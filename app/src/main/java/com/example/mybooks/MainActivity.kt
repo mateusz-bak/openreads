@@ -7,6 +7,7 @@ import com.google.android.material.snackbar.Snackbar
 import androidx.appcompat.app.AppCompatActivity
 import android.view.Menu
 import android.view.MenuItem
+import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
 import kotlinx.android.synthetic.main.activity_main.*
 
@@ -46,5 +47,18 @@ class MainActivity : AppCompatActivity() {
                 startActivity(it)
             }
         }
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        menuInflater.inflate(R.menu.app_bar_menu, menu)
+        return true
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when(item.itemId) {
+            R.id.miAbout -> Toast.makeText(this, "About is work in progress", Toast.LENGTH_SHORT).show()
+            R.id.miSettings -> Toast.makeText(this, "Settings are work in progress", Toast.LENGTH_SHORT).show()
+        }
+        return true
     }
 }
