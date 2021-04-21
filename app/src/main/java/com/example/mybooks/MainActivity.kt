@@ -2,8 +2,6 @@ package com.example.mybooks
 
 import android.content.Intent
 import android.os.Bundle
-import com.google.android.material.floatingactionbutton.FloatingActionButton
-import com.google.android.material.snackbar.Snackbar
 import androidx.appcompat.app.AppCompatActivity
 import android.view.Menu
 import android.view.MenuItem
@@ -13,36 +11,26 @@ import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity() {
 
-    private lateinit var listElementAdapter: ListElementAdapter
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-//        val title = intent.getStringExtra("EXTRA_TITLE")
-//        val author = intent.getStringExtra("EXTRA_AUTHOR")
-//        val rating = intent.getFloatExtra("EXTRA_RATING", 1.0F)
+        var booksList = mutableListOf<ListElement>()
 
-        listElementAdapter = ListElementAdapter(mutableListOf())
-        rvListOfBooks.adapter = listElementAdapter
+        val adapter = ListElementAdapter(booksList)
+        rvListOfBooks.adapter = adapter
         rvListOfBooks.layoutManager = LinearLayoutManager(this)
 
-//        val bookSerialized = intent.getSerializableExtra("EXTRA_BOOK")
+        if (intent.getBooleanExtra("EXTRA_ADD_BOOK", false)){
+            val newTitle = intent.getStringExtra("EXTRA_TITLE").toString()
+            val newAuthor = intent.getStringExtra("EXTRA_AUTHOR").toString()
+            val newRating = intent.getFloatExtra("EXTRA_RATING", 0F)
+            val newBook = ListElement(newTitle, newAuthor, newRating)
+            booksList.add(newBook)
+            adapter.notifyItemInserted(booksList.size -1)
+        }
 
-//        if (bookSerialized == null) {
-//            val book = ListElement("Title placeholder", "Author placeholder", 0.0F)
-//            listElementAdapter.addBook(book)
-//        }
-//        else {
-//            val book = bookSerialized as ListElement
-//        val book = ListElement(title.toString(), author.toString(), rating)
-//            listElementAdapter.addBook(book)
-//        }
-
-
-
-
-        fabGoToAdder.setOnClickListener() {
+        fabGoToAdder.setOnClickListener {
             Intent(this, AdderActivity::class.java).also {
                 startActivity(it)
             }

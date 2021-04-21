@@ -15,7 +15,7 @@
         android:textSize="24sp"
         android:layout_marginRight="16dp"
         android:textColor="@color/black"
-        app:layout_constraintEnd_toStartOf="@+id/appCompatRatingBar"
+        app:layout_constraintEnd_toStartOf="@+id/rbRatingIndicator"
         app:layout_constraintHorizontal_weight="1"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -34,7 +34,7 @@
 
     <androidx.appcompat.widget.AppCompatRatingBar
         style="?android:attr/ratingBarStyleSmall"
-        android:id="@+id/appCompatRatingBar"
+        android:id="@+id/rbRatingIndicator"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:stepSize="1"

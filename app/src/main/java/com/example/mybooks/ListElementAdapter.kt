@@ -9,11 +9,11 @@ import kotlinx.android.synthetic.main.item_list_element.view.*
 
 class ListElementAdapter(
 
-        private val books: MutableList<ListElement>
+        private var books: List<ListElement>
 
 ) : RecyclerView.Adapter<ListElementAdapter.ListElementViewHolder>() {
 
-    class ListElementViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView)
+    inner class ListElementViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView)
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ListElementViewHolder {
         return ListElementViewHolder(
@@ -30,15 +30,11 @@ class ListElementAdapter(
         holder.itemView.apply {
             tvBookTitle.text = curBook.bookTitle
             tvBookAuthor.text = curBook.bookAuthor
+            rbRatingIndicator.rating = curBook.bookRating
         }
     }
 
     override fun getItemCount(): Int {
         return books.size
-    }
-
-    fun addBook(listElement: ListElement){
-        books.add(listElement)
-        notifyItemInserted(books.size -1)
     }
 }
