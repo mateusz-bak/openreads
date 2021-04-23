@@ -1,4 +1,4 @@
-package com.example.mybooks
+package com.example.mybooks.ui.bookslist
 
 import android.content.Intent
 import android.os.Bundle
@@ -7,6 +7,9 @@ import android.view.Menu
 import android.view.MenuItem
 import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.mybooks.AdderActivity
+import com.example.mybooks.ListElementAdapter
+import com.example.mybooks.R
 import com.example.mybooks.data.db.entities.ListElement
 import kotlinx.android.synthetic.main.activity_list.*
 

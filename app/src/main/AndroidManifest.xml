@@ -10,7 +10,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.MyBooks">
         <activity
-            android:name=".ListActivity"
+            android:name=".ui.bookslist.ListActivity"
             android:label="@string/app_name"
             >
             <intent-filter>
