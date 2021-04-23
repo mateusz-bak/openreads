@@ -1,8 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:padding="16dp">
@@ -11,10 +9,10 @@
         android:id="@+id/tvBookTitle"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:text="1984"
-        android:textSize="24sp"
-        android:layout_marginRight="16dp"
+        android:layout_marginEnd="16dp"
+        android:text="Title Title: Title title Title"
         android:textColor="@color/black"
+        android:textSize="18sp"
         app:layout_constraintEnd_toStartOf="@+id/rbRatingIndicator"
         app:layout_constraintHorizontal_weight="1"
         app:layout_constraintStart_toStartOf="parent"
@@ -24,26 +22,37 @@
         android:id="@+id/tvBookAuthor"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:text="George Orwell"
-        android:textSize="18sp"
+        android:layout_marginTop="12dp"
+        android:text="Author Author Author"
+        android:textSize="14sp"
         app:layout_constraintEnd_toEndOf="@+id/tvBookTitle"
         app:layout_constraintHorizontal_weight="1"
         app:layout_constraintStart_toStartOf="@+id/tvBookTitle"
         app:layout_constraintTop_toBottomOf="@+id/tvBookTitle" />
 
     <androidx.appcompat.widget.AppCompatRatingBar
-        style="?android:attr/ratingBarStyleSmall"
         android:id="@+id/rbRatingIndicator"
+        style="?android:attr/ratingBarStyleSmall"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:stepSize="1"
         android:isIndicator="true"
-        app:layout_constraintBottom_toBottomOf="@+id/tvBookAuthor"
-        app:layout_constraintEnd_toEndOf="parent"
         android:numStars="5"
         android:rating="4"
+        android:stepSize="1"
+        android:layout_marginEnd="8dp"
+        app:layout_constraintBottom_toBottomOf="@+id/tvBookAuthor"
+        app:layout_constraintEnd_toStartOf="@+id/ivDeleteBook"
         app:layout_constraintTop_toTopOf="@+id/tvBookTitle" />
+
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/ivDeleteBook"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:tint="@android:color/darker_gray"
+        android:src="@drawable/ic_baseline_delete_forever_32"
+        app:layout_constraintBottom_toBottomOf="@+id/rbRatingIndicator"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/rbRatingIndicator" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

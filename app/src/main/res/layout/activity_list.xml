@@ -6,26 +6,6 @@
     android:layout_height="match_parent"
     tools:context=".ui.bookslist.ListActivity">
 
-    <androidx.constraintlayout.widget.Guideline
-        android:id="@+id/guideline3"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        app:layout_constraintGuide_begin="20dp"
-        app:layout_constraintGuide_percent="0.1" />
-
-    <TextView
-        android:id="@+id/tvListTitle"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Your Books"
-        android:textColor="@color/black"
-        android:textSize="24sp"
-        app:layout_constraintBottom_toTopOf="@+id/guideline3"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/guideline3" />
-
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/fabGoToAdder"
         android:layout_width="wrap_content"
@@ -40,10 +20,9 @@
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rvListOfBooks"
         android:layout_width="match_parent"
-        android:layout_height="0dp"
+        android:layout_height="match_parent"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tvListTitle"
-        tools:layout_editor_absoluteX="179dp"
-        android:layout_marginTop="24dp"/>
+        app:layout_constraintTop_toTopOf="parent"
+        tools:layout_editor_absoluteX="179dp" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
