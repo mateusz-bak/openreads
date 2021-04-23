@@ -60,8 +60,9 @@ class AdderActivity: AppCompatActivity() {
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when(item.itemId) {
-            R.id.miAbout -> Toast.makeText(this, "About is work in progress", Toast.LENGTH_SHORT).show()
-            R.id.miSettings -> Toast.makeText(this, "Settings are work in progress", Toast.LENGTH_SHORT).show()
+            R.id.miAbout -> Intent(this, AdderActivity::class.java).also {
+                startActivity(it)
+            }
         }
         return true
     }
