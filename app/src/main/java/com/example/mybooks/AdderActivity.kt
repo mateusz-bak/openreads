@@ -28,7 +28,7 @@ class AdderActivity: AppCompatActivity() {
 
             if (bookTitle.isNotEmpty()) {
                 if (bookAuthor.isNotEmpty()){
-                    Intent(this, MainActivity::class.java).also {
+                    Intent(this, ListActivity::class.java).also {
                         it.putExtra("EXTRA_TITLE", bookTitle)
                         it.putExtra("EXTRA_AUTHOR", bookAuthor)
                         it.putExtra("EXTRA_RATING", bookRating)
