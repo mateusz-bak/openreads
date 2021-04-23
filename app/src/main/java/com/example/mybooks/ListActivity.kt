@@ -7,6 +7,7 @@ import android.view.Menu
 import android.view.MenuItem
 import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.mybooks.data.db.entities.ListElement
 import kotlinx.android.synthetic.main.activity_list.*
 
 class ListActivity : AppCompatActivity() {

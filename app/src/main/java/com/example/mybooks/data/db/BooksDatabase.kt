@@ -1,9 +1,10 @@
-package com.example.mybooks
+package com.example.mybooks.data.db
 
 import android.content.Context
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
+import com.example.mybooks.data.db.entities.ListElement
 
 @Database(
         entities = [ListElement::class],

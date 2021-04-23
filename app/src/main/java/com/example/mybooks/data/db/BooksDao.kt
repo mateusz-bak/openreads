@@ -1,7 +1,8 @@
-package com.example.mybooks
+package com.example.mybooks.data.db
 
 import androidx.lifecycle.LiveData
 import androidx.room.*
+import com.example.mybooks.data.db.entities.ListElement
 
 @Dao
 interface BooksDao {
