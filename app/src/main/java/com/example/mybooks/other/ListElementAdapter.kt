@@ -1,15 +1,18 @@
-package com.example.mybooks
+package com.example.mybooks.other
 
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import com.example.mybooks.R
 import com.example.mybooks.data.db.entities.ListElement
+import com.example.mybooks.ui.bookslist.BooksViewModel
 import kotlinx.android.synthetic.main.item_list_element.view.*
 
 class ListElementAdapter(
 
-        private var books: List<ListElement>
+        var books: List<ListElement>,
+        private val viewModel: BooksViewModel
 
 ) : RecyclerView.Adapter<ListElementAdapter.ListElementViewHolder>() {
 

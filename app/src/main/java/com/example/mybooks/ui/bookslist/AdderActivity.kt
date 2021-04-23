@@ -1,4 +1,4 @@
-package com.example.mybooks
+package com.example.mybooks.ui.bookslist
 
 import android.content.Intent
 import android.os.Bundle
@@ -6,21 +6,26 @@ import android.view.Menu
 import android.view.MenuItem
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import com.example.mybooks.ui.bookslist.ListActivity
+import androidx.lifecycle.ViewModelProviders
+import com.example.mybooks.R
+import com.example.mybooks.data.db.BooksDatabase
+import com.example.mybooks.data.db.entities.ListElement
+import com.example.mybooks.data.repositories.BooksRepository
 import com.google.android.material.snackbar.Snackbar
 import kotlinx.android.synthetic.main.activity_adder.*
 
 
 class AdderActivity: AppCompatActivity() {
 
-    private lateinit var listElementAdapter: ListElementAdapter
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_adder)
 
-        listElementAdapter = ListElementAdapter(mutableListOf())
+        val database = BooksDatabase(this)
+        val repository = BooksRepository(database)
+        val factory = BooksViewModelFactory(repository)
 
+        val viewModel = ViewModelProviders.of(this, factory).get(BooksViewModel::class.java)
 
         btnAddBook.setOnClickListener { view ->
             val bookTitle = etTitle.text.toString()
@@ -30,10 +35,8 @@ class AdderActivity: AppCompatActivity() {
             if (bookTitle.isNotEmpty()) {
                 if (bookAuthor.isNotEmpty()){
                     Intent(this, ListActivity::class.java).also {
-                        it.putExtra("EXTRA_TITLE", bookTitle)
-                        it.putExtra("EXTRA_AUTHOR", bookAuthor)
-                        it.putExtra("EXTRA_RATING", bookRating)
-                        it.putExtra("EXTRA_ADD_BOOK", true)
+                        val item = ListElement(bookTitle, bookAuthor, bookRating)
+                        viewModel.upsert(item)
                         startActivity(it)
                     }
 

@@ -6,11 +6,13 @@ import androidx.appcompat.app.AppCompatActivity
 import android.view.Menu
 import android.view.MenuItem
 import android.widget.Toast
+import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.example.mybooks.AdderActivity
-import com.example.mybooks.ListElementAdapter
+import com.example.mybooks.other.ListElementAdapter
 import com.example.mybooks.R
-import com.example.mybooks.data.db.entities.ListElement
+import com.example.mybooks.data.db.BooksDatabase
+import com.example.mybooks.data.repositories.BooksRepository
 import kotlinx.android.synthetic.main.activity_list.*
 
 class ListActivity : AppCompatActivity() {
@@ -19,20 +21,21 @@ class ListActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_list)
 
-        var booksList = mutableListOf<ListElement>()
+        val database = BooksDatabase(this)
+        val repository = BooksRepository(database)
+        val factory = BooksViewModelFactory(repository)
 
-        val adapter = ListElementAdapter(booksList)
+        val viewModel = ViewModelProviders.of(this, factory).get(BooksViewModel::class.java)
+
+        val adapter = ListElementAdapter(listOf(), viewModel)
+
         rvListOfBooks.adapter = adapter
         rvListOfBooks.layoutManager = LinearLayoutManager(this)
 
-        if (intent.getBooleanExtra("EXTRA_ADD_BOOK", false)){
-            val newTitle = intent.getStringExtra("EXTRA_TITLE").toString()
-            val newAuthor = intent.getStringExtra("EXTRA_AUTHOR").toString()
-            val newRating = intent.getFloatExtra("EXTRA_RATING", 0F)
-            val newBook = ListElement(newTitle, newAuthor, newRating)
-            booksList.add(newBook)
-            adapter.notifyItemInserted(booksList.size -1)
-        }
+        viewModel.getAllListElements().observe(this, Observer {
+            adapter.books = it
+            adapter.notifyDataSetChanged()
+        })
 
         fabGoToAdder.setOnClickListener {
             Intent(this, AdderActivity::class.java).also {
