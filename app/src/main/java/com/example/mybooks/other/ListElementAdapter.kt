@@ -35,6 +35,10 @@ class ListElementAdapter(
             tvBookAuthor.text = curBook.bookAuthor
             rbRatingIndicator.rating = curBook.bookRating
         }
+
+        holder.itemView.ivDeleteBook.setOnClickListener{
+            viewModel.delete(curBook)
+        }
     }
 
     override fun getItemCount(): Int {
