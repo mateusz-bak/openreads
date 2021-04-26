@@ -5,7 +5,6 @@ import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import android.view.Menu
 import android.view.MenuItem
-import android.widget.Toast
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -27,7 +26,7 @@ class ListActivity : AppCompatActivity() {
 
         val viewModel = ViewModelProviders.of(this, factory).get(BooksViewModel::class.java)
 
-        val adapter = ListElementAdapter(listOf(), viewModel)
+        val adapter = ListElementAdapter(listOf(), viewModel, this)
 
         rvListOfBooks.adapter = adapter
         rvListOfBooks.layoutManager = LinearLayoutManager(this)
