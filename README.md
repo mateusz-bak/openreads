@@ -10,3 +10,5 @@ An Android app written in Kotlin for keeping tracks of books you have read.
 ### Adding a book:
 <img src="doc/images/screenshot-adder.png" alt="drawing" width="300"/>
 
+### Editing a book:
+<img src="doc/images/screenshot-editor.png" alt="drawing" width="300"/>
