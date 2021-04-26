@@ -51,14 +51,12 @@ class ListElementAdapter(
         holder.itemView.ivDeleteBook.setOnClickListener{
             viewModel.delete(curBook)
 
-            Snackbar.make(it, "Subscription Deleted", Snackbar.LENGTH_LONG)
+            Snackbar.make(it, "Book Deleted", Snackbar.LENGTH_LONG)
                 .setAction("Undo", UndoBookDeletion())
                 .show()
         }
 
         holder.itemView.ivEditBook.setOnClickListener {
-            // AppLog
-            Log.d("AppLog", "setOnClickListener executed")
             EditListElementDialog(context, curBook,
                 object: EditDialogListener {
                     override fun onSaveButtonClicked(item: ListElement) {
