@@ -1,5 +1,7 @@
 package com.example.mybooks.other
 
+import android.content.Context
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -7,13 +9,16 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.mybooks.R
 import com.example.mybooks.data.db.entities.ListElement
 import com.example.mybooks.ui.bookslist.BooksViewModel
+import com.example.mybooks.ui.bookslist.EditDialogListener
+import com.example.mybooks.ui.bookslist.EditListElementDialog
 import com.google.android.material.snackbar.Snackbar
 import kotlinx.android.synthetic.main.item_list_element.view.*
 
 class ListElementAdapter(
 
     var books: List<ListElement>,
-    private val viewModel: BooksViewModel
+    private val viewModel: BooksViewModel,
+    var context: Context
 
 ) : RecyclerView.Adapter<ListElementAdapter.ListElementViewHolder>() {
 
@@ -49,6 +54,20 @@ class ListElementAdapter(
             Snackbar.make(it, "Subscription Deleted", Snackbar.LENGTH_LONG)
                 .setAction("Undo", UndoBookDeletion())
                 .show()
+        }
+
+        holder.itemView.ivEditBook.setOnClickListener {
+            // AppLog
+            Log.d("AppLog", "setOnClickListener executed")
+            EditListElementDialog(context, curBook,
+                object: EditDialogListener {
+                    override fun onSaveButtonClicked(item: ListElement) {
+
+                        viewModel.delete(curBook)
+                        viewModel.upsert(item)
+                    }
+                }
+            ).show()
         }
     }
 
