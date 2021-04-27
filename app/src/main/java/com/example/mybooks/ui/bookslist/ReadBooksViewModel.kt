@@ -1,21 +1,21 @@
 package com.example.mybooks.ui.bookslist
 
 import androidx.lifecycle.ViewModel
-import com.example.mybooks.data.db.entities.ListElement
-import com.example.mybooks.data.repositories.BooksRepository
+import com.example.mybooks.data.db.entities.ReadBook
+import com.example.mybooks.data.repositories.ReadBooksRepository
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
-class BooksViewModel(
-        private val repository: BooksRepository
+class ReadBooksViewModel(
+        private val repository: ReadBooksRepository
 ): ViewModel() {
 
-    fun upsert(item: ListElement) = CoroutineScope(Dispatchers.Main).launch {
+    fun upsert(item: ReadBook) = CoroutineScope(Dispatchers.Main).launch {
         repository.upsert(item)
     }
 
-    fun delete(item: ListElement) = CoroutineScope(Dispatchers.Main).launch {
+    fun delete(item: ReadBook) = CoroutineScope(Dispatchers.Main).launch {
         repository.delete(item)
     }
 

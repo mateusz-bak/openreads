@@ -1,33 +1,32 @@
 package com.example.mybooks.other
 
 import android.content.Context
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.example.mybooks.R
-import com.example.mybooks.data.db.entities.ListElement
-import com.example.mybooks.ui.bookslist.BooksViewModel
-import com.example.mybooks.ui.bookslist.EditDialogListener
-import com.example.mybooks.ui.bookslist.EditListElementDialog
+import com.example.mybooks.data.db.entities.ReadBook
+import com.example.mybooks.ui.bookslist.ReadBooksViewModel
+import com.example.mybooks.ui.bookslist.EditReadBookDialogListener
+import com.example.mybooks.ui.bookslist.EditReadBookDialog
 import com.google.android.material.snackbar.Snackbar
-import kotlinx.android.synthetic.main.item_list_element.view.*
+import kotlinx.android.synthetic.main.item_read_book.view.*
 
-class ListElementAdapter(
+class ReadBookAdapter(
 
-    var books: List<ListElement>,
-    private val viewModel: BooksViewModel,
+    var readBooks: List<ReadBook>,
+    private val viewModel: ReadBooksViewModel,
     var context: Context
 
-) : RecyclerView.Adapter<ListElementAdapter.ListElementViewHolder>() {
+) : RecyclerView.Adapter<ReadBookAdapter.ListElementViewHolder>() {
 
     inner class ListElementViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView)
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ListElementViewHolder {
         return ListElementViewHolder(
             LayoutInflater.from(parent.context).inflate(
-                R.layout.item_list_element,
+                R.layout.item_read_book,
                 parent,
                 false
             )
@@ -35,7 +34,7 @@ class ListElementAdapter(
     }
 
     override fun onBindViewHolder(holder: ListElementViewHolder, position: Int) {
-        val curBook = books[position]
+        val curBook = readBooks[position]
         holder.itemView.apply {
             tvBookTitle.text = curBook.bookTitle
             tvBookAuthor.text = curBook.bookAuthor
@@ -57,9 +56,9 @@ class ListElementAdapter(
         }
 
         holder.itemView.ivEditBook.setOnClickListener {
-            EditListElementDialog(context, curBook,
-                object: EditDialogListener {
-                    override fun onSaveButtonClicked(item: ListElement) {
+            EditReadBookDialog(context, curBook,
+                object: EditReadBookDialogListener {
+                    override fun onSaveButtonClicked(item: ReadBook) {
 
                         viewModel.delete(curBook)
                         viewModel.upsert(item)
@@ -70,6 +69,6 @@ class ListElementAdapter(
     }
 
     override fun getItemCount(): Int {
-        return books.size
+        return readBooks.size
     }
 }

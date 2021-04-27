@@ -4,13 +4,12 @@ import android.content.Intent
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
-import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProviders
 import com.example.mybooks.R
-import com.example.mybooks.data.db.BooksDatabase
-import com.example.mybooks.data.db.entities.ListElement
-import com.example.mybooks.data.repositories.BooksRepository
+import com.example.mybooks.data.db.ReadBooksDatabase
+import com.example.mybooks.data.db.entities.ReadBook
+import com.example.mybooks.data.repositories.ReadBooksRepository
 import com.google.android.material.snackbar.Snackbar
 import kotlinx.android.synthetic.main.activity_adder.*
 
@@ -21,11 +20,11 @@ class AdderActivity: AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_adder)
 
-        val database = BooksDatabase(this)
-        val repository = BooksRepository(database)
-        val factory = BooksViewModelFactory(repository)
+        val database = ReadBooksDatabase(this)
+        val repository = ReadBooksRepository(database)
+        val factory = ReadBooksViewModelFactory(repository)
 
-        val viewModel = ViewModelProviders.of(this, factory).get(BooksViewModel::class.java)
+        val viewModel = ViewModelProviders.of(this, factory).get(ReadBooksViewModel::class.java)
 
         btnAddBook.setOnClickListener { view ->
             val bookTitle = etTitle.text.toString()
@@ -35,7 +34,7 @@ class AdderActivity: AppCompatActivity() {
             if (bookTitle.isNotEmpty()) {
                 if (bookAuthor.isNotEmpty()){
                     Intent(this, ListActivity::class.java).also {
-                        val item = ListElement(bookTitle, bookAuthor, bookRating)
+                        val item = ReadBook(bookTitle, bookAuthor, bookRating)
                         viewModel.upsert(item)
                         startActivity(it)
                     }

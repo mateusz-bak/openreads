@@ -5,10 +5,10 @@ import android.os.Bundle
 import android.view.Window
 import com.example.mybooks.R
 import androidx.appcompat.app.AppCompatDialog
-import com.example.mybooks.data.db.entities.ListElement
+import com.example.mybooks.data.db.entities.ReadBook
 import kotlinx.android.synthetic.main.dialog_edit_list_element.*
 
-class EditListElementDialog(context: Context, val curBook: ListElement, var editDialogListener: EditDialogListener) : AppCompatDialog(context) {
+class EditReadBookDialog(context: Context, val curBook: ReadBook, var editReadBookDialogListener: EditReadBookDialogListener) : AppCompatDialog(context) {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -24,8 +24,8 @@ class EditListElementDialog(context: Context, val curBook: ListElement, var edit
             val editedAuthor = etEditorAuthor.text.toString()
             val editedRating = rbEditorRating.rating
 
-            val editedBook = ListElement(editedTitle, editedAuthor, editedRating)
-            editDialogListener.onSaveButtonClicked(editedBook)
+            val editedBook = ReadBook(editedTitle, editedAuthor, editedRating)
+            editReadBookDialogListener.onSaveButtonClicked(editedBook)
             dismiss()
         }
     }

@@ -4,8 +4,8 @@ import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 
-@Entity(tableName = "read_books")
-data class ListElement (
+@Entity(tableName = "to_read_books")
+data class ToReadBook (
         @ColumnInfo(name = "item_bookTitle")
         var bookTitle: String,
         @ColumnInfo(name = "item_bookAuthor")
