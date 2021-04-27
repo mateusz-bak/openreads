@@ -14,5 +14,5 @@ interface InProgressBooksDao {
     suspend fun delete(item: InProgressBook)
 
     @Query("SELECT * FROM in_progress_books")
-    fun getAllListElements(): LiveData<List<InProgressBook>>
+    fun getAllInProgressBooks(): LiveData<List<InProgressBook>>
 }

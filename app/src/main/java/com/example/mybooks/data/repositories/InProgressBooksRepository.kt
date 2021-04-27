@@ -10,5 +10,5 @@ class InProgressBooksRepository (
 
     suspend fun delete(item: InProgressBook) = db.getInProgressBooksDao().delete(item)
 
-    fun getAllListElements() = db.getInProgressBooksDao().getAllListElements()
+    fun getAllListElements() = db.getInProgressBooksDao().getAllInProgressBooks()
 }

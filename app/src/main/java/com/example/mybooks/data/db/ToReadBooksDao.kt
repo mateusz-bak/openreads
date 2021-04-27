@@ -14,5 +14,5 @@ interface ToReadBooksDao {
     suspend fun delete(item: ToReadBook)
 
     @Query("SELECT * FROM to_read_books")
-    fun getAllListElements(): LiveData<List<ToReadBook>>
+    fun getAllToReadBooks(): LiveData<List<ToReadBook>>
 }

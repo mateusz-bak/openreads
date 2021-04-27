@@ -10,5 +10,5 @@ class ToReadBooksRepository (
 
     suspend fun delete(item: ToReadBook) = db.getToReadBooksDao().delete(item)
 
-    fun getAllListElements() = db.getToReadBooksDao().getAllListElements()
+    fun getAllListElements() = db.getToReadBooksDao().getAllToReadBooks()
 }
