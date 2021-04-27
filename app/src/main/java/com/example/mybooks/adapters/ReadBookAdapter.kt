@@ -19,12 +19,12 @@ class ReadBookAdapter(
     private val viewModel: ReadBooksViewModel,
     var context: Context
 
-) : RecyclerView.Adapter<ReadBookAdapter.ListElementViewHolder>() {
+) : RecyclerView.Adapter<ReadBookAdapter.ReadBookViewHolder>() {
 
-    inner class ListElementViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView)
+    inner class ReadBookViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView)
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ListElementViewHolder {
-        return ListElementViewHolder(
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ReadBookViewHolder {
+        return ReadBookViewHolder(
             LayoutInflater.from(parent.context).inflate(
                 R.layout.item_read_book,
                 parent,
@@ -33,7 +33,7 @@ class ReadBookAdapter(
         )
     }
 
-    override fun onBindViewHolder(holder: ListElementViewHolder, position: Int) {
+    override fun onBindViewHolder(holder: ReadBookViewHolder, position: Int) {
         val curBook = readBooks[position]
         holder.itemView.apply {
             tvBookTitle.text = curBook.bookTitle
