@@ -1,4 +1,4 @@
-package com.example.mybooks.other
+package com.example.mybooks.adapters
 
 import android.content.Context
 import android.view.LayoutInflater
