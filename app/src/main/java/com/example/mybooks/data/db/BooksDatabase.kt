@@ -4,19 +4,19 @@ import android.content.Context
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
-import com.example.mybooks.data.db.entities.InProgressBook
+import com.example.mybooks.data.db.entities.Book
 
 @Database(
-        entities = [InProgressBook::class],
+        entities = [Book::class],
         version = 1
 )
-abstract class InProgressBooksDatabase: RoomDatabase() {
+abstract class BooksDatabase: RoomDatabase() {
 
-    abstract fun getInProgressBooksDao(): InProgressBooksDao
+    abstract fun getBooksDao(): BooksDao
 
     companion object {
         @Volatile
-        private var instance: InProgressBooksDatabase? = null
+        private var instance: BooksDatabase? = null
         private val LOCK = Any()
 
         operator fun invoke(context: Context) = instance ?: synchronized(LOCK) {
@@ -25,6 +25,6 @@ abstract class InProgressBooksDatabase: RoomDatabase() {
 
         private fun createDatabase(context: Context) =
                 Room.databaseBuilder(context.applicationContext,
-                        InProgressBooksDatabase::class.java, "InProgressBooksDB.db").build()
+                        BooksDatabase::class.java, "BooksDB.db").build()
     }
 }
