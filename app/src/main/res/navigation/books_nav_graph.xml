@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto" android:id="@+id/books_nav_graph"
+    app:startDestination="@id/readFragment">
+
+
+    <fragment
+        android:id="@+id/readFragment"
+        android:name="com.example.mybooks.ui.bookslist.fragments.ReadFragment"
+        android:label="ReadFragment" >
+        <action
+            android:id="@+id/action_readFragment_to_addReadFragment"
+            app:destination="@id/addReadFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/addReadFragment"
+        android:name="com.example.mybooks.ui.bookslist.fragments.AddReadFragment"
+        android:label="AddReadFragment" >
+        <action
+            android:id="@+id/action_addReadFragment_to_readFragment"
+            app:destination="@id/readFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/inProgressFragment"
+        android:name="com.example.mybooks.ui.bookslist.fragments.InProgressFragment"
+        android:label="InProgressFragment" >
+        <action
+            android:id="@+id/action_inProgressFragment_to_addInProgressFragment"
+            app:destination="@id/addInProgressFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/addInProgressFragment"
+        android:name="com.example.mybooks.ui.bookslist.fragments.AddInProgressFragment"
+        android:label="AddInProgressFragment" >
+        <action
+            android:id="@+id/action_addInProgressFragment_to_inProgressFragment"
+            app:destination="@id/inProgressFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/toReadFragment"
+        android:name="com.example.mybooks.ui.bookslist.fragments.ToReadFragment"
+        android:label="ToReadFragment" >
+        <action
+            android:id="@+id/action_toReadFragment_to_addToReadFragment"
+            app:destination="@id/addToReadFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/addToReadFragment"
+        android:name="com.example.mybooks.ui.bookslist.fragments.AddToReadFragment"
+        android:label="AddToReadFragment" >
+        <action
+            android:id="@+id/action_addToReadFragment_to_toReadFragment"
+            app:destination="@id/toReadFragment" />
+    </fragment>
+</navigation>
