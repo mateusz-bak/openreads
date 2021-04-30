@@ -1,13 +1,11 @@
 package com.example.mybooks.ui.bookslist.fragments
 
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelProviders
-import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.mybooks.R
 import com.example.mybooks.adapters.BookAdapter
@@ -44,10 +42,5 @@ class InProgressFragment : Fragment(R.layout.fragment_in_progress) {
         viewModel.getInProgressBooks().observe(viewLifecycleOwner, Observer { some_books ->
             adapter.differ.submitList(some_books)
         })
-
-        fabGoToAdder.setOnClickListener {
-            Log.d("Tagg", "two")
-            findNavController().navigate(R.id.action_inProgressFragment_to_addInProgressFragment)
-        }
     }
 }
