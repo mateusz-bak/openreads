@@ -16,9 +16,9 @@ import com.example.mybooks.data.repositories.BooksRepository
 import com.example.mybooks.ui.bookslist.ListActivity
 import com.example.mybooks.ui.bookslist.BooksViewModel
 import com.example.mybooks.ui.bookslist.BooksViewModelProviderFactory
-import kotlinx.android.synthetic.main.fragment_to_read.*
+import kotlinx.android.synthetic.main.fragment_in_progress.*
 
-class ToReadFragment : Fragment(R.layout.fragment_to_read) {
+class InProgressFragment : Fragment(R.layout.fragment_in_progress) {
 
     lateinit var viewModel: BooksViewModel
 
@@ -36,18 +36,18 @@ class ToReadFragment : Fragment(R.layout.fragment_to_read) {
         val factory = BooksViewModelProviderFactory(booksRepository)
         val viewModel = ViewModelProviders.of(this, factory).get(BooksViewModel::class.java)
 
-        val adapter = BookAdapter(viewModel, view.context, whichFragment = "to_read")
+        val adapter = BookAdapter(viewModel, view.context, whichFragment = "in_progress")
 
-        rvToReadBooks.adapter = adapter
-        rvToReadBooks.layoutManager = LinearLayoutManager(view.context)
+        rvInProgressBooks.adapter = adapter
+        rvInProgressBooks.layoutManager = LinearLayoutManager(view.context)
 
-        viewModel.getToReadBooks().observe(viewLifecycleOwner, Observer { some_books ->
+        viewModel.getInProgressBooks().observe(viewLifecycleOwner, Observer { some_books ->
             adapter.differ.submitList(some_books)
         })
 
         fabGoToAdder.setOnClickListener {
             Log.d("Tagg", "two")
-            findNavController().navigate(R.id.action_toReadFragment_to_addToReadFragment)
+            findNavController().navigate(R.id.action_inProgressFragment_to_addInProgressFragment)
         }
     }
 }
