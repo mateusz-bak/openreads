@@ -3,7 +3,7 @@
 
 
     <item android:id="@+id/readFragment"
-        android:title="Read"
+        android:title="Finished"
         android:icon="@drawable/ic_baseline_done_24"/>
 
     <item android:id="@+id/inProgressFragment"
