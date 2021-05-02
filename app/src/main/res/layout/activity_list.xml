@@ -24,7 +24,6 @@
             android:layout_height="match_parent"
             app:defaultNavHost="true"
             app:navGraph="@navigation/books_nav_graph" />
-
     </FrameLayout>
 
     <com.google.android.material.bottomnavigation.BottomNavigationView
@@ -36,69 +35,5 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"/>
-
-    <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/fabExpandAddOptions"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="bottom|end"
-        android:layout_marginEnd="24dp"
-        android:backgroundTint="?colorPrimary"
-        android:clickable="true"
-        android:focusable="true"
-        app:borderWidth="0dp"
-        android:layout_marginBottom="24dp"
-        app:layout_constraintBottom_toBottomOf="@+id/flFragment"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:srcCompat="@drawable/ic_baseline_add_24"
-        app:tint="?colorOnPrimary" />
-
-    <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/fabAddReadBook"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:clickable="true"
-        android:focusable="true"
-        android:backgroundTint="?colorPrimaryVariant"
-        android:layout_marginBottom="16dp"
-        app:borderWidth="0dp"
-        android:visibility="invisible"
-        app:layout_constraintBottom_toTopOf="@+id/fabExpandAddOptions"
-        app:layout_constraintEnd_toEndOf="@+id/fabExpandAddOptions"
-        app:layout_constraintStart_toStartOf="@+id/fabExpandAddOptions"
-        app:srcCompat="@drawable/ic_baseline_done_24"
-        app:tint="?colorOnPrimary" />
-
-    <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/fabAddInProgressBook"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:clickable="true"
-        android:focusable="true"
-        android:backgroundTint="?colorPrimaryVariant"
-        android:layout_marginBottom="16dp"
-        app:borderWidth="0dp"
-        android:visibility="invisible"
-        app:layout_constraintBottom_toTopOf="@+id/fabAddReadBook"
-        app:layout_constraintEnd_toEndOf="@+id/fabAddReadBook"
-        app:layout_constraintStart_toStartOf="@+id/fabAddReadBook"
-        app:srcCompat="@drawable/ic_baseline_hourglass_bottom_24"
-        app:tint="?colorOnPrimary" />
-
-    <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/fabAddToReadBook"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:clickable="true"
-        android:focusable="true"
-        android:backgroundTint="?colorPrimaryVariant"
-        android:layout_marginBottom="16dp"
-        app:borderWidth="0dp"
-        android:visibility="invisible"
-        app:layout_constraintBottom_toTopOf="@+id/fabAddInProgressBook"
-        app:layout_constraintEnd_toEndOf="@+id/fabAddInProgressBook"
-        app:layout_constraintStart_toStartOf="@+id/fabAddInProgressBook"
-        app:srcCompat="@drawable/ic_baseline_list_24"
-        app:tint="?colorOnPrimary" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

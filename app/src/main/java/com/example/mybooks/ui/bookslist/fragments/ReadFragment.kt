@@ -11,10 +11,13 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.mybooks.R
 import com.example.mybooks.adapters.BookAdapter
 import com.example.mybooks.data.db.BooksDatabase
+import com.example.mybooks.data.db.entities.Book
 import com.example.mybooks.data.repositories.BooksRepository
 import com.example.mybooks.ui.bookslist.ListActivity
 import com.example.mybooks.ui.bookslist.BooksViewModel
 import com.example.mybooks.ui.bookslist.BooksViewModelProviderFactory
+import com.example.mybooks.ui.bookslist.readbooks.AddReadBookDialog
+import com.example.mybooks.ui.bookslist.readbooks.AddReadBookDialogListener
 import kotlinx.android.synthetic.main.fragment_read.*
 
 class ReadFragment : Fragment(R.layout.fragment_read) {
@@ -42,12 +45,19 @@ class ReadFragment : Fragment(R.layout.fragment_read) {
         rvReadBooks.adapter = bookAdapter
         rvReadBooks.layoutManager = LinearLayoutManager(view.context)
 
-        listActivity.showFabExpandAddOptions()
-        listActivity.hideFabEditBook()
-
         viewModel.getReadBooks().observe(viewLifecycleOwner, Observer { some_books ->
             bookAdapter.differ.submitList(some_books)
         })
+
+        fabAddBook.setOnClickListener{
+            AddReadBookDialog(view.context,
+                object: AddReadBookDialogListener {
+                    override fun onSaveButtonClicked(item: Book) {
+                        viewModel.upsert(item)
+                    }
+                }
+            ).show()
+        }
 
         bookAdapter.setOnBookClickListener {
             val bundle = Bundle().apply {

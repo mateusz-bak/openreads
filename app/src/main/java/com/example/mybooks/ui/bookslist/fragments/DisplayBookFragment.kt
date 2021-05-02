@@ -35,9 +35,6 @@ class DisplayBookFragment : Fragment(R.layout.fragment_display_book) {
 
         val viewModel = ViewModelProviders.of(this, factory).get(BooksViewModel::class.java)
 
-        listActivity.hideFabExpandAddOptions()
-        listActivity.showFabEditBook()
-
         viewModel.getSingleBook(args.bookId).observe(viewLifecycleOwner, Observer {
             val book = it
 
