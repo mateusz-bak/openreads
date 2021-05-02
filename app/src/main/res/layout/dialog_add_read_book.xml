@@ -43,11 +43,11 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:stepSize="1"
-        android:layout_marginTop="40dp"
+        android:layout_marginTop="28dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/ivBookStatusInProgress" />
+        app:layout_constraintTop_toBottomOf="@+id/tvInProgress" />
 
     <TextView
         android:id="@+id/tv_EditorTitle"
@@ -65,8 +65,8 @@
         android:id="@+id/btnEditorSaveBook"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="32dp"
-        android:backgroundTint="@color/teal_200"
+        android:layout_marginTop="16dp"
+        android:backgroundTint="?colorPrimary"
         android:text="Save"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"

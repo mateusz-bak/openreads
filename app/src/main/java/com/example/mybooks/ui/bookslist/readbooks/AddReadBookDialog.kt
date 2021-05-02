@@ -4,13 +4,22 @@ import android.content.Context
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
+import android.view.View
 import android.view.Window
 import com.example.mybooks.R
 import androidx.appcompat.app.AppCompatDialog
+import androidx.core.content.ContextCompat
 import com.example.mybooks.data.db.entities.Book
-import kotlinx.android.synthetic.main.dialog_edit_read_book.*
+import com.google.android.material.snackbar.Snackbar
+import kotlinx.android.synthetic.main.dialog_add_read_book.*
+import kotlinx.android.synthetic.main.dialog_edit_read_book.btnEditorSaveBook
+import kotlinx.android.synthetic.main.dialog_edit_read_book.etEditorAuthor
+import kotlinx.android.synthetic.main.dialog_edit_read_book.etEditorBookTitle
+import kotlinx.android.synthetic.main.dialog_edit_read_book.rbEditorRating
 
 class AddReadBookDialog(context: Context, var addReadBookDialogListener: AddReadBookDialogListener) : AppCompatDialog(context) {
+
+    var whatIsClicked: String = "nothing"
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -18,15 +27,57 @@ class AddReadBookDialog(context: Context, var addReadBookDialogListener: AddRead
         setContentView(R.layout.dialog_add_read_book)
 
         this.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+        rbEditorRating.visibility = View.GONE
+
+        ivBookStatusRead.setOnClickListener {
+            ivBookStatusRead.setColorFilter(ContextCompat.getColor(context, R.color.teal_200), android.graphics.PorterDuff.Mode.SRC_IN)
+            ivBookStatusInProgress.setColorFilter(ContextCompat.getColor(context, R.color.grey), android.graphics.PorterDuff.Mode.SRC_IN)
+            ivBookStatusToRead.setColorFilter(ContextCompat.getColor(context, R.color.grey), android.graphics.PorterDuff.Mode.SRC_IN)
+            whatIsClicked = "read"
+            rbEditorRating.visibility = View.VISIBLE
+        }
+
+        ivBookStatusInProgress.setOnClickListener {
+            ivBookStatusRead.setColorFilter(ContextCompat.getColor(context, R.color.grey), android.graphics.PorterDuff.Mode.SRC_IN)
+            ivBookStatusInProgress.setColorFilter(ContextCompat.getColor(context, R.color.teal_200), android.graphics.PorterDuff.Mode.SRC_IN)
+            ivBookStatusToRead.setColorFilter(ContextCompat.getColor(context, R.color.grey), android.graphics.PorterDuff.Mode.SRC_IN)
+            whatIsClicked = "in_progress"
+            rbEditorRating.visibility = View.GONE
+        }
+
+        ivBookStatusToRead.setOnClickListener {
+            ivBookStatusRead.setColorFilter(ContextCompat.getColor(context, R.color.grey), android.graphics.PorterDuff.Mode.SRC_IN)
+            ivBookStatusInProgress.setColorFilter(ContextCompat.getColor(context, R.color.grey), android.graphics.PorterDuff.Mode.SRC_IN)
+            ivBookStatusToRead.setColorFilter(ContextCompat.getColor(context, R.color.teal_200), android.graphics.PorterDuff.Mode.SRC_IN)
+            whatIsClicked = "to_read"
+            rbEditorRating.visibility = View.GONE
+        }
 
         btnEditorSaveBook.setOnClickListener {
-            val editedTitle = etEditorBookTitle.text.toString()
-            val editedAuthor = etEditorAuthor.text.toString()
-            val editedRating = rbEditorRating.rating
+            var bookTitle = etEditorBookTitle.text.toString()
+            var bookAuthor = etEditorAuthor.text.toString()
+            var bookRating = 0.0F
 
-            val editedBook = Book(editedTitle, editedAuthor, editedRating, bookStatus = "read", bookPriority = "none", bookStartDate = "none", bookFinishDate = "none")
-            addReadBookDialogListener.onSaveButtonClicked(editedBook)
-            dismiss()
+            if (bookTitle.isNotEmpty()) {
+                if (bookAuthor.isNotEmpty()){
+                    if (whatIsClicked != "nothing") {
+                        when(whatIsClicked){
+                            "read" -> bookRating = rbEditorRating.rating
+                            "in_progress" -> bookRating = 0.0F
+                            "to_read" -> bookRating = 0.0F
+                        }
+                        val editedBook = Book(bookTitle, bookAuthor, bookRating, bookStatus = whatIsClicked, bookPriority = "none", bookStartDate = "none", bookFinishDate = "none")
+                        addReadBookDialogListener.onSaveButtonClicked(editedBook)
+                        dismiss()
+                    } else {
+                        Snackbar.make(it, "Select book's state", Snackbar.LENGTH_SHORT).show()
+                    }
+                } else {
+                    Snackbar.make(it, "Fill in the author", Snackbar.LENGTH_SHORT).show()
+                }
+            } else {
+                Snackbar.make(it, "Fill in the title", Snackbar.LENGTH_SHORT).show()
+            }
         }
     }
 }
