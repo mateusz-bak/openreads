@@ -43,14 +43,14 @@
         android:layout_height="wrap_content"
         android:layout_gravity="bottom|end"
         android:layout_marginEnd="24dp"
-        android:layout_marginBottom="80dp"
-        android:focusable="true"
+        android:backgroundTint="?colorPrimary"
         android:clickable="true"
+        android:focusable="true"
         app:borderWidth="0dp"
-        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_marginBottom="24dp"
+        app:layout_constraintBottom_toBottomOf="@+id/flFragment"
         app:layout_constraintEnd_toEndOf="parent"
         app:srcCompat="@drawable/ic_baseline_add_24"
-        android:backgroundTint="?colorPrimary"
         app:tint="?colorOnPrimary" />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
@@ -99,6 +99,22 @@
         app:layout_constraintEnd_toEndOf="@+id/fabAddInProgressBook"
         app:layout_constraintStart_toStartOf="@+id/fabAddInProgressBook"
         app:srcCompat="@drawable/ic_baseline_list_24"
+        app:tint="?colorOnPrimary" />
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/fabEditBook"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom|end"
+        android:layout_marginEnd="24dp"
+        android:layout_marginBottom="24dp"
+        android:backgroundTint="?colorPrimary"
+        android:clickable="true"
+        android:focusable="true"
+        app:borderWidth="0dp"
+        app:layout_constraintBottom_toBottomOf="@+id/flFragment"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:srcCompat="@drawable/ic_baseline_edit_24"
         app:tint="?colorOnPrimary" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
