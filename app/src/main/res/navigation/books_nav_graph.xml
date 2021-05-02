@@ -11,6 +11,9 @@
         <action
             android:id="@+id/action_readFragment_to_addReadFragment"
             app:destination="@id/addReadFragment" />
+        <action
+            android:id="@+id/action_readFragment_to_displayBookFragment"
+            app:destination="@id/displayBookFragment" />
     </fragment>
 
     <fragment
@@ -29,6 +32,9 @@
         <action
             android:id="@+id/action_inProgressFragment_to_addInProgressFragment"
             app:destination="@id/addInProgressFragment" />
+        <action
+            android:id="@+id/action_inProgressFragment_to_displayBookFragment"
+            app:destination="@id/displayBookFragment" />
     </fragment>
 
     <fragment
@@ -46,6 +52,9 @@
         <action
             android:id="@+id/action_toReadFragment_to_addToReadFragment"
             app:destination="@id/addToReadFragment" />
+        <action
+            android:id="@+id/action_toReadFragment_to_displayBookFragment"
+            app:destination="@id/displayBookFragment" />
     </fragment>
 
     <fragment
@@ -55,5 +64,13 @@
         <action
             android:id="@+id/action_addToReadFragment_to_toReadFragment"
             app:destination="@id/toReadFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/displayBookFragment"
+        android:name="com.example.mybooks.ui.bookslist.fragments.DisplayBookFragment"
+        android:label="DisplayBookFragment" >
+        <argument
+            android:name="bookId"
+            app:argType="integer" />
     </fragment>
 </navigation>
