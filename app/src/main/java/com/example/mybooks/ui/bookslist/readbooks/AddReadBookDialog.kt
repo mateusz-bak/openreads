@@ -1,6 +1,8 @@
 package com.example.mybooks.ui.bookslist.readbooks//package com.example.mybooks.ui.bookslist.readbooks
 
 import android.content.Context
+import android.graphics.Color
+import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import android.view.Window
 import com.example.mybooks.R
@@ -14,6 +16,8 @@ class AddReadBookDialog(context: Context, var addReadBookDialogListener: AddRead
         super.onCreate(savedInstanceState)
         supportRequestWindowFeature(Window.FEATURE_NO_TITLE)
         setContentView(R.layout.dialog_add_read_book)
+
+        this.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
 
         btnEditorSaveBook.setOnClickListener {
             val editedTitle = etEditorBookTitle.text.toString()
