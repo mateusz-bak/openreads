@@ -24,4 +24,6 @@ class BooksViewModel(
     fun getInProgressBooks() = repository.getInProgressBooks()
 
     fun getToReadBooks() = repository.getToReadBooks()
+
+    fun getSingleBook(bookId: Int) = repository.getSingleBook(bookId)
 }

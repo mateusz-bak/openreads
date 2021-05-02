@@ -51,6 +51,7 @@ class BookAdapter(
 
         return BookViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.item_read_book, parent,false))
     }
+    private var onBookClickListener: ((Book) -> Unit)? = null
 
     override fun onBindViewHolder(holder: BookViewHolder, position: Int) {
         val curBook = differ.currentList[position]
@@ -63,50 +64,59 @@ class BookAdapter(
             }
         }
 
-        class UndoBookDeletion : View.OnClickListener {
-            override fun onClick(view: View) {
-                viewModel.upsert(curBook)
-            }
-        }
+//        class UndoBookDeletion : View.OnClickListener {
+//            override fun onClick(view: View) {
+//                viewModel.upsert(curBook)
+//            }
+//        }
 
-        holder.itemView.ivDeleteBook.setOnClickListener{
-            viewModel.delete(curBook)
+//        holder.itemView.ivDeleteBook.setOnClickListener{
+//            viewModel.delete(curBook)
 
-            Snackbar.make(it, "Book Deleted", Snackbar.LENGTH_LONG)
-                .setAction("Undo", UndoBookDeletion())
-                .show()
-        }
+//            Snackbar.make(it, "Book Deleted", Snackbar.LENGTH_LONG)
+//                .setAction("Undo", UndoBookDeletion())
+//                .show()
+//        }
 
-        holder.itemView.ivEditBook.setOnClickListener {
-            when (whichFragment ){
-                "read" -> EditReadBookDialog(context, curBook,
-                    object: EditReadBookDialogListener {
-                        override fun onSaveButtonClicked(item: Book) {
-                            viewModel.delete(curBook)
-                            viewModel.upsert(item)
-                        }
-                    }
-                ).show()
-                "in_progress" -> EditInProgressBookDialog(context, curBook,
-                    object: EditInProgressBookDialogListener {
-                        override fun onSaveButtonClicked(item: Book) {
-                            viewModel.delete(curBook)
-                            viewModel.upsert(item)
-                        }
-                    }
-                ).show()
-                "to_read" -> EditToReadBookDialog(context, curBook,
-                    object: EditToReadBookDialogListener {
-                        override fun onSaveButtonClicked(item: Book) {
-                            viewModel.delete(curBook)
-                            viewModel.upsert(item)
-                        }
-                    }
-                ).show()
+//        holder.itemView.ivEditBook.setOnClickListener {
+//            when (whichFragment ){
+//                "read" -> EditReadBookDialog(context, curBook,
+//                    object: EditReadBookDialogListener {
+//                        override fun onSaveButtonClicked(item: Book) {
+//                            viewModel.delete(curBook)
+//                            viewModel.upsert(item)
+//                        }
+//                    }
+//                ).show()
+//                "in_progress" -> EditInProgressBookDialog(context, curBook,
+//                    object: EditInProgressBookDialogListener {
+//                        override fun onSaveButtonClicked(item: Book) {
+//                            viewModel.delete(curBook)
+//                            viewModel.upsert(item)
+//                        }
+//                    }
+//                ).show()
+//                "to_read" -> EditToReadBookDialog(context, curBook,
+//                    object: EditToReadBookDialogListener {
+//                        override fun onSaveButtonClicked(item: Book) {
+//                            viewModel.delete(curBook)
+//                            viewModel.upsert(item)
+//                        }
+//                    }
+//                ).show()
+//            }
+//        }
+
+        holder.itemView.apply {
+            setOnClickListener {
+                onBookClickListener?.let { it(curBook) }
             }
         }
     }
 
+    fun setOnBookClickListener(listener: (Book) -> Unit) {
+        onBookClickListener = listener
+    }
     override fun getItemCount(): Int {
         return differ.currentList.size
     }

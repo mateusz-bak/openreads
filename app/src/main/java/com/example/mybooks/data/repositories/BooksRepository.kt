@@ -15,4 +15,6 @@ class BooksRepository (
     fun getInProgressBooks() = db.getBooksDao().getInProgressBooks()
 
     fun getToReadBooks() = db.getBooksDao().getToReadBooks()
+
+    fun getSingleBook(bookId: Int) = db.getBooksDao().getSingleBook(bookId)
 }

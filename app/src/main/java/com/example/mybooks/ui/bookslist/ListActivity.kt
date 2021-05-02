@@ -1,5 +1,6 @@
 package com.example.mybooks.ui.bookslist
 
+import android.annotation.SuppressLint
 import android.content.Intent
 import android.os.Bundle
 import android.view.Menu
@@ -15,6 +16,7 @@ import com.example.mybooks.R
 import com.example.mybooks.data.db.BooksDatabase
 import com.example.mybooks.data.db.entities.Book
 import com.example.mybooks.data.repositories.BooksRepository
+import com.example.mybooks.ui.bookslist.fragments.DisplayBookFragment
 import com.example.mybooks.ui.bookslist.inprogressbooks.AddInProgressBookDialog
 import com.example.mybooks.ui.bookslist.inprogressbooks.AddInProgressBookDialogListener
 import com.example.mybooks.ui.bookslist.readbooks.AddReadBookDialog
@@ -75,7 +77,6 @@ class ListActivity : AppCompatActivity() {
             AddToReadBookDialog(this,
                 object: AddToReadBookDialogListener {
                     override fun onSaveButtonClicked(item: Book) {
-
                         booksViewModel.upsert(item)
                     }
                 }
@@ -139,5 +140,25 @@ class ListActivity : AppCompatActivity() {
             fabAddInProgressBook.isClickable = false
             fabAddToReadBook.isClickable = false
         }
+    }
+
+    fun showFabEditBook() {
+        fabEditBook.visibility = View.VISIBLE
+        fabEditBook.isClickable = true
+    }
+
+    fun hideFabEditBook() {
+        fabEditBook.visibility = View.GONE
+        fabEditBook.isClickable = false
+    }
+
+    fun showFabExpandAddOptions() {
+        fabExpandAddOptions.visibility = View.VISIBLE
+        fabExpandAddOptions.isClickable = true
+    }
+
+    fun hideFabExpandAddOptions() {
+        fabExpandAddOptions.visibility = View.GONE
+        fabExpandAddOptions.isClickable = false
     }
 }

@@ -40,30 +40,30 @@
         android:numStars="5"
         android:rating="4"
         android:stepSize="1"
-        app:layout_constraintBottom_toBottomOf="@+id/tvBookTitle"
+        app:layout_constraintBottom_toBottomOf="@+id/tvBookAuthor"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="@+id/tvBookTitle" />
 
-    <androidx.appcompat.widget.AppCompatImageView
-        android:id="@+id/ivEditBook"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:src="@drawable/ic_baseline_edit_24"
-        android:tint="@android:color/darker_gray"
-        app:layout_constraintBottom_toBottomOf="@+id/tvBookAuthor"
-        app:layout_constraintStart_toStartOf="@+id/rbRatingIndicator"
-        app:layout_constraintTop_toTopOf="@+id/tvBookAuthor" />
+<!--    <androidx.appcompat.widget.AppCompatImageView-->
+<!--        android:id="@+id/ivEditBook"-->
+<!--        android:layout_width="wrap_content"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:layout_marginStart="8dp"-->
+<!--        android:src="@drawable/ic_baseline_edit_24"-->
+<!--        android:tint="@android:color/darker_gray"-->
+<!--        app:layout_constraintBottom_toBottomOf="@+id/tvBookAuthor"-->
+<!--        app:layout_constraintStart_toStartOf="@+id/rbRatingIndicator"-->
+<!--        app:layout_constraintTop_toTopOf="@+id/tvBookAuthor" />-->
 
-    <androidx.appcompat.widget.AppCompatImageView
-        android:id="@+id/ivDeleteBook"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="8dp"
-        android:src="@drawable/ic_baseline_delete_24"
-        android:tint="@android:color/darker_gray"
-        app:layout_constraintBottom_toBottomOf="@+id/ivEditBook"
-        app:layout_constraintEnd_toEndOf="@+id/rbRatingIndicator"
-        app:layout_constraintTop_toTopOf="@+id/ivEditBook" />
+<!--    <androidx.appcompat.widget.AppCompatImageView-->
+<!--        android:id="@+id/ivDeleteBook"-->
+<!--        android:layout_width="wrap_content"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:layout_marginEnd="8dp"-->
+<!--        android:src="@drawable/ic_baseline_delete_24"-->
+<!--        android:tint="@android:color/darker_gray"-->
+<!--        app:layout_constraintBottom_toBottomOf="@+id/ivEditBook"-->
+<!--        app:layout_constraintEnd_toEndOf="@+id/rbRatingIndicator"-->
+<!--        app:layout_constraintTop_toTopOf="@+id/ivEditBook" />-->
 
 </androidx.constraintlayout.widget.ConstraintLayout>

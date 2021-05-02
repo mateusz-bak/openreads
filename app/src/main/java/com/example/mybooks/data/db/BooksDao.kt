@@ -21,4 +21,7 @@ interface BooksDao {
 
     @Query("SELECT * FROM Book WHERE item_bookStatus LIKE 'to_read'")
     fun getToReadBooks(): LiveData<List<Book>>
+
+    @Query("SELECT * FROM Book WHERE id=:bookId")
+    fun getSingleBook(bookId: Int): LiveData<Book>
 }

@@ -6,6 +6,7 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelProviders
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.mybooks.R
 import com.example.mybooks.adapters.BookAdapter
@@ -19,10 +20,12 @@ import kotlinx.android.synthetic.main.fragment_read.*
 class ReadFragment : Fragment(R.layout.fragment_read) {
 
     lateinit var viewModel: BooksViewModel
+    lateinit var listActivity: ListActivity
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         viewModel = (activity as ListActivity).booksViewModel
+        listActivity = activity as ListActivity
 
         val database = BooksDatabase(view.context)
         val booksRepository = BooksRepository(database)
@@ -34,13 +37,26 @@ class ReadFragment : Fragment(R.layout.fragment_read) {
         val factory = BooksViewModelProviderFactory(booksRepository)
         val viewModel = ViewModelProviders.of(this, factory).get(BooksViewModel::class.java)
 
-        val adapter = BookAdapter(viewModel, view.context, whichFragment = "read")
+        val bookAdapter = BookAdapter(viewModel, view.context, whichFragment = "read")
 
-        rvReadBooks.adapter = adapter
+        rvReadBooks.adapter = bookAdapter
         rvReadBooks.layoutManager = LinearLayoutManager(view.context)
 
+        listActivity.showFabExpandAddOptions()
+        listActivity.hideFabEditBook()
+
         viewModel.getReadBooks().observe(viewLifecycleOwner, Observer { some_books ->
-            adapter.differ.submitList(some_books)
+            bookAdapter.differ.submitList(some_books)
         })
+
+        bookAdapter.setOnBookClickListener {
+            val bundle = Bundle().apply {
+                putInt("bookId", it.id!!)
+            }
+            findNavController().navigate(
+                R.id.action_readFragment_to_displayBookFragment,
+                bundle
+            )
+        }
     }
 }
