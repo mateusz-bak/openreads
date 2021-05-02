@@ -2,16 +2,30 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/frDisplayBook"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:paddingStart="24dp"
-    android:paddingEnd="24dp"
-    android:id="@+id/frDisplayBook">
+    android:layout_height="match_parent" >
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/fabEditBook"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom|end"
+        android:backgroundTint="?colorPrimary"
+        android:clickable="true"
+        android:focusable="true"
+        app:borderWidth="0dp"
+        android:layout_marginEnd="24dp"
+        android:layout_marginBottom="24dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:srcCompat="@drawable/ic_baseline_edit_24"
+        app:tint="?colorOnPrimary" />
 
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:fillViewport="true">
+        android:fillViewport="true" >
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
@@ -21,12 +35,12 @@
                 android:id="@+id/ivBookCover"
                 android:layout_width="180dp"
                 android:layout_height="300dp"
+                android:layout_marginTop="24dp"
                 android:scaleType="centerCrop"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.5"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                android:layout_marginTop="32dp"
                 app:shapeAppearanceOverlay="@style/roundedCornersImageView"
                 app:srcCompat="@drawable/book_cover_example" />
 
@@ -34,11 +48,13 @@
                 android:id="@+id/tvBookTitle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="tvBookTitle"
+                android:layout_marginTop="32dp"
+                android:text="tvBookTitletvBookTitletvBookTitletvBookTitletvBookTitletvBookTitletvBookTitletvBookTitle"
                 android:textAlignment="center"
                 android:textColor="@color/black"
                 android:textSize="22sp"
-                android:layout_marginTop="32dp"
+                android:paddingStart="24dp"
+                android:paddingEnd="24dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/tvBookStatus"
@@ -61,8 +77,10 @@
                 style="?android:attr/ratingBarStyleIndicator"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:stepSize="1"
                 android:layout_marginTop="32dp"
+                android:layout_marginBottom="24dp"
+                android:stepSize="1"
+                android:paddingBottom="16dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/tvBookAuthor" />
@@ -92,9 +110,9 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"
+                android:layout_marginTop="8dp"
                 android:text="book status"
                 android:textSize="12dp"
-                android:layout_marginTop="8dp"
                 app:layout_constraintStart_toStartOf="@+id/ivBookCover"
                 app:layout_constraintTop_toBottomOf="@+id/ivBookCover" />
 
