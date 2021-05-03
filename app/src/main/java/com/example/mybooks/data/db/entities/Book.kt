@@ -3,6 +3,7 @@ package com.example.mybooks.data.db.entities
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
+import java.io.Serializable
 
 @Entity(tableName = "Book")
 data class Book (
@@ -27,7 +28,7 @@ data class Book (
 
         @ColumnInfo(name = "item_bookFinishDate")
         var  bookFinishDate: String
-){
+): Serializable{
     @PrimaryKey(autoGenerate = true)
     var id: Int? = null
 }
