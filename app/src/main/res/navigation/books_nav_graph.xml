@@ -69,8 +69,22 @@
         android:id="@+id/displayBookFragment"
         android:name="com.example.mybooks.ui.bookslist.fragments.DisplayBookFragment"
         android:label="DisplayBookFragment" >
+        <action
+            android:id="@+id/action_displayBookFragment_to_editBookFragment"
+            app:destination="@id/editBookFragment" />
         <argument
-            android:name="bookId"
-            app:argType="integer" />
+            android:name="book"
+            app:argType="com.example.mybooks.data.db.entities.Book" />
+    </fragment>
+    <fragment
+        android:id="@+id/editBookFragment"
+        android:name="com.example.mybooks.ui.bookslist.fragments.EditBookFragment"
+        android:label="EditBookFragment" >
+        <argument
+            android:name="book"
+            app:argType="com.example.mybooks.data.db.entities.Book" />
+        <action
+            android:id="@+id/action_editBookFragment_to_displayBookFragment"
+            app:destination="@id/displayBookFragment" />
     </fragment>
 </navigation>

@@ -1,18 +1,13 @@
 package com.example.mybooks.ui.bookslist.fragments
 
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProviders
+import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.example.mybooks.R
-import com.example.mybooks.data.db.BooksDatabase
 import com.example.mybooks.data.db.entities.Book
-import com.example.mybooks.data.repositories.BooksRepository
 import com.example.mybooks.ui.bookslist.BooksViewModel
-import com.example.mybooks.ui.bookslist.BooksViewModelProviderFactory
 import com.example.mybooks.ui.bookslist.ListActivity
 import kotlinx.android.synthetic.main.fragment_display_book.*
 
@@ -29,14 +24,7 @@ class DisplayBookFragment : Fragment(R.layout.fragment_display_book) {
         viewModel = (activity as ListActivity).booksViewModel
         listActivity = activity as ListActivity
 
-        val database = BooksDatabase(view.context)
-        val repository = BooksRepository(database)
-        val factory = BooksViewModelProviderFactory(repository)
-
-        val viewModel = ViewModelProviders.of(this, factory).get(BooksViewModel::class.java)
-
-        viewModel.getSingleBook(args.bookId).observe(viewLifecycleOwner, Observer {
-            val book = it
+        var book = args.book
 
             tvBookTitle.text = book.bookTitle
             tvBookAuthor.text = book.bookAuthor
@@ -59,6 +47,15 @@ class DisplayBookFragment : Fragment(R.layout.fragment_display_book) {
                     ivBookStatusRead.visibility = View.GONE
                 }
             }
-        })
+
+        fabEditBook.setOnClickListener{
+            val bundle = Bundle().apply {
+                putSerializable("book", book)
+            }
+            findNavController().navigate(
+                R.id.action_displayBookFragment_to_editBookFragment,
+                bundle
+            )
+        }
     }
 }

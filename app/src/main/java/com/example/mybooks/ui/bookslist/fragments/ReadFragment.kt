@@ -40,7 +40,7 @@ class ReadFragment : Fragment(R.layout.fragment_read) {
         val factory = BooksViewModelProviderFactory(booksRepository)
         val viewModel = ViewModelProviders.of(this, factory).get(BooksViewModel::class.java)
 
-        val bookAdapter = BookAdapter(viewModel, view.context, whichFragment = "read")
+        val bookAdapter = BookAdapter(view.context, whichFragment = "read")
 
         rvReadBooks.adapter = bookAdapter
         rvReadBooks.layoutManager = LinearLayoutManager(view.context)
@@ -61,7 +61,7 @@ class ReadFragment : Fragment(R.layout.fragment_read) {
 
         bookAdapter.setOnBookClickListener {
             val bundle = Bundle().apply {
-                putInt("bookId", it.id!!)
+                putSerializable("book", it)
             }
             findNavController().navigate(
                 R.id.action_readFragment_to_displayBookFragment,
