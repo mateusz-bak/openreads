@@ -9,20 +9,12 @@
         android:name="com.example.mybooks.ui.bookslist.fragments.ReadFragment"
         android:label="ReadFragment" >
         <action
-            android:id="@+id/action_readFragment_to_addReadFragment"
-            app:destination="@id/addReadFragment" />
-        <action
             android:id="@+id/action_readFragment_to_displayBookFragment"
-            app:destination="@id/displayBookFragment" />
-    </fragment>
-
-    <fragment
-        android:id="@+id/addReadFragment"
-        android:name="com.example.mybooks.ui.bookslist.fragments.AddReadFragment"
-        android:label="AddReadFragment" >
-        <action
-            android:id="@+id/action_addReadFragment_to_readFragment"
-            app:destination="@id/readFragment" />
+            app:destination="@id/displayBookFragment"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right"/>
     </fragment>
 
     <fragment
@@ -30,48 +22,38 @@
         android:name="com.example.mybooks.ui.bookslist.fragments.InProgressFragment"
         android:label="InProgressFragment" >
         <action
-            android:id="@+id/action_inProgressFragment_to_addInProgressFragment"
-            app:destination="@id/addInProgressFragment" />
-        <action
             android:id="@+id/action_inProgressFragment_to_displayBookFragment"
-            app:destination="@id/displayBookFragment" />
+            app:destination="@id/displayBookFragment"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right"/>
     </fragment>
 
-    <fragment
-        android:id="@+id/addInProgressFragment"
-        android:name="com.example.mybooks.ui.bookslist.fragments.AddInProgressFragment"
-        android:label="AddInProgressFragment" >
-        <action
-            android:id="@+id/action_addInProgressFragment_to_inProgressFragment"
-            app:destination="@id/inProgressFragment" />
-    </fragment>
     <fragment
         android:id="@+id/toReadFragment"
         android:name="com.example.mybooks.ui.bookslist.fragments.ToReadFragment"
         android:label="ToReadFragment" >
         <action
-            android:id="@+id/action_toReadFragment_to_addToReadFragment"
-            app:destination="@id/addToReadFragment" />
-        <action
             android:id="@+id/action_toReadFragment_to_displayBookFragment"
-            app:destination="@id/displayBookFragment" />
+            app:destination="@id/displayBookFragment"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right"/>
     </fragment>
 
-    <fragment
-        android:id="@+id/addToReadFragment"
-        android:name="com.example.mybooks.ui.bookslist.fragments.AddToReadFragment"
-        android:label="AddToReadFragment" >
-        <action
-            android:id="@+id/action_addToReadFragment_to_toReadFragment"
-            app:destination="@id/toReadFragment" />
-    </fragment>
     <fragment
         android:id="@+id/displayBookFragment"
         android:name="com.example.mybooks.ui.bookslist.fragments.DisplayBookFragment"
         android:label="DisplayBookFragment" >
         <action
             android:id="@+id/action_displayBookFragment_to_editBookFragment"
-            app:destination="@id/editBookFragment" />
+            app:destination="@id/editBookFragment"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right"/>
         <argument
             android:name="book"
             app:argType="com.example.mybooks.data.db.entities.Book" />
