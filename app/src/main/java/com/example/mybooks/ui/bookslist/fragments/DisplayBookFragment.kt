@@ -7,7 +7,7 @@ import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.example.mybooks.R
 import com.example.mybooks.data.db.entities.Book
-import com.example.mybooks.ui.bookslist.BooksViewModel
+import com.example.mybooks.ui.bookslist.viewmodel.BooksViewModel
 import com.example.mybooks.ui.bookslist.ListActivity
 import kotlinx.android.synthetic.main.fragment_display_book.*
 

@@ -1,4 +1,4 @@
-package com.example.mybooks.ui.bookslist.readbooks//package com.example.mybooks.ui.bookslist.readbooks
+package com.example.mybooks.ui.bookslist.adder
 
 import android.content.Context
 import android.graphics.Color
@@ -11,20 +11,17 @@ import androidx.appcompat.app.AppCompatDialog
 import androidx.core.content.ContextCompat
 import com.example.mybooks.data.db.entities.Book
 import com.google.android.material.snackbar.Snackbar
-import kotlinx.android.synthetic.main.dialog_add_read_book.*
-import kotlinx.android.synthetic.main.dialog_edit_read_book.btnEditorSaveBook
-import kotlinx.android.synthetic.main.dialog_edit_read_book.etEditorAuthor
-import kotlinx.android.synthetic.main.dialog_edit_read_book.etEditorBookTitle
-import kotlinx.android.synthetic.main.dialog_edit_read_book.rbEditorRating
+import kotlinx.android.synthetic.main.dialog_add_book.*
 
-class AddReadBookDialog(context: Context, var addReadBookDialogListener: AddReadBookDialogListener) : AppCompatDialog(context) {
+
+class AddBookDialog(context: Context, var addBookDialogListener: AddBookDialogListener) : AppCompatDialog(context) {
 
     var whatIsClicked: String = "nothing"
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         supportRequestWindowFeature(Window.FEATURE_NO_TITLE)
-        setContentView(R.layout.dialog_add_read_book)
+        setContentView(R.layout.dialog_add_book)
 
         this.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
         rbEditorRating.visibility = View.GONE
@@ -67,7 +64,7 @@ class AddReadBookDialog(context: Context, var addReadBookDialogListener: AddRead
                             "to_read" -> bookRating = 0.0F
                         }
                         val editedBook = Book(bookTitle, bookAuthor, bookRating, bookStatus = whatIsClicked, bookPriority = "none", bookStartDate = "none", bookFinishDate = "none")
-                        addReadBookDialogListener.onSaveButtonClicked(editedBook)
+                        addBookDialogListener.onSaveButtonClicked(editedBook)
                         dismiss()
                     } else {
                         Snackbar.make(it, "Select book's state", Snackbar.LENGTH_SHORT).show()

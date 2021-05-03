@@ -1,7 +1,7 @@
-package com.example.mybooks.ui.bookslist.readbooks
+package com.example.mybooks.ui.bookslist.adder
 
 import com.example.mybooks.data.db.entities.Book
 
-interface AddReadBookDialogListener {
+interface AddBookDialogListener {
     fun onSaveButtonClicked(item: Book)
 }

@@ -13,8 +13,8 @@ import com.example.mybooks.R
 import com.example.mybooks.data.db.BooksDatabase
 import com.example.mybooks.data.db.entities.Book
 import com.example.mybooks.data.repositories.BooksRepository
-import com.example.mybooks.ui.bookslist.BooksViewModel
-import com.example.mybooks.ui.bookslist.BooksViewModelProviderFactory
+import com.example.mybooks.ui.bookslist.viewmodel.BooksViewModel
+import com.example.mybooks.ui.bookslist.viewmodel.BooksViewModelProviderFactory
 import com.example.mybooks.ui.bookslist.ListActivity
 import com.google.android.material.snackbar.Snackbar
 import kotlinx.android.synthetic.main.fragment_edit_book.*

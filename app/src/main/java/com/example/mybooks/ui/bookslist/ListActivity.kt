@@ -11,6 +11,8 @@ import androidx.navigation.ui.setupWithNavController
 import com.example.mybooks.R
 import com.example.mybooks.data.db.BooksDatabase
 import com.example.mybooks.data.repositories.BooksRepository
+import com.example.mybooks.ui.bookslist.viewmodel.BooksViewModel
+import com.example.mybooks.ui.bookslist.viewmodel.BooksViewModelProviderFactory
 import kotlinx.android.synthetic.main.activity_list.*
 
 class ListActivity : AppCompatActivity() {

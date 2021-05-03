@@ -1,4 +1,4 @@
-package com.example.mybooks.ui.bookslist
+package com.example.mybooks.ui.bookslist.viewmodel
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider

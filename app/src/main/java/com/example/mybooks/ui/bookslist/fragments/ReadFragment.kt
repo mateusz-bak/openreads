@@ -14,10 +14,10 @@ import com.example.mybooks.data.db.BooksDatabase
 import com.example.mybooks.data.db.entities.Book
 import com.example.mybooks.data.repositories.BooksRepository
 import com.example.mybooks.ui.bookslist.ListActivity
-import com.example.mybooks.ui.bookslist.BooksViewModel
-import com.example.mybooks.ui.bookslist.BooksViewModelProviderFactory
-import com.example.mybooks.ui.bookslist.readbooks.AddReadBookDialog
-import com.example.mybooks.ui.bookslist.readbooks.AddReadBookDialogListener
+import com.example.mybooks.ui.bookslist.viewmodel.BooksViewModel
+import com.example.mybooks.ui.bookslist.viewmodel.BooksViewModelProviderFactory
+import com.example.mybooks.ui.bookslist.adder.AddBookDialog
+import com.example.mybooks.ui.bookslist.adder.AddBookDialogListener
 import kotlinx.android.synthetic.main.fragment_read.*
 
 class ReadFragment : Fragment(R.layout.fragment_read) {
@@ -48,8 +48,8 @@ class ReadFragment : Fragment(R.layout.fragment_read) {
         })
 
         fabAddBook.setOnClickListener{
-            AddReadBookDialog(view.context,
-                object: AddReadBookDialogListener {
+            AddBookDialog(view.context,
+                object: AddBookDialogListener {
                     override fun onSaveButtonClicked(item: Book) {
                         viewModel.upsert(item)
                     }
