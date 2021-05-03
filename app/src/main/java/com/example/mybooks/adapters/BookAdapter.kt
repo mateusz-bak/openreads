@@ -9,24 +9,13 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.example.mybooks.R
 import com.example.mybooks.data.db.entities.Book
-import com.example.mybooks.ui.bookslist.BooksViewModel
-import com.example.mybooks.ui.bookslist.inprogressbooks.EditInProgressBookDialog
-import com.example.mybooks.ui.bookslist.inprogressbooks.EditInProgressBookDialogListener
-import com.example.mybooks.ui.bookslist.readbooks.EditReadBookDialog
-import com.example.mybooks.ui.bookslist.readbooks.EditReadBookDialogListener
-import com.example.mybooks.ui.bookslist.toreadbooks.EditToReadBookDialog
-import com.example.mybooks.ui.bookslist.toreadbooks.EditToReadBookDialogListener
-import com.google.android.material.snackbar.Snackbar
 import kotlinx.android.synthetic.main.item_read_book.view.*
 
 class BookAdapter(
-
-    private val viewModel: BooksViewModel,
     var context: Context,
     val whichFragment: String
 
 ) : RecyclerView.Adapter<BookAdapter.BookViewHolder>() {
-
     inner class BookViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView)
 
     private val differCallback = object : DiffUtil.ItemCallback<Book>() {
@@ -51,6 +40,7 @@ class BookAdapter(
 
         return BookViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.item_read_book, parent,false))
     }
+
     private var onBookClickListener: ((Book) -> Unit)? = null
 
     override fun onBindViewHolder(holder: BookViewHolder, position: Int) {
@@ -64,49 +54,6 @@ class BookAdapter(
             }
         }
 
-//        class UndoBookDeletion : View.OnClickListener {
-//            override fun onClick(view: View) {
-//                viewModel.upsert(curBook)
-//            }
-//        }
-
-//        holder.itemView.ivDeleteBook.setOnClickListener{
-//            viewModel.delete(curBook)
-
-//            Snackbar.make(it, "Book Deleted", Snackbar.LENGTH_LONG)
-//                .setAction("Undo", UndoBookDeletion())
-//                .show()
-//        }
-
-//        holder.itemView.ivEditBook.setOnClickListener {
-//            when (whichFragment ){
-//                "read" -> EditReadBookDialog(context, curBook,
-//                    object: EditReadBookDialogListener {
-//                        override fun onSaveButtonClicked(item: Book) {
-//                            viewModel.delete(curBook)
-//                            viewModel.upsert(item)
-//                        }
-//                    }
-//                ).show()
-//                "in_progress" -> EditInProgressBookDialog(context, curBook,
-//                    object: EditInProgressBookDialogListener {
-//                        override fun onSaveButtonClicked(item: Book) {
-//                            viewModel.delete(curBook)
-//                            viewModel.upsert(item)
-//                        }
-//                    }
-//                ).show()
-//                "to_read" -> EditToReadBookDialog(context, curBook,
-//                    object: EditToReadBookDialogListener {
-//                        override fun onSaveButtonClicked(item: Book) {
-//                            viewModel.delete(curBook)
-//                            viewModel.upsert(item)
-//                        }
-//                    }
-//                ).show()
-//            }
-//        }
-
         holder.itemView.apply {
             setOnClickListener {
                 onBookClickListener?.let { it(curBook) }
@@ -117,6 +64,7 @@ class BookAdapter(
     fun setOnBookClickListener(listener: (Book) -> Unit) {
         onBookClickListener = listener
     }
+
     override fun getItemCount(): Int {
         return differ.currentList.size
     }
