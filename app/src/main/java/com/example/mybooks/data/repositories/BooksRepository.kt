@@ -16,5 +16,5 @@ class BooksRepository (
 
     fun getToReadBooks() = db.getBooksDao().getToReadBooks()
 
-    fun getSingleBook(bookId: Int) = db.getBooksDao().getSingleBook(bookId)
+    suspend fun updateBook(id: Int?, bookTitle: String, bookAuthor: String, bookRating: Float, bookStatus: String) = db.getBooksDao().updateBook(id, bookTitle, bookAuthor, bookRating, bookStatus)
 }
