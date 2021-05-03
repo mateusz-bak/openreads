@@ -10,7 +10,7 @@
         android:id="@+id/tvBookTitle"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="16dp"
+        android:layout_marginEnd="28dp"
         android:text="Title Title: Title title Title"
         android:textColor="@color/black"
         android:textSize="18sp"
@@ -40,6 +40,9 @@
         android:numStars="5"
         android:rating="4"
         android:stepSize="1"
+        android:scaleX="1.5"
+        android:scaleY="1.5"
+        android:layout_marginEnd="24dp"
         app:layout_constraintBottom_toBottomOf="@+id/tvBookAuthor"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="@+id/tvBookTitle" />
