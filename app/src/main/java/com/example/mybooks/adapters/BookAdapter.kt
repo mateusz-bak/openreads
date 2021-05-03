@@ -32,13 +32,15 @@ class BookAdapter(
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): BookViewHolder {
 
+        var bookViewHolder = BookViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.item_read_book, parent,false))
+
         when (whichFragment ){
-            "read" -> return BookViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.item_read_book, parent,false))
-            "in_progress" -> return BookViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.item_in_progress_book, parent,false))
-            "to_read" -> return BookViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.item_to_read_book, parent,false))
+            "read" -> bookViewHolder = BookViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.item_read_book, parent,false))
+            "in_progress" -> bookViewHolder = BookViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.item_in_progress_book, parent,false))
+            "to_read" -> bookViewHolder = BookViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.item_to_read_book, parent,false))
         }
 
-        return BookViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.item_read_book, parent,false))
+        return bookViewHolder
     }
 
     private var onBookClickListener: ((Book) -> Unit)? = null
