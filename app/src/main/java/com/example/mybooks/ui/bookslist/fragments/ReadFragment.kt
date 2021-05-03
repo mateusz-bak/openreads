@@ -23,12 +23,10 @@ import kotlinx.android.synthetic.main.fragment_read.*
 class ReadFragment : Fragment(R.layout.fragment_read) {
 
     lateinit var viewModel: BooksViewModel
-    lateinit var listActivity: ListActivity
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         viewModel = (activity as ListActivity).booksViewModel
-        listActivity = activity as ListActivity
 
         val database = BooksDatabase(view.context)
         val booksRepository = BooksRepository(database)
