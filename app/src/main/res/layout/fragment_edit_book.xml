@@ -49,33 +49,21 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
-            <com.google.android.material.imageview.ShapeableImageView
-                android:id="@+id/ivBookCover"
-                android:layout_width="180dp"
-                android:layout_height="300dp"
-                android:layout_marginTop="24dp"
-                android:scaleType="centerCrop"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.5"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:shapeAppearanceOverlay="@style/roundedCornersImageView"
-                app:srcCompat="@drawable/book_cover_example" />
-
             <EditText
                 android:id="@+id/etEditedBookTitle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:focusable="true"
+                android:inputType="textCapWords"
                 android:paddingStart="24dp"
                 android:paddingEnd="24dp"
                 android:text="tvBookTitle"
-                android:layout_marginTop="74dp"
                 android:textAlignment="center"
                 android:textColor="@color/black"
-                android:textSize="22sp"
+                android:textSize="24sp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/ivBookCover"
+                app:layout_constraintTop_toTopOf="@+id/guideline4"
                 app:layout_constraintVertical_weight="2" />
 
             <EditText
@@ -84,8 +72,11 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
                 android:text="tvBookAuthor"
+                android:textAlignment="center"
                 android:textColor="@android:color/darker_gray"
-                android:textSize="16sp"
+                android:textSize="14sp"
+                android:focusable="true"
+                android:inputType="textCapWords"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/etEditedBookTitle" />
@@ -95,15 +86,11 @@
                 style="?android:attr/ratingBarStyle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="32dp"
-                android:layout_marginBottom="24dp"
                 android:stepSize="1"
-                android:paddingBottom="16dp"
-                android:scaleX="0.7"
-                android:scaleY="0.7"
+                android:layout_marginTop="32dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/etEditedBookTitle" />
+                app:layout_constraintTop_toBottomOf="@+id/ivEditorBookStatusRead" />
 
             <androidx.constraintlayout.widget.Guideline
                 android:id="@+id/guideline2"
@@ -133,11 +120,11 @@
                 android:focusable="true"
                 android:scaleX="1.5"
                 android:scaleY="1.5"
-                android:layout_marginTop="24dp"
+                android:layout_marginTop="32dp"
                 app:layout_constraintEnd_toStartOf="@+id/ivEditorBookStatusInProgress"
                 app:layout_constraintHorizontal_bias="0.5"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/ivBookCover"
+                app:layout_constraintTop_toBottomOf="@+id/etEditedBookAuthor"
                 app:srcCompat="@drawable/ic_baseline_done_24" />
 
             <ImageView

@@ -31,19 +31,6 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
-            <com.google.android.material.imageview.ShapeableImageView
-                android:id="@+id/ivBookCover"
-                android:layout_width="180dp"
-                android:layout_height="300dp"
-                android:layout_marginTop="24dp"
-                android:scaleType="centerCrop"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.5"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:shapeAppearanceOverlay="@style/roundedCornersImageView"
-                app:srcCompat="@drawable/book_cover_example" />
-
             <TextView
                 android:id="@+id/tvBookTitle"
                 android:layout_width="wrap_content"
@@ -51,13 +38,12 @@
                 android:paddingStart="24dp"
                 android:paddingEnd="24dp"
                 android:text="tvBookTitle"
-                android:layout_marginTop="52dp"
                 android:textAlignment="center"
                 android:textColor="@color/black"
-                android:textSize="22sp"
+                android:textSize="26sp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/ivBookCover"
+                app:layout_constraintTop_toTopOf="@+id/guideline4"
                 app:layout_constraintVertical_weight="2" />
 
             <TextView
@@ -74,16 +60,15 @@
 
             <RatingBar
                 android:id="@+id/rbRatingIndicator"
-                style="?android:attr/ratingBarStyleIndicator"
+                style="?android:attr/ratingBarStyle"
+                android:isIndicator="true"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="32dp"
-                android:layout_marginBottom="24dp"
                 android:stepSize="1"
-                android:paddingBottom="16dp"
+                android:layout_marginTop="8dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/tvBookAuthor" />
+                app:layout_constraintTop_toBottomOf="@+id/tvBookStatus" />
 
             <androidx.constraintlayout.widget.Guideline
                 android:id="@+id/guideline2"
@@ -109,20 +94,20 @@
                 android:id="@+id/tvBookStatus"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="8dp"
-                android:layout_marginTop="8dp"
                 android:text="book status"
                 android:textSize="12dp"
-                app:layout_constraintStart_toStartOf="@+id/ivBookCover"
-                app:layout_constraintTop_toBottomOf="@+id/ivBookCover" />
+                android:layout_marginTop="60dp"
+                android:layout_marginStart="56dp"
+                app:layout_constraintStart_toStartOf="@+id/rbRatingIndicator"
+                app:layout_constraintTop_toBottomOf="@+id/tvBookAuthor" />
 
             <ImageView
                 android:id="@+id/ivBookStatusRead"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginEnd="8dp"
+                android:layout_marginEnd="56dp"
                 app:layout_constraintBottom_toBottomOf="@+id/tvBookStatus"
-                app:layout_constraintEnd_toEndOf="@+id/ivBookCover"
+                app:layout_constraintEnd_toEndOf="@+id/rbRatingIndicator"
                 app:layout_constraintTop_toTopOf="@+id/tvBookStatus"
                 app:srcCompat="@drawable/ic_baseline_done_24" />
 
@@ -130,9 +115,9 @@
                 android:id="@+id/ivBookStatusInProgress"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginEnd="8dp"
+                android:layout_marginEnd="56dp"
                 app:layout_constraintBottom_toBottomOf="@+id/tvBookStatus"
-                app:layout_constraintEnd_toEndOf="@+id/ivBookCover"
+                app:layout_constraintEnd_toEndOf="@+id/rbRatingIndicator"
                 app:layout_constraintTop_toTopOf="@+id/tvBookStatus"
                 app:srcCompat="@drawable/ic_baseline_hourglass_bottom_24" />
 
@@ -140,9 +125,9 @@
                 android:id="@+id/ivBookStatusToRead"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginEnd="8dp"
+                android:layout_marginEnd="56dp"
                 app:layout_constraintBottom_toBottomOf="@+id/tvBookStatus"
-                app:layout_constraintEnd_toEndOf="@+id/ivBookCover"
+                app:layout_constraintEnd_toEndOf="@+id/rbRatingIndicator"
                 app:layout_constraintTop_toTopOf="@+id/tvBookStatus"
                 app:srcCompat="@drawable/ic_baseline_list_24" />
 
