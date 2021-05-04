@@ -61,11 +61,11 @@
             <RatingBar
                 android:id="@+id/rbRatingIndicator"
                 style="?android:attr/ratingBarStyle"
-                android:isIndicator="true"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:stepSize="1"
                 android:layout_marginTop="8dp"
+                android:isIndicator="true"
+                android:stepSize="1"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/tvBookStatus" />
@@ -94,30 +94,31 @@
                 android:id="@+id/tvBookStatus"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="60dp"
                 android:text="book status"
                 android:textSize="12dp"
-                android:layout_marginTop="60dp"
-                android:layout_marginStart="56dp"
-                app:layout_constraintStart_toStartOf="@+id/rbRatingIndicator"
+                android:layout_marginEnd="16dp"
+                app:layout_constraintEnd_toStartOf="@+id/guideline3"
                 app:layout_constraintTop_toBottomOf="@+id/tvBookAuthor" />
 
             <ImageView
                 android:id="@+id/ivBookStatusRead"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginEnd="56dp"
+                android:layout_marginStart="32dp"
                 app:layout_constraintBottom_toBottomOf="@+id/tvBookStatus"
-                app:layout_constraintEnd_toEndOf="@+id/rbRatingIndicator"
+                app:layout_constraintStart_toStartOf="@+id/guideline3"
                 app:layout_constraintTop_toTopOf="@+id/tvBookStatus"
-                app:srcCompat="@drawable/ic_baseline_done_24" />
+                app:srcCompat="@drawable/ic_baseline_done_24"
+                tools:layout_editor_absoluteX="246dp" />
 
             <ImageView
                 android:id="@+id/ivBookStatusInProgress"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginEnd="56dp"
+                android:layout_marginStart="32dp"
                 app:layout_constraintBottom_toBottomOf="@+id/tvBookStatus"
-                app:layout_constraintEnd_toEndOf="@+id/rbRatingIndicator"
+                app:layout_constraintStart_toStartOf="@+id/guideline3"
                 app:layout_constraintTop_toTopOf="@+id/tvBookStatus"
                 app:srcCompat="@drawable/ic_baseline_hourglass_bottom_24" />
 
@@ -125,11 +126,18 @@
                 android:id="@+id/ivBookStatusToRead"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginEnd="56dp"
+                android:layout_marginStart="32dp"
                 app:layout_constraintBottom_toBottomOf="@+id/tvBookStatus"
-                app:layout_constraintEnd_toEndOf="@+id/rbRatingIndicator"
+                app:layout_constraintStart_toStartOf="@+id/guideline3"
                 app:layout_constraintTop_toTopOf="@+id/tvBookStatus"
                 app:srcCompat="@drawable/ic_baseline_list_24" />
+
+            <androidx.constraintlayout.widget.Guideline
+                android:id="@+id/guideline3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                app:layout_constraintGuide_percent="0.5" />
 
 
         </androidx.constraintlayout.widget.ConstraintLayout>
