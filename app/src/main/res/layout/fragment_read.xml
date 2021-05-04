@@ -5,32 +5,136 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
+    <EditText
+        android:id="@+id/etSearchRead"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        android:focusable="true"
+        android:hint="Search"
+        android:inputType="textCapWords"
+        android:paddingEnd="24dp"
+        android:textAlignment="textStart"
+        android:textColor="?colorOnSecondary"
+        android:textSize="18sp"
+        app:layout_constraintEnd_toStartOf="@+id/guideline5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rvReadBooks"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="0dp"
+        android:layout_marginTop="4dp"
         android:clipToPadding="false"
         android:paddingBottom="70dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toBottomOf="@+id/etSearchRead" />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/fabAddBook"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="bottom|end"
+        android:layout_marginEnd="16dp"
+        android:layout_marginBottom="16dp"
         android:backgroundTint="?colorPrimary"
         android:clickable="true"
         android:focusable="true"
         app:borderWidth="0dp"
-        android:layout_marginBottom="16dp"
-        android:layout_marginEnd="16dp"
         app:layout_constraintBottom_toBottomOf="@+id/rvReadBooks"
         app:layout_constraintEnd_toEndOf="parent"
         app:srcCompat="@drawable/ic_baseline_add_24"
         app:tint="?colorOnPrimary" />
+
+    <ImageView
+        android:id="@+id/ivSearchRead"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:scaleX="1.2"
+        android:scaleY="1.2"
+        android:clickable="true"
+        android:layout_marginStart="16dp"
+        app:layout_constraintBottom_toBottomOf="@+id/etSearchRead"
+        app:layout_constraintEnd_toStartOf="@+id/ivSeparator1"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/etSearchRead"
+        app:layout_constraintTop_toTopOf="@+id/etSearchRead"
+        app:srcCompat="@drawable/ic_baseline_search_24" />
+
+    <ImageView
+        android:id="@+id/ivSortRead"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:scaleX="1.2"
+        android:scaleY="1.2"
+        android:clickable="true"
+        app:layout_constraintBottom_toBottomOf="@+id/ivSearchRead"
+        app:layout_constraintEnd_toStartOf="@+id/ivSeparator2"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/ivSeparator1"
+        app:layout_constraintTop_toTopOf="@+id/ivSearchRead"
+        app:layout_constraintVertical_bias="0.0"
+        app:srcCompat="@drawable/ic_baseline_sort_24" />
+
+    <ImageView
+        android:id="@+id/ivMoreRead"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:scaleX="1.2"
+        android:scaleY="1.2"
+        android:clickable="true"
+        android:layout_marginEnd="16dp"
+        app:layout_constraintBottom_toBottomOf="@+id/ivSortRead"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/ivSeparator2"
+        app:layout_constraintTop_toTopOf="@+id/ivSortRead"
+        app:layout_constraintVertical_bias="0.0"
+        app:srcCompat="@drawable/ic_baseline_more_vert_24" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline5"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.60" />
+
+    <ImageView
+        android:id="@+id/ivSeparator1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:rotation="90"
+        android:scaleY="0.5"
+        android:scaleX="0.7"
+        android:clickable="false"
+        app:layout_constraintBottom_toBottomOf="@+id/ivSearchRead"
+        app:layout_constraintEnd_toStartOf="@+id/ivSortRead"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/ivSearchRead"
+        app:layout_constraintTop_toTopOf="@+id/ivSearchRead"
+        app:layout_constraintVertical_bias="0.0"
+        app:srcCompat="@drawable/ic_baseline_horizontal_rule_24" />
+
+    <ImageView
+        android:id="@+id/ivSeparator2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:rotation="90"
+        android:scaleY="0.5"
+        android:scaleX="0.7"
+
+        android:clickable="false"
+        app:layout_constraintBottom_toBottomOf="@+id/ivSearchRead"
+        app:layout_constraintEnd_toStartOf="@+id/ivMoreRead"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/ivSortRead"
+        app:layout_constraintTop_toTopOf="@+id/ivSearchRead"
+        app:layout_constraintVertical_bias="0.0"
+        app:srcCompat="@drawable/ic_baseline_horizontal_rule_24" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
