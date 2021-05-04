@@ -39,7 +39,7 @@
                 android:paddingEnd="24dp"
                 android:text="tvBookTitle"
                 android:textAlignment="center"
-                android:textColor="@color/black"
+                android:textColor="?colorOnSecondary"
                 android:textSize="26sp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"

@@ -12,7 +12,7 @@
         android:layout_height="wrap_content"
         android:layout_marginEnd="28dp"
         android:text="Title Title: Title title Title"
-        android:textColor="@color/black"
+        android:textColor="?colorOnSecondary"
         android:textSize="18sp"
         app:layout_constraintEnd_toStartOf="@+id/rbRatingIndicator"
         app:layout_constraintHorizontal_weight="1"

@@ -27,7 +27,7 @@ class AddBookDialog(context: Context, var addBookDialogListener: AddBookDialogLi
         rbEditorRating.visibility = View.GONE
 
         ivBookStatusRead.setOnClickListener {
-            ivBookStatusRead.setColorFilter(ContextCompat.getColor(context, R.color.teal_200), android.graphics.PorterDuff.Mode.SRC_IN)
+            ivBookStatusRead.setColorFilter(ContextCompat.getColor(context, R.color.orange_300), android.graphics.PorterDuff.Mode.SRC_IN)
             ivBookStatusInProgress.setColorFilter(ContextCompat.getColor(context, R.color.grey), android.graphics.PorterDuff.Mode.SRC_IN)
             ivBookStatusToRead.setColorFilter(ContextCompat.getColor(context, R.color.grey), android.graphics.PorterDuff.Mode.SRC_IN)
             whatIsClicked = "read"
@@ -36,7 +36,7 @@ class AddBookDialog(context: Context, var addBookDialogListener: AddBookDialogLi
 
         ivBookStatusInProgress.setOnClickListener {
             ivBookStatusRead.setColorFilter(ContextCompat.getColor(context, R.color.grey), android.graphics.PorterDuff.Mode.SRC_IN)
-            ivBookStatusInProgress.setColorFilter(ContextCompat.getColor(context, R.color.teal_200), android.graphics.PorterDuff.Mode.SRC_IN)
+            ivBookStatusInProgress.setColorFilter(ContextCompat.getColor(context, R.color.orange_300), android.graphics.PorterDuff.Mode.SRC_IN)
             ivBookStatusToRead.setColorFilter(ContextCompat.getColor(context, R.color.grey), android.graphics.PorterDuff.Mode.SRC_IN)
             whatIsClicked = "in_progress"
             rbEditorRating.visibility = View.GONE
@@ -45,7 +45,7 @@ class AddBookDialog(context: Context, var addBookDialogListener: AddBookDialogLi
         ivBookStatusToRead.setOnClickListener {
             ivBookStatusRead.setColorFilter(ContextCompat.getColor(context, R.color.grey), android.graphics.PorterDuff.Mode.SRC_IN)
             ivBookStatusInProgress.setColorFilter(ContextCompat.getColor(context, R.color.grey), android.graphics.PorterDuff.Mode.SRC_IN)
-            ivBookStatusToRead.setColorFilter(ContextCompat.getColor(context, R.color.teal_200), android.graphics.PorterDuff.Mode.SRC_IN)
+            ivBookStatusToRead.setColorFilter(ContextCompat.getColor(context, R.color.orange_300), android.graphics.PorterDuff.Mode.SRC_IN)
             whatIsClicked = "to_read"
             rbEditorRating.visibility = View.GONE
         }
