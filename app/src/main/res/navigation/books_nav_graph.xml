@@ -11,10 +11,16 @@
         <action
             android:id="@+id/action_readFragment_to_displayBookFragment"
             app:destination="@id/displayBookFragment"
-            app:enterAnim="@anim/slide_in_right"
-            app:exitAnim="@anim/slide_out_left"
-            app:popEnterAnim="@anim/slide_in_left"
-            app:popExitAnim="@anim/slide_out_right"/>
+            app:enterAnim="@anim/fade_in"
+            app:exitAnim="@anim/fade_out"
+            app:popEnterAnim="@anim/fade_in"
+            app:popExitAnim="@anim/fade_out"/>
+        <action
+            android:id="@+id/action_readFragment_to_inProgressFragment"
+            app:destination="@id/inProgressFragment" />
+        <action
+            android:id="@+id/action_readFragment_to_toReadFragment"
+            app:destination="@id/toReadFragment" />
     </fragment>
 
     <fragment
@@ -24,10 +30,16 @@
         <action
             android:id="@+id/action_inProgressFragment_to_displayBookFragment"
             app:destination="@id/displayBookFragment"
-            app:enterAnim="@anim/slide_in_right"
-            app:exitAnim="@anim/slide_out_left"
-            app:popEnterAnim="@anim/slide_in_left"
-            app:popExitAnim="@anim/slide_out_right"/>
+            app:enterAnim="@anim/fade_in"
+            app:exitAnim="@anim/fade_out"
+            app:popEnterAnim="@anim/fade_in"
+            app:popExitAnim="@anim/fade_out"/>
+        <action
+            android:id="@+id/action_inProgressFragment_to_readFragment"
+            app:destination="@id/readFragment" />
+        <action
+            android:id="@+id/action_inProgressFragment_to_toReadFragment"
+            app:destination="@id/toReadFragment" />
     </fragment>
 
     <fragment
@@ -37,10 +49,16 @@
         <action
             android:id="@+id/action_toReadFragment_to_displayBookFragment"
             app:destination="@id/displayBookFragment"
-            app:enterAnim="@anim/slide_in_right"
-            app:exitAnim="@anim/slide_out_left"
-            app:popEnterAnim="@anim/slide_in_left"
-            app:popExitAnim="@anim/slide_out_right"/>
+            app:enterAnim="@anim/fade_in"
+            app:exitAnim="@anim/fade_out"
+            app:popEnterAnim="@anim/fade_in"
+            app:popExitAnim="@anim/fade_out"/>
+        <action
+            android:id="@+id/action_toReadFragment_to_readFragment"
+            app:destination="@id/readFragment" />
+        <action
+            android:id="@+id/action_toReadFragment_to_inProgressFragment"
+            app:destination="@id/inProgressFragment" />
     </fragment>
 
     <fragment
@@ -50,10 +68,10 @@
         <action
             android:id="@+id/action_displayBookFragment_to_editBookFragment"
             app:destination="@id/editBookFragment"
-            app:enterAnim="@anim/slide_in_right"
-            app:exitAnim="@anim/slide_out_left"
-            app:popEnterAnim="@anim/slide_in_left"
-            app:popExitAnim="@anim/slide_out_right"/>
+            app:enterAnim="@anim/fade_in"
+            app:exitAnim="@anim/fade_out"
+            app:popEnterAnim="@anim/fade_in"
+            app:popExitAnim="@anim/fade_out"/>
         <argument
             android:name="book"
             app:argType="com.example.mybooks.data.db.entities.Book" />

@@ -52,6 +52,16 @@ class ReadFragment : Fragment(R.layout.fragment_read) {
                 object: AddBookDialogListener {
                     override fun onSaveButtonClicked(item: Book) {
                         viewModel.upsert(item)
+                        when(item.bookStatus) {
+                            "in_progress" -> { findNavController().navigate(
+                                R.id.action_readFragment_to_inProgressFragment
+                                )
+                            }
+                            "to_read" -> { findNavController().navigate(
+                                R.id.action_readFragment_to_toReadFragment
+                                )
+                            }
+                        }
                     }
                 }
             ).show()
