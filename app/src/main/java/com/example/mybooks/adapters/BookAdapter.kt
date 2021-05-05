@@ -9,7 +9,7 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.example.mybooks.R
 import com.example.mybooks.data.db.entities.Book
-import kotlinx.android.synthetic.main.item_read_book.view.*
+import kotlinx.android.synthetic.main.item_book.view.*
 
 class BookAdapter(
     var context: Context,
@@ -31,16 +31,7 @@ class BookAdapter(
     val differ = AsyncListDiffer(this, differCallback)
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): BookViewHolder {
-
-        var bookViewHolder = BookViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.item_read_book, parent,false))
-
-        when (whichFragment ){
-            "read" -> bookViewHolder = BookViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.item_read_book, parent,false))
-            "in_progress" -> bookViewHolder = BookViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.item_in_progress_book, parent,false))
-            "to_read" -> bookViewHolder = BookViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.item_to_read_book, parent,false))
-        }
-
-        return bookViewHolder
+        return BookViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.item_book, parent,false))
     }
 
     private var onBookClickListener: ((Book) -> Unit)? = null
@@ -53,6 +44,24 @@ class BookAdapter(
 
             when (whichFragment ){
                 "read" -> rbRatingIndicator.rating = curBook.bookRating
+            }
+            when (curBook.bookStatus ){
+                "read" -> {
+                    ivInProgressIndicator.visibility = View.GONE
+                    ivToReadIndicator.visibility = View.GONE
+                    rbRatingIndicator.visibility = View.VISIBLE
+                    rbRatingIndicator.rating = curBook.bookRating
+                }
+                "in_progress" -> {
+                    rbRatingIndicator.visibility = View.GONE
+                    ivToReadIndicator.visibility = View.GONE
+                    ivInProgressIndicator.visibility = View.VISIBLE
+                }
+                "to_read" -> {
+                    rbRatingIndicator.visibility = View.GONE
+                    ivInProgressIndicator.visibility = View.GONE
+                    ivToReadIndicator.visibility = View.VISIBLE
+                }
             }
         }
 
