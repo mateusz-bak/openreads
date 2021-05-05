@@ -17,4 +17,6 @@ class BooksRepository (
     fun getToReadBooks() = db.getBooksDao().getToReadBooks()
 
     suspend fun updateBook(id: Int?, bookTitle: String, bookAuthor: String, bookRating: Float, bookStatus: String) = db.getBooksDao().updateBook(id, bookTitle, bookAuthor, bookRating, bookStatus)
+
+    fun searchBooks(searchQuery: String) = db.getBooksDao().searchBooks(searchQuery)
 }
