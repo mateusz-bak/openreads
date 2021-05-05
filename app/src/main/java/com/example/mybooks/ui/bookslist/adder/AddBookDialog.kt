@@ -6,6 +6,7 @@ import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import android.view.View
 import android.view.Window
+import android.view.inputmethod.InputMethodManager
 import com.example.mybooks.R
 import androidx.appcompat.app.AppCompatDialog
 import androidx.core.content.ContextCompat
@@ -32,6 +33,7 @@ class AddBookDialog(context: Context, var addBookDialogListener: AddBookDialogLi
             ivBookStatusToRead.setColorFilter(ContextCompat.getColor(context, R.color.grey), android.graphics.PorterDuff.Mode.SRC_IN)
             whatIsClicked = "read"
             rbEditorRating.visibility = View.VISIBLE
+            it.hideKeyboard()
         }
 
         ivBookStatusInProgress.setOnClickListener {
@@ -40,6 +42,7 @@ class AddBookDialog(context: Context, var addBookDialogListener: AddBookDialogLi
             ivBookStatusToRead.setColorFilter(ContextCompat.getColor(context, R.color.grey), android.graphics.PorterDuff.Mode.SRC_IN)
             whatIsClicked = "in_progress"
             rbEditorRating.visibility = View.GONE
+            it.hideKeyboard()
         }
 
         ivBookStatusToRead.setOnClickListener {
@@ -48,6 +51,7 @@ class AddBookDialog(context: Context, var addBookDialogListener: AddBookDialogLi
             ivBookStatusToRead.setColorFilter(ContextCompat.getColor(context, R.color.orange_300), android.graphics.PorterDuff.Mode.SRC_IN)
             whatIsClicked = "to_read"
             rbEditorRating.visibility = View.GONE
+            it.hideKeyboard()
         }
 
         btnEditorSaveBook.setOnClickListener {
@@ -76,5 +80,10 @@ class AddBookDialog(context: Context, var addBookDialogListener: AddBookDialogLi
                 Snackbar.make(it, "Fill in the title", Snackbar.LENGTH_SHORT).show()
             }
         }
+    }
+
+    fun View.hideKeyboard() {
+        val inputManager = context.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+        inputManager.hideSoftInputFromWindow(windowToken, 0)
     }
 }
