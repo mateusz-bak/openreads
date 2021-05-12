@@ -32,19 +32,19 @@ class DisplayBookFragment : Fragment(R.layout.fragment_display_book) {
 
             when (book.bookStatus) {
                 "read" -> {
-                    tvBookStatus.text = "Finished"
+                    tvBookStatus.text = getString(R.string.tvFinished)
                     ivBookStatusInProgress.visibility = View.GONE
                     ivBookStatusToRead.visibility = View.GONE
                     rbRatingIndicator.visibility = View.VISIBLE
                 }
                 "in_progress" -> {
-                    tvBookStatus.text = "In progress"
+                    tvBookStatus.text = getString(R.string.tvInProgress)
                     ivBookStatusRead.visibility = View.GONE
                     ivBookStatusToRead.visibility = View.GONE
                     rbRatingIndicator.visibility = View.GONE
                 }
                 "to_read" -> {
-                    tvBookStatus.text = "To read"
+                    tvBookStatus.text = getString(R.string.tvToRead)
                     ivBookStatusInProgress.visibility = View.GONE
                     ivBookStatusRead.visibility = View.GONE
                     rbRatingIndicator.visibility = View.GONE
