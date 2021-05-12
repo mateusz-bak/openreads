@@ -151,9 +151,12 @@ class ReadFragment : Fragment(R.layout.fragment_read) {
         })
 
         etSearch.addTextChangedListener {
-            viewModel.searchBooks(etSearch.text.toString()).observe(viewLifecycleOwner, Observer { some_books ->
-                bookAdapter.differ.submitList(some_books)
-            })
+            if (etSearch.text.isNotEmpty() == true) {
+                viewModel.searchBooks(etSearch.text.toString())
+                    .observe(viewLifecycleOwner, Observer { some_books ->
+                        bookAdapter.differ.submitList(some_books)
+                    })
+            }
         }
 
         ivClearSearch.setOnClickListener {
