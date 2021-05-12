@@ -10,6 +10,7 @@
 
     <EditText
         android:id="@+id/etAdderBookTitle"
+        android:autofillHints="@string/hintBookTitle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="24dp"
@@ -26,6 +27,7 @@
 
     <EditText
         android:id="@+id/etAdderAuthor"
+        android:autofillHints="@string/hintBookAuthor"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="12dp"

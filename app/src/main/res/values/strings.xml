@@ -43,6 +43,10 @@
     <string name="etEditedBookTitle">Enter new title</string>
     <string name="etEditedBookAuthor">Enter new author</string>
     <string name="etSearch">Search</string>
+    <!-- Autofill hints -->
+    <string name="hintBookTitle">booktitle</string>
+    <string name="hintBookAuthor">bookauthor</string>
+    <string name="hintSearch">booksearch</string>
 
     <string name="app_version">v0.1.1</string>
 

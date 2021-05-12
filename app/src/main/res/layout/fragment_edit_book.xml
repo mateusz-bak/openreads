@@ -53,6 +53,7 @@
 
             <EditText
                 android:id="@+id/etEditedBookTitle"
+                android:autofillHints="@string/hintBookTitle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:focusable="true"
@@ -70,6 +71,7 @@
 
             <EditText
                 android:id="@+id/etEditedBookAuthor"
+                android:autofillHints="@string/hintBookAuthor"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
