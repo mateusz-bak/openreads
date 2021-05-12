@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">MyBooks</string>
+    <string name="app_name" translatable="false">MyBooks</string>
     <string name="ivAuthorUrl">https://github.com/mateusz-bak/</string>
     <!-- Images descriptions -->
     <string name="ivBookStatusSetRead">Set book as finished</string>
@@ -27,16 +27,16 @@
     <string name="ivRepoUrl">https://github.com/mateusz-bak/mybooks-android/</string>
     <string name="tvLicenseUrl">https://github.com/mateusz-bak/mybooks-android/blob/master/LICENSE</string>
     <string name="miAbout">About</string>
-    <string name="readFragment">Finished books</string>
-    <string name="inProgressFragment">In progress books</string>
-    <string name="toReadFragment">To read books</string>
+    <string name="readFragment">Finished</string>
+    <string name="inProgressFragment">In progress</string>
+    <string name="toReadFragment">To read</string>
     <string name="etAdderBookTitle">Title</string>
     <string name="etAdderAuthor">Author</string>
     <string name="tvAdderTitle">Add a book</string>
     <string name="btnAdderSaveBook">Save</string>
-    <string name="tvFinished">Finished</string>
-    <string name="tvInProgress">In progress</string>
-    <string name="tvToRead">To read</string>
+    <string name="finished">Finished</string>
+    <string name="inProgress">In progress</string>
+    <string name="toRead">To read</string>
     <string name="tvBookTitle">Enter a title</string>
     <string name="tvBookAuthor">Enter an author</string>
     <string name="tvBookStatus">Book status</string>
@@ -44,10 +44,10 @@
     <string name="etEditedBookAuthor">Enter new author</string>
     <string name="etSearch">Search</string>
     <!-- Autofill hints -->
-    <string name="hintBookTitle">booktitle</string>
-    <string name="hintBookAuthor">bookauthor</string>
-    <string name="hintSearch">booksearch</string>
+    <string name="hintBookTitle" translatable="false">booktitle</string>
+    <string name="hintBookAuthor" translatable="false">bookauthor</string>
+    <string name="hintSearch" translatable="false">booksearch</string>
 
-    <string name="app_version">v0.1.1</string>
+    <string name="app_version" translatable="false">v0.1.1</string>
 
 </resources>
