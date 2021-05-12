@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="ivAuthorUrl">https://github.com/mateusz-bak/</string>
+    <string name="fabEditBook">Edytuj wyświetloną książkę</string>
+    <string name="ivBookStatusRead">Książka jest skończona</string>
+    <string name="ivBookStatusInProgress">Książka jest w trakcie czytania</string>
+    <string name="ivBookStatusToRead">Książka jest do przeczytania</string>
+    <string name="fabSaveEditedBook">Zapisz edytowaną książkę</string>
+    <string name="fabDeleteBook">Usuń książkę</string>
+    <string name="ivBookStatusSetRead">Ustaw status książki na \"skończona\"</string>
+    <string name="ivBookStatusSetInProgress">Ustaw status książki na \"w trakcie czytania\"</string>
+    <string name="ivBookStatusSetToRead">Ustaw status książki na \"to przeczytania\"</string>
+    <string name="fabAddBook">Dodaj nową książkę</string>
+    <string name="ivSearch">Szukaj książki</string>
+    <string name="ivClearSearch">Wyczyść okno szukania</string>
+    <string name="ivSort">Sortuj wyświetlone książki</string>
+    <string name="ivMore">Pokaż więcej opcji</string>
+    <string name="ivSeparator1">Separator pomiędzy \"szukaj\" i \"sortuj\"</string>
+    <string name="ivSeparator2">Separator pomiędzy \"sortuj\" i \"więcej opcji\"</string>
+    <string name="rbRatingIndicator">Książka jest przeczytana</string>
+    <string name="ivInProgressIndicator">Książka jest w trakcie czytania</string>
+    <string name="ivToReadIndicator">Książka jest do przeczytania</string>
+    <string name="tvSourceCode">Kod żródłowy</string>
+    <string name="ivRepoUrl">https://github.com/mateusz-bak/mybooks-android/</string>
+    <string name="tvLicenseUrl">https://github.com/mateusz-bak/mybooks-android/blob/master/LICENSE</string>
+    <string name="miAbout">O aplikacji</string>
+    <string name="tvAppsAuthor">Autor</string>
+    <string name="readFragment">Przeczytane</string>
+    <string name="inProgressFragment">W trakcie</string>
+    <string name="toReadFragment">Do przeczytania</string>
+    <string name="etAdderBookTitle">Tytuł</string>
+    <string name="etAdderAuthor">Autor</string>
+    <string name="tvAdderTitle">Dodaj książkę</string>
+    <string name="btnAdderSaveBook">Zapisz</string>
+    <string name="tvBookTitle">Wpisz tytuł</string>
+    <string name="tvBookAuthor">Wpisz autora</string>
+    <string name="tvBookStatus">Status książki</string>
+    <string name="etEditedBookTitle">Wpisz nowy tytuł</string>
+    <string name="etEditedBookAuthor">Wpisz nowego autora</string>
+    <string name="etSearch">Szukaj</string>
+    <string name="finished">Przeczytana</string>
+    <string name="inProgress">W trakcie</string>
+    <string name="toRead">Do przeczytania</string>
+</resources>
