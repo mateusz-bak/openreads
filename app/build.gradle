@@ -13,7 +13,7 @@ android {
 
     defaultConfig {
         applicationId "com.example.mybooks"
-        minSdkVersion 21
+        minSdkVersion 24
         targetSdkVersion 30
         versionCode 1
         versionName "0.1.1"
