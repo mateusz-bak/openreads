@@ -25,14 +25,14 @@ class AddBookDialog(context: Context, var addBookDialogListener: AddBookDialogLi
         setContentView(R.layout.dialog_add_book)
 
         this.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
-        rbEditorRating.visibility = View.GONE
+        rbAdderRating.visibility = View.GONE
 
         ivBookStatusSetRead.setOnClickListener {
             ivBookStatusSetRead.setColorFilter(ContextCompat.getColor(context, R.color.orange_300), android.graphics.PorterDuff.Mode.SRC_IN)
             ivBookStatusSetInProgress.setColorFilter(ContextCompat.getColor(context, R.color.grey), android.graphics.PorterDuff.Mode.SRC_IN)
             ivBookStatusSetToRead.setColorFilter(ContextCompat.getColor(context, R.color.grey), android.graphics.PorterDuff.Mode.SRC_IN)
             whatIsClicked = "read"
-            rbEditorRating.visibility = View.VISIBLE
+            rbAdderRating.visibility = View.VISIBLE
             it.hideKeyboard()
         }
 
@@ -41,7 +41,7 @@ class AddBookDialog(context: Context, var addBookDialogListener: AddBookDialogLi
             ivBookStatusSetInProgress.setColorFilter(ContextCompat.getColor(context, R.color.orange_300), android.graphics.PorterDuff.Mode.SRC_IN)
             ivBookStatusSetToRead.setColorFilter(ContextCompat.getColor(context, R.color.grey), android.graphics.PorterDuff.Mode.SRC_IN)
             whatIsClicked = "in_progress"
-            rbEditorRating.visibility = View.GONE
+            rbAdderRating.visibility = View.GONE
             it.hideKeyboard()
         }
 
@@ -50,20 +50,20 @@ class AddBookDialog(context: Context, var addBookDialogListener: AddBookDialogLi
             ivBookStatusSetInProgress.setColorFilter(ContextCompat.getColor(context, R.color.grey), android.graphics.PorterDuff.Mode.SRC_IN)
             ivBookStatusSetToRead.setColorFilter(ContextCompat.getColor(context, R.color.orange_300), android.graphics.PorterDuff.Mode.SRC_IN)
             whatIsClicked = "to_read"
-            rbEditorRating.visibility = View.GONE
+            rbAdderRating.visibility = View.GONE
             it.hideKeyboard()
         }
 
-        btnEditorSaveBook.setOnClickListener {
-            var bookTitle = etEditorBookTitle.text.toString()
-            var bookAuthor = etEditorAuthor.text.toString()
+        btnAdderSaveBook.setOnClickListener {
+            var bookTitle = etAdderBookTitle.text.toString()
+            var bookAuthor = etAdderAuthor.text.toString()
             var bookRating = 0.0F
 
             if (bookTitle.isNotEmpty()) {
                 if (bookAuthor.isNotEmpty()){
                     if (whatIsClicked != "nothing") {
                         when(whatIsClicked){
-                            "read" -> bookRating = rbEditorRating.rating
+                            "read" -> bookRating = rbAdderRating.rating
                             "in_progress" -> bookRating = 0.0F
                             "to_read" -> bookRating = 0.0F
                         }

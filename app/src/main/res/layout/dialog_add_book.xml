@@ -9,12 +9,12 @@
     android:padding="16dp">
 
     <EditText
-        android:id="@+id/etEditorBookTitle"
+        android:id="@+id/etAdderBookTitle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="24dp"
         android:width="300dp"
-        android:hint="Title"
+        android:hint="@string/etAdderBookTitle"
         android:inputType="textCapWords"
         android:maxLength="200"
         android:textSize="18sp"
@@ -22,15 +22,15 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tv_EditorTitle" />
+        app:layout_constraintTop_toBottomOf="@+id/tvAdderTitle" />
 
     <EditText
-        android:id="@+id/etEditorAuthor"
+        android:id="@+id/etAdderAuthor"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="12dp"
         android:width="300dp"
-        android:hint="Author"
+        android:hint="@string/etAdderAuthor"
         android:inputType="textCapWords"
         android:maxLength="100"
         android:textSize="14sp"
@@ -38,10 +38,10 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/etEditorBookTitle" />
+        app:layout_constraintTop_toBottomOf="@+id/etAdderBookTitle" />
 
     <RatingBar
-        android:id="@+id/rbEditorRating"
+        android:id="@+id/rbAdderRating"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:stepSize="1"
@@ -52,10 +52,10 @@
         app:layout_constraintTop_toBottomOf="@+id/tvInProgress" />
 
     <TextView
-        android:id="@+id/tv_EditorTitle"
+        android:id="@+id/tvAdderTitle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Add a book"
+        android:text="@string/tvAdderTitle"
         android:textSize="24sp"
         android:textColor="?colorOnSecondary"
         app:layout_constraintEnd_toEndOf="parent"
@@ -65,16 +65,16 @@
 
 
     <Button
-        android:id="@+id/btnEditorSaveBook"
+        android:id="@+id/btnAdderSaveBook"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
         android:backgroundTint="?colorPrimary"
-        android:text="Save"
+        android:text="@string/btnAdderSaveBook"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/rbEditorRating" />
+        app:layout_constraintTop_toBottomOf="@+id/rbAdderRating" />
 
 
     <ImageView
@@ -90,7 +90,7 @@
         app:layout_constraintEnd_toStartOf="@+id/ivBookStatusSetInProgress"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/etEditorAuthor"
+        app:layout_constraintTop_toBottomOf="@+id/etAdderAuthor"
         app:srcCompat="@drawable/ic_baseline_done_24"
         />
 
@@ -130,7 +130,7 @@
         android:id="@+id/tvFinished"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Finished"
+        android:text="@string/tvFinished"
         android:textSize="12sp"
         android:layout_marginTop="8dp"
         app:layout_constraintEnd_toEndOf="@+id/ivBookStatusSetRead"
@@ -141,7 +141,7 @@
         android:id="@+id/tvInProgress"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="In progress"
+        android:text="@string/tvInProgress"
         android:textSize="12sp"
         android:layout_marginTop="8dp"
         app:layout_constraintEnd_toEndOf="@+id/ivBookStatusSetInProgress"
@@ -152,7 +152,7 @@
         android:id="@+id/tvToRead"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="To read"
+        android:text="@string/tvToRead"
         android:textSize="12sp"
         android:layout_marginTop="8dp"
         app:layout_constraintEnd_toEndOf="@+id/ivBookStatusSetToRead"

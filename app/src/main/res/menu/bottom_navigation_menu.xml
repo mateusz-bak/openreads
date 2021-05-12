@@ -3,15 +3,15 @@
 
 
     <item android:id="@+id/readFragment"
-        android:title="Finished"
+        android:title="@string/readFragment"
         android:icon="@drawable/ic_baseline_done_24"/>
 
     <item android:id="@+id/inProgressFragment"
-        android:title="In progress"
+        android:title="@string/inProgressFragment"
         android:icon="@drawable/ic_baseline_hourglass_bottom_24"/>
 
     <item android:id="@+id/toReadFragment"
-        android:title="To read"
+        android:title="@string/toReadFragment"
         android:icon="@drawable/ic_baseline_list_24"/>
 
 </menu>

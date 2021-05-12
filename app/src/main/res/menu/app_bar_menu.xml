@@ -12,7 +12,7 @@
 
     <item
         android:id="@+id/miAbout"
-        android:title="About"
+        android:title="@string/miAbout"
         android:icon="@drawable/ic_baseline_info_24"
         app:showAsAction="never"/>
 
