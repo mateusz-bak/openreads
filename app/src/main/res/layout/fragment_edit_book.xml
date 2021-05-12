@@ -8,6 +8,7 @@
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/fabSaveEditedBook"
+        android:contentDescription="@string/fabSaveEditedBook"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="bottom|end"
@@ -24,6 +25,7 @@
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/fabDeleteBook"
+        android:contentDescription="@string/fabDeleteBook"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="bottom|end"
@@ -114,6 +116,7 @@
 
             <ImageView
                 android:id="@+id/ivEditorBookStatusRead"
+                android:contentDescription="@string/ivBookStatusSetRead"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:clickable="true"
@@ -129,6 +132,7 @@
 
             <ImageView
                 android:id="@+id/ivEditorBookStatusInProgress"
+                android:contentDescription="@string/ivBookStatusSetInProgress"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:scaleX="1.5"
@@ -144,6 +148,7 @@
 
             <ImageView
                 android:id="@+id/ivEditorBookStatusToRead"
+                android:contentDescription="@string/ivBookStatusSetToRead"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:scaleX="1.5"

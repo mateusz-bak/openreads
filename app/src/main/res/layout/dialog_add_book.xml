@@ -78,14 +78,16 @@
 
 
     <ImageView
-        android:id="@+id/ivBookStatusRead"
+        android:id="@+id/ivBookStatusSetRead"
+        android:contentDescription="@string/ivBookStatusSetRead"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="32dp"
         android:scaleX="2"
         android:scaleY="2"
         android:clickable="true"
-        app:layout_constraintEnd_toStartOf="@+id/ivBookStatusInProgress"
+        android:focusable="true"
+        app:layout_constraintEnd_toStartOf="@+id/ivBookStatusSetInProgress"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/etEditorAuthor"
@@ -93,31 +95,35 @@
         />
 
     <ImageView
-        android:id="@+id/ivBookStatusInProgress"
+        android:id="@+id/ivBookStatusSetInProgress"
+        android:contentDescription="@string/ivBookStatusSetInProgress"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:scaleX="2"
         android:scaleY="2"
         android:clickable="true"
-        app:layout_constraintBottom_toBottomOf="@+id/ivBookStatusRead"
-        app:layout_constraintEnd_toStartOf="@+id/ivBookStatusToRead"
+        android:focusable="true"
+        app:layout_constraintBottom_toBottomOf="@+id/ivBookStatusSetRead"
+        app:layout_constraintEnd_toStartOf="@+id/ivBookStatusSetToRead"
         app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toEndOf="@+id/ivBookStatusRead"
-        app:layout_constraintTop_toTopOf="@+id/ivBookStatusRead"
+        app:layout_constraintStart_toEndOf="@+id/ivBookStatusSetRead"
+        app:layout_constraintTop_toTopOf="@+id/ivBookStatusSetRead"
         app:srcCompat="@drawable/ic_baseline_hourglass_bottom_24" />
 
     <ImageView
-        android:id="@+id/ivBookStatusToRead"
+        android:id="@+id/ivBookStatusSetToRead"
+        android:contentDescription="@string/ivBookStatusSetToRead"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:scaleX="2"
         android:scaleY="2"
         android:clickable="true"
-        app:layout_constraintBottom_toBottomOf="@+id/ivBookStatusRead"
+        android:focusable="true"
+        app:layout_constraintBottom_toBottomOf="@+id/ivBookStatusSetRead"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toEndOf="@+id/ivBookStatusInProgress"
-        app:layout_constraintTop_toTopOf="@+id/ivBookStatusRead"
+        app:layout_constraintStart_toEndOf="@+id/ivBookStatusSetInProgress"
+        app:layout_constraintTop_toTopOf="@+id/ivBookStatusSetRead"
         app:srcCompat="@drawable/ic_baseline_list_24" />
 
     <TextView
@@ -127,9 +133,9 @@
         android:text="Finished"
         android:textSize="12sp"
         android:layout_marginTop="8dp"
-        app:layout_constraintEnd_toEndOf="@+id/ivBookStatusRead"
-        app:layout_constraintStart_toStartOf="@+id/ivBookStatusRead"
-        app:layout_constraintTop_toBottomOf="@+id/ivBookStatusRead" />
+        app:layout_constraintEnd_toEndOf="@+id/ivBookStatusSetRead"
+        app:layout_constraintStart_toStartOf="@+id/ivBookStatusSetRead"
+        app:layout_constraintTop_toBottomOf="@+id/ivBookStatusSetRead" />
 
     <TextView
         android:id="@+id/tvInProgress"
@@ -138,9 +144,9 @@
         android:text="In progress"
         android:textSize="12sp"
         android:layout_marginTop="8dp"
-        app:layout_constraintEnd_toEndOf="@+id/ivBookStatusInProgress"
-        app:layout_constraintStart_toStartOf="@+id/ivBookStatusInProgress"
-        app:layout_constraintTop_toBottomOf="@+id/ivBookStatusInProgress" />
+        app:layout_constraintEnd_toEndOf="@+id/ivBookStatusSetInProgress"
+        app:layout_constraintStart_toStartOf="@+id/ivBookStatusSetInProgress"
+        app:layout_constraintTop_toBottomOf="@+id/ivBookStatusSetInProgress" />
 
     <TextView
         android:id="@+id/tvToRead"
@@ -149,8 +155,8 @@
         android:text="To read"
         android:textSize="12sp"
         android:layout_marginTop="8dp"
-        app:layout_constraintEnd_toEndOf="@+id/ivBookStatusToRead"
-        app:layout_constraintStart_toStartOf="@+id/ivBookStatusToRead"
-        app:layout_constraintTop_toBottomOf="@+id/ivBookStatusToRead" />
+        app:layout_constraintEnd_toEndOf="@+id/ivBookStatusSetToRead"
+        app:layout_constraintStart_toStartOf="@+id/ivBookStatusSetToRead"
+        app:layout_constraintTop_toBottomOf="@+id/ivBookStatusSetToRead" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

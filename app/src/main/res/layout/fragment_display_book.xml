@@ -8,6 +8,7 @@
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/fabEditBook"
+        android:contentDescription="@string/fabEditBook"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="bottom|end"
@@ -96,13 +97,14 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="60dp"
                 android:text="book status"
-                android:textSize="12dp"
+                android:textSize="12sp"
                 android:layout_marginEnd="16dp"
                 app:layout_constraintEnd_toStartOf="@+id/guideline3"
                 app:layout_constraintTop_toBottomOf="@+id/tvBookAuthor" />
 
             <ImageView
                 android:id="@+id/ivBookStatusRead"
+                android:contentDescription="@string/ivBookStatusRead"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="32dp"
@@ -114,6 +116,7 @@
 
             <ImageView
                 android:id="@+id/ivBookStatusInProgress"
+                android:contentDescription="@string/ivBookStatusInProgress"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="32dp"
@@ -124,6 +127,7 @@
 
             <ImageView
                 android:id="@+id/ivBookStatusToRead"
+                android:contentDescription="@string/ivBookStatusToRead"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="32dp"

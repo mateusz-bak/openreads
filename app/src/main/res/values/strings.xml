@@ -6,6 +6,26 @@
     <string name="second_fragment_label">Second Fragment</string>
     <string name="next">Next</string>
     <string name="previous">Previous</string>
+    <!-- Images descriptions -->
+    <string name="ivBookStatusSetRead">Set book as finished</string>
+    <string name="ivBookStatusSetInProgress">Set book as in progress</string>
+    <string name="ivBookStatusSetToRead">Set book as "to read"</string>
+    <string name="fabEditBook">Edit displayed book</string>
+    <string name="ivBookStatusRead">Book is finished</string>
+    <string name="ivBookStatusInProgress">Book is in progress</string>
+    <string name="ivBookStatusToRead">Book is "to read"</string>
+    <string name="fabSaveEditedBook">Save edited book</string>
+    <string name="fabDeleteBook">Delete current book</string>
+    <string name="fabAddBook">Add a new book</string>
+    <string name="ivSearch">Search for a book</string>
+    <string name="ivClearSearch">Clear search window</string>
+    <string name="ivSort">Sort displayed books</string>
+    <string name="ivMore">Show more options</string>
+    <string name="ivSeparator1">Separator between search and sort</string>
+    <string name="ivSeparator2">Separator between sort and more options</string>
+    <string name="rbRatingIndicator">This book is finished</string>
+    <string name="ivInProgressIndicator">This book is in progress</string>
+    <string name="ivToReadIndicator">This book is to read</string>
 
     <string name="app_version">v0.1.1</string>
 

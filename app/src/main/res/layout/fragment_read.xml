@@ -39,6 +39,7 @@
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/fabAddBook"
+        android:contentDescription="@string/fabAddBook"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="bottom|end"
@@ -55,6 +56,7 @@
 
     <ImageView
         android:id="@+id/ivSearch"
+        android:contentDescription="@string/ivSearch"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
@@ -71,6 +73,7 @@
 
     <ImageView
         android:id="@+id/ivClearSearch"
+        android:contentDescription="@string/ivClearSearch"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:clickable="true"
@@ -86,6 +89,7 @@
 
     <ImageView
         android:id="@+id/ivSort"
+        android:contentDescription="@string/ivSort"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:clickable="true"
@@ -101,6 +105,7 @@
 
     <ImageView
         android:id="@+id/ivMore"
+        android:contentDescription="@string/ivMore"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
@@ -124,6 +129,7 @@
 
     <ImageView
         android:id="@+id/ivSeparator1"
+        android:contentDescription="@string/ivSeparator1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:clickable="false"
@@ -140,6 +146,7 @@
 
     <ImageView
         android:id="@+id/ivSeparator2"
+        android:contentDescription="@string/ivSeparator2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:clickable="false"
@@ -153,5 +160,55 @@
         app:layout_constraintTop_toTopOf="@+id/ivMore"
         app:layout_constraintVertical_bias="0.0"
         app:srcCompat="@drawable/ic_baseline_horizontal_rule_24" />
+<!--    -->
+<!--    <Button-->
+<!--        android:id="@+id/btnSortAZDecreasing"-->
+<!--        android:layout_width="120dp"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:layout_marginTop="8dp"-->
+<!--        android:backgroundTint="?colorOnPrimary"-->
+<!--        android:paddingEnd="20dp"-->
+<!--        android:text="A - Z"-->
+<!--        android:layout_marginEnd="16dp"-->
+<!--        android:textColor="?colorOnSecondary"-->
+<!--        app:layout_constraintEnd_toEndOf="parent"-->
+<!--        app:layout_constraintTop_toBottomOf="@+id/ivSort" />-->
+
+<!--    <Button-->
+<!--        android:id="@+id/btnSortAZIncreasing"-->
+<!--        android:layout_width="120dp"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:text="Z - A"-->
+<!--        android:backgroundTint="?colorOnPrimary"-->
+<!--        android:textColor="?colorOnSecondary"-->
+<!--        app:layout_constraintEnd_toEndOf="@+id/btnSortAZDecreasing"-->
+<!--        app:layout_constraintStart_toStartOf="@+id/btnSortAZDecreasing"-->
+<!--        app:layout_constraintTop_toBottomOf="@+id/btnSortAZDecreasing" />-->
+
+<!--    <Button-->
+<!--        android:id="@+id/btnSortRatingDecreasing"-->
+<!--        android:layout_width="120dp"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:text="▼"-->
+<!--        android:drawableLeft="@drawable/ic_baseline_star_rate_24"-->
+<!--        android:drawableTint="?colorPrimary"-->
+<!--        android:backgroundTint="?colorOnPrimary"-->
+<!--        android:textColor="?colorOnSecondary"-->
+<!--        app:layout_constraintEnd_toEndOf="@+id/btnSortAZIncreasing"-->
+<!--        app:layout_constraintStart_toStartOf="@+id/btnSortAZIncreasing"-->
+<!--        app:layout_constraintTop_toBottomOf="@+id/btnSortAZIncreasing" />-->
+
+<!--    <Button-->
+<!--        android:id="@+id/btnSortRatingIncreasing"-->
+<!--        android:layout_width="120dp"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:text="▲"-->
+<!--        android:drawableLeft="@drawable/ic_baseline_star_rate_24"-->
+<!--        android:drawableTint="?colorPrimary"-->
+<!--        android:backgroundTint="?colorOnPrimary"-->
+<!--        android:textColor="?colorOnSecondary"-->
+<!--        app:layout_constraintEnd_toEndOf="@+id/btnSortRatingDecreasing"-->
+<!--        app:layout_constraintStart_toStartOf="@+id/btnSortRatingDecreasing"-->
+<!--        app:layout_constraintTop_toBottomOf="@+id/btnSortRatingDecreasing" />-->
 
 </androidx.constraintlayout.widget.ConstraintLayout>

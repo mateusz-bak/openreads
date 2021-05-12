@@ -38,6 +38,7 @@
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/fabAddBook"
+        android:contentDescription="@string/fabAddBook"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="bottom|end"
@@ -54,6 +55,7 @@
 
     <ImageView
         android:id="@+id/ivSearch"
+        android:contentDescription="@string/ivSearch"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
@@ -70,6 +72,7 @@
 
     <ImageView
         android:id="@+id/ivClearSearch"
+        android:contentDescription="@string/ivClearSearch"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:clickable="true"
@@ -85,6 +88,7 @@
 
     <ImageView
         android:id="@+id/ivSort"
+        android:contentDescription="@string/ivSort"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:clickable="true"
@@ -100,6 +104,7 @@
 
     <ImageView
         android:id="@+id/ivMore"
+        android:contentDescription="@string/ivMore"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
@@ -123,6 +128,7 @@
 
     <ImageView
         android:id="@+id/ivSeparator1"
+        android:contentDescription="@string/ivSeparator1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:clickable="false"
@@ -139,6 +145,7 @@
 
     <ImageView
         android:id="@+id/ivSeparator2"
+        android:contentDescription="@string/ivSeparator2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:clickable="false"
