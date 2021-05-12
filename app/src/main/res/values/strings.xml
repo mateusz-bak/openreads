@@ -43,6 +43,9 @@
     <string name="etEditedBookTitle">Enter new title</string>
     <string name="etEditedBookAuthor">Enter new author</string>
     <string name="etSearch">Search</string>
+    <string name="sbWarningAuthor">Select book\'s state</string>
+    <string name="sbWarningTitle">Fill in the author</string>
+    <string name="sbWarningState">Fill in the title</string>
     <!-- Autofill hints -->
     <string name="hintBookTitle" translatable="false">booktitle</string>
     <string name="hintBookAuthor" translatable="false">bookauthor</string>

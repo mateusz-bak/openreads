@@ -41,4 +41,7 @@
     <string name="finished">Przeczytana</string>
     <string name="inProgress">W trakcie</string>
     <string name="toRead">Do przeczytania</string>
+    <string name="sbWarningAuthor">Wybierz status książki!</string>
+    <string name="sbWarningTitle">Wpisz autora książki!</string>
+    <string name="sbWarningState">Wpisz tytuł książki!</string>
 </resources>

@@ -71,13 +71,13 @@ class AddBookDialog(context: Context, var addBookDialogListener: AddBookDialogLi
                         addBookDialogListener.onSaveButtonClicked(editedBook)
                         dismiss()
                     } else {
-                        Snackbar.make(it, "Select book's state", Snackbar.LENGTH_SHORT).show()
+                        Snackbar.make(it, R.string.sbWarningState, Snackbar.LENGTH_SHORT).show()
                     }
                 } else {
-                    Snackbar.make(it, "Fill in the author", Snackbar.LENGTH_SHORT).show()
+                    Snackbar.make(it, R.string.sbWarningAuthor, Snackbar.LENGTH_SHORT).show()
                 }
             } else {
-                Snackbar.make(it, "Fill in the title", Snackbar.LENGTH_SHORT).show()
+                Snackbar.make(it, R.string.sbWarningTitle, Snackbar.LENGTH_SHORT).show()
             }
         }
     }
