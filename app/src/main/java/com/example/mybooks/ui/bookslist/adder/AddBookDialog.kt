@@ -55,8 +55,8 @@ class AddBookDialog(context: Context, var addBookDialogListener: AddBookDialogLi
         }
 
         btnAdderSaveBook.setOnClickListener {
-            var bookTitle = etAdderBookTitle.text.toString()
-            var bookAuthor = etAdderAuthor.text.toString()
+            val bookTitle = etAdderBookTitle.text.toString()
+            val bookAuthor = etAdderAuthor.text.toString()
             var bookRating = 0.0F
 
             if (bookTitle.isNotEmpty()) {

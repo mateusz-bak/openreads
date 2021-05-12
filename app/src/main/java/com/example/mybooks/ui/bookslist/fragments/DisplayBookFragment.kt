@@ -24,7 +24,7 @@ class DisplayBookFragment : Fragment(R.layout.fragment_display_book) {
         viewModel = (activity as ListActivity).booksViewModel
         listActivity = activity as ListActivity
 
-        var book = args.book
+        val book = args.book
 
             tvBookTitle.text = book.bookTitle
             tvBookAuthor.text = book.bookAuthor

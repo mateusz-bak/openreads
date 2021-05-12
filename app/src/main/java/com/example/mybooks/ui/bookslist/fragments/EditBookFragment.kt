@@ -37,9 +37,9 @@ class EditBookFragment : Fragment(R.layout.fragment_edit_book) {
         val database = BooksDatabase(view.context)
         val repository = BooksRepository(database)
         val factory = BooksViewModelProviderFactory(repository)
-        var book = args.book
+        val book = args.book
 
-        var viewModel = ViewModelProviders.of(this, factory).get(BooksViewModel::class.java)
+        val viewModel = ViewModelProviders.of(this, factory).get(BooksViewModel::class.java)
 
             etEditedBookTitle.setText(book.bookTitle)
             etEditedBookAuthor.setText(book.bookAuthor)
@@ -94,8 +94,8 @@ class EditBookFragment : Fragment(R.layout.fragment_edit_book) {
         }
 
         fabSaveEditedBook.setOnClickListener {
-            var bookTitle = etEditedBookTitle.text.toString()
-            var bookAuthor = etEditedBookAuthor.text.toString()
+            val bookTitle = etEditedBookTitle.text.toString()
+            val bookAuthor = etEditedBookAuthor.text.toString()
             var bookRating = 0.0F
 
             if (bookTitle.isNotEmpty()) {
@@ -107,7 +107,7 @@ class EditBookFragment : Fragment(R.layout.fragment_edit_book) {
                             "to_read" -> bookRating = 0.0F
                         }
 
-                        var bookStatus = whatIsClicked
+                        val bookStatus = whatIsClicked
                         viewModel.updateBook(book.id, bookTitle, bookAuthor, bookRating, bookStatus)
 
                         it.hideKeyboard()
