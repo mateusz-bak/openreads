@@ -14,6 +14,7 @@
         android:hint="@string/etSearch"
         android:inputType="textCapWords"
         android:paddingEnd="24dp"
+        android:paddingStart="24dp"
         android:textAlignment="textStart"
         android:textColor="?colorOnSecondary"
         android:textSize="18sp"
