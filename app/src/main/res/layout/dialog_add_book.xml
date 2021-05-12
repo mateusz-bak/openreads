@@ -6,7 +6,10 @@
     android:layout_width="340dp"
     android:layout_height="wrap_content"
     android:background="@drawable/dialog_rounded"
-    android:padding="16dp">
+    android:paddingStart="16dp"
+    android:paddingEnd="16dp"
+    android:paddingBottom="56dp"
+    android:paddingTop="56dp">
 
     <EditText
         android:id="@+id/etAdderBookTitle"
