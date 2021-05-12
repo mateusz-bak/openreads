@@ -37,6 +37,16 @@ class ReadFragment : Fragment(R.layout.fragment_read) {
         ivClearSearch.isClickable = false
         view.hideKeyboard()
 
+//        btnSortAZIncreasing.visibility = View.GONE
+//        btnSortAZDecreasing.visibility = View.GONE
+//        btnSortRatingDecreasing.visibility = View.GONE
+//        btnSortRatingIncreasing.visibility = View.GONE
+//
+//        btnSortAZIncreasing.isClickable = false
+//        btnSortAZDecreasing.isClickable = false
+//        btnSortRatingDecreasing.isClickable = false
+//        btnSortRatingIncreasing.isClickable = false
+
         val database = BooksDatabase(view.context)
         val booksRepository = BooksRepository(database)
         val booksViewModelProviderFactory = BooksViewModelProviderFactory(booksRepository)
@@ -88,6 +98,16 @@ class ReadFragment : Fragment(R.layout.fragment_read) {
         }
 
         ivSearch.setOnClickListener {
+//            btnSortAZIncreasing.visibility = View.GONE
+//            btnSortAZDecreasing.visibility = View.GONE
+//            btnSortRatingDecreasing.visibility = View.GONE
+//            btnSortRatingIncreasing.visibility = View.GONE
+//
+//            btnSortAZIncreasing.isClickable = false
+//            btnSortAZDecreasing.isClickable = false
+//            btnSortRatingDecreasing.isClickable = false
+//            btnSortRatingIncreasing.isClickable = false
+
             when(etSearch.visibility) {
                 View.VISIBLE -> {
                     when (etSearch.text.isEmpty()){
@@ -99,6 +119,13 @@ class ReadFragment : Fragment(R.layout.fragment_read) {
                     }
                 }
                 View.GONE -> {
+                    etSearch.visibility = View.VISIBLE
+                    ivClearSearch.visibility = View.VISIBLE
+                    ivClearSearch.isClickable = true
+                    etSearch.requestFocus()
+                    it.showKeyboard()
+                }
+                View.INVISIBLE -> {
                     etSearch.visibility = View.VISIBLE
                     ivClearSearch.visibility = View.VISIBLE
                     ivClearSearch.isClickable = true
@@ -148,6 +175,81 @@ class ReadFragment : Fragment(R.layout.fragment_read) {
                 }
             }
         }
+//
+//        ivSort.setOnClickListener {
+//            when(btnSortAZIncreasing.visibility) {
+//                View.GONE -> {
+//                    btnSortAZIncreasing.visibility = View.VISIBLE
+//                    btnSortAZDecreasing.visibility = View.VISIBLE
+//                    btnSortRatingDecreasing.visibility = View.VISIBLE
+//                    btnSortRatingIncreasing.visibility = View.VISIBLE
+//
+//                    btnSortAZIncreasing.isClickable = true
+//                    btnSortAZDecreasing.isClickable = true
+//                    btnSortRatingDecreasing.isClickable = true
+//                    btnSortRatingIncreasing.isClickable = true
+//                }
+//                View.VISIBLE -> {
+//                    btnSortAZIncreasing.visibility = View.GONE
+//                    btnSortAZDecreasing.visibility = View.GONE
+//                    btnSortRatingDecreasing.visibility = View.GONE
+//                    btnSortRatingIncreasing.visibility = View.GONE
+//
+//                    btnSortAZIncreasing.isClickable = false
+//                    btnSortAZDecreasing.isClickable = false
+//                    btnSortRatingDecreasing.isClickable = false
+//                    btnSortRatingIncreasing.isClickable = false
+//                }
+//            }
+//        }
+//
+//        btnSortAZIncreasing.setOnClickListener {
+//            btnSortAZIncreasing.visibility = View.GONE
+//            btnSortAZDecreasing.visibility = View.GONE
+//            btnSortRatingDecreasing.visibility = View.GONE
+//            btnSortRatingIncreasing.visibility = View.GONE
+//
+//            btnSortAZIncreasing.isClickable = false
+//            btnSortAZDecreasing.isClickable = false
+//            btnSortRatingDecreasing.isClickable = false
+//            btnSortRatingIncreasing.isClickable = false
+//        }
+//
+//        btnSortAZDecreasing.setOnClickListener {
+//            btnSortAZIncreasing.visibility = View.GONE
+//            btnSortAZDecreasing.visibility = View.GONE
+//            btnSortRatingDecreasing.visibility = View.GONE
+//            btnSortRatingIncreasing.visibility = View.GONE
+//
+//            btnSortAZIncreasing.isClickable = false
+//            btnSortAZDecreasing.isClickable = false
+//            btnSortRatingDecreasing.isClickable = false
+//            btnSortRatingIncreasing.isClickable = false
+//        }
+//
+//        btnSortRatingDecreasing.setOnClickListener {
+//            btnSortAZIncreasing.visibility = View.GONE
+//            btnSortAZDecreasing.visibility = View.GONE
+//            btnSortRatingDecreasing.visibility = View.GONE
+//            btnSortRatingIncreasing.visibility = View.GONE
+//
+//            btnSortAZIncreasing.isClickable = false
+//            btnSortAZDecreasing.isClickable = false
+//            btnSortRatingDecreasing.isClickable = false
+//            btnSortRatingIncreasing.isClickable = false
+//        }
+//
+//        btnSortRatingIncreasing.setOnClickListener {
+//            btnSortAZIncreasing.visibility = View.GONE
+//            btnSortAZDecreasing.visibility = View.GONE
+//            btnSortRatingDecreasing.visibility = View.GONE
+//            btnSortRatingIncreasing.visibility = View.GONE
+//
+//            btnSortAZIncreasing.isClickable = false
+//            btnSortAZDecreasing.isClickable = false
+//            btnSortRatingDecreasing.isClickable = false
+//            btnSortRatingIncreasing.isClickable = false
+//        }
     }
 
     fun View.hideKeyboard() {

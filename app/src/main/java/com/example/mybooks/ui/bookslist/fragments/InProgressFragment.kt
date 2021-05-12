@@ -105,6 +105,13 @@ class InProgressFragment : Fragment(R.layout.fragment_in_progress) {
                     etSearch.requestFocus()
                     it.showKeyboard()
                 }
+                View.INVISIBLE -> {
+                    etSearch.visibility = View.VISIBLE
+                    ivClearSearch.visibility = View.VISIBLE
+                    ivClearSearch.isClickable = true
+                    etSearch.requestFocus()
+                    it.showKeyboard()
+                }
             }
         }
 

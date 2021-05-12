@@ -105,6 +105,13 @@ class ToReadFragment : Fragment(R.layout.fragment_to_read) {
                     etSearch.requestFocus()
                     it.showKeyboard()
                 }
+                View.INVISIBLE -> {
+                    etSearch.visibility = View.VISIBLE
+                    ivClearSearch.visibility = View.VISIBLE
+                    ivClearSearch.isClickable = true
+                    etSearch.requestFocus()
+                    it.showKeyboard()
+                }
             }
         }
 
