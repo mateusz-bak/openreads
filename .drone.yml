@@ -9,10 +9,13 @@ concurrency:
 steps:
 - name: build
   image: mingc/android-build-box:1.20.0
+  when:
+    branch:
+    - master
   commands:
   - ./gradlew build
   
-- name: Create a signed .apk
+- name: Signed .apk
   image: mingc/android-build-box:1.20.0
   when:
     branch:
