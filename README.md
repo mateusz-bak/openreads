@@ -1,5 +1,7 @@
 
 # myBooks-android  
+[![Build Status](https://git-drone.mateusz.ovh/api/badges/mateusz-bak/mybooks-android/status.svg)](https://git-drone.mateusz.ovh/mateusz-bak/mybooks-android)
+
 An Android app written in Kotlin for keeping tracks of books you have read.
 
 ## Screenshots
