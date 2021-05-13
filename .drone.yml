@@ -24,6 +24,7 @@ steps:
     KEY_PASSWORD:
       from_secret: mateusz-bak.key-password
   commands:
+  - echo $KEYFILE
   - echo $KEYFILE > key.jks.b64
   - cat key.jks.b64
   - pwd
