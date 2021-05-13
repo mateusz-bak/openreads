@@ -1,11 +1,27 @@
 ---
 kind: pipeline
 type: docker
-name: default-android
+name: android
 
 steps:
 - name: build
   image: mingc/android-build-box:1.20.0
   commands:
   - ./gradlew build
+  
+- name: publish signed .apk via a Matrix group chat
+  image: mingc/android-build-box:1.20.0
+  environment:
+    KEYFILE:
+      from_secret: mateusz-bak.jks
+    STORE_PASSWORD:
+      from_secret: mateusz-bak.key-store-password
+    KEY_ALIAS:
+      from_secret: mateusz-bak.key-alias
+    KEY_PASSWORD:
+      from_secret: mateusz-bak.key-password
+  commands:
+  - echo $KEYFILE > key.jks
+  - ./gradlew assembleRelease -Pandroid.injected.signing.store.file=key.jks -Pandroid.injected.signing.store.password=$STORE_PASSWORD -Pandroid.injected.signing.key.alias=$KEY_ALIAS -Pandroid.injected.signing.key.password=$KEY_PASSWORD
+  - ls app/release
 ...
