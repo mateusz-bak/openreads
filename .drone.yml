@@ -4,10 +4,10 @@ type: docker
 name: android
 
 steps:
-- name: build
-  image: mingc/android-build-box:1.20.0
-  commands:
-  - ./gradlew build
+# - name: build
+#   image: mingc/android-build-box:1.20.0
+#   commands:
+#   - ./gradlew build
   
 - name: publish signed .apk via a Matrix group chat
   image: mingc/android-build-box:1.20.0
@@ -21,7 +21,12 @@ steps:
     KEY_PASSWORD:
       from_secret: mateusz-bak.key-password
   commands:
-  - echo $KEYFILE > key.jks
+  - echo $KEYFILE > key.jks.b64
+  - pwd
+  - ls
+  - base64 -d key.jks.b64 > key.jks
+  - pwd
+  - ls
   - ./gradlew assembleRelease -Pandroid.injected.signing.store.file=key.jks -Pandroid.injected.signing.store.password=$STORE_PASSWORD -Pandroid.injected.signing.key.alias=$KEY_ALIAS -Pandroid.injected.signing.key.password=$KEY_PASSWORD
   - ls app/release
 ...
