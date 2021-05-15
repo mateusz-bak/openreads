@@ -1,0 +1,183 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="300dp"
+    android:layout_height="wrap_content"
+    android:background="@drawable/dialog_rounded"
+    android:paddingStart="16dp"
+    android:paddingTop="32dp"
+    android:paddingEnd="16dp"
+    android:paddingBottom="32dp">
+
+    <TextView
+        android:id="@+id/tvSorterTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/tvSorterTitle"
+        android:textColor="?colorOnSecondary"
+        android:textSize="24sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+
+    <TextView
+        android:id="@+id/tvSortTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="24dp"
+        android:text="@string/tvSortTitle"
+        android:textColor="?colorOnSecondary"
+        android:textSize="24sp"
+        app:layout_constraintStart_toStartOf="@+id/tvSortAuthor"
+        app:layout_constraintTop_toBottomOf="@+id/tvSorterTitle" />
+
+    <TextView
+        android:id="@+id/tvSortAuthor"
+        android:layout_width="164dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="24dp"
+        android:text="@string/tvSortAuthor"
+        android:textColor="?colorOnSecondary"
+        android:textSize="24sp"
+        app:layout_constraintEnd_toStartOf="@+id/ivSortTitleIncreasing2"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tvSortTitle" />
+
+    <TextView
+        android:id="@+id/tvSortRating"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="24dp"
+        android:text="@string/tvSortRating"
+        android:textColor="?colorOnSecondary"
+        android:textSize="24sp"
+        app:layout_constraintStart_toStartOf="@+id/tvSortAuthor"
+        app:layout_constraintTop_toBottomOf="@+id/tvSortAuthor" />
+
+    <ImageView
+        android:id="@+id/ivSortTitleDecreasing"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:clickable="true"
+        android:focusable="true"
+        android:scaleX="2"
+        android:scaleY="2"
+        app:tint="?colorOnSecondary"
+        app:layout_constraintBottom_toBottomOf="@+id/tvSortTitle"
+        app:layout_constraintEnd_toEndOf="@+id/ivSortTitleDecreasing2"
+        app:layout_constraintStart_toStartOf="@+id/ivSortTitleDecreasing2"
+        app:layout_constraintTop_toTopOf="@+id/tvSortTitle"
+        app:srcCompat="@drawable/ic_baseline_keyboard_arrow_down_24" />
+
+    <ImageView
+        android:id="@+id/ivSortTitleDecreasing2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="24dp"
+        android:clickable="true"
+        android:focusable="true"
+        android:scaleX="2"
+        android:scaleY="2"
+        app:tint="?colorOnSecondary"
+        app:layout_constraintBottom_toBottomOf="@+id/tvSortAuthor"
+        app:layout_constraintEnd_toStartOf="@+id/ivSortTitleIncreasing2"
+        app:layout_constraintTop_toTopOf="@+id/tvSortAuthor"
+        app:srcCompat="@drawable/ic_baseline_keyboard_arrow_down_24" />
+
+    <ImageView
+        android:id="@+id/ivSortTitleDecreasing3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:clickable="true"
+        android:focusable="true"
+        android:scaleX="2"
+        android:scaleY="2"
+        app:tint="?colorOnSecondary"
+        app:layout_constraintBottom_toBottomOf="@+id/tvSortRating"
+        app:layout_constraintEnd_toEndOf="@+id/ivSortTitleDecreasing2"
+        app:layout_constraintStart_toStartOf="@+id/ivSortTitleDecreasing2"
+        app:layout_constraintTop_toTopOf="@+id/tvSortRating"
+        app:srcCompat="@drawable/ic_baseline_keyboard_arrow_down_24" />
+
+    <ImageView
+        android:id="@+id/ivSortTitleIncreasing"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:clickable="true"
+        android:focusable="true"
+        android:scaleX="2"
+        android:scaleY="2"
+        app:tint="?colorOnSecondary"
+        app:layout_constraintBottom_toBottomOf="@+id/ivSortTitleDecreasing"
+        app:layout_constraintEnd_toEndOf="@+id/ivSortTitleIncreasing2"
+        app:layout_constraintStart_toStartOf="@+id/ivSortTitleIncreasing2"
+        app:layout_constraintTop_toTopOf="@+id/ivSortTitleDecreasing"
+        app:srcCompat="@drawable/ic_baseline_keyboard_arrow_up_24" />
+
+    <ImageView
+        android:id="@+id/ivSortTitleIncreasing2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:clickable="true"
+        android:focusable="true"
+        android:scaleX="2"
+        android:scaleY="2"
+        app:tint="?colorOnSecondary"
+        app:layout_constraintBottom_toBottomOf="@+id/ivSortTitleDecreasing2"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/tvSortAuthor"
+        app:layout_constraintTop_toTopOf="@+id/ivSortTitleDecreasing2"
+        app:layout_constraintVertical_bias="1.0"
+        app:srcCompat="@drawable/ic_baseline_keyboard_arrow_up_24" />
+
+    <ImageView
+        android:id="@+id/ivSortTitleIncreasing3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:clickable="true"
+        android:focusable="true"
+        android:scaleX="2"
+        android:scaleY="2"
+        app:tint="?colorOnSecondary"
+        app:layout_constraintBottom_toBottomOf="@+id/ivSortTitleDecreasing3"
+        app:layout_constraintEnd_toEndOf="@+id/ivSortTitleIncreasing2"
+        app:layout_constraintStart_toStartOf="@+id/ivSortTitleIncreasing2"
+        app:layout_constraintTop_toTopOf="@+id/ivSortTitleDecreasing3"
+        app:srcCompat="@drawable/ic_baseline_keyboard_arrow_up_24" />
+
+    <ImageView
+        android:id="@+id/ivSeparator1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:clickable="false"
+        android:scaleX="12"
+        android:scaleY="0.5"
+        app:layout_constraintBottom_toTopOf="@+id/tvSortAuthor"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tvSortTitle"
+        app:srcCompat="@drawable/ic_baseline_horizontal_rule_24" />
+
+    <ImageView
+        android:id="@+id/ivSeparator"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:clickable="false"
+        android:scaleX="12"
+        android:scaleY="0.5"
+        app:layout_constraintBottom_toTopOf="@+id/tvSortRating"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tvSortAuthor"
+        app:srcCompat="@drawable/ic_baseline_horizontal_rule_24" />
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>
