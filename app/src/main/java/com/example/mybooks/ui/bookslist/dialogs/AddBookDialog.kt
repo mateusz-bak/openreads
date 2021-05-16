@@ -1,4 +1,4 @@
-package com.example.mybooks.ui.bookslist.adder
+package com.example.mybooks.ui.bookslist.dialogs
 
 import android.content.Context
 import android.graphics.Color

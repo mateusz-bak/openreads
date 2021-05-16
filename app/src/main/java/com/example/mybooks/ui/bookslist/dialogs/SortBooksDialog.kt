@@ -4,20 +4,16 @@ import android.content.Context
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
-import android.view.View
 import android.view.Window
-import android.view.inputmethod.InputMethodManager
 import com.example.mybooks.R
 import androidx.appcompat.app.AppCompatDialog
 import androidx.core.content.ContextCompat
-import com.example.mybooks.data.db.entities.Book
-import com.google.android.material.snackbar.Snackbar
 import kotlinx.android.synthetic.main.dialog_sort_books.*
 
 
 class SortBooksDialog(context: Context, var sortBooksDialogListener: SortBooksDialogListener) : AppCompatDialog(context) {
 
-//    var whatIsClicked: String = "nothing"
+    var whatIsClicked: String = "nothing"
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -25,65 +21,70 @@ class SortBooksDialog(context: Context, var sortBooksDialogListener: SortBooksDi
         setContentView(R.layout.dialog_sort_books)
 
         this.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
-//        rbAdderRating.visibility = View.GONE
 
-//        ivBookStatusSetRead.setOnClickListener {
-//            ivBookStatusSetRead.setColorFilter(ContextCompat.getColor(context, R.color.orange_300), android.graphics.PorterDuff.Mode.SRC_IN)
-//            ivBookStatusSetInProgress.setColorFilter(ContextCompat.getColor(context, R.color.grey), android.graphics.PorterDuff.Mode.SRC_IN)
-//            ivBookStatusSetToRead.setColorFilter(ContextCompat.getColor(context, R.color.grey), android.graphics.PorterDuff.Mode.SRC_IN)
-//            whatIsClicked = "read"
-//            rbAdderRating.visibility = View.VISIBLE
-//            it.hideKeyboard()
-//        }
-//
-//        ivBookStatusSetInProgress.setOnClickListener {
-//            ivBookStatusSetRead.setColorFilter(ContextCompat.getColor(context, R.color.grey), android.graphics.PorterDuff.Mode.SRC_IN)
-//            ivBookStatusSetInProgress.setColorFilter(ContextCompat.getColor(context, R.color.orange_300), android.graphics.PorterDuff.Mode.SRC_IN)
-//            ivBookStatusSetToRead.setColorFilter(ContextCompat.getColor(context, R.color.grey), android.graphics.PorterDuff.Mode.SRC_IN)
-//            whatIsClicked = "in_progress"
-//            rbAdderRating.visibility = View.GONE
-//            it.hideKeyboard()
-//        }
-//
-//        ivBookStatusSetToRead.setOnClickListener {
-//            ivBookStatusSetRead.setColorFilter(ContextCompat.getColor(context, R.color.grey), android.graphics.PorterDuff.Mode.SRC_IN)
-//            ivBookStatusSetInProgress.setColorFilter(ContextCompat.getColor(context, R.color.grey), android.graphics.PorterDuff.Mode.SRC_IN)
-//            ivBookStatusSetToRead.setColorFilter(ContextCompat.getColor(context, R.color.orange_300), android.graphics.PorterDuff.Mode.SRC_IN)
-//            whatIsClicked = "to_read"
-//            rbAdderRating.visibility = View.GONE
-//            it.hideKeyboard()
-//        }
+        ivSortTitleDesc.setOnClickListener {
+            ivSortTitleDesc.setColorFilter(ContextCompat.getColor(context, R.color.orange_300), android.graphics.PorterDuff.Mode.SRC_IN)
+            ivSortTitleAsc.setColorFilter(ContextCompat.getColor(context, R.color.grey), android.graphics.PorterDuff.Mode.SRC_IN)
+            ivSortAuthorDecreasing.setColorFilter(ContextCompat.getColor(context, R.color.grey), android.graphics.PorterDuff.Mode.SRC_IN)
+            ivSortAuthorIncreasing.setColorFilter(ContextCompat.getColor(context, R.color.grey), android.graphics.PorterDuff.Mode.SRC_IN)
+            ivSortRatingDecreasing.setColorFilter(ContextCompat.getColor(context, R.color.grey), android.graphics.PorterDuff.Mode.SRC_IN)
+            ivSortRatingIncreasing.setColorFilter(ContextCompat.getColor(context, R.color.grey), android.graphics.PorterDuff.Mode.SRC_IN)
+            whatIsClicked = "ivSortTitleDesc"
+        }
 
-//        btnSorterExecute.setOnClickListener {
-//            val bookTitle = etAdderBookTitle.text.toString()
-//            val bookAuthor = etAdderAuthor.text.toString()
-//            var bookRating = 0.0F
-//
-//            if (bookTitle.isNotEmpty()) {
-//                if (bookAuthor.isNotEmpty()){
-//                    if (whatIsClicked != "nothing") {
-//                        when(whatIsClicked){
-//                            "read" -> bookRating = rbAdderRating.rating
-//                            "in_progress" -> bookRating = 0.0F
-//                            "to_read" -> bookRating = 0.0F
-//                        }
-//                        val editedBook = Book(bookTitle, bookAuthor, bookRating, bookStatus = whatIsClicked, bookPriority = "none", bookStartDate = "none", bookFinishDate = "none")
-//                        addBookDialogListener.onSaveButtonClicked(editedBook)
-//                        dismiss()
-//                    } else {
-//                        Snackbar.make(it, R.string.sbWarningState, Snackbar.LENGTH_SHORT).show()
-//                    }
-//                } else {
-//                    Snackbar.make(it, R.string.sbWarningAuthor, Snackbar.LENGTH_SHORT).show()
-//                }
-//            } else {
-//                Snackbar.make(it, R.string.sbWarningTitle, Snackbar.LENGTH_SHORT).show()
-//            }
-//        }
+        ivSortTitleAsc.setOnClickListener {
+            ivSortTitleDesc.setColorFilter(ContextCompat.getColor(context, R.color.grey), android.graphics.PorterDuff.Mode.SRC_IN)
+            ivSortTitleAsc.setColorFilter(ContextCompat.getColor(context, R.color.orange_300), android.graphics.PorterDuff.Mode.SRC_IN)
+            ivSortAuthorDecreasing.setColorFilter(ContextCompat.getColor(context, R.color.grey), android.graphics.PorterDuff.Mode.SRC_IN)
+            ivSortAuthorIncreasing.setColorFilter(ContextCompat.getColor(context, R.color.grey), android.graphics.PorterDuff.Mode.SRC_IN)
+            ivSortRatingDecreasing.setColorFilter(ContextCompat.getColor(context, R.color.grey), android.graphics.PorterDuff.Mode.SRC_IN)
+            ivSortRatingIncreasing.setColorFilter(ContextCompat.getColor(context, R.color.grey), android.graphics.PorterDuff.Mode.SRC_IN)
+            whatIsClicked = "ivSortTitleAsc"
+        }
+
+        ivSortAuthorDecreasing.setOnClickListener {
+            ivSortTitleDesc.setColorFilter(ContextCompat.getColor(context, R.color.grey), android.graphics.PorterDuff.Mode.SRC_IN)
+            ivSortTitleAsc.setColorFilter(ContextCompat.getColor(context, R.color.grey), android.graphics.PorterDuff.Mode.SRC_IN)
+            ivSortAuthorDecreasing.setColorFilter(ContextCompat.getColor(context, R.color.orange_300), android.graphics.PorterDuff.Mode.SRC_IN)
+            ivSortAuthorIncreasing.setColorFilter(ContextCompat.getColor(context, R.color.grey), android.graphics.PorterDuff.Mode.SRC_IN)
+            ivSortRatingDecreasing.setColorFilter(ContextCompat.getColor(context, R.color.grey), android.graphics.PorterDuff.Mode.SRC_IN)
+            ivSortRatingIncreasing.setColorFilter(ContextCompat.getColor(context, R.color.grey), android.graphics.PorterDuff.Mode.SRC_IN)
+            whatIsClicked = "ivSortAuthorDecreasing"
+        }
+
+        ivSortAuthorIncreasing.setOnClickListener {
+            ivSortTitleDesc.setColorFilter(ContextCompat.getColor(context, R.color.grey), android.graphics.PorterDuff.Mode.SRC_IN)
+            ivSortTitleAsc.setColorFilter(ContextCompat.getColor(context, R.color.grey), android.graphics.PorterDuff.Mode.SRC_IN)
+            ivSortAuthorDecreasing.setColorFilter(ContextCompat.getColor(context, R.color.grey), android.graphics.PorterDuff.Mode.SRC_IN)
+            ivSortAuthorIncreasing.setColorFilter(ContextCompat.getColor(context, R.color.orange_300), android.graphics.PorterDuff.Mode.SRC_IN)
+            ivSortRatingDecreasing.setColorFilter(ContextCompat.getColor(context, R.color.grey), android.graphics.PorterDuff.Mode.SRC_IN)
+            ivSortRatingIncreasing.setColorFilter(ContextCompat.getColor(context, R.color.grey), android.graphics.PorterDuff.Mode.SRC_IN)
+            whatIsClicked = "ivSortAuthorIncreasing"
+        }
+
+        ivSortRatingDecreasing.setOnClickListener {
+            ivSortTitleDesc.setColorFilter(ContextCompat.getColor(context, R.color.grey), android.graphics.PorterDuff.Mode.SRC_IN)
+            ivSortTitleAsc.setColorFilter(ContextCompat.getColor(context, R.color.grey), android.graphics.PorterDuff.Mode.SRC_IN)
+            ivSortAuthorDecreasing.setColorFilter(ContextCompat.getColor(context, R.color.grey), android.graphics.PorterDuff.Mode.SRC_IN)
+            ivSortAuthorIncreasing.setColorFilter(ContextCompat.getColor(context, R.color.grey), android.graphics.PorterDuff.Mode.SRC_IN)
+            ivSortRatingDecreasing.setColorFilter(ContextCompat.getColor(context, R.color.orange_300), android.graphics.PorterDuff.Mode.SRC_IN)
+            ivSortRatingIncreasing.setColorFilter(ContextCompat.getColor(context, R.color.grey), android.graphics.PorterDuff.Mode.SRC_IN)
+            whatIsClicked = "ivSortRatingDecreasing"
+        }
+
+        ivSortRatingIncreasing.setOnClickListener {
+            ivSortTitleDesc.setColorFilter(ContextCompat.getColor(context, R.color.grey), android.graphics.PorterDuff.Mode.SRC_IN)
+            ivSortTitleAsc.setColorFilter(ContextCompat.getColor(context, R.color.grey), android.graphics.PorterDuff.Mode.SRC_IN)
+            ivSortAuthorDecreasing.setColorFilter(ContextCompat.getColor(context, R.color.grey), android.graphics.PorterDuff.Mode.SRC_IN)
+            ivSortAuthorIncreasing.setColorFilter(ContextCompat.getColor(context, R.color.grey), android.graphics.PorterDuff.Mode.SRC_IN)
+            ivSortRatingDecreasing.setColorFilter(ContextCompat.getColor(context, R.color.grey), android.graphics.PorterDuff.Mode.SRC_IN)
+            ivSortRatingIncreasing.setColorFilter(ContextCompat.getColor(context, R.color.orange_300), android.graphics.PorterDuff.Mode.SRC_IN)
+            whatIsClicked = "ivSortRatingIncreasing"
+        }
+
+        btnSorterExecute.setOnClickListener {
+            sortBooksDialogListener.onSaveButtonClicked(whatIsClicked)
+            dismiss()
+        }
     }
-
-//    fun View.hideKeyboard() {
-//        val inputManager = context.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
-//        inputManager.hideSoftInputFromWindow(windowToken, 0)
-//    }
 }

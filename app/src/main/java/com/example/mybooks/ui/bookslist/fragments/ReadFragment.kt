@@ -20,8 +20,10 @@ import com.example.mybooks.data.repositories.BooksRepository
 import com.example.mybooks.ui.bookslist.ListActivity
 import com.example.mybooks.ui.bookslist.viewmodel.BooksViewModel
 import com.example.mybooks.ui.bookslist.viewmodel.BooksViewModelProviderFactory
-import com.example.mybooks.ui.bookslist.adder.AddBookDialog
-import com.example.mybooks.ui.bookslist.adder.AddBookDialogListener
+import com.example.mybooks.ui.bookslist.dialogs.AddBookDialog
+import com.example.mybooks.ui.bookslist.dialogs.AddBookDialogListener
+import com.example.mybooks.ui.bookslist.dialogs.SortBooksDialog
+import com.example.mybooks.ui.bookslist.dialogs.SortBooksDialogListener
 import kotlinx.android.synthetic.main.fragment_read.*
 
 class ReadFragment : Fragment(R.layout.fragment_read) {
@@ -36,16 +38,6 @@ class ReadFragment : Fragment(R.layout.fragment_read) {
         ivClearSearch.visibility = View.GONE
         ivClearSearch.isClickable = false
         view.hideKeyboard()
-
-//        btnSortAZIncreasing.visibility = View.GONE
-//        btnSortAZDecreasing.visibility = View.GONE
-//        btnSortRatingDecreasing.visibility = View.GONE
-//        btnSortRatingIncreasing.visibility = View.GONE
-//
-//        btnSortAZIncreasing.isClickable = false
-//        btnSortAZDecreasing.isClickable = false
-//        btnSortRatingDecreasing.isClickable = false
-//        btnSortRatingIncreasing.isClickable = false
 
         val database = BooksDatabase(view.context)
         val booksRepository = BooksRepository(database)
@@ -86,6 +78,28 @@ class ReadFragment : Fragment(R.layout.fragment_read) {
             ).show()
         }
 
+        ivSort.setOnClickListener{
+            SortBooksDialog(view.context,
+                object: SortBooksDialogListener {
+                    override fun onSaveButtonClicked(sort_order: String) {
+                        when(sort_order) {
+                            "ivSortTitleDesc" -> {
+                                viewModel.getSortedBooksByTitleDesc().observe(viewLifecycleOwner, Observer { some_books ->
+                                    bookAdapter.differ.submitList(some_books)
+                                })
+
+                            }
+                            "ivSortTitleAsc" -> {
+                                viewModel.getSortedBooksByTitleAsc().observe(viewLifecycleOwner, Observer { some_books ->
+                                    bookAdapter.differ.submitList(some_books)
+                                })
+                            }
+                        }
+                    }
+                }
+            ).show()
+        }
+
         bookAdapter.setOnBookClickListener {
             etSearch.setText("")
             val bundle = Bundle().apply {
@@ -98,16 +112,6 @@ class ReadFragment : Fragment(R.layout.fragment_read) {
         }
 
         ivSearch.setOnClickListener {
-//            btnSortAZIncreasing.visibility = View.GONE
-//            btnSortAZDecreasing.visibility = View.GONE
-//            btnSortRatingDecreasing.visibility = View.GONE
-//            btnSortRatingIncreasing.visibility = View.GONE
-//
-//            btnSortAZIncreasing.isClickable = false
-//            btnSortAZDecreasing.isClickable = false
-//            btnSortRatingDecreasing.isClickable = false
-//            btnSortRatingIncreasing.isClickable = false
-
             when(etSearch.visibility) {
                 View.VISIBLE -> {
                     when (etSearch.text.isEmpty()){
@@ -178,81 +182,6 @@ class ReadFragment : Fragment(R.layout.fragment_read) {
                 }
             }
         }
-//
-//        ivSort.setOnClickListener {
-//            when(btnSortAZIncreasing.visibility) {
-//                View.GONE -> {
-//                    btnSortAZIncreasing.visibility = View.VISIBLE
-//                    btnSortAZDecreasing.visibility = View.VISIBLE
-//                    btnSortRatingDecreasing.visibility = View.VISIBLE
-//                    btnSortRatingIncreasing.visibility = View.VISIBLE
-//
-//                    btnSortAZIncreasing.isClickable = true
-//                    btnSortAZDecreasing.isClickable = true
-//                    btnSortRatingDecreasing.isClickable = true
-//                    btnSortRatingIncreasing.isClickable = true
-//                }
-//                View.VISIBLE -> {
-//                    btnSortAZIncreasing.visibility = View.GONE
-//                    btnSortAZDecreasing.visibility = View.GONE
-//                    btnSortRatingDecreasing.visibility = View.GONE
-//                    btnSortRatingIncreasing.visibility = View.GONE
-//
-//                    btnSortAZIncreasing.isClickable = false
-//                    btnSortAZDecreasing.isClickable = false
-//                    btnSortRatingDecreasing.isClickable = false
-//                    btnSortRatingIncreasing.isClickable = false
-//                }
-//            }
-//        }
-//
-//        btnSortAZIncreasing.setOnClickListener {
-//            btnSortAZIncreasing.visibility = View.GONE
-//            btnSortAZDecreasing.visibility = View.GONE
-//            btnSortRatingDecreasing.visibility = View.GONE
-//            btnSortRatingIncreasing.visibility = View.GONE
-//
-//            btnSortAZIncreasing.isClickable = false
-//            btnSortAZDecreasing.isClickable = false
-//            btnSortRatingDecreasing.isClickable = false
-//            btnSortRatingIncreasing.isClickable = false
-//        }
-//
-//        btnSortAZDecreasing.setOnClickListener {
-//            btnSortAZIncreasing.visibility = View.GONE
-//            btnSortAZDecreasing.visibility = View.GONE
-//            btnSortRatingDecreasing.visibility = View.GONE
-//            btnSortRatingIncreasing.visibility = View.GONE
-//
-//            btnSortAZIncreasing.isClickable = false
-//            btnSortAZDecreasing.isClickable = false
-//            btnSortRatingDecreasing.isClickable = false
-//            btnSortRatingIncreasing.isClickable = false
-//        }
-//
-//        btnSortRatingDecreasing.setOnClickListener {
-//            btnSortAZIncreasing.visibility = View.GONE
-//            btnSortAZDecreasing.visibility = View.GONE
-//            btnSortRatingDecreasing.visibility = View.GONE
-//            btnSortRatingIncreasing.visibility = View.GONE
-//
-//            btnSortAZIncreasing.isClickable = false
-//            btnSortAZDecreasing.isClickable = false
-//            btnSortRatingDecreasing.isClickable = false
-//            btnSortRatingIncreasing.isClickable = false
-//        }
-//
-//        btnSortRatingIncreasing.setOnClickListener {
-//            btnSortAZIncreasing.visibility = View.GONE
-//            btnSortAZDecreasing.visibility = View.GONE
-//            btnSortRatingDecreasing.visibility = View.GONE
-//            btnSortRatingIncreasing.visibility = View.GONE
-//
-//            btnSortAZIncreasing.isClickable = false
-//            btnSortAZDecreasing.isClickable = false
-//            btnSortRatingDecreasing.isClickable = false
-//            btnSortRatingIncreasing.isClickable = false
-//        }
     }
 
     fun View.hideKeyboard() {

@@ -44,4 +44,8 @@
     <string name="sbWarningAuthor">Wpisz autora książki!</string>
     <string name="sbWarningTitle">Wpisz tytuł książki!</string>
     <string name="sbWarningState">Wybierz status książki!</string>
+    <string name="tvSorterTitle">Sortuj książki</string>
+    <string name="tvSortTitle">Tytuł</string>
+    <string name="tvSortAuthor">Autor</string>
+    <string name="tvSortRating">Ocena</string>
 </resources>

@@ -20,8 +20,8 @@ import com.example.mybooks.data.repositories.BooksRepository
 import com.example.mybooks.ui.bookslist.ListActivity
 import com.example.mybooks.ui.bookslist.viewmodel.BooksViewModel
 import com.example.mybooks.ui.bookslist.viewmodel.BooksViewModelProviderFactory
-import com.example.mybooks.ui.bookslist.adder.AddBookDialog
-import com.example.mybooks.ui.bookslist.adder.AddBookDialogListener
+import com.example.mybooks.ui.bookslist.dialogs.AddBookDialog
+import com.example.mybooks.ui.bookslist.dialogs.AddBookDialogListener
 import kotlinx.android.synthetic.main.fragment_in_progress.*
 
 class InProgressFragment : Fragment(R.layout.fragment_in_progress) {

@@ -46,6 +46,12 @@
     <string name="sbWarningAuthor">Fill in the author!</string>
     <string name="sbWarningTitle">Fill in the title!</string>
     <string name="sbWarningState">Select book\'s state!</string>
+    <string name="tvSorterTitle">Sort books</string>
+    <string name="tvSortTitle">Title</string>
+    <string name="tvSortAuthor">Author</string>
+    <string name="tvSortRating">Rating</string>
+    <string name="btnSortDecreasing" translatable="false">▼</string>
+    <string name="btnSortIncreasing" translatable="false">▲</string>
     <!-- Autofill hints -->
     <string name="hintBookTitle" translatable="false">booktitle</string>
     <string name="hintBookAuthor" translatable="false">bookauthor</string>

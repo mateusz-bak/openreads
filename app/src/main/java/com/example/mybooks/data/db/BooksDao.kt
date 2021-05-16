@@ -27,4 +27,10 @@ interface BooksDao {
 
     @Query("SELECT * FROM Book WHERE (item_bookTitle LIKE '%' || :searchQuery || '%' OR item_bookAuthor LIKE '%' || :searchQuery || '%')")
     fun searchBooks(searchQuery: String): LiveData<List<Book>>
+
+    @Query("SELECT * FROM Book ORDER BY item_bookTitle DESC")
+    fun getSortedBooksByTitleDesc(): LiveData<List<Book>>
+
+    @Query("SELECT * FROM Book ORDER BY item_bookTitle ASC")
+    fun getSortedBooksByTitleAsc(): LiveData<List<Book>>
 }
