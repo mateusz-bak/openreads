@@ -57,7 +57,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:focusable="true"
-                android:inputType="textCapWords"
+                android:inputType="textCapSentences"
                 android:paddingStart="24dp"
                 android:paddingEnd="24dp"
                 android:text="@string/etEditedBookTitle"
