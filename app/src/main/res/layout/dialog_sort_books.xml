@@ -43,7 +43,7 @@
         android:text="@string/tvSortAuthor"
         android:textColor="?colorOnSecondary"
         android:textSize="24sp"
-        app:layout_constraintEnd_toStartOf="@+id/ivSortAuthorIncreasing"
+        app:layout_constraintEnd_toStartOf="@+id/ivSortAuthorDesc"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tvSortTitle" />
@@ -60,7 +60,7 @@
         app:layout_constraintTop_toBottomOf="@+id/tvSortAuthor" />
 
     <ImageView
-        android:id="@+id/ivSortTitleDesc"
+        android:id="@+id/ivSortTitleAsc"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:clickable="true"
@@ -69,13 +69,13 @@
         android:scaleY="2"
         app:tint="@color/grey"
         app:layout_constraintBottom_toBottomOf="@+id/tvSortTitle"
-        app:layout_constraintEnd_toEndOf="@+id/ivSortAuthorDecreasing"
-        app:layout_constraintStart_toStartOf="@+id/ivSortAuthorDecreasing"
+        app:layout_constraintEnd_toEndOf="@+id/ivSortAuthorAsc"
+        app:layout_constraintStart_toStartOf="@+id/ivSortAuthorAsc"
         app:layout_constraintTop_toTopOf="@+id/tvSortTitle"
-        app:srcCompat="@drawable/ic_baseline_keyboard_arrow_down_24" />
+        app:srcCompat="@drawable/ic_baseline_keyboard_arrow_up_24" />
 
     <ImageView
-        android:id="@+id/ivSortAuthorDecreasing"
+        android:id="@+id/ivSortAuthorAsc"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="24dp"
@@ -85,12 +85,12 @@
         android:scaleY="2"
         app:tint="@color/grey"
         app:layout_constraintBottom_toBottomOf="@+id/tvSortAuthor"
-        app:layout_constraintEnd_toStartOf="@+id/ivSortAuthorIncreasing"
+        app:layout_constraintEnd_toStartOf="@+id/ivSortAuthorDesc"
         app:layout_constraintTop_toTopOf="@+id/tvSortAuthor"
-        app:srcCompat="@drawable/ic_baseline_keyboard_arrow_down_24" />
+        app:srcCompat="@drawable/ic_baseline_keyboard_arrow_up_24" />
 
     <ImageView
-        android:id="@+id/ivSortRatingDecreasing"
+        android:id="@+id/ivSortRatingAsc"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:clickable="true"
@@ -99,13 +99,28 @@
         android:scaleY="2"
         app:tint="@color/grey"
         app:layout_constraintBottom_toBottomOf="@+id/tvSortRating"
-        app:layout_constraintEnd_toEndOf="@+id/ivSortAuthorDecreasing"
-        app:layout_constraintStart_toStartOf="@+id/ivSortAuthorDecreasing"
+        app:layout_constraintEnd_toEndOf="@+id/ivSortAuthorAsc"
+        app:layout_constraintStart_toStartOf="@+id/ivSortAuthorAsc"
         app:layout_constraintTop_toTopOf="@+id/tvSortRating"
+        app:srcCompat="@drawable/ic_baseline_keyboard_arrow_up_24" />
+
+    <ImageView
+        android:id="@+id/ivSortTitleDesc"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:clickable="true"
+        android:focusable="true"
+        android:scaleX="2"
+        android:scaleY="2"
+        app:tint="@color/grey"
+        app:layout_constraintBottom_toBottomOf="@+id/ivSortTitleAsc"
+        app:layout_constraintEnd_toEndOf="@+id/ivSortAuthorDesc"
+        app:layout_constraintStart_toStartOf="@+id/ivSortAuthorDesc"
+        app:layout_constraintTop_toTopOf="@+id/ivSortTitleAsc"
         app:srcCompat="@drawable/ic_baseline_keyboard_arrow_down_24" />
 
     <ImageView
-        android:id="@+id/ivSortTitleAsc"
+        android:id="@+id/ivSortAuthorDesc"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:clickable="true"
@@ -113,31 +128,16 @@
         android:scaleX="2"
         android:scaleY="2"
         app:tint="@color/grey"
-        app:layout_constraintBottom_toBottomOf="@+id/ivSortTitleDesc"
-        app:layout_constraintEnd_toEndOf="@+id/ivSortAuthorIncreasing"
-        app:layout_constraintStart_toStartOf="@+id/ivSortAuthorIncreasing"
-        app:layout_constraintTop_toTopOf="@+id/ivSortTitleDesc"
-        app:srcCompat="@drawable/ic_baseline_keyboard_arrow_up_24" />
-
-    <ImageView
-        android:id="@+id/ivSortAuthorIncreasing"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:clickable="true"
-        android:focusable="true"
-        android:scaleX="2"
-        android:scaleY="2"
-        app:tint="@color/grey"
-        app:layout_constraintBottom_toBottomOf="@+id/ivSortAuthorDecreasing"
+        app:layout_constraintBottom_toBottomOf="@+id/ivSortAuthorAsc"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toEndOf="@+id/tvSortAuthor"
-        app:layout_constraintTop_toTopOf="@+id/ivSortAuthorDecreasing"
+        app:layout_constraintTop_toTopOf="@+id/ivSortAuthorAsc"
         app:layout_constraintVertical_bias="1.0"
-        app:srcCompat="@drawable/ic_baseline_keyboard_arrow_up_24" />
+        app:srcCompat="@drawable/ic_baseline_keyboard_arrow_down_24" />
 
     <ImageView
-        android:id="@+id/ivSortRatingIncreasing"
+        android:id="@+id/ivSortRatingDesc"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:clickable="true"
@@ -145,11 +145,11 @@
         android:scaleX="2"
         android:scaleY="2"
         app:tint="@color/grey"
-        app:layout_constraintBottom_toBottomOf="@+id/ivSortRatingDecreasing"
-        app:layout_constraintEnd_toEndOf="@+id/ivSortAuthorIncreasing"
-        app:layout_constraintStart_toStartOf="@+id/ivSortAuthorIncreasing"
-        app:layout_constraintTop_toTopOf="@+id/ivSortRatingDecreasing"
-        app:srcCompat="@drawable/ic_baseline_keyboard_arrow_up_24" />
+        app:layout_constraintBottom_toBottomOf="@+id/ivSortRatingAsc"
+        app:layout_constraintEnd_toEndOf="@+id/ivSortAuthorDesc"
+        app:layout_constraintStart_toStartOf="@+id/ivSortAuthorDesc"
+        app:layout_constraintTop_toTopOf="@+id/ivSortRatingAsc"
+        app:srcCompat="@drawable/ic_baseline_keyboard_arrow_down_24" />
 
     <ImageView
         android:id="@+id/ivSeparatorSorter1"
