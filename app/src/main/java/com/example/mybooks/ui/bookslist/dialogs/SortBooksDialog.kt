@@ -11,7 +11,7 @@ import androidx.core.content.ContextCompat
 import kotlinx.android.synthetic.main.dialog_sort_books.*
 
 
-class SortBooksDialog(context: Context, var sortBooksDialogListener: SortBooksDialogListener) : AppCompatDialog(context) {
+class SortBooksDialog(context: Context, var sortBooksDialogListener: SortBooksDialogListener, var sortOrder: String?) : AppCompatDialog(context) {
 
     var whatIsClicked: String = "nothing"
 
@@ -21,6 +21,11 @@ class SortBooksDialog(context: Context, var sortBooksDialogListener: SortBooksDi
         setContentView(R.layout.dialog_sort_books)
 
         this.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+
+        when (sortOrder) {
+            "ivSortTitleDesc" -> ivSortTitleDesc.setColorFilter(ContextCompat.getColor(context, R.color.orange_300), android.graphics.PorterDuff.Mode.SRC_IN)
+            "ivSortTitleAsc" -> ivSortTitleAsc.setColorFilter(ContextCompat.getColor(context, R.color.orange_300), android.graphics.PorterDuff.Mode.SRC_IN)
+        }
 
         ivSortTitleDesc.setOnClickListener {
             ivSortTitleDesc.setColorFilter(ContextCompat.getColor(context, R.color.orange_300), android.graphics.PorterDuff.Mode.SRC_IN)
