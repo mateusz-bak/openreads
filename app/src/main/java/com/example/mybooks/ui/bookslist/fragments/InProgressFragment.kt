@@ -10,6 +10,7 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelProviders
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.mybooks.R
@@ -22,7 +23,12 @@ import com.example.mybooks.ui.bookslist.viewmodel.BooksViewModel
 import com.example.mybooks.ui.bookslist.viewmodel.BooksViewModelProviderFactory
 import com.example.mybooks.ui.bookslist.dialogs.AddBookDialog
 import com.example.mybooks.ui.bookslist.dialogs.AddBookDialogListener
+import com.example.mybooks.ui.bookslist.dialogs.SortBooksDialog
+import com.example.mybooks.ui.bookslist.dialogs.SortBooksDialogListener
 import kotlinx.android.synthetic.main.fragment_in_progress.*
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
+
 
 class InProgressFragment : Fragment(R.layout.fragment_in_progress) {
 
@@ -31,6 +37,9 @@ class InProgressFragment : Fragment(R.layout.fragment_in_progress) {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         viewModel = (activity as ListActivity).booksViewModel
+
+        val sharedPref = (activity as ListActivity).getSharedPreferences("appPref", Context.MODE_PRIVATE)
+        val editor = sharedPref.edit()
 
         etSearch.visibility = View.GONE
         ivClearSearch.visibility = View.GONE
@@ -52,9 +61,7 @@ class InProgressFragment : Fragment(R.layout.fragment_in_progress) {
         rvBooks.adapter = bookAdapter
         rvBooks.layoutManager = LinearLayoutManager(view.context)
 
-        viewModel.getInProgressBooks().observe(viewLifecycleOwner, Observer { some_books ->
-            bookAdapter.differ.submitList(some_books)
-        })
+        this.getBooks(bookAdapter)
 
         fabAddBook.setOnClickListener{
             AddBookDialog(view.context,
@@ -74,6 +81,24 @@ class InProgressFragment : Fragment(R.layout.fragment_in_progress) {
                     }
                 }
             ).show()
+        }
+
+        ivSort.setOnClickListener{
+            SortBooksDialog(view.context,
+                object: SortBooksDialogListener {
+                    override fun onSaveButtonClicked(sortOrder: String) {
+                        editor.apply {
+                            putString("sort_order", sortOrder)
+                            apply()
+                        }
+                        getBooks(bookAdapter)
+                        lifecycleScope.launch {
+                            delay(250L)
+                            rvBooks.scrollToPosition(0)
+                        }
+                    }
+                }
+                , sharedPref.getString("sort_order", "ivSortTitleAsc")).show()
         }
 
         bookAdapter.setOnBookClickListener {
@@ -131,9 +156,12 @@ class InProgressFragment : Fragment(R.layout.fragment_in_progress) {
         })
 
         etSearch.addTextChangedListener {
-            viewModel.searchBooks(etSearch.text.toString()).observe(viewLifecycleOwner, Observer { some_books ->
-                bookAdapter.differ.submitList(some_books)
-            })
+            if (etSearch.text.isNotEmpty()) {
+                viewModel.searchBooks(etSearch.text.toString())
+                    .observe(viewLifecycleOwner, Observer { some_books ->
+                        bookAdapter.differ.submitList(some_books)
+                    })
+            }
         }
 
         ivClearSearch.setOnClickListener {
@@ -149,9 +177,7 @@ class InProgressFragment : Fragment(R.layout.fragment_in_progress) {
                     ivClearSearch.visibility = View.GONE
                     ivClearSearch.isClickable = false
                     it.hideKeyboard()
-                    viewModel.getInProgressBooks().observe(viewLifecycleOwner, Observer { some_books ->
-                        bookAdapter.differ.submitList(some_books)
-                    })
+                    this.getBooks(bookAdapter)
                 }
             }
         }
@@ -165,5 +191,17 @@ class InProgressFragment : Fragment(R.layout.fragment_in_progress) {
     fun View.showKeyboard() {
         val inputManager = context.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
         inputManager.toggleSoftInputFromWindow(windowToken, 0, 0)
+    }
+
+    fun getBooks(bookAdapter: BookAdapter) {
+        val sharedPref = (activity as ListActivity).getSharedPreferences("appPref", Context.MODE_PRIVATE)
+        when(sharedPref.getString("sort_order", "ivSortTitleAsc")) {
+            "ivSortTitleDesc" -> viewModel.getSortedBooksByTitleDesc("in_progress").observe(viewLifecycleOwner, Observer { some_books -> bookAdapter.differ.submitList(some_books)})
+            "ivSortTitleAsc" -> viewModel.getSortedBooksByTitleAsc("in_progress").observe(viewLifecycleOwner, Observer { some_books -> bookAdapter.differ.submitList(some_books)})
+            "ivSortAuthorDesc" -> viewModel.getSortedBooksByAuthorDesc("in_progress").observe(viewLifecycleOwner, Observer { some_books -> bookAdapter.differ.submitList(some_books)})
+            "ivSortAuthorAsc" -> viewModel.getSortedBooksByAuthorAsc("in_progress").observe(viewLifecycleOwner, Observer { some_books -> bookAdapter.differ.submitList(some_books)})
+            "ivSortRatingDesc" -> viewModel.getSortedBooksByRatingDesc("in_progress").observe(viewLifecycleOwner, Observer { some_books -> bookAdapter.differ.submitList(some_books)})
+            "ivSortRatingAsc" -> viewModel.getSortedBooksByRatingAsc("in_progress").observe(viewLifecycleOwner, Observer { some_books -> bookAdapter.differ.submitList(some_books)})
+        }
     }
 }

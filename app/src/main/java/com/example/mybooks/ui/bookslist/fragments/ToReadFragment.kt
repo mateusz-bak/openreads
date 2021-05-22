@@ -10,6 +10,7 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelProviders
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.mybooks.R
@@ -22,7 +23,11 @@ import com.example.mybooks.ui.bookslist.viewmodel.BooksViewModel
 import com.example.mybooks.ui.bookslist.viewmodel.BooksViewModelProviderFactory
 import com.example.mybooks.ui.bookslist.dialogs.AddBookDialog
 import com.example.mybooks.ui.bookslist.dialogs.AddBookDialogListener
+import com.example.mybooks.ui.bookslist.dialogs.SortBooksDialog
+import com.example.mybooks.ui.bookslist.dialogs.SortBooksDialogListener
 import kotlinx.android.synthetic.main.fragment_to_read.*
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
 
 class ToReadFragment : Fragment(R.layout.fragment_to_read) {
 
@@ -31,6 +36,9 @@ class ToReadFragment : Fragment(R.layout.fragment_to_read) {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         viewModel = (activity as ListActivity).booksViewModel
+
+        val sharedPref = (activity as ListActivity).getSharedPreferences("appPref", Context.MODE_PRIVATE)
+        val editor = sharedPref.edit()
 
         etSearch.visibility = View.GONE
         ivClearSearch.visibility = View.GONE
@@ -52,9 +60,7 @@ class ToReadFragment : Fragment(R.layout.fragment_to_read) {
         rvBooks.adapter = bookAdapter
         rvBooks.layoutManager = LinearLayoutManager(view.context)
 
-        viewModel.getToReadBooks().observe(viewLifecycleOwner, Observer { some_books ->
-            bookAdapter.differ.submitList(some_books)
-        })
+        this.getBooks(bookAdapter)
 
         fabAddBook.setOnClickListener{
             AddBookDialog(view.context,
@@ -74,6 +80,24 @@ class ToReadFragment : Fragment(R.layout.fragment_to_read) {
                     }
                 }
             ).show()
+        }
+
+        ivSort.setOnClickListener{
+            SortBooksDialog(view.context,
+                object: SortBooksDialogListener {
+                    override fun onSaveButtonClicked(sortOrder: String) {
+                        editor.apply {
+                            putString("sort_order", sortOrder)
+                            apply()
+                        }
+                        getBooks(bookAdapter)
+                        lifecycleScope.launch {
+                            delay(250L)
+                            rvBooks.scrollToPosition(0)
+                        }
+                    }
+                }
+                , sharedPref.getString("sort_order", "ivSortTitleAsc")).show()
         }
 
         bookAdapter.setOnBookClickListener {
@@ -131,9 +155,12 @@ class ToReadFragment : Fragment(R.layout.fragment_to_read) {
         })
 
         etSearch.addTextChangedListener {
-            viewModel.searchBooks(etSearch.text.toString()).observe(viewLifecycleOwner, Observer { some_books ->
-                bookAdapter.differ.submitList(some_books)
-            })
+            if (etSearch.text.isNotEmpty()) {
+                viewModel.searchBooks(etSearch.text.toString())
+                    .observe(viewLifecycleOwner, Observer { some_books ->
+                        bookAdapter.differ.submitList(some_books)
+                    })
+            }
         }
 
         ivClearSearch.setOnClickListener {
@@ -149,9 +176,7 @@ class ToReadFragment : Fragment(R.layout.fragment_to_read) {
                     ivClearSearch.visibility = View.GONE
                     ivClearSearch.isClickable = false
                     it.hideKeyboard()
-                    viewModel.getToReadBooks().observe(viewLifecycleOwner, Observer { some_books ->
-                        bookAdapter.differ.submitList(some_books)
-                    })
+                    this.getBooks(bookAdapter)
                 }
             }
         }
@@ -165,5 +190,17 @@ class ToReadFragment : Fragment(R.layout.fragment_to_read) {
     fun View.showKeyboard() {
         val inputManager = context.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
         inputManager.toggleSoftInputFromWindow(windowToken, 0, 0)
+    }
+
+    fun getBooks(bookAdapter: BookAdapter) {
+        val sharedPref = (activity as ListActivity).getSharedPreferences("appPref", Context.MODE_PRIVATE)
+        when(sharedPref.getString("sort_order", "ivSortTitleAsc")) {
+            "ivSortTitleDesc" -> viewModel.getSortedBooksByTitleDesc("to_read").observe(viewLifecycleOwner, Observer { some_books -> bookAdapter.differ.submitList(some_books)})
+            "ivSortTitleAsc" -> viewModel.getSortedBooksByTitleAsc("to_read").observe(viewLifecycleOwner, Observer { some_books -> bookAdapter.differ.submitList(some_books)})
+            "ivSortAuthorDesc" -> viewModel.getSortedBooksByAuthorDesc("to_read").observe(viewLifecycleOwner, Observer { some_books -> bookAdapter.differ.submitList(some_books)})
+            "ivSortAuthorAsc" -> viewModel.getSortedBooksByAuthorAsc("to_read").observe(viewLifecycleOwner, Observer { some_books -> bookAdapter.differ.submitList(some_books)})
+            "ivSortRatingDesc" -> viewModel.getSortedBooksByRatingDesc("to_read").observe(viewLifecycleOwner, Observer { some_books -> bookAdapter.differ.submitList(some_books)})
+            "ivSortRatingAsc" -> viewModel.getSortedBooksByRatingAsc("to_read").observe(viewLifecycleOwner, Observer { some_books -> bookAdapter.differ.submitList(some_books)})
+        }
     }
 }
