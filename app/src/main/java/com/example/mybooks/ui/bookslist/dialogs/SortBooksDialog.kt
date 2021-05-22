@@ -25,6 +25,10 @@ class SortBooksDialog(context: Context, var sortBooksDialogListener: SortBooksDi
         when (sortOrder) {
             "ivSortTitleDesc" -> ivSortTitleDesc.setColorFilter(ContextCompat.getColor(context, R.color.orange_300), android.graphics.PorterDuff.Mode.SRC_IN)
             "ivSortTitleAsc" -> ivSortTitleAsc.setColorFilter(ContextCompat.getColor(context, R.color.orange_300), android.graphics.PorterDuff.Mode.SRC_IN)
+            "ivSortAuthorDesc" -> ivSortAuthorDesc.setColorFilter(ContextCompat.getColor(context, R.color.orange_300), android.graphics.PorterDuff.Mode.SRC_IN)
+            "ivSortAuthorAsc" -> ivSortAuthorAsc.setColorFilter(ContextCompat.getColor(context, R.color.orange_300), android.graphics.PorterDuff.Mode.SRC_IN)
+            "ivSortRatingDesc" -> ivSortRatingDesc.setColorFilter(ContextCompat.getColor(context, R.color.orange_300), android.graphics.PorterDuff.Mode.SRC_IN)
+            "ivSortRatingAsc" -> ivSortRatingAsc.setColorFilter(ContextCompat.getColor(context, R.color.orange_300), android.graphics.PorterDuff.Mode.SRC_IN)
         }
 
         ivSortTitleDesc.setOnClickListener {

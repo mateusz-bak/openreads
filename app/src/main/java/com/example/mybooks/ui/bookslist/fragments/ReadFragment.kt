@@ -61,18 +61,7 @@ class ReadFragment : Fragment(R.layout.fragment_read) {
         rvBooks.adapter = bookAdapter
         rvBooks.layoutManager = LinearLayoutManager(view.context)
 
-        when(sharedPref.getString("sort_order", "ivSortTitleAsc")) {
-            "ivSortTitleDesc" -> {
-                viewModel.getSortedBooksByTitleDesc("read").observe(viewLifecycleOwner, Observer { some_books ->
-                    bookAdapter.differ.submitList(some_books)
-                })
-            }
-            "ivSortTitleAsc" -> {
-                viewModel.getSortedBooksByTitleAsc("read").observe(viewLifecycleOwner, Observer { some_books ->
-                    bookAdapter.differ.submitList(some_books)
-                })
-            }
-        }
+        this.getBooks(bookAdapter)
 
         fabAddBook.setOnClickListener{
             AddBookDialog(view.context,
@@ -98,51 +87,14 @@ class ReadFragment : Fragment(R.layout.fragment_read) {
             SortBooksDialog(view.context,
                 object: SortBooksDialogListener {
                     override fun onSaveButtonClicked(sortOrder: String) {
-                        when(sortOrder) {
-                            "ivSortTitleDesc" -> {
-                                viewModel.getSortedBooksByTitleDesc("read").observe(viewLifecycleOwner, Observer { some_books ->
-                                    bookAdapter.differ.submitList(some_books)
-                                })
-                                editor.apply {
-                                    putString("sort_order", sortOrder)
-                                    apply()
-                                }
-                            }
-                            "ivSortTitleAsc" -> {
-                                viewModel.getSortedBooksByTitleAsc("read").observe(viewLifecycleOwner, Observer { some_books ->
-                                    bookAdapter.differ.submitList(some_books)
-                                })
-                                editor.apply {
-                                    putString("sort_order", sortOrder)
-                                    apply()
-                                }
-                            }
-                            "ivSortAuthorDesc" -> {
-                                viewModel.getSortedBooksByAuthorDesc("read").observe(viewLifecycleOwner, Observer { some_books ->
-                                    bookAdapter.differ.submitList(some_books)
-                                })
-
-                            }
-                            "ivSortAuthorAsc" -> {
-                                viewModel.getSortedBooksByAuthorAsc("read").observe(viewLifecycleOwner, Observer { some_books ->
-                                    bookAdapter.differ.submitList(some_books)
-                                })
-                            }
-                            "ivSortRatingDesc" -> {
-                                viewModel.getSortedBooksByRatingDesc("read").observe(viewLifecycleOwner, Observer { some_books ->
-                                    bookAdapter.differ.submitList(some_books)
-                                })
-
-                            }
-                            "ivSortRatingAsc" -> {
-                                viewModel.getSortedBooksByRatingAsc("read").observe(viewLifecycleOwner, Observer { some_books ->
-                                    bookAdapter.differ.submitList(some_books)
-                                })
-                            }
+                        editor.apply {
+                            putString("sort_order", sortOrder)
+                            apply()
                         }
+                        getBooks(bookAdapter)
                         lifecycleScope.launch {
-                            delay(100L)
-                            rvBooks.smoothScrollToPosition(0)
+                            delay(250L)
+                            rvBooks.scrollToPosition(0)
                         }
                     }
                 }
@@ -204,7 +156,7 @@ class ReadFragment : Fragment(R.layout.fragment_read) {
         })
 
         etSearch.addTextChangedListener {
-            if (etSearch.text.isNotEmpty() == true) {
+            if (etSearch.text.isNotEmpty()) {
                 viewModel.searchBooks(etSearch.text.toString())
                     .observe(viewLifecycleOwner, Observer { some_books ->
                         bookAdapter.differ.submitList(some_books)
@@ -225,9 +177,7 @@ class ReadFragment : Fragment(R.layout.fragment_read) {
                     ivClearSearch.visibility = View.GONE
                     ivClearSearch.isClickable = false
                     it.hideKeyboard()
-                    viewModel.getReadBooks().observe(viewLifecycleOwner, Observer { some_books ->
-                        bookAdapter.differ.submitList(some_books)
-                    })
+                    this.getBooks(bookAdapter)
                 }
             }
         }
@@ -241,5 +191,17 @@ class ReadFragment : Fragment(R.layout.fragment_read) {
     fun View.showKeyboard() {
         val inputManager = context.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
         inputManager.toggleSoftInputFromWindow(windowToken, 0, 0)
+    }
+
+    fun getBooks(bookAdapter: BookAdapter) {
+        val sharedPref = (activity as ListActivity).getSharedPreferences("appPref", Context.MODE_PRIVATE)
+        when(sharedPref.getString("sort_order", "ivSortTitleAsc")) {
+            "ivSortTitleDesc" -> viewModel.getSortedBooksByTitleDesc("read").observe(viewLifecycleOwner, Observer { some_books -> bookAdapter.differ.submitList(some_books)})
+            "ivSortTitleAsc" -> viewModel.getSortedBooksByTitleAsc("read").observe(viewLifecycleOwner, Observer { some_books -> bookAdapter.differ.submitList(some_books)})
+            "ivSortAuthorDesc" -> viewModel.getSortedBooksByAuthorDesc("read").observe(viewLifecycleOwner, Observer { some_books -> bookAdapter.differ.submitList(some_books)})
+            "ivSortAuthorAsc" -> viewModel.getSortedBooksByAuthorAsc("read").observe(viewLifecycleOwner, Observer { some_books -> bookAdapter.differ.submitList(some_books)})
+            "ivSortRatingDesc" -> viewModel.getSortedBooksByRatingDesc("read").observe(viewLifecycleOwner, Observer { some_books -> bookAdapter.differ.submitList(some_books)})
+            "ivSortRatingAsc" -> viewModel.getSortedBooksByRatingAsc("read").observe(viewLifecycleOwner, Observer { some_books -> bookAdapter.differ.submitList(some_books)})
+        }
     }
 }

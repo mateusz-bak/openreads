@@ -31,7 +31,11 @@ class BooksViewModel(
 
     fun searchBooks(searchQuery: String) = repository.searchBooks(searchQuery)
 
-    fun getSortedBooksByTitleDesc() = repository.getSortedBooksByTitleDesc()
+    fun getSortedBooksByTitleDesc(bookStatus: String) = repository.getSortedBooksByTitleDesc(bookStatus)
+    fun getSortedBooksByTitleAsc(bookStatus: String) = repository.getSortedBooksByTitleAsc(bookStatus)
+    fun getSortedBooksByAuthorDesc(bookStatus: String) = repository.getSortedBooksByAuthorDesc(bookStatus)
+    fun getSortedBooksByAuthorAsc(bookStatus: String) = repository.getSortedBooksByAuthorAsc(bookStatus)
+    fun getSortedBooksByRatingDesc(bookStatus: String) = repository.getSortedBooksByRatingDesc(bookStatus)
+    fun getSortedBooksByRatingAsc(bookStatus: String) = repository.getSortedBooksByRatingAsc(bookStatus)
 
-    fun getSortedBooksByTitleAsc() = repository.getSortedBooksByTitleAsc()
 }
