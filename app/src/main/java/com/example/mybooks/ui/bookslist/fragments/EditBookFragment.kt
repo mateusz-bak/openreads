@@ -136,8 +136,8 @@ class EditBookFragment : Fragment(R.layout.fragment_edit_book) {
             findNavController().popBackStack()
             findNavController().popBackStack()
 
-            Snackbar.make(it, "Book Deleted", Snackbar.LENGTH_LONG)
-                .setAction("Undo", UndoBookDeletion())
+            Snackbar.make(it, getString(R.string.bookDeleted), Snackbar.LENGTH_LONG)
+                .setAction(getString(R.string.undo), UndoBookDeletion())
                 .show()
         }
     }

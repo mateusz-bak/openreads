@@ -50,4 +50,6 @@
     <string name="tvSortRating">Ocena</string>
     <string name="notYetImplemented">Jeszcze nie dostępne</string>
     <string name="dismiss">Ok</string>
+    <string name="bookDeleted">Książka usunięta</string>
+    <string name="undo">Cofnij</string>
 </resources>
