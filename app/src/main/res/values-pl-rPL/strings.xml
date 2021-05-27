@@ -21,8 +21,8 @@
     <string name="ivInProgressIndicator">Książka jest w trakcie czytania</string>
     <string name="ivToReadIndicator">Książka jest do przeczytania</string>
     <string name="tvSourceCode">Kod żródłowy</string>
-    <string name="ivRepoUrl">https://github.com/mateusz-bak/mybooks-android/</string>
-    <string name="tvLicenseUrl">https://github.com/mateusz-bak/mybooks-android/blob/master/LICENSE</string>
+    <string name="ivRepoUrl">https://github.com/mateusz-bak/books-tracker-android/</string>
+    <string name="tvLicenseUrl">https://github.com/mateusz-bak/books-tracker-android/blob/master/LICENSE</string>
     <string name="miAbout">O aplikacji</string>
     <string name="tvAppsAuthor">Autor</string>
     <string name="readFragment">Przeczytane</string>

@@ -6,7 +6,7 @@
 
     <fragment
         android:id="@+id/readFragment"
-        android:name="com.example.mybooks.ui.bookslist.fragments.ReadFragment"
+        android:name="com.books.tracker.ui.bookslist.fragments.ReadFragment"
         android:label="ReadFragment" >
         <action
             android:id="@+id/action_readFragment_to_displayBookFragment"
@@ -25,7 +25,7 @@
 
     <fragment
         android:id="@+id/inProgressFragment"
-        android:name="com.example.mybooks.ui.bookslist.fragments.InProgressFragment"
+        android:name="com.books.tracker.ui.bookslist.fragments.InProgressFragment"
         android:label="InProgressFragment" >
         <action
             android:id="@+id/action_inProgressFragment_to_displayBookFragment"
@@ -44,7 +44,7 @@
 
     <fragment
         android:id="@+id/toReadFragment"
-        android:name="com.example.mybooks.ui.bookslist.fragments.ToReadFragment"
+        android:name="com.books.tracker.ui.bookslist.fragments.ToReadFragment"
         android:label="ToReadFragment" >
         <action
             android:id="@+id/action_toReadFragment_to_displayBookFragment"
@@ -63,7 +63,7 @@
 
     <fragment
         android:id="@+id/displayBookFragment"
-        android:name="com.example.mybooks.ui.bookslist.fragments.DisplayBookFragment"
+        android:name="com.books.tracker.ui.bookslist.fragments.DisplayBookFragment"
         android:label="DisplayBookFragment" >
         <action
             android:id="@+id/action_displayBookFragment_to_editBookFragment"
@@ -74,15 +74,15 @@
             app:popExitAnim="@anim/fade_out"/>
         <argument
             android:name="book"
-            app:argType="com.example.mybooks.data.db.entities.Book" />
+            app:argType="com.books.tracker.data.db.entities.Book" />
     </fragment>
     <fragment
         android:id="@+id/editBookFragment"
-        android:name="com.example.mybooks.ui.bookslist.fragments.EditBookFragment"
+        android:name="com.books.tracker.ui.bookslist.fragments.EditBookFragment"
         android:label="EditBookFragment" >
         <argument
             android:name="book"
-            app:argType="com.example.mybooks.data.db.entities.Book" />
+            app:argType="com.books.tracker.data.db.entities.Book" />
         <action
             android:id="@+id/action_editBookFragment_to_displayBookFragment"
             app:destination="@id/displayBookFragment" />

@@ -1,5 +1,5 @@
 
-# myBooks-android  
+# books-tracker-android  
 An Android app written in Kotlin for keeping tracks of books you have read.
 
 ## Screenshots

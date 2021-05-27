@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name" translatable="false">MyBooks</string>
+    <string name="app_name" translatable="false">Books Tracker</string>
     <string name="ivAuthorUrl">https://github.com/mateusz-bak/</string>
     <!-- Images descriptions -->
     <string name="ivBookStatusSetRead">Set book as finished</string>
@@ -24,8 +24,8 @@
     <!-- In-app strings -->
     <string name="tvAppsAuthor">Created by</string>
     <string name="tvSourceCode">Source code</string>
-    <string name="ivRepoUrl">https://github.com/mateusz-bak/mybooks-android/</string>
-    <string name="tvLicenseUrl">https://github.com/mateusz-bak/mybooks-android/blob/master/LICENSE</string>
+    <string name="ivRepoUrl">https://github.com/mateusz-bak/books-tracker-android/</string>
+    <string name="tvLicenseUrl">https://github.com/mateusz-bak/books-tracker-android/blob/master/LICENSE</string>
     <string name="miAbout">About</string>
     <string name="readFragment">Finished</string>
     <string name="inProgressFragment">In progress</string>
