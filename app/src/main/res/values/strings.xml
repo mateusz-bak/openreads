@@ -58,5 +58,7 @@
     <string name="hintSearch" translatable="false">booksearch</string>
 
     <string name="app_version" translatable="false">v0.1.1</string>
+    <string name="notYetImplemented">Not yet implemented</string>
+    <string name="dismiss">Dismiss</string>
 
 </resources>
