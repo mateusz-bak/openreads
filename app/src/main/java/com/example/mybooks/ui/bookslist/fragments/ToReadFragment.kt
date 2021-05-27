@@ -25,7 +25,16 @@ import com.example.mybooks.ui.bookslist.dialogs.AddBookDialog
 import com.example.mybooks.ui.bookslist.dialogs.AddBookDialogListener
 import com.example.mybooks.ui.bookslist.dialogs.SortBooksDialog
 import com.example.mybooks.ui.bookslist.dialogs.SortBooksDialogListener
+import com.google.android.material.snackbar.Snackbar
+import kotlinx.android.synthetic.main.fragment_read.*
 import kotlinx.android.synthetic.main.fragment_to_read.*
+import kotlinx.android.synthetic.main.fragment_to_read.etSearch
+import kotlinx.android.synthetic.main.fragment_to_read.fabAddBook
+import kotlinx.android.synthetic.main.fragment_to_read.ivClearSearch
+import kotlinx.android.synthetic.main.fragment_to_read.ivMore
+import kotlinx.android.synthetic.main.fragment_to_read.ivSearch
+import kotlinx.android.synthetic.main.fragment_to_read.ivSort
+import kotlinx.android.synthetic.main.fragment_to_read.rvBooks
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
@@ -179,6 +188,12 @@ class ToReadFragment : Fragment(R.layout.fragment_to_read) {
                     this.getBooks(bookAdapter)
                 }
             }
+        }
+
+        ivMore.setOnClickListener{
+            Snackbar.make(view, getString(R.string.notYetImplemented), Snackbar.LENGTH_SHORT)
+                .setAction(getString(R.string.dismiss)) { }
+                .show()
         }
     }
 

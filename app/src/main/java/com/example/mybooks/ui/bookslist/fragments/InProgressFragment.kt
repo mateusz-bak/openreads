@@ -25,7 +25,16 @@ import com.example.mybooks.ui.bookslist.dialogs.AddBookDialog
 import com.example.mybooks.ui.bookslist.dialogs.AddBookDialogListener
 import com.example.mybooks.ui.bookslist.dialogs.SortBooksDialog
 import com.example.mybooks.ui.bookslist.dialogs.SortBooksDialogListener
+import com.google.android.material.snackbar.Snackbar
 import kotlinx.android.synthetic.main.fragment_in_progress.*
+import kotlinx.android.synthetic.main.fragment_in_progress.etSearch
+import kotlinx.android.synthetic.main.fragment_in_progress.fabAddBook
+import kotlinx.android.synthetic.main.fragment_in_progress.ivClearSearch
+import kotlinx.android.synthetic.main.fragment_in_progress.ivMore
+import kotlinx.android.synthetic.main.fragment_in_progress.ivSearch
+import kotlinx.android.synthetic.main.fragment_in_progress.ivSort
+import kotlinx.android.synthetic.main.fragment_in_progress.rvBooks
+import kotlinx.android.synthetic.main.fragment_read.*
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
@@ -180,6 +189,12 @@ class InProgressFragment : Fragment(R.layout.fragment_in_progress) {
                     this.getBooks(bookAdapter)
                 }
             }
+        }
+
+        ivMore.setOnClickListener{
+            Snackbar.make(view, getString(R.string.notYetImplemented), Snackbar.LENGTH_SHORT)
+                .setAction(getString(R.string.dismiss)) { }
+                .show()
         }
     }
 
