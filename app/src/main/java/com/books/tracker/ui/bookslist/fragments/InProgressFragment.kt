@@ -1,6 +1,7 @@
 package com.books.tracker.ui.bookslist.fragments
 
 import android.content.Context
+import android.content.Intent
 import android.os.Bundle
 import android.view.KeyEvent
 import android.view.View
@@ -18,6 +19,7 @@ import com.books.tracker.adapters.BookAdapter
 import com.books.tracker.data.db.BooksDatabase
 import com.books.tracker.data.db.entities.Book
 import com.books.tracker.data.repositories.BooksRepository
+import com.books.tracker.ui.bookslist.AboutActivity
 import com.books.tracker.ui.bookslist.ListActivity
 import com.books.tracker.ui.bookslist.viewmodel.BooksViewModel
 import com.books.tracker.ui.bookslist.viewmodel.BooksViewModelProviderFactory
@@ -192,9 +194,7 @@ class InProgressFragment : Fragment(R.layout.fragment_in_progress) {
         }
 
         ivMore.setOnClickListener{
-            Snackbar.make(view, getString(R.string.notYetImplemented), Snackbar.LENGTH_SHORT)
-                .setAction(getString(R.string.dismiss)) { }
-                .show()
+            requireActivity().startActivity(Intent(requireActivity(), AboutActivity::class.java))
         }
     }
 
