@@ -12,7 +12,7 @@ android {
     buildToolsVersion "30.0.3"
 
     defaultConfig {
-        applicationId "software.mdev.tracker"
+        applicationId "software.mdev.bookstracker"
         minSdkVersion 24
         targetSdkVersion 30
         versionCode 1
