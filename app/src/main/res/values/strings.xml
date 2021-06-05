@@ -1,12 +1,66 @@
 <resources>
-    <string name="app_name">MyBooks</string>
-    <string name="action_settings">Settings</string>
-    <!-- Strings used for fragments for navigation -->
-    <string name="first_fragment_label">First Fragment</string>
-    <string name="second_fragment_label">Second Fragment</string>
-    <string name="next">Next</string>
-    <string name="previous">Previous</string>
+    <string name="app_name" translatable="false">Books Tracker</string>
+    <string name="ivAuthorUrl">https://github.com/mateusz-bak/</string>
+    <!-- Images descriptions -->
+    <string name="ivBookStatusSetRead">Set book as finished</string>
+    <string name="ivBookStatusSetInProgress">Set book as in progress</string>
+    <string name="ivBookStatusSetToRead">Set book as "to read"</string>
+    <string name="fabEditBook">Edit displayed book</string>
+    <string name="ivBookStatusRead">Book is finished</string>
+    <string name="ivBookStatusInProgress">Book is in progress</string>
+    <string name="ivBookStatusToRead">Book is "to read"</string>
+    <string name="fabSaveEditedBook">Save edited book</string>
+    <string name="fabDeleteBook">Delete current book</string>
+    <string name="fabAddBook">Add a new book</string>
+    <string name="ivSearch">Search for a book</string>
+    <string name="ivClearSearch">Clear search window</string>
+    <string name="ivSort">Sort displayed books</string>
+    <string name="ivMore">Show more options</string>
+    <string name="ivSeparator1">Separator between search and sort</string>
+    <string name="ivSeparator2">Separator between sort and more options</string>
+    <string name="rbRatingIndicator">This book is finished</string>
+    <string name="ivInProgressIndicator">This book is in progress</string>
+    <string name="ivToReadIndicator">This book is to read</string>
+    <!-- In-app strings -->
+    <string name="tvAppsAuthor">Created by</string>
+    <string name="tvSourceCode">Source code</string>
+    <string name="ivRepoUrl">https://github.com/mateusz-bak/books-tracker-android/</string>
+    <string name="tvLicenseUrl">https://github.com/mateusz-bak/books-tracker-android/blob/master/LICENSE</string>
+    <string name="miAbout">About</string>
+    <string name="readFragment">Finished</string>
+    <string name="inProgressFragment">In progress</string>
+    <string name="toReadFragment">To read</string>
+    <string name="etAdderBookTitle">Title</string>
+    <string name="etAdderAuthor">Author</string>
+    <string name="tvAdderTitle">Add a book</string>
+    <string name="btnAdderSaveBook">Save</string>
+    <string name="finished">Finished</string>
+    <string name="inProgress">In progress</string>
+    <string name="toRead">To read</string>
+    <string name="tvBookTitle">Enter a title</string>
+    <string name="tvBookAuthor">Enter an author</string>
+    <string name="tvBookStatus">Book status</string>
+    <string name="etEditedBookTitle">Enter new title</string>
+    <string name="etEditedBookAuthor">Enter new author</string>
+    <string name="etSearch">Search</string>
+    <string name="sbWarningAuthor">Fill in the author!</string>
+    <string name="sbWarningTitle">Fill in the title!</string>
+    <string name="sbWarningState">Select book\'s state!</string>
+    <string name="tvSorterTitle">Sort books</string>
+    <string name="tvSortTitle">Title</string>
+    <string name="tvSortAuthor">Author</string>
+    <string name="tvSortRating">Rating</string>
+    <string name="btnSortDecreasing" translatable="false">▼</string>
+    <string name="btnSortIncreasing" translatable="false">▲</string>
+    <!-- Autofill hints -->
+    <string name="hintBookTitle" translatable="false">booktitle</string>
+    <string name="hintBookAuthor" translatable="false">bookauthor</string>
+    <string name="hintSearch" translatable="false">booksearch</string>
 
-    <string name="app_version">v0.1.1</string>
+    <string name="app_version" translatable="false">v1.0.0</string>
+    <string name="notYetImplemented">Not yet implemented</string>
+    <string name="dismiss">Dismiss</string>
+    <string name="bookDeleted">Book deleted</string>
+    <string name="undo">Undo</string>
 
 </resources>

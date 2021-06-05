@@ -1,0 +1,167 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="340dp"
+    android:layout_height="wrap_content"
+    android:background="@drawable/dialog_rounded"
+    android:paddingStart="16dp"
+    android:paddingEnd="16dp"
+    android:paddingBottom="56dp"
+    android:paddingTop="56dp">
+
+    <EditText
+        android:id="@+id/etAdderBookTitle"
+        android:autofillHints="@string/hintBookTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="24dp"
+        android:width="300dp"
+        android:hint="@string/etAdderBookTitle"
+        android:inputType="textCapSentences"
+        android:maxLength="200"
+        android:textSize="18sp"
+        android:textColor="?colorOnSecondary"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tvAdderTitle" />
+
+    <EditText
+        android:id="@+id/etAdderAuthor"
+        android:autofillHints="@string/hintBookAuthor"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="12dp"
+        android:width="300dp"
+        android:hint="@string/etAdderAuthor"
+        android:inputType="textCapWords"
+        android:maxLength="100"
+        android:textSize="14sp"
+        android:textColor="?colorOnSecondary"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/etAdderBookTitle" />
+
+    <RatingBar
+        android:id="@+id/rbAdderRating"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:stepSize="1"
+        android:layout_marginTop="28dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tvInProgress" />
+
+    <TextView
+        android:id="@+id/tvAdderTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/tvAdderTitle"
+        android:textSize="24sp"
+        android:textColor="?colorOnSecondary"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+
+    <Button
+        android:id="@+id/btnAdderSaveBook"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:backgroundTint="?colorPrimary"
+        android:text="@string/btnAdderSaveBook"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/rbAdderRating" />
+
+
+    <ImageView
+        android:id="@+id/ivBookStatusSetRead"
+        android:contentDescription="@string/ivBookStatusSetRead"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="32dp"
+        android:scaleX="2"
+        android:scaleY="2"
+        android:clickable="true"
+        android:focusable="true"
+        app:layout_constraintEnd_toStartOf="@+id/ivBookStatusSetInProgress"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/etAdderAuthor"
+        app:srcCompat="@drawable/ic_baseline_done_24"
+        />
+
+    <ImageView
+        android:id="@+id/ivBookStatusSetInProgress"
+        android:contentDescription="@string/ivBookStatusSetInProgress"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:scaleX="2"
+        android:scaleY="2"
+        android:clickable="true"
+        android:focusable="true"
+        app:layout_constraintBottom_toBottomOf="@+id/ivBookStatusSetRead"
+        app:layout_constraintEnd_toStartOf="@+id/ivBookStatusSetToRead"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/ivBookStatusSetRead"
+        app:layout_constraintTop_toTopOf="@+id/ivBookStatusSetRead"
+        app:srcCompat="@drawable/ic_baseline_hourglass_bottom_24" />
+
+    <ImageView
+        android:id="@+id/ivBookStatusSetToRead"
+        android:contentDescription="@string/ivBookStatusSetToRead"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:scaleX="2"
+        android:scaleY="2"
+        android:clickable="true"
+        android:focusable="true"
+        app:layout_constraintBottom_toBottomOf="@+id/ivBookStatusSetRead"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/ivBookStatusSetInProgress"
+        app:layout_constraintTop_toTopOf="@+id/ivBookStatusSetRead"
+        app:srcCompat="@drawable/ic_baseline_list_24" />
+
+    <TextView
+        android:id="@+id/tvFinished"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/finished"
+        android:textSize="12sp"
+        android:layout_marginTop="8dp"
+        app:layout_constraintEnd_toEndOf="@+id/ivBookStatusSetRead"
+        app:layout_constraintStart_toStartOf="@+id/ivBookStatusSetRead"
+        app:layout_constraintTop_toBottomOf="@+id/ivBookStatusSetRead" />
+
+    <TextView
+        android:id="@+id/tvInProgress"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/inProgress"
+        android:textSize="12sp"
+        android:layout_marginTop="8dp"
+        app:layout_constraintEnd_toEndOf="@+id/ivBookStatusSetInProgress"
+        app:layout_constraintStart_toStartOf="@+id/ivBookStatusSetInProgress"
+        app:layout_constraintTop_toBottomOf="@+id/ivBookStatusSetInProgress" />
+
+    <TextView
+        android:id="@+id/tvToRead"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/toRead"
+        android:textSize="12sp"
+        android:layout_marginTop="8dp"
+        app:layout_constraintEnd_toEndOf="@+id/ivBookStatusSetToRead"
+        app:layout_constraintStart_toStartOf="@+id/ivBookStatusSetToRead"
+        app:layout_constraintTop_toBottomOf="@+id/ivBookStatusSetToRead" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

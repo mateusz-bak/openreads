@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto" android:id="@+id/books_nav_graph"
+    app:startDestination="@id/readFragment">
+
+
+    <fragment
+        android:id="@+id/readFragment"
+        android:name="software.mdev.bookstracker.ui.bookslist.fragments.ReadFragment"
+        android:label="ReadFragment" >
+        <action
+            android:id="@+id/action_readFragment_to_displayBookFragment"
+            app:destination="@id/displayBookFragment"
+            app:enterAnim="@anim/fade_in"
+            app:exitAnim="@anim/fade_out"
+            app:popEnterAnim="@anim/fade_in"
+            app:popExitAnim="@anim/fade_out"/>
+        <action
+            android:id="@+id/action_readFragment_to_inProgressFragment"
+            app:destination="@id/inProgressFragment" />
+        <action
+            android:id="@+id/action_readFragment_to_toReadFragment"
+            app:destination="@id/toReadFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/inProgressFragment"
+        android:name="software.mdev.bookstracker.ui.bookslist.fragments.InProgressFragment"
+        android:label="InProgressFragment" >
+        <action
+            android:id="@+id/action_inProgressFragment_to_displayBookFragment"
+            app:destination="@id/displayBookFragment"
+            app:enterAnim="@anim/fade_in"
+            app:exitAnim="@anim/fade_out"
+            app:popEnterAnim="@anim/fade_in"
+            app:popExitAnim="@anim/fade_out"/>
+        <action
+            android:id="@+id/action_inProgressFragment_to_readFragment"
+            app:destination="@id/readFragment" />
+        <action
+            android:id="@+id/action_inProgressFragment_to_toReadFragment"
+            app:destination="@id/toReadFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/toReadFragment"
+        android:name="software.mdev.bookstracker.ui.bookslist.fragments.ToReadFragment"
+        android:label="ToReadFragment" >
+        <action
+            android:id="@+id/action_toReadFragment_to_displayBookFragment"
+            app:destination="@id/displayBookFragment"
+            app:enterAnim="@anim/fade_in"
+            app:exitAnim="@anim/fade_out"
+            app:popEnterAnim="@anim/fade_in"
+            app:popExitAnim="@anim/fade_out"/>
+        <action
+            android:id="@+id/action_toReadFragment_to_readFragment"
+            app:destination="@id/readFragment" />
+        <action
+            android:id="@+id/action_toReadFragment_to_inProgressFragment"
+            app:destination="@id/inProgressFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/displayBookFragment"
+        android:name="software.mdev.bookstracker.ui.bookslist.fragments.DisplayBookFragment"
+        android:label="DisplayBookFragment" >
+        <action
+            android:id="@+id/action_displayBookFragment_to_editBookFragment"
+            app:destination="@id/editBookFragment"
+            app:enterAnim="@anim/fade_in"
+            app:exitAnim="@anim/fade_out"
+            app:popEnterAnim="@anim/fade_in"
+            app:popExitAnim="@anim/fade_out"/>
+        <argument
+            android:name="book"
+            app:argType="software.mdev.bookstracker.data.db.entities.Book" />
+    </fragment>
+    <fragment
+        android:id="@+id/editBookFragment"
+        android:name="software.mdev.bookstracker.ui.bookslist.fragments.EditBookFragment"
+        android:label="EditBookFragment" >
+        <argument
+            android:name="book"
+            app:argType="software.mdev.bookstracker.data.db.entities.Book" />
+        <action
+            android:id="@+id/action_editBookFragment_to_displayBookFragment"
+            app:destination="@id/displayBookFragment" />
+    </fragment>
+</navigation>
