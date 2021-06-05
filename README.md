@@ -16,14 +16,5 @@ An Android app written in Kotlin for keeping tracks of books you have read.
   <img src='https://raw.githubusercontent.com/mateusz-bak/books-tracker-android/master/doc/images/screenshot-sorted-books.png' width='18%'/>
 </p>
 
-### List of your books:
-<img src="doc/images/screenshot-list.png" alt="drawing" width="300"/>
-
-### Adding a book:
-<img src="doc/images/screenshot-adder.png" alt="drawing" width="300"/>
-
-### Editing a book:
-<img src="doc/images/screenshot-editor.png" alt="drawing" width="300"/>
-
 ## Attributions  
 Launcher icon made by [smalllikeart](https://www.flaticon.com/authors/smalllikeart "smalllikeart") from [www.flaticon.com](https://www.flaticon.com/ "Flaticon")
