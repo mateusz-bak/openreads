@@ -26,4 +26,4 @@ An Android app written in Kotlin for keeping tracks of books you have read.
 <img src="doc/images/screenshot-editor.png" alt="drawing" width="300"/>
 
 ## Attributions  
-Icons made by [Freepik](https://www.freepik.com "Freepik") from [www.flaticon.com](https://www.flaticon.com/ "Flaticon")
+Launcher icon made by [smalllikeart](https://www.flaticon.com/authors/smalllikeart "smalllikeart") from [www.flaticon.com](https://www.flaticon.com/ "Flaticon")

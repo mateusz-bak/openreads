@@ -4,9 +4,9 @@
 
     <application
         android:allowBackup="true"
-        android:icon="@mipmap/ic_open_book"
+        android:icon="@mipmap/ic_books"
         android:label="@string/app_name"
-        android:roundIcon="@mipmap/ic_open_book_round"
+        android:roundIcon="@mipmap/ic_books_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.Mdev.Bookstracker">
         <activity
