@@ -4,6 +4,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
+import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
@@ -24,6 +25,15 @@ class ListActivity : AppCompatActivity() {
         setContentView(R.layout.activity_list)
 
         bottomNavigationView.setupWithNavController(booksNavHostFragment.findNavController())
+
+        booksNavHostFragment.findNavController()
+            .addOnDestinationChangedListener { _, destination, _ ->
+                when(destination.id) {
+                    R.id.readFragment, R.id.inProgressFragment, R.id.toReadFragment ->
+                        bottomNavigationView.visibility = View.VISIBLE
+                    else -> bottomNavigationView.visibility = View.GONE
+                }
+            }
 
         val booksRepository = BooksRepository(BooksDatabase(this))
         val booksViewModelProviderFactory = BooksViewModelProviderFactory(booksRepository)
