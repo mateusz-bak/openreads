@@ -62,5 +62,7 @@
     <string name="dismiss">Dismiss</string>
     <string name="bookDeleted">Book deleted</string>
     <string name="undo">Undo</string>
+    <string name="tvWelcomeText">Welcome to Books Tracker app!</string>
+    <string name="tvLooksEmpty">Your book list looks empty for now, click plus button below and start adding new books!</string>
 
 </resources>

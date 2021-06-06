@@ -38,4 +38,6 @@ class BooksViewModel(
     fun getSortedBooksByRatingDesc(bookStatus: String) = repository.getSortedBooksByRatingDesc(bookStatus)
     fun getSortedBooksByRatingAsc(bookStatus: String) = repository.getSortedBooksByRatingAsc(bookStatus)
 
+    fun getBookCount(bookStatus: String) = repository.getBookCount(bookStatus)
+
 }

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto" android:id="@+id/books_nav_graph"
-    app:startDestination="@id/readFragment">
+    app:startDestination="@id/setupFragment">
 
 
     <fragment
@@ -86,5 +86,13 @@
         <action
             android:id="@+id/action_editBookFragment_to_displayBookFragment"
             app:destination="@id/displayBookFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/setupFragment"
+        android:name="software.mdev.bookstracker.ui.bookslist.fragments.SetupFragment"
+        android:label="SetupFragment" >
+        <action
+            android:id="@+id/action_setupFragment_to_readFragment"
+            app:destination="@id/readFragment" />
     </fragment>
 </navigation>

@@ -27,15 +27,7 @@ import software.mdev.bookstracker.ui.bookslist.dialogs.AddBookDialog
 import software.mdev.bookstracker.ui.bookslist.dialogs.AddBookDialogListener
 import software.mdev.bookstracker.ui.bookslist.dialogs.SortBooksDialog
 import software.mdev.bookstracker.ui.bookslist.dialogs.SortBooksDialogListener
-import kotlinx.android.synthetic.main.fragment_read.*
 import kotlinx.android.synthetic.main.fragment_to_read.*
-import kotlinx.android.synthetic.main.fragment_to_read.etSearch
-import kotlinx.android.synthetic.main.fragment_to_read.fabAddBook
-import kotlinx.android.synthetic.main.fragment_to_read.ivClearSearch
-import kotlinx.android.synthetic.main.fragment_to_read.ivMore
-import kotlinx.android.synthetic.main.fragment_to_read.ivSearch
-import kotlinx.android.synthetic.main.fragment_to_read.ivSort
-import kotlinx.android.synthetic.main.fragment_to_read.rvBooks
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
@@ -71,6 +63,16 @@ class ToReadFragment : Fragment(R.layout.fragment_to_read) {
         rvBooks.layoutManager = LinearLayoutManager(view.context)
 
         this.getBooks(bookAdapter)
+
+        viewModel.getBookCount("to_read").observe(viewLifecycleOwner, Observer {
+                count ->
+            run {
+                when(count.toInt()) {
+                    0 -> tvLooksEmpty.visibility = View.VISIBLE
+                    else -> tvLooksEmpty.visibility = View.GONE
+                }
+            }
+        })
 
         fabAddBook.setOnClickListener{
             AddBookDialog(view.context,

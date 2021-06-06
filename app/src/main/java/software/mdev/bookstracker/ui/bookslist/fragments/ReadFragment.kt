@@ -65,6 +65,16 @@ class ReadFragment : Fragment(R.layout.fragment_read) {
 
         this.getBooks(bookAdapter)
 
+        viewModel.getBookCount("read").observe(viewLifecycleOwner, Observer {
+                count ->
+            run {
+                when(count.toInt()) {
+                    0 -> tvLooksEmpty.visibility = View.VISIBLE
+                    else -> tvLooksEmpty.visibility = View.GONE
+                }
+            }
+        })
+
         fabAddBook.setOnClickListener{
             AddBookDialog(view.context,
                 object: AddBookDialogListener {

@@ -52,4 +52,6 @@
     <string name="dismiss">Ok</string>
     <string name="bookDeleted">Książka usunięta</string>
     <string name="undo">Cofnij</string>
+    <string name="tvWelcomeText">Witaj w aplikacji Books Tracker!</string>
+    <string name="tvLooksEmpty">Twoja lista książek jest na razie pusta, kliknij przycisk \"plus\" poniżej, w celu dodania nowych książek!</string>
 </resources>
