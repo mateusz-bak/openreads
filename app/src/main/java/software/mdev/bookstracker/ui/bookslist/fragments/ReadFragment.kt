@@ -1,7 +1,6 @@
 package software.mdev.bookstracker.ui.bookslist.fragments
 
 import android.content.Context
-import android.content.Intent
 import android.os.Bundle
 import android.view.KeyEvent
 import android.view.View
@@ -19,7 +18,6 @@ import software.mdev.bookstracker.adapters.BookAdapter
 import software.mdev.bookstracker.data.db.BooksDatabase
 import software.mdev.bookstracker.data.db.entities.Book
 import software.mdev.bookstracker.data.repositories.BooksRepository
-import software.mdev.bookstracker.ui.bookslist.AboutActivity
 import software.mdev.bookstracker.ui.bookslist.ListActivity
 import software.mdev.bookstracker.ui.bookslist.viewmodel.BooksViewModel
 import software.mdev.bookstracker.ui.bookslist.viewmodel.BooksViewModelProviderFactory
@@ -195,7 +193,7 @@ class ReadFragment : Fragment(R.layout.fragment_read) {
         }
 
         ivMore.setOnClickListener{
-            requireActivity().startActivity(Intent(requireActivity(), AboutActivity::class.java))
+            findNavController().navigate(R.id.settingsFragment, null)
         }
     }
 

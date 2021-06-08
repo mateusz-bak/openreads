@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <PreferenceCategory
+        android:key="customization"
+        android:title="@string/customization"
+        app:icon="@drawable/ic_baseline_brush_24">
+
+        <ListPreference
+            android:defaultValue="orange"
+            android:entries="@array/accents"
+            android:entryValues="@array/accent_values"
+            android:key="accent_color"
+            android:summary="%s"
+            android:title="@string/accent_name"
+            app:iconSpaceReserved="false" />
+
+        <SwitchPreference
+            android:defaultValue="true"
+            android:key="switch_1"
+            android:summaryOff="@string/switch_1_off"
+            android:summaryOn="@string/switch_1_on"
+            android:title="@string/switch_1"
+            app:iconSpaceReserved="false" />
+
+        <ListPreference
+            android:defaultValue="list_1"
+            android:entries="@array/list_1_entries"
+            android:entryValues="@array/list_1_values"
+            android:key="list_1"
+            android:summary="%s"
+            android:title="@string/list_1"
+            app:iconSpaceReserved="false" />
+    </PreferenceCategory>
+
+</PreferenceScreen>

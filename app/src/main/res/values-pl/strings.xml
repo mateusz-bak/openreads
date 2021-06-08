@@ -54,4 +54,7 @@
     <string name="undo">Cofnij</string>
     <string name="tvWelcomeText">Witaj w aplikacji Books Tracker!</string>
     <string name="tvLooksEmpty">Twoja lista książek jest na razie pusta, kliknij przycisk \"plus\" poniżej, w celu dodania nowych książek!</string>
+    <string name="customization">Wygląd aplikacji</string>
+    <string name="accent_green">Zielony</string>
+    <string name="accent_orange">Pomarańczowy</string>
 </resources>
