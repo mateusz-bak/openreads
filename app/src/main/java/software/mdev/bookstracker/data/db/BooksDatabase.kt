@@ -5,6 +5,7 @@ import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
 import software.mdev.bookstracker.data.db.entities.Book
+import software.mdev.bookstracker.other.Constants.DATABASE_FILE_NAME
 
 @Database(
         entities = [Book::class],
@@ -25,6 +26,6 @@ abstract class BooksDatabase: RoomDatabase() {
 
         private fun createDatabase(context: Context) =
                 Room.databaseBuilder(context.applicationContext,
-                        BooksDatabase::class.java, "BooksDB.db").build()
+                        BooksDatabase::class.java, DATABASE_FILE_NAME).build()
     }
 }

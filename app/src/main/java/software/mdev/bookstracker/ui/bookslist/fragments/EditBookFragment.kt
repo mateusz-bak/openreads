@@ -18,6 +18,10 @@ import software.mdev.bookstracker.ui.bookslist.viewmodel.BooksViewModelProviderF
 import software.mdev.bookstracker.ui.bookslist.ListActivity
 import com.google.android.material.snackbar.Snackbar
 import kotlinx.android.synthetic.main.fragment_edit_book.*
+import software.mdev.bookstracker.other.Constants.BOOK_STATUS_IN_PROGRESS
+import software.mdev.bookstracker.other.Constants.BOOK_STATUS_NOTHING
+import software.mdev.bookstracker.other.Constants.BOOK_STATUS_READ
+import software.mdev.bookstracker.other.Constants.BOOK_STATUS_TO_READ
 
 
 class EditBookFragment : Fragment(R.layout.fragment_edit_book) {
@@ -32,7 +36,7 @@ class EditBookFragment : Fragment(R.layout.fragment_edit_book) {
         viewModel = (activity as ListActivity).booksViewModel
         listActivity = activity as ListActivity
 
-        var whatIsClicked = "nothing"
+        var whatIsClicked = BOOK_STATUS_NOTHING
 
         val database = BooksDatabase(view.context)
         val repository = BooksRepository(database)
@@ -46,25 +50,25 @@ class EditBookFragment : Fragment(R.layout.fragment_edit_book) {
             rbEditedRating.rating = book.bookRating
 
             when (book.bookStatus) {
-                "read" -> {
+                BOOK_STATUS_READ -> {
                     ivEditorBookStatusRead.setColorFilter(ContextCompat.getColor(view.context, R.color.orange_300), android.graphics.PorterDuff.Mode.SRC_IN)
                     ivEditorBookStatusInProgress.setColorFilter(ContextCompat.getColor(view.context, R.color.grey), android.graphics.PorterDuff.Mode.SRC_IN)
                     ivEditorBookStatusToRead.setColorFilter(ContextCompat.getColor(view.context, R.color.grey), android.graphics.PorterDuff.Mode.SRC_IN)
-                    whatIsClicked = "read"
+                    whatIsClicked = BOOK_STATUS_READ
                     rbEditedRating.visibility = View.VISIBLE
                 }
-                "in_progress" -> {
+                BOOK_STATUS_IN_PROGRESS -> {
                     ivEditorBookStatusRead.setColorFilter(ContextCompat.getColor(view.context, R.color.grey), android.graphics.PorterDuff.Mode.SRC_IN)
                     ivEditorBookStatusInProgress.setColorFilter(ContextCompat.getColor(view.context, R.color.orange_300), android.graphics.PorterDuff.Mode.SRC_IN)
                     ivEditorBookStatusToRead.setColorFilter(ContextCompat.getColor(view.context, R.color.grey), android.graphics.PorterDuff.Mode.SRC_IN)
-                    whatIsClicked = "in_progress"
+                    whatIsClicked = BOOK_STATUS_IN_PROGRESS
                     rbEditedRating.visibility = View.GONE
                 }
-                "to_read" -> {
+                BOOK_STATUS_TO_READ -> {
                     ivEditorBookStatusRead.setColorFilter(ContextCompat.getColor(view.context, R.color.grey), android.graphics.PorterDuff.Mode.SRC_IN)
                     ivEditorBookStatusInProgress.setColorFilter(ContextCompat.getColor(view.context, R.color.grey), android.graphics.PorterDuff.Mode.SRC_IN)
                     ivEditorBookStatusToRead.setColorFilter(ContextCompat.getColor(view.context, R.color.orange_300), android.graphics.PorterDuff.Mode.SRC_IN)
-                    whatIsClicked = "to_read"
+                    whatIsClicked = BOOK_STATUS_TO_READ
                     rbEditedRating.visibility = View.GONE
                 }
             }
@@ -73,7 +77,7 @@ class EditBookFragment : Fragment(R.layout.fragment_edit_book) {
             ivEditorBookStatusRead.setColorFilter(ContextCompat.getColor(view.context, R.color.orange_300), android.graphics.PorterDuff.Mode.SRC_IN)
             ivEditorBookStatusInProgress.setColorFilter(ContextCompat.getColor(view.context, R.color.grey), android.graphics.PorterDuff.Mode.SRC_IN)
             ivEditorBookStatusToRead.setColorFilter(ContextCompat.getColor(view.context, R.color.grey), android.graphics.PorterDuff.Mode.SRC_IN)
-            whatIsClicked = "read"
+            whatIsClicked = BOOK_STATUS_READ
             rbEditedRating.visibility = View.VISIBLE
         }
 
@@ -81,7 +85,7 @@ class EditBookFragment : Fragment(R.layout.fragment_edit_book) {
             ivEditorBookStatusRead.setColorFilter(ContextCompat.getColor(view.context, R.color.grey), android.graphics.PorterDuff.Mode.SRC_IN)
             ivEditorBookStatusInProgress.setColorFilter(ContextCompat.getColor(view.context, R.color.orange_300), android.graphics.PorterDuff.Mode.SRC_IN)
             ivEditorBookStatusToRead.setColorFilter(ContextCompat.getColor(view.context, R.color.grey), android.graphics.PorterDuff.Mode.SRC_IN)
-            whatIsClicked = "in_progress"
+            whatIsClicked = BOOK_STATUS_IN_PROGRESS
             rbEditedRating.visibility = View.GONE
         }
 
@@ -89,7 +93,7 @@ class EditBookFragment : Fragment(R.layout.fragment_edit_book) {
             ivEditorBookStatusRead.setColorFilter(ContextCompat.getColor(view.context, R.color.grey), android.graphics.PorterDuff.Mode.SRC_IN)
             ivEditorBookStatusInProgress.setColorFilter(ContextCompat.getColor(view.context, R.color.grey), android.graphics.PorterDuff.Mode.SRC_IN)
             ivEditorBookStatusToRead.setColorFilter(ContextCompat.getColor(view.context, R.color.orange_300), android.graphics.PorterDuff.Mode.SRC_IN)
-            whatIsClicked = "to_read"
+            whatIsClicked = BOOK_STATUS_TO_READ
             rbEditedRating.visibility = View.GONE
         }
 
@@ -100,11 +104,11 @@ class EditBookFragment : Fragment(R.layout.fragment_edit_book) {
 
             if (bookTitle.isNotEmpty()) {
                 if (bookAuthor.isNotEmpty()){
-                    if (whatIsClicked != "nothing") {
+                    if (whatIsClicked != BOOK_STATUS_NOTHING) {
                         when(whatIsClicked){
-                            "read" -> bookRating = rbEditedRating.rating
-                            "in_progress" -> bookRating = 0.0F
-                            "to_read" -> bookRating = 0.0F
+                            BOOK_STATUS_READ -> bookRating = rbEditedRating.rating
+                            BOOK_STATUS_IN_PROGRESS -> bookRating = 0.0F
+                            BOOK_STATUS_TO_READ -> bookRating = 0.0F
                         }
 
                         val bookStatus = whatIsClicked

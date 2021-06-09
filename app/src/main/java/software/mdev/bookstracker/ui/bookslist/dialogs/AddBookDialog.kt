@@ -13,11 +13,16 @@ import androidx.core.content.ContextCompat
 import software.mdev.bookstracker.data.db.entities.Book
 import com.google.android.material.snackbar.Snackbar
 import kotlinx.android.synthetic.main.dialog_add_book.*
+import software.mdev.bookstracker.other.Constants.BOOK_STATUS_IN_PROGRESS
+import software.mdev.bookstracker.other.Constants.BOOK_STATUS_NOTHING
+import software.mdev.bookstracker.other.Constants.BOOK_STATUS_READ
+import software.mdev.bookstracker.other.Constants.BOOK_STATUS_TO_READ
+import software.mdev.bookstracker.other.Constants.DATABASE_EMPTY_VALUE
 
 
 class AddBookDialog(context: Context, var addBookDialogListener: AddBookDialogListener) : AppCompatDialog(context) {
 
-    var whatIsClicked: String = "nothing"
+    var whatIsClicked: String = BOOK_STATUS_NOTHING
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -31,7 +36,7 @@ class AddBookDialog(context: Context, var addBookDialogListener: AddBookDialogLi
             ivBookStatusSetRead.setColorFilter(ContextCompat.getColor(context, R.color.orange_300), android.graphics.PorterDuff.Mode.SRC_IN)
             ivBookStatusSetInProgress.setColorFilter(ContextCompat.getColor(context, R.color.grey), android.graphics.PorterDuff.Mode.SRC_IN)
             ivBookStatusSetToRead.setColorFilter(ContextCompat.getColor(context, R.color.grey), android.graphics.PorterDuff.Mode.SRC_IN)
-            whatIsClicked = "read"
+            whatIsClicked = BOOK_STATUS_READ
             rbAdderRating.visibility = View.VISIBLE
             it.hideKeyboard()
         }
@@ -40,7 +45,7 @@ class AddBookDialog(context: Context, var addBookDialogListener: AddBookDialogLi
             ivBookStatusSetRead.setColorFilter(ContextCompat.getColor(context, R.color.grey), android.graphics.PorterDuff.Mode.SRC_IN)
             ivBookStatusSetInProgress.setColorFilter(ContextCompat.getColor(context, R.color.orange_300), android.graphics.PorterDuff.Mode.SRC_IN)
             ivBookStatusSetToRead.setColorFilter(ContextCompat.getColor(context, R.color.grey), android.graphics.PorterDuff.Mode.SRC_IN)
-            whatIsClicked = "in_progress"
+            whatIsClicked = BOOK_STATUS_IN_PROGRESS
             rbAdderRating.visibility = View.GONE
             it.hideKeyboard()
         }
@@ -49,7 +54,7 @@ class AddBookDialog(context: Context, var addBookDialogListener: AddBookDialogLi
             ivBookStatusSetRead.setColorFilter(ContextCompat.getColor(context, R.color.grey), android.graphics.PorterDuff.Mode.SRC_IN)
             ivBookStatusSetInProgress.setColorFilter(ContextCompat.getColor(context, R.color.grey), android.graphics.PorterDuff.Mode.SRC_IN)
             ivBookStatusSetToRead.setColorFilter(ContextCompat.getColor(context, R.color.orange_300), android.graphics.PorterDuff.Mode.SRC_IN)
-            whatIsClicked = "to_read"
+            whatIsClicked = BOOK_STATUS_TO_READ
             rbAdderRating.visibility = View.GONE
             it.hideKeyboard()
         }
@@ -61,13 +66,13 @@ class AddBookDialog(context: Context, var addBookDialogListener: AddBookDialogLi
 
             if (bookTitle.isNotEmpty()) {
                 if (bookAuthor.isNotEmpty()){
-                    if (whatIsClicked != "nothing") {
+                    if (whatIsClicked != BOOK_STATUS_NOTHING) {
                         when(whatIsClicked){
-                            "read" -> bookRating = rbAdderRating.rating
-                            "in_progress" -> bookRating = 0.0F
-                            "to_read" -> bookRating = 0.0F
+                            BOOK_STATUS_READ -> bookRating = rbAdderRating.rating
+                            BOOK_STATUS_IN_PROGRESS -> bookRating = 0.0F
+                            BOOK_STATUS_TO_READ -> bookRating = 0.0F
                         }
-                        val editedBook = Book(bookTitle, bookAuthor, bookRating, bookStatus = whatIsClicked, bookPriority = "none", bookStartDate = "none", bookFinishDate = "none")
+                        val editedBook = Book(bookTitle, bookAuthor, bookRating, bookStatus = whatIsClicked, bookPriority = DATABASE_EMPTY_VALUE, bookStartDate = DATABASE_EMPTY_VALUE, bookFinishDate = DATABASE_EMPTY_VALUE)
                         addBookDialogListener.onSaveButtonClicked(editedBook)
                         dismiss()
                     } else {

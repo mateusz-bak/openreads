@@ -9,6 +9,8 @@ import androidx.navigation.fragment.findNavController
 import software.mdev.bookstracker.R
 import software.mdev.bookstracker.ui.bookslist.ListActivity
 import kotlinx.android.synthetic.main.fragment_setup.*
+import software.mdev.bookstracker.other.Constants.SHARED_PREFERENCES_KEY_FIRST_TIME_TOGGLE
+import software.mdev.bookstracker.other.Constants.SHARED_PREFERENCES_NAME
 
 
 class SetupFragment : Fragment(R.layout.fragment_setup) {
@@ -16,9 +18,9 @@ class SetupFragment : Fragment(R.layout.fragment_setup) {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val sharedPref = (activity as ListActivity).getSharedPreferences("appPref", Context.MODE_PRIVATE)
+        val sharedPref = (activity as ListActivity).getSharedPreferences(SHARED_PREFERENCES_NAME, Context.MODE_PRIVATE)
 
-        if(sharedPref.getBoolean("app_launched", false)) {
+        if(sharedPref.getBoolean(SHARED_PREFERENCES_KEY_FIRST_TIME_TOGGLE, false)) {
             val navOptions = NavOptions.Builder()
                 .setPopUpTo(R.id.setupFragment, true)
                 .build()
@@ -36,11 +38,11 @@ class SetupFragment : Fragment(R.layout.fragment_setup) {
     }
 
     private fun saveAppsFirstlaunch() {
-        val sharedPref = (activity as ListActivity).getSharedPreferences("appPref", Context.MODE_PRIVATE)
+        val sharedPref = (activity as ListActivity).getSharedPreferences(SHARED_PREFERENCES_NAME, Context.MODE_PRIVATE)
         val editor = sharedPref.edit()
 
         editor.apply {
-            putBoolean("app_launched", true)
+            putBoolean(SHARED_PREFERENCES_KEY_FIRST_TIME_TOGGLE, true)
             apply()
         }
     }

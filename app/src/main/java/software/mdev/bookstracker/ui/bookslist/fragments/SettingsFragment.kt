@@ -7,6 +7,8 @@ import android.os.Bundle
 import androidx.preference.PreferenceFragmentCompat
 import androidx.preference.PreferenceManager
 import software.mdev.bookstracker.R
+import software.mdev.bookstracker.other.Constants.SHARED_PREFERENCES_KEY_ACCENT
+import software.mdev.bookstracker.other.Constants.SHARED_PREFERENCES_REFRESHED
 import software.mdev.bookstracker.ui.bookslist.ListActivity
 import software.mdev.bookstracker.ui.bookslist.viewmodel.BooksViewModel
 
@@ -34,14 +36,14 @@ class SettingsFragment : PreferenceFragmentCompat(), OnSharedPreferenceChangeLis
 
     override fun onSharedPreferenceChanged(sharedPreferences: SharedPreferences, key: String) {
         when (key) {
-            "accent_color" -> hotReloadActivity(activity)
+            SHARED_PREFERENCES_KEY_ACCENT -> hotReloadActivity(activity)
         }
     }
 
     private fun hotReloadActivity(activity: Activity?) {
         if (activity == null) return
         val sharedPrefs = PreferenceManager.getDefaultSharedPreferences(activity)
-        sharedPrefs.edit().putBoolean("refreshed", true).apply()
+        sharedPrefs.edit().putBoolean(SHARED_PREFERENCES_REFRESHED, true).apply()
         activity.recreate()
     }
 }

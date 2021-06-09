@@ -11,7 +11,7 @@
             android:defaultValue="orange"
             android:entries="@array/accents"
             android:entryValues="@array/accent_values"
-            android:key="accent_color"
+            android:key="KEY_ACCENT"
             android:summary="%s"
             android:title="@string/accent_name"
             app:iconSpaceReserved="false" />
