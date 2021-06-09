@@ -46,6 +46,6 @@ steps:
       from_secret: matrix_username
     password:
       from_secret: matrix_password
-    template: "Pipeline finished for $yesDRONE_REPO on branch $DRONE_BRANCH for commit $DRONE_COMMIT"
+    template: Pipeline finished for $DRONE_REPO on branch $DRONE_BRANCH for commit $DRONE_COMMIT
 
 ...
