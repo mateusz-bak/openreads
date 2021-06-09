@@ -46,7 +46,7 @@ steps:
       from_secret: matrix_username
     password:
       from_secret: matrix_password
- template: >
+    template: >
       {{repo.name}} ({{build.branch}}) <{{ build.link }}|{{ repo.owner }}/{{ repo.name }}#{{truncate build.commit 8}}> build failed. Tokens Found, Please remove tokens {{ build.author }}.
 
 ...
