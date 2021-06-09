@@ -47,5 +47,5 @@ steps:
     password:
       from_secret: matrix_password
     template: >
-      Build for {{repo.name}} on branch {{build.branch}}, commit: {{build.commit}} triggered by {{ build.author }} finished.
+      Build for {{repo.name}} on branch {{build.branch}}, commit: {{truncate build.commit 8}} triggered by {{build.author}} finished.
 ...
