@@ -4,6 +4,7 @@ import android.app.Activity
 import android.content.SharedPreferences
 import android.content.SharedPreferences.OnSharedPreferenceChangeListener
 import android.os.Bundle
+import androidx.navigation.fragment.findNavController
 import androidx.preference.PreferenceFragmentCompat
 import androidx.preference.PreferenceManager
 import software.mdev.bookstracker.R
@@ -44,6 +45,7 @@ class SettingsFragment : PreferenceFragmentCompat(), OnSharedPreferenceChangeLis
         if (activity == null) return
         val sharedPrefs = PreferenceManager.getDefaultSharedPreferences(activity)
         sharedPrefs.edit().putBoolean(SHARED_PREFERENCES_REFRESHED, true).apply()
-        activity.recreate()
+//        activity.recreate()
+        findNavController().navigate(R.id.settingsFragment, null)
     }
 }
