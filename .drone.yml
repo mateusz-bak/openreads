@@ -34,4 +34,18 @@ steps:
   - cp mateusz-bak.jks app/mateusz-bak.jks
   - ./gradlew assembleRelease -Pandroid.injected.signing.store.file=mateusz-bak.jks -Pandroid.injected.signing.store.password=$STORE_PASSWORD -Pandroid.injected.signing.key.alias=$KEY_ALIAS -Pandroid.injected.signing.key.password=$KEY_PASSWORD
   - ls -l app/build/outputs/apk/release
+  
+  steps:
+- name: notify
+  image: plugins/matrix
+  settings:
+    homeserver: https://matrix.org
+    roomid:
+      from_secret: matrix_roomid
+    username:
+      from_secret: matrix_username
+    password:
+      from_secret: matrix_password
+    template: "Pipeline finished"
+
 ...
