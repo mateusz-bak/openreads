@@ -1,9 +1,7 @@
 package software.mdev.bookstracker.ui.bookslist
 
-import android.content.Intent
 import android.os.Bundle
 import android.view.Menu
-import android.view.MenuItem
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
@@ -43,15 +41,6 @@ class ListActivity : AppCompatActivity() {
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
         menuInflater.inflate(R.menu.app_bar_menu, menu)
-        return true
-    }
-
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        when(item.itemId) {
-            R.id.miAbout -> Intent(this, AboutActivity::class.java).also {
-                startActivity(it)
-            }
-        }
         return true
     }
 }

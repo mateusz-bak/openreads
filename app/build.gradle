@@ -74,5 +74,5 @@ dependencies {
     implementation "org.kodein.di:kodein-di-framework-android-x:$kodein_version"
 
     // PREFERENCES
-    implementation 'com.takisoft.fix:preference-v7:25.3.0.0'
+    implementation "androidx.preference:preference-ktx:1.1.1"
 }

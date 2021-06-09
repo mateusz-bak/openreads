@@ -57,4 +57,18 @@
     <string name="customization">Wygląd aplikacji</string>
     <string name="accent_orange">Pomarańczowy</string>
     <string name="accent_green">Zielony</string>
+    <string name="accent_name">Kolor akcentu</string>
+    <string name="accent_blue">Niebieski</string>
+    <string name="accent_pink">Różowy</string>
+    <string name="accent_yellow">Żółty</string>
+    <string name="accent_brown">Brązowy</string>
+    <string name="about">O aplikacji</string>
+    <string name="app_version_title">Wersja</string>
+    <string name="app_developer_title">Deweloper</string>
+    <string name="app_source_code_title">Kod źródłowy</string>
+    <string name="app_changelog">Lista zmian</string>
+    <string name="app_licence_title">Licencja</string>
+    <string name="daily_book_recommendations_title">Wysyłaj codzienną rekomendację nowej książki</string>
+    <string name="daily_book_recommendations_on">Wysyłaj codzienne powiadomienie</string>
+    <string name="daily_book_recommendations_off">Nie wysyłaj codziennego powiadomienia</string>
 </resources>

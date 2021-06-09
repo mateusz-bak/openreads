@@ -1,26 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <string-array name="list_1_entries">
-        <item>@string/list_1_1</item>
-        <item>@string/list_1_2</item>
-        <item>@string/list_1_3</item>
-    </string-array>
-
-    <string-array name="list_1_values">
-        <item>list_1_1</item>
-        <item>list_1_2</item>
-        <item>list_1_3</item>
-    </string-array>
-
     <string-array name="accents">
         <item>@string/accent_green</item>
         <item>@string/accent_orange</item>
+        <item>@string/accent_blue</item>
+        <item>@string/accent_pink</item>
+        <item>@string/accent_yellow</item>
+        <item>@string/accent_brown</item>
     </string-array>
 
     <string-array name="accent_values">
         <item>green</item>
         <item>orange</item>
+        <item>blue</item>
+        <item>pink</item>
+        <item>yellow</item>
+        <item>brown</item>
     </string-array>
 
 </resources>

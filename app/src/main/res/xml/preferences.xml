@@ -13,25 +13,57 @@
             android:entryValues="@array/accent_values"
             android:key="KEY_ACCENT"
             android:summary="%s"
-            android:title="@string/accent_name"
-            app:iconSpaceReserved="false" />
+            android:title="@string/accent_name" />
 
         <SwitchPreference
             android:defaultValue="true"
-            android:key="switch_1"
-            android:summaryOff="@string/switch_1_off"
-            android:summaryOn="@string/switch_1_on"
-            android:title="@string/switch_1"
-            app:iconSpaceReserved="false" />
+            android:key="KEY_RECOMMENDATIONS"
+            android:summaryOff="@string/daily_book_recommendations_off"
+            android:summaryOn="@string/daily_book_recommendations_on"
+            android:title="@string/daily_book_recommendations_title" />
+    </PreferenceCategory>
 
-        <ListPreference
-            android:defaultValue="list_1"
-            android:entries="@array/list_1_entries"
-            android:entryValues="@array/list_1_values"
-            android:key="list_1"
-            android:summary="%s"
-            android:title="@string/list_1"
-            app:iconSpaceReserved="false" />
+    <PreferenceCategory
+        android:key="about"
+        android:title="@string/about"
+        app:icon="@drawable/ic_baseline_info_24">
+
+        <Preference
+            android:title="@string/app_developer_title"
+            android:summary="@string/app_developer" >
+            <intent
+                android:action="android.intent.action.VIEW"
+                android:data="@string/ivAuthorUrl" />
+        </Preference>
+
+        <Preference
+            android:title="@string/app_version_title"
+            android:summary="@string/app_version">
+        </Preference>
+
+        <Preference
+            android:title="@string/app_source_code_title"
+            android:summary="@string/ivRepoUrl" >
+            <intent
+                android:action="android.intent.action.VIEW"
+                android:data="@string/ivRepoUrl" />
+        </Preference>
+
+        <Preference
+            android:title="@string/app_changelog"
+            android:summary="@string/url_releases" >
+            <intent
+                android:action="android.intent.action.VIEW"
+                android:data="@string/url_releases" />
+        </Preference>
+
+        <Preference
+            android:title="@string/app_licence_title"
+            android:summary="@string/app_licence" >
+            <intent
+                android:action="android.intent.action.VIEW"
+                android:data="@string/tvLicenseUrl" />
+        </Preference>
     </PreferenceCategory>
 
 </PreferenceScreen>

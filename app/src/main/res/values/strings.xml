@@ -69,11 +69,27 @@
     <string name="switch_1_on" translatable="false">switch_1_on</string>
     <string name="switch_1_off" translatable="false">switch_1_off</string>
     <string name="list_1" translatable="false">list_1</string>
-    <string name="accent_name" translatable="false">accent_name</string>
     <string name="list_1_1" translatable="false">list_1_1</string>
     <string name="list_1_2" translatable="false">list_1_2</string>
     <string name="list_1_3" translatable="false">list_1_3</string>
+    <string name="accent_name">Color accent</string>
     <string name="accent_green">Green</string>
     <string name="accent_orange">Orange</string>
+    <string name="accent_blue">Blue</string>
+    <string name="accent_pink">Pink</string>
+    <string name="accent_yellow">Yellow</string>
+    <string name="accent_brown">Brown</string>
+    <string name="about">About</string>
+    <string name="app_version_title">App version</string>
+    <string name="app_source_code_title">Source code</string>
+    <string name="app_developer_title">Developer</string>
+    <string name="app_developer" translatable="false">Mateusz Bąk</string>
+    <string name="app_changelog">Changelog</string>
+    <string name="url_releases" translatable="false">https://github.com/mateusz-bak/books-tracker-android/releases</string>
+    <string name="app_licence_title">Licence</string>
+    <string name="app_licence" translatable="false">GNU General Public License v2.0</string>
+    <string name="daily_book_recommendations_title">Send daily new book recommendation</string>
+    <string name="daily_book_recommendations_on">Send daily notification</string>
+    <string name="daily_book_recommendations_off">Don\'t send daily notification</string>
 
 </resources>
