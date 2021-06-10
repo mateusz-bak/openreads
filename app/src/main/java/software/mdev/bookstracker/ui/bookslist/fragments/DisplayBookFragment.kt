@@ -10,6 +10,10 @@ import software.mdev.bookstracker.data.db.entities.Book
 import software.mdev.bookstracker.ui.bookslist.viewmodel.BooksViewModel
 import software.mdev.bookstracker.ui.bookslist.ListActivity
 import kotlinx.android.synthetic.main.fragment_display_book.*
+import software.mdev.bookstracker.other.Constants.BOOK_STATUS_IN_PROGRESS
+import software.mdev.bookstracker.other.Constants.BOOK_STATUS_READ
+import software.mdev.bookstracker.other.Constants.BOOK_STATUS_TO_READ
+import software.mdev.bookstracker.other.Constants.SERIALIZABLE_BUNDLE_BOOK
 
 
 class DisplayBookFragment : Fragment(R.layout.fragment_display_book) {
@@ -31,19 +35,19 @@ class DisplayBookFragment : Fragment(R.layout.fragment_display_book) {
             rbRatingIndicator.rating = book.bookRating
 
             when (book.bookStatus) {
-                "read" -> {
+                BOOK_STATUS_READ -> {
                     tvBookStatus.text = getString(R.string.finished)
                     ivBookStatusInProgress.visibility = View.GONE
                     ivBookStatusToRead.visibility = View.GONE
                     rbRatingIndicator.visibility = View.VISIBLE
                 }
-                "in_progress" -> {
+                BOOK_STATUS_IN_PROGRESS -> {
                     tvBookStatus.text = getString(R.string.inProgress)
                     ivBookStatusRead.visibility = View.GONE
                     ivBookStatusToRead.visibility = View.GONE
                     rbRatingIndicator.visibility = View.GONE
                 }
-                "to_read" -> {
+                BOOK_STATUS_TO_READ -> {
                     tvBookStatus.text = getString(R.string.toRead)
                     ivBookStatusInProgress.visibility = View.GONE
                     ivBookStatusRead.visibility = View.GONE
@@ -53,7 +57,7 @@ class DisplayBookFragment : Fragment(R.layout.fragment_display_book) {
 
         fabEditBook.setOnClickListener{
             val bundle = Bundle().apply {
-                putSerializable("book", book)
+                putSerializable(SERIALIZABLE_BUNDLE_BOOK, book)
             }
             findNavController().navigate(
                 R.id.action_displayBookFragment_to_editBookFragment,

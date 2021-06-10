@@ -57,10 +57,48 @@
     <string name="hintBookAuthor" translatable="false">bookauthor</string>
     <string name="hintSearch" translatable="false">booksearch</string>
 
-    <string name="app_version" translatable="false">v1.0.0</string>
+nomn    <string name="app_version" translatable="false">v1.1.0</string>
     <string name="notYetImplemented">Not yet implemented</string>
     <string name="dismiss">Dismiss</string>
     <string name="bookDeleted">Book deleted</string>
     <string name="undo">Undo</string>
+    <string name="tvWelcomeText">Welcome to Books Tracker app!</string>
+    <string name="tvLooksEmpty">Your book list looks empty for now, click plus button below and start adding new books!</string>
+    <string name="customization">Customization</string>
+    <string name="switch_1" translatable="false">switch_1</string>
+    <string name="switch_1_on" translatable="false">switch_1_on</string>
+    <string name="switch_1_off" translatable="false">switch_1_off</string>
+    <string name="list_1" translatable="false">list_1</string>
+    <string name="list_1_1" translatable="false">list_1_1</string>
+    <string name="list_1_2" translatable="false">list_1_2</string>
+    <string name="list_1_3" translatable="false">list_1_3</string>
+    <string name="about">About</string>
+    <string name="app_version_title">App version</string>
+    <string name="app_source_code_title">Source code</string>
+    <string name="app_developer_title">Developer</string>
+    <string name="app_developer" translatable="false">Mateusz Bąk</string>
+    <string name="app_changelog">Changelog</string>
+    <string name="url_releases" translatable="false">https://github.com/mateusz-bak/books-tracker-android/releases</string>
+    <string name="app_licence_title">Licence</string>
+    <string name="app_licence" translatable="false">GNU General Public License v2.0</string>
+    <string name="daily_book_recommendations_title">Send daily new book recommendation</string>
+    <string name="daily_book_recommendations_on">Send daily notification</string>
+    <string name="daily_book_recommendations_off">Don\'t send daily notification</string>
+    <string name="changes_after_app_restart">Changes will be applied after app restart!</string>
+    <string name="accent_amber">Amber</string>
+    <string name="accent_blue">Blue</string>
+    <string name="accent_cyan">Cyan</string>
+    <string name="accent_green">Green</string>
+    <string name="accent_indigo">Indigo</string>
+    <string name="accent_lime">Lime</string>
+    <string name="accent_pink">Pink</string>
+    <string name="accent_purple">Purple</string>
+    <string name="accent_teal">Teal</string>
+    <string name="accent_yellow">Yellow</string>
+    <string name="accent_name_title">Accent color</string>
+    <string name="first_time_toggle_title">Show welcome screen</string>
+    <string name="first_time_toggle_off">Won\'t be shown after app restart</string>
+    <string name="first_time_toggle_on">Will be shown after app restart</string>
+    <string name="rate_this_book">Rate this book:</string>
 
 </resources>

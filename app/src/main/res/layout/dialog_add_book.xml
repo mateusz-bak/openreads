@@ -50,7 +50,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:stepSize="1"
-        android:layout_marginTop="28dp"
+        android:layout_marginTop="48dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
@@ -152,6 +152,17 @@
         app:layout_constraintEnd_toEndOf="@+id/ivBookStatusSetInProgress"
         app:layout_constraintStart_toStartOf="@+id/ivBookStatusSetInProgress"
         app:layout_constraintTop_toBottomOf="@+id/ivBookStatusSetInProgress" />
+
+    <TextView
+        android:id="@+id/tvRateThisBook"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/rate_this_book"
+        android:textSize="16sp"
+        android:layout_marginBottom="8dp"
+        app:layout_constraintBottom_toTopOf="@+id/rbAdderRating"
+        app:layout_constraintEnd_toEndOf="@+id/rbAdderRating"
+        app:layout_constraintStart_toStartOf="@+id/rbAdderRating" />
 
     <TextView
         android:id="@+id/tvToRead"

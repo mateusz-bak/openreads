@@ -10,6 +10,9 @@ import androidx.recyclerview.widget.RecyclerView
 import software.mdev.bookstracker.R
 import software.mdev.bookstracker.data.db.entities.Book
 import kotlinx.android.synthetic.main.item_book.view.*
+import software.mdev.bookstracker.other.Constants.BOOK_STATUS_IN_PROGRESS
+import software.mdev.bookstracker.other.Constants.BOOK_STATUS_READ
+import software.mdev.bookstracker.other.Constants.BOOK_STATUS_TO_READ
 
 class BookAdapter(
     var context: Context,
@@ -43,21 +46,21 @@ class BookAdapter(
             tvBookAuthor.text = curBook.bookAuthor
 
             when (whichFragment ){
-                "read" -> rbRatingIndicator.rating = curBook.bookRating
+                BOOK_STATUS_READ -> rbRatingIndicator.rating = curBook.bookRating
             }
             when (curBook.bookStatus ){
-                "read" -> {
+                BOOK_STATUS_READ -> {
                     ivInProgressIndicator.visibility = View.GONE
                     ivToReadIndicator.visibility = View.GONE
                     rbRatingIndicator.visibility = View.VISIBLE
                     rbRatingIndicator.rating = curBook.bookRating
                 }
-                "in_progress" -> {
+                BOOK_STATUS_IN_PROGRESS -> {
                     rbRatingIndicator.visibility = View.GONE
                     ivToReadIndicator.visibility = View.GONE
                     ivInProgressIndicator.visibility = View.VISIBLE
                 }
-                "to_read" -> {
+                BOOK_STATUS_TO_READ -> {
                     rbRatingIndicator.visibility = View.GONE
                     ivInProgressIndicator.visibility = View.GONE
                     ivToReadIndicator.visibility = View.VISIBLE

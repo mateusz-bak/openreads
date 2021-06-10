@@ -19,7 +19,6 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name="software.mdev.bookstracker.ui.bookslist.AboutActivity"/>
     </application>
 
 </manifest>

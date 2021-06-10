@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto" android:id="@+id/books_nav_graph"
-    app:startDestination="@id/readFragment">
+    app:startDestination="@id/setupFragment">
 
 
     <fragment
@@ -21,6 +21,9 @@
         <action
             android:id="@+id/action_readFragment_to_toReadFragment"
             app:destination="@id/toReadFragment" />
+        <action
+            android:id="@+id/action_readFragment_to_settingsFragment"
+            app:destination="@id/settingsFragment" />
     </fragment>
 
     <fragment
@@ -40,6 +43,9 @@
         <action
             android:id="@+id/action_inProgressFragment_to_toReadFragment"
             app:destination="@id/toReadFragment" />
+        <action
+            android:id="@+id/action_inProgressFragment_to_settingsFragment"
+            app:destination="@id/settingsFragment" />
     </fragment>
 
     <fragment
@@ -59,6 +65,9 @@
         <action
             android:id="@+id/action_toReadFragment_to_inProgressFragment"
             app:destination="@id/inProgressFragment" />
+        <action
+            android:id="@+id/action_toReadFragment_to_settingsFragment"
+            app:destination="@id/settingsFragment" />
     </fragment>
 
     <fragment
@@ -87,4 +96,16 @@
             android:id="@+id/action_editBookFragment_to_displayBookFragment"
             app:destination="@id/displayBookFragment" />
     </fragment>
+    <fragment
+        android:id="@+id/setupFragment"
+        android:name="software.mdev.bookstracker.ui.bookslist.fragments.SetupFragment"
+        android:label="SetupFragment" >
+        <action
+            android:id="@+id/action_setupFragment_to_readFragment"
+            app:destination="@id/readFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/settingsFragment"
+        android:name="software.mdev.bookstracker.ui.bookslist.fragments.SettingsFragment"
+        android:label="SettingsFragment" />
 </navigation>

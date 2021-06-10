@@ -3,6 +3,16 @@
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
     <color name="grey">#787474</color>
-    <color name="orange_300">#FFB74D</color>
-    <color name="orange_500">#FF9800</color>
+
+    <color name="amber_500">#FFC107</color>
+    <color name="blue_500">#2196F3</color>
+    <color name="cyan_500">#00BCD4</color>
+    <color name="green_500">#4CAF50</color>
+    <color name="indigo_500">#3F51B5</color>
+    <color name="lime_500">#CDDC39</color>
+    <color name="pink_500">#E91E63</color>
+    <color name="purple_500">#9C27B0</color>
+    <color name="teal_500">#009688</color>
+    <color name="yellow_500">#FFEB3B</color>
+    <color name="grey_300">#E0E0E0</color>
 </resources>

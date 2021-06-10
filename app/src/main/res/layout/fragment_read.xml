@@ -163,4 +163,19 @@
         app:layout_constraintVertical_bias="0.0"
         app:srcCompat="@drawable/ic_baseline_horizontal_rule_24" />
 
+    <TextView
+        android:id="@+id/tvLooksEmpty"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/tvLooksEmpty"
+        android:textSize="16dp"
+        android:textColor="?colorOnSecondary"
+        android:padding="24dp"
+        android:gravity="center"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/rvBooks" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>
