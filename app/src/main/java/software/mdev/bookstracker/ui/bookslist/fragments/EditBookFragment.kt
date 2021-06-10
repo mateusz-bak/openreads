@@ -63,6 +63,9 @@ class EditBookFragment : Fragment(R.layout.fragment_edit_book) {
         etEditedBookAuthor.setText(book.bookAuthor)
         rbEditedRating.rating = book.bookRating
 
+        etEditedBookTitle.requestFocus()
+        view.showKeyboard()
+
         when (book.bookStatus) {
             BOOK_STATUS_READ -> {
                 ivEditorBookStatusRead.setColorFilter(accentColor, android.graphics.PorterDuff.Mode.SRC_IN)
@@ -163,6 +166,11 @@ class EditBookFragment : Fragment(R.layout.fragment_edit_book) {
     fun View.hideKeyboard() {
         val inputManager = context.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
         inputManager.hideSoftInputFromWindow(windowToken, 0)
+    }
+
+    fun View.showKeyboard() {
+        val inputManager = context.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+        inputManager.toggleSoftInputFromWindow(windowToken, 0, 0)
     }
 
     fun getAccentColor(context: Context): Int {
