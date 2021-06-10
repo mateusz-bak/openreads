@@ -207,6 +207,7 @@ class ReadFragment : Fragment(R.layout.fragment_read) {
         }
 
         ivMore.setOnClickListener{
+            it.hideKeyboard()
             findNavController().navigate(R.id.settingsFragment, null)
         }
     }
