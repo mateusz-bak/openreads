@@ -17,4 +17,5 @@
  <img src='https://raw.githubusercontent.com/mateusz-bak/books-tracker-android/master/doc/images/screenshot-add-book.png' width='35%'/>  
 </p>  
   
-## Attributions Launcher icon made by [smalllikeart](https://www.flaticon.com/authors/smalllikeart "smalllikeart") from [www.flaticon.com](https://www.flaticon.com/ "Flaticon")
+## Attributions
+Launcher and welcome screen icon made by [smalllikeart](https://www.flaticon.com/authors/smalllikeart "smalllikeart") from [www.flaticon.com](https://www.flaticon.com/ "Flaticon")
