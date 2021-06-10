@@ -1,7 +1,6 @@
 package software.mdev.bookstracker.ui.bookslist.fragments
 
 import android.content.Context
-import android.content.Intent
 import android.os.Bundle
 import android.view.KeyEvent
 import android.view.View
@@ -19,7 +18,6 @@ import software.mdev.bookstracker.adapters.BookAdapter
 import software.mdev.bookstracker.data.db.BooksDatabase
 import software.mdev.bookstracker.data.db.entities.Book
 import software.mdev.bookstracker.data.repositories.BooksRepository
-import software.mdev.bookstracker.ui.bookslist.AboutActivity
 import software.mdev.bookstracker.ui.bookslist.ListActivity
 import software.mdev.bookstracker.ui.bookslist.viewmodel.BooksViewModel
 import software.mdev.bookstracker.ui.bookslist.viewmodel.BooksViewModelProviderFactory
@@ -30,16 +28,31 @@ import software.mdev.bookstracker.ui.bookslist.dialogs.SortBooksDialogListener
 import kotlinx.android.synthetic.main.fragment_to_read.*
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
+import software.mdev.bookstracker.other.Constants.BOOK_STATUS_IN_PROGRESS
+import software.mdev.bookstracker.other.Constants.BOOK_STATUS_READ
+import software.mdev.bookstracker.other.Constants.BOOK_STATUS_TO_READ
+import software.mdev.bookstracker.other.Constants.EMPTY_STRING
+import software.mdev.bookstracker.other.Constants.SHARED_PREFERENCES_KEY_SORT_ORDER
+import software.mdev.bookstracker.other.Constants.SERIALIZABLE_BUNDLE_BOOK
+import software.mdev.bookstracker.other.Constants.SHARED_PREFERENCES_NAME
+import software.mdev.bookstracker.other.Constants.SORT_ORDER_AUTHOR_ASC
+import software.mdev.bookstracker.other.Constants.SORT_ORDER_AUTHOR_DESC
+import software.mdev.bookstracker.other.Constants.SORT_ORDER_RATING_ASC
+import software.mdev.bookstracker.other.Constants.SORT_ORDER_RATING_DESC
+import software.mdev.bookstracker.other.Constants.SORT_ORDER_TITLE_ASC
+import software.mdev.bookstracker.other.Constants.SORT_ORDER_TITLE_DESC
+
 
 class ToReadFragment : Fragment(R.layout.fragment_to_read) {
 
     lateinit var viewModel: BooksViewModel
+    val currentFragment = BOOK_STATUS_TO_READ
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         viewModel = (activity as ListActivity).booksViewModel
 
-        val sharedPref = (activity as ListActivity).getSharedPreferences("appPref", Context.MODE_PRIVATE)
+        val sharedPref = (activity as ListActivity).getSharedPreferences(SHARED_PREFERENCES_NAME, Context.MODE_PRIVATE)
         val editor = sharedPref.edit()
 
         etSearch.visibility = View.GONE
@@ -57,14 +70,14 @@ class ToReadFragment : Fragment(R.layout.fragment_to_read) {
         val factory = BooksViewModelProviderFactory(booksRepository)
         val viewModel = ViewModelProviders.of(this, factory).get(BooksViewModel::class.java)
 
-        val bookAdapter = BookAdapter(view.context, whichFragment = "to_read")
+        val bookAdapter = BookAdapter(view.context, whichFragment = currentFragment)
 
         rvBooks.adapter = bookAdapter
         rvBooks.layoutManager = LinearLayoutManager(view.context)
 
         this.getBooks(bookAdapter)
 
-        viewModel.getBookCount("to_read").observe(viewLifecycleOwner, Observer {
+        viewModel.getBookCount(currentFragment).observe(viewLifecycleOwner, Observer {
                 count ->
             run {
                 when(count.toInt()) {
@@ -80,11 +93,11 @@ class ToReadFragment : Fragment(R.layout.fragment_to_read) {
                     override fun onSaveButtonClicked(item: Book) {
                         viewModel.upsert(item)
                         when(item.bookStatus) {
-                            "read" -> { findNavController().navigate(
+                            BOOK_STATUS_READ -> { findNavController().navigate(
                                 R.id.action_toReadFragment_to_readFragment
                             )
                             }
-                            "in_progress" -> { findNavController().navigate(
+                            BOOK_STATUS_IN_PROGRESS -> { findNavController().navigate(
                                 R.id.action_toReadFragment_to_inProgressFragment
                             )
                             }
@@ -99,7 +112,7 @@ class ToReadFragment : Fragment(R.layout.fragment_to_read) {
                 object: SortBooksDialogListener {
                     override fun onSaveButtonClicked(sortOrder: String) {
                         editor.apply {
-                            putString("sort_order", sortOrder)
+                            putString(SHARED_PREFERENCES_KEY_SORT_ORDER, sortOrder)
                             apply()
                         }
                         getBooks(bookAdapter)
@@ -109,13 +122,13 @@ class ToReadFragment : Fragment(R.layout.fragment_to_read) {
                         }
                     }
                 }
-                , sharedPref.getString("sort_order", "ivSortTitleAsc")).show()
+                , sharedPref.getString(SHARED_PREFERENCES_KEY_SORT_ORDER, SORT_ORDER_TITLE_ASC)).show()
         }
 
         bookAdapter.setOnBookClickListener {
-            etSearch.setText("")
+            etSearch.setText(EMPTY_STRING)
             val bundle = Bundle().apply {
-                putSerializable("book", it)
+                putSerializable(SERIALIZABLE_BUNDLE_BOOK, it)
             }
             findNavController().navigate(
                 R.id.action_toReadFragment_to_displayBookFragment,
@@ -178,7 +191,7 @@ class ToReadFragment : Fragment(R.layout.fragment_to_read) {
         ivClearSearch.setOnClickListener {
             when (etSearch.text.isEmpty()) {
                 false -> {
-                    etSearch.setText("")
+                    etSearch.setText(EMPTY_STRING)
                     viewModel.searchBooks(etSearch.text.toString()).observe(viewLifecycleOwner, Observer { some_books ->
                         bookAdapter.differ.submitList(some_books)
                     })
@@ -194,7 +207,7 @@ class ToReadFragment : Fragment(R.layout.fragment_to_read) {
         }
 
         ivMore.setOnClickListener{
-            requireActivity().startActivity(Intent(requireActivity(), AboutActivity::class.java))
+            findNavController().navigate(R.id.settingsFragment, null)
         }
     }
 
@@ -209,14 +222,14 @@ class ToReadFragment : Fragment(R.layout.fragment_to_read) {
     }
 
     fun getBooks(bookAdapter: BookAdapter) {
-        val sharedPref = (activity as ListActivity).getSharedPreferences("appPref", Context.MODE_PRIVATE)
-        when(sharedPref.getString("sort_order", "ivSortTitleAsc")) {
-            "ivSortTitleDesc" -> viewModel.getSortedBooksByTitleDesc("to_read").observe(viewLifecycleOwner, Observer { some_books -> bookAdapter.differ.submitList(some_books)})
-            "ivSortTitleAsc" -> viewModel.getSortedBooksByTitleAsc("to_read").observe(viewLifecycleOwner, Observer { some_books -> bookAdapter.differ.submitList(some_books)})
-            "ivSortAuthorDesc" -> viewModel.getSortedBooksByAuthorDesc("to_read").observe(viewLifecycleOwner, Observer { some_books -> bookAdapter.differ.submitList(some_books)})
-            "ivSortAuthorAsc" -> viewModel.getSortedBooksByAuthorAsc("to_read").observe(viewLifecycleOwner, Observer { some_books -> bookAdapter.differ.submitList(some_books)})
-            "ivSortRatingDesc" -> viewModel.getSortedBooksByRatingDesc("to_read").observe(viewLifecycleOwner, Observer { some_books -> bookAdapter.differ.submitList(some_books)})
-            "ivSortRatingAsc" -> viewModel.getSortedBooksByRatingAsc("to_read").observe(viewLifecycleOwner, Observer { some_books -> bookAdapter.differ.submitList(some_books)})
+        val sharedPref = (activity as ListActivity).getSharedPreferences(SHARED_PREFERENCES_NAME, Context.MODE_PRIVATE)
+        when(sharedPref.getString(SHARED_PREFERENCES_KEY_SORT_ORDER, SORT_ORDER_TITLE_ASC)) {
+            SORT_ORDER_TITLE_DESC -> viewModel.getSortedBooksByTitleDesc(currentFragment).observe(viewLifecycleOwner, Observer { some_books -> bookAdapter.differ.submitList(some_books)})
+            SORT_ORDER_TITLE_ASC -> viewModel.getSortedBooksByTitleAsc(currentFragment).observe(viewLifecycleOwner, Observer { some_books -> bookAdapter.differ.submitList(some_books)})
+            SORT_ORDER_AUTHOR_DESC -> viewModel.getSortedBooksByAuthorDesc(currentFragment).observe(viewLifecycleOwner, Observer { some_books -> bookAdapter.differ.submitList(some_books)})
+            SORT_ORDER_AUTHOR_ASC -> viewModel.getSortedBooksByAuthorAsc(currentFragment).observe(viewLifecycleOwner, Observer { some_books -> bookAdapter.differ.submitList(some_books)})
+            SORT_ORDER_RATING_DESC -> viewModel.getSortedBooksByRatingDesc(currentFragment).observe(viewLifecycleOwner, Observer { some_books -> bookAdapter.differ.submitList(some_books)})
+            SORT_ORDER_RATING_ASC -> viewModel.getSortedBooksByRatingAsc(currentFragment).observe(viewLifecycleOwner, Observer { some_books -> bookAdapter.differ.submitList(some_books)})
         }
     }
 }

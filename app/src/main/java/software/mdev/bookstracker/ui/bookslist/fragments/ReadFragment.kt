@@ -46,6 +46,7 @@ import software.mdev.bookstracker.other.Constants.SORT_ORDER_TITLE_DESC
 class ReadFragment : Fragment(R.layout.fragment_read) {
 
     lateinit var viewModel: BooksViewModel
+    val currentFragment = BOOK_STATUS_READ
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -69,14 +70,14 @@ class ReadFragment : Fragment(R.layout.fragment_read) {
         val factory = BooksViewModelProviderFactory(booksRepository)
         val viewModel = ViewModelProviders.of(this, factory).get(BooksViewModel::class.java)
 
-        val bookAdapter = BookAdapter(view.context, whichFragment = BOOK_STATUS_READ)
+        val bookAdapter = BookAdapter(view.context, whichFragment = currentFragment)
 
         rvBooks.adapter = bookAdapter
         rvBooks.layoutManager = LinearLayoutManager(view.context)
 
         this.getBooks(bookAdapter)
 
-        viewModel.getBookCount(BOOK_STATUS_READ).observe(viewLifecycleOwner, Observer {
+        viewModel.getBookCount(currentFragment).observe(viewLifecycleOwner, Observer {
                 count ->
             run {
                 when(count.toInt()) {
@@ -223,12 +224,12 @@ class ReadFragment : Fragment(R.layout.fragment_read) {
     fun getBooks(bookAdapter: BookAdapter) {
         val sharedPref = (activity as ListActivity).getSharedPreferences(SHARED_PREFERENCES_NAME, Context.MODE_PRIVATE)
         when(sharedPref.getString(SHARED_PREFERENCES_KEY_SORT_ORDER, SORT_ORDER_TITLE_ASC)) {
-            SORT_ORDER_TITLE_DESC -> viewModel.getSortedBooksByTitleDesc(BOOK_STATUS_READ).observe(viewLifecycleOwner, Observer { some_books -> bookAdapter.differ.submitList(some_books)})
-            SORT_ORDER_TITLE_ASC -> viewModel.getSortedBooksByTitleAsc(BOOK_STATUS_READ).observe(viewLifecycleOwner, Observer { some_books -> bookAdapter.differ.submitList(some_books)})
-            SORT_ORDER_AUTHOR_DESC -> viewModel.getSortedBooksByAuthorDesc(BOOK_STATUS_READ).observe(viewLifecycleOwner, Observer { some_books -> bookAdapter.differ.submitList(some_books)})
-            SORT_ORDER_AUTHOR_ASC -> viewModel.getSortedBooksByAuthorAsc(BOOK_STATUS_READ).observe(viewLifecycleOwner, Observer { some_books -> bookAdapter.differ.submitList(some_books)})
-            SORT_ORDER_RATING_DESC -> viewModel.getSortedBooksByRatingDesc(BOOK_STATUS_READ).observe(viewLifecycleOwner, Observer { some_books -> bookAdapter.differ.submitList(some_books)})
-            SORT_ORDER_RATING_ASC -> viewModel.getSortedBooksByRatingAsc(BOOK_STATUS_READ).observe(viewLifecycleOwner, Observer { some_books -> bookAdapter.differ.submitList(some_books)})
+            SORT_ORDER_TITLE_DESC -> viewModel.getSortedBooksByTitleDesc(currentFragment).observe(viewLifecycleOwner, Observer { some_books -> bookAdapter.differ.submitList(some_books)})
+            SORT_ORDER_TITLE_ASC -> viewModel.getSortedBooksByTitleAsc(currentFragment).observe(viewLifecycleOwner, Observer { some_books -> bookAdapter.differ.submitList(some_books)})
+            SORT_ORDER_AUTHOR_DESC -> viewModel.getSortedBooksByAuthorDesc(currentFragment).observe(viewLifecycleOwner, Observer { some_books -> bookAdapter.differ.submitList(some_books)})
+            SORT_ORDER_AUTHOR_ASC -> viewModel.getSortedBooksByAuthorAsc(currentFragment).observe(viewLifecycleOwner, Observer { some_books -> bookAdapter.differ.submitList(some_books)})
+            SORT_ORDER_RATING_DESC -> viewModel.getSortedBooksByRatingDesc(currentFragment).observe(viewLifecycleOwner, Observer { some_books -> bookAdapter.differ.submitList(some_books)})
+            SORT_ORDER_RATING_ASC -> viewModel.getSortedBooksByRatingAsc(currentFragment).observe(viewLifecycleOwner, Observer { some_books -> bookAdapter.differ.submitList(some_books)})
         }
     }
 }
