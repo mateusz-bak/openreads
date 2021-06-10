@@ -79,4 +79,5 @@
     <string name="first_time_toggle_title">Pokaż ekran powitalny</string>
     <string name="first_time_toggle_on">Zostanie pokazany po restarcie aplikacji</string>
     <string name="first_time_toggle_off">Nie zostanie pokazany po restarcie aplikacji</string>
+    <string name="rate_this_book">Oceń tę książkę:</string>
 </resources>

@@ -33,6 +33,7 @@ class AddBookDialog(context: Context, var addBookDialogListener: AddBookDialogLi
 
         this.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
         rbAdderRating.visibility = View.GONE
+        tvRateThisBook.visibility = View.GONE
 
         ivBookStatusSetRead.setOnClickListener {
             ivBookStatusSetRead.setColorFilter(accentColor, android.graphics.PorterDuff.Mode.SRC_IN)
@@ -40,6 +41,7 @@ class AddBookDialog(context: Context, var addBookDialogListener: AddBookDialogLi
             ivBookStatusSetToRead.setColorFilter(ContextCompat.getColor(context, R.color.grey), android.graphics.PorterDuff.Mode.SRC_IN)
             whatIsClicked = BOOK_STATUS_READ
             rbAdderRating.visibility = View.VISIBLE
+            tvRateThisBook.visibility = View.VISIBLE
             it.hideKeyboard()
         }
 
@@ -49,6 +51,7 @@ class AddBookDialog(context: Context, var addBookDialogListener: AddBookDialogLi
             ivBookStatusSetToRead.setColorFilter(ContextCompat.getColor(context, R.color.grey), android.graphics.PorterDuff.Mode.SRC_IN)
             whatIsClicked = BOOK_STATUS_IN_PROGRESS
             rbAdderRating.visibility = View.GONE
+            tvRateThisBook.visibility = View.GONE
             it.hideKeyboard()
         }
 
@@ -58,6 +61,7 @@ class AddBookDialog(context: Context, var addBookDialogListener: AddBookDialogLi
             ivBookStatusSetToRead.setColorFilter(accentColor, android.graphics.PorterDuff.Mode.SRC_IN)
             whatIsClicked = BOOK_STATUS_TO_READ
             rbAdderRating.visibility = View.GONE
+            tvRateThisBook.visibility = View.GONE
             it.hideKeyboard()
         }
 

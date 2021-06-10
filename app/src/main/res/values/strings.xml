@@ -99,5 +99,6 @@
     <string name="first_time_toggle_title">Show welcome screen</string>
     <string name="first_time_toggle_off">Won\'t be shown after app restart</string>
     <string name="first_time_toggle_on">Will be shown after app restart</string>
+    <string name="rate_this_book">Rate this book:</string>
 
 </resources>
