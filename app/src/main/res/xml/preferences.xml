@@ -8,7 +8,7 @@
         app:icon="@drawable/ic_baseline_brush_24">
 
         <ListPreference
-            android:defaultValue="orange"
+            android:defaultValue="accent_green"
             android:entries="@array/accents"
             android:entryValues="@array/accent_values"
             android:key="KEY_ACCENT"

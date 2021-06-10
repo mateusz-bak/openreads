@@ -27,6 +27,7 @@ import software.mdev.bookstracker.other.Constants.SHARED_PREFERENCES_NAME
 import software.mdev.bookstracker.other.Constants.THEME_ACCENT_AMBER_500
 import software.mdev.bookstracker.other.Constants.THEME_ACCENT_BLUE_500
 import software.mdev.bookstracker.other.Constants.THEME_ACCENT_CYAN_500
+import software.mdev.bookstracker.other.Constants.THEME_ACCENT_DEFAULT
 import software.mdev.bookstracker.other.Constants.THEME_ACCENT_GREEN_500
 import software.mdev.bookstracker.other.Constants.THEME_ACCENT_INDIGO_500
 import software.mdev.bookstracker.other.Constants.THEME_ACCENT_LIME_500
@@ -165,11 +166,11 @@ class EditBookFragment : Fragment(R.layout.fragment_edit_book) {
     }
 
     fun getAccentColor(context: Context): Int {
-        var accentColor = ContextCompat.getColor(context, R.color.amber_500)
+        var accentColor = ContextCompat.getColor(context, R.color.green_500)
 
         val sharedPref = (activity as ListActivity).getSharedPreferences(SHARED_PREFERENCES_NAME, Context.MODE_PRIVATE)
 
-        var accent = sharedPref.getString(Constants.SHARED_PREFERENCES_KEY_ACCENT, THEME_ACCENT_AMBER_500).toString()
+        var accent = sharedPref.getString(Constants.SHARED_PREFERENCES_KEY_ACCENT, THEME_ACCENT_DEFAULT).toString()
 
         when(accent){
             THEME_ACCENT_AMBER_500 -> accentColor = ContextCompat.getColor(context, R.color.amber_500)

@@ -10,20 +10,11 @@ import androidx.appcompat.app.AppCompatDialog
 import androidx.core.content.ContextCompat
 import kotlinx.android.synthetic.main.dialog_sort_books.*
 import software.mdev.bookstracker.other.Constants
-import software.mdev.bookstracker.other.Constants.BOOK_STATUS_NOTHING
-import software.mdev.bookstracker.other.Constants.SHARED_PREFERENCES_KEY_ACCENT
-import software.mdev.bookstracker.other.Constants.SORT_ORDER_AUTHOR_ASC
-import software.mdev.bookstracker.other.Constants.SORT_ORDER_AUTHOR_DESC
-import software.mdev.bookstracker.other.Constants.SORT_ORDER_RATING_ASC
-import software.mdev.bookstracker.other.Constants.SORT_ORDER_RATING_DESC
-import software.mdev.bookstracker.other.Constants.SORT_ORDER_TITLE_ASC
-import software.mdev.bookstracker.other.Constants.SORT_ORDER_TITLE_DESC
-import software.mdev.bookstracker.other.Constants.THEME_ACCENT_AMBER_500
 
 
 class SortBooksDialog(context: Context, var sortBooksDialogListener: SortBooksDialogListener, var sortOrder: String?) : AppCompatDialog(context) {
 
-    var whatIsClicked: String = BOOK_STATUS_NOTHING
+    var whatIsClicked: String = Constants.BOOK_STATUS_NOTHING
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -34,12 +25,12 @@ class SortBooksDialog(context: Context, var sortBooksDialogListener: SortBooksDi
         this.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
 
         when (sortOrder) {
-            SORT_ORDER_TITLE_DESC -> ivSortTitleDesc.setColorFilter(accentColor, android.graphics.PorterDuff.Mode.SRC_IN)
-            SORT_ORDER_TITLE_ASC -> ivSortTitleAsc.setColorFilter(accentColor, android.graphics.PorterDuff.Mode.SRC_IN)
-            SORT_ORDER_AUTHOR_DESC -> ivSortAuthorDesc.setColorFilter(accentColor, android.graphics.PorterDuff.Mode.SRC_IN)
-            SORT_ORDER_AUTHOR_ASC -> ivSortAuthorAsc.setColorFilter(accentColor, android.graphics.PorterDuff.Mode.SRC_IN)
-            SORT_ORDER_RATING_DESC -> ivSortRatingDesc.setColorFilter(accentColor, android.graphics.PorterDuff.Mode.SRC_IN)
-            SORT_ORDER_RATING_ASC -> ivSortRatingAsc.setColorFilter(accentColor, android.graphics.PorterDuff.Mode.SRC_IN)
+            Constants.SORT_ORDER_TITLE_DESC -> ivSortTitleDesc.setColorFilter(accentColor, android.graphics.PorterDuff.Mode.SRC_IN)
+            Constants.SORT_ORDER_TITLE_ASC -> ivSortTitleAsc.setColorFilter(accentColor, android.graphics.PorterDuff.Mode.SRC_IN)
+            Constants.SORT_ORDER_AUTHOR_DESC -> ivSortAuthorDesc.setColorFilter(accentColor, android.graphics.PorterDuff.Mode.SRC_IN)
+            Constants.SORT_ORDER_AUTHOR_ASC -> ivSortAuthorAsc.setColorFilter(accentColor, android.graphics.PorterDuff.Mode.SRC_IN)
+            Constants.SORT_ORDER_RATING_DESC -> ivSortRatingDesc.setColorFilter(accentColor, android.graphics.PorterDuff.Mode.SRC_IN)
+            Constants.SORT_ORDER_RATING_ASC -> ivSortRatingAsc.setColorFilter(accentColor, android.graphics.PorterDuff.Mode.SRC_IN)
         }
 
         ivSortTitleDesc.setOnClickListener {
@@ -49,7 +40,7 @@ class SortBooksDialog(context: Context, var sortBooksDialogListener: SortBooksDi
             ivSortAuthorAsc.setColorFilter(ContextCompat.getColor(context, R.color.grey), android.graphics.PorterDuff.Mode.SRC_IN)
             ivSortRatingDesc.setColorFilter(ContextCompat.getColor(context, R.color.grey), android.graphics.PorterDuff.Mode.SRC_IN)
             ivSortRatingAsc.setColorFilter(ContextCompat.getColor(context, R.color.grey), android.graphics.PorterDuff.Mode.SRC_IN)
-            whatIsClicked = SORT_ORDER_TITLE_DESC
+            whatIsClicked = Constants.SORT_ORDER_TITLE_DESC
         }
 
         ivSortTitleAsc.setOnClickListener {
@@ -59,7 +50,7 @@ class SortBooksDialog(context: Context, var sortBooksDialogListener: SortBooksDi
             ivSortAuthorAsc.setColorFilter(ContextCompat.getColor(context, R.color.grey), android.graphics.PorterDuff.Mode.SRC_IN)
             ivSortRatingDesc.setColorFilter(ContextCompat.getColor(context, R.color.grey), android.graphics.PorterDuff.Mode.SRC_IN)
             ivSortRatingAsc.setColorFilter(ContextCompat.getColor(context, R.color.grey), android.graphics.PorterDuff.Mode.SRC_IN)
-            whatIsClicked = SORT_ORDER_TITLE_ASC
+            whatIsClicked = Constants.SORT_ORDER_TITLE_ASC
         }
 
         ivSortAuthorDesc.setOnClickListener {
@@ -69,7 +60,7 @@ class SortBooksDialog(context: Context, var sortBooksDialogListener: SortBooksDi
             ivSortAuthorAsc.setColorFilter(ContextCompat.getColor(context, R.color.grey), android.graphics.PorterDuff.Mode.SRC_IN)
             ivSortRatingDesc.setColorFilter(ContextCompat.getColor(context, R.color.grey), android.graphics.PorterDuff.Mode.SRC_IN)
             ivSortRatingAsc.setColorFilter(ContextCompat.getColor(context, R.color.grey), android.graphics.PorterDuff.Mode.SRC_IN)
-            whatIsClicked = SORT_ORDER_AUTHOR_DESC
+            whatIsClicked = Constants.SORT_ORDER_AUTHOR_DESC
         }
 
         ivSortAuthorAsc.setOnClickListener {
@@ -79,7 +70,7 @@ class SortBooksDialog(context: Context, var sortBooksDialogListener: SortBooksDi
             ivSortAuthorAsc.setColorFilter(accentColor, android.graphics.PorterDuff.Mode.SRC_IN)
             ivSortRatingDesc.setColorFilter(ContextCompat.getColor(context, R.color.grey), android.graphics.PorterDuff.Mode.SRC_IN)
             ivSortRatingAsc.setColorFilter(ContextCompat.getColor(context, R.color.grey), android.graphics.PorterDuff.Mode.SRC_IN)
-            whatIsClicked = SORT_ORDER_AUTHOR_ASC
+            whatIsClicked = Constants.SORT_ORDER_AUTHOR_ASC
         }
 
         ivSortRatingDesc.setOnClickListener {
@@ -89,7 +80,7 @@ class SortBooksDialog(context: Context, var sortBooksDialogListener: SortBooksDi
             ivSortAuthorAsc.setColorFilter(ContextCompat.getColor(context, R.color.grey), android.graphics.PorterDuff.Mode.SRC_IN)
             ivSortRatingDesc.setColorFilter(accentColor, android.graphics.PorterDuff.Mode.SRC_IN)
             ivSortRatingAsc.setColorFilter(ContextCompat.getColor(context, R.color.grey), android.graphics.PorterDuff.Mode.SRC_IN)
-            whatIsClicked = SORT_ORDER_RATING_DESC
+            whatIsClicked = Constants.SORT_ORDER_RATING_DESC
         }
 
         ivSortRatingAsc.setOnClickListener {
@@ -99,7 +90,7 @@ class SortBooksDialog(context: Context, var sortBooksDialogListener: SortBooksDi
             ivSortAuthorAsc.setColorFilter(ContextCompat.getColor(context, R.color.grey), android.graphics.PorterDuff.Mode.SRC_IN)
             ivSortRatingDesc.setColorFilter(ContextCompat.getColor(context, R.color.grey), android.graphics.PorterDuff.Mode.SRC_IN)
             ivSortRatingAsc.setColorFilter(accentColor, android.graphics.PorterDuff.Mode.SRC_IN)
-            whatIsClicked = SORT_ORDER_RATING_ASC
+            whatIsClicked = Constants.SORT_ORDER_RATING_ASC
         }
 
         btnSorterExecute.setOnClickListener {
@@ -115,8 +106,8 @@ class SortBooksDialog(context: Context, var sortBooksDialogListener: SortBooksDi
         val sharedPref = context.getSharedPreferences(Constants.SHARED_PREFERENCES_NAME, Context.MODE_PRIVATE)
 
         var accent = sharedPref?.getString(
-            SHARED_PREFERENCES_KEY_ACCENT,
-            THEME_ACCENT_AMBER_500
+            Constants.SHARED_PREFERENCES_KEY_ACCENT,
+            Constants.THEME_ACCENT_DEFAULT
         ).toString()
 
         when(accent){

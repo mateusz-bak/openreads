@@ -35,6 +35,7 @@ object Constants {
     const val SHARED_PREFERENCES_REFRESHED = "refreshed"
 
     const val EMPTY_STRING = ""
+
     const val THEME_ACCENT_AMBER_500 = "accent_amber"
     const val THEME_ACCENT_BLUE_500 = "accent_blue"
     const val THEME_ACCENT_CYAN_500 = "accent_cyan"
@@ -45,4 +46,6 @@ object Constants {
     const val THEME_ACCENT_PURPLE_500 = "accent_purple"
     const val THEME_ACCENT_TEAL_500 = "accent_teal"
     const val THEME_ACCENT_YELLOW_500 = "accent_yellow"
+
+    const val THEME_ACCENT_DEFAULT = THEME_ACCENT_GREEN_500
 }

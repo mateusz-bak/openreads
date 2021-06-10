@@ -2,10 +2,10 @@
     <!-- Base application theme. -->
     <style name="Theme.Mdev.Bookstracker" parent="Theme.MaterialComponents.DayNight.DarkActionBar">
         <!-- Primary brand color. -->
-        <item name="colorPrimary">@color/amber_500</item>
+        <item name="colorPrimary">@color/green_500</item>
         <item name="colorOnPrimary">@color/black</item>
         <!-- Secondary brand color. -->
-        <item name="colorSecondary">@color/amber_500</item>
+        <item name="colorSecondary">@color/green_500</item>
         <item name="colorOnSecondary">@color/white</item>
         <!-- Status bar color. -->
         <item name="android:statusBarColor" tools:targetApi="l">?attr/colorPrimary</item>

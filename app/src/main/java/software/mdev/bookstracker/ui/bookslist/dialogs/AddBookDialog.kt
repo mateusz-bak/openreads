@@ -102,7 +102,7 @@ class AddBookDialog(context: Context, var addBookDialogListener: AddBookDialogLi
 
         var accent = sharedPref?.getString(
             Constants.SHARED_PREFERENCES_KEY_ACCENT,
-            Constants.THEME_ACCENT_AMBER_500
+            Constants.THEME_ACCENT_DEFAULT
         ).toString()
 
         when(accent){

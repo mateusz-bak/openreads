@@ -15,6 +15,16 @@ import software.mdev.bookstracker.data.repositories.BooksRepository
 import software.mdev.bookstracker.other.Constants.SHARED_PREFERENCES_KEY_ACCENT
 import software.mdev.bookstracker.other.Constants.SHARED_PREFERENCES_NAME
 import software.mdev.bookstracker.other.Constants.THEME_ACCENT_AMBER_500
+import software.mdev.bookstracker.other.Constants.THEME_ACCENT_BLUE_500
+import software.mdev.bookstracker.other.Constants.THEME_ACCENT_CYAN_500
+import software.mdev.bookstracker.other.Constants.THEME_ACCENT_DEFAULT
+import software.mdev.bookstracker.other.Constants.THEME_ACCENT_GREEN_500
+import software.mdev.bookstracker.other.Constants.THEME_ACCENT_INDIGO_500
+import software.mdev.bookstracker.other.Constants.THEME_ACCENT_LIME_500
+import software.mdev.bookstracker.other.Constants.THEME_ACCENT_PINK_500
+import software.mdev.bookstracker.other.Constants.THEME_ACCENT_PURPLE_500
+import software.mdev.bookstracker.other.Constants.THEME_ACCENT_TEAL_500
+import software.mdev.bookstracker.other.Constants.THEME_ACCENT_YELLOW_500
 import software.mdev.bookstracker.ui.bookslist.viewmodel.BooksViewModel
 import software.mdev.bookstracker.ui.bookslist.viewmodel.BooksViewModelProviderFactory
 
@@ -53,20 +63,20 @@ class ListActivity : AppCompatActivity() {
         val sharedPref = getSharedPreferences(SHARED_PREFERENCES_NAME, Context.MODE_PRIVATE)
         var accent = sharedPref.getString(
             SHARED_PREFERENCES_KEY_ACCENT,
-            THEME_ACCENT_AMBER_500
+            THEME_ACCENT_DEFAULT
         ).toString()
 
         when(accent){
-            "accent_amber" -> setTheme(R.style.Theme_Mdev_Bookstracker)
-            "accent_blue" -> setTheme(R.style.Theme_Mdev_Bookstracker_CustomTheme_Blue)
-            "accent_cyan" -> setTheme(R.style.Theme_Mdev_Bookstracker_CustomTheme_Cyan)
-            "accent_green" -> setTheme(R.style.Theme_Mdev_Bookstracker_CustomTheme_Green)
-            "accent_indigo" -> setTheme(R.style.Theme_Mdev_Bookstracker_CustomTheme_Indigo)
-            "accent_lime" -> setTheme(R.style.Theme_Mdev_Bookstracker_CustomTheme_Lime)
-            "accent_pink" -> setTheme(R.style.Theme_Mdev_Bookstracker_CustomTheme_Pink)
-            "accent_purple" -> setTheme(R.style.Theme_Mdev_Bookstracker_CustomTheme_Purple)
-            "accent_teal" -> setTheme(R.style.Theme_Mdev_Bookstracker_CustomTheme_Teal)
-            "accent_yellow" -> setTheme(R.style.Theme_Mdev_Bookstracker_CustomTheme_Yellow)
+            THEME_ACCENT_AMBER_500 -> setTheme(R.style.Theme_Mdev_Bookstracker_CustomTheme_Amber)
+            THEME_ACCENT_BLUE_500 -> setTheme(R.style.Theme_Mdev_Bookstracker_CustomTheme_Blue)
+            THEME_ACCENT_CYAN_500 -> setTheme(R.style.Theme_Mdev_Bookstracker_CustomTheme_Cyan)
+            THEME_ACCENT_GREEN_500 -> setTheme(R.style.Theme_Mdev_Bookstracker_CustomTheme_Green)
+            THEME_ACCENT_INDIGO_500 -> setTheme(R.style.Theme_Mdev_Bookstracker_CustomTheme_Indigo)
+            THEME_ACCENT_LIME_500 -> setTheme(R.style.Theme_Mdev_Bookstracker_CustomTheme_Lime)
+            THEME_ACCENT_PINK_500 -> setTheme(R.style.Theme_Mdev_Bookstracker_CustomTheme_Pink)
+            THEME_ACCENT_PURPLE_500 -> setTheme(R.style.Theme_Mdev_Bookstracker_CustomTheme_Purple)
+            THEME_ACCENT_TEAL_500 -> setTheme(R.style.Theme_Mdev_Bookstracker_CustomTheme_Teal)
+            THEME_ACCENT_YELLOW_500 -> setTheme(R.style.Theme_Mdev_Bookstracker_CustomTheme_Yellow)
         }
     }
 
