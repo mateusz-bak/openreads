@@ -27,7 +27,7 @@ object Constants {
 
     const val SERIALIZABLE_BUNDLE_BOOK = "book"
 
-    const val SHARED_PREFERENCES_NAME = "appPref"
+    const val SHARED_PREFERENCES_NAME = "software.mdev.bookstracker_preferences"
     const val SHARED_PREFERENCES_KEY_FIRST_TIME_TOGGLE = "KEY_FIRST_TIME_TOGGLE"
     const val SHARED_PREFERENCES_KEY_SORT_ORDER = "KEY_SORT_ORDER"
     const val SHARED_PREFERENCES_KEY_ACCENT = "KEY_ACCENT"
@@ -35,4 +35,14 @@ object Constants {
     const val SHARED_PREFERENCES_REFRESHED = "refreshed"
 
     const val EMPTY_STRING = ""
+    const val THEME_ACCENT_AMBER_500 = "accent_amber"
+    const val THEME_ACCENT_BLUE_500 = "accent_blue"
+    const val THEME_ACCENT_CYAN_500 = "accent_cyan"
+    const val THEME_ACCENT_GREEN_500 = "accent_green"
+    const val THEME_ACCENT_INDIGO_500 = "accent_indigo"
+    const val THEME_ACCENT_LIME_500 = "accent_lime"
+    const val THEME_ACCENT_PINK_500 = "accent_pink"
+    const val THEME_ACCENT_PURPLE_500 = "accent_purple"
+    const val THEME_ACCENT_TEAL_500 = "accent_teal"
+    const val THEME_ACCENT_YELLOW_500 = "accent_yellow"
 }

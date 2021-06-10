@@ -13,7 +13,7 @@
             android:entryValues="@array/accent_values"
             android:key="KEY_ACCENT"
             android:summary="%s"
-            android:title="@string/accent_name" />
+            android:title="@string/accent_name_title" />
 
         <SwitchPreference
             android:defaultValue="true"

@@ -4,6 +4,7 @@ import android.app.Activity
 import android.content.SharedPreferences
 import android.content.SharedPreferences.OnSharedPreferenceChangeListener
 import android.os.Bundle
+import android.widget.Toast
 import androidx.navigation.fragment.findNavController
 import androidx.preference.PreferenceFragmentCompat
 import androidx.preference.PreferenceManager
@@ -42,10 +43,10 @@ class SettingsFragment : PreferenceFragmentCompat(), OnSharedPreferenceChangeLis
     }
 
     private fun hotReloadActivity(activity: Activity?) {
+        Toast.makeText(context?.applicationContext, R.string.changes_after_app_restart, Toast.LENGTH_LONG).show()
         if (activity == null) return
-        val sharedPrefs = PreferenceManager.getDefaultSharedPreferences(activity)
-        sharedPrefs.edit().putBoolean(SHARED_PREFERENCES_REFRESHED, true).apply()
-//        activity.recreate()
+        val sharedPref = PreferenceManager.getDefaultSharedPreferences(context?.applicationContext)
+        sharedPref.edit().putBoolean(SHARED_PREFERENCES_REFRESHED, true).apply()
         findNavController().navigate(R.id.settingsFragment, null)
     }
 }

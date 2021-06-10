@@ -72,13 +72,6 @@
     <string name="list_1_1" translatable="false">list_1_1</string>
     <string name="list_1_2" translatable="false">list_1_2</string>
     <string name="list_1_3" translatable="false">list_1_3</string>
-    <string name="accent_name">Color accent</string>
-    <string name="accent_green">Green</string>
-    <string name="accent_orange">Orange</string>
-    <string name="accent_blue">Blue</string>
-    <string name="accent_pink">Pink</string>
-    <string name="accent_yellow">Yellow</string>
-    <string name="accent_brown">Brown</string>
     <string name="about">About</string>
     <string name="app_version_title">App version</string>
     <string name="app_source_code_title">Source code</string>
@@ -91,5 +84,17 @@
     <string name="daily_book_recommendations_title">Send daily new book recommendation</string>
     <string name="daily_book_recommendations_on">Send daily notification</string>
     <string name="daily_book_recommendations_off">Don\'t send daily notification</string>
+    <string name="changes_after_app_restart">Changes will be applied after app restart!</string>
+    <string name="accent_amber">Amber</string>
+    <string name="accent_blue">Blue</string>
+    <string name="accent_cyan">Cyan</string>
+    <string name="accent_green">Green</string>
+    <string name="accent_indigo">Indigo</string>
+    <string name="accent_lime">Lime</string>
+    <string name="accent_pink">Pink</string>
+    <string name="accent_purple">Purple</string>
+    <string name="accent_teal">Teal</string>
+    <string name="accent_yellow">Yellow</string>
+    <string name="accent_name_title">Accent color</string>
 
 </resources>

@@ -55,13 +55,6 @@
     <string name="tvWelcomeText">Witaj w aplikacji Books Tracker!</string>
     <string name="tvLooksEmpty">Twoja lista książek jest na razie pusta, kliknij przycisk \"plus\" poniżej, w celu dodania nowych książek!</string>
     <string name="customization">Wygląd aplikacji</string>
-    <string name="accent_orange">Pomarańczowy</string>
-    <string name="accent_green">Zielony</string>
-    <string name="accent_name">Kolor akcentu</string>
-    <string name="accent_blue">Niebieski</string>
-    <string name="accent_pink">Różowy</string>
-    <string name="accent_yellow">Żółty</string>
-    <string name="accent_brown">Brązowy</string>
     <string name="about">O aplikacji</string>
     <string name="app_version_title">Wersja</string>
     <string name="app_developer_title">Deweloper</string>
@@ -71,4 +64,16 @@
     <string name="daily_book_recommendations_title">Wysyłaj codzienną rekomendację nowej książki</string>
     <string name="daily_book_recommendations_on">Wysyłaj codzienne powiadomienie</string>
     <string name="daily_book_recommendations_off">Nie wysyłaj codziennego powiadomienia</string>
+    <string name="changes_after_app_restart">Zmiany zostaną zastosowane po restarcie aplikacji!</string>
+    <string name="accent_blue">Niebieski</string>
+    <string name="accent_green">Zielony</string>
+    <string name="accent_lime">Limonkowy</string>
+    <string name="accent_pink">Różowy</string>
+    <string name="accent_yellow">Żółty</string>
+    <string name="accent_name_title">Kolor akcentu</string>
+    <string name="accent_amber">Bursztynowy</string>
+    <string name="accent_cyan">Cyjanowy</string>
+    <string name="accent_indigo">Indygo</string>
+    <string name="accent_purple">Fioletowy</string>
+    <string name="accent_teal">Morski</string>
 </resources>
