@@ -20,7 +20,7 @@ class SetupFragment : Fragment(R.layout.fragment_setup) {
 
         val sharedPref = (activity as ListActivity).getSharedPreferences(SHARED_PREFERENCES_NAME, Context.MODE_PRIVATE)
 
-        if(sharedPref.getBoolean(SHARED_PREFERENCES_KEY_FIRST_TIME_TOGGLE, false)) {
+        if(!sharedPref.getBoolean(SHARED_PREFERENCES_KEY_FIRST_TIME_TOGGLE, true)) {
             val navOptions = NavOptions.Builder()
                 .setPopUpTo(R.id.setupFragment, true)
                 .build()
@@ -42,7 +42,7 @@ class SetupFragment : Fragment(R.layout.fragment_setup) {
         val editor = sharedPref.edit()
 
         editor.apply {
-            putBoolean(SHARED_PREFERENCES_KEY_FIRST_TIME_TOGGLE, true)
+            putBoolean(SHARED_PREFERENCES_KEY_FIRST_TIME_TOGGLE, false)
             apply()
         }
     }

@@ -10,6 +10,7 @@ import androidx.preference.PreferenceFragmentCompat
 import androidx.preference.PreferenceManager
 import software.mdev.bookstracker.R
 import software.mdev.bookstracker.other.Constants.SHARED_PREFERENCES_KEY_ACCENT
+import software.mdev.bookstracker.other.Constants.SHARED_PREFERENCES_KEY_RECOMMENDATIONS
 import software.mdev.bookstracker.other.Constants.SHARED_PREFERENCES_REFRESHED
 import software.mdev.bookstracker.ui.bookslist.ListActivity
 import software.mdev.bookstracker.ui.bookslist.viewmodel.BooksViewModel
@@ -38,12 +39,17 @@ class SettingsFragment : PreferenceFragmentCompat(), OnSharedPreferenceChangeLis
 
     override fun onSharedPreferenceChanged(sharedPreferences: SharedPreferences, key: String) {
         when (key) {
-            SHARED_PREFERENCES_KEY_ACCENT -> hotReloadActivity(activity)
+            SHARED_PREFERENCES_KEY_ACCENT -> {
+                Toast.makeText(context?.applicationContext, R.string.changes_after_app_restart, Toast.LENGTH_LONG).show()
+                hotReloadActivity(activity)
+            }
+            SHARED_PREFERENCES_KEY_RECOMMENDATIONS -> {
+                Toast.makeText(context?.applicationContext, R.string.notYetImplemented, Toast.LENGTH_LONG).show()
+            }
         }
     }
 
     private fun hotReloadActivity(activity: Activity?) {
-        Toast.makeText(context?.applicationContext, R.string.changes_after_app_restart, Toast.LENGTH_LONG).show()
         if (activity == null) return
         val sharedPref = PreferenceManager.getDefaultSharedPreferences(context?.applicationContext)
         sharedPref.edit().putBoolean(SHARED_PREFERENCES_REFRESHED, true).apply()

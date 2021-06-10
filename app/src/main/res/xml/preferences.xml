@@ -16,11 +16,17 @@
             android:title="@string/accent_name_title" />
 
         <SwitchPreference
-            android:defaultValue="true"
+            android:defaultValue="false"
             android:key="KEY_RECOMMENDATIONS"
             android:summaryOff="@string/daily_book_recommendations_off"
             android:summaryOn="@string/daily_book_recommendations_on"
             android:title="@string/daily_book_recommendations_title" />
+
+        <SwitchPreference
+            android:key="KEY_FIRST_TIME_TOGGLE"
+            android:summaryOff="@string/first_time_toggle_off"
+            android:summaryOn="@string/first_time_toggle_on"
+            android:title="@string/first_time_toggle_title" />
     </PreferenceCategory>
 
     <PreferenceCategory
