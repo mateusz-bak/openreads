@@ -57,7 +57,7 @@
     <string name="hintBookAuthor" translatable="false">bookauthor</string>
     <string name="hintSearch" translatable="false">booksearch</string>
 
-    <string name="app_version" translatable="false">v1.0.0</string>
+nomn    <string name="app_version" translatable="false">v1.1.0</string>
     <string name="notYetImplemented">Not yet implemented</string>
     <string name="dismiss">Dismiss</string>
     <string name="bookDeleted">Book deleted</string>
