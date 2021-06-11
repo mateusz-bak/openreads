@@ -16,6 +16,36 @@
  <img src='https://raw.githubusercontent.com/mateusz-bak/books-tracker-android/master/doc/images/screenshot-to-read.png' width='35%'/>  
  <img src='https://raw.githubusercontent.com/mateusz-bak/books-tracker-android/master/doc/images/screenshot-add-book.png' width='35%'/>  
 </p>  
+
+
+## Build Process
+
+### Dependencies
+
+- Android SDK
+
+### Build
+
+1. Clone or download this repository
+
+   ```sh
+   git clone https://github.com/mateusz-bak/books-tracker-android.git
+   cd books-tracker-android
+   ```
+
+2. Open the project in Android Studio and run it from there or build an APK directly through Gradle:
+
+   ```sh
+   ./gradlew assembleDebug
+   ```
+
+### Deploy to device/emulator
+
+   ```sh
+   ./gradlew installDebug
+   ```
+
+*You can also replace the "Debug" with "Release" to get an optimized release binary.*
   
 ## Attributions
 Launcher and welcome screen icon made by [smalllikeart](https://www.flaticon.com/authors/smalllikeart "smalllikeart") from [www.flaticon.com](https://www.flaticon.com/ "Flaticon")
