@@ -59,6 +59,17 @@
         app:layout_constraintStart_toStartOf="@+id/tvSortAuthor"
         app:layout_constraintTop_toBottomOf="@+id/tvSortAuthor" />
 
+    <TextView
+        android:id="@+id/tvSortPages"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="24dp"
+        android:text="@string/tvSortPages"
+        android:textColor="?colorOnSecondary"
+        android:textSize="24sp"
+        app:layout_constraintStart_toStartOf="@+id/tvSortAuthor"
+        app:layout_constraintTop_toBottomOf="@+id/tvSortRating" />
+
     <ImageView
         android:id="@+id/ivSortTitleAsc"
         android:layout_width="wrap_content"
@@ -103,6 +114,21 @@
         app:layout_constraintStart_toStartOf="@+id/ivSortAuthorAsc"
         app:layout_constraintTop_toTopOf="@+id/tvSortRating"
         app:srcCompat="@drawable/ic_baseline_keyboard_arrow_up_24" />
+
+    <ImageView
+        android:id="@+id/ivSortPagesAsc"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:clickable="true"
+        android:focusable="true"
+        android:scaleX="2"
+        android:scaleY="2"
+        app:layout_constraintBottom_toBottomOf="@+id/tvSortPages"
+        app:layout_constraintEnd_toEndOf="@+id/ivSortAuthorAsc"
+        app:layout_constraintStart_toStartOf="@+id/ivSortAuthorAsc"
+        app:layout_constraintTop_toTopOf="@+id/tvSortPages"
+        app:srcCompat="@drawable/ic_baseline_keyboard_arrow_up_24"
+        app:tint="@color/grey" />
 
     <ImageView
         android:id="@+id/ivSortTitleDesc"
@@ -152,6 +178,21 @@
         app:srcCompat="@drawable/ic_baseline_keyboard_arrow_down_24" />
 
     <ImageView
+        android:id="@+id/ivSortPagesDesc"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:clickable="true"
+        android:focusable="true"
+        android:scaleX="2"
+        android:scaleY="2"
+        app:layout_constraintBottom_toBottomOf="@+id/ivSortPagesAsc"
+        app:layout_constraintEnd_toEndOf="@+id/ivSortAuthorDesc"
+        app:layout_constraintStart_toStartOf="@+id/ivSortAuthorDesc"
+        app:layout_constraintTop_toTopOf="@+id/ivSortPagesAsc"
+        app:srcCompat="@drawable/ic_baseline_keyboard_arrow_down_24"
+        app:tint="@color/grey" />
+
+    <ImageView
         android:id="@+id/ivSeparatorSorter1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -179,16 +220,30 @@
         app:layout_constraintTop_toBottomOf="@+id/tvSortAuthor"
         app:srcCompat="@drawable/ic_baseline_horizontal_rule_24" />
 
+    <ImageView
+        android:id="@+id/ivSeparatorSorter"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:clickable="false"
+        android:scaleX="12"
+        android:scaleY="0.5"
+        app:layout_constraintBottom_toTopOf="@+id/tvSortPages"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tvSortRating"
+        app:srcCompat="@drawable/ic_baseline_horizontal_rule_24" />
+
     <Button
         android:id="@+id/btnSorterExecute"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:backgroundTint="?colorPrimary"
         android:text="@string/btnAdderSaveBook"
-        app:layout_constraintEnd_toEndOf="parent"
         android:layout_marginTop="24dp"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tvSortRating" />
+        app:layout_constraintTop_toBottomOf="@+id/tvSortPages" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -40,6 +40,10 @@ interface BooksDao {
     fun getSortedBooksByRatingDesc(bookStatus: String): LiveData<List<Book>>
     @Query("SELECT * FROM Book WHERE item_bookStatus LIKE :bookStatus ORDER BY item_bookRating ASC")
     fun getSortedBooksByRatingAsc(bookStatus: String): LiveData<List<Book>>
+    @Query("SELECT * FROM Book WHERE item_bookStatus LIKE :bookStatus ORDER BY item_bookNumberOfPages DESC")
+    fun getSortedBooksByPagesDesc(bookStatus: String): LiveData<List<Book>>
+    @Query("SELECT * FROM Book WHERE item_bookStatus LIKE :bookStatus ORDER BY item_bookNumberOfPages ASC")
+    fun getSortedBooksByPagesAsc(bookStatus: String): LiveData<List<Book>>
 
     @Query("SELECT COUNT(id) FROM Book WHERE item_bookStatus LIKE :bookStatus")
     fun getBookCount(bookStatus: String): LiveData<Integer>

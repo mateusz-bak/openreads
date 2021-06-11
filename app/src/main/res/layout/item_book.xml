@@ -44,7 +44,7 @@
         android:scaleX="1.5"
         android:scaleY="1.5"
         android:stepSize="1"
-        app:layout_constraintBottom_toBottomOf="@+id/tvBookAuthor"
+        app:layout_constraintBottom_toTopOf="@+id/tvNumberOfPages"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="@+id/glVertical70"
         app:layout_constraintTop_toTopOf="@+id/tvBookTitle" />
@@ -82,4 +82,13 @@
         android:orientation="vertical"
         app:layout_constraintGuide_percent="0.70" />
 
+    <TextView
+        android:id="@+id/tvNumberOfPages"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:text="678 pages"
+        app:layout_constraintBottom_toBottomOf="@+id/tvBookAuthor"
+        app:layout_constraintEnd_toEndOf="@+id/rbRatingIndicator"
+        app:layout_constraintStart_toStartOf="@+id/rbRatingIndicator" />
 </androidx.constraintlayout.widget.ConstraintLayout>

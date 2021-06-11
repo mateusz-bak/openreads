@@ -10,9 +10,7 @@ import androidx.recyclerview.widget.RecyclerView
 import software.mdev.bookstracker.R
 import software.mdev.bookstracker.data.db.entities.Book
 import kotlinx.android.synthetic.main.item_book.view.*
-import software.mdev.bookstracker.other.Constants.BOOK_STATUS_IN_PROGRESS
-import software.mdev.bookstracker.other.Constants.BOOK_STATUS_READ
-import software.mdev.bookstracker.other.Constants.BOOK_STATUS_TO_READ
+import software.mdev.bookstracker.other.Constants
 
 class BookAdapter(
     var context: Context,
@@ -45,25 +43,44 @@ class BookAdapter(
             tvBookTitle.text = curBook.bookTitle
             tvBookAuthor.text = curBook.bookAuthor
 
+            var stringPages = curBook.bookNumberOfPages.toString() +
+                    holder.itemView.getContext().getString(R.string.space) +
+                    holder.itemView.getContext().getString(R.string.pages)
+
+            tvNumberOfPages.text = stringPages
+            tvNumberOfPages.visibility = View.GONE
+
+            val sharedPref = context.getSharedPreferences(Constants.SHARED_PREFERENCES_NAME, Context.MODE_PRIVATE)
+            val sortOrder = sharedPref.getString(
+                Constants.SHARED_PREFERENCES_KEY_SORT_ORDER,
+                Constants.SORT_ORDER_TITLE_ASC
+            )
+
+            if (sortOrder == Constants.SORT_ORDER_PAGES_DESC || sortOrder == Constants.SORT_ORDER_PAGES_ASC) {
+                tvNumberOfPages.visibility = View.VISIBLE
+            }
+
             when (whichFragment ){
-                BOOK_STATUS_READ -> rbRatingIndicator.rating = curBook.bookRating
+                Constants.BOOK_STATUS_READ -> rbRatingIndicator.rating = curBook.bookRating
             }
             when (curBook.bookStatus ){
-                BOOK_STATUS_READ -> {
+                Constants.BOOK_STATUS_READ -> {
                     ivInProgressIndicator.visibility = View.GONE
                     ivToReadIndicator.visibility = View.GONE
                     rbRatingIndicator.visibility = View.VISIBLE
                     rbRatingIndicator.rating = curBook.bookRating
                 }
-                BOOK_STATUS_IN_PROGRESS -> {
+                Constants.BOOK_STATUS_IN_PROGRESS -> {
                     rbRatingIndicator.visibility = View.GONE
                     ivToReadIndicator.visibility = View.GONE
                     ivInProgressIndicator.visibility = View.VISIBLE
+                    tvNumberOfPages.visibility = View.GONE
                 }
-                BOOK_STATUS_TO_READ -> {
+                Constants.BOOK_STATUS_TO_READ -> {
                     rbRatingIndicator.visibility = View.GONE
                     ivInProgressIndicator.visibility = View.GONE
                     ivToReadIndicator.visibility = View.VISIBLE
+                    tvNumberOfPages.visibility = View.GONE
                 }
             }
         }

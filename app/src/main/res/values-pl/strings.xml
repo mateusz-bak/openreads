@@ -88,4 +88,6 @@
     <string name="sbNotAValidNumber">To nie jest prawidłowy numer!</string>
     <string name="sbWarningPagesMissing">Wpisz liczbę stron!</string>
     <string name="sbWarningPages0">Liczba musi być większa niż 0!</string>
+    <string name="tvSortPages">Strony</string>
+    <string name="pages">stron</string>
 </resources>

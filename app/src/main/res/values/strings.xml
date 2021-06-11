@@ -110,5 +110,8 @@ nomn    <string name="app_version" translatable="false">v1.1.0</string>
     <string name="sbNotAValidNumber">Not a valid number!</string>
     <string name="sbWarningPagesMissing">Fill in number of pages!</string>
     <string name="sbWarningPages0">Number of pages cannot be 0!</string>
+    <string name="tvSortPages">Pages</string>
+    <string name="pages">pages</string>
+    <string name="space" translatable="false">" "</string>
 
 </resources>

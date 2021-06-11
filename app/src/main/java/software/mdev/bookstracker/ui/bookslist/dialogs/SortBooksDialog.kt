@@ -25,12 +25,38 @@ class SortBooksDialog(context: Context, var sortBooksDialogListener: SortBooksDi
         this.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
 
         when (sortOrder) {
-            Constants.SORT_ORDER_TITLE_DESC -> ivSortTitleDesc.setColorFilter(accentColor, android.graphics.PorterDuff.Mode.SRC_IN)
-            Constants.SORT_ORDER_TITLE_ASC -> ivSortTitleAsc.setColorFilter(accentColor, android.graphics.PorterDuff.Mode.SRC_IN)
-            Constants.SORT_ORDER_AUTHOR_DESC -> ivSortAuthorDesc.setColorFilter(accentColor, android.graphics.PorterDuff.Mode.SRC_IN)
-            Constants.SORT_ORDER_AUTHOR_ASC -> ivSortAuthorAsc.setColorFilter(accentColor, android.graphics.PorterDuff.Mode.SRC_IN)
-            Constants.SORT_ORDER_RATING_DESC -> ivSortRatingDesc.setColorFilter(accentColor, android.graphics.PorterDuff.Mode.SRC_IN)
-            Constants.SORT_ORDER_RATING_ASC -> ivSortRatingAsc.setColorFilter(accentColor, android.graphics.PorterDuff.Mode.SRC_IN)
+            Constants.SORT_ORDER_TITLE_DESC -> {
+                ivSortTitleDesc.setColorFilter(accentColor, android.graphics.PorterDuff.Mode.SRC_IN)
+                whatIsClicked = Constants.SORT_ORDER_TITLE_DESC
+            }
+            Constants.SORT_ORDER_TITLE_ASC -> {
+                ivSortTitleAsc.setColorFilter(accentColor, android.graphics.PorterDuff.Mode.SRC_IN)
+                whatIsClicked = Constants.SORT_ORDER_TITLE_ASC
+            }
+            Constants.SORT_ORDER_AUTHOR_DESC -> {
+                ivSortAuthorDesc.setColorFilter(accentColor, android.graphics.PorterDuff.Mode.SRC_IN)
+                whatIsClicked = Constants.SORT_ORDER_AUTHOR_DESC
+            }
+            Constants.SORT_ORDER_AUTHOR_ASC -> {
+                ivSortAuthorAsc.setColorFilter(accentColor, android.graphics.PorterDuff.Mode.SRC_IN)
+                whatIsClicked = Constants.SORT_ORDER_AUTHOR_ASC
+            }
+            Constants.SORT_ORDER_RATING_DESC -> {
+                ivSortRatingDesc.setColorFilter(accentColor, android.graphics.PorterDuff.Mode.SRC_IN)
+                whatIsClicked = Constants.SORT_ORDER_RATING_DESC
+            }
+            Constants.SORT_ORDER_RATING_ASC -> {
+                ivSortRatingAsc.setColorFilter(accentColor, android.graphics.PorterDuff.Mode.SRC_IN)
+                whatIsClicked = Constants.SORT_ORDER_RATING_ASC
+            }
+            Constants.SORT_ORDER_PAGES_DESC -> {
+                ivSortPagesDesc.setColorFilter(accentColor, android.graphics.PorterDuff.Mode.SRC_IN)
+                whatIsClicked = Constants.SORT_ORDER_PAGES_DESC
+            }
+            Constants.SORT_ORDER_PAGES_ASC -> {
+                ivSortPagesAsc.setColorFilter(accentColor, android.graphics.PorterDuff.Mode.SRC_IN)
+                whatIsClicked = Constants.SORT_ORDER_PAGES_ASC
+            }
         }
 
         ivSortTitleDesc.setOnClickListener {
@@ -40,6 +66,8 @@ class SortBooksDialog(context: Context, var sortBooksDialogListener: SortBooksDi
             ivSortAuthorAsc.setColorFilter(ContextCompat.getColor(context, R.color.grey), android.graphics.PorterDuff.Mode.SRC_IN)
             ivSortRatingDesc.setColorFilter(ContextCompat.getColor(context, R.color.grey), android.graphics.PorterDuff.Mode.SRC_IN)
             ivSortRatingAsc.setColorFilter(ContextCompat.getColor(context, R.color.grey), android.graphics.PorterDuff.Mode.SRC_IN)
+            ivSortPagesDesc.setColorFilter(ContextCompat.getColor(context, R.color.grey), android.graphics.PorterDuff.Mode.SRC_IN)
+            ivSortPagesAsc.setColorFilter(ContextCompat.getColor(context, R.color.grey), android.graphics.PorterDuff.Mode.SRC_IN)
             whatIsClicked = Constants.SORT_ORDER_TITLE_DESC
         }
 
@@ -50,6 +78,8 @@ class SortBooksDialog(context: Context, var sortBooksDialogListener: SortBooksDi
             ivSortAuthorAsc.setColorFilter(ContextCompat.getColor(context, R.color.grey), android.graphics.PorterDuff.Mode.SRC_IN)
             ivSortRatingDesc.setColorFilter(ContextCompat.getColor(context, R.color.grey), android.graphics.PorterDuff.Mode.SRC_IN)
             ivSortRatingAsc.setColorFilter(ContextCompat.getColor(context, R.color.grey), android.graphics.PorterDuff.Mode.SRC_IN)
+            ivSortPagesDesc.setColorFilter(ContextCompat.getColor(context, R.color.grey), android.graphics.PorterDuff.Mode.SRC_IN)
+            ivSortPagesAsc.setColorFilter(ContextCompat.getColor(context, R.color.grey), android.graphics.PorterDuff.Mode.SRC_IN)
             whatIsClicked = Constants.SORT_ORDER_TITLE_ASC
         }
 
@@ -60,6 +90,8 @@ class SortBooksDialog(context: Context, var sortBooksDialogListener: SortBooksDi
             ivSortAuthorAsc.setColorFilter(ContextCompat.getColor(context, R.color.grey), android.graphics.PorterDuff.Mode.SRC_IN)
             ivSortRatingDesc.setColorFilter(ContextCompat.getColor(context, R.color.grey), android.graphics.PorterDuff.Mode.SRC_IN)
             ivSortRatingAsc.setColorFilter(ContextCompat.getColor(context, R.color.grey), android.graphics.PorterDuff.Mode.SRC_IN)
+            ivSortPagesDesc.setColorFilter(ContextCompat.getColor(context, R.color.grey), android.graphics.PorterDuff.Mode.SRC_IN)
+            ivSortPagesAsc.setColorFilter(ContextCompat.getColor(context, R.color.grey), android.graphics.PorterDuff.Mode.SRC_IN)
             whatIsClicked = Constants.SORT_ORDER_AUTHOR_DESC
         }
 
@@ -70,6 +102,8 @@ class SortBooksDialog(context: Context, var sortBooksDialogListener: SortBooksDi
             ivSortAuthorAsc.setColorFilter(accentColor, android.graphics.PorterDuff.Mode.SRC_IN)
             ivSortRatingDesc.setColorFilter(ContextCompat.getColor(context, R.color.grey), android.graphics.PorterDuff.Mode.SRC_IN)
             ivSortRatingAsc.setColorFilter(ContextCompat.getColor(context, R.color.grey), android.graphics.PorterDuff.Mode.SRC_IN)
+            ivSortPagesDesc.setColorFilter(ContextCompat.getColor(context, R.color.grey), android.graphics.PorterDuff.Mode.SRC_IN)
+            ivSortPagesAsc.setColorFilter(ContextCompat.getColor(context, R.color.grey), android.graphics.PorterDuff.Mode.SRC_IN)
             whatIsClicked = Constants.SORT_ORDER_AUTHOR_ASC
         }
 
@@ -80,6 +114,8 @@ class SortBooksDialog(context: Context, var sortBooksDialogListener: SortBooksDi
             ivSortAuthorAsc.setColorFilter(ContextCompat.getColor(context, R.color.grey), android.graphics.PorterDuff.Mode.SRC_IN)
             ivSortRatingDesc.setColorFilter(accentColor, android.graphics.PorterDuff.Mode.SRC_IN)
             ivSortRatingAsc.setColorFilter(ContextCompat.getColor(context, R.color.grey), android.graphics.PorterDuff.Mode.SRC_IN)
+            ivSortPagesDesc.setColorFilter(ContextCompat.getColor(context, R.color.grey), android.graphics.PorterDuff.Mode.SRC_IN)
+            ivSortPagesAsc.setColorFilter(ContextCompat.getColor(context, R.color.grey), android.graphics.PorterDuff.Mode.SRC_IN)
             whatIsClicked = Constants.SORT_ORDER_RATING_DESC
         }
 
@@ -90,7 +126,33 @@ class SortBooksDialog(context: Context, var sortBooksDialogListener: SortBooksDi
             ivSortAuthorAsc.setColorFilter(ContextCompat.getColor(context, R.color.grey), android.graphics.PorterDuff.Mode.SRC_IN)
             ivSortRatingDesc.setColorFilter(ContextCompat.getColor(context, R.color.grey), android.graphics.PorterDuff.Mode.SRC_IN)
             ivSortRatingAsc.setColorFilter(accentColor, android.graphics.PorterDuff.Mode.SRC_IN)
+            ivSortPagesDesc.setColorFilter(ContextCompat.getColor(context, R.color.grey), android.graphics.PorterDuff.Mode.SRC_IN)
+            ivSortPagesAsc.setColorFilter(ContextCompat.getColor(context, R.color.grey), android.graphics.PorterDuff.Mode.SRC_IN)
             whatIsClicked = Constants.SORT_ORDER_RATING_ASC
+        }
+
+        ivSortPagesDesc.setOnClickListener {
+            ivSortTitleDesc.setColorFilter(ContextCompat.getColor(context, R.color.grey), android.graphics.PorterDuff.Mode.SRC_IN)
+            ivSortTitleAsc.setColorFilter(ContextCompat.getColor(context, R.color.grey), android.graphics.PorterDuff.Mode.SRC_IN)
+            ivSortAuthorDesc.setColorFilter(ContextCompat.getColor(context, R.color.grey), android.graphics.PorterDuff.Mode.SRC_IN)
+            ivSortAuthorAsc.setColorFilter(ContextCompat.getColor(context, R.color.grey), android.graphics.PorterDuff.Mode.SRC_IN)
+            ivSortRatingDesc.setColorFilter(ContextCompat.getColor(context, R.color.grey), android.graphics.PorterDuff.Mode.SRC_IN)
+            ivSortRatingAsc.setColorFilter(ContextCompat.getColor(context, R.color.grey), android.graphics.PorterDuff.Mode.SRC_IN)
+            ivSortPagesDesc.setColorFilter(accentColor, android.graphics.PorterDuff.Mode.SRC_IN)
+            ivSortPagesAsc.setColorFilter(ContextCompat.getColor(context, R.color.grey), android.graphics.PorterDuff.Mode.SRC_IN)
+            whatIsClicked = Constants.SORT_ORDER_PAGES_DESC
+        }
+
+        ivSortPagesAsc.setOnClickListener {
+            ivSortTitleDesc.setColorFilter(ContextCompat.getColor(context, R.color.grey), android.graphics.PorterDuff.Mode.SRC_IN)
+            ivSortTitleAsc.setColorFilter(ContextCompat.getColor(context, R.color.grey), android.graphics.PorterDuff.Mode.SRC_IN)
+            ivSortAuthorDesc.setColorFilter(ContextCompat.getColor(context, R.color.grey), android.graphics.PorterDuff.Mode.SRC_IN)
+            ivSortAuthorAsc.setColorFilter(ContextCompat.getColor(context, R.color.grey), android.graphics.PorterDuff.Mode.SRC_IN)
+            ivSortRatingDesc.setColorFilter(ContextCompat.getColor(context, R.color.grey), android.graphics.PorterDuff.Mode.SRC_IN)
+            ivSortRatingAsc.setColorFilter(ContextCompat.getColor(context, R.color.grey), android.graphics.PorterDuff.Mode.SRC_IN)
+            ivSortPagesDesc.setColorFilter(ContextCompat.getColor(context, R.color.grey), android.graphics.PorterDuff.Mode.SRC_IN)
+            ivSortPagesAsc.setColorFilter(accentColor, android.graphics.PorterDuff.Mode.SRC_IN)
+            whatIsClicked = Constants.SORT_ORDER_PAGES_ASC
         }
 
         btnSorterExecute.setOnClickListener {

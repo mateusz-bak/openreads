@@ -37,6 +37,8 @@ import software.mdev.bookstracker.other.Constants.SERIALIZABLE_BUNDLE_BOOK
 import software.mdev.bookstracker.other.Constants.SHARED_PREFERENCES_NAME
 import software.mdev.bookstracker.other.Constants.SORT_ORDER_AUTHOR_ASC
 import software.mdev.bookstracker.other.Constants.SORT_ORDER_AUTHOR_DESC
+import software.mdev.bookstracker.other.Constants.SORT_ORDER_PAGES_ASC
+import software.mdev.bookstracker.other.Constants.SORT_ORDER_PAGES_DESC
 import software.mdev.bookstracker.other.Constants.SORT_ORDER_RATING_ASC
 import software.mdev.bookstracker.other.Constants.SORT_ORDER_RATING_DESC
 import software.mdev.bookstracker.other.Constants.SORT_ORDER_TITLE_ASC
@@ -115,6 +117,7 @@ class ReadFragment : Fragment(R.layout.fragment_read) {
                             putString(SHARED_PREFERENCES_KEY_SORT_ORDER, sortOrder)
                             apply()
                         }
+                        bookAdapter.notifyDataSetChanged()
                         getBooks(bookAdapter)
                         lifecycleScope.launch {
                             delay(250L)
@@ -231,6 +234,8 @@ class ReadFragment : Fragment(R.layout.fragment_read) {
             SORT_ORDER_AUTHOR_ASC -> viewModel.getSortedBooksByAuthorAsc(currentFragment).observe(viewLifecycleOwner, Observer { some_books -> bookAdapter.differ.submitList(some_books)})
             SORT_ORDER_RATING_DESC -> viewModel.getSortedBooksByRatingDesc(currentFragment).observe(viewLifecycleOwner, Observer { some_books -> bookAdapter.differ.submitList(some_books)})
             SORT_ORDER_RATING_ASC -> viewModel.getSortedBooksByRatingAsc(currentFragment).observe(viewLifecycleOwner, Observer { some_books -> bookAdapter.differ.submitList(some_books)})
+            SORT_ORDER_PAGES_DESC -> viewModel.getSortedBooksByPagesDesc(currentFragment).observe(viewLifecycleOwner, Observer { some_books -> bookAdapter.differ.submitList(some_books)})
+            SORT_ORDER_PAGES_ASC -> viewModel.getSortedBooksByPagesAsc(currentFragment).observe(viewLifecycleOwner, Observer { some_books -> bookAdapter.differ.submitList(some_books)})
         }
     }
 }
