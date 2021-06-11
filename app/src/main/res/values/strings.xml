@@ -100,5 +100,15 @@ nomn    <string name="app_version" translatable="false">v1.1.0</string>
     <string name="first_time_toggle_off">Won\'t be shown after app restart</string>
     <string name="first_time_toggle_on">Will be shown after app restart</string>
     <string name="rate_this_book">Rate this book:</string>
+    <string name="tv_more_about_book">More</string>
+    <string name="tv_book_pages_title">Pages</string>
+    <string name="tv_date_finished" translatable="false">DD/MM/RRR</string>
+    <string name="tv_book_pages">Pages number</string>
+    <string name="tv_date_finished_title">Date finished</string>
+    <string name="hint_pages_number">Pages</string>
+    <string name="autofill_hint_pages_number" translatable="false">bookPages</string>
+    <string name="sbNotAValidNumber">Not a valid number!</string>
+    <string name="sbWarningPagesMissing">Fill in number of pages!</string>
+    <string name="sbWarningPages0">Number of pages cannot be 0!</string>
 
 </resources>

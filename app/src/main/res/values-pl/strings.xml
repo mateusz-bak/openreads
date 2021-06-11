@@ -80,4 +80,12 @@
     <string name="first_time_toggle_on">Zostanie pokazany po restarcie aplikacji</string>
     <string name="first_time_toggle_off">Nie zostanie pokazany po restarcie aplikacji</string>
     <string name="rate_this_book">Oceń tę książkę:</string>
+    <string name="tv_more_about_book">Więcej</string>
+    <string name="tv_book_pages">Liczba stron</string>
+    <string name="tv_date_finished_title">Data zakończenia</string>
+    <string name="tv_book_pages_title">Stron</string>
+    <string name="hint_pages_number">Stron</string>
+    <string name="sbNotAValidNumber">To nie jest prawidłowy numer!</string>
+    <string name="sbWarningPagesMissing">Wpisz liczbę stron!</string>
+    <string name="sbWarningPages0">Liczba musi być większa niż 0!</string>
 </resources>

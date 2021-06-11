@@ -28,11 +28,17 @@ class DisplayBookFragment : Fragment(R.layout.fragment_display_book) {
         viewModel = (activity as ListActivity).booksViewModel
         listActivity = activity as ListActivity
 
+        tvDateFinishedTitle.visibility = View.GONE
+        tvDateFinished.visibility = View.GONE
+        tvBookPagesTitle.visibility = View.GONE
+        tvBookPages.visibility = View.GONE
+
         val book = args.book
 
         tvBookTitle.text = book.bookTitle
         tvBookAuthor.text = book.bookAuthor
         rbRatingIndicator.rating = book.bookRating
+        tvBookPages.text = book.bookNumberOfPages.toString()
 
         when (book.bookStatus) {
             BOOK_STATUS_READ -> {
@@ -46,12 +52,20 @@ class DisplayBookFragment : Fragment(R.layout.fragment_display_book) {
                 ivBookStatusRead.visibility = View.GONE
                 ivBookStatusToRead.visibility = View.GONE
                 rbRatingIndicator.visibility = View.GONE
+                tvMoreAboutBook.visibility = View.GONE
+                tvMoreAboutBook.isClickable = false
+                tvBookPagesTitle.visibility = View.GONE
+                tvBookPages.visibility = View.GONE
             }
             BOOK_STATUS_TO_READ -> {
                 tvBookStatus.text = getString(R.string.toRead)
                 ivBookStatusInProgress.visibility = View.GONE
                 ivBookStatusRead.visibility = View.GONE
                 rbRatingIndicator.visibility = View.GONE
+                tvMoreAboutBook.visibility = View.GONE
+                tvMoreAboutBook.isClickable = false
+                tvBookPagesTitle.visibility = View.GONE
+                tvBookPages.visibility = View.GONE
             }
         }
 
@@ -63,6 +77,19 @@ class DisplayBookFragment : Fragment(R.layout.fragment_display_book) {
                 R.id.action_displayBookFragment_to_editBookFragment,
                 bundle
             )
+        }
+
+        tvMoreAboutBook.setOnClickListener {
+            when(tvBookPagesTitle.visibility){
+                View.GONE -> {
+                    tvBookPagesTitle.visibility = View.VISIBLE
+                    tvBookPages.visibility = View.VISIBLE
+                }
+                View.VISIBLE -> {
+                    tvBookPagesTitle.visibility = View.GONE
+                    tvBookPages.visibility = View.GONE
+                }
+            }
         }
     }
 }

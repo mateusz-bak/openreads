@@ -73,6 +73,7 @@ class EditBookFragment : Fragment(R.layout.fragment_edit_book) {
                 ivEditorBookStatusToRead.setColorFilter(ContextCompat.getColor(view.context, R.color.grey), android.graphics.PorterDuff.Mode.SRC_IN)
                 whatIsClicked = BOOK_STATUS_READ
                 rbEditedRating.visibility = View.VISIBLE
+                etEditedPagesNumber.visibility = View.VISIBLE
             }
             BOOK_STATUS_IN_PROGRESS -> {
                 ivEditorBookStatusRead.setColorFilter(ContextCompat.getColor(view.context, R.color.grey), android.graphics.PorterDuff.Mode.SRC_IN)
@@ -80,6 +81,7 @@ class EditBookFragment : Fragment(R.layout.fragment_edit_book) {
                 ivEditorBookStatusToRead.setColorFilter(ContextCompat.getColor(view.context, R.color.grey), android.graphics.PorterDuff.Mode.SRC_IN)
                 whatIsClicked = BOOK_STATUS_IN_PROGRESS
                 rbEditedRating.visibility = View.GONE
+                etEditedPagesNumber.visibility = View.GONE
             }
             BOOK_STATUS_TO_READ -> {
                 ivEditorBookStatusRead.setColorFilter(ContextCompat.getColor(view.context, R.color.grey), android.graphics.PorterDuff.Mode.SRC_IN)
@@ -87,6 +89,7 @@ class EditBookFragment : Fragment(R.layout.fragment_edit_book) {
                 ivEditorBookStatusToRead.setColorFilter(accentColor, android.graphics.PorterDuff.Mode.SRC_IN)
                 whatIsClicked = BOOK_STATUS_TO_READ
                 rbEditedRating.visibility = View.GONE
+                etEditedPagesNumber.visibility = View.GONE
             }
         }
 
@@ -96,6 +99,7 @@ class EditBookFragment : Fragment(R.layout.fragment_edit_book) {
             ivEditorBookStatusToRead.setColorFilter(ContextCompat.getColor(view.context, R.color.grey), android.graphics.PorterDuff.Mode.SRC_IN)
             whatIsClicked = BOOK_STATUS_READ
             rbEditedRating.visibility = View.VISIBLE
+            etEditedPagesNumber.visibility = View.VISIBLE
         }
 
         ivEditorBookStatusInProgress.setOnClickListener {
@@ -104,6 +108,7 @@ class EditBookFragment : Fragment(R.layout.fragment_edit_book) {
             ivEditorBookStatusToRead.setColorFilter(ContextCompat.getColor(view.context, R.color.grey), android.graphics.PorterDuff.Mode.SRC_IN)
             whatIsClicked = BOOK_STATUS_IN_PROGRESS
             rbEditedRating.visibility = View.GONE
+            etEditedPagesNumber.visibility = View.GONE
         }
 
         ivEditorBookStatusToRead.setOnClickListener {
@@ -112,28 +117,54 @@ class EditBookFragment : Fragment(R.layout.fragment_edit_book) {
             ivEditorBookStatusToRead.setColorFilter(accentColor, android.graphics.PorterDuff.Mode.SRC_IN)
             whatIsClicked = BOOK_STATUS_TO_READ
             rbEditedRating.visibility = View.GONE
+            etEditedPagesNumber.visibility = View.GONE
         }
 
         fabSaveEditedBook.setOnClickListener {
             val bookTitle = etEditedBookTitle.text.toString()
             val bookAuthor = etEditedBookAuthor.text.toString()
             var bookRating = 0.0F
+            val bookNumberOfPagesIntOrNull = etEditedPagesNumber.text.toString().toIntOrNull()
+            var bookNumberOfPagesInt: Int
 
             if (bookTitle.isNotEmpty()) {
-                if (bookAuthor.isNotEmpty()){
+                if (bookAuthor.isNotEmpty()) {
                     if (whatIsClicked != BOOK_STATUS_NOTHING) {
-                        when(whatIsClicked){
-                            BOOK_STATUS_READ -> bookRating = rbEditedRating.rating
-                            BOOK_STATUS_IN_PROGRESS -> bookRating = 0.0F
-                            BOOK_STATUS_TO_READ -> bookRating = 0.0F
+                        if (bookNumberOfPagesIntOrNull != null || whatIsClicked == BOOK_STATUS_IN_PROGRESS || whatIsClicked == BOOK_STATUS_TO_READ) {
+                            bookNumberOfPagesInt = when (bookNumberOfPagesIntOrNull) {
+                                null -> 0
+                                else -> bookNumberOfPagesIntOrNull
+                            }
+                            if (bookNumberOfPagesInt > 0 || whatIsClicked == BOOK_STATUS_IN_PROGRESS || whatIsClicked == BOOK_STATUS_TO_READ) {
+
+
+                                when (whatIsClicked) {
+                                    BOOK_STATUS_READ -> bookRating = rbEditedRating.rating
+                                    BOOK_STATUS_IN_PROGRESS -> bookRating = 0.0F
+                                    BOOK_STATUS_TO_READ -> bookRating = 0.0F
+                                }
+
+                                val bookStatus = whatIsClicked
+                                viewModel.updateBook(
+                                    book.id,
+                                    bookTitle,
+                                    bookAuthor,
+                                    bookRating,
+                                    bookStatus,
+                                    bookNumberOfPagesInt
+                                )
+
+                                it.hideKeyboard()
+                                findNavController().popBackStack()
+                                findNavController().popBackStack()
+                            } else {
+                                Snackbar.make(it, R.string.sbWarningPages0, Snackbar.LENGTH_SHORT)
+                                    .show()
+                            }
+                        } else {
+                            Snackbar.make(it, R.string.sbWarningPagesMissing, Snackbar.LENGTH_SHORT)
+                                .show()
                         }
-
-                        val bookStatus = whatIsClicked
-                        viewModel.updateBook(book.id, bookTitle, bookAuthor, bookRating, bookStatus)
-
-                        it.hideKeyboard()
-                        findNavController().popBackStack()
-                        findNavController().popBackStack()
                     } else {
                         Snackbar.make(it, getString(R.string.sbWarningState), Snackbar.LENGTH_SHORT).show()
                     }

@@ -34,6 +34,7 @@ class AddBookDialog(context: Context, var addBookDialogListener: AddBookDialogLi
         this.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
         rbAdderRating.visibility = View.GONE
         tvRateThisBook.visibility = View.GONE
+        etPagesNumber.visibility = View.GONE
 
         ivBookStatusSetRead.setOnClickListener {
             ivBookStatusSetRead.setColorFilter(accentColor, android.graphics.PorterDuff.Mode.SRC_IN)
@@ -42,6 +43,7 @@ class AddBookDialog(context: Context, var addBookDialogListener: AddBookDialogLi
             whatIsClicked = BOOK_STATUS_READ
             rbAdderRating.visibility = View.VISIBLE
             tvRateThisBook.visibility = View.VISIBLE
+            etPagesNumber.visibility = View.VISIBLE
             it.hideKeyboard()
         }
 
@@ -52,6 +54,7 @@ class AddBookDialog(context: Context, var addBookDialogListener: AddBookDialogLi
             whatIsClicked = BOOK_STATUS_IN_PROGRESS
             rbAdderRating.visibility = View.GONE
             tvRateThisBook.visibility = View.GONE
+            etPagesNumber.visibility = View.GONE
             it.hideKeyboard()
         }
 
@@ -62,6 +65,7 @@ class AddBookDialog(context: Context, var addBookDialogListener: AddBookDialogLi
             whatIsClicked = BOOK_STATUS_TO_READ
             rbAdderRating.visibility = View.GONE
             tvRateThisBook.visibility = View.GONE
+            etPagesNumber.visibility = View.GONE
             it.hideKeyboard()
         }
 
@@ -69,18 +73,45 @@ class AddBookDialog(context: Context, var addBookDialogListener: AddBookDialogLi
             val bookTitle = etAdderBookTitle.text.toString()
             val bookAuthor = etAdderAuthor.text.toString()
             var bookRating = 0.0F
+            val bookNumberOfPagesIntOrNull = etPagesNumber.text.toString().toIntOrNull()
+            var bookNumberOfPagesInt : Int
 
             if (bookTitle.isNotEmpty()) {
                 if (bookAuthor.isNotEmpty()){
                     if (whatIsClicked != BOOK_STATUS_NOTHING) {
-                        when(whatIsClicked){
-                            BOOK_STATUS_READ -> bookRating = rbAdderRating.rating
-                            BOOK_STATUS_IN_PROGRESS -> bookRating = 0.0F
-                            BOOK_STATUS_TO_READ -> bookRating = 0.0F
+                        if (bookNumberOfPagesIntOrNull!=null || whatIsClicked == BOOK_STATUS_IN_PROGRESS || whatIsClicked == BOOK_STATUS_TO_READ) {
+                            bookNumberOfPagesInt = when (bookNumberOfPagesIntOrNull) {
+                            null -> 0
+                            else -> bookNumberOfPagesIntOrNull
+                            }
+                            if (bookNumberOfPagesInt > 0 || whatIsClicked == BOOK_STATUS_IN_PROGRESS || whatIsClicked == BOOK_STATUS_TO_READ) {
+                                when (whatIsClicked) {
+                                    BOOK_STATUS_READ -> bookRating = rbAdderRating.rating
+                                    BOOK_STATUS_IN_PROGRESS -> bookRating = 0.0F
+                                    BOOK_STATUS_TO_READ -> {
+                                        bookRating = 0.0F
+                                        bookNumberOfPagesInt = 0
+                                    }
+                                }
+                                val editedBook = Book(
+                                    bookTitle,
+                                    bookAuthor,
+                                    bookRating,
+                                    bookStatus = whatIsClicked,
+                                    bookPriority = DATABASE_EMPTY_VALUE,
+                                    bookStartDate = DATABASE_EMPTY_VALUE,
+                                    bookFinishDate = DATABASE_EMPTY_VALUE,
+                                    bookNumberOfPages = bookNumberOfPagesInt
+                                )
+                                addBookDialogListener.onSaveButtonClicked(editedBook)
+                                dismiss()
+
+                            } else {
+                                Snackbar.make(it, R.string.sbWarningPages0, Snackbar.LENGTH_SHORT).show()
+                            }
+                        } else {
+                            Snackbar.make(it, R.string.sbWarningPagesMissing, Snackbar.LENGTH_SHORT).show()
                         }
-                        val editedBook = Book(bookTitle, bookAuthor, bookRating, bookStatus = whatIsClicked, bookPriority = DATABASE_EMPTY_VALUE, bookStartDate = DATABASE_EMPTY_VALUE, bookFinishDate = DATABASE_EMPTY_VALUE)
-                        addBookDialogListener.onSaveButtonClicked(editedBook)
-                        dismiss()
                     } else {
                         Snackbar.make(it, R.string.sbWarningState, Snackbar.LENGTH_SHORT).show()
                     }
