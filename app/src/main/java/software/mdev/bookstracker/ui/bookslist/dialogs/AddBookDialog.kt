@@ -19,6 +19,7 @@ import software.mdev.bookstracker.other.Constants.BOOK_STATUS_NOTHING
 import software.mdev.bookstracker.other.Constants.BOOK_STATUS_READ
 import software.mdev.bookstracker.other.Constants.BOOK_STATUS_TO_READ
 import software.mdev.bookstracker.other.Constants.DATABASE_EMPTY_VALUE
+import java.text.Normalizer
 
 
 class AddBookDialog(context: Context, var addBookDialogListener: AddBookDialogListener) : AppCompatDialog(context) {
@@ -93,6 +94,13 @@ class AddBookDialog(context: Context, var addBookDialogListener: AddBookDialogLi
                                         bookNumberOfPagesInt = 0
                                     }
                                 }
+
+                                val REGEX_UNACCENT = "\\p{InCombiningDiacriticalMarks}+".toRegex()
+                                fun CharSequence.unaccent(): String {
+                                    val temp = Normalizer.normalize(this, Normalizer.Form.NFD)
+                                    return REGEX_UNACCENT.replace(temp, "")
+                                }
+
                                 val editedBook = Book(
                                     bookTitle,
                                     bookAuthor,
@@ -101,7 +109,9 @@ class AddBookDialog(context: Context, var addBookDialogListener: AddBookDialogLi
                                     bookPriority = DATABASE_EMPTY_VALUE,
                                     bookStartDate = DATABASE_EMPTY_VALUE,
                                     bookFinishDate = DATABASE_EMPTY_VALUE,
-                                    bookNumberOfPages = bookNumberOfPagesInt
+                                    bookNumberOfPages = bookNumberOfPagesInt,
+                                    bookTitle_ASCII = bookTitle.unaccent(),
+                                    bookAuthor_ASCII = bookAuthor.unaccent()
                                 )
                                 addBookDialogListener.onSaveButtonClicked(editedBook)
                                 dismiss()

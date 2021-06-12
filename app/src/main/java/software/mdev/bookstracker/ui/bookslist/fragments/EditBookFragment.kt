@@ -35,6 +35,7 @@ import software.mdev.bookstracker.other.Constants.THEME_ACCENT_PINK_500
 import software.mdev.bookstracker.other.Constants.THEME_ACCENT_PURPLE_500
 import software.mdev.bookstracker.other.Constants.THEME_ACCENT_TEAL_500
 import software.mdev.bookstracker.other.Constants.THEME_ACCENT_YELLOW_500
+import java.text.Normalizer
 
 
 class EditBookFragment : Fragment(R.layout.fragment_edit_book) {
@@ -62,6 +63,7 @@ class EditBookFragment : Fragment(R.layout.fragment_edit_book) {
         etEditedBookTitle.setText(book.bookTitle)
         etEditedBookAuthor.setText(book.bookAuthor)
         rbEditedRating.rating = book.bookRating
+        etEditedPagesNumber.setText(book.bookNumberOfPages.toString())
 
         etEditedBookTitle.requestFocus()
         view.showKeyboard()
@@ -144,6 +146,12 @@ class EditBookFragment : Fragment(R.layout.fragment_edit_book) {
                                     BOOK_STATUS_TO_READ -> bookRating = 0.0F
                                 }
 
+                                val REGEX_UNACCENT = "\\p{InCombiningDiacriticalMarks}+".toRegex()
+                                fun CharSequence.unaccent(): String {
+                                    val temp = Normalizer.normalize(this, Normalizer.Form.NFD)
+                                    return REGEX_UNACCENT.replace(temp, "")
+                                }
+
                                 val bookStatus = whatIsClicked
                                 viewModel.updateBook(
                                     book.id,
@@ -151,7 +159,9 @@ class EditBookFragment : Fragment(R.layout.fragment_edit_book) {
                                     bookAuthor,
                                     bookRating,
                                     bookStatus,
-                                    bookNumberOfPagesInt
+                                    bookNumberOfPagesInt,
+                                    bookTitle_ASCII = bookTitle.unaccent(),
+                                    bookAuthor_ASCII = bookAuthor.unaccent()
                                 )
 
                                 it.hideKeyboard()

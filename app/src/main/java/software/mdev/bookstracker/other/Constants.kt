@@ -17,6 +17,8 @@ object Constants {
     const val DATABASE_ITEM_BOOK_START_DATE = "item_bookStartDate"
     const val DATABASE_ITEM_BOOK_FINISH_DATE = "item_bookFinishDate"
     const val DATABASE_ITEM_BOOK_NUMBER_OF_PAGES = "item_bookNumberOfPages"
+    const val DATABASE_ITEM_BOOK_TITLE_ASCII = "item_bookTitle_ASCII"
+    const val DATABASE_ITEM_BOOK_AUTHOR_ASCII = "item_bookAuthor_ASCII"
     const val DATABASE_EMPTY_VALUE = "none"
 
     const val SORT_ORDER_TITLE_DESC = "ivSortTitleDesc"

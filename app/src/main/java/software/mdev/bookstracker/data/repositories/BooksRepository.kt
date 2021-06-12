@@ -16,7 +16,25 @@ class BooksRepository (
 
     fun getToReadBooks() = db.getBooksDao().getToReadBooks()
 
-    suspend fun updateBook(id: Int?, bookTitle: String, bookAuthor: String, bookRating: Float, bookStatus: String, bookNumberOfPagesInt: Int) = db.getBooksDao().updateBook(id, bookTitle, bookAuthor, bookRating, bookStatus, bookNumberOfPagesInt)
+    suspend fun updateBook(
+        id: Int?,
+        bookTitle: String,
+        bookAuthor: String,
+        bookRating: Float,
+        bookStatus: String,
+        bookNumberOfPagesInt: Int,
+        bookTitle_ASCII: String,
+        bookAuthor_ASCII: String
+    ) = db.getBooksDao().updateBook(
+        id,
+        bookTitle,
+        bookAuthor,
+        bookRating,
+        bookStatus,
+        bookNumberOfPagesInt,
+        bookTitle_ASCII,
+        bookAuthor_ASCII
+    )
 
     fun searchBooks(searchQuery: String) = db.getBooksDao().searchBooks(searchQuery)
 

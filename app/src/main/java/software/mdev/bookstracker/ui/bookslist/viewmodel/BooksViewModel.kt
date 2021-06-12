@@ -25,8 +25,26 @@ class BooksViewModel(
 
     fun getToReadBooks() = repository.getToReadBooks()
 
-    fun updateBook(id: Int?, bookTitle: String, bookAuthor: String, bookRating: Float, bookStatus: String, bookNumberOfPagesInt: Int) = CoroutineScope(Dispatchers.Main).launch {
-        repository.updateBook(id, bookTitle, bookAuthor, bookRating, bookStatus, bookNumberOfPagesInt)
+    fun updateBook(
+        id: Int?,
+        bookTitle: String,
+        bookAuthor: String,
+        bookRating: Float,
+        bookStatus: String,
+        bookNumberOfPagesInt: Int,
+        bookTitle_ASCII: String,
+        bookAuthor_ASCII: String
+    ) = CoroutineScope(Dispatchers.Main).launch {
+        repository.updateBook(
+            id,
+            bookTitle,
+            bookAuthor,
+            bookRating,
+            bookStatus,
+            bookNumberOfPagesInt,
+            bookTitle_ASCII,
+            bookAuthor_ASCII
+        )
     }
 
     fun searchBooks(searchQuery: String) = repository.searchBooks(searchQuery)
