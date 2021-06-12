@@ -160,8 +160,8 @@ class EditBookFragment : Fragment(R.layout.fragment_edit_book) {
                                     bookRating,
                                     bookStatus,
                                     bookNumberOfPagesInt,
-                                    bookTitle_ASCII = bookTitle.unaccent(),
-                                    bookAuthor_ASCII = bookAuthor.unaccent()
+                                    bookTitle_ASCII = bookTitle.unaccent().replace("ł", "l", false),
+                                    bookAuthor_ASCII = bookAuthor.unaccent().replace("ł", "l", false)
                                 )
 
                                 it.hideKeyboard()
