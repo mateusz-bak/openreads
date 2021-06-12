@@ -79,6 +79,18 @@
         app:layout_constraintTop_toBottomOf="@+id/rbAdderRating" />
 
 
+    <Button
+        android:id="@+id/btnAdderSaveFinishDate"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:backgroundTint="?colorPrimary"
+        android:text="@string/btnAdderSaveFinishDate"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/dpBookFinishDate" />
+
     <ImageView
         android:id="@+id/ivBookStatusSetRead"
         android:contentDescription="@string/ivBookStatusSetRead"
@@ -174,10 +186,9 @@
 
     <EditText
         android:id="@+id/etPagesNumber"
-        android:layout_width="wrap_content"
+        android:layout_width="75dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="12dp"
-        android:width="75dp"
         android:autofillHints="@string/autofill_hint_pages_number"
         android:hint="@string/hint_pages_number"
         android:inputType="number"
@@ -185,7 +196,31 @@
         android:textColor="?colorOnSecondary"
         android:textSize="14sp"
         app:layout_constraintStart_toStartOf="@+id/etAdderAuthor"
-        app:layout_constraintTop_toBottomOf="@+id/etAdderAuthor"
-        tools:ignore="TextViewEdits" />
+        app:layout_constraintTop_toBottomOf="@+id/etAdderAuthor" />
+
+    <DatePicker
+        android:id="@+id/dpBookFinishDate"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:calendarViewShown="false"
+        android:datePickerMode="calendar"
+        android:layout_marginTop="12dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tvAdderTitle" />
+
+    <Button
+        android:id="@+id/btnSetFinishDate"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/hint_date_finished"
+        android:layout_marginEnd="4dp"
+        app:layout_constraintBottom_toBottomOf="@+id/etPagesNumber"
+        app:layout_constraintEnd_toEndOf="@+id/etAdderAuthor" />
+
+
+
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

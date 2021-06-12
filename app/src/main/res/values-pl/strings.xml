@@ -90,4 +90,9 @@
     <string name="sbWarningPages0">Liczba musi być większa niż 0!</string>
     <string name="tvSortPages">Strony</string>
     <string name="pages">stron</string>
+    <string name="tvBookFinishDateTitle">Data zakończenia:</string>
+    <string name="hint_date_finished">Data zakończenia</string>
+    <string name="set_finish_date_title">Ustaw datę zakończenia</string>
+    <string name="sbWarningMissingFinishDate">Ustaw datę zakończenia!</string>
+    <string name="btnAdderSaveFinishDate">Ustaw</string>
 </resources>

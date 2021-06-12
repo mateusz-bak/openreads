@@ -113,5 +113,11 @@ nomn    <string name="app_version" translatable="false">v1.1.0</string>
     <string name="tvSortPages">Pages</string>
     <string name="pages">pages</string>
     <string name="space" translatable="false">" "</string>
+    <string name="tvBookFinishDateTitle">"Date finished:\n%s"</string>
+    <string name="tvBookFinishDate" translatable="false">dd/mm/rrrr</string>
+    <string name="hint_date_finished">Finish date</string>
+    <string name="set_finish_date_title">Set finish date</string>
+    <string name="sbWarningMissingFinishDate">Choose the finish date!</string>
+    <string name="btnAdderSaveFinishDate">Set</string>
 
 </resources>
