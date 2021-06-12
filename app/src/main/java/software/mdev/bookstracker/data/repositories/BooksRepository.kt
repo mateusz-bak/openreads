@@ -22,6 +22,7 @@ class BooksRepository (
         bookAuthor: String,
         bookRating: Float,
         bookStatus: String,
+        bookFinishDateMs: String,
         bookNumberOfPagesInt: Int,
         bookTitle_ASCII: String,
         bookAuthor_ASCII: String
@@ -31,6 +32,7 @@ class BooksRepository (
         bookAuthor,
         bookRating,
         bookStatus,
+        bookFinishDateMs,
         bookNumberOfPagesInt,
         bookTitle_ASCII,
         bookAuthor_ASCII
