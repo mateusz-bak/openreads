@@ -14,6 +14,8 @@ import software.mdev.bookstracker.other.Constants.BOOK_STATUS_TO_READ
 import software.mdev.bookstracker.other.Constants.SERIALIZABLE_BUNDLE_BOOK
 import software.mdev.bookstracker.ui.bookslist.ListActivity
 import software.mdev.bookstracker.ui.bookslist.viewmodel.BooksViewModel
+import java.text.SimpleDateFormat
+import java.util.*
 
 
 class DisplayBookFragment : Fragment(R.layout.fragment_display_book) {
@@ -39,6 +41,13 @@ class DisplayBookFragment : Fragment(R.layout.fragment_display_book) {
         tvBookAuthor.text = book.bookAuthor
         rbRatingIndicator.rating = book.bookRating
         tvBookPages.text = book.bookNumberOfPages.toString()
+
+        if(book.bookFinishDate == "none" || book.bookFinishDate == "null") {
+            tvDateFinished.text = getString(R.string.not_set)
+        } else {
+            var bookFinishTimeStampLong = book.bookFinishDate.toLong()
+            tvDateFinished.text = convertLongToTime(bookFinishTimeStampLong)
+        }
 
         when (book.bookStatus) {
             BOOK_STATUS_READ -> {
@@ -84,6 +93,8 @@ class DisplayBookFragment : Fragment(R.layout.fragment_display_book) {
                 View.GONE -> {
                     tvBookPagesTitle.visibility = View.VISIBLE
                     tvBookPages.visibility = View.VISIBLE
+                    tvDateFinishedTitle.visibility = View.VISIBLE
+                    tvDateFinished.visibility = View.VISIBLE
                 }
                 View.VISIBLE -> {
                     tvBookPagesTitle.visibility = View.GONE
@@ -91,5 +102,11 @@ class DisplayBookFragment : Fragment(R.layout.fragment_display_book) {
                 }
             }
         }
+    }
+
+    fun convertLongToTime(time: Long): String {
+        val date = Date(time)
+        val format = SimpleDateFormat("dd MMM yyyy")
+        return format.format(date)
     }
 }

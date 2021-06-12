@@ -119,5 +119,6 @@ nomn    <string name="app_version" translatable="false">v1.1.0</string>
     <string name="set_finish_date_title">Set finish date</string>
     <string name="sbWarningMissingFinishDate">Choose the finish date!</string>
     <string name="btnAdderSaveFinishDate">Set</string>
+    <string name="not_set">Not set</string>
 
 </resources>
