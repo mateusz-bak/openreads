@@ -21,6 +21,7 @@ import software.mdev.bookstracker.other.Constants.BOOK_STATUS_READ
 import software.mdev.bookstracker.other.Constants.BOOK_STATUS_TO_READ
 import software.mdev.bookstracker.other.Constants.DATABASE_EMPTY_VALUE
 import java.text.Normalizer
+import java.text.SimpleDateFormat
 import java.util.*
 
 
@@ -111,19 +112,6 @@ class AddBookDialog(context: Context, var addBookDialogListener: AddBookDialogLi
 
         btnAdderSaveFinishDate.setOnClickListener {
             bookFinishDateMs = getDateFromDatePickerInMillis(dpBookFinishDate)
-            var bookFinishDateYearStr = dpBookFinishDate.year.toString()
-            var bookFinishDateDayInt = dpBookFinishDate.dayOfMonth
-            var bookFinishDateDayStr = bookFinishDateDayInt.toString()
-            var bookFinishDateMonthInt = dpBookFinishDate.month + 1
-            var bookFinishDateMonthStr = bookFinishDateMonthInt.toString()
-
-            if(bookFinishDateDayInt < 10) {
-                bookFinishDateDayStr = "0$bookFinishDateDayStr"
-            }
-
-            if(bookFinishDateMonthInt < 10) {
-                bookFinishDateMonthStr = "0$bookFinishDateMonthStr"
-            }
 
             dpBookFinishDate.visibility = View.GONE
             btnAdderSaveFinishDate.visibility = View.GONE
@@ -145,7 +133,7 @@ class AddBookDialog(context: Context, var addBookDialogListener: AddBookDialogLi
             btnAdderSaveBook.visibility = View.VISIBLE
             btnSetFinishDate.visibility = View.VISIBLE
 
-            btnSetFinishDate.text = "$bookFinishDateDayStr / $bookFinishDateMonthStr / $bookFinishDateYearStr"
+            btnSetFinishDate.text = bookFinishDateMs?.let { it1 -> convertLongToTime(it1) }
         }
 
         btnAdderSaveBook.setOnClickListener {
@@ -228,6 +216,12 @@ class AddBookDialog(context: Context, var addBookDialogListener: AddBookDialogLi
         val calendar = Calendar.getInstance()
         calendar[year, month] = day
         return calendar.timeInMillis
+    }
+
+    fun convertLongToTime(time: Long): String {
+        val date = Date(time)
+        val format = SimpleDateFormat("dd MMM yyyy")
+        return format.format(date)
     }
 
     fun getAccentColor(context: Context): Int {
