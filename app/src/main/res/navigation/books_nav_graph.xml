@@ -107,5 +107,9 @@
     <fragment
         android:id="@+id/settingsFragment"
         android:name="software.mdev.bookstracker.ui.bookslist.fragments.SettingsFragment"
-        android:label="SettingsFragment" />
+        android:label="SettingsFragment" >
+        <action
+            android:id="@+id/action_settingsFragment_to_readFragment"
+            app:destination="@id/readFragment" />
+    </fragment>
 </navigation>

@@ -33,6 +33,11 @@ class ListActivity : AppCompatActivity() {
     lateinit var booksViewModel: BooksViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
+        val booksRepository = BooksRepository(BooksDatabase(this))
+        val booksViewModelProviderFactory = BooksViewModelProviderFactory(booksRepository)
+        booksViewModel = ViewModelProvider(this, booksViewModelProviderFactory).get(
+            BooksViewModel::class.java)
+
         setAppTheme()
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_list)
@@ -47,11 +52,6 @@ class ListActivity : AppCompatActivity() {
                     else -> bottomNavigationView.visibility = View.GONE
                 }
             }
-
-        val booksRepository = BooksRepository(BooksDatabase(this))
-        val booksViewModelProviderFactory = BooksViewModelProviderFactory(booksRepository)
-        booksViewModel = ViewModelProvider(this, booksViewModelProviderFactory).get(
-            BooksViewModel::class.java)
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {

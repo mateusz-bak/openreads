@@ -5,6 +5,7 @@ import android.content.SharedPreferences
 import android.content.SharedPreferences.OnSharedPreferenceChangeListener
 import android.os.Bundle
 import android.widget.Toast
+import androidx.fragment.app.FragmentActivity
 import androidx.navigation.fragment.findNavController
 import androidx.preference.PreferenceFragmentCompat
 import androidx.preference.PreferenceManager
@@ -40,7 +41,7 @@ class SettingsFragment : PreferenceFragmentCompat(), OnSharedPreferenceChangeLis
     override fun onSharedPreferenceChanged(sharedPreferences: SharedPreferences, key: String) {
         when (key) {
             SHARED_PREFERENCES_KEY_ACCENT -> {
-                Toast.makeText(context?.applicationContext, R.string.changes_after_app_restart, Toast.LENGTH_LONG).show()
+//                Toast.makeText(context?.applicationContext, R.string.changes_after_app_restart, Toast.LENGTH_LONG).show()
                 hotReloadActivity(activity)
             }
             SHARED_PREFERENCES_KEY_RECOMMENDATIONS -> {
@@ -53,6 +54,7 @@ class SettingsFragment : PreferenceFragmentCompat(), OnSharedPreferenceChangeLis
         if (activity == null) return
         val sharedPref = PreferenceManager.getDefaultSharedPreferences(context?.applicationContext)
         sharedPref.edit().putBoolean(SHARED_PREFERENCES_REFRESHED, true).apply()
-        findNavController().navigate(R.id.settingsFragment, null)
+        findNavController().navigate(R.id.readFragment, null)
+        (activity as FragmentActivity).recreate()
     }
 }
