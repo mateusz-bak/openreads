@@ -28,13 +28,13 @@ interface BooksDao {
     @Query("SELECT * FROM Book WHERE (item_bookTitle_ASCII LIKE '%' || :searchQuery || '%' OR item_bookAuthor_ASCII LIKE '%' || :searchQuery || '%')")
     fun searchBooks(searchQuery: String): LiveData<List<Book>>
 
-    @Query("SELECT * FROM Book WHERE item_bookStatus LIKE :bookStatus ORDER BY item_bookTitle DESC")
+    @Query("SELECT * FROM Book WHERE item_bookStatus LIKE :bookStatus ORDER BY item_bookTitle_ASCII DESC")
     fun getSortedBooksByTitleDesc(bookStatus: String): LiveData<List<Book>>
-    @Query("SELECT * FROM Book WHERE item_bookStatus LIKE :bookStatus ORDER BY item_bookTitle ASC")
+    @Query("SELECT * FROM Book WHERE item_bookStatus LIKE :bookStatus ORDER BY item_bookTitle_ASCII ASC")
     fun getSortedBooksByTitleAsc(bookStatus: String): LiveData<List<Book>>
-    @Query("SELECT * FROM Book WHERE item_bookStatus LIKE :bookStatus ORDER BY item_bookAuthor DESC")
+    @Query("SELECT * FROM Book WHERE item_bookStatus LIKE :bookStatus ORDER BY item_bookAuthor_ASCII DESC")
     fun getSortedBooksByAuthorDesc(bookStatus: String): LiveData<List<Book>>
-    @Query("SELECT * FROM Book WHERE item_bookStatus LIKE :bookStatus ORDER BY item_bookAuthor ASC")
+    @Query("SELECT * FROM Book WHERE item_bookStatus LIKE :bookStatus ORDER BY item_bookAuthor_ASCII ASC")
     fun getSortedBooksByAuthorAsc(bookStatus: String): LiveData<List<Book>>
     @Query("SELECT * FROM Book WHERE item_bookStatus LIKE :bookStatus ORDER BY item_bookRating DESC")
     fun getSortedBooksByRatingDesc(bookStatus: String): LiveData<List<Book>>
