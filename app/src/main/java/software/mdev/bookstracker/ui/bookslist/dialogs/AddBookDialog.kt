@@ -9,6 +9,7 @@ import android.view.Window
 import android.view.inputmethod.InputMethodManager
 import software.mdev.bookstracker.R
 import android.widget.DatePicker
+import android.widget.EditText
 import androidx.appcompat.app.AppCompatDialog
 import androidx.core.content.ContextCompat
 import software.mdev.bookstracker.data.db.entities.Book
@@ -45,6 +46,9 @@ class AddBookDialog(context: Context, var addBookDialogListener: AddBookDialogLi
         dpBookFinishDate.visibility = View.GONE
         btnAdderSaveFinishDate.visibility = View.GONE
 
+        etAdderBookTitle.requestFocus()
+        showKeyboard(etAdderBookTitle,350)
+
         ivBookStatusSetRead.setOnClickListener {
             ivBookStatusSetRead.setColorFilter(accentColor, android.graphics.PorterDuff.Mode.SRC_IN)
             ivBookStatusSetInProgress.setColorFilter(ContextCompat.getColor(context, R.color.grey), android.graphics.PorterDuff.Mode.SRC_IN)
@@ -55,7 +59,8 @@ class AddBookDialog(context: Context, var addBookDialogListener: AddBookDialogLi
             etPagesNumber.visibility = View.VISIBLE
             btnSetFinishDate.visibility  = View.VISIBLE
             btnSetFinishDate.isClickable = true
-            it.hideKeyboard()
+            etPagesNumber.requestFocus()
+            showKeyboard(etPagesNumber,350)
         }
 
         ivBookStatusSetInProgress.setOnClickListener {
@@ -207,6 +212,16 @@ class AddBookDialog(context: Context, var addBookDialogListener: AddBookDialogLi
     fun View.hideKeyboard() {
         val inputManager = context.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
         inputManager.hideSoftInputFromWindow(windowToken, 0)
+    }
+
+    fun showKeyboard(et: EditText, delay: Long) {
+        val timer = Timer()
+        timer.schedule(object : TimerTask() {
+            override fun run() {
+                val inputManager = context.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+                inputManager.showSoftInput(et, 0)
+            }
+        }, delay)
     }
 
     fun getDateFromDatePickerInMillis(datePicker: DatePicker): Long? {
