@@ -29,6 +29,8 @@ object Constants {
     const val SORT_ORDER_RATING_ASC = "ivSortRatingAsc"
     const val SORT_ORDER_PAGES_DESC = "ivSortPagesDesc"
     const val SORT_ORDER_PAGES_ASC = "ivSortPagesAsc"
+    const val SORT_ORDER_DATE_DESC = "ivSortDateDesc"
+    const val SORT_ORDER_DATE_ASC = "ivSortDateAsc"
 
     const val SERIALIZABLE_BUNDLE_BOOK = "book"
 

@@ -96,4 +96,5 @@
     <string name="sbWarningMissingFinishDate">Ustaw datę zakończenia!</string>
     <string name="btnAdderSaveFinishDate">Ustaw</string>
     <string name="not_set">Nie ustawiono</string>
+    <string name="tvSortDate">Data</string>
 </resources>

@@ -37,6 +37,8 @@ import software.mdev.bookstracker.other.Constants.SERIALIZABLE_BUNDLE_BOOK
 import software.mdev.bookstracker.other.Constants.SHARED_PREFERENCES_NAME
 import software.mdev.bookstracker.other.Constants.SORT_ORDER_AUTHOR_ASC
 import software.mdev.bookstracker.other.Constants.SORT_ORDER_AUTHOR_DESC
+import software.mdev.bookstracker.other.Constants.SORT_ORDER_DATE_ASC
+import software.mdev.bookstracker.other.Constants.SORT_ORDER_DATE_DESC
 import software.mdev.bookstracker.other.Constants.SORT_ORDER_PAGES_ASC
 import software.mdev.bookstracker.other.Constants.SORT_ORDER_PAGES_DESC
 import software.mdev.bookstracker.other.Constants.SORT_ORDER_RATING_ASC
@@ -236,6 +238,8 @@ class ReadFragment : Fragment(R.layout.fragment_read) {
             SORT_ORDER_RATING_ASC -> viewModel.getSortedBooksByRatingAsc(currentFragment).observe(viewLifecycleOwner, Observer { some_books -> bookAdapter.differ.submitList(some_books)})
             SORT_ORDER_PAGES_DESC -> viewModel.getSortedBooksByPagesDesc(currentFragment).observe(viewLifecycleOwner, Observer { some_books -> bookAdapter.differ.submitList(some_books)})
             SORT_ORDER_PAGES_ASC -> viewModel.getSortedBooksByPagesAsc(currentFragment).observe(viewLifecycleOwner, Observer { some_books -> bookAdapter.differ.submitList(some_books)})
+            SORT_ORDER_DATE_DESC -> viewModel.getSortedBooksByDateDesc(currentFragment).observe(viewLifecycleOwner, Observer { some_books -> bookAdapter.differ.submitList(some_books)})
+            SORT_ORDER_DATE_ASC -> viewModel.getSortedBooksByDateAsc(currentFragment).observe(viewLifecycleOwner, Observer { some_books -> bookAdapter.differ.submitList(some_books)})
         }
     }
 }

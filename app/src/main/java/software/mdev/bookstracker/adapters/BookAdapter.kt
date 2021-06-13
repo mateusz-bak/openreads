@@ -11,6 +11,8 @@ import software.mdev.bookstracker.R
 import software.mdev.bookstracker.data.db.entities.Book
 import kotlinx.android.synthetic.main.item_book.view.*
 import software.mdev.bookstracker.other.Constants
+import java.text.SimpleDateFormat
+import java.util.*
 
 class BookAdapter(
     var context: Context,
@@ -49,6 +51,14 @@ class BookAdapter(
 
             tvNumberOfPages.text = stringPages
             tvNumberOfPages.visibility = View.GONE
+            tvDateFinished.visibility = View.GONE
+
+            if(curBook.bookFinishDate == "none" || curBook.bookFinishDate == "null") {
+                tvDateFinished.text = holder.itemView.getContext().getString(R.string.not_set)
+            } else {
+                var bookFinishTimeStampLong = curBook.bookFinishDate.toLong()
+                tvDateFinished.text = convertLongToTime(bookFinishTimeStampLong)
+            }
 
             val sharedPref = context.getSharedPreferences(Constants.SHARED_PREFERENCES_NAME, Context.MODE_PRIVATE)
             val sortOrder = sharedPref.getString(
@@ -58,6 +68,9 @@ class BookAdapter(
 
             if (sortOrder == Constants.SORT_ORDER_PAGES_DESC || sortOrder == Constants.SORT_ORDER_PAGES_ASC) {
                 tvNumberOfPages.visibility = View.VISIBLE
+            }
+            if (sortOrder == Constants.SORT_ORDER_DATE_DESC || sortOrder == Constants.SORT_ORDER_DATE_ASC) {
+                tvDateFinished.visibility = View.VISIBLE
             }
 
             when (whichFragment ){
@@ -75,12 +88,14 @@ class BookAdapter(
                     ivToReadIndicator.visibility = View.GONE
                     ivInProgressIndicator.visibility = View.VISIBLE
                     tvNumberOfPages.visibility = View.GONE
+                    tvDateFinished.visibility = View.GONE
                 }
                 Constants.BOOK_STATUS_TO_READ -> {
                     rbRatingIndicator.visibility = View.GONE
                     ivInProgressIndicator.visibility = View.GONE
                     ivToReadIndicator.visibility = View.VISIBLE
                     tvNumberOfPages.visibility = View.GONE
+                    tvDateFinished.visibility = View.GONE
                 }
             }
         }
@@ -98,5 +113,11 @@ class BookAdapter(
 
     override fun getItemCount(): Int {
         return differ.currentList.size
+    }
+
+    fun convertLongToTime(time: Long): String {
+        val date = Date(time)
+        val format = SimpleDateFormat("dd MMM yyyy")
+        return format.format(date)
     }
 }

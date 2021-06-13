@@ -30,10 +30,8 @@ class DisplayBookFragment : Fragment(R.layout.fragment_display_book) {
         viewModel = (activity as ListActivity).booksViewModel
         listActivity = activity as ListActivity
 
-        tvDateFinishedTitle.visibility = View.GONE
-        tvDateFinished.visibility = View.GONE
-        tvBookPagesTitle.visibility = View.GONE
-        tvBookPages.visibility = View.GONE
+        tvMoreAboutBook.visibility = View.GONE
+        tvMoreAboutBook.isClickable = false
 
         val book = args.book
 
