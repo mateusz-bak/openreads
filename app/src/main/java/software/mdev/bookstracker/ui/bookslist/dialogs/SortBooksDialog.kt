@@ -29,142 +29,119 @@ class SortBooksDialog(context: Context, var sortBooksDialogListener: SortBooksDi
         clPages.setBackgroundResource(R.drawable.sort_background_unselected)
         clDate.setBackgroundResource(R.drawable.sort_background_unselected)
 
+        ivSortTitle.isClickable = false
+        ivSortAuthor.isClickable = false
+        ivSortRating.isClickable = false
+        ivSortPages.isClickable = false
+        ivSortDate.isClickable = false
+
         when (sortOrder) {
             Constants.SORT_ORDER_TITLE_DESC -> {
-                ivSortTitleDesc.setColorFilter(ContextCompat.getColor(context, R.color.design_default_color_on_primary))
+                ivSortTitle.setColorFilter(ContextCompat.getColor(context, R.color.design_default_color_on_primary))
                 clTitle.setBackgroundResource(R.drawable.sort_background_selected)
                 tvSortTitle.setTextColor(ContextCompat.getColor(context, R.color.design_default_color_on_primary))
                 whatIsClicked = Constants.SORT_ORDER_TITLE_DESC
+                ivSortTitle.animate().rotation( 180F).setDuration(1L).start()
             }
             Constants.SORT_ORDER_TITLE_ASC -> {
-                ivSortTitleAsc.setColorFilter(ContextCompat.getColor(context, R.color.design_default_color_on_primary))
+                ivSortTitle.setColorFilter(ContextCompat.getColor(context, R.color.design_default_color_on_primary))
                 clTitle.setBackgroundResource(R.drawable.sort_background_selected)
                 tvSortTitle.setTextColor(ContextCompat.getColor(context, R.color.design_default_color_on_primary))
                 whatIsClicked = Constants.SORT_ORDER_TITLE_ASC
+                ivSortTitle.animate().rotation( 0F).setDuration(1L).start()
             }
             Constants.SORT_ORDER_AUTHOR_DESC -> {
-                ivSortAuthorDesc.setColorFilter(ContextCompat.getColor(context, R.color.design_default_color_on_primary))
+                ivSortAuthor.setColorFilter(ContextCompat.getColor(context, R.color.design_default_color_on_primary))
                 clAuthor.setBackgroundResource(R.drawable.sort_background_selected)
                 tvSortAuthor.setTextColor(ContextCompat.getColor(context, R.color.design_default_color_on_primary))
                 whatIsClicked = Constants.SORT_ORDER_AUTHOR_DESC
+                ivSortAuthor.animate().rotation( 180F).setDuration(1L).start()
             }
             Constants.SORT_ORDER_AUTHOR_ASC -> {
-                ivSortAuthorAsc.setColorFilter(ContextCompat.getColor(context, R.color.design_default_color_on_primary))
+                ivSortAuthor.setColorFilter(ContextCompat.getColor(context, R.color.design_default_color_on_primary))
                 clAuthor.setBackgroundResource(R.drawable.sort_background_selected)
                 tvSortAuthor.setTextColor(ContextCompat.getColor(context, R.color.design_default_color_on_primary))
                 whatIsClicked = Constants.SORT_ORDER_AUTHOR_ASC
+                ivSortAuthor.animate().rotation( 0F).setDuration(1L).start()
             }
             Constants.SORT_ORDER_RATING_DESC -> {
-                ivSortRatingDesc.setColorFilter(ContextCompat.getColor(context, R.color.design_default_color_on_primary))
+                ivSortRating.setColorFilter(ContextCompat.getColor(context, R.color.design_default_color_on_primary))
                 clRating.setBackgroundResource(R.drawable.sort_background_selected)
                 tvSortRating.setTextColor(ContextCompat.getColor(context, R.color.design_default_color_on_primary))
                 whatIsClicked = Constants.SORT_ORDER_RATING_DESC
+                ivSortRating.animate().rotation( 180F).setDuration(1L).start()
             }
             Constants.SORT_ORDER_RATING_ASC -> {
-                ivSortRatingAsc.setColorFilter(ContextCompat.getColor(context, R.color.design_default_color_on_primary))
+                ivSortRating.setColorFilter(ContextCompat.getColor(context, R.color.design_default_color_on_primary))
                 clRating.setBackgroundResource(R.drawable.sort_background_selected)
                 tvSortRating.setTextColor(ContextCompat.getColor(context, R.color.design_default_color_on_primary))
                 whatIsClicked = Constants.SORT_ORDER_RATING_ASC
+                ivSortRating.animate().rotation( 0F).setDuration(1L).start()
             }
             Constants.SORT_ORDER_PAGES_DESC -> {
-                ivSortPagesDesc.setColorFilter(ContextCompat.getColor(context, R.color.design_default_color_on_primary))
+                ivSortPages.setColorFilter(ContextCompat.getColor(context, R.color.design_default_color_on_primary))
                 clPages.setBackgroundResource(R.drawable.sort_background_selected)
                 tvSortPages.setTextColor(ContextCompat.getColor(context, R.color.design_default_color_on_primary))
                 whatIsClicked = Constants.SORT_ORDER_PAGES_DESC
+                ivSortPages.animate().rotation( 180F).setDuration(1L).start()
             }
             Constants.SORT_ORDER_PAGES_ASC -> {
-                ivSortPagesAsc.setColorFilter(ContextCompat.getColor(context, R.color.design_default_color_on_primary))
+                ivSortPages.setColorFilter(ContextCompat.getColor(context, R.color.design_default_color_on_primary))
                 clPages.setBackgroundResource(R.drawable.sort_background_selected)
                 tvSortPages.setTextColor(ContextCompat.getColor(context, R.color.design_default_color_on_primary))
                 whatIsClicked = Constants.SORT_ORDER_PAGES_ASC
+                ivSortPages.animate().rotation( 0F).setDuration(1L).start()
             }
             Constants.SORT_ORDER_DATE_DESC -> {
-                ivSortDateDesc.setColorFilter(ContextCompat.getColor(context, R.color.design_default_color_on_primary))
+                ivSortDate.setColorFilter(ContextCompat.getColor(context, R.color.design_default_color_on_primary))
                 clDate.setBackgroundResource(R.drawable.sort_background_selected)
                 tvSortDate.setTextColor(ContextCompat.getColor(context, R.color.design_default_color_on_primary))
                 whatIsClicked = Constants.SORT_ORDER_DATE_DESC
+                ivSortDate.animate().rotation( 180F).setDuration(1L).start()
             }
             Constants.SORT_ORDER_DATE_ASC -> {
-                ivSortDateAsc.setColorFilter(ContextCompat.getColor(context, R.color.design_default_color_on_primary))
+                ivSortDate.setColorFilter(ContextCompat.getColor(context, R.color.design_default_color_on_primary))
                 clDate.setBackgroundResource(R.drawable.sort_background_selected)
                 tvSortDate.setTextColor(ContextCompat.getColor(context, R.color.design_default_color_on_primary))
                 whatIsClicked = Constants.SORT_ORDER_DATE_ASC
+                ivSortDate.animate().rotation( 0F).setDuration(1L).start()
             }
         }
 
-        ivSortTitleDesc.setOnClickListener {
-            ivSortTitleDescSelected()
-        }
-
-        ivSortTitleAsc.setOnClickListener {
-            ivSortTitleAscSelected()
-        }
-
-        ivSortAuthorDesc.setOnClickListener {
-            ivSortAuthorDescSelected()
-        }
-
-        ivSortAuthorAsc.setOnClickListener {
-            ivSortAuthorAscSelected()
-        }
-
-        ivSortRatingDesc.setOnClickListener {
-            ivSortRatingDescSelected()
-        }
-
-        ivSortRatingAsc.setOnClickListener {
-            ivSortRatingAscSelected()
-        }
-
-        ivSortPagesDesc.setOnClickListener {
-            ivSortPagesDescSelected()
-        }
-
-        ivSortPagesAsc.setOnClickListener {
-            ivSortPagesAscSelected()
-        }
-
-        ivSortDateDesc.setOnClickListener {
-            ivSortDateDescSelected()
-        }
-
-        ivSortDateAsc.setOnClickListener {
-            ivSortDateAscSelected()
-        }
-
-
-
-        tvSortTitle.setOnClickListener {
+        clTitle.setOnClickListener {
             when (whatIsClicked) {
                 Constants.SORT_ORDER_TITLE_ASC -> ivSortTitleDescSelected()
                 else -> ivSortTitleAscSelected()
             }
         }
 
-        tvSortAuthor.setOnClickListener {
+        clAuthor.setOnClickListener {
             when (whatIsClicked) {
                 Constants.SORT_ORDER_AUTHOR_ASC -> ivSortAuthorDescSelected()
                 else -> ivSortAuthorAscSelected()
             }
         }
 
-        tvSortRating.setOnClickListener {
+        clRating.setOnClickListener {
             when (whatIsClicked) {
                 Constants.SORT_ORDER_RATING_ASC -> ivSortRatingDescSelected()
                 else -> ivSortRatingAscSelected()
-            }        }
+            }
+        }
 
-        tvSortPages.setOnClickListener {
+        clPages.setOnClickListener {
             when (whatIsClicked) {
                 Constants.SORT_ORDER_PAGES_ASC -> ivSortPagesDescSelected()
                 else -> ivSortPagesAscSelected()
-            }        }
+            }
+        }
 
-        tvSortDate.setOnClickListener {
+        clDate.setOnClickListener {
             when (whatIsClicked) {
                 Constants.SORT_ORDER_DATE_ASC -> ivSortDateDescSelected()
                 else -> ivSortDateAscSelected()
-            }        }
+            }
+        }
 
         btnSorterExecute.setOnClickListener {
             sortBooksDialogListener.onSaveButtonClicked(whatIsClicked)
@@ -173,16 +150,11 @@ class SortBooksDialog(context: Context, var sortBooksDialogListener: SortBooksDi
     }
 
     private fun ivSortTitleDescSelected() {
-        ivSortTitleDesc.setColorFilter(ContextCompat.getColor(context, R.color.design_default_color_on_primary))
-        ivSortTitleAsc.setColorFilter(ContextCompat.getColor(context, R.color.grey), android.graphics.PorterDuff.Mode.SRC_IN)
-        ivSortAuthorDesc.setColorFilter(ContextCompat.getColor(context, R.color.grey), android.graphics.PorterDuff.Mode.SRC_IN)
-        ivSortAuthorAsc.setColorFilter(ContextCompat.getColor(context, R.color.grey), android.graphics.PorterDuff.Mode.SRC_IN)
-        ivSortRatingDesc.setColorFilter(ContextCompat.getColor(context, R.color.grey), android.graphics.PorterDuff.Mode.SRC_IN)
-        ivSortRatingAsc.setColorFilter(ContextCompat.getColor(context, R.color.grey), android.graphics.PorterDuff.Mode.SRC_IN)
-        ivSortPagesDesc.setColorFilter(ContextCompat.getColor(context, R.color.grey), android.graphics.PorterDuff.Mode.SRC_IN)
-        ivSortPagesAsc.setColorFilter(ContextCompat.getColor(context, R.color.grey), android.graphics.PorterDuff.Mode.SRC_IN)
-        ivSortDateDesc.setColorFilter(ContextCompat.getColor(context, R.color.grey), android.graphics.PorterDuff.Mode.SRC_IN)
-        ivSortDateAsc.setColorFilter(ContextCompat.getColor(context, R.color.grey), android.graphics.PorterDuff.Mode.SRC_IN)
+        ivSortTitle.setColorFilter(ContextCompat.getColor(context, R.color.design_default_color_on_primary))
+        ivSortAuthor.setColorFilter(ContextCompat.getColor(context, R.color.grey), android.graphics.PorterDuff.Mode.SRC_IN)
+        ivSortRating.setColorFilter(ContextCompat.getColor(context, R.color.grey), android.graphics.PorterDuff.Mode.SRC_IN)
+        ivSortPages.setColorFilter(ContextCompat.getColor(context, R.color.grey), android.graphics.PorterDuff.Mode.SRC_IN)
+        ivSortDate.setColorFilter(ContextCompat.getColor(context, R.color.grey), android.graphics.PorterDuff.Mode.SRC_IN)
 
         clTitle.setBackgroundResource(R.drawable.sort_background_selected)
         clAuthor.setBackgroundResource(R.drawable.sort_background_unselected)
@@ -197,20 +169,15 @@ class SortBooksDialog(context: Context, var sortBooksDialogListener: SortBooksDi
         tvSortDate.setTextColor(ContextCompat.getColor(context, R.color.grey))
 
         whatIsClicked = Constants.SORT_ORDER_TITLE_DESC
-        animateSortArrow()
+        ivSortTitle.animate().rotation( 180F).setDuration(350L).start()
     }
 
     private fun ivSortTitleAscSelected() {
-        ivSortTitleDesc.setColorFilter(ContextCompat.getColor(context, R.color.grey))
-        ivSortTitleAsc.setColorFilter(ContextCompat.getColor(context, R.color.design_default_color_on_primary), android.graphics.PorterDuff.Mode.SRC_IN)
-        ivSortAuthorDesc.setColorFilter(ContextCompat.getColor(context, R.color.grey), android.graphics.PorterDuff.Mode.SRC_IN)
-        ivSortAuthorAsc.setColorFilter(ContextCompat.getColor(context, R.color.grey), android.graphics.PorterDuff.Mode.SRC_IN)
-        ivSortRatingDesc.setColorFilter(ContextCompat.getColor(context, R.color.grey), android.graphics.PorterDuff.Mode.SRC_IN)
-        ivSortRatingAsc.setColorFilter(ContextCompat.getColor(context, R.color.grey), android.graphics.PorterDuff.Mode.SRC_IN)
-        ivSortPagesDesc.setColorFilter(ContextCompat.getColor(context, R.color.grey), android.graphics.PorterDuff.Mode.SRC_IN)
-        ivSortPagesAsc.setColorFilter(ContextCompat.getColor(context, R.color.grey), android.graphics.PorterDuff.Mode.SRC_IN)
-        ivSortDateDesc.setColorFilter(ContextCompat.getColor(context, R.color.grey), android.graphics.PorterDuff.Mode.SRC_IN)
-        ivSortDateAsc.setColorFilter(ContextCompat.getColor(context, R.color.grey), android.graphics.PorterDuff.Mode.SRC_IN)
+        ivSortTitle.setColorFilter(ContextCompat.getColor(context, R.color.design_default_color_on_primary))
+        ivSortAuthor.setColorFilter(ContextCompat.getColor(context, R.color.grey), android.graphics.PorterDuff.Mode.SRC_IN)
+        ivSortRating.setColorFilter(ContextCompat.getColor(context, R.color.grey), android.graphics.PorterDuff.Mode.SRC_IN)
+        ivSortPages.setColorFilter(ContextCompat.getColor(context, R.color.grey), android.graphics.PorterDuff.Mode.SRC_IN)
+        ivSortDate.setColorFilter(ContextCompat.getColor(context, R.color.grey), android.graphics.PorterDuff.Mode.SRC_IN)
 
         clTitle.setBackgroundResource(R.drawable.sort_background_selected)
         clAuthor.setBackgroundResource(R.drawable.sort_background_unselected)
@@ -225,20 +192,15 @@ class SortBooksDialog(context: Context, var sortBooksDialogListener: SortBooksDi
         tvSortDate.setTextColor(ContextCompat.getColor(context, R.color.grey))
 
         whatIsClicked = Constants.SORT_ORDER_TITLE_ASC
-        animateSortArrow()
+        ivSortTitle.animate().rotation( 0F).setDuration(350L).start()
     }
 
     private fun ivSortAuthorDescSelected() {
-        ivSortTitleDesc.setColorFilter(ContextCompat.getColor(context, R.color.grey))
-        ivSortTitleAsc.setColorFilter(ContextCompat.getColor(context, R.color.grey), android.graphics.PorterDuff.Mode.SRC_IN)
-        ivSortAuthorDesc.setColorFilter(ContextCompat.getColor(context, R.color.design_default_color_on_primary), android.graphics.PorterDuff.Mode.SRC_IN)
-        ivSortAuthorAsc.setColorFilter(ContextCompat.getColor(context, R.color.grey), android.graphics.PorterDuff.Mode.SRC_IN)
-        ivSortRatingDesc.setColorFilter(ContextCompat.getColor(context, R.color.grey), android.graphics.PorterDuff.Mode.SRC_IN)
-        ivSortRatingAsc.setColorFilter(ContextCompat.getColor(context, R.color.grey), android.graphics.PorterDuff.Mode.SRC_IN)
-        ivSortPagesDesc.setColorFilter(ContextCompat.getColor(context, R.color.grey), android.graphics.PorterDuff.Mode.SRC_IN)
-        ivSortPagesAsc.setColorFilter(ContextCompat.getColor(context, R.color.grey), android.graphics.PorterDuff.Mode.SRC_IN)
-        ivSortDateDesc.setColorFilter(ContextCompat.getColor(context, R.color.grey), android.graphics.PorterDuff.Mode.SRC_IN)
-        ivSortDateAsc.setColorFilter(ContextCompat.getColor(context, R.color.grey), android.graphics.PorterDuff.Mode.SRC_IN)
+        ivSortTitle.setColorFilter(ContextCompat.getColor(context, R.color.grey))
+        ivSortAuthor.setColorFilter(ContextCompat.getColor(context, R.color.design_default_color_on_primary), android.graphics.PorterDuff.Mode.SRC_IN)
+        ivSortRating.setColorFilter(ContextCompat.getColor(context, R.color.grey), android.graphics.PorterDuff.Mode.SRC_IN)
+        ivSortPages.setColorFilter(ContextCompat.getColor(context, R.color.grey), android.graphics.PorterDuff.Mode.SRC_IN)
+        ivSortDate.setColorFilter(ContextCompat.getColor(context, R.color.grey), android.graphics.PorterDuff.Mode.SRC_IN)
 
         clTitle.setBackgroundResource(R.drawable.sort_background_unselected)
         clAuthor.setBackgroundResource(R.drawable.sort_background_selected)
@@ -253,20 +215,15 @@ class SortBooksDialog(context: Context, var sortBooksDialogListener: SortBooksDi
         tvSortDate.setTextColor(ContextCompat.getColor(context, R.color.grey))
 
         whatIsClicked = Constants.SORT_ORDER_AUTHOR_DESC
-        animateSortArrow()
+        ivSortAuthor.animate().rotation( 180F).setDuration(350L).start()
     }
 
     private fun ivSortAuthorAscSelected() {
-        ivSortTitleDesc.setColorFilter(ContextCompat.getColor(context, R.color.grey))
-        ivSortTitleAsc.setColorFilter(ContextCompat.getColor(context, R.color.grey), android.graphics.PorterDuff.Mode.SRC_IN)
-        ivSortAuthorDesc.setColorFilter(ContextCompat.getColor(context, R.color.grey), android.graphics.PorterDuff.Mode.SRC_IN)
-        ivSortAuthorAsc.setColorFilter(ContextCompat.getColor(context, R.color.design_default_color_on_primary), android.graphics.PorterDuff.Mode.SRC_IN)
-        ivSortRatingDesc.setColorFilter(ContextCompat.getColor(context, R.color.grey), android.graphics.PorterDuff.Mode.SRC_IN)
-        ivSortRatingAsc.setColorFilter(ContextCompat.getColor(context, R.color.grey), android.graphics.PorterDuff.Mode.SRC_IN)
-        ivSortPagesDesc.setColorFilter(ContextCompat.getColor(context, R.color.grey), android.graphics.PorterDuff.Mode.SRC_IN)
-        ivSortPagesAsc.setColorFilter(ContextCompat.getColor(context, R.color.grey), android.graphics.PorterDuff.Mode.SRC_IN)
-        ivSortDateDesc.setColorFilter(ContextCompat.getColor(context, R.color.grey), android.graphics.PorterDuff.Mode.SRC_IN)
-        ivSortDateAsc.setColorFilter(ContextCompat.getColor(context, R.color.grey), android.graphics.PorterDuff.Mode.SRC_IN)
+        ivSortTitle.setColorFilter(ContextCompat.getColor(context, R.color.grey))
+        ivSortAuthor.setColorFilter(ContextCompat.getColor(context, R.color.design_default_color_on_primary), android.graphics.PorterDuff.Mode.SRC_IN)
+        ivSortRating.setColorFilter(ContextCompat.getColor(context, R.color.grey), android.graphics.PorterDuff.Mode.SRC_IN)
+        ivSortPages.setColorFilter(ContextCompat.getColor(context, R.color.grey), android.graphics.PorterDuff.Mode.SRC_IN)
+        ivSortDate.setColorFilter(ContextCompat.getColor(context, R.color.grey), android.graphics.PorterDuff.Mode.SRC_IN)
 
         clTitle.setBackgroundResource(R.drawable.sort_background_unselected)
         clAuthor.setBackgroundResource(R.drawable.sort_background_selected)
@@ -281,20 +238,15 @@ class SortBooksDialog(context: Context, var sortBooksDialogListener: SortBooksDi
         tvSortDate.setTextColor(ContextCompat.getColor(context, R.color.grey))
 
         whatIsClicked = Constants.SORT_ORDER_AUTHOR_ASC
-        animateSortArrow()
+        ivSortAuthor.animate().rotation( 0F).setDuration(350L).start()
     }
 
     private fun ivSortRatingDescSelected() {
-        ivSortTitleDesc.setColorFilter(ContextCompat.getColor(context, R.color.grey))
-        ivSortTitleAsc.setColorFilter(ContextCompat.getColor(context, R.color.grey), android.graphics.PorterDuff.Mode.SRC_IN)
-        ivSortAuthorDesc.setColorFilter(ContextCompat.getColor(context, R.color.grey), android.graphics.PorterDuff.Mode.SRC_IN)
-        ivSortAuthorAsc.setColorFilter(ContextCompat.getColor(context, R.color.grey), android.graphics.PorterDuff.Mode.SRC_IN)
-        ivSortRatingDesc.setColorFilter(ContextCompat.getColor(context, R.color.design_default_color_on_primary), android.graphics.PorterDuff.Mode.SRC_IN)
-        ivSortRatingAsc.setColorFilter(ContextCompat.getColor(context, R.color.grey), android.graphics.PorterDuff.Mode.SRC_IN)
-        ivSortPagesDesc.setColorFilter(ContextCompat.getColor(context, R.color.grey), android.graphics.PorterDuff.Mode.SRC_IN)
-        ivSortPagesAsc.setColorFilter(ContextCompat.getColor(context, R.color.grey), android.graphics.PorterDuff.Mode.SRC_IN)
-        ivSortDateDesc.setColorFilter(ContextCompat.getColor(context, R.color.grey), android.graphics.PorterDuff.Mode.SRC_IN)
-        ivSortDateAsc.setColorFilter(ContextCompat.getColor(context, R.color.grey), android.graphics.PorterDuff.Mode.SRC_IN)
+        ivSortTitle.setColorFilter(ContextCompat.getColor(context, R.color.grey))
+        ivSortAuthor.setColorFilter(ContextCompat.getColor(context, R.color.grey), android.graphics.PorterDuff.Mode.SRC_IN)
+        ivSortRating.setColorFilter(ContextCompat.getColor(context, R.color.design_default_color_on_primary), android.graphics.PorterDuff.Mode.SRC_IN)
+        ivSortPages.setColorFilter(ContextCompat.getColor(context, R.color.grey), android.graphics.PorterDuff.Mode.SRC_IN)
+        ivSortDate.setColorFilter(ContextCompat.getColor(context, R.color.grey), android.graphics.PorterDuff.Mode.SRC_IN)
 
         clTitle.setBackgroundResource(R.drawable.sort_background_unselected)
         clAuthor.setBackgroundResource(R.drawable.sort_background_unselected)
@@ -309,20 +261,15 @@ class SortBooksDialog(context: Context, var sortBooksDialogListener: SortBooksDi
         tvSortDate.setTextColor(ContextCompat.getColor(context, R.color.grey))
 
         whatIsClicked = Constants.SORT_ORDER_RATING_DESC
-        animateSortArrow()
+        ivSortRating.animate().rotation( 180F).setDuration(350L).start()
     }
 
     private fun ivSortRatingAscSelected() {
-        ivSortTitleDesc.setColorFilter(ContextCompat.getColor(context, R.color.grey))
-        ivSortTitleAsc.setColorFilter(ContextCompat.getColor(context, R.color.grey), android.graphics.PorterDuff.Mode.SRC_IN)
-        ivSortAuthorDesc.setColorFilter(ContextCompat.getColor(context, R.color.grey), android.graphics.PorterDuff.Mode.SRC_IN)
-        ivSortAuthorAsc.setColorFilter(ContextCompat.getColor(context, R.color.grey), android.graphics.PorterDuff.Mode.SRC_IN)
-        ivSortRatingDesc.setColorFilter(ContextCompat.getColor(context, R.color.grey), android.graphics.PorterDuff.Mode.SRC_IN)
-        ivSortRatingAsc.setColorFilter(ContextCompat.getColor(context, R.color.design_default_color_on_primary), android.graphics.PorterDuff.Mode.SRC_IN)
-        ivSortPagesDesc.setColorFilter(ContextCompat.getColor(context, R.color.grey), android.graphics.PorterDuff.Mode.SRC_IN)
-        ivSortPagesAsc.setColorFilter(ContextCompat.getColor(context, R.color.grey), android.graphics.PorterDuff.Mode.SRC_IN)
-        ivSortDateDesc.setColorFilter(ContextCompat.getColor(context, R.color.grey), android.graphics.PorterDuff.Mode.SRC_IN)
-        ivSortDateAsc.setColorFilter(ContextCompat.getColor(context, R.color.grey), android.graphics.PorterDuff.Mode.SRC_IN)
+        ivSortTitle.setColorFilter(ContextCompat.getColor(context, R.color.grey))
+        ivSortAuthor.setColorFilter(ContextCompat.getColor(context, R.color.grey), android.graphics.PorterDuff.Mode.SRC_IN)
+        ivSortRating.setColorFilter(ContextCompat.getColor(context, R.color.design_default_color_on_primary), android.graphics.PorterDuff.Mode.SRC_IN)
+        ivSortPages.setColorFilter(ContextCompat.getColor(context, R.color.grey), android.graphics.PorterDuff.Mode.SRC_IN)
+        ivSortDate.setColorFilter(ContextCompat.getColor(context, R.color.grey), android.graphics.PorterDuff.Mode.SRC_IN)
 
         clTitle.setBackgroundResource(R.drawable.sort_background_unselected)
         clAuthor.setBackgroundResource(R.drawable.sort_background_unselected)
@@ -337,20 +284,15 @@ class SortBooksDialog(context: Context, var sortBooksDialogListener: SortBooksDi
         tvSortDate.setTextColor(ContextCompat.getColor(context, R.color.grey))
 
         whatIsClicked = Constants.SORT_ORDER_RATING_ASC
-        animateSortArrow()
+        ivSortRating.animate().rotation( 0F).setDuration(350L).start()
     }
 
     private fun ivSortPagesDescSelected() {
-        ivSortTitleDesc.setColorFilter(ContextCompat.getColor(context, R.color.grey))
-        ivSortTitleAsc.setColorFilter(ContextCompat.getColor(context, R.color.grey), android.graphics.PorterDuff.Mode.SRC_IN)
-        ivSortAuthorDesc.setColorFilter(ContextCompat.getColor(context, R.color.grey), android.graphics.PorterDuff.Mode.SRC_IN)
-        ivSortAuthorAsc.setColorFilter(ContextCompat.getColor(context, R.color.grey), android.graphics.PorterDuff.Mode.SRC_IN)
-        ivSortRatingDesc.setColorFilter(ContextCompat.getColor(context, R.color.grey), android.graphics.PorterDuff.Mode.SRC_IN)
-        ivSortRatingAsc.setColorFilter(ContextCompat.getColor(context, R.color.grey), android.graphics.PorterDuff.Mode.SRC_IN)
-        ivSortPagesDesc.setColorFilter(ContextCompat.getColor(context, R.color.design_default_color_on_primary), android.graphics.PorterDuff.Mode.SRC_IN)
-        ivSortPagesAsc.setColorFilter(ContextCompat.getColor(context, R.color.grey), android.graphics.PorterDuff.Mode.SRC_IN)
-        ivSortDateDesc.setColorFilter(ContextCompat.getColor(context, R.color.grey), android.graphics.PorterDuff.Mode.SRC_IN)
-        ivSortDateAsc.setColorFilter(ContextCompat.getColor(context, R.color.grey), android.graphics.PorterDuff.Mode.SRC_IN)
+        ivSortTitle.setColorFilter(ContextCompat.getColor(context, R.color.grey))
+        ivSortAuthor.setColorFilter(ContextCompat.getColor(context, R.color.grey), android.graphics.PorterDuff.Mode.SRC_IN)
+        ivSortRating.setColorFilter(ContextCompat.getColor(context, R.color.grey), android.graphics.PorterDuff.Mode.SRC_IN)
+        ivSortPages.setColorFilter(ContextCompat.getColor(context, R.color.design_default_color_on_primary), android.graphics.PorterDuff.Mode.SRC_IN)
+        ivSortDate.setColorFilter(ContextCompat.getColor(context, R.color.grey), android.graphics.PorterDuff.Mode.SRC_IN)
 
         clTitle.setBackgroundResource(R.drawable.sort_background_unselected)
         clAuthor.setBackgroundResource(R.drawable.sort_background_unselected)
@@ -365,20 +307,15 @@ class SortBooksDialog(context: Context, var sortBooksDialogListener: SortBooksDi
         tvSortDate.setTextColor(ContextCompat.getColor(context, R.color.grey))
 
         whatIsClicked = Constants.SORT_ORDER_PAGES_DESC
-        animateSortArrow()
+        ivSortPages.animate().rotation( 180F).setDuration(350L).start()
     }
 
     private fun ivSortPagesAscSelected() {
-        ivSortTitleDesc.setColorFilter(ContextCompat.getColor(context, R.color.grey))
-        ivSortTitleAsc.setColorFilter(ContextCompat.getColor(context, R.color.grey), android.graphics.PorterDuff.Mode.SRC_IN)
-        ivSortAuthorDesc.setColorFilter(ContextCompat.getColor(context, R.color.grey), android.graphics.PorterDuff.Mode.SRC_IN)
-        ivSortAuthorAsc.setColorFilter(ContextCompat.getColor(context, R.color.grey), android.graphics.PorterDuff.Mode.SRC_IN)
-        ivSortRatingDesc.setColorFilter(ContextCompat.getColor(context, R.color.grey), android.graphics.PorterDuff.Mode.SRC_IN)
-        ivSortRatingAsc.setColorFilter(ContextCompat.getColor(context, R.color.grey), android.graphics.PorterDuff.Mode.SRC_IN)
-        ivSortPagesDesc.setColorFilter(ContextCompat.getColor(context, R.color.grey), android.graphics.PorterDuff.Mode.SRC_IN)
-        ivSortPagesAsc.setColorFilter(ContextCompat.getColor(context, R.color.design_default_color_on_primary), android.graphics.PorterDuff.Mode.SRC_IN)
-        ivSortDateDesc.setColorFilter(ContextCompat.getColor(context, R.color.grey), android.graphics.PorterDuff.Mode.SRC_IN)
-        ivSortDateAsc.setColorFilter(ContextCompat.getColor(context, R.color.grey), android.graphics.PorterDuff.Mode.SRC_IN)
+        ivSortTitle.setColorFilter(ContextCompat.getColor(context, R.color.grey))
+        ivSortAuthor.setColorFilter(ContextCompat.getColor(context, R.color.grey), android.graphics.PorterDuff.Mode.SRC_IN)
+        ivSortRating.setColorFilter(ContextCompat.getColor(context, R.color.grey), android.graphics.PorterDuff.Mode.SRC_IN)
+        ivSortPages.setColorFilter(ContextCompat.getColor(context, R.color.design_default_color_on_primary), android.graphics.PorterDuff.Mode.SRC_IN)
+        ivSortDate.setColorFilter(ContextCompat.getColor(context, R.color.grey), android.graphics.PorterDuff.Mode.SRC_IN)
 
         clTitle.setBackgroundResource(R.drawable.sort_background_unselected)
         clAuthor.setBackgroundResource(R.drawable.sort_background_unselected)
@@ -393,20 +330,15 @@ class SortBooksDialog(context: Context, var sortBooksDialogListener: SortBooksDi
         tvSortDate.setTextColor(ContextCompat.getColor(context, R.color.grey))
 
         whatIsClicked = Constants.SORT_ORDER_PAGES_ASC
-        animateSortArrow()
+        ivSortPages.animate().rotation( 0F).setDuration(350L).start()
     }
 
     private fun ivSortDateDescSelected() {
-        ivSortTitleDesc.setColorFilter(ContextCompat.getColor(context, R.color.grey))
-        ivSortTitleAsc.setColorFilter(ContextCompat.getColor(context, R.color.grey), android.graphics.PorterDuff.Mode.SRC_IN)
-        ivSortAuthorDesc.setColorFilter(ContextCompat.getColor(context, R.color.grey), android.graphics.PorterDuff.Mode.SRC_IN)
-        ivSortAuthorAsc.setColorFilter(ContextCompat.getColor(context, R.color.grey), android.graphics.PorterDuff.Mode.SRC_IN)
-        ivSortRatingDesc.setColorFilter(ContextCompat.getColor(context, R.color.grey), android.graphics.PorterDuff.Mode.SRC_IN)
-        ivSortRatingAsc.setColorFilter(ContextCompat.getColor(context, R.color.grey), android.graphics.PorterDuff.Mode.SRC_IN)
-        ivSortPagesDesc.setColorFilter(ContextCompat.getColor(context, R.color.grey), android.graphics.PorterDuff.Mode.SRC_IN)
-        ivSortPagesAsc.setColorFilter(ContextCompat.getColor(context, R.color.grey), android.graphics.PorterDuff.Mode.SRC_IN)
-        ivSortDateDesc.setColorFilter(ContextCompat.getColor(context, R.color.design_default_color_on_primary), android.graphics.PorterDuff.Mode.SRC_IN)
-        ivSortDateAsc.setColorFilter(ContextCompat.getColor(context, R.color.grey), android.graphics.PorterDuff.Mode.SRC_IN)
+        ivSortTitle.setColorFilter(ContextCompat.getColor(context, R.color.grey))
+        ivSortAuthor.setColorFilter(ContextCompat.getColor(context, R.color.grey), android.graphics.PorterDuff.Mode.SRC_IN)
+        ivSortRating.setColorFilter(ContextCompat.getColor(context, R.color.grey), android.graphics.PorterDuff.Mode.SRC_IN)
+        ivSortPages.setColorFilter(ContextCompat.getColor(context, R.color.grey), android.graphics.PorterDuff.Mode.SRC_IN)
+        ivSortDate.setColorFilter(ContextCompat.getColor(context, R.color.design_default_color_on_primary), android.graphics.PorterDuff.Mode.SRC_IN)
 
         clTitle.setBackgroundResource(R.drawable.sort_background_unselected)
         clAuthor.setBackgroundResource(R.drawable.sort_background_unselected)
@@ -421,20 +353,15 @@ class SortBooksDialog(context: Context, var sortBooksDialogListener: SortBooksDi
         tvSortDate.setTextColor(ContextCompat.getColor(context, R.color.design_default_color_on_primary))
 
         whatIsClicked = Constants.SORT_ORDER_DATE_DESC
-        animateSortArrow()
+        ivSortDate.animate().rotation( 180F).setDuration(350L).start()
     }
 
     private fun ivSortDateAscSelected() {
-        ivSortTitleDesc.setColorFilter(ContextCompat.getColor(context, R.color.grey))
-        ivSortTitleAsc.setColorFilter(ContextCompat.getColor(context, R.color.grey), android.graphics.PorterDuff.Mode.SRC_IN)
-        ivSortAuthorDesc.setColorFilter(ContextCompat.getColor(context, R.color.grey), android.graphics.PorterDuff.Mode.SRC_IN)
-        ivSortAuthorAsc.setColorFilter(ContextCompat.getColor(context, R.color.grey), android.graphics.PorterDuff.Mode.SRC_IN)
-        ivSortRatingDesc.setColorFilter(ContextCompat.getColor(context, R.color.grey), android.graphics.PorterDuff.Mode.SRC_IN)
-        ivSortRatingAsc.setColorFilter(ContextCompat.getColor(context, R.color.grey), android.graphics.PorterDuff.Mode.SRC_IN)
-        ivSortPagesDesc.setColorFilter(ContextCompat.getColor(context, R.color.grey), android.graphics.PorterDuff.Mode.SRC_IN)
-        ivSortPagesAsc.setColorFilter(ContextCompat.getColor(context, R.color.grey), android.graphics.PorterDuff.Mode.SRC_IN)
-        ivSortDateDesc.setColorFilter(ContextCompat.getColor(context, R.color.grey), android.graphics.PorterDuff.Mode.SRC_IN)
-        ivSortDateAsc.setColorFilter(ContextCompat.getColor(context, R.color.design_default_color_on_primary), android.graphics.PorterDuff.Mode.SRC_IN)
+        ivSortTitle.setColorFilter(ContextCompat.getColor(context, R.color.grey))
+        ivSortAuthor.setColorFilter(ContextCompat.getColor(context, R.color.grey), android.graphics.PorterDuff.Mode.SRC_IN)
+        ivSortRating.setColorFilter(ContextCompat.getColor(context, R.color.grey), android.graphics.PorterDuff.Mode.SRC_IN)
+        ivSortPages.setColorFilter(ContextCompat.getColor(context, R.color.grey), android.graphics.PorterDuff.Mode.SRC_IN)
+        ivSortDate.setColorFilter(ContextCompat.getColor(context, R.color.design_default_color_on_primary), android.graphics.PorterDuff.Mode.SRC_IN)
 
         clTitle.setBackgroundResource(R.drawable.sort_background_unselected)
         clAuthor.setBackgroundResource(R.drawable.sort_background_unselected)
@@ -449,92 +376,7 @@ class SortBooksDialog(context: Context, var sortBooksDialogListener: SortBooksDi
         tvSortDate.setTextColor(ContextCompat.getColor(context, R.color.design_default_color_on_primary))
 
         whatIsClicked = Constants.SORT_ORDER_DATE_ASC
-        animateSortArrow()
-    }
-
-    private fun animateSortArrow() {
-        when(whatIsClicked){
-            Constants.SORT_ORDER_TITLE_DESC -> {
-                if(ivSortTitleDesc.getRotation() < 180F){
-                    ivSortTitleDesc.animate().rotation( 360F).start()
-                }
-                else {
-                    ivSortTitleDesc.animate().rotation( 0F).start()
-                }
-            }
-            Constants.SORT_ORDER_TITLE_ASC -> {
-                if(ivSortTitleAsc.getRotation() < 180F){
-                    ivSortTitleAsc.animate().rotation( 360F).start()
-                }
-                else {
-                    ivSortTitleAsc.animate().rotation( 0F).start()
-                }
-            }
-            Constants.SORT_ORDER_AUTHOR_DESC -> {
-                if(ivSortAuthorDesc.getRotation() < 180F){
-                    ivSortAuthorDesc.animate().rotation( 360F).start()
-                }
-                else {
-                    ivSortAuthorDesc.animate().rotation( 0F).start()
-                }
-            }
-            Constants.SORT_ORDER_AUTHOR_ASC -> {
-                if(ivSortAuthorAsc.getRotation() < 180F){
-                    ivSortAuthorAsc.animate().rotation( 360F).start()
-                }
-                else {
-                    ivSortAuthorAsc.animate().rotation( 0F).start()
-                }
-            }
-            Constants.SORT_ORDER_RATING_DESC -> {
-                if(ivSortRatingDesc.getRotation() < 180F){
-                    ivSortRatingDesc.animate().rotation( 360F).start()
-                }
-                else {
-                    ivSortRatingDesc.animate().rotation( 0F).start()
-                }
-            }
-            Constants.SORT_ORDER_RATING_ASC -> {
-                if(ivSortRatingAsc.getRotation() < 180F){
-                    ivSortRatingAsc.animate().rotation( 360F).start()
-                }
-                else {
-                    ivSortRatingAsc.animate().rotation( 0F).start()
-                }
-            }
-            Constants.SORT_ORDER_PAGES_DESC -> {
-                if(ivSortPagesDesc.getRotation() < 180F){
-                    ivSortPagesDesc.animate().rotation( 360F).start()
-                }
-                else {
-                    ivSortPagesDesc.animate().rotation( 0F).start()
-                }
-            }
-            Constants.SORT_ORDER_PAGES_ASC -> {
-                if(ivSortPagesAsc.getRotation() < 180F){
-                    ivSortPagesAsc.animate().rotation( 360F).start()
-                }
-                else {
-                    ivSortPagesAsc.animate().rotation( 0F).start()
-                }
-            }
-            Constants.SORT_ORDER_DATE_DESC -> {
-                if(ivSortDateDesc.getRotation() < 180F){
-                    ivSortDateDesc.animate().rotation( 360F).start()
-                }
-                else {
-                    ivSortDateDesc.animate().rotation( 0F).start()
-                }
-            }
-            Constants.SORT_ORDER_DATE_ASC -> {
-                if(ivSortDateAsc.getRotation() < 180F){
-                    ivSortDateAsc.animate().rotation( 360F).start()
-                }
-                else {
-                    ivSortDateAsc.animate().rotation( 0F).start()
-                }
-            }
-        }
+        ivSortDate.animate().rotation( 0F).setDuration(350L).start()
     }
 
     fun getAccentColor(context: Context): Int {

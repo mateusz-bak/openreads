@@ -29,9 +29,9 @@
         android:id="@+id/clTitle"
         android:layout_marginTop="8dp"
         android:background="@drawable/sort_background_unselected"
-        android:paddingStart="20dp"
+        android:paddingStart="30dp"
         android:paddingTop="2dp"
-        android:paddingEnd="20dp"
+        android:paddingEnd="30dp"
         android:paddingBottom="2dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
@@ -46,41 +46,30 @@
             android:text="@string/tvSortTitle"
             android:textColor="@color/grey"
             android:textSize="18sp"
+            android:layout_marginEnd="30dp"
             app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/ivSortTitle"
+            app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
         <ImageView
-            android:id="@+id/ivSortTitleAsc"
+            android:id="@+id/ivSortTitle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="4dp"
             android:clickable="true"
             android:focusable="true"
             android:padding="4dp"
             android:scaleX="2"
             android:scaleY="2"
             app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toEndOf="@+id/tvSortTitle"
             app:layout_constraintTop_toTopOf="parent"
             app:srcCompat="@drawable/ic_baseline_keyboard_arrow_up_24"
             app:tint="@color/grey" />
 
-        <ImageView
-            android:id="@+id/ivSortTitleDesc"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="12dp"
-            android:clickable="true"
-            android:focusable="true"
-            android:padding="4dp"
-            android:scaleX="2"
-            android:scaleY="2"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/ivSortTitleAsc"
-            app:layout_constraintTop_toTopOf="parent"
-            app:srcCompat="@drawable/ic_baseline_keyboard_arrow_down_24"
-            app:tint="@color/grey" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -89,9 +78,9 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="4dp"
         android:background="@drawable/sort_background_unselected"
-        android:paddingStart="20dp"
+        android:paddingStart="30dp"
         android:paddingTop="2dp"
-        android:paddingEnd="20dp"
+        android:paddingEnd="30dp"
         android:paddingBottom="2dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
@@ -106,41 +95,30 @@
             android:text="@string/tvSortAuthor"
             android:textColor="@color/grey"
             android:textSize="18sp"
+            android:layout_marginEnd="30dp"
             app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/ivSortAuthor"
+            app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
         <ImageView
-            android:id="@+id/ivSortAuthorAsc"
+            android:id="@+id/ivSortAuthor"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="4dp"
             android:clickable="true"
             android:focusable="true"
             android:padding="4dp"
             android:scaleX="2"
             android:scaleY="2"
             app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toEndOf="@+id/tvSortAuthor"
             app:layout_constraintTop_toTopOf="parent"
             app:srcCompat="@drawable/ic_baseline_keyboard_arrow_up_24"
             app:tint="@color/grey" />
 
-        <ImageView
-            android:id="@+id/ivSortAuthorDesc"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="12dp"
-            android:clickable="true"
-            android:focusable="true"
-            android:padding="4dp"
-            android:scaleX="2"
-            android:scaleY="2"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/ivSortAuthorAsc"
-            app:layout_constraintTop_toTopOf="parent"
-            app:srcCompat="@drawable/ic_baseline_keyboard_arrow_down_24"
-            app:tint="@color/grey" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -149,9 +127,9 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="4dp"
         android:background="@drawable/sort_background_unselected"
-        android:paddingStart="20dp"
+        android:paddingStart="30dp"
         android:paddingTop="2dp"
-        android:paddingEnd="20dp"
+        android:paddingEnd="30dp"
         android:paddingBottom="2dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
@@ -166,41 +144,30 @@
             android:text="@string/tvSortRating"
             android:textColor="@color/grey"
             android:textSize="18sp"
+            android:layout_marginEnd="30dp"
             app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/ivSortRating"
+            app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
         <ImageView
-            android:id="@+id/ivSortRatingAsc"
+            android:id="@+id/ivSortRating"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="4dp"
             android:clickable="true"
             android:focusable="true"
             android:padding="4dp"
             android:scaleX="2"
             android:scaleY="2"
             app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toEndOf="@+id/tvSortRating"
             app:layout_constraintTop_toTopOf="parent"
             app:srcCompat="@drawable/ic_baseline_keyboard_arrow_up_24"
             app:tint="@color/grey" />
 
-        <ImageView
-            android:id="@+id/ivSortRatingDesc"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="12dp"
-            android:clickable="true"
-            android:focusable="true"
-            android:padding="4dp"
-            android:scaleX="2"
-            android:scaleY="2"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/ivSortRatingAsc"
-            app:layout_constraintTop_toTopOf="parent"
-            app:srcCompat="@drawable/ic_baseline_keyboard_arrow_down_24"
-            app:tint="@color/grey" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -209,9 +176,9 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="4dp"
         android:background="@drawable/sort_background_unselected"
-        android:paddingStart="20dp"
+        android:paddingStart="30dp"
         android:paddingTop="2dp"
-        android:paddingEnd="20dp"
+        android:paddingEnd="30dp"
         android:paddingBottom="2dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
@@ -226,41 +193,30 @@
             android:text="@string/tvSortPages"
             android:textColor="@color/grey"
             android:textSize="18sp"
+            android:layout_marginEnd="30dp"
             app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/ivSortPages"
+            app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
         <ImageView
-            android:id="@+id/ivSortPagesAsc"
+            android:id="@+id/ivSortPages"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="4dp"
             android:clickable="true"
             android:focusable="true"
             android:padding="4dp"
             android:scaleX="2"
             android:scaleY="2"
             app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toEndOf="@+id/tvSortPages"
             app:layout_constraintTop_toTopOf="parent"
             app:srcCompat="@drawable/ic_baseline_keyboard_arrow_up_24"
             app:tint="@color/grey" />
 
-        <ImageView
-            android:id="@+id/ivSortPagesDesc"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="12dp"
-            android:clickable="true"
-            android:focusable="true"
-            android:padding="4dp"
-            android:scaleX="2"
-            android:scaleY="2"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/ivSortPagesAsc"
-            app:layout_constraintTop_toTopOf="parent"
-            app:srcCompat="@drawable/ic_baseline_keyboard_arrow_down_24"
-            app:tint="@color/grey" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -269,9 +225,9 @@
         android:id="@+id/clDate"
         android:layout_marginTop="4dp"
         android:background="@drawable/sort_background_unselected"
-        android:paddingStart="20dp"
+        android:paddingStart="30dp"
         android:paddingTop="2dp"
-        android:paddingEnd="20dp"
+        android:paddingEnd="30dp"
         android:paddingBottom="2dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
@@ -286,41 +242,30 @@
             android:text="@string/tvSortDate"
             android:textColor="@color/grey"
             android:textSize="18sp"
+            android:layout_marginEnd="30dp"
             app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/ivSortDate"
+            app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
         <ImageView
-            android:id="@+id/ivSortDateAsc"
+            android:id="@+id/ivSortDate"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="4dp"
             android:clickable="true"
             android:focusable="true"
             android:padding="4dp"
             android:scaleX="2"
             android:scaleY="2"
             app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toEndOf="@+id/tvSortDate"
             app:layout_constraintTop_toTopOf="parent"
             app:srcCompat="@drawable/ic_baseline_keyboard_arrow_up_24"
             app:tint="@color/grey" />
 
-        <ImageView
-            android:id="@+id/ivSortDateDesc"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="12dp"
-            android:clickable="true"
-            android:focusable="true"
-            android:padding="4dp"
-            android:scaleX="2"
-            android:scaleY="2"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/ivSortDateAsc"
-            app:layout_constraintTop_toTopOf="parent"
-            app:srcCompat="@drawable/ic_baseline_keyboard_arrow_down_24"
-            app:tint="@color/grey" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <Button
