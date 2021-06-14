@@ -56,8 +56,7 @@
     <string name="hintBookTitle" translatable="false">booktitle</string>
     <string name="hintBookAuthor" translatable="false">bookauthor</string>
     <string name="hintSearch" translatable="false">booksearch</string>
-
-nomn    <string name="app_version" translatable="false">v1.2.0</string>
+    <string name="app_version" translatable="false">v1.2.0</string>
     <string name="notYetImplemented">Not yet implemented</string>
     <string name="dismiss">Dismiss</string>
     <string name="bookDeleted">Book deleted</string>
@@ -123,5 +122,12 @@ nomn    <string name="app_version" translatable="false">v1.2.0</string>
     <string name="tvSortDate">Date</string>
     <string name="tvNumberOfPages" translatable="false">101 pages</string>
     <string name="tvDateFinished" translatable="false">13 Jun 2021</string>
+    <string name="setTitleOnUpdateAvailable">New update!</string>
+    <string name="setContentOnUpdateAvailable">"Newer version of the Books Tracker app is available.\n\nClick \"update\"  to go to the downloading page."</string>
+    <string name="setButtonUpdate">Update</string>
+    <string name="setButtonDismiss">Dismiss</string>
+    <string name="setButtonDoNotShowAgain">Ignore</string>
+    <string name="setContentOnUpdateNotAvailable">You\'ve got the latest version available of Books Tracker app!</string>
+    <string name="setTitleOnUpdateNotAvailable">No updates available</string>
 
 </resources>

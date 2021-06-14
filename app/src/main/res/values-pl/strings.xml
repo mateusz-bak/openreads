@@ -97,4 +97,11 @@
     <string name="btnAdderSaveFinishDate">Ustaw</string>
     <string name="not_set">Nie ustawiono</string>
     <string name="tvSortDate">Data</string>
+    <string name="setTitleOnUpdateAvailable">Aktualizacja!</string>
+    <string name="setContentOnUpdateAvailable">"Nowsza wersja aplikacji Books Tracker jest dostępna.\n\nKliknij \"aktualizuj\", żeby przejść na stronę pobierania."</string>
+    <string name="setButtonUpdate">Aktualizuj</string>
+    <string name="setButtonDismiss">Później</string>
+    <string name="setButtonDoNotShowAgain">Ignoruj</string>
+    <string name="setContentOnUpdateNotAvailable">Masz zainstalowaną najnowszą wersję aplikacji Books Tracker!</string>
+    <string name="setTitleOnUpdateNotAvailable">Brak dostępnych aktualizacji</string>
 </resources>
