@@ -43,6 +43,7 @@
         </Preference>
 
         <Preference
+            android:key="KEY_CHECK_FOR_UPDATES"
             android:title="@string/app_version_title"
             android:summary="@string/app_version">
         </Preference>

@@ -15,8 +15,8 @@ android {
         applicationId "software.mdev.bookstracker"
         minSdkVersion 24
         targetSdkVersion 30
-        versionCode 1
-        versionName "1.2.0"
+        versionCode 2
+        versionName "1.2.1"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
@@ -75,4 +75,7 @@ dependencies {
 
     // PREFERENCES
     implementation "androidx.preference:preference-ktx:1.1.1"
+
+    // https://github.com/javiersantos/AppUpdater
+    implementation 'com.github.javiersantos:AppUpdater:2.7'
 }

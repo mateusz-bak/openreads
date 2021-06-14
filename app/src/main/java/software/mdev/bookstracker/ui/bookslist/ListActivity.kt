@@ -8,7 +8,13 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.ui.setupWithNavController
+import com.github.javiersantos.appupdater.AppUpdater
+import com.github.javiersantos.appupdater.enums.Display
+import com.github.javiersantos.appupdater.enums.UpdateFrom
 import kotlinx.android.synthetic.main.activity_list.*
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 import software.mdev.bookstracker.R
 import software.mdev.bookstracker.data.db.BooksDatabase
 import software.mdev.bookstracker.data.repositories.BooksRepository
@@ -29,7 +35,7 @@ class ListActivity : AppCompatActivity() {
         setAppTheme()
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_list)
-
+        checkForAppUpdate(this)
         bottomNavigationView.setupWithNavController(booksNavHostFragment.findNavController())
 
         booksNavHostFragment.findNavController()
@@ -68,4 +74,18 @@ class ListActivity : AppCompatActivity() {
         }
     }
 
+    fun checkForAppUpdate(context: Context) = CoroutineScope(Dispatchers.Main).launch {
+        var appUpdater = AppUpdater(context)
+        appUpdater
+            .setTitleOnUpdateAvailable(getString(R.string.setTitleOnUpdateAvailable))
+            .setContentOnUpdateAvailable(getString(R.string.setContentOnUpdateAvailable))
+            .setButtonUpdate(getString(R.string.setButtonUpdate))
+            .setButtonDismiss(getString(R.string.setButtonDismiss))
+            .setButtonDoNotShowAgain(getString(R.string.setButtonDoNotShowAgain))
+            .setUpdateFrom(UpdateFrom.GITHUB)
+            .setGitHubUserAndRepo(Constants.GITHUB_USER, Constants.GITHUB_REPO)
+            .setDisplay(Display.DIALOG)
+            .showAppUpdated(false)
+            .start()
+    }
 }

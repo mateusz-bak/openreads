@@ -40,6 +40,7 @@ object Constants {
     const val SHARED_PREFERENCES_KEY_ACCENT = "KEY_ACCENT"
     const val SHARED_PREFERENCES_KEY_RECOMMENDATIONS = "KEY_RECOMMENDATIONS"
     const val SHARED_PREFERENCES_REFRESHED = "refreshed"
+    const val KEY_CHECK_FOR_UPDATES = "KEY_CHECK_FOR_UPDATES"
 
     const val EMPTY_STRING = ""
 
@@ -55,4 +56,7 @@ object Constants {
     const val THEME_ACCENT_YELLOW_500 = "accent_yellow"
 
     const val THEME_ACCENT_DEFAULT = THEME_ACCENT_GREEN_500
+
+    const val GITHUB_USER = "mateusz-bak"
+    const val GITHUB_REPO = "books-tracker-android"
 }
