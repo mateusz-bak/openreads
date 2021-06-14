@@ -1,7 +1,7 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
     <!-- Base application theme. -->
-    <style name="Theme.Mdev.Bookstracker.CustomTheme.Indigo" parent="Theme.Mdev.Bookstracker">
+    <style name="Theme.Mdev.Bookstracker.CustomTheme.Red" parent="Theme.Mdev.Bookstracker">
         <!-- Primary brand color. -->
-        <item name="colorPrimary">@color/indigo_500</item>
+        <item name="colorPrimary">@color/red_800</item>
     </style>
 </resources>

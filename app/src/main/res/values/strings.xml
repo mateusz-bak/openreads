@@ -57,7 +57,7 @@
     <string name="hintBookAuthor" translatable="false">bookauthor</string>
     <string name="hintSearch" translatable="false">booksearch</string>
 
-nomn    <string name="app_version" translatable="false">v1.1.0</string>
+nomn    <string name="app_version" translatable="false">v1.2.0</string>
     <string name="notYetImplemented">Not yet implemented</string>
     <string name="dismiss">Dismiss</string>
     <string name="bookDeleted">Book deleted</string>
@@ -85,11 +85,11 @@ nomn    <string name="app_version" translatable="false">v1.1.0</string>
     <string name="daily_book_recommendations_on">Send daily notification</string>
     <string name="daily_book_recommendations_off">Don\'t send daily notification</string>
     <string name="changes_after_app_restart">Changes will be applied after app restart!</string>
-    <string name="accent_amber">Amber</string>
-    <string name="accent_blue">Blue</string>
+    <string name="accent_light_green">Light green</string>
+    <string name="accent_red">Red</string>
     <string name="accent_cyan">Cyan</string>
     <string name="accent_green">Green</string>
-    <string name="accent_indigo">Indigo</string>
+    <string name="accent_brown">Brown</string>
     <string name="accent_lime">Lime</string>
     <string name="accent_pink">Pink</string>
     <string name="accent_purple">Purple</string>
@@ -100,5 +100,28 @@ nomn    <string name="app_version" translatable="false">v1.1.0</string>
     <string name="first_time_toggle_off">Won\'t be shown after app restart</string>
     <string name="first_time_toggle_on">Will be shown after app restart</string>
     <string name="rate_this_book">Rate this book:</string>
+    <string name="tv_more_about_book">More</string>
+    <string name="tv_book_pages_title">Pages</string>
+    <string name="tv_date_finished" translatable="false">DD/MM/RRR</string>
+    <string name="tv_book_pages">Pages number</string>
+    <string name="tv_date_finished_title">Date finished</string>
+    <string name="hint_pages_number">Pages</string>
+    <string name="autofill_hint_pages_number" translatable="false">bookPages</string>
+    <string name="sbNotAValidNumber">Not a valid number!</string>
+    <string name="sbWarningPagesMissing">Fill in number of pages!</string>
+    <string name="sbWarningPages0">Number of pages cannot be 0!</string>
+    <string name="tvSortPages">Pages</string>
+    <string name="pages">pages</string>
+    <string name="space" translatable="false">" "</string>
+    <string name="tvBookFinishDateTitle">"Date finished:\n%s"</string>
+    <string name="tvBookFinishDate" translatable="false">dd/mm/rrrr</string>
+    <string name="hint_date_finished">Finish date</string>
+    <string name="set_finish_date_title">Set finish date</string>
+    <string name="sbWarningMissingFinishDate">Choose the finish date!</string>
+    <string name="btnAdderSaveFinishDate">Set</string>
+    <string name="not_set">Not set</string>
+    <string name="tvSortDate">Date</string>
+    <string name="tvNumberOfPages" translatable="false">101 pages</string>
+    <string name="tvDateFinished" translatable="false">13 Jun 2021</string>
 
 </resources>

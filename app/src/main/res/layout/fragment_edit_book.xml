@@ -29,16 +29,14 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="bottom|end"
-        android:layout_marginBottom="16dp"
         android:backgroundTint="@android:color/holo_red_dark"
         android:clickable="true"
         android:focusable="true"
         app:borderWidth="0dp"
-        android:scaleX="0.75"
-        android:scaleY="0.75"
-        android:layout_marginEnd="16dp"
-        app:layout_constraintBottom_toTopOf="@id/fabSaveEditedBook"
-        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginStart="16dp"
+        android:layout_marginBottom="16dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
         app:srcCompat="@drawable/ic_baseline_delete_24"
         app:tint="?colorOnPrimary" />
 
@@ -49,19 +47,17 @@
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:padding="24dp">
 
             <EditText
                 android:id="@+id/etEditedBookTitle"
-                android:autofillHints="@string/hintBookTitle"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:autofillHints="@string/hintBookTitle"
                 android:focusable="true"
                 android:inputType="textCapSentences"
-                android:paddingStart="24dp"
-                android:paddingEnd="24dp"
                 android:text="@string/etEditedBookTitle"
-                android:textAlignment="center"
                 android:textColor="?colorOnSecondary"
                 android:textSize="24sp"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -71,16 +67,15 @@
 
             <EditText
                 android:id="@+id/etEditedBookAuthor"
-                android:autofillHints="@string/hintBookAuthor"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
-                android:text="@string/etEditedBookAuthor"
-                android:textAlignment="center"
-                android:textColor="@android:color/darker_gray"
-                android:textSize="14sp"
+                android:layout_marginTop="12dp"
+                android:autofillHints="@string/hintBookAuthor"
                 android:focusable="true"
                 android:inputType="textCapWords"
+                android:text="@string/etEditedBookAuthor"
+                android:textColor="@android:color/darker_gray"
+                android:textSize="14sp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/etEditedBookTitle" />
@@ -90,8 +85,8 @@
                 style="?android:attr/ratingBarStyle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:stepSize="1"
                 android:layout_marginTop="32dp"
+                android:stepSize="1"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/ivEditorBookStatusRead" />
@@ -118,29 +113,29 @@
 
             <ImageView
                 android:id="@+id/ivEditorBookStatusRead"
-                android:contentDescription="@string/ivBookStatusSetRead"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:clickable="true"
-                android:focusable="true"
-                android:scaleX="1.5"
-                android:scaleY="1.5"
                 android:layout_marginTop="32dp"
+                android:clickable="true"
+                android:contentDescription="@string/ivBookStatusSetRead"
+                android:focusable="true"
+                android:scaleX="2"
+                android:scaleY="2"
                 app:layout_constraintEnd_toStartOf="@+id/ivEditorBookStatusInProgress"
                 app:layout_constraintHorizontal_bias="0.5"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/etEditedBookAuthor"
+                app:layout_constraintTop_toBottomOf="@+id/etEditedPagesNumber"
                 app:srcCompat="@drawable/ic_baseline_done_24" />
 
             <ImageView
                 android:id="@+id/ivEditorBookStatusInProgress"
-                android:contentDescription="@string/ivBookStatusSetInProgress"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:scaleX="1.5"
-                android:scaleY="1.5"
                 android:clickable="true"
+                android:contentDescription="@string/ivBookStatusSetInProgress"
                 android:focusable="true"
+                android:scaleX="2"
+                android:scaleY="2"
                 app:layout_constraintBottom_toBottomOf="@+id/ivEditorBookStatusRead"
                 app:layout_constraintEnd_toStartOf="@+id/ivEditorBookStatusToRead"
                 app:layout_constraintHorizontal_bias="0.5"
@@ -150,13 +145,13 @@
 
             <ImageView
                 android:id="@+id/ivEditorBookStatusToRead"
-                android:contentDescription="@string/ivBookStatusSetToRead"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:scaleX="1.5"
-                android:scaleY="1.5"
                 android:clickable="true"
+                android:contentDescription="@string/ivBookStatusSetToRead"
                 android:focusable="true"
+                android:scaleX="2"
+                android:scaleY="2"
                 app:layout_constraintBottom_toBottomOf="@+id/ivEditorBookStatusRead"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.5"
@@ -168,9 +163,9 @@
                 android:id="@+id/tvFinished"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
                 android:text="@string/finished"
                 android:textSize="12sp"
-                android:layout_marginTop="4dp"
                 app:layout_constraintEnd_toEndOf="@+id/ivEditorBookStatusRead"
                 app:layout_constraintStart_toStartOf="@+id/ivEditorBookStatusRead"
                 app:layout_constraintTop_toBottomOf="@+id/ivEditorBookStatusRead" />
@@ -181,10 +176,10 @@
                 android:layout_height="wrap_content"
                 android:text="@string/inProgress"
                 android:textSize="12sp"
-                android:layout_marginTop="4dp"
+                app:layout_constraintBottom_toBottomOf="@+id/tvFinished"
                 app:layout_constraintEnd_toEndOf="@+id/ivEditorBookStatusInProgress"
                 app:layout_constraintStart_toStartOf="@+id/ivEditorBookStatusInProgress"
-                app:layout_constraintTop_toBottomOf="@+id/ivEditorBookStatusInProgress" />
+                app:layout_constraintTop_toTopOf="@+id/tvFinished" />
 
             <TextView
                 android:id="@+id/tvToRead"
@@ -192,11 +187,58 @@
                 android:layout_height="wrap_content"
                 android:text="@string/toRead"
                 android:textSize="12sp"
-                android:layout_marginTop="4dp"
+                app:layout_constraintBottom_toBottomOf="@+id/tvInProgress"
                 app:layout_constraintEnd_toEndOf="@+id/ivEditorBookStatusToRead"
                 app:layout_constraintStart_toStartOf="@+id/ivEditorBookStatusToRead"
-                app:layout_constraintTop_toBottomOf="@+id/ivEditorBookStatusToRead" />
+                app:layout_constraintTop_toTopOf="@+id/tvInProgress" />
 
+            <EditText
+                android:id="@+id/etEditedPagesNumber"
+                android:layout_width="75dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="12dp"
+                android:autofillHints="@string/autofill_hint_pages_number"
+                android:hint="@string/hint_pages_number"
+                android:inputType="number"
+                android:maxLength="10"
+                android:textColor="?colorOnSecondary"
+                android:textSize="14sp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/etEditedBookAuthor"
+                tools:ignore="TextViewEdits" />
+
+            <Button
+                android:id="@+id/btnEditFinishDate"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/hint_date_finished"
+                android:layout_marginEnd="4dp"
+                app:layout_constraintBottom_toBottomOf="@+id/etEditedPagesNumber"
+                app:layout_constraintEnd_toEndOf="@+id/etEditedBookAuthor" />
+
+            <DatePicker
+                android:id="@+id/dpEditBookFinishDate"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="12dp"
+                android:calendarViewShown="false"
+                android:datePickerMode="calendar"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/guideline4" />
+
+            <Button
+                android:id="@+id/btnEditorSaveFinishDate"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:backgroundTint="?colorPrimary"
+                android:text="@string/btnAdderSaveFinishDate"
+                app:layout_constraintBottom_toTopOf="@+id/guideline2"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/dpEditBookFinishDate" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
     </ScrollView>

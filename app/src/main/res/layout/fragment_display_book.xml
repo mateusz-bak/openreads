@@ -4,20 +4,20 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/frDisplayBook"
     android:layout_width="match_parent"
-    android:layout_height="match_parent" >
+    android:layout_height="match_parent">
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/fabEditBook"
-        android:contentDescription="@string/fabEditBook"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="bottom|end"
+        android:layout_marginEnd="16dp"
+        android:layout_marginBottom="70dp"
         android:backgroundTint="?colorPrimary"
         android:clickable="true"
+        android:contentDescription="@string/fabEditBook"
         android:focusable="true"
         app:borderWidth="0dp"
-        android:layout_marginEnd="16dp"
-        android:layout_marginBottom="16dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:srcCompat="@drawable/ic_baseline_edit_24"
@@ -26,7 +26,7 @@
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:fillViewport="true" >
+        android:fillViewport="true">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
@@ -64,7 +64,7 @@
                 style="?android:attr/ratingBarStyle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
+                android:layout_marginTop="24dp"
                 android:isIndicator="true"
                 android:stepSize="1"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -96,18 +96,18 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="60dp"
+                android:layout_marginEnd="16dp"
                 android:text="@string/tvBookStatus"
                 android:textSize="12sp"
-                android:layout_marginEnd="16dp"
                 app:layout_constraintEnd_toStartOf="@+id/guideline3"
                 app:layout_constraintTop_toBottomOf="@+id/tvBookAuthor" />
 
             <ImageView
                 android:id="@+id/ivBookStatusRead"
-                android:contentDescription="@string/ivBookStatusRead"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="32dp"
+                android:contentDescription="@string/ivBookStatusRead"
                 app:layout_constraintBottom_toBottomOf="@+id/tvBookStatus"
                 app:layout_constraintStart_toStartOf="@+id/guideline3"
                 app:layout_constraintTop_toTopOf="@+id/tvBookStatus"
@@ -116,10 +116,10 @@
 
             <ImageView
                 android:id="@+id/ivBookStatusInProgress"
-                android:contentDescription="@string/ivBookStatusInProgress"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="32dp"
+                android:contentDescription="@string/ivBookStatusInProgress"
                 app:layout_constraintBottom_toBottomOf="@+id/tvBookStatus"
                 app:layout_constraintStart_toStartOf="@+id/guideline3"
                 app:layout_constraintTop_toTopOf="@+id/tvBookStatus"
@@ -127,10 +127,10 @@
 
             <ImageView
                 android:id="@+id/ivBookStatusToRead"
-                android:contentDescription="@string/ivBookStatusToRead"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="32dp"
+                android:contentDescription="@string/ivBookStatusToRead"
                 app:layout_constraintBottom_toBottomOf="@+id/tvBookStatus"
                 app:layout_constraintStart_toStartOf="@+id/guideline3"
                 app:layout_constraintTop_toTopOf="@+id/tvBookStatus"
@@ -142,6 +142,65 @@
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
                 app:layout_constraintGuide_percent="0.5" />
+
+            <TextView
+                android:id="@+id/tvMoreAboutBook"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="24dp"
+                android:clickable="true"
+                android:focusable="true"
+                android:text="@string/tv_more_about_book"
+                android:textAlignment="center"
+                android:textColor="@color/grey"
+                android:textSize="18sp"
+                app:drawableBottomCompat="@drawable/ic_baseline_keyboard_arrow_down_36"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/rbRatingIndicator" />
+
+            <TextView
+                android:id="@+id/tvBookPagesTitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="40dp"
+                android:text="@string/tv_book_pages_title"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toEndOf="@+id/tvDateFinishedTitle"
+                app:layout_constraintTop_toBottomOf="@+id/tvMoreAboutBook" />
+
+            <TextView
+                android:id="@+id/tvDateFinishedTitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="40dp"
+                android:text="@string/tv_date_finished_title"
+                app:layout_constraintEnd_toStartOf="@+id/tvBookPagesTitle"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tvMoreAboutBook" />
+
+            <TextView
+                android:id="@+id/tvDateFinished"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="12dp"
+                android:text="@string/tv_date_finished"
+                app:layout_constraintEnd_toEndOf="@+id/tvDateFinishedTitle"
+                app:layout_constraintStart_toStartOf="@+id/tvDateFinishedTitle"
+                app:layout_constraintTop_toBottomOf="@+id/tvDateFinishedTitle" />
+
+            <TextView
+                android:id="@+id/tvBookPages"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="12dp"
+                android:text="@string/tv_book_pages"
+                app:layout_constraintEnd_toEndOf="@+id/tvBookPagesTitle"
+                app:layout_constraintStart_toStartOf="@+id/tvBookPagesTitle"
+                app:layout_constraintTop_toBottomOf="@+id/tvBookPagesTitle" />
 
 
         </androidx.constraintlayout.widget.ConstraintLayout>

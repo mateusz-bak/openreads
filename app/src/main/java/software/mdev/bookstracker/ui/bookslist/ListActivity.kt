@@ -12,19 +12,7 @@ import kotlinx.android.synthetic.main.activity_list.*
 import software.mdev.bookstracker.R
 import software.mdev.bookstracker.data.db.BooksDatabase
 import software.mdev.bookstracker.data.repositories.BooksRepository
-import software.mdev.bookstracker.other.Constants.SHARED_PREFERENCES_KEY_ACCENT
-import software.mdev.bookstracker.other.Constants.SHARED_PREFERENCES_NAME
-import software.mdev.bookstracker.other.Constants.THEME_ACCENT_AMBER_500
-import software.mdev.bookstracker.other.Constants.THEME_ACCENT_BLUE_500
-import software.mdev.bookstracker.other.Constants.THEME_ACCENT_CYAN_500
-import software.mdev.bookstracker.other.Constants.THEME_ACCENT_DEFAULT
-import software.mdev.bookstracker.other.Constants.THEME_ACCENT_GREEN_500
-import software.mdev.bookstracker.other.Constants.THEME_ACCENT_INDIGO_500
-import software.mdev.bookstracker.other.Constants.THEME_ACCENT_LIME_500
-import software.mdev.bookstracker.other.Constants.THEME_ACCENT_PINK_500
-import software.mdev.bookstracker.other.Constants.THEME_ACCENT_PURPLE_500
-import software.mdev.bookstracker.other.Constants.THEME_ACCENT_TEAL_500
-import software.mdev.bookstracker.other.Constants.THEME_ACCENT_YELLOW_500
+import software.mdev.bookstracker.other.Constants
 import software.mdev.bookstracker.ui.bookslist.viewmodel.BooksViewModel
 import software.mdev.bookstracker.ui.bookslist.viewmodel.BooksViewModelProviderFactory
 
@@ -33,6 +21,11 @@ class ListActivity : AppCompatActivity() {
     lateinit var booksViewModel: BooksViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
+        val booksRepository = BooksRepository(BooksDatabase(this))
+        val booksViewModelProviderFactory = BooksViewModelProviderFactory(booksRepository)
+        booksViewModel = ViewModelProvider(this, booksViewModelProviderFactory).get(
+            BooksViewModel::class.java)
+
         setAppTheme()
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_list)
@@ -47,11 +40,6 @@ class ListActivity : AppCompatActivity() {
                     else -> bottomNavigationView.visibility = View.GONE
                 }
             }
-
-        val booksRepository = BooksRepository(BooksDatabase(this))
-        val booksViewModelProviderFactory = BooksViewModelProviderFactory(booksRepository)
-        booksViewModel = ViewModelProvider(this, booksViewModelProviderFactory).get(
-            BooksViewModel::class.java)
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
@@ -60,23 +48,23 @@ class ListActivity : AppCompatActivity() {
     }
 
     private fun setAppTheme(){
-        val sharedPref = getSharedPreferences(SHARED_PREFERENCES_NAME, Context.MODE_PRIVATE)
+        val sharedPref = getSharedPreferences(Constants.SHARED_PREFERENCES_NAME, Context.MODE_PRIVATE)
         var accent = sharedPref.getString(
-            SHARED_PREFERENCES_KEY_ACCENT,
-            THEME_ACCENT_DEFAULT
+            Constants.SHARED_PREFERENCES_KEY_ACCENT,
+            Constants.THEME_ACCENT_DEFAULT
         ).toString()
 
         when(accent){
-            THEME_ACCENT_AMBER_500 -> setTheme(R.style.Theme_Mdev_Bookstracker_CustomTheme_Amber)
-            THEME_ACCENT_BLUE_500 -> setTheme(R.style.Theme_Mdev_Bookstracker_CustomTheme_Blue)
-            THEME_ACCENT_CYAN_500 -> setTheme(R.style.Theme_Mdev_Bookstracker_CustomTheme_Cyan)
-            THEME_ACCENT_GREEN_500 -> setTheme(R.style.Theme_Mdev_Bookstracker_CustomTheme_Green)
-            THEME_ACCENT_INDIGO_500 -> setTheme(R.style.Theme_Mdev_Bookstracker_CustomTheme_Indigo)
-            THEME_ACCENT_LIME_500 -> setTheme(R.style.Theme_Mdev_Bookstracker_CustomTheme_Lime)
-            THEME_ACCENT_PINK_500 -> setTheme(R.style.Theme_Mdev_Bookstracker_CustomTheme_Pink)
-            THEME_ACCENT_PURPLE_500 -> setTheme(R.style.Theme_Mdev_Bookstracker_CustomTheme_Purple)
-            THEME_ACCENT_TEAL_500 -> setTheme(R.style.Theme_Mdev_Bookstracker_CustomTheme_Teal)
-            THEME_ACCENT_YELLOW_500 -> setTheme(R.style.Theme_Mdev_Bookstracker_CustomTheme_Yellow)
+            Constants.THEME_ACCENT_LIGHT_GREEN -> setTheme(R.style.Theme_Mdev_Bookstracker_CustomTheme_LightGreen)
+            Constants.THEME_ACCENT_RED_800 -> setTheme(R.style.Theme_Mdev_Bookstracker_CustomTheme_Red)
+            Constants.THEME_ACCENT_CYAN_500 -> setTheme(R.style.Theme_Mdev_Bookstracker_CustomTheme_Cyan)
+            Constants.THEME_ACCENT_GREEN_500 -> setTheme(R.style.Theme_Mdev_Bookstracker_CustomTheme_Green)
+            Constants.THEME_ACCENT_BROWN_400 -> setTheme(R.style.Theme_Mdev_Bookstracker_CustomTheme_Brown)
+            Constants.THEME_ACCENT_LIME_500 -> setTheme(R.style.Theme_Mdev_Bookstracker_CustomTheme_Lime)
+            Constants.THEME_ACCENT_PINK_300 -> setTheme(R.style.Theme_Mdev_Bookstracker_CustomTheme_Pink)
+            Constants.THEME_ACCENT_PURPLE_500 -> setTheme(R.style.Theme_Mdev_Bookstracker_CustomTheme_Purple)
+            Constants.THEME_ACCENT_TEAL_500 -> setTheme(R.style.Theme_Mdev_Bookstracker_CustomTheme_Teal)
+            Constants.THEME_ACCENT_YELLOW_500 -> setTheme(R.style.Theme_Mdev_Bookstracker_CustomTheme_Yellow)
         }
     }
 

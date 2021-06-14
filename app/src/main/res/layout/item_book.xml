@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:paddingTop="8dp"
+    android:paddingTop="16dp"
     android:paddingStart="16dp"
     android:paddingBottom="16dp"
     android:paddingEnd="16dp">
@@ -24,7 +24,7 @@
         android:id="@+id/tvBookAuthor"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
+        android:layout_marginTop="4dp"
         android:textSize="14sp"
         app:layout_constraintEnd_toEndOf="@+id/tvBookTitle"
         app:layout_constraintHorizontal_weight="1"
@@ -82,4 +82,27 @@
         android:orientation="vertical"
         app:layout_constraintGuide_percent="0.70" />
 
+    <TextView
+        android:id="@+id/tvNumberOfPages"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="4dp"
+        android:text="@string/tvNumberOfPages"
+        android:textSize="14sp"
+        app:layout_constraintTop_toBottomOf="@+id/rbRatingIndicator"
+        app:layout_constraintBottom_toBottomOf="@+id/tvBookAuthor"
+        app:layout_constraintEnd_toEndOf="@+id/rbRatingIndicator"
+        app:layout_constraintStart_toStartOf="@+id/rbRatingIndicator" />
+
+    <TextView
+        android:id="@+id/tvDateFinished"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/tvDateFinished"
+        android:layout_marginTop="4dp"
+        android:textSize="14sp"
+        app:layout_constraintTop_toBottomOf="@+id/rbRatingIndicator"
+        app:layout_constraintBottom_toBottomOf="@+id/tvBookAuthor"
+        app:layout_constraintEnd_toEndOf="@+id/rbRatingIndicator"
+        app:layout_constraintStart_toStartOf="@+id/rbRatingIndicator" />
 </androidx.constraintlayout.widget.ConstraintLayout>

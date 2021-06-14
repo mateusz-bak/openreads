@@ -16,6 +16,9 @@ object Constants {
     const val DATABASE_ITEM_BOOK_PRIORITY = "item_bookPriority"
     const val DATABASE_ITEM_BOOK_START_DATE = "item_bookStartDate"
     const val DATABASE_ITEM_BOOK_FINISH_DATE = "item_bookFinishDate"
+    const val DATABASE_ITEM_BOOK_NUMBER_OF_PAGES = "item_bookNumberOfPages"
+    const val DATABASE_ITEM_BOOK_TITLE_ASCII = "item_bookTitle_ASCII"
+    const val DATABASE_ITEM_BOOK_AUTHOR_ASCII = "item_bookAuthor_ASCII"
     const val DATABASE_EMPTY_VALUE = "none"
 
     const val SORT_ORDER_TITLE_DESC = "ivSortTitleDesc"
@@ -24,6 +27,10 @@ object Constants {
     const val SORT_ORDER_AUTHOR_ASC = "ivSortAuthorAsc"
     const val SORT_ORDER_RATING_DESC = "ivSortRatingDesc"
     const val SORT_ORDER_RATING_ASC = "ivSortRatingAsc"
+    const val SORT_ORDER_PAGES_DESC = "ivSortPagesDesc"
+    const val SORT_ORDER_PAGES_ASC = "ivSortPagesAsc"
+    const val SORT_ORDER_DATE_DESC = "ivSortDateDesc"
+    const val SORT_ORDER_DATE_ASC = "ivSortDateAsc"
 
     const val SERIALIZABLE_BUNDLE_BOOK = "book"
 
@@ -36,13 +43,13 @@ object Constants {
 
     const val EMPTY_STRING = ""
 
-    const val THEME_ACCENT_AMBER_500 = "accent_amber"
-    const val THEME_ACCENT_BLUE_500 = "accent_blue"
+    const val THEME_ACCENT_LIGHT_GREEN = "accent_light_green"
+    const val THEME_ACCENT_RED_800 = "accent_red"
     const val THEME_ACCENT_CYAN_500 = "accent_cyan"
     const val THEME_ACCENT_GREEN_500 = "accent_green"
-    const val THEME_ACCENT_INDIGO_500 = "accent_indigo"
+    const val THEME_ACCENT_BROWN_400 = "accent_brown"
     const val THEME_ACCENT_LIME_500 = "accent_lime"
-    const val THEME_ACCENT_PINK_500 = "accent_pink"
+    const val THEME_ACCENT_PINK_300 = "accent_pink"
     const val THEME_ACCENT_PURPLE_500 = "accent_purple"
     const val THEME_ACCENT_TEAL_500 = "accent_teal"
     const val THEME_ACCENT_YELLOW_500 = "accent_yellow"
