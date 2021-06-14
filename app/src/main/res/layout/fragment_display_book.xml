@@ -12,7 +12,7 @@
         android:layout_height="wrap_content"
         android:layout_gravity="bottom|end"
         android:layout_marginEnd="16dp"
-        android:layout_marginBottom="16dp"
+        android:layout_marginBottom="70dp"
         android:backgroundTint="?colorPrimary"
         android:clickable="true"
         android:contentDescription="@string/fabEditBook"

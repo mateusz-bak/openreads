@@ -132,6 +132,7 @@ class ReadFragment : Fragment(R.layout.fragment_read) {
 
         bookAdapter.setOnBookClickListener {
             etSearch.setText(EMPTY_STRING)
+            fabAddBook.visibility = View.GONE
             val bundle = Bundle().apply {
                 putSerializable(SERIALIZABLE_BUNDLE_BOOK, it)
             }

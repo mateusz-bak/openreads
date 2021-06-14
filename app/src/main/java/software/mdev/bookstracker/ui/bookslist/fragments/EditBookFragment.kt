@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.view.View
 import android.view.inputmethod.InputMethodManager
 import android.widget.DatePicker
+import android.widget.EditText
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProviders
@@ -63,7 +64,7 @@ class EditBookFragment : Fragment(R.layout.fragment_edit_book) {
         }
 
         etEditedBookTitle.requestFocus()
-        view.showKeyboard()
+        showKeyboard(etEditedBookTitle,350)
 
         when (book.bookStatus) {
             Constants.BOOK_STATUS_READ -> {
@@ -262,6 +263,16 @@ class EditBookFragment : Fragment(R.layout.fragment_edit_book) {
     fun View.showKeyboard() {
         val inputManager = context.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
         inputManager.toggleSoftInputFromWindow(windowToken, 0, 0)
+    }
+
+    fun showKeyboard(et: EditText, delay: Long) {
+        val timer = Timer()
+        timer.schedule(object : TimerTask() {
+            override fun run() {
+                val inputManager = context?.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+                inputManager.showSoftInput(et, 0)
+            }
+        }, delay)
     }
 
     fun convertLongToTime(time: Long): String {
