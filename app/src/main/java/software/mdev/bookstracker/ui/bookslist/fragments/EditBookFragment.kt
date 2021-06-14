@@ -20,22 +20,6 @@ import software.mdev.bookstracker.ui.bookslist.ListActivity
 import com.google.android.material.snackbar.Snackbar
 import kotlinx.android.synthetic.main.fragment_edit_book.*
 import software.mdev.bookstracker.other.Constants
-import software.mdev.bookstracker.other.Constants.BOOK_STATUS_IN_PROGRESS
-import software.mdev.bookstracker.other.Constants.BOOK_STATUS_NOTHING
-import software.mdev.bookstracker.other.Constants.BOOK_STATUS_READ
-import software.mdev.bookstracker.other.Constants.BOOK_STATUS_TO_READ
-import software.mdev.bookstracker.other.Constants.SHARED_PREFERENCES_NAME
-import software.mdev.bookstracker.other.Constants.THEME_ACCENT_AMBER_500
-import software.mdev.bookstracker.other.Constants.THEME_ACCENT_BLUE_500
-import software.mdev.bookstracker.other.Constants.THEME_ACCENT_CYAN_500
-import software.mdev.bookstracker.other.Constants.THEME_ACCENT_DEFAULT
-import software.mdev.bookstracker.other.Constants.THEME_ACCENT_GREEN_500
-import software.mdev.bookstracker.other.Constants.THEME_ACCENT_INDIGO_500
-import software.mdev.bookstracker.other.Constants.THEME_ACCENT_LIME_500
-import software.mdev.bookstracker.other.Constants.THEME_ACCENT_PINK_500
-import software.mdev.bookstracker.other.Constants.THEME_ACCENT_PURPLE_500
-import software.mdev.bookstracker.other.Constants.THEME_ACCENT_TEAL_500
-import software.mdev.bookstracker.other.Constants.THEME_ACCENT_YELLOW_500
 import java.text.Normalizer
 import java.text.SimpleDateFormat
 import java.util.*
@@ -54,7 +38,7 @@ class EditBookFragment : Fragment(R.layout.fragment_edit_book) {
         viewModel = (activity as ListActivity).booksViewModel
         listActivity = activity as ListActivity
 
-        var whatIsClicked = BOOK_STATUS_NOTHING
+        var whatIsClicked = Constants.BOOK_STATUS_NOTHING
 
         val database = BooksDatabase(view.context)
         val repository = BooksRepository(database)
@@ -82,27 +66,27 @@ class EditBookFragment : Fragment(R.layout.fragment_edit_book) {
         view.showKeyboard()
 
         when (book.bookStatus) {
-            BOOK_STATUS_READ -> {
+            Constants.BOOK_STATUS_READ -> {
                 ivEditorBookStatusRead.setColorFilter(accentColor, android.graphics.PorterDuff.Mode.SRC_IN)
                 ivEditorBookStatusInProgress.setColorFilter(ContextCompat.getColor(view.context, R.color.grey), android.graphics.PorterDuff.Mode.SRC_IN)
                 ivEditorBookStatusToRead.setColorFilter(ContextCompat.getColor(view.context, R.color.grey), android.graphics.PorterDuff.Mode.SRC_IN)
-                whatIsClicked = BOOK_STATUS_READ
+                whatIsClicked = Constants.BOOK_STATUS_READ
                 rbEditedRating.visibility = View.VISIBLE
                 etEditedPagesNumber.visibility = View.VISIBLE
             }
-            BOOK_STATUS_IN_PROGRESS -> {
+            Constants.BOOK_STATUS_IN_PROGRESS -> {
                 ivEditorBookStatusRead.setColorFilter(ContextCompat.getColor(view.context, R.color.grey), android.graphics.PorterDuff.Mode.SRC_IN)
                 ivEditorBookStatusInProgress.setColorFilter(accentColor, android.graphics.PorterDuff.Mode.SRC_IN)
                 ivEditorBookStatusToRead.setColorFilter(ContextCompat.getColor(view.context, R.color.grey), android.graphics.PorterDuff.Mode.SRC_IN)
-                whatIsClicked = BOOK_STATUS_IN_PROGRESS
+                whatIsClicked = Constants.BOOK_STATUS_IN_PROGRESS
                 rbEditedRating.visibility = View.GONE
                 etEditedPagesNumber.visibility = View.GONE
             }
-            BOOK_STATUS_TO_READ -> {
+            Constants.BOOK_STATUS_TO_READ -> {
                 ivEditorBookStatusRead.setColorFilter(ContextCompat.getColor(view.context, R.color.grey), android.graphics.PorterDuff.Mode.SRC_IN)
                 ivEditorBookStatusInProgress.setColorFilter(ContextCompat.getColor(view.context, R.color.grey), android.graphics.PorterDuff.Mode.SRC_IN)
                 ivEditorBookStatusToRead.setColorFilter(accentColor, android.graphics.PorterDuff.Mode.SRC_IN)
-                whatIsClicked = BOOK_STATUS_TO_READ
+                whatIsClicked = Constants.BOOK_STATUS_TO_READ
                 rbEditedRating.visibility = View.GONE
                 etEditedPagesNumber.visibility = View.GONE
             }
@@ -112,7 +96,7 @@ class EditBookFragment : Fragment(R.layout.fragment_edit_book) {
             ivEditorBookStatusRead.setColorFilter(accentColor, android.graphics.PorterDuff.Mode.SRC_IN)
             ivEditorBookStatusInProgress.setColorFilter(ContextCompat.getColor(view.context, R.color.grey), android.graphics.PorterDuff.Mode.SRC_IN)
             ivEditorBookStatusToRead.setColorFilter(ContextCompat.getColor(view.context, R.color.grey), android.graphics.PorterDuff.Mode.SRC_IN)
-            whatIsClicked = BOOK_STATUS_READ
+            whatIsClicked = Constants.BOOK_STATUS_READ
             rbEditedRating.visibility = View.VISIBLE
             etEditedPagesNumber.visibility = View.VISIBLE
         }
@@ -121,7 +105,7 @@ class EditBookFragment : Fragment(R.layout.fragment_edit_book) {
             ivEditorBookStatusRead.setColorFilter(ContextCompat.getColor(view.context, R.color.grey), android.graphics.PorterDuff.Mode.SRC_IN)
             ivEditorBookStatusInProgress.setColorFilter(accentColor, android.graphics.PorterDuff.Mode.SRC_IN)
             ivEditorBookStatusToRead.setColorFilter(ContextCompat.getColor(view.context, R.color.grey), android.graphics.PorterDuff.Mode.SRC_IN)
-            whatIsClicked = BOOK_STATUS_IN_PROGRESS
+            whatIsClicked = Constants.BOOK_STATUS_IN_PROGRESS
             rbEditedRating.visibility = View.GONE
             etEditedPagesNumber.visibility = View.GONE
         }
@@ -130,7 +114,7 @@ class EditBookFragment : Fragment(R.layout.fragment_edit_book) {
             ivEditorBookStatusRead.setColorFilter(ContextCompat.getColor(view.context, R.color.grey), android.graphics.PorterDuff.Mode.SRC_IN)
             ivEditorBookStatusInProgress.setColorFilter(ContextCompat.getColor(view.context, R.color.grey), android.graphics.PorterDuff.Mode.SRC_IN)
             ivEditorBookStatusToRead.setColorFilter(accentColor, android.graphics.PorterDuff.Mode.SRC_IN)
-            whatIsClicked = BOOK_STATUS_TO_READ
+            whatIsClicked = Constants.BOOK_STATUS_TO_READ
             rbEditedRating.visibility = View.GONE
             etEditedPagesNumber.visibility = View.GONE
         }
@@ -194,18 +178,18 @@ class EditBookFragment : Fragment(R.layout.fragment_edit_book) {
 
             if (bookTitle.isNotEmpty()) {
                 if (bookAuthor.isNotEmpty()) {
-                    if (whatIsClicked != BOOK_STATUS_NOTHING) {
-                        if (bookNumberOfPagesIntOrNull != null || whatIsClicked == BOOK_STATUS_IN_PROGRESS || whatIsClicked == BOOK_STATUS_TO_READ) {
+                    if (whatIsClicked != Constants.BOOK_STATUS_NOTHING) {
+                        if (bookNumberOfPagesIntOrNull != null || whatIsClicked == Constants.BOOK_STATUS_IN_PROGRESS || whatIsClicked == Constants.BOOK_STATUS_TO_READ) {
                             bookNumberOfPagesInt = when (bookNumberOfPagesIntOrNull) {
                                 null -> 0
                                 else -> bookNumberOfPagesIntOrNull
                             }
-                            if (bookNumberOfPagesInt > 0 || whatIsClicked == BOOK_STATUS_IN_PROGRESS || whatIsClicked == BOOK_STATUS_TO_READ) {
-                                if (bookFinishDateMs!=null || whatIsClicked == BOOK_STATUS_IN_PROGRESS || whatIsClicked == BOOK_STATUS_TO_READ) {
+                            if (bookNumberOfPagesInt > 0 || whatIsClicked == Constants.BOOK_STATUS_IN_PROGRESS || whatIsClicked == Constants.BOOK_STATUS_TO_READ) {
+                                if (bookFinishDateMs!=null || whatIsClicked == Constants.BOOK_STATUS_IN_PROGRESS || whatIsClicked == Constants.BOOK_STATUS_TO_READ) {
                                     when (whatIsClicked) {
-                                        BOOK_STATUS_READ -> bookRating = rbEditedRating.rating
-                                        BOOK_STATUS_IN_PROGRESS -> bookRating = 0.0F
-                                        BOOK_STATUS_TO_READ -> bookRating = 0.0F
+                                        Constants.BOOK_STATUS_READ -> bookRating = rbEditedRating.rating
+                                        Constants.BOOK_STATUS_IN_PROGRESS -> bookRating = 0.0F
+                                        Constants.BOOK_STATUS_TO_READ -> bookRating = 0.0F
                                     }
 
                                     val REGEX_UNACCENT = "\\p{InCombiningDiacriticalMarks}+".toRegex()
@@ -298,21 +282,21 @@ class EditBookFragment : Fragment(R.layout.fragment_edit_book) {
     fun getAccentColor(context: Context): Int {
         var accentColor = ContextCompat.getColor(context, R.color.green_500)
 
-        val sharedPref = (activity as ListActivity).getSharedPreferences(SHARED_PREFERENCES_NAME, Context.MODE_PRIVATE)
+        val sharedPref = (activity as ListActivity).getSharedPreferences(Constants.SHARED_PREFERENCES_NAME, Context.MODE_PRIVATE)
 
-        var accent = sharedPref.getString(Constants.SHARED_PREFERENCES_KEY_ACCENT, THEME_ACCENT_DEFAULT).toString()
+        var accent = sharedPref.getString(Constants.SHARED_PREFERENCES_KEY_ACCENT, Constants.THEME_ACCENT_DEFAULT).toString()
 
         when(accent){
-            THEME_ACCENT_AMBER_500 -> accentColor = ContextCompat.getColor(context, R.color.amber_500)
-            THEME_ACCENT_BLUE_500 -> accentColor = ContextCompat.getColor(context, R.color.blue_500)
-            THEME_ACCENT_CYAN_500 -> accentColor = ContextCompat.getColor(context, R.color.cyan_500)
-            THEME_ACCENT_GREEN_500 -> accentColor = ContextCompat.getColor(context, R.color.green_500)
-            THEME_ACCENT_INDIGO_500 -> accentColor = ContextCompat.getColor(context, R.color.indigo_500)
-            THEME_ACCENT_LIME_500 -> accentColor = ContextCompat.getColor(context, R.color.lime_500)
-            THEME_ACCENT_PINK_500 -> accentColor = ContextCompat.getColor(context, R.color.pink_500)
-            THEME_ACCENT_PURPLE_500 -> accentColor = ContextCompat.getColor(context, R.color.purple_500)
-            THEME_ACCENT_TEAL_500 -> accentColor = ContextCompat.getColor(context, R.color.teal_500)
-            THEME_ACCENT_YELLOW_500 -> accentColor = ContextCompat.getColor(context, R.color.yellow_500)
+            Constants.THEME_ACCENT_LIGHT_GREEN -> accentColor = ContextCompat.getColor(context, R.color.light_green)
+            Constants.THEME_ACCENT_RED_800 -> accentColor = ContextCompat.getColor(context, R.color.red_800)
+            Constants.THEME_ACCENT_CYAN_500 -> accentColor = ContextCompat.getColor(context, R.color.cyan_500)
+            Constants.THEME_ACCENT_GREEN_500 -> accentColor = ContextCompat.getColor(context, R.color.green_500)
+            Constants.THEME_ACCENT_BROWN_400 -> accentColor = ContextCompat.getColor(context, R.color.brown_400)
+            Constants.THEME_ACCENT_LIME_500 -> accentColor = ContextCompat.getColor(context, R.color.lime_500)
+            Constants.THEME_ACCENT_PINK_300 -> accentColor = ContextCompat.getColor(context, R.color.pink_300)
+            Constants.THEME_ACCENT_PURPLE_500 -> accentColor = ContextCompat.getColor(context, R.color.purple_500)
+            Constants.THEME_ACCENT_TEAL_500 -> accentColor = ContextCompat.getColor(context, R.color.teal_500)
+            Constants.THEME_ACCENT_YELLOW_500 -> accentColor = ContextCompat.getColor(context, R.color.yellow_500)
         }
         return accentColor
     }

@@ -2,6 +2,6 @@
     <!-- Base application theme. -->
     <style name="Theme.Mdev.Bookstracker.CustomTheme.Pink" parent="Theme.Mdev.Bookstracker">
         <!-- Primary brand color. -->
-        <item name="colorPrimary">@color/pink_500</item>
+        <item name="colorPrimary">@color/pink_300</item>
     </style>
 </resources>

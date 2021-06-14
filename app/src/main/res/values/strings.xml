@@ -85,11 +85,11 @@ nomn    <string name="app_version" translatable="false">v1.1.0</string>
     <string name="daily_book_recommendations_on">Send daily notification</string>
     <string name="daily_book_recommendations_off">Don\'t send daily notification</string>
     <string name="changes_after_app_restart">Changes will be applied after app restart!</string>
-    <string name="accent_amber">Amber</string>
-    <string name="accent_blue">Blue</string>
+    <string name="accent_light_green">Light green</string>
+    <string name="accent_red">Red</string>
     <string name="accent_cyan">Cyan</string>
     <string name="accent_green">Green</string>
-    <string name="accent_indigo">Indigo</string>
+    <string name="accent_brown">Brown</string>
     <string name="accent_lime">Lime</string>
     <string name="accent_pink">Pink</string>
     <string name="accent_purple">Purple</string>
