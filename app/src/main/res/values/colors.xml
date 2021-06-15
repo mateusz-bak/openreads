@@ -15,4 +15,5 @@
     <color name="teal_500">#009688</color>
     <color name="yellow_500">#FFEB3B</color>
     <color name="grey_300">#E0E0E0</color>
+    <color name="grey_900">#212121</color>
 </resources>

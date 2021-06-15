@@ -102,7 +102,9 @@
         android:label="SetupFragment" >
         <action
             android:id="@+id/action_setupFragment_to_readFragment"
-            app:destination="@id/readFragment" />
+            app:destination="@id/readFragment"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"/>
     </fragment>
     <fragment
         android:id="@+id/settingsFragment"

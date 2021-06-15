@@ -14,6 +14,7 @@
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
         <item name="colorAccent">?colorPrimary</item>
+        <item name="sortDialogBackgroundColor">@color/white</item>
     </style>
 
     <style name="Theme.Mdev.Bookstracker.NoActionBar">
