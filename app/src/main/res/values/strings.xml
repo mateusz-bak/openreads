@@ -129,5 +129,11 @@
     <string name="setButtonDoNotShowAgain">Ignore</string>
     <string name="setContentOnUpdateNotAvailable">You\'ve got the latest version available of Books Tracker app!</string>
     <string name="setTitleOnUpdateNotAvailable">No updates available</string>
+    <string name="statisticsFragment">Statistics</string>
+    <string name="statistics_all">All</string>
+    <string name="tvBooksReadTitle">Books read</string>
+    <string name="tvBooksRead" translatable="false">999</string>
+    <string name="tvPagesReadTitle">Pages read</string>
+    <string name="tvPagesRead" translatable="false">999999</string>
 
 </resources>

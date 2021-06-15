@@ -41,7 +41,7 @@ class ListActivity : AppCompatActivity() {
         booksNavHostFragment.findNavController()
             .addOnDestinationChangedListener { _, destination, _ ->
                 when(destination.id) {
-                    R.id.readFragment, R.id.inProgressFragment, R.id.toReadFragment ->
+                    R.id.readFragment, R.id.inProgressFragment, R.id.toReadFragment , R.id.statisticsFragment->
                         bottomNavigationView.visibility = View.VISIBLE
                     else -> bottomNavigationView.visibility = View.GONE
                 }
