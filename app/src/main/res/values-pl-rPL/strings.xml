@@ -104,4 +104,8 @@
     <string name="setButtonDoNotShowAgain">Ignoruj</string>
     <string name="setContentOnUpdateNotAvailable">Masz zainstalowaną najnowszą wersję aplikacji Books Tracker!</string>
     <string name="setTitleOnUpdateNotAvailable">Brak dostępnych aktualizacji</string>
+    <string name="statisticsFragment">Statystyki</string>
+    <string name="statistics_all">Wszystko</string>
+    <string name="tvBooksReadTitle">Przeczytane książki</string>
+    <string name="tvPagesReadTitle">Przeczytane strony</string>
 </resources>

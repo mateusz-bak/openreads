@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingStart="16dp"
+    android:paddingTop="16dp"
+    android:paddingEnd="16dp"
+    android:paddingBottom="16dp">
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guidelin2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintGuide_percent="0.50"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <ImageView
+        android:id="@+id/ivBooksRead"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:layout_marginBottom="12dp"
+        android:scaleType="centerInside"
+        android:scaleX="1"
+        android:scaleY="1"
+        android:src="@drawable/ic_books_svg"
+        app:layout_constraintBottom_toTopOf="@+id/tvBooksReadTitle"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <ImageView
+        android:id="@+id/ivPagesRead"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:scaleType="centerInside"
+        android:scaleX="1"
+        android:scaleY="1"
+        android:src="@drawable/ic_study"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/guidelin2" />
+
+    <TextView
+        android:id="@+id/tvBooksReadTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="12dp"
+        android:gravity="center"
+        android:text="@string/tvBooksReadTitle"
+        android:textColor="?colorOnSecondary"
+        android:textSize="20sp"
+        app:layout_constraintBottom_toTopOf="@+id/tvBooksRead"
+        app:layout_constraintEnd_toEndOf="@+id/ivBooksRead"
+        app:layout_constraintStart_toStartOf="@+id/ivBooksRead" />
+
+    <TextView
+        android:id="@+id/tvBooksRead"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="24dp"
+        android:gravity="center"
+        android:text="@string/tvBooksRead"
+        android:textSize="16sp"
+        app:layout_constraintBottom_toTopOf="@+id/guidelin2"
+        app:layout_constraintEnd_toEndOf="@+id/tvBooksReadTitle"
+        app:layout_constraintStart_toStartOf="@+id/tvBooksReadTitle" />
+
+    <TextView
+        android:id="@+id/tvPagesReadTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="12dp"
+        android:gravity="center"
+        android:text="@string/tvPagesReadTitle"
+        android:textColor="?colorOnSecondary"
+        android:textSize="20sp"
+        app:layout_constraintEnd_toEndOf="@+id/ivPagesRead"
+        app:layout_constraintStart_toStartOf="@+id/ivPagesRead"
+        app:layout_constraintTop_toBottomOf="@+id/ivPagesRead" />
+
+    <TextView
+        android:id="@+id/tvPagesRead"
+        android:layout_width="57dp"
+        android:layout_height="17dp"
+        android:layout_marginTop="12dp"
+        android:gravity="center"
+        android:text="@string/tvPagesRead"
+        android:textSize="16sp"
+        app:layout_constraintEnd_toEndOf="@+id/tvPagesReadTitle"
+        app:layout_constraintStart_toStartOf="@+id/tvPagesReadTitle"
+        app:layout_constraintTop_toBottomOf="@+id/tvPagesReadTitle" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

@@ -49,4 +49,6 @@
 *You can also replace the "Debug" with "Release" to get an optimized release binary.*
   
 ## Attributions
-Launcher and welcome screen icon made by [smalllikeart](https://www.flaticon.com/authors/smalllikeart "smalllikeart") from [www.flaticon.com](https://www.flaticon.com/ "Flaticon")
+### Icons made by:
+[Smalllikeart](https://www.flaticon.com/authors/smalllikeart "Smalllikeart") from [www.flaticon.com](https://www.flaticon.com/ "Flaticon")
+[Freepik](https://www.freepik.com "Freepik") from [www.flaticon.com](https://www.flaticon.com/ "Flaticon")

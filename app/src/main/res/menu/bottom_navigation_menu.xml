@@ -14,4 +14,7 @@
         android:title="@string/toReadFragment"
         android:icon="@drawable/ic_baseline_list_24"/>
 
+    <item android:id="@+id/statisticsFragment"
+        android:title="@string/statisticsFragment"
+        android:icon="@drawable/ic_baseline_bar_chart_24"/>
 </menu>
