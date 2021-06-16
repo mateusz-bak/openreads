@@ -108,9 +108,11 @@
     <string name="statistics_all">Wszystko</string>
     <string name="tvBooksReadTitle">Przeczytane książki</string>
     <string name="tvPagesReadTitle">Przeczytane strony</string>
-    <string name="tvWelcomeText_1">Pomoże Ci w organizacji Twoich Książek</string>
+    <string name="tvWelcomeText_1">Pomoże Ci w organizacji Twoich książek</string>
     <string name="tvWelcomeText_2">Zobaczysz też parę fajnych statystyk</string>
     <string name="tvWelcomeText_3">Powodzenia w czytaniu!</string>
     <string name="tvSetupSwipeHint_0">Przesuń w lewo</string>
     <string name="tvSetupSwipeHint_1">Wciśnij przycisk</string>
+    <string name="tvAvgRatingTitle">Średnia ocena</string>
+    <string name="tvLooksEmptyStatistics">Nic tu nie ma! Dodaj przeczytane książki i wróć tu później.</string>
 </resources>

@@ -140,5 +140,8 @@
     <string name="tvWelcomeText_3">Enjoy and keep reading!</string>
     <string name="tvSetupSwipeHint_0">Swipe left</string>
     <string name="tvSetupSwipeHint_1">Click the button</string>
+    <string name="tvAvgRatingTitle">Average rating</string>
+    <string name="tvAvgRating" translatable="false">4.9</string>
+    <string name="tvLooksEmptyStatistics">Nothing to see here yet! Add read books and come back here later.</string>
 
 </resources>

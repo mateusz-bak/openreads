@@ -67,7 +67,7 @@ class StatisticsFragment : Fragment(R.layout.fragment_statistics) {
         viewModel.getSortedBooksByDateDesc(Constants.BOOK_STATUS_READ)
             .observe(viewLifecycleOwner, Observer { books ->
                 var listOfYears = mutableListOf<Year>()
-                listOfYears.add(Year("0000", 0, 0))
+                listOfYears.add(Year("0000", 0, 0, 0F))
 
                 var years = listOf<Int>()
                 var year: Int
@@ -83,10 +83,12 @@ class StatisticsFragment : Fragment(R.layout.fragment_statistics) {
 
                 var booksAllTime = 0
                 var pagesAllTime = 0
+                var sumRatingAllTime = 0F
 
                 for (item_year in years) {
                     var booksInYear = 0
                     var pagesInYear = 0
+                    var sumRatingInYear = 0F
 
                     for (item_book in books) {
                         if (item_book.bookFinishDate != "none" && item_book.bookFinishDate != "null") {
@@ -96,13 +98,15 @@ class StatisticsFragment : Fragment(R.layout.fragment_statistics) {
                                 booksAllTime++
                                 pagesInYear += item_book.bookNumberOfPages
                                 pagesAllTime += item_book.bookNumberOfPages
+                                sumRatingInYear += item_book.bookRating
+                                sumRatingAllTime += item_book.bookRating
                             }
                         }
                     }
-                    listOfYears.add(Year(item_year.toString(), booksInYear, pagesInYear))
+                    listOfYears.add(Year(item_year.toString(), booksInYear, pagesInYear, (sumRatingInYear/booksInYear)))
                 }
 
-                listOfYears[0] = Year("0000", booksAllTime, pagesAllTime)
+                listOfYears[0] = Year("0000", booksAllTime, pagesAllTime, (sumRatingAllTime/booksAllTime))
 
                 statisticsAdapter.differ.submitList(listOfYears)
 

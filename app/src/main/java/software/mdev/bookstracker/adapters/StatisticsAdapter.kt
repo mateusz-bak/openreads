@@ -16,6 +16,8 @@ import software.mdev.bookstracker.data.repositories.BooksRepository
 import software.mdev.bookstracker.ui.bookslist.fragments.StatisticsFragment
 import software.mdev.bookstracker.ui.bookslist.viewmodel.BooksViewModel
 import software.mdev.bookstracker.ui.bookslist.viewmodel.BooksViewModelProviderFactory
+import java.math.RoundingMode
+import java.text.DecimalFormat
 
 class StatisticsAdapter(
     private val statisticsFragment: StatisticsFragment,
@@ -62,10 +64,39 @@ class StatisticsAdapter(
 
     override fun onBindViewHolder(holder: StatisticsViewHolder, position: Int) {
         val curYear = differ.currentList[position]
+        val df = DecimalFormat("#.#")
+        df.roundingMode = RoundingMode.CEILING
+
+        if (position == 0 && curYear.yearBooks == 0) {
+            holder.itemView.apply {
+                tvLooksEmptyStatistics.visibility = View.VISIBLE
+                ivBooksRead.visibility = View.GONE
+                ivPagesRead.visibility = View.GONE
+                rbAvgRatingIndicator.visibility = View.GONE
+                tvBooksReadTitle.visibility = View.GONE
+                tvBooksRead.visibility = View.GONE
+                tvPagesReadTitle.visibility = View.GONE
+                tvPagesRead.visibility = View.GONE
+                tvAvgRatingTitle.visibility = View.GONE
+                tvAvgRating.visibility = View.GONE
+            }
+        } else {
+            holder.itemView.tvLooksEmptyStatistics.visibility = View.GONE
+        }
 
         holder.itemView.apply {
             tvBooksRead.text = curYear.yearBooks.toString()
             tvPagesRead.text = curYear.yearPages.toString()
+            rbAvgRatingIndicator.rating = curYear.avgRating
+            when (curYear.avgRating) {
+                0F -> tvAvgRating.text = "0.0"
+                1F -> tvAvgRating.text = "1.0"
+                2F -> tvAvgRating.text = "2.0"
+                3F -> tvAvgRating.text = "3.0"
+                4F -> tvAvgRating.text = "4.0"
+                5F -> tvAvgRating.text = "5.0"
+                else -> tvAvgRating.text = df.format(curYear.avgRating)
+            }
         }
     }
 }
