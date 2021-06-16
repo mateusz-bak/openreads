@@ -9,8 +9,8 @@ import androidx.navigation.fragment.findNavController
 import software.mdev.bookstracker.R
 import software.mdev.bookstracker.ui.bookslist.ListActivity
 import kotlinx.android.synthetic.main.fragment_setup.*
-import software.mdev.bookstracker.other.Constants.SHARED_PREFERENCES_KEY_FIRST_TIME_TOGGLE
-import software.mdev.bookstracker.other.Constants.SHARED_PREFERENCES_NAME
+import software.mdev.bookstracker.adapters.SetupAdapter
+import software.mdev.bookstracker.other.Constants
 
 
 class SetupFragment : Fragment(R.layout.fragment_setup) {
@@ -18,9 +18,15 @@ class SetupFragment : Fragment(R.layout.fragment_setup) {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val sharedPref = (activity as ListActivity).getSharedPreferences(SHARED_PREFERENCES_NAME, Context.MODE_PRIVATE)
+        val sharedPref = (activity as ListActivity).getSharedPreferences(
+            Constants.SHARED_PREFERENCES_NAME,
+            Context.MODE_PRIVATE
+        )
 
-        if(!sharedPref.getBoolean(SHARED_PREFERENCES_KEY_FIRST_TIME_TOGGLE, true)) {
+        if (!sharedPref.getBoolean(Constants.SHARED_PREFERENCES_KEY_FIRST_TIME_TOGGLE, true) &&
+            sharedPref.getString(Constants.SHARED_PREFERENCES_KEY_APP_VERSION, "v0.0.0") ==
+            resources.getString(R.string.app_version)
+        ) {
             val navOptions = NavOptions.Builder()
                 .setPopUpTo(R.id.setupFragment, true)
                 .build()
@@ -31,19 +37,18 @@ class SetupFragment : Fragment(R.layout.fragment_setup) {
             )
         }
 
-        fabLaunchApp.setOnClickListener{
-            saveAppsFirstlaunch()
-            findNavController().navigate(R.id.action_setupFragment_to_readFragment)
-        }
-    }
+        val images = listOf(
+            R.drawable.ic_svg_books,
+            R.drawable.ic_svg_study,
+            R.drawable.ic_svg_presentation,
+            R.drawable.ic_svg_like
+        )
 
-    private fun saveAppsFirstlaunch() {
-        val sharedPref = (activity as ListActivity).getSharedPreferences(SHARED_PREFERENCES_NAME, Context.MODE_PRIVATE)
-        val editor = sharedPref.edit()
-
-        editor.apply {
-            putBoolean(SHARED_PREFERENCES_KEY_FIRST_TIME_TOGGLE, false)
-            apply()
-        }
+        val adapter = SetupAdapter(
+            activity as ListActivity,
+            images,
+            resources.getString(R.string.app_version)
+        )
+        vpSetup.adapter = adapter
     }
 }

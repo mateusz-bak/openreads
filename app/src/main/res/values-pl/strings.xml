@@ -52,7 +52,7 @@
     <string name="dismiss">Ok</string>
     <string name="bookDeleted">Książka usunięta</string>
     <string name="undo">Cofnij</string>
-    <string name="tvWelcomeText">Witaj w aplikacji Books Tracker!</string>
+    <string name="tvWelcomeText_0">Witaj w aplikacji Books Tracker</string>
     <string name="tvLooksEmpty">Twoja lista książek jest na razie pusta, kliknij przycisk \"plus\" poniżej, w celu dodania nowych książek!</string>
     <string name="customization">Wygląd aplikacji</string>
     <string name="about">O aplikacji</string>
@@ -108,4 +108,9 @@
     <string name="statistics_all">Wszystko</string>
     <string name="tvBooksReadTitle">Przeczytane książki</string>
     <string name="tvPagesReadTitle">Przeczytane strony</string>
+    <string name="tvWelcomeText_1">Pomoże Ci w organizacji Twoich Książek</string>
+    <string name="tvWelcomeText_2">Zobaczysz też parę fajnych statystyk</string>
+    <string name="tvWelcomeText_3">Powodzenia w czytaniu!</string>
+    <string name="tvSetupSwipeHint_0">Przesuń w lewo</string>
+    <string name="tvSetupSwipeHint_1">Wciśnij przycisk</string>
 </resources>

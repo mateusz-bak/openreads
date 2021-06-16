@@ -61,7 +61,7 @@
     <string name="dismiss">Dismiss</string>
     <string name="bookDeleted">Book deleted</string>
     <string name="undo">Undo</string>
-    <string name="tvWelcomeText">Welcome to Books Tracker app!</string>
+    <string name="tvWelcomeText_0">Welcome to Books Tracker app</string>
     <string name="tvLooksEmpty">Your book list looks empty for now, click plus button below and start adding new books!</string>
     <string name="customization">Customization</string>
     <string name="switch_1" translatable="false">switch_1</string>
@@ -135,5 +135,10 @@
     <string name="tvBooksRead" translatable="false">999</string>
     <string name="tvPagesReadTitle">Pages read</string>
     <string name="tvPagesRead" translatable="false">999999</string>
+    <string name="tvWelcomeText_1">It will help you keep track of your books</string>
+    <string name="tvWelcomeText_2">You will also see some cool statistics</string>
+    <string name="tvWelcomeText_3">Enjoy and keep reading!</string>
+    <string name="tvSetupSwipeHint_0">Swipe left</string>
+    <string name="tvSetupSwipeHint_1">Click the button</string>
 
 </resources>
