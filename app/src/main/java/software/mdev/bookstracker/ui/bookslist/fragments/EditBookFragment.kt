@@ -56,6 +56,7 @@ class EditBookFragment : Fragment(R.layout.fragment_edit_book) {
         dpEditBookFinishDate.visibility = View.GONE
         btnEditorSaveFinishDate.visibility = View.GONE
         btnEditFinishDate.visibility = View.GONE
+        dpEditBookFinishDate.maxDate = System.currentTimeMillis()
 
         if(book.bookFinishDate == "none" || book.bookFinishDate == "null") {
             btnEditFinishDate.text = getString(R.string.hint_date_finished)
@@ -76,6 +77,9 @@ class EditBookFragment : Fragment(R.layout.fragment_edit_book) {
                 rbEditedRating.visibility = View.VISIBLE
                 etEditedPagesNumber.visibility = View.VISIBLE
                 btnEditFinishDate.visibility = View.VISIBLE
+                if(book.bookFinishDate != "none" && book.bookFinishDate != "null") {
+                    bookFinishDateMs = book.bookFinishDate.toLong()
+                }
             }
             Constants.BOOK_STATUS_IN_PROGRESS -> {
                 ivEditorBookStatusRead.setColorFilter(ContextCompat.getColor(view.context, R.color.grey), android.graphics.PorterDuff.Mode.SRC_IN)

@@ -45,6 +45,7 @@ class AddBookDialog(context: Context, var addBookDialogListener: AddBookDialogLi
         btnSetFinishDate.isClickable = false
         dpBookFinishDate.visibility = View.GONE
         btnAdderSaveFinishDate.visibility = View.GONE
+        dpBookFinishDate.maxDate = System.currentTimeMillis()
 
         etAdderBookTitle.requestFocus()
         showKeyboard(etAdderBookTitle,350)
