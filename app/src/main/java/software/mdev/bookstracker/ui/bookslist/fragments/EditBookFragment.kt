@@ -55,6 +55,7 @@ class EditBookFragment : Fragment(R.layout.fragment_edit_book) {
         etEditedPagesNumber.setText(book.bookNumberOfPages.toString())
         dpEditBookFinishDate.visibility = View.GONE
         btnEditorSaveFinishDate.visibility = View.GONE
+        btnEditFinishDate.visibility = View.GONE
 
         if(book.bookFinishDate == "none" || book.bookFinishDate == "null") {
             btnEditFinishDate.text = getString(R.string.hint_date_finished)
@@ -74,6 +75,7 @@ class EditBookFragment : Fragment(R.layout.fragment_edit_book) {
                 whatIsClicked = Constants.BOOK_STATUS_READ
                 rbEditedRating.visibility = View.VISIBLE
                 etEditedPagesNumber.visibility = View.VISIBLE
+                btnEditFinishDate.visibility = View.VISIBLE
             }
             Constants.BOOK_STATUS_IN_PROGRESS -> {
                 ivEditorBookStatusRead.setColorFilter(ContextCompat.getColor(view.context, R.color.grey), android.graphics.PorterDuff.Mode.SRC_IN)
@@ -100,6 +102,7 @@ class EditBookFragment : Fragment(R.layout.fragment_edit_book) {
             whatIsClicked = Constants.BOOK_STATUS_READ
             rbEditedRating.visibility = View.VISIBLE
             etEditedPagesNumber.visibility = View.VISIBLE
+            btnEditFinishDate.visibility = View.VISIBLE
         }
 
         ivEditorBookStatusInProgress.setOnClickListener {
@@ -109,6 +112,7 @@ class EditBookFragment : Fragment(R.layout.fragment_edit_book) {
             whatIsClicked = Constants.BOOK_STATUS_IN_PROGRESS
             rbEditedRating.visibility = View.GONE
             etEditedPagesNumber.visibility = View.GONE
+            btnEditFinishDate.visibility = View.GONE
         }
 
         ivEditorBookStatusToRead.setOnClickListener {
@@ -118,6 +122,7 @@ class EditBookFragment : Fragment(R.layout.fragment_edit_book) {
             whatIsClicked = Constants.BOOK_STATUS_TO_READ
             rbEditedRating.visibility = View.GONE
             etEditedPagesNumber.visibility = View.GONE
+            btnEditFinishDate.visibility = View.GONE
         }
 
         btnEditFinishDate.setOnClickListener {

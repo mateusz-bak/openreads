@@ -169,7 +169,7 @@
         android:layout_height="wrap_content"
         android:text="@string/tvLooksEmpty"
         android:textSize="16dp"
-        android:textColor="?colorOnSecondary"
+        android:textColor="@color/grey"
         android:padding="24dp"
         android:gravity="center"
         app:layout_constraintBottom_toBottomOf="parent"

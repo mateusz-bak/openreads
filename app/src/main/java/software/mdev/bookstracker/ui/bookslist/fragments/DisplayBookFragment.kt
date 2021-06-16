@@ -63,6 +63,8 @@ class DisplayBookFragment : Fragment(R.layout.fragment_display_book) {
                 tvMoreAboutBook.isClickable = false
                 tvBookPagesTitle.visibility = View.GONE
                 tvBookPages.visibility = View.GONE
+                tvDateFinishedTitle.visibility = View.GONE
+                tvDateFinished.visibility = View.GONE
             }
             BOOK_STATUS_TO_READ -> {
                 tvBookStatus.text = getString(R.string.toRead)
@@ -73,6 +75,8 @@ class DisplayBookFragment : Fragment(R.layout.fragment_display_book) {
                 tvMoreAboutBook.isClickable = false
                 tvBookPagesTitle.visibility = View.GONE
                 tvBookPages.visibility = View.GONE
+                tvDateFinishedTitle.visibility = View.GONE
+                tvDateFinished.visibility = View.GONE
             }
         }
 

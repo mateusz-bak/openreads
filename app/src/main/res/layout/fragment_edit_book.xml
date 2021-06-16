@@ -69,7 +69,7 @@
                 android:id="@+id/etEditedBookAuthor"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="12dp"
+                android:layout_marginTop="18dp"
                 android:autofillHints="@string/hintBookAuthor"
                 android:focusable="true"
                 android:inputType="textCapWords"
@@ -109,7 +109,7 @@
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
                 app:layout_constraintGuide_begin="20dp"
-                app:layout_constraintGuide_percent="0.1" />
+                app:layout_constraintGuide_percent="0.12" />
 
             <ImageView
                 android:id="@+id/ivEditorBookStatusRead"
