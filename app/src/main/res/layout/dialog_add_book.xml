@@ -1,234 +1,241 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="340dp"
-    android:layout_height="wrap_content"
-    android:background="@drawable/dialog_rounded"
-    android:paddingTop="16dp"
-    android:paddingBottom="16dp">
+    android:layout_height="wrap_content">
 
-    <EditText
-        android:id="@+id/etAdderBookTitle"
-        android:autofillHints="@string/hintBookTitle"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:width="300dp"
-        android:hint="@string/etAdderBookTitle"
-        android:inputType="textCapSentences"
-        android:maxLength="200"
-        android:textSize="18sp"
-        android:textColor="?colorOnSecondary"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tvAdderTitle" />
-
-    <EditText
-        android:id="@+id/etAdderAuthor"
-        android:autofillHints="@string/hintBookAuthor"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="12dp"
-        android:width="300dp"
-        android:hint="@string/etAdderAuthor"
-        android:inputType="textCapWords"
-        android:maxLength="100"
-        android:textSize="14sp"
-        android:textColor="?colorOnSecondary"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/etAdderBookTitle" />
-
-    <RatingBar
-        android:id="@+id/rbAdderRating"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:stepSize="1"
-        android:layout_marginTop="48dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tvInProgress" />
-
-    <TextView
-        android:id="@+id/tvAdderTitle"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/tvAdderTitle"
-        android:textSize="24sp"
-        android:textColor="?colorOnSecondary"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@drawable/dialog_rounded"
+        android:paddingTop="16dp"
+        android:paddingBottom="16dp">
 
 
-    <Button
-        android:id="@+id/btnAdderSaveBook"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:backgroundTint="?colorPrimary"
-        android:text="@string/btnAdderSaveBook"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/rbAdderRating" />
+        <EditText
+            android:id="@+id/etAdderBookTitle"
+            android:autofillHints="@string/hintBookTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:width="300dp"
+            android:hint="@string/etAdderBookTitle"
+            android:inputType="textCapSentences"
+            android:maxLength="200"
+            android:textSize="18sp"
+            android:textColor="?colorOnSecondary"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tvAdderTitle" />
+
+        <EditText
+            android:id="@+id/etAdderAuthor"
+            android:autofillHints="@string/hintBookAuthor"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="12dp"
+            android:width="300dp"
+            android:hint="@string/etAdderAuthor"
+            android:inputType="textCapWords"
+            android:maxLength="100"
+            android:textSize="14sp"
+            android:textColor="?colorOnSecondary"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/etAdderBookTitle" />
+
+        <RatingBar
+            android:id="@+id/rbAdderRating"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:stepSize="1"
+            android:layout_marginTop="48dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tvInProgress" />
+
+        <TextView
+            android:id="@+id/tvAdderTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/tvAdderTitle"
+            android:textSize="24sp"
+            android:textColor="?colorOnSecondary"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
 
-    <Button
-        android:id="@+id/btnAdderCancelFinishDate"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:backgroundTint="@color/red_800"
-        android:text="@string/btnAdderCancelFinishDate"
-        android:layout_marginTop="8dp"
-        app:layout_constraintEnd_toStartOf="@+id/btnAdderSaveFinishDate"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/dpBookFinishDate" />
+        <Button
+            android:id="@+id/btnAdderSaveBook"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:backgroundTint="?colorPrimary"
+            android:text="@string/btnAdderSaveBook"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/rbAdderRating" />
 
-    <Button
-        android:id="@+id/btnAdderSaveFinishDate"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:backgroundTint="?colorPrimary"
-        android:text="@string/btnAdderSaveFinishDate"
-        android:layout_marginTop="8dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toEndOf="@+id/btnAdderCancelFinishDate"
-        app:layout_constraintTop_toBottomOf="@+id/dpBookFinishDate" />
 
-    <ImageView
-        android:id="@+id/ivBookStatusSetRead"
-        android:contentDescription="@string/ivBookStatusSetRead"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="24dp"
-        android:scaleX="2"
-        android:scaleY="2"
-        android:clickable="true"
-        android:focusable="true"
-        app:layout_constraintEnd_toStartOf="@+id/ivBookStatusSetInProgress"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/etPagesNumber"
-        app:srcCompat="@drawable/ic_baseline_done_24"
-        />
+        <Button
+            android:id="@+id/btnAdderCancelFinishDate"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:backgroundTint="@color/red_800"
+            android:text="@string/btnAdderCancelFinishDate"
+            android:layout_marginTop="8dp"
+            app:layout_constraintEnd_toStartOf="@+id/btnAdderSaveFinishDate"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/dpBookFinishDate" />
 
-    <ImageView
-        android:id="@+id/ivBookStatusSetInProgress"
-        android:contentDescription="@string/ivBookStatusSetInProgress"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:scaleX="2"
-        android:scaleY="2"
-        android:clickable="true"
-        android:focusable="true"
-        app:layout_constraintBottom_toBottomOf="@+id/ivBookStatusSetRead"
-        app:layout_constraintEnd_toStartOf="@+id/ivBookStatusSetToRead"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toEndOf="@+id/ivBookStatusSetRead"
-        app:layout_constraintTop_toTopOf="@+id/ivBookStatusSetRead"
-        app:srcCompat="@drawable/ic_baseline_hourglass_bottom_24" />
+        <Button
+            android:id="@+id/btnAdderSaveFinishDate"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:backgroundTint="?colorPrimary"
+            android:text="@string/btnAdderSaveFinishDate"
+            android:layout_marginTop="8dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toEndOf="@+id/btnAdderCancelFinishDate"
+            app:layout_constraintTop_toBottomOf="@+id/dpBookFinishDate" />
 
-    <ImageView
-        android:id="@+id/ivBookStatusSetToRead"
-        android:contentDescription="@string/ivBookStatusSetToRead"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:scaleX="2"
-        android:scaleY="2"
-        android:clickable="true"
-        android:focusable="true"
-        app:layout_constraintBottom_toBottomOf="@+id/ivBookStatusSetRead"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toEndOf="@+id/ivBookStatusSetInProgress"
-        app:layout_constraintTop_toTopOf="@+id/ivBookStatusSetRead"
-        app:srcCompat="@drawable/ic_baseline_list_24" />
+        <ImageView
+            android:id="@+id/ivBookStatusSetRead"
+            android:contentDescription="@string/ivBookStatusSetRead"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="24dp"
+            android:scaleX="2"
+            android:scaleY="2"
+            android:clickable="true"
+            android:focusable="true"
+            app:layout_constraintEnd_toStartOf="@+id/ivBookStatusSetInProgress"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/etPagesNumber"
+            app:srcCompat="@drawable/ic_baseline_done_24"
+            />
 
-    <TextView
-        android:id="@+id/tvFinished"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/finished"
-        android:textSize="12sp"
-        android:layout_marginTop="8dp"
-        app:layout_constraintEnd_toEndOf="@+id/ivBookStatusSetRead"
-        app:layout_constraintStart_toStartOf="@+id/ivBookStatusSetRead"
-        app:layout_constraintTop_toBottomOf="@+id/ivBookStatusSetRead" />
+        <ImageView
+            android:id="@+id/ivBookStatusSetInProgress"
+            android:contentDescription="@string/ivBookStatusSetInProgress"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:scaleX="2"
+            android:scaleY="2"
+            android:clickable="true"
+            android:focusable="true"
+            app:layout_constraintBottom_toBottomOf="@+id/ivBookStatusSetRead"
+            app:layout_constraintEnd_toStartOf="@+id/ivBookStatusSetToRead"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toEndOf="@+id/ivBookStatusSetRead"
+            app:layout_constraintTop_toTopOf="@+id/ivBookStatusSetRead"
+            app:srcCompat="@drawable/ic_baseline_hourglass_bottom_24" />
 
-    <TextView
-        android:id="@+id/tvInProgress"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/inProgress"
-        android:textSize="12sp"
-        android:layout_marginTop="8dp"
-        app:layout_constraintEnd_toEndOf="@+id/ivBookStatusSetInProgress"
-        app:layout_constraintStart_toStartOf="@+id/ivBookStatusSetInProgress"
-        app:layout_constraintTop_toBottomOf="@+id/ivBookStatusSetInProgress" />
+        <ImageView
+            android:id="@+id/ivBookStatusSetToRead"
+            android:contentDescription="@string/ivBookStatusSetToRead"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:scaleX="2"
+            android:scaleY="2"
+            android:clickable="true"
+            android:focusable="true"
+            app:layout_constraintBottom_toBottomOf="@+id/ivBookStatusSetRead"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toEndOf="@+id/ivBookStatusSetInProgress"
+            app:layout_constraintTop_toTopOf="@+id/ivBookStatusSetRead"
+            app:srcCompat="@drawable/ic_baseline_list_24" />
 
-    <TextView
-        android:id="@+id/tvRateThisBook"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/rate_this_book"
-        android:textSize="16sp"
-        android:layout_marginBottom="8dp"
-        app:layout_constraintBottom_toTopOf="@+id/rbAdderRating"
-        app:layout_constraintEnd_toEndOf="@+id/rbAdderRating"
-        app:layout_constraintStart_toStartOf="@+id/rbAdderRating" />
+        <TextView
+            android:id="@+id/tvFinished"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/finished"
+            android:textSize="12sp"
+            android:layout_marginTop="8dp"
+            app:layout_constraintEnd_toEndOf="@+id/ivBookStatusSetRead"
+            app:layout_constraintStart_toStartOf="@+id/ivBookStatusSetRead"
+            app:layout_constraintTop_toBottomOf="@+id/ivBookStatusSetRead" />
 
-    <TextView
-        android:id="@+id/tvToRead"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/toRead"
-        android:textSize="12sp"
-        android:layout_marginTop="8dp"
-        app:layout_constraintEnd_toEndOf="@+id/ivBookStatusSetToRead"
-        app:layout_constraintStart_toStartOf="@+id/ivBookStatusSetToRead"
-        app:layout_constraintTop_toBottomOf="@+id/ivBookStatusSetToRead" />
+        <TextView
+            android:id="@+id/tvInProgress"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/inProgress"
+            android:textSize="12sp"
+            android:layout_marginTop="8dp"
+            app:layout_constraintEnd_toEndOf="@+id/ivBookStatusSetInProgress"
+            app:layout_constraintStart_toStartOf="@+id/ivBookStatusSetInProgress"
+            app:layout_constraintTop_toBottomOf="@+id/ivBookStatusSetInProgress" />
 
-    <EditText
-        android:id="@+id/etPagesNumber"
-        android:layout_width="75dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="12dp"
-        android:autofillHints="@string/autofill_hint_pages_number"
-        android:hint="@string/hint_pages_number"
-        android:inputType="number"
-        android:maxLength="10"
-        android:textColor="?colorOnSecondary"
-        android:textSize="14sp"
-        app:layout_constraintStart_toStartOf="@+id/etAdderAuthor"
-        app:layout_constraintTop_toBottomOf="@+id/etAdderAuthor" />
+        <TextView
+            android:id="@+id/tvRateThisBook"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/rate_this_book"
+            android:textSize="16sp"
+            android:layout_marginBottom="8dp"
+            app:layout_constraintBottom_toTopOf="@+id/rbAdderRating"
+            app:layout_constraintEnd_toEndOf="@+id/rbAdderRating"
+            app:layout_constraintStart_toStartOf="@+id/rbAdderRating" />
 
-    <DatePicker
-        android:id="@+id/dpBookFinishDate"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:calendarViewShown="false"
-        android:datePickerMode="calendar"
-        android:layout_marginTop="12dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tvAdderTitle" />
+        <TextView
+            android:id="@+id/tvToRead"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/toRead"
+            android:textSize="12sp"
+            android:layout_marginTop="8dp"
+            app:layout_constraintEnd_toEndOf="@+id/ivBookStatusSetToRead"
+            app:layout_constraintStart_toStartOf="@+id/ivBookStatusSetToRead"
+            app:layout_constraintTop_toBottomOf="@+id/ivBookStatusSetToRead" />
 
-    <Button
-        android:id="@+id/btnSetFinishDate"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/hint_date_finished"
-        android:layout_marginEnd="4dp"
-        app:layout_constraintBottom_toBottomOf="@+id/etPagesNumber"
-        app:layout_constraintEnd_toEndOf="@+id/etAdderAuthor" />
-</androidx.constraintlayout.widget.ConstraintLayout>
+        <EditText
+            android:id="@+id/etPagesNumber"
+            android:layout_width="75dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="12dp"
+            android:autofillHints="@string/autofill_hint_pages_number"
+            android:hint="@string/hint_pages_number"
+            android:inputType="number"
+            android:maxLength="10"
+            android:textColor="?colorOnSecondary"
+            android:textSize="14sp"
+            app:layout_constraintStart_toStartOf="@+id/etAdderAuthor"
+            app:layout_constraintTop_toBottomOf="@+id/etAdderAuthor" />
+
+        <DatePicker
+            android:id="@+id/dpBookFinishDate"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:calendarViewShown="false"
+            android:datePickerMode="calendar"
+            android:layout_marginTop="12dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tvAdderTitle" />
+
+        <Button
+            android:id="@+id/btnSetFinishDate"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/hint_date_finished"
+            android:layout_marginEnd="4dp"
+            app:layout_constraintBottom_toBottomOf="@+id/etPagesNumber"
+            app:layout_constraintEnd_toEndOf="@+id/etAdderAuthor" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</androidx.coordinatorlayout.widget.CoordinatorLayout>
