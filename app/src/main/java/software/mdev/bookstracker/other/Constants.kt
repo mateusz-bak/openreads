@@ -46,7 +46,7 @@ object Constants {
     const val EMPTY_STRING = ""
 
     const val THEME_ACCENT_LIGHT_GREEN = "accent_light_green"
-    const val THEME_ACCENT_RED_800 = "accent_red"
+    const val THEME_ACCENT_ORANGE_500 = "accent_orange"
     const val THEME_ACCENT_CYAN_500 = "accent_cyan"
     const val THEME_ACCENT_GREEN_500 = "accent_green"
     const val THEME_ACCENT_BROWN_400 = "accent_brown"

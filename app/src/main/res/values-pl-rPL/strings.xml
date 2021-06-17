@@ -65,7 +65,7 @@
     <string name="daily_book_recommendations_on">Wysyłaj codzienne powiadomienie</string>
     <string name="daily_book_recommendations_off">Nie wysyłaj codziennego powiadomienia</string>
     <string name="changes_after_app_restart">Zmiany zostaną zastosowane po restarcie aplikacji!</string>
-    <string name="accent_red">Czerwony</string>
+    <string name="accent_orange">Pomarańczowy</string>
     <string name="accent_green">Zielony</string>
     <string name="accent_lime">Limonkowy</string>
     <string name="accent_pink">Różowy</string>

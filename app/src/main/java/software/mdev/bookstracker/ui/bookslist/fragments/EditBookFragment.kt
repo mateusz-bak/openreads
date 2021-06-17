@@ -337,7 +337,7 @@ class EditBookFragment : Fragment(R.layout.fragment_edit_book) {
 
         when(accent){
             Constants.THEME_ACCENT_LIGHT_GREEN -> accentColor = ContextCompat.getColor(context, R.color.light_green)
-            Constants.THEME_ACCENT_RED_800 -> accentColor = ContextCompat.getColor(context, R.color.red_800)
+            Constants.THEME_ACCENT_ORANGE_500 -> accentColor = ContextCompat.getColor(context, R.color.orange_500)
             Constants.THEME_ACCENT_CYAN_500 -> accentColor = ContextCompat.getColor(context, R.color.cyan_500)
             Constants.THEME_ACCENT_GREEN_500 -> accentColor = ContextCompat.getColor(context, R.color.green_500)
             Constants.THEME_ACCENT_BROWN_400 -> accentColor = ContextCompat.getColor(context, R.color.brown_400)

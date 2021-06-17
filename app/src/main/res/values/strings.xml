@@ -85,7 +85,7 @@
     <string name="daily_book_recommendations_off">Don\'t send daily notification</string>
     <string name="changes_after_app_restart">Changes will be applied after app restart!</string>
     <string name="accent_light_green">Light green</string>
-    <string name="accent_red">Red</string>
+    <string name="accent_orange">Orange</string>
     <string name="accent_cyan">Cyan</string>
     <string name="accent_green">Green</string>
     <string name="accent_brown">Brown</string>
