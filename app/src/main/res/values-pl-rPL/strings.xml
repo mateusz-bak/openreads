@@ -115,4 +115,5 @@
     <string name="tvSetupSwipeHint_1">Wciśnij przycisk</string>
     <string name="tvAvgRatingTitle">Średnia ocena</string>
     <string name="tvLooksEmptyStatistics">Nic tu nie ma! Dodaj przeczytane książki i wróć tu później.</string>
+    <string name="btnAdderCancelFinishDate">Anuluj</string>
 </resources>

@@ -45,6 +45,7 @@ class AddBookDialog(context: Context, var addBookDialogListener: AddBookDialogLi
         btnSetFinishDate.isClickable = false
         dpBookFinishDate.visibility = View.GONE
         btnAdderSaveFinishDate.visibility = View.GONE
+        btnAdderCancelFinishDate.visibility = View.GONE
         dpBookFinishDate.maxDate = System.currentTimeMillis()
 
         etAdderBookTitle.requestFocus()
@@ -95,6 +96,7 @@ class AddBookDialog(context: Context, var addBookDialogListener: AddBookDialogLi
 
             dpBookFinishDate.visibility = View.VISIBLE
             btnAdderSaveFinishDate.visibility = View.VISIBLE
+            btnAdderCancelFinishDate.visibility = View.VISIBLE
             btnSetFinishDate.isClickable = true
             tvAdderTitle.setText(R.string.set_finish_date_title)
 
@@ -121,6 +123,7 @@ class AddBookDialog(context: Context, var addBookDialogListener: AddBookDialogLi
 
             dpBookFinishDate.visibility = View.GONE
             btnAdderSaveFinishDate.visibility = View.GONE
+            btnAdderCancelFinishDate.visibility = View.GONE
             tvAdderTitle.setText(R.string.tvAdderTitle)
 
             etAdderBookTitle.visibility = View.VISIBLE
@@ -140,6 +143,29 @@ class AddBookDialog(context: Context, var addBookDialogListener: AddBookDialogLi
             btnSetFinishDate.visibility = View.VISIBLE
 
             btnSetFinishDate.text = bookFinishDateMs?.let { it1 -> convertLongToTime(it1) }
+        }
+
+        btnAdderCancelFinishDate.setOnClickListener {
+            dpBookFinishDate.visibility = View.GONE
+            btnAdderSaveFinishDate.visibility = View.GONE
+            btnAdderCancelFinishDate.visibility = View.GONE
+            tvAdderTitle.setText(R.string.tvAdderTitle)
+
+            etAdderBookTitle.visibility = View.VISIBLE
+            etAdderAuthor.visibility = View.VISIBLE
+
+            ivBookStatusSetRead.visibility = View.VISIBLE
+            ivBookStatusSetInProgress.visibility = View.VISIBLE
+            ivBookStatusSetToRead.visibility = View.VISIBLE
+            tvFinished.visibility = View.VISIBLE
+            tvInProgress.visibility = View.VISIBLE
+            tvToRead.visibility = View.VISIBLE
+
+            etPagesNumber.visibility = View.VISIBLE
+            tvRateThisBook.visibility = View.VISIBLE
+            rbAdderRating.visibility = View.VISIBLE
+            btnAdderSaveBook.visibility = View.VISIBLE
+            btnSetFinishDate.visibility = View.VISIBLE
         }
 
         btnAdderSaveBook.setOnClickListener {

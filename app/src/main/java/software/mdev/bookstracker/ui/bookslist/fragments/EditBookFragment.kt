@@ -55,6 +55,7 @@ class EditBookFragment : Fragment(R.layout.fragment_edit_book) {
         etEditedPagesNumber.setText(book.bookNumberOfPages.toString())
         dpEditBookFinishDate.visibility = View.GONE
         btnEditorSaveFinishDate.visibility = View.GONE
+        btnEditorCancelFinishDate.visibility = View.GONE
         btnEditFinishDate.visibility = View.GONE
         dpEditBookFinishDate.maxDate = System.currentTimeMillis()
 
@@ -134,7 +135,9 @@ class EditBookFragment : Fragment(R.layout.fragment_edit_book) {
 
             dpEditBookFinishDate.visibility = View.VISIBLE
             btnEditorSaveFinishDate.visibility = View.VISIBLE
+            btnEditorCancelFinishDate.visibility = View.VISIBLE
             btnEditorSaveFinishDate.isClickable = true
+            btnEditorCancelFinishDate.isClickable = true
 
             etEditedBookTitle.visibility = View.GONE
             etEditedBookAuthor.visibility = View.GONE
@@ -158,7 +161,9 @@ class EditBookFragment : Fragment(R.layout.fragment_edit_book) {
 
             dpEditBookFinishDate.visibility = View.GONE
             btnEditorSaveFinishDate.visibility = View.GONE
+            btnEditorCancelFinishDate.visibility = View.GONE
             btnEditorSaveFinishDate.isClickable = false
+            btnEditorCancelFinishDate.isClickable = false
 
             etEditedBookTitle.visibility = View.VISIBLE
             etEditedBookAuthor.visibility = View.VISIBLE
@@ -177,6 +182,30 @@ class EditBookFragment : Fragment(R.layout.fragment_edit_book) {
             fabDeleteBook.visibility = View.VISIBLE
 
             btnEditFinishDate.text = bookFinishDateMs?.let { it1 -> convertLongToTime(it1) }
+        }
+
+        btnEditorCancelFinishDate.setOnClickListener {
+            dpEditBookFinishDate.visibility = View.GONE
+            btnEditorSaveFinishDate.visibility = View.GONE
+            btnEditorCancelFinishDate.visibility = View.GONE
+            btnEditorSaveFinishDate.isClickable = false
+            btnEditorCancelFinishDate.isClickable = false
+
+            etEditedBookTitle.visibility = View.VISIBLE
+            etEditedBookAuthor.visibility = View.VISIBLE
+
+            ivEditorBookStatusRead.visibility = View.VISIBLE
+            ivEditorBookStatusInProgress.visibility = View.VISIBLE
+            ivEditorBookStatusToRead.visibility = View.VISIBLE
+            tvFinished.visibility = View.VISIBLE
+            tvInProgress.visibility = View.VISIBLE
+            tvToRead.visibility = View.VISIBLE
+
+            etEditedPagesNumber.visibility = View.VISIBLE
+            rbEditedRating.visibility = View.VISIBLE
+            btnEditFinishDate.visibility = View.VISIBLE
+            fabSaveEditedBook.visibility = View.VISIBLE
+            fabDeleteBook.visibility = View.VISIBLE
         }
 
         fabSaveEditedBook.setOnClickListener {

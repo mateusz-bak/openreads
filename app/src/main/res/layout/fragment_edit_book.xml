@@ -234,8 +234,22 @@
                 android:layout_height="wrap_content"
                 android:backgroundTint="?colorPrimary"
                 android:text="@string/btnAdderSaveFinishDate"
+                android:layout_marginTop="8dp"
                 app:layout_constraintBottom_toTopOf="@+id/guideline2"
                 app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toEndOf="@+id/btnEditorCancelFinishDate"
+                app:layout_constraintTop_toBottomOf="@+id/dpEditBookFinishDate" />
+
+            <Button
+                android:id="@+id/btnEditorCancelFinishDate"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:backgroundTint="@color/red_800"
+                android:text="@string/btnAdderCancelFinishDate"
+                app:layout_constraintEnd_toStartOf="@+id/btnEditorSaveFinishDate"
+                app:layout_constraintBottom_toTopOf="@+id/guideline2"
                 app:layout_constraintHorizontal_bias="0.5"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/dpEditBookFinishDate" />
