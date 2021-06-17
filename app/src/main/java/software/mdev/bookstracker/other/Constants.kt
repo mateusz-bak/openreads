@@ -21,6 +21,13 @@ object Constants {
     const val DATABASE_ITEM_BOOK_AUTHOR_ASCII = "item_bookAuthor_ASCII"
     const val DATABASE_EMPTY_VALUE = "none"
 
+    const val DATABASE_NAME_CHALLENGE = "Challenge"
+    const val DATABASE_CHALLENGE_FILE_NAME = "ChallengeDB.db"
+    const val DATABASE_CHALLENGE_ITEM_CHALLENGE_YEAR = "item_challengeYear"
+    const val DATABASE_CHALLENGE_ITEM_CHALLENGE_BOOKS = "item_challengeBooks"
+    const val DATABASE_CHALLENGE_ITEM_CHALLENGE_PAGES = "item_challengePages"
+
+
     const val SORT_ORDER_TITLE_DESC = "ivSortTitleDesc"
     const val SORT_ORDER_TITLE_ASC = "ivSortTitleAsc"
     const val SORT_ORDER_AUTHOR_DESC = "ivSortAuthorDesc"
