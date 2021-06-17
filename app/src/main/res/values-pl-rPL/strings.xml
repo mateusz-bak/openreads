@@ -116,4 +116,6 @@
     <string name="tvAvgRatingTitle">Średnia ocena</string>
     <string name="tvLooksEmptyStatistics">Nic tu nie ma! Dodaj przeczytane książki i wróć tu później.</string>
     <string name="btnAdderCancelFinishDate">Anuluj</string>
+    <string name="tvChallengeTitle">Wyzwanie roczne</string>
+    <string name="tvChallengeTitleCurrent">Tegoroczne wyzwanie</string>
 </resources>
