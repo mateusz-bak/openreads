@@ -6,7 +6,8 @@
     android:layout_width="340dp"
     android:layout_height="wrap_content"
     android:background="@drawable/dialog_rounded"
-    android:padding="16dp">
+    android:paddingTop="16dp"
+    android:paddingBottom="16dp">
 
     <EditText
         android:id="@+id/etAdderBookTitle"
@@ -80,15 +81,27 @@
 
 
     <Button
+        android:id="@+id/btnAdderCancelFinishDate"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:backgroundTint="@color/red_800"
+        android:text="@string/btnAdderCancelFinishDate"
+        android:layout_marginTop="8dp"
+        app:layout_constraintEnd_toStartOf="@+id/btnAdderSaveFinishDate"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/dpBookFinishDate" />
+
+    <Button
         android:id="@+id/btnAdderSaveFinishDate"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
         android:backgroundTint="?colorPrimary"
         android:text="@string/btnAdderSaveFinishDate"
+        android:layout_marginTop="8dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/btnAdderCancelFinishDate"
         app:layout_constraintTop_toBottomOf="@+id/dpBookFinishDate" />
 
     <ImageView

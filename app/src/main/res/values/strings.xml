@@ -143,5 +143,6 @@
     <string name="tvAvgRatingTitle">Average rating</string>
     <string name="tvAvgRating" translatable="false">4.9</string>
     <string name="tvLooksEmptyStatistics">Nothing to see here yet! Add read books and come back here later.</string>
+    <string name="btnAdderCancelFinishDate">Cancel</string>
 
 </resources>
