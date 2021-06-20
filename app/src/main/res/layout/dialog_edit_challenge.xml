@@ -1,0 +1,144 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/constraintLayout"
+        android:layout_width="340dp"
+        android:layout_height="match_parent"
+        android:background="@drawable/dialog_rounded"
+        android:paddingTop="16dp"
+        android:paddingBottom="16dp">
+
+
+        <TextView
+            android:id="@+id/tvChallengeEditorYear"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:gravity="center"
+            android:text="2069"
+            android:textColor="?colorOnSecondary"
+            android:textSize="32sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tvChallengeEditorTitle" />
+
+
+        <Button
+            android:id="@+id/btnChallengeEditorBooksNumber"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="12dp"
+            android:backgroundTint="?colorPrimary"
+            android:text="12"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tvChallengeEditorYear" />
+
+        <Button
+            android:id="@+id/btnChallengeEditorBeginner"
+            android:layout_width="150dp"
+            android:layout_height="wrap_content"
+            android:backgroundTint="?colorPrimary"
+            android:text="Beginner - 3"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/btnChallengeEditorCancel" />
+
+        <Button
+            android:id="@+id/btnChallengeEditorEasy"
+            android:layout_width="150dp"
+            android:layout_height="wrap_content"
+            android:backgroundTint="?colorPrimary"
+            android:text="Easy - 6"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/btnChallengeEditorBeginner" />
+
+        <Button
+            android:id="@+id/btnChallengeEditorNormal"
+            android:layout_width="150dp"
+            android:layout_height="wrap_content"
+            android:backgroundTint="?colorPrimary"
+            android:text="Normal - 12"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/btnChallengeEditorEasy" />
+
+        <Button
+            android:id="@+id/btnChallengeEditorHard"
+            android:layout_width="150dp"
+            android:layout_height="wrap_content"
+            android:backgroundTint="?colorPrimary"
+            android:text="Hard - 18"
+            app:layout_anchor="@+id/constraintLayout"
+            app:layout_anchorGravity="bottom|center"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/btnChallengeEditorNormal" />
+
+        <Button
+            android:id="@+id/btnChallengeEditorInsane"
+            android:layout_width="150dp"
+            android:layout_height="wrap_content"
+            android:backgroundTint="?colorPrimary"
+            android:text="Insane - 24"
+            app:layout_anchor="@+id/constraintLayout"
+            app:layout_anchorGravity="bottom|center"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/btnChallengeEditorHard" />
+
+        <TextView
+            android:id="@+id/tvChallengeEditorTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/tvChallengeEditorTitle"
+            android:textColor="?colorOnSecondary"
+            android:textSize="24sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.502"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <Button
+            android:id="@+id/btnChallengeEditorCancel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:backgroundTint="@color/red_800"
+            android:text="@string/btnAdderCancelFinishDate"
+            app:layout_constraintEnd_toStartOf="@+id/btnChallengeEditorSet"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/btnChallengeEditorBooksNumber" />
+
+        <Button
+            android:id="@+id/btnChallengeEditorSet"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:backgroundTint="?colorPrimary"
+            android:text="@string/btnAdderSaveFinishDate"
+            app:layout_constraintBottom_toBottomOf="@+id/btnChallengeEditorCancel"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toEndOf="@+id/btnChallengeEditorCancel"
+            app:layout_constraintTop_toTopOf="@+id/btnChallengeEditorCancel" />
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

@@ -139,13 +139,23 @@
     <string name="tvWelcomeText_2">You will also see some cool statistics</string>
     <string name="tvWelcomeText_3">Enjoy and keep reading!</string>
     <string name="tvSetupSwipeHint_0">Swipe left</string>
-    <string name="tvSetupSwipeHint_1">Click the button</string>
+    <string name="tvSetupSwipeHint_1">Click the arrow</string>
     <string name="tvAvgRatingTitle">Average rating</string>
     <string name="tvAvgRating" translatable="false">4.9</string>
     <string name="tvLooksEmptyStatistics">Nothing to see here yet! Add read books and come back here later.</string>
     <string name="btnAdderCancelFinishDate">Cancel</string>
-    <string name="tvChallengeTitle">Year challenge</string>
+    <string name="tvChallengeTitle">Challenge</string>
     <string name="tvChallenge" translatable="false">6 / 9</string>
     <string name="tvChallengeTitleCurrent">Current year challenge</string>
+    <string name="tvChallengeEditorTitle">Edit challenge</string>
+    <string name="challenge_0">Beginner - 3</string>
+    <string name="challenge_1">Easy - 6</string>
+    <string name="challenge_2">Normal - 12</string>
+    <string name="challenge_3">Hard - 18</string>
+    <string name="challenge_4">Insane - 24</string>
+    <string name="tvChallengeNotSet">None, click to add one!</string>
+    <string name="savingChanges">Saving changes</string>
+    <string name="click_to_set_challenge">Set difficulty</string>
+    <string name="warning_challenge_difficulty_not_set">Choose a difficulty!</string>
 
 </resources>

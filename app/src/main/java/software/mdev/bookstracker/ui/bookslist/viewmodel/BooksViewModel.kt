@@ -6,9 +6,12 @@ import software.mdev.bookstracker.data.repositories.BooksRepository
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import software.mdev.bookstracker.data.db.entities.Year
+import software.mdev.bookstracker.data.repositories.YearRepository
 
 class BooksViewModel(
-        private val repository: BooksRepository
+        private val repository: BooksRepository,
+        private val YearRepository: YearRepository
 ): ViewModel() {
 
     fun upsert(item: Book) = CoroutineScope(Dispatchers.Main).launch {
@@ -63,5 +66,45 @@ class BooksViewModel(
     fun getSortedBooksByDateAsc(bookStatus: String) = repository.getSortedBooksByDateAsc(bookStatus)
 
     fun getBookCount(bookStatus: String) = repository.getBookCount(bookStatus)
+
+    fun upsertYear(item: Year) = CoroutineScope(Dispatchers.Main).launch {
+        YearRepository.upsertYear(item)
+    }
+
+    fun deleteYear(item: Year) = CoroutineScope(Dispatchers.Main).launch {
+        YearRepository.deleteYear(item)
+    }
+
+    fun getYear(year: Int) = YearRepository.getYear(year)
+
+    fun getYears() = YearRepository.getYears()
+
+    fun updateYear(
+        item_year: String,
+        item_books: Int,
+        item_pages: Int,
+        item_rating: Float,
+        item_challenge_books: Int,
+        item_challenge_pages: Int
+    ) = CoroutineScope(Dispatchers.Main).launch {
+        YearRepository.updateYear(
+            item_year,
+            item_books,
+            item_pages,
+            item_rating,
+            item_challenge_books,
+            item_challenge_pages
+        )
+    }
+
+    fun updateYearsNumberOfBooks(
+        item_year: String,
+        item_books: Int
+    ) = CoroutineScope(Dispatchers.Main).launch {
+        YearRepository.updateYearsNumberOfBooks(
+            item_year,
+            item_books
+        )
+    }
 
 }

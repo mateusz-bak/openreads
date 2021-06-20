@@ -20,10 +20,17 @@ import software.mdev.bookstracker.ui.bookslist.viewmodel.BooksViewModelProviderF
 import software.mdev.bookstracker.ui.bookslist.ListActivity
 import com.google.android.material.snackbar.Snackbar
 import kotlinx.android.synthetic.main.fragment_edit_book.*
+import software.mdev.bookstracker.data.db.YearDatabase
+import software.mdev.bookstracker.data.repositories.YearRepository
 import software.mdev.bookstracker.other.Constants
 import java.text.Normalizer
 import java.text.SimpleDateFormat
 import java.util.*
+import androidx.lifecycle.Observer
+import androidx.lifecycle.lifecycleScope
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
+import software.mdev.bookstracker.data.db.entities.Year
 
 
 class EditBookFragment : Fragment(R.layout.fragment_edit_book) {
@@ -42,8 +49,10 @@ class EditBookFragment : Fragment(R.layout.fragment_edit_book) {
         var whatIsClicked = Constants.BOOK_STATUS_NOTHING
 
         val database = BooksDatabase(view.context)
+        val yearDatabase = YearDatabase(view.context)
         val repository = BooksRepository(database)
-        val factory = BooksViewModelProviderFactory(repository)
+        val yearRepository = YearRepository(yearDatabase)
+        val factory = BooksViewModelProviderFactory(repository, yearRepository)
         val book = args.book
         var accentColor = getAccentColor(view.context)
 
@@ -250,9 +259,9 @@ class EditBookFragment : Fragment(R.layout.fragment_edit_book) {
                                         bookAuthor_ASCII = bookAuthor.unaccent().replace("ł", "l", false)
                                     )
 
-                                    it.hideKeyboard()
-                                    findNavController().popBackStack()
-                                    findNavController().popBackStack()
+                                    Snackbar.make(it, R.string.savingChanges, Snackbar.LENGTH_SHORT).show()
+                                    recalculateChallenges()
+
                                     } else {
                                     Snackbar.make(it, R.string.sbWarningMissingFinishDate, Snackbar.LENGTH_SHORT).show()
                                 }
@@ -283,9 +292,7 @@ class EditBookFragment : Fragment(R.layout.fragment_edit_book) {
 
         fabDeleteBook.setOnClickListener{
             viewModel.delete(book)
-            it.hideKeyboard()
-            findNavController().popBackStack()
-            findNavController().popBackStack()
+            recalculateChallenges()
 
             Snackbar.make(it, getString(R.string.bookDeleted), Snackbar.LENGTH_LONG)
                 .setAction(getString(R.string.undo), UndoBookDeletion())
@@ -348,5 +355,49 @@ class EditBookFragment : Fragment(R.layout.fragment_edit_book) {
             Constants.THEME_ACCENT_YELLOW_500 -> accentColor = ContextCompat.getColor(context, R.color.yellow_500)
         }
         return accentColor
+    }
+
+    fun convertLongToYear(time: Long): String {
+        val date = Date(time)
+        val format = SimpleDateFormat("yyyy")
+        return format.format(date)
+    }
+
+    private fun recalculateChallenges() {
+        viewModel.getSortedBooksByDateDesc(Constants.BOOK_STATUS_READ)
+            .observe(viewLifecycleOwner, Observer { books ->
+                var year: Int
+                var years = listOf<Int>()
+
+                for (item in books) {
+                    if (item.bookFinishDate != "null" && item.bookFinishDate != "none") {
+                        year = convertLongToYear(item.bookFinishDate.toLong()).toInt()
+                        if (year !in years) {
+                            years = years + year
+                        }
+                    }
+                }
+
+                for (item_year in years) {
+                    var booksInYear = 0
+
+                    for (item_book in books) {
+                        if (item_book.bookFinishDate != "none" && item_book.bookFinishDate != "null") {
+                            year = convertLongToYear(item_book.bookFinishDate.toLong()).toInt()
+                            if (year == item_year) {
+                                booksInYear++
+                            }
+                        }
+                    }
+                    viewModel.updateYearsNumberOfBooks(item_year.toString(), booksInYear)
+                }
+            }
+            )
+        lifecycleScope.launch {
+            delay(500L)
+            view?.hideKeyboard()
+            findNavController().popBackStack()
+            findNavController().popBackStack()
+        }
     }
 }

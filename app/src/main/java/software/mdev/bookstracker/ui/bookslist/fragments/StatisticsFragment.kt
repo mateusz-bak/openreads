@@ -14,8 +14,10 @@ import software.mdev.bookstracker.ui.bookslist.ListActivity
 import kotlinx.android.synthetic.main.fragment_statistics.*
 import software.mdev.bookstracker.adapters.StatisticsAdapter
 import software.mdev.bookstracker.data.db.BooksDatabase
+import software.mdev.bookstracker.data.db.YearDatabase
 import software.mdev.bookstracker.data.db.entities.Year
 import software.mdev.bookstracker.data.repositories.BooksRepository
+import software.mdev.bookstracker.data.repositories.YearRepository
 import software.mdev.bookstracker.other.Constants
 import software.mdev.bookstracker.other.Constants.SHARED_PREFERENCES_NAME
 import software.mdev.bookstracker.ui.bookslist.viewmodel.BooksViewModel
@@ -39,17 +41,24 @@ class StatisticsFragment : Fragment(R.layout.fragment_statistics) {
         )
 
         val database = BooksDatabase(view.context)
+        val yearDatabase = YearDatabase(view.context)
         val booksRepository = BooksRepository(database)
-        val booksViewModelProviderFactory = BooksViewModelProviderFactory(booksRepository)
+        val yearRepository = YearRepository(yearDatabase)
+        val booksViewModelProviderFactory = BooksViewModelProviderFactory(booksRepository, yearRepository)
 
         viewModel = ViewModelProvider(this, booksViewModelProviderFactory).get(
             BooksViewModel::class.java
         )
 
-        val adapter = StatisticsAdapter(this)
-        vpStatistics.adapter = adapter
+        var listOfYearsFromDb: List<Year>
 
-        this.getYears(adapter)
+        viewModel.getYears()
+            .observe(viewLifecycleOwner, Observer { years ->
+                listOfYearsFromDb = years
+                val adapter = StatisticsAdapter(this, listOfYearsFromDb)
+                vpStatistics.adapter = adapter
+                this.getYears(adapter)
+            })
 
         ivMore.setOnClickListener {
             it.hideKeyboard()
@@ -67,14 +76,14 @@ class StatisticsFragment : Fragment(R.layout.fragment_statistics) {
         viewModel.getSortedBooksByDateDesc(Constants.BOOK_STATUS_READ)
             .observe(viewLifecycleOwner, Observer { books ->
                 var listOfYears = mutableListOf<Year>()
-                listOfYears.add(Year("0000", 0, 0, 0F))
+                listOfYears.add(Year("0000", 0, 0, 0F, 0, 0))
 
                 var years = listOf<Int>()
                 var year: Int
 
                 for (item in books) {
                     if (item.bookFinishDate != "null" && item.bookFinishDate != "none") {
-                        year = convertLongToTime(item.bookFinishDate.toLong()).toInt()
+                        year = convertLongToYear(item.bookFinishDate.toLong()).toInt()
                         if (year !in years) {
                             years = years + year
                         }
@@ -92,7 +101,7 @@ class StatisticsFragment : Fragment(R.layout.fragment_statistics) {
 
                     for (item_book in books) {
                         if (item_book.bookFinishDate != "none" && item_book.bookFinishDate != "null") {
-                            year = convertLongToTime(item_book.bookFinishDate.toLong()).toInt()
+                            year = convertLongToYear(item_book.bookFinishDate.toLong()).toInt()
                             if (year == item_year) {
                                 booksInYear++
                                 booksAllTime++
@@ -103,10 +112,10 @@ class StatisticsFragment : Fragment(R.layout.fragment_statistics) {
                             }
                         }
                     }
-                    listOfYears.add(Year(item_year.toString(), booksInYear, pagesInYear, (sumRatingInYear/booksInYear)))
+                    listOfYears.add(Year(item_year.toString(), booksInYear, pagesInYear, (sumRatingInYear/booksInYear), 0, 0))
                 }
 
-                listOfYears[0] = Year("0000", booksAllTime, pagesAllTime, (sumRatingAllTime/booksAllTime))
+                listOfYears[0] = Year("0000", booksAllTime, pagesAllTime, (sumRatingAllTime/booksAllTime), 0, 0)
 
                 statisticsAdapter.differ.submitList(listOfYears)
 
@@ -120,7 +129,7 @@ class StatisticsFragment : Fragment(R.layout.fragment_statistics) {
             )
     }
 
-    fun convertLongToTime(time: Long): String {
+    fun convertLongToYear(time: Long): String {
         val date = Date(time)
         val format = SimpleDateFormat("yyyy")
         return format.format(date)

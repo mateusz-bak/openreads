@@ -28,6 +28,9 @@ import software.mdev.bookstracker.ui.bookslist.dialogs.SortBooksDialogListener
 import kotlinx.android.synthetic.main.fragment_in_progress.*
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
+import software.mdev.bookstracker.data.db.YearDatabase
+import software.mdev.bookstracker.data.repositories.YearRepository
+import software.mdev.bookstracker.other.Constants
 import software.mdev.bookstracker.other.Constants.BOOK_STATUS_IN_PROGRESS
 import software.mdev.bookstracker.other.Constants.BOOK_STATUS_READ
 import software.mdev.bookstracker.other.Constants.BOOK_STATUS_TO_READ
@@ -45,6 +48,8 @@ import software.mdev.bookstracker.other.Constants.SORT_ORDER_RATING_ASC
 import software.mdev.bookstracker.other.Constants.SORT_ORDER_RATING_DESC
 import software.mdev.bookstracker.other.Constants.SORT_ORDER_TITLE_ASC
 import software.mdev.bookstracker.other.Constants.SORT_ORDER_TITLE_DESC
+import java.text.SimpleDateFormat
+import java.util.*
 
 
 class InProgressFragment : Fragment(R.layout.fragment_in_progress) {
@@ -65,13 +70,15 @@ class InProgressFragment : Fragment(R.layout.fragment_in_progress) {
         view.hideKeyboard()
 
         val database = BooksDatabase(view.context)
+        val yearDatabase = YearDatabase(view.context)
         val booksRepository = BooksRepository(database)
-        val booksViewModelProviderFactory = BooksViewModelProviderFactory(booksRepository)
+        val yearRepository = YearRepository(yearDatabase)
+        val booksViewModelProviderFactory = BooksViewModelProviderFactory(booksRepository, yearRepository)
 
         viewModel = ViewModelProvider(this, booksViewModelProviderFactory).get(
             BooksViewModel::class.java)
 
-        val factory = BooksViewModelProviderFactory(booksRepository)
+        val factory = BooksViewModelProviderFactory(booksRepository, yearRepository)
         val viewModel = ViewModelProviders.of(this, factory).get(BooksViewModel::class.java)
 
         val bookAdapter = BookAdapter(view.context, whichFragment = currentFragment)
@@ -96,6 +103,7 @@ class InProgressFragment : Fragment(R.layout.fragment_in_progress) {
                 object: AddBookDialogListener {
                     override fun onSaveButtonClicked(item: Book) {
                         viewModel.upsert(item)
+                        recalculateChallenges()
                         when(item.bookStatus) {
                             BOOK_STATUS_READ -> { findNavController().navigate(
                                 R.id.action_inProgressFragment_to_readFragment
@@ -242,5 +250,43 @@ class InProgressFragment : Fragment(R.layout.fragment_in_progress) {
             SORT_ORDER_DATE_DESC -> viewModel.getSortedBooksByDateDesc(currentFragment).observe(viewLifecycleOwner, Observer { some_books -> bookAdapter.differ.submitList(some_books)})
             SORT_ORDER_DATE_ASC -> viewModel.getSortedBooksByDateAsc(currentFragment).observe(viewLifecycleOwner, Observer { some_books -> bookAdapter.differ.submitList(some_books)})
         }
+    }
+
+    private fun recalculateChallenges() {
+        viewModel.getSortedBooksByDateDesc(Constants.BOOK_STATUS_READ)
+            .observe(viewLifecycleOwner, Observer { books ->
+                var year: Int
+                var years = listOf<Int>()
+
+                for (item in books) {
+                    if (item.bookFinishDate != "null" && item.bookFinishDate != "none") {
+                        year = convertLongToYear(item.bookFinishDate.toLong()).toInt()
+                        if (year !in years) {
+                            years = years + year
+                        }
+                    }
+                }
+
+                for (item_year in years) {
+                    var booksInYear = 0
+
+                    for (item_book in books) {
+                        if (item_book.bookFinishDate != "none" && item_book.bookFinishDate != "null") {
+                            year = convertLongToYear(item_book.bookFinishDate.toLong()).toInt()
+                            if (year == item_year) {
+                                booksInYear++
+                            }
+                        }
+                    }
+                    viewModel.updateYearsNumberOfBooks(item_year.toString(), booksInYear)
+                }
+            }
+            )
+    }
+
+    fun convertLongToYear(time: Long): String {
+        val date = Date(time)
+        val format = SimpleDateFormat("yyyy")
+        return format.format(date)
     }
 }
