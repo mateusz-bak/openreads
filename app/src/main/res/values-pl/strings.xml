@@ -87,7 +87,7 @@
     <string name="hint_pages_number">Stron</string>
     <string name="sbNotAValidNumber">To nie jest prawidłowy numer!</string>
     <string name="sbWarningPagesMissing">Wpisz liczbę stron!</string>
-    <string name="sbWarningPages0">Liczba musi być większa niż 0!</string>
+    <string name="sbWarningPages0">Liczba stron musi być większa niż 0!</string>
     <string name="tvSortPages">Strony</string>
     <string name="pages">stron</string>
     <string name="tvBookFinishDateTitle">Data zakończenia:</string>

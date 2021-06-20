@@ -44,10 +44,10 @@
 
         <Button
             android:id="@+id/btnChallengeEditorBeginner"
-            android:layout_width="150dp"
+            android:layout_width="200dp"
             android:layout_height="wrap_content"
             android:backgroundTint="?colorPrimary"
-            android:text="Beginner - 3"
+            android:text="@string/challenge_0"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toStartOf="parent"
@@ -55,10 +55,10 @@
 
         <Button
             android:id="@+id/btnChallengeEditorEasy"
-            android:layout_width="150dp"
+            android:layout_width="200dp"
             android:layout_height="wrap_content"
             android:backgroundTint="?colorPrimary"
-            android:text="Easy - 6"
+            android:text="@string/challenge_1"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toStartOf="parent"
@@ -66,10 +66,10 @@
 
         <Button
             android:id="@+id/btnChallengeEditorNormal"
-            android:layout_width="150dp"
+            android:layout_width="200dp"
             android:layout_height="wrap_content"
             android:backgroundTint="?colorPrimary"
-            android:text="Normal - 12"
+            android:text="@string/challenge_2"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toStartOf="parent"
@@ -77,10 +77,10 @@
 
         <Button
             android:id="@+id/btnChallengeEditorHard"
-            android:layout_width="150dp"
+            android:layout_width="200dp"
             android:layout_height="wrap_content"
             android:backgroundTint="?colorPrimary"
-            android:text="Hard - 18"
+            android:text="@string/challenge_3"
             app:layout_anchor="@+id/constraintLayout"
             app:layout_anchorGravity="bottom|center"
             app:layout_constraintEnd_toEndOf="parent"
@@ -90,10 +90,10 @@
 
         <Button
             android:id="@+id/btnChallengeEditorInsane"
-            android:layout_width="150dp"
+            android:layout_width="200dp"
             android:layout_height="wrap_content"
             android:backgroundTint="?colorPrimary"
-            android:text="Insane - 24"
+            android:text="@string/challenge_4"
             app:layout_anchor="@+id/constraintLayout"
             app:layout_anchorGravity="bottom|center"
             app:layout_constraintEnd_toEndOf="parent"
