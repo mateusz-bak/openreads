@@ -97,7 +97,7 @@ class AddBookDialog(context: Context, var addBookDialogListener: AddBookDialogLi
             dpBookFinishDate.visibility = View.VISIBLE
             btnAdderSaveFinishDate.visibility = View.VISIBLE
             btnAdderCancelFinishDate.visibility = View.VISIBLE
-            btnSetFinishDate.isClickable = true
+            btnSetFinishDate.isClickable = false
             tvAdderTitle.setText(R.string.set_finish_date_title)
 
             etAdderBookTitle.visibility = View.GONE
