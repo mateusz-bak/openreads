@@ -32,130 +32,20 @@ class ChallengeDialog(
 
         this.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
 
-        var challengeDifficulty: Int?
-
-        if (year.yearChallengeBooks == null) {
-            challengeDifficulty = null
-        } else {
-            challengeDifficulty = year.yearChallengeBooks
-        }
-
         tvChallengeEditorYear.text = year.year
-        when (year.yearChallengeBooks) {
-            0 -> btnChallengeEditorBooksNumber.text = context.getString(R.string.challenge_0)
-            1 -> btnChallengeEditorBooksNumber.text = context.getString(R.string.challenge_1)
-            2 -> btnChallengeEditorBooksNumber.text = context.getString(R.string.challenge_2)
-            3 -> btnChallengeEditorBooksNumber.text = context.getString(R.string.challenge_3)
-            4 -> btnChallengeEditorBooksNumber.text = context.getString(R.string.challenge_4)
-            else -> btnChallengeEditorBooksNumber.text =
-                context.getString(R.string.click_to_set_challenge)
+        if (year.yearChallengeBooks != null) {
+            etChallengeEditorBooksNumber.setText(year.yearChallengeBooks.toString())
+        } else {
+            etChallengeEditorBooksNumber.setText("0")
         }
 
-        btnChallengeEditorBeginner.visibility = View.GONE
-        btnChallengeEditorEasy.visibility = View.GONE
-        btnChallengeEditorNormal.visibility = View.GONE
-        btnChallengeEditorHard.visibility = View.GONE
-        btnChallengeEditorInsane.visibility = View.GONE
-
-        btnChallengeEditorBooksNumber.setOnClickListener {
-            tvChallengeEditorTitle.visibility = View.GONE
-            tvChallengeEditorYear.visibility = View.GONE
-            btnChallengeEditorBooksNumber.visibility = View.GONE
-            btnChallengeEditorCancel.visibility = View.GONE
-            btnChallengeEditorSet.visibility = View.GONE
-
-            btnChallengeEditorBeginner.visibility = View.VISIBLE
-            btnChallengeEditorEasy.visibility = View.VISIBLE
-            btnChallengeEditorNormal.visibility = View.VISIBLE
-            btnChallengeEditorHard.visibility = View.VISIBLE
-            btnChallengeEditorInsane.visibility = View.VISIBLE
-        }
-
-        btnChallengeEditorBeginner.setOnClickListener {
-            btnChallengeEditorBeginner.visibility = View.GONE
-            btnChallengeEditorEasy.visibility = View.GONE
-            btnChallengeEditorNormal.visibility = View.GONE
-            btnChallengeEditorHard.visibility = View.GONE
-            btnChallengeEditorInsane.visibility = View.GONE
-
-            tvChallengeEditorTitle.visibility = View.VISIBLE
-            tvChallengeEditorYear.visibility = View.VISIBLE
-            btnChallengeEditorBooksNumber.visibility = View.VISIBLE
-            btnChallengeEditorCancel.visibility = View.VISIBLE
-            btnChallengeEditorSet.visibility = View.VISIBLE
-            challengeDifficulty = 0
-            btnChallengeEditorBooksNumber.text = context.getString(R.string.challenge_0)
-        }
-        btnChallengeEditorEasy.setOnClickListener {
-            btnChallengeEditorBeginner.visibility = View.GONE
-            btnChallengeEditorEasy.visibility = View.GONE
-            btnChallengeEditorNormal.visibility = View.GONE
-            btnChallengeEditorHard.visibility = View.GONE
-            btnChallengeEditorInsane.visibility = View.GONE
-
-            tvChallengeEditorTitle.visibility = View.VISIBLE
-            tvChallengeEditorYear.visibility = View.VISIBLE
-            btnChallengeEditorBooksNumber.visibility = View.VISIBLE
-            btnChallengeEditorCancel.visibility = View.VISIBLE
-            btnChallengeEditorSet.visibility = View.VISIBLE
-            challengeDifficulty = 1
-            btnChallengeEditorBooksNumber.text = context.getString(R.string.challenge_1)
-        }
-        btnChallengeEditorNormal.setOnClickListener {
-            btnChallengeEditorBeginner.visibility = View.GONE
-            btnChallengeEditorEasy.visibility = View.GONE
-            btnChallengeEditorNormal.visibility = View.GONE
-            btnChallengeEditorHard.visibility = View.GONE
-            btnChallengeEditorInsane.visibility = View.GONE
-
-            tvChallengeEditorTitle.visibility = View.VISIBLE
-            tvChallengeEditorYear.visibility = View.VISIBLE
-            btnChallengeEditorBooksNumber.visibility = View.VISIBLE
-            btnChallengeEditorCancel.visibility = View.VISIBLE
-            btnChallengeEditorSet.visibility = View.VISIBLE
-            challengeDifficulty = 2
-            btnChallengeEditorBooksNumber.text = context.getString(R.string.challenge_2)
-        }
-        btnChallengeEditorHard.setOnClickListener {
-            btnChallengeEditorBeginner.visibility = View.GONE
-            btnChallengeEditorEasy.visibility = View.GONE
-            btnChallengeEditorNormal.visibility = View.GONE
-            btnChallengeEditorHard.visibility = View.GONE
-            btnChallengeEditorInsane.visibility = View.GONE
-
-            tvChallengeEditorTitle.visibility = View.VISIBLE
-            tvChallengeEditorYear.visibility = View.VISIBLE
-            btnChallengeEditorBooksNumber.visibility = View.VISIBLE
-            btnChallengeEditorCancel.visibility = View.VISIBLE
-            btnChallengeEditorSet.visibility = View.VISIBLE
-            challengeDifficulty = 3
-            btnChallengeEditorBooksNumber.text = context.getString(R.string.challenge_3)
-        }
-        btnChallengeEditorInsane.setOnClickListener {
-            btnChallengeEditorBeginner.visibility = View.GONE
-            btnChallengeEditorEasy.visibility = View.GONE
-            btnChallengeEditorNormal.visibility = View.GONE
-            btnChallengeEditorHard.visibility = View.GONE
-            btnChallengeEditorInsane.visibility = View.GONE
-
-            tvChallengeEditorTitle.visibility = View.VISIBLE
-            tvChallengeEditorYear.visibility = View.VISIBLE
-            btnChallengeEditorBooksNumber.visibility = View.VISIBLE
-            btnChallengeEditorCancel.visibility = View.VISIBLE
-            btnChallengeEditorSet.visibility = View.VISIBLE
-            challengeDifficulty = 4
-            btnChallengeEditorBooksNumber.text = context.getString(R.string.challenge_4)
-        }
+        etChallengeEditorBooksNumber.requestFocus()
+        etChallengeEditorBooksNumber.setSelection(etChallengeEditorBooksNumber.text.toString().length)
+        showKeyboard(etChallengeEditorBooksNumber,350)
 
         btnChallengeEditorSet.setOnClickListener {
-            if (challengeDifficulty != null) {
-                when (challengeDifficulty) {
-                    0 -> year.yearChallengeBooks = 0
-                    1 -> year.yearChallengeBooks = 1
-                    2 -> year.yearChallengeBooks = 2
-                    3 -> year.yearChallengeBooks = 3
-                    4 -> year.yearChallengeBooks = 4
-                }
+            if (etChallengeEditorBooksNumber.text.toString().isNotEmpty()) {
+                year.yearChallengeBooks = etChallengeEditorBooksNumber.text.toString().toInt()
                 challengeDialogListener.onSaveButtonClicked(year)
                 dismiss()
             } else {

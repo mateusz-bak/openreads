@@ -138,12 +138,8 @@ class StatisticsAdapter(
             }
 
             var challengeBooksTarget = "null"
-            when (foundYear?.yearChallengeBooks) {
-                0 -> challengeBooksTarget = Constants.CHALLENGE_BEGINNER.toString()
-                1 -> challengeBooksTarget = Constants.CHALLENGE_EASY.toString()
-                2 -> challengeBooksTarget = Constants.CHALLENGE_NORMAL.toString()
-                3 -> challengeBooksTarget = Constants.CHALLENGE_HARD.toString()
-                4 -> challengeBooksTarget = Constants.CHALLENGE_INSANE.toString()
+            if (foundYear?.yearChallengeBooks != null) {
+                challengeBooksTarget = foundYear?.yearChallengeBooks.toString()
             }
 
             val tvChallengeText = "$challengeBooksRead / $challengeBooksTarget"

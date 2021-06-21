@@ -148,14 +148,9 @@
     <string name="tvChallenge" translatable="false">6 / 9</string>
     <string name="tvChallengeTitleCurrent">Current year challenge</string>
     <string name="tvChallengeEditorTitle">Edit challenge</string>
-    <string name="challenge_0">Beginner - 3</string>
-    <string name="challenge_1">Easy - 6</string>
-    <string name="challenge_2">Normal - 12</string>
-    <string name="challenge_3">Hard - 18</string>
-    <string name="challenge_4">Insane - 24</string>
     <string name="tvChallengeNotSet">None, click to add one!</string>
     <string name="savingChanges">Saving changes</string>
-    <string name="click_to_set_challenge">Set difficulty</string>
     <string name="warning_challenge_difficulty_not_set">Choose a difficulty!</string>
+    <string name="tvChallengeBooks">books</string>
 
 </resources>

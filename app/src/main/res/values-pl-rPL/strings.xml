@@ -119,13 +119,8 @@
     <string name="tvChallengeTitle">Wyzwanie</string>
     <string name="tvChallengeTitleCurrent">Tegoroczne wyzwanie</string>
     <string name="tvChallengeEditorTitle">Edytuj wyzwanie</string>
-    <string name="challenge_0">Początkujący - 3</string>
-    <string name="challenge_1">Łatwe - 6</string>
-    <string name="challenge_2">Normalne - 12</string>
-    <string name="challenge_3">Trudne - 18</string>
-    <string name="challenge_4">Niemożliwe - 24</string>
     <string name="tvChallengeNotSet">Kliknij, żeby dodać!</string>
     <string name="savingChanges">Zapisywanie zmian</string>
-    <string name="click_to_set_challenge">Ustaw cel wyzwania</string>
     <string name="warning_challenge_difficulty_not_set">Wybierz cel wyzwania!</string>
+    <string name="tvChallengeBooks">książek</string>
 </resources>
