@@ -4,14 +4,18 @@ import android.content.Context
 import android.os.Bundle
 import android.view.View
 import android.view.inputmethod.InputMethodManager
+import androidx.core.view.children
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
+import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.tabs.TabLayoutMediator
 import software.mdev.bookstracker.R
 import software.mdev.bookstracker.ui.bookslist.ListActivity
 import kotlinx.android.synthetic.main.fragment_statistics.*
+import me.everything.android.ui.overscroll.OverScrollDecoratorHelper
+import me.everything.android.ui.overscroll.OverScrollDecoratorHelper.ORIENTATION_HORIZONTAL
 import software.mdev.bookstracker.adapters.StatisticsAdapter
 import software.mdev.bookstracker.data.db.BooksDatabase
 import software.mdev.bookstracker.data.db.YearDatabase
@@ -118,6 +122,11 @@ class StatisticsFragment : Fragment(R.layout.fragment_statistics) {
                 listOfYears[0] = Year("0000", booksAllTime, pagesAllTime, (sumRatingAllTime/booksAllTime), 0, 0)
 
                 statisticsAdapter.differ.submitList(listOfYears)
+
+                // bounce effect on viewpager2
+                vpStatistics.children.filterIsInstance<RecyclerView>().firstOrNull()?.let {
+                    OverScrollDecoratorHelper.setUpOverScroll(it, ORIENTATION_HORIZONTAL)
+                }
 
                 TabLayoutMediator(tlStatistics, vpStatistics) { tab, position ->
                     when (position) {
