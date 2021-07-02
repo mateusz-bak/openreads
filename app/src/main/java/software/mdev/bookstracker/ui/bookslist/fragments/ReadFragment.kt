@@ -125,23 +125,33 @@ class ReadFragment : Fragment(R.layout.fragment_read) {
         }
 
         ivFilterBooks.setOnClickListener{
+            // changes variable to false when ivFilterBooks is clicked
+            var willDialogBeShownAfterClick = true
 
             viewModel.getSortedBooksByDateDesc(currentFragment).observe(viewLifecycleOwner, Observer { some_books ->
                 var arrayOfYears = functions.calculateYearsFromDb(some_books)
 
-                FilterBooksDialog(view,
-                    object: FilterBooksDialogListener {
-                        override fun onSaveFilterButtonClicked() {
-                            bookAdapter.notifyDataSetChanged()
-                            getBooks(bookAdapter)
-                            lifecycleScope.launch {
-                                delay(250L)
-                                rvBooks.scrollToPosition(0)
+                // checks variable whether dialog is called by user (true) or by some_books change (false)
+                if (willDialogBeShownAfterClick) {
+                    // changes variable to false so dialog won't be shown when not called by user
+                    willDialogBeShownAfterClick = false
+
+                    FilterBooksDialog(
+                        view,
+                        object : FilterBooksDialogListener {
+                            override fun onSaveFilterButtonClicked() {
+                                bookAdapter.notifyDataSetChanged()
+                                getBooks(bookAdapter)
+                                lifecycleScope.launch {
+                                    delay(250L)
+                                    rvBooks.scrollToPosition(0)
+                                }
                             }
-                        }
-                    },
-                    arrayOfYears,
-                    activity as ListActivity).show()
+                        },
+                        arrayOfYears,
+                        activity as ListActivity
+                    ).show()
+                }
             })
         }
 
