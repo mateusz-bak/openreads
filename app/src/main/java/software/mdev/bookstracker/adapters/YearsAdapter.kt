@@ -66,8 +66,11 @@ class YearsAdapter(
             jsonString1 =
                 sharedPref.getString(Constants.SHARED_PREFERENCES_KEY_FILTER_YEARS, jsonString1)
             var currentArray1 = gson1.fromJson(jsonString1, Array<String>::class.java).toList()
-            if (curYear in currentArray1)
+            if (curYear in currentArray1) {
                 cbFilterYear.isChecked = true
+                tvFilterYear.setTextColor(getAccentColor(context))
+                tvFilterYear.setTypeface(null, Typeface.BOLD)
+            }
 
             clFilterDialog.setOnClickListener {
                 var gson = Gson()
