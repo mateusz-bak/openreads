@@ -16,7 +16,7 @@
     <string name="ivSort">Sortuj wyświetlone książki</string>
     <string name="ivMore">Pokaż więcej opcji</string>
     <string name="ivSeparator1">Separator pomiędzy \"szukaj\" i \"sortuj\"</string>
-    <string name="ivSeparator2">Separator pomiędzy \"sortuj\" i \"więcej opcji\"</string>
+    <string name="ivSeparator2">Separator pomiędzy \"sortuj\" i \"filtruj\"</string>
     <string name="rbRatingIndicator">Książka jest przeczytana</string>
     <string name="ivInProgressIndicator">Książka jest w trakcie czytania</string>
     <string name="ivToReadIndicator">Książka jest do przeczytania</string>
@@ -123,4 +123,7 @@
     <string name="savingChanges">Zapisywanie zmian</string>
     <string name="warning_challenge_difficulty_not_set">Wybierz cel wyzwania!</string>
     <string name="tvChallengeBooks">książek</string>
+    <string name="ivFilter">Filtruj wyświetlone książki</string>
+    <string name="ivSeparator3">Separator pomiędzy \"filtruj i \"więcej opcji\"</string>
+    <string name="tvFilterTitle">Filtruj książki</string>
 </resources>

@@ -17,7 +17,7 @@
     <string name="ivSort">Sort displayed books</string>
     <string name="ivMore">Show more options</string>
     <string name="ivSeparator1">Separator between search and sort</string>
-    <string name="ivSeparator2">Separator between sort and more options</string>
+    <string name="ivSeparator2">Separator between sort and filter</string>
     <string name="rbRatingIndicator">This book is finished</string>
     <string name="ivInProgressIndicator">This book is in progress</string>
     <string name="ivToReadIndicator">This book is to read</string>
@@ -152,5 +152,8 @@
     <string name="savingChanges">Saving changes</string>
     <string name="warning_challenge_difficulty_not_set">Choose a difficulty!</string>
     <string name="tvChallengeBooks">books</string>
+    <string name="ivFilter">Filter displayed books</string>
+    <string name="ivSeparator3">Separator between filter and more options</string>
+    <string name="tvFilterTitle">Filter books</string>
 
 </resources>
