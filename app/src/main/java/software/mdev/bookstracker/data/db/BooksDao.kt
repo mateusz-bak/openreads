@@ -28,27 +28,30 @@ interface BooksDao {
     @Query("SELECT * FROM Book WHERE (item_bookTitle_ASCII LIKE '%' || :searchQuery || '%' OR item_bookAuthor_ASCII LIKE '%' || :searchQuery || '%')")
     fun searchBooks(searchQuery: String): LiveData<List<Book>>
 
-    @Query("SELECT * FROM Book WHERE item_bookStatus LIKE :bookStatus ORDER BY item_bookTitle_ASCII DESC")
+    @Query("SELECT * FROM Book WHERE (item_bookStatus LIKE :bookStatus AND item_bookIsDeleted LIKE 0) ORDER BY item_bookTitle_ASCII DESC")
     fun getSortedBooksByTitleDesc(bookStatus: String): LiveData<List<Book>>
-    @Query("SELECT * FROM Book WHERE item_bookStatus LIKE :bookStatus ORDER BY item_bookTitle_ASCII ASC")
+    @Query("SELECT * FROM Book WHERE (item_bookStatus LIKE :bookStatus AND item_bookIsDeleted LIKE 0) ORDER BY item_bookTitle_ASCII ASC")
     fun getSortedBooksByTitleAsc(bookStatus: String): LiveData<List<Book>>
-    @Query("SELECT * FROM Book WHERE item_bookStatus LIKE :bookStatus ORDER BY item_bookAuthor_ASCII DESC")
+    @Query("SELECT * FROM Book WHERE (item_bookStatus LIKE :bookStatus AND item_bookIsDeleted LIKE 0) ORDER BY item_bookAuthor_ASCII DESC")
     fun getSortedBooksByAuthorDesc(bookStatus: String): LiveData<List<Book>>
-    @Query("SELECT * FROM Book WHERE item_bookStatus LIKE :bookStatus ORDER BY item_bookAuthor_ASCII ASC")
+    @Query("SELECT * FROM Book WHERE (item_bookStatus LIKE :bookStatus AND item_bookIsDeleted LIKE 0) ORDER BY item_bookAuthor_ASCII ASC")
     fun getSortedBooksByAuthorAsc(bookStatus: String): LiveData<List<Book>>
-    @Query("SELECT * FROM Book WHERE item_bookStatus LIKE :bookStatus ORDER BY item_bookRating DESC")
+    @Query("SELECT * FROM Book WHERE (item_bookStatus LIKE :bookStatus AND item_bookIsDeleted LIKE 0) ORDER BY item_bookRating DESC")
     fun getSortedBooksByRatingDesc(bookStatus: String): LiveData<List<Book>>
-    @Query("SELECT * FROM Book WHERE item_bookStatus LIKE :bookStatus ORDER BY item_bookRating ASC")
+    @Query("SELECT * FROM Book WHERE (item_bookStatus LIKE :bookStatus AND item_bookIsDeleted LIKE 0) ORDER BY item_bookRating ASC")
     fun getSortedBooksByRatingAsc(bookStatus: String): LiveData<List<Book>>
-    @Query("SELECT * FROM Book WHERE item_bookStatus LIKE :bookStatus ORDER BY item_bookNumberOfPages DESC")
+    @Query("SELECT * FROM Book WHERE (item_bookStatus LIKE :bookStatus AND item_bookIsDeleted LIKE 0) ORDER BY item_bookNumberOfPages DESC")
     fun getSortedBooksByPagesDesc(bookStatus: String): LiveData<List<Book>>
-    @Query("SELECT * FROM Book WHERE item_bookStatus LIKE :bookStatus ORDER BY item_bookNumberOfPages ASC")
+    @Query("SELECT * FROM Book WHERE (item_bookStatus LIKE :bookStatus AND item_bookIsDeleted LIKE 0) ORDER BY item_bookNumberOfPages ASC")
     fun getSortedBooksByPagesAsc(bookStatus: String): LiveData<List<Book>>
-    @Query("SELECT * FROM Book WHERE item_bookStatus LIKE :bookStatus ORDER BY item_bookFinishDate DESC")
+    @Query("SELECT * FROM Book WHERE (item_bookStatus LIKE :bookStatus AND item_bookIsDeleted LIKE 0) ORDER BY item_bookFinishDate DESC")
     fun getSortedBooksByDateDesc(bookStatus: String): LiveData<List<Book>>
-    @Query("SELECT * FROM Book WHERE item_bookStatus LIKE :bookStatus ORDER BY item_bookFinishDate ASC")
+    @Query("SELECT * FROM Book WHERE (item_bookStatus LIKE :bookStatus AND item_bookIsDeleted LIKE 0) ORDER BY item_bookFinishDate ASC")
     fun getSortedBooksByDateAsc(bookStatus: String): LiveData<List<Book>>
 
-    @Query("SELECT COUNT(id) FROM Book WHERE item_bookStatus LIKE :bookStatus")
+    @Query("SELECT COUNT(id) FROM Book WHERE (item_bookStatus LIKE :bookStatus AND item_bookIsDeleted LIKE 0)")
     fun getBookCount(bookStatus: String): LiveData<Integer>
+
+    @Query("SELECT * FROM Book WHERE item_bookIsDeleted LIKE 1 ORDER BY item_bookTitle_ASCII ASC")
+    fun getDeletedBooks(): LiveData<List<Book>>
 }

@@ -210,7 +210,8 @@ class AddBookDialog(context: Context, var addBookDialogListener: AddBookDialogLi
                                             bookFinishDate = bookFinishDateMs.toString(),
                                             bookNumberOfPages = bookNumberOfPagesInt,
                                             bookTitle_ASCII = bookTitle.unaccent().replace("ł", "l", false),
-                                            bookAuthor_ASCII = bookAuthor.unaccent().replace("ł", "l", false)
+                                            bookAuthor_ASCII = bookAuthor.unaccent().replace("ł", "l", false),
+                                            false
                                         )
                                         addBookDialogListener.onSaveButtonClicked(editedBook)
                                         dismiss()

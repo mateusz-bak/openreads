@@ -109,4 +109,6 @@ class BooksViewModel(
         )
     }
 
+    fun getDeletedBooks() = repository.getDeletedBooks()
+
 }

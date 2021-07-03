@@ -256,7 +256,8 @@ class EditBookFragment : Fragment(R.layout.fragment_edit_book) {
                                         bookFinishDateMs.toString(),
                                         bookNumberOfPagesInt,
                                         bookTitle_ASCII = bookTitle.unaccent().replace("ł", "l", false),
-                                        bookAuthor_ASCII = bookAuthor.unaccent().replace("ł", "l", false)
+                                        bookAuthor_ASCII = bookAuthor.unaccent().replace("ł", "l", false),
+                                        false
                                     )
 
                                     Snackbar.make(it, R.string.savingChanges, Snackbar.LENGTH_SHORT).show()
@@ -286,12 +287,34 @@ class EditBookFragment : Fragment(R.layout.fragment_edit_book) {
 
         class UndoBookDeletion : View.OnClickListener {
             override fun onClick(view: View) {
-                viewModel.upsert(book)
+                viewModel.updateBook(
+                    book.id,
+                    book.bookTitle,
+                    book.bookAuthor,
+                    book.bookRating,
+                    book.bookStatus,
+                    book.bookFinishDate,
+                    book.bookNumberOfPages,
+                    book.bookTitle_ASCII,
+                    book.bookAuthor_ASCII,
+                    false
+                )
             }
         }
 
         fabDeleteBook.setOnClickListener{
-            viewModel.delete(book)
+            viewModel.updateBook(
+                book.id,
+                book.bookTitle,
+                book.bookAuthor,
+                book.bookRating,
+                book.bookStatus,
+                book.bookFinishDate,
+                book.bookNumberOfPages,
+                book.bookTitle_ASCII,
+                book.bookAuthor_ASCII,
+                true
+            )
             recalculateChallenges()
 
             Snackbar.make(it, getString(R.string.bookDeleted), Snackbar.LENGTH_LONG)
