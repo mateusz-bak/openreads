@@ -126,4 +126,7 @@
     <string name="ivFilter">Filtruj wyświetlone książki</string>
     <string name="ivSeparator3">Separator pomiędzy \"filtruj i \"więcej opcji\"</string>
     <string name="tvFilterTitle">Filtruj książki</string>
+    <string name="trash_summary">Usunięte książki</string>
+    <string name="trash_title">Kosz</string>
+    <string name="preference_application">Aplikacja</string>
 </resources>

@@ -155,5 +155,8 @@
     <string name="ivFilter">Filter displayed books</string>
     <string name="ivSeparator3">Separator between filter and more options</string>
     <string name="tvFilterTitle">Filter books</string>
+    <string name="trash_summary">Deleted books</string>
+    <string name="trash_title">Trash</string>
+    <string name="preference_application">App</string>
 
 </resources>

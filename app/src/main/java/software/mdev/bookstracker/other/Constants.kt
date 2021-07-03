@@ -60,6 +60,7 @@ object Constants {
     const val SHARED_PREFERENCES_KEY_RECOMMENDATIONS = "KEY_RECOMMENDATIONS"
     const val SHARED_PREFERENCES_REFRESHED = "refreshed"
     const val KEY_CHECK_FOR_UPDATES = "KEY_CHECK_FOR_UPDATES"
+    const val KEY_TRASH = "KEY_TRASH"
 
     const val EMPTY_STRING = ""
 

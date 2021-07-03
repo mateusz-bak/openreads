@@ -122,6 +122,9 @@
         <action
             android:id="@+id/action_settingsFragment_to_readFragment"
             app:destination="@id/readFragment" />
+        <action
+            android:id="@+id/action_settingsFragment_to_trashFragment"
+            app:destination="@id/trashFragment" />
     </fragment>
     <fragment
         android:id="@+id/statisticsFragment"
@@ -131,4 +134,8 @@
             android:id="@+id/action_statisticsFragment_to_settingsFragment"
             app:destination="@id/settingsFragment" />
     </fragment>
+    <fragment
+        android:id="@+id/trashFragment"
+        android:name="software.mdev.bookstracker.ui.bookslist.fragments.TrashFragment"
+        android:label="TrashFragment" />
 </navigation>
