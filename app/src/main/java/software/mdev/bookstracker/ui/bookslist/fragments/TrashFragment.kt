@@ -11,13 +11,13 @@ import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
 import kotlinx.android.synthetic.main.fragment_trash.*
 import software.mdev.bookstracker.R
-import software.mdev.bookstracker.adapters.BookAdapter
 import software.mdev.bookstracker.data.db.BooksDatabase
 import software.mdev.bookstracker.data.repositories.BooksRepository
 import software.mdev.bookstracker.ui.bookslist.ListActivity
 import software.mdev.bookstracker.ui.bookslist.viewmodel.BooksViewModel
 import software.mdev.bookstracker.ui.bookslist.viewmodel.BooksViewModelProviderFactory
 import me.everything.android.ui.overscroll.OverScrollDecoratorHelper
+import software.mdev.bookstracker.adapters.DeletedBookAdapter
 import software.mdev.bookstracker.data.db.YearDatabase
 import software.mdev.bookstracker.data.repositories.YearRepository
 import software.mdev.bookstracker.other.Constants
@@ -56,9 +56,9 @@ class TrashFragment : Fragment(R.layout.fragment_trash) {
         val factory = BooksViewModelProviderFactory(booksRepository, yearRepository)
         val viewModel = ViewModelProviders.of(this, factory).get(BooksViewModel::class.java)
 
-        val bookAdapter = BookAdapter(view.context, whichFragment = currentFragment)
+        val deletedBookAdapter = DeletedBookAdapter(view.context, whichFragment = currentFragment, viewModel)
 
-        rvBooks.adapter = bookAdapter
+        rvBooks.adapter = deletedBookAdapter
         rvBooks.layoutManager = LinearLayoutManager(view.context)
 
         // bounce effect on the recyclerview
@@ -67,7 +67,7 @@ class TrashFragment : Fragment(R.layout.fragment_trash) {
             OverScrollDecoratorHelper.ORIENTATION_VERTICAL
         )
 
-        this.getBooks(bookAdapter)
+        this.getBooks(deletedBookAdapter)
     }
 
     fun View.hideKeyboard() {
@@ -82,10 +82,10 @@ class TrashFragment : Fragment(R.layout.fragment_trash) {
         inputManager.toggleSoftInputFromWindow(windowToken, 0, 0)
     }
 
-    fun getBooks(bookAdapter: BookAdapter) {
+    fun getBooks(deletedBookAdapter: DeletedBookAdapter) {
         viewModel.getDeletedBooks().observe(
             viewLifecycleOwner,
-            Observer { some_books -> bookAdapter.differ.submitList(some_books) })
+            Observer { some_books -> deletedBookAdapter.differ.submitList(some_books) })
     }
 
     private fun recalculateChallenges() {

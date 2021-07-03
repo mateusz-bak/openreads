@@ -11,7 +11,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="28dp"
         android:text="@string/trash_title"
-        android:textColor="@color/design_default_color_on_secondary"
+        android:textColor="?colorOnSecondary"
         android:textSize="28sp"
         app:layout_constraintEnd_toEndOf="@+id/glVertical66"
         app:layout_constraintHorizontal_bias="0.5"

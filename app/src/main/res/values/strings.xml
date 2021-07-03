@@ -158,5 +158,7 @@
     <string name="trash_summary">Deleted books</string>
     <string name="trash_title">Trash</string>
     <string name="preference_application">App</string>
+    <string name="ivRestoreBook">Restore deleted book</string>
+    <string name="ivDeleteBookPermanently">Delete book permanently</string>
 
 </resources>

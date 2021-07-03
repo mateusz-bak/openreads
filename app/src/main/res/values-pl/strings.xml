@@ -128,5 +128,7 @@
     <string name="tvFilterTitle">Filtruj książki</string>
     <string name="trash_summary">Usunięte książki</string>
     <string name="trash_title">Kosz</string>
-    <string name="preference_application">Aplikacja</string>
+    <string name="preference_application">ivToReadIndicator</string>
+    <string name="ivRestoreBook">Przywróć usuniętą książkę</string>
+    <string name="ivDeleteBookPermanently">Usuń książkę trwale</string>
 </resources>
