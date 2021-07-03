@@ -25,7 +25,8 @@ class BooksRepository (
         bookFinishDateMs: String,
         bookNumberOfPagesInt: Int,
         bookTitle_ASCII: String,
-        bookAuthor_ASCII: String
+        bookAuthor_ASCII: String,
+        bookIsDeleted: Boolean
     ) = db.getBooksDao().updateBook(
         id,
         bookTitle,
@@ -35,7 +36,8 @@ class BooksRepository (
         bookFinishDateMs,
         bookNumberOfPagesInt,
         bookTitle_ASCII,
-        bookAuthor_ASCII
+        bookAuthor_ASCII,
+        bookIsDeleted
     )
 
     fun searchBooks(searchQuery: String) = db.getBooksDao().searchBooks(searchQuery)

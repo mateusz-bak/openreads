@@ -22,8 +22,8 @@ interface BooksDao {
     @Query("SELECT * FROM Book WHERE item_bookStatus LIKE 'to_read'")
     fun getToReadBooks(): LiveData<List<Book>>
 
-    @Query("UPDATE Book SET item_bookTitle =:bookTitle ,item_bookAuthor=:bookAuthor ,item_bookRating=:bookRating, item_bookStatus=:bookStatus, item_bookFinishDate=:bookFinishDateMs, item_bookNumberOfPages=:bookNumberOfPagesInt, item_bookTitle_ASCII=:bookTitle_ASCII, item_bookAuthor_ASCII=:bookAuthor_ASCII WHERE id=:id")
-    suspend fun updateBook(id: Int?, bookTitle: String, bookAuthor: String, bookRating: Float, bookStatus: String, bookFinishDateMs: String, bookNumberOfPagesInt: Int, bookTitle_ASCII: String, bookAuthor_ASCII: String)
+    @Query("UPDATE Book SET item_bookTitle =:bookTitle ,item_bookAuthor=:bookAuthor ,item_bookRating=:bookRating, item_bookStatus=:bookStatus, item_bookFinishDate=:bookFinishDateMs, item_bookNumberOfPages=:bookNumberOfPagesInt, item_bookTitle_ASCII=:bookTitle_ASCII, item_bookAuthor_ASCII=:bookAuthor_ASCII, item_bookIsDeleted=:bookIsDeleted  WHERE id=:id")
+    suspend fun updateBook(id: Int?, bookTitle: String, bookAuthor: String, bookRating: Float, bookStatus: String, bookFinishDateMs: String, bookNumberOfPagesInt: Int, bookTitle_ASCII: String, bookAuthor_ASCII: String, bookIsDeleted: Boolean)
 
     @Query("SELECT * FROM Book WHERE (item_bookTitle_ASCII LIKE '%' || :searchQuery || '%' OR item_bookAuthor_ASCII LIKE '%' || :searchQuery || '%')")
     fun searchBooks(searchQuery: String): LiveData<List<Book>>

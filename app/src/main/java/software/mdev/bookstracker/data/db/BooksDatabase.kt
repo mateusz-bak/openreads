@@ -11,7 +11,7 @@ import software.mdev.bookstracker.other.Constants.DATABASE_FILE_NAME
 
 @Database(
         entities = [Book::class],
-        version = 3
+        version = 4
 )
 abstract class BooksDatabase: RoomDatabase() {
 
@@ -33,7 +33,8 @@ abstract class BooksDatabase: RoomDatabase() {
                     DATABASE_FILE_NAME
                 ).addMigrations(
                     MIGRATION_1_2,
-                    MIGRATION_2_3
+                    MIGRATION_2_3,
+                    MIGRATION_3_4
                 )
                 .build()
 
@@ -47,6 +48,12 @@ abstract class BooksDatabase: RoomDatabase() {
             override fun migrate(database: SupportSQLiteDatabase) {
                 database.execSQL("ALTER TABLE Book ADD COLUMN item_bookTitle_ASCII TEXT NOT NULL DEFAULT 'not_converted'")
                 database.execSQL("ALTER TABLE Book ADD COLUMN item_bookAuthor_ASCII TEXT NOT NULL DEFAULT 'not_converted'")
+            }
+        }
+
+        private val MIGRATION_3_4 = object : Migration(3, 4) {
+            override fun migrate(database: SupportSQLiteDatabase) {
+                database.execSQL("ALTER TABLE Book ADD COLUMN item_bookIsDeleted INTEGER NOT NULL DEFAULT 0")
             }
         }
     }

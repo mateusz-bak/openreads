@@ -37,7 +37,8 @@ class BooksViewModel(
         bookFinishDateMs: String,
         bookNumberOfPagesInt: Int,
         bookTitle_ASCII: String,
-        bookAuthor_ASCII: String
+        bookAuthor_ASCII: String,
+        bookIsDeleted: Boolean
     ) = CoroutineScope(Dispatchers.Main).launch {
         repository.updateBook(
             id,
@@ -48,7 +49,8 @@ class BooksViewModel(
             bookFinishDateMs,
             bookNumberOfPagesInt,
             bookTitle_ASCII,
-            bookAuthor_ASCII
+            bookAuthor_ASCII,
+            bookIsDeleted
         )
     }
 
