@@ -67,6 +67,7 @@ class InProgressFragment : Fragment(R.layout.fragment_in_progress) {
 
         etSearch.visibility = View.GONE
         ivClearSearch.visibility = View.GONE
+        tvLooksEmpty.visibility = View.GONE
         ivClearSearch.isClickable = false
         view.hideKeyboard()
 

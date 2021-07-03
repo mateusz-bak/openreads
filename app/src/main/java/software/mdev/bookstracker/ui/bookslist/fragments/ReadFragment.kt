@@ -48,6 +48,7 @@ class ReadFragment : Fragment(R.layout.fragment_read) {
 
         etSearch.visibility = View.GONE
         ivClearSearch.visibility = View.GONE
+        tvLooksEmpty.visibility = View.GONE
         ivClearSearch.isClickable = false
         ivFilterBooks.isClickable = false
         view.hideKeyboard()
