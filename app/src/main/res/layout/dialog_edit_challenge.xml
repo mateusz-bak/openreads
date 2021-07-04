@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/constraintLayout"
+        android:layout_width="340dp"
+        android:layout_height="match_parent"
+        android:background="@drawable/dialog_rounded"
+        android:paddingTop="16dp"
+        android:paddingBottom="16dp">
+
+
+        <TextView
+            android:id="@+id/tvChallengeEditorYear"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:gravity="center"
+            android:text="2069"
+            android:textColor="?colorOnSecondary"
+            android:textSize="32sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tvChallengeEditorTitle" />
+
+
+        <TextView
+            android:id="@+id/tvChallengeEditorTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/tvChallengeEditorTitle"
+            android:textColor="?colorOnSecondary"
+            android:textSize="24sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.502"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/tvChallengeBooks"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/tvChallengeBooks"
+            android:textColor="?colorOnSecondary"
+            android:textSize="24sp"
+            android:layout_marginStart="12dp"
+            app:layout_constraintBottom_toBottomOf="@+id/etChallengeEditorBooksNumber"
+            app:layout_constraintStart_toStartOf="@+id/guideline"
+            app:layout_constraintTop_toTopOf="@+id/etChallengeEditorBooksNumber" />
+
+        <Button
+            android:id="@+id/btnChallengeEditorCancel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:backgroundTint="@color/red_800"
+            android:text="@string/btnAdderCancelFinishDate"
+            app:layout_constraintEnd_toStartOf="@+id/btnChallengeEditorSet"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/etChallengeEditorBooksNumber" />
+
+        <Button
+            android:id="@+id/btnChallengeEditorSet"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:backgroundTint="?colorPrimary"
+            android:text="@string/btnAdderSaveFinishDate"
+            app:layout_constraintBottom_toBottomOf="@+id/btnChallengeEditorCancel"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toEndOf="@+id/btnChallengeEditorCancel"
+            app:layout_constraintTop_toTopOf="@+id/btnChallengeEditorCancel" />
+
+        <EditText
+            android:id="@+id/etChallengeEditorBooksNumber"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="12dp"
+            android:ems="3"
+            android:inputType="number"
+            android:layout_marginEnd="12dp"
+            app:layout_constraintEnd_toStartOf="@+id/guideline"
+            app:layout_constraintTop_toBottomOf="@+id/tvChallengeEditorYear" />
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guideline"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_percent="0.50" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

@@ -1,10 +1,12 @@
 package software.mdev.bookstracker.ui.bookslist.fragments
 
 import android.os.Bundle
+import android.view.MotionEvent
 import android.view.View
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
+import com.google.android.material.snackbar.Snackbar
 import kotlinx.android.synthetic.main.fragment_display_book.*
 import software.mdev.bookstracker.R
 import software.mdev.bookstracker.data.db.entities.Book
@@ -63,6 +65,8 @@ class DisplayBookFragment : Fragment(R.layout.fragment_display_book) {
                 tvMoreAboutBook.isClickable = false
                 tvBookPagesTitle.visibility = View.GONE
                 tvBookPages.visibility = View.GONE
+                tvDateFinishedTitle.visibility = View.GONE
+                tvDateFinished.visibility = View.GONE
             }
             BOOK_STATUS_TO_READ -> {
                 tvBookStatus.text = getString(R.string.toRead)
@@ -73,6 +77,8 @@ class DisplayBookFragment : Fragment(R.layout.fragment_display_book) {
                 tvMoreAboutBook.isClickable = false
                 tvBookPagesTitle.visibility = View.GONE
                 tvBookPages.visibility = View.GONE
+                tvDateFinishedTitle.visibility = View.GONE
+                tvDateFinished.visibility = View.GONE
             }
         }
 
@@ -99,6 +105,53 @@ class DisplayBookFragment : Fragment(R.layout.fragment_display_book) {
                     tvBookPages.visibility = View.GONE
                 }
             }
+        }
+
+        tvBookTitle.setOnClickListener {
+            Snackbar.make(it, R.string.click_edit_button_to_edit_title, Snackbar.LENGTH_SHORT).show()
+        }
+
+        tvBookAuthor.setOnClickListener {
+            Snackbar.make(it, R.string.click_edit_button_to_edit_author, Snackbar.LENGTH_SHORT).show()
+        }
+
+        rbRatingIndicator.setOnTouchListener(View.OnTouchListener { v, event ->
+                if (event.action == MotionEvent.ACTION_UP) {
+                    Snackbar.make(view, R.string.click_edit_button_to_edit_rating, Snackbar.LENGTH_SHORT).show()
+                }
+                return@OnTouchListener true
+            })
+
+        tvBookStatus.setOnClickListener {
+            Snackbar.make(it, R.string.click_edit_button_to_edit_status, Snackbar.LENGTH_SHORT).show()
+        }
+
+        ivBookStatusRead.setOnClickListener {
+            Snackbar.make(it, R.string.click_edit_button_to_edit_status, Snackbar.LENGTH_SHORT).show()
+        }
+
+        ivBookStatusInProgress.setOnClickListener {
+            Snackbar.make(it, R.string.click_edit_button_to_edit_status, Snackbar.LENGTH_SHORT).show()
+        }
+
+        ivBookStatusToRead.setOnClickListener {
+            Snackbar.make(it, R.string.click_edit_button_to_edit_status, Snackbar.LENGTH_SHORT).show()
+        }
+
+        tvDateFinishedTitle.setOnClickListener {
+            Snackbar.make(it, R.string.click_edit_button_to_edit_date, Snackbar.LENGTH_SHORT).show()
+        }
+
+        tvDateFinished.setOnClickListener {
+            Snackbar.make(it, R.string.click_edit_button_to_edit_date, Snackbar.LENGTH_SHORT).show()
+        }
+
+        tvBookPagesTitle.setOnClickListener {
+            Snackbar.make(it, R.string.click_edit_button_to_edit_pages, Snackbar.LENGTH_SHORT).show()
+        }
+
+        tvBookPages.setOnClickListener {
+            Snackbar.make(it, R.string.click_edit_button_to_edit_pages, Snackbar.LENGTH_SHORT).show()
         }
     }
 

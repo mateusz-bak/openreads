@@ -17,7 +17,9 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import software.mdev.bookstracker.R
 import software.mdev.bookstracker.data.db.BooksDatabase
+import software.mdev.bookstracker.data.db.YearDatabase
 import software.mdev.bookstracker.data.repositories.BooksRepository
+import software.mdev.bookstracker.data.repositories.YearRepository
 import software.mdev.bookstracker.other.Constants
 import software.mdev.bookstracker.ui.bookslist.viewmodel.BooksViewModel
 import software.mdev.bookstracker.ui.bookslist.viewmodel.BooksViewModelProviderFactory
@@ -28,7 +30,8 @@ class ListActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         val booksRepository = BooksRepository(BooksDatabase(this))
-        val booksViewModelProviderFactory = BooksViewModelProviderFactory(booksRepository)
+        val yearRepository = YearRepository(YearDatabase(this))
+        val booksViewModelProviderFactory = BooksViewModelProviderFactory(booksRepository, yearRepository)
         booksViewModel = ViewModelProvider(this, booksViewModelProviderFactory).get(
             BooksViewModel::class.java)
 
@@ -41,7 +44,7 @@ class ListActivity : AppCompatActivity() {
         booksNavHostFragment.findNavController()
             .addOnDestinationChangedListener { _, destination, _ ->
                 when(destination.id) {
-                    R.id.readFragment, R.id.inProgressFragment, R.id.toReadFragment ->
+                    R.id.readFragment, R.id.inProgressFragment, R.id.toReadFragment , R.id.statisticsFragment->
                         bottomNavigationView.visibility = View.VISIBLE
                     else -> bottomNavigationView.visibility = View.GONE
                 }
@@ -62,7 +65,7 @@ class ListActivity : AppCompatActivity() {
 
         when(accent){
             Constants.THEME_ACCENT_LIGHT_GREEN -> setTheme(R.style.Theme_Mdev_Bookstracker_CustomTheme_LightGreen)
-            Constants.THEME_ACCENT_RED_800 -> setTheme(R.style.Theme_Mdev_Bookstracker_CustomTheme_Red)
+            Constants.THEME_ACCENT_ORANGE_500 -> setTheme(R.style.Theme_Mdev_Bookstracker_CustomTheme_Orange)
             Constants.THEME_ACCENT_CYAN_500 -> setTheme(R.style.Theme_Mdev_Bookstracker_CustomTheme_Cyan)
             Constants.THEME_ACCENT_GREEN_500 -> setTheme(R.style.Theme_Mdev_Bookstracker_CustomTheme_Green)
             Constants.THEME_ACCENT_BROWN_400 -> setTheme(R.style.Theme_Mdev_Bookstracker_CustomTheme_Brown)

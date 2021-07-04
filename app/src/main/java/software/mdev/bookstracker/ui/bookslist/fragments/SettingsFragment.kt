@@ -19,10 +19,6 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import software.mdev.bookstracker.R
 import software.mdev.bookstracker.other.Constants
-import software.mdev.bookstracker.other.Constants.KEY_CHECK_FOR_UPDATES
-import software.mdev.bookstracker.other.Constants.SHARED_PREFERENCES_KEY_ACCENT
-import software.mdev.bookstracker.other.Constants.SHARED_PREFERENCES_KEY_RECOMMENDATIONS
-import software.mdev.bookstracker.other.Constants.SHARED_PREFERENCES_REFRESHED
 import software.mdev.bookstracker.ui.bookslist.ListActivity
 import software.mdev.bookstracker.ui.bookslist.viewmodel.BooksViewModel
 
@@ -35,11 +31,19 @@ class SettingsFragment : PreferenceFragmentCompat(), OnSharedPreferenceChangeLis
         setPreferencesFromResource(R.xml.preferences, rootKey)
         viewModel = (activity as ListActivity).booksViewModel
 
-        var preferenceCheckForUpdates = findPreference<Preference>(KEY_CHECK_FOR_UPDATES)
+        var preferenceCheckForUpdates = findPreference<Preference>(Constants.KEY_CHECK_FOR_UPDATES)
+        var preferenceTrash = findPreference<Preference>(Constants.KEY_TRASH)
 
         if (preferenceCheckForUpdates != null) {
             preferenceCheckForUpdates.onPreferenceClickListener = Preference.OnPreferenceClickListener {
                 context?.let { it1 -> checkForAppUpdate(it1) }
+                true
+            }
+        }
+
+        if (preferenceTrash != null) {
+            preferenceTrash.onPreferenceClickListener = Preference.OnPreferenceClickListener {
+                findNavController().navigate(R.id.trashFragment, null)
                 true
             }
         }
@@ -59,11 +63,11 @@ class SettingsFragment : PreferenceFragmentCompat(), OnSharedPreferenceChangeLis
 
     override fun onSharedPreferenceChanged(sharedPreferences: SharedPreferences, key: String) {
         when (key) {
-            SHARED_PREFERENCES_KEY_ACCENT -> {
+            Constants.SHARED_PREFERENCES_KEY_ACCENT -> {
 //                Toast.makeText(context?.applicationContext, R.string.changes_after_app_restart, Toast.LENGTH_LONG).show()
                 hotReloadActivity(activity)
             }
-            SHARED_PREFERENCES_KEY_RECOMMENDATIONS -> {
+            Constants.SHARED_PREFERENCES_KEY_RECOMMENDATIONS -> {
                 Toast.makeText(context?.applicationContext, R.string.notYetImplemented, Toast.LENGTH_LONG).show()
             }
         }
@@ -72,7 +76,7 @@ class SettingsFragment : PreferenceFragmentCompat(), OnSharedPreferenceChangeLis
     private fun hotReloadActivity(activity: Activity?) {
         if (activity == null) return
         val sharedPref = PreferenceManager.getDefaultSharedPreferences(context?.applicationContext)
-        sharedPref.edit().putBoolean(SHARED_PREFERENCES_REFRESHED, true).apply()
+        sharedPref.edit().putBoolean(Constants.SHARED_PREFERENCES_REFRESHED, true).apply()
         findNavController().navigate(R.id.readFragment, null)
         (activity as FragmentActivity).recreate()
     }

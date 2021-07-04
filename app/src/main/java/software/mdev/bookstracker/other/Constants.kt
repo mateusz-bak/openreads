@@ -19,7 +19,24 @@ object Constants {
     const val DATABASE_ITEM_BOOK_NUMBER_OF_PAGES = "item_bookNumberOfPages"
     const val DATABASE_ITEM_BOOK_TITLE_ASCII = "item_bookTitle_ASCII"
     const val DATABASE_ITEM_BOOK_AUTHOR_ASCII = "item_bookAuthor_ASCII"
+    const val DATABASE_ITEM_BOOK_IS_DELETED = "item_bookIsDeleted"
     const val DATABASE_EMPTY_VALUE = "none"
+
+    const val DATABASE_NAME_YEAR = "Year"
+    const val DATABASE_YEAR_FILE_NAME = "YearDB.db"
+    const val DATABASE_YEAR_ITEM_YEAR = "item_year"
+    const val DATABASE_YEAR_ITEM_BOOKS = "item_books"
+    const val DATABASE_YEAR_ITEM_PAGES = "item_pages"
+    const val DATABASE_YEAR_ITEM_RATING = "item_rating"
+    const val DATABASE_YEAR_CHALLENGE_BOOKS = "item_challenge_books"
+    const val DATABASE_YEAR_CHALLENGE_PAGES = "item_challenge_pages"
+
+    const val CHALLENGE_BEGINNER = 3
+    const val CHALLENGE_EASY = 6
+    const val CHALLENGE_NORMAL = 12
+    const val CHALLENGE_HARD = 18
+    const val CHALLENGE_INSANE = 24
+
 
     const val SORT_ORDER_TITLE_DESC = "ivSortTitleDesc"
     const val SORT_ORDER_TITLE_ASC = "ivSortTitleAsc"
@@ -36,16 +53,19 @@ object Constants {
 
     const val SHARED_PREFERENCES_NAME = "software.mdev.bookstracker_preferences"
     const val SHARED_PREFERENCES_KEY_FIRST_TIME_TOGGLE = "KEY_FIRST_TIME_TOGGLE"
+    const val SHARED_PREFERENCES_KEY_APP_VERSION = "SHARED_PREFERENCES_KEY_APP_VERSION"
     const val SHARED_PREFERENCES_KEY_SORT_ORDER = "KEY_SORT_ORDER"
+    const val SHARED_PREFERENCES_KEY_FILTER_YEARS = "KEY_FILTER_YEARS"
     const val SHARED_PREFERENCES_KEY_ACCENT = "KEY_ACCENT"
     const val SHARED_PREFERENCES_KEY_RECOMMENDATIONS = "KEY_RECOMMENDATIONS"
     const val SHARED_PREFERENCES_REFRESHED = "refreshed"
     const val KEY_CHECK_FOR_UPDATES = "KEY_CHECK_FOR_UPDATES"
+    const val KEY_TRASH = "KEY_TRASH"
 
     const val EMPTY_STRING = ""
 
     const val THEME_ACCENT_LIGHT_GREEN = "accent_light_green"
-    const val THEME_ACCENT_RED_800 = "accent_red"
+    const val THEME_ACCENT_ORANGE_500 = "accent_orange"
     const val THEME_ACCENT_CYAN_500 = "accent_cyan"
     const val THEME_ACCENT_GREEN_500 = "accent_green"
     const val THEME_ACCENT_BROWN_400 = "accent_brown"

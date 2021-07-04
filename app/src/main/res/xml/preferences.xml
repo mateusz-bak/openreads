@@ -3,6 +3,18 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <PreferenceCategory
+        android:key="application"
+        android:title="@string/app_name">
+
+        <Preference
+            android:key="KEY_TRASH"
+            android:title="@string/trash_title"
+            android:summary="@string/trash_summary" >
+        </Preference>
+
+    </PreferenceCategory>
+
+    <PreferenceCategory
         android:key="customization"
         android:title="@string/customization"
         app:icon="@drawable/ic_baseline_brush_24">
@@ -15,12 +27,12 @@
             android:summary="%s"
             android:title="@string/accent_name_title" />
 
-        <SwitchPreference
-            android:defaultValue="false"
-            android:key="KEY_RECOMMENDATIONS"
-            android:summaryOff="@string/daily_book_recommendations_off"
-            android:summaryOn="@string/daily_book_recommendations_on"
-            android:title="@string/daily_book_recommendations_title" />
+<!--        <SwitchPreference-->
+<!--            android:defaultValue="false"-->
+<!--            android:key="KEY_RECOMMENDATIONS"-->
+<!--            android:summaryOff="@string/daily_book_recommendations_off"-->
+<!--            android:summaryOn="@string/daily_book_recommendations_on"-->
+<!--            android:title="@string/daily_book_recommendations_title" />-->
 
         <SwitchPreference
             android:key="KEY_FIRST_TIME_TOGGLE"

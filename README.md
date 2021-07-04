@@ -7,7 +7,7 @@
 - books you finished,  
 - books you are currently reading,  
 - books you want to read later.
-#### Now available in 10 different color themes!  
+#### You can also see come cool statistics!  
   
 ## Screenshots  
 <p align='center'>  
@@ -15,7 +15,10 @@
  <img src='doc/images/screenshot-in-progress.png' width='35%'/>  
   
  <img src='doc/images/screenshot-to-read.png' width='35%'/>  
- <img src='doc/images/screenshot-add-book.png' width='35%'/>  
+ <img src='doc/images/screenshot-statistics.png' width='35%'/>
+ 
+ <img src='doc/images/screenshot-sort-books.png' width='35%'/>  
+ <img src='doc/images/screenshot-add-book.png' width='35%'/>
 </p>  
 
 
@@ -49,4 +52,8 @@
 *You can also replace the "Debug" with "Release" to get an optimized release binary.*
   
 ## Attributions
-Launcher and welcome screen icon made by [smalllikeart](https://www.flaticon.com/authors/smalllikeart "smalllikeart") from [www.flaticon.com](https://www.flaticon.com/ "Flaticon")
+### Icons made by:
+[Smalllikeart](https://www.flaticon.com/authors/smalllikeart "Smalllikeart") from [www.flaticon.com](https://www.flaticon.com/ "Flaticon")
+[Freepik](https://www.freepik.com "Freepik") from [www.flaticon.com](https://www.flaticon.com/ "Flaticon")
+[Vectors Market](https://www.flaticon.com/authors/vectors-market "Vectors Market") from [www.flaticon.com](https://www.flaticon.com/ "Flaticon")
+[photo3idea_studio](https://www.flaticon.com/authors/photo3idea-studio "photo3idea_studio") from [www.flaticon.com](https://www.flaticon.com/ "Flaticon")

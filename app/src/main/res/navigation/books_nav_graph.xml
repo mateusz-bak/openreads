@@ -24,6 +24,9 @@
         <action
             android:id="@+id/action_readFragment_to_settingsFragment"
             app:destination="@id/settingsFragment" />
+        <action
+            android:id="@+id/action_readFragment_to_statisticsFragment"
+            app:destination="@id/statisticsFragment" />
     </fragment>
 
     <fragment
@@ -46,6 +49,9 @@
         <action
             android:id="@+id/action_inProgressFragment_to_settingsFragment"
             app:destination="@id/settingsFragment" />
+        <action
+            android:id="@+id/action_inProgressFragment_to_statisticsFragment"
+            app:destination="@id/statisticsFragment" />
     </fragment>
 
     <fragment
@@ -68,6 +74,9 @@
         <action
             android:id="@+id/action_toReadFragment_to_settingsFragment"
             app:destination="@id/settingsFragment" />
+        <action
+            android:id="@+id/action_toReadFragment_to_statisticsFragment"
+            app:destination="@id/statisticsFragment" />
     </fragment>
 
     <fragment
@@ -102,7 +111,9 @@
         android:label="SetupFragment" >
         <action
             android:id="@+id/action_setupFragment_to_readFragment"
-            app:destination="@id/readFragment" />
+            app:destination="@id/readFragment"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"/>
     </fragment>
     <fragment
         android:id="@+id/settingsFragment"
@@ -111,5 +122,20 @@
         <action
             android:id="@+id/action_settingsFragment_to_readFragment"
             app:destination="@id/readFragment" />
+        <action
+            android:id="@+id/action_settingsFragment_to_trashFragment"
+            app:destination="@id/trashFragment" />
     </fragment>
+    <fragment
+        android:id="@+id/statisticsFragment"
+        android:name="software.mdev.bookstracker.ui.bookslist.fragments.StatisticsFragment"
+        android:label="StatisticsFragment" >
+        <action
+            android:id="@+id/action_statisticsFragment_to_settingsFragment"
+            app:destination="@id/settingsFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/trashFragment"
+        android:name="software.mdev.bookstracker.ui.bookslist.fragments.TrashFragment"
+        android:label="TrashFragment" />
 </navigation>

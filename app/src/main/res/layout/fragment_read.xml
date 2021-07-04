@@ -21,23 +21,9 @@
         android:textSize="18sp"
         android:imeOptions="actionSearch"
         app:layout_constraintBottom_toBottomOf="@+id/ivSearch"
-        app:layout_constraintEnd_toStartOf="@+id/glVertical70"
+        app:layout_constraintEnd_toStartOf="@+id/ivSearch"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@+id/ivSearch" />
-
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/rvBooks"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_marginTop="16dp"
-        android:clipToPadding="false"
-        android:paddingBottom="70dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/ivSearch"
-        app:layout_constraintVertical_bias="1.0" />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/fabAddBook"
@@ -51,7 +37,7 @@
         android:clickable="true"
         android:focusable="true"
         app:borderWidth="0dp"
-        app:layout_constraintBottom_toBottomOf="@+id/rvBooks"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:srcCompat="@drawable/ic_baseline_add_24"
         app:tint="?colorOnPrimary" />
@@ -106,6 +92,22 @@
         app:srcCompat="@drawable/ic_baseline_sort_24" />
 
     <ImageView
+        android:id="@+id/ivFilterBooks"
+        android:contentDescription="@string/ivFilter"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:clickable="true"
+        android:focusable="true"
+        android:scaleX="1.2"
+        android:scaleY="1.2"
+        app:layout_constraintBottom_toBottomOf="@+id/ivMore"
+        app:layout_constraintEnd_toStartOf="@+id/ivSeparator3"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/ivSeparator2"
+        app:layout_constraintTop_toTopOf="@+id/ivMore"
+        app:srcCompat="@drawable/ic_baseline_filter_list_24" />
+
+    <ImageView
         android:id="@+id/ivMore"
         android:contentDescription="@string/ivMore"
         android:layout_width="wrap_content"
@@ -118,7 +120,7 @@
         android:scaleY="1.2"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toEndOf="@+id/ivSeparator2"
+        app:layout_constraintStart_toEndOf="@+id/ivSeparator3"
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/ic_baseline_more_vert_24" />
 
@@ -156,9 +158,26 @@
         android:scaleX="0.7"
         android:scaleY="0.5"
         app:layout_constraintBottom_toBottomOf="@+id/ivMore"
-        app:layout_constraintEnd_toStartOf="@+id/ivMore"
+        app:layout_constraintEnd_toStartOf="@+id/ivFilterBooks"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toEndOf="@+id/ivSort"
+        app:layout_constraintTop_toTopOf="@+id/ivMore"
+        app:layout_constraintVertical_bias="0.0"
+        app:srcCompat="@drawable/ic_baseline_horizontal_rule_24" />
+
+    <ImageView
+        android:id="@+id/ivSeparator3"
+        android:contentDescription="@string/ivSeparator3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:clickable="false"
+        android:rotation="90"
+        android:scaleX="0.7"
+        android:scaleY="0.5"
+        app:layout_constraintBottom_toBottomOf="@+id/ivMore"
+        app:layout_constraintEnd_toStartOf="@+id/ivMore"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/ivFilterBooks"
         app:layout_constraintTop_toTopOf="@+id/ivMore"
         app:layout_constraintVertical_bias="0.0"
         app:srcCompat="@drawable/ic_baseline_horizontal_rule_24" />
@@ -169,13 +188,40 @@
         android:layout_height="wrap_content"
         android:text="@string/tvLooksEmpty"
         android:textSize="16dp"
-        android:textColor="?colorOnSecondary"
+        android:textColor="@color/grey"
         android:padding="24dp"
         android:gravity="center"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/rvBooks" />
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:clipToPadding="false"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/ivSearch"
+        app:layout_constraintVertical_bias="1.0">
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rvBooks"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginTop="16dp"
+            android:clipToPadding="false"
+            android:paddingBottom="70dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="1.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/ivSearch"
+            app:layout_constraintVertical_bias="1.0" />
+
+    </FrameLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

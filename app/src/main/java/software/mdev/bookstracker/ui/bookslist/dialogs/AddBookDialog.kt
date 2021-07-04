@@ -45,6 +45,8 @@ class AddBookDialog(context: Context, var addBookDialogListener: AddBookDialogLi
         btnSetFinishDate.isClickable = false
         dpBookFinishDate.visibility = View.GONE
         btnAdderSaveFinishDate.visibility = View.GONE
+        btnAdderCancelFinishDate.visibility = View.GONE
+        dpBookFinishDate.maxDate = System.currentTimeMillis()
 
         etAdderBookTitle.requestFocus()
         showKeyboard(etAdderBookTitle,350)
@@ -94,7 +96,8 @@ class AddBookDialog(context: Context, var addBookDialogListener: AddBookDialogLi
 
             dpBookFinishDate.visibility = View.VISIBLE
             btnAdderSaveFinishDate.visibility = View.VISIBLE
-            btnSetFinishDate.isClickable = true
+            btnAdderCancelFinishDate.visibility = View.VISIBLE
+            btnSetFinishDate.isClickable = false
             tvAdderTitle.setText(R.string.set_finish_date_title)
 
             etAdderBookTitle.visibility = View.GONE
@@ -120,6 +123,7 @@ class AddBookDialog(context: Context, var addBookDialogListener: AddBookDialogLi
 
             dpBookFinishDate.visibility = View.GONE
             btnAdderSaveFinishDate.visibility = View.GONE
+            btnAdderCancelFinishDate.visibility = View.GONE
             tvAdderTitle.setText(R.string.tvAdderTitle)
 
             etAdderBookTitle.visibility = View.VISIBLE
@@ -139,6 +143,29 @@ class AddBookDialog(context: Context, var addBookDialogListener: AddBookDialogLi
             btnSetFinishDate.visibility = View.VISIBLE
 
             btnSetFinishDate.text = bookFinishDateMs?.let { it1 -> convertLongToTime(it1) }
+        }
+
+        btnAdderCancelFinishDate.setOnClickListener {
+            dpBookFinishDate.visibility = View.GONE
+            btnAdderSaveFinishDate.visibility = View.GONE
+            btnAdderCancelFinishDate.visibility = View.GONE
+            tvAdderTitle.setText(R.string.tvAdderTitle)
+
+            etAdderBookTitle.visibility = View.VISIBLE
+            etAdderAuthor.visibility = View.VISIBLE
+
+            ivBookStatusSetRead.visibility = View.VISIBLE
+            ivBookStatusSetInProgress.visibility = View.VISIBLE
+            ivBookStatusSetToRead.visibility = View.VISIBLE
+            tvFinished.visibility = View.VISIBLE
+            tvInProgress.visibility = View.VISIBLE
+            tvToRead.visibility = View.VISIBLE
+
+            etPagesNumber.visibility = View.VISIBLE
+            tvRateThisBook.visibility = View.VISIBLE
+            rbAdderRating.visibility = View.VISIBLE
+            btnAdderSaveBook.visibility = View.VISIBLE
+            btnSetFinishDate.visibility = View.VISIBLE
         }
 
         btnAdderSaveBook.setOnClickListener {
@@ -183,7 +210,8 @@ class AddBookDialog(context: Context, var addBookDialogListener: AddBookDialogLi
                                             bookFinishDate = bookFinishDateMs.toString(),
                                             bookNumberOfPages = bookNumberOfPagesInt,
                                             bookTitle_ASCII = bookTitle.unaccent().replace("ł", "l", false),
-                                            bookAuthor_ASCII = bookAuthor.unaccent().replace("ł", "l", false)
+                                            bookAuthor_ASCII = bookAuthor.unaccent().replace("ł", "l", false),
+                                            false
                                         )
                                         addBookDialogListener.onSaveButtonClicked(editedBook)
                                         dismiss()
@@ -252,7 +280,7 @@ class AddBookDialog(context: Context, var addBookDialogListener: AddBookDialogLi
 
         when(accent){
             Constants.THEME_ACCENT_LIGHT_GREEN -> accentColor = ContextCompat.getColor(context, R.color.light_green)
-            Constants.THEME_ACCENT_RED_800 -> accentColor = ContextCompat.getColor(context, R.color.red_800)
+            Constants.THEME_ACCENT_ORANGE_500 -> accentColor = ContextCompat.getColor(context, R.color.orange_500)
             Constants.THEME_ACCENT_CYAN_500 -> accentColor = ContextCompat.getColor(context, R.color.cyan_500)
             Constants.THEME_ACCENT_GREEN_500 -> accentColor = ContextCompat.getColor(context, R.color.green_500)
             Constants.THEME_ACCENT_BROWN_400 -> accentColor = ContextCompat.getColor(context, R.color.brown_400)
