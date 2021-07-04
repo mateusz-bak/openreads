@@ -15,5 +15,6 @@
         <item name="windowNoTitle">true</item>
         <item name="colorAccent">?colorPrimary</item>
         <item name="sortDialogBackgroundColor">@color/grey_900</item>
+        <item name="android:navigationBarColor">?attr/colorPrimarySurface</item>
     </style>
 </resources>
