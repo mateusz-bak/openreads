@@ -260,7 +260,7 @@ class EditBookFragment : Fragment(R.layout.fragment_edit_book) {
                                         false
                                     )
 
-                                    Snackbar.make(it, R.string.savingChanges, Snackbar.LENGTH_SHORT).show()
+//                                    Snackbar.make(it, R.string.savingChanges, Snackbar.LENGTH_SHORT).show()
                                     recalculateChallenges()
 
                                     } else {
