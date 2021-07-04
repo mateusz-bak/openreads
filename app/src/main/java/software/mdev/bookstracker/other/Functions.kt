@@ -68,6 +68,8 @@ class Functions {
                     if (book.bookFinishDate.toLong() in startTimeStamp..endTimeStamp) {
                         filteredBooks += book
                     }
+                } else {
+                    filteredBooks += book
                 }
             }
         }
