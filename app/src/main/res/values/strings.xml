@@ -160,5 +160,11 @@
     <string name="preference_application">App</string>
     <string name="ivRestoreBook">Restore deleted book</string>
     <string name="ivDeleteBookPermanently">Delete book permanently</string>
+    <string name="click_edit_button_to_edit_title">Click edit button to change book\'s title</string>
+    <string name="click_edit_button_to_edit_author">Click edit button to change book\'s author</string>
+    <string name="click_edit_button_to_edit_rating">Click edit button to change book\'s rating</string>
+    <string name="click_edit_button_to_edit_status">Click edit button to change book\'s status</string>
+    <string name="click_edit_button_to_edit_date">Click edit button to change book\'s finish date</string>
+    <string name="click_edit_button_to_edit_pages">Click edit button to change book\'s number of pages</string>
 
 </resources>
