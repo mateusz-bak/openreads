@@ -79,4 +79,6 @@ object Constants {
 
     const val GITHUB_USER = "mateusz-bak"
     const val GITHUB_REPO = "books-tracker-android"
+
+    const val BASE_URL = "https://openlibrary.org/"
 }
