@@ -4,6 +4,7 @@ import android.content.Context
 import android.os.Bundle
 import android.view.KeyEvent
 import android.view.View
+import android.view.animation.AnimationUtils
 import android.view.inputmethod.InputMethodManager
 import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.Fragment
@@ -49,8 +50,12 @@ class ReadFragment : Fragment(R.layout.fragment_read) {
         etSearch.visibility = View.GONE
         ivClearSearch.visibility = View.GONE
         tvLooksEmpty.visibility = View.GONE
+        btnAddManual.visibility = View.GONE
+        btnAddSearch.visibility = View.GONE
         ivClearSearch.isClickable = false
         ivFilterBooks.isClickable = false
+        btnAddManual.isClickable = false
+        btnAddSearch.isClickable = false
         view.hideKeyboard()
 
         val database = BooksDatabase(view.context)
@@ -85,7 +90,14 @@ class ReadFragment : Fragment(R.layout.fragment_read) {
             }
         })
 
-        fabAddBook.setOnClickListener{
+        btnAddManual.setOnClickListener{
+            btnAddManual.visibility = View.GONE
+            btnAddSearch.visibility = View.GONE
+            btnAddManual.isClickable = false
+            btnAddSearch.isClickable = false
+
+            fabAddBook.animate().rotation( 0F).setDuration(350L).start()
+
             AddBookDialog(view.context,
                 object: AddBookDialogListener {
                     override fun onSaveButtonClicked(item: Book) {
@@ -104,6 +116,51 @@ class ReadFragment : Fragment(R.layout.fragment_read) {
                     }
                 }
             ).show()
+        }
+
+        fabAddBook.setOnClickListener {
+            if (btnAddManual.visibility == View.GONE) {
+                btnAddManual.visibility = View.VISIBLE
+                btnAddSearch.visibility = View.VISIBLE
+                btnAddManual.isClickable = true
+                btnAddSearch.isClickable = true
+
+                fabAddBook.animate().rotation(180F).setDuration(350L).start()
+                btnAddSearch.startAnimation(AnimationUtils.loadAnimation(context,R.anim.slide_in_up))
+                btnAddManual.startAnimation(AnimationUtils.loadAnimation(context,R.anim.slide_in_up))
+            }
+            else {
+                btnAddManual.visibility = View.GONE
+                btnAddSearch.visibility = View.GONE
+                btnAddManual.isClickable = false
+                btnAddSearch.isClickable = false
+
+                fabAddBook.animate().rotation(0F).setDuration(350L).start()
+                btnAddSearch.startAnimation(AnimationUtils.loadAnimation(context,R.anim.slide_out_down))
+                btnAddManual.startAnimation(AnimationUtils.loadAnimation(context,R.anim.slide_out_down))
+            }
+
+
+        }
+
+        btnAddSearch.setOnClickListener {
+            btnAddManual.visibility = View.GONE
+            btnAddSearch.visibility = View.GONE
+            btnAddManual.isClickable = false
+            btnAddSearch.isClickable = false
+
+            fabAddBook.animate().rotation( 0F).setDuration(350L).start()
+            btnAddSearch.startAnimation(AnimationUtils.loadAnimation(context,R.anim.slide_out_down))
+            btnAddManual.startAnimation(AnimationUtils.loadAnimation(context,R.anim.slide_out_down))
+        }
+
+        rvBooks.setOnClickListener {
+            btnAddManual.visibility = View.GONE
+            btnAddSearch.visibility = View.GONE
+            btnAddManual.isClickable = false
+            btnAddSearch.isClickable = false
+
+            fabAddBook.animate().rotation( 0F).setDuration(350L).start()
         }
 
         ivSort.setOnClickListener{
