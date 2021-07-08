@@ -27,6 +27,7 @@ import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import me.everything.android.ui.overscroll.OverScrollDecoratorHelper
 import software.mdev.bookstracker.data.db.YearDatabase
+import software.mdev.bookstracker.data.repositories.OpenLibraryRepository
 import software.mdev.bookstracker.data.repositories.YearRepository
 import software.mdev.bookstracker.other.Constants
 import software.mdev.bookstracker.other.Functions
@@ -60,15 +61,21 @@ class ReadFragment : Fragment(R.layout.fragment_read) {
 
         val database = BooksDatabase(view.context)
         val yearDatabase = YearDatabase(view.context)
+
         val booksRepository = BooksRepository(database)
         val yearRepository = YearRepository(yearDatabase)
-        val booksViewModelProviderFactory = BooksViewModelProviderFactory(booksRepository, yearRepository)
+        val openLibraryRepository = OpenLibraryRepository()
+
+        val booksViewModelProviderFactory = BooksViewModelProviderFactory(
+            booksRepository,
+            yearRepository,
+            openLibraryRepository
+        )
 
         viewModel = ViewModelProvider(this, booksViewModelProviderFactory).get(
             BooksViewModel::class.java)
 
-        val factory = BooksViewModelProviderFactory(booksRepository, yearRepository)
-        val viewModel = ViewModelProviders.of(this, factory).get(BooksViewModel::class.java)
+        val viewModel = ViewModelProviders.of(this, booksViewModelProviderFactory).get(BooksViewModel::class.java)
 
         val bookAdapter = BookAdapter(view.context, whichFragment = currentFragment)
 

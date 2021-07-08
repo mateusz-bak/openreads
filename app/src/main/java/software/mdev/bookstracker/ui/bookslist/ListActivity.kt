@@ -19,6 +19,7 @@ import software.mdev.bookstracker.R
 import software.mdev.bookstracker.data.db.BooksDatabase
 import software.mdev.bookstracker.data.db.YearDatabase
 import software.mdev.bookstracker.data.repositories.BooksRepository
+import software.mdev.bookstracker.data.repositories.OpenLibraryRepository
 import software.mdev.bookstracker.data.repositories.YearRepository
 import software.mdev.bookstracker.other.Constants
 import software.mdev.bookstracker.ui.bookslist.viewmodel.BooksViewModel
@@ -31,7 +32,14 @@ class ListActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         val booksRepository = BooksRepository(BooksDatabase(this))
         val yearRepository = YearRepository(YearDatabase(this))
-        val booksViewModelProviderFactory = BooksViewModelProviderFactory(booksRepository, yearRepository)
+        val openLibraryRepository = OpenLibraryRepository()
+
+        val booksViewModelProviderFactory = BooksViewModelProviderFactory(
+            booksRepository,
+            yearRepository,
+            openLibraryRepository
+        )
+
         booksViewModel = ViewModelProvider(this, booksViewModelProviderFactory).get(
             BooksViewModel::class.java)
 

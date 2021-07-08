@@ -31,6 +31,7 @@ import androidx.lifecycle.lifecycleScope
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import software.mdev.bookstracker.data.db.entities.Year
+import software.mdev.bookstracker.data.repositories.OpenLibraryRepository
 
 
 class EditBookFragment : Fragment(R.layout.fragment_edit_book) {
@@ -50,13 +51,21 @@ class EditBookFragment : Fragment(R.layout.fragment_edit_book) {
 
         val database = BooksDatabase(view.context)
         val yearDatabase = YearDatabase(view.context)
+
         val repository = BooksRepository(database)
         val yearRepository = YearRepository(yearDatabase)
-        val factory = BooksViewModelProviderFactory(repository, yearRepository)
+        val openLibraryRepository = OpenLibraryRepository()
+
+        val booksViewModelProviderFactory = BooksViewModelProviderFactory(
+            repository,
+            yearRepository,
+            openLibraryRepository
+        )
+
         val book = args.book
         var accentColor = getAccentColor(view.context)
 
-        val viewModel = ViewModelProviders.of(this, factory).get(BooksViewModel::class.java)
+        val viewModel = ViewModelProviders.of(this, booksViewModelProviderFactory).get(BooksViewModel::class.java)
 
         etEditedBookTitle.setText(book.bookTitle)
         etEditedBookAuthor.setText(book.bookAuthor)

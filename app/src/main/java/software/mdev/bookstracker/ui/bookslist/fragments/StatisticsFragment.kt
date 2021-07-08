@@ -21,6 +21,7 @@ import software.mdev.bookstracker.data.db.BooksDatabase
 import software.mdev.bookstracker.data.db.YearDatabase
 import software.mdev.bookstracker.data.db.entities.Year
 import software.mdev.bookstracker.data.repositories.BooksRepository
+import software.mdev.bookstracker.data.repositories.OpenLibraryRepository
 import software.mdev.bookstracker.data.repositories.YearRepository
 import software.mdev.bookstracker.other.Constants
 import software.mdev.bookstracker.other.Constants.SHARED_PREFERENCES_NAME
@@ -46,9 +47,16 @@ class StatisticsFragment : Fragment(R.layout.fragment_statistics) {
 
         val database = BooksDatabase(view.context)
         val yearDatabase = YearDatabase(view.context)
+
         val booksRepository = BooksRepository(database)
         val yearRepository = YearRepository(yearDatabase)
-        val booksViewModelProviderFactory = BooksViewModelProviderFactory(booksRepository, yearRepository)
+        val openLibraryRepository = OpenLibraryRepository()
+
+        val booksViewModelProviderFactory = BooksViewModelProviderFactory(
+            booksRepository,
+            yearRepository,
+            openLibraryRepository
+        )
 
         viewModel = ViewModelProvider(this, booksViewModelProviderFactory).get(
             BooksViewModel::class.java
