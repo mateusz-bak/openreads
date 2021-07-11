@@ -1,7 +1,7 @@
 package software.mdev.bookstracker.api
 
 data class OpenLibrarySearchTitleResponse(
-    val docs: List<OpenLibraryBook>,
+    val docs: MutableList<OpenLibraryBook>,
     val numFound: Int,
     val numFoundExact: Boolean,
     val num_found: Int,
