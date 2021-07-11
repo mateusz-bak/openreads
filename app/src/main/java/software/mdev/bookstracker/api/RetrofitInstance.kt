@@ -6,6 +6,7 @@ import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import software.mdev.bookstracker.other.Constants
+import java.util.concurrent.TimeUnit
 
 class RetrofitInstance {
     companion object {

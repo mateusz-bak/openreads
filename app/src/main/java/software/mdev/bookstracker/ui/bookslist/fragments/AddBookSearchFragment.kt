@@ -27,6 +27,7 @@ import java.util.*
 import androidx.lifecycle.Observer
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.google.android.material.snackbar.Snackbar
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.MainScope
 import kotlinx.coroutines.delay
@@ -174,21 +175,65 @@ class AddBookSearchFragment : Fragment(R.layout.fragment_add_book_search) {
 
                         if (booksResponse != null) {
                             if (booksResponse.languages != null) {
-                                if (booksResponse.languages[0].key == "/languages/pol" || booksResponse.languages[0].key == "/languages/eng") {
-                                    byOLIDBookAdapter.differ.submitList(byOLIDBookAdapter.differ.currentList + booksResponse)
-                                    byOLIDBookAdapter.selectedAuthorsName =
-                                        viewModel.selectedAuthorsName
+//                                if (booksResponse.languages[0].key == "/languages/pol" || booksResponse.languages[0].key == "/languages/eng") {
+                                if (true) {
+
+                                    lifecycleScope.launch {
+                                        var currentList = byOLIDBookAdapter.differ.currentList
+                                        var newList = currentList.toList()
+
+                                        if (booksResponse.number_of_pages > 0) {
+                                            if (currentList.isNotEmpty()) {
+                                                var add = true
+
+                                                for (item in currentList) {
+                                                    if (item.isbn_10 != null && booksResponse.isbn_10 != null) {
+                                                        if (item.isbn_10[0] == booksResponse.isbn_10[0])
+                                                            add = false
+                                                    }
+
+                                                    if (item.isbn_13 != null && booksResponse.isbn_13 != null) {
+                                                        if (item.isbn_13[0] == booksResponse.isbn_13[0]) {
+                                                            add = false
+                                                        }
+                                                    }
+
+                                                    if (item.covers != null && booksResponse.covers != null) {
+                                                        if (item.covers[0] == booksResponse.covers[0]) {
+                                                            add = false
+                                                        }
+                                                    }
+                                                }
+
+                                                if (add == true) {
+                                                    newList += booksResponse
+                                                    byOLIDBookAdapter.differ.submitList(
+                                                        newList
+                                                    )
+                                                    byOLIDBookAdapter.notifyDataSetChanged()
+                                                }
+                                            } else {
+                                                newList += booksResponse
+                                                byOLIDBookAdapter.differ.submitList(newList)
+                                                byOLIDBookAdapter.notifyDataSetChanged()
+                                            }
+                                        }
+                                    }
+
+                                    byOLIDBookAdapter.selectedAuthorsName = viewModel.selectedAuthorsName
                                     hideProgressBar()
                                 }
                             }
                         }
                     }
                 }
+
                 is Resource.Error -> {
                     hideProgressBar()
                     response.message?.let { message ->
                         Log.e("AddBookSearchFragment", "An error occured: $message")
                         Log.e("AddBookSearchFragment", response.toString())
+                        Snackbar.make(view,"An error occured: $message", Snackbar.LENGTH_SHORT).show()
                     }
                 }
                 is Resource.Loading -> {

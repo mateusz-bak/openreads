@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.AsyncListDiffer
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
+import androidx.swiperefreshlayout.widget.CircularProgressDrawable
 import com.squareup.picasso.Picasso
 import software.mdev.bookstracker.R
 import kotlinx.android.synthetic.main.item_book_searched_by_olid.view.*
@@ -46,7 +47,6 @@ class ByOLIDBookAdapter : RecyclerView.Adapter<ByOLIDBookAdapter.OpenLibraryBook
 
     override fun onBindViewHolder(holder: OpenLibraryBookViewHolder, position: Int) {
         val curBook = differ.currentList[position]
-        if (curBook != null)
 
             holder.itemView.apply {
 
@@ -54,14 +54,7 @@ class ByOLIDBookAdapter : RecyclerView.Adapter<ByOLIDBookAdapter.OpenLibraryBook
                     if (curBook.title != null)
                         tvBookTitle.text = curBook.title
 
-                    if (curBook.authors != null) {
-//                    var authorsCombined = ""
-//                    for (author in curBook.authors) {
-//                        authorsCombined += author.key + ", "
-//                    }
-//                    tvBookAuthor.text = authorsCombined
-                        tvBookAuthor.text = selectedAuthorsName
-                    }
+                    tvBookAuthor.text = selectedAuthorsName
 
                     if (curBook.isbn_13 != null) {
                         var isbn = "ISBN: " + curBook.isbn_13[0]
