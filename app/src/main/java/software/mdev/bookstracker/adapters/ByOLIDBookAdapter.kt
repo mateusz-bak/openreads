@@ -10,7 +10,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.squareup.picasso.Picasso
 import software.mdev.bookstracker.R
 import kotlinx.android.synthetic.main.item_book_searched_by_olid.view.*
-import software.mdev.bookstracker.api.OpenLibraryOLIDResponse
+import software.mdev.bookstracker.api.models.OpenLibraryOLIDResponse
 
 class ByOLIDBookAdapter : RecyclerView.Adapter<ByOLIDBookAdapter.OpenLibraryBookViewHolder>() {
     inner class OpenLibraryBookViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView)

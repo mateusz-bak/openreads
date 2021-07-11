@@ -1,4 +1,4 @@
-package software.mdev.bookstracker.api
+package software.mdev.bookstracker.api.models
 
 data class OpenLibrarySearchTitleResponse(
     val docs: MutableList<OpenLibraryBook>,

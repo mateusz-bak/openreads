@@ -9,7 +9,7 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import software.mdev.bookstracker.R
 import kotlinx.android.synthetic.main.item_book_searched.view.*
-import software.mdev.bookstracker.api.OpenLibraryBook
+import software.mdev.bookstracker.api.models.OpenLibraryBook
 
 class SearchedBookAdapter : RecyclerView.Adapter<SearchedBookAdapter.OpenLibraryBookViewHolder>() {
     inner class OpenLibraryBookViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView)

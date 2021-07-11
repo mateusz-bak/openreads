@@ -34,7 +34,7 @@ import kotlinx.coroutines.launch
 import me.everything.android.ui.overscroll.OverScrollDecoratorHelper
 import software.mdev.bookstracker.adapters.ByOLIDBookAdapter
 import software.mdev.bookstracker.adapters.SearchedBookAdapter
-import software.mdev.bookstracker.api.OpenLibraryBook
+import software.mdev.bookstracker.api.models.OpenLibraryBook
 import software.mdev.bookstracker.data.repositories.OpenLibraryRepository
 import software.mdev.bookstracker.other.Resource
 import kotlin.collections.ArrayList

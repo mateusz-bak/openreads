@@ -13,8 +13,8 @@ import software.mdev.bookstracker.data.db.entities.Year
 import software.mdev.bookstracker.data.repositories.OpenLibraryRepository
 import software.mdev.bookstracker.data.repositories.YearRepository
 import retrofit2.Response
-import software.mdev.bookstracker.api.OpenLibraryOLIDResponse
-import software.mdev.bookstracker.api.OpenLibrarySearchTitleResponse
+import software.mdev.bookstracker.api.models.OpenLibraryOLIDResponse
+import software.mdev.bookstracker.api.models.OpenLibrarySearchTitleResponse
 import software.mdev.bookstracker.other.Resource
 import java.lang.Exception
 
