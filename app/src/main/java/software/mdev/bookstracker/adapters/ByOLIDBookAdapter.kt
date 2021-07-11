@@ -64,6 +64,11 @@ class ByOLIDBookAdapter : RecyclerView.Adapter<ByOLIDBookAdapter.OpenLibraryBook
                         tvBookISBN.text = isbn
                     }
 
+                    if(curBook.number_of_pages != null) {
+                        var pages = curBook.number_of_pages.toString() + " pages"
+                        tvBookPages.text = pages
+                    }
+
                     if (curBook.languages != null) {
                         var language = curBook.languages[0].key.replace("/languages/", "")
                         tvBookLanguage.text = language
