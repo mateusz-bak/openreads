@@ -139,4 +139,8 @@
     <string name="click_edit_button_to_edit_pages">Kliknij przycisk edytowania, żeby zmienić liczbę stron książki</string>
     <string name="btnAddSearch">Wyszukaj</string>
     <string name="btnAddManual">Ręcznie</string>
+    <string name="etAdderBookTitleSearch">Wpisz tytuł, żeby wyszukać…</string>
+    <string name="fabAddNewBook">Dodaj nową książkę</string>
+    <string name="fabCancelAddingNewBook">Przewij dodawanie nowej książki</string>
+    <string name="UNKNOWN">NIEZNANE</string>
 </resources>

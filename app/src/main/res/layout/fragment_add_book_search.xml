@@ -1,0 +1,298 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/frDisplayBook"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/fabAddNewBook"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom|end"
+        android:layout_marginEnd="16dp"
+        android:layout_marginBottom="16dp"
+        android:backgroundTint="?colorPrimary"
+        android:clickable="true"
+        android:contentDescription="@string/fabAddNewBook"
+        android:focusable="true"
+        app:borderWidth="0dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:srcCompat="@drawable/ic_baseline_done_24"
+        app:tint="?colorOnPrimary" />
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/fabCancelAddingNewBook"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom|end"
+        android:layout_marginStart="16dp"
+        android:layout_marginBottom="16dp"
+        android:backgroundTint="@android:color/holo_red_dark"
+        android:clickable="true"
+        android:contentDescription="@string/fabCancelAddingNewBook"
+        android:focusable="true"
+        app:borderWidth="0dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:srcCompat="@drawable/ic_baseline_delete_24"
+        app:tint="?colorOnPrimary" />
+
+    <ProgressBar
+        android:id="@+id/paginationProgressBar"
+        style="?attr/progressBarStyle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@android:color/transparent"
+        android:visibility="invisible"
+        app:layout_constraintBottom_toBottomOf="@+id/fabCancelAddingNewBook"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/fabCancelAddingNewBook" />
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:fillViewport="true">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="24dp">
+
+            <EditText
+                android:id="@+id/etAdderBookTitleSearch"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="2dp"
+                android:hint="@string/etAdderBookTitleSearch"
+                android:inputType="textCapSentences"
+                android:maxLength="200"
+                android:textColor="?colorOnSecondary"
+                android:textSize="18sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/guideline4" />
+
+
+            <RatingBar
+                android:id="@+id/rbRating"
+                style="?android:attr/ratingBarStyle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="32dp"
+                android:stepSize="1"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/ivBookStatusRead" />
+
+            <androidx.constraintlayout.widget.Guideline
+                android:id="@+id/guideline2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintGuide_percent="0.85"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/rbRating" />
+
+            <androidx.constraintlayout.widget.Guideline
+                android:id="@+id/guideline4"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                app:layout_constraintGuide_begin="20dp"
+                app:layout_constraintGuide_percent="0.12" />
+
+            <ImageView
+                android:id="@+id/ivBookStatusRead"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="24dp"
+                android:clickable="true"
+                android:contentDescription="@string/ivBookStatusSetRead"
+                android:focusable="true"
+                android:scaleX="2"
+                android:scaleY="2"
+                app:layout_constraintEnd_toStartOf="@+id/ivBookStatusInProgress"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/btnSetFinishDate"
+                app:srcCompat="@drawable/ic_baseline_done_24" />
+
+            <ImageView
+                android:id="@+id/ivBookStatusInProgress"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:clickable="true"
+                android:contentDescription="@string/ivBookStatusSetInProgress"
+                android:focusable="true"
+                android:scaleX="2"
+                android:scaleY="2"
+                app:layout_constraintBottom_toBottomOf="@+id/ivBookStatusRead"
+                app:layout_constraintEnd_toStartOf="@+id/ivBookStatusToRead"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toEndOf="@+id/ivBookStatusRead"
+                app:layout_constraintTop_toTopOf="@+id/ivBookStatusRead"
+                app:srcCompat="@drawable/ic_baseline_hourglass_bottom_24" />
+
+            <ImageView
+                android:id="@+id/ivBookStatusToRead"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:clickable="true"
+                android:contentDescription="@string/ivBookStatusSetToRead"
+                android:focusable="true"
+                android:scaleX="2"
+                android:scaleY="2"
+                app:layout_constraintBottom_toBottomOf="@+id/ivBookStatusRead"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toEndOf="@+id/ivBookStatusInProgress"
+                app:layout_constraintTop_toTopOf="@+id/ivBookStatusRead"
+                app:srcCompat="@drawable/ic_baseline_list_24" />
+
+            <TextView
+                android:id="@+id/tvFinished"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:text="@string/finished"
+                android:textSize="12sp"
+                app:layout_constraintEnd_toEndOf="@+id/ivBookStatusRead"
+                app:layout_constraintStart_toStartOf="@+id/ivBookStatusRead"
+                app:layout_constraintTop_toBottomOf="@+id/ivBookStatusRead" />
+
+            <TextView
+                android:id="@+id/tvInProgress"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/inProgress"
+                android:textSize="12sp"
+                app:layout_constraintBottom_toBottomOf="@+id/tvFinished"
+                app:layout_constraintEnd_toEndOf="@+id/ivBookStatusInProgress"
+                app:layout_constraintStart_toStartOf="@+id/ivBookStatusInProgress"
+                app:layout_constraintTop_toTopOf="@+id/tvFinished" />
+
+            <TextView
+                android:id="@+id/tvToRead"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/toRead"
+                android:textSize="12sp"
+                app:layout_constraintBottom_toBottomOf="@+id/tvInProgress"
+                app:layout_constraintEnd_toEndOf="@+id/ivBookStatusToRead"
+                app:layout_constraintStart_toStartOf="@+id/ivBookStatusToRead"
+                app:layout_constraintTop_toTopOf="@+id/tvInProgress" />
+
+            <FrameLayout
+                android:id="@+id/frameLayout2"
+                android:layout_width="match_parent"
+                android:layout_height="300dp"
+                android:layout_marginTop="12dp"
+                android:clipToPadding="false"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="1.0"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/etAdderBookTitleSearch">
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/rvBooksSearched"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:clipToPadding="false"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="1.0"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/ivSearch"
+                    app:layout_constraintVertical_bias="1.0" />
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/rvBooksByOLID"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:clipToPadding="false"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="1.0"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/ivSearch"
+                    app:layout_constraintVertical_bias="1.0" />
+
+            </FrameLayout>
+
+            <!--            <EditText-->
+            <!--                android:id="@+id/etPagesNumber"-->
+            <!--                android:layout_width="75dp"-->
+            <!--                android:layout_height="wrap_content"-->
+            <!--                android:layout_marginTop="12dp"-->
+            <!--                android:autofillHints="@string/autofill_hint_pages_number"-->
+            <!--                android:hint="@string/hint_pages_number"-->
+            <!--                android:inputType="number"-->
+            <!--                android:maxLength="10"-->
+            <!--                android:textColor="?colorOnSecondary"-->
+            <!--                android:textSize="14sp"-->
+            <!--                app:layout_constraintStart_toStartOf="parent"-->
+            <!--                app:layout_constraintTop_toBottomOf="@+id/etEditedBookAuthor"-->
+            <!--                tools:ignore="TextViewEdits" />-->
+
+            <Button
+                android:id="@+id/btnSetFinishDate"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="12dp"
+                android:text="@string/hint_date_finished"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/frameLayout2" />
+
+            <DatePicker
+                android:id="@+id/dpBookFinishDate"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="12dp"
+                android:calendarViewShown="false"
+                android:datePickerMode="calendar"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/guideline4" />
+
+            <Button
+                android:id="@+id/btnSaveFinishDate"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:backgroundTint="?colorPrimary"
+                android:text="@string/btnAdderSaveFinishDate"
+                app:layout_constraintBottom_toTopOf="@+id/guideline2"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toEndOf="@+id/btnCancelFinishDate"
+                app:layout_constraintTop_toBottomOf="@+id/dpBookFinishDate" />
+
+            <Button
+                android:id="@+id/btnCancelFinishDate"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:backgroundTint="@color/red_800"
+                android:text="@string/btnAdderCancelFinishDate"
+                app:layout_constraintBottom_toTopOf="@+id/guideline2"
+                app:layout_constraintEnd_toStartOf="@+id/btnSaveFinishDate"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/dpBookFinishDate" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </ScrollView>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

@@ -1,5 +1,6 @@
 package software.mdev.bookstracker.ui.bookslist.viewmodel
 
+import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -12,8 +13,10 @@ import software.mdev.bookstracker.data.db.entities.Year
 import software.mdev.bookstracker.data.repositories.OpenLibraryRepository
 import software.mdev.bookstracker.data.repositories.YearRepository
 import retrofit2.Response
+import software.mdev.bookstracker.api.OpenLibraryOLIDResponse
 import software.mdev.bookstracker.api.OpenLibrarySearchTitleResponse
 import software.mdev.bookstracker.other.Resource
+import java.lang.Exception
 
 class BooksViewModel(
         private val repository: BooksRepository,
@@ -21,7 +24,9 @@ class BooksViewModel(
         private val openLibraryRepository: OpenLibraryRepository
 ): ViewModel() {
 
-    val searchBooksInOpenLibrary: MutableLiveData<Resource<OpenLibrarySearchTitleResponse>> = MutableLiveData()
+    val booksFromOpenLibrary: MutableLiveData<Resource<OpenLibrarySearchTitleResponse>> = MutableLiveData()
+    val booksByOLID: MutableLiveData<Resource<OpenLibraryOLIDResponse>> = MutableLiveData()
+    var selectedAuthorsName: String = ""
 
     fun upsert(item: Book) = CoroutineScope(Dispatchers.Main).launch {
         repository.upsert(item)
@@ -131,8 +136,34 @@ class BooksViewModel(
     }
 
     fun searchBooksInOpenLibrary(searchQuery: String) = viewModelScope.launch {
-        searchBooksInOpenLibrary.postValue(Resource.Loading())
+        booksFromOpenLibrary.postValue(Resource.Loading())
         val response = openLibraryRepository.searchBooksInOpenLibrary(searchQuery)
-        searchBooksInOpenLibrary.postValue(handleSearchBooksInOpenLibraryResponse(response))
+        booksFromOpenLibrary.postValue(handleSearchBooksInOpenLibraryResponse(response))
+    }
+
+    private fun handleGetBooksByOLIDResponse(response: Response<OpenLibraryOLIDResponse>): Resource<OpenLibraryOLIDResponse> {
+        if (response.isSuccessful) {
+            response.body()?.let { resultResponse ->
+                Log.d("eloo3", response.toString())
+                return Resource.Success(resultResponse)
+            }
+        }
+        Log.d("eloo33", response.toString())
+        return Resource.Error(response.message())
+    }
+
+    fun getBooksByOLID(isbn: String) = viewModelScope.launch {
+        Log.d("eloo1", isbn)
+        Log.d("eloo1", "$isbn.json")
+
+        booksByOLID.postValue(Resource.Loading())
+
+        try {
+            val response = openLibraryRepository.getBookFromOLID("$isbn.json")
+            Log.d("eloo4", handleGetBooksByOLIDResponse(response).toString())
+            booksByOLID.postValue(handleGetBooksByOLIDResponse(response))
+        } catch (e: Exception) {
+            Log.d("eloo53", "catched $e")
+        }
     }
 }

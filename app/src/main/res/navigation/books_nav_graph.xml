@@ -27,6 +27,9 @@
         <action
             android:id="@+id/action_readFragment_to_statisticsFragment"
             app:destination="@id/statisticsFragment" />
+        <action
+            android:id="@+id/action_readFragment_to_addBookSearchFragment"
+            app:destination="@id/addBookSearchFragment" />
     </fragment>
 
     <fragment
@@ -52,6 +55,9 @@
         <action
             android:id="@+id/action_inProgressFragment_to_statisticsFragment"
             app:destination="@id/statisticsFragment" />
+        <action
+            android:id="@+id/action_inProgressFragment_to_addBookSearchFragment"
+            app:destination="@id/addBookSearchFragment" />
     </fragment>
 
     <fragment
@@ -77,6 +83,9 @@
         <action
             android:id="@+id/action_toReadFragment_to_statisticsFragment"
             app:destination="@id/statisticsFragment" />
+        <action
+            android:id="@+id/action_toReadFragment_to_addBookSearchFragment"
+            app:destination="@id/addBookSearchFragment" />
     </fragment>
 
     <fragment
@@ -138,4 +147,8 @@
         android:id="@+id/trashFragment"
         android:name="software.mdev.bookstracker.ui.bookslist.fragments.TrashFragment"
         android:label="TrashFragment" />
+    <fragment
+        android:id="@+id/addBookSearchFragment"
+        android:name="software.mdev.bookstracker.ui.bookslist.fragments.AddBookSearchFragment"
+        android:label="AddBookSearchFragment" />
 </navigation>

@@ -81,4 +81,5 @@ object Constants {
     const val GITHUB_REPO = "books-tracker-android"
 
     const val BASE_URL = "https://openlibrary.org/"
+    const val OPEN_LIBRARY_SEARCH_DELAY = 500L
 }

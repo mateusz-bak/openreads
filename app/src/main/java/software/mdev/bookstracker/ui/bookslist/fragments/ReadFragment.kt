@@ -104,6 +104,8 @@ class ReadFragment : Fragment(R.layout.fragment_read) {
             btnAddSearch.isClickable = false
 
             fabAddBook.animate().rotation( 0F).setDuration(350L).start()
+            btnAddSearch.startAnimation(AnimationUtils.loadAnimation(context,R.anim.slide_out_down))
+            btnAddManual.startAnimation(AnimationUtils.loadAnimation(context,R.anim.slide_out_down))
 
             AddBookDialog(view.context,
                 object: AddBookDialogListener {
@@ -159,6 +161,9 @@ class ReadFragment : Fragment(R.layout.fragment_read) {
             fabAddBook.animate().rotation( 0F).setDuration(350L).start()
             btnAddSearch.startAnimation(AnimationUtils.loadAnimation(context,R.anim.slide_out_down))
             btnAddManual.startAnimation(AnimationUtils.loadAnimation(context,R.anim.slide_out_down))
+
+            findNavController().navigate(
+                R.id.action_readFragment_to_addBookSearchFragment)
         }
 
         rvBooks.setOnClickListener {

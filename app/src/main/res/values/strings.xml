@@ -168,5 +168,9 @@
     <string name="click_edit_button_to_edit_pages">Click edit button to change book\'s number of pages</string>
     <string name="btnAddSearch">Search</string>
     <string name="btnAddManual">Manually</string>
+    <string name="etAdderBookTitleSearch">Type title to search…</string>
+    <string name="fabAddNewBook">Add new book</string>
+    <string name="fabCancelAddingNewBook">Cancel adding new book</string>
+    <string name="UNKNOWN">UNKNOWN</string>
 
 </resources>
