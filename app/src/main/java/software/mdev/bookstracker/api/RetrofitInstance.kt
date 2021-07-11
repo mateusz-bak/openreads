@@ -20,6 +20,8 @@ class RetrofitInstance {
             logging.setLevel(HttpLoggingInterceptor.Level.BODY)
             val client = OkHttpClient.Builder()
                 .addInterceptor(logging)
+                .connectTimeout(30, TimeUnit.SECONDS)
+                .readTimeout(30, TimeUnit.SECONDS)
                 .build()
             Retrofit.Builder()
                 .baseUrl(Constants.BASE_URL)
