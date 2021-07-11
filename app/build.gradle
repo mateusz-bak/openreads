@@ -86,4 +86,7 @@ dependencies {
 
     // https://stackoverflow.com/questions/7145606/how-do-you-save-store-objects-in-sharedpreferences-on-android
     implementation 'com.google.code.gson:gson:2.8.6'
+
+    // https://github.com/square/picasso
+    implementation 'com.squareup.picasso:picasso:2.8'
 }
