@@ -81,13 +81,19 @@ class ByOLIDBookAdapter : RecyclerView.Adapter<ByOLIDBookAdapter.OpenLibraryBook
                     }
 
                     if (curBook.covers != null) {
-//                    lifecycleScope.launch {
-//                        delay(250L)
-//                        rvBooks.scrollToPosition(0)
-//                    }
+                        val circularProgressDrawable = CircularProgressDrawable(this.context)
+                        circularProgressDrawable.strokeWidth = 5f
+                        circularProgressDrawable.centerRadius = 30f
+                        circularProgressDrawable.start()
+
                         var coverID = curBook.covers[0].toString()
                         var coverUrl = "https://covers.openlibrary.org/b/id/$coverID-M.jpg"
-                        Picasso.get().load(coverUrl).into(ivBookCover);
+                        Picasso
+                            .get()
+                            .load(coverUrl)
+                            .placeholder(circularProgressDrawable)
+                            .error(R.drawable.ic_baseline_error_outline_24)
+                            .into(ivBookCover)
                     }
                 }
             }
