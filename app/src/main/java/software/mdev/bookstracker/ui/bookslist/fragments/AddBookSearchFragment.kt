@@ -146,7 +146,11 @@ class AddBookSearchFragment : Fragment(R.layout.fragment_add_book_search) {
         searchedBookAdapter.setOnBookClickListener { curBook ->
             rvBooksSearched.visibility = View.GONE
             rvBooksByOLID.visibility = View.VISIBLE
-            Log.d("eloo", "adapter clicked")
+
+            var oldList = byOLIDBookAdapter.differ.currentList
+            var newList = oldList.toList()
+            newList = emptyList()
+            byOLIDBookAdapter.differ.submitList(newList)
 
             job?.cancel()
             job = MainScope().launch {
