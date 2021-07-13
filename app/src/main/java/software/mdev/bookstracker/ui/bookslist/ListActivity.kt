@@ -17,8 +17,10 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import software.mdev.bookstracker.R
 import software.mdev.bookstracker.data.db.BooksDatabase
+import software.mdev.bookstracker.data.db.LanguageDatabase
 import software.mdev.bookstracker.data.db.YearDatabase
 import software.mdev.bookstracker.data.repositories.BooksRepository
+import software.mdev.bookstracker.data.repositories.LanguageRepository
 import software.mdev.bookstracker.data.repositories.OpenLibraryRepository
 import software.mdev.bookstracker.data.repositories.YearRepository
 import software.mdev.bookstracker.other.Constants
@@ -33,11 +35,13 @@ class ListActivity : AppCompatActivity() {
         val booksRepository = BooksRepository(BooksDatabase(this))
         val yearRepository = YearRepository(YearDatabase(this))
         val openLibraryRepository = OpenLibraryRepository()
+        val languageRepository = LanguageRepository(LanguageDatabase(this))
 
         val booksViewModelProviderFactory = BooksViewModelProviderFactory(
             booksRepository,
             yearRepository,
-            openLibraryRepository
+            openLibraryRepository,
+            languageRepository
         )
 
         booksViewModel = ViewModelProvider(this, booksViewModelProviderFactory).get(

@@ -15,13 +15,15 @@ import software.mdev.bookstracker.data.repositories.YearRepository
 import retrofit2.Response
 import software.mdev.bookstracker.api.models.OpenLibraryOLIDResponse
 import software.mdev.bookstracker.api.models.OpenLibrarySearchTitleResponse
+import software.mdev.bookstracker.data.repositories.LanguageRepository
 import software.mdev.bookstracker.other.Resource
 import java.lang.Exception
 
 class BooksViewModel(
         private val repository: BooksRepository,
         private val yearRepository: YearRepository,
-        private val openLibraryRepository: OpenLibraryRepository
+        private val openLibraryRepository: OpenLibraryRepository,
+        private val languageRepository: LanguageRepository
 ): ViewModel() {
 
     val booksFromOpenLibrary: MutableLiveData<Resource<OpenLibrarySearchTitleResponse>> = MutableLiveData()
@@ -166,4 +168,6 @@ class BooksViewModel(
             Log.d("eloo53", "catched $e")
         }
     }
+
+    fun getLanguages() = languageRepository.getLanguages()
 }

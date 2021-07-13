@@ -31,6 +31,13 @@ object Constants {
     const val DATABASE_YEAR_CHALLENGE_BOOKS = "item_challenge_books"
     const val DATABASE_YEAR_CHALLENGE_PAGES = "item_challenge_pages"
 
+    const val DATABASE_NAME_LANGUAGE = "Language"
+    const val DATABASE_LANGUAGE_FILE_NAME = "LanguageDB.db"
+    const val DATABASE_LANGUAGE_ITEM_language6392B = "item_language6392B"
+    const val DATABASE_LANGUAGE_ITEM_isoLanguageName = "item_isoLanguageName"
+    const val DATABASE_LANGUAGE_ITEM_isSelected = "item_isSelected"
+    const val DATABASE_LANGUAGE_ITEM_selectCounter = "item_selectCounter"
+
     const val CHALLENGE_BEGINNER = 3
     const val CHALLENGE_EASY = 6
     const val CHALLENGE_NORMAL = 12

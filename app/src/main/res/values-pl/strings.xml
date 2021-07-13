@@ -143,4 +143,5 @@
     <string name="fabAddNewBook">Dodaj nową książkę</string>
     <string name="fabCancelAddingNewBook">Przewij dodawanie nowej książki</string>
     <string name="UNKNOWN">NIEZNANE</string>
+    <string name="language">język</string>
 </resources>

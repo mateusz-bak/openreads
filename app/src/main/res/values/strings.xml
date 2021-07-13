@@ -172,5 +172,6 @@
     <string name="fabAddNewBook">Add new book</string>
     <string name="fabCancelAddingNewBook">Cancel adding new book</string>
     <string name="UNKNOWN">UNKNOWN</string>
+    <string name="language">language</string>
 
 </resources>

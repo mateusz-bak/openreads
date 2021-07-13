@@ -34,8 +34,11 @@ import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import me.everything.android.ui.overscroll.OverScrollDecoratorHelper
 import software.mdev.bookstracker.adapters.ByOLIDBookAdapter
+import software.mdev.bookstracker.adapters.LanguageAdapter
 import software.mdev.bookstracker.adapters.SearchedBookAdapter
 import software.mdev.bookstracker.api.models.OpenLibraryBook
+import software.mdev.bookstracker.data.db.LanguageDatabase
+import software.mdev.bookstracker.data.repositories.LanguageRepository
 import software.mdev.bookstracker.data.repositories.OpenLibraryRepository
 import software.mdev.bookstracker.other.Resource
 import kotlin.collections.ArrayList
@@ -46,6 +49,7 @@ class AddBookSearchFragment : Fragment(R.layout.fragment_add_book_search) {
     lateinit var viewModel: BooksViewModel
     lateinit var searchedBookAdapter: SearchedBookAdapter
     lateinit var byOLIDBookAdapter: ByOLIDBookAdapter
+    lateinit var languageAdapter: LanguageAdapter
 
     lateinit var book: Book
     lateinit var listActivity: ListActivity
@@ -60,15 +64,18 @@ class AddBookSearchFragment : Fragment(R.layout.fragment_add_book_search) {
 
         val database = BooksDatabase(view.context)
         val yearDatabase = YearDatabase(view.context)
+        val languageDatabase = LanguageDatabase(view.context)
 
         val repository = BooksRepository(database)
         val yearRepository = YearRepository(yearDatabase)
         val openLibraryRepository = OpenLibraryRepository()
+        val languageRepository = LanguageRepository(languageDatabase)
 
         val booksViewModelProviderFactory = BooksViewModelProviderFactory(
             repository,
             yearRepository,
-            openLibraryRepository
+            openLibraryRepository,
+            languageRepository
         )
 
         var accentColor = getAccentColor(view.context.applicationContext)
@@ -91,6 +98,7 @@ class AddBookSearchFragment : Fragment(R.layout.fragment_add_book_search) {
 
         setupRvBooksSearched()
         setupRvBooksByOLID()
+        setupRvLanguages()
 
         frameLayout2.layoutParams.height = 0
 
@@ -245,6 +253,10 @@ class AddBookSearchFragment : Fragment(R.layout.fragment_add_book_search) {
                 }
             }
         })
+
+        viewModel.getLanguages().observe(viewLifecycleOwner, Observer { languages ->
+            Log.d("eloodb", languages.toString())
+            languageAdapter.differ.submitList(languages)})
 
 
 //        searchedBookAdapter.setOnBookClickListener {
@@ -491,6 +503,15 @@ class AddBookSearchFragment : Fragment(R.layout.fragment_add_book_search) {
             rvBooksByOLID,
             OverScrollDecoratorHelper.ORIENTATION_VERTICAL
         )
+    }
+
+    private fun setupRvLanguages() {
+        languageAdapter = LanguageAdapter()
+
+        rvLanguages.apply {
+            adapter = languageAdapter
+            layoutManager = LinearLayoutManager(context)
+        }
     }
 
     private fun hideProgressBar() {

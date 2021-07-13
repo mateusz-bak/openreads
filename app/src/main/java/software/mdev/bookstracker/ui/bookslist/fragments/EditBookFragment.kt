@@ -30,7 +30,9 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.lifecycleScope
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
+import software.mdev.bookstracker.data.db.LanguageDatabase
 import software.mdev.bookstracker.data.db.entities.Year
+import software.mdev.bookstracker.data.repositories.LanguageRepository
 import software.mdev.bookstracker.data.repositories.OpenLibraryRepository
 
 
@@ -51,15 +53,18 @@ class EditBookFragment : Fragment(R.layout.fragment_edit_book) {
 
         val database = BooksDatabase(view.context)
         val yearDatabase = YearDatabase(view.context)
+        val languageDatabase = LanguageDatabase(view.context)
 
         val repository = BooksRepository(database)
         val yearRepository = YearRepository(yearDatabase)
         val openLibraryRepository = OpenLibraryRepository()
+        val languageRepository = LanguageRepository(languageDatabase)
 
         val booksViewModelProviderFactory = BooksViewModelProviderFactory(
             repository,
             yearRepository,
-            openLibraryRepository
+            openLibraryRepository,
+            languageRepository
         )
 
         val book = args.book
