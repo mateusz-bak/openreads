@@ -140,8 +140,13 @@ class BooksViewModel(
 
     fun searchBooksInOpenLibrary(searchQuery: String) = viewModelScope.launch {
         booksFromOpenLibrary.postValue(Resource.Loading())
-        val response = openLibraryRepository.searchBooksInOpenLibrary(searchQuery)
-        booksFromOpenLibrary.postValue(handleSearchBooksInOpenLibraryResponse(response))
+
+        try {
+            val response = openLibraryRepository.searchBooksInOpenLibrary(searchQuery)
+            booksFromOpenLibrary.postValue(handleSearchBooksInOpenLibraryResponse(response))
+        } catch (e: java.net.UnknownHostException) {
+            Log.e("UnknownHostException", "in searchBooksInOpenLibrary: $e")
+        }
     }
 
     private fun handleGetBooksByOLIDResponse(response: Response<OpenLibraryOLIDResponse>): Resource<OpenLibraryOLIDResponse> {
