@@ -2,12 +2,13 @@ package software.mdev.bookstracker.ui.bookslist.fragments
 
 import android.content.Context
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import android.view.inputmethod.InputMethodManager
 import android.widget.DatePicker
 import android.widget.EditText
+import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.content.ContextCompat
+import androidx.core.view.updateLayoutParams
 import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
@@ -28,15 +29,13 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.snackbar.Snackbar
-import kotlinx.coroutines.Job
-import kotlinx.coroutines.MainScope
-import kotlinx.coroutines.delay
-import kotlinx.coroutines.launch
+import kotlinx.coroutines.*
 import me.everything.android.ui.overscroll.OverScrollDecoratorHelper
 import software.mdev.bookstracker.adapters.ByOLIDBookAdapter
 import software.mdev.bookstracker.adapters.LanguageAdapter
 import software.mdev.bookstracker.adapters.SearchedBookAdapter
 import software.mdev.bookstracker.api.models.OpenLibraryBook
+import software.mdev.bookstracker.api.models.OpenLibraryOLIDResponse
 import software.mdev.bookstracker.data.db.LanguageDatabase
 import software.mdev.bookstracker.data.repositories.LanguageRepository
 import software.mdev.bookstracker.data.repositories.OpenLibraryRepository
@@ -112,6 +111,12 @@ class AddBookSearchFragment : Fragment(R.layout.fragment_add_book_search) {
                         frameLayout2.layoutParams.height = 1000
                         rvBooksByOLID.visibility = View.GONE
                         rvBooksSearched.visibility = View.VISIBLE
+                        rvLanguages.visibility = View.VISIBLE
+                        ivSeparator0.visibility = View.VISIBLE
+                        frameLayout2.updateLayoutParams<ConstraintLayout.LayoutParams> {
+                            topToBottom = ivSeparator0.id
+                        }
+
                         if (editable.last().toString() == " ")
                             editable.dropLast(1)
                         viewModel.searchBooksInOpenLibrary(editable.toString())
@@ -131,7 +136,6 @@ class AddBookSearchFragment : Fragment(R.layout.fragment_add_book_search) {
 
                         for (item in booksResponse.docs) {
                             if (item.title != null && item.author_name != null) {
-                                Log.d("eloo", "added")
 
                                 booksResponseCleaned?.add(item)
                             }
@@ -141,9 +145,6 @@ class AddBookSearchFragment : Fragment(R.layout.fragment_add_book_search) {
                 }
                 is Resource.Error -> {
                     hideProgressBar()
-                    response.message?.let { message ->
-                        Log.e("AddBookSearchFragment", "An error occured: $message")
-                    }
                 }
                 is Resource.Loading -> {
                     showProgressBar()
@@ -152,13 +153,30 @@ class AddBookSearchFragment : Fragment(R.layout.fragment_add_book_search) {
         })
 
         searchedBookAdapter.setOnBookClickListener { curBook ->
+
+            var willLanguageCounterBeUpdate = true
+
+            view?.hideKeyboard()
+
             rvBooksSearched.visibility = View.GONE
+            rvLanguages.visibility = View.GONE
+            ivSeparator0.visibility = View.GONE
             rvBooksByOLID.visibility = View.VISIBLE
 
-            var oldList = byOLIDBookAdapter.differ.currentList
-            var newList = oldList.toList()
+            frameLayout2.updateLayoutParams<ConstraintLayout.LayoutParams> {
+                topToBottom = etAdderBookTitleSearch.id
+            }
+
+            viewModel.booksByOLID.value = null
+            viewModel.booksByOLIDFiltered.value = null
+
+            var currentList = byOLIDBookAdapter.differ.currentList
+            var newList = currentList.toList()
             newList = emptyList()
-            byOLIDBookAdapter.differ.submitList(newList)
+
+            byOLIDBookAdapter.differ.submitList(
+                newList
+            )
 
             job?.cancel()
             job = MainScope().launch {
@@ -173,102 +191,147 @@ class AddBookSearchFragment : Fragment(R.layout.fragment_add_book_search) {
                         viewModel.getBooksByOLID(isbn)
                 }
             }
+
+            viewModel.getLanguages().observe(viewLifecycleOwner, Observer { languages ->
+
+                if (willLanguageCounterBeUpdate) {
+                    willLanguageCounterBeUpdate = false
+
+                    for (language in languages) {
+                        if (language.isSelected == 1) {
+                            val currentCounter = language.selectCounter
+                            if (currentCounter != null)
+                                viewModel.updateCounter(language.id, currentCounter + 1)
+                            else
+                                viewModel.updateCounter(language.id, 1)
+
+                            lifecycleScope.launch {
+                                delay(100L)
+                                rvLanguages.scrollToPosition(0)
+                            }
+                        }
+                    }
+                }
+            }
+            )
+
         }
+
 
         viewModel.booksByOLID.observe(viewLifecycleOwner, Observer { response ->
 
-            Log.d("eloo2", response.toString())
+            if (response != null) {
+                when (response) {
+                    is Resource.Success -> {
+                        hideProgressBar()
 
-            when (response) {
-                is Resource.Success -> {
-                    hideProgressBar()
+                        response.data?.let { booksResponse ->
 
-                    response.data?.let { booksResponse ->
 
-                        if (booksResponse != null) {
-                            if (booksResponse.languages != null) {
-//                                if (booksResponse.languages[0].key == "/languages/pol" || booksResponse.languages[0].key == "/languages/eng") {
-                                if (true) {
+                            lifecycleScope.launch(Dispatchers.IO) {
+                                val selectedLanguages = viewModel.getSelectedLanguages()
+
+                                if (booksResponse != null) {
+
+                                    if (booksResponse.languages != null) {
+
+                                        if (selectedLanguages.isNotEmpty()) {
+
+                                            for (language in selectedLanguages) {
+                                                if (booksResponse.languages[0].key.replace(
+                                                        "/languages/",
+                                                        ""
+                                                    ) == language.language6392B
+                                                ) {
+                                                    viewModel.booksByOLIDFiltered.postValue(
+                                                        booksResponse
+                                                    )
+                                                }
+                                            }
+
+                                        } else {
+                                            viewModel.booksByOLIDFiltered.postValue(booksResponse)
+                                        }
+
+
+                                    }
+                                }
+
+                            }
+                        }
+                    }
+
+                    is Resource.Error -> {
+                        hideProgressBar()
+                        response.message?.let { message ->
+                            Snackbar.make(view, "An error occurred: $message", Snackbar.LENGTH_SHORT)
+                                .show()
+                        }
+                    }
+                    is Resource.Loading -> {
+                        showProgressBar()
+                    }
+                }
+            }
+        })
+
+
+        viewModel.booksByOLIDFiltered.observe(viewLifecycleOwner, Observer { response ->
+                            if (response != null) {
+                                hideProgressBar()
 
                                     lifecycleScope.launch {
                                         var currentList = byOLIDBookAdapter.differ.currentList
                                         var newList = currentList.toList()
 
-                                        if (booksResponse.number_of_pages > 0) {
+                                        if (response.number_of_pages > 0) {
                                             if (currentList.isNotEmpty()) {
                                                 var add = true
 
                                                 for (item in currentList) {
-                                                    if (item.isbn_10 != null && booksResponse.isbn_10 != null) {
-                                                        if (item.isbn_10[0] == booksResponse.isbn_10[0])
+                                                    if (item.isbn_10 != null && response.isbn_10 != null) {
+                                                        if (item.isbn_10[0] == response.isbn_10[0])
                                                             add = false
                                                     }
 
-                                                    if (item.isbn_13 != null && booksResponse.isbn_13 != null) {
-                                                        if (item.isbn_13[0] == booksResponse.isbn_13[0]) {
+                                                    if (item.isbn_13 != null && response.isbn_13 != null) {
+                                                        if (item.isbn_13[0] == response.isbn_13[0]) {
                                                             add = false
                                                         }
                                                     }
 
-                                                    if (item.covers != null && booksResponse.covers != null) {
-                                                        if (item.covers[0] == booksResponse.covers[0]) {
+                                                    if (item.covers != null && response.covers != null) {
+                                                        if (item.covers[0] == response.covers[0]) {
                                                             add = false
                                                         }
                                                     }
                                                 }
 
-                                                if (add == true) {
-                                                    newList += booksResponse
+                                                if (add) {
+                                                    newList += response
                                                     byOLIDBookAdapter.differ.submitList(
                                                         newList
                                                     )
                                                     byOLIDBookAdapter.notifyDataSetChanged()
                                                 }
                                             } else {
-                                                newList += booksResponse
-                                                byOLIDBookAdapter.differ.submitList(newList)
+                                                newList += response
+                                                byOLIDBookAdapter.differ.submitList(
+                                                    newList
+                                                )
                                                 byOLIDBookAdapter.notifyDataSetChanged()
                                             }
                                         }
                                     }
 
-                                    byOLIDBookAdapter.selectedAuthorsName = viewModel.selectedAuthorsName
+                                    byOLIDBookAdapter.selectedAuthorsName =
+                                        viewModel.selectedAuthorsName
                                     hideProgressBar()
-                                }
                             }
-                        }
-                    }
-                }
-
-                is Resource.Error -> {
-                    hideProgressBar()
-                    response.message?.let { message ->
-                        Log.e("AddBookSearchFragment", "An error occured: $message")
-                        Log.e("AddBookSearchFragment", response.toString())
-                        Snackbar.make(view,"An error occured: $message", Snackbar.LENGTH_SHORT).show()
-                    }
-                }
-                is Resource.Loading -> {
-                    showProgressBar()
-                }
-            }
         })
 
         viewModel.getLanguages().observe(viewLifecycleOwner, Observer { languages ->
-            Log.d("eloodb", languages.toString())
             languageAdapter.differ.submitList(languages)})
-
-
-//        searchedBookAdapter.setOnBookClickListener {
-//            job?.cancel()
-//            job = MainScope().launch {
-//                delay(Constants.OPEN_LIBRARY_SEARCH_DELAY)
-//                it.isbn?.let {
-//                    frameLayout2.layoutParams.height = 1000
-//                    viewModel.getBooksByISBN(it)
-//                }
-//            }
-//        }
 
         ivBookStatusRead.setOnClickListener {
             ivBookStatusRead.setColorFilter(accentColor, android.graphics.PorterDuff.Mode.SRC_IN)
@@ -506,7 +569,7 @@ class AddBookSearchFragment : Fragment(R.layout.fragment_add_book_search) {
     }
 
     private fun setupRvLanguages() {
-        languageAdapter = LanguageAdapter()
+        languageAdapter = LanguageAdapter(this)
 
         rvLanguages.apply {
             adapter = languageAdapter

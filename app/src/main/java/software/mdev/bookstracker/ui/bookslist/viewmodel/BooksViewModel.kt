@@ -27,8 +27,9 @@ class BooksViewModel(
 ): ViewModel() {
 
     val booksFromOpenLibrary: MutableLiveData<Resource<OpenLibrarySearchTitleResponse>> = MutableLiveData()
-    val booksByOLID: MutableLiveData<Resource<OpenLibraryOLIDResponse>> = MutableLiveData()
+    var booksByOLID: MutableLiveData<Resource<OpenLibraryOLIDResponse>> = MutableLiveData()
     var selectedAuthorsName: String = ""
+    var booksByOLIDFiltered: MutableLiveData<OpenLibraryOLIDResponse> = MutableLiveData()
 
     fun upsert(item: Book) = CoroutineScope(Dispatchers.Main).launch {
         repository.upsert(item)
@@ -146,28 +147,36 @@ class BooksViewModel(
     private fun handleGetBooksByOLIDResponse(response: Response<OpenLibraryOLIDResponse>): Resource<OpenLibraryOLIDResponse> {
         if (response.isSuccessful) {
             response.body()?.let { resultResponse ->
-                Log.d("eloo3", response.toString())
                 return Resource.Success(resultResponse)
             }
         }
-        Log.d("eloo33", response.toString())
         return Resource.Error(response.message())
     }
 
     fun getBooksByOLID(isbn: String) = viewModelScope.launch {
-        Log.d("eloo1", isbn)
-        Log.d("eloo1", "$isbn.json")
-
         booksByOLID.postValue(Resource.Loading())
 
         try {
             val response = openLibraryRepository.getBookFromOLID("$isbn.json")
-            Log.d("eloo4", handleGetBooksByOLIDResponse(response).toString())
             booksByOLID.postValue(handleGetBooksByOLIDResponse(response))
         } catch (e: Exception) {
-            Log.d("eloo53", "catched $e")
+            Log.e("UnknownHostException", "in getBooksByOLID: $e")
         }
     }
 
     fun getLanguages() = languageRepository.getLanguages()
+
+    fun selectLanguage(id: Int?) = CoroutineScope(Dispatchers.Main).launch {
+        languageRepository.selectLanguage(id, 1)
+    }
+
+    fun unselectLanguage(id: Int?) = CoroutineScope(Dispatchers.Main).launch {
+        languageRepository.unselectLanguage(id, 0)
+    }
+
+    fun updateCounter(id: Int?, selectCounter: Int) = CoroutineScope(Dispatchers.Main).launch {
+        languageRepository.updateCounter(id, selectCounter)
+    }
+
+    fun getSelectedLanguages() = languageRepository.getSelectedLanguages(1)
 }

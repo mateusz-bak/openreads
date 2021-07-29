@@ -1,9 +1,9 @@
 package software.mdev.bookstracker.adapters
 
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.AsyncListDiffer
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
@@ -84,6 +84,7 @@ class ByOLIDBookAdapter : RecyclerView.Adapter<ByOLIDBookAdapter.OpenLibraryBook
                         val circularProgressDrawable = CircularProgressDrawable(this.context)
                         circularProgressDrawable.strokeWidth = 5f
                         circularProgressDrawable.centerRadius = 30f
+                        circularProgressDrawable.setColorSchemeColors(ContextCompat.getColor(context, R.color.grey))
                         circularProgressDrawable.start()
 
                         var coverID = curBook.covers[0].toString()
