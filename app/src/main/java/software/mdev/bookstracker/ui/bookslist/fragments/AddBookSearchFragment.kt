@@ -89,6 +89,14 @@ class AddBookSearchFragment : Fragment(R.layout.fragment_add_book_search) {
         btnCancelFinishDate.visibility = View.GONE
         dpBookFinishDate.maxDate = System.currentTimeMillis()
 
+        ivBookStatusRead.visibility         = View.GONE
+        ivBookStatusInProgress.visibility   = View.GONE
+        ivBookStatusToRead.visibility       = View.GONE
+
+        tvFinished.visibility               = View.GONE
+        tvInProgress.visibility             = View.GONE
+        tvToRead.visibility                 = View.GONE
+
         rvBooksByOLID.visibility = View.GONE
         rvBooksSearched.visibility = View.VISIBLE
 
@@ -108,7 +116,6 @@ class AddBookSearchFragment : Fragment(R.layout.fragment_add_book_search) {
                 delay(Constants.OPEN_LIBRARY_SEARCH_DELAY)
                 editable?.let {
                     if (editable.toString().isNotEmpty()) {
-                        frameLayout2.layoutParams.height = 1000
                         rvBooksByOLID.visibility = View.GONE
                         rvBooksSearched.visibility = View.VISIBLE
                         rvLanguages.visibility = View.VISIBLE
