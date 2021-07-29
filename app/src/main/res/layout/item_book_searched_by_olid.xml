@@ -53,13 +53,12 @@
 
     <ImageView
         android:id="@+id/ivBookCover"
-        android:layout_width="60dp"
+        android:layout_width="80dp"
         android:layout_height="0dp"
         android:scaleType="fitCenter"
-        app:layout_constraintBottom_toBottomOf="@+id/tvBookLanguage"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/tvBookTitle"
-        app:srcCompat="@drawable/ic_baseline_hourglass_bottom_24" />
+        app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/tvBookOLID"
