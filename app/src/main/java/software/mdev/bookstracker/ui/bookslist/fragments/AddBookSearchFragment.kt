@@ -110,7 +110,22 @@ class AddBookSearchFragment : Fragment(R.layout.fragment_add_book_search) {
         frameLayout2.layoutParams.height = 0
 
         var job: Job? = null
-        etAdderBookTitleSearch.addTextChangedListener { editable ->
+//        etAdderBookTitleSearch.addTextChangedListener { editable ->
+
+        btnSearchInOL.setOnClickListener {
+            var editable = etAdderBookTitleSearch.text.toString()
+
+            viewModel.booksByOLID.value = null
+            viewModel.booksByOLIDFiltered.value = null
+
+            var currentList = byOLIDBookAdapter.differ.currentList
+            var newList = currentList.toList()
+            newList = emptyList()
+
+            byOLIDBookAdapter.differ.submitList(
+                newList
+            )
+
             job?.cancel()
             job = MainScope().launch {
                 delay(Constants.OPEN_LIBRARY_SEARCH_DELAY)
