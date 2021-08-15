@@ -144,8 +144,9 @@ class BooksViewModel(
         try {
             val response = openLibraryRepository.searchBooksInOpenLibrary(searchQuery)
             booksFromOpenLibrary.postValue(handleSearchBooksInOpenLibraryResponse(response))
-        } catch (e: java.net.UnknownHostException) {
-            Log.e("UnknownHostException", "in searchBooksInOpenLibrary: $e")
+        } catch (e: Exception) {
+            // TODO - add a toast with error description
+            Log.e("OpenLibrary connection error", "in searchBooksInOpenLibrary: $e")
         }
     }
 
@@ -165,7 +166,8 @@ class BooksViewModel(
             val response = openLibraryRepository.getBookFromOLID("$isbn.json")
             booksByOLID.postValue(handleGetBooksByOLIDResponse(response))
         } catch (e: Exception) {
-            Log.e("UnknownHostException", "in getBooksByOLID: $e")
+            // TODO - add a toast with error description
+            Log.e("OpenLibrary connection error", "in getBooksByOLID: $e")
         }
     }
 
