@@ -4,15 +4,14 @@ import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import kotlinx.coroutines.*
 import software.mdev.bookstracker.data.db.entities.Book
 import software.mdev.bookstracker.data.repositories.BooksRepository
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
 import software.mdev.bookstracker.data.db.entities.Year
 import software.mdev.bookstracker.data.repositories.OpenLibraryRepository
 import software.mdev.bookstracker.data.repositories.YearRepository
 import retrofit2.Response
+import software.mdev.bookstracker.api.models.OpenLibraryBook
 import software.mdev.bookstracker.api.models.OpenLibraryOLIDResponse
 import software.mdev.bookstracker.api.models.OpenLibrarySearchTitleResponse
 import software.mdev.bookstracker.data.repositories.LanguageRepository
@@ -26,10 +25,8 @@ class BooksViewModel(
         private val languageRepository: LanguageRepository
 ): ViewModel() {
 
-    val booksFromOpenLibrary: MutableLiveData<Resource<OpenLibrarySearchTitleResponse>> = MutableLiveData()
-    var booksByOLID: MutableLiveData<Resource<OpenLibraryOLIDResponse>> = MutableLiveData()
-    var selectedAuthorsName: String = ""
-    var booksByOLIDFiltered: MutableLiveData<OpenLibraryOLIDResponse> = MutableLiveData()
+    val openLibrarySearchResult: MutableLiveData<Resource<OpenLibrarySearchTitleResponse>> = MutableLiveData()
+    var openLibraryBooksByOLID: MutableLiveData<List<Resource<OpenLibraryOLIDResponse>>> = MutableLiveData()
 
     fun upsert(item: Book) = CoroutineScope(Dispatchers.Main).launch {
         repository.upsert(item)
@@ -138,12 +135,12 @@ class BooksViewModel(
         return Resource.Error(response.message())
     }
 
-    fun searchBooksInOpenLibrary(searchQuery: String) = viewModelScope.launch {
-        booksFromOpenLibrary.postValue(Resource.Loading())
+    suspend fun searchBooksInOpenLibrary(searchQuery: String) {
+        openLibrarySearchResult.postValue(Resource.Loading())
 
         try {
             val response = openLibraryRepository.searchBooksInOpenLibrary(searchQuery)
-            booksFromOpenLibrary.postValue(handleSearchBooksInOpenLibraryResponse(response))
+            openLibrarySearchResult.postValue(handleSearchBooksInOpenLibraryResponse(response))
         } catch (e: Exception) {
             // TODO - add a toast with error description
             Log.e("OpenLibrary connection error", "in searchBooksInOpenLibrary: $e")
@@ -159,15 +156,43 @@ class BooksViewModel(
         return Resource.Error(response.message())
     }
 
-    fun getBooksByOLID(isbn: String) = viewModelScope.launch {
-        booksByOLID.postValue(Resource.Loading())
+    fun getBooksByOLID(list: MutableList<OpenLibraryBook>?) = viewModelScope.launch {
+        // TODO add a separate livedata object for loading indicator
+        // booksByOLID.postValue(Resource.Loading())
 
-        try {
-            val response = openLibraryRepository.getBookFromOLID("$isbn.json")
-            booksByOLID.postValue(handleGetBooksByOLIDResponse(response))
-        } catch (e: Exception) {
-            // TODO - add a toast with error description
-            Log.e("OpenLibrary connection error", "in getBooksByOLID: $e")
+        if (list != null) {
+            for (item in list) {
+
+                item.isbn?.let {
+                    for (isbn in it) {
+
+                        try {
+                            val response = openLibraryRepository.getBookFromOLID("$isbn.json")
+                            val handledResponse = handleGetBooksByOLIDResponse(response)
+
+                            if (openLibraryBooksByOLID.value == null) {
+                                var emptyList = emptyList<Resource<OpenLibraryOLIDResponse>>()
+                                var listToPost: List<Resource<OpenLibraryOLIDResponse>> =
+                                    emptyList + handledResponse
+
+                                if (isActive)
+                                    openLibraryBooksByOLID.postValue(listToPost)
+                            } else {
+                                if (isActive) {
+                                    openLibraryBooksByOLID.postValue(
+                                        openLibraryBooksByOLID.value?.plus(
+                                            handleGetBooksByOLIDResponse(response)
+                                        )
+                                    )
+                                }
+                            }
+                        } catch (e: Exception) {
+                            // TODO - add a toast with error description
+                            Log.e("OpenLibrary connection error", "in getBooksByOLID: $e")
+                        }
+                    }
+                }
+            }
         }
     }
 
