@@ -60,7 +60,7 @@ class FoundBookAdapter : RecyclerView.Adapter<FoundBookAdapter.OpenLibraryBookVi
                     if (curBook.data.authors != null) {
                         var allAuthors = ""
                         for (author in curBook.data.authors) {
-                            allAuthors += author
+                            allAuthors += author.key
                             allAuthors += ", "
                         }
                         // TODO delete separator at the and of allAuthors string
@@ -89,57 +89,40 @@ class FoundBookAdapter : RecyclerView.Adapter<FoundBookAdapter.OpenLibraryBookVi
                             .into(ivBookCover)
                     }
 
+                    if (curBook.data.isbn_13 != null) {
+                        var isbn13: String? = curBook.data.isbn_13[0]
+                        var isbn = "ISBN: $isbn13"
+                        tvBookISBN.text = isbn
+                    } else if (curBook.data.isbn_10 != null){
+                        var isbn10: String? = curBook.data.isbn_10[0]
+                        var isbn = "ISBN: $isbn10"
+                        tvBookISBN.text = isbn
+                    }
 
+                    if (curBook.data.number_of_pages != null) {
+                        var pages: Int? = curBook.data.number_of_pages
+                        var pagesString = "$pages pages"
+                        tvBookPages.text = pagesString
+                    }
+
+                    if (curBook.data.languages != null) {
+                        var languagesList = curBook.data.languages
+                        var languagesString = ""
+
+                        for (language in languagesList) {
+                            languagesString += language.key.replace("/languages/", "")
+                            languagesString += ", "
+                        }
+                        tvBookLanguage.text = languagesString
+                    }
+
+                    if (curBook.data.key != null) {
+                        var olid = curBook.data.key.toString()
+                        olid = olid.replace("/books/", "")
+                        olid = "OLID: $olid"
+                        tvBookOLID.text = olid
+                    }
                 }
-
-
-//                    tvBookAuthor.text = selectedAuthorsName
-
-//                    var isbn13: String? = curBook.foundBookISBN13
-//                    var isbn10: String? = curBook.foundBookISBN10
-//                    if (isbn13 != null) {
-//                        var isbn = "ISBN: $isbn13"
-//                        tvBookISBN.text = isbn
-//                    } else if (isbn10 != null) {
-//                        var isbn = "ISBN: $isbn10"
-//                        tvBookISBN.text = isbn
-//                    }
-//
-//                    var pages: Int? = curBook.foundBookNumberOfPages
-//                    if(pages != null) {
-//                        var pages = "$pages pages"
-//                        tvBookPages.text = pages
-//                    }
-//
-//                    var language: String? = curBook.foundBookLanguage
-//                    if (language != null) {
-//                        var language = language.replace("/languages/", "")
-//                        tvBookLanguage.text = language
-//                    }
-//
-//                    var olid: String? = curBook.foundBookOLID
-//                    if (olid != null) {
-//                        var olid = olid.replace("/books/", "")
-//                        olid = "OLID: $olid"
-//                        tvBookOLID.text = olid
-//                    }
-//
-//                    if (curBook.foundBookCover != null) {
-//                        val circularProgressDrawable = CircularProgressDrawable(this.context)
-//                        circularProgressDrawable.strokeWidth = 5f
-//                        circularProgressDrawable.centerRadius = 30f
-//                        circularProgressDrawable.setColorSchemeColors(ContextCompat.getColor(context, R.color.grey))
-//                        circularProgressDrawable.start()
-//
-//                        var coverID = curBook.foundBookCover.toString()
-//                        var coverUrl = "https://covers.openlibrary.org/b/id/$coverID-M.jpg"
-//                        Picasso
-//                            .get()
-//                            .load(coverUrl)
-//                            .placeholder(circularProgressDrawable)
-//                            .error(R.drawable.ic_baseline_error_outline_24)
-//                            .into(ivBookCover)
-//                    }
             }
         }
 

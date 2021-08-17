@@ -29,6 +29,7 @@ import kotlinx.coroutines.*
 import me.everything.android.ui.overscroll.OverScrollDecoratorHelper
 import software.mdev.bookstracker.adapters.*
 import software.mdev.bookstracker.api.models.OpenLibraryBook
+import software.mdev.bookstracker.api.models.OpenLibraryOLIDResponse
 import software.mdev.bookstracker.data.db.LanguageDatabase
 import software.mdev.bookstracker.data.repositories.LanguageRepository
 import software.mdev.bookstracker.data.repositories.OpenLibraryRepository
@@ -172,8 +173,28 @@ class AddBookSearchFragment : Fragment(R.layout.fragment_add_book_search) {
         })
 
         viewModel.openLibraryBooksByOLID.observe(viewLifecycleOwner, Observer { list ->
+            var newList: List<Resource<OpenLibraryOLIDResponse>> = emptyList()
+
+            if (list != null) {
+                for (item in list) {
+                    if (item.data != null) {
+                        if (item.data.title != null) {
+
+                            var add = true
+                            for (currentItem in newList) {
+                                if (currentItem.data?.key == item.data.key)
+                                    add = false
+                            }
+
+                            if (add)
+                                newList += item
+                        }
+                    }
+                }
+            }
+
             foundBooksAdapter.differ.submitList(
-                list
+                newList
             )
         })
 
