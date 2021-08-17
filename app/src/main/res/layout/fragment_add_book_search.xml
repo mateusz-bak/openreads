@@ -73,8 +73,7 @@
                 android:maxLength="200"
                 android:textColor="?colorOnSecondary"
                 android:textSize="18sp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintEnd_toStartOf="@+id/btnSearchInOL"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
@@ -227,35 +226,28 @@
                 android:layout_height="0dp"
                 android:layout_marginTop="12dp"
                 android:clipToPadding="false"
+                app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="1.0"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/ivSeparator0">
 
-                <androidx.recyclerview.widget.RecyclerView
-                    android:id="@+id/rvBooksSearched"
+                <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:clipToPadding="false"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintHorizontal_bias="1.0"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/ivSearch"
-                    app:layout_constraintVertical_bias="1.0" />
+                    android:padding="4dp">
 
-                <androidx.recyclerview.widget.RecyclerView
-                    android:id="@+id/rvBooksByOLID"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:clipToPadding="false"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintHorizontal_bias="1.0"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/ivSearch"
-                    app:layout_constraintVertical_bias="1.0" />
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/rvFoundBooks"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:clipToPadding="false"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintHorizontal_bias="0.5"
+                        app:layout_constraintStart_toEndOf="parent" />
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
 
             </FrameLayout>
 
@@ -322,6 +314,16 @@
                 app:layout_constraintHorizontal_bias="0.5"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/dpBookFinishDate" />
+
+            <Button
+                android:id="@+id/btnSearchInOL"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="Search"
+                app:layout_constraintBottom_toBottomOf="@+id/etAdderBookTitleSearch"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/etAdderBookTitleSearch" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
     </ScrollView>
