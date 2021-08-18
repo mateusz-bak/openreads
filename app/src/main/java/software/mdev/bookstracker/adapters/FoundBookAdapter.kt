@@ -92,6 +92,8 @@ class FoundBookAdapter(
 
                             tvBookAuthor.text = allAuthors
                         }
+                    } else {
+                        tvBookAuthor.text = holder.itemView.context.getString(R.string.UNKNOWN)
                     }
 
                     if (curBook.data.covers != null) {
@@ -114,6 +116,8 @@ class FoundBookAdapter(
                             .placeholder(circularProgressDrawable)
                             .error(R.drawable.ic_baseline_error_outline_24)
                             .into(ivBookCover)
+                    } else {
+                        ivBookCover.setImageDrawable(holder.itemView.context.getDrawable(R.drawable.ic_baseline_book_24))
                     }
 
                     if (curBook.data.isbn_13 != null) {

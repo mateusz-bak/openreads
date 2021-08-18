@@ -7,6 +7,7 @@ import android.view.inputmethod.InputMethodManager
 import android.widget.DatePicker
 import android.widget.EditText
 import androidx.core.content.ContextCompat
+import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import software.mdev.bookstracker.R
@@ -95,12 +96,44 @@ class AddBookSearchFragment : Fragment(R.layout.fragment_add_book_search) {
         setupRvFoundBooks()
 
         var searchQueryJob: Job? = null
+        var searchQueryAutoJob: Job? = null
         var searchByOLIDJob: Job? = null
         var searchAuthorJob: Job? = null
 
-//        etAdderBookTitleSearch.addTextChangedListener { editable ->
-        btnSearchInOL.setOnClickListener {
+        etAdderBookTitleSearch.addTextChangedListener { editable ->
             searchQueryJob?.cancel()
+            searchQueryAutoJob?.cancel()
+            searchByOLIDJob?.cancel()
+            searchAuthorJob?.cancel()
+
+            viewModel.openLibrarySearchResult.value = null
+            viewModel.openLibraryBooksByOLID.value = null
+
+            searchQueryJob?.cancel()
+            searchQueryAutoJob?.cancel()
+            searchByOLIDJob?.cancel()
+            searchAuthorJob?.cancel()
+
+            searchQueryAutoJob = MainScope().launch {
+                delay(1000L)
+                editable?.let {
+                    if (it.isNotEmpty()) {
+                        var searchQuery = it.toString()
+
+                        if (searchQuery.last().toString() == " ")
+                            searchQuery = searchQuery.dropLast(1)
+
+                        viewModel.searchBooksInOpenLibrary(searchQuery)
+                    }
+                }
+            }
+        }
+
+        btnSearchInOL.setOnClickListener {
+            it.hideKeyboard()
+
+            searchQueryJob?.cancel()
+            searchQueryAutoJob?.cancel()
             searchByOLIDJob?.cancel()
             searchAuthorJob?.cancel()
             var editable = etAdderBookTitleSearch.text.toString()
@@ -109,6 +142,7 @@ class AddBookSearchFragment : Fragment(R.layout.fragment_add_book_search) {
             viewModel.openLibraryBooksByOLID.value = null
 
             searchQueryJob?.cancel()
+            searchQueryAutoJob?.cancel()
             searchByOLIDJob?.cancel()
             searchAuthorJob?.cancel()
 
