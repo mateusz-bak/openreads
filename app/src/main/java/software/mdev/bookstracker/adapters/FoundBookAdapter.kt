@@ -84,11 +84,13 @@ class FoundBookAdapter(
                                     Log.e("OpenLibrary connection error", "in FoundBookAdapter: $e")
                                 }
                             }
-                            if (allAuthors.last().toString() == " ")
-                                allAuthors = allAuthors.dropLast(1)
+                            if (allAuthors.isNotEmpty()) {
+                                if (allAuthors.last().toString() == " ")
+                                    allAuthors = allAuthors.dropLast(1)
 
-                            if (allAuthors.last().toString() == ",")
-                                allAuthors =allAuthors.dropLast(1)
+                                if (allAuthors.last().toString() == ",")
+                                    allAuthors = allAuthors.dropLast(1)
+                            }
 
                             tvBookAuthor.text = allAuthors
                         }
