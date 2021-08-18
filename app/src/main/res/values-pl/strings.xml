@@ -142,6 +142,7 @@
     <string name="etAdderBookTitleSearch">Wpisz tytuł, żeby wyszukać…</string>
     <string name="fabAddNewBook">Dodaj nową książkę</string>
     <string name="fabCancelAddingNewBook">Przewij dodawanie nowej książki</string>
-    <string name="UNKNOWN">NIEZNANE</string>
+    <string name="UNKNOWN">Brak autora</string>
     <string name="language">język</string>
+    <string name="language_upperCase">Język</string>
 </resources>

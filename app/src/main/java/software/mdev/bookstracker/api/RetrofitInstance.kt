@@ -37,5 +37,9 @@ class RetrofitInstance {
         val apiOLID by lazy {
             retrofit.create(BooksOLIDAPI::class.java)
         }
+
+        val apiAuthors by lazy {
+            retrofit.create(AuthorsAPI::class.java)
+        }
     }
 }

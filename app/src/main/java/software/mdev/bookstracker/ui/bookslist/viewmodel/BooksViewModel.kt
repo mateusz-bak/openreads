@@ -11,6 +11,7 @@ import software.mdev.bookstracker.data.db.entities.Year
 import software.mdev.bookstracker.data.repositories.OpenLibraryRepository
 import software.mdev.bookstracker.data.repositories.YearRepository
 import retrofit2.Response
+import software.mdev.bookstracker.api.models.OpenLibraryAuthor
 import software.mdev.bookstracker.api.models.OpenLibraryBook
 import software.mdev.bookstracker.api.models.OpenLibraryOLIDResponse
 import software.mdev.bookstracker.api.models.OpenLibrarySearchTitleResponse
@@ -195,6 +196,17 @@ class BooksViewModel(
             }
         }
     }
+
+    fun handleGetAuthorFromOLID(response: Response<OpenLibraryAuthor>): Resource<OpenLibraryAuthor> {
+        if (response.isSuccessful) {
+            response.body()?.let { resultResponse ->
+                return Resource.Success(resultResponse)
+            }
+        }
+        return Resource.Error(response.message())
+    }
+
+    suspend fun getAuthorFromOLID(author: String) =  openLibraryRepository.getAuthorFromOLID(author)
 
     fun getLanguages() = languageRepository.getLanguages()
 

@@ -96,11 +96,13 @@ class AddBookSearchFragment : Fragment(R.layout.fragment_add_book_search) {
 
         var searchQueryJob: Job? = null
         var searchByOLIDJob: Job? = null
+        var searchAuthorJob: Job? = null
 
 //        etAdderBookTitleSearch.addTextChangedListener { editable ->
         btnSearchInOL.setOnClickListener {
             searchQueryJob?.cancel()
             searchByOLIDJob?.cancel()
+            searchAuthorJob?.cancel()
             var editable = etAdderBookTitleSearch.text.toString()
 
             viewModel.openLibrarySearchResult.value = null
@@ -108,6 +110,7 @@ class AddBookSearchFragment : Fragment(R.layout.fragment_add_book_search) {
 
             searchQueryJob?.cancel()
             searchByOLIDJob?.cancel()
+            searchAuthorJob?.cancel()
 
             searchQueryJob = MainScope().launch {
                 editable?.let {
@@ -404,7 +407,7 @@ class AddBookSearchFragment : Fragment(R.layout.fragment_add_book_search) {
     }
 
     private fun setupRvFoundBooks() {
-        foundBooksAdapter = FoundBookAdapter()
+        foundBooksAdapter = FoundBookAdapter(viewModel)
 
         rvFoundBooks.apply {
             adapter = foundBooksAdapter

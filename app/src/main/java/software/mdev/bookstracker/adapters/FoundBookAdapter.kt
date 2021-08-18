@@ -1,5 +1,6 @@
 package software.mdev.bookstracker.adapters
 
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -11,10 +12,15 @@ import androidx.swiperefreshlayout.widget.CircularProgressDrawable
 import com.squareup.picasso.Picasso
 import software.mdev.bookstracker.R
 import kotlinx.android.synthetic.main.item_book_searched_by_olid.view.*
+import kotlinx.coroutines.MainScope
+import kotlinx.coroutines.launch
 import software.mdev.bookstracker.api.models.OpenLibraryOLIDResponse
 import software.mdev.bookstracker.other.Resource
+import software.mdev.bookstracker.ui.bookslist.viewmodel.BooksViewModel
 
-class FoundBookAdapter : RecyclerView.Adapter<FoundBookAdapter.OpenLibraryBookViewHolder>() {
+class FoundBookAdapter(
+    private val viewModel: BooksViewModel
+) : RecyclerView.Adapter<FoundBookAdapter.OpenLibraryBookViewHolder>() {
     inner class OpenLibraryBookViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView)
 
     private val differCallback =
@@ -58,13 +64,32 @@ class FoundBookAdapter : RecyclerView.Adapter<FoundBookAdapter.OpenLibraryBookVi
                     }
 
                     if (curBook.data.authors != null) {
-                        var allAuthors = ""
-                        for (author in curBook.data.authors) {
-                            allAuthors += author.key
-                            allAuthors += ", "
+                        var searchAuthorJob = MainScope().launch {
+                            var allAuthors = ""
+                            for (author in curBook.data.authors) {
+                                var key = author.key
+                                key = key.replace("/authors/", "")
+
+                                try {
+                                    var authorsResource = viewModel.handleGetAuthorFromOLID(viewModel.getAuthorFromOLID(key))
+                                    var authorsName: String? = authorsResource.data?.name
+
+                                    allAuthors += authorsName
+                                    allAuthors += ", "
+
+                                    if (allAuthors.last().toString() == " ")
+                                        allAuthors = allAuthors.dropLast(1)
+
+                                    if (allAuthors.last().toString() == ",")
+                                        allAuthors =allAuthors.dropLast(1)
+
+                                } catch (e: Exception) {
+                                    // TODO - add a toast with error description
+                                    Log.e("OpenLibrary connection error", "in FoundBookAdapter: $e")
+                                }
+                            }
+                            tvBookAuthor.text = allAuthors
                         }
-                        // TODO delete separator at the and of allAuthors string
-                        tvBookAuthor.text = allAuthors
                     }
 
                     if (curBook.data.covers != null) {
@@ -101,18 +126,25 @@ class FoundBookAdapter : RecyclerView.Adapter<FoundBookAdapter.OpenLibraryBookVi
 
                     if (curBook.data.number_of_pages != null) {
                         var pages: Int? = curBook.data.number_of_pages
-                        var pagesString = "$pages pages"
+                        var pagesString = pages.toString() + " " + holder.itemView.context.getString(R.string.pages)
                         tvBookPages.text = pagesString
                     }
 
                     if (curBook.data.languages != null) {
                         var languagesList = curBook.data.languages
-                        var languagesString = ""
+                        var languagesString = holder.itemView.context.getString(R.string.language_upperCase) + ": "
 
                         for (language in languagesList) {
                             languagesString += language.key.replace("/languages/", "")
                             languagesString += ", "
                         }
+
+                        if (languagesString.last().toString() == " ")
+                            languagesString = languagesString.dropLast(1)
+
+                        if (languagesString.last().toString() == ",")
+                            languagesString =languagesString.dropLast(1)
+
                         tvBookLanguage.text = languagesString
                     }
 

@@ -9,4 +9,7 @@ class OpenLibraryRepository {
 
     suspend fun getBookFromOLID(olid: String) =
         RetrofitInstance.apiOLID.getBookFromOLID(olid)
+
+    suspend fun getAuthorFromOLID(authors: String) =
+        RetrofitInstance.apiAuthors.getAuthorFromOLID(authors)
 }

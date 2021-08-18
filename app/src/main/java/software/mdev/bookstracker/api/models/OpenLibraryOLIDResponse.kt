@@ -26,7 +26,7 @@ data class OpenLibraryOLIDResponse(
     val works: List<Work>
 ) {
     data class Author(
-        val key: String
+        var key: String
     )
 
     class Classifications(
