@@ -28,6 +28,7 @@ class BooksViewModel(
 
     val openLibrarySearchResult: MutableLiveData<Resource<OpenLibrarySearchTitleResponse>> = MutableLiveData()
     var openLibraryBooksByOLID: MutableLiveData<List<Resource<OpenLibraryOLIDResponse>>> = MutableLiveData()
+    var showLoadingCircle: MutableLiveData<Boolean> = MutableLiveData()
 
     fun upsert(item: Book) = CoroutineScope(Dispatchers.Main).launch {
         repository.upsert(item)
@@ -137,11 +138,12 @@ class BooksViewModel(
     }
 
     suspend fun searchBooksInOpenLibrary(searchQuery: String) {
-        openLibrarySearchResult.postValue(Resource.Loading())
+        showLoadingCircle.postValue(true)
 
         try {
             val response = openLibraryRepository.searchBooksInOpenLibrary(searchQuery)
             openLibrarySearchResult.postValue(handleSearchBooksInOpenLibraryResponse(response))
+            showLoadingCircle.postValue(false)
         } catch (e: Exception) {
             // TODO - add a toast with error description
             Log.e("OpenLibrary connection error", "in searchBooksInOpenLibrary: $e")
@@ -158,8 +160,7 @@ class BooksViewModel(
     }
 
     fun getBooksByOLID(list: MutableList<OpenLibraryBook>?) = viewModelScope.launch {
-        // TODO add a separate livedata object for loading indicator
-        // booksByOLID.postValue(Resource.Loading())
+        showLoadingCircle.postValue(true)
 
         if (list != null) {
             for (item in list) {
@@ -187,6 +188,7 @@ class BooksViewModel(
                                     )
                                 }
                             }
+                            showLoadingCircle.postValue(false)
                         } catch (e: Exception) {
                             // TODO - add a toast with error description
                             Log.e("OpenLibrary connection error", "in getBooksByOLID: $e")

@@ -71,23 +71,25 @@ class FoundBookAdapter(
                                 key = key.replace("/authors/", "")
 
                                 try {
+                                    viewModel.showLoadingCircle.postValue(true)
                                     var authorsResource = viewModel.handleGetAuthorFromOLID(viewModel.getAuthorFromOLID(key))
                                     var authorsName: String? = authorsResource.data?.name
 
                                     allAuthors += authorsName
                                     allAuthors += ", "
 
-                                    if (allAuthors.last().toString() == " ")
-                                        allAuthors = allAuthors.dropLast(1)
-
-                                    if (allAuthors.last().toString() == ",")
-                                        allAuthors =allAuthors.dropLast(1)
-
+                                    viewModel.showLoadingCircle.postValue(false)
                                 } catch (e: Exception) {
                                     // TODO - add a toast with error description
                                     Log.e("OpenLibrary connection error", "in FoundBookAdapter: $e")
                                 }
                             }
+                            if (allAuthors.last().toString() == " ")
+                                allAuthors = allAuthors.dropLast(1)
+
+                            if (allAuthors.last().toString() == ",")
+                                allAuthors =allAuthors.dropLast(1)
+
                             tvBookAuthor.text = allAuthors
                         }
                     }

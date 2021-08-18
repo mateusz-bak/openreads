@@ -126,8 +126,6 @@ class AddBookSearchFragment : Fragment(R.layout.fragment_add_book_search) {
         viewModel.openLibrarySearchResult.observe(viewLifecycleOwner, Observer { response ->
             when (response) {
                 is Resource.Success -> {
-                    hideProgressBar()
-
                     response.data?.let { booksResponse ->
                         var booksResponseCleaned: MutableList<OpenLibraryBook>? =
                             ArrayList<OpenLibraryBook>()
@@ -167,10 +165,8 @@ class AddBookSearchFragment : Fragment(R.layout.fragment_add_book_search) {
                     }
                 }
                 is Resource.Error -> {
-                    hideProgressBar()
                 }
                 is Resource.Loading -> {
-                    showProgressBar()
                 }
             }
         })
@@ -203,6 +199,24 @@ class AddBookSearchFragment : Fragment(R.layout.fragment_add_book_search) {
 
         viewModel.getLanguages().observe(viewLifecycleOwner, Observer { languages ->
             languageAdapter.differ.submitList(languages)})
+
+        var hideProgressBarJob: Job? = null
+
+        viewModel.showLoadingCircle.observe(viewLifecycleOwner, Observer { bool ->
+            if (bool) {
+                hideProgressBarJob?.cancel()
+                showProgressBar()
+            }
+            else {
+                hideProgressBarJob?.cancel()
+                hideProgressBarJob = MainScope().launch {
+                    delay(500L)
+                    if (isActive) {
+                        hideProgressBar()
+                    }
+                }
+            }
+        })
 
         ivBookStatusRead.setOnClickListener {
             ivBookStatusRead.setColorFilter(accentColor, android.graphics.PorterDuff.Mode.SRC_IN)
