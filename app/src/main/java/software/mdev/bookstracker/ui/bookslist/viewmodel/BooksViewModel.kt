@@ -18,6 +18,7 @@ import software.mdev.bookstracker.api.models.OpenLibrarySearchTitleResponse
 import software.mdev.bookstracker.data.repositories.LanguageRepository
 import software.mdev.bookstracker.other.Resource
 import java.lang.Exception
+import java.text.Normalizer
 
 class BooksViewModel(
         private val repository: BooksRepository,
@@ -140,13 +141,22 @@ class BooksViewModel(
     suspend fun searchBooksInOpenLibrary(searchQuery: String) {
         showLoadingCircle.postValue(true)
 
+        val REGEX_UNACCENT = "\\p{InCombiningDiacriticalMarks}+".toRegex()
+        fun CharSequence.unaccent(): String {
+            val temp = Normalizer.normalize(this, Normalizer.Form.NFD)
+            return REGEX_UNACCENT.replace(temp, "")
+        }
+
+        val searchQueryASCII = searchQuery.unaccent().replace("ł", "l", false)
+
         try {
-            val response = openLibraryRepository.searchBooksInOpenLibrary(searchQuery)
+            val response = openLibraryRepository.searchBooksInOpenLibrary(searchQueryASCII)
             openLibrarySearchResult.postValue(handleSearchBooksInOpenLibraryResponse(response))
             showLoadingCircle.postValue(false)
         } catch (e: Exception) {
             // TODO - add a toast with error description
             Log.e("OpenLibrary connection error", "in searchBooksInOpenLibrary: $e")
+            showLoadingCircle.postValue(false)
         }
     }
 
@@ -192,6 +202,7 @@ class BooksViewModel(
                         } catch (e: Exception) {
                             // TODO - add a toast with error description
                             Log.e("OpenLibrary connection error", "in getBooksByOLID: $e")
+                            showLoadingCircle.postValue(false)
                         }
                     }
                 }
