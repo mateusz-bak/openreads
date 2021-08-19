@@ -1,6 +1,8 @@
 package software.mdev.bookstracker.ui.bookslist.viewmodel
 
+import android.content.Context
 import android.util.Log
+import android.widget.Toast
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -11,7 +13,7 @@ import software.mdev.bookstracker.data.db.entities.Year
 import software.mdev.bookstracker.data.repositories.OpenLibraryRepository
 import software.mdev.bookstracker.data.repositories.YearRepository
 import retrofit2.Response
-import software.mdev.bookstracker.api.models.OpenLibraryAuthor
+import software.mdev.bookstracker.R
 import software.mdev.bookstracker.api.models.OpenLibraryBook
 import software.mdev.bookstracker.api.models.OpenLibraryOLIDResponse
 import software.mdev.bookstracker.api.models.OpenLibrarySearchTitleResponse
@@ -19,7 +21,7 @@ import software.mdev.bookstracker.data.db.entities.Language
 import software.mdev.bookstracker.data.repositories.LanguageRepository
 import software.mdev.bookstracker.other.Resource
 import java.lang.Exception
-import java.text.Normalizer
+import java.net.UnknownHostException
 
 class BooksViewModel(
         private val repository: BooksRepository,
@@ -140,26 +142,21 @@ class BooksViewModel(
         return Resource.Error(response.message())
     }
 
-    suspend fun searchBooksInOpenLibrary(searchQuery: String) {
+    suspend fun searchBooksInOpenLibrary(searchQuery: String, context: Context?) {
         showLoadingCircle.postValue(true)
 
-        val REGEX_UNACCENT = "\\p{InCombiningDiacriticalMarks}+".toRegex()
-        fun CharSequence.unaccent(): String {
-            val temp = Normalizer.normalize(this, Normalizer.Form.NFD)
-            return REGEX_UNACCENT.replace(temp, "")
-        }
-
-        val searchQueryASCII = searchQuery.unaccent().replace("ł", "l", false)
-
         try {
-            val response = openLibraryRepository.searchBooksInOpenLibrary(searchQueryASCII)
+            val response = openLibraryRepository.searchBooksInOpenLibrary(searchQuery)
             showLoadingCircle.postValue(true)
             openLibrarySearchResult.postValue(handleSearchBooksInOpenLibraryResponse(response))
             showLoadingCircle.postValue(false)
         } catch (e: Exception) {
-            // TODO - add a toast with error description
             Log.e("OpenLibrary connection error", "in searchBooksInOpenLibrary: $e")
             showLoadingCircle.postValue(false)
+
+            when(e) {
+                is UnknownHostException -> Toast.makeText(context?.applicationContext, R.string.toast_no_connection_to_OL, Toast.LENGTH_SHORT).show()
+            }
         }
     }
 
@@ -172,7 +169,7 @@ class BooksViewModel(
         return Resource.Error(response.message())
     }
 
-    fun getBooksByOLID(list: MutableList<OpenLibraryBook>?) = viewModelScope.launch {
+    fun getBooksByOLID(list: MutableList<OpenLibraryBook>?, context: Context?) = viewModelScope.launch {
         showLoadingCircle.postValue(true)
 
         if (list != null) {
@@ -217,9 +214,12 @@ class BooksViewModel(
                             }
                             showLoadingCircle.postValue(false)
                         } catch (e: Exception) {
-                            // TODO - add a toast with error description
                             Log.e("OpenLibrary connection error", "in getBooksByOLID: $e")
                             showLoadingCircle.postValue(false)
+
+                            when(e) {
+                                is UnknownHostException -> Toast.makeText(context?.applicationContext, R.string.toast_no_connection_to_OL, Toast.LENGTH_SHORT).show()
+                            }
                         }
                     }
                 }

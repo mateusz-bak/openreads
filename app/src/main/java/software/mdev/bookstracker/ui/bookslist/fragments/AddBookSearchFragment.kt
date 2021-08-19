@@ -159,7 +159,7 @@ class AddBookSearchFragment : Fragment(R.layout.fragment_add_book_search) {
                         if (searchQuery.last().toString() == " ")
                             searchQuery = searchQuery.dropLast(1)
 
-                        viewModel.searchBooksInOpenLibrary(searchQuery)
+                        viewModel.searchBooksInOpenLibrary(searchQuery, context)
                     }
                 }
             }
@@ -200,7 +200,7 @@ class AddBookSearchFragment : Fragment(R.layout.fragment_add_book_search) {
                     if (editable.isNotEmpty()) {
                         if (editable.last().toString() == " ")
                             editable.dropLast(1)
-                        viewModel.searchBooksInOpenLibrary(editable)
+                        viewModel.searchBooksInOpenLibrary(editable, context)
                     }
                 }
             }
@@ -220,7 +220,7 @@ class AddBookSearchFragment : Fragment(R.layout.fragment_add_book_search) {
                         }
 
                         if (booksResponseCleaned != null) {
-                            searchByOLIDJob = viewModel.getBooksByOLID(booksResponseCleaned)
+                            searchByOLIDJob = viewModel.getBooksByOLID(booksResponseCleaned, context)
                         }
                     }
                 }
