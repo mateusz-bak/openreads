@@ -37,6 +37,7 @@ object Constants {
     const val DATABASE_LANGUAGE_ITEM_isoLanguageName = "item_isoLanguageName"
     const val DATABASE_LANGUAGE_ITEM_isSelected = "item_isSelected"
     const val DATABASE_LANGUAGE_ITEM_selectCounter = "item_selectCounter"
+    const val DATABASE_LANGUAGE_ITEM_isoLanguageName_pol = "item_isoLanguageName_pol"
 
     const val CHALLENGE_BEGINNER = 3
     const val CHALLENGE_EASY = 6

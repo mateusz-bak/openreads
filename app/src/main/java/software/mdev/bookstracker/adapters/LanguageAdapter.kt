@@ -15,6 +15,7 @@ import software.mdev.bookstracker.data.repositories.*
 import software.mdev.bookstracker.ui.bookslist.fragments.AddBookSearchFragment
 import software.mdev.bookstracker.ui.bookslist.viewmodel.BooksViewModel
 import software.mdev.bookstracker.ui.bookslist.viewmodel.BooksViewModelProviderFactory
+import java.util.*
 
 class LanguageAdapter (
     private val addBookSearchFragment: AddBookSearchFragment,
@@ -79,7 +80,11 @@ class LanguageAdapter (
         val curLanguage = differ.currentList[position]
 
         holder.itemView.apply {
-            cbLanguage.text = curLanguage.language6392B
+            if (Locale.getDefault().language == "pl") {
+                cbLanguage.text = curLanguage.isoLanguageName_pol
+            } else {
+                cbLanguage.text = curLanguage.isoLanguageName
+            }
 
             cbLanguage.isChecked = curLanguage.isSelected != 0
 

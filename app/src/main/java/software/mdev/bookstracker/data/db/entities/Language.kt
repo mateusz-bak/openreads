@@ -18,7 +18,10 @@ data class Language(
     var isSelected: Int?,
 
     @ColumnInfo(name = Constants.DATABASE_LANGUAGE_ITEM_selectCounter)
-    var selectCounter: Int?
+    var selectCounter: Int?,
+
+    @ColumnInfo(name = Constants.DATABASE_LANGUAGE_ITEM_isoLanguageName_pol)
+    var isoLanguageName_pol: String?
 ) : Serializable {
     @PrimaryKey(autoGenerate = true)
     var id: Int? = null
