@@ -116,7 +116,20 @@ class AddBookSearchFragment : Fragment(R.layout.fragment_add_book_search) {
             searchAuthorJob?.cancel()
 
             searchQueryAutoJob = MainScope().launch {
-                delay(1000L)
+                delay(500L)
+
+                var selectedLanguages = viewModel.selectedLanguages.value
+                if (selectedLanguages != null) {
+                    for (selectedLanguage in selectedLanguages) {
+                        var oldCounter = selectedLanguage.selectCounter
+
+                        if (oldCounter == null)
+                            viewModel.updateCounter(selectedLanguage.id,  1)
+                        else
+                            viewModel.updateCounter(selectedLanguage.id,  oldCounter + 1)
+                    }
+                }
+
                 editable?.let {
                     if (it.isNotEmpty()) {
                         var searchQuery = it.toString()
@@ -148,6 +161,19 @@ class AddBookSearchFragment : Fragment(R.layout.fragment_add_book_search) {
             searchAuthorJob?.cancel()
 
             searchQueryJob = MainScope().launch {
+
+                var selectedLanguages = viewModel.selectedLanguages.value
+                if (selectedLanguages != null) {
+                    for (selectedLanguage in selectedLanguages) {
+                        var oldCounter = selectedLanguage.selectCounter
+
+                        if (oldCounter == null)
+                            viewModel.updateCounter(selectedLanguage.id,  1)
+                        else
+                            viewModel.updateCounter(selectedLanguage.id,  oldCounter + 1)
+                    }
+                }
+
                 editable?.let {
                     if (editable.isNotEmpty()) {
                         if (editable.last().toString() == " ")
@@ -173,29 +199,6 @@ class AddBookSearchFragment : Fragment(R.layout.fragment_add_book_search) {
 
                         if (booksResponseCleaned != null) {
                             searchByOLIDJob = viewModel.getBooksByOLID(booksResponseCleaned)
-
-//                                viewModel.getLanguages().observe(viewLifecycleOwner, Observer { languages ->
-//
-//                                    if (willLanguageCounterBeUpdate) {
-//                                        willLanguageCounterBeUpdate = false
-//
-//                                        for (language in languages) {
-//                                            if (language.isSelected == 1) {
-//                                                val currentCounter = language.selectCounter
-//                                                if (currentCounter != null)
-//                                                    viewModel.updateCounter(language.id, currentCounter + 1)
-//                                                else
-//                                                    viewModel.updateCounter(language.id, 1)
-//
-//                                                lifecycleScope.launch {
-//                                                    delay(100L)
-//                                                    rvLanguages.scrollToPosition(0)
-//                                                }
-//                                            }
-//                                        }
-//                                    }
-//                                }
-//                                )
                         }
                     }
                 }
