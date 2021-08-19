@@ -176,5 +176,8 @@
     <string name="language_upperCase">Language</string>
     <string name="button_search">search</string>
     <string name="button_language">filter languages</string>
+    <string name="results_1">result</string>
+    <string name="results_2_4">results</string>
+    <string name="results_5_">results</string>
 
 </resources>

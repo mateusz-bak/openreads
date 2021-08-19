@@ -147,4 +147,7 @@
     <string name="language_upperCase">Język</string>
     <string name="button_search">szukaj</string>
     <string name="button_language">filtruj języki</string>
+    <string name="results_1">wynik</string>
+    <string name="results_2_4">wyniki</string>
+    <string name="results_5_">wyników</string>
 </resources>

@@ -310,6 +310,17 @@ class AddBookSearchFragment : Fragment(R.layout.fragment_add_book_search) {
                     foundBooksAdapter.differ.submitList(
                         newList
                     )
+
+                    var numberOfFilteredBooks = newList.size
+
+                    when (numberOfFilteredBooks) {
+                        0 -> tvResultsNumber.text = ""
+                        1 -> tvResultsNumber.text = "1 " + getString(R.string.results_1)
+                        2 -> tvResultsNumber.text = "2 " + getString(R.string.results_2_4)
+                        3 -> tvResultsNumber.text = "3 " + getString(R.string.results_2_4)
+                        4 -> tvResultsNumber.text = "4 " + getString(R.string.results_2_4)
+                        else -> tvResultsNumber.text = newList.size.toString() + " " + getString(R.string.results_5_)
+                    }
                 }
             })
         })
