@@ -174,5 +174,7 @@
     <string name="UNKNOWN">No author</string>
     <string name="language">language</string>
     <string name="language_upperCase">Language</string>
+    <string name="button_search">search</string>
+    <string name="button_language">filter languages</string>
 
 </resources>

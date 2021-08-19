@@ -6,6 +6,7 @@ import android.view.View
 import android.view.inputmethod.InputMethodManager
 import android.widget.DatePicker
 import android.widget.EditText
+import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.content.ContextCompat
 import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.Fragment
@@ -74,6 +75,8 @@ class AddBookSearchFragment : Fragment(R.layout.fragment_add_book_search) {
 
         var accentColor = getAccentColor(view.context.applicationContext)
 
+        rvLanguages.visibility = View.GONE
+
         rbRating.visibility = View.GONE
         btnSetFinishDate.visibility = View.GONE
         btnSetFinishDate.isClickable = false
@@ -100,6 +103,25 @@ class AddBookSearchFragment : Fragment(R.layout.fragment_add_book_search) {
         var searchQueryAutoJob: Job? = null
         var searchByOLIDJob: Job? = null
         var searchAuthorJob: Job? = null
+
+        btnFilterLanguage.setOnClickListener {
+            if (rvLanguages.visibility == View.GONE) {
+                rvLanguages.visibility = View.VISIBLE
+                rvLanguages.scrollToPosition(0)
+
+                val currentLayout = frameLayout2.layoutParams as ConstraintLayout.LayoutParams
+                currentLayout.topToBottom = R.id.frLanguages
+                frameLayout2.layoutParams = currentLayout
+            }
+            else {
+                rvLanguages.visibility = View.GONE
+
+                val currentLayout = frameLayout2.layoutParams as ConstraintLayout.LayoutParams
+
+                currentLayout.topToBottom = R.id.btnFilterLanguage
+                frameLayout2.layoutParams = currentLayout
+            }
+        }
 
         etAdderBookTitleSearch.addTextChangedListener { editable ->
             searchQueryJob?.cancel()
@@ -219,6 +241,15 @@ class AddBookSearchFragment : Fragment(R.layout.fragment_add_book_search) {
             }
 
             viewModel.selectedLanguages.postValue(newList)
+
+            var selectedLanguages = newList.size
+            if (selectedLanguages == 0) {
+                btnFilterLanguage.text = getString(R.string.button_language)
+            } else {
+                var buttonText = getString(R.string.button_language) + " (" + selectedLanguages.toString() + ")"
+                btnFilterLanguage.text = buttonText
+            }
+
         })
 
         var filterBooksByLanguage: Job? = null

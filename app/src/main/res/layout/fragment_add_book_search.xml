@@ -61,13 +61,14 @@
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:padding="24dp">
+            android:padding="16dp">
 
             <EditText
                 android:id="@+id/etAdderBookTitleSearch"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="2dp"
+                android:layout_marginEnd="8dp"
                 android:hint="@string/etAdderBookTitleSearch"
                 android:inputType="textCapSentences"
                 android:maxLength="200"
@@ -79,11 +80,12 @@
 
             <FrameLayout
                 android:id="@+id/frLanguages"
-                android:layout_width="match_parent"
-                android:layout_height="100dp"
-                android:layout_marginTop="12dp"
+                android:layout_width="0dp"
+                android:layout_height="150dp"
+                android:layout_marginTop="24dp"
+                android:layout_marginEnd="12dp"
                 android:clipToPadding="false"
-                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintEnd_toStartOf="@+id/btnFilterLanguage"
                 app:layout_constraintHorizontal_bias="1.0"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/etAdderBookTitleSearch">
@@ -93,6 +95,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:clipToPadding="false"
+                    android:scrollbars="vertical"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintHorizontal_bias="1.0"
@@ -101,20 +104,6 @@
                     app:layout_constraintVertical_bias="1.0" />
 
             </FrameLayout>
-
-            <ImageView
-                android:id="@+id/ivSeparator0"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:clickable="false"
-                android:scaleX="15"
-                android:scaleY="0.5"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.5"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/frLanguages"
-                app:srcCompat="@drawable/ic_baseline_horizontal_rule_24" />
-
 
             <RatingBar
                 android:id="@+id/rbRating"
@@ -222,26 +211,26 @@
 
             <FrameLayout
                 android:id="@+id/frameLayout2"
-                android:layout_width="match_parent"
+                android:layout_width="0dp"
                 android:layout_height="0dp"
-                android:layout_marginTop="12dp"
+                android:layout_marginTop="24dp"
                 android:clipToPadding="false"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="1.0"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/ivSeparator0">
+                app:layout_constraintTop_toBottomOf="@+id/etAdderBookTitleSearch">
 
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:padding="4dp">
+                    android:layout_height="match_parent">
 
                     <androidx.recyclerview.widget.RecyclerView
                         android:id="@+id/rvFoundBooks"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:clipToPadding="false"
+                        android:scrollbars="vertical"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintHorizontal_bias="0.5"
@@ -320,10 +309,21 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:gravity="center"
-                android:text="Search"
+                android:text="@string/button_search"
                 app:layout_constraintBottom_toBottomOf="@+id/etAdderBookTitleSearch"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="@+id/etAdderBookTitleSearch" />
+
+            <Button
+                android:id="@+id/btnFilterLanguage"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:layout_marginTop="4dp"
+                android:text="@string/button_language"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/btnSearchInOL" />
+
 
         </androidx.constraintlayout.widget.ConstraintLayout>
     </ScrollView>

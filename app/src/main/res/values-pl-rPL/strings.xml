@@ -145,4 +145,6 @@
     <string name="UNKNOWN">Brak autora</string>
     <string name="language">język</string>
     <string name="language_upperCase">Język</string>
+    <string name="button_search">szukaj</string>
+    <string name="button_language">filtruj języki</string>
 </resources>
