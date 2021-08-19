@@ -82,6 +82,7 @@ class FoundBookAdapter(
                                 } catch (e: Exception) {
                                     // TODO - add a toast with error description
                                     Log.e("OpenLibrary connection error", "in FoundBookAdapter: $e")
+                                    viewModel.showLoadingCircle.postValue(false)
                                 }
                             }
                             if (allAuthors.isNotEmpty()) {
@@ -99,6 +100,7 @@ class FoundBookAdapter(
                     }
 
                     if (curBook.data.covers != null) {
+                        viewModel.showLoadingCircle.postValue(true)
                         val circularProgressDrawable = CircularProgressDrawable(this.context)
                         circularProgressDrawable.strokeWidth = 5f
                         circularProgressDrawable.centerRadius = 30f
@@ -112,12 +114,17 @@ class FoundBookAdapter(
 
                         var coverID = curBook.data.covers[0]
                         var coverUrl = "https://covers.openlibrary.org/b/id/$coverID-M.jpg"
+
+                        viewModel.showLoadingCircle.postValue(true)
+
                         Picasso
                             .get()
                             .load(coverUrl)
                             .placeholder(circularProgressDrawable)
                             .error(R.drawable.ic_baseline_error_outline_24)
                             .into(ivBookCover)
+
+                        viewModel.showLoadingCircle.postValue(false)
                     } else {
                         ivBookCover.setImageDrawable(holder.itemView.context.getDrawable(R.drawable.ic_baseline_book_24))
                     }

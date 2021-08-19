@@ -153,6 +153,7 @@ class BooksViewModel(
 
         try {
             val response = openLibraryRepository.searchBooksInOpenLibrary(searchQueryASCII)
+            showLoadingCircle.postValue(true)
             openLibrarySearchResult.postValue(handleSearchBooksInOpenLibraryResponse(response))
             showLoadingCircle.postValue(false)
         } catch (e: Exception) {
@@ -181,7 +182,9 @@ class BooksViewModel(
                     for (isbn in it) {
 
                         try {
+                            showLoadingCircle.postValue(true)
                             val response = openLibraryRepository.getBookFromOLID("$isbn.json")
+                            showLoadingCircle.postValue(true)
                             val handledResponse = handleGetBooksByOLIDResponse(response)
 
                             if (openLibraryBooksByOLID.value == null) {
@@ -189,10 +192,15 @@ class BooksViewModel(
                                 var listToPost: List<Resource<OpenLibraryOLIDResponse>> =
                                     emptyList + handledResponse
 
-                                if (isActive)
-                                    openLibraryBooksByOLID.postValue(listToPost)
-                            } else {
+                                showLoadingCircle.postValue(false)
                                 if (isActive) {
+                                    showLoadingCircle.postValue(true)
+                                    openLibraryBooksByOLID.postValue(listToPost)
+                                }
+                            } else {
+                                showLoadingCircle.postValue(false)
+                                if (isActive) {
+                                    showLoadingCircle.postValue(true)
                                     openLibraryBooksByOLID.postValue(
                                         openLibraryBooksByOLID.value?.plus(
                                             handleGetBooksByOLIDResponse(response)
