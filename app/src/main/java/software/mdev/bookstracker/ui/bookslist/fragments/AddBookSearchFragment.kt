@@ -37,6 +37,8 @@ import software.mdev.bookstracker.data.db.entities.Language
 import software.mdev.bookstracker.data.repositories.LanguageRepository
 import software.mdev.bookstracker.data.repositories.OpenLibraryRepository
 import software.mdev.bookstracker.other.Resource
+import software.mdev.bookstracker.ui.bookslist.dialogs.AlertDialog
+import software.mdev.bookstracker.ui.bookslist.dialogs.AlertDialogListener
 import kotlin.collections.ArrayList
 
 
@@ -56,6 +58,9 @@ class AddBookSearchFragment : Fragment(R.layout.fragment_add_book_search) {
         listActivity = activity as ListActivity
 
         var whatIsClicked = Constants.BOOK_STATUS_NOTHING
+
+        val sharedPref = (activity as ListActivity).getSharedPreferences(Constants.SHARED_PREFERENCES_NAME, Context.MODE_PRIVATE)
+        val editor = sharedPref.edit()
 
         val database = BooksDatabase(view.context)
         val yearDatabase = YearDatabase(view.context)
@@ -103,6 +108,23 @@ class AddBookSearchFragment : Fragment(R.layout.fragment_add_book_search) {
         var searchQueryAutoJob: Job? = null
         var searchByOLIDJob: Job? = null
         var searchAuthorJob: Job? = null
+
+
+        if (sharedPref.getBoolean(Constants.SHARED_PREFERENCES_KEY_SHOW_OL_ALERT, true)) {
+            AlertDialog(
+                view,
+                object : AlertDialogListener {
+                    override fun onOkButtonClicked(isChecked: Boolean) {
+                        if (isChecked) {
+                            editor.apply {
+                                putBoolean(Constants.SHARED_PREFERENCES_KEY_SHOW_OL_ALERT, false)
+                                apply()
+                            }
+                        }
+                    }
+                }, activity as ListActivity
+            ).show()
+        }
 
         btnFilterLanguage.setOnClickListener {
             if (rvLanguages.visibility == View.GONE) {

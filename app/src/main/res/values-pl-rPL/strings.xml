@@ -150,4 +150,16 @@
     <string name="results_1">wynik</string>
     <string name="results_2_4">wyniki</string>
     <string name="results_5_">wyników</string>
+    <string name="btn_ok">ok</string>
+    <string name="cb_dont_show_again">Nie pokazuj ponownie</string>
+    <string name="tvAlertContent1">Wyszukiwanie książek korzysta z bazy openlibrary.org. Jest ona darmowa, jednak posiada ograniczenia.</string>
+    <string name="tvAlertContent2">Możesz wyszukać książki po tytule czy autorze. Postaraj się być dokładny/a, będzie wtedy szybciej.</string>
+    <string name="tvAlertContent3">Jeżeli wyszukiwarka nie znajduje książek spróbuj trochę mniej dokładnej frazy (tylko nazwisko autora lub jedno słowo z tytułu, jednak może to trochę potrwać (nawet kilka minut)</string>
+    <string name="tvAlertContent4">Jeżeli tytuł lub nazwisko/ imię mają w sobie np. polskie znaki spróbuj wyszukać bez nich.</string>
+    <string name="tvAlertTitle">Porada nt. wyszukiwania</string>
+    <string name="tvAlertContent5">Możliwe, że w bazie nie ma książki której szukasz, więc wybierz najpodobniejszą i edytuj ją jak Ci się podoba.</string>
+    <string name="toast_no_connection_to_OL">Błąd: brak połączenia z openlibrary.org</string>
+    <string name="show_ol_alert_title">Porada nt. wyszukiwania</string>
+    <string name="show_ol_alert_on">Zostanie pokazana</string>
+    <string name="show_ol_alert_off">Nie zostanie pokazana</string>
 </resources>

@@ -179,5 +179,17 @@
     <string name="results_1">result</string>
     <string name="results_2_4">results</string>
     <string name="results_5_">results</string>
+    <string name="btn_ok">ok</string>
+    <string name="cb_dont_show_again">Don\'t show again</string>
+    <string name="tvAlertContent1">Searching books uses openlibrary.org database. It is free to use but can have some limitations.</string>
+    <string name="tvAlertContent2">You can search for a book’s title and author’s name. Try to be specific, it will be faster.</string>
+    <string name="tvAlertContent3">If no results found then try a more broad query (just authors name or one word from the title) but it can take a long time (even a couple of minutes).</string>
+    <string name="tvAlertContent4">If book’s title or author’s name contain diactric characters try to use non-diactric characters.</string>
+    <string name="tvAlertTitle">Help for searching books</string>
+    <string name="tvAlertContent5">Lastly the book you look for might be missing so choose the most similiar one and edit the details to your liking.</string>
+    <string name="toast_no_connection_to_OL">Error: no connection to openlibrary.org</string>
+    <string name="show_ol_alert_off">Won\'t be shown</string>
+    <string name="show_ol_alert_on">Will be shown</string>
+    <string name="show_ol_alert_title">Help for searching books</string>
 
 </resources>
