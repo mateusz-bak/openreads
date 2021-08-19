@@ -64,37 +64,26 @@ class FoundBookAdapter(
                     }
 
                     if (curBook.data.authors != null) {
-                        var searchAuthorJob = MainScope().launch {
-                            var allAuthors = ""
-                            for (author in curBook.data.authors) {
-                                var key = author.key
-                                key = key.replace("/authors/", "")
+                        var allAuthors = ""
+                        for (author in curBook.data.authors) {
+                            var key = author.key
 
-                                try {
-                                    viewModel.showLoadingCircle.postValue(true)
-                                    var authorsResource = viewModel.handleGetAuthorFromOLID(viewModel.getAuthorFromOLID(key))
-                                    var authorsName: String? = authorsResource.data?.name
+                            allAuthors += key
+                            allAuthors += ", "
 
-                                    allAuthors += authorsName
-                                    allAuthors += ", "
+                            viewModel.showLoadingCircle.postValue(false)
 
-                                    viewModel.showLoadingCircle.postValue(false)
-                                } catch (e: Exception) {
-                                    // TODO - add a toast with error description
-                                    Log.e("OpenLibrary connection error", "in FoundBookAdapter: $e")
-                                    viewModel.showLoadingCircle.postValue(false)
-                                }
-                            }
-                            if (allAuthors.isNotEmpty()) {
-                                if (allAuthors.last().toString() == " ")
-                                    allAuthors = allAuthors.dropLast(1)
-
-                                if (allAuthors.last().toString() == ",")
-                                    allAuthors = allAuthors.dropLast(1)
-                            }
-
-                            tvBookAuthor.text = allAuthors
                         }
+
+                        if (allAuthors.isNotEmpty()) {
+                            if (allAuthors.last().toString() == " ")
+                                allAuthors = allAuthors.dropLast(1)
+
+                            if (allAuthors.last().toString() == ",")
+                                allAuthors = allAuthors.dropLast(1)
+                        }
+
+                        tvBookAuthor.text = allAuthors
                     } else {
                         tvBookAuthor.text = holder.itemView.context.getString(R.string.UNKNOWN)
                     }

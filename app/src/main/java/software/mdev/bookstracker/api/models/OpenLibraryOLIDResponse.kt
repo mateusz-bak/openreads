@@ -1,7 +1,7 @@
 package software.mdev.bookstracker.api.models
 
 data class OpenLibraryOLIDResponse(
-    val authors: List<Author>,
+    var authors: List<Author>,
     val classifications: Classifications,
     val contributions: List<String>,
     val covers: List<Int>,

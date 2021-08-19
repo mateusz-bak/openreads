@@ -187,6 +187,13 @@ class BooksViewModel(
                             showLoadingCircle.postValue(true)
                             val handledResponse = handleGetBooksByOLIDResponse(response)
 
+                                var authorsList = emptyList<OpenLibraryOLIDResponse.Author>()
+
+                                for ((j, i) in item.author_name.withIndex()) {
+                                    authorsList += OpenLibraryOLIDResponse.Author(item.author_name[j])
+                                }
+                                handledResponse.data?.authors = authorsList
+
                             if (openLibraryBooksByOLID.value == null) {
                                 var emptyList = emptyList<Resource<OpenLibraryOLIDResponse>>()
                                 var listToPost: List<Resource<OpenLibraryOLIDResponse>> =
@@ -220,16 +227,16 @@ class BooksViewModel(
         }
     }
 
-    fun handleGetAuthorFromOLID(response: Response<OpenLibraryAuthor>): Resource<OpenLibraryAuthor> {
-        if (response.isSuccessful) {
-            response.body()?.let { resultResponse ->
-                return Resource.Success(resultResponse)
-            }
-        }
-        return Resource.Error(response.message())
-    }
-
-    suspend fun getAuthorFromOLID(author: String) =  openLibraryRepository.getAuthorFromOLID(author)
+//    fun handleGetAuthorFromOLID(response: Response<OpenLibraryAuthor>): Resource<OpenLibraryAuthor> {
+//        if (response.isSuccessful) {
+//            response.body()?.let { resultResponse ->
+//                return Resource.Success(resultResponse)
+//            }
+//        }
+//        return Resource.Error(response.message())
+//    }
+//
+//    suspend fun getAuthorFromOLID(author: String) =  openLibraryRepository.getAuthorFromOLID(author)
 
     fun getLanguages() = languageRepository.getLanguages()
 
