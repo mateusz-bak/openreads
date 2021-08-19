@@ -32,6 +32,7 @@ import software.mdev.bookstracker.adapters.*
 import software.mdev.bookstracker.api.models.OpenLibraryBook
 import software.mdev.bookstracker.api.models.OpenLibraryOLIDResponse
 import software.mdev.bookstracker.data.db.LanguageDatabase
+import software.mdev.bookstracker.data.db.entities.Language
 import software.mdev.bookstracker.data.repositories.LanguageRepository
 import software.mdev.bookstracker.data.repositories.OpenLibraryRepository
 import software.mdev.bookstracker.other.Resource
@@ -205,30 +206,78 @@ class AddBookSearchFragment : Fragment(R.layout.fragment_add_book_search) {
             }
         })
 
-        viewModel.openLibraryBooksByOLID.observe(viewLifecycleOwner, Observer { list ->
-            var newList: List<Resource<OpenLibraryOLIDResponse>> = emptyList()
+        viewModel.getLanguages().observe(viewLifecycleOwner, Observer { languages ->
+            var newList: List<Language> = emptyList()
 
-            if (list != null) {
-                for (item in list) {
-                    if (item.data != null) {
-                        if (item.data.title != null) {
-
-                            var add = true
-                            for (currentItem in newList) {
-                                if (currentItem.data?.key == item.data.key)
-                                    add = false
-                            }
-
-                            if (add)
-                                newList += item
-                        }
-                    }
+            for (language in languages) {
+                if (language.isSelected == 1) {
+                    newList += language
                 }
             }
 
-            foundBooksAdapter.differ.submitList(
-                newList
-            )
+            viewModel.selectedLanguages.postValue(newList)
+        })
+
+        var filterBooksByLanguage: Job? = null
+
+        viewModel.openLibraryBooksByOLID.observe(viewLifecycleOwner, Observer { list ->
+
+            viewModel.selectedLanguages.observe(viewLifecycleOwner, Observer { languages ->
+
+                filterBooksByLanguage?.cancel()
+                filterBooksByLanguage = MainScope().launch {
+                    var newList: List<Resource<OpenLibraryOLIDResponse>> = emptyList()
+
+                    if (list != null) {
+                        for (item in list) {
+                            if (item.data != null) {
+                                if (item.data.title != null) {
+
+                                    var add = false
+                                    if (languages.isNotEmpty()) {
+
+                                        if (item.data.languages != null) {
+
+                                            for (language in languages) {
+
+                                                if (language.isSelected == 1) {
+
+                                                    for (itemLanguage in item.data.languages) {
+
+                                                        if (language.language6392B == itemLanguage.key.replace(
+                                                                "/languages/",
+                                                                ""
+                                                            )
+                                                        ) {
+                                                            add = true
+                                                        }
+                                                    }
+                                                } else {
+                                                    add = true
+                                                }
+                                            }
+                                        }
+                                    } else {
+                                        add = true
+                                    }
+
+                                    for (currentItem in newList) {
+                                        if (currentItem.data?.key == item.data.key)
+                                            add = false
+                                    }
+
+                                    if (add)
+                                        newList += item
+                                }
+                            }
+                        }
+                    }
+
+                    foundBooksAdapter.differ.submitList(
+                        newList
+                    )
+                }
+            })
         })
 
         viewModel.getLanguages().observe(viewLifecycleOwner, Observer { languages ->

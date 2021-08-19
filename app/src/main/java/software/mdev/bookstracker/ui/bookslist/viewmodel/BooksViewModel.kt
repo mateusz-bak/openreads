@@ -15,6 +15,7 @@ import software.mdev.bookstracker.api.models.OpenLibraryAuthor
 import software.mdev.bookstracker.api.models.OpenLibraryBook
 import software.mdev.bookstracker.api.models.OpenLibraryOLIDResponse
 import software.mdev.bookstracker.api.models.OpenLibrarySearchTitleResponse
+import software.mdev.bookstracker.data.db.entities.Language
 import software.mdev.bookstracker.data.repositories.LanguageRepository
 import software.mdev.bookstracker.other.Resource
 import java.lang.Exception
@@ -30,6 +31,7 @@ class BooksViewModel(
     val openLibrarySearchResult: MutableLiveData<Resource<OpenLibrarySearchTitleResponse>> = MutableLiveData()
     var openLibraryBooksByOLID: MutableLiveData<List<Resource<OpenLibraryOLIDResponse>>> = MutableLiveData()
     var showLoadingCircle: MutableLiveData<Boolean> = MutableLiveData()
+    var selectedLanguages: MutableLiveData<List<Language>> = MutableLiveData()
 
     fun upsert(item: Book) = CoroutineScope(Dispatchers.Main).launch {
         repository.upsert(item)
