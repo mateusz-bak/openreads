@@ -32,6 +32,17 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
+            <ImageView
+                android:id="@+id/ivBookCover"
+                android:layout_width="250dp"
+                android:layout_height="250dp"
+                android:layout_marginTop="24dp"
+                android:scaleType="fitCenter"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
             <TextView
                 android:id="@+id/tvBookTitle"
                 android:layout_width="wrap_content"
@@ -39,12 +50,13 @@
                 android:paddingStart="24dp"
                 android:paddingEnd="24dp"
                 android:text="@string/tvBookTitle"
+                android:layout_marginTop="24dp"
                 android:textAlignment="center"
                 android:textColor="?colorOnSecondary"
                 android:textSize="26sp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="@+id/guideline4"
+                app:layout_constraintTop_toBottomOf="@+id/ivBookCover"
                 app:layout_constraintVertical_weight="2" />
 
             <TextView

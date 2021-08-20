@@ -1,6 +1,5 @@
 package software.mdev.bookstracker.adapters
 
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -12,8 +11,6 @@ import androidx.swiperefreshlayout.widget.CircularProgressDrawable
 import com.squareup.picasso.Picasso
 import software.mdev.bookstracker.R
 import kotlinx.android.synthetic.main.item_book_searched_by_olid.view.*
-import kotlinx.coroutines.MainScope
-import kotlinx.coroutines.launch
 import software.mdev.bookstracker.api.models.OpenLibraryOLIDResponse
 import software.mdev.bookstracker.other.Resource
 import software.mdev.bookstracker.ui.bookslist.viewmodel.BooksViewModel
@@ -48,6 +45,8 @@ class FoundBookAdapter(
                 .inflate(R.layout.item_book_searched_by_olid, parent, false)
         )
     }
+
+    private var onBookClickListener: ((Resource<OpenLibraryOLIDResponse>) -> Unit)? = null
 
     override fun onBindViewHolder(holder: OpenLibraryBookViewHolder, position: Int) {
         val curBook = differ.currentList[position]
@@ -162,22 +161,18 @@ class FoundBookAdapter(
             }
         }
 
-//        holder.itemView.apply {
-//            setOnClickListener {
-//                onBookClickListener?.let { it(curBook) }
-//            }
-//        }
+        holder.itemView.apply {
+            setOnClickListener {
+                onBookClickListener?.let { it(curBook) }
+            }
+        }
     }
 
-//    fun setOnBookClickListener(listener: (Book) -> Unit) {
-//        onBookClickListener = listener
-//    }
+    fun setOnBookClickListener(listener: (Resource<OpenLibraryOLIDResponse>) -> Unit) {
+        onBookClickListener = listener
+    }
 
     override fun getItemCount(): Int {
         return differ.currentList.size
     }
-
-//    fun setOnBookClickListener(listener: (OpenLibraryOLIDResponse) -> Unit) {
-//        onBookClickListener = listener
-//    }
 }

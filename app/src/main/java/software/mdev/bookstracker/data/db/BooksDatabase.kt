@@ -11,7 +11,7 @@ import software.mdev.bookstracker.other.Constants.DATABASE_FILE_NAME
 
 @Database(
         entities = [Book::class],
-        version = 4
+        version = 5
 )
 abstract class BooksDatabase: RoomDatabase() {
 
@@ -34,7 +34,8 @@ abstract class BooksDatabase: RoomDatabase() {
                 ).addMigrations(
                     MIGRATION_1_2,
                     MIGRATION_2_3,
-                    MIGRATION_3_4
+                    MIGRATION_3_4,
+                    MIGRATION_4_5
                 )
                 .build()
 
@@ -54,6 +55,12 @@ abstract class BooksDatabase: RoomDatabase() {
         private val MIGRATION_3_4 = object : Migration(3, 4) {
             override fun migrate(database: SupportSQLiteDatabase) {
                 database.execSQL("ALTER TABLE Book ADD COLUMN item_bookIsDeleted INTEGER NOT NULL DEFAULT 0")
+            }
+        }
+
+        private val MIGRATION_4_5 = object : Migration(4, 5) {
+            override fun migrate(database: SupportSQLiteDatabase) {
+                database.execSQL("ALTER TABLE Book ADD COLUMN item_bookCoverUrl TEXT NOT NULL DEFAULT 'url_missing'")
             }
         }
     }

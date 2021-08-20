@@ -37,8 +37,7 @@ import software.mdev.bookstracker.data.db.entities.Language
 import software.mdev.bookstracker.data.repositories.LanguageRepository
 import software.mdev.bookstracker.data.repositories.OpenLibraryRepository
 import software.mdev.bookstracker.other.Resource
-import software.mdev.bookstracker.ui.bookslist.dialogs.AlertDialog
-import software.mdev.bookstracker.ui.bookslist.dialogs.AlertDialogListener
+import software.mdev.bookstracker.ui.bookslist.dialogs.*
 import kotlin.collections.ArrayList
 
 
@@ -81,22 +80,6 @@ class AddBookSearchFragment : Fragment(R.layout.fragment_add_book_search) {
         var accentColor = getAccentColor(view.context.applicationContext)
 
         rvLanguages.visibility = View.GONE
-
-        rbRating.visibility = View.GONE
-        btnSetFinishDate.visibility = View.GONE
-        btnSetFinishDate.isClickable = false
-        dpBookFinishDate.visibility = View.GONE
-        btnSaveFinishDate.visibility = View.GONE
-        btnCancelFinishDate.visibility = View.GONE
-        dpBookFinishDate.maxDate = System.currentTimeMillis()
-
-        ivBookStatusRead.visibility         = View.GONE
-        ivBookStatusInProgress.visibility   = View.GONE
-        ivBookStatusToRead.visibility       = View.GONE
-
-        tvFinished.visibility               = View.GONE
-        tvInProgress.visibility             = View.GONE
-        tvToRead.visibility                 = View.GONE
 
         etAdderBookTitleSearch.requestFocus()
         showKeyboard(etAdderBookTitleSearch, 350)
@@ -368,206 +351,32 @@ class AddBookSearchFragment : Fragment(R.layout.fragment_add_book_search) {
             }
         })
 
-        ivBookStatusRead.setOnClickListener {
-            ivBookStatusRead.setColorFilter(accentColor, android.graphics.PorterDuff.Mode.SRC_IN)
-            ivBookStatusInProgress.setColorFilter(
-                ContextCompat.getColor(
-                    view.context,
-                    R.color.grey
-                ), android.graphics.PorterDuff.Mode.SRC_IN
-            )
-            ivBookStatusToRead.setColorFilter(
-                ContextCompat.getColor(view.context, R.color.grey),
-                android.graphics.PorterDuff.Mode.SRC_IN
-            )
-            whatIsClicked = Constants.BOOK_STATUS_READ
-            rbRating.visibility = View.VISIBLE
-//            etPagesNumber.visibility = View.VISIBLE
-            btnSetFinishDate.visibility = View.VISIBLE
-            it.hideKeyboard()
+        foundBooksAdapter.setOnBookClickListener {
+
+            AddFoundBookDialog(it, view.context,
+                object: AddFoundBookDialogListener {
+                    override fun onSaveButtonClicked(item: Book) {
+                        viewModel.upsert(item)
+                        recalculateChallenges()
+
+                        when(item.bookStatus) {
+                            Constants.BOOK_STATUS_READ -> { findNavController().navigate(
+                                R.id.action_addBookSearchFragment_to_readFragment
+                            )
+                            }
+                            Constants.BOOK_STATUS_IN_PROGRESS -> { findNavController().navigate(
+                                R.id.action_addBookSearchFragment_to_inProgressFragment
+                            )
+                            }
+                            Constants.BOOK_STATUS_TO_READ -> { findNavController().navigate(
+                                R.id.action_addBookSearchFragment_to_toReadFragment
+                            )
+                            }
+                        }
+                    }
+                }
+            ).show()
         }
-
-        ivBookStatusInProgress.setOnClickListener {
-            ivBookStatusRead.setColorFilter(
-                ContextCompat.getColor(view.context, R.color.grey),
-                android.graphics.PorterDuff.Mode.SRC_IN
-            )
-            ivBookStatusInProgress.setColorFilter(
-                accentColor,
-                android.graphics.PorterDuff.Mode.SRC_IN
-            )
-            ivBookStatusToRead.setColorFilter(
-                ContextCompat.getColor(view.context, R.color.grey),
-                android.graphics.PorterDuff.Mode.SRC_IN
-            )
-            whatIsClicked = Constants.BOOK_STATUS_IN_PROGRESS
-            rbRating.visibility = View.GONE
-//            etEditedPagesNumber.visibility = View.GONE
-            btnSetFinishDate.visibility = View.GONE
-            it.hideKeyboard()
-        }
-
-        ivBookStatusToRead.setOnClickListener {
-            ivBookStatusRead.setColorFilter(
-                ContextCompat.getColor(view.context, R.color.grey),
-                android.graphics.PorterDuff.Mode.SRC_IN
-            )
-            ivBookStatusInProgress.setColorFilter(
-                ContextCompat.getColor(
-                    view.context,
-                    R.color.grey
-                ), android.graphics.PorterDuff.Mode.SRC_IN
-            )
-            ivBookStatusToRead.setColorFilter(accentColor, android.graphics.PorterDuff.Mode.SRC_IN)
-            whatIsClicked = Constants.BOOK_STATUS_TO_READ
-            rbRating.visibility = View.GONE
-//            etEditedPagesNumber.visibility = View.GONE
-            btnSetFinishDate.visibility = View.GONE
-            it.hideKeyboard()
-        }
-
-        btnSetFinishDate.setOnClickListener {
-            it.hideKeyboard()
-
-            dpBookFinishDate.visibility = View.VISIBLE
-            btnSaveFinishDate.visibility = View.VISIBLE
-            btnCancelFinishDate.visibility = View.VISIBLE
-            btnSaveFinishDate.isClickable = true
-            btnCancelFinishDate.isClickable = true
-
-            etAdderBookTitleSearch.visibility = View.GONE
-
-            ivBookStatusRead.visibility = View.GONE
-            ivBookStatusInProgress.visibility = View.GONE
-            ivBookStatusToRead.visibility = View.GONE
-            tvFinished.visibility = View.GONE
-            tvInProgress.visibility = View.GONE
-            tvToRead.visibility = View.GONE
-
-//            etPagesNumber.visibility = View.GONE
-            rbRating.visibility = View.GONE
-            btnSetFinishDate.visibility = View.GONE
-            fabAddNewBook.visibility = View.GONE
-            fabCancelAddingNewBook.visibility = View.GONE
-        }
-
-        btnSaveFinishDate.setOnClickListener {
-            bookFinishDateMs = getDateFromDatePickerInMillis(dpBookFinishDate)
-
-            dpBookFinishDate.visibility = View.GONE
-            btnSaveFinishDate.visibility = View.GONE
-            btnCancelFinishDate.visibility = View.GONE
-            btnSaveFinishDate.isClickable = false
-            btnCancelFinishDate.isClickable = false
-
-            etAdderBookTitleSearch.visibility = View.VISIBLE
-
-            ivBookStatusRead.visibility = View.VISIBLE
-            ivBookStatusInProgress.visibility = View.VISIBLE
-            ivBookStatusToRead.visibility = View.VISIBLE
-            tvFinished.visibility = View.VISIBLE
-            tvInProgress.visibility = View.VISIBLE
-            tvToRead.visibility = View.VISIBLE
-
-//            etPagesNumber.visibility = View.VISIBLE
-            rbRating.visibility = View.VISIBLE
-            btnSetFinishDate.visibility = View.VISIBLE
-            fabAddNewBook.visibility = View.VISIBLE
-            fabCancelAddingNewBook.visibility = View.VISIBLE
-
-            btnSetFinishDate.text = bookFinishDateMs?.let { it1 -> convertLongToTime(it1) }
-        }
-
-        btnCancelFinishDate.setOnClickListener {
-            dpBookFinishDate.visibility = View.GONE
-            btnSaveFinishDate.visibility = View.GONE
-            btnCancelFinishDate.visibility = View.GONE
-            btnSaveFinishDate.isClickable = false
-            btnCancelFinishDate.isClickable = false
-
-            etAdderBookTitleSearch.visibility = View.VISIBLE
-
-            ivBookStatusRead.visibility = View.VISIBLE
-            ivBookStatusInProgress.visibility = View.VISIBLE
-            ivBookStatusToRead.visibility = View.VISIBLE
-            tvFinished.visibility = View.VISIBLE
-            tvInProgress.visibility = View.VISIBLE
-            tvToRead.visibility = View.VISIBLE
-
-//            etPagesNumber.visibility = View.VISIBLE
-            rbRating.visibility = View.VISIBLE
-            btnSetFinishDate.visibility = View.VISIBLE
-            fabAddNewBook.visibility = View.VISIBLE
-            fabCancelAddingNewBook.visibility = View.VISIBLE
-        }
-
-//        fabSaveEditedBook.setOnClickListener {
-//            val bookTitle = etEditedBookTitle.text.toString()
-//            val bookAuthor = etEditedBookAuthor.text.toString()
-//            var bookRating = 0.0F
-//            val bookNumberOfPagesIntOrNull = etEditedPagesNumber.text.toString().toIntOrNull()
-//            var bookNumberOfPagesInt: Int
-//
-//            if (bookTitle.isNotEmpty()) {
-//                if (bookAuthor.isNotEmpty()) {
-//                    if (whatIsClicked != Constants.BOOK_STATUS_NOTHING) {
-//                        if (bookNumberOfPagesIntOrNull != null || whatIsClicked == Constants.BOOK_STATUS_IN_PROGRESS || whatIsClicked == Constants.BOOK_STATUS_TO_READ) {
-//                            bookNumberOfPagesInt = when (bookNumberOfPagesIntOrNull) {
-//                                null -> 0
-//                                else -> bookNumberOfPagesIntOrNull
-//                            }
-//                            if (bookNumberOfPagesInt > 0 || whatIsClicked == Constants.BOOK_STATUS_IN_PROGRESS || whatIsClicked == Constants.BOOK_STATUS_TO_READ) {
-//                                if (bookFinishDateMs!=null || whatIsClicked == Constants.BOOK_STATUS_IN_PROGRESS || whatIsClicked == Constants.BOOK_STATUS_TO_READ) {
-//                                    when (whatIsClicked) {
-//                                        Constants.BOOK_STATUS_READ -> bookRating = rbEditedRating.rating
-//                                        Constants.BOOK_STATUS_IN_PROGRESS -> bookRating = 0.0F
-//                                        Constants.BOOK_STATUS_TO_READ -> bookRating = 0.0F
-//                                    }
-//
-//                                    val REGEX_UNACCENT = "\\p{InCombiningDiacriticalMarks}+".toRegex()
-//                                    fun CharSequence.unaccent(): String {
-//                                        val temp = Normalizer.normalize(this, Normalizer.Form.NFD)
-//                                        return REGEX_UNACCENT.replace(temp, "")
-//                                    }
-//
-//                                    val bookStatus = whatIsClicked
-//                                    viewModel.updateBook(
-//                                        book.id,
-//                                        bookTitle,
-//                                        bookAuthor,
-//                                        bookRating,
-//                                        bookStatus,
-//                                        bookFinishDateMs.toString(),
-//                                        bookNumberOfPagesInt,
-//                                        bookTitle_ASCII = bookTitle.unaccent().replace("ł", "l", false),
-//                                        bookAuthor_ASCII = bookAuthor.unaccent().replace("ł", "l", false),
-//                                        false
-//                                    )
-//
-////                                    Snackbar.make(it, R.string.savingChanges, Snackbar.LENGTH_SHORT).show()
-//                                    recalculateChallenges()
-//
-//                                    } else {
-//                                    Snackbar.make(it, R.string.sbWarningMissingFinishDate, Snackbar.LENGTH_SHORT).show()
-//                                }
-//                            } else {
-//                                Snackbar.make(it, R.string.sbWarningPages0, Snackbar.LENGTH_SHORT)
-//                                    .show()
-//                            }
-//                        } else {
-//                            Snackbar.make(it, R.string.sbWarningPagesMissing, Snackbar.LENGTH_SHORT)
-//                                .show()
-//                        }
-//                    } else {
-//                        Snackbar.make(it, getString(R.string.sbWarningState), Snackbar.LENGTH_SHORT).show()
-//                    }
-//                } else {
-//                    Snackbar.make(it, getString(R.string.sbWarningAuthor), Snackbar.LENGTH_SHORT).show()
-//                }
-//            } else {
-//                Snackbar.make(it, getString(R.string.sbWarningTitle), Snackbar.LENGTH_SHORT).show()
-//            }
-//        }
     }
 
     private fun setupRvFoundBooks() {

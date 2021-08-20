@@ -3,13 +3,17 @@ package software.mdev.bookstracker.ui.bookslist.fragments
 import android.os.Bundle
 import android.view.MotionEvent
 import android.view.View
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
+import androidx.swiperefreshlayout.widget.CircularProgressDrawable
 import com.google.android.material.snackbar.Snackbar
+import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.fragment_display_book.*
 import software.mdev.bookstracker.R
 import software.mdev.bookstracker.data.db.entities.Book
+import software.mdev.bookstracker.other.Constants
 import software.mdev.bookstracker.other.Constants.BOOK_STATUS_IN_PROGRESS
 import software.mdev.bookstracker.other.Constants.BOOK_STATUS_READ
 import software.mdev.bookstracker.other.Constants.BOOK_STATUS_TO_READ
@@ -41,6 +45,31 @@ class DisplayBookFragment : Fragment(R.layout.fragment_display_book) {
         tvBookAuthor.text = book.bookAuthor
         rbRatingIndicator.rating = book.bookRating
         tvBookPages.text = book.bookNumberOfPages.toString()
+
+        if (book.bookCoverUrl == Constants.DATABASE_EMPTY_VALUE) {
+            ivBookCover.visibility = View.GONE
+        } else {
+            val circularProgressDrawable = CircularProgressDrawable(view.context)
+            circularProgressDrawable.strokeWidth = 5f
+            circularProgressDrawable.centerRadius = 30f
+            circularProgressDrawable.setColorSchemeColors(
+                ContextCompat.getColor(
+                    view.context,
+                    R.color.grey
+                )
+            )
+            circularProgressDrawable.start()
+
+            var coverID = book.bookCoverUrl
+            var coverUrl = "https://covers.openlibrary.org/b/id/$coverID-L.jpg"
+
+            Picasso
+                .get()
+                .load(coverUrl)
+                .placeholder(circularProgressDrawable)
+                .error(R.drawable.ic_baseline_error_outline_24)
+                .into(ivBookCover)
+        }
 
         if(book.bookFinishDate == "none" || book.bookFinishDate == "null") {
             tvDateFinished.text = getString(R.string.not_set)
@@ -80,6 +109,16 @@ class DisplayBookFragment : Fragment(R.layout.fragment_display_book) {
                 tvDateFinishedTitle.visibility = View.GONE
                 tvDateFinished.visibility = View.GONE
             }
+        }
+
+        ivBookCover.setOnClickListener {
+            val bundle = Bundle().apply {
+                putSerializable("cover", book.bookCoverUrl)
+            }
+            findNavController().navigate(
+                R.id.action_displayBookFragment_to_displayCoverFragment,
+                bundle
+            )
         }
 
         fabEditBook.setOnClickListener {

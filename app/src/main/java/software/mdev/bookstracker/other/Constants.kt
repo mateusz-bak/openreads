@@ -19,6 +19,7 @@ object Constants {
     const val DATABASE_ITEM_BOOK_NUMBER_OF_PAGES = "item_bookNumberOfPages"
     const val DATABASE_ITEM_BOOK_TITLE_ASCII = "item_bookTitle_ASCII"
     const val DATABASE_ITEM_BOOK_AUTHOR_ASCII = "item_bookAuthor_ASCII"
+    const val DATABASE_ITEM_BOOK_COVER_URL = "item_bookCoverUrl"
     const val DATABASE_ITEM_BOOK_IS_DELETED = "item_bookIsDeleted"
     const val DATABASE_EMPTY_VALUE = "none"
 

@@ -102,6 +102,9 @@
         <argument
             android:name="book"
             app:argType="software.mdev.bookstracker.data.db.entities.Book" />
+        <action
+            android:id="@+id/action_displayBookFragment_to_displayCoverFragment"
+            app:destination="@id/displayCoverFragment" />
     </fragment>
     <fragment
         android:id="@+id/editBookFragment"
@@ -150,5 +153,23 @@
     <fragment
         android:id="@+id/addBookSearchFragment"
         android:name="software.mdev.bookstracker.ui.bookslist.fragments.AddBookSearchFragment"
-        android:label="AddBookSearchFragment" />
+        android:label="AddBookSearchFragment" >
+        <action
+            android:id="@+id/action_addBookSearchFragment_to_readFragment"
+            app:destination="@id/readFragment" />
+        <action
+            android:id="@+id/action_addBookSearchFragment_to_inProgressFragment"
+            app:destination="@id/inProgressFragment" />
+        <action
+            android:id="@+id/action_addBookSearchFragment_to_toReadFragment"
+            app:destination="@id/toReadFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/displayCoverFragment"
+        android:name="software.mdev.bookstracker.ui.bookslist.fragments.DisplayCoverFragment"
+        android:label="DisplayCoverFragment">
+    <argument
+        android:name="cover"
+        app:argType="string" />
+    </fragment>
 </navigation>
