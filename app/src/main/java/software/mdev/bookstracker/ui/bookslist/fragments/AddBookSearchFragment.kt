@@ -404,11 +404,11 @@ class AddBookSearchFragment : Fragment(R.layout.fragment_add_book_search) {
     }
 
     private fun hideProgressBar() {
-        paginationProgressBar.visibility = View.INVISIBLE
+        paginationProgressBar?.visibility = View.INVISIBLE
     }
 
     private fun showProgressBar() {
-        paginationProgressBar.visibility = View.VISIBLE
+        paginationProgressBar?.visibility = View.VISIBLE
     }
 
     fun View.hideKeyboard() {
