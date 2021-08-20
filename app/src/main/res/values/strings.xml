@@ -195,5 +195,9 @@
     <string name="tv_book_isbn_title" translatable="false">ISBN</string>
     <string name="tv_book_isbn" translatable="false">1234567890123</string>
     <string name="tv_book_url" translatable="false">https://openlibrary.org/books/OL27755728M</string>
+    <string name="hint_date_started">Date started</string>
+    <string name="set_start_date_title">Set start date</string>
+    <string name="sbWarningMissingStartDate">Set the start date!</string>
+    <string name="sbWarningStartDateMustBeBeforeFinishDate">Finish date cannot be set before starting date</string>
 
 </resources>

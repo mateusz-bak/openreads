@@ -16,7 +16,7 @@ import androidx.swiperefreshlayout.widget.CircularProgressDrawable
 import software.mdev.bookstracker.data.db.entities.Book
 import com.google.android.material.snackbar.Snackbar
 import com.squareup.picasso.Picasso
-import kotlinx.android.synthetic.main.dialog_add_found_book.*
+import kotlinx.android.synthetic.main.dialog_add_book.*
 import software.mdev.bookstracker.api.models.OpenLibraryOLIDResponse
 import software.mdev.bookstracker.other.Constants
 import software.mdev.bookstracker.other.Constants.BOOK_STATUS_IN_PROGRESS
@@ -38,23 +38,33 @@ class AddFoundBookDialog(
 
     var whatIsClicked: String = BOOK_STATUS_NOTHING
     private var bookFinishDateMs: Long? = null
+    private var bookStartDateMs: Long? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         supportRequestWindowFeature(Window.FEATURE_NO_TITLE)
-        setContentView(R.layout.dialog_add_found_book)
+        setContentView(R.layout.dialog_add_book)
         var accentColor = getAccentColor(context.applicationContext)
 
         this.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
         rbAdderRating.visibility = View.GONE
         tvRateThisBook.visibility = View.GONE
         etPagesNumber.visibility = View.GONE
-        btnSetFinishDate.visibility = View.GONE
+
+        btnSetFinishDate.visibility  = View.GONE
+        btnSetStartDate.visibility  = View.GONE
         btnSetFinishDate.isClickable = false
+        btnSetStartDate.isClickable = false
         dpBookFinishDate.visibility = View.GONE
+        dpBookStartDate.visibility = View.GONE
+
         btnAdderSaveFinishDate.visibility = View.GONE
         btnAdderCancelFinishDate.visibility = View.GONE
+        btnAdderSaveStartDate.visibility = View.GONE
+        btnAdderCancelStartDate.visibility = View.GONE
+
         dpBookFinishDate.maxDate = System.currentTimeMillis()
+        dpBookStartDate.maxDate = System.currentTimeMillis()
 
         etAdderBookTitle.requestFocus()
         showKeyboard(etAdderBookTitle, 350)
@@ -109,8 +119,10 @@ class AddFoundBookDialog(
             rbAdderRating.visibility = View.VISIBLE
             tvRateThisBook.visibility = View.VISIBLE
             etPagesNumber.visibility = View.VISIBLE
-            btnSetFinishDate.visibility = View.VISIBLE
+            btnSetFinishDate.visibility  = View.VISIBLE
+            btnSetStartDate.visibility  = View.VISIBLE
             btnSetFinishDate.isClickable = true
+            btnSetStartDate.isClickable = true
             etPagesNumber.requestFocus()
             showKeyboard(etPagesNumber, 350)
         }
@@ -132,8 +144,10 @@ class AddFoundBookDialog(
             rbAdderRating.visibility = View.GONE
             tvRateThisBook.visibility = View.GONE
             etPagesNumber.visibility = View.GONE
-            btnSetFinishDate.visibility = View.GONE
+            btnSetFinishDate.visibility  = View.GONE
+            btnSetStartDate.visibility  = View.GONE
             btnSetFinishDate.isClickable = false
+            btnSetStartDate.isClickable = false
             it.hideKeyboard()
         }
 
@@ -154,8 +168,8 @@ class AddFoundBookDialog(
             rbAdderRating.visibility = View.GONE
             tvRateThisBook.visibility = View.GONE
             etPagesNumber.visibility = View.GONE
-            btnSetFinishDate.visibility = View.GONE
             btnSetFinishDate.isClickable = false
+            btnSetStartDate.isClickable = false
             it.hideKeyboard()
         }
 
@@ -183,7 +197,37 @@ class AddFoundBookDialog(
             rbAdderRating.visibility = View.GONE
             btnAdderSaveBook.visibility = View.GONE
             btnSetFinishDate.visibility = View.GONE
+            btnSetStartDate.visibility = View.GONE
 
+        }
+
+        btnSetStartDate.setOnClickListener {
+            it.hideKeyboard()
+
+            dpBookStartDate.visibility = View.VISIBLE
+            btnAdderSaveStartDate.visibility = View.VISIBLE
+            btnAdderCancelStartDate.visibility = View.VISIBLE
+            btnSetFinishDate.isClickable = false
+            btnSetStartDate.isClickable = false
+
+            etAdderBookTitle.visibility = View.GONE
+            etAdderAuthor.visibility = View.GONE
+
+            ivBookStatusSetRead.visibility = View.GONE
+            ivBookStatusSetInProgress.visibility = View.GONE
+            ivBookStatusSetToRead.visibility = View.GONE
+            tvFinished.visibility = View.GONE
+            tvInProgress.visibility = View.GONE
+            tvToRead.visibility = View.GONE
+
+            etPagesNumber.visibility = View.GONE
+            tvRateThisBook.visibility = View.GONE
+            rbAdderRating.visibility = View.GONE
+            btnAdderSaveBook.visibility = View.GONE
+            btnSetFinishDate.visibility = View.GONE
+            btnSetStartDate.visibility = View.GONE
+
+            ivBookCover.visibility = View.GONE
         }
 
         btnAdderSaveFinishDate.setOnClickListener {
@@ -209,6 +253,10 @@ class AddFoundBookDialog(
             rbAdderRating.visibility = View.VISIBLE
             btnAdderSaveBook.visibility = View.VISIBLE
             btnSetFinishDate.visibility = View.VISIBLE
+            btnSetStartDate.visibility = View.VISIBLE
+
+            btnSetFinishDate.isClickable = true
+            btnSetStartDate.isClickable = true
 
             btnSetFinishDate.text = bookFinishDateMs?.let { it1 -> convertLongToTime(it1) }
         }
@@ -234,6 +282,69 @@ class AddFoundBookDialog(
             rbAdderRating.visibility = View.VISIBLE
             btnAdderSaveBook.visibility = View.VISIBLE
             btnSetFinishDate.visibility = View.VISIBLE
+            btnSetStartDate.visibility = View.VISIBLE
+
+            btnSetFinishDate.isClickable = true
+            btnSetStartDate.isClickable = true
+        }
+
+        btnAdderSaveStartDate.setOnClickListener {
+            bookStartDateMs = getDateFromDatePickerInMillis(dpBookStartDate)
+
+            dpBookStartDate.visibility = View.GONE
+            btnAdderSaveStartDate.visibility = View.GONE
+            btnAdderCancelStartDate.visibility = View.GONE
+
+            etAdderBookTitle.visibility = View.VISIBLE
+            etAdderAuthor.visibility = View.VISIBLE
+
+            ivBookStatusSetRead.visibility = View.VISIBLE
+            ivBookStatusSetInProgress.visibility = View.VISIBLE
+            ivBookStatusSetToRead.visibility = View.VISIBLE
+            tvFinished.visibility = View.VISIBLE
+            tvInProgress.visibility = View.VISIBLE
+            tvToRead.visibility = View.VISIBLE
+
+            etPagesNumber.visibility = View.VISIBLE
+            tvRateThisBook.visibility = View.VISIBLE
+            rbAdderRating.visibility = View.VISIBLE
+            btnAdderSaveBook.visibility = View.VISIBLE
+            btnSetFinishDate.visibility = View.VISIBLE
+            btnSetStartDate.visibility = View.VISIBLE
+
+            btnSetFinishDate.isClickable = true
+            btnSetStartDate.isClickable = true
+
+            ivBookCover.visibility = View.VISIBLE
+
+            btnSetStartDate.text = bookStartDateMs?.let { it1 -> convertLongToTime(it1) }
+        }
+
+        btnAdderCancelStartDate.setOnClickListener {
+            dpBookStartDate.visibility = View.GONE
+            btnAdderSaveStartDate.visibility = View.GONE
+            btnAdderCancelStartDate.visibility = View.GONE
+
+            etAdderBookTitle.visibility = View.VISIBLE
+            etAdderAuthor.visibility = View.VISIBLE
+
+            ivBookStatusSetRead.visibility = View.VISIBLE
+            ivBookStatusSetInProgress.visibility = View.VISIBLE
+            ivBookStatusSetToRead.visibility = View.VISIBLE
+            tvFinished.visibility = View.VISIBLE
+            tvInProgress.visibility = View.VISIBLE
+            tvToRead.visibility = View.VISIBLE
+
+            etPagesNumber.visibility = View.VISIBLE
+            tvRateThisBook.visibility = View.VISIBLE
+            rbAdderRating.visibility = View.VISIBLE
+            btnAdderSaveBook.visibility = View.VISIBLE
+            btnSetFinishDate.visibility = View.VISIBLE
+            btnSetStartDate.visibility = View.VISIBLE
+            btnSetFinishDate.isClickable = true
+            btnSetStartDate.isClickable = true
+
+            ivBookCover.visibility = View.VISIBLE
         }
 
         btnAdderSaveBook.setOnClickListener {

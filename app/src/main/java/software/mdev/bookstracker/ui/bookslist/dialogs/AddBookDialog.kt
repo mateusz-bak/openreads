@@ -30,6 +30,7 @@ class AddBookDialog(context: Context, var addBookDialogListener: AddBookDialogLi
 
     var whatIsClicked: String = BOOK_STATUS_NOTHING
     private var bookFinishDateMs: Long? = null
+    private var bookStartDateMs: Long? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -42,11 +43,21 @@ class AddBookDialog(context: Context, var addBookDialogListener: AddBookDialogLi
         tvRateThisBook.visibility = View.GONE
         etPagesNumber.visibility = View.GONE
         btnSetFinishDate.visibility  = View.GONE
+        btnSetStartDate.visibility  = View.GONE
         btnSetFinishDate.isClickable = false
+        btnSetStartDate.isClickable = false
         dpBookFinishDate.visibility = View.GONE
+        dpBookStartDate.visibility = View.GONE
+
         btnAdderSaveFinishDate.visibility = View.GONE
         btnAdderCancelFinishDate.visibility = View.GONE
+        btnAdderSaveStartDate.visibility = View.GONE
+        btnAdderCancelStartDate.visibility = View.GONE
+
+        ivBookCover.visibility = View.GONE
+
         dpBookFinishDate.maxDate = System.currentTimeMillis()
+        dpBookStartDate.maxDate = System.currentTimeMillis()
 
         etAdderBookTitle.requestFocus()
         showKeyboard(etAdderBookTitle,350)
@@ -60,7 +71,9 @@ class AddBookDialog(context: Context, var addBookDialogListener: AddBookDialogLi
             tvRateThisBook.visibility = View.VISIBLE
             etPagesNumber.visibility = View.VISIBLE
             btnSetFinishDate.visibility  = View.VISIBLE
+            btnSetStartDate.visibility  = View.VISIBLE
             btnSetFinishDate.isClickable = true
+            btnSetStartDate.isClickable = true
             etPagesNumber.requestFocus()
             showKeyboard(etPagesNumber,350)
         }
@@ -74,7 +87,9 @@ class AddBookDialog(context: Context, var addBookDialogListener: AddBookDialogLi
             tvRateThisBook.visibility = View.GONE
             etPagesNumber.visibility = View.GONE
             btnSetFinishDate.visibility  = View.GONE
+            btnSetStartDate.visibility  = View.GONE
             btnSetFinishDate.isClickable = false
+            btnSetStartDate.isClickable = false
             it.hideKeyboard()
         }
 
@@ -87,7 +102,9 @@ class AddBookDialog(context: Context, var addBookDialogListener: AddBookDialogLi
             tvRateThisBook.visibility = View.GONE
             etPagesNumber.visibility = View.GONE
             btnSetFinishDate.visibility  = View.GONE
+            btnSetStartDate.visibility  = View.GONE
             btnSetFinishDate.isClickable = false
+            btnSetStartDate.isClickable = false
             it.hideKeyboard()
         }
 
@@ -98,7 +115,7 @@ class AddBookDialog(context: Context, var addBookDialogListener: AddBookDialogLi
             btnAdderSaveFinishDate.visibility = View.VISIBLE
             btnAdderCancelFinishDate.visibility = View.VISIBLE
             btnSetFinishDate.isClickable = false
-            tvAdderTitle.setText(R.string.set_finish_date_title)
+            btnSetStartDate.isClickable = false
 
             etAdderBookTitle.visibility = View.GONE
             etAdderAuthor.visibility = View.GONE
@@ -115,6 +132,35 @@ class AddBookDialog(context: Context, var addBookDialogListener: AddBookDialogLi
             rbAdderRating.visibility = View.GONE
             btnAdderSaveBook.visibility = View.GONE
             btnSetFinishDate.visibility = View.GONE
+            btnSetStartDate.visibility = View.GONE
+
+        }
+
+        btnSetStartDate.setOnClickListener {
+            it.hideKeyboard()
+
+            dpBookStartDate.visibility = View.VISIBLE
+            btnAdderSaveStartDate.visibility = View.VISIBLE
+            btnAdderCancelStartDate.visibility = View.VISIBLE
+            btnSetFinishDate.isClickable = false
+            btnSetStartDate.isClickable = false
+
+            etAdderBookTitle.visibility = View.GONE
+            etAdderAuthor.visibility = View.GONE
+
+            ivBookStatusSetRead.visibility = View.GONE
+            ivBookStatusSetInProgress.visibility = View.GONE
+            ivBookStatusSetToRead.visibility = View.GONE
+            tvFinished.visibility = View.GONE
+            tvInProgress.visibility = View.GONE
+            tvToRead.visibility = View.GONE
+
+            etPagesNumber.visibility = View.GONE
+            tvRateThisBook.visibility = View.GONE
+            rbAdderRating.visibility = View.GONE
+            btnAdderSaveBook.visibility = View.GONE
+            btnSetFinishDate.visibility = View.GONE
+            btnSetStartDate.visibility = View.GONE
 
         }
 
@@ -124,7 +170,6 @@ class AddBookDialog(context: Context, var addBookDialogListener: AddBookDialogLi
             dpBookFinishDate.visibility = View.GONE
             btnAdderSaveFinishDate.visibility = View.GONE
             btnAdderCancelFinishDate.visibility = View.GONE
-            tvAdderTitle.setText(R.string.tvAdderTitle)
 
             etAdderBookTitle.visibility = View.VISIBLE
             etAdderAuthor.visibility = View.VISIBLE
@@ -141,6 +186,10 @@ class AddBookDialog(context: Context, var addBookDialogListener: AddBookDialogLi
             rbAdderRating.visibility = View.VISIBLE
             btnAdderSaveBook.visibility = View.VISIBLE
             btnSetFinishDate.visibility = View.VISIBLE
+            btnSetStartDate.visibility = View.VISIBLE
+
+            btnSetFinishDate.isClickable = true
+            btnSetStartDate.isClickable = true
 
             btnSetFinishDate.text = bookFinishDateMs?.let { it1 -> convertLongToTime(it1) }
         }
@@ -149,7 +198,6 @@ class AddBookDialog(context: Context, var addBookDialogListener: AddBookDialogLi
             dpBookFinishDate.visibility = View.GONE
             btnAdderSaveFinishDate.visibility = View.GONE
             btnAdderCancelFinishDate.visibility = View.GONE
-            tvAdderTitle.setText(R.string.tvAdderTitle)
 
             etAdderBookTitle.visibility = View.VISIBLE
             etAdderAuthor.visibility = View.VISIBLE
@@ -166,6 +214,64 @@ class AddBookDialog(context: Context, var addBookDialogListener: AddBookDialogLi
             rbAdderRating.visibility = View.VISIBLE
             btnAdderSaveBook.visibility = View.VISIBLE
             btnSetFinishDate.visibility = View.VISIBLE
+            btnSetStartDate.visibility = View.VISIBLE
+            btnSetFinishDate.isClickable = true
+            btnSetStartDate.isClickable = true
+        }
+
+        btnAdderSaveStartDate.setOnClickListener {
+            bookStartDateMs = getDateFromDatePickerInMillis(dpBookStartDate)
+
+            dpBookStartDate.visibility = View.GONE
+            btnAdderSaveStartDate.visibility = View.GONE
+            btnAdderCancelStartDate.visibility = View.GONE
+
+            etAdderBookTitle.visibility = View.VISIBLE
+            etAdderAuthor.visibility = View.VISIBLE
+
+            ivBookStatusSetRead.visibility = View.VISIBLE
+            ivBookStatusSetInProgress.visibility = View.VISIBLE
+            ivBookStatusSetToRead.visibility = View.VISIBLE
+            tvFinished.visibility = View.VISIBLE
+            tvInProgress.visibility = View.VISIBLE
+            tvToRead.visibility = View.VISIBLE
+
+            etPagesNumber.visibility = View.VISIBLE
+            tvRateThisBook.visibility = View.VISIBLE
+            rbAdderRating.visibility = View.VISIBLE
+            btnAdderSaveBook.visibility = View.VISIBLE
+            btnSetFinishDate.visibility = View.VISIBLE
+            btnSetStartDate.visibility = View.VISIBLE
+
+            btnSetFinishDate.isClickable = true
+            btnSetStartDate.isClickable = true
+
+            btnSetStartDate.text = bookStartDateMs?.let { it1 -> convertLongToTime(it1) }
+        }
+
+        btnAdderCancelStartDate.setOnClickListener {
+            dpBookStartDate.visibility = View.GONE
+            btnAdderSaveStartDate.visibility = View.GONE
+            btnAdderCancelStartDate.visibility = View.GONE
+
+            etAdderBookTitle.visibility = View.VISIBLE
+            etAdderAuthor.visibility = View.VISIBLE
+
+            ivBookStatusSetRead.visibility = View.VISIBLE
+            ivBookStatusSetInProgress.visibility = View.VISIBLE
+            ivBookStatusSetToRead.visibility = View.VISIBLE
+            tvFinished.visibility = View.VISIBLE
+            tvInProgress.visibility = View.VISIBLE
+            tvToRead.visibility = View.VISIBLE
+
+            etPagesNumber.visibility = View.VISIBLE
+            tvRateThisBook.visibility = View.VISIBLE
+            rbAdderRating.visibility = View.VISIBLE
+            btnAdderSaveBook.visibility = View.VISIBLE
+            btnSetFinishDate.visibility = View.VISIBLE
+            btnSetStartDate.visibility = View.VISIBLE
+            btnSetFinishDate.isClickable = true
+            btnSetStartDate.isClickable = true
         }
 
         btnAdderSaveBook.setOnClickListener {
@@ -185,40 +291,57 @@ class AddBookDialog(context: Context, var addBookDialogListener: AddBookDialogLi
                             }
                                 if (bookNumberOfPagesInt > 0 || whatIsClicked == BOOK_STATUS_IN_PROGRESS || whatIsClicked == BOOK_STATUS_TO_READ) {
                                     if (bookFinishDateMs!=null || whatIsClicked == BOOK_STATUS_IN_PROGRESS || whatIsClicked == BOOK_STATUS_TO_READ) {
-                                        when (whatIsClicked) {
-                                            BOOK_STATUS_READ -> bookRating = rbAdderRating.rating
-                                            BOOK_STATUS_IN_PROGRESS -> bookRating = 0.0F
-                                            BOOK_STATUS_TO_READ -> {
-                                                bookRating = 0.0F
-                                                bookNumberOfPagesInt = 0
+                                        if (bookStartDateMs != null || whatIsClicked == BOOK_STATUS_IN_PROGRESS || whatIsClicked == BOOK_STATUS_TO_READ) {
+                                            if (bookFinishDateMs != null && bookStartDateMs != null && bookStartDateMs!! < bookFinishDateMs!!) {
+                                                when (whatIsClicked) {
+                                                    BOOK_STATUS_READ -> bookRating =
+                                                        rbAdderRating.rating
+                                                    BOOK_STATUS_IN_PROGRESS -> bookRating = 0.0F
+                                                    BOOK_STATUS_TO_READ -> {
+                                                        bookRating = 0.0F
+                                                        bookNumberOfPagesInt = 0
+                                                    }
+                                                }
+
+                                                val REGEX_UNACCENT =
+                                                    "\\p{InCombiningDiacriticalMarks}+".toRegex()
+
+                                                fun CharSequence.unaccent(): String {
+                                                    val temp =
+                                                        Normalizer.normalize(
+                                                            this,
+                                                            Normalizer.Form.NFD
+                                                        )
+                                                    return REGEX_UNACCENT.replace(temp, "")
+                                                }
+
+                                                val editedBook = Book(
+                                                    bookTitle,
+                                                    bookAuthor,
+                                                    bookRating,
+                                                    bookStatus = whatIsClicked,
+                                                    bookPriority = DATABASE_EMPTY_VALUE,
+                                                    bookStartDate = bookStartDateMs.toString(),
+                                                    bookFinishDate = bookFinishDateMs.toString(),
+                                                    bookNumberOfPages = bookNumberOfPagesInt,
+                                                    bookTitle_ASCII = bookTitle.unaccent()
+                                                        .replace("ł", "l", false),
+                                                    bookAuthor_ASCII = bookAuthor.unaccent()
+                                                        .replace("ł", "l", false),
+                                                    false,
+                                                    Constants.DATABASE_EMPTY_VALUE,
+                                                    Constants.DATABASE_EMPTY_VALUE,
+                                                    Constants.DATABASE_EMPTY_VALUE,
+                                                    Constants.DATABASE_EMPTY_VALUE
+                                                )
+                                                addBookDialogListener.onSaveButtonClicked(editedBook)
+                                                dismiss()
+                                            } else {
+                                                Snackbar.make(it, R.string.sbWarningStartDateMustBeBeforeFinishDate, Snackbar.LENGTH_SHORT).show()
                                             }
+                                        } else {
+                                            Snackbar.make(it, R.string.sbWarningMissingStartDate, Snackbar.LENGTH_SHORT).show()
                                         }
-
-                                        val REGEX_UNACCENT = "\\p{InCombiningDiacriticalMarks}+".toRegex()
-                                        fun CharSequence.unaccent(): String {
-                                            val temp = Normalizer.normalize(this, Normalizer.Form.NFD)
-                                            return REGEX_UNACCENT.replace(temp, "")
-                                        }
-
-                                        val editedBook = Book(
-                                            bookTitle,
-                                            bookAuthor,
-                                            bookRating,
-                                            bookStatus = whatIsClicked,
-                                            bookPriority = DATABASE_EMPTY_VALUE,
-                                            bookStartDate = DATABASE_EMPTY_VALUE,
-                                            bookFinishDate = bookFinishDateMs.toString(),
-                                            bookNumberOfPages = bookNumberOfPagesInt,
-                                            bookTitle_ASCII = bookTitle.unaccent().replace("ł", "l", false),
-                                            bookAuthor_ASCII = bookAuthor.unaccent().replace("ł", "l", false),
-                                            false,
-                                            Constants.DATABASE_EMPTY_VALUE,
-                                            Constants.DATABASE_EMPTY_VALUE,
-                                            Constants.DATABASE_EMPTY_VALUE,
-                                            Constants.DATABASE_EMPTY_VALUE
-                                        )
-                                        addBookDialogListener.onSaveButtonClicked(editedBook)
-                                        dismiss()
                                 } else {
                                     Snackbar.make(it, R.string.sbWarningMissingFinishDate, Snackbar.LENGTH_SHORT).show()
                                 }

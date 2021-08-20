@@ -163,4 +163,8 @@
     <string name="show_ol_alert_on">Zostanie pokazana</string>
     <string name="show_ol_alert_off">Nie zostanie pokazana</string>
     <string name="tv_date_started_title">Data rozpoczęcia</string>
+    <string name="hint_date_started">Data rozpoczęcia</string>
+    <string name="set_start_date_title">Ustaw datę rozpoczęcia</string>
+    <string name="sbWarningMissingStartDate">Ustaw datę rozpoczęcia!</string>
+    <string name="sbWarningStartDateMustBeBeforeFinishDate">Data zakończenia nie może być wcześniej niż data rozpoczęcia</string>
 </resources>
