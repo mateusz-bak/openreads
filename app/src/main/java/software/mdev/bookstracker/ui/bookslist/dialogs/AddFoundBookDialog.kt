@@ -273,6 +273,18 @@ class AddFoundBookDialog(
                                     var coverID = resource.data!!.covers[0]
 //                                        var coverUrl = "https://covers.openlibrary.org/b/id/$coverID-M.jpg"
 
+                                    var olid = resource.data!!.key
+                                    var isbn10 = Constants.DATABASE_EMPTY_VALUE
+                                    var isbn13 = Constants.DATABASE_EMPTY_VALUE
+
+                                    if (resource.data!!.isbn_10 != null) {
+                                        isbn10 = resource.data!!.isbn_10[0]
+                                    }
+
+                                    if (resource.data!!.isbn_13 != null) {
+                                        isbn13 = resource.data!!.isbn_13[0]
+                                    }
+
                                     val editedBook = Book(
                                         bookTitle,
                                         bookAuthor,
@@ -287,7 +299,10 @@ class AddFoundBookDialog(
                                         bookAuthor_ASCII = bookAuthor.unaccent()
                                             .replace("ł", "l", false),
                                         false,
-                                        coverID.toString()
+                                        coverID.toString(),
+                                        olid.replace("/books/", ""),
+                                        isbn10,
+                                        isbn13
                                     )
 
                                     addFoundBookDialogListener.onSaveButtonClicked(editedBook)
