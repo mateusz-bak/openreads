@@ -22,6 +22,8 @@ import software.mdev.bookstracker.ui.bookslist.ListActivity
 import software.mdev.bookstracker.ui.bookslist.viewmodel.BooksViewModel
 import java.text.SimpleDateFormat
 import java.util.*
+import android.graphics.*
+import com.squareup.picasso.Transformation
 
 
 class DisplayBookFragment : Fragment(R.layout.fragment_display_book) {
@@ -36,15 +38,26 @@ class DisplayBookFragment : Fragment(R.layout.fragment_display_book) {
         viewModel = (activity as ListActivity).booksViewModel
         listActivity = activity as ListActivity
 
-        tvMoreAboutBook.visibility = View.GONE
-        tvMoreAboutBook.isClickable = false
-
         val book = args.book
 
         tvBookTitle.text = book.bookTitle
         tvBookAuthor.text = book.bookAuthor
         rbRatingIndicator.rating = book.bookRating
         tvBookPages.text = book.bookNumberOfPages.toString()
+
+        tvDateFinished.visibility = View.GONE
+        tvDateFinishedTitle.visibility = View.GONE
+
+        tvDateStarted.visibility = View.GONE
+        tvDateStartedTitle.visibility = View.GONE
+
+        tvBookPages.visibility = View.GONE
+        tvBookPagesTitle.visibility = View.GONE
+
+        tvBookISBN.visibility = View.GONE
+        tvBookISBNTitle.visibility = View.GONE
+
+        tvBookURL.visibility = View.GONE
 
         if (book.bookCoverUrl == Constants.DATABASE_EMPTY_VALUE) {
             ivBookCover.visibility = View.GONE
@@ -68,7 +81,24 @@ class DisplayBookFragment : Fragment(R.layout.fragment_display_book) {
                 .load(coverUrl)
                 .placeholder(circularProgressDrawable)
                 .error(R.drawable.ic_baseline_error_outline_24)
+                .transform(RoundCornersTransform(16.0f))
                 .into(ivBookCover)
+        }
+
+        if (book.bookISBN13 != Constants.DATABASE_EMPTY_VALUE) {
+            tvBookISBN.text = book.bookISBN13
+        } else if (book.bookISBN10 != Constants.DATABASE_EMPTY_VALUE) {
+            tvBookISBN.text = book.bookISBN10
+        } else {
+            tvBookISBN.text = getString(R.string.not_set)
+        }
+
+        if (book.bookOLID != Constants.DATABASE_EMPTY_VALUE) {
+            var olid: String = book.bookOLID
+            var url: String = "https://openlibrary.org/books/$olid"
+            tvBookURL.text = url
+        } else {
+            tvBookISBN.text = getString(R.string.not_set)
         }
 
         if(book.bookFinishDate == "none" || book.bookFinishDate == "null") {
@@ -76,6 +106,13 @@ class DisplayBookFragment : Fragment(R.layout.fragment_display_book) {
         } else {
             var bookFinishTimeStampLong = book.bookFinishDate.toLong()
             tvDateFinished.text = convertLongToTime(bookFinishTimeStampLong)
+        }
+
+        if(book.bookStartDate == "none" || book.bookFinishDate == "null") {
+            tvDateStarted.text = getString(R.string.not_set)
+        } else {
+            var bookStartTimeStampLong = book.bookStartDate.toLong()
+            tvDateStarted.text = convertLongToTime(bookStartTimeStampLong)
         }
 
         when (book.bookStatus) {
@@ -90,8 +127,6 @@ class DisplayBookFragment : Fragment(R.layout.fragment_display_book) {
                 ivBookStatusRead.visibility = View.GONE
                 ivBookStatusToRead.visibility = View.GONE
                 rbRatingIndicator.visibility = View.GONE
-                tvMoreAboutBook.visibility = View.GONE
-                tvMoreAboutBook.isClickable = false
                 tvBookPagesTitle.visibility = View.GONE
                 tvBookPages.visibility = View.GONE
                 tvDateFinishedTitle.visibility = View.GONE
@@ -102,8 +137,6 @@ class DisplayBookFragment : Fragment(R.layout.fragment_display_book) {
                 ivBookStatusInProgress.visibility = View.GONE
                 ivBookStatusRead.visibility = View.GONE
                 rbRatingIndicator.visibility = View.GONE
-                tvMoreAboutBook.visibility = View.GONE
-                tvMoreAboutBook.isClickable = false
                 tvBookPagesTitle.visibility = View.GONE
                 tvBookPages.visibility = View.GONE
                 tvDateFinishedTitle.visibility = View.GONE
@@ -138,10 +171,22 @@ class DisplayBookFragment : Fragment(R.layout.fragment_display_book) {
                     tvBookPages.visibility = View.VISIBLE
                     tvDateFinishedTitle.visibility = View.VISIBLE
                     tvDateFinished.visibility = View.VISIBLE
+                    tvBookISBNTitle.visibility = View.VISIBLE
+                    tvBookISBN.visibility = View.VISIBLE
+                    tvDateStartedTitle.visibility = View.VISIBLE
+                    tvDateStarted.visibility = View.VISIBLE
+                    tvBookURL.visibility = View.VISIBLE
                 }
                 View.VISIBLE -> {
                     tvBookPagesTitle.visibility = View.GONE
                     tvBookPages.visibility = View.GONE
+                    tvDateFinishedTitle.visibility = View.GONE
+                    tvDateFinished.visibility = View.GONE
+                    tvBookISBNTitle.visibility = View.GONE
+                    tvBookISBN.visibility = View.GONE
+                    tvDateStartedTitle.visibility = View.GONE
+                    tvDateStarted.visibility = View.GONE
+                    tvBookURL.visibility = View.GONE
                 }
             }
         }
@@ -199,4 +244,25 @@ class DisplayBookFragment : Fragment(R.layout.fragment_display_book) {
         val format = SimpleDateFormat("dd MMM yyyy")
         return format.format(date)
     }
+}
+
+class RoundCornersTransform(private val radiusInPx: Float) : Transformation {
+
+    override fun transform(source: Bitmap): Bitmap {
+        val bitmap = Bitmap.createBitmap(source.width, source.height, source.config)
+        val canvas = Canvas(bitmap)
+        val paint = Paint(Paint.ANTI_ALIAS_FLAG or Paint.DITHER_FLAG)
+        val shader = BitmapShader(source, Shader.TileMode.CLAMP, Shader.TileMode.CLAMP)
+        paint.shader = shader
+        val rect = RectF(0.0f, 0.0f, source.width.toFloat(), source.height.toFloat())
+        canvas.drawRoundRect(rect, radiusInPx, radiusInPx, paint)
+        source.recycle()
+
+        return bitmap
+    }
+
+    override fun key(): String {
+        return "round_corners"
+    }
+
 }

@@ -191,5 +191,9 @@
     <string name="show_ol_alert_off">Won\'t be shown</string>
     <string name="show_ol_alert_on">Will be shown</string>
     <string name="show_ol_alert_title">Help for searching books</string>
+    <string name="tv_date_started_title">Date started</string>
+    <string name="tv_book_isbn_title" translatable="false">ISBN</string>
+    <string name="tv_book_isbn" translatable="false">1234567890123</string>
+    <string name="tv_book_url" translatable="false">https://openlibrary.org/books/OL27755728M</string>
 
 </resources>

@@ -47,10 +47,10 @@
                 android:id="@+id/tvBookTitle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="24dp"
                 android:paddingStart="24dp"
                 android:paddingEnd="24dp"
                 android:text="@string/tvBookTitle"
-                android:layout_marginTop="24dp"
                 android:textAlignment="center"
                 android:textColor="?colorOnSecondary"
                 android:textSize="26sp"
@@ -107,7 +107,7 @@
                 android:id="@+id/tvBookStatus"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="60dp"
+                android:layout_marginTop="36dp"
                 android:layout_marginEnd="16dp"
                 android:text="@string/tvBookStatus"
                 android:textSize="12sp"
@@ -173,26 +173,36 @@
                 app:layout_constraintTop_toBottomOf="@+id/rbRatingIndicator" />
 
             <TextView
-                android:id="@+id/tvBookPagesTitle"
+                android:id="@+id/tvDateStartedTitle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="40dp"
-                android:text="@string/tv_book_pages_title"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.5"
-                app:layout_constraintStart_toEndOf="@+id/tvDateFinishedTitle"
+                android:layout_marginTop="12dp"
+                android:layout_marginEnd="24dp"
+                android:text="@string/tv_date_started_title"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toStartOf="@+id/guideline3"
                 app:layout_constraintTop_toBottomOf="@+id/tvMoreAboutBook" />
+
+            <TextView
+                android:id="@+id/tvDateStarted"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="12dp"
+                android:text="@string/tv_date_finished"
+                app:layout_constraintEnd_toEndOf="@+id/tvDateStartedTitle"
+                app:layout_constraintStart_toStartOf="@+id/tvDateStartedTitle"
+                app:layout_constraintTop_toBottomOf="@+id/tvDateStartedTitle" />
 
             <TextView
                 android:id="@+id/tvDateFinishedTitle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="40dp"
+                android:layout_marginStart="24dp"
                 android:text="@string/tv_date_finished_title"
-                app:layout_constraintEnd_toStartOf="@+id/tvBookPagesTitle"
-                app:layout_constraintHorizontal_bias="0.5"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/tvMoreAboutBook" />
+                android:textStyle="bold"
+                app:layout_constraintBottom_toBottomOf="@+id/tvDateStartedTitle"
+                app:layout_constraintStart_toStartOf="@+id/guideline3"
+                app:layout_constraintTop_toTopOf="@+id/tvDateStartedTitle" />
 
             <TextView
                 android:id="@+id/tvDateFinished"
@@ -205,6 +215,18 @@
                 app:layout_constraintTop_toBottomOf="@+id/tvDateFinishedTitle" />
 
             <TextView
+                android:id="@+id/tvBookPagesTitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="12dp"
+                android:text="@string/tv_book_pages_title"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toEndOf="@+id/tvDateStarted"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toStartOf="@+id/tvDateStarted"
+                app:layout_constraintTop_toBottomOf="@+id/tvDateStarted" />
+
+            <TextView
                 android:id="@+id/tvBookPages"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -213,6 +235,42 @@
                 app:layout_constraintEnd_toEndOf="@+id/tvBookPagesTitle"
                 app:layout_constraintStart_toStartOf="@+id/tvBookPagesTitle"
                 app:layout_constraintTop_toBottomOf="@+id/tvBookPagesTitle" />
+
+            <TextView
+                android:id="@+id/tvBookISBNTitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="12dp"
+                android:text="@string/tv_book_isbn_title"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toEndOf="@+id/tvDateFinished"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toStartOf="@+id/tvDateFinished"
+                app:layout_constraintTop_toBottomOf="@+id/tvDateStarted" />
+
+            <TextView
+                android:id="@+id/tvBookISBN"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="12dp"
+                android:text="@string/tv_book_isbn"
+                app:layout_constraintEnd_toEndOf="@+id/tvBookISBNTitle"
+                app:layout_constraintStart_toStartOf="@+id/tvBookISBNTitle"
+                app:layout_constraintTop_toBottomOf="@+id/tvBookISBNTitle" />
+
+            <TextView
+                android:id="@+id/tvBookURL"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="12dp"
+                android:layout_marginBottom="24dp"
+                android:text="@string/tv_book_url"
+                android:autoLink="web"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tvBookISBN" />
 
 
         </androidx.constraintlayout.widget.ConstraintLayout>

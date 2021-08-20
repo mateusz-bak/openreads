@@ -162,4 +162,5 @@
     <string name="show_ol_alert_title">Porada nt. wyszukiwania</string>
     <string name="show_ol_alert_off">Nie zostanie pokazana</string>
     <string name="show_ol_alert_on">Zostanie pokazana</string>
+    <string name="tv_date_started_title">Data rozpoczęcia</string>
 </resources>
