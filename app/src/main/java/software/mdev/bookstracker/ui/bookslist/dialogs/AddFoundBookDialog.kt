@@ -389,7 +389,9 @@ class AddFoundBookDialog(
                                                 return REGEX_UNACCENT.replace(temp, "")
                                             }
 
-                                            var coverID = resource.data!!.covers[0]
+                                            var coverID = Constants.DATABASE_EMPTY_VALUE
+                                            if (resource.data!!.covers != null)
+                                                coverID = resource.data!!.covers[0].toString()
 //                                        var coverUrl = "https://covers.openlibrary.org/b/id/$coverID-M.jpg"
 
                                             var olid = resource.data!!.key
