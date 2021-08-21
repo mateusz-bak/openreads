@@ -8,17 +8,22 @@
 - books you are currently reading,  
 - books you want to read later.
 #### You can also see come cool statistics!  
+
+#### Update 1.4.0: You can now search for books using Open Library API and add them straight to your lists.
   
 ## Screenshots  
 <p align='center'>  
- <img src='doc/images/screenshot-finished.png' width='35%'/>  
- <img src='doc/images/screenshot-in-progress.png' width='35%'/>  
-  
- <img src='doc/images/screenshot-to-read.png' width='35%'/>  
- <img src='doc/images/screenshot-statistics.png' width='35%'/>
- 
- <img src='doc/images/screenshot-sort-books.png' width='35%'/>  
- <img src='doc/images/screenshot-add-book.png' width='35%'/>
+ <img src='doc/images/screenshot-finished.png' width='23%'/>  
+ <img src='doc/images/screenshot-in-progress.png' width='23%'/>    
+ <img src='doc/images/screenshot-to-read.png' width='23%'/>  
+
+ <img src='doc/images/screenshot-display-book.png' width='23%'/>
+ <img src='doc/images/screenshot-statistics.png' width='23%'/>
+ <img src='doc/images/screenshot-sort-books.png' width='23%'/>
+
+ <img src='doc/images/screenshot-filter-books.png' width='23%'/>
+ <img src='doc/images/screenshot-book-search.png' width='23%'/>
+ <img src='doc/images/screenshot-add-book-manual.png' width='23%'/>
 </p>  
 
 
@@ -52,6 +57,8 @@
 *You can also replace the "Debug" with "Release" to get an optimized release binary.*
   
 ## Attributions
+### Used APIs:
+[Open Library](https://openlibrary.org/ "Open Library")
 ### Icons made by:
 [Smalllikeart](https://www.flaticon.com/authors/smalllikeart "Smalllikeart") from [www.flaticon.com](https://www.flaticon.com/ "Flaticon")
 [Freepik](https://www.freepik.com "Freepik") from [www.flaticon.com](https://www.flaticon.com/ "Flaticon")
