@@ -13,17 +13,17 @@
   
 ## Screenshots  
 <p align='center'>  
- <img src='doc/images/screenshot-finished.png' width='23%'/>  
- <img src='doc/images/screenshot-in-progress.png' width='23%'/>    
- <img src='doc/images/screenshot-to-read.png' width='23%'/>  
+ <img src='doc/images/screenshot-finished.png' width='30%'/>  
+ <img src='doc/images/screenshot-in-progress.png' width='30%'/>    
+ <img src='doc/images/screenshot-to-read.png' width='30%'/>  
 
- <img src='doc/images/screenshot-display-book.png' width='23%'/>
- <img src='doc/images/screenshot-statistics.png' width='23%'/>
- <img src='doc/images/screenshot-sort-books.png' width='23%'/>
+ <img src='doc/images/screenshot-display-book.png' width='30%'/>
+ <img src='doc/images/screenshot-statistics.png' width='30%'/>
+ <img src='doc/images/screenshot-sort-books.png' width='30%'/>
 
- <img src='doc/images/screenshot-filter-books.png' width='23%'/>
- <img src='doc/images/screenshot-book-search.png' width='23%'/>
- <img src='doc/images/screenshot-add-book-manual.png' width='23%'/>
+ <img src='doc/images/screenshot-filter-books.png' width='30%'/>
+ <img src='doc/images/screenshot-book-search.png' width='30%'/>
+ <img src='doc/images/screenshot-add-book-manual.png' width='30%'/>
 </p>  
 
 
