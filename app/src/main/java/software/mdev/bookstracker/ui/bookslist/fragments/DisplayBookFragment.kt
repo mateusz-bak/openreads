@@ -97,8 +97,6 @@ class DisplayBookFragment : Fragment(R.layout.fragment_display_book) {
             var olid: String = book.bookOLID
             var url: String = "https://openlibrary.org/books/$olid"
             tvBookURL.text = url
-        } else {
-            tvBookISBN.text = getString(R.string.not_set)
         }
 
         if(book.bookFinishDate == "none" || book.bookFinishDate == "null") {
@@ -175,7 +173,8 @@ class DisplayBookFragment : Fragment(R.layout.fragment_display_book) {
                     tvBookISBN.visibility = View.VISIBLE
                     tvDateStartedTitle.visibility = View.VISIBLE
                     tvDateStarted.visibility = View.VISIBLE
-                    tvBookURL.visibility = View.VISIBLE
+                    if (book.bookOLID != Constants.DATABASE_EMPTY_VALUE)
+                        tvBookURL.visibility = View.VISIBLE
                 }
                 View.VISIBLE -> {
                     tvBookPagesTitle.visibility = View.GONE
