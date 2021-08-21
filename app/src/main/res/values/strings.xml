@@ -1,5 +1,6 @@
 <resources>
     <string name="app_name" translatable="false">Books Tracker</string>
+    <string name="app_version" translatable="false">v1.4.0</string>
     <string name="ivAuthorUrl">https://github.com/mateusz-bak/</string>
     <!-- Images descriptions -->
     <string name="ivBookStatusSetRead">Set book as finished</string>
@@ -56,7 +57,6 @@
     <string name="hintBookTitle" translatable="false">booktitle</string>
     <string name="hintBookAuthor" translatable="false">bookauthor</string>
     <string name="hintSearch" translatable="false">booksearch</string>
-    <string name="app_version" translatable="false">v1.3.0</string>
     <string name="notYetImplemented">Not yet implemented</string>
     <string name="dismiss">Dismiss</string>
     <string name="bookDeleted">Book deleted</string>
