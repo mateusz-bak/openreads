@@ -4,23 +4,17 @@ import android.content.Context
 import android.os.Bundle
 import android.view.View
 import android.view.inputmethod.InputMethodManager
-import android.widget.DatePicker
 import android.widget.EditText
+import android.widget.Toast
 import androidx.constraintlayout.widget.ConstraintLayout
-import androidx.core.content.ContextCompat
 import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import software.mdev.bookstracker.R
-import software.mdev.bookstracker.data.db.BooksDatabase
 import software.mdev.bookstracker.data.db.entities.Book
-import software.mdev.bookstracker.data.repositories.BooksRepository
 import software.mdev.bookstracker.ui.bookslist.viewmodel.BooksViewModel
-import software.mdev.bookstracker.ui.bookslist.viewmodel.BooksViewModelProviderFactory
 import software.mdev.bookstracker.ui.bookslist.ListActivity
 import kotlinx.android.synthetic.main.fragment_add_book_search.*
-import software.mdev.bookstracker.data.db.YearDatabase
-import software.mdev.bookstracker.data.repositories.YearRepository
 import software.mdev.bookstracker.other.Constants
 import java.text.SimpleDateFormat
 import java.util.*
@@ -32,10 +26,7 @@ import me.everything.android.ui.overscroll.OverScrollDecoratorHelper
 import software.mdev.bookstracker.adapters.*
 import software.mdev.bookstracker.api.models.OpenLibraryBook
 import software.mdev.bookstracker.api.models.OpenLibraryOLIDResponse
-import software.mdev.bookstracker.data.db.LanguageDatabase
 import software.mdev.bookstracker.data.db.entities.Language
-import software.mdev.bookstracker.data.repositories.LanguageRepository
-import software.mdev.bookstracker.data.repositories.OpenLibraryRepository
 import software.mdev.bookstracker.other.Resource
 import software.mdev.bookstracker.ui.bookslist.dialogs.*
 import kotlin.collections.ArrayList
@@ -49,35 +40,14 @@ class AddBookSearchFragment : Fragment(R.layout.fragment_add_book_search) {
 
     lateinit var book: Book
     lateinit var listActivity: ListActivity
-    private var bookFinishDateMs: Long? = null
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         viewModel = (activity as ListActivity).booksViewModel
         listActivity = activity as ListActivity
 
-        var whatIsClicked = Constants.BOOK_STATUS_NOTHING
-
         val sharedPref = (activity as ListActivity).getSharedPreferences(Constants.SHARED_PREFERENCES_NAME, Context.MODE_PRIVATE)
         val editor = sharedPref.edit()
-
-        val database = BooksDatabase(view.context)
-        val yearDatabase = YearDatabase(view.context)
-        val languageDatabase = LanguageDatabase(view.context)
-
-        val repository = BooksRepository(database)
-        val yearRepository = YearRepository(yearDatabase)
-        val openLibraryRepository = OpenLibraryRepository()
-        val languageRepository = LanguageRepository(languageDatabase)
-
-        val booksViewModelProviderFactory = BooksViewModelProviderFactory(
-            repository,
-            yearRepository,
-            openLibraryRepository,
-            languageRepository
-        )
-
-        var accentColor = getAccentColor(view.context.applicationContext)
 
         rvLanguages.visibility = View.GONE
 
@@ -91,6 +61,7 @@ class AddBookSearchFragment : Fragment(R.layout.fragment_add_book_search) {
         var searchQueryAutoJob: Job? = null
         var searchByOLIDJob: Job? = null
         var searchAuthorJob: Job? = null
+        var hideProgressBarJob: Job? = null
 
 
         if (sharedPref.getBoolean(Constants.SHARED_PREFERENCES_KEY_SHOW_OL_ALERT, true)) {
@@ -225,7 +196,12 @@ class AddBookSearchFragment : Fragment(R.layout.fragment_add_book_search) {
                         }
 
                         if (booksResponseCleaned != null) {
-                            searchByOLIDJob = viewModel.getBooksByOLID(booksResponseCleaned, context)
+                            if (booksResponseCleaned.isNotEmpty()) {
+                                searchByOLIDJob =
+                                    viewModel.getBooksByOLID(booksResponseCleaned, context)
+                            } else {
+                                Toast.makeText(context?.applicationContext, R.string.toast_no_results_from_OL, Toast.LENGTH_SHORT).show()
+                            }
                         }
                     }
                 }
@@ -331,9 +307,8 @@ class AddBookSearchFragment : Fragment(R.layout.fragment_add_book_search) {
         })
 
         viewModel.getLanguages().observe(viewLifecycleOwner, Observer { languages ->
-            languageAdapter.differ.submitList(languages)})
-
-        var hideProgressBarJob: Job? = null
+            languageAdapter.differ.submitList(languages)
+        })
 
         viewModel.showLoadingCircle.observe(viewLifecycleOwner, Observer { bool ->
             if (bool) {
@@ -417,13 +392,7 @@ class AddBookSearchFragment : Fragment(R.layout.fragment_add_book_search) {
         inputManager.hideSoftInputFromWindow(windowToken, 0)
     }
 
-    fun View.showKeyboard() {
-        val inputManager =
-            context.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
-        inputManager.toggleSoftInputFromWindow(windowToken, 0, 0)
-    }
-
-    fun showKeyboard(et: EditText, delay: Long) {
+    private fun showKeyboard(et: EditText, delay: Long) {
         val timer = Timer()
         timer.schedule(object : TimerTask() {
             override fun run() {
@@ -434,60 +403,7 @@ class AddBookSearchFragment : Fragment(R.layout.fragment_add_book_search) {
         }, delay)
     }
 
-    fun convertLongToTime(time: Long): String {
-        val date = Date(time)
-        val format = SimpleDateFormat("dd MMM yyyy")
-        return format.format(date)
-    }
-
-    fun getDateFromDatePickerInMillis(datePicker: DatePicker): Long? {
-        val day = datePicker.dayOfMonth
-        val month = datePicker.month
-        val year = datePicker.year
-        val calendar = Calendar.getInstance()
-        calendar[year, month] = day
-        return calendar.timeInMillis
-    }
-
-    fun getAccentColor(context: Context): Int {
-        var accentColor = ContextCompat.getColor(context, R.color.green_500)
-
-        val sharedPref = (activity as ListActivity).getSharedPreferences(
-            Constants.SHARED_PREFERENCES_NAME,
-            Context.MODE_PRIVATE
-        )
-
-        var accent = sharedPref.getString(
-            Constants.SHARED_PREFERENCES_KEY_ACCENT,
-            Constants.THEME_ACCENT_DEFAULT
-        ).toString()
-
-        when (accent) {
-            Constants.THEME_ACCENT_LIGHT_GREEN -> accentColor =
-                ContextCompat.getColor(context, R.color.light_green)
-            Constants.THEME_ACCENT_ORANGE_500 -> accentColor =
-                ContextCompat.getColor(context, R.color.orange_500)
-            Constants.THEME_ACCENT_CYAN_500 -> accentColor =
-                ContextCompat.getColor(context, R.color.cyan_500)
-            Constants.THEME_ACCENT_GREEN_500 -> accentColor =
-                ContextCompat.getColor(context, R.color.green_500)
-            Constants.THEME_ACCENT_BROWN_400 -> accentColor =
-                ContextCompat.getColor(context, R.color.brown_400)
-            Constants.THEME_ACCENT_LIME_500 -> accentColor =
-                ContextCompat.getColor(context, R.color.lime_500)
-            Constants.THEME_ACCENT_PINK_300 -> accentColor =
-                ContextCompat.getColor(context, R.color.pink_300)
-            Constants.THEME_ACCENT_PURPLE_500 -> accentColor =
-                ContextCompat.getColor(context, R.color.purple_500)
-            Constants.THEME_ACCENT_TEAL_500 -> accentColor =
-                ContextCompat.getColor(context, R.color.teal_500)
-            Constants.THEME_ACCENT_YELLOW_500 -> accentColor =
-                ContextCompat.getColor(context, R.color.yellow_500)
-        }
-        return accentColor
-    }
-
-    fun convertLongToYear(time: Long): String {
+    private fun convertLongToYear(time: Long): String {
         val date = Date(time)
         val format = SimpleDateFormat("yyyy")
         return format.format(date)
