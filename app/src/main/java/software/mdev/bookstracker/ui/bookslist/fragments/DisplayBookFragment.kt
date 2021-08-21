@@ -106,7 +106,7 @@ class DisplayBookFragment : Fragment(R.layout.fragment_display_book) {
             tvDateFinished.text = convertLongToTime(bookFinishTimeStampLong)
         }
 
-        if(book.bookStartDate == "none" || book.bookFinishDate == "null") {
+        if(book.bookStartDate == "none" || book.bookStartDate == "null") {
             tvDateStarted.text = getString(R.string.not_set)
         } else {
             var bookStartTimeStampLong = book.bookStartDate.toLong()

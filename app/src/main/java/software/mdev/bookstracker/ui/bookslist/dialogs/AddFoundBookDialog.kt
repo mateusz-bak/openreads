@@ -363,61 +363,76 @@ class AddFoundBookDialog(
                                 else -> bookNumberOfPagesIntOrNull
                             }
                             if (bookNumberOfPagesInt > 0 || whatIsClicked == BOOK_STATUS_IN_PROGRESS || whatIsClicked == BOOK_STATUS_TO_READ) {
+
                                 if (bookFinishDateMs != null || whatIsClicked == BOOK_STATUS_IN_PROGRESS || whatIsClicked == BOOK_STATUS_TO_READ) {
-                                    when (whatIsClicked) {
-                                        BOOK_STATUS_READ -> bookRating = rbAdderRating.rating
-                                        BOOK_STATUS_IN_PROGRESS -> bookRating = 0.0F
-                                        BOOK_STATUS_TO_READ -> {
-                                            bookRating = 0.0F
-                                            bookNumberOfPagesInt = 0
-                                        }
-                                    }
 
-                                    val REGEX_UNACCENT =
-                                        "\\p{InCombiningDiacriticalMarks}+".toRegex()
+                                    if (bookStartDateMs != null || whatIsClicked == BOOK_STATUS_IN_PROGRESS || whatIsClicked == BOOK_STATUS_TO_READ) {
 
-                                    fun CharSequence.unaccent(): String {
-                                        val temp = Normalizer.normalize(this, Normalizer.Form.NFD)
-                                        return REGEX_UNACCENT.replace(temp, "")
-                                    }
+                                        if (bookFinishDateMs != null && bookStartDateMs != null && bookStartDateMs!! < bookFinishDateMs!!) {
+                                            when (whatIsClicked) {
+                                                BOOK_STATUS_READ -> bookRating =
+                                                    rbAdderRating.rating
+                                                BOOK_STATUS_IN_PROGRESS -> bookRating = 0.0F
+                                                BOOK_STATUS_TO_READ -> {
+                                                    bookRating = 0.0F
+                                                    bookNumberOfPagesInt = 0
+                                                }
+                                            }
 
-                                    var coverID = resource.data!!.covers[0]
+                                            val REGEX_UNACCENT =
+                                                "\\p{InCombiningDiacriticalMarks}+".toRegex()
+
+                                            fun CharSequence.unaccent(): String {
+                                                val temp =
+                                                    Normalizer.normalize(this, Normalizer.Form.NFD)
+                                                return REGEX_UNACCENT.replace(temp, "")
+                                            }
+
+                                            var coverID = resource.data!!.covers[0]
 //                                        var coverUrl = "https://covers.openlibrary.org/b/id/$coverID-M.jpg"
 
-                                    var olid = resource.data!!.key
-                                    var isbn10 = Constants.DATABASE_EMPTY_VALUE
-                                    var isbn13 = Constants.DATABASE_EMPTY_VALUE
+                                            var olid = resource.data!!.key
+                                            var isbn10 = Constants.DATABASE_EMPTY_VALUE
+                                            var isbn13 = Constants.DATABASE_EMPTY_VALUE
 
-                                    if (resource.data!!.isbn_10 != null) {
-                                        isbn10 = resource.data!!.isbn_10[0]
+                                            if (resource.data!!.isbn_10 != null) {
+                                                isbn10 = resource.data!!.isbn_10[0]
+                                            }
+
+                                            if (resource.data!!.isbn_13 != null) {
+                                                isbn13 = resource.data!!.isbn_13[0]
+                                            }
+
+                                            val editedBook = Book(
+                                                bookTitle,
+                                                bookAuthor,
+                                                bookRating,
+                                                bookStatus = whatIsClicked,
+                                                bookPriority = DATABASE_EMPTY_VALUE,
+                                                bookStartDate = bookStartDateMs.toString(),
+                                                bookFinishDate = bookFinishDateMs.toString(),
+                                                bookNumberOfPages = bookNumberOfPagesInt,
+                                                bookTitle_ASCII = bookTitle.unaccent()
+                                                    .replace("ł", "l", false),
+                                                bookAuthor_ASCII = bookAuthor.unaccent()
+                                                    .replace("ł", "l", false),
+                                                false,
+                                                coverID.toString(),
+                                                olid.replace("/books/", ""),
+                                                isbn10,
+                                                isbn13
+                                            )
+
+                                            addFoundBookDialogListener.onSaveButtonClicked(
+                                                editedBook
+                                            )
+                                            dismiss()
+                                        } else {
+                                            Snackbar.make(it, R.string.sbWarningStartDateMustBeBeforeFinishDate, Snackbar.LENGTH_SHORT).show()
+                                        }
+                                    } else {
+                                        Snackbar.make(it, R.string.sbWarningMissingStartDate, Snackbar.LENGTH_SHORT).show()
                                     }
-
-                                    if (resource.data!!.isbn_13 != null) {
-                                        isbn13 = resource.data!!.isbn_13[0]
-                                    }
-
-                                    val editedBook = Book(
-                                        bookTitle,
-                                        bookAuthor,
-                                        bookRating,
-                                        bookStatus = whatIsClicked,
-                                        bookPriority = DATABASE_EMPTY_VALUE,
-                                        bookStartDate = DATABASE_EMPTY_VALUE,
-                                        bookFinishDate = bookFinishDateMs.toString(),
-                                        bookNumberOfPages = bookNumberOfPagesInt,
-                                        bookTitle_ASCII = bookTitle.unaccent()
-                                            .replace("ł", "l", false),
-                                        bookAuthor_ASCII = bookAuthor.unaccent()
-                                            .replace("ł", "l", false),
-                                        false,
-                                        coverID.toString(),
-                                        olid.replace("/books/", ""),
-                                        isbn10,
-                                        isbn13
-                                    )
-
-                                    addFoundBookDialogListener.onSaveButtonClicked(editedBook)
-                                    dismiss()
                                 } else {
                                     Snackbar.make(
                                         it,

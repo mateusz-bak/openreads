@@ -22,22 +22,34 @@ class BooksRepository (
         bookAuthor: String,
         bookRating: Float,
         bookStatus: String,
+        bookPriority: String,
+        bookStartDateMs: String,
         bookFinishDateMs: String,
         bookNumberOfPagesInt: Int,
         bookTitle_ASCII: String,
         bookAuthor_ASCII: String,
-        bookIsDeleted: Boolean
+        bookIsDeleted: Boolean,
+        bookCoverUrl: String,
+        bookOLID: String,
+        bookISBN10: String,
+        bookISBN13: String
     ) = db.getBooksDao().updateBook(
         id,
         bookTitle,
         bookAuthor,
         bookRating,
         bookStatus,
+        bookPriority,
+        bookStartDateMs,
         bookFinishDateMs,
         bookNumberOfPagesInt,
         bookTitle_ASCII,
         bookAuthor_ASCII,
-        bookIsDeleted
+        bookIsDeleted,
+        bookCoverUrl,
+        bookOLID,
+        bookISBN10,
+        bookISBN13
     )
 
     fun searchBooks(searchQuery: String) = db.getBooksDao().searchBooks(searchQuery)

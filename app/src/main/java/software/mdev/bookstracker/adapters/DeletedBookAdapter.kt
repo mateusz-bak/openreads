@@ -137,11 +137,17 @@ class DeletedBookAdapter(
                 curBook.bookAuthor,
                 curBook.bookRating,
                 curBook.bookStatus,
+                curBook.bookPriority,
+                curBook.bookStartDate,
                 curBook.bookFinishDate,
                 curBook.bookNumberOfPages,
                 curBook.bookTitle_ASCII,
                 curBook.bookAuthor_ASCII,
-                false
+                false,
+                curBook.bookCoverUrl,
+                curBook.bookOLID,
+                curBook.bookISBN10,
+                curBook.bookISBN13
             )
         }
     }

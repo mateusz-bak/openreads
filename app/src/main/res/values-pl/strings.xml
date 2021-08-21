@@ -168,5 +168,5 @@
     <string name="sbWarningMissingStartDate">Ustaw datę rozpoczęcia!</string>
     <string name="sbWarningStartDateMustBeBeforeFinishDate">Data zakończenia nie może być wcześniej niż data rozpoczęcia</string>
     <string name="toast_no_results_from_OL">Brak rezultatów</string>
-    <string name="tvSortStartDate">Data zakończenia</string>
+    <string name="tvSortStartDate">Data rozpoczęcia</string>
 </resources>

@@ -85,11 +85,11 @@
                 style="?android:attr/ratingBarStyle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="32dp"
+                android:layout_marginTop="16dp"
                 android:stepSize="1"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/ivEditorBookStatusRead" />
+                app:layout_constraintTop_toBottomOf="@+id/btnEditStartDate" />
 
             <androidx.constraintlayout.widget.Guideline
                 android:id="@+id/guideline2"
@@ -109,7 +109,7 @@
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
                 app:layout_constraintGuide_begin="20dp"
-                app:layout_constraintGuide_percent="0.12" />
+                app:layout_constraintGuide_percent="0.01" />
 
             <ImageView
                 android:id="@+id/ivEditorBookStatusRead"
@@ -207,14 +207,49 @@
                 app:layout_constraintTop_toBottomOf="@+id/etEditedBookAuthor"
                 tools:ignore="TextViewEdits" />
 
+            <TextView
+                android:id="@+id/tvDateStartedTitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="18dp"
+                android:text="@string/tv_date_started_title"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toEndOf="@+id/btnEditStartDate"
+                app:layout_constraintStart_toStartOf="@+id/btnEditStartDate"
+                app:layout_constraintTop_toBottomOf="@+id/tvFinished" />
+
+            <TextView
+                android:id="@+id/tvDateFinishedTitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/tv_date_finished_title"
+                android:textStyle="bold"
+                app:layout_constraintBottom_toBottomOf="@+id/tvDateStartedTitle"
+                app:layout_constraintEnd_toEndOf="@+id/btnEditFinishDate"
+                app:layout_constraintStart_toStartOf="@+id/btnEditFinishDate"
+                app:layout_constraintTop_toTopOf="@+id/tvDateStartedTitle" />
+
             <Button
                 android:id="@+id/btnEditFinishDate"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/hint_date_finished"
                 android:layout_marginEnd="4dp"
-                app:layout_constraintBottom_toBottomOf="@+id/etEditedPagesNumber"
-                app:layout_constraintEnd_toEndOf="@+id/etEditedBookAuthor" />
+                android:text="@string/hint_date_finished"
+                app:layout_constraintBottom_toBottomOf="@+id/btnEditStartDate"
+                app:layout_constraintEnd_toEndOf="@+id/etEditedBookAuthor"
+                app:layout_constraintTop_toTopOf="@+id/btnEditStartDate" />
+
+            <DatePicker
+                android:id="@+id/dpEditBookStartDate"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="12dp"
+                android:calendarViewShown="false"
+                android:datePickerMode="calendar"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/guideline4" />
 
             <DatePicker
                 android:id="@+id/dpEditBookFinishDate"
@@ -229,12 +264,20 @@
                 app:layout_constraintTop_toBottomOf="@+id/guideline4" />
 
             <Button
+                android:id="@+id/btnEditStartDate"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/hint_date_started"
+                app:layout_constraintStart_toStartOf="@+id/etEditedBookTitle"
+                app:layout_constraintTop_toBottomOf="@+id/tvDateStartedTitle" />
+
+            <Button
                 android:id="@+id/btnEditorSaveFinishDate"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
                 android:backgroundTint="?colorPrimary"
                 android:text="@string/btnAdderSaveFinishDate"
-                android:layout_marginTop="8dp"
                 app:layout_constraintBottom_toTopOf="@+id/guideline2"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.5"
@@ -248,11 +291,116 @@
                 android:layout_marginTop="8dp"
                 android:backgroundTint="@color/red_800"
                 android:text="@string/btnAdderCancelFinishDate"
-                app:layout_constraintEnd_toStartOf="@+id/btnEditorSaveFinishDate"
                 app:layout_constraintBottom_toTopOf="@+id/guideline2"
+                app:layout_constraintEnd_toStartOf="@+id/btnEditorSaveFinishDate"
                 app:layout_constraintHorizontal_bias="0.5"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/dpEditBookFinishDate" />
+
+            <Button
+                android:id="@+id/btnEditorSaveStartDate"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:backgroundTint="?colorPrimary"
+                android:text="@string/btnAdderSaveFinishDate"
+                app:layout_constraintBottom_toTopOf="@+id/guideline2"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toEndOf="@+id/btnEditorCancelStartDate"
+                app:layout_constraintTop_toBottomOf="@+id/dpEditBookStartDate" />
+
+            <Button
+                android:id="@+id/btnEditorCancelStartDate"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:backgroundTint="@color/red_800"
+                android:text="@string/btnAdderCancelFinishDate"
+                app:layout_constraintBottom_toTopOf="@+id/guideline2"
+                app:layout_constraintEnd_toStartOf="@+id/btnEditorSaveStartDate"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/dpEditBookStartDate" />
+
+            <TextView
+                android:id="@+id/tvEditedOLID"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/hint_olid"
+                android:textSize="12sp"
+                android:layout_marginTop="12dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/rbEditedRating" />
+
+            <EditText
+                android:id="@+id/etEditedBookOLID"
+                android:layout_width="200dp"
+                android:layout_height="wrap_content"
+                android:hint="@string/hint_olid"
+                android:inputType="textCapCharacters"
+                android:maxLength="20"
+                android:textColor="?colorOnSecondary"
+                android:textSize="14sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tvEditedOLID"
+                tools:ignore="TextViewEdits" />
+
+            <TextView
+                android:id="@+id/tvEditedISBN10"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/hint_isbn10"
+                android:textSize="12sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/etEditedBookOLID" />
+
+            <EditText
+                android:id="@+id/etEditedBookISBN10"
+                android:layout_width="200dp"
+                android:layout_height="wrap_content"
+                android:hint="@string/hint_isbn10"
+                android:inputType="textCapCharacters"
+                android:maxLength="20"
+                android:textColor="?colorOnSecondary"
+                android:textSize="14sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tvEditedISBN10"
+                tools:ignore="TextViewEdits" />
+
+            <TextView
+                android:id="@+id/tvEditedISBN13"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/hint_isbn13"
+                android:textSize="12sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/etEditedBookISBN10" />
+
+            <EditText
+                android:id="@+id/etEditedBookISBN13"
+                android:layout_width="200dp"
+                android:layout_height="wrap_content"
+                android:hint="@string/hint_isbn13"
+                android:inputType="textCapCharacters"
+                android:maxLength="20"
+                android:textColor="?colorOnSecondary"
+                android:textSize="14sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tvEditedISBN13"
+                tools:ignore="TextViewEdits" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
     </ScrollView>

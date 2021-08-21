@@ -290,9 +290,13 @@ class AddBookDialog(context: Context, var addBookDialogListener: AddBookDialogLi
                             else -> bookNumberOfPagesIntOrNull
                             }
                                 if (bookNumberOfPagesInt > 0 || whatIsClicked == BOOK_STATUS_IN_PROGRESS || whatIsClicked == BOOK_STATUS_TO_READ) {
+
                                     if (bookFinishDateMs!=null || whatIsClicked == BOOK_STATUS_IN_PROGRESS || whatIsClicked == BOOK_STATUS_TO_READ) {
+
                                         if (bookStartDateMs != null || whatIsClicked == BOOK_STATUS_IN_PROGRESS || whatIsClicked == BOOK_STATUS_TO_READ) {
+
                                             if (bookFinishDateMs != null && bookStartDateMs != null && bookStartDateMs!! < bookFinishDateMs!!) {
+
                                                 when (whatIsClicked) {
                                                     BOOK_STATUS_READ -> bookRating =
                                                         rbAdderRating.rating

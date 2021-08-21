@@ -201,5 +201,8 @@
     <string name="sbWarningStartDateMustBeBeforeFinishDate">Finish date cannot be set before starting date</string>
     <string name="toast_no_results_from_OL">No results</string>
     <string name="tvSortStartDate">Start date</string>
+    <string name="hint_olid" translatable="false">Open Library ID</string>
+    <string name="hint_isbn10" translatable="false">ISBN 10</string>
+    <string name="hint_isbn13" translatable="false">ISBN 13</string>
 
 </resources>
