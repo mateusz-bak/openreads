@@ -41,6 +41,13 @@ class AddBookSearchFragment : Fragment(R.layout.fragment_add_book_search) {
     lateinit var book: Book
     lateinit var listActivity: ListActivity
 
+    private var searchQueryJob: Job? = null
+    private var searchQueryAutoJob: Job? = null
+    private var searchByOLIDJob: Job? = null
+    private var searchAuthorJob: Job? = null
+    private var hideProgressBarJob: Job? = null
+    private var filterBooksByLanguage: Job? = null
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         viewModel = (activity as ListActivity).booksViewModel
@@ -56,13 +63,6 @@ class AddBookSearchFragment : Fragment(R.layout.fragment_add_book_search) {
 
         setupRvLanguages()
         setupRvFoundBooks()
-
-        var searchQueryJob: Job? = null
-        var searchQueryAutoJob: Job? = null
-        var searchByOLIDJob: Job? = null
-        var searchAuthorJob: Job? = null
-        var hideProgressBarJob: Job? = null
-
 
         if (sharedPref.getBoolean(Constants.SHARED_PREFERENCES_KEY_SHOW_OL_ALERT, true)) {
             AlertDialog(
@@ -235,8 +235,6 @@ class AddBookSearchFragment : Fragment(R.layout.fragment_add_book_search) {
             }
         })
 
-        var filterBooksByLanguage: Job? = null
-
         viewModel.openLibraryBooksByOLID.observe(viewLifecycleOwner, Observer { list ->
 
             viewModel.selectedLanguages.observe(viewLifecycleOwner, Observer { languages ->
@@ -354,6 +352,16 @@ class AddBookSearchFragment : Fragment(R.layout.fragment_add_book_search) {
                 }
             ).show()
         }
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        searchQueryJob?.cancel()
+        searchQueryAutoJob?.cancel()
+        searchByOLIDJob?.cancel()
+        searchAuthorJob?.cancel()
+        hideProgressBarJob?.cancel()
+        filterBooksByLanguage?.cancel()
     }
 
     private fun setupRvFoundBooks() {

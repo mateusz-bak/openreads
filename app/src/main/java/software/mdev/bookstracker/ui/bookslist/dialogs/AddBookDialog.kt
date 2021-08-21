@@ -295,7 +295,7 @@ class AddBookDialog(context: Context, var addBookDialogListener: AddBookDialogLi
 
                                         if (bookStartDateMs != null || whatIsClicked == BOOK_STATUS_IN_PROGRESS || whatIsClicked == BOOK_STATUS_TO_READ) {
 
-                                            if (bookFinishDateMs != null && bookStartDateMs != null && bookStartDateMs!! < bookFinishDateMs!!) {
+                                            if ((bookFinishDateMs != null && bookStartDateMs != null && bookStartDateMs!! < bookFinishDateMs!!) || whatIsClicked == Constants.BOOK_STATUS_IN_PROGRESS || whatIsClicked == Constants.BOOK_STATUS_TO_READ) {
 
                                                 when (whatIsClicked) {
                                                     BOOK_STATUS_READ -> bookRating =
