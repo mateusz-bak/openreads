@@ -412,7 +412,7 @@ class AddBookSearchFragment : Fragment(R.layout.fragment_add_book_search) {
     }
 
     private fun recalculateChallenges() {
-        viewModel.getSortedBooksByDateDesc(Constants.BOOK_STATUS_READ)
+        viewModel.getSortedBooksByFinishDateDesc(Constants.BOOK_STATUS_READ)
             .observe(viewLifecycleOwner, Observer { books ->
                 var year: Int
                 var years = listOf<Int>()

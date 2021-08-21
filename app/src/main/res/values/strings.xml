@@ -119,7 +119,7 @@
     <string name="sbWarningMissingFinishDate">Set the finish date!</string>
     <string name="btnAdderSaveFinishDate">Set</string>
     <string name="not_set">Not set</string>
-    <string name="tvSortDate">Date</string>
+    <string name="tvSortFinishDate">Finish date</string>
     <string name="tvNumberOfPages" translatable="false">101 pages</string>
     <string name="tvDateFinished" translatable="false">13 Jun 2021</string>
     <string name="setTitleOnUpdateAvailable">New update!</string>
@@ -200,5 +200,6 @@
     <string name="sbWarningMissingStartDate">Set the start date!</string>
     <string name="sbWarningStartDateMustBeBeforeFinishDate">Finish date cannot be set before starting date</string>
     <string name="toast_no_results_from_OL">No results</string>
+    <string name="tvSortStartDate">Start date</string>
 
 </resources>

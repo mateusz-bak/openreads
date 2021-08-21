@@ -85,8 +85,10 @@ class BooksViewModel(
     fun getSortedBooksByRatingAsc(bookStatus: String) = repository.getSortedBooksByRatingAsc(bookStatus)
     fun getSortedBooksByPagesDesc(bookStatus: String) = repository.getSortedBooksByPagesDesc(bookStatus)
     fun getSortedBooksByPagesAsc(bookStatus: String) = repository.getSortedBooksByPagesAsc(bookStatus)
-    fun getSortedBooksByDateDesc(bookStatus: String) = repository.getSortedBooksByDateDesc(bookStatus)
-    fun getSortedBooksByDateAsc(bookStatus: String) = repository.getSortedBooksByDateAsc(bookStatus)
+    fun getSortedBooksByStartDateDesc(bookStatus: String) = repository.getSortedBooksByStartDateDesc(bookStatus)
+    fun getSortedBooksByStartDateAsc(bookStatus: String) = repository.getSortedBooksByStartDateAsc(bookStatus)
+    fun getSortedBooksByFinishDateDesc(bookStatus: String) = repository.getSortedBooksByFinishDateDesc(bookStatus)
+    fun getSortedBooksByFinishDateAsc(bookStatus: String) = repository.getSortedBooksByFinishDateAsc(bookStatus)
 
     fun getBookCount(bookStatus: String) = repository.getBookCount(bookStatus)
 

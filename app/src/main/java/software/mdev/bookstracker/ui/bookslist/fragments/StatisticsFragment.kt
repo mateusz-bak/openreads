@@ -90,7 +90,7 @@ class StatisticsFragment : Fragment(R.layout.fragment_statistics) {
     }
 
     private fun getYears(statisticsAdapter: StatisticsAdapter) {
-        viewModel.getSortedBooksByDateDesc(Constants.BOOK_STATUS_READ)
+        viewModel.getSortedBooksByFinishDateDesc(Constants.BOOK_STATUS_READ)
             .observe(viewLifecycleOwner, Observer { books ->
                 var listOfYears = mutableListOf<Year>()
                 listOfYears.add(Year("0000", 0, 0, 0F, 0, 0))

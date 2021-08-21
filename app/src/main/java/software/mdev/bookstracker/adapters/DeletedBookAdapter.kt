@@ -55,7 +55,15 @@ class DeletedBookAdapter(
 
             tvNumberOfPages.text = stringPages
             tvNumberOfPages.visibility = View.GONE
+            tvDateStarted.visibility = View.GONE
             tvDateFinished.visibility = View.GONE
+
+            if (curBook.bookStartDate == "none" || curBook.bookStartDate == "null") {
+                tvDateStarted.text = holder.itemView.context.getString(R.string.not_set)
+            } else {
+                var bookStartTimeStampLong = curBook.bookStartDate.toLong()
+                tvDateStarted.text = convertLongToTime(bookStartTimeStampLong)
+            }
 
             if (curBook.bookFinishDate == "none" || curBook.bookFinishDate == "null") {
                 tvDateFinished.text = holder.itemView.getContext().getString(R.string.not_set)
@@ -76,7 +84,10 @@ class DeletedBookAdapter(
             if (sortOrder == Constants.SORT_ORDER_PAGES_DESC || sortOrder == Constants.SORT_ORDER_PAGES_ASC) {
                 tvNumberOfPages.visibility = View.VISIBLE
             }
-            if (sortOrder == Constants.SORT_ORDER_DATE_DESC || sortOrder == Constants.SORT_ORDER_DATE_ASC) {
+            if (sortOrder == Constants.SORT_ORDER_START_DATE_DESC || sortOrder == Constants.SORT_ORDER_START_DATE_ASC) {
+                tvDateStarted.visibility = View.VISIBLE
+            }
+            if (sortOrder == Constants.SORT_ORDER_FINISH_DATE_DESC || sortOrder == Constants.SORT_ORDER_FINISH_DATE_ASC) {
                 tvDateFinished.visibility = View.VISIBLE
             }
 
@@ -95,6 +106,7 @@ class DeletedBookAdapter(
                     ivToReadIndicator.visibility = View.GONE
                     ivInProgressIndicator.visibility = View.VISIBLE
                     tvNumberOfPages.visibility = View.GONE
+                    tvDateStarted.visibility = View.GONE
                     tvDateFinished.visibility = View.GONE
                 }
                 Constants.BOOK_STATUS_TO_READ -> {
@@ -102,6 +114,7 @@ class DeletedBookAdapter(
                     ivInProgressIndicator.visibility = View.GONE
                     ivToReadIndicator.visibility = View.VISIBLE
                     tvNumberOfPages.visibility = View.GONE
+                    tvDateStarted.visibility = View.GONE
                     tvDateFinished.visibility = View.GONE
                 }
             }

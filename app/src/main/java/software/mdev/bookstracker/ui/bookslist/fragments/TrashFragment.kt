@@ -98,42 +98,4 @@ class TrashFragment : Fragment(R.layout.fragment_trash) {
             viewLifecycleOwner,
             Observer { some_books -> deletedBookAdapter.differ.submitList(some_books) })
     }
-
-    private fun recalculateChallenges() {
-        viewModel.getSortedBooksByDateDesc(Constants.BOOK_STATUS_READ)
-            .observe(viewLifecycleOwner, Observer { books ->
-                var year: Int
-                var years = listOf<Int>()
-
-                for (item in books) {
-                    if (item.bookFinishDate != "null" && item.bookFinishDate != "none") {
-                        year = convertLongToYear(item.bookFinishDate.toLong()).toInt()
-                        if (year !in years) {
-                            years = years + year
-                        }
-                    }
-                }
-
-                for (item_year in years) {
-                    var booksInYear = 0
-
-                    for (item_book in books) {
-                        if (item_book.bookFinishDate != "none" && item_book.bookFinishDate != "null") {
-                            year = convertLongToYear(item_book.bookFinishDate.toLong()).toInt()
-                            if (year == item_year) {
-                                booksInYear++
-                            }
-                        }
-                    }
-                    viewModel.updateYearsNumberOfBooks(item_year.toString(), booksInYear)
-                }
-            }
-            )
-    }
-
-    fun convertLongToYear(time: Long): String {
-        val date = Date(time)
-        val format = SimpleDateFormat("yyyy")
-        return format.format(date)
-    }
 }

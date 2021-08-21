@@ -40,7 +40,7 @@
 
         <TextView
             android:id="@+id/tvSortTitle"
-            android:layout_width="100dp"
+            android:layout_width="150dp"
             android:layout_height="wrap_content"
             android:padding="8dp"
             android:text="@string/tvSortTitle"
@@ -89,7 +89,7 @@
 
         <TextView
             android:id="@+id/tvSortAuthor"
-            android:layout_width="100dp"
+            android:layout_width="150dp"
             android:layout_height="wrap_content"
             android:padding="8dp"
             android:text="@string/tvSortAuthor"
@@ -138,7 +138,7 @@
 
         <TextView
             android:id="@+id/tvSortRating"
-            android:layout_width="100dp"
+            android:layout_width="150dp"
             android:layout_height="wrap_content"
             android:padding="8dp"
             android:text="@string/tvSortRating"
@@ -187,7 +187,7 @@
 
         <TextView
             android:id="@+id/tvSortPages"
-            android:layout_width="100dp"
+            android:layout_width="150dp"
             android:layout_height="wrap_content"
             android:padding="8dp"
             android:text="@string/tvSortPages"
@@ -222,7 +222,7 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/clDate"
+        android:id="@+id/clStartDate"
         android:layout_marginTop="4dp"
         android:background="@drawable/sort_background_unselected"
         android:paddingStart="30dp"
@@ -235,22 +235,22 @@
         app:layout_constraintTop_toBottomOf="@+id/clPages">
 
         <TextView
-            android:id="@+id/tvSortDate"
-            android:layout_width="100dp"
+            android:id="@+id/tvSortStartDate"
+            android:layout_width="150dp"
             android:layout_height="wrap_content"
             android:padding="8dp"
-            android:text="@string/tvSortDate"
+            android:text="@string/tvSortStartDate"
             android:textColor="@color/grey"
             android:textSize="18sp"
             android:layout_marginEnd="30dp"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@+id/ivSortDate"
+            app:layout_constraintEnd_toStartOf="@+id/ivSortStartDate"
             app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
         <ImageView
-            android:id="@+id/ivSortDate"
+            android:id="@+id/ivSortStartDate"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:clickable="true"
@@ -261,7 +261,56 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintStart_toEndOf="@+id/tvSortDate"
+            app:layout_constraintStart_toEndOf="@+id/tvSortStartDate"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/ic_baseline_keyboard_arrow_up_24"
+            app:tint="@color/grey" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/clFinishDate"
+        android:layout_marginTop="4dp"
+        android:background="@drawable/sort_background_unselected"
+        android:paddingStart="30dp"
+        android:paddingTop="2dp"
+        android:paddingEnd="30dp"
+        android:paddingBottom="2dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/clStartDate">
+
+        <TextView
+            android:id="@+id/tvSortFinishDate"
+            android:layout_width="150dp"
+            android:layout_height="wrap_content"
+            android:padding="8dp"
+            android:text="@string/tvSortFinishDate"
+            android:textColor="@color/grey"
+            android:textSize="18sp"
+            android:layout_marginEnd="30dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/ivSortFinishDate"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <ImageView
+            android:id="@+id/ivSortFinishDate"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:clickable="true"
+            android:focusable="true"
+            android:padding="4dp"
+            android:scaleX="2"
+            android:scaleY="2"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toEndOf="@+id/tvSortFinishDate"
             app:layout_constraintTop_toTopOf="parent"
             app:srcCompat="@drawable/ic_baseline_keyboard_arrow_up_24"
             app:tint="@color/grey" />
@@ -277,6 +326,6 @@
         android:layout_marginTop="4dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/clDate" />
+        app:layout_constraintTop_toBottomOf="@+id/clFinishDate" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

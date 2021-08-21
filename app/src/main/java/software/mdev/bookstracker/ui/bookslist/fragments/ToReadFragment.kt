@@ -44,12 +44,14 @@ import software.mdev.bookstracker.other.Constants.SERIALIZABLE_BUNDLE_BOOK
 import software.mdev.bookstracker.other.Constants.SHARED_PREFERENCES_NAME
 import software.mdev.bookstracker.other.Constants.SORT_ORDER_AUTHOR_ASC
 import software.mdev.bookstracker.other.Constants.SORT_ORDER_AUTHOR_DESC
-import software.mdev.bookstracker.other.Constants.SORT_ORDER_DATE_ASC
-import software.mdev.bookstracker.other.Constants.SORT_ORDER_DATE_DESC
+import software.mdev.bookstracker.other.Constants.SORT_ORDER_FINISH_DATE_ASC
+import software.mdev.bookstracker.other.Constants.SORT_ORDER_FINISH_DATE_DESC
 import software.mdev.bookstracker.other.Constants.SORT_ORDER_PAGES_ASC
 import software.mdev.bookstracker.other.Constants.SORT_ORDER_PAGES_DESC
 import software.mdev.bookstracker.other.Constants.SORT_ORDER_RATING_ASC
 import software.mdev.bookstracker.other.Constants.SORT_ORDER_RATING_DESC
+import software.mdev.bookstracker.other.Constants.SORT_ORDER_START_DATE_ASC
+import software.mdev.bookstracker.other.Constants.SORT_ORDER_START_DATE_DESC
 import software.mdev.bookstracker.other.Constants.SORT_ORDER_TITLE_ASC
 import software.mdev.bookstracker.other.Constants.SORT_ORDER_TITLE_DESC
 import java.text.SimpleDateFormat
@@ -264,13 +266,15 @@ class ToReadFragment : Fragment(R.layout.fragment_to_read) {
             SORT_ORDER_RATING_ASC -> viewModel.getSortedBooksByRatingAsc(currentFragment).observe(viewLifecycleOwner, Observer { some_books -> bookAdapter.differ.submitList(some_books)})
             SORT_ORDER_PAGES_DESC -> viewModel.getSortedBooksByPagesDesc(currentFragment).observe(viewLifecycleOwner, Observer { some_books -> bookAdapter.differ.submitList(some_books)})
             SORT_ORDER_PAGES_ASC -> viewModel.getSortedBooksByPagesAsc(currentFragment).observe(viewLifecycleOwner, Observer { some_books -> bookAdapter.differ.submitList(some_books)})
-            SORT_ORDER_DATE_DESC -> viewModel.getSortedBooksByDateDesc(currentFragment).observe(viewLifecycleOwner, Observer { some_books -> bookAdapter.differ.submitList(some_books)})
-            SORT_ORDER_DATE_ASC -> viewModel.getSortedBooksByDateAsc(currentFragment).observe(viewLifecycleOwner, Observer { some_books -> bookAdapter.differ.submitList(some_books)})
+            SORT_ORDER_START_DATE_DESC -> viewModel.getSortedBooksByStartDateDesc(currentFragment).observe(viewLifecycleOwner, Observer { some_books -> bookAdapter.differ.submitList(some_books)})
+            SORT_ORDER_START_DATE_ASC -> viewModel.getSortedBooksByStartDateAsc(currentFragment).observe(viewLifecycleOwner, Observer { some_books -> bookAdapter.differ.submitList(some_books)})
+            SORT_ORDER_FINISH_DATE_DESC -> viewModel.getSortedBooksByFinishDateDesc(currentFragment).observe(viewLifecycleOwner, Observer { some_books -> bookAdapter.differ.submitList(some_books)})
+            SORT_ORDER_FINISH_DATE_ASC -> viewModel.getSortedBooksByFinishDateAsc(currentFragment).observe(viewLifecycleOwner, Observer { some_books -> bookAdapter.differ.submitList(some_books)})
         }
     }
 
     private fun recalculateChallenges() {
-        viewModel.getSortedBooksByDateDesc(Constants.BOOK_STATUS_READ)
+        viewModel.getSortedBooksByFinishDateDesc(Constants.BOOK_STATUS_READ)
             .observe(viewLifecycleOwner, Observer { books ->
                 var year: Int
                 var years = listOf<Int>()

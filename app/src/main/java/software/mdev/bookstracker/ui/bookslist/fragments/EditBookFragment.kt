@@ -31,7 +31,6 @@ import androidx.lifecycle.lifecycleScope
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import software.mdev.bookstracker.data.db.LanguageDatabase
-import software.mdev.bookstracker.data.db.entities.Year
 import software.mdev.bookstracker.data.repositories.LanguageRepository
 import software.mdev.bookstracker.data.repositories.OpenLibraryRepository
 
@@ -401,7 +400,7 @@ class EditBookFragment : Fragment(R.layout.fragment_edit_book) {
     }
 
     private fun recalculateChallenges() {
-        viewModel.getSortedBooksByDateDesc(Constants.BOOK_STATUS_READ)
+        viewModel.getSortedBooksByFinishDateDesc(Constants.BOOK_STATUS_READ)
             .observe(viewLifecycleOwner, Observer { books ->
                 var year: Int
                 var years = listOf<Int>()

@@ -44,10 +44,14 @@ interface BooksDao {
     fun getSortedBooksByPagesDesc(bookStatus: String): LiveData<List<Book>>
     @Query("SELECT * FROM Book WHERE (item_bookStatus LIKE :bookStatus AND item_bookIsDeleted LIKE 0) ORDER BY item_bookNumberOfPages ASC")
     fun getSortedBooksByPagesAsc(bookStatus: String): LiveData<List<Book>>
+    @Query("SELECT * FROM Book WHERE (item_bookStatus LIKE :bookStatus AND item_bookIsDeleted LIKE 0) ORDER BY item_bookStartDate DESC")
+    fun getSortedBooksByStartDateDesc(bookStatus: String): LiveData<List<Book>>
+    @Query("SELECT * FROM Book WHERE (item_bookStatus LIKE :bookStatus AND item_bookIsDeleted LIKE 0) ORDER BY item_bookStartDate ASC")
+    fun getSortedBooksByStartDateAsc(bookStatus: String): LiveData<List<Book>>
     @Query("SELECT * FROM Book WHERE (item_bookStatus LIKE :bookStatus AND item_bookIsDeleted LIKE 0) ORDER BY item_bookFinishDate DESC")
-    fun getSortedBooksByDateDesc(bookStatus: String): LiveData<List<Book>>
+    fun getSortedBooksByFinishDateDesc(bookStatus: String): LiveData<List<Book>>
     @Query("SELECT * FROM Book WHERE (item_bookStatus LIKE :bookStatus AND item_bookIsDeleted LIKE 0) ORDER BY item_bookFinishDate ASC")
-    fun getSortedBooksByDateAsc(bookStatus: String): LiveData<List<Book>>
+    fun getSortedBooksByFinishDateAsc(bookStatus: String): LiveData<List<Book>>
 
     @Query("SELECT COUNT(id) FROM Book WHERE (item_bookStatus LIKE :bookStatus AND item_bookIsDeleted LIKE 0)")
     fun getBookCount(bookStatus: String): LiveData<Integer>
