@@ -13,8 +13,8 @@ steps:
     branch:
     - master
   commands:
-  - ./gradlew build
-  
+#  - ./gradlew build
+
 - name: Signed .apk
   image: mingc/android-build-box:1.21.1
   when:
@@ -30,8 +30,8 @@ steps:
     KEY_PASSWORD:
       from_secret: mateusz-bak.key-password
   commands:
-  - wget -q $KEY_LOCATION
-  - cp mateusz-bak.jks app/mateusz-bak.jks
-  - ./gradlew assembleRelease -Pandroid.injected.signing.store.file=mateusz-bak.jks -Pandroid.injected.signing.store.password=$STORE_PASSWORD -Pandroid.injected.signing.key.alias=$KEY_ALIAS -Pandroid.injected.signing.key.password=$KEY_PASSWORD
-  - ls -l app/build/outputs/apk/release
+#  - wget -q $KEY_LOCATION
+#  - cp mateusz-bak.jks app/mateusz-bak.jks
+#  - ./gradlew assembleRelease -Pandroid.injected.signing.store.file=mateusz-bak.jks -Pandroid.injected.signing.store.password=$STORE_PASSWORD -Pandroid.injected.signing.key.alias=$KEY_ALIAS -Pandroid.injected.signing.key.password=$KEY_PASSWORD
+#  - ls -l app/build/outputs/apk/release
 ...
