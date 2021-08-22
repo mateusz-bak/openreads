@@ -4,6 +4,7 @@ import android.content.Context
 import android.os.Bundle
 import android.view.KeyEvent
 import android.view.View
+import android.view.animation.AnimationUtils
 import android.view.inputmethod.InputMethodManager
 import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.Fragment
@@ -25,7 +26,10 @@ import kotlinx.android.synthetic.main.fragment_read.*
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import me.everything.android.ui.overscroll.OverScrollDecoratorHelper
+import software.mdev.bookstracker.data.db.LanguageDatabase
 import software.mdev.bookstracker.data.db.YearDatabase
+import software.mdev.bookstracker.data.repositories.LanguageRepository
+import software.mdev.bookstracker.data.repositories.OpenLibraryRepository
 import software.mdev.bookstracker.data.repositories.YearRepository
 import software.mdev.bookstracker.other.Constants
 import software.mdev.bookstracker.other.Functions
@@ -49,21 +53,34 @@ class ReadFragment : Fragment(R.layout.fragment_read) {
         etSearch.visibility = View.GONE
         ivClearSearch.visibility = View.GONE
         tvLooksEmpty.visibility = View.GONE
+        btnAddManual.visibility = View.GONE
+        btnAddSearch.visibility = View.GONE
         ivClearSearch.isClickable = false
         ivFilterBooks.isClickable = false
+        btnAddManual.isClickable = false
+        btnAddSearch.isClickable = false
         view.hideKeyboard()
 
         val database = BooksDatabase(view.context)
         val yearDatabase = YearDatabase(view.context)
+        val languageDatabase = LanguageDatabase(view.context)
+
         val booksRepository = BooksRepository(database)
         val yearRepository = YearRepository(yearDatabase)
-        val booksViewModelProviderFactory = BooksViewModelProviderFactory(booksRepository, yearRepository)
+        val openLibraryRepository = OpenLibraryRepository()
+        val languageRepository = LanguageRepository(languageDatabase)
+
+        val booksViewModelProviderFactory = BooksViewModelProviderFactory(
+            booksRepository,
+            yearRepository,
+            openLibraryRepository,
+            languageRepository
+        )
 
         viewModel = ViewModelProvider(this, booksViewModelProviderFactory).get(
             BooksViewModel::class.java)
 
-        val factory = BooksViewModelProviderFactory(booksRepository, yearRepository)
-        val viewModel = ViewModelProviders.of(this, factory).get(BooksViewModel::class.java)
+        val viewModel = ViewModelProviders.of(this, booksViewModelProviderFactory).get(BooksViewModel::class.java)
 
         val bookAdapter = BookAdapter(view.context, whichFragment = currentFragment)
 
@@ -85,7 +102,16 @@ class ReadFragment : Fragment(R.layout.fragment_read) {
             }
         })
 
-        fabAddBook.setOnClickListener{
+        btnAddManual.setOnClickListener{
+            btnAddManual.visibility = View.GONE
+            btnAddSearch.visibility = View.GONE
+            btnAddManual.isClickable = false
+            btnAddSearch.isClickable = false
+
+            fabAddBook.animate().rotation( 0F).setDuration(350L).start()
+            btnAddSearch.startAnimation(AnimationUtils.loadAnimation(context,R.anim.slide_out_down))
+            btnAddManual.startAnimation(AnimationUtils.loadAnimation(context,R.anim.slide_out_down))
+
             AddBookDialog(view.context,
                 object: AddBookDialogListener {
                     override fun onSaveButtonClicked(item: Book) {
@@ -104,6 +130,54 @@ class ReadFragment : Fragment(R.layout.fragment_read) {
                     }
                 }
             ).show()
+        }
+
+        fabAddBook.setOnClickListener {
+            if (btnAddManual.visibility == View.GONE) {
+                btnAddManual.visibility = View.VISIBLE
+                btnAddSearch.visibility = View.VISIBLE
+                btnAddManual.isClickable = true
+                btnAddSearch.isClickable = true
+
+                fabAddBook.animate().rotation(180F).setDuration(350L).start()
+                btnAddSearch.startAnimation(AnimationUtils.loadAnimation(context,R.anim.slide_in_up))
+                btnAddManual.startAnimation(AnimationUtils.loadAnimation(context,R.anim.slide_in_up))
+            }
+            else {
+                btnAddManual.visibility = View.GONE
+                btnAddSearch.visibility = View.GONE
+                btnAddManual.isClickable = false
+                btnAddSearch.isClickable = false
+
+                fabAddBook.animate().rotation(0F).setDuration(350L).start()
+                btnAddSearch.startAnimation(AnimationUtils.loadAnimation(context,R.anim.slide_out_down))
+                btnAddManual.startAnimation(AnimationUtils.loadAnimation(context,R.anim.slide_out_down))
+            }
+
+
+        }
+
+        btnAddSearch.setOnClickListener {
+            btnAddManual.visibility = View.GONE
+            btnAddSearch.visibility = View.GONE
+            btnAddManual.isClickable = false
+            btnAddSearch.isClickable = false
+
+            fabAddBook.animate().rotation( 0F).setDuration(350L).start()
+            btnAddSearch.startAnimation(AnimationUtils.loadAnimation(context,R.anim.slide_out_down))
+            btnAddManual.startAnimation(AnimationUtils.loadAnimation(context,R.anim.slide_out_down))
+
+            findNavController().navigate(
+                R.id.action_readFragment_to_addBookSearchFragment)
+        }
+
+        rvBooks.setOnClickListener {
+            btnAddManual.visibility = View.GONE
+            btnAddSearch.visibility = View.GONE
+            btnAddManual.isClickable = false
+            btnAddSearch.isClickable = false
+
+            fabAddBook.animate().rotation( 0F).setDuration(350L).start()
         }
 
         ivSort.setOnClickListener{
@@ -129,7 +203,7 @@ class ReadFragment : Fragment(R.layout.fragment_read) {
             // changes variable to false when ivFilterBooks is clicked
             var willDialogBeShownAfterClick = true
 
-            viewModel.getSortedBooksByDateDesc(currentFragment).observe(viewLifecycleOwner, Observer { some_books ->
+            viewModel.getSortedBooksByFinishDateDesc(currentFragment).observe(viewLifecycleOwner, Observer { some_books ->
                 var arrayOfYears = functions.calculateYearsFromDb(some_books)
 
                 // checks variable whether dialog is called by user (true) or by some_books change (false)
@@ -269,13 +343,15 @@ class ReadFragment : Fragment(R.layout.fragment_read) {
             Constants.SORT_ORDER_RATING_ASC -> viewModel.getSortedBooksByRatingAsc(currentFragment).observe(viewLifecycleOwner, Observer { some_books -> functions.filterBooksList(activity as ListActivity, bookAdapter, some_books)})
             Constants.SORT_ORDER_PAGES_DESC -> viewModel.getSortedBooksByPagesDesc(currentFragment).observe(viewLifecycleOwner, Observer { some_books -> functions.filterBooksList(activity as ListActivity, bookAdapter, some_books)})
             Constants.SORT_ORDER_PAGES_ASC -> viewModel.getSortedBooksByPagesAsc(currentFragment).observe(viewLifecycleOwner, Observer { some_books -> functions.filterBooksList(activity as ListActivity, bookAdapter, some_books)})
-            Constants.SORT_ORDER_DATE_DESC -> viewModel.getSortedBooksByDateDesc(currentFragment).observe(viewLifecycleOwner, Observer { some_books -> functions.filterBooksList(activity as ListActivity, bookAdapter, some_books)})
-            Constants.SORT_ORDER_DATE_ASC -> viewModel.getSortedBooksByDateAsc(currentFragment).observe(viewLifecycleOwner, Observer { some_books -> functions.filterBooksList(activity as ListActivity, bookAdapter, some_books)})
+            Constants.SORT_ORDER_START_DATE_DESC -> viewModel.getSortedBooksByStartDateDesc(currentFragment).observe(viewLifecycleOwner, Observer { some_books -> functions.filterBooksList(activity as ListActivity, bookAdapter, some_books)})
+            Constants.SORT_ORDER_START_DATE_ASC -> viewModel.getSortedBooksByStartDateAsc(currentFragment).observe(viewLifecycleOwner, Observer { some_books -> functions.filterBooksList(activity as ListActivity, bookAdapter, some_books)})
+            Constants.SORT_ORDER_FINISH_DATE_DESC -> viewModel.getSortedBooksByFinishDateDesc(currentFragment).observe(viewLifecycleOwner, Observer { some_books -> functions.filterBooksList(activity as ListActivity, bookAdapter, some_books)})
+            Constants.SORT_ORDER_FINISH_DATE_ASC -> viewModel.getSortedBooksByFinishDateAsc(currentFragment).observe(viewLifecycleOwner, Observer { some_books -> functions.filterBooksList(activity as ListActivity, bookAdapter, some_books)})
         }
     }
 
     fun recalculateChallenges() {
-        viewModel.getSortedBooksByDateDesc(Constants.BOOK_STATUS_READ)
+        viewModel.getSortedBooksByFinishDateDesc(Constants.BOOK_STATUS_READ)
             .observe(viewLifecycleOwner, Observer { books ->
                 var year: Int
                 var years = listOf<Int>()

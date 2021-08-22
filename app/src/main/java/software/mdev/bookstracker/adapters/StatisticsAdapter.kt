@@ -11,9 +11,12 @@ import androidx.recyclerview.widget.RecyclerView
 import kotlinx.android.synthetic.main.item_statistics.view.*
 import software.mdev.bookstracker.R
 import software.mdev.bookstracker.data.db.BooksDatabase
+import software.mdev.bookstracker.data.db.LanguageDatabase
 import software.mdev.bookstracker.data.db.YearDatabase
 import software.mdev.bookstracker.data.db.entities.Year
 import software.mdev.bookstracker.data.repositories.BooksRepository
+import software.mdev.bookstracker.data.repositories.LanguageRepository
+import software.mdev.bookstracker.data.repositories.OpenLibraryRepository
 import software.mdev.bookstracker.data.repositories.YearRepository
 import software.mdev.bookstracker.other.Constants
 import software.mdev.bookstracker.ui.bookslist.dialogs.ChallengeDialog
@@ -52,17 +55,26 @@ class StatisticsAdapter(
 
         val database = BooksDatabase(view.context)
         val yearDatabase = YearDatabase(view.context)
+        val languageDatabase = LanguageDatabase(view.context)
+
         val booksRepository = BooksRepository(database)
         val yearRepository = YearRepository(yearDatabase)
-        val booksViewModelProviderFactory = BooksViewModelProviderFactory(booksRepository, yearRepository)
+        val openLibraryRepository = OpenLibraryRepository()
+        val languageRepository = LanguageRepository(languageDatabase)
+
+        val booksViewModelProviderFactory = BooksViewModelProviderFactory(
+            booksRepository,
+            yearRepository,
+            openLibraryRepository,
+            languageRepository
+        )
 
         viewModel = ViewModelProvider(statisticsFragment, booksViewModelProviderFactory).get(
             BooksViewModel::class.java
         )
 
-        val factory = BooksViewModelProviderFactory(booksRepository, yearRepository)
         val viewModel =
-            ViewModelProviders.of(statisticsFragment, factory).get(BooksViewModel::class.java)
+            ViewModelProviders.of(statisticsFragment, booksViewModelProviderFactory).get(BooksViewModel::class.java)
 
         return StatisticsViewHolder(view)
     }

@@ -19,6 +19,10 @@ object Constants {
     const val DATABASE_ITEM_BOOK_NUMBER_OF_PAGES = "item_bookNumberOfPages"
     const val DATABASE_ITEM_BOOK_TITLE_ASCII = "item_bookTitle_ASCII"
     const val DATABASE_ITEM_BOOK_AUTHOR_ASCII = "item_bookAuthor_ASCII"
+    const val DATABASE_ITEM_BOOK_COVER_URL = "item_bookCoverUrl"
+    const val DATABASE_ITEM_BOOK_OLID = "item_bookOLID"
+    const val DATABASE_ITEM_BOOK_ISBN10 = "item_bookISBN10"
+    const val DATABASE_ITEM_BOOK_ISBN13 = "item_bookISBN13"
     const val DATABASE_ITEM_BOOK_IS_DELETED = "item_bookIsDeleted"
     const val DATABASE_EMPTY_VALUE = "none"
 
@@ -30,6 +34,14 @@ object Constants {
     const val DATABASE_YEAR_ITEM_RATING = "item_rating"
     const val DATABASE_YEAR_CHALLENGE_BOOKS = "item_challenge_books"
     const val DATABASE_YEAR_CHALLENGE_PAGES = "item_challenge_pages"
+
+    const val DATABASE_NAME_LANGUAGE = "Language"
+    const val DATABASE_LANGUAGE_FILE_NAME = "LanguageDB.db"
+    const val DATABASE_LANGUAGE_ITEM_language6392B = "item_language6392B"
+    const val DATABASE_LANGUAGE_ITEM_isoLanguageName = "item_isoLanguageName"
+    const val DATABASE_LANGUAGE_ITEM_isSelected = "item_isSelected"
+    const val DATABASE_LANGUAGE_ITEM_selectCounter = "item_selectCounter"
+    const val DATABASE_LANGUAGE_ITEM_isoLanguageName_pol = "item_isoLanguageName_pol"
 
     const val CHALLENGE_BEGINNER = 3
     const val CHALLENGE_EASY = 6
@@ -46,8 +58,10 @@ object Constants {
     const val SORT_ORDER_RATING_ASC = "ivSortRatingAsc"
     const val SORT_ORDER_PAGES_DESC = "ivSortPagesDesc"
     const val SORT_ORDER_PAGES_ASC = "ivSortPagesAsc"
-    const val SORT_ORDER_DATE_DESC = "ivSortDateDesc"
-    const val SORT_ORDER_DATE_ASC = "ivSortDateAsc"
+    const val SORT_ORDER_START_DATE_DESC = "ivSortStartDateDesc"
+    const val SORT_ORDER_START_DATE_ASC = "ivSortStartDateAsc"
+    const val SORT_ORDER_FINISH_DATE_DESC = "ivSortFinishDateDesc"
+    const val SORT_ORDER_FINISH_DATE_ASC = "ivSortFinishDateAsc"
 
     const val SERIALIZABLE_BUNDLE_BOOK = "book"
 
@@ -58,6 +72,7 @@ object Constants {
     const val SHARED_PREFERENCES_KEY_FILTER_YEARS = "KEY_FILTER_YEARS"
     const val SHARED_PREFERENCES_KEY_ACCENT = "KEY_ACCENT"
     const val SHARED_PREFERENCES_KEY_RECOMMENDATIONS = "KEY_RECOMMENDATIONS"
+    const val SHARED_PREFERENCES_KEY_SHOW_OL_ALERT = "KEY_SHOW_OL_ALERT"
     const val SHARED_PREFERENCES_REFRESHED = "refreshed"
     const val KEY_CHECK_FOR_UPDATES = "KEY_CHECK_FOR_UPDATES"
     const val KEY_TRASH = "KEY_TRASH"
@@ -79,4 +94,7 @@ object Constants {
 
     const val GITHUB_USER = "mateusz-bak"
     const val GITHUB_REPO = "books-tracker-android"
+
+    const val BASE_URL = "https://openlibrary.org/"
+    const val OPEN_LIBRARY_SEARCH_DELAY = 500L
 }

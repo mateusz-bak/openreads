@@ -39,6 +39,12 @@
             android:summaryOff="@string/first_time_toggle_off"
             android:summaryOn="@string/first_time_toggle_on"
             android:title="@string/first_time_toggle_title" />
+
+        <SwitchPreference
+            android:key="KEY_SHOW_OL_ALERT"
+            android:summaryOff="@string/show_ol_alert_off"
+            android:summaryOn="@string/show_ol_alert_on"
+            android:title="@string/show_ol_alert_title" />
     </PreferenceCategory>
 
     <PreferenceCategory

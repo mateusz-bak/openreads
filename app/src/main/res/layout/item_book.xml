@@ -95,6 +95,18 @@
         app:layout_constraintStart_toStartOf="@+id/rbRatingIndicator" />
 
     <TextView
+        android:id="@+id/tvDateStarted"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/tvDateFinished"
+        android:layout_marginTop="4dp"
+        android:textSize="14sp"
+        app:layout_constraintTop_toBottomOf="@+id/rbRatingIndicator"
+        app:layout_constraintBottom_toBottomOf="@+id/tvBookAuthor"
+        app:layout_constraintEnd_toEndOf="@+id/rbRatingIndicator"
+        app:layout_constraintStart_toStartOf="@+id/rbRatingIndicator" />
+
+    <TextView
         android:id="@+id/tvDateFinished"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

@@ -1,5 +1,6 @@
 <resources>
     <string name="app_name" translatable="false">Books Tracker</string>
+    <string name="app_version" translatable="false">v1.4.0</string>
     <string name="ivAuthorUrl">https://github.com/mateusz-bak/</string>
     <!-- Images descriptions -->
     <string name="ivBookStatusSetRead">Set book as finished</string>
@@ -56,7 +57,6 @@
     <string name="hintBookTitle" translatable="false">booktitle</string>
     <string name="hintBookAuthor" translatable="false">bookauthor</string>
     <string name="hintSearch" translatable="false">booksearch</string>
-    <string name="app_version" translatable="false">v1.3.0</string>
     <string name="notYetImplemented">Not yet implemented</string>
     <string name="dismiss">Dismiss</string>
     <string name="bookDeleted">Book deleted</string>
@@ -114,12 +114,12 @@
     <string name="space" translatable="false">" "</string>
     <string name="tvBookFinishDateTitle">"Date finished:\n%s"</string>
     <string name="tvBookFinishDate" translatable="false">dd/mm/rrrr</string>
-    <string name="hint_date_finished">Finish date</string>
+    <string name="hint_date_finished">Date finished</string>
     <string name="set_finish_date_title">Set finish date</string>
-    <string name="sbWarningMissingFinishDate">Choose the finish date!</string>
+    <string name="sbWarningMissingFinishDate">Set the finish date!</string>
     <string name="btnAdderSaveFinishDate">Set</string>
     <string name="not_set">Not set</string>
-    <string name="tvSortDate">Date</string>
+    <string name="tvSortFinishDate">Finish date</string>
     <string name="tvNumberOfPages" translatable="false">101 pages</string>
     <string name="tvDateFinished" translatable="false">13 Jun 2021</string>
     <string name="setTitleOnUpdateAvailable">New update!</string>
@@ -166,5 +166,43 @@
     <string name="click_edit_button_to_edit_status">Click edit button to change book\'s status</string>
     <string name="click_edit_button_to_edit_date">Click edit button to change book\'s finish date</string>
     <string name="click_edit_button_to_edit_pages">Click edit button to change book\'s number of pages</string>
+    <string name="btnAddSearch">Search</string>
+    <string name="btnAddManual">Manually</string>
+    <string name="etAdderBookTitleSearch">Type title to search…</string>
+    <string name="fabAddNewBook">Add new book</string>
+    <string name="fabCancelAddingNewBook">Cancel adding new book</string>
+    <string name="UNKNOWN">No author</string>
+    <string name="language">language</string>
+    <string name="language_upperCase">Language</string>
+    <string name="button_search">search</string>
+    <string name="button_language">filter languages</string>
+    <string name="results_1">result</string>
+    <string name="results_2_4">results</string>
+    <string name="results_5_">results</string>
+    <string name="btn_ok">ok</string>
+    <string name="cb_dont_show_again">Don\'t show again</string>
+    <string name="tvAlertContent1">Searching books uses openlibrary.org database. It is free to use but can have some limitations.</string>
+    <string name="tvAlertContent2">You can search for a book’s title and author’s name. Try to be specific, it will be faster.</string>
+    <string name="tvAlertContent3">If no results found then try a more broad query (just authors name or one word from the title) but it can take a long time (even a couple of minutes).</string>
+    <string name="tvAlertContent4">If book’s title or author’s name contain diactric characters try to use non-diactric characters.</string>
+    <string name="tvAlertTitle">Help for searching books</string>
+    <string name="tvAlertContent5">Lastly the book you look for might be missing so choose the most similiar one and edit the details to your liking.</string>
+    <string name="toast_no_connection_to_OL">Error: no connection to openlibrary.org</string>
+    <string name="show_ol_alert_off">Won\'t be shown</string>
+    <string name="show_ol_alert_on">Will be shown</string>
+    <string name="show_ol_alert_title">Help for searching books</string>
+    <string name="tv_date_started_title">Date started</string>
+    <string name="tv_book_isbn_title" translatable="false">ISBN</string>
+    <string name="tv_book_isbn" translatable="false">1234567890123</string>
+    <string name="tv_book_url" translatable="false">https://openlibrary.org/books/OL27755728M</string>
+    <string name="hint_date_started">Date started</string>
+    <string name="set_start_date_title">Set start date</string>
+    <string name="sbWarningMissingStartDate">Set the start date!</string>
+    <string name="sbWarningStartDateMustBeBeforeFinishDate">Finish date cannot be set before starting date</string>
+    <string name="toast_no_results_from_OL">No results</string>
+    <string name="tvSortStartDate">Start date</string>
+    <string name="hint_olid" translatable="false">Open Library ID</string>
+    <string name="hint_isbn10" translatable="false">ISBN 10</string>
+    <string name="hint_isbn13" translatable="false">ISBN 13</string>
 
 </resources>

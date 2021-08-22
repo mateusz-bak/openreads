@@ -40,7 +40,19 @@ data class Book (
         var  bookAuthor_ASCII: String,
 
         @ColumnInfo(name = Constants.DATABASE_ITEM_BOOK_IS_DELETED)
-        var  bookIsDeleted: Boolean
+        var  bookIsDeleted: Boolean,
+
+        @ColumnInfo(name = Constants.DATABASE_ITEM_BOOK_COVER_URL)
+        var  bookCoverUrl: String,
+
+        @ColumnInfo(name = Constants.DATABASE_ITEM_BOOK_OLID)
+        var  bookOLID: String,
+
+        @ColumnInfo(name = Constants.DATABASE_ITEM_BOOK_ISBN10)
+        var  bookISBN10: String,
+
+        @ColumnInfo(name = Constants.DATABASE_ITEM_BOOK_ISBN13)
+        var  bookISBN13: String
 ): Serializable{
     @PrimaryKey(autoGenerate = true)
     var id: Int? = null

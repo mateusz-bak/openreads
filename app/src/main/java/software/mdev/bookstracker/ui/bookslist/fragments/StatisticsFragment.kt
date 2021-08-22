@@ -18,9 +18,12 @@ import me.everything.android.ui.overscroll.OverScrollDecoratorHelper
 import me.everything.android.ui.overscroll.OverScrollDecoratorHelper.ORIENTATION_HORIZONTAL
 import software.mdev.bookstracker.adapters.StatisticsAdapter
 import software.mdev.bookstracker.data.db.BooksDatabase
+import software.mdev.bookstracker.data.db.LanguageDatabase
 import software.mdev.bookstracker.data.db.YearDatabase
 import software.mdev.bookstracker.data.db.entities.Year
 import software.mdev.bookstracker.data.repositories.BooksRepository
+import software.mdev.bookstracker.data.repositories.LanguageRepository
+import software.mdev.bookstracker.data.repositories.OpenLibraryRepository
 import software.mdev.bookstracker.data.repositories.YearRepository
 import software.mdev.bookstracker.other.Constants
 import software.mdev.bookstracker.other.Constants.SHARED_PREFERENCES_NAME
@@ -46,9 +49,19 @@ class StatisticsFragment : Fragment(R.layout.fragment_statistics) {
 
         val database = BooksDatabase(view.context)
         val yearDatabase = YearDatabase(view.context)
+        val languageDatabase = LanguageDatabase(view.context)
+
         val booksRepository = BooksRepository(database)
         val yearRepository = YearRepository(yearDatabase)
-        val booksViewModelProviderFactory = BooksViewModelProviderFactory(booksRepository, yearRepository)
+        val openLibraryRepository = OpenLibraryRepository()
+        val languageRepository = LanguageRepository(languageDatabase)
+
+        val booksViewModelProviderFactory = BooksViewModelProviderFactory(
+            booksRepository,
+            yearRepository,
+            openLibraryRepository,
+            languageRepository
+        )
 
         viewModel = ViewModelProvider(this, booksViewModelProviderFactory).get(
             BooksViewModel::class.java
@@ -77,7 +90,7 @@ class StatisticsFragment : Fragment(R.layout.fragment_statistics) {
     }
 
     private fun getYears(statisticsAdapter: StatisticsAdapter) {
-        viewModel.getSortedBooksByDateDesc(Constants.BOOK_STATUS_READ)
+        viewModel.getSortedBooksByFinishDateDesc(Constants.BOOK_STATUS_READ)
             .observe(viewLifecycleOwner, Observer { books ->
                 var listOfYears = mutableListOf<Year>()
                 listOfYears.add(Year("0000", 0, 0, 0F, 0, 0))
