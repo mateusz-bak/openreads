@@ -30,7 +30,8 @@
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:paddingBottom="120dp">
 
             <ImageView
                 android:id="@+id/ivBookCover"
@@ -95,14 +96,6 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/rbRatingIndicator" />
 
-            <androidx.constraintlayout.widget.Guideline
-                android:id="@+id/guideline4"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                app:layout_constraintGuide_begin="20dp"
-                app:layout_constraintGuide_percent="0.12" />
-
             <TextView
                 android:id="@+id/tvBookStatus"
                 android:layout_width="wrap_content"
@@ -155,6 +148,20 @@
                 android:orientation="vertical"
                 app:layout_constraintGuide_percent="0.5" />
 
+            <androidx.constraintlayout.widget.Guideline
+                android:id="@+id/guideline4"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                app:layout_constraintGuide_percent="0.33" />
+
+            <androidx.constraintlayout.widget.Guideline
+                android:id="@+id/guideline5"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                app:layout_constraintGuide_percent="0.69" />
+
             <TextView
                 android:id="@+id/tvMoreAboutBook"
                 android:layout_width="wrap_content"
@@ -177,10 +184,10 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="12dp"
-                android:layout_marginEnd="24dp"
                 android:text="@string/tv_date_started_title"
                 android:textStyle="bold"
-                app:layout_constraintEnd_toStartOf="@+id/guideline3"
+                app:layout_constraintEnd_toEndOf="@+id/guideline4"
+                app:layout_constraintStart_toStartOf="@+id/guideline4"
                 app:layout_constraintTop_toBottomOf="@+id/tvMoreAboutBook" />
 
             <TextView
@@ -189,19 +196,19 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="12dp"
                 android:text="@string/tv_date_finished"
-                app:layout_constraintEnd_toEndOf="@+id/tvDateStartedTitle"
-                app:layout_constraintStart_toStartOf="@+id/tvDateStartedTitle"
+                app:layout_constraintEnd_toEndOf="@+id/guideline4"
+                app:layout_constraintStart_toStartOf="@+id/guideline4"
                 app:layout_constraintTop_toBottomOf="@+id/tvDateStartedTitle" />
 
             <TextView
                 android:id="@+id/tvDateFinishedTitle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="24dp"
                 android:text="@string/tv_date_finished_title"
                 android:textStyle="bold"
                 app:layout_constraintBottom_toBottomOf="@+id/tvDateStartedTitle"
-                app:layout_constraintStart_toStartOf="@+id/guideline3"
+                app:layout_constraintEnd_toEndOf="@+id/guideline5"
+                app:layout_constraintStart_toStartOf="@+id/guideline5"
                 app:layout_constraintTop_toTopOf="@+id/tvDateStartedTitle" />
 
             <TextView
@@ -210,8 +217,8 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="12dp"
                 android:text="@string/tv_date_finished"
-                app:layout_constraintEnd_toEndOf="@+id/tvDateFinishedTitle"
-                app:layout_constraintStart_toStartOf="@+id/tvDateFinishedTitle"
+                app:layout_constraintEnd_toEndOf="@+id/guideline5"
+                app:layout_constraintStart_toStartOf="@+id/guideline5"
                 app:layout_constraintTop_toBottomOf="@+id/tvDateFinishedTitle" />
 
             <TextView
@@ -221,9 +228,9 @@
                 android:layout_marginTop="12dp"
                 android:text="@string/tv_book_pages_title"
                 android:textStyle="bold"
-                app:layout_constraintEnd_toEndOf="@+id/tvDateStarted"
+                app:layout_constraintEnd_toEndOf="@+id/guideline4"
+                app:layout_constraintStart_toStartOf="@+id/guideline4"
                 app:layout_constraintHorizontal_bias="0.5"
-                app:layout_constraintStart_toStartOf="@+id/tvDateStarted"
                 app:layout_constraintTop_toBottomOf="@+id/tvDateStarted" />
 
             <TextView
@@ -232,8 +239,8 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="12dp"
                 android:text="@string/tv_book_pages"
-                app:layout_constraintEnd_toEndOf="@+id/tvBookPagesTitle"
-                app:layout_constraintStart_toStartOf="@+id/tvBookPagesTitle"
+                app:layout_constraintEnd_toEndOf="@+id/guideline4"
+                app:layout_constraintStart_toStartOf="@+id/guideline4"
                 app:layout_constraintTop_toBottomOf="@+id/tvBookPagesTitle" />
 
             <TextView
@@ -243,9 +250,9 @@
                 android:layout_marginTop="12dp"
                 android:text="@string/tv_book_isbn_title"
                 android:textStyle="bold"
-                app:layout_constraintEnd_toEndOf="@+id/tvDateFinished"
+                app:layout_constraintEnd_toEndOf="@+id/guideline5"
+                app:layout_constraintStart_toStartOf="@+id/guideline5"
                 app:layout_constraintHorizontal_bias="0.5"
-                app:layout_constraintStart_toStartOf="@+id/tvDateFinished"
                 app:layout_constraintTop_toBottomOf="@+id/tvDateStarted" />
 
             <TextView
@@ -262,7 +269,7 @@
                 android:id="@+id/tvBookURL"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="12dp"
+                android:layout_marginTop="24dp"
                 android:layout_marginBottom="24dp"
                 android:text="@string/tv_book_url"
                 android:autoLink="web"

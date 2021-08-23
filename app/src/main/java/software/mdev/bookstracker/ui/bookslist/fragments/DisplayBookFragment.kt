@@ -23,6 +23,7 @@ import software.mdev.bookstracker.ui.bookslist.viewmodel.BooksViewModel
 import java.text.SimpleDateFormat
 import java.util.*
 import android.graphics.*
+import androidx.constraintlayout.widget.ConstraintLayout
 import com.squareup.picasso.Transformation
 
 
@@ -167,14 +168,40 @@ class DisplayBookFragment : Fragment(R.layout.fragment_display_book) {
                 View.GONE -> {
                     tvBookPagesTitle.visibility = View.VISIBLE
                     tvBookPages.visibility = View.VISIBLE
-                    tvDateFinishedTitle.visibility = View.VISIBLE
-                    tvDateFinished.visibility = View.VISIBLE
                     tvBookISBNTitle.visibility = View.VISIBLE
                     tvBookISBN.visibility = View.VISIBLE
-                    tvDateStartedTitle.visibility = View.VISIBLE
-                    tvDateStarted.visibility = View.VISIBLE
                     if (book.bookOLID != Constants.DATABASE_EMPTY_VALUE)
                         tvBookURL.visibility = View.VISIBLE
+                    if (book.bookStatus == Constants.BOOK_STATUS_READ) {
+
+                        tvDateFinishedTitle.visibility = View.VISIBLE
+                        tvDateFinished.visibility = View.VISIBLE
+
+                        val tvDateStartedTitleLayut = tvDateStartedTitle.layoutParams as ConstraintLayout.LayoutParams // btn is a View here
+                        tvDateStartedTitleLayut.startToStart = R.id.guideline4 // resource ID of new parent field
+                        tvDateStartedTitleLayut.endToEnd = R.id.guideline4 // resource ID of new parent field
+                        tvDateStartedTitle.layoutParams = tvDateStartedTitleLayut
+                        tvDateStartedTitle.visibility = View.VISIBLE
+
+                        val tvDateStartedLayut = tvDateStarted.layoutParams as ConstraintLayout.LayoutParams // btn is a View here
+                        tvDateStartedLayut.startToStart = R.id.guideline4 // resource ID of new parent field
+                        tvDateStartedLayut.endToEnd = R.id.guideline4 // resource ID of new parent field
+                        tvDateStarted.layoutParams = tvDateStartedLayut
+                        tvDateStarted.visibility = View.VISIBLE
+                    } else if (book.bookStatus == Constants.BOOK_STATUS_IN_PROGRESS){
+
+                        val tvDateStartedTitleLayut = tvDateStartedTitle.layoutParams as ConstraintLayout.LayoutParams // btn is a View here
+                        tvDateStartedTitleLayut.startToStart = R.id.guideline3 // resource ID of new parent field
+                        tvDateStartedTitleLayut.endToEnd = R.id.guideline3 // resource ID of new parent field
+                        tvDateStartedTitle.layoutParams = tvDateStartedTitleLayut
+                        tvDateStartedTitle.visibility = View.VISIBLE
+
+                        val tvDateStartedLayut = tvDateStarted.layoutParams as ConstraintLayout.LayoutParams // btn is a View here
+                        tvDateStartedLayut.startToStart = R.id.guideline3 // resource ID of new parent field
+                        tvDateStartedLayut.endToEnd = R.id.guideline3 // resource ID of new parent field
+                        tvDateStarted.layoutParams = tvDateStartedLayut
+                        tvDateStarted.visibility = View.VISIBLE
+                    }
                 }
                 View.VISIBLE -> {
                     tvBookPagesTitle.visibility = View.GONE
