@@ -7,9 +7,10 @@
 - books you finished,  
 - books you are currently reading,  
 - books you want to read later.
-#### You can also see come cool statistics!  
 
-#### Update 1.4.0: You can now search for books using Open Library API and add them straight to your lists.
+ You can also see come cool statistics!  
+
+#### Update 1.4.x: You can now search for books using Open Library API and add them straight to your lists.
   
 ## Screenshots  
 <p align='center'>  
@@ -57,10 +58,23 @@
 *You can also replace the "Debug" with "Release" to get an optimized release binary.*
   
 ## Attributions
-### Used APIs:
+
+### Contributors
+
+#### Testing
+[Wiktor Młynarczyk](https://github.com/jokereey "jokereey")
+
+
+### Used APIs
 [Open Library](https://openlibrary.org/ "Open Library")
-### Icons made by:
+
+
+### Icons made by
 [Smalllikeart](https://www.flaticon.com/authors/smalllikeart "Smalllikeart") from [www.flaticon.com](https://www.flaticon.com/ "Flaticon")
+
 [Freepik](https://www.freepik.com "Freepik") from [www.flaticon.com](https://www.flaticon.com/ "Flaticon")
+
 [Vectors Market](https://www.flaticon.com/authors/vectors-market "Vectors Market") from [www.flaticon.com](https://www.flaticon.com/ "Flaticon")
+
 [photo3idea_studio](https://www.flaticon.com/authors/photo3idea-studio "photo3idea_studio") from [www.flaticon.com](https://www.flaticon.com/ "Flaticon")
+
