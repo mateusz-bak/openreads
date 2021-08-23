@@ -55,6 +55,10 @@ class AddFoundBookDialog(
         btnSetStartDate.visibility  = View.GONE
         btnSetFinishDate.isClickable = false
         btnSetStartDate.isClickable = false
+
+        tvSetFinishDate.visibility  = View.GONE
+        tvSetStartDate.visibility  = View.GONE
+
         dpBookFinishDate.visibility = View.GONE
         dpBookStartDate.visibility = View.GONE
 
@@ -123,6 +127,10 @@ class AddFoundBookDialog(
             btnSetStartDate.visibility  = View.VISIBLE
             btnSetFinishDate.isClickable = true
             btnSetStartDate.isClickable = true
+
+            tvSetFinishDate.visibility  = View.VISIBLE
+            tvSetStartDate.visibility  = View.VISIBLE
+
             etPagesNumber.requestFocus()
             showKeyboard(etPagesNumber, 350)
         }
@@ -148,6 +156,10 @@ class AddFoundBookDialog(
             btnSetStartDate.visibility  = View.GONE
             btnSetFinishDate.isClickable = false
             btnSetStartDate.isClickable = false
+
+            tvSetFinishDate.visibility  = View.GONE
+            tvSetStartDate.visibility  = View.GONE
+
             it.hideKeyboard()
         }
 
@@ -168,8 +180,16 @@ class AddFoundBookDialog(
             rbAdderRating.visibility = View.GONE
             tvRateThisBook.visibility = View.GONE
             etPagesNumber.visibility = View.GONE
+
+            btnSetFinishDate.visibility = View.GONE
+            btnSetStartDate.visibility = View.GONE
+
             btnSetFinishDate.isClickable = false
             btnSetStartDate.isClickable = false
+
+            tvSetFinishDate.visibility = View.GONE
+            tvSetStartDate.visibility = View.GONE
+
             it.hideKeyboard()
         }
 
@@ -180,6 +200,7 @@ class AddFoundBookDialog(
             btnAdderSaveFinishDate.visibility = View.VISIBLE
             btnAdderCancelFinishDate.visibility = View.VISIBLE
             btnSetFinishDate.isClickable = false
+            btnSetStartDate.isClickable = false
 
             etAdderBookTitle.visibility = View.GONE
             etAdderAuthor.visibility = View.GONE
@@ -199,6 +220,8 @@ class AddFoundBookDialog(
             btnSetFinishDate.visibility = View.GONE
             btnSetStartDate.visibility = View.GONE
 
+            tvSetFinishDate.visibility = View.GONE
+            tvSetStartDate.visibility = View.GONE
         }
 
         btnSetStartDate.setOnClickListener {
@@ -226,6 +249,9 @@ class AddFoundBookDialog(
             btnAdderSaveBook.visibility = View.GONE
             btnSetFinishDate.visibility = View.GONE
             btnSetStartDate.visibility = View.GONE
+
+            tvSetFinishDate.visibility = View.GONE
+            tvSetStartDate.visibility = View.GONE
 
             ivBookCover.visibility = View.GONE
         }
@@ -258,6 +284,9 @@ class AddFoundBookDialog(
             btnSetFinishDate.isClickable = true
             btnSetStartDate.isClickable = true
 
+            tvSetFinishDate.visibility = View.VISIBLE
+            tvSetStartDate.visibility = View.VISIBLE
+
             btnSetFinishDate.text = bookFinishDateMs?.let { it1 -> convertLongToTime(it1) }
         }
 
@@ -286,6 +315,9 @@ class AddFoundBookDialog(
 
             btnSetFinishDate.isClickable = true
             btnSetStartDate.isClickable = true
+
+            tvSetFinishDate.visibility = View.VISIBLE
+            tvSetStartDate.visibility = View.VISIBLE
         }
 
         btnAdderSaveStartDate.setOnClickListener {
@@ -317,6 +349,9 @@ class AddFoundBookDialog(
 
             ivBookCover.visibility = View.VISIBLE
 
+            tvSetFinishDate.visibility = View.VISIBLE
+            tvSetStartDate.visibility = View.VISIBLE
+
             btnSetStartDate.text = bookStartDateMs?.let { it1 -> convertLongToTime(it1) }
         }
 
@@ -341,8 +376,12 @@ class AddFoundBookDialog(
             btnAdderSaveBook.visibility = View.VISIBLE
             btnSetFinishDate.visibility = View.VISIBLE
             btnSetStartDate.visibility = View.VISIBLE
+
             btnSetFinishDate.isClickable = true
             btnSetStartDate.isClickable = true
+
+            tvSetFinishDate.visibility = View.VISIBLE
+            tvSetStartDate.visibility = View.VISIBLE
 
             ivBookCover.visibility = View.VISIBLE
         }

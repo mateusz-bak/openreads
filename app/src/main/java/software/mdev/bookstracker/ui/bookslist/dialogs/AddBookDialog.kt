@@ -46,6 +46,10 @@ class AddBookDialog(context: Context, var addBookDialogListener: AddBookDialogLi
         btnSetStartDate.visibility  = View.GONE
         btnSetFinishDate.isClickable = false
         btnSetStartDate.isClickable = false
+
+        tvSetFinishDate.visibility  = View.GONE
+        tvSetStartDate.visibility  = View.GONE
+
         dpBookFinishDate.visibility = View.GONE
         dpBookStartDate.visibility = View.GONE
 
@@ -74,6 +78,10 @@ class AddBookDialog(context: Context, var addBookDialogListener: AddBookDialogLi
             btnSetStartDate.visibility  = View.VISIBLE
             btnSetFinishDate.isClickable = true
             btnSetStartDate.isClickable = true
+
+            tvSetFinishDate.visibility  = View.VISIBLE
+            tvSetStartDate.visibility  = View.VISIBLE
+
             etPagesNumber.requestFocus()
             showKeyboard(etPagesNumber,350)
         }
@@ -90,6 +98,10 @@ class AddBookDialog(context: Context, var addBookDialogListener: AddBookDialogLi
             btnSetStartDate.visibility  = View.GONE
             btnSetFinishDate.isClickable = false
             btnSetStartDate.isClickable = false
+
+            tvSetFinishDate.visibility  = View.GONE
+            tvSetStartDate.visibility  = View.GONE
+
             it.hideKeyboard()
         }
 
@@ -105,6 +117,10 @@ class AddBookDialog(context: Context, var addBookDialogListener: AddBookDialogLi
             btnSetStartDate.visibility  = View.GONE
             btnSetFinishDate.isClickable = false
             btnSetStartDate.isClickable = false
+
+            tvSetFinishDate.visibility  = View.GONE
+            tvSetStartDate.visibility  = View.GONE
+
             it.hideKeyboard()
         }
 
@@ -134,6 +150,9 @@ class AddBookDialog(context: Context, var addBookDialogListener: AddBookDialogLi
             btnSetFinishDate.visibility = View.GONE
             btnSetStartDate.visibility = View.GONE
 
+            tvSetFinishDate.visibility = View.GONE
+            tvSetStartDate.visibility = View.GONE
+
         }
 
         btnSetStartDate.setOnClickListener {
@@ -162,6 +181,8 @@ class AddBookDialog(context: Context, var addBookDialogListener: AddBookDialogLi
             btnSetFinishDate.visibility = View.GONE
             btnSetStartDate.visibility = View.GONE
 
+            tvSetFinishDate.visibility = View.GONE
+            tvSetStartDate.visibility = View.GONE
         }
 
         btnAdderSaveFinishDate.setOnClickListener {
@@ -187,6 +208,9 @@ class AddBookDialog(context: Context, var addBookDialogListener: AddBookDialogLi
             btnAdderSaveBook.visibility = View.VISIBLE
             btnSetFinishDate.visibility = View.VISIBLE
             btnSetStartDate.visibility = View.VISIBLE
+
+            tvSetFinishDate.visibility = View.VISIBLE
+            tvSetStartDate.visibility = View.VISIBLE
 
             btnSetFinishDate.isClickable = true
             btnSetStartDate.isClickable = true
@@ -217,6 +241,9 @@ class AddBookDialog(context: Context, var addBookDialogListener: AddBookDialogLi
             btnSetStartDate.visibility = View.VISIBLE
             btnSetFinishDate.isClickable = true
             btnSetStartDate.isClickable = true
+
+            tvSetFinishDate.visibility = View.VISIBLE
+            tvSetStartDate.visibility = View.VISIBLE
         }
 
         btnAdderSaveStartDate.setOnClickListener {
@@ -246,6 +273,9 @@ class AddBookDialog(context: Context, var addBookDialogListener: AddBookDialogLi
             btnSetFinishDate.isClickable = true
             btnSetStartDate.isClickable = true
 
+            tvSetFinishDate.visibility = View.VISIBLE
+            tvSetStartDate.visibility = View.VISIBLE
+
             btnSetStartDate.text = bookStartDateMs?.let { it1 -> convertLongToTime(it1) }
         }
 
@@ -272,6 +302,9 @@ class AddBookDialog(context: Context, var addBookDialogListener: AddBookDialogLi
             btnSetStartDate.visibility = View.VISIBLE
             btnSetFinishDate.isClickable = true
             btnSetStartDate.isClickable = true
+
+            tvSetFinishDate.visibility = View.VISIBLE
+            tvSetStartDate.visibility = View.VISIBLE
         }
 
         btnAdderSaveBook.setOnClickListener {
