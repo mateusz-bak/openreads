@@ -165,7 +165,7 @@ class InProgressFragment : Fragment(R.layout.fragment_in_progress) {
             btnAddManual.startAnimation(AnimationUtils.loadAnimation(context,R.anim.slide_out_down))
 
             findNavController().navigate(
-                R.id.action_readFragment_to_addBookSearchFragment)
+                R.id.action_inProgressFragment_to_addBookSearchFragment)
         }
 
         rvBooks.setOnClickListener {
