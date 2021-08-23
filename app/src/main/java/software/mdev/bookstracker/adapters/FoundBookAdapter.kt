@@ -112,6 +112,8 @@ class FoundBookAdapter(
                             .error(R.drawable.ic_baseline_error_outline_24)
                             .into(ivBookCover)
 
+                        tvCoverMissing.visibility = View.GONE
+
                         viewModel.showLoadingCircle.postValue(false)
                     } else {
                         ivBookCover.setImageDrawable(holder.itemView.context.getDrawable(R.drawable.ic_baseline_book_24))

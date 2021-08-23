@@ -104,6 +104,8 @@ class AddFoundBookDialog(
                     .placeholder(circularProgressDrawable)
                     .error(R.drawable.ic_baseline_error_outline_24)
                     .into(ivBookCover)
+            } else {
+                ivBookCover.visibility = View.GONE
             }
         }
 

@@ -204,5 +204,6 @@
     <string name="hint_olid" translatable="false">Open Library ID</string>
     <string name="hint_isbn10" translatable="false">ISBN 10</string>
     <string name="hint_isbn13" translatable="false">ISBN 13</string>
+    <string name="tv_cover_missing">Cover missing</string>
 
 </resources>
