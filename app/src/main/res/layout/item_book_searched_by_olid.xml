@@ -4,7 +4,10 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:padding="4dp">
+    android:paddingTop="4dp"
+    android:paddingStart="4dp"
+    android:paddingEnd="4dp"
+    android:paddingBottom="12dp">
 
     <TextView
         android:id="@+id/tvBookTitle"
@@ -56,9 +59,20 @@
         android:layout_width="80dp"
         android:layout_height="0dp"
         android:scaleType="fitCenter"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/tvCoverMissing"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/tvCoverMissing"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/tv_cover_missing"
+        android:textSize="14sp"
+        app:layout_constraintEnd_toEndOf="@+id/ivBookCover"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="@+id/ivBookCover"
+        app:layout_constraintTop_toBottomOf="@+id/ivBookCover" />
 
     <TextView
         android:id="@+id/tvBookOLID"

@@ -44,10 +44,21 @@ class ChallengeDialog(
         showKeyboard(etChallengeEditorBooksNumber,350)
 
         btnChallengeEditorSet.setOnClickListener {
-            if (etChallengeEditorBooksNumber.text.toString().isNotEmpty()) {
-                year.yearChallengeBooks = etChallengeEditorBooksNumber.text.toString().toInt()
-                challengeDialogListener.onSaveButtonClicked(year)
-                dismiss()
+            var chosenDifficulty = etChallengeEditorBooksNumber.text.toString()
+
+            if (chosenDifficulty.isNotEmpty()) {
+
+                if (chosenDifficulty.toInt() > 0) {
+                    year.yearChallengeBooks = etChallengeEditorBooksNumber.text.toString().toInt()
+                    challengeDialogListener.onSaveButtonClicked(year)
+                    dismiss()
+                } else {
+                    Snackbar.make(
+                        it,
+                        R.string.warning_challenge_difficulty_not_set,
+                        Snackbar.LENGTH_SHORT
+                    ).show()
+                }
             } else {
                 Snackbar.make(
                     it,
@@ -55,6 +66,10 @@ class ChallengeDialog(
                     Snackbar.LENGTH_SHORT
                 ).show()
             }
+        }
+
+        btnChallengeEditorCancel.setOnClickListener {
+            dismiss()
         }
     }
 

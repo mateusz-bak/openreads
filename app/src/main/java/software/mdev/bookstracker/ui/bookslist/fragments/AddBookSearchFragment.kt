@@ -449,11 +449,5 @@ class AddBookSearchFragment : Fragment(R.layout.fragment_add_book_search) {
                 }
             }
             )
-        lifecycleScope.launch {
-            delay(500L)
-            view?.hideKeyboard()
-            findNavController().popBackStack()
-            findNavController().popBackStack()
-        }
     }
 }

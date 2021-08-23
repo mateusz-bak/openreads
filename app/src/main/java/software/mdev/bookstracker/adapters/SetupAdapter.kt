@@ -84,6 +84,7 @@ class SetupAdapter(
         editor.apply {
             putBoolean(Constants.SHARED_PREFERENCES_KEY_FIRST_TIME_TOGGLE, false)
             putString(Constants.SHARED_PREFERENCES_KEY_APP_VERSION, appVersion)
+            putBoolean(Constants.SHARED_PREFERENCES_KEY_SHOW_OL_ALERT, true)
             apply()
         }
     }

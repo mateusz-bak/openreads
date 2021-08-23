@@ -46,7 +46,7 @@
             android:id="@+id/etAdderAuthor"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="12dp"
+            android:layout_marginTop="4dp"
             android:width="300dp"
             android:autofillHints="@string/hintBookAuthor"
             android:hint="@string/etAdderAuthor"
@@ -63,7 +63,7 @@
             android:id="@+id/rbAdderRating"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="12dp"
+            android:layout_marginTop="4dp"
             android:stepSize="1"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.5"
@@ -87,7 +87,7 @@
             android:id="@+id/btnAdderSaveBook"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
+            android:layout_marginTop="4dp"
             android:backgroundTint="?colorPrimary"
             android:text="@string/btnAdderSaveBook"
             app:layout_constraintEnd_toEndOf="parent"
@@ -148,7 +148,7 @@
             android:id="@+id/ivBookStatusSetRead"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="24dp"
+            android:layout_marginTop="12dp"
             android:clickable="true"
             android:contentDescription="@string/ivBookStatusSetRead"
             android:focusable="true"
@@ -218,14 +218,14 @@
             android:id="@+id/tvRateThisBook"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
             android:layout_marginBottom="8dp"
             android:text="@string/rate_this_book"
             android:textSize="16sp"
-            android:layout_marginTop="12dp"
             app:layout_constraintBottom_toTopOf="@+id/rbAdderRating"
             app:layout_constraintEnd_toEndOf="@+id/rbAdderRating"
             app:layout_constraintStart_toStartOf="@+id/rbAdderRating"
-            app:layout_constraintTop_toBottomOf="@+id/btnSetStartDate" />
+            app:layout_constraintTop_toBottomOf="@+id/btnSetFinishDate" />
 
         <TextView
             android:id="@+id/tvToRead"
@@ -242,7 +242,7 @@
             android:id="@+id/etPagesNumber"
             android:layout_width="75dp"
             android:layout_height="wrap_content"
-            android:layout_marginTop="12dp"
+            android:layout_marginTop="4dp"
             android:autofillHints="@string/autofill_hint_pages_number"
             android:hint="@string/hint_pages_number"
             android:inputType="number"
@@ -276,27 +276,55 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
+        <TextView
+            android:id="@+id/tvSetStartDate"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:layout_marginBottom="8dp"
+            android:text="@string/hint_date_started"
+            android:textSize="16sp"
+            app:layout_constraintBottom_toBottomOf="@+id/btnSetStartDate"
+            app:layout_constraintEnd_toStartOf="@+id/btnSetStartDate"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/btnSetStartDate" />
+
+        <TextView
+            android:id="@+id/tvSetFinishDate"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:layout_marginBottom="8dp"
+            android:text="@string/hint_date_finished"
+            android:textSize="16sp"
+            app:layout_constraintBottom_toBottomOf="@+id/btnSetFinishDate"
+            app:layout_constraintEnd_toStartOf="@+id/btnSetFinishDate"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/btnSetFinishDate" />
+
+
         <Button
             android:id="@+id/btnSetStartDate"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/hint_date_started"
-            android:layout_marginTop="12dp"
-            app:layout_constraintEnd_toStartOf="@+id/btnSetFinishDate"
+            android:layout_marginTop="4dp"
+            android:text="@string/not_set"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintStart_toStartOf="@+id/etAdderBookTitle"
+            app:layout_constraintStart_toEndOf="@+id/tvSetStartDate"
             app:layout_constraintTop_toBottomOf="@+id/tvFinished" />
 
         <Button
             android:id="@+id/btnSetFinishDate"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/hint_date_finished"
-            app:layout_constraintBottom_toBottomOf="@+id/btnSetStartDate"
-            app:layout_constraintEnd_toEndOf="@+id/etAdderBookTitle"
+            android:text="@string/not_set"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintStart_toEndOf="@+id/btnSetStartDate" />
-
+            app:layout_constraintStart_toEndOf="@+id/tvSetFinishDate"
+            app:layout_constraintTop_toBottomOf="@+id/btnSetStartDate" />
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>

@@ -152,8 +152,6 @@ class InProgressFragment : Fragment(R.layout.fragment_in_progress) {
                 btnAddSearch.startAnimation(AnimationUtils.loadAnimation(context,R.anim.slide_out_down))
                 btnAddManual.startAnimation(AnimationUtils.loadAnimation(context,R.anim.slide_out_down))
             }
-
-
         }
 
         btnAddSearch.setOnClickListener {
@@ -275,7 +273,7 @@ class InProgressFragment : Fragment(R.layout.fragment_in_progress) {
                     ivClearSearch.visibility = View.GONE
                     ivClearSearch.isClickable = false
                     it.hideKeyboard()
-                    getBooks(bookAdapter)
+                    this.getBooks(bookAdapter)
                 }
             }
         }
@@ -296,25 +294,13 @@ class InProgressFragment : Fragment(R.layout.fragment_in_progress) {
         inputManager.toggleSoftInputFromWindow(windowToken, 0, 0)
     }
 
-    fun getBooks(
-        bookAdapter: BookAdapter) {
+    private fun getBooks(bookAdapter: BookAdapter) {
         val sharedPref = (activity as ListActivity).getSharedPreferences(Constants.SHARED_PREFERENCES_NAME, Context.MODE_PRIVATE)
-        when(sharedPref.getString(
-            Constants.SHARED_PREFERENCES_KEY_SORT_ORDER,
-            Constants.SORT_ORDER_TITLE_ASC
-        )) {
-            Constants.SORT_ORDER_TITLE_DESC -> viewModel.getSortedBooksByTitleDesc(currentFragment).observe(viewLifecycleOwner, Observer { some_books -> functions.filterBooksList(activity as ListActivity, bookAdapter, some_books)})
-            Constants.SORT_ORDER_TITLE_ASC -> viewModel.getSortedBooksByTitleAsc(currentFragment).observe(viewLifecycleOwner, Observer { some_books -> functions.filterBooksList(activity as ListActivity, bookAdapter, some_books)})
-            Constants.SORT_ORDER_AUTHOR_DESC -> viewModel.getSortedBooksByAuthorDesc(currentFragment).observe(viewLifecycleOwner, Observer { some_books -> functions.filterBooksList(activity as ListActivity, bookAdapter, some_books)})
-            Constants.SORT_ORDER_AUTHOR_ASC -> viewModel.getSortedBooksByAuthorAsc(currentFragment).observe(viewLifecycleOwner, Observer { some_books -> functions.filterBooksList(activity as ListActivity, bookAdapter, some_books)})
-            Constants.SORT_ORDER_RATING_DESC -> viewModel.getSortedBooksByRatingDesc(currentFragment).observe(viewLifecycleOwner, Observer { some_books -> functions.filterBooksList(activity as ListActivity, bookAdapter, some_books)})
-            Constants.SORT_ORDER_RATING_ASC -> viewModel.getSortedBooksByRatingAsc(currentFragment).observe(viewLifecycleOwner, Observer { some_books -> functions.filterBooksList(activity as ListActivity, bookAdapter, some_books)})
-            Constants.SORT_ORDER_PAGES_DESC -> viewModel.getSortedBooksByPagesDesc(currentFragment).observe(viewLifecycleOwner, Observer { some_books -> functions.filterBooksList(activity as ListActivity, bookAdapter, some_books)})
-            Constants.SORT_ORDER_PAGES_ASC -> viewModel.getSortedBooksByPagesAsc(currentFragment).observe(viewLifecycleOwner, Observer { some_books -> functions.filterBooksList(activity as ListActivity, bookAdapter, some_books)})
-            Constants.SORT_ORDER_START_DATE_DESC -> viewModel.getSortedBooksByStartDateDesc(currentFragment).observe(viewLifecycleOwner, Observer { some_books -> functions.filterBooksList(activity as ListActivity, bookAdapter, some_books)})
-            Constants.SORT_ORDER_START_DATE_ASC -> viewModel.getSortedBooksByStartDateAsc(currentFragment).observe(viewLifecycleOwner, Observer { some_books -> functions.filterBooksList(activity as ListActivity, bookAdapter, some_books)})
-            Constants.SORT_ORDER_FINISH_DATE_DESC -> viewModel.getSortedBooksByFinishDateDesc(currentFragment).observe(viewLifecycleOwner, Observer { some_books -> functions.filterBooksList(activity as ListActivity, bookAdapter, some_books)})
-            Constants.SORT_ORDER_FINISH_DATE_ASC -> viewModel.getSortedBooksByFinishDateAsc(currentFragment).observe(viewLifecycleOwner, Observer { some_books -> functions.filterBooksList(activity as ListActivity, bookAdapter, some_books)})
+        when(sharedPref.getString(Constants.SHARED_PREFERENCES_KEY_SORT_ORDER, Constants.SORT_ORDER_TITLE_ASC)) {
+            Constants.SORT_ORDER_TITLE_DESC -> viewModel.getSortedBooksByTitleDesc(currentFragment).observe(viewLifecycleOwner, Observer { some_books -> bookAdapter.differ.submitList(some_books)})
+            Constants.SORT_ORDER_AUTHOR_DESC -> viewModel.getSortedBooksByAuthorDesc(currentFragment).observe(viewLifecycleOwner, Observer { some_books -> bookAdapter.differ.submitList(some_books)})
+            Constants.SORT_ORDER_AUTHOR_ASC -> viewModel.getSortedBooksByAuthorAsc(currentFragment).observe(viewLifecycleOwner, Observer { some_books -> bookAdapter.differ.submitList(some_books)})
+            else -> viewModel.getSortedBooksByTitleAsc(currentFragment).observe(viewLifecycleOwner, Observer { some_books -> bookAdapter.differ.submitList(some_books)})
         }
     }
 
