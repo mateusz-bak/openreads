@@ -310,21 +310,51 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="4dp"
+            android:layout_marginEnd="24dp"
             android:text="@string/not_set"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toEndOf="@+id/tvSetStartDate"
             app:layout_constraintTop_toBottomOf="@+id/tvFinished" />
 
+        <ImageView
+            android:id="@+id/ivClearStartDate"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:clickable="true"
+            android:focusable="true"
+            android:scaleX="1.2"
+            android:scaleY="1.2"
+            app:layout_constraintBottom_toBottomOf="@+id/btnSetStartDate"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/btnSetStartDate"
+            app:layout_constraintTop_toTopOf="@+id/btnSetStartDate"
+            app:srcCompat="@drawable/ic_baseline_clear_24" />
+
         <Button
             android:id="@+id/btnSetFinishDate"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginEnd="24dp"
             android:text="@string/not_set"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toEndOf="@+id/tvSetFinishDate"
             app:layout_constraintTop_toBottomOf="@+id/btnSetStartDate" />
+
+        <ImageView
+            android:id="@+id/ivClearFinishDate"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:clickable="true"
+            android:focusable="true"
+            android:scaleX="1.2"
+            android:scaleY="1.2"
+            app:layout_constraintBottom_toBottomOf="@+id/btnSetFinishDate"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/btnSetFinishDate"
+            app:layout_constraintTop_toTopOf="@+id/btnSetFinishDate"
+            app:srcCompat="@drawable/ic_baseline_clear_24" />
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>

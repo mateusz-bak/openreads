@@ -56,6 +56,9 @@ class AddFoundBookDialog(
         btnSetFinishDate.isClickable = false
         btnSetStartDate.isClickable = false
 
+        ivClearStartDate.visibility  = View.GONE
+        ivClearFinishDate.visibility  = View.GONE
+
         tvSetFinishDate.visibility  = View.GONE
         tvSetStartDate.visibility  = View.GONE
 
@@ -133,8 +136,18 @@ class AddFoundBookDialog(
             tvSetFinishDate.visibility  = View.VISIBLE
             tvSetStartDate.visibility  = View.VISIBLE
 
+            if (bookStartDateMs == null)
+                ivClearStartDate.visibility  = View.GONE
+            else
+                ivClearStartDate.visibility  = View.VISIBLE
+
+            if (bookFinishDateMs == null)
+                ivClearFinishDate.visibility  = View.GONE
+            else
+                ivClearFinishDate.visibility  = View.VISIBLE
+
             etPagesNumber.requestFocus()
-            showKeyboard(etPagesNumber, 350)
+            showKeyboard(etPagesNumber,250)
         }
 
         ivBookStatusSetInProgress.setOnClickListener {
@@ -162,7 +175,21 @@ class AddFoundBookDialog(
             tvSetFinishDate.visibility  = View.GONE
             tvSetStartDate.visibility  = View.GONE
 
-            it.hideKeyboard()
+            etPagesNumber.visibility = View.VISIBLE
+            btnSetStartDate.visibility  = View.VISIBLE
+            btnSetStartDate.isClickable = true
+
+            tvSetStartDate.visibility  = View.VISIBLE
+
+            if (bookStartDateMs == null)
+                ivClearStartDate.visibility  = View.GONE
+            else
+                ivClearStartDate.visibility  = View.VISIBLE
+
+            ivClearFinishDate.visibility  = View.GONE
+
+            etPagesNumber.requestFocus()
+            showKeyboard(etPagesNumber,250)
         }
 
         ivBookStatusSetToRead.setOnClickListener {
@@ -191,6 +218,9 @@ class AddFoundBookDialog(
 
             tvSetFinishDate.visibility = View.GONE
             tvSetStartDate.visibility = View.GONE
+
+            ivClearStartDate.visibility  = View.GONE
+            ivClearFinishDate.visibility  = View.GONE
 
             it.hideKeyboard()
         }
@@ -291,6 +321,8 @@ class AddFoundBookDialog(
             tvSetStartDate.visibility = View.VISIBLE
 
             btnSetFinishDate.text = bookFinishDateMs?.let { it1 -> convertLongToTime(it1) }
+
+            ivClearFinishDate.visibility  = View.VISIBLE
         }
 
         btnAdderCancelFinishDate.setOnClickListener {
@@ -345,10 +377,8 @@ class AddFoundBookDialog(
             tvRateThisBook.visibility = View.VISIBLE
             rbAdderRating.visibility = View.VISIBLE
             btnAdderSaveBook.visibility = View.VISIBLE
-            btnSetFinishDate.visibility = View.VISIBLE
             btnSetStartDate.visibility = View.VISIBLE
 
-            btnSetFinishDate.isClickable = true
             btnSetStartDate.isClickable = true
 
             if (resource.data!!.covers != null)
@@ -358,6 +388,21 @@ class AddFoundBookDialog(
             tvSetStartDate.visibility = View.VISIBLE
 
             btnSetStartDate.text = bookStartDateMs?.let { it1 -> convertLongToTime(it1) }
+
+            ivClearStartDate.visibility  = View.VISIBLE
+
+            if (whatIsClicked == Constants.BOOK_STATUS_IN_PROGRESS) {
+                btnSetFinishDate.visibility = View.GONE
+                btnSetFinishDate.isClickable = false
+                tvSetFinishDate.visibility = View.GONE
+                ivClearFinishDate.visibility = View.GONE
+            } else {
+                btnSetFinishDate.visibility = View.VISIBLE
+                btnSetFinishDate.isClickable = true
+                tvSetFinishDate.visibility = View.VISIBLE
+                if (bookFinishDateMs != null)
+                    ivClearFinishDate.visibility = View.VISIBLE
+            }
         }
 
         btnAdderCancelStartDate.setOnClickListener {
@@ -379,10 +424,8 @@ class AddFoundBookDialog(
             tvRateThisBook.visibility = View.VISIBLE
             rbAdderRating.visibility = View.VISIBLE
             btnAdderSaveBook.visibility = View.VISIBLE
-            btnSetFinishDate.visibility = View.VISIBLE
             btnSetStartDate.visibility = View.VISIBLE
 
-            btnSetFinishDate.isClickable = true
             btnSetStartDate.isClickable = true
 
             if (resource.data!!.covers != null)
@@ -391,7 +434,34 @@ class AddFoundBookDialog(
             tvSetFinishDate.visibility = View.VISIBLE
             tvSetStartDate.visibility = View.VISIBLE
 
-            ivBookCover.visibility = View.VISIBLE
+            if (whatIsClicked == Constants.BOOK_STATUS_IN_PROGRESS) {
+                btnSetFinishDate.visibility = View.GONE
+                btnSetFinishDate.isClickable = false
+                tvSetFinishDate.visibility = View.GONE
+                ivClearFinishDate.visibility = View.GONE
+            } else {
+                btnSetFinishDate.visibility = View.VISIBLE
+                btnSetFinishDate.isClickable = true
+                tvSetFinishDate.visibility = View.VISIBLE
+                if (bookFinishDateMs != null)
+                    ivClearFinishDate.visibility = View.VISIBLE
+            }
+        }
+
+        ivClearStartDate.setOnClickListener {
+            ivClearStartDate.visibility = View.GONE
+
+            btnSetStartDate.text =  context.getString(R.string.not_set)
+
+            bookStartDateMs = null
+        }
+
+        ivClearFinishDate.setOnClickListener {
+            ivClearFinishDate.visibility = View.GONE
+
+            btnSetFinishDate.text =  context.getString(R.string.not_set)
+
+            bookFinishDateMs = null
         }
 
         btnAdderSaveBook.setOnClickListener {
@@ -404,103 +474,84 @@ class AddFoundBookDialog(
             if (bookTitle.isNotEmpty()) {
                 if (bookAuthor.isNotEmpty()) {
                     if (whatIsClicked != BOOK_STATUS_NOTHING) {
-                        if (bookNumberOfPagesIntOrNull != null || whatIsClicked == BOOK_STATUS_IN_PROGRESS || whatIsClicked == BOOK_STATUS_TO_READ) {
                             bookNumberOfPagesInt = when (bookNumberOfPagesIntOrNull) {
                                 null -> 0
                                 else -> bookNumberOfPagesIntOrNull
                             }
-                            if (bookNumberOfPagesInt > 0 || whatIsClicked == BOOK_STATUS_IN_PROGRESS || whatIsClicked == BOOK_STATUS_TO_READ) {
 
-                                if (bookFinishDateMs != null || whatIsClicked == BOOK_STATUS_IN_PROGRESS || whatIsClicked == BOOK_STATUS_TO_READ) {
+                        if ((bookFinishDateMs != null && bookStartDateMs != null && bookStartDateMs!! < bookFinishDateMs!!)
+                            || whatIsClicked == Constants.BOOK_STATUS_IN_PROGRESS
+                            || whatIsClicked == Constants.BOOK_STATUS_TO_READ
+                            || (bookFinishDateMs == null && bookStartDateMs == null) ) {
 
-                                    if (bookStartDateMs != null || whatIsClicked == BOOK_STATUS_IN_PROGRESS || whatIsClicked == BOOK_STATUS_TO_READ) {
+                            when (whatIsClicked) {
+                                BOOK_STATUS_READ -> {
+                                    bookRating = rbAdderRating.rating
+                                }
+                                BOOK_STATUS_IN_PROGRESS -> {
+                                    bookRating = 0.0F
+                                    bookFinishDateMs = null
+                                }
+                                BOOK_STATUS_TO_READ -> {
+                                    bookRating = 0.0F
+                                    bookNumberOfPagesInt = 0
+                                    bookStartDateMs = null
+                                    bookFinishDateMs = null
+                                }
+                            }
 
-                                        if ((bookFinishDateMs != null && bookStartDateMs != null && bookStartDateMs!! < bookFinishDateMs!!) || whatIsClicked == Constants.BOOK_STATUS_IN_PROGRESS || whatIsClicked == Constants.BOOK_STATUS_TO_READ) {
+                            val REGEX_UNACCENT =
+                                "\\p{InCombiningDiacriticalMarks}+".toRegex()
 
-                                            when (whatIsClicked) {
-                                                BOOK_STATUS_READ -> bookRating =
-                                                    rbAdderRating.rating
-                                                BOOK_STATUS_IN_PROGRESS -> bookRating = 0.0F
-                                                BOOK_STATUS_TO_READ -> {
-                                                    bookRating = 0.0F
-                                                    bookNumberOfPagesInt = 0
-                                                }
-                                            }
+                            fun CharSequence.unaccent(): String {
+                                val temp =
+                                    Normalizer.normalize(this, Normalizer.Form.NFD)
+                                return REGEX_UNACCENT.replace(temp, "")
+                            }
 
-                                            val REGEX_UNACCENT =
-                                                "\\p{InCombiningDiacriticalMarks}+".toRegex()
-
-                                            fun CharSequence.unaccent(): String {
-                                                val temp =
-                                                    Normalizer.normalize(this, Normalizer.Form.NFD)
-                                                return REGEX_UNACCENT.replace(temp, "")
-                                            }
-
-                                            var coverID = Constants.DATABASE_EMPTY_VALUE
-                                            if (resource.data!!.covers != null)
-                                                coverID = resource.data!!.covers[0].toString()
+                            var coverID = Constants.DATABASE_EMPTY_VALUE
+                            if (resource.data!!.covers != null)
+                                coverID = resource.data!!.covers[0].toString()
 //                                        var coverUrl = "https://covers.openlibrary.org/b/id/$coverID-M.jpg"
 
-                                            var olid = resource.data!!.key
-                                            var isbn10 = Constants.DATABASE_EMPTY_VALUE
-                                            var isbn13 = Constants.DATABASE_EMPTY_VALUE
+                            var olid = resource.data!!.key
+                            var isbn10 = Constants.DATABASE_EMPTY_VALUE
+                            var isbn13 = Constants.DATABASE_EMPTY_VALUE
 
-                                            if (resource.data!!.isbn_10 != null) {
-                                                isbn10 = resource.data!!.isbn_10[0]
-                                            }
-
-                                            if (resource.data!!.isbn_13 != null) {
-                                                isbn13 = resource.data!!.isbn_13[0]
-                                            }
-
-                                            val editedBook = Book(
-                                                bookTitle,
-                                                bookAuthor,
-                                                bookRating,
-                                                bookStatus = whatIsClicked,
-                                                bookPriority = DATABASE_EMPTY_VALUE,
-                                                bookStartDate = bookStartDateMs.toString(),
-                                                bookFinishDate = bookFinishDateMs.toString(),
-                                                bookNumberOfPages = bookNumberOfPagesInt,
-                                                bookTitle_ASCII = bookTitle.unaccent()
-                                                    .replace("ł", "l", false),
-                                                bookAuthor_ASCII = bookAuthor.unaccent()
-                                                    .replace("ł", "l", false),
-                                                false,
-                                                coverID.toString(),
-                                                olid.replace("/books/", ""),
-                                                isbn10,
-                                                isbn13
-                                            )
-
-                                            addFoundBookDialogListener.onSaveButtonClicked(
-                                                editedBook
-                                            )
-                                            dismiss()
-                                        } else {
-                                            Snackbar.make(it, R.string.sbWarningStartDateMustBeBeforeFinishDate, Snackbar.LENGTH_SHORT).show()
-                                        }
-                                    } else {
-                                        Snackbar.make(it, R.string.sbWarningMissingStartDate, Snackbar.LENGTH_SHORT).show()
-                                    }
-                                } else {
-                                    Snackbar.make(
-                                        it,
-                                        R.string.sbWarningMissingFinishDate,
-                                        Snackbar.LENGTH_SHORT
-                                    ).show()
-                                }
-
-                            } else {
-                                Snackbar.make(
-                                    it,
-                                    R.string.sbWarningPagesMissing,
-                                    Snackbar.LENGTH_SHORT
-                                ).show()
+                            if (resource.data!!.isbn_10 != null) {
+                                isbn10 = resource.data!!.isbn_10[0]
                             }
+
+                            if (resource.data!!.isbn_13 != null) {
+                                isbn13 = resource.data!!.isbn_13[0]
+                            }
+
+                            val editedBook = Book(
+                                bookTitle,
+                                bookAuthor,
+                                bookRating,
+                                bookStatus = whatIsClicked,
+                                bookPriority = DATABASE_EMPTY_VALUE,
+                                bookStartDate = bookStartDateMs.toString(),
+                                bookFinishDate = bookFinishDateMs.toString(),
+                                bookNumberOfPages = bookNumberOfPagesInt,
+                                bookTitle_ASCII = bookTitle.unaccent()
+                                    .replace("ł", "l", false),
+                                bookAuthor_ASCII = bookAuthor.unaccent()
+                                    .replace("ł", "l", false),
+                                false,
+                                coverID.toString(),
+                                olid.replace("/books/", ""),
+                                isbn10,
+                                isbn13
+                            )
+
+                            addFoundBookDialogListener.onSaveButtonClicked(
+                                editedBook
+                            )
+                            dismiss()
                         } else {
-                            Snackbar.make(it, R.string.sbWarningPagesMissing, Snackbar.LENGTH_SHORT)
-                                .show()
+                            Snackbar.make(it, R.string.sbWarningStartDateMustBeBeforeFinishDate, Snackbar.LENGTH_SHORT).show()
                         }
                     } else {
                         Snackbar.make(it, R.string.sbWarningState, Snackbar.LENGTH_SHORT).show()
