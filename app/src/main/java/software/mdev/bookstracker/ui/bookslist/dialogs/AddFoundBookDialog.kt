@@ -275,7 +275,8 @@ class AddFoundBookDialog(
             tvInProgress.visibility = View.VISIBLE
             tvToRead.visibility = View.VISIBLE
 
-            ivBookCover.visibility = View.VISIBLE
+            if (resource.data!!.covers != null)
+                ivBookCover.visibility = View.VISIBLE
             etPagesNumber.visibility = View.VISIBLE
             tvRateThisBook.visibility = View.VISIBLE
             rbAdderRating.visibility = View.VISIBLE
@@ -307,7 +308,8 @@ class AddFoundBookDialog(
             tvInProgress.visibility = View.VISIBLE
             tvToRead.visibility = View.VISIBLE
 
-            ivBookCover.visibility = View.VISIBLE
+            if (resource.data!!.covers != null)
+                ivBookCover.visibility = View.VISIBLE
             etPagesNumber.visibility = View.VISIBLE
             tvRateThisBook.visibility = View.VISIBLE
             rbAdderRating.visibility = View.VISIBLE
@@ -349,7 +351,8 @@ class AddFoundBookDialog(
             btnSetFinishDate.isClickable = true
             btnSetStartDate.isClickable = true
 
-            ivBookCover.visibility = View.VISIBLE
+            if (resource.data!!.covers != null)
+                ivBookCover.visibility = View.VISIBLE
 
             tvSetFinishDate.visibility = View.VISIBLE
             tvSetStartDate.visibility = View.VISIBLE
@@ -381,6 +384,9 @@ class AddFoundBookDialog(
 
             btnSetFinishDate.isClickable = true
             btnSetStartDate.isClickable = true
+
+            if (resource.data!!.covers != null)
+                ivBookCover.visibility = View.VISIBLE
 
             tvSetFinishDate.visibility = View.VISIBLE
             tvSetStartDate.visibility = View.VISIBLE
