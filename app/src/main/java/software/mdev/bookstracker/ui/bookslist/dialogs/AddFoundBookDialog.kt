@@ -451,7 +451,7 @@ class AddFoundBookDialog(
         ivClearStartDate.setOnClickListener {
             ivClearStartDate.visibility = View.GONE
 
-            btnSetStartDate.text =  context.getString(R.string.not_set)
+            btnSetStartDate.text =  context.getString(R.string.set)
 
             bookStartDateMs = null
         }
@@ -459,7 +459,7 @@ class AddFoundBookDialog(
         ivClearFinishDate.setOnClickListener {
             ivClearFinishDate.visibility = View.GONE
 
-            btnSetFinishDate.text =  context.getString(R.string.not_set)
+            btnSetFinishDate.text =  context.getString(R.string.set)
 
             bookFinishDateMs = null
         }
@@ -482,7 +482,9 @@ class AddFoundBookDialog(
                         if ((bookFinishDateMs != null && bookStartDateMs != null && bookStartDateMs!! < bookFinishDateMs!!)
                             || whatIsClicked == Constants.BOOK_STATUS_IN_PROGRESS
                             || whatIsClicked == Constants.BOOK_STATUS_TO_READ
-                            || (bookFinishDateMs == null && bookStartDateMs == null) ) {
+                            || (bookFinishDateMs == null && bookStartDateMs == null)
+                            || bookFinishDateMs == null
+                            || bookStartDateMs == null ) {
 
                             when (whatIsClicked) {
                                 BOOK_STATUS_READ -> {
