@@ -95,17 +95,21 @@ class EditBookFragment : Fragment(R.layout.fragment_edit_book) {
         dpEditBookStartDate.maxDate = System.currentTimeMillis()
 
         if(book.bookFinishDate == "none" || book.bookFinishDate == "null") {
-            btnEditFinishDate.text = getString(R.string.hint_date_finished)
+            btnEditFinishDate.text = getString(R.string.set)
+            ivClearFinishDate.visibility = View.GONE
         } else {
             var bookFinishTimeStampLong = book.bookFinishDate.toLong()
             btnEditFinishDate.text = convertLongToTime(bookFinishTimeStampLong)
+            ivClearFinishDate.visibility = View.VISIBLE
         }
 
         if(book.bookStartDate == "none" || book.bookStartDate == "null") {
-            btnEditStartDate.text = getString(R.string.hint_date_started)
+            btnEditStartDate.text = getString(R.string.set)
+            ivClearStartDate.visibility = View.GONE
         } else {
             var bookStartTimeStampLong = book.bookStartDate.toLong()
             btnEditStartDate.text = convertLongToTime(bookStartTimeStampLong)
+            ivClearStartDate.visibility = View.VISIBLE
         }
 
         if(book.bookOLID == "none" || book.bookOLID == "null") {
@@ -170,6 +174,8 @@ class EditBookFragment : Fragment(R.layout.fragment_edit_book) {
         }
 
         ivEditorBookStatusRead.setOnClickListener {
+            it.hideKeyboard()
+
             ivEditorBookStatusRead.setColorFilter(accentColor, android.graphics.PorterDuff.Mode.SRC_IN)
             ivEditorBookStatusInProgress.setColorFilter(ContextCompat.getColor(view.context, R.color.grey), android.graphics.PorterDuff.Mode.SRC_IN)
             ivEditorBookStatusToRead.setColorFilter(ContextCompat.getColor(view.context, R.color.grey), android.graphics.PorterDuff.Mode.SRC_IN)
@@ -181,9 +187,17 @@ class EditBookFragment : Fragment(R.layout.fragment_edit_book) {
 
             tvDateStartedTitle.visibility = View.VISIBLE
             tvDateFinishedTitle.visibility = View.VISIBLE
+
+            if (bookStartDateMs != null)
+                ivClearStartDate.visibility = View.VISIBLE
+
+            if (bookFinishDateMs != null)
+                ivClearFinishDate.visibility = View.VISIBLE
         }
 
         ivEditorBookStatusInProgress.setOnClickListener {
+            it.hideKeyboard()
+
             ivEditorBookStatusRead.setColorFilter(ContextCompat.getColor(view.context, R.color.grey), android.graphics.PorterDuff.Mode.SRC_IN)
             ivEditorBookStatusInProgress.setColorFilter(accentColor, android.graphics.PorterDuff.Mode.SRC_IN)
             ivEditorBookStatusToRead.setColorFilter(ContextCompat.getColor(view.context, R.color.grey), android.graphics.PorterDuff.Mode.SRC_IN)
@@ -195,9 +209,19 @@ class EditBookFragment : Fragment(R.layout.fragment_edit_book) {
 
             tvDateStartedTitle.visibility = View.GONE
             tvDateFinishedTitle.visibility = View.GONE
+
+            tvDateStartedTitle.visibility = View.VISIBLE
+            btnEditStartDate.visibility = View.VISIBLE
+
+            ivClearFinishDate.visibility = View.GONE
+
+            if (bookStartDateMs != null)
+                ivClearStartDate.visibility = View.VISIBLE
         }
 
         ivEditorBookStatusToRead.setOnClickListener {
+            it.hideKeyboard()
+
             ivEditorBookStatusRead.setColorFilter(ContextCompat.getColor(view.context, R.color.grey), android.graphics.PorterDuff.Mode.SRC_IN)
             ivEditorBookStatusInProgress.setColorFilter(ContextCompat.getColor(view.context, R.color.grey), android.graphics.PorterDuff.Mode.SRC_IN)
             ivEditorBookStatusToRead.setColorFilter(accentColor, android.graphics.PorterDuff.Mode.SRC_IN)
@@ -209,6 +233,9 @@ class EditBookFragment : Fragment(R.layout.fragment_edit_book) {
 
             tvDateStartedTitle.visibility = View.GONE
             tvDateFinishedTitle.visibility = View.GONE
+
+            ivClearStartDate.visibility = View.GONE
+            ivClearFinishDate.visibility = View.GONE
         }
 
         btnEditFinishDate.setOnClickListener {
@@ -248,6 +275,9 @@ class EditBookFragment : Fragment(R.layout.fragment_edit_book) {
             tvEditedOLID.visibility = View.GONE
             tvEditedISBN10.visibility = View.GONE
             tvEditedISBN13.visibility = View.GONE
+
+            ivClearStartDate.visibility = View.GONE
+            ivClearFinishDate.visibility = View.GONE
         }
 
         btnEditorSaveFinishDate.setOnClickListener {
@@ -289,6 +319,11 @@ class EditBookFragment : Fragment(R.layout.fragment_edit_book) {
             tvEditedISBN13.visibility = View.VISIBLE
 
             btnEditFinishDate.text = bookFinishDateMs?.let { it1 -> convertLongToTime(it1) }
+
+            if (bookStartDateMs != null)
+                ivClearStartDate.visibility = View.VISIBLE
+            if (bookFinishDateMs != null)
+                ivClearFinishDate.visibility = View.VISIBLE
         }
 
         btnEditorCancelFinishDate.setOnClickListener {
@@ -326,6 +361,11 @@ class EditBookFragment : Fragment(R.layout.fragment_edit_book) {
             tvEditedOLID.visibility = View.VISIBLE
             tvEditedISBN10.visibility = View.VISIBLE
             tvEditedISBN13.visibility = View.VISIBLE
+
+            if (bookStartDateMs != null)
+                ivClearStartDate.visibility = View.VISIBLE
+            if (bookFinishDateMs != null)
+                ivClearFinishDate.visibility = View.VISIBLE
         }
 
         btnEditStartDate.setOnClickListener {
@@ -365,6 +405,9 @@ class EditBookFragment : Fragment(R.layout.fragment_edit_book) {
             tvEditedOLID.visibility = View.GONE
             tvEditedISBN10.visibility = View.GONE
             tvEditedISBN13.visibility = View.GONE
+
+            ivClearStartDate.visibility = View.GONE
+            ivClearFinishDate.visibility = View.GONE
         }
 
         btnEditorSaveStartDate.setOnClickListener {
@@ -388,11 +431,16 @@ class EditBookFragment : Fragment(R.layout.fragment_edit_book) {
 
             etEditedPagesNumber.visibility = View.VISIBLE
             rbEditedRating.visibility = View.VISIBLE
-            btnEditFinishDate.visibility = View.VISIBLE
             btnEditStartDate.visibility = View.VISIBLE
 
             tvDateStartedTitle.visibility = View.VISIBLE
-            tvDateFinishedTitle.visibility = View.VISIBLE
+            if (whatIsClicked == Constants.BOOK_STATUS_READ) {
+                tvDateFinishedTitle.visibility = View.VISIBLE
+                btnEditFinishDate.visibility = View.VISIBLE
+
+                if (bookFinishDateMs != null)
+                    ivClearFinishDate.visibility = View.VISIBLE
+            }
 
             fabSaveEditedBook.visibility = View.VISIBLE
             fabDeleteBook.visibility = View.VISIBLE
@@ -406,6 +454,9 @@ class EditBookFragment : Fragment(R.layout.fragment_edit_book) {
             tvEditedISBN13.visibility = View.VISIBLE
 
             btnEditStartDate.text = bookStartDateMs?.let { it1 -> convertLongToTime(it1) }
+
+            if (bookStartDateMs != null)
+                ivClearStartDate.visibility = View.VISIBLE
         }
 
         btnEditorCancelStartDate.setOnClickListener {
@@ -427,11 +478,17 @@ class EditBookFragment : Fragment(R.layout.fragment_edit_book) {
 
             etEditedPagesNumber.visibility = View.VISIBLE
             rbEditedRating.visibility = View.VISIBLE
-            btnEditFinishDate.visibility = View.VISIBLE
             btnEditStartDate.visibility = View.VISIBLE
 
             tvDateStartedTitle.visibility = View.VISIBLE
-            tvDateFinishedTitle.visibility = View.VISIBLE
+
+            if (whatIsClicked == Constants.BOOK_STATUS_READ) {
+                tvDateFinishedTitle.visibility = View.VISIBLE
+                btnEditFinishDate.visibility = View.VISIBLE
+
+                if (bookFinishDateMs != null)
+                    ivClearFinishDate.visibility = View.VISIBLE
+            }
 
             fabSaveEditedBook.visibility = View.VISIBLE
             fabDeleteBook.visibility = View.VISIBLE
@@ -443,6 +500,21 @@ class EditBookFragment : Fragment(R.layout.fragment_edit_book) {
             tvEditedOLID.visibility = View.VISIBLE
             tvEditedISBN10.visibility = View.VISIBLE
             tvEditedISBN13.visibility = View.VISIBLE
+
+            if (bookStartDateMs != null)
+                ivClearStartDate.visibility = View.VISIBLE
+        }
+
+        ivClearStartDate.setOnClickListener {
+            bookStartDateMs = null
+            ivClearStartDate.visibility = View.GONE
+            btnEditStartDate.text = getString(R.string.set)
+        }
+
+        ivClearFinishDate.setOnClickListener {
+            bookFinishDateMs = null
+            ivClearFinishDate.visibility = View.GONE
+            btnEditFinishDate.text = getString(R.string.set)
         }
 
         fabSaveEditedBook.setOnClickListener {
@@ -470,27 +542,32 @@ class EditBookFragment : Fragment(R.layout.fragment_edit_book) {
             if (bookTitle.isNotEmpty()) {
                 if (bookAuthor.isNotEmpty()) {
                     if (whatIsClicked != Constants.BOOK_STATUS_NOTHING) {
-                        if (bookNumberOfPagesIntOrNull != null || whatIsClicked == Constants.BOOK_STATUS_IN_PROGRESS || whatIsClicked == Constants.BOOK_STATUS_TO_READ) {
                             bookNumberOfPagesInt = when (bookNumberOfPagesIntOrNull) {
                                 null -> 0
                                 else -> bookNumberOfPagesIntOrNull
                             }
 
-                            if (bookNumberOfPagesInt > 0 || whatIsClicked == Constants.BOOK_STATUS_IN_PROGRESS || whatIsClicked == Constants.BOOK_STATUS_TO_READ) {
+                                    if ((bookFinishDateMs != null && bookStartDateMs != null && bookStartDateMs!! < bookFinishDateMs!!)
+                                        || whatIsClicked == Constants.BOOK_STATUS_IN_PROGRESS
+                                        || whatIsClicked == Constants.BOOK_STATUS_TO_READ
+                                        || bookFinishDateMs == null
+                                        || bookStartDateMs == null ) {
 
-                                if (bookFinishDateMs!=null || whatIsClicked == Constants.BOOK_STATUS_IN_PROGRESS || whatIsClicked == Constants.BOOK_STATUS_TO_READ) {
-
-                                    if (bookStartDateMs != null || whatIsClicked == Constants.BOOK_STATUS_IN_PROGRESS || whatIsClicked == Constants.BOOK_STATUS_TO_READ) {
-
-                                        if ((bookFinishDateMs != null && bookStartDateMs != null && bookStartDateMs!! < bookFinishDateMs!!) || whatIsClicked == Constants.BOOK_STATUS_IN_PROGRESS || whatIsClicked == Constants.BOOK_STATUS_TO_READ) {
-
-                                            when (whatIsClicked) {
-                                                Constants.BOOK_STATUS_READ -> bookRating =
-                                                    rbEditedRating.rating
-                                                Constants.BOOK_STATUS_IN_PROGRESS -> bookRating =
-                                                    0.0F
-                                                Constants.BOOK_STATUS_TO_READ -> bookRating = 0.0F
+                                        when (whatIsClicked) {
+                                            Constants.BOOK_STATUS_READ -> {
+                                                bookRating = rbEditedRating.rating
                                             }
+                                            Constants.BOOK_STATUS_IN_PROGRESS -> {
+                                                bookRating = 0.0F
+                                                bookFinishDateMs = null
+                                            }
+                                            Constants.BOOK_STATUS_TO_READ -> {
+                                                bookRating = 0.0F
+                                                bookNumberOfPagesInt = 0
+                                                bookStartDateMs = null
+                                                bookFinishDateMs = null
+                                            }
+                                        }
 
                                             val REGEX_UNACCENT =
                                                 "\\p{InCombiningDiacriticalMarks}+".toRegex()
@@ -536,20 +613,6 @@ class EditBookFragment : Fragment(R.layout.fragment_edit_book) {
                                         } else {
                                             Snackbar.make(it, R.string.sbWarningStartDateMustBeBeforeFinishDate, Snackbar.LENGTH_SHORT).show()
                                         }
-                                    } else {
-                                        Snackbar.make(it, R.string.sbWarningMissingStartDate, Snackbar.LENGTH_SHORT).show()
-                                    }
-                                } else {
-                                    Snackbar.make(it, R.string.sbWarningMissingFinishDate, Snackbar.LENGTH_SHORT).show()
-                                }
-                            } else {
-                                Snackbar.make(it, R.string.sbWarningPages0, Snackbar.LENGTH_SHORT)
-                                    .show()
-                            }
-                        } else {
-                            Snackbar.make(it, R.string.sbWarningPagesMissing, Snackbar.LENGTH_SHORT)
-                                .show()
-                        }
                     } else {
                         Snackbar.make(it, getString(R.string.sbWarningState), Snackbar.LENGTH_SHORT).show()
                     }
