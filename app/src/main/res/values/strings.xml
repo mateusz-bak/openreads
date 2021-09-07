@@ -206,5 +206,6 @@
     <string name="hint_isbn13" translatable="false">ISBN 13</string>
     <string name="tv_cover_missing">"Cover\nmissing"</string>
     <string name="set">set</string>
+    <string name="tvWelcomeText_4">Now choose theme color for the app</string>
 
 </resources>

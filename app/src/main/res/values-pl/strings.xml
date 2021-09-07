@@ -171,4 +171,5 @@
     <string name="tvSortStartDate">Data rozpoczęcia</string>
     <string name="tv_cover_missing">"Brak\nokładki"</string>
     <string name="set">ustaw</string>
+    <string name="tvWelcomeText_4">Wybierz teraz kolor akcentów</string>
 </resources>

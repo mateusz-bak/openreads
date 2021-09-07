@@ -1,11 +1,16 @@
 package software.mdev.bookstracker.ui.bookslist.fragments
 
+import android.app.Activity
 import android.content.Context
+import android.content.res.ColorStateList
 import android.os.Bundle
 import android.view.View
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.navigation.NavOptions
+import androidx.navigation.Navigation
 import androidx.navigation.fragment.findNavController
+import androidx.preference.PreferenceManager
 import androidx.viewpager2.widget.ViewPager2
 import software.mdev.bookstracker.R
 import software.mdev.bookstracker.ui.bookslist.ListActivity
@@ -49,7 +54,9 @@ class SetupFragment : Fragment(R.layout.fragment_setup) {
         val adapter = SetupAdapter(
             activity as ListActivity,
             images,
-            resources.getString(R.string.app_version)
+            resources.getString(R.string.app_version),
+            view.context,
+            vpSetup
         )
         vpSetup.adapter = adapter
 
@@ -65,12 +72,56 @@ class SetupFragment : Fragment(R.layout.fragment_setup) {
             override fun onPageSelected(position: Int) {
                 super.onPageSelected(position)
 
+                changeFabColor(context)
+
                 when(vpSetup.currentItem) {
-                    0 -> selectIndicator(ivPosition0, 0)
-                    1 -> selectIndicator(ivPosition1, 0)
-                    2 -> selectIndicator(ivPosition2, 0)
-                    3 -> selectIndicator(ivPosition3, 0)
-                    4 -> selectIndicator(ivPosition4, 0)
+                    0 -> {
+                        selectIndicator(ivPosition0, 0)
+
+                        fabLaunchApp.visibility = View.INVISIBLE
+                        fabLaunchApp.scaleX = 0F
+                        fabLaunchApp.scaleY = 0F
+
+                        vpSetup.isUserInputEnabled = true
+                    }
+                    1 -> {
+                        selectIndicator(ivPosition1, 0)
+
+                        fabLaunchApp.visibility = View.INVISIBLE
+                        fabLaunchApp.scaleX = 0F
+                        fabLaunchApp.scaleY = 0F
+
+                        vpSetup.isUserInputEnabled = true
+                    }
+                    2 -> {
+                        selectIndicator(ivPosition2, 0)
+
+                        fabLaunchApp.visibility = View.INVISIBLE
+                        fabLaunchApp.scaleX = 0F
+                        fabLaunchApp.scaleY = 0F
+
+                        vpSetup.isUserInputEnabled = true
+                    }
+                    3 -> {
+                        selectIndicator(ivPosition3, 0)
+
+                        fabLaunchApp.animate().setDuration(250L).scaleX(0F).start()
+                        fabLaunchApp.animate().setDuration(250L).scaleY(0F).start()
+
+                        vpSetup.isUserInputEnabled = false
+                    }
+                    4 -> {
+                        selectIndicator(ivPosition4, 0)
+
+                        fabLaunchApp.scaleX = 0F
+                        fabLaunchApp.scaleY = 0F
+                        fabLaunchApp.visibility = View.VISIBLE
+
+                        fabLaunchApp.animate().setDuration(250L).scaleX(1F).start()
+                        fabLaunchApp.animate().setDuration(250L).scaleY(1F).start()
+
+                        vpSetup.isUserInputEnabled = false
+                    }
                 }
             }
 
@@ -78,6 +129,12 @@ class SetupFragment : Fragment(R.layout.fragment_setup) {
                 super.onPageScrollStateChanged(state)
             }
         })
+
+        fabLaunchApp.setOnClickListener {
+            hotReloadActivity(activity)
+            saveAppsFirstlaunch()
+            Navigation.findNavController(view).navigate(R.id.action_setupFragment_to_readFragment)
+        }
     }
 
     private fun selectIndicator(selectedIndicator: View, position: Int) {
@@ -100,5 +157,61 @@ class SetupFragment : Fragment(R.layout.fragment_setup) {
                 indicator.animate().scaleY(scaleSmall).setDuration(200L).start()
             }
         }
+    }
+
+    private fun hotReloadActivity(activity: Activity?) {
+        if (activity == null) return
+        val sharedPref = PreferenceManager.getDefaultSharedPreferences(context?.applicationContext)
+        sharedPref.edit().putBoolean(Constants.SHARED_PREFERENCES_REFRESHED, true).apply()
+
+        (activity as ListActivity).recreate()
+    }
+
+    private fun saveAppsFirstlaunch() {
+        val sharedPref =
+            (activity)?.getSharedPreferences(Constants.SHARED_PREFERENCES_NAME, Context.MODE_PRIVATE)
+        val editor = sharedPref?.edit()
+
+        editor?.apply {
+            putBoolean(Constants.SHARED_PREFERENCES_KEY_FIRST_TIME_TOGGLE, false)
+            putString(Constants.SHARED_PREFERENCES_KEY_APP_VERSION, resources.getString(R.string.app_version))
+            putBoolean(Constants.SHARED_PREFERENCES_KEY_SHOW_OL_ALERT, true)
+            apply()
+        }
+    }
+
+    private fun changeFabColor(context: Context?) {
+        if (context != null) {
+
+            var color = getAccentColor(context)
+
+            fabLaunchApp.backgroundTintList= ColorStateList.valueOf(color)
+        }
+    }
+
+    private fun getAccentColor(context: Context): Int {
+
+        var accentColor = ContextCompat.getColor(context, R.color.purple_500)
+
+        val sharedPref = context.getSharedPreferences(Constants.SHARED_PREFERENCES_NAME, Context.MODE_PRIVATE)
+
+        var accent = sharedPref?.getString(
+            Constants.SHARED_PREFERENCES_KEY_ACCENT,
+            Constants.THEME_ACCENT_DEFAULT
+        ).toString()
+
+        when(accent){
+            Constants.THEME_ACCENT_LIGHT_GREEN -> accentColor = ContextCompat.getColor(context, R.color.light_green)
+            Constants.THEME_ACCENT_ORANGE_500 -> accentColor = ContextCompat.getColor(context, R.color.orange_500)
+            Constants.THEME_ACCENT_CYAN_500 -> accentColor = ContextCompat.getColor(context, R.color.cyan_500)
+            Constants.THEME_ACCENT_GREEN_500 -> accentColor = ContextCompat.getColor(context, R.color.green_500)
+            Constants.THEME_ACCENT_BROWN_400 -> accentColor = ContextCompat.getColor(context, R.color.brown_400)
+            Constants.THEME_ACCENT_LIME_500 -> accentColor = ContextCompat.getColor(context, R.color.lime_500)
+            Constants.THEME_ACCENT_PINK_300 -> accentColor = ContextCompat.getColor(context, R.color.pink_300)
+            Constants.THEME_ACCENT_PURPLE_500 -> accentColor = ContextCompat.getColor(context, R.color.purple_500)
+            Constants.THEME_ACCENT_TEAL_500 -> accentColor = ContextCompat.getColor(context, R.color.teal_500)
+            Constants.THEME_ACCENT_YELLOW_500 -> accentColor = ContextCompat.getColor(context, R.color.yellow_500)
+        }
+        return accentColor
     }
 }
