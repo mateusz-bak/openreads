@@ -18,5 +18,67 @@
 
     </androidx.viewpager2.widget.ViewPager2>
 
+    <ImageView
+        android:id="@+id/ivPosition0"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="12dp"
+        android:scaleX="0.3"
+        android:scaleY="0.3"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/ivPosition1"
+        app:srcCompat="@drawable/ic_baseline_circle_24"
+        app:tint="@color/grey_300" />
+
+    <ImageView
+        android:id="@+id/ivPosition1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:scaleX="0.3"
+        android:scaleY="0.3"
+        app:layout_constraintEnd_toStartOf="@+id/ivPosition2"
+        app:layout_constraintTop_toTopOf="@+id/ivPosition0"
+        app:srcCompat="@drawable/ic_baseline_circle_24"
+        app:tint="@color/grey_300" />
+
+
+    <ImageView
+        android:id="@+id/ivPosition2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:scaleX="0.3"
+        android:scaleY="0.3"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/ivPosition1"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/ivPosition1"
+        app:srcCompat="@drawable/ic_baseline_circle_24"
+        app:tint="@color/grey_300" />
+
+
+    <ImageView
+        android:id="@+id/ivPosition3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:scaleX="0.3"
+        android:scaleY="0.3"
+        app:layout_constraintStart_toEndOf="@+id/ivPosition2"
+        app:layout_constraintTop_toTopOf="@+id/ivPosition2"
+        app:srcCompat="@drawable/ic_baseline_circle_24"
+        app:tint="@color/grey_300" />
+
+
+    <ImageView
+        android:id="@+id/ivPosition4"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:scaleX="0.3"
+        android:scaleY="0.3"
+        app:layout_constraintStart_toEndOf="@+id/ivPosition3"
+        app:layout_constraintTop_toTopOf="@+id/ivPosition3"
+        app:srcCompat="@drawable/ic_baseline_circle_24"
+        app:tint="@color/grey_300" />
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

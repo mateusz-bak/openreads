@@ -6,6 +6,7 @@ import android.view.View
 import androidx.fragment.app.Fragment
 import androidx.navigation.NavOptions
 import androidx.navigation.fragment.findNavController
+import androidx.viewpager2.widget.ViewPager2
 import software.mdev.bookstracker.R
 import software.mdev.bookstracker.ui.bookslist.ListActivity
 import kotlinx.android.synthetic.main.fragment_setup.*
@@ -41,6 +42,7 @@ class SetupFragment : Fragment(R.layout.fragment_setup) {
             R.drawable.ic_svg_books,
             R.drawable.ic_svg_study,
             R.drawable.ic_svg_presentation,
+            0,
             R.drawable.ic_svg_like
         )
 
@@ -50,5 +52,53 @@ class SetupFragment : Fragment(R.layout.fragment_setup) {
             resources.getString(R.string.app_version)
         )
         vpSetup.adapter = adapter
+
+        vpSetup.registerOnPageChangeCallback(object: ViewPager2.OnPageChangeCallback() {
+            override fun onPageScrolled(
+                position: Int,
+                positionOffset: Float,
+                positionOffsetPixels: Int
+            ) {
+                super.onPageScrolled(position, positionOffset, positionOffsetPixels)
+            }
+
+            override fun onPageSelected(position: Int) {
+                super.onPageSelected(position)
+
+                when(vpSetup.currentItem) {
+                    0 -> selectIndicator(ivPosition0, 0)
+                    1 -> selectIndicator(ivPosition1, 0)
+                    2 -> selectIndicator(ivPosition2, 0)
+                    3 -> selectIndicator(ivPosition3, 0)
+                    4 -> selectIndicator(ivPosition4, 0)
+                }
+            }
+
+            override fun onPageScrollStateChanged(state: Int) {
+                super.onPageScrollStateChanged(state)
+            }
+        })
+    }
+
+    private fun selectIndicator(selectedIndicator: View, position: Int) {
+        var scaleBig = 0.6F
+        var scaleSmall = 0.3F
+        var listOfIndicators = listOf(
+            ivPosition0,
+            ivPosition1,
+            ivPosition2,
+            ivPosition3,
+            ivPosition4
+        )
+
+        for (indicator in listOfIndicators) {
+            if (indicator == selectedIndicator) {
+                indicator.animate().scaleX(scaleBig).setDuration(350L).start()
+                indicator.animate().scaleY(scaleBig).setDuration(350L).start()
+            } else {
+                indicator.animate().scaleX(scaleSmall).setDuration(200L).start()
+                indicator.animate().scaleY(scaleSmall).setDuration(200L).start()
+            }
+        }
     }
 }
