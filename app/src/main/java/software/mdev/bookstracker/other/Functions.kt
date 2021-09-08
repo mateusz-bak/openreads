@@ -66,10 +66,12 @@ class Functions {
 
                 if (book.bookFinishDate != "null" && book.bookFinishDate != "none") {
                     if (book.bookFinishDate.toLong() in startTimeStamp..endTimeStamp) {
-                        filteredBooks += book
+                        if (book !in filteredBooks)
+                            filteredBooks += book
                     }
                 } else {
-                    filteredBooks += book
+                    if (book !in filteredBooks)
+                        filteredBooks += book
                 }
             }
         }

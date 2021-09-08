@@ -27,7 +27,7 @@
     <string name="tvAppsAuthor">Autor</string>
     <string name="readFragment">Przeczytane</string>
     <string name="inProgressFragment">W trakcie</string>
-    <string name="toReadFragment">Do przeczytania</string>
+    <string name="toReadFragment">Na później</string>
     <string name="etAdderBookTitle">Tytuł</string>
     <string name="etAdderAuthor">Autor</string>
     <string name="tvAdderTitle">Dodaj książkę</string>
@@ -40,7 +40,7 @@
     <string name="etSearch">Szukaj</string>
     <string name="finished">Przeczytana</string>
     <string name="inProgress">W trakcie</string>
-    <string name="toRead">Do przeczytania</string>
+    <string name="toRead">Na później</string>
     <string name="sbWarningAuthor">Wpisz autora książki!</string>
     <string name="sbWarningTitle">Wpisz tytuł książki!</string>
     <string name="sbWarningState">Wybierz status książki!</string>

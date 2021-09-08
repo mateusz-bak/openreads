@@ -30,14 +30,14 @@
     <string name="miAbout">About</string>
     <string name="readFragment">Finished</string>
     <string name="inProgressFragment">In progress</string>
-    <string name="toReadFragment">To read</string>
+    <string name="toReadFragment">For later</string>
     <string name="etAdderBookTitle">Title</string>
     <string name="etAdderAuthor">Author</string>
     <string name="tvAdderTitle">Add a book</string>
     <string name="btnAdderSaveBook">Save</string>
     <string name="finished">Finished</string>
     <string name="inProgress">In progress</string>
-    <string name="toRead">To read</string>
+    <string name="toRead">For later</string>
     <string name="tvBookTitle">Enter a title</string>
     <string name="tvBookAuthor">Enter an author</string>
     <string name="tvBookStatus">Book status</string>
