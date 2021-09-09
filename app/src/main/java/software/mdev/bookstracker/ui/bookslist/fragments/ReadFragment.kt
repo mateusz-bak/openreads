@@ -338,73 +338,52 @@ class ReadFragment : Fragment(R.layout.fragment_read) {
         )) {
             Constants.SORT_ORDER_TITLE_DESC -> viewModel.getSortedBooksByTitleDesc(currentFragment).observe(viewLifecycleOwner, Observer { some_books ->
                 functions.filterBooksList(activity as ListActivity, bookAdapter, some_books)
-                setBtmNavCounter(some_books.size)
             })
 
             Constants.SORT_ORDER_TITLE_ASC -> viewModel.getSortedBooksByTitleAsc(currentFragment).observe(viewLifecycleOwner, Observer { some_books ->
                 functions.filterBooksList(activity as ListActivity, bookAdapter, some_books)
-                setBtmNavCounter(some_books.size)
             })
 
             Constants.SORT_ORDER_AUTHOR_DESC -> viewModel.getSortedBooksByAuthorDesc(currentFragment).observe(viewLifecycleOwner, Observer { some_books ->
                 functions.filterBooksList(activity as ListActivity, bookAdapter, some_books)
-                setBtmNavCounter(some_books.size)
             })
 
             Constants.SORT_ORDER_AUTHOR_ASC -> viewModel.getSortedBooksByAuthorAsc(currentFragment).observe(viewLifecycleOwner, Observer { some_books ->
                 functions.filterBooksList(activity as ListActivity, bookAdapter, some_books)
-                setBtmNavCounter(some_books.size)
             })
 
             Constants.SORT_ORDER_RATING_DESC -> viewModel.getSortedBooksByRatingDesc(currentFragment).observe(viewLifecycleOwner, Observer { some_books ->
                 functions.filterBooksList(activity as ListActivity, bookAdapter, some_books)
-                setBtmNavCounter(some_books.size)
             })
 
             Constants.SORT_ORDER_RATING_ASC -> viewModel.getSortedBooksByRatingAsc(currentFragment).observe(viewLifecycleOwner, Observer { some_books ->
                 functions.filterBooksList(activity as ListActivity, bookAdapter, some_books)
-                setBtmNavCounter(some_books.size)
             })
 
             Constants.SORT_ORDER_PAGES_DESC -> viewModel.getSortedBooksByPagesDesc(currentFragment).observe(viewLifecycleOwner, Observer { some_books ->
                 functions.filterBooksList(activity as ListActivity, bookAdapter, some_books)
-                setBtmNavCounter(some_books.size)
             })
 
             Constants.SORT_ORDER_PAGES_ASC -> viewModel.getSortedBooksByPagesAsc(currentFragment).observe(viewLifecycleOwner, Observer { some_books ->
                 functions.filterBooksList(activity as ListActivity, bookAdapter, some_books)
-                setBtmNavCounter(some_books.size)
             })
 
             Constants.SORT_ORDER_START_DATE_DESC -> viewModel.getSortedBooksByStartDateDesc(currentFragment).observe(viewLifecycleOwner, Observer { some_books ->
                 functions.filterBooksList(activity as ListActivity, bookAdapter, some_books)
-                setBtmNavCounter(some_books.size)
             })
 
             Constants.SORT_ORDER_START_DATE_ASC -> viewModel.getSortedBooksByStartDateAsc(currentFragment).observe(viewLifecycleOwner, Observer { some_books ->
                 functions.filterBooksList(activity as ListActivity, bookAdapter, some_books)
-                setBtmNavCounter(some_books.size)
             })
 
             Constants.SORT_ORDER_FINISH_DATE_DESC -> viewModel.getSortedBooksByFinishDateDesc(currentFragment).observe(viewLifecycleOwner, Observer { some_books ->
                 functions.filterBooksList(activity as ListActivity, bookAdapter, some_books)
-                setBtmNavCounter(some_books.size)
             })
 
             Constants.SORT_ORDER_FINISH_DATE_ASC -> viewModel.getSortedBooksByFinishDateAsc(currentFragment).observe(viewLifecycleOwner, Observer { some_books ->
                 functions.filterBooksList(activity as ListActivity, bookAdapter, some_books)
-                setBtmNavCounter(some_books.size)
             })
         }
-    }
-
-    private fun setBtmNavCounter(size: Int) {
-        var title = getString(R.string.readFragment)
-
-        if (size != 0)
-            title = "$title ($size)"
-
-        requireActivity().bottomNavigationView.menu.getItem(0).title = title
     }
 
     fun recalculateChallenges() {

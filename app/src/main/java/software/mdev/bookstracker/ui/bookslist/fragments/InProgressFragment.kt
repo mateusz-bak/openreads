@@ -300,33 +300,20 @@ class InProgressFragment : Fragment(R.layout.fragment_in_progress) {
         when(sharedPref.getString(Constants.SHARED_PREFERENCES_KEY_SORT_ORDER, Constants.SORT_ORDER_TITLE_ASC)) {
             Constants.SORT_ORDER_TITLE_DESC -> viewModel.getSortedBooksByTitleDesc(currentFragment).observe(viewLifecycleOwner, Observer { some_books ->
                 bookAdapter.differ.submitList(some_books)
-                setBtmNavCounter(some_books.size)
             })
 
             Constants.SORT_ORDER_AUTHOR_DESC -> viewModel.getSortedBooksByAuthorDesc(currentFragment).observe(viewLifecycleOwner, Observer { some_books ->
                 bookAdapter.differ.submitList(some_books)
-                setBtmNavCounter(some_books.size)
             })
 
             Constants.SORT_ORDER_AUTHOR_ASC -> viewModel.getSortedBooksByAuthorAsc(currentFragment).observe(viewLifecycleOwner, Observer { some_books ->
                 bookAdapter.differ.submitList(some_books)
-                setBtmNavCounter(some_books.size)
             })
 
             else -> viewModel.getSortedBooksByTitleAsc(currentFragment).observe(viewLifecycleOwner, Observer { some_books ->
                 bookAdapter.differ.submitList(some_books)
-                setBtmNavCounter(some_books.size)
             })
         }
-    }
-
-    private fun setBtmNavCounter(size: Int) {
-        var title = getString(R.string.inProgressFragment)
-
-        if (size != 0)
-            title = "$title ($size)"
-
-        requireActivity().bottomNavigationView.menu.getItem(1).title = title
     }
 
     private fun recalculateChallenges() {
