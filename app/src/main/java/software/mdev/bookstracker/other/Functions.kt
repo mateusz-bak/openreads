@@ -1,7 +1,9 @@
 package software.mdev.bookstracker.other
 
 import android.content.Context
+import androidx.core.content.ContextCompat
 import com.google.gson.Gson
+import software.mdev.bookstracker.R
 import software.mdev.bookstracker.adapters.BookAdapter
 import software.mdev.bookstracker.data.db.entities.Book
 import software.mdev.bookstracker.ui.bookslist.ListActivity
@@ -77,5 +79,31 @@ class Functions {
         }
 
         bookAdapter.differ.submitList(filteredBooks)
+    }
+
+    fun getAccentColor(context: Context): Int {
+
+        var accentColor = ContextCompat.getColor(context, R.color.purple_500)
+
+        val sharedPref = context.getSharedPreferences(Constants.SHARED_PREFERENCES_NAME, Context.MODE_PRIVATE)
+
+        var accent = sharedPref?.getString(
+            Constants.SHARED_PREFERENCES_KEY_ACCENT,
+            Constants.THEME_ACCENT_DEFAULT
+        ).toString()
+
+        when(accent){
+            Constants.THEME_ACCENT_LIGHT_GREEN -> accentColor = ContextCompat.getColor(context, R.color.light_green)
+            Constants.THEME_ACCENT_ORANGE_500 -> accentColor = ContextCompat.getColor(context, R.color.orange_500)
+            Constants.THEME_ACCENT_CYAN_500 -> accentColor = ContextCompat.getColor(context, R.color.cyan_500)
+            Constants.THEME_ACCENT_GREEN_500 -> accentColor = ContextCompat.getColor(context, R.color.green_500)
+            Constants.THEME_ACCENT_BROWN_400 -> accentColor = ContextCompat.getColor(context, R.color.brown_400)
+            Constants.THEME_ACCENT_LIME_500 -> accentColor = ContextCompat.getColor(context, R.color.lime_500)
+            Constants.THEME_ACCENT_PINK_300 -> accentColor = ContextCompat.getColor(context, R.color.pink_300)
+            Constants.THEME_ACCENT_PURPLE_500 -> accentColor = ContextCompat.getColor(context, R.color.purple_500)
+            Constants.THEME_ACCENT_TEAL_500 -> accentColor = ContextCompat.getColor(context, R.color.teal_500)
+            Constants.THEME_ACCENT_YELLOW_500 -> accentColor = ContextCompat.getColor(context, R.color.yellow_500)
+        }
+        return accentColor
     }
 }

@@ -24,6 +24,7 @@ import software.mdev.bookstracker.data.repositories.LanguageRepository
 import software.mdev.bookstracker.data.repositories.OpenLibraryRepository
 import software.mdev.bookstracker.data.repositories.YearRepository
 import software.mdev.bookstracker.other.Constants
+import software.mdev.bookstracker.other.Functions
 import software.mdev.bookstracker.ui.bookslist.viewmodel.BooksViewModel
 import software.mdev.bookstracker.ui.bookslist.viewmodel.BooksViewModelProviderFactory
 
@@ -61,11 +62,37 @@ class ListActivity : AppCompatActivity() {
                     else -> bottomNavigationView.visibility = View.GONE
                 }
             }
+
+        booksViewModel.getBookCount(Constants.BOOK_STATUS_READ).observe(this) { count ->
+            setBadge(0, count.toInt())
+        }
+
+        booksViewModel.getBookCount(Constants.BOOK_STATUS_IN_PROGRESS).observe(this) { count ->
+            setBadge(1, count.toInt())
+        }
+
+        booksViewModel.getBookCount(Constants.BOOK_STATUS_TO_READ).observe(this) { count ->
+            setBadge(2, count.toInt())
+        }
+
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
         menuInflater.inflate(R.menu.app_bar_menu, menu)
         return true
+    }
+
+    private fun setBadge(index: Int, count: Int) {
+        val functions = Functions()
+        var menuItemId = bottomNavigationView.menu.getItem(index).itemId
+
+        if (count > 0) {
+            bottomNavigationView.getOrCreateBadge(menuItemId).backgroundColor =
+                functions.getAccentColor(this.applicationContext)
+            bottomNavigationView.getOrCreateBadge(menuItemId).number = count
+        } else {
+            bottomNavigationView.removeBadge(menuItemId)
+        }
     }
 
     private fun setAppTheme(){
