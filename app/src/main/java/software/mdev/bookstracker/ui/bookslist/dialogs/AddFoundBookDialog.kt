@@ -254,6 +254,9 @@ class AddFoundBookDialog(
 
             tvSetFinishDate.visibility = View.GONE
             tvSetStartDate.visibility = View.GONE
+
+            ivClearStartDate.visibility = View.GONE
+            ivClearFinishDate.visibility = View.GONE
         }
 
         btnSetStartDate.setOnClickListener {
@@ -286,6 +289,9 @@ class AddFoundBookDialog(
             tvSetStartDate.visibility = View.GONE
 
             ivBookCover.visibility = View.GONE
+
+            ivClearStartDate.visibility = View.GONE
+            ivClearFinishDate.visibility = View.GONE
         }
 
         btnAdderSaveFinishDate.setOnClickListener {
@@ -322,7 +328,10 @@ class AddFoundBookDialog(
 
             btnSetFinishDate.text = bookFinishDateMs?.let { it1 -> convertLongToTime(it1) }
 
-            ivClearFinishDate.visibility  = View.VISIBLE
+            if (bookStartDateMs!= null)
+                ivClearStartDate.visibility = View.VISIBLE
+            if (bookFinishDateMs!= null)
+                ivClearFinishDate.visibility = View.VISIBLE
         }
 
         btnAdderCancelFinishDate.setOnClickListener {
@@ -354,8 +363,12 @@ class AddFoundBookDialog(
 
             tvSetFinishDate.visibility = View.VISIBLE
             tvSetStartDate.visibility = View.VISIBLE
-        }
 
+            if (bookStartDateMs!= null)
+                ivClearStartDate.visibility = View.VISIBLE
+            if (bookFinishDateMs!= null)
+                ivClearFinishDate.visibility = View.VISIBLE
+        }
         btnAdderSaveStartDate.setOnClickListener {
             bookStartDateMs = getDateFromDatePickerInMillis(dpBookStartDate)
 
@@ -403,6 +416,9 @@ class AddFoundBookDialog(
                 if (bookFinishDateMs != null)
                     ivClearFinishDate.visibility = View.VISIBLE
             }
+
+            if (bookStartDateMs!= null)
+                ivClearStartDate.visibility = View.VISIBLE
         }
 
         btnAdderCancelStartDate.setOnClickListener {
@@ -446,6 +462,9 @@ class AddFoundBookDialog(
                 if (bookFinishDateMs != null)
                     ivClearFinishDate.visibility = View.VISIBLE
             }
+
+            if (bookStartDateMs!= null)
+                ivClearStartDate.visibility = View.VISIBLE
         }
 
         ivClearStartDate.setOnClickListener {
