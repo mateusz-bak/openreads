@@ -166,8 +166,8 @@
     <string name="click_edit_button_to_edit_status">Click edit button to change book\'s status</string>
     <string name="click_edit_button_to_edit_date">Click edit button to change book\'s finish date</string>
     <string name="click_edit_button_to_edit_pages">Click edit button to change book\'s number of pages</string>
-    <string name="btnAddSearch">Search</string>
-    <string name="btnAddManual">Manually</string>
+    <string name="btnAddSearch">"Search in\nOpen Library"</string>
+    <string name="btnAddManual">"Add\nmanually"</string>
     <string name="etAdderBookTitleSearch">Type title to search…</string>
     <string name="fabAddNewBook">Add new book</string>
     <string name="fabCancelAddingNewBook">Cancel adding new book</string>
