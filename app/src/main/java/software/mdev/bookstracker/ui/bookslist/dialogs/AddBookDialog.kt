@@ -13,6 +13,7 @@ import android.widget.EditText
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatDialog
 import androidx.core.content.ContextCompat
+import androidx.core.widget.addTextChangedListener
 import software.mdev.bookstracker.data.db.entities.Book
 import com.google.android.material.snackbar.Snackbar
 import kotlinx.android.synthetic.main.dialog_add_book.*
@@ -62,6 +63,10 @@ class AddBookDialog(context: Context, var addBookDialogListener: AddBookDialogLi
         btnAdderSaveStartDate.visibility = View.GONE
         btnAdderCancelStartDate.visibility = View.GONE
 
+        ivClearTitle.visibility = View.GONE
+        ivClearAuthor.visibility = View.GONE
+        ivClearPages.visibility = View.GONE
+
         ivBookCover.visibility = View.GONE
 
         dpBookFinishDate.maxDate = System.currentTimeMillis()
@@ -69,6 +74,48 @@ class AddBookDialog(context: Context, var addBookDialogListener: AddBookDialogLi
 
         etAdderBookTitle.requestFocus()
         showKeyboard(etAdderBookTitle,350)
+
+        etAdderBookTitle.addTextChangedListener { editable ->
+            editable?.let {
+                if (it.isNotEmpty())
+                    ivClearTitle.visibility = View.VISIBLE
+                else
+                    ivClearTitle.visibility = View.GONE
+            }
+        }
+
+        etAdderAuthor.addTextChangedListener { editable ->
+            editable?.let {
+                if (it.isNotEmpty())
+                    ivClearAuthor.visibility = View.VISIBLE
+                else
+                    ivClearAuthor.visibility = View.GONE
+            }
+        }
+
+        etPagesNumber.addTextChangedListener { editable ->
+            editable?.let {
+                if (it.isNotEmpty())
+                    ivClearPages.visibility = View.VISIBLE
+                else
+                    ivClearPages.visibility = View.GONE
+            }
+        }
+
+        ivClearTitle.setOnClickListener {
+            etAdderBookTitle.setText(Constants.EMPTY_STRING)
+            ivClearTitle.visibility = View.GONE
+        }
+
+        ivClearAuthor.setOnClickListener {
+            etAdderAuthor.setText(Constants.EMPTY_STRING)
+            ivClearAuthor.visibility = View.GONE
+        }
+
+        ivClearPages.setOnClickListener {
+            etPagesNumber.setText(Constants.EMPTY_STRING)
+            ivClearPages.visibility = View.GONE
+        }
 
         ivBookStatusSetRead.setOnClickListener {
             ivBookStatusSetRead.setColorFilter(accentColor, android.graphics.PorterDuff.Mode.SRC_IN)
@@ -95,6 +142,21 @@ class AddBookDialog(context: Context, var addBookDialogListener: AddBookDialogLi
                 ivClearFinishDate.visibility  = View.GONE
             else
                 ivClearFinishDate.visibility  = View.VISIBLE
+
+            if (etAdderBookTitle.text.isNotEmpty())
+                ivClearTitle.visibility = View.VISIBLE
+            else
+                ivClearTitle.visibility = View.GONE
+
+            if (etAdderAuthor.text.isNotEmpty())
+                ivClearAuthor.visibility = View.VISIBLE
+            else
+                ivClearAuthor.visibility = View.GONE
+
+            if (etPagesNumber.text.isNotEmpty())
+                ivClearPages.visibility = View.VISIBLE
+            else
+                ivClearPages.visibility = View.GONE
 
             it.hideKeyboard()
         }
@@ -128,6 +190,21 @@ class AddBookDialog(context: Context, var addBookDialogListener: AddBookDialogLi
 
             ivClearFinishDate.visibility  = View.GONE
 
+            if (etAdderBookTitle.text.isNotEmpty())
+                ivClearTitle.visibility = View.VISIBLE
+            else
+                ivClearTitle.visibility = View.GONE
+
+            if (etAdderAuthor.text.isNotEmpty())
+                ivClearAuthor.visibility = View.VISIBLE
+            else
+                ivClearAuthor.visibility = View.GONE
+
+            if (etPagesNumber.text.isNotEmpty())
+                ivClearPages.visibility = View.VISIBLE
+            else
+                ivClearPages.visibility = View.GONE
+
             it.hideKeyboard()
         }
 
@@ -150,6 +227,18 @@ class AddBookDialog(context: Context, var addBookDialogListener: AddBookDialogLi
             ivClearStartDate.visibility  = View.GONE
             ivClearFinishDate.visibility  = View.GONE
 
+            if (etAdderBookTitle.text.isNotEmpty())
+                ivClearTitle.visibility = View.VISIBLE
+            else
+                ivClearTitle.visibility = View.GONE
+
+            if (etAdderAuthor.text.isNotEmpty())
+                ivClearAuthor.visibility = View.VISIBLE
+            else
+                ivClearAuthor.visibility = View.GONE
+
+            ivClearPages.visibility = View.GONE
+
             it.hideKeyboard()
         }
 
@@ -163,7 +252,10 @@ class AddBookDialog(context: Context, var addBookDialogListener: AddBookDialogLi
             btnSetStartDate.isClickable = false
 
             etAdderBookTitle.visibility = View.GONE
+            ivClearTitle.visibility = View.GONE
+
             etAdderAuthor.visibility = View.GONE
+            ivClearAuthor.visibility = View.GONE
 
             ivBookStatusSetRead.visibility = View.GONE
             ivBookStatusSetInProgress.visibility = View.GONE
@@ -173,6 +265,8 @@ class AddBookDialog(context: Context, var addBookDialogListener: AddBookDialogLi
             tvToRead.visibility = View.GONE
 
             etPagesNumber.visibility = View.GONE
+            ivClearPages.visibility = View.GONE
+
             tvRateThisBook.visibility = View.GONE
             rbAdderRating.visibility = View.GONE
             btnAdderSaveBook.visibility = View.GONE
@@ -196,7 +290,10 @@ class AddBookDialog(context: Context, var addBookDialogListener: AddBookDialogLi
             btnSetStartDate.isClickable = false
 
             etAdderBookTitle.visibility = View.GONE
+            ivClearTitle.visibility = View.GONE
+
             etAdderAuthor.visibility = View.GONE
+            ivClearAuthor.visibility = View.GONE
 
             ivBookStatusSetRead.visibility = View.GONE
             ivBookStatusSetInProgress.visibility = View.GONE
@@ -206,6 +303,8 @@ class AddBookDialog(context: Context, var addBookDialogListener: AddBookDialogLi
             tvToRead.visibility = View.GONE
 
             etPagesNumber.visibility = View.GONE
+            ivClearPages.visibility = View.GONE
+
             tvRateThisBook.visibility = View.GONE
             rbAdderRating.visibility = View.GONE
             btnAdderSaveBook.visibility = View.GONE
@@ -227,7 +326,12 @@ class AddBookDialog(context: Context, var addBookDialogListener: AddBookDialogLi
             btnAdderCancelFinishDate.visibility = View.GONE
 
             etAdderBookTitle.visibility = View.VISIBLE
+            if (etAdderBookTitle.text.isNotEmpty())
+                ivClearTitle.visibility = View.VISIBLE
+
             etAdderAuthor.visibility = View.VISIBLE
+            if (etAdderAuthor.text.isNotEmpty())
+                ivClearAuthor.visibility = View.VISIBLE
 
             ivBookStatusSetRead.visibility = View.VISIBLE
             ivBookStatusSetInProgress.visibility = View.VISIBLE
@@ -237,6 +341,9 @@ class AddBookDialog(context: Context, var addBookDialogListener: AddBookDialogLi
             tvToRead.visibility = View.VISIBLE
 
             etPagesNumber.visibility = View.VISIBLE
+            if (etPagesNumber.text.isNotEmpty())
+                ivClearPages.visibility = View.VISIBLE
+
             tvRateThisBook.visibility = View.VISIBLE
             rbAdderRating.visibility = View.VISIBLE
             btnAdderSaveBook.visibility = View.VISIBLE
@@ -263,7 +370,12 @@ class AddBookDialog(context: Context, var addBookDialogListener: AddBookDialogLi
             btnAdderCancelFinishDate.visibility = View.GONE
 
             etAdderBookTitle.visibility = View.VISIBLE
+            if (etAdderBookTitle.text.isNotEmpty())
+                ivClearTitle.visibility = View.VISIBLE
+
             etAdderAuthor.visibility = View.VISIBLE
+            if (etAdderAuthor.text.isNotEmpty())
+                ivClearAuthor.visibility = View.VISIBLE
 
             ivBookStatusSetRead.visibility = View.VISIBLE
             ivBookStatusSetInProgress.visibility = View.VISIBLE
@@ -273,6 +385,9 @@ class AddBookDialog(context: Context, var addBookDialogListener: AddBookDialogLi
             tvToRead.visibility = View.VISIBLE
 
             etPagesNumber.visibility = View.VISIBLE
+            if (etPagesNumber.text.isNotEmpty())
+                ivClearPages.visibility = View.VISIBLE
+
             tvRateThisBook.visibility = View.VISIBLE
             rbAdderRating.visibility = View.VISIBLE
             btnAdderSaveBook.visibility = View.VISIBLE
@@ -298,7 +413,12 @@ class AddBookDialog(context: Context, var addBookDialogListener: AddBookDialogLi
             btnAdderCancelStartDate.visibility = View.GONE
 
             etAdderBookTitle.visibility = View.VISIBLE
+            if (etAdderBookTitle.text.isNotEmpty())
+                ivClearTitle.visibility = View.VISIBLE
+
             etAdderAuthor.visibility = View.VISIBLE
+            if (etAdderAuthor.text.isNotEmpty())
+                ivClearAuthor.visibility = View.VISIBLE
 
             ivBookStatusSetRead.visibility = View.VISIBLE
             ivBookStatusSetInProgress.visibility = View.VISIBLE
@@ -308,6 +428,9 @@ class AddBookDialog(context: Context, var addBookDialogListener: AddBookDialogLi
             tvToRead.visibility = View.VISIBLE
 
             etPagesNumber.visibility = View.VISIBLE
+            if (etPagesNumber.text.isNotEmpty())
+                ivClearPages.visibility = View.VISIBLE
+
             tvRateThisBook.visibility = View.VISIBLE
             rbAdderRating.visibility = View.VISIBLE
             btnAdderSaveBook.visibility = View.VISIBLE
@@ -345,7 +468,12 @@ class AddBookDialog(context: Context, var addBookDialogListener: AddBookDialogLi
             btnAdderCancelStartDate.visibility = View.GONE
 
             etAdderBookTitle.visibility = View.VISIBLE
+            if (etAdderBookTitle.text.isNotEmpty())
+                ivClearTitle.visibility = View.VISIBLE
+
             etAdderAuthor.visibility = View.VISIBLE
+            if (etAdderAuthor.text.isNotEmpty())
+                ivClearAuthor.visibility = View.VISIBLE
 
             ivBookStatusSetRead.visibility = View.VISIBLE
             ivBookStatusSetInProgress.visibility = View.VISIBLE
@@ -355,6 +483,9 @@ class AddBookDialog(context: Context, var addBookDialogListener: AddBookDialogLi
             tvToRead.visibility = View.VISIBLE
 
             etPagesNumber.visibility = View.VISIBLE
+            if (etPagesNumber.text.isNotEmpty())
+                ivClearPages.visibility = View.VISIBLE
+
             tvRateThisBook.visibility = View.VISIBLE
             rbAdderRating.visibility = View.VISIBLE
             btnAdderSaveBook.visibility = View.VISIBLE

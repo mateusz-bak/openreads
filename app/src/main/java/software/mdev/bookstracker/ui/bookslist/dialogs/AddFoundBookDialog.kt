@@ -13,6 +13,7 @@ import android.widget.EditText
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatDialog
 import androidx.core.content.ContextCompat
+import androidx.core.widget.addTextChangedListener
 import androidx.swiperefreshlayout.widget.CircularProgressDrawable
 import software.mdev.bookstracker.data.db.entities.Book
 import com.google.android.material.snackbar.Snackbar
@@ -71,6 +72,10 @@ class AddFoundBookDialog(
         btnAdderSaveStartDate.visibility = View.GONE
         btnAdderCancelStartDate.visibility = View.GONE
 
+        ivClearTitle.visibility = View.GONE
+        ivClearAuthor.visibility = View.GONE
+        ivClearPages.visibility = View.GONE
+
         dpBookFinishDate.maxDate = System.currentTimeMillis()
         dpBookStartDate.maxDate = System.currentTimeMillis()
 
@@ -78,14 +83,19 @@ class AddFoundBookDialog(
         showKeyboard(etAdderBookTitle, 350)
 
         if (resource.data != null) {
-            if (resource.data!!.title != null)
+            if (resource.data!!.title != null) {
                 etAdderBookTitle.setText(resource.data!!.title)
+                ivClearTitle.visibility = View.VISIBLE
+            }
 
-            if (resource.data!!.authors != null)
+            if (resource.data!!.authors != null) {
                 etAdderAuthor.setText(resource.data!!.authors[0].key)
+                ivClearAuthor.visibility = View.VISIBLE
+            }
 
-            if (resource.data!!.number_of_pages != null)
+            if (resource.data!!.number_of_pages != null) {
                 etPagesNumber.setText(resource.data!!.number_of_pages.toString())
+            }
 
             if (resource.data!!.covers != null) {
                 val circularProgressDrawable = CircularProgressDrawable(this.context)
@@ -113,7 +123,47 @@ class AddFoundBookDialog(
             }
         }
 
+        etAdderBookTitle.addTextChangedListener { editable ->
+            editable?.let {
+                if (it.isNotEmpty())
+                    ivClearTitle.visibility = View.VISIBLE
+                else
+                    ivClearTitle.visibility = View.GONE
+            }
+        }
 
+        etAdderAuthor.addTextChangedListener { editable ->
+            editable?.let {
+                if (it.isNotEmpty())
+                    ivClearAuthor.visibility = View.VISIBLE
+                else
+                    ivClearAuthor.visibility = View.GONE
+            }
+        }
+
+        etPagesNumber.addTextChangedListener { editable ->
+            editable?.let {
+                if (it.isNotEmpty())
+                    ivClearPages.visibility = View.VISIBLE
+                else
+                    ivClearPages.visibility = View.GONE
+            }
+        }
+
+        ivClearTitle.setOnClickListener {
+            etAdderBookTitle.setText(Constants.EMPTY_STRING)
+            ivClearTitle.visibility = View.GONE
+        }
+
+        ivClearAuthor.setOnClickListener {
+            etAdderAuthor.setText(Constants.EMPTY_STRING)
+            ivClearAuthor.visibility = View.GONE
+        }
+
+        ivClearPages.setOnClickListener {
+            etPagesNumber.setText(Constants.EMPTY_STRING)
+            ivClearPages.visibility = View.GONE
+        }
 
         ivBookStatusSetRead.setOnClickListener {
             ivBookStatusSetRead.setColorFilter(accentColor, android.graphics.PorterDuff.Mode.SRC_IN)
@@ -146,6 +196,21 @@ class AddFoundBookDialog(
                 ivClearFinishDate.visibility  = View.GONE
             else
                 ivClearFinishDate.visibility  = View.VISIBLE
+
+            if (etAdderBookTitle.text.isNotEmpty())
+                ivClearTitle.visibility = View.VISIBLE
+            else
+                ivClearTitle.visibility = View.GONE
+
+            if (etAdderAuthor.text.isNotEmpty())
+                ivClearAuthor.visibility = View.VISIBLE
+            else
+                ivClearAuthor.visibility = View.GONE
+
+            if (etPagesNumber.text.isNotEmpty())
+                ivClearPages.visibility = View.VISIBLE
+            else
+                ivClearPages.visibility = View.GONE
 
             it.hideKeyboard()
         }
@@ -188,6 +253,21 @@ class AddFoundBookDialog(
 
             ivClearFinishDate.visibility  = View.GONE
 
+            if (etAdderBookTitle.text.isNotEmpty())
+                ivClearTitle.visibility = View.VISIBLE
+            else
+                ivClearTitle.visibility = View.GONE
+
+            if (etAdderAuthor.text.isNotEmpty())
+                ivClearAuthor.visibility = View.VISIBLE
+            else
+                ivClearAuthor.visibility = View.GONE
+
+            if (etPagesNumber.text.isNotEmpty())
+                ivClearPages.visibility = View.VISIBLE
+            else
+                ivClearPages.visibility = View.GONE
+
             it.hideKeyboard()
         }
 
@@ -221,6 +301,18 @@ class AddFoundBookDialog(
             ivClearStartDate.visibility  = View.GONE
             ivClearFinishDate.visibility  = View.GONE
 
+            if (etAdderBookTitle.text.isNotEmpty())
+                ivClearTitle.visibility = View.VISIBLE
+            else
+                ivClearTitle.visibility = View.GONE
+
+            if (etAdderAuthor.text.isNotEmpty())
+                ivClearAuthor.visibility = View.VISIBLE
+            else
+                ivClearAuthor.visibility = View.GONE
+
+            ivClearPages.visibility = View.GONE
+
             it.hideKeyboard()
         }
 
@@ -234,7 +326,10 @@ class AddFoundBookDialog(
             btnSetStartDate.isClickable = false
 
             etAdderBookTitle.visibility = View.GONE
+            ivClearTitle.visibility = View.GONE
+
             etAdderAuthor.visibility = View.GONE
+            ivClearAuthor.visibility = View.GONE
 
             ivBookStatusSetRead.visibility = View.GONE
             ivBookStatusSetInProgress.visibility = View.GONE
@@ -244,7 +339,10 @@ class AddFoundBookDialog(
             tvToRead.visibility = View.GONE
 
             ivBookCover.visibility = View.GONE
+
             etPagesNumber.visibility = View.GONE
+            ivClearPages.visibility = View.GONE
+
             tvRateThisBook.visibility = View.GONE
             rbAdderRating.visibility = View.GONE
             btnAdderSaveBook.visibility = View.GONE
@@ -268,7 +366,10 @@ class AddFoundBookDialog(
             btnSetStartDate.isClickable = false
 
             etAdderBookTitle.visibility = View.GONE
+            ivClearTitle.visibility = View.GONE
+
             etAdderAuthor.visibility = View.GONE
+            ivClearAuthor.visibility = View.GONE
 
             ivBookStatusSetRead.visibility = View.GONE
             ivBookStatusSetInProgress.visibility = View.GONE
@@ -278,6 +379,8 @@ class AddFoundBookDialog(
             tvToRead.visibility = View.GONE
 
             etPagesNumber.visibility = View.GONE
+            ivClearPages.visibility = View.GONE
+
             tvRateThisBook.visibility = View.GONE
             rbAdderRating.visibility = View.GONE
             btnAdderSaveBook.visibility = View.GONE
@@ -301,7 +404,12 @@ class AddFoundBookDialog(
             btnAdderCancelFinishDate.visibility = View.GONE
 
             etAdderBookTitle.visibility = View.VISIBLE
+            if (etAdderBookTitle.text.isNotEmpty())
+                ivClearTitle.visibility = View.VISIBLE
+
             etAdderAuthor.visibility = View.VISIBLE
+            if (etAdderAuthor.text.isNotEmpty())
+                ivClearAuthor.visibility = View.VISIBLE
 
             ivBookStatusSetRead.visibility = View.VISIBLE
             ivBookStatusSetInProgress.visibility = View.VISIBLE
@@ -312,7 +420,11 @@ class AddFoundBookDialog(
 
             if (resource.data!!.covers != null)
                 ivBookCover.visibility = View.VISIBLE
+
             etPagesNumber.visibility = View.VISIBLE
+            if (etPagesNumber.text.isNotEmpty())
+                ivClearPages.visibility = View.VISIBLE
+
             tvRateThisBook.visibility = View.VISIBLE
             rbAdderRating.visibility = View.VISIBLE
             btnAdderSaveBook.visibility = View.VISIBLE
@@ -339,7 +451,12 @@ class AddFoundBookDialog(
             btnAdderCancelFinishDate.visibility = View.GONE
 
             etAdderBookTitle.visibility = View.VISIBLE
+            if (etAdderBookTitle.text.isNotEmpty())
+                ivClearTitle.visibility = View.VISIBLE
+
             etAdderAuthor.visibility = View.VISIBLE
+            if (etAdderAuthor.text.isNotEmpty())
+                ivClearAuthor.visibility = View.VISIBLE
 
             ivBookStatusSetRead.visibility = View.VISIBLE
             ivBookStatusSetInProgress.visibility = View.VISIBLE
@@ -350,7 +467,11 @@ class AddFoundBookDialog(
 
             if (resource.data!!.covers != null)
                 ivBookCover.visibility = View.VISIBLE
+
             etPagesNumber.visibility = View.VISIBLE
+            if (etPagesNumber.text.isNotEmpty())
+                ivClearPages.visibility = View.VISIBLE
+
             tvRateThisBook.visibility = View.VISIBLE
             rbAdderRating.visibility = View.VISIBLE
             btnAdderSaveBook.visibility = View.VISIBLE
@@ -376,7 +497,12 @@ class AddFoundBookDialog(
             btnAdderCancelStartDate.visibility = View.GONE
 
             etAdderBookTitle.visibility = View.VISIBLE
+            if (etAdderBookTitle.text.isNotEmpty())
+                ivClearTitle.visibility = View.VISIBLE
+
             etAdderAuthor.visibility = View.VISIBLE
+            if (etAdderAuthor.text.isNotEmpty())
+                ivClearAuthor.visibility = View.VISIBLE
 
             ivBookStatusSetRead.visibility = View.VISIBLE
             ivBookStatusSetInProgress.visibility = View.VISIBLE
@@ -386,6 +512,9 @@ class AddFoundBookDialog(
             tvToRead.visibility = View.VISIBLE
 
             etPagesNumber.visibility = View.VISIBLE
+            if (etPagesNumber.text.isNotEmpty())
+                ivClearPages.visibility = View.VISIBLE
+
             tvRateThisBook.visibility = View.VISIBLE
             rbAdderRating.visibility = View.VISIBLE
             btnAdderSaveBook.visibility = View.VISIBLE
@@ -426,7 +555,12 @@ class AddFoundBookDialog(
             btnAdderCancelStartDate.visibility = View.GONE
 
             etAdderBookTitle.visibility = View.VISIBLE
+            if (etAdderBookTitle.text.isNotEmpty())
+                ivClearTitle.visibility = View.VISIBLE
+
             etAdderAuthor.visibility = View.VISIBLE
+            if (etAdderAuthor.text.isNotEmpty())
+                ivClearAuthor.visibility = View.VISIBLE
 
             ivBookStatusSetRead.visibility = View.VISIBLE
             ivBookStatusSetInProgress.visibility = View.VISIBLE
@@ -436,6 +570,9 @@ class AddFoundBookDialog(
             tvToRead.visibility = View.VISIBLE
 
             etPagesNumber.visibility = View.VISIBLE
+            if (etPagesNumber.text.isNotEmpty())
+                ivClearPages.visibility = View.VISIBLE
+
             tvRateThisBook.visibility = View.VISIBLE
             rbAdderRating.visibility = View.VISIBLE
             btnAdderSaveBook.visibility = View.VISIBLE
