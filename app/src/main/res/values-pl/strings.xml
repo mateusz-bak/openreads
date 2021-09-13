@@ -175,4 +175,8 @@
     <string name="unknown_title">Brak tytułu</string>
     <string name="unknown_language">Brak języka</string>
     <string name="unknown_isbn">Brak ISBN</string>
+    <string name="warning_no_finish_date_title">Data zakończenia nieustawiona!</string>
+    <string name="warning_no_finish_date_message">Ta książka nie zostanie policzona jako roczne wyzwanie</string>
+    <string name="warning_no_finish_date_add_anyway">Dodaj mimo to</string>
+    <string name="warning_no_finish_date_cancel">Wróć</string>
 </resources>

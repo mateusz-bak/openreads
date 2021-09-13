@@ -10,6 +10,7 @@ import android.view.inputmethod.InputMethodManager
 import software.mdev.bookstracker.R
 import android.widget.DatePicker
 import android.widget.EditText
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatDialog
 import androidx.core.content.ContextCompat
 import software.mdev.bookstracker.data.db.entities.Book
@@ -401,7 +402,6 @@ class AddBookDialog(context: Context, var addBookDialogListener: AddBookDialogLi
         btnAdderSaveBook.setOnClickListener {
             val bookTitle = etAdderBookTitle.text.toString()
             val bookAuthor = etAdderAuthor.text.toString()
-            var bookRating = 0.0F
             val bookNumberOfPagesIntOrNull = etPagesNumber.text.toString().toIntOrNull()
             var bookNumberOfPagesInt : Int
 
@@ -419,55 +419,44 @@ class AddBookDialog(context: Context, var addBookDialogListener: AddBookDialogLi
                             || bookFinishDateMs == null
                             || bookStartDateMs == null ) {
 
-                            when (whatIsClicked) {
-                                BOOK_STATUS_READ -> {
-                                    bookRating = rbAdderRating.rating
-                                }
-                                BOOK_STATUS_IN_PROGRESS -> {
-                                    bookRating = 0.0F
-                                    bookFinishDateMs = null
-                                }
-                                BOOK_STATUS_TO_READ -> {
-                                    bookRating = 0.0F
-                                    bookNumberOfPagesInt = 0
-                                    bookStartDateMs = null
-                                    bookFinishDateMs = null
-                                }
-                            }
+                                if (bookFinishDateMs == null) {
+                                    val noChallengeWarningDialog = AlertDialog.Builder(context)
+                                        .setTitle(R.string.warning_no_finish_date_title)
+                                        .setMessage(R.string.warning_no_finish_date_message)
+                                        .setIcon(R.drawable.ic_baseline_warning_amber_24)
+                                        .setPositiveButton(R.string.warning_no_finish_date_add_anyway) { _, _ ->
+                                            var editedBook = prepareBook(
+                                                whatIsClicked,
+                                                bookRating = rbAdderRating.rating,
+                                                bookNumberOfPagesInt,
+                                                bookStartDateMs,
+                                                bookFinishDateMs,
+                                                bookTitle,
+                                                bookAuthor
+                                            )
 
-                            val REGEX_UNACCENT =
-                                "\\p{InCombiningDiacriticalMarks}+".toRegex()
+                                            addBookDialogListener.onSaveButtonClicked(editedBook)
+                                            dismiss()
+                                        }
+                                        .setNegativeButton(R.string.warning_no_finish_date_cancel) { _, _ ->
+                                        }
+                                        .create()
 
-                            fun CharSequence.unaccent(): String {
-                                val temp =
-                                    Normalizer.normalize(
-                                        this,
-                                        Normalizer.Form.NFD
+                                    noChallengeWarningDialog.show()
+                                } else {
+                                    var editedBook = prepareBook(
+                                        whatIsClicked,
+                                        bookRating = rbAdderRating.rating,
+                                        bookNumberOfPagesInt,
+                                        bookStartDateMs,
+                                        bookFinishDateMs,
+                                        bookTitle,
+                                        bookAuthor
                                     )
-                                return REGEX_UNACCENT.replace(temp, "")
-                            }
 
-                            val editedBook = Book(
-                                bookTitle,
-                                bookAuthor,
-                                bookRating,
-                                bookStatus = whatIsClicked,
-                                bookPriority = DATABASE_EMPTY_VALUE,
-                                bookStartDate = bookStartDateMs.toString(),
-                                bookFinishDate = bookFinishDateMs.toString(),
-                                bookNumberOfPages = bookNumberOfPagesInt,
-                                bookTitle_ASCII = bookTitle.unaccent()
-                                    .replace("ł", "l", false),
-                                bookAuthor_ASCII = bookAuthor.unaccent()
-                                    .replace("ł", "l", false),
-                                false,
-                                Constants.DATABASE_EMPTY_VALUE,
-                                Constants.DATABASE_EMPTY_VALUE,
-                                Constants.DATABASE_EMPTY_VALUE,
-                                Constants.DATABASE_EMPTY_VALUE
-                            )
-                            addBookDialogListener.onSaveButtonClicked(editedBook)
-                            dismiss()
+                                    addBookDialogListener.onSaveButtonClicked(editedBook)
+                                    dismiss()
+                                }
                         } else {
                             Snackbar.make(it, R.string.sbWarningStartDateMustBeBeforeFinishDate, Snackbar.LENGTH_SHORT).show()
                         }
@@ -481,6 +470,69 @@ class AddBookDialog(context: Context, var addBookDialogListener: AddBookDialogLi
                 Snackbar.make(it, R.string.sbWarningTitle, Snackbar.LENGTH_SHORT).show()
             }
         }
+    }
+
+    private fun prepareBook(
+        whatIsClicked: String,
+        bookRating: Float,
+        bookNumberOfPagesInt: Int,
+        bookStartDateMs: Long?,
+        bookFinishDateMs: Long?,
+        bookTitle: String,
+        bookAuthor: String
+    ): Book {
+        var newBookRating = 0.0F
+        var newBookNumberOfPagesInt = bookNumberOfPagesInt
+        var newBookStartDateMs: Long? = bookStartDateMs
+        var newBookFinishDateMs: Long? = bookFinishDateMs
+
+        when (whatIsClicked) {
+            BOOK_STATUS_READ -> {
+                newBookRating = bookRating
+            }
+            BOOK_STATUS_IN_PROGRESS -> {
+                newBookRating = 0.0F
+                newBookFinishDateMs = null
+            }
+            BOOK_STATUS_TO_READ -> {
+                newBookRating = 0.0F
+                newBookNumberOfPagesInt = 0
+                newBookStartDateMs = null
+                newBookFinishDateMs = null
+            }
+        }
+
+        val REGEX_UNACCENT =
+            "\\p{InCombiningDiacriticalMarks}+".toRegex()
+
+        fun CharSequence.unaccent(): String {
+            val temp =
+                Normalizer.normalize(
+                    this,
+                    Normalizer.Form.NFD
+                )
+            return REGEX_UNACCENT.replace(temp, "")
+        }
+
+        return Book(
+            bookTitle,
+            bookAuthor,
+            newBookRating,
+            bookStatus = whatIsClicked,
+            bookPriority = DATABASE_EMPTY_VALUE,
+            bookStartDate = newBookStartDateMs.toString(),
+            bookFinishDate = newBookFinishDateMs.toString(),
+            bookNumberOfPages = newBookNumberOfPagesInt,
+            bookTitle_ASCII = bookTitle.unaccent()
+                .replace("ł", "l", false),
+            bookAuthor_ASCII = bookAuthor.unaccent()
+                .replace("ł", "l", false),
+            false,
+            DATABASE_EMPTY_VALUE,
+            DATABASE_EMPTY_VALUE,
+            DATABASE_EMPTY_VALUE,
+            DATABASE_EMPTY_VALUE
+        )
     }
 
     fun View.hideKeyboard() {

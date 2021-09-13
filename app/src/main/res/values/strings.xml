@@ -210,5 +210,9 @@
     <string name="unknown_title">No title</string>
     <string name="unknown_language">No language</string>
     <string name="unknown_isbn">No ISBN</string>
+    <string name="warning_no_finish_date_title">Finish date not set!</string>
+    <string name="warning_no_finish_date_message">This book won\'t be counted for yearly challenge.</string>
+    <string name="warning_no_finish_date_add_anyway">Add anyway</string>
+    <string name="warning_no_finish_date_cancel">Go back</string>
 
 </resources>

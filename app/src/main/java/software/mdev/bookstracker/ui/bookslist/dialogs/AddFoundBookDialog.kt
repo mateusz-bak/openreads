@@ -10,6 +10,7 @@ import android.view.inputmethod.InputMethodManager
 import software.mdev.bookstracker.R
 import android.widget.DatePicker
 import android.widget.EditText
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatDialog
 import androidx.core.content.ContextCompat
 import androidx.swiperefreshlayout.widget.CircularProgressDrawable
@@ -486,7 +487,6 @@ class AddFoundBookDialog(
         btnAdderSaveBook.setOnClickListener {
             val bookTitle = etAdderBookTitle.text.toString()
             val bookAuthor = etAdderAuthor.text.toString()
-            var bookRating = 0.0F
             val bookNumberOfPagesIntOrNull = etPagesNumber.text.toString().toIntOrNull()
             var bookNumberOfPagesInt: Int
 
@@ -505,72 +505,52 @@ class AddFoundBookDialog(
                             || bookFinishDateMs == null
                             || bookStartDateMs == null ) {
 
-                            when (whatIsClicked) {
-                                BOOK_STATUS_READ -> {
-                                    bookRating = rbAdderRating.rating
-                                }
-                                BOOK_STATUS_IN_PROGRESS -> {
-                                    bookRating = 0.0F
-                                    bookFinishDateMs = null
-                                }
-                                BOOK_STATUS_TO_READ -> {
-                                    bookRating = 0.0F
-                                    bookNumberOfPagesInt = 0
-                                    bookStartDateMs = null
-                                    bookFinishDateMs = null
-                                }
+                            if (bookFinishDateMs == null) {
+                                val noChallengeWarningDialog = AlertDialog.Builder(context)
+                                    .setTitle(R.string.warning_no_finish_date_title)
+                                    .setMessage(R.string.warning_no_finish_date_message)
+                                    .setIcon(R.drawable.ic_baseline_warning_amber_24)
+                                    .setPositiveButton(R.string.warning_no_finish_date_add_anyway) { _, _ ->
+                                        var editedBook = prepareBook(
+                                            whatIsClicked,
+                                            bookRating = rbAdderRating.rating,
+                                            bookNumberOfPagesInt = bookNumberOfPagesInt,
+                                            bookStartDateMs = bookStartDateMs,
+                                            bookFinishDateMs = bookFinishDateMs,
+                                            bookTitle = bookTitle,
+                                            bookAuthor = bookAuthor,
+                                            covers = resource.data!!.covers,
+                                            key = resource.data!!.key,
+                                            isbn10 = resource.data!!.isbn_10,
+                                            isbn13 = resource.data!!.isbn_13
+                                        )
+
+                                        addFoundBookDialogListener.onSaveButtonClicked(editedBook)
+                                        dismiss()
+                                    }
+                                    .setNegativeButton(R.string.warning_no_finish_date_cancel) { _, _ ->
+                                    }
+                                    .create()
+
+                                noChallengeWarningDialog.show()
+                            } else {
+                                var editedBook = prepareBook(
+                                    whatIsClicked,
+                                    bookRating = rbAdderRating.rating,
+                                    bookNumberOfPagesInt = bookNumberOfPagesInt,
+                                    bookStartDateMs = bookStartDateMs,
+                                    bookFinishDateMs = bookFinishDateMs,
+                                    bookTitle = bookTitle,
+                                    bookAuthor = bookAuthor,
+                                    covers = resource.data!!.covers,
+                                    resource.data!!.key,
+                                    resource.data!!.isbn_10,
+                                    resource.data!!.isbn_13
+                                )
+
+                                addFoundBookDialogListener.onSaveButtonClicked(editedBook)
+                                dismiss()
                             }
-
-                            val REGEX_UNACCENT =
-                                "\\p{InCombiningDiacriticalMarks}+".toRegex()
-
-                            fun CharSequence.unaccent(): String {
-                                val temp =
-                                    Normalizer.normalize(this, Normalizer.Form.NFD)
-                                return REGEX_UNACCENT.replace(temp, "")
-                            }
-
-                            var coverID = Constants.DATABASE_EMPTY_VALUE
-                            if (resource.data!!.covers != null)
-                                coverID = resource.data!!.covers[0].toString()
-//                                        var coverUrl = "https://covers.openlibrary.org/b/id/$coverID-M.jpg"
-
-                            var olid = resource.data!!.key
-                            var isbn10 = Constants.DATABASE_EMPTY_VALUE
-                            var isbn13 = Constants.DATABASE_EMPTY_VALUE
-
-                            if (resource.data!!.isbn_10 != null) {
-                                isbn10 = resource.data!!.isbn_10[0]
-                            }
-
-                            if (resource.data!!.isbn_13 != null) {
-                                isbn13 = resource.data!!.isbn_13[0]
-                            }
-
-                            val editedBook = Book(
-                                bookTitle,
-                                bookAuthor,
-                                bookRating,
-                                bookStatus = whatIsClicked,
-                                bookPriority = DATABASE_EMPTY_VALUE,
-                                bookStartDate = bookStartDateMs.toString(),
-                                bookFinishDate = bookFinishDateMs.toString(),
-                                bookNumberOfPages = bookNumberOfPagesInt,
-                                bookTitle_ASCII = bookTitle.unaccent()
-                                    .replace("ł", "l", false),
-                                bookAuthor_ASCII = bookAuthor.unaccent()
-                                    .replace("ł", "l", false),
-                                false,
-                                coverID.toString(),
-                                olid.replace("/books/", ""),
-                                isbn10,
-                                isbn13
-                            )
-
-                            addFoundBookDialogListener.onSaveButtonClicked(
-                                editedBook
-                            )
-                            dismiss()
                         } else {
                             Snackbar.make(it, R.string.sbWarningStartDateMustBeBeforeFinishDate, Snackbar.LENGTH_SHORT).show()
                         }
@@ -584,6 +564,94 @@ class AddFoundBookDialog(
                 Snackbar.make(it, R.string.sbWarningTitle, Snackbar.LENGTH_SHORT).show()
             }
         }
+    }
+
+    private fun prepareBook(
+        whatIsClicked: String,
+        bookRating: Float,
+        bookNumberOfPagesInt: Int,
+        bookStartDateMs: Long?,
+        bookFinishDateMs: Long?,
+        bookTitle: String,
+        bookAuthor: String,
+        covers: List<Int>,
+        key: String,
+        isbn10: List<String>,
+        isbn13: List<String>
+    ): Book {
+        var newBookRating = 0.0F
+        var newBookNumberOfPagesInt = bookNumberOfPagesInt
+        var newBookStartDateMs: Long? = bookStartDateMs
+        var newBookFinishDateMs: Long? = bookFinishDateMs
+
+        when (whatIsClicked) {
+            BOOK_STATUS_READ -> {
+                newBookRating = bookRating
+            }
+            BOOK_STATUS_IN_PROGRESS -> {
+                newBookRating = 0.0F
+                newBookFinishDateMs = null
+            }
+            BOOK_STATUS_TO_READ -> {
+                newBookRating = 0.0F
+                newBookNumberOfPagesInt = 0
+                newBookStartDateMs = null
+                newBookFinishDateMs = null
+            }
+        }
+
+        val REGEX_UNACCENT =
+            "\\p{InCombiningDiacriticalMarks}+".toRegex()
+
+        fun CharSequence.unaccent(): String {
+            val temp =
+                Normalizer.normalize(
+                    this,
+                    Normalizer.Form.NFD
+                )
+            return REGEX_UNACCENT.replace(temp, "")
+        }
+
+
+
+        var coverID = Constants.DATABASE_EMPTY_VALUE
+        if (covers != null)
+            coverID = covers[0].toString()
+
+        var olid = key
+
+        var newIsbn10 = Constants.DATABASE_EMPTY_VALUE
+        var newIsbn13 = Constants.DATABASE_EMPTY_VALUE
+
+        if (isbn10 != null) {
+            newIsbn10 = isbn10[0]
+        }
+
+        if (isbn13 != null) {
+            newIsbn13 = isbn13[0]
+        }
+
+
+
+        return Book(
+            bookTitle,
+            bookAuthor,
+            newBookRating,
+            bookStatus = whatIsClicked,
+            bookPriority = DATABASE_EMPTY_VALUE,
+            bookStartDate = newBookStartDateMs.toString(),
+            bookFinishDate = newBookFinishDateMs.toString(),
+            bookNumberOfPages = newBookNumberOfPagesInt,
+            bookTitle_ASCII = bookTitle.unaccent()
+                .replace("ł", "l", false),
+            bookAuthor_ASCII = bookAuthor.unaccent()
+                .replace("ł", "l", false),
+            false,
+            coverID.toString(),
+            olid.replace("/books/", ""),
+            newIsbn10,
+            newIsbn13
+        )
     }
 
     fun View.hideKeyboard() {
