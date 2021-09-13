@@ -13,6 +13,7 @@ import software.mdev.bookstracker.R
 import kotlinx.android.synthetic.main.item_book_searched_by_olid.view.*
 import software.mdev.bookstracker.api.models.OpenLibraryOLIDResponse
 import software.mdev.bookstracker.other.Resource
+import software.mdev.bookstracker.ui.bookslist.fragments.RoundCornersTransform
 import software.mdev.bookstracker.ui.bookslist.viewmodel.BooksViewModel
 
 class FoundBookAdapter(
@@ -84,7 +85,7 @@ class FoundBookAdapter(
 
                         tvBookAuthor.text = allAuthors
                     } else {
-                        tvBookAuthor.text = holder.itemView.context.getString(R.string.UNKNOWN)
+                        tvBookAuthor.text = holder.itemView.context.getString(R.string.unknown_author)
                     }
 
                     if (curBook.data.covers != null) {
@@ -110,6 +111,7 @@ class FoundBookAdapter(
                             .load(coverUrl)
                             .placeholder(circularProgressDrawable)
                             .error(R.drawable.ic_baseline_error_outline_24)
+                            .transform(RoundCornersTransform(16.0f))
                             .into(ivBookCover)
 
                         tvCoverMissing.visibility = View.GONE
@@ -151,13 +153,6 @@ class FoundBookAdapter(
                             languagesString =languagesString.dropLast(1)
 
                         tvBookLanguage.text = languagesString
-                    }
-
-                    if (curBook.data.key != null) {
-                        var olid = curBook.data.key.toString()
-                        olid = olid.replace("/books/", "")
-                        olid = "OLID: $olid"
-                        tvBookOLID.text = olid
                     }
                 }
             }

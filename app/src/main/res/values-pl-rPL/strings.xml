@@ -142,7 +142,7 @@
     <string name="etAdderBookTitleSearch">Wpisz tytuł, żeby wyszukać…</string>
     <string name="fabAddNewBook">Dodaj nową książkę</string>
     <string name="fabCancelAddingNewBook">Przewij dodawanie nowej książki</string>
-    <string name="UNKNOWN">Brak autora</string>
+    <string name="unknown_author">Brak autora</string>
     <string name="language">język</string>
     <string name="language_upperCase">Język</string>
     <string name="button_search">szukaj</string>
@@ -169,7 +169,10 @@
     <string name="sbWarningStartDateMustBeBeforeFinishDate">Data zakończenia nie może być wcześniej niż data rozpoczęcia</string>
     <string name="toast_no_results_from_OL">Brak rezultatów</string>
     <string name="tvSortStartDate">Data rozpoczęcia</string>
-    <string name="tv_cover_missing">"Brak\nokładki"</string>
+    <string name="tv_cover_missing">"Brak okładki"</string>
     <string name="set">ustaw</string>
     <string name="tvWelcomeText_4">Wybierz teraz kolor akcentów</string>
+    <string name="unknown_title">Brak tytułu</string>
+    <string name="unknown_language">Brak języka</string>
+    <string name="unknown_isbn">Brak ISBN</string>
 </resources>

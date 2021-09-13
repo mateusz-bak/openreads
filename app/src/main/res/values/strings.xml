@@ -171,7 +171,7 @@
     <string name="etAdderBookTitleSearch">Type title to search…</string>
     <string name="fabAddNewBook">Add new book</string>
     <string name="fabCancelAddingNewBook">Cancel adding new book</string>
-    <string name="UNKNOWN">No author</string>
+    <string name="unknown_author">No author</string>
     <string name="language">language</string>
     <string name="language_upperCase">Language</string>
     <string name="button_search">search</string>
@@ -204,8 +204,11 @@
     <string name="hint_olid" translatable="false">Open Library ID</string>
     <string name="hint_isbn10" translatable="false">ISBN 10</string>
     <string name="hint_isbn13" translatable="false">ISBN 13</string>
-    <string name="tv_cover_missing">"Cover\nmissing"</string>
+    <string name="tv_cover_missing">"Cover missing"</string>
     <string name="set">set</string>
     <string name="tvWelcomeText_4">Now choose theme color for the app</string>
+    <string name="unknown_title">No title</string>
+    <string name="unknown_language">No language</string>
+    <string name="unknown_isbn">No ISBN</string>
 
 </resources>
