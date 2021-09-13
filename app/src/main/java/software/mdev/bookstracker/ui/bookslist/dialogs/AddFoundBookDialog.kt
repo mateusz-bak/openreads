@@ -147,8 +147,7 @@ class AddFoundBookDialog(
             else
                 ivClearFinishDate.visibility  = View.VISIBLE
 
-            etPagesNumber.requestFocus()
-            showKeyboard(etPagesNumber,250)
+            it.hideKeyboard()
         }
 
         ivBookStatusSetInProgress.setOnClickListener {
@@ -189,8 +188,7 @@ class AddFoundBookDialog(
 
             ivClearFinishDate.visibility  = View.GONE
 
-            etPagesNumber.requestFocus()
-            showKeyboard(etPagesNumber,250)
+            it.hideKeyboard()
         }
 
         ivBookStatusSetToRead.setOnClickListener {
