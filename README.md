@@ -9,9 +9,8 @@
 - books you want to read later.
 
  You can also see come cool statistics!  
+ 
 
-#### Update 1.4.x: You can now search for books using Open Library API and add them straight to your lists.
-  
 ## Screenshots  
 <p align='center'>  
  <img src='doc/images/screenshot-finished.png' width='30%'/>  

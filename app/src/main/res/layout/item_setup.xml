@@ -54,6 +54,17 @@
         app:layout_constraintTop_toTopOf="@+id/guideline2" />
 
     <TextView
+        android:id="@+id/tvSetupVersion"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/app_version"
+        android:textColor="@color/grey_500"
+        android:textSize="12dp"
+        android:visibility="invisible"
+        app:layout_constraintEnd_toEndOf="@+id/ivSetupImage"
+        app:layout_constraintTop_toBottomOf="@+id/ivSetupImage" />
+
+    <TextView
         android:id="@+id/tvSetupSwipeHint"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

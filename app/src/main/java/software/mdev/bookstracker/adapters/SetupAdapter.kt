@@ -41,6 +41,7 @@ class SetupAdapter(
                     ivSetupImage.setImageResource(images[position])
 
                     tvSetupText.text = resources.getText(R.string.tvWelcomeText_0)
+                    tvSetupVersion.visibility = View.VISIBLE
 
                     ivSwipeHint1.visibility = View.INVISIBLE
                     ivSwipeHint2.visibility = View.INVISIBLE
@@ -56,6 +57,7 @@ class SetupAdapter(
                     ivSetupImage.setImageResource(images[position])
 
                     tvSetupText.text = resources.getText(R.string.tvWelcomeText_1)
+                    tvSetupVersion.visibility = View.INVISIBLE
 
                     ivSwipeHint1.visibility = View.INVISIBLE
                     ivSwipeHint2.visibility = View.INVISIBLE
@@ -70,6 +72,7 @@ class SetupAdapter(
                     ivSetupImage.setImageResource(images[position])
 
                     tvSetupText.text = resources.getText(R.string.tvWelcomeText_2)
+                    tvSetupVersion.visibility = View.INVISIBLE
 
                     ivSwipeHint1.visibility = View.INVISIBLE
                     ivSwipeHint2.visibility = View.INVISIBLE
@@ -84,6 +87,7 @@ class SetupAdapter(
 
                     clThemeSelector.visibility = View.VISIBLE
                     tvSetupText.text = resources.getText(R.string.tvWelcomeText_4)
+                    tvSetupVersion.visibility = View.INVISIBLE
 
                     ivSwipeHint1.visibility = View.INVISIBLE
                     ivSwipeHint2.visibility = View.INVISIBLE
@@ -145,6 +149,8 @@ class SetupAdapter(
                     ivSetupImage.setImageResource(images[position])
 
                     tvSetupText.text = resources.getText(R.string.tvWelcomeText_3)
+                    tvSetupVersion.visibility = View.INVISIBLE
+
                     ivSwipeHint1.visibility = View.INVISIBLE
                     ivSwipeHint2.visibility = View.INVISIBLE
                     tvSetupSwipeHint.text = resources.getText(R.string.tvSetupSwipeHint_1)
