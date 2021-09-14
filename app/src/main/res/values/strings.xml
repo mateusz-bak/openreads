@@ -123,11 +123,15 @@
     <string name="tvNumberOfPages" translatable="false">101 pages</string>
     <string name="tvDateFinished" translatable="false">13 Jun 2021</string>
     <string name="setTitleOnUpdateAvailable">New update!</string>
-    <string name="setContentOnUpdateAvailable">"Newer version of the Books Tracker app is available.\n\nClick \"update\"  to go to the downloading page."</string>
+    <string name="setContentOnUpdateAvailable_gplay">"Newer version of the Books Tracker app is available in Google Play store.\n\nClick \"update\"  to go to the downloading page."</string>
+    <string name="setContentOnUpdateAvailable_fdroid">"Newer version of the Books Tracker app is available in F-Droid store.\n\nClick \"update\"  to go to the downloading page."</string>
+    <string name="setContentOnUpdateAvailable_github">"Newer version of the Books Tracker app is available in Github repository.\n\nClick \"update\"  to go to the downloading page."</string>
     <string name="setButtonUpdate">Update</string>
     <string name="setButtonDismiss">Dismiss</string>
     <string name="setButtonDoNotShowAgain">Ignore</string>
-    <string name="setContentOnUpdateNotAvailable">You\'ve got the latest version available of Books Tracker app!</string>
+    <string name="setContentOnUpdateNotAvailable_gplay">You\'ve got the latest version available of Books Tracker app from Google Play store.</string>
+    <string name="setContentOnUpdateNotAvailable_fdroid">You\'ve got the latest version available of Books Tracker app from F-Droid store.</string>
+    <string name="setContentOnUpdateNotAvailable_github">You\'ve got the latest version available of Books Tracker app from Github repository.</string>
     <string name="setTitleOnUpdateNotAvailable">No updates available</string>
     <string name="statisticsFragment">Statistics</string>
     <string name="statistics_all">All</string>

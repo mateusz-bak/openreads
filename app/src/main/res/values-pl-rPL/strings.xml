@@ -98,11 +98,15 @@
     <string name="not_set">Nie ustawiono</string>
     <string name="tvSortFinishDate">Data zakończenia</string>
     <string name="setTitleOnUpdateAvailable">Aktualizacja!</string>
-    <string name="setContentOnUpdateAvailable">"Nowsza wersja aplikacji Books Tracker jest dostępna.\n\nKliknij \"aktualizuj\", żeby przejść na stronę pobierania."</string>
+    <string name="setContentOnUpdateAvailable_gplay">"Nowsza wersja aplikacji Books Tracker jest dostępna do pobrania z Google Play.\n\nKliknij \"aktualizuj\", żeby przejść na stronę pobierania."</string>
+    <string name="setContentOnUpdateAvailable_fdroid">"Nowsza wersja aplikacji Books Tracker jest dostępna do pobrania z F-Droid.\n\nKliknij \"aktualizuj\", żeby przejść na stronę pobierania."</string>
+    <string name="setContentOnUpdateAvailable_github">"Nowsza wersja aplikacji Books Tracker jest dostępna do pobrania z repozytorium Github.\n\nKliknij \"aktualizuj\", żeby przejść na stronę pobierania."</string>
     <string name="setButtonUpdate">Aktualizuj</string>
     <string name="setButtonDismiss">Później</string>
     <string name="setButtonDoNotShowAgain">Ignoruj</string>
-    <string name="setContentOnUpdateNotAvailable">Masz zainstalowaną najnowszą wersję aplikacji Books Tracker!</string>
+    <string name="setContentOnUpdateNotAvailable_gplay">Masz zainstalowaną najnowszą wersję aplikacji Books Tracker z Google Play.</string>
+    <string name="setContentOnUpdateNotAvailable_fdroid">Masz zainstalowaną najnowszą wersję aplikacji Books Tracker z F-Droid.</string>
+    <string name="setContentOnUpdateNotAvailable_github">Masz zainstalowaną najnowszą wersję aplikacji Books Tracker z repozytorium Github.</string>
     <string name="setTitleOnUpdateNotAvailable">Brak dostępnych aktualizacji</string>
     <string name="statisticsFragment">Statystyki</string>
     <string name="statistics_all">Wszystko</string>

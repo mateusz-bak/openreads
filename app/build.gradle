@@ -19,6 +19,8 @@ android {
         versionName "1.4.1"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+
+        flavorDimensions "variant"
     }
 
     buildTypes {
@@ -27,6 +29,21 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
     }
+
+
+    productFlavors {
+        github {
+            dimension = "variant"
+            isDefault = true
+        }
+        fdroid {
+            dimension = "variant"
+        }
+        gplay {
+            dimension = "variant"
+        }
+    }
+
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8

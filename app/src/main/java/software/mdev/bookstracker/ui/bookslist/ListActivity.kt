@@ -25,6 +25,7 @@ import software.mdev.bookstracker.data.repositories.OpenLibraryRepository
 import software.mdev.bookstracker.data.repositories.YearRepository
 import software.mdev.bookstracker.other.Constants
 import software.mdev.bookstracker.other.Functions
+import software.mdev.bookstracker.other.Updater
 import software.mdev.bookstracker.ui.bookslist.viewmodel.BooksViewModel
 import software.mdev.bookstracker.ui.bookslist.viewmodel.BooksViewModelProviderFactory
 
@@ -37,6 +38,8 @@ class ListActivity : AppCompatActivity() {
         val yearRepository = YearRepository(YearDatabase(this))
         val openLibraryRepository = OpenLibraryRepository()
         val languageRepository = LanguageRepository(LanguageDatabase(this))
+
+        val updater = Updater()
 
         val booksViewModelProviderFactory = BooksViewModelProviderFactory(
             booksRepository,
@@ -51,7 +54,9 @@ class ListActivity : AppCompatActivity() {
         setAppTheme()
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_list)
-        checkForAppUpdate(this)
+
+        updater.checkForAppUpdate(this, false)
+
         bottomNavigationView.setupWithNavController(booksNavHostFragment.findNavController())
 
         booksNavHostFragment.findNavController()
@@ -114,20 +119,5 @@ class ListActivity : AppCompatActivity() {
             Constants.THEME_ACCENT_TEAL_500 -> setTheme(R.style.Theme_Mdev_Bookstracker_CustomTheme_Teal)
             Constants.THEME_ACCENT_YELLOW_500 -> setTheme(R.style.Theme_Mdev_Bookstracker_CustomTheme_Yellow)
         }
-    }
-
-    fun checkForAppUpdate(context: Context) = CoroutineScope(Dispatchers.Main).launch {
-        var appUpdater = AppUpdater(context)
-        appUpdater
-            .setTitleOnUpdateAvailable(getString(R.string.setTitleOnUpdateAvailable))
-            .setContentOnUpdateAvailable(getString(R.string.setContentOnUpdateAvailable))
-            .setButtonUpdate(getString(R.string.setButtonUpdate))
-            .setButtonDismiss(getString(R.string.setButtonDismiss))
-            .setButtonDoNotShowAgain(getString(R.string.setButtonDoNotShowAgain))
-            .setUpdateFrom(UpdateFrom.GITHUB)
-            .setGitHubUserAndRepo(Constants.GITHUB_USER, Constants.GITHUB_REPO)
-            .setDisplay(Display.DIALOG)
-            .showAppUpdated(false)
-            .start()
     }
 }
