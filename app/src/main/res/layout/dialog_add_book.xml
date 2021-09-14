@@ -37,10 +37,25 @@
             android:maxLength="200"
             android:textColor="?colorOnSecondary"
             android:textSize="18sp"
+            android:paddingEnd="40dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/ivBookCover" />
+
+        <ImageView
+            android:id="@+id/ivClearTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:clickable="true"
+            android:focusable="true"
+            android:scaleX="0.8"
+            android:scaleY="0.8"
+            android:layout_marginEnd="8dp"
+            app:layout_constraintBottom_toBottomOf="@+id/etAdderBookTitle"
+            app:layout_constraintEnd_toEndOf="@+id/etAdderBookTitle"
+            app:layout_constraintTop_toTopOf="@+id/etAdderBookTitle"
+            app:srcCompat="@drawable/ic_baseline_clear_24" />
 
         <EditText
             android:id="@+id/etAdderAuthor"
@@ -54,10 +69,25 @@
             android:maxLength="100"
             android:textColor="?colorOnSecondary"
             android:textSize="14sp"
+            android:paddingEnd="40dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/etAdderBookTitle" />
+
+        <ImageView
+            android:id="@+id/ivClearAuthor"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:clickable="true"
+            android:focusable="true"
+            android:scaleX="0.8"
+            android:scaleY="0.8"
+            android:layout_marginEnd="8dp"
+            app:layout_constraintBottom_toBottomOf="@+id/etAdderAuthor"
+            app:layout_constraintEnd_toEndOf="@+id/etAdderAuthor"
+            app:layout_constraintTop_toTopOf="@+id/etAdderAuthor"
+            app:srcCompat="@drawable/ic_baseline_clear_24" />
 
         <RatingBar
             android:id="@+id/rbAdderRating"
@@ -240,7 +270,7 @@
 
         <EditText
             android:id="@+id/etPagesNumber"
-            android:layout_width="75dp"
+            android:layout_width="100dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="4dp"
             android:autofillHints="@string/autofill_hint_pages_number"
@@ -249,8 +279,24 @@
             android:maxLength="10"
             android:textColor="?colorOnSecondary"
             android:textSize="14sp"
+            android:paddingEnd="40dp"
             app:layout_constraintStart_toStartOf="@+id/etAdderAuthor"
             app:layout_constraintTop_toBottomOf="@+id/etAdderAuthor" />
+
+        <ImageView
+            android:id="@+id/ivClearPages"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:clickable="true"
+            android:focusable="true"
+            android:scaleX="0.8"
+            android:scaleY="0.8"
+            android:layout_marginEnd="8dp"
+            app:layout_constraintBottom_toBottomOf="@+id/etPagesNumber"
+            app:layout_constraintEnd_toEndOf="@+id/etPagesNumber"
+            app:layout_constraintTop_toTopOf="@+id/etPagesNumber"
+            app:srcCompat="@drawable/ic_baseline_clear_24" />
+
 
         <DatePicker
             android:id="@+id/dpBookFinishDate"
@@ -282,6 +328,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="4dp"
             android:layout_marginBottom="8dp"
+            android:layout_marginStart="24dp"
             android:text="@string/hint_date_started"
             android:textSize="16sp"
             app:layout_constraintBottom_toBottomOf="@+id/btnSetStartDate"
@@ -299,9 +346,7 @@
             android:text="@string/hint_date_finished"
             android:textSize="16sp"
             app:layout_constraintBottom_toBottomOf="@+id/btnSetFinishDate"
-            app:layout_constraintEnd_toStartOf="@+id/btnSetFinishDate"
-            app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintStart_toStartOf="@+id/tvSetStartDate"
             app:layout_constraintTop_toTopOf="@+id/btnSetFinishDate" />
 
 
@@ -310,21 +355,52 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="4dp"
-            android:text="@string/not_set"
+            android:layout_marginEnd="24dp"
+            android:text="@string/set"
+            android:minWidth="140dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toEndOf="@+id/tvSetStartDate"
             app:layout_constraintTop_toBottomOf="@+id/tvFinished" />
 
+        <ImageView
+            android:id="@+id/ivClearStartDate"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:clickable="true"
+            android:focusable="true"
+            android:scaleX="0.8"
+            android:scaleY="0.8"
+            android:foregroundGravity="center"
+            app:layout_constraintBottom_toBottomOf="@+id/btnSetStartDate"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/btnSetStartDate"
+            app:layout_constraintTop_toTopOf="@+id/btnSetStartDate"
+            app:srcCompat="@drawable/ic_baseline_clear_24" />
+
         <Button
             android:id="@+id/btnSetFinishDate"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/not_set"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintStart_toEndOf="@+id/tvSetFinishDate"
+            android:text="@string/set"
+            android:minWidth="140dp"
+            app:layout_constraintEnd_toEndOf="@+id/btnSetStartDate"
             app:layout_constraintTop_toBottomOf="@+id/btnSetStartDate" />
+
+        <ImageView
+            android:id="@+id/ivClearFinishDate"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:clickable="true"
+            android:focusable="true"
+            android:scaleX="0.8"
+            android:scaleY="0.8"
+            android:foregroundGravity="center"
+            app:layout_constraintBottom_toBottomOf="@+id/btnSetFinishDate"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/btnSetFinishDate"
+            app:layout_constraintTop_toTopOf="@+id/btnSetFinishDate"
+            app:srcCompat="@drawable/ic_baseline_clear_24" />
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>

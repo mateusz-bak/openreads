@@ -80,6 +80,22 @@ class AddBookSearchFragment : Fragment(R.layout.fragment_add_book_search) {
             ).show()
         }
 
+        ivClearTitleSearch.visibility = View.GONE
+
+        etAdderBookTitleSearch.addTextChangedListener { editable ->
+            editable?.let {
+                if (it.isNotEmpty())
+                    ivClearTitleSearch.visibility = View.VISIBLE
+                else
+                    ivClearTitleSearch.visibility = View.GONE
+            }
+        }
+
+        ivClearTitleSearch.setOnClickListener {
+            etAdderBookTitleSearch.setText(Constants.EMPTY_STRING)
+            ivClearTitleSearch.visibility = View.GONE
+        }
+
         btnFilterLanguage.setOnClickListener {
             if (rvLanguages.visibility == View.GONE) {
                 rvLanguages.visibility = View.VISIBLE

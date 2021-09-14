@@ -14,6 +14,7 @@ import androidx.lifecycle.ViewModelProviders
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
+import kotlinx.android.synthetic.main.activity_list.*
 import software.mdev.bookstracker.R
 import software.mdev.bookstracker.adapters.BookAdapter
 import software.mdev.bookstracker.data.db.BooksDatabase
@@ -335,18 +336,53 @@ class ReadFragment : Fragment(R.layout.fragment_read) {
             Constants.SHARED_PREFERENCES_KEY_SORT_ORDER,
             Constants.SORT_ORDER_TITLE_ASC
         )) {
-            Constants.SORT_ORDER_TITLE_DESC -> viewModel.getSortedBooksByTitleDesc(currentFragment).observe(viewLifecycleOwner, Observer { some_books -> functions.filterBooksList(activity as ListActivity, bookAdapter, some_books)})
-            Constants.SORT_ORDER_TITLE_ASC -> viewModel.getSortedBooksByTitleAsc(currentFragment).observe(viewLifecycleOwner, Observer { some_books -> functions.filterBooksList(activity as ListActivity, bookAdapter, some_books)})
-            Constants.SORT_ORDER_AUTHOR_DESC -> viewModel.getSortedBooksByAuthorDesc(currentFragment).observe(viewLifecycleOwner, Observer { some_books -> functions.filterBooksList(activity as ListActivity, bookAdapter, some_books)})
-            Constants.SORT_ORDER_AUTHOR_ASC -> viewModel.getSortedBooksByAuthorAsc(currentFragment).observe(viewLifecycleOwner, Observer { some_books -> functions.filterBooksList(activity as ListActivity, bookAdapter, some_books)})
-            Constants.SORT_ORDER_RATING_DESC -> viewModel.getSortedBooksByRatingDesc(currentFragment).observe(viewLifecycleOwner, Observer { some_books -> functions.filterBooksList(activity as ListActivity, bookAdapter, some_books)})
-            Constants.SORT_ORDER_RATING_ASC -> viewModel.getSortedBooksByRatingAsc(currentFragment).observe(viewLifecycleOwner, Observer { some_books -> functions.filterBooksList(activity as ListActivity, bookAdapter, some_books)})
-            Constants.SORT_ORDER_PAGES_DESC -> viewModel.getSortedBooksByPagesDesc(currentFragment).observe(viewLifecycleOwner, Observer { some_books -> functions.filterBooksList(activity as ListActivity, bookAdapter, some_books)})
-            Constants.SORT_ORDER_PAGES_ASC -> viewModel.getSortedBooksByPagesAsc(currentFragment).observe(viewLifecycleOwner, Observer { some_books -> functions.filterBooksList(activity as ListActivity, bookAdapter, some_books)})
-            Constants.SORT_ORDER_START_DATE_DESC -> viewModel.getSortedBooksByStartDateDesc(currentFragment).observe(viewLifecycleOwner, Observer { some_books -> functions.filterBooksList(activity as ListActivity, bookAdapter, some_books)})
-            Constants.SORT_ORDER_START_DATE_ASC -> viewModel.getSortedBooksByStartDateAsc(currentFragment).observe(viewLifecycleOwner, Observer { some_books -> functions.filterBooksList(activity as ListActivity, bookAdapter, some_books)})
-            Constants.SORT_ORDER_FINISH_DATE_DESC -> viewModel.getSortedBooksByFinishDateDesc(currentFragment).observe(viewLifecycleOwner, Observer { some_books -> functions.filterBooksList(activity as ListActivity, bookAdapter, some_books)})
-            Constants.SORT_ORDER_FINISH_DATE_ASC -> viewModel.getSortedBooksByFinishDateAsc(currentFragment).observe(viewLifecycleOwner, Observer { some_books -> functions.filterBooksList(activity as ListActivity, bookAdapter, some_books)})
+            Constants.SORT_ORDER_TITLE_DESC -> viewModel.getSortedBooksByTitleDesc(currentFragment).observe(viewLifecycleOwner, Observer { some_books ->
+                functions.filterBooksList(activity as ListActivity, bookAdapter, some_books)
+            })
+
+            Constants.SORT_ORDER_TITLE_ASC -> viewModel.getSortedBooksByTitleAsc(currentFragment).observe(viewLifecycleOwner, Observer { some_books ->
+                functions.filterBooksList(activity as ListActivity, bookAdapter, some_books)
+            })
+
+            Constants.SORT_ORDER_AUTHOR_DESC -> viewModel.getSortedBooksByAuthorDesc(currentFragment).observe(viewLifecycleOwner, Observer { some_books ->
+                functions.filterBooksList(activity as ListActivity, bookAdapter, some_books)
+            })
+
+            Constants.SORT_ORDER_AUTHOR_ASC -> viewModel.getSortedBooksByAuthorAsc(currentFragment).observe(viewLifecycleOwner, Observer { some_books ->
+                functions.filterBooksList(activity as ListActivity, bookAdapter, some_books)
+            })
+
+            Constants.SORT_ORDER_RATING_DESC -> viewModel.getSortedBooksByRatingDesc(currentFragment).observe(viewLifecycleOwner, Observer { some_books ->
+                functions.filterBooksList(activity as ListActivity, bookAdapter, some_books)
+            })
+
+            Constants.SORT_ORDER_RATING_ASC -> viewModel.getSortedBooksByRatingAsc(currentFragment).observe(viewLifecycleOwner, Observer { some_books ->
+                functions.filterBooksList(activity as ListActivity, bookAdapter, some_books)
+            })
+
+            Constants.SORT_ORDER_PAGES_DESC -> viewModel.getSortedBooksByPagesDesc(currentFragment).observe(viewLifecycleOwner, Observer { some_books ->
+                functions.filterBooksList(activity as ListActivity, bookAdapter, some_books)
+            })
+
+            Constants.SORT_ORDER_PAGES_ASC -> viewModel.getSortedBooksByPagesAsc(currentFragment).observe(viewLifecycleOwner, Observer { some_books ->
+                functions.filterBooksList(activity as ListActivity, bookAdapter, some_books)
+            })
+
+            Constants.SORT_ORDER_START_DATE_DESC -> viewModel.getSortedBooksByStartDateDesc(currentFragment).observe(viewLifecycleOwner, Observer { some_books ->
+                functions.filterBooksList(activity as ListActivity, bookAdapter, some_books)
+            })
+
+            Constants.SORT_ORDER_START_DATE_ASC -> viewModel.getSortedBooksByStartDateAsc(currentFragment).observe(viewLifecycleOwner, Observer { some_books ->
+                functions.filterBooksList(activity as ListActivity, bookAdapter, some_books)
+            })
+
+            Constants.SORT_ORDER_FINISH_DATE_DESC -> viewModel.getSortedBooksByFinishDateDesc(currentFragment).observe(viewLifecycleOwner, Observer { some_books ->
+                functions.filterBooksList(activity as ListActivity, bookAdapter, some_books)
+            })
+
+            Constants.SORT_ORDER_FINISH_DATE_ASC -> viewModel.getSortedBooksByFinishDateAsc(currentFragment).observe(viewLifecycleOwner, Observer { some_books ->
+                functions.filterBooksList(activity as ListActivity, bookAdapter, some_books)
+            })
         }
     }
 

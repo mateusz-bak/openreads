@@ -24,6 +24,8 @@ import software.mdev.bookstracker.data.repositories.LanguageRepository
 import software.mdev.bookstracker.data.repositories.OpenLibraryRepository
 import software.mdev.bookstracker.data.repositories.YearRepository
 import software.mdev.bookstracker.other.Constants
+import software.mdev.bookstracker.other.Functions
+import software.mdev.bookstracker.other.Updater
 import software.mdev.bookstracker.ui.bookslist.viewmodel.BooksViewModel
 import software.mdev.bookstracker.ui.bookslist.viewmodel.BooksViewModelProviderFactory
 
@@ -36,6 +38,8 @@ class ListActivity : AppCompatActivity() {
         val yearRepository = YearRepository(YearDatabase(this))
         val openLibraryRepository = OpenLibraryRepository()
         val languageRepository = LanguageRepository(LanguageDatabase(this))
+
+        val updater = Updater()
 
         val booksViewModelProviderFactory = BooksViewModelProviderFactory(
             booksRepository,
@@ -50,7 +54,9 @@ class ListActivity : AppCompatActivity() {
         setAppTheme()
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_list)
-        checkForAppUpdate(this)
+
+        updater.checkForAppUpdate(this, false)
+
         bottomNavigationView.setupWithNavController(booksNavHostFragment.findNavController())
 
         booksNavHostFragment.findNavController()
@@ -61,11 +67,37 @@ class ListActivity : AppCompatActivity() {
                     else -> bottomNavigationView.visibility = View.GONE
                 }
             }
+
+        booksViewModel.getBookCount(Constants.BOOK_STATUS_READ).observe(this) { count ->
+            setBadge(0, count.toInt())
+        }
+
+        booksViewModel.getBookCount(Constants.BOOK_STATUS_IN_PROGRESS).observe(this) { count ->
+            setBadge(1, count.toInt())
+        }
+
+        booksViewModel.getBookCount(Constants.BOOK_STATUS_TO_READ).observe(this) { count ->
+            setBadge(2, count.toInt())
+        }
+
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
         menuInflater.inflate(R.menu.app_bar_menu, menu)
         return true
+    }
+
+    private fun setBadge(index: Int, count: Int) {
+        val functions = Functions()
+        var menuItemId = bottomNavigationView.menu.getItem(index).itemId
+
+        if (count > 0) {
+            bottomNavigationView.getOrCreateBadge(menuItemId).backgroundColor =
+                functions.getAccentColor(this.applicationContext)
+            bottomNavigationView.getOrCreateBadge(menuItemId).number = count
+        } else {
+            bottomNavigationView.removeBadge(menuItemId)
+        }
     }
 
     private fun setAppTheme(){
@@ -87,20 +119,5 @@ class ListActivity : AppCompatActivity() {
             Constants.THEME_ACCENT_TEAL_500 -> setTheme(R.style.Theme_Mdev_Bookstracker_CustomTheme_Teal)
             Constants.THEME_ACCENT_YELLOW_500 -> setTheme(R.style.Theme_Mdev_Bookstracker_CustomTheme_Yellow)
         }
-    }
-
-    fun checkForAppUpdate(context: Context) = CoroutineScope(Dispatchers.Main).launch {
-        var appUpdater = AppUpdater(context)
-        appUpdater
-            .setTitleOnUpdateAvailable(getString(R.string.setTitleOnUpdateAvailable))
-            .setContentOnUpdateAvailable(getString(R.string.setContentOnUpdateAvailable))
-            .setButtonUpdate(getString(R.string.setButtonUpdate))
-            .setButtonDismiss(getString(R.string.setButtonDismiss))
-            .setButtonDoNotShowAgain(getString(R.string.setButtonDoNotShowAgain))
-            .setUpdateFrom(UpdateFrom.GITHUB)
-            .setGitHubUserAndRepo(Constants.GITHUB_USER, Constants.GITHUB_REPO)
-            .setDisplay(Display.DIALOG)
-            .showAppUpdated(false)
-            .start()
     }
 }

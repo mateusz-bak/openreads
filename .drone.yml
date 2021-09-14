@@ -8,28 +8,30 @@ concurrency:
 
 steps:
 - name: build
-  image: mingc/android-build-box:1.21.1
+  image: mingc/android-build-box:master
   when:
     branch:
     - master
   commands:
-#  - ./gradlew build
+  - . $HOME/.bash_profile   # Enable jenv
+  - jenv local 11           # Set current Java env to 11
+  - ./gradlew build
 
-- name: Signed .apk
-  image: mingc/android-build-box:1.21.1
-  when:
-    branch:
-    - master
-  environment:
-    KEY_LOCATION:
-      from_secret: key-location
-    STORE_PASSWORD:
-      from_secret: mateusz-bak.key-store-password
-    KEY_ALIAS:
-      from_secret: mateusz-bak.key-alias
-    KEY_PASSWORD:
-      from_secret: mateusz-bak.key-password
-  commands:
+#- name: Signed .apk
+#  image: mingc/android-build-box:1.21.1
+#  when:
+#    branch:
+#    - master
+#  environment:
+#    KEY_LOCATION:
+#      from_secret: key-location
+#    STORE_PASSWORD:
+#      from_secret: mateusz-bak.key-store-password
+#    KEY_ALIAS:
+#      from_secret: mateusz-bak.key-alias
+#    KEY_PASSWORD:
+#      from_secret: mateusz-bak.key-password
+#  commands:
 #  - wget -q $KEY_LOCATION
 #  - cp mateusz-bak.jks app/mateusz-bak.jks
 #  - ./gradlew assembleRelease -Pandroid.injected.signing.store.file=mateusz-bak.jks -Pandroid.injected.signing.store.password=$STORE_PASSWORD -Pandroid.injected.signing.key.alias=$KEY_ALIAS -Pandroid.injected.signing.key.password=$KEY_PASSWORD

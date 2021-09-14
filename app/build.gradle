@@ -15,10 +15,12 @@ android {
         applicationId "software.mdev.bookstracker"
         minSdkVersion 24
         targetSdkVersion 30
-        versionCode 5
-        versionName "1.4.1"
+        versionCode 6
+        versionName "1.5.0"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+
+        flavorDimensions "variant"
     }
 
     buildTypes {
@@ -27,6 +29,21 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
     }
+
+
+    productFlavors {
+        github {
+            dimension = "variant"
+            isDefault = true
+        }
+        fdroid {
+            dimension = "variant"
+        }
+        gplay {
+            dimension = "variant"
+        }
+    }
+
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
@@ -63,7 +80,7 @@ dependencies {
     kapt "androidx.lifecycle:lifecycle-compiler:2.3.1"
 
     // COROUTINES
-    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-core:1.4.3"
+    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-core:1.5.0"
     implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:1.4.3"
 
     // KODEIN
@@ -89,4 +106,6 @@ dependencies {
 
     // https://github.com/square/picasso
     implementation 'com.squareup.picasso:picasso:2.8'
+
+    implementation 'androidx.cardview:cardview:1.0.0'
 }

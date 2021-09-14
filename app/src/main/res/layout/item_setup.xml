@@ -24,26 +24,9 @@
         android:orientation="horizontal"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintGuide_percent="0.66"
+        app:layout_constraintGuide_percent="0.75"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent" />
-
-    <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/fabLaunchApp"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="bottom|end"
-        android:backgroundTint="?colorPrimary"
-        android:clickable="true"
-        android:contentDescription="@string/fabEditBook"
-        android:focusable="true"
-        app:borderWidth="0dp"
-        android:layout_marginBottom="16dp"
-        android:layout_marginEnd="16dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:srcCompat="@drawable/ic_baseline_arrow_forward_24"
-        app:tint="?colorOnPrimary" />
 
     <ImageView
         android:id="@+id/ivSetupImage"
@@ -71,13 +54,25 @@
         app:layout_constraintTop_toTopOf="@+id/guideline2" />
 
     <TextView
+        android:id="@+id/tvSetupVersion"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/app_version"
+        android:textColor="@color/grey_500"
+        android:textSize="12dp"
+        android:visibility="invisible"
+        app:layout_constraintEnd_toEndOf="@+id/ivSetupImage"
+        app:layout_constraintTop_toBottomOf="@+id/ivSetupImage" />
+
+    <TextView
         android:id="@+id/tvSetupSwipeHint"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginBottom="32dp"
         android:text="@string/tvSetupSwipeHint_0"
         android:textColor="@color/grey"
-        android:textSize="16dp"
-        android:layout_marginBottom="32dp"
+        android:textSize="20dp"
+        android:visibility="invisible"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
@@ -87,22 +82,43 @@
         android:id="@+id/ivSwipeHint2"
         android:layout_width="25dp"
         android:layout_height="22dp"
-        app:tint="@color/grey_300"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/ic_baseline_arrow_forward_ios_24" />
+        android:rotation="180"
+        android:visibility="invisible"
+        android:layout_marginStart="8dp"
+        app:layout_constraintBottom_toBottomOf="@+id/ivSwipeHint1"
+        app:layout_constraintStart_toStartOf="@+id/ivSwipeHint1"
+        app:layout_constraintTop_toTopOf="@+id/ivSwipeHint1"
+        app:srcCompat="@drawable/ic_baseline_arrow_forward_ios_24"
+        app:tint="@color/grey_500" />
 
     <ImageView
         android:id="@+id/ivSwipeHint1"
         android:layout_width="25dp"
         android:layout_height="22dp"
-        android:layout_marginEnd="8dp"
-        app:tint="@color/grey_300"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="@+id/ivSwipeHint2"
-        app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/ic_baseline_arrow_forward_ios_24" />
+        android:layout_marginStart="4dp"
+        android:rotation="180"
+        android:visibility="invisible"
+        app:layout_constraintBottom_toBottomOf="@+id/tvSetupSwipeHint"
+        app:layout_constraintStart_toEndOf="@+id/tvSetupSwipeHint"
+        app:layout_constraintTop_toTopOf="@+id/tvSetupSwipeHint"
+        app:srcCompat="@drawable/ic_baseline_arrow_forward_ios_24"
+        app:tint="@color/grey_500" />
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/clThemeSelector"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginBottom="12dp"
+        android:visibility="gone"
+        app:layout_constraintBottom_toTopOf="@+id/tvSetupText"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <include layout="@layout/layout_theme_selector" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

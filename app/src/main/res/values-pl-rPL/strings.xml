@@ -27,7 +27,7 @@
     <string name="tvAppsAuthor">Autor</string>
     <string name="readFragment">Przeczytane</string>
     <string name="inProgressFragment">W trakcie</string>
-    <string name="toReadFragment">Do przeczytania</string>
+    <string name="toReadFragment">Na później</string>
     <string name="etAdderBookTitle">Tytuł</string>
     <string name="etAdderAuthor">Autor</string>
     <string name="tvAdderTitle">Dodaj książkę</string>
@@ -40,7 +40,7 @@
     <string name="etSearch">Szukaj</string>
     <string name="finished">Przeczytana</string>
     <string name="inProgress">W trakcie</string>
-    <string name="toRead">Do przeczytania</string>
+    <string name="toRead">Na później</string>
     <string name="sbWarningAuthor">Wpisz autora książki!</string>
     <string name="sbWarningTitle">Wpisz tytuł książki!</string>
     <string name="sbWarningState">Wybierz status książki!</string>
@@ -98,11 +98,15 @@
     <string name="not_set">Nie ustawiono</string>
     <string name="tvSortFinishDate">Data zakończenia</string>
     <string name="setTitleOnUpdateAvailable">Aktualizacja!</string>
-    <string name="setContentOnUpdateAvailable">"Nowsza wersja aplikacji Books Tracker jest dostępna.\n\nKliknij \"aktualizuj\", żeby przejść na stronę pobierania."</string>
+    <string name="setContentOnUpdateAvailable_gplay">"Nowsza wersja aplikacji Books Tracker jest dostępna do pobrania z Google Play.\n\nKliknij \"aktualizuj\", żeby przejść na stronę pobierania."</string>
+    <string name="setContentOnUpdateAvailable_fdroid">"Nowsza wersja aplikacji Books Tracker jest dostępna do pobrania z F-Droid.\n\nKliknij \"aktualizuj\", żeby przejść na stronę pobierania."</string>
+    <string name="setContentOnUpdateAvailable_github">"Nowsza wersja aplikacji Books Tracker jest dostępna do pobrania z repozytorium Github.\n\nKliknij \"aktualizuj\", żeby przejść na stronę pobierania."</string>
     <string name="setButtonUpdate">Aktualizuj</string>
     <string name="setButtonDismiss">Później</string>
     <string name="setButtonDoNotShowAgain">Ignoruj</string>
-    <string name="setContentOnUpdateNotAvailable">Masz zainstalowaną najnowszą wersję aplikacji Books Tracker!</string>
+    <string name="setContentOnUpdateNotAvailable_gplay">Masz zainstalowaną najnowszą wersję aplikacji Books Tracker z Google Play.</string>
+    <string name="setContentOnUpdateNotAvailable_fdroid">Masz zainstalowaną najnowszą wersję aplikacji Books Tracker z F-Droid.</string>
+    <string name="setContentOnUpdateNotAvailable_github">Masz zainstalowaną najnowszą wersję aplikacji Books Tracker z repozytorium Github.</string>
     <string name="setTitleOnUpdateNotAvailable">Brak dostępnych aktualizacji</string>
     <string name="statisticsFragment">Statystyki</string>
     <string name="statistics_all">Wszystko</string>
@@ -137,12 +141,12 @@
     <string name="click_edit_button_to_edit_status">Kliknij przycisk edytowania, żeby zmienić status książki</string>
     <string name="click_edit_button_to_edit_date">Kliknij przycisk edytowania, żeby zmienić datę zakończenia książki</string>
     <string name="click_edit_button_to_edit_pages">Kliknij przycisk edytowania, żeby zmienić liczbę stron książki</string>
-    <string name="btnAddSearch">Wyszukaj</string>
-    <string name="btnAddManual">Ręcznie</string>
+    <string name="btnAddSearch">"Wyszukaj w\nOpen Library"</string>
+    <string name="btnAddManual">"Wpisz\nręcznie"</string>
     <string name="etAdderBookTitleSearch">Wpisz tytuł, żeby wyszukać…</string>
     <string name="fabAddNewBook">Dodaj nową książkę</string>
     <string name="fabCancelAddingNewBook">Przewij dodawanie nowej książki</string>
-    <string name="UNKNOWN">Brak autora</string>
+    <string name="unknown_author">Brak autora</string>
     <string name="language">język</string>
     <string name="language_upperCase">Język</string>
     <string name="button_search">szukaj</string>
@@ -169,5 +173,14 @@
     <string name="sbWarningStartDateMustBeBeforeFinishDate">Data zakończenia nie może być wcześniej niż data rozpoczęcia</string>
     <string name="toast_no_results_from_OL">Brak rezultatów</string>
     <string name="tvSortStartDate">Data rozpoczęcia</string>
-    <string name="tv_cover_missing">Brak okładki</string>
+    <string name="tv_cover_missing">"Brak okładki"</string>
+    <string name="set">ustaw</string>
+    <string name="tvWelcomeText_4">Wybierz teraz kolor akcentów</string>
+    <string name="unknown_title">Brak tytułu</string>
+    <string name="unknown_language">Brak języka</string>
+    <string name="unknown_isbn">Brak ISBN</string>
+    <string name="warning_no_finish_date_title">Data zakończenia nieustawiona!</string>
+    <string name="warning_no_finish_date_message">Ta książka nie zostanie policzona jako roczne wyzwanie</string>
+    <string name="warning_no_finish_date_add_anyway">Dodaj mimo to</string>
+    <string name="warning_no_finish_date_cancel">Wróć</string>
 </resources>

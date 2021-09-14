@@ -85,11 +85,11 @@
                 style="?android:attr/ratingBarStyle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="16dp"
+                android:layout_marginTop="24dp"
                 android:stepSize="1"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/btnEditStartDate" />
+                app:layout_constraintTop_toBottomOf="@+id/tvDateFinishedTitle" />
 
             <androidx.constraintlayout.widget.Guideline
                 android:id="@+id/guideline2"
@@ -211,33 +211,27 @@
                 android:id="@+id/tvDateStartedTitle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="18dp"
+                android:layout_marginTop="32dp"
                 android:text="@string/tv_date_started_title"
-                android:textStyle="bold"
-                app:layout_constraintEnd_toEndOf="@+id/btnEditStartDate"
-                app:layout_constraintStart_toStartOf="@+id/btnEditStartDate"
+                android:textSize="16sp"
+                app:layout_constraintEnd_toStartOf="@+id/btnEditStartDate"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/tvFinished" />
 
-            <TextView
-                android:id="@+id/tvDateFinishedTitle"
+            <ImageView
+                android:id="@+id/ivClearStartDate"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/tv_date_finished_title"
-                android:textStyle="bold"
-                app:layout_constraintBottom_toBottomOf="@+id/tvDateStartedTitle"
-                app:layout_constraintEnd_toEndOf="@+id/btnEditFinishDate"
-                app:layout_constraintStart_toStartOf="@+id/btnEditFinishDate"
-                app:layout_constraintTop_toTopOf="@+id/tvDateStartedTitle" />
-
-            <Button
-                android:id="@+id/btnEditFinishDate"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginEnd="4dp"
-                android:text="@string/hint_date_finished"
+                android:clickable="true"
+                android:focusable="true"
+                android:scaleX="1.2"
+                android:scaleY="1.2"
+                android:layout_marginStart="8dp"
                 app:layout_constraintBottom_toBottomOf="@+id/btnEditStartDate"
-                app:layout_constraintEnd_toEndOf="@+id/etEditedBookAuthor"
-                app:layout_constraintTop_toTopOf="@+id/btnEditStartDate" />
+                app:layout_constraintStart_toEndOf="@+id/btnEditStartDate"
+                app:layout_constraintTop_toTopOf="@+id/btnEditStartDate"
+                app:srcCompat="@drawable/ic_baseline_clear_24" />
 
             <DatePicker
                 android:id="@+id/dpEditBookStartDate"
@@ -263,13 +257,52 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/guideline4" />
 
+            <TextView
+                android:id="@+id/tvDateFinishedTitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="32dp"
+                android:text="@string/tv_date_finished_title"
+                android:textSize="16sp"
+                app:layout_constraintStart_toStartOf="@+id/tvDateStartedTitle"
+                app:layout_constraintTop_toBottomOf="@+id/tvDateStartedTitle" />
+
+            <Button
+                android:id="@+id/btnEditFinishDate"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:minWidth="140dp"
+                android:text="@string/set"
+                app:layout_constraintBottom_toBottomOf="@+id/tvDateFinishedTitle"
+                app:layout_constraintEnd_toEndOf="@+id/btnEditStartDate"
+                app:layout_constraintTop_toTopOf="@+id/tvDateFinishedTitle"
+                app:layout_constraintVertical_bias="0.482" />
+
+            <ImageView
+                android:id="@+id/ivClearFinishDate"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:clickable="true"
+                android:focusable="true"
+                android:layout_marginStart="8dp"
+                android:scaleX="1.2"
+                android:scaleY="1.2"
+                app:layout_constraintBottom_toBottomOf="@+id/btnEditFinishDate"
+                app:layout_constraintStart_toEndOf="@+id/btnEditFinishDate"
+                app:layout_constraintTop_toTopOf="@+id/btnEditFinishDate"
+                app:srcCompat="@drawable/ic_baseline_clear_24" />
+
             <Button
                 android:id="@+id/btnEditStartDate"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/hint_date_started"
-                app:layout_constraintStart_toStartOf="@+id/etEditedBookTitle"
-                app:layout_constraintTop_toBottomOf="@+id/tvDateStartedTitle" />
+                android:text="@string/set"
+                android:minWidth="140dp"
+                app:layout_constraintBottom_toBottomOf="@+id/tvDateStartedTitle"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toEndOf="@+id/tvDateStartedTitle"
+                app:layout_constraintTop_toTopOf="@+id/tvDateStartedTitle" />
 
             <Button
                 android:id="@+id/btnEditorSaveFinishDate"
@@ -327,9 +360,9 @@
                 android:id="@+id/tvEditedOLID"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="24dp"
                 android:text="@string/hint_olid"
                 android:textSize="12sp"
-                android:layout_marginTop="12dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.5"
                 app:layout_constraintStart_toStartOf="parent"

@@ -1,6 +1,6 @@
 <resources>
     <string name="app_name" translatable="false">Books Tracker</string>
-    <string name="app_version" translatable="false">v1.4.1</string>
+    <string name="app_version" translatable="false">v1.5.0</string>
     <string name="ivAuthorUrl">https://github.com/mateusz-bak/</string>
     <!-- Images descriptions -->
     <string name="ivBookStatusSetRead">Set book as finished</string>
@@ -30,14 +30,14 @@
     <string name="miAbout">About</string>
     <string name="readFragment">Finished</string>
     <string name="inProgressFragment">In progress</string>
-    <string name="toReadFragment">To read</string>
+    <string name="toReadFragment">For later</string>
     <string name="etAdderBookTitle">Title</string>
     <string name="etAdderAuthor">Author</string>
     <string name="tvAdderTitle">Add a book</string>
     <string name="btnAdderSaveBook">Save</string>
     <string name="finished">Finished</string>
     <string name="inProgress">In progress</string>
-    <string name="toRead">To read</string>
+    <string name="toRead">For later</string>
     <string name="tvBookTitle">Enter a title</string>
     <string name="tvBookAuthor">Enter an author</string>
     <string name="tvBookStatus">Book status</string>
@@ -123,11 +123,15 @@
     <string name="tvNumberOfPages" translatable="false">101 pages</string>
     <string name="tvDateFinished" translatable="false">13 Jun 2021</string>
     <string name="setTitleOnUpdateAvailable">New update!</string>
-    <string name="setContentOnUpdateAvailable">"Newer version of the Books Tracker app is available.\n\nClick \"update\"  to go to the downloading page."</string>
+    <string name="setContentOnUpdateAvailable_gplay">"Newer version of the Books Tracker app is available in Google Play store.\n\nClick \"update\"  to go to the downloading page."</string>
+    <string name="setContentOnUpdateAvailable_fdroid">"Newer version of the Books Tracker app is available in F-Droid store.\n\nClick \"update\"  to go to the downloading page."</string>
+    <string name="setContentOnUpdateAvailable_github">"Newer version of the Books Tracker app is available in Github repository.\n\nClick \"update\"  to go to the downloading page."</string>
     <string name="setButtonUpdate">Update</string>
     <string name="setButtonDismiss">Dismiss</string>
     <string name="setButtonDoNotShowAgain">Ignore</string>
-    <string name="setContentOnUpdateNotAvailable">You\'ve got the latest version available of Books Tracker app!</string>
+    <string name="setContentOnUpdateNotAvailable_gplay">You\'ve got the latest version available of Books Tracker app from Google Play store.</string>
+    <string name="setContentOnUpdateNotAvailable_fdroid">You\'ve got the latest version available of Books Tracker app from F-Droid store.</string>
+    <string name="setContentOnUpdateNotAvailable_github">You\'ve got the latest version available of Books Tracker app from Github repository.</string>
     <string name="setTitleOnUpdateNotAvailable">No updates available</string>
     <string name="statisticsFragment">Statistics</string>
     <string name="statistics_all">All</string>
@@ -166,12 +170,12 @@
     <string name="click_edit_button_to_edit_status">Click edit button to change book\'s status</string>
     <string name="click_edit_button_to_edit_date">Click edit button to change book\'s finish date</string>
     <string name="click_edit_button_to_edit_pages">Click edit button to change book\'s number of pages</string>
-    <string name="btnAddSearch">Search</string>
-    <string name="btnAddManual">Manually</string>
+    <string name="btnAddSearch">"Search in\nOpen Library"</string>
+    <string name="btnAddManual">"Add\nmanually"</string>
     <string name="etAdderBookTitleSearch">Type title to search…</string>
     <string name="fabAddNewBook">Add new book</string>
     <string name="fabCancelAddingNewBook">Cancel adding new book</string>
-    <string name="UNKNOWN">No author</string>
+    <string name="unknown_author">No author</string>
     <string name="language">language</string>
     <string name="language_upperCase">Language</string>
     <string name="button_search">search</string>
@@ -204,6 +208,15 @@
     <string name="hint_olid" translatable="false">Open Library ID</string>
     <string name="hint_isbn10" translatable="false">ISBN 10</string>
     <string name="hint_isbn13" translatable="false">ISBN 13</string>
-    <string name="tv_cover_missing">Cover missing</string>
+    <string name="tv_cover_missing">"Cover missing"</string>
+    <string name="set">set</string>
+    <string name="tvWelcomeText_4">Now choose theme color for the app</string>
+    <string name="unknown_title">No title</string>
+    <string name="unknown_language">No language</string>
+    <string name="unknown_isbn">No ISBN</string>
+    <string name="warning_no_finish_date_title">Finish date not set!</string>
+    <string name="warning_no_finish_date_message">This book won\'t be counted for yearly challenge.</string>
+    <string name="warning_no_finish_date_add_anyway">Add anyway</string>
+    <string name="warning_no_finish_date_cancel">Go back</string>
 
 </resources>
