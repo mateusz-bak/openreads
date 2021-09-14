@@ -14,12 +14,13 @@ steps:
 #    - master
   commands:
 #  - . $HOME/.bash_profile   # Enable jenv
-  - echo "pwd $HOME"
-  - pwd $HOME
-  - echo "ls $HOME"
-  - ls $HOME
-  - jenv local 11           # Set current Java env to 11
-  - ./gradlew build
+#  - echo "pwd $HOME"
+#  - pwd $HOME
+#  - echo "ls $HOME"
+#  - ls $HOME
+    - ls /root
+#  - jenv local 11           # Set current Java env to 11
+#  - ./gradlew build
 
 #- name: Signed .apk
 #  image: mingc/android-build-box:1.21.1
