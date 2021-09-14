@@ -218,5 +218,9 @@
     <string name="warning_no_finish_date_message">This book won\'t be counted for yearly challenge.</string>
     <string name="warning_no_finish_date_add_anyway">Add anyway</string>
     <string name="warning_no_finish_date_cancel">Go back</string>
+    <string name="warning_delete_book_title">Watch out!</string>
+    <string name="warning_delete_book_message">Do you really want to delete this book?</string>
+    <string name="warning_delete_book_delete">delete</string>
+    <string name="warning_delete_book_cancel">back</string>
 
 </resources>
