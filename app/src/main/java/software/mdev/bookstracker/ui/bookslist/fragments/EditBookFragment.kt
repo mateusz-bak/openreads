@@ -6,6 +6,7 @@ import android.view.View
 import android.view.inputmethod.InputMethodManager
 import android.widget.DatePicker
 import android.widget.EditText
+import androidx.appcompat.app.AlertDialog
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProviders
@@ -171,6 +172,12 @@ class EditBookFragment : Fragment(R.layout.fragment_edit_book) {
                 rbEditedRating.visibility = View.GONE
                 etEditedPagesNumber.visibility = View.GONE
             }
+        }
+
+        fabCancelEditing.setOnClickListener {
+            view?.hideKeyboard()
+            findNavController().popBackStack()
+            findNavController().popBackStack()
         }
 
         ivEditorBookStatusRead.setOnClickListener {
@@ -648,29 +655,46 @@ class EditBookFragment : Fragment(R.layout.fragment_edit_book) {
         }
 
         fabDeleteBook.setOnClickListener{
-            viewModel.updateBook(
-                book.id,
-                book.bookTitle,
-                book.bookAuthor,
-                book.bookRating,
-                book.bookStatus,
-                book.bookPriority,
-                book.bookStartDate,
-                book.bookFinishDate,
-                book.bookNumberOfPages,
-                book.bookTitle_ASCII,
-                book.bookAuthor_ASCII,
-                true,
-                book.bookCoverUrl,
-                book.bookOLID,
-                book.bookISBN10,
-                book.bookISBN13
-            )
-            recalculateChallenges()
+            val deleteBookWarningDialog = this.context?.let { it1 ->
+                AlertDialog.Builder(it1)
+                    .setTitle(R.string.warning_delete_book_title)
+                    .setMessage(R.string.warning_delete_book_message)
+                    .setIcon(R.drawable.ic_baseline_warning_amber_24)
+                    .setNegativeButton(R.string.warning_delete_book_delete) { _, _ ->
+                        viewModel.updateBook(
+                            book.id,
+                            book.bookTitle,
+                            book.bookAuthor,
+                            book.bookRating,
+                            book.bookStatus,
+                            book.bookPriority,
+                            book.bookStartDate,
+                            book.bookFinishDate,
+                            book.bookNumberOfPages,
+                            book.bookTitle_ASCII,
+                            book.bookAuthor_ASCII,
+                            true,
+                            book.bookCoverUrl,
+                            book.bookOLID,
+                            book.bookISBN10,
+                            book.bookISBN13
+                        )
+                        recalculateChallenges()
 
-            Snackbar.make(it, getString(R.string.bookDeleted), Snackbar.LENGTH_LONG)
-                .setAction(getString(R.string.undo), UndoBookDeletion())
-                .show()
+                        Snackbar.make(it, getString(R.string.bookDeleted), Snackbar.LENGTH_LONG)
+                            .setAction(getString(R.string.undo), UndoBookDeletion())
+                            .show()
+                    }
+                    .setPositiveButton(R.string.warning_delete_book_cancel) { _, _ ->
+                    }
+                    .create()
+            }
+
+            deleteBookWarningDialog?.show()
+            if (this.context !=null && deleteBookWarningDialog?.getButton(AlertDialog.BUTTON_POSITIVE) != null) {
+                deleteBookWarningDialog?.getButton(AlertDialog.BUTTON_POSITIVE)!!.setBackgroundColor(getAccentColor(this.requireContext()))
+                deleteBookWarningDialog?.getButton(AlertDialog.BUTTON_POSITIVE)!!.setTextColor(ContextCompat.getColor(this.requireContext(),R.color.design_default_color_on_primary))
+            }
         }
     }
 
@@ -768,7 +792,7 @@ class EditBookFragment : Fragment(R.layout.fragment_edit_book) {
             }
             )
         lifecycleScope.launch {
-            delay(500L)
+            delay(300L)
             view?.hideKeyboard()
             findNavController().popBackStack()
             findNavController().popBackStack()

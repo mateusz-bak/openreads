@@ -3,6 +3,7 @@ package software.mdev.bookstracker.ui.bookslist.dialogs
 import android.content.Context
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
+import android.os.Build
 import android.os.Bundle
 import android.view.View
 import android.view.Window
@@ -548,12 +549,12 @@ class AddBookDialog(context: Context, var addBookDialogListener: AddBookDialogLi
                             || bookFinishDateMs == null
                             || bookStartDateMs == null ) {
 
-                                if (bookFinishDateMs == null) {
+                                if (bookFinishDateMs == null && whatIsClicked == Constants.BOOK_STATUS_READ) {
                                     val noChallengeWarningDialog = AlertDialog.Builder(context)
                                         .setTitle(R.string.warning_no_finish_date_title)
                                         .setMessage(R.string.warning_no_finish_date_message)
                                         .setIcon(R.drawable.ic_baseline_warning_amber_24)
-                                        .setPositiveButton(R.string.warning_no_finish_date_add_anyway) { _, _ ->
+                                        .setNegativeButton(R.string.warning_no_finish_date_add_anyway) { _, _ ->
                                             var editedBook = prepareBook(
                                                 whatIsClicked,
                                                 bookRating = rbAdderRating.rating,
@@ -567,11 +568,13 @@ class AddBookDialog(context: Context, var addBookDialogListener: AddBookDialogLi
                                             addBookDialogListener.onSaveButtonClicked(editedBook)
                                             dismiss()
                                         }
-                                        .setNegativeButton(R.string.warning_no_finish_date_cancel) { _, _ ->
+                                        .setPositiveButton(R.string.warning_no_finish_date_cancel) { _, _ ->
                                         }
                                         .create()
 
                                     noChallengeWarningDialog.show()
+                                    noChallengeWarningDialog.getButton(AlertDialog.BUTTON_POSITIVE).setBackgroundColor(getAccentColor(context))
+                                    noChallengeWarningDialog.getButton(AlertDialog.BUTTON_POSITIVE).setTextColor(ContextCompat.getColor(context, R.color.design_default_color_on_primary))
                                 } else {
                                     var editedBook = prepareBook(
                                         whatIsClicked,

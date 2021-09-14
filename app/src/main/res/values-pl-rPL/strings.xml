@@ -183,4 +183,8 @@
     <string name="warning_no_finish_date_message">Ta książka nie zostanie policzona jako roczne wyzwanie</string>
     <string name="warning_no_finish_date_add_anyway">Dodaj mimo to</string>
     <string name="warning_no_finish_date_cancel">Wróć</string>
+    <string name="warning_delete_book_title">Uważaj!</string>
+    <string name="warning_delete_book_message">Czy na prawdę chcesz usunąć tę książkę?</string>
+    <string name="warning_delete_book_delete">usuń</string>
+    <string name="warning_delete_book_cancel">wróć</string>
 </resources>

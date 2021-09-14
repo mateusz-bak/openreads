@@ -17,26 +17,41 @@
         android:focusable="true"
         app:borderWidth="0dp"
         android:layout_marginEnd="16dp"
-        android:layout_marginBottom="70dp"
+        android:layout_marginBottom="16dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:srcCompat="@drawable/ic_baseline_done_24"
         app:tint="?colorOnPrimary" />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/fabDeleteBook"
-        android:contentDescription="@string/fabDeleteBook"
+        android:id="@+id/fabCancelEditing"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="bottom|end"
-        android:backgroundTint="@android:color/holo_red_dark"
+        android:backgroundTint="?colorPrimary"
         android:clickable="true"
         android:focusable="true"
         app:borderWidth="0dp"
         android:layout_marginStart="16dp"
-        android:layout_marginBottom="70dp"
+        android:layout_marginBottom="16dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
+        app:srcCompat="@drawable/ic_baseline_arrow_back_24"
+        app:tint="?colorOnPrimary" />
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/fabDeleteBook"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom|end"
+        android:layout_marginBottom="16dp"
+        android:backgroundTint="@android:color/holo_red_dark"
+        android:clickable="true"
+        android:contentDescription="@string/fabDeleteBook"
+        android:focusable="true"
+        app:borderWidth="0dp"
+        app:layout_constraintBottom_toTopOf="@+id/fabCancelEditing"
+        app:layout_constraintStart_toStartOf="@+id/fabCancelEditing"
         app:srcCompat="@drawable/ic_baseline_delete_24"
         app:tint="?colorOnPrimary" />
 

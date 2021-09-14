@@ -105,6 +105,15 @@
         <action
             android:id="@+id/action_displayBookFragment_to_displayCoverFragment"
             app:destination="@id/displayCoverFragment" />
+        <action
+            android:id="@+id/action_displayBookFragment_to_readFragment"
+            app:destination="@id/readFragment" />
+        <action
+            android:id="@+id/action_displayBookFragment_to_inProgressFragment"
+            app:destination="@id/inProgressFragment" />
+        <action
+            android:id="@+id/action_displayBookFragment_to_toReadFragment"
+            app:destination="@id/toReadFragment" />
     </fragment>
     <fragment
         android:id="@+id/editBookFragment"

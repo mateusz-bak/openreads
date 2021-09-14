@@ -1,5 +1,6 @@
 package software.mdev.bookstracker.ui.bookslist.fragments
 
+import android.content.Context
 import android.os.Bundle
 import android.view.MotionEvent
 import android.view.View
@@ -23,8 +24,14 @@ import software.mdev.bookstracker.ui.bookslist.viewmodel.BooksViewModel
 import java.text.SimpleDateFormat
 import java.util.*
 import android.graphics.*
+import android.view.inputmethod.InputMethodManager
+import androidx.appcompat.app.AlertDialog
 import androidx.constraintlayout.widget.ConstraintLayout
+import androidx.lifecycle.Observer
+import androidx.lifecycle.lifecycleScope
 import com.squareup.picasso.Transformation
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
 
 
 class DisplayBookFragment : Fragment(R.layout.fragment_display_book) {
@@ -263,11 +270,156 @@ class DisplayBookFragment : Fragment(R.layout.fragment_display_book) {
         tvBookPages.setOnClickListener {
             Snackbar.make(it, R.string.click_edit_button_to_edit_pages, Snackbar.LENGTH_SHORT).show()
         }
+
+        class UndoBookDeletion : View.OnClickListener {
+            override fun onClick(view: View) {
+                viewModel.updateBook(
+                    book.id,
+                    book.bookTitle,
+                    book.bookAuthor,
+                    book.bookRating,
+                    book.bookStatus,
+                    book.bookPriority,
+                    book.bookStartDate,
+                    book.bookFinishDate,
+                    book.bookNumberOfPages,
+                    book.bookTitle_ASCII,
+                    book.bookAuthor_ASCII,
+                    false,
+                    book.bookCoverUrl,
+                    book.bookOLID,
+                    book.bookISBN10,
+                    book.bookISBN13
+                )
+            }
+        }
+
+        fabDeleteBook.setOnClickListener{
+            val deleteBookWarningDialog = this.context?.let { it1 ->
+                AlertDialog.Builder(it1)
+                    .setTitle(R.string.warning_delete_book_title)
+                    .setMessage(R.string.warning_delete_book_message)
+                    .setIcon(R.drawable.ic_baseline_warning_amber_24)
+                    .setNegativeButton(R.string.warning_delete_book_delete) { _, _ ->
+                        viewModel.updateBook(
+                            book.id,
+                            book.bookTitle,
+                            book.bookAuthor,
+                            book.bookRating,
+                            book.bookStatus,
+                            book.bookPriority,
+                            book.bookStartDate,
+                            book.bookFinishDate,
+                            book.bookNumberOfPages,
+                            book.bookTitle_ASCII,
+                            book.bookAuthor_ASCII,
+                            true,
+                            book.bookCoverUrl,
+                            book.bookOLID,
+                            book.bookISBN10,
+                            book.bookISBN13
+                        )
+                        recalculateChallenges(book.bookStatus)
+
+                        Snackbar.make(it, getString(R.string.bookDeleted), Snackbar.LENGTH_LONG)
+                            .setAction(getString(R.string.undo), UndoBookDeletion())
+                            .show()
+                    }
+                    .setPositiveButton(R.string.warning_delete_book_cancel) { _, _ ->
+                    }
+                    .create()
+            }
+
+            deleteBookWarningDialog?.show()
+            if (this.context !=null && deleteBookWarningDialog?.getButton(AlertDialog.BUTTON_POSITIVE) != null) {
+                deleteBookWarningDialog?.getButton(AlertDialog.BUTTON_POSITIVE)!!.setBackgroundColor(getAccentColor(this.requireContext()))
+                deleteBookWarningDialog?.getButton(AlertDialog.BUTTON_POSITIVE)!!.setTextColor(ContextCompat.getColor(this.requireContext(),R.color.design_default_color_on_primary))
+            }
+        }
+    }
+
+    private fun getAccentColor(context: Context): Int {
+
+        var accentColor = ContextCompat.getColor(context, R.color.purple_500)
+
+        val sharedPref = context.getSharedPreferences(Constants.SHARED_PREFERENCES_NAME, Context.MODE_PRIVATE)
+
+        var accent = sharedPref?.getString(
+            Constants.SHARED_PREFERENCES_KEY_ACCENT,
+            Constants.THEME_ACCENT_DEFAULT
+        ).toString()
+
+        when(accent){
+            Constants.THEME_ACCENT_LIGHT_GREEN -> accentColor = ContextCompat.getColor(context, R.color.light_green)
+            Constants.THEME_ACCENT_ORANGE_500 -> accentColor = ContextCompat.getColor(context, R.color.orange_500)
+            Constants.THEME_ACCENT_CYAN_500 -> accentColor = ContextCompat.getColor(context, R.color.cyan_500)
+            Constants.THEME_ACCENT_GREEN_500 -> accentColor = ContextCompat.getColor(context, R.color.green_500)
+            Constants.THEME_ACCENT_BROWN_400 -> accentColor = ContextCompat.getColor(context, R.color.brown_400)
+            Constants.THEME_ACCENT_LIME_500 -> accentColor = ContextCompat.getColor(context, R.color.lime_500)
+            Constants.THEME_ACCENT_PINK_300 -> accentColor = ContextCompat.getColor(context, R.color.pink_300)
+            Constants.THEME_ACCENT_PURPLE_500 -> accentColor = ContextCompat.getColor(context, R.color.purple_500)
+            Constants.THEME_ACCENT_TEAL_500 -> accentColor = ContextCompat.getColor(context, R.color.teal_500)
+            Constants.THEME_ACCENT_YELLOW_500 -> accentColor = ContextCompat.getColor(context, R.color.yellow_500)
+        }
+        return accentColor
+    }
+
+    fun View.hideKeyboard() {
+        val inputManager = context.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+        inputManager.hideSoftInputFromWindow(windowToken, 0)
     }
 
     fun convertLongToTime(time: Long): String {
         val date = Date(time)
         val format = SimpleDateFormat("dd MMM yyyy")
+        return format.format(date)
+    }
+
+    private fun recalculateChallenges(bookStatus: String) {
+        viewModel.getSortedBooksByFinishDateDesc(Constants.BOOK_STATUS_READ)
+            .observe(viewLifecycleOwner, Observer { books ->
+                var year: Int
+                var years = listOf<Int>()
+
+                for (item in books) {
+                    if (item.bookFinishDate != "null" && item.bookFinishDate != "none") {
+                        year = convertLongToYear(item.bookFinishDate.toLong()).toInt()
+                        if (year !in years) {
+                            years = years + year
+                        }
+                    }
+                }
+
+                for (item_year in years) {
+                    var booksInYear = 0
+
+                    for (item_book in books) {
+                        if (item_book.bookFinishDate != "none" && item_book.bookFinishDate != "null") {
+                            year = convertLongToYear(item_book.bookFinishDate.toLong()).toInt()
+                            if (year == item_year) {
+                                booksInYear++
+                            }
+                        }
+                    }
+                    viewModel.updateYearsNumberOfBooks(item_year.toString(), booksInYear)
+                }
+            }
+            )
+        lifecycleScope.launch {
+            delay(300L)
+            view?.hideKeyboard()
+
+            when (bookStatus) {
+                Constants.BOOK_STATUS_READ -> findNavController().navigate(R.id.action_displayBookFragment_to_readFragment)
+                Constants.BOOK_STATUS_IN_PROGRESS -> findNavController().navigate(R.id.action_displayBookFragment_to_inProgressFragment)
+                Constants.BOOK_STATUS_TO_READ -> findNavController().navigate(R.id.action_displayBookFragment_to_toReadFragment)
+            }
+        }
+    }
+
+    fun convertLongToYear(time: Long): String {
+        val date = Date(time)
+        val format = SimpleDateFormat("yyyy")
         return format.format(date)
     }
 }
