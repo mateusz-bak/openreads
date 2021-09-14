@@ -9,9 +9,9 @@ concurrency:
 steps:
 - name: build
   image: mingc/android-build-box:1.22.0
-  when:
-    branch:
-    - master
+#  when:
+#    branch:
+#    - master
   commands:
   - ./gradlew build
 
