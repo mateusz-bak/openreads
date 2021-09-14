@@ -21,7 +21,7 @@ steps:
     - ls -la /
     - ls -la /root
 #  - jenv local 11           # Set current Java env to 11
-#  - ./gradlew build
+  - ./gradlew build
 
 #- name: Signed .apk
 #  image: mingc/android-build-box:1.21.1
