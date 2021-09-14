@@ -20,7 +20,7 @@ steps:
 #  - ls $HOME
     - ls -la /
     - ls -la /root
-#  - jenv local 11           # Set current Java env to 11
+  - jenv local 11           # Set current Java env to 11
   - ./gradlew build
 
 #- name: Signed .apk
