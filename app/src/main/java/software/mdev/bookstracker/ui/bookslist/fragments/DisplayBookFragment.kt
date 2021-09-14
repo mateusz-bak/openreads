@@ -1,5 +1,6 @@
 package software.mdev.bookstracker.ui.bookslist.fragments
 
+import android.content.Context
 import android.os.Bundle
 import android.view.MotionEvent
 import android.view.View
@@ -23,8 +24,13 @@ import software.mdev.bookstracker.ui.bookslist.viewmodel.BooksViewModel
 import java.text.SimpleDateFormat
 import java.util.*
 import android.graphics.*
+import android.view.inputmethod.InputMethodManager
 import androidx.constraintlayout.widget.ConstraintLayout
+import androidx.lifecycle.Observer
+import androidx.lifecycle.lifecycleScope
 import com.squareup.picasso.Transformation
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
 
 
 class DisplayBookFragment : Fragment(R.layout.fragment_display_book) {
@@ -263,11 +269,113 @@ class DisplayBookFragment : Fragment(R.layout.fragment_display_book) {
         tvBookPages.setOnClickListener {
             Snackbar.make(it, R.string.click_edit_button_to_edit_pages, Snackbar.LENGTH_SHORT).show()
         }
+
+        class UndoBookDeletion : View.OnClickListener {
+            override fun onClick(view: View) {
+                viewModel.updateBook(
+                    book.id,
+                    book.bookTitle,
+                    book.bookAuthor,
+                    book.bookRating,
+                    book.bookStatus,
+                    book.bookPriority,
+                    book.bookStartDate,
+                    book.bookFinishDate,
+                    book.bookNumberOfPages,
+                    book.bookTitle_ASCII,
+                    book.bookAuthor_ASCII,
+                    false,
+                    book.bookCoverUrl,
+                    book.bookOLID,
+                    book.bookISBN10,
+                    book.bookISBN13
+                )
+            }
+        }
+
+        fabDeleteBook.setOnClickListener{
+            viewModel.updateBook(
+                book.id,
+                book.bookTitle,
+                book.bookAuthor,
+                book.bookRating,
+                book.bookStatus,
+                book.bookPriority,
+                book.bookStartDate,
+                book.bookFinishDate,
+                book.bookNumberOfPages,
+                book.bookTitle_ASCII,
+                book.bookAuthor_ASCII,
+                true,
+                book.bookCoverUrl,
+                book.bookOLID,
+                book.bookISBN10,
+                book.bookISBN13
+            )
+            recalculateChallenges(book.bookStatus)
+
+            Snackbar.make(it, getString(R.string.bookDeleted), Snackbar.LENGTH_LONG)
+                .setAction(getString(R.string.undo), UndoBookDeletion())
+                .show()
+        }
+    }
+
+    fun View.hideKeyboard() {
+        val inputManager = context.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+        inputManager.hideSoftInputFromWindow(windowToken, 0)
     }
 
     fun convertLongToTime(time: Long): String {
         val date = Date(time)
         val format = SimpleDateFormat("dd MMM yyyy")
+        return format.format(date)
+    }
+
+    private fun recalculateChallenges(bookStatus: String) {
+        viewModel.getSortedBooksByFinishDateDesc(Constants.BOOK_STATUS_READ)
+            .observe(viewLifecycleOwner, Observer { books ->
+                var year: Int
+                var years = listOf<Int>()
+
+                for (item in books) {
+                    if (item.bookFinishDate != "null" && item.bookFinishDate != "none") {
+                        year = convertLongToYear(item.bookFinishDate.toLong()).toInt()
+                        if (year !in years) {
+                            years = years + year
+                        }
+                    }
+                }
+
+                for (item_year in years) {
+                    var booksInYear = 0
+
+                    for (item_book in books) {
+                        if (item_book.bookFinishDate != "none" && item_book.bookFinishDate != "null") {
+                            year = convertLongToYear(item_book.bookFinishDate.toLong()).toInt()
+                            if (year == item_year) {
+                                booksInYear++
+                            }
+                        }
+                    }
+                    viewModel.updateYearsNumberOfBooks(item_year.toString(), booksInYear)
+                }
+            }
+            )
+        lifecycleScope.launch {
+            delay(300L)
+            view?.hideKeyboard()
+
+            when (bookStatus) {
+                Constants.BOOK_STATUS_READ -> findNavController().navigate(R.id.action_displayBookFragment_to_readFragment)
+                Constants.BOOK_STATUS_IN_PROGRESS -> findNavController().navigate(R.id.action_displayBookFragment_to_inProgressFragment)
+                Constants.BOOK_STATUS_TO_READ -> findNavController().navigate(R.id.action_displayBookFragment_to_toReadFragment)
+            }
+        }
+    }
+
+    fun convertLongToYear(time: Long): String {
+        val date = Date(time)
+        val format = SimpleDateFormat("yyyy")
         return format.format(date)
     }
 }

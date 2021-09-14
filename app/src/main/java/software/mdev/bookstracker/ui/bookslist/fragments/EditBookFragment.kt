@@ -173,6 +173,12 @@ class EditBookFragment : Fragment(R.layout.fragment_edit_book) {
             }
         }
 
+        fabCancelEditing.setOnClickListener {
+            view?.hideKeyboard()
+            findNavController().popBackStack()
+            findNavController().popBackStack()
+        }
+
         ivEditorBookStatusRead.setOnClickListener {
             it.hideKeyboard()
 
