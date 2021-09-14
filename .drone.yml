@@ -8,22 +8,22 @@ concurrency:
 
 steps:
 - name: build
-  image: mingc/android-build-box:1.22.0
+  image: mingc/android-build-box:master
 #  when:
 #    branch:
 #    - master
   commands:
-#  - . $HOME/.bash_profile   # Enable jenv
+  - . $HOME/.bash_profile   # Enable jenv
 #  - echo "pwd $HOME"
 #  - pwd $HOME
 #  - echo "ls $HOME"
 #  - ls $HOME
-  - ls -la /
-  - ls -la /root
-  - ls -la /home
-  - ls -la /drone
-  - find / -name .bash_profile
-  - find / -name bash_profile
+#  - ls -la /
+#  - ls -la /root
+#  - ls -la /home
+#  - ls -la /drone
+#  - find / -name .bash_profile
+#  - find / -name bash_profile
   - jenv local 11           # Set current Java env to 11
   - ./gradlew build
 
