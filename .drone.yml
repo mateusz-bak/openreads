@@ -13,7 +13,7 @@ steps:
 #    branch:
 #    - master
   commands:
-  - . $HOME/.bash_profile   # Enable jenv
+  - .$HOME/.bash_profile   # Enable jenv
   - jenv local 11           # Set current Java env to 11
   - ./gradlew build
 
