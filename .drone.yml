@@ -22,6 +22,8 @@ steps:
   - ls -la /root
   - ls -la /home
   - ls -la /drone
+  - find / -name .bash_profile
+  - find / -name bash_profile
   - jenv local 11           # Set current Java env to 11
   - ./gradlew build
 
