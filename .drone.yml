@@ -18,8 +18,8 @@ steps:
 #  - pwd $HOME
 #  - echo "ls $HOME"
 #  - ls $HOME
-    - ls -la /
-    - ls -la /root
+  - ls -la /
+  - ls -la /root
   - jenv local 11           # Set current Java env to 11
   - ./gradlew build
 
