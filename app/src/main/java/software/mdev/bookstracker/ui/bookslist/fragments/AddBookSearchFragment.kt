@@ -53,7 +53,8 @@ class AddBookSearchFragment : Fragment(R.layout.fragment_add_book_search) {
         viewModel = (activity as ListActivity).booksViewModel
         listActivity = activity as ListActivity
 
-        val sharedPref = (activity as ListActivity).getSharedPreferences(Constants.SHARED_PREFERENCES_NAME, Context.MODE_PRIVATE)
+        var sharedPreferencesName = (activity as ListActivity).getString(R.string.shared_preferences_name)
+        val sharedPref = (activity as ListActivity).getSharedPreferences(sharedPreferencesName, Context.MODE_PRIVATE)
         val editor = sharedPref.edit()
 
         rvLanguages.visibility = View.GONE

@@ -101,7 +101,9 @@ class ListActivity : AppCompatActivity() {
     }
 
     private fun setAppTheme(){
-        val sharedPref = getSharedPreferences(Constants.SHARED_PREFERENCES_NAME, Context.MODE_PRIVATE)
+        var sharedPreferencesName = getString(R.string.shared_preferences_name)
+        val sharedPref = getSharedPreferences(sharedPreferencesName, Context.MODE_PRIVATE)
+
         var accent = sharedPref.getString(
             Constants.SHARED_PREFERENCES_KEY_ACCENT,
             Constants.THEME_ACCENT_DEFAULT

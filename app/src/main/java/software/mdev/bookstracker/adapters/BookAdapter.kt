@@ -76,7 +76,9 @@ class BookAdapter(
                 tvDateFinished.text = convertLongToTime(bookFinishTimeStampLong)
             }
 
-            val sharedPref = context.getSharedPreferences(Constants.SHARED_PREFERENCES_NAME, Context.MODE_PRIVATE)
+            var sharedPreferencesName = holder.itemView.getContext().getString(R.string.shared_preferences_name)
+            val sharedPref = context.getSharedPreferences(sharedPreferencesName, Context.MODE_PRIVATE)
+
             val sortOrder = sharedPref.getString(
                 Constants.SHARED_PREFERENCES_KEY_SORT_ORDER,
                 Constants.SORT_ORDER_TITLE_ASC

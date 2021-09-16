@@ -26,7 +26,6 @@ import software.mdev.bookstracker.data.repositories.LanguageRepository
 import software.mdev.bookstracker.data.repositories.OpenLibraryRepository
 import software.mdev.bookstracker.data.repositories.YearRepository
 import software.mdev.bookstracker.other.Constants
-import software.mdev.bookstracker.other.Constants.SHARED_PREFERENCES_NAME
 import software.mdev.bookstracker.ui.bookslist.viewmodel.BooksViewModel
 import software.mdev.bookstracker.ui.bookslist.viewmodel.BooksViewModelProviderFactory
 import java.text.SimpleDateFormat
@@ -42,10 +41,8 @@ class StatisticsFragment : Fragment(R.layout.fragment_statistics) {
         viewModel = (activity as ListActivity).booksViewModel
         view.hideKeyboard()
 
-        val sharedPref = (activity as ListActivity).getSharedPreferences(
-            SHARED_PREFERENCES_NAME,
-            Context.MODE_PRIVATE
-        )
+        var sharedPreferencesName = (activity as ListActivity).getString(R.string.shared_preferences_name)
+        val sharedPref = (activity as ListActivity).getSharedPreferences(sharedPreferencesName, Context.MODE_PRIVATE)
 
         val database = BooksDatabase(view.context)
         val yearDatabase = YearDatabase(view.context)

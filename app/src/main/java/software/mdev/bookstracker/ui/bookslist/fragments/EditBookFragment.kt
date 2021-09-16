@@ -736,7 +736,8 @@ class EditBookFragment : Fragment(R.layout.fragment_edit_book) {
     fun getAccentColor(context: Context): Int {
         var accentColor = ContextCompat.getColor(context, R.color.green_500)
 
-        val sharedPref = (activity as ListActivity).getSharedPreferences(Constants.SHARED_PREFERENCES_NAME, Context.MODE_PRIVATE)
+        var sharedPreferencesName = context.getString(R.string.shared_preferences_name)
+        val sharedPref = context.getSharedPreferences(sharedPreferencesName, Context.MODE_PRIVATE)
 
         var accent = sharedPref.getString(Constants.SHARED_PREFERENCES_KEY_ACCENT, Constants.THEME_ACCENT_DEFAULT).toString()
 

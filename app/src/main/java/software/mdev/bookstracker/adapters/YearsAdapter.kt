@@ -52,10 +52,8 @@ class YearsAdapter(
 
             cbFilterYear.isClickable = false
 
-            val sharedPref = (listActivity).getSharedPreferences(
-                Constants.SHARED_PREFERENCES_NAME,
-                Context.MODE_PRIVATE
-            )
+            var sharedPreferencesName = holder.itemView.getContext().getString(R.string.shared_preferences_name)
+            val sharedPref = (listActivity).getSharedPreferences(sharedPreferencesName, Context.MODE_PRIVATE)
             val editor = sharedPref.edit()
 
             // Check shared preferences to see if checkbox should be ticked
@@ -127,8 +125,9 @@ class YearsAdapter(
 
         var accentColor = ContextCompat.getColor(context, R.color.purple_500)
 
+        var sharedPreferencesName = context.getString(R.string.shared_preferences_name)
         val sharedPref =
-            context.getSharedPreferences(Constants.SHARED_PREFERENCES_NAME, Context.MODE_PRIVATE)
+            context.getSharedPreferences(sharedPreferencesName, Context.MODE_PRIVATE)
 
         var accent = sharedPref?.getString(
             Constants.SHARED_PREFERENCES_KEY_ACCENT,

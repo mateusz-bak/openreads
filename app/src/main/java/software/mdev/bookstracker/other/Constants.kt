@@ -65,7 +65,6 @@ object Constants {
 
     const val SERIALIZABLE_BUNDLE_BOOK = "book"
 
-    const val SHARED_PREFERENCES_NAME = "software.mdev.bookstracker_preferences"
     const val SHARED_PREFERENCES_KEY_FIRST_TIME_TOGGLE = "KEY_FIRST_TIME_TOGGLE"
     const val SHARED_PREFERENCES_KEY_APP_VERSION = "SHARED_PREFERENCES_KEY_APP_VERSION"
     const val SHARED_PREFERENCES_KEY_SORT_ORDER = "KEY_SORT_ORDER"
