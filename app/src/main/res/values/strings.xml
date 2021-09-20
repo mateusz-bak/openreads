@@ -228,5 +228,9 @@
     <string name="backup_title">Backup</string>
     <string name="backup_summary">Backup or restore your books</string>
     <string name="restoreBackup_title">Found backups:</string>
+    <string name="backup_success">Backup successfully created!</string>
+    <string name="no_backups_found">No backups found in Backup/BooksTracker</string>
+    <string name="api_29_not_yet_supported">API 29 not yet supported</string>
+    <string name="api_30_not_yet_supported">API 30 not yet supported</string>
 
 </resources>

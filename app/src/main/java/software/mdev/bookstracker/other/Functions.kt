@@ -1,6 +1,8 @@
 package software.mdev.bookstracker.other
 
 import android.content.Context
+import android.content.pm.PackageManager
+import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import com.google.gson.Gson
 import software.mdev.bookstracker.R
@@ -106,5 +108,12 @@ class Functions {
             Constants.THEME_ACCENT_YELLOW_500 -> accentColor = ContextCompat.getColor(context, R.color.yellow_500)
         }
         return accentColor
+    }
+
+    fun checkPermission(activity: ListActivity, permission: String) =
+        ActivityCompat.checkSelfPermission(activity.baseContext, permission) == PackageManager.PERMISSION_GRANTED
+
+    fun requestPermission(activity: ListActivity, permission: String) {
+        ActivityCompat.requestPermissions(activity, arrayOf(permission), 0)
     }
 }

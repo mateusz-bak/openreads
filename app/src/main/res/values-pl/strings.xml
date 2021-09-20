@@ -194,4 +194,8 @@
     <string name="backup_title">Kopia zapasowa</string>
     <string name="backup_summary">Utwórz lub przywróć kopię zapasową Twoich książek</string>
     <string name="restoreBackup_title">Znalezione kopie zapasowe:</string>
+    <string name="backup_success">Pomyślnie utworzono kopię zapasową</string>
+    <string name="no_backups_found">Nie znaleziono kopii zapasowych w Backup/BooksTracker</string>
+    <string name="api_29_not_yet_supported">API 29 nie jest jeszcze wspierane</string>
+    <string name="api_30_not_yet_supported">API 30 nie jest jeszcze wspierane</string>
 </resources>
