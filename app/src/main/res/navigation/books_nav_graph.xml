@@ -146,6 +146,9 @@
         <action
             android:id="@+id/action_settingsFragment_to_trashFragment"
             app:destination="@id/trashFragment" />
+        <action
+            android:id="@+id/action_settingsFragment_to_settingsBackupFragment"
+            app:destination="@id/settingsBackupFragment" />
     </fragment>
     <fragment
         android:id="@+id/statisticsFragment"
@@ -181,4 +184,16 @@
         android:name="cover"
         app:argType="string" />
     </fragment>
+    <fragment
+        android:id="@+id/settingsBackupFragment"
+        android:name="software.mdev.bookstracker.ui.bookslist.fragments.SettingsBackupFragment"
+        android:label="SettingsBackupFragment" >
+        <action
+            android:id="@+id/action_settingsBackupFragment_to_restoreBackupFragment"
+            app:destination="@id/restoreBackupFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/restoreBackupFragment"
+        android:name="software.mdev.bookstracker.ui.bookslist.fragments.RestoreBackupFragment"
+        android:label="RestoreBackupFragment" />
 </navigation>

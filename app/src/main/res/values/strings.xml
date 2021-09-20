@@ -221,5 +221,12 @@
     <string name="warning_delete_book_message">Do you really want to delete this book?</string>
     <string name="warning_delete_book_delete">delete</string>
     <string name="warning_delete_book_cancel">back</string>
+    <string name="export_title">Create backup</string>
+    <string name="export_summary">Save your books to a local file on your phone. You may need to grant storage permissions for the app.</string>
+    <string name="import_title">Restore backup</string>
+    <string name="import_summary">Load your books from a local file on your phone. You may need to grant storage permissions for the app.</string>
+    <string name="backup_title">Backup</string>
+    <string name="backup_summary">Backup or restore your books</string>
+    <string name="restoreBackup_title">Found backups:</string>
 
 </resources>

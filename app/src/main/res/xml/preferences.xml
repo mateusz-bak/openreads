@@ -12,6 +12,12 @@
             android:summary="@string/trash_summary" >
         </Preference>
 
+        <Preference
+            android:key="KEY_BACKUP"
+            android:title="@string/backup_title"
+            android:summary="@string/backup_summary" >
+        </Preference>
+
     </PreferenceCategory>
 
     <PreferenceCategory

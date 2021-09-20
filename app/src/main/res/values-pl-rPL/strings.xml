@@ -187,4 +187,11 @@
     <string name="warning_delete_book_message">Czy na prawdę chcesz usunąć tę książkę?</string>
     <string name="warning_delete_book_delete">usuń</string>
     <string name="warning_delete_book_cancel">wróć</string>
+    <string name="export_title">Stwórz kopię</string>
+    <string name="export_summary">Zapisz książki do pliku na Twoim telefonie. Potrzebne może być udzielenie uprawnień dostępu do pamięci.</string>
+    <string name="import_title">Wczytaj kopię</string>
+    <string name="import_summary">Załaduj książki z pliku na Twoim telefonie. Potrzebne może być udzielenie uprawnień dostępu do pamięci.</string>
+    <string name="backup_title">Kopia zapasowa</string>
+    <string name="backup_summary">Utwórz lub przywróć kopię zapasową Twoich książek</string>
+    <string name="restoreBackup_title">Znalezione kopie zapasowe:</string>
 </resources>
