@@ -45,6 +45,7 @@ class RestoreBackupFragment : Fragment(R.layout.fragment_restore_backup) {
     }
 
     private fun setupRv(files: Array<File>?) {
+        files?.reverse()
         backupAdapter = BackupAdapter(files)
 
         rvBackups.apply {

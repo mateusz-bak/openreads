@@ -66,7 +66,6 @@ class SettingsBackupFragment : PreferenceFragmentCompat(), OnSharedPreferenceCha
         val functions = Functions()
         if (functions.checkPermission(activity, Manifest.permission.WRITE_EXTERNAL_STORAGE)) {
             val database = BooksDatabase(activity.baseContext)
-            database.close()
 
             when (Build.VERSION.SDK_INT) {
                 in 1..28 -> exportDbToFileApi28AndLower(activity)
