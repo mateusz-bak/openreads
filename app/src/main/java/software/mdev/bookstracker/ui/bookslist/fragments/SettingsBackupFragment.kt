@@ -35,7 +35,7 @@ class SettingsBackupFragment : PreferenceFragmentCompat(), OnSharedPreferenceCha
 
         if (preferenceImport != null) {
             preferenceImport.onPreferenceClickListener = Preference.OnPreferenceClickListener {
-                lookForDbBackups(activity as ListActivity, this)
+                Backup().runImporter(activity as ListActivity)
                 true
             }
         }
@@ -54,19 +54,5 @@ class SettingsBackupFragment : PreferenceFragmentCompat(), OnSharedPreferenceCha
     }
 
     override fun onSharedPreferenceChanged(sharedPreferences: SharedPreferences?, key: String?) {
-    }
-
-    private fun lookForDbBackups(activity: ListActivity, fragment: SettingsBackupFragment) {
-        val files = File("/sdcard/Backup/BooksTracker").listFiles()
-
-        if (files != null) {
-            if (files.isNotEmpty()) {
-                fragment.findNavController().navigate(R.id.restoreBackupFragment, null)
-            } else {
-                Toast.makeText(activity.baseContext, R.string.no_backups_found, Toast.LENGTH_SHORT).show()
-            }
-        } else {
-            Toast.makeText(activity.baseContext, R.string.no_backups_found, Toast.LENGTH_SHORT).show()
-        }
     }
 }

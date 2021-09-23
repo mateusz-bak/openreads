@@ -1,10 +1,14 @@
 package software.mdev.bookstracker.ui.bookslist
 
+import android.Manifest
 import android.annotation.SuppressLint
 import android.content.Context
+import android.net.Uri
+import android.os.Build
 import android.os.Bundle
 import android.view.Menu
 import android.view.View
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
@@ -19,11 +23,13 @@ import software.mdev.bookstracker.data.repositories.BooksRepository
 import software.mdev.bookstracker.data.repositories.LanguageRepository
 import software.mdev.bookstracker.data.repositories.OpenLibraryRepository
 import software.mdev.bookstracker.data.repositories.YearRepository
+import software.mdev.bookstracker.other.Backup
 import software.mdev.bookstracker.other.Constants
 import software.mdev.bookstracker.other.Functions
 import software.mdev.bookstracker.other.Updater
 import software.mdev.bookstracker.ui.bookslist.viewmodel.BooksViewModel
 import software.mdev.bookstracker.ui.bookslist.viewmodel.BooksViewModelProviderFactory
+import java.io.IOException
 
 class ListActivity : AppCompatActivity() {
 
@@ -140,4 +146,17 @@ class ListActivity : AppCompatActivity() {
         }
         snackbar.show()
     }
+
+    // Choose a backup registering a callback and following the latest guidelines
+    val selectBackup =
+        registerForActivityResult(ActivityResultContracts.GetContent()) { fileUri: Uri? ->
+
+            try {
+                val backupImporter = Backup()
+                if (fileUri != null) backupImporter.importBackup(this, fileUri)
+            } catch (e: IOException) {
+                showSnackbar(e.toString())
+                e.printStackTrace()
+            }
+        }
 }

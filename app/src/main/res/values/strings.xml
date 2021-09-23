@@ -222,7 +222,7 @@
     <string name="warning_delete_book_delete">delete</string>
     <string name="warning_delete_book_cancel">back</string>
     <string name="export_title">Create backup</string>
-    <string name="export_summary">Save your books to a local file on your phone. You may need to grant storage permissions for the app.</string>
+    <string name="export_summary">Save your books to the cloud or to a local file on your phone. Local save can couse problems, use direct upload to a cloud (Nextcloud, Google Drive, OneDrive, Dropbox, Mega, Proton Drive)</string>
     <string name="import_title">Restore backup</string>
     <string name="import_summary">Load your books from a local file on your phone. You may need to grant storage permissions for the app.</string>
     <string name="backup_title">Backup</string>
@@ -233,5 +233,7 @@
     <string name="no_backups_found">No backups found in Backup/BooksTracker</string>
     <string name="api_29_not_yet_supported">API 29 not yet supported</string>
     <string name="api_30_not_yet_supported">API 30 not yet supported</string>
-
+    <string name="backup_import_invalid_file">Import failed. The chosen file is not a valid Books Tracker backup!</string>
+    <string name="backup_import_success">Import completed!</string>
+    <string name="backup_import_failure">Import failed. Did you choose the file correctly?</string>
 </resources>

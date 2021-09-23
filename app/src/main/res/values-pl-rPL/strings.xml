@@ -187,9 +187,9 @@
     <string name="warning_delete_book_message">Czy na prawdę chcesz usunąć tę książkę?</string>
     <string name="warning_delete_book_delete">usuń</string>
     <string name="warning_delete_book_cancel">wróć</string>
-    <string name="export_title">Stwórz kopię</string>
-    <string name="export_summary">Zapisz książki do pliku na Twoim telefonie. Potrzebne może być udzielenie uprawnień dostępu do pamięci.</string>
-    <string name="import_title">Wczytaj kopię</string>
+    <string name="export_title">Stwórz kopię książek</string>
+    <string name="export_summary">Zapisz książki w chmurze lub do pliku na Twoim telefonie. Zapis na telefonie może powodować problemy, wybierz opcję wysłania bezpośrednio do chmury (Nextcloud, Google Drive, OneDrive, Dropbox, Mega, Proton Drive)</string>
+    <string name="import_title">Wczytaj kopię książek</string>
     <string name="import_summary">Załaduj książki z pliku na Twoim telefonie. Potrzebne może być udzielenie uprawnień dostępu do pamięci.</string>
     <string name="backup_title">Kopia zapasowa</string>
     <string name="backup_summary">Utwórz lub przywróć kopię zapasową Twoich książek</string>
@@ -199,4 +199,7 @@
     <string name="api_29_not_yet_supported">API 29 nie jest jeszcze wspierane</string>
     <string name="api_30_not_yet_supported">API 30 nie jest jeszcze wspierane</string>
     <string name="backup_failure">Tworzenie kopii zapasowaj nie powiodło się!</string>
+    <string name="backup_import_invalid_file">Import zakończony niepowodzeniem. Wybrany plik nie jest poprawą kopią zapasową aplikacji Books Tracker!</string>
+    <string name="backup_import_success">Import zakończony powodzeniem!</string>
+    <string name="backup_import_failure">Import zakończony niepowodzeniem. Czy wybrany został poprawny plik?</string>
 </resources>
