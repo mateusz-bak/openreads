@@ -40,6 +40,30 @@ abstract class BooksDatabase: RoomDatabase() {
                 )
                 .build()
 
+        fun getBooksDatabase(context: Context): BooksDatabase {
+            val tempInstance = instance
+            if (tempInstance != null) {
+                return tempInstance
+            }
+            synchronized(this) {
+                val instance = Room.databaseBuilder(
+                    context.applicationContext,
+                    BooksDatabase::class.java,
+                    DATABASE_FILE_NAME
+                )
+                    .addMigrations(
+                        MIGRATION_1_2,
+                        MIGRATION_2_3,
+                        MIGRATION_3_4,
+                        MIGRATION_4_5,
+                        MIGRATION_5_6
+                    )
+                    .build()
+                Companion.instance = instance
+                return instance
+            }
+        }
+
         val MIGRATION_1_2 = object : Migration(1, 2) {
             override fun migrate(database: SupportSQLiteDatabase) {
                 database.execSQL("ALTER TABLE Book ADD COLUMN item_bookNumberOfPages INTEGER NOT NULL DEFAULT 0")

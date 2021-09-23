@@ -2,6 +2,7 @@ package software.mdev.bookstracker.data.db
 
 import androidx.lifecycle.LiveData
 import androidx.room.*
+import androidx.sqlite.db.SupportSQLiteQuery
 import software.mdev.bookstracker.data.db.entities.Book
 
 @Dao
@@ -89,4 +90,8 @@ interface BooksDao {
 
     @Query("SELECT * FROM Book WHERE item_bookIsDeleted LIKE 1 ORDER BY item_bookTitle_ASCII ASC")
     fun getDeletedBooks(): LiveData<List<Book>>
+
+    // Checkpoint functionality, not yet supported in room but useful to avoid closing the db during the backup creation
+    @RawQuery
+    fun checkpoint(supportSQLiteQuery: SupportSQLiteQuery?): Int
 }

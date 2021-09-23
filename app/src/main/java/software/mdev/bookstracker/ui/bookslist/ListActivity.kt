@@ -1,5 +1,6 @@
 package software.mdev.bookstracker.ui.bookslist
 
+import android.annotation.SuppressLint
 import android.content.Context
 import android.os.Bundle
 import android.view.Menu
@@ -8,13 +9,8 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.ui.setupWithNavController
-import com.github.javiersantos.appupdater.AppUpdater
-import com.github.javiersantos.appupdater.enums.Display
-import com.github.javiersantos.appupdater.enums.UpdateFrom
+import com.google.android.material.snackbar.Snackbar
 import kotlinx.android.synthetic.main.activity_list.*
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
 import software.mdev.bookstracker.R
 import software.mdev.bookstracker.data.db.BooksDatabase
 import software.mdev.bookstracker.data.db.LanguageDatabase
@@ -121,5 +117,27 @@ class ListActivity : AppCompatActivity() {
             Constants.THEME_ACCENT_TEAL_500 -> setTheme(R.style.Theme_Mdev_Bookstracker_CustomTheme_Teal)
             Constants.THEME_ACCENT_YELLOW_500 -> setTheme(R.style.Theme_Mdev_Bookstracker_CustomTheme_Yellow)
         }
+    }
+
+    // Show a snackbar containing a given text and an optional action, with a 5 seconds duration
+    @SuppressLint("ResourceType")
+    fun showSnackbar(
+        content: String,
+        attachView: View? = null,
+        action: (() -> Unit)? = null,
+        actionText: String? = null,
+    ) {
+        val snackbar = Snackbar.make(findViewById(android.R.id.content), content, 5000)
+        snackbar.isGestureInsetBottomIgnored = true
+        if (attachView != null)
+            snackbar.anchorView = attachView
+        else
+            snackbar.anchorView = this.bottomNavigationView
+        if (action != null) {
+            snackbar.setAction(actionText) {
+                action()
+            }
+        }
+        snackbar.show()
     }
 }

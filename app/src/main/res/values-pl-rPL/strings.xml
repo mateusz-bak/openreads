@@ -198,4 +198,5 @@
     <string name="no_backups_found">Nie znaleziono kopii zapasowych w Backup/BooksTracker</string>
     <string name="api_29_not_yet_supported">API 29 nie jest jeszcze wspierane</string>
     <string name="api_30_not_yet_supported">API 30 nie jest jeszcze wspierane</string>
+    <string name="backup_failure">Tworzenie kopii zapasowaj nie powiodło się!</string>
 </resources>

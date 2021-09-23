@@ -4,7 +4,9 @@
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"
+        android:maxSdkVersion="28"/>
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_books"
@@ -12,6 +14,15 @@
         android:roundIcon="@mipmap/ic_books_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.Mdev.Bookstracker">
+        <provider
+            android:name="androidx.core.content.FileProvider"
+            android:authorities="software.mdev.bookstracker.fileprovider"
+            android:exported="false"
+            android:grantUriPermissions="true">
+            <meta-data
+                android:name="android.support.FILE_PROVIDER_PATHS"
+                android:resource="@xml/filepaths" />
+        </provider>
         <activity
             android:name="software.mdev.bookstracker.ui.bookslist.ListActivity"
             android:label="@string/app_name"
