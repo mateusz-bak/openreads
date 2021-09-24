@@ -57,9 +57,11 @@ class ToReadFragment : Fragment(R.layout.fragment_to_read) {
         tvLooksEmpty.visibility = View.GONE
         btnAddManual.visibility = View.GONE
         btnAddSearch.visibility = View.GONE
+        btnAddScan.visibility = View.GONE
         ivClearSearch.isClickable = false
         btnAddManual.isClickable = false
         btnAddSearch.isClickable = false
+        btnAddScan.isClickable = false
         view.hideKeyboard()
 
         val database = BooksDatabase(view.context)
@@ -106,11 +108,14 @@ class ToReadFragment : Fragment(R.layout.fragment_to_read) {
         btnAddManual.setOnClickListener{
             btnAddManual.visibility = View.GONE
             btnAddSearch.visibility = View.GONE
+            btnAddScan.visibility = View.GONE
             btnAddManual.isClickable = false
             btnAddSearch.isClickable = false
+            btnAddScan.isClickable = false
 
             fabAddBook.animate().rotation( 0F).setDuration(350L).start()
             btnAddSearch.startAnimation(AnimationUtils.loadAnimation(context,R.anim.slide_out_down))
+            btnAddScan.startAnimation(AnimationUtils.loadAnimation(context,R.anim.slide_out_down))
             btnAddManual.startAnimation(AnimationUtils.loadAnimation(context,R.anim.slide_out_down))
 
             AddBookDialog(view.context,
@@ -137,21 +142,27 @@ class ToReadFragment : Fragment(R.layout.fragment_to_read) {
             if (btnAddManual.visibility == View.GONE) {
                 btnAddManual.visibility = View.VISIBLE
                 btnAddSearch.visibility = View.VISIBLE
+                btnAddScan.visibility = View.VISIBLE
                 btnAddManual.isClickable = true
                 btnAddSearch.isClickable = true
+                btnAddScan.isClickable = true
 
                 fabAddBook.animate().rotation(180F).setDuration(350L).start()
                 btnAddSearch.startAnimation(AnimationUtils.loadAnimation(context,R.anim.slide_in_up))
+                btnAddScan.startAnimation(AnimationUtils.loadAnimation(context,R.anim.slide_in_up))
                 btnAddManual.startAnimation(AnimationUtils.loadAnimation(context,R.anim.slide_in_up))
             }
             else {
                 btnAddManual.visibility = View.GONE
                 btnAddSearch.visibility = View.GONE
+                btnAddScan.visibility = View.GONE
                 btnAddManual.isClickable = false
                 btnAddSearch.isClickable = false
+                btnAddScan.isClickable = false
 
                 fabAddBook.animate().rotation(0F).setDuration(350L).start()
                 btnAddSearch.startAnimation(AnimationUtils.loadAnimation(context,R.anim.slide_out_down))
+                btnAddScan.startAnimation(AnimationUtils.loadAnimation(context,R.anim.slide_out_down))
                 btnAddManual.startAnimation(AnimationUtils.loadAnimation(context,R.anim.slide_out_down))
             }
         }
@@ -159,22 +170,44 @@ class ToReadFragment : Fragment(R.layout.fragment_to_read) {
         btnAddSearch.setOnClickListener {
             btnAddManual.visibility = View.GONE
             btnAddSearch.visibility = View.GONE
+            btnAddScan.visibility = View.GONE
             btnAddManual.isClickable = false
             btnAddSearch.isClickable = false
+            btnAddScan.isClickable = false
 
             fabAddBook.animate().rotation( 0F).setDuration(350L).start()
             btnAddSearch.startAnimation(AnimationUtils.loadAnimation(context,R.anim.slide_out_down))
+            btnAddScan.startAnimation(AnimationUtils.loadAnimation(context,R.anim.slide_out_down))
             btnAddManual.startAnimation(AnimationUtils.loadAnimation(context,R.anim.slide_out_down))
 
             findNavController().navigate(
                 R.id.action_toReadFragment_to_addBookSearchFragment)
         }
 
+        btnAddScan.setOnClickListener {
+            btnAddManual.visibility = View.GONE
+            btnAddSearch.visibility = View.GONE
+            btnAddScan.visibility = View.GONE
+            btnAddManual.isClickable = false
+            btnAddSearch.isClickable = false
+            btnAddScan.isClickable = false
+
+            fabAddBook.animate().rotation( 0F).setDuration(350L).start()
+            btnAddSearch.startAnimation(AnimationUtils.loadAnimation(context,R.anim.slide_out_down))
+            btnAddScan.startAnimation(AnimationUtils.loadAnimation(context,R.anim.slide_out_down))
+            btnAddManual.startAnimation(AnimationUtils.loadAnimation(context,R.anim.slide_out_down))
+
+            findNavController().navigate(
+                R.id.action_toReadFragment_to_addBookScanFragment)
+        }
+
         rvBooks.setOnClickListener {
             btnAddManual.visibility = View.GONE
             btnAddSearch.visibility = View.GONE
+            btnAddScan.visibility = View.GONE
             btnAddManual.isClickable = false
             btnAddSearch.isClickable = false
+            btnAddScan.isClickable = false
 
             fabAddBook.animate().rotation( 0F).setDuration(350L).start()
         }

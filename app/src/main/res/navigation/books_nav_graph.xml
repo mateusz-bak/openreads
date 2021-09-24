@@ -30,6 +30,9 @@
         <action
             android:id="@+id/action_readFragment_to_addBookSearchFragment"
             app:destination="@id/addBookSearchFragment" />
+        <action
+            android:id="@+id/action_readFragment_to_addBookScanFragment"
+            app:destination="@id/addBookScanFragment" />
     </fragment>
 
     <fragment
@@ -58,6 +61,9 @@
         <action
             android:id="@+id/action_inProgressFragment_to_addBookSearchFragment"
             app:destination="@id/addBookSearchFragment" />
+        <action
+            android:id="@+id/action_inProgressFragment_to_addBookScanFragment"
+            app:destination="@id/addBookScanFragment" />
     </fragment>
 
     <fragment
@@ -86,6 +92,9 @@
         <action
             android:id="@+id/action_toReadFragment_to_addBookSearchFragment"
             app:destination="@id/addBookSearchFragment" />
+        <action
+            android:id="@+id/action_toReadFragment_to_addBookScanFragment"
+            app:destination="@id/addBookScanFragment" />
     </fragment>
 
     <fragment
@@ -187,13 +196,9 @@
     <fragment
         android:id="@+id/settingsBackupFragment"
         android:name="software.mdev.bookstracker.ui.bookslist.fragments.SettingsBackupFragment"
-        android:label="SettingsBackupFragment" >
-        <action
-            android:id="@+id/action_settingsBackupFragment_to_restoreBackupFragment"
-            app:destination="@id/restoreBackupFragment" />
-    </fragment>
+        android:label="SettingsBackupFragment" />
     <fragment
-        android:id="@+id/restoreBackupFragment"
-        android:name="software.mdev.bookstracker.ui.bookslist.fragments.RestoreBackupFragment"
-        android:label="RestoreBackupFragment" />
+        android:id="@+id/addBookScanFragment"
+        android:name="software.mdev.bookstracker.ui.bookslist.fragments.AddBookScanFragment"
+        android:label="AddBookScanFragment" />
 </navigation>

@@ -66,6 +66,17 @@
         app:layout_constraintStart_toEndOf="@+id/btnAddManual"
         app:layout_constraintTop_toTopOf="@+id/fabAddBook" />
 
+    <Button
+        android:id="@+id/btnAddScan"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:minWidth="120dp"
+        android:text="@string/btnAddScan"
+        android:textSize="12dp"
+        app:layout_constraintBottom_toTopOf="@+id/btnAddManual"
+        app:layout_constraintEnd_toEndOf="@+id/btnAddManual"
+        app:layout_constraintStart_toStartOf="@+id/btnAddManual"/>
+
     <ImageView
         android:id="@+id/ivSearch"
         android:contentDescription="@string/ivSearch"

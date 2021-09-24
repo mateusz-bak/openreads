@@ -210,4 +210,5 @@
     <string name="warning_understand">Rozumiem</string>
     <string name="warning_take_me_back">Zabierz mnie stąd!</string>
     <string name="tv_less_about_book">Mniej</string>
+    <string name="btnAddScan">Skanuj kod kreskowy</string>
 </resources>
