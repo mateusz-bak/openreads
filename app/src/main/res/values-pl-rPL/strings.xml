@@ -202,4 +202,7 @@
     <string name="backup_import_invalid_file">Import zakończony niepowodzeniem. Wybrany plik nie jest poprawą kopią zapasową aplikacji Books Tracker!</string>
     <string name="backup_import_success">Import zakończony powodzeniem!</string>
     <string name="backup_import_failure">Import zakończony niepowodzeniem. Czy wybrany został poprawny plik?</string>
+    <string name="rate_app_title">Oceń aplikację</string>
+    <string name="rate_app">Podoba Ci się Books Tracker? Oceń ją w sklepie!. Kliknij tutaj</string>
+    <string name="contact_title">Skontaktuj się</string>
 </resources>

@@ -236,4 +236,10 @@
     <string name="backup_import_invalid_file">Import failed. The chosen file is not a valid Books Tracker backup!</string>
     <string name="backup_import_success">Import completed!</string>
     <string name="backup_import_failure">Import failed. Did you choose the file correctly?</string>
+    <string name="rate_app_title">Rate the app</string>
+    <string name="rate_app">Do you like Books Tracker? Take a moment to rate it. Click here</string>
+    <string name="app_market_url" translatable="false">market://details?id=software.mdev.bookstracker</string>
+    <string name="contact_title">Contact me</string>
+    <string name="dev_email" translatable="false">mateusz.bak.dev@gmail.com</string>
+    <string name="dev_mailto" translatable="false">mailto:mateusz.bak.dev@gmail.com</string>
 </resources>

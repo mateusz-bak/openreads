@@ -59,14 +59,6 @@
         app:icon="@drawable/ic_baseline_info_24">
 
         <Preference
-            android:title="@string/app_developer_title"
-            android:summary="@string/app_developer" >
-            <intent
-                android:action="android.intent.action.VIEW"
-                android:data="@string/ivAuthorUrl" />
-        </Preference>
-
-        <Preference
             android:key="KEY_CHECK_FOR_UPDATES"
             android:title="@string/app_version_title"
             android:summary="@string/app_version">
@@ -94,6 +86,30 @@
             <intent
                 android:action="android.intent.action.VIEW"
                 android:data="@string/tvLicenseUrl" />
+        </Preference>
+
+        <Preference
+            android:title="@string/app_developer_title"
+            android:summary="@string/app_developer" >
+            <intent
+                android:action="android.intent.action.VIEW"
+                android:data="@string/ivAuthorUrl" />
+        </Preference>
+
+        <Preference
+            android:title="@string/rate_app_title"
+            android:summary="@string/rate_app" >
+            <intent
+                android:action="android.intent.action.VIEW"
+                android:data="@string/app_market_url" />
+        </Preference>
+
+        <Preference
+            android:title="@string/contact_title"
+            android:summary="@string/dev_email" >
+            <intent
+                android:action="android.intent.action.VIEW"
+                android:data="@string/dev_mailto" />
         </Preference>
     </PreferenceCategory>
 
