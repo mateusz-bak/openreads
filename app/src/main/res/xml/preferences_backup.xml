@@ -7,16 +7,16 @@
         android:title="">
 
         <Preference
-            android:icon="@drawable/ic_baseline_download_24"
+            android:icon="@drawable/ic_baseline_cloud_upload_24"
             android:key="KEY_EXPORT"
             android:summary="@string/export_summary"
-            android:title="@string/export_title"></Preference>
+            android:title="@string/export_title" />
 
         <Preference
-            android:icon="@drawable/ic_baseline_upload_24"
+            android:icon="@drawable/ic_baseline_restore_24"
             android:key="KEY_IMPORT"
             android:summary="@string/import_summary"
-            android:title="@string/import_title"></Preference>
+            android:title="@string/import_title" />
 
     </PreferenceCategory>
 

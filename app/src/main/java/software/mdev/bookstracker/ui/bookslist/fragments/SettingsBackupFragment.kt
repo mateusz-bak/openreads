@@ -3,8 +3,8 @@ package software.mdev.bookstracker.ui.bookslist.fragments
 import android.content.SharedPreferences
 import android.content.SharedPreferences.OnSharedPreferenceChangeListener
 import android.os.Bundle
-import android.widget.Toast
-import androidx.navigation.fragment.findNavController
+import androidx.appcompat.app.AlertDialog
+import androidx.core.content.ContextCompat
 import androidx.preference.Preference
 import androidx.preference.PreferenceFragmentCompat
 import software.mdev.bookstracker.R
@@ -12,7 +12,6 @@ import software.mdev.bookstracker.other.Backup
 import software.mdev.bookstracker.other.Constants
 import software.mdev.bookstracker.ui.bookslist.ListActivity
 import software.mdev.bookstracker.ui.bookslist.viewmodel.BooksViewModel
-import java.io.File
 
 
 class SettingsBackupFragment : PreferenceFragmentCompat(), OnSharedPreferenceChangeListener {
@@ -35,7 +34,7 @@ class SettingsBackupFragment : PreferenceFragmentCompat(), OnSharedPreferenceCha
 
         if (preferenceImport != null) {
             preferenceImport.onPreferenceClickListener = Preference.OnPreferenceClickListener {
-                Backup().runImporter(activity as ListActivity)
+                confirmBackupImportAndExecute(activity as ListActivity)
                 true
             }
         }
@@ -54,5 +53,23 @@ class SettingsBackupFragment : PreferenceFragmentCompat(), OnSharedPreferenceCha
     }
 
     override fun onSharedPreferenceChanged(sharedPreferences: SharedPreferences?, key: String?) {
+    }
+
+    private fun confirmBackupImportAndExecute(activity: ListActivity) {
+        val restoreBackupWarningDialog = this.context?.let { it1 ->
+            AlertDialog.Builder(it1)
+                .setTitle(R.string.restore_backup_warning_title)
+                .setMessage(R.string.restore_backup_warning_message)
+                .setIcon(R.drawable.ic_baseline_warning_amber_24)
+                .setNegativeButton(R.string.warning_take_me_back) { _, _ ->
+                }
+                .setPositiveButton(R.string.warning_understand) { _, _ ->
+                    Backup().runImporter(activity)
+                }
+                .create()
+        }
+
+        restoreBackupWarningDialog?.show()
+        restoreBackupWarningDialog?.getButton(AlertDialog.BUTTON_NEGATIVE)?.setTextColor(ContextCompat.getColor(activity.baseContext, R.color.grey_500))
     }
 }

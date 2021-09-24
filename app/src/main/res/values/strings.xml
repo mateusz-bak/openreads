@@ -222,7 +222,7 @@
     <string name="warning_delete_book_delete">delete</string>
     <string name="warning_delete_book_cancel">back</string>
     <string name="export_title">Create backup</string>
-    <string name="export_summary">Save your books to the cloud or to a local file on your phone. Local save can couse problems, use direct upload to a cloud (Nextcloud, Google Drive, OneDrive, Dropbox, Mega, Proton Drive)</string>
+    <string name="export_summary">Save your books to the cloud so they won\'t go anywhere! You can save the backup file to your cloud app (Nextcloud, Google Drive, OneDrive, Dropbox, Mega, Proton Drive)</string>
     <string name="import_title">Restore backup</string>
     <string name="import_summary">Load your books from a local file on your phone. You may need to grant storage permissions for the app.</string>
     <string name="backup_title">Backup</string>
@@ -242,4 +242,8 @@
     <string name="contact_title">Contact me</string>
     <string name="dev_email" translatable="false">mateusz.bak.dev@gmail.com</string>
     <string name="dev_mailto" translatable="false">mailto:mateusz.bak.dev@gmail.com</string>
+    <string name="restore_backup_warning_title">Watch out!</string>
+    <string name="restore_backup_warning_message">Restoring a backup will overwrite the books you currently have. Remember to have a backup of those.</string>
+    <string name="warning_understand">I understand</string>
+    <string name="warning_take_me_back">Take me back!</string>
 </resources>
