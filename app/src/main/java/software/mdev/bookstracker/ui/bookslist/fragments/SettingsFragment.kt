@@ -81,9 +81,8 @@ class SettingsFragment : PreferenceFragmentCompat(), OnSharedPreferenceChangeLis
 
     private fun hotReloadActivity(activity: Activity?) {
         if (activity == null) return
-        val sharedPref = PreferenceManager.getDefaultSharedPreferences(context?.applicationContext)
+        val sharedPref = PreferenceManager.getDefaultSharedPreferences(activity)
         sharedPref.edit().putBoolean(Constants.SHARED_PREFERENCES_REFRESHED, true).apply()
-        findNavController().navigate(R.id.readFragment, null)
-        (activity as FragmentActivity).recreate()
+        activity.recreate()
     }
 }
