@@ -113,7 +113,8 @@ class Backup {
 
         // An initial, naive validation
         if (!(uri.contains("books_tracker", true) ||
-                    uri.contains("document", true))
+                    uri.contains("document", true) ||
+                    uri.contains("external", true))
         ) {
             (context as ListActivity).showSnackbar(uri.toString())
             return false
