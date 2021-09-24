@@ -554,7 +554,7 @@ class AddBookDialog(context: Context, var addBookDialogListener: AddBookDialogLi
                                         .setTitle(R.string.warning_no_finish_date_title)
                                         .setMessage(R.string.warning_no_finish_date_message)
                                         .setIcon(R.drawable.ic_baseline_warning_amber_24)
-                                        .setNegativeButton(R.string.warning_no_finish_date_add_anyway) { _, _ ->
+                                        .setPositiveButton(R.string.warning_no_finish_date_add_anyway) { _, _ ->
                                             var editedBook = prepareBook(
                                                 whatIsClicked,
                                                 bookRating = rbAdderRating.rating,
@@ -568,13 +568,12 @@ class AddBookDialog(context: Context, var addBookDialogListener: AddBookDialogLi
                                             addBookDialogListener.onSaveButtonClicked(editedBook)
                                             dismiss()
                                         }
-                                        .setPositiveButton(R.string.warning_no_finish_date_cancel) { _, _ ->
+                                        .setNegativeButton(R.string.warning_no_finish_date_cancel) { _, _ ->
                                         }
                                         .create()
 
                                     noChallengeWarningDialog.show()
-                                    noChallengeWarningDialog.getButton(AlertDialog.BUTTON_POSITIVE).setBackgroundColor(getAccentColor(context))
-                                    noChallengeWarningDialog.getButton(AlertDialog.BUTTON_POSITIVE).setTextColor(ContextCompat.getColor(context, R.color.design_default_color_on_primary))
+                                    noChallengeWarningDialog?.getButton(AlertDialog.BUTTON_NEGATIVE)?.setTextColor(ContextCompat.getColor(context, R.color.grey_500))
                                 } else {
                                     var editedBook = prepareBook(
                                         whatIsClicked,

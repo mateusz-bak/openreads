@@ -300,7 +300,7 @@ class DisplayBookFragment : Fragment(R.layout.fragment_display_book) {
                     .setTitle(R.string.warning_delete_book_title)
                     .setMessage(R.string.warning_delete_book_message)
                     .setIcon(R.drawable.ic_baseline_warning_amber_24)
-                    .setNegativeButton(R.string.warning_delete_book_delete) { _, _ ->
+                    .setPositiveButton(R.string.warning_delete_book_delete) { _, _ ->
                         viewModel.updateBook(
                             book.id,
                             book.bookTitle,
@@ -325,16 +325,13 @@ class DisplayBookFragment : Fragment(R.layout.fragment_display_book) {
                             .setAction(getString(R.string.undo), UndoBookDeletion())
                             .show()
                     }
-                    .setPositiveButton(R.string.warning_delete_book_cancel) { _, _ ->
+                    .setNegativeButton(R.string.warning_delete_book_cancel) { _, _ ->
                     }
                     .create()
             }
 
             deleteBookWarningDialog?.show()
-            if (this.context !=null && deleteBookWarningDialog?.getButton(AlertDialog.BUTTON_POSITIVE) != null) {
-                deleteBookWarningDialog?.getButton(AlertDialog.BUTTON_POSITIVE)!!.setBackgroundColor(getAccentColor(this.requireContext()))
-                deleteBookWarningDialog?.getButton(AlertDialog.BUTTON_POSITIVE)!!.setTextColor(ContextCompat.getColor(this.requireContext(),R.color.design_default_color_on_primary))
-            }
+            deleteBookWarningDialog?.getButton(AlertDialog.BUTTON_NEGATIVE)?.setTextColor(ContextCompat.getColor(listActivity.baseContext, R.color.grey_500))
         }
     }
 

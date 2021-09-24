@@ -668,6 +668,7 @@ class AddFoundBookDialog(
                                     .create()
 
                                 noChallengeWarningDialog.show()
+                                noChallengeWarningDialog?.getButton(AlertDialog.BUTTON_NEGATIVE)?.setTextColor(ContextCompat.getColor(context, R.color.grey_500))
                             } else {
                                 var editedBook = prepareBook(
                                     whatIsClicked,
