@@ -97,7 +97,7 @@ class EditBookFragment : Fragment(R.layout.fragment_edit_book) {
 
         if(book.bookFinishDate == "none" || book.bookFinishDate == "null") {
             btnEditFinishDate.text = getString(R.string.set)
-            ivClearFinishDate.visibility = View.GONE
+            ivClearFinishDate.visibility = View.INVISIBLE
         } else {
             var bookFinishTimeStampLong = book.bookFinishDate.toLong()
             btnEditFinishDate.text = convertLongToTime(bookFinishTimeStampLong)
@@ -106,7 +106,7 @@ class EditBookFragment : Fragment(R.layout.fragment_edit_book) {
 
         if(book.bookStartDate == "none" || book.bookStartDate == "null") {
             btnEditStartDate.text = getString(R.string.set)
-            ivClearStartDate.visibility = View.GONE
+            ivClearStartDate.visibility = View.INVISIBLE
         } else {
             var bookStartTimeStampLong = book.bookStartDate.toLong()
             btnEditStartDate.text = convertLongToTime(bookStartTimeStampLong)
@@ -220,7 +220,7 @@ class EditBookFragment : Fragment(R.layout.fragment_edit_book) {
             tvDateStartedTitle.visibility = View.VISIBLE
             btnEditStartDate.visibility = View.VISIBLE
 
-            ivClearFinishDate.visibility = View.GONE
+            ivClearFinishDate.visibility = View.INVISIBLE
 
             if (bookStartDateMs != null)
                 ivClearStartDate.visibility = View.VISIBLE
@@ -241,8 +241,8 @@ class EditBookFragment : Fragment(R.layout.fragment_edit_book) {
             tvDateStartedTitle.visibility = View.GONE
             tvDateFinishedTitle.visibility = View.GONE
 
-            ivClearStartDate.visibility = View.GONE
-            ivClearFinishDate.visibility = View.GONE
+            ivClearStartDate.visibility = View.INVISIBLE
+            ivClearFinishDate.visibility = View.INVISIBLE
         }
 
         btnEditFinishDate.setOnClickListener {
@@ -283,8 +283,8 @@ class EditBookFragment : Fragment(R.layout.fragment_edit_book) {
             tvEditedISBN10.visibility = View.GONE
             tvEditedISBN13.visibility = View.GONE
 
-            ivClearStartDate.visibility = View.GONE
-            ivClearFinishDate.visibility = View.GONE
+            ivClearStartDate.visibility = View.INVISIBLE
+            ivClearFinishDate.visibility = View.INVISIBLE
         }
 
         btnEditorSaveFinishDate.setOnClickListener {
@@ -413,8 +413,8 @@ class EditBookFragment : Fragment(R.layout.fragment_edit_book) {
             tvEditedISBN10.visibility = View.GONE
             tvEditedISBN13.visibility = View.GONE
 
-            ivClearStartDate.visibility = View.GONE
-            ivClearFinishDate.visibility = View.GONE
+            ivClearStartDate.visibility = View.INVISIBLE
+            ivClearFinishDate.visibility = View.INVISIBLE
         }
 
         btnEditorSaveStartDate.setOnClickListener {
@@ -520,7 +520,7 @@ class EditBookFragment : Fragment(R.layout.fragment_edit_book) {
 
         ivClearFinishDate.setOnClickListener {
             bookFinishDateMs = null
-            ivClearFinishDate.visibility = View.GONE
+            ivClearFinishDate.visibility = View.INVISIBLE
             btnEditFinishDate.text = getString(R.string.set)
         }
 

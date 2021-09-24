@@ -115,7 +115,7 @@ class StatisticsAdapter(
                 tvPagesRead.visibility = View.GONE
                 tvAvgRatingTitle.visibility = View.GONE
                 tvAvgRating.visibility = View.GONE
-                ivChallenge.visibility = View.GONE
+                ivChallenge.visibility = View.INVISIBLE
                 tvChallengeTitle.visibility = View.GONE
                 tvChallenge.visibility = View.GONE
             }
@@ -177,7 +177,7 @@ class StatisticsAdapter(
         } else {
             holder.itemView.apply {
                 if (foundYear == null) {
-                    ivChallenge.visibility = View.GONE
+                    ivChallenge.visibility = View.INVISIBLE
                     tvChallengeTitle.visibility = View.GONE
                     tvChallenge.visibility = View.GONE
                 }

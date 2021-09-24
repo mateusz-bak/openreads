@@ -209,4 +209,5 @@
     <string name="restore_backup_warning_message">Przywrócenie kopii zapasowej nadpisze książki, które aktualnie posiadasz. Pamiętaj żeby mieć ich kopię zapasową.</string>
     <string name="warning_understand">Rozumiem</string>
     <string name="warning_take_me_back">Zabierz mnie stąd!</string>
+    <string name="tv_less_about_book">Mniej</string>
 </resources>

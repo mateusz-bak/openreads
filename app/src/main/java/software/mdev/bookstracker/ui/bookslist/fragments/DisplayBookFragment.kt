@@ -1,6 +1,7 @@
 package software.mdev.bookstracker.ui.bookslist.fragments
 
 import android.content.Context
+import android.content.res.ColorStateList
 import android.os.Bundle
 import android.view.MotionEvent
 import android.view.View
@@ -173,6 +174,11 @@ class DisplayBookFragment : Fragment(R.layout.fragment_display_book) {
         tvMoreAboutBook.setOnClickListener {
             when(tvBookPagesTitle.visibility){
                 View.GONE -> {
+                    tvMoreAboutBook.setTextColor((activity as ListActivity).getColor(R.color.grey_300))
+                    tvMoreAboutBook.text = (activity as ListActivity).getString(R.string.tv_less_about_book)
+                    tvMoreAboutBook.setCompoundDrawablesRelativeWithIntrinsicBounds(null, (activity as ListActivity).getDrawable(R.drawable.ic_baseline_keyboard_arrow_up_24), null, null)
+                    tvMoreAboutBook.compoundDrawableTintList= ColorStateList.valueOf((activity as ListActivity).getColor(R.color.grey_300))
+
                     tvBookPagesTitle.visibility = View.VISIBLE
                     tvBookPages.visibility = View.VISIBLE
                     tvBookISBNTitle.visibility = View.VISIBLE
@@ -211,6 +217,11 @@ class DisplayBookFragment : Fragment(R.layout.fragment_display_book) {
                     }
                 }
                 View.VISIBLE -> {
+                    tvMoreAboutBook.setTextColor((activity as ListActivity).getColor(R.color.grey))
+                    tvMoreAboutBook.text = (activity as ListActivity).getString(R.string.tv_more_about_book)
+                    tvMoreAboutBook.setCompoundDrawablesRelativeWithIntrinsicBounds(null, null, null, (activity as ListActivity).getDrawable(R.drawable.ic_baseline_keyboard_arrow_down_24))
+                    tvMoreAboutBook.compoundDrawableTintList= ColorStateList.valueOf((activity as ListActivity).getColor(R.color.grey))
+
                     tvBookPagesTitle.visibility = View.GONE
                     tvBookPages.visibility = View.GONE
                     tvDateFinishedTitle.visibility = View.GONE
