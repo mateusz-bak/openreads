@@ -31,6 +31,9 @@ import software.mdev.bookstracker.data.db.entities.Language
 import software.mdev.bookstracker.other.Resource
 import software.mdev.bookstracker.ui.bookslist.dialogs.*
 import kotlin.collections.ArrayList
+import android.view.inputmethod.EditorInfo
+import android.widget.TextView
+import android.widget.TextView.OnEditorActionListener
 
 
 class AddBookSearchFragment : Fragment(R.layout.fragment_add_book_search) {
@@ -406,6 +409,43 @@ class AddBookSearchFragment : Fragment(R.layout.fragment_add_book_search) {
                     }
                 }
             ).show()
+        }
+
+        etAdderBookTitleSearch.setOnEditorActionListener(OnEditorActionListener { v, actionId, event ->
+            if (actionId == EditorInfo.IME_ACTION_SEARCH) {
+                performSearch(v)
+                return@OnEditorActionListener true
+            }
+            false
+        })
+    }
+
+    private fun performSearch(v: TextView) {
+        v.hideKeyboard()
+
+        searchQueryJob?.cancel()
+        searchQueryAutoJob?.cancel()
+        searchByOLIDJob?.cancel()
+        searchAuthorJob?.cancel()
+        var editable = etAdderBookTitleSearch.text.toString()
+
+        viewModel.openLibrarySearchResult.value = null
+        viewModel.openLibraryBooksByOLID.value = null
+
+        searchQueryJob?.cancel()
+        searchQueryAutoJob?.cancel()
+        searchByOLIDJob?.cancel()
+        searchAuthorJob?.cancel()
+
+        searchQueryJob = MainScope().launch {
+
+            editable?.let {
+                if (editable.isNotEmpty()) {
+                    if (editable.last().toString() == " ")
+                        editable.dropLast(1)
+                    viewModel.searchBooksInOpenLibrary(editable, context)
+                }
+            }
         }
     }
 
