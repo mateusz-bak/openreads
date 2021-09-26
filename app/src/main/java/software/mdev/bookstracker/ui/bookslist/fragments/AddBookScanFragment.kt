@@ -3,13 +3,15 @@ package software.mdev.bookstracker.ui.bookslist.fragments
 
 import android.os.Bundle
 import android.view.View
-import android.widget.Toast
+import android.view.WindowManager
 import androidx.fragment.app.Fragment
+import androidx.navigation.fragment.findNavController
 import com.budiyev.android.codescanner.CodeScanner
 import com.budiyev.android.codescanner.CodeScannerView
 import com.budiyev.android.codescanner.DecodeCallback
 import kotlinx.android.synthetic.main.fragment_add_book_scan.*
 import software.mdev.bookstracker.R
+import software.mdev.bookstracker.other.Constants
 import software.mdev.bookstracker.ui.bookslist.viewmodel.BooksViewModel
 import software.mdev.bookstracker.ui.bookslist.ListActivity
 
@@ -25,14 +27,24 @@ class AddBookScanFragment : Fragment(R.layout.fragment_add_book_scan) {
         viewModel = (activity as ListActivity).booksViewModel
         listActivity = activity as ListActivity
 
+        (activity as ListActivity).window.addFlags(WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS)
+
         val scannerView = view.findViewById<CodeScannerView>(R.id.scanner_view)
 
         codeScanner = CodeScanner(listActivity, scannerView)
         codeScanner.decodeCallback = DecodeCallback {
+            val bundle = Bundle().apply {
+                putSerializable(Constants.SERIALIZABLE_BUNDLE_ISBN, it.text)
+            }
+
             listActivity.runOnUiThread {
-                Toast.makeText(activity, it.text, Toast.LENGTH_LONG).show()
+                findNavController().navigate(
+                    R.id.action_addBookScanFragment_to_addBookSearchFragment,
+                    bundle
+                )
             }
         }
+
         scannerView.setOnClickListener {
             codeScanner.startPreview()
         }
@@ -44,15 +56,8 @@ class AddBookScanFragment : Fragment(R.layout.fragment_add_book_scan) {
     }
 
     override fun onPause() {
+        (activity as ListActivity).window.clearFlags(WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS)
         codeScanner.releaseResources()
         super.onPause()
-    }
-
-    private fun hideProgressBar() {
-        paginationProgressBar?.visibility = View.INVISIBLE
-    }
-
-    private fun showProgressBar() {
-        paginationProgressBar?.visibility = View.VISIBLE
     }
 }

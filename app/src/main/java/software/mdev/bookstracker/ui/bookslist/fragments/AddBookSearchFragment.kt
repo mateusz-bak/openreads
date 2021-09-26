@@ -20,6 +20,7 @@ import java.text.SimpleDateFormat
 import java.util.*
 import androidx.lifecycle.Observer
 import androidx.lifecycle.lifecycleScope
+import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
 import kotlinx.coroutines.*
 import me.everything.android.ui.overscroll.OverScrollDecoratorHelper
@@ -48,10 +49,14 @@ class AddBookSearchFragment : Fragment(R.layout.fragment_add_book_search) {
     private var hideProgressBarJob: Job? = null
     private var filterBooksByLanguage: Job? = null
 
+    private val args: AddBookSearchFragmentArgs by navArgs()
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         viewModel = (activity as ListActivity).booksViewModel
         listActivity = activity as ListActivity
+
+        val isbn = args.isbn
 
         var sharedPreferencesName = (activity as ListActivity).getString(R.string.shared_preferences_name)
         val sharedPref = (activity as ListActivity).getSharedPreferences(sharedPreferencesName, Context.MODE_PRIVATE)
@@ -59,13 +64,43 @@ class AddBookSearchFragment : Fragment(R.layout.fragment_add_book_search) {
 
         rvLanguages.visibility = View.GONE
 
-        etAdderBookTitleSearch.requestFocus()
-        showKeyboard(etAdderBookTitleSearch, 350)
+        if (isbn == "manual_search") {
+            etAdderBookTitleSearch.requestFocus()
+            showKeyboard(etAdderBookTitleSearch, 350)
+        } else {
+            etAdderBookTitleSearch.setText(isbn)
+
+            searchQueryJob?.cancel()
+            searchQueryAutoJob?.cancel()
+            searchByOLIDJob?.cancel()
+            searchAuthorJob?.cancel()
+            var editable = etAdderBookTitleSearch.text.toString()
+
+            viewModel.openLibrarySearchResult.value = null
+            viewModel.openLibraryBooksByOLID.value = null
+
+            searchQueryJob?.cancel()
+            searchQueryAutoJob?.cancel()
+            searchByOLIDJob?.cancel()
+            searchAuthorJob?.cancel()
+
+            searchQueryJob = MainScope().launch {
+
+                editable?.let {
+                    if (editable.isNotEmpty()) {
+                        if (editable.last().toString() == " ")
+                            editable.dropLast(1)
+                        viewModel.searchBooksInOpenLibrary(editable, context)
+                    }
+                }
+            }
+        }
 
         setupRvLanguages()
         setupRvFoundBooks()
 
-        if (sharedPref.getBoolean(Constants.SHARED_PREFERENCES_KEY_SHOW_OL_ALERT, true)) {
+        if (sharedPref.getBoolean(Constants.SHARED_PREFERENCES_KEY_SHOW_OL_ALERT, true)
+            && isbn == "manual_search") {
             AlertDialog(
                 view,
                 object : AlertDialogListener {

@@ -248,4 +248,5 @@
     <string name="warning_take_me_back">Take me back!</string>
     <string name="tv_less_about_book">Less</string>
     <string name="btnAddScan">Scan barcode</string>
+    <string name="tbScannerTip">Scan a barcode</string>
 </resources>

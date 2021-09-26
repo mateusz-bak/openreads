@@ -175,6 +175,10 @@
         android:id="@+id/addBookSearchFragment"
         android:name="software.mdev.bookstracker.ui.bookslist.fragments.AddBookSearchFragment"
         android:label="AddBookSearchFragment" >
+        <argument
+            android:name="isbn"
+            app:argType="string"
+            android:defaultValue="manual_search"/>
         <action
             android:id="@+id/action_addBookSearchFragment_to_readFragment"
             app:destination="@id/readFragment" />
@@ -200,5 +204,9 @@
     <fragment
         android:id="@+id/addBookScanFragment"
         android:name="software.mdev.bookstracker.ui.bookslist.fragments.AddBookScanFragment"
-        android:label="AddBookScanFragment" />
+        android:label="AddBookScanFragment" >
+        <action
+            android:id="@+id/action_addBookScanFragment_to_addBookSearchFragment"
+            app:destination="@id/addBookSearchFragment" />
+    </fragment>
 </navigation>
