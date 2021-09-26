@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_version" translatable="false">v1.5.1</string>
+    <string name="app_version" translatable="false">v1.6.0</string>
     <string name="ivAuthorUrl">https://github.com/mateusz-bak/</string>
     <!-- Images descriptions -->
     <string name="ivBookStatusSetRead">Set book as finished</string>
