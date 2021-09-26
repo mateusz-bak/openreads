@@ -4,17 +4,17 @@
 
     <item android:id="@+id/readFragment"
         android:title="@string/readFragment"
-        android:icon="@drawable/ic_baseline_done_24"/>
+        android:icon="@drawable/ic_book_black_24dp"/>
 
     <item android:id="@+id/inProgressFragment"
         android:title="@string/inProgressFragment"
-        android:icon="@drawable/ic_baseline_hourglass_bottom_24"/>
+        android:icon="@drawable/ic_auto_stories_black_24dp"/>
 
     <item android:id="@+id/toReadFragment"
         android:title="@string/toReadFragment"
-        android:icon="@drawable/ic_baseline_list_24"/>
+        android:icon="@drawable/ic_library_books_black_24dp"/>
 
     <item android:id="@+id/statisticsFragment"
         android:title="@string/statisticsFragment"
-        android:icon="@drawable/ic_baseline_bar_chart_24"/>
+        android:icon="@drawable/ic_assessment_black_24dp"/>
 </menu>

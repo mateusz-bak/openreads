@@ -67,34 +67,6 @@
             app:layout_constraintStart_toStartOf="@+id/tvBookAuthor"
             app:layout_constraintTop_toBottomOf="@+id/tvBookAuthor" />
 
-        <ImageView
-            android:id="@+id/ivInProgressIndicator"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginEnd="8dp"
-            android:contentDescription="@string/ivInProgressIndicator"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintStart_toStartOf="@+id/glVertical70"
-            app:layout_constraintTop_toTopOf="parent"
-            app:srcCompat="@drawable/ic_baseline_hourglass_bottom_24"
-            app:tint="?colorPrimary" />
-
-        <ImageView
-            android:id="@+id/ivToReadIndicator"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginEnd="8dp"
-            android:contentDescription="@string/ivToReadIndicator"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintStart_toStartOf="@+id/glVertical70"
-            app:layout_constraintTop_toTopOf="parent"
-            app:srcCompat="@drawable/ic_baseline_list_24"
-            app:tint="?colorPrimary" />
-
         <androidx.constraintlayout.widget.Guideline
             android:id="@+id/glVertical70"
             android:layout_width="wrap_content"

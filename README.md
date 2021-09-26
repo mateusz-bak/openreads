@@ -77,3 +77,4 @@
 
 [photo3idea_studio](https://www.flaticon.com/authors/photo3idea-studio "photo3idea_studio") from [www.flaticon.com](https://www.flaticon.com/ "Flaticon")
 
+[Vaadin](https://vaadin.com/font-icons "Vaadin") from [www.flaticon.com](https://www.flaticon.com/ "Flaticon")

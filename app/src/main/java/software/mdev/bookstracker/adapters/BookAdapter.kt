@@ -101,15 +101,11 @@ class BookAdapter(
             }
             when (curBook.bookStatus ){
                 Constants.BOOK_STATUS_READ -> {
-                    ivInProgressIndicator.visibility = View.GONE
-                    ivToReadIndicator.visibility = View.GONE
                     rbRatingIndicator.visibility = View.VISIBLE
                     rbRatingIndicator.rating = curBook.bookRating
                 }
                 Constants.BOOK_STATUS_IN_PROGRESS -> {
                     rbRatingIndicator.visibility = View.GONE
-                    ivToReadIndicator.visibility = View.GONE
-                    ivInProgressIndicator.visibility = View.VISIBLE
                     tvNumberOfPages.visibility = View.GONE
 
                     tvDateStarted.visibility = View.GONE
@@ -120,8 +116,6 @@ class BookAdapter(
                 }
                 Constants.BOOK_STATUS_TO_READ -> {
                     rbRatingIndicator.visibility = View.GONE
-                    ivInProgressIndicator.visibility = View.GONE
-                    ivToReadIndicator.visibility = View.VISIBLE
                     tvNumberOfPages.visibility = View.GONE
 
                     tvDateStarted.visibility = View.GONE
