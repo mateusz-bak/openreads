@@ -640,7 +640,7 @@ class AddFoundBookDialog(
                             || bookFinishDateMs == null
                             || bookStartDateMs == null ) {
 
-                            if (bookFinishDateMs == null) {
+                            if (bookFinishDateMs == null && whatIsClicked == Constants.BOOK_STATUS_READ) {
                                 val noChallengeWarningDialog = AlertDialog.Builder(context)
                                     .setTitle(R.string.warning_no_finish_date_title)
                                     .setMessage(R.string.warning_no_finish_date_message)

@@ -130,6 +130,9 @@ class AddBookSearchFragment : Fragment(R.layout.fragment_add_book_search) {
         ivClearTitleSearch.setOnClickListener {
             etAdderBookTitleSearch.setText(Constants.EMPTY_STRING)
             ivClearTitleSearch.visibility = View.GONE
+
+            etAdderBookTitleSearch.requestFocus()
+            showKeyboard(etAdderBookTitleSearch, 50)
         }
 
         btnFilterLanguage.setOnClickListener {

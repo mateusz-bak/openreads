@@ -6,6 +6,7 @@ import android.view.KeyEvent
 import android.view.View
 import android.view.animation.AnimationUtils
 import android.view.inputmethod.InputMethodManager
+import android.widget.EditText
 import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
@@ -247,14 +248,14 @@ class ReadFragment : Fragment(R.layout.fragment_read) {
                     ivClearSearch.visibility = View.VISIBLE
                     ivClearSearch.isClickable = true
                     etSearch.requestFocus()
-                    it.showKeyboard()
+                    showKeyboard(etSearch, 50)
                 }
                 View.INVISIBLE -> {
                     etSearch.visibility = View.VISIBLE
                     ivClearSearch.visibility = View.VISIBLE
                     ivClearSearch.isClickable = true
                     etSearch.requestFocus()
-                    it.showKeyboard()
+                    showKeyboard(etSearch, 50)
                 }
             }
         }
@@ -286,6 +287,9 @@ class ReadFragment : Fragment(R.layout.fragment_read) {
         ivClearSearch.setOnClickListener {
             when (etSearch.text.isEmpty()) {
                 false -> {
+                    etSearch.requestFocus()
+                    showKeyboard(etSearch, 50)
+
                     etSearch.setText(Constants.EMPTY_STRING)
                     viewModel.searchBooks(etSearch.text.toString()).observe(viewLifecycleOwner, Observer { some_books ->
                         bookAdapter.differ.submitList(some_books)
@@ -434,5 +438,16 @@ class ReadFragment : Fragment(R.layout.fragment_read) {
                 }
             }
             )
+    }
+
+    private fun showKeyboard(et: EditText, delay: Long) {
+        val timer = Timer()
+        timer.schedule(object : TimerTask() {
+            override fun run() {
+                val inputManager =
+                    context?.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+                inputManager.showSoftInput(et, 0)
+            }
+        }, delay)
     }
 }
