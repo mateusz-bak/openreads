@@ -58,6 +58,10 @@ class SetupAdapter(
                 holder.itemView.apply {
                     ivSetupImage.setImageResource(images[position])
 
+                    val param = ivSetupImage.layoutParams as ViewGroup.MarginLayoutParams
+                    param.setMargins(75,0,0,0)
+                    ivSetupImage.layoutParams = param
+
                     tvSetupText.text = resources.getText(R.string.tvWelcomeText_1)
                     tvSetupVersion.visibility = View.INVISIBLE
 
