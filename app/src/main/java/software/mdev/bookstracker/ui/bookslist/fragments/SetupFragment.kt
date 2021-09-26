@@ -45,6 +45,7 @@ class SetupFragment : Fragment(R.layout.fragment_setup) {
             R.drawable.ic_svg_books,
             R.drawable.ic_svg_study,
             R.drawable.ic_svg_presentation,
+            R.drawable.ic_svg_code,
             0,
             R.drawable.ic_svg_like
         )
@@ -103,13 +104,22 @@ class SetupFragment : Fragment(R.layout.fragment_setup) {
                     3 -> {
                         selectIndicator(ivPosition3, 0)
 
+                        fabLaunchApp.visibility = View.INVISIBLE
+                        fabLaunchApp.scaleX = 0F
+                        fabLaunchApp.scaleY = 0F
+
+                        vpSetup.isUserInputEnabled = true
+                    }
+                    4 -> {
+                        selectIndicator(ivPosition4, 0)
+
                         fabLaunchApp.animate().setDuration(250L).scaleX(0F).start()
                         fabLaunchApp.animate().setDuration(250L).scaleY(0F).start()
 
                         vpSetup.isUserInputEnabled = false
                     }
-                    4 -> {
-                        selectIndicator(ivPosition4, 0)
+                    5 -> {
+                        selectIndicator(ivPosition5, 0)
 
                         fabLaunchApp.scaleX = 0F
                         fabLaunchApp.scaleY = 0F
@@ -143,7 +153,8 @@ class SetupFragment : Fragment(R.layout.fragment_setup) {
             ivPosition1,
             ivPosition2,
             ivPosition3,
-            ivPosition4
+            ivPosition4,
+            ivPosition5
         )
 
         for (indicator in listOfIndicators) {

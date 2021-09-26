@@ -89,14 +89,6 @@
         </Preference>
 
         <Preference
-            android:title="@string/app_developer_title"
-            android:summary="@string/app_developer" >
-            <intent
-                android:action="android.intent.action.VIEW"
-                android:data="@string/ivAuthorUrl" />
-        </Preference>
-
-        <Preference
             android:title="@string/rate_app_title"
             android:summary="@string/rate_app" >
             <intent

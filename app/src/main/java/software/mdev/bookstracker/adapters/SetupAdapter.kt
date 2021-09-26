@@ -11,6 +11,7 @@ import software.mdev.bookstracker.R
 import software.mdev.bookstracker.other.Constants
 import software.mdev.bookstracker.ui.bookslist.ListActivity
 import androidx.core.content.ContextCompat
+import androidx.core.view.marginStart
 import androidx.viewpager2.widget.ViewPager2
 import kotlinx.coroutines.*
 
@@ -41,6 +42,7 @@ class SetupAdapter(
                     ivSetupImage.setImageResource(images[position])
 
                     tvSetupText.text = resources.getText(R.string.tvWelcomeText_0)
+                    tvSetupText.textSize = 20F
                     tvSetupVersion.visibility = View.VISIBLE
 
                     ivSwipeHint1.visibility = View.INVISIBLE
@@ -82,6 +84,24 @@ class SetupAdapter(
                 }
             }
             3 -> {
+                holder.itemView.apply {
+                    ivSetupImage.setImageResource(images[position])
+
+                    val param = ivSetupImage.layoutParams as ViewGroup.MarginLayoutParams
+                    param.setMargins(150,0,0,0)
+                    ivSetupImage.layoutParams = param
+
+                    tvSetupText.text = resources.getText(R.string.tvWelcomeText_3)
+                    tvSetupVersion.visibility = View.INVISIBLE
+
+                    ivSwipeHint1.visibility = View.INVISIBLE
+                    ivSwipeHint2.visibility = View.INVISIBLE
+                    tvSetupSwipeHint.visibility = View.INVISIBLE
+
+                    triggerHintArrows(holder, position)
+                }
+            }
+            4 -> {
                 holder.itemView.apply {
                     ivSetupImage.visibility = View.GONE
 
@@ -144,11 +164,12 @@ class SetupAdapter(
                     }
                 }
             }
-            4 -> {
+            5 -> {
                 holder.itemView.apply {
                     ivSetupImage.setImageResource(images[position])
 
-                    tvSetupText.text = resources.getText(R.string.tvWelcomeText_3)
+                    tvSetupText.text = resources.getText(R.string.tvWelcomeText_5)
+                    tvSetupText.textSize = 20F
                     tvSetupVersion.visibility = View.INVISIBLE
 
                     ivSwipeHint1.visibility = View.INVISIBLE
