@@ -451,6 +451,9 @@ class AddBookDialog(context: Context, var addBookDialogListener: AddBookDialogLi
                 btnSetFinishDate.isClickable = false
                 tvSetFinishDate.visibility = View.GONE
                 ivClearFinishDate.visibility = View.GONE
+
+                rbAdderRating.visibility = View.GONE
+                tvRateThisBook.visibility = View.GONE
             } else {
                 btnSetFinishDate.visibility = View.VISIBLE
                 btnSetFinishDate.isClickable = true
@@ -501,6 +504,9 @@ class AddBookDialog(context: Context, var addBookDialogListener: AddBookDialogLi
                 btnSetFinishDate.isClickable = false
                 tvSetFinishDate.visibility = View.GONE
                 ivClearFinishDate.visibility = View.GONE
+
+                rbAdderRating.visibility = View.GONE
+                tvRateThisBook.visibility = View.GONE
             } else {
                 btnSetFinishDate.visibility = View.VISIBLE
                 btnSetFinishDate.isClickable = true
