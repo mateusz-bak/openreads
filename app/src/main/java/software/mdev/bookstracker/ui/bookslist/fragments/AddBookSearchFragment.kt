@@ -20,6 +20,7 @@ import java.text.SimpleDateFormat
 import java.util.*
 import androidx.lifecycle.Observer
 import androidx.lifecycle.lifecycleScope
+import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
 import kotlinx.coroutines.*
 import me.everything.android.ui.overscroll.OverScrollDecoratorHelper
@@ -30,6 +31,9 @@ import software.mdev.bookstracker.data.db.entities.Language
 import software.mdev.bookstracker.other.Resource
 import software.mdev.bookstracker.ui.bookslist.dialogs.*
 import kotlin.collections.ArrayList
+import android.view.inputmethod.EditorInfo
+import android.widget.TextView
+import android.widget.TextView.OnEditorActionListener
 
 
 class AddBookSearchFragment : Fragment(R.layout.fragment_add_book_search) {
@@ -48,23 +52,58 @@ class AddBookSearchFragment : Fragment(R.layout.fragment_add_book_search) {
     private var hideProgressBarJob: Job? = null
     private var filterBooksByLanguage: Job? = null
 
+    private val args: AddBookSearchFragmentArgs by navArgs()
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         viewModel = (activity as ListActivity).booksViewModel
         listActivity = activity as ListActivity
 
-        val sharedPref = (activity as ListActivity).getSharedPreferences(Constants.SHARED_PREFERENCES_NAME, Context.MODE_PRIVATE)
+        val isbn = args.isbn
+
+        var sharedPreferencesName = (activity as ListActivity).getString(R.string.shared_preferences_name)
+        val sharedPref = (activity as ListActivity).getSharedPreferences(sharedPreferencesName, Context.MODE_PRIVATE)
         val editor = sharedPref.edit()
 
         rvLanguages.visibility = View.GONE
 
-        etAdderBookTitleSearch.requestFocus()
-        showKeyboard(etAdderBookTitleSearch, 350)
+        if (isbn == "manual_search") {
+            etAdderBookTitleSearch.requestFocus()
+            showKeyboard(etAdderBookTitleSearch, 350)
+        } else {
+            etAdderBookTitleSearch.setText(isbn)
+
+            searchQueryJob?.cancel()
+            searchQueryAutoJob?.cancel()
+            searchByOLIDJob?.cancel()
+            searchAuthorJob?.cancel()
+            var editable = etAdderBookTitleSearch.text.toString()
+
+            viewModel.openLibrarySearchResult.value = null
+            viewModel.openLibraryBooksByOLID.value = null
+
+            searchQueryJob?.cancel()
+            searchQueryAutoJob?.cancel()
+            searchByOLIDJob?.cancel()
+            searchAuthorJob?.cancel()
+
+            searchQueryJob = MainScope().launch {
+
+                editable?.let {
+                    if (editable.isNotEmpty()) {
+                        if (editable.last().toString() == " ")
+                            editable.dropLast(1)
+                        viewModel.searchBooksInOpenLibrary(editable, context)
+                    }
+                }
+            }
+        }
 
         setupRvLanguages()
         setupRvFoundBooks()
 
-        if (sharedPref.getBoolean(Constants.SHARED_PREFERENCES_KEY_SHOW_OL_ALERT, true)) {
+        if (sharedPref.getBoolean(Constants.SHARED_PREFERENCES_KEY_SHOW_OL_ALERT, true)
+            && isbn == "manual_search") {
             AlertDialog(
                 view,
                 object : AlertDialogListener {
@@ -94,6 +133,9 @@ class AddBookSearchFragment : Fragment(R.layout.fragment_add_book_search) {
         ivClearTitleSearch.setOnClickListener {
             etAdderBookTitleSearch.setText(Constants.EMPTY_STRING)
             ivClearTitleSearch.visibility = View.GONE
+
+            etAdderBookTitleSearch.requestFocus()
+            showKeyboard(etAdderBookTitleSearch, 50)
         }
 
         btnFilterLanguage.setOnClickListener {
@@ -367,6 +409,43 @@ class AddBookSearchFragment : Fragment(R.layout.fragment_add_book_search) {
                     }
                 }
             ).show()
+        }
+
+        etAdderBookTitleSearch.setOnEditorActionListener(OnEditorActionListener { v, actionId, event ->
+            if (actionId == EditorInfo.IME_ACTION_SEARCH) {
+                performSearch(v)
+                return@OnEditorActionListener true
+            }
+            false
+        })
+    }
+
+    private fun performSearch(v: TextView) {
+        v.hideKeyboard()
+
+        searchQueryJob?.cancel()
+        searchQueryAutoJob?.cancel()
+        searchByOLIDJob?.cancel()
+        searchAuthorJob?.cancel()
+        var editable = etAdderBookTitleSearch.text.toString()
+
+        viewModel.openLibrarySearchResult.value = null
+        viewModel.openLibraryBooksByOLID.value = null
+
+        searchQueryJob?.cancel()
+        searchQueryAutoJob?.cancel()
+        searchByOLIDJob?.cancel()
+        searchAuthorJob?.cancel()
+
+        searchQueryJob = MainScope().launch {
+
+            editable?.let {
+                if (editable.isNotEmpty()) {
+                    if (editable.last().toString() == " ")
+                        editable.dropLast(1)
+                    viewModel.searchBooksInOpenLibrary(editable, context)
+                }
+            }
         }
     }
 

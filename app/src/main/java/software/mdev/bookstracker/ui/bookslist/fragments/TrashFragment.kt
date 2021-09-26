@@ -37,10 +37,8 @@ class TrashFragment : Fragment(R.layout.fragment_trash) {
         super.onViewCreated(view, savedInstanceState)
         viewModel = (activity as ListActivity).booksViewModel
 
-        val sharedPref = (activity as ListActivity).getSharedPreferences(
-            Constants.SHARED_PREFERENCES_NAME,
-            Context.MODE_PRIVATE
-        )
+        var sharedPreferencesName = (activity as ListActivity).getString(R.string.shared_preferences_name)
+        val sharedPref = (activity as ListActivity).getSharedPreferences(sharedPreferencesName, Context.MODE_PRIVATE)
         val editor = sharedPref.edit()
 
         view.hideKeyboard()

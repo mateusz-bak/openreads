@@ -1,16 +1,28 @@
 # books-tracker-android   
+
+
+<p align='center'>  
+ <img src='doc/images/github-banner.png' width='100%'/>
+</p>
+
 [![Build Status](https://git-drone.mateusz.ovh/api/badges/mateusz-bak/books-tracker-android/status.svg)](https://git-drone.mateusz.ovh/mateusz-bak/books-tracker-android)  
 [![GitHub tag (latest by date)](https://img.shields.io/github/v/tag/mateusz-bak/books-tracker-android?label=latest%20version)](https://github.com/mateusz-bak/books-tracker-android/releases/latest)
 
+<br/><br/>
 ### An Android app written in Kotlin for keeping tracks of your books.  
 #### There are three lists provided so you won't get confused:  
 - books you finished,  
 - books you are currently reading,  
 - books you want to read later.
 
- You can also see come cool statistics!  
- 
+#### The books can be added by:
+- looking up in Open Library database,
+- scanning book's barcode,
+- adding book's details manually.
 
+####  You can also see come cool statistics!  
+
+<br/><br/>
 ## Screenshots  
 <p align='center'>  
  <img src='doc/images/screenshot-finished.png' width='30%'/>  
@@ -26,7 +38,7 @@
  <img src='doc/images/screenshot-add-book-manual.png' width='30%'/>
 </p>  
 
-
+<br/><br/>
 ## Build Process
 
 ### Dependencies
@@ -55,7 +67,8 @@
    ```
 
 *You can also replace the "Debug" with "Release" to get an optimized release binary.*
-  
+
+<br/><br/>
 ## Attributions
 
 ### Contributors
@@ -77,3 +90,4 @@
 
 [photo3idea_studio](https://www.flaticon.com/authors/photo3idea-studio "photo3idea_studio") from [www.flaticon.com](https://www.flaticon.com/ "Flaticon")
 
+[Vaadin](https://vaadin.com/font-icons "Vaadin") from [www.flaticon.com](https://www.flaticon.com/ "Flaticon")

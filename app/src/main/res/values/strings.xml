@@ -1,6 +1,5 @@
 <resources>
-    <string name="app_name" translatable="false">Books Tracker</string>
-    <string name="app_version" translatable="false">v1.5.1</string>
+    <string name="app_version" translatable="false">v1.6.0</string>
     <string name="ivAuthorUrl">https://github.com/mateusz-bak/</string>
     <!-- Images descriptions -->
     <string name="ivBookStatusSetRead">Set book as finished</string>
@@ -141,7 +140,9 @@
     <string name="tvPagesRead" translatable="false">999999</string>
     <string name="tvWelcomeText_1">It will help you keep track of your books</string>
     <string name="tvWelcomeText_2">You will also see some cool statistics</string>
-    <string name="tvWelcomeText_3">Enjoy and keep reading!</string>
+    <string name="tvWelcomeText_3">"Books Tracker is completely open source!\n\nIt means that you can inspect the app's code on your own and contribute to it's development.\n\nAs a bonus you get zero ads and absolutely no tracking!"</string>
+    <string name="tvWelcomeText_4">Now choose theme color for the app</string>
+    <string name="tvWelcomeText_5">Enjoy and keep reading!</string>
     <string name="tvSetupSwipeHint_0">Swipe left</string>
     <string name="tvSetupSwipeHint_1">Click the arrow</string>
     <string name="tvAvgRatingTitle">Average rating</string>
@@ -172,7 +173,7 @@
     <string name="click_edit_button_to_edit_pages">Click edit button to change book\'s number of pages</string>
     <string name="btnAddSearch">"Search in\nOpen Library"</string>
     <string name="btnAddManual">"Add\nmanually"</string>
-    <string name="etAdderBookTitleSearch">Type title to search…</string>
+    <string name="etAdderBookTitleSearch">Title, author, isbn...</string>
     <string name="fabAddNewBook">Add new book</string>
     <string name="fabCancelAddingNewBook">Cancel adding new book</string>
     <string name="unknown_author">No author</string>
@@ -210,7 +211,6 @@
     <string name="hint_isbn13" translatable="false">ISBN 13</string>
     <string name="tv_cover_missing">"Cover missing"</string>
     <string name="set">set</string>
-    <string name="tvWelcomeText_4">Now choose theme color for the app</string>
     <string name="unknown_title">No title</string>
     <string name="unknown_language">No language</string>
     <string name="unknown_isbn">No ISBN</string>
@@ -222,5 +222,32 @@
     <string name="warning_delete_book_message">Do you really want to delete this book?</string>
     <string name="warning_delete_book_delete">delete</string>
     <string name="warning_delete_book_cancel">back</string>
-
+    <string name="export_title">Create backup</string>
+    <string name="export_summary">Save your books to the cloud so they won\'t go anywhere! You can save the backup file to your cloud app (Nextcloud, Google Drive, OneDrive, Dropbox, Mega, Proton Drive)</string>
+    <string name="import_title">Restore backup</string>
+    <string name="import_summary">Load your books from a local file on your phone. You may need to grant storage permissions for the app.</string>
+    <string name="backup_title">Backup</string>
+    <string name="backup_summary">Backup or restore your books</string>
+    <string name="restoreBackup_title">Found backups:</string>
+    <string name="backup_success">Backup successfully created!</string>
+    <string name="backup_failure">Backup creation failed!</string>
+    <string name="no_backups_found">No backups found in Backup/BooksTracker</string>
+    <string name="api_29_not_yet_supported">API 29 not yet supported</string>
+    <string name="api_30_not_yet_supported">API 30 not yet supported</string>
+    <string name="backup_import_invalid_file">Import failed. The chosen file is not a valid Books Tracker backup!</string>
+    <string name="backup_import_success">Import completed!</string>
+    <string name="backup_import_failure">Import failed. Did you choose the file correctly?</string>
+    <string name="rate_app_title">Rate the app</string>
+    <string name="rate_app">Do you like Books Tracker? Take a moment to rate it. Click here</string>
+    <string name="app_market_url" translatable="false">market://details?id=software.mdev.bookstracker</string>
+    <string name="contact_title">Contact me</string>
+    <string name="dev_email" translatable="false">mateusz.bak.dev@gmail.com</string>
+    <string name="dev_mailto" translatable="false">mailto:mateusz.bak.dev@gmail.com</string>
+    <string name="restore_backup_warning_title">Watch out!</string>
+    <string name="restore_backup_warning_message">Restoring a backup will overwrite the books you currently have. Remember to have a backup of those.</string>
+    <string name="warning_understand">I understand</string>
+    <string name="warning_take_me_back">Take me back!</string>
+    <string name="tv_less_about_book">Less</string>
+    <string name="btnAddScan">Scan barcode</string>
+    <string name="tbScannerTip">Scan a barcode</string>
 </resources>

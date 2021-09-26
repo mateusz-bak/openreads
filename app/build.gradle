@@ -15,8 +15,8 @@ android {
         applicationId "software.mdev.bookstracker"
         minSdkVersion 24
         targetSdkVersion 30
-        versionCode 7
-        versionName "1.5.1"
+        versionCode 8
+        versionName "1.6.0"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
 
@@ -27,6 +27,21 @@ android {
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+            resValue "string", "app_name", "Books Tracker"
+            resValue "string", "shared_preferences_name", "software.mdev.bookstracker_preferences"
+            manifestPlaceholders = [
+                    appIcon: "@mipmap/ic_launcher_three_books",
+                    appIconRound: "@mipmap/ic_launcher_three_books_round"
+            ]
+        }
+        debug {
+            applicationIdSuffix ".debug"
+            resValue "string", "app_name", "Books Tracker debug"
+            resValue "string", "shared_preferences_name", "software.mdev.bookstracker.debug_preferences"
+            manifestPlaceholders = [
+                    appIcon: "@mipmap/ic_launcher_three_books_debug",
+                    appIconRound: "@mipmap/ic_launcher_three_books_debug"
+            ]
         }
     }
 
@@ -108,4 +123,7 @@ dependencies {
     implementation 'com.squareup.picasso:picasso:2.8'
 
     implementation 'androidx.cardview:cardview:1.0.0'
+
+    // https://github.com/yuriy-budiyev/code-scanner
+    implementation 'com.budiyev.android:code-scanner:2.1.0'
 }

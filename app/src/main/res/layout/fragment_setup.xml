@@ -64,10 +64,7 @@
         android:layout_height="wrap_content"
         android:scaleX="0.3"
         android:scaleY="0.3"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toEndOf="@+id/ivPosition1"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/guideline1"
         app:layout_constraintTop_toTopOf="@+id/ivPosition1"
         app:srcCompat="@drawable/ic_baseline_circle_24"
         app:tint="@color/grey_300" />
@@ -79,7 +76,7 @@
         android:layout_height="wrap_content"
         android:scaleX="0.3"
         android:scaleY="0.3"
-        app:layout_constraintStart_toEndOf="@+id/ivPosition2"
+        app:layout_constraintStart_toStartOf="@+id/guideline1"
         app:layout_constraintTop_toTopOf="@+id/ivPosition2"
         app:srcCompat="@drawable/ic_baseline_circle_24"
         app:tint="@color/grey_300" />
@@ -96,5 +93,22 @@
         app:srcCompat="@drawable/ic_baseline_circle_24"
         app:tint="@color/grey_300" />
 
+    <ImageView
+        android:id="@+id/ivPosition5"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:scaleX="0.3"
+        android:scaleY="0.3"
+        app:layout_constraintStart_toEndOf="@+id/ivPosition4"
+        app:layout_constraintTop_toTopOf="@+id/ivPosition3"
+        app:srcCompat="@drawable/ic_baseline_circle_24"
+        app:tint="@color/grey_300" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.5" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -97,7 +97,7 @@ class EditBookFragment : Fragment(R.layout.fragment_edit_book) {
 
         if(book.bookFinishDate == "none" || book.bookFinishDate == "null") {
             btnEditFinishDate.text = getString(R.string.set)
-            ivClearFinishDate.visibility = View.GONE
+            ivClearFinishDate.visibility = View.INVISIBLE
         } else {
             var bookFinishTimeStampLong = book.bookFinishDate.toLong()
             btnEditFinishDate.text = convertLongToTime(bookFinishTimeStampLong)
@@ -106,7 +106,7 @@ class EditBookFragment : Fragment(R.layout.fragment_edit_book) {
 
         if(book.bookStartDate == "none" || book.bookStartDate == "null") {
             btnEditStartDate.text = getString(R.string.set)
-            ivClearStartDate.visibility = View.GONE
+            ivClearStartDate.visibility = View.INVISIBLE
         } else {
             var bookStartTimeStampLong = book.bookStartDate.toLong()
             btnEditStartDate.text = convertLongToTime(bookStartTimeStampLong)
@@ -220,7 +220,7 @@ class EditBookFragment : Fragment(R.layout.fragment_edit_book) {
             tvDateStartedTitle.visibility = View.VISIBLE
             btnEditStartDate.visibility = View.VISIBLE
 
-            ivClearFinishDate.visibility = View.GONE
+            ivClearFinishDate.visibility = View.INVISIBLE
 
             if (bookStartDateMs != null)
                 ivClearStartDate.visibility = View.VISIBLE
@@ -241,8 +241,8 @@ class EditBookFragment : Fragment(R.layout.fragment_edit_book) {
             tvDateStartedTitle.visibility = View.GONE
             tvDateFinishedTitle.visibility = View.GONE
 
-            ivClearStartDate.visibility = View.GONE
-            ivClearFinishDate.visibility = View.GONE
+            ivClearStartDate.visibility = View.INVISIBLE
+            ivClearFinishDate.visibility = View.INVISIBLE
         }
 
         btnEditFinishDate.setOnClickListener {
@@ -283,8 +283,8 @@ class EditBookFragment : Fragment(R.layout.fragment_edit_book) {
             tvEditedISBN10.visibility = View.GONE
             tvEditedISBN13.visibility = View.GONE
 
-            ivClearStartDate.visibility = View.GONE
-            ivClearFinishDate.visibility = View.GONE
+            ivClearStartDate.visibility = View.INVISIBLE
+            ivClearFinishDate.visibility = View.INVISIBLE
         }
 
         btnEditorSaveFinishDate.setOnClickListener {
@@ -413,8 +413,8 @@ class EditBookFragment : Fragment(R.layout.fragment_edit_book) {
             tvEditedISBN10.visibility = View.GONE
             tvEditedISBN13.visibility = View.GONE
 
-            ivClearStartDate.visibility = View.GONE
-            ivClearFinishDate.visibility = View.GONE
+            ivClearStartDate.visibility = View.INVISIBLE
+            ivClearFinishDate.visibility = View.INVISIBLE
         }
 
         btnEditorSaveStartDate.setOnClickListener {
@@ -520,7 +520,7 @@ class EditBookFragment : Fragment(R.layout.fragment_edit_book) {
 
         ivClearFinishDate.setOnClickListener {
             bookFinishDateMs = null
-            ivClearFinishDate.visibility = View.GONE
+            ivClearFinishDate.visibility = View.INVISIBLE
             btnEditFinishDate.text = getString(R.string.set)
         }
 
@@ -660,7 +660,7 @@ class EditBookFragment : Fragment(R.layout.fragment_edit_book) {
                     .setTitle(R.string.warning_delete_book_title)
                     .setMessage(R.string.warning_delete_book_message)
                     .setIcon(R.drawable.ic_baseline_warning_amber_24)
-                    .setNegativeButton(R.string.warning_delete_book_delete) { _, _ ->
+                    .setPositiveButton(R.string.warning_delete_book_delete) { _, _ ->
                         viewModel.updateBook(
                             book.id,
                             book.bookTitle,
@@ -685,16 +685,13 @@ class EditBookFragment : Fragment(R.layout.fragment_edit_book) {
                             .setAction(getString(R.string.undo), UndoBookDeletion())
                             .show()
                     }
-                    .setPositiveButton(R.string.warning_delete_book_cancel) { _, _ ->
+                    .setNegativeButton(R.string.warning_delete_book_cancel) { _, _ ->
                     }
                     .create()
             }
 
             deleteBookWarningDialog?.show()
-            if (this.context !=null && deleteBookWarningDialog?.getButton(AlertDialog.BUTTON_POSITIVE) != null) {
-                deleteBookWarningDialog?.getButton(AlertDialog.BUTTON_POSITIVE)!!.setBackgroundColor(getAccentColor(this.requireContext()))
-                deleteBookWarningDialog?.getButton(AlertDialog.BUTTON_POSITIVE)!!.setTextColor(ContextCompat.getColor(this.requireContext(),R.color.design_default_color_on_primary))
-            }
+            deleteBookWarningDialog?.getButton(AlertDialog.BUTTON_NEGATIVE)?.setTextColor(ContextCompat.getColor(listActivity.baseContext, R.color.grey_500))
         }
     }
 
@@ -736,7 +733,8 @@ class EditBookFragment : Fragment(R.layout.fragment_edit_book) {
     fun getAccentColor(context: Context): Int {
         var accentColor = ContextCompat.getColor(context, R.color.green_500)
 
-        val sharedPref = (activity as ListActivity).getSharedPreferences(Constants.SHARED_PREFERENCES_NAME, Context.MODE_PRIVATE)
+        var sharedPreferencesName = context.getString(R.string.shared_preferences_name)
+        val sharedPref = context.getSharedPreferences(sharedPreferencesName, Context.MODE_PRIVATE)
 
         var accent = sharedPref.getString(Constants.SHARED_PREFERENCES_KEY_ACCENT, Constants.THEME_ACCENT_DEFAULT).toString()
 

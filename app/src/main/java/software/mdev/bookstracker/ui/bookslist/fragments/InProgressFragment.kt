@@ -6,6 +6,7 @@ import android.view.KeyEvent
 import android.view.View
 import android.view.animation.AnimationUtils
 import android.view.inputmethod.InputMethodManager
+import android.widget.EditText
 import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
@@ -48,7 +49,8 @@ class InProgressFragment : Fragment(R.layout.fragment_in_progress) {
         super.onViewCreated(view, savedInstanceState)
         viewModel = (activity as ListActivity).booksViewModel
 
-        val sharedPref = (activity as ListActivity).getSharedPreferences(Constants.SHARED_PREFERENCES_NAME, Context.MODE_PRIVATE)
+        var sharedPreferencesName = (activity as ListActivity).getString(R.string.shared_preferences_name)
+        val sharedPref = (activity as ListActivity).getSharedPreferences(sharedPreferencesName, Context.MODE_PRIVATE)
         val editor = sharedPref.edit()
 
         etSearch.visibility = View.GONE
@@ -56,9 +58,11 @@ class InProgressFragment : Fragment(R.layout.fragment_in_progress) {
         tvLooksEmpty.visibility = View.GONE
         btnAddManual.visibility = View.GONE
         btnAddSearch.visibility = View.GONE
+        btnAddScan.visibility = View.GONE
         ivClearSearch.isClickable = false
         btnAddManual.isClickable = false
         btnAddSearch.isClickable = false
+        btnAddScan.isClickable = false
         view.hideKeyboard()
 
         val database = BooksDatabase(view.context)
@@ -103,14 +107,7 @@ class InProgressFragment : Fragment(R.layout.fragment_in_progress) {
         })
 
         btnAddManual.setOnClickListener{
-            btnAddManual.visibility = View.GONE
-            btnAddSearch.visibility = View.GONE
-            btnAddManual.isClickable = false
-            btnAddSearch.isClickable = false
-
-            fabAddBook.animate().rotation( 0F).setDuration(350L).start()
-            btnAddSearch.startAnimation(AnimationUtils.loadAnimation(context,R.anim.slide_out_down))
-            btnAddManual.startAnimation(AnimationUtils.loadAnimation(context,R.anim.slide_out_down))
+            hideAddOptionButtons()
 
             AddBookDialog(view.context,
                 object: AddBookDialogListener {
@@ -134,46 +131,40 @@ class InProgressFragment : Fragment(R.layout.fragment_in_progress) {
 
         fabAddBook.setOnClickListener {
             if (btnAddManual.visibility == View.GONE) {
-                btnAddManual.visibility = View.VISIBLE
-                btnAddSearch.visibility = View.VISIBLE
-                btnAddManual.isClickable = true
-                btnAddSearch.isClickable = true
-
-                fabAddBook.animate().rotation(180F).setDuration(350L).start()
-                btnAddSearch.startAnimation(AnimationUtils.loadAnimation(context,R.anim.slide_in_up))
-                btnAddManual.startAnimation(AnimationUtils.loadAnimation(context,R.anim.slide_in_up))
+                showAddOptionButtons()
             }
             else {
-                btnAddManual.visibility = View.GONE
-                btnAddSearch.visibility = View.GONE
-                btnAddManual.isClickable = false
-                btnAddSearch.isClickable = false
-
-                fabAddBook.animate().rotation(0F).setDuration(350L).start()
-                btnAddSearch.startAnimation(AnimationUtils.loadAnimation(context,R.anim.slide_out_down))
-                btnAddManual.startAnimation(AnimationUtils.loadAnimation(context,R.anim.slide_out_down))
+                hideAddOptionButtons()
             }
         }
 
         btnAddSearch.setOnClickListener {
-            btnAddManual.visibility = View.GONE
-            btnAddSearch.visibility = View.GONE
-            btnAddManual.isClickable = false
-            btnAddSearch.isClickable = false
-
-            fabAddBook.animate().rotation( 0F).setDuration(350L).start()
-            btnAddSearch.startAnimation(AnimationUtils.loadAnimation(context,R.anim.slide_out_down))
-            btnAddManual.startAnimation(AnimationUtils.loadAnimation(context,R.anim.slide_out_down))
+            hideAddOptionButtons()
 
             findNavController().navigate(
                 R.id.action_inProgressFragment_to_addBookSearchFragment)
         }
 
+        btnAddScan.setOnClickListener {
+            hideAddOptionButtons()
+
+            if (Functions().checkPermission(activity as ListActivity, android.Manifest.permission.CAMERA)) {
+                findNavController().navigate(R.id.action_inProgressFragment_to_addBookScanFragment)
+            } else {
+                Functions().requestPermission(
+                    activity as ListActivity,
+                    android.Manifest.permission.CAMERA,
+                    Constants.PERMISSION_CAMERA_FROM_LIST_2)
+            }
+        }
+
         rvBooks.setOnClickListener {
             btnAddManual.visibility = View.GONE
             btnAddSearch.visibility = View.GONE
+            btnAddScan.visibility = View.GONE
             btnAddManual.isClickable = false
             btnAddSearch.isClickable = false
+            btnAddScan.isClickable = false
 
             fabAddBook.animate().rotation( 0F).setDuration(350L).start()
         }
@@ -225,14 +216,14 @@ class InProgressFragment : Fragment(R.layout.fragment_in_progress) {
                     ivClearSearch.visibility = View.VISIBLE
                     ivClearSearch.isClickable = true
                     etSearch.requestFocus()
-                    it.showKeyboard()
+                    showKeyboard(etSearch, 50)
                 }
                 View.INVISIBLE -> {
                     etSearch.visibility = View.VISIBLE
                     ivClearSearch.visibility = View.VISIBLE
                     ivClearSearch.isClickable = true
                     etSearch.requestFocus()
-                    it.showKeyboard()
+                    showKeyboard(etSearch, 50)
                 }
             }
         }
@@ -264,6 +255,9 @@ class InProgressFragment : Fragment(R.layout.fragment_in_progress) {
         ivClearSearch.setOnClickListener {
             when (etSearch.text.isEmpty()) {
                 false -> {
+                    etSearch.requestFocus()
+                    showKeyboard(etSearch, 50)
+
                     etSearch.setText(Constants.EMPTY_STRING)
                     viewModel.searchBooks(etSearch.text.toString()).observe(viewLifecycleOwner, Observer { some_books ->
                         bookAdapter.differ.submitList(some_books)
@@ -285,6 +279,34 @@ class InProgressFragment : Fragment(R.layout.fragment_in_progress) {
         }
     }
 
+    private fun hideAddOptionButtons() {
+        btnAddManual.visibility = View.GONE
+        btnAddSearch.visibility = View.GONE
+        btnAddScan.visibility = View.GONE
+        btnAddManual.isClickable = false
+        btnAddSearch.isClickable = false
+        btnAddScan.isClickable = false
+
+        fabAddBook.animate().rotation( 0F).setDuration(350L).start()
+        btnAddSearch.startAnimation(AnimationUtils.loadAnimation(context,R.anim.slide_out_down))
+        btnAddScan.startAnimation(AnimationUtils.loadAnimation(context,R.anim.slide_out_down))
+        btnAddManual.startAnimation(AnimationUtils.loadAnimation(context,R.anim.slide_out_down))
+    }
+
+    private fun showAddOptionButtons() {
+        btnAddManual.visibility = View.VISIBLE
+        btnAddSearch.visibility = View.VISIBLE
+        btnAddScan.visibility = View.VISIBLE
+        btnAddManual.isClickable = true
+        btnAddSearch.isClickable = true
+        btnAddScan.isClickable = true
+
+        fabAddBook.animate().rotation(180F).setDuration(350L).start()
+        btnAddSearch.startAnimation(AnimationUtils.loadAnimation(context,R.anim.slide_in_up))
+        btnAddScan.startAnimation(AnimationUtils.loadAnimation(context,R.anim.slide_in_up))
+        btnAddManual.startAnimation(AnimationUtils.loadAnimation(context,R.anim.slide_in_up))
+    }
+
     fun View.hideKeyboard() {
         val inputManager = context.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
         inputManager.hideSoftInputFromWindow(windowToken, 0)
@@ -296,7 +318,8 @@ class InProgressFragment : Fragment(R.layout.fragment_in_progress) {
     }
 
     private fun getBooks(bookAdapter: BookAdapter) {
-        val sharedPref = (activity as ListActivity).getSharedPreferences(Constants.SHARED_PREFERENCES_NAME, Context.MODE_PRIVATE)
+        var sharedPreferencesName = (activity as ListActivity).getString(R.string.shared_preferences_name)
+        val sharedPref = (activity as ListActivity).getSharedPreferences(sharedPreferencesName, Context.MODE_PRIVATE)
         when(sharedPref.getString(Constants.SHARED_PREFERENCES_KEY_SORT_ORDER, Constants.SORT_ORDER_TITLE_ASC)) {
             Constants.SORT_ORDER_TITLE_DESC -> viewModel.getSortedBooksByTitleDesc(currentFragment).observe(viewLifecycleOwner, Observer { some_books ->
                 bookAdapter.differ.submitList(some_books)
@@ -346,5 +369,16 @@ class InProgressFragment : Fragment(R.layout.fragment_in_progress) {
                 }
             }
             )
+    }
+
+    private fun showKeyboard(et: EditText, delay: Long) {
+        val timer = Timer()
+        timer.schedule(object : TimerTask() {
+            override fun run() {
+                val inputManager =
+                    context?.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+                inputManager.showSoftInput(et, 0)
+            }
+        }, delay)
     }
 }

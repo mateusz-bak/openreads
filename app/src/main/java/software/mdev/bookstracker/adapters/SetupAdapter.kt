@@ -11,6 +11,7 @@ import software.mdev.bookstracker.R
 import software.mdev.bookstracker.other.Constants
 import software.mdev.bookstracker.ui.bookslist.ListActivity
 import androidx.core.content.ContextCompat
+import androidx.core.view.marginStart
 import androidx.viewpager2.widget.ViewPager2
 import kotlinx.coroutines.*
 
@@ -41,6 +42,7 @@ class SetupAdapter(
                     ivSetupImage.setImageResource(images[position])
 
                     tvSetupText.text = resources.getText(R.string.tvWelcomeText_0)
+                    tvSetupText.textSize = 20F
                     tvSetupVersion.visibility = View.VISIBLE
 
                     ivSwipeHint1.visibility = View.INVISIBLE
@@ -55,6 +57,10 @@ class SetupAdapter(
             1 -> {
                 holder.itemView.apply {
                     ivSetupImage.setImageResource(images[position])
+
+                    val param = ivSetupImage.layoutParams as ViewGroup.MarginLayoutParams
+                    param.setMargins(75,0,0,0)
+                    ivSetupImage.layoutParams = param
 
                     tvSetupText.text = resources.getText(R.string.tvWelcomeText_1)
                     tvSetupVersion.visibility = View.INVISIBLE
@@ -83,6 +89,24 @@ class SetupAdapter(
             }
             3 -> {
                 holder.itemView.apply {
+                    ivSetupImage.setImageResource(images[position])
+
+                    val param = ivSetupImage.layoutParams as ViewGroup.MarginLayoutParams
+                    param.setMargins(150,0,0,0)
+                    ivSetupImage.layoutParams = param
+
+                    tvSetupText.text = resources.getText(R.string.tvWelcomeText_3)
+                    tvSetupVersion.visibility = View.INVISIBLE
+
+                    ivSwipeHint1.visibility = View.INVISIBLE
+                    ivSwipeHint2.visibility = View.INVISIBLE
+                    tvSetupSwipeHint.visibility = View.INVISIBLE
+
+                    triggerHintArrows(holder, position)
+                }
+            }
+            4 -> {
+                holder.itemView.apply {
                     ivSetupImage.visibility = View.GONE
 
                     clThemeSelector.visibility = View.VISIBLE
@@ -95,60 +119,61 @@ class SetupAdapter(
 
                     btn1.setOnClickListener {
                         selectBtn(holder, it.btn1, position)
-                        saveAppsTheme(Constants.THEME_ACCENT_BROWN_400)
+                        saveAppsTheme(Constants.THEME_ACCENT_BROWN_400, holder.itemView.getContext())
                     }
 
                     btn2.setOnClickListener {
                         selectBtn(holder, it.btn2, position)
-                        saveAppsTheme(Constants.THEME_ACCENT_CYAN_500)
+                        saveAppsTheme(Constants.THEME_ACCENT_CYAN_500, holder.itemView.getContext())
                     }
 
                     btn3.setOnClickListener {
                         selectBtn(holder, it.btn3, position)
-                        saveAppsTheme(Constants.THEME_ACCENT_GREEN_500)
+                        saveAppsTheme(Constants.THEME_ACCENT_GREEN_500, holder.itemView.getContext())
                     }
 
                     btn4.setOnClickListener {
                         selectBtn(holder, it.btn4, position)
-                        saveAppsTheme(Constants.THEME_ACCENT_LIGHT_GREEN)
+                        saveAppsTheme(Constants.THEME_ACCENT_LIGHT_GREEN, holder.itemView.getContext())
                     }
 
                     btn5.setOnClickListener {
                         selectBtn(holder, it.btn5, position)
-                        saveAppsTheme(Constants.THEME_ACCENT_LIME_500)
+                        saveAppsTheme(Constants.THEME_ACCENT_LIME_500, holder.itemView.getContext())
                     }
 
                     btn6.setOnClickListener {
                         selectBtn(holder, it.btn6, position)
-                        saveAppsTheme(Constants.THEME_ACCENT_PINK_300)
+                        saveAppsTheme(Constants.THEME_ACCENT_PINK_300, holder.itemView.getContext())
                     }
 
                     btn7.setOnClickListener {
                         selectBtn(holder, it.btn7, position)
-                        saveAppsTheme(Constants.THEME_ACCENT_PURPLE_500)
+                        saveAppsTheme(Constants.THEME_ACCENT_PURPLE_500, holder.itemView.getContext())
                     }
 
                     btn8.setOnClickListener {
                         selectBtn(holder, it.btn8, position)
-                        saveAppsTheme(Constants.THEME_ACCENT_ORANGE_500)
+                        saveAppsTheme(Constants.THEME_ACCENT_ORANGE_500, holder.itemView.getContext())
                     }
 
                     btn9.setOnClickListener {
                         selectBtn(holder, it.btn9, position)
-                        saveAppsTheme(Constants.THEME_ACCENT_TEAL_500)
+                        saveAppsTheme(Constants.THEME_ACCENT_TEAL_500, holder.itemView.getContext())
                     }
 
                     btn10.setOnClickListener {
                         selectBtn(holder, it.btn10, position)
-                        saveAppsTheme(Constants.THEME_ACCENT_YELLOW_500)
+                        saveAppsTheme(Constants.THEME_ACCENT_YELLOW_500, holder.itemView.getContext())
                     }
                 }
             }
-            4 -> {
+            5 -> {
                 holder.itemView.apply {
                     ivSetupImage.setImageResource(images[position])
 
-                    tvSetupText.text = resources.getText(R.string.tvWelcomeText_3)
+                    tvSetupText.text = resources.getText(R.string.tvWelcomeText_5)
+                    tvSetupText.textSize = 20F
                     tvSetupVersion.visibility = View.INVISIBLE
 
                     ivSwipeHint1.visibility = View.INVISIBLE
@@ -292,11 +317,11 @@ class SetupAdapter(
         }
     }
 
-    private fun saveAppsTheme(accent: String) {
+    private fun saveAppsTheme(accent: String, context: Context) {
         newTheme = accent
 
-        val sharedPref =
-            (activity).getSharedPreferences(Constants.SHARED_PREFERENCES_NAME, Context.MODE_PRIVATE)
+        var sharedPreferencesName = context.getString(R.string.shared_preferences_name)
+        val sharedPref = (activity).getSharedPreferences(sharedPreferencesName, Context.MODE_PRIVATE)
         val editor = sharedPref.edit()
 
         editor.apply {
@@ -309,7 +334,8 @@ class SetupAdapter(
 
         var accentColor = ContextCompat.getColor(context, R.color.purple_500)
 
-        val sharedPref = context.getSharedPreferences(Constants.SHARED_PREFERENCES_NAME, Context.MODE_PRIVATE)
+        var sharedPreferencesName = context.getString(R.string.shared_preferences_name)
+        val sharedPref = context.getSharedPreferences(sharedPreferencesName, Context.MODE_PRIVATE)
 
         var accent = sharedPref?.getString(
             Constants.SHARED_PREFERENCES_KEY_ACCENT,

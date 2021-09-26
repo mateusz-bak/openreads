@@ -451,6 +451,9 @@ class AddBookDialog(context: Context, var addBookDialogListener: AddBookDialogLi
                 btnSetFinishDate.isClickable = false
                 tvSetFinishDate.visibility = View.GONE
                 ivClearFinishDate.visibility = View.GONE
+
+                rbAdderRating.visibility = View.GONE
+                tvRateThisBook.visibility = View.GONE
             } else {
                 btnSetFinishDate.visibility = View.VISIBLE
                 btnSetFinishDate.isClickable = true
@@ -501,6 +504,9 @@ class AddBookDialog(context: Context, var addBookDialogListener: AddBookDialogLi
                 btnSetFinishDate.isClickable = false
                 tvSetFinishDate.visibility = View.GONE
                 ivClearFinishDate.visibility = View.GONE
+
+                rbAdderRating.visibility = View.GONE
+                tvRateThisBook.visibility = View.GONE
             } else {
                 btnSetFinishDate.visibility = View.VISIBLE
                 btnSetFinishDate.isClickable = true
@@ -554,7 +560,7 @@ class AddBookDialog(context: Context, var addBookDialogListener: AddBookDialogLi
                                         .setTitle(R.string.warning_no_finish_date_title)
                                         .setMessage(R.string.warning_no_finish_date_message)
                                         .setIcon(R.drawable.ic_baseline_warning_amber_24)
-                                        .setNegativeButton(R.string.warning_no_finish_date_add_anyway) { _, _ ->
+                                        .setPositiveButton(R.string.warning_no_finish_date_add_anyway) { _, _ ->
                                             var editedBook = prepareBook(
                                                 whatIsClicked,
                                                 bookRating = rbAdderRating.rating,
@@ -568,13 +574,12 @@ class AddBookDialog(context: Context, var addBookDialogListener: AddBookDialogLi
                                             addBookDialogListener.onSaveButtonClicked(editedBook)
                                             dismiss()
                                         }
-                                        .setPositiveButton(R.string.warning_no_finish_date_cancel) { _, _ ->
+                                        .setNegativeButton(R.string.warning_no_finish_date_cancel) { _, _ ->
                                         }
                                         .create()
 
                                     noChallengeWarningDialog.show()
-                                    noChallengeWarningDialog.getButton(AlertDialog.BUTTON_POSITIVE).setBackgroundColor(getAccentColor(context))
-                                    noChallengeWarningDialog.getButton(AlertDialog.BUTTON_POSITIVE).setTextColor(ContextCompat.getColor(context, R.color.design_default_color_on_primary))
+                                    noChallengeWarningDialog?.getButton(AlertDialog.BUTTON_NEGATIVE)?.setTextColor(ContextCompat.getColor(context, R.color.grey_500))
                                 } else {
                                     var editedBook = prepareBook(
                                         whatIsClicked,
@@ -701,7 +706,8 @@ class AddBookDialog(context: Context, var addBookDialogListener: AddBookDialogLi
 
         var accentColor = ContextCompat.getColor(context, R.color.purple_500)
 
-        val sharedPref = context.getSharedPreferences(Constants.SHARED_PREFERENCES_NAME, Context.MODE_PRIVATE)
+        var sharedPreferencesName = context.getString(R.string.shared_preferences_name)
+        val sharedPref = context.getSharedPreferences(sharedPreferencesName, Context.MODE_PRIVATE)
 
         var accent = sharedPref?.getString(
             Constants.SHARED_PREFERENCES_KEY_ACCENT,

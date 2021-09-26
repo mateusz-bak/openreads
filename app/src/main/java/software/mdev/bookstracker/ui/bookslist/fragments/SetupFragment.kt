@@ -24,10 +24,8 @@ class SetupFragment : Fragment(R.layout.fragment_setup) {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val sharedPref = (activity as ListActivity).getSharedPreferences(
-            Constants.SHARED_PREFERENCES_NAME,
-            Context.MODE_PRIVATE
-        )
+        var sharedPreferencesName = (activity as ListActivity).getString(R.string.shared_preferences_name)
+        val sharedPref = (activity as ListActivity).getSharedPreferences(sharedPreferencesName, Context.MODE_PRIVATE)
 
         if (!sharedPref.getBoolean(Constants.SHARED_PREFERENCES_KEY_FIRST_TIME_TOGGLE, true) &&
             sharedPref.getString(Constants.SHARED_PREFERENCES_KEY_APP_VERSION, "v0.0.0") ==
@@ -44,9 +42,10 @@ class SetupFragment : Fragment(R.layout.fragment_setup) {
         }
 
         val images = listOf(
-            R.drawable.ic_svg_books,
-            R.drawable.ic_svg_study,
-            R.drawable.ic_svg_presentation,
+            R.drawable.ic_svg_three_books,
+            R.drawable.ic_svg_clipboard,
+            R.drawable.ic_svg_graph,
+            R.drawable.ic_svg_code,
             0,
             R.drawable.ic_svg_like
         )
@@ -105,13 +104,22 @@ class SetupFragment : Fragment(R.layout.fragment_setup) {
                     3 -> {
                         selectIndicator(ivPosition3, 0)
 
+                        fabLaunchApp.visibility = View.INVISIBLE
+                        fabLaunchApp.scaleX = 0F
+                        fabLaunchApp.scaleY = 0F
+
+                        vpSetup.isUserInputEnabled = true
+                    }
+                    4 -> {
+                        selectIndicator(ivPosition4, 0)
+
                         fabLaunchApp.animate().setDuration(250L).scaleX(0F).start()
                         fabLaunchApp.animate().setDuration(250L).scaleY(0F).start()
 
                         vpSetup.isUserInputEnabled = false
                     }
-                    4 -> {
-                        selectIndicator(ivPosition4, 0)
+                    5 -> {
+                        selectIndicator(ivPosition5, 0)
 
                         fabLaunchApp.scaleX = 0F
                         fabLaunchApp.scaleY = 0F
@@ -145,7 +153,8 @@ class SetupFragment : Fragment(R.layout.fragment_setup) {
             ivPosition1,
             ivPosition2,
             ivPosition3,
-            ivPosition4
+            ivPosition4,
+            ivPosition5
         )
 
         for (indicator in listOfIndicators) {
@@ -168,8 +177,9 @@ class SetupFragment : Fragment(R.layout.fragment_setup) {
     }
 
     private fun saveAppsFirstlaunch() {
-        val sharedPref =
-            (activity)?.getSharedPreferences(Constants.SHARED_PREFERENCES_NAME, Context.MODE_PRIVATE)
+        var sharedPreferencesName = (activity as ListActivity).getString(R.string.shared_preferences_name)
+        val sharedPref = (activity as ListActivity).getSharedPreferences(sharedPreferencesName, Context.MODE_PRIVATE)
+
         val editor = sharedPref?.edit()
 
         editor?.apply {
@@ -193,7 +203,8 @@ class SetupFragment : Fragment(R.layout.fragment_setup) {
 
         var accentColor = ContextCompat.getColor(context, R.color.purple_500)
 
-        val sharedPref = context.getSharedPreferences(Constants.SHARED_PREFERENCES_NAME, Context.MODE_PRIVATE)
+        var sharedPreferencesName = context.getString(R.string.shared_preferences_name)
+        val sharedPref = context.getSharedPreferences(sharedPreferencesName, Context.MODE_PRIVATE)
 
         var accent = sharedPref?.getString(
             Constants.SHARED_PREFERENCES_KEY_ACCENT,

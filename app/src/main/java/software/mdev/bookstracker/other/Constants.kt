@@ -64,8 +64,8 @@ object Constants {
     const val SORT_ORDER_FINISH_DATE_ASC = "ivSortFinishDateAsc"
 
     const val SERIALIZABLE_BUNDLE_BOOK = "book"
+    const val SERIALIZABLE_BUNDLE_ISBN = "isbn"
 
-    const val SHARED_PREFERENCES_NAME = "software.mdev.bookstracker_preferences"
     const val SHARED_PREFERENCES_KEY_FIRST_TIME_TOGGLE = "KEY_FIRST_TIME_TOGGLE"
     const val SHARED_PREFERENCES_KEY_APP_VERSION = "SHARED_PREFERENCES_KEY_APP_VERSION"
     const val SHARED_PREFERENCES_KEY_SORT_ORDER = "KEY_SORT_ORDER"
@@ -76,6 +76,9 @@ object Constants {
     const val SHARED_PREFERENCES_REFRESHED = "refreshed"
     const val KEY_CHECK_FOR_UPDATES = "KEY_CHECK_FOR_UPDATES"
     const val KEY_TRASH = "KEY_TRASH"
+    const val KEY_BACKUP = "KEY_BACKUP"
+    const val KEY_EXPORT = "KEY_EXPORT"
+    const val KEY_IMPORT = "KEY_IMPORT"
 
     const val EMPTY_STRING = ""
 
@@ -97,4 +100,9 @@ object Constants {
 
     const val BASE_URL = "https://openlibrary.org/"
     const val OPEN_LIBRARY_SEARCH_DELAY = 500L
+
+    // permission request codes
+    const val PERMISSION_CAMERA_FROM_LIST_1 = 1
+    const val PERMISSION_CAMERA_FROM_LIST_2 = 2
+    const val PERMISSION_CAMERA_FROM_LIST_3 = 3
 }

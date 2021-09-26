@@ -9,44 +9,26 @@
     android:paddingEnd="16dp"
     android:paddingBottom="16dp">
 
-    <androidx.constraintlayout.widget.Guideline
-        android:id="@+id/guideline1"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        app:layout_constraintGuide_percent="0.25" />
-
-    <androidx.constraintlayout.widget.Guideline
-        android:id="@+id/guideline2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        app:layout_constraintGuide_percent="0.55" />
-
-    <androidx.constraintlayout.widget.Guideline
-        android:id="@+id/guideline3"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        app:layout_constraintGuide_percent="0.80" />
-
     <ImageView
         android:id="@+id/ivBooksRead"
         android:layout_width="100dp"
         android:layout_height="100dp"
         android:scaleType="centerInside"
+        android:layout_marginTop="-25dp"
         android:scaleX="1"
         android:scaleY="1"
         android:src="@drawable/ic_svg_books"
-        app:layout_constraintBottom_toTopOf="@+id/guideline1"
+        app:layout_constraintBottom_toTopOf="@+id/ivChallenge"
         app:layout_constraintEnd_toStartOf="@+id/ivPagesRead"
         app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <ImageView
         android:id="@+id/ivPagesRead"
         android:layout_width="100dp"
         android:layout_height="100dp"
+        android:layout_marginTop="20dp"
         android:scaleType="centerInside"
         android:scaleX="1"
         android:scaleY="1"
@@ -62,24 +44,25 @@
         android:layout_width="100dp"
         android:layout_height="100dp"
         android:scaleType="centerInside"
+        android:layout_marginTop="50dp"
         android:scaleX="1"
         android:scaleY="1"
         android:src="@drawable/ic_svg_runner"
-        app:layout_constraintBottom_toTopOf="@+id/guideline3"
-        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="@+id/ivPagesRead"
         app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/guideline3" />
+        app:layout_constraintStart_toStartOf="@+id/ivPagesRead"
+        app:layout_constraintTop_toBottomOf="@+id/ivBooksRead" />
 
     <TextView
         android:id="@+id/tvBooksReadTitle"
-        android:layout_width="120dp"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
         android:gravity="center"
         android:text="@string/tvBooksReadTitle"
         android:textColor="?colorOnSecondary"
-        android:textSize="20sp"
+        android:textSize="16sp"
         app:layout_constraintEnd_toEndOf="@+id/ivBooksRead"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="@+id/ivBooksRead"
@@ -92,7 +75,7 @@
         android:layout_marginTop="8dp"
         android:gravity="center"
         android:text="@string/tvBooksRead"
-        android:textSize="16sp"
+        android:textSize="14sp"
         app:layout_constraintEnd_toEndOf="@+id/ivBooksRead"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="@+id/ivBooksRead"
@@ -100,16 +83,16 @@
 
     <TextView
         android:id="@+id/tvPagesReadTitle"
-        android:layout_width="120dp"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
         android:gravity="center"
         android:text="@string/tvPagesReadTitle"
         android:textColor="?colorOnSecondary"
-        android:textSize="20sp"
+        android:textSize="16sp"
+        app:layout_constraintBottom_toBottomOf="@+id/tvBooksReadTitle"
         app:layout_constraintEnd_toEndOf="@+id/ivPagesRead"
         app:layout_constraintStart_toStartOf="@+id/ivPagesRead"
-        app:layout_constraintTop_toBottomOf="@+id/ivPagesRead" />
+        app:layout_constraintTop_toTopOf="@+id/tvBooksReadTitle" />
 
     <TextView
         android:id="@+id/tvPagesRead"
@@ -118,7 +101,7 @@
         android:layout_marginTop="8dp"
         android:gravity="center"
         android:text="@string/tvPagesRead"
-        android:textSize="16sp"
+        android:textSize="14sp"
         app:layout_constraintEnd_toEndOf="@+id/ivPagesRead"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="@+id/ivPagesRead"
@@ -130,24 +113,28 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:isIndicator="true"
+        android:scaleX="0.6"
+        android:scaleY="0.6"
         android:stepSize="0.5"
-        app:layout_constraintBottom_toTopOf="@+id/guideline2"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintBottom_toBottomOf="@+id/ivChallenge"
+        app:layout_constraintEnd_toEndOf="@+id/ivBooksRead"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="@+id/ivBooksRead"
+        app:layout_constraintTop_toTopOf="@+id/ivChallenge" />
 
     <TextView
         android:id="@+id/tvAvgRatingTitle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
         android:gravity="center"
         android:text="@string/tvAvgRatingTitle"
         android:textColor="?colorOnSecondary"
-        android:textSize="20sp"
-        app:layout_constraintEnd_toEndOf="parent"
+        android:textSize="16sp"
+        app:layout_constraintBottom_toBottomOf="@+id/tvChallengeTitle"
+        app:layout_constraintEnd_toEndOf="@+id/rbAvgRatingIndicator"
         app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/rbAvgRatingIndicator" />
+        app:layout_constraintStart_toStartOf="@+id/rbAvgRatingIndicator"
+        app:layout_constraintTop_toTopOf="@+id/tvChallengeTitle" />
 
     <TextView
         android:id="@+id/tvChallengeTitle"
@@ -157,10 +144,10 @@
         android:gravity="center"
         android:text="@string/tvChallengeTitle"
         android:textColor="?colorOnSecondary"
-        android:textSize="20sp"
-        app:layout_constraintEnd_toEndOf="parent"
+        android:textSize="16sp"
+        app:layout_constraintEnd_toEndOf="@+id/ivChallenge"
         app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/ivChallenge"
         app:layout_constraintTop_toBottomOf="@+id/ivChallenge" />
 
     <TextView
@@ -170,10 +157,10 @@
         android:layout_marginTop="8dp"
         android:gravity="center"
         android:text="@string/tvAvgRating"
-        android:textSize="16sp"
-        app:layout_constraintEnd_toEndOf="parent"
+        android:textSize="14sp"
+        app:layout_constraintEnd_toEndOf="@+id/tvAvgRatingTitle"
         app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/tvAvgRatingTitle"
         app:layout_constraintTop_toBottomOf="@+id/tvAvgRatingTitle" />
 
     <TextView
@@ -183,10 +170,10 @@
         android:layout_marginTop="8dp"
         android:gravity="center"
         android:text="@string/tvChallenge"
-        android:textSize="16sp"
-        app:layout_constraintEnd_toEndOf="parent"
+        android:textSize="14sp"
+        app:layout_constraintEnd_toEndOf="@+id/tvChallengeTitle"
         app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/tvChallengeTitle"
         app:layout_constraintTop_toBottomOf="@+id/tvChallengeTitle" />
 
     <TextView

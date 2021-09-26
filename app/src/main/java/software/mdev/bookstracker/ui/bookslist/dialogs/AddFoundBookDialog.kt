@@ -537,6 +537,9 @@ class AddFoundBookDialog(
                 btnSetFinishDate.isClickable = false
                 tvSetFinishDate.visibility = View.GONE
                 ivClearFinishDate.visibility = View.GONE
+
+                rbAdderRating.visibility = View.GONE
+                tvRateThisBook.visibility = View.GONE
             } else {
                 btnSetFinishDate.visibility = View.VISIBLE
                 btnSetFinishDate.isClickable = true
@@ -591,6 +594,9 @@ class AddFoundBookDialog(
                 btnSetFinishDate.isClickable = false
                 tvSetFinishDate.visibility = View.GONE
                 ivClearFinishDate.visibility = View.GONE
+
+                rbAdderRating.visibility = View.GONE
+                tvRateThisBook.visibility = View.GONE
             } else {
                 btnSetFinishDate.visibility = View.VISIBLE
                 btnSetFinishDate.isClickable = true
@@ -640,7 +646,7 @@ class AddFoundBookDialog(
                             || bookFinishDateMs == null
                             || bookStartDateMs == null ) {
 
-                            if (bookFinishDateMs == null) {
+                            if (bookFinishDateMs == null && whatIsClicked == Constants.BOOK_STATUS_READ) {
                                 val noChallengeWarningDialog = AlertDialog.Builder(context)
                                     .setTitle(R.string.warning_no_finish_date_title)
                                     .setMessage(R.string.warning_no_finish_date_message)
@@ -668,6 +674,7 @@ class AddFoundBookDialog(
                                     .create()
 
                                 noChallengeWarningDialog.show()
+                                noChallengeWarningDialog?.getButton(AlertDialog.BUTTON_NEGATIVE)?.setTextColor(ContextCompat.getColor(context, R.color.grey_500))
                             } else {
                                 var editedBook = prepareBook(
                                     whatIsClicked,
@@ -825,8 +832,8 @@ class AddFoundBookDialog(
 
         var accentColor = ContextCompat.getColor(context, R.color.purple_500)
 
-        val sharedPref =
-            context.getSharedPreferences(Constants.SHARED_PREFERENCES_NAME, Context.MODE_PRIVATE)
+        var sharedPreferencesName = context.getString(R.string.shared_preferences_name)
+        val sharedPref = context.getSharedPreferences(sharedPreferencesName, Context.MODE_PRIVATE)
 
         var accent = sharedPref?.getString(
             Constants.SHARED_PREFERENCES_KEY_ACCENT,

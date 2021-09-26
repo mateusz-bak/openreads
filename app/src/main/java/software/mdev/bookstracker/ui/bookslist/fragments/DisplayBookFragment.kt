@@ -1,6 +1,7 @@
 package software.mdev.bookstracker.ui.bookslist.fragments
 
 import android.content.Context
+import android.content.res.ColorStateList
 import android.os.Bundle
 import android.view.MotionEvent
 import android.view.View
@@ -173,6 +174,11 @@ class DisplayBookFragment : Fragment(R.layout.fragment_display_book) {
         tvMoreAboutBook.setOnClickListener {
             when(tvBookPagesTitle.visibility){
                 View.GONE -> {
+                    tvMoreAboutBook.setTextColor((activity as ListActivity).getColor(R.color.grey_300))
+                    tvMoreAboutBook.text = (activity as ListActivity).getString(R.string.tv_less_about_book)
+                    tvMoreAboutBook.setCompoundDrawablesRelativeWithIntrinsicBounds(null, (activity as ListActivity).getDrawable(R.drawable.ic_baseline_keyboard_arrow_up_24), null, null)
+                    tvMoreAboutBook.compoundDrawableTintList= ColorStateList.valueOf((activity as ListActivity).getColor(R.color.grey_300))
+
                     tvBookPagesTitle.visibility = View.VISIBLE
                     tvBookPages.visibility = View.VISIBLE
                     tvBookISBNTitle.visibility = View.VISIBLE
@@ -211,6 +217,11 @@ class DisplayBookFragment : Fragment(R.layout.fragment_display_book) {
                     }
                 }
                 View.VISIBLE -> {
+                    tvMoreAboutBook.setTextColor((activity as ListActivity).getColor(R.color.grey))
+                    tvMoreAboutBook.text = (activity as ListActivity).getString(R.string.tv_more_about_book)
+                    tvMoreAboutBook.setCompoundDrawablesRelativeWithIntrinsicBounds(null, null, null, (activity as ListActivity).getDrawable(R.drawable.ic_baseline_keyboard_arrow_down_24))
+                    tvMoreAboutBook.compoundDrawableTintList= ColorStateList.valueOf((activity as ListActivity).getColor(R.color.grey))
+
                     tvBookPagesTitle.visibility = View.GONE
                     tvBookPages.visibility = View.GONE
                     tvDateFinishedTitle.visibility = View.GONE
@@ -300,7 +311,7 @@ class DisplayBookFragment : Fragment(R.layout.fragment_display_book) {
                     .setTitle(R.string.warning_delete_book_title)
                     .setMessage(R.string.warning_delete_book_message)
                     .setIcon(R.drawable.ic_baseline_warning_amber_24)
-                    .setNegativeButton(R.string.warning_delete_book_delete) { _, _ ->
+                    .setPositiveButton(R.string.warning_delete_book_delete) { _, _ ->
                         viewModel.updateBook(
                             book.id,
                             book.bookTitle,
@@ -325,16 +336,13 @@ class DisplayBookFragment : Fragment(R.layout.fragment_display_book) {
                             .setAction(getString(R.string.undo), UndoBookDeletion())
                             .show()
                     }
-                    .setPositiveButton(R.string.warning_delete_book_cancel) { _, _ ->
+                    .setNegativeButton(R.string.warning_delete_book_cancel) { _, _ ->
                     }
                     .create()
             }
 
             deleteBookWarningDialog?.show()
-            if (this.context !=null && deleteBookWarningDialog?.getButton(AlertDialog.BUTTON_POSITIVE) != null) {
-                deleteBookWarningDialog?.getButton(AlertDialog.BUTTON_POSITIVE)!!.setBackgroundColor(getAccentColor(this.requireContext()))
-                deleteBookWarningDialog?.getButton(AlertDialog.BUTTON_POSITIVE)!!.setTextColor(ContextCompat.getColor(this.requireContext(),R.color.design_default_color_on_primary))
-            }
+            deleteBookWarningDialog?.getButton(AlertDialog.BUTTON_NEGATIVE)?.setTextColor(ContextCompat.getColor(listActivity.baseContext, R.color.grey_500))
         }
     }
 
@@ -342,7 +350,8 @@ class DisplayBookFragment : Fragment(R.layout.fragment_display_book) {
 
         var accentColor = ContextCompat.getColor(context, R.color.purple_500)
 
-        val sharedPref = context.getSharedPreferences(Constants.SHARED_PREFERENCES_NAME, Context.MODE_PRIVATE)
+        var sharedPreferencesName = context.getString(R.string.shared_preferences_name)
+        val sharedPref = context.getSharedPreferences(sharedPreferencesName, Context.MODE_PRIVATE)
 
         var accent = sharedPref?.getString(
             Constants.SHARED_PREFERENCES_KEY_ACCENT,

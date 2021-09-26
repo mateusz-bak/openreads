@@ -1,6 +1,8 @@
 package software.mdev.bookstracker.other
 
 import android.content.Context
+import android.content.pm.PackageManager
+import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import com.google.gson.Gson
 import software.mdev.bookstracker.R
@@ -48,8 +50,8 @@ class Functions {
         bookAdapter: BookAdapter,
         notFilteredBooks: List<Book>
     ) {
-        val sharedPref =
-            (activity).getSharedPreferences(Constants.SHARED_PREFERENCES_NAME, Context.MODE_PRIVATE)
+        var sharedPreferencesName = activity.getString(R.string.shared_preferences_name)
+        val sharedPref = (activity).getSharedPreferences(sharedPreferencesName, Context.MODE_PRIVATE)
         var filteredBooks: List<Book> = emptyList()
 
         var gson1 = Gson()
@@ -85,7 +87,8 @@ class Functions {
 
         var accentColor = ContextCompat.getColor(context, R.color.purple_500)
 
-        val sharedPref = context.getSharedPreferences(Constants.SHARED_PREFERENCES_NAME, Context.MODE_PRIVATE)
+        var sharedPreferencesName = context.getString(R.string.shared_preferences_name)
+        val sharedPref = context.getSharedPreferences(sharedPreferencesName, Context.MODE_PRIVATE)
 
         var accent = sharedPref?.getString(
             Constants.SHARED_PREFERENCES_KEY_ACCENT,
@@ -105,5 +108,12 @@ class Functions {
             Constants.THEME_ACCENT_YELLOW_500 -> accentColor = ContextCompat.getColor(context, R.color.yellow_500)
         }
         return accentColor
+    }
+
+    fun checkPermission(activity: ListActivity, permission: String) =
+        ActivityCompat.checkSelfPermission(activity.baseContext, permission) == PackageManager.PERMISSION_GRANTED
+
+    fun requestPermission(activity: ListActivity, permission: String, requestCode: Int) {
+        ActivityCompat.requestPermissions(activity, arrayOf(permission), requestCode)
     }
 }

@@ -48,6 +48,7 @@
         android:layout_height="wrap_content"
         android:minWidth="120dp"
         android:text="@string/btnAddManual"
+        android:textSize="11sp"
         app:layout_constraintBottom_toBottomOf="@+id/fabAddBook"
         app:layout_constraintEnd_toStartOf="@+id/btnAddSearch"
         app:layout_constraintStart_toStartOf="parent"
@@ -59,10 +60,22 @@
         android:layout_height="wrap_content"
         android:minWidth="120dp"
         android:text="@string/btnAddSearch"
+        android:textSize="11sp"
         app:layout_constraintBottom_toBottomOf="@+id/fabAddBook"
         app:layout_constraintEnd_toStartOf="@+id/fabAddBook"
         app:layout_constraintStart_toEndOf="@+id/btnAddManual"
         app:layout_constraintTop_toTopOf="@+id/fabAddBook" />
+
+    <Button
+        android:id="@+id/btnAddScan"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:minWidth="120dp"
+        android:text="@string/btnAddScan"
+        android:textSize="11sp"
+        app:layout_constraintBottom_toTopOf="@+id/btnAddManual"
+        app:layout_constraintEnd_toEndOf="@+id/btnAddManual"
+        app:layout_constraintStart_toStartOf="@+id/btnAddManual"/>
 
     <ImageView
         android:id="@+id/ivSearch"
@@ -74,6 +87,7 @@
         android:focusable="true"
         android:scaleX="1.2"
         android:scaleY="1.2"
+        android:padding="2dp"
         app:layout_constraintBottom_toBottomOf="@+id/ivMore"
         app:layout_constraintEnd_toStartOf="@+id/ivSeparator1"
         app:layout_constraintHorizontal_bias="0.5"
@@ -104,14 +118,15 @@
         android:layout_height="wrap_content"
         android:clickable="true"
         android:focusable="true"
-        android:scaleX="1.2"
-        android:scaleY="1.2"
+        android:padding="6dp"
+        android:scaleX="2"
+        android:scaleY="2"
         app:layout_constraintBottom_toBottomOf="@+id/ivMore"
         app:layout_constraintEnd_toStartOf="@+id/ivSeparator2"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toEndOf="@+id/ivSeparator1"
         app:layout_constraintTop_toTopOf="@+id/ivMore"
-        app:srcCompat="@drawable/ic_baseline_sort_24" />
+        app:srcCompat="@drawable/ic_sort" />
 
     <ImageView
         android:id="@+id/ivMore"
@@ -122,13 +137,12 @@
         android:layout_marginEnd="16dp"
         android:clickable="true"
         android:focusable="true"
-        android:scaleX="1.2"
-        android:scaleY="1.2"
+        android:padding="2dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toEndOf="@+id/ivSeparator2"
         app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/ic_baseline_more_vert_24" />
+        app:srcCompat="@drawable/ic_baseline_settings_24" />
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/glVertical70"
@@ -141,7 +155,7 @@
         android:id="@+id/ivSeparator1"
         android:contentDescription="@string/ivSeparator1"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_height="0dp"
         android:clickable="false"
         android:rotation="90"
         android:scaleX="0.7"
@@ -158,7 +172,7 @@
         android:id="@+id/ivSeparator2"
         android:contentDescription="@string/ivSeparator2"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_height="0dp"
         android:clickable="false"
         android:rotation="90"
         android:scaleX="0.7"
@@ -176,7 +190,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/tvLooksEmpty"
-        android:textSize="16dp"
+        android:textSize="13sp"
         android:textColor="@color/grey"
         android:padding="24dp"
         android:gravity="center"

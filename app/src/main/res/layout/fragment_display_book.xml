@@ -170,14 +170,14 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
-                app:layout_constraintGuide_percent="0.33" />
+                app:layout_constraintGuide_percent="0.25" />
 
             <androidx.constraintlayout.widget.Guideline
                 android:id="@+id/guideline5"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
-                app:layout_constraintGuide_percent="0.69" />
+                app:layout_constraintGuide_percent="0.75" />
 
             <TextView
                 android:id="@+id/tvMoreAboutBook"
@@ -288,6 +288,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="24dp"
                 android:layout_marginBottom="24dp"
+                android:gravity="center"
                 android:text="@string/tv_book_url"
                 android:autoLink="web"
                 app:layout_constraintEnd_toEndOf="parent"

@@ -76,7 +76,9 @@ class BookAdapter(
                 tvDateFinished.text = convertLongToTime(bookFinishTimeStampLong)
             }
 
-            val sharedPref = context.getSharedPreferences(Constants.SHARED_PREFERENCES_NAME, Context.MODE_PRIVATE)
+            var sharedPreferencesName = holder.itemView.getContext().getString(R.string.shared_preferences_name)
+            val sharedPref = context.getSharedPreferences(sharedPreferencesName, Context.MODE_PRIVATE)
+
             val sortOrder = sharedPref.getString(
                 Constants.SHARED_PREFERENCES_KEY_SORT_ORDER,
                 Constants.SORT_ORDER_TITLE_ASC
@@ -99,15 +101,11 @@ class BookAdapter(
             }
             when (curBook.bookStatus ){
                 Constants.BOOK_STATUS_READ -> {
-                    ivInProgressIndicator.visibility = View.GONE
-                    ivToReadIndicator.visibility = View.GONE
                     rbRatingIndicator.visibility = View.VISIBLE
                     rbRatingIndicator.rating = curBook.bookRating
                 }
                 Constants.BOOK_STATUS_IN_PROGRESS -> {
                     rbRatingIndicator.visibility = View.GONE
-                    ivToReadIndicator.visibility = View.GONE
-                    ivInProgressIndicator.visibility = View.VISIBLE
                     tvNumberOfPages.visibility = View.GONE
 
                     tvDateStarted.visibility = View.GONE
@@ -118,8 +116,6 @@ class BookAdapter(
                 }
                 Constants.BOOK_STATUS_TO_READ -> {
                     rbRatingIndicator.visibility = View.GONE
-                    ivInProgressIndicator.visibility = View.GONE
-                    ivToReadIndicator.visibility = View.VISIBLE
                     tvNumberOfPages.visibility = View.GONE
 
                     tvDateStarted.visibility = View.GONE

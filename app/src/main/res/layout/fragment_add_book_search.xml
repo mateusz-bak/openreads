@@ -43,6 +43,7 @@
                 android:textColor="?colorOnSecondary"
                 android:textSize="18sp"
                 android:paddingEnd="36dp"
+                android:imeOptions="actionSearch"
                 app:layout_constraintEnd_toStartOf="@+id/btnSearchInOL"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />

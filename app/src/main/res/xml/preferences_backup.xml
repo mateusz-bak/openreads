@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <PreferenceCategory
+        android:key="application"
+        android:title="">
+
+        <Preference
+            android:icon="@drawable/ic_baseline_cloud_upload_24"
+            android:key="KEY_EXPORT"
+            android:summary="@string/export_summary"
+            android:title="@string/export_title" />
+
+        <Preference
+            android:icon="@drawable/ic_baseline_restore_24"
+            android:key="KEY_IMPORT"
+            android:summary="@string/import_summary"
+            android:title="@string/import_title" />
+
+    </PreferenceCategory>
+
+</PreferenceScreen>

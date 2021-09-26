@@ -9,20 +9,19 @@
     app:cardUseCompatPadding="true"
     app:cardCornerRadius="12dp">
 
-    <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:app="http://schemas.android.com/apk/res-auto"
-        xmlns:tools="http://schemas.android.com/tools"
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:padding="10dp">
 
         <ImageView
             android:id="@+id/ivBookCover"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
+            android:layout_width="70dp"
+            android:layout_height="wrap_content"
+            android:adjustViewBounds="true"
+            android:paddingEnd="10dp"
             android:scaleType="fitCenter"
             android:src="@mipmap/ic_books"
-            android:paddingEnd="18dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
@@ -30,10 +29,11 @@
         <TextView
             android:id="@+id/tvBookTitle"
             android:layout_width="0dp"
+            android:layout_marginStart="8dp"
             android:layout_height="wrap_content"
-            android:textColor="?colorOnSecondary"
-            android:textSize="18sp"
             android:text="@string/unknown_title"
+            android:textColor="?colorOnSecondary"
+            android:textSize="16sp"
             app:layout_constraintEnd_toStartOf="@+id/glVertical70"
             app:layout_constraintHorizontal_weight="1"
             app:layout_constraintStart_toEndOf="@+id/ivBookCover"
@@ -43,9 +43,8 @@
             android:id="@+id/tvBookAuthor"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginTop="4dp"
-            android:textSize="14sp"
             android:text="@string/unknown_author"
+            android:textSize="12sp"
             app:layout_constraintEnd_toEndOf="@+id/tvBookTitle"
             app:layout_constraintHorizontal_weight="1"
             app:layout_constraintStart_toStartOf="@+id/tvBookTitle"
@@ -53,53 +52,27 @@
 
         <androidx.appcompat.widget.AppCompatRatingBar
             android:id="@+id/rbRatingIndicator"
-            android:contentDescription="@string/rbRatingIndicator"
             style="?android:attr/ratingBarStyleSmall"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginStart="-2dp"
+            android:layout_marginTop="4dp"
+            android:contentDescription="@string/rbRatingIndicator"
+            android:foregroundGravity="right"
             android:isIndicator="true"
             android:numStars="5"
             android:rating="4"
-            android:stepSize="1"
-            android:layout_marginTop="6dp"
-            android:foregroundGravity="right"
             android:scaleType="fitStart"
-            app:layout_constraintTop_toBottomOf="@+id/tvBookAuthor"
+            android:stepSize="1"
             app:layout_constraintStart_toStartOf="@+id/tvBookAuthor"
-            app:layout_constraintBottom_toBottomOf="parent"/>
-
-        <ImageView
-            android:id="@+id/ivInProgressIndicator"
-            android:contentDescription="@string/ivInProgressIndicator"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginEnd="8dp"
-            app:layout_constraintBottom_toBottomOf="@+id/tvBookAuthor"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="@+id/glVertical70"
-            app:layout_constraintTop_toTopOf="parent"
-            app:srcCompat="@drawable/ic_baseline_hourglass_bottom_24"
-            app:tint="?colorPrimary" />
-
-        <ImageView
-            android:id="@+id/ivToReadIndicator"
-            android:contentDescription="@string/ivToReadIndicator"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginEnd="8dp"
-            app:layout_constraintBottom_toBottomOf="@+id/tvBookAuthor"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="@+id/glVertical70"
-            app:layout_constraintTop_toTopOf="@+id/tvBookTitle"
-            app:srcCompat="@drawable/ic_baseline_list_24"
-            app:tint="?colorPrimary" />
+            app:layout_constraintTop_toBottomOf="@+id/tvBookAuthor" />
 
         <androidx.constraintlayout.widget.Guideline
             android:id="@+id/glVertical70"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            app:layout_constraintGuide_percent="0.70" />
+            app:layout_constraintGuide_percent="0.75" />
 
         <TextView
             android:id="@+id/tvNumberOfPages"
@@ -108,17 +81,16 @@
             android:layout_marginTop="4dp"
             android:text="@string/tvNumberOfPages"
             android:textSize="10sp"
-            app:layout_constraintTop_toBottomOf="@+id/rbRatingIndicator"
-            app:layout_constraintBottom_toBottomOf="@+id/tvBookAuthor"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent" />
 
         <TextView
             android:id="@+id/tvDateStartedTitle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginBottom="4dp"
             android:text="@string/tv_date_started_title"
             android:textSize="8sp"
-            android:layout_marginBottom="4dp"
             app:layout_constraintBottom_toTopOf="@+id/tvDateStarted"
             app:layout_constraintEnd_toEndOf="@+id/tvDateStarted" />
 
@@ -126,20 +98,19 @@
             android:id="@+id/tvDateStarted"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/tvDateFinished"
             android:layout_marginTop="4dp"
+            android:text="@string/tvDateFinished"
             android:textSize="10sp"
-            app:layout_constraintTop_toBottomOf="@+id/rbRatingIndicator"
-            app:layout_constraintBottom_toBottomOf="@+id/tvBookAuthor"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent" />
 
         <TextView
             android:id="@+id/tvDateFinishedTitle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginBottom="4dp"
             android:text="@string/tv_date_finished_title"
             android:textSize="8sp"
-            android:layout_marginBottom="4dp"
             app:layout_constraintBottom_toTopOf="@+id/tvDateFinished"
             app:layout_constraintEnd_toEndOf="@+id/tvDateFinished" />
 
@@ -147,11 +118,10 @@
             android:id="@+id/tvDateFinished"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/tvDateFinished"
             android:layout_marginTop="4dp"
+            android:text="@string/tvDateFinished"
             android:textSize="10sp"
-            app:layout_constraintTop_toBottomOf="@+id/rbRatingIndicator"
-            app:layout_constraintBottom_toBottomOf="@+id/tvBookAuthor"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </androidx.cardview.widget.CardView>
