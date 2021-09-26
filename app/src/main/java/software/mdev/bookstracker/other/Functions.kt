@@ -113,7 +113,7 @@ class Functions {
     fun checkPermission(activity: ListActivity, permission: String) =
         ActivityCompat.checkSelfPermission(activity.baseContext, permission) == PackageManager.PERMISSION_GRANTED
 
-    fun requestPermission(activity: ListActivity, permission: String) {
-        ActivityCompat.requestPermissions(activity, arrayOf(permission), 0)
+    fun requestPermission(activity: ListActivity, permission: String, requestCode: Int) {
+        ActivityCompat.requestPermissions(activity, arrayOf(permission), requestCode)
     }
 }

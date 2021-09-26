@@ -1,10 +1,9 @@
 package software.mdev.bookstracker.ui.bookslist
 
-import android.Manifest
 import android.annotation.SuppressLint
 import android.content.Context
+import android.content.pm.PackageManager
 import android.net.Uri
-import android.os.Build
 import android.os.Bundle
 import android.view.Menu
 import android.view.View
@@ -159,4 +158,24 @@ class ListActivity : AppCompatActivity() {
                 e.printStackTrace()
             }
         }
+
+    override fun onRequestPermissionsResult(
+        requestCode: Int,
+        permissions: Array<out String>,
+        grantResults: IntArray
+    ) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
+
+        if (grantResults.isNotEmpty()
+            && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+            when (requestCode) {
+                Constants.PERMISSION_CAMERA_FROM_LIST_1 -> booksNavHostFragment.findNavController()
+                    .navigate(R.id.action_readFragment_to_addBookScanFragment)
+                Constants.PERMISSION_CAMERA_FROM_LIST_2 -> booksNavHostFragment.findNavController()
+                    .navigate(R.id.action_inProgressFragment_to_addBookScanFragment)
+                Constants.PERMISSION_CAMERA_FROM_LIST_3 -> booksNavHostFragment.findNavController()
+                    .navigate(R.id.action_toReadFragment_to_addBookScanFragment)
+            }
+        }
+    }
 }

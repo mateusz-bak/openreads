@@ -99,4 +99,9 @@ object Constants {
 
     const val BASE_URL = "https://openlibrary.org/"
     const val OPEN_LIBRARY_SEARCH_DELAY = 500L
+
+    // permission request codes
+    const val PERMISSION_CAMERA_FROM_LIST_1 = 1
+    const val PERMISSION_CAMERA_FROM_LIST_2 = 2
+    const val PERMISSION_CAMERA_FROM_LIST_3 = 3
 }

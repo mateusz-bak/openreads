@@ -106,17 +106,7 @@ class ToReadFragment : Fragment(R.layout.fragment_to_read) {
         })
 
         btnAddManual.setOnClickListener{
-            btnAddManual.visibility = View.GONE
-            btnAddSearch.visibility = View.GONE
-            btnAddScan.visibility = View.GONE
-            btnAddManual.isClickable = false
-            btnAddSearch.isClickable = false
-            btnAddScan.isClickable = false
-
-            fabAddBook.animate().rotation( 0F).setDuration(350L).start()
-            btnAddSearch.startAnimation(AnimationUtils.loadAnimation(context,R.anim.slide_out_down))
-            btnAddScan.startAnimation(AnimationUtils.loadAnimation(context,R.anim.slide_out_down))
-            btnAddManual.startAnimation(AnimationUtils.loadAnimation(context,R.anim.slide_out_down))
+            hideAddOptionButtons()
 
             AddBookDialog(view.context,
                 object: AddBookDialogListener {
@@ -140,65 +130,31 @@ class ToReadFragment : Fragment(R.layout.fragment_to_read) {
 
         fabAddBook.setOnClickListener {
             if (btnAddManual.visibility == View.GONE) {
-                btnAddManual.visibility = View.VISIBLE
-                btnAddSearch.visibility = View.VISIBLE
-                btnAddScan.visibility = View.VISIBLE
-                btnAddManual.isClickable = true
-                btnAddSearch.isClickable = true
-                btnAddScan.isClickable = true
-
-                fabAddBook.animate().rotation(180F).setDuration(350L).start()
-                btnAddSearch.startAnimation(AnimationUtils.loadAnimation(context,R.anim.slide_in_up))
-                btnAddScan.startAnimation(AnimationUtils.loadAnimation(context,R.anim.slide_in_up))
-                btnAddManual.startAnimation(AnimationUtils.loadAnimation(context,R.anim.slide_in_up))
+                showAddOptionButtons()
             }
             else {
-                btnAddManual.visibility = View.GONE
-                btnAddSearch.visibility = View.GONE
-                btnAddScan.visibility = View.GONE
-                btnAddManual.isClickable = false
-                btnAddSearch.isClickable = false
-                btnAddScan.isClickable = false
-
-                fabAddBook.animate().rotation(0F).setDuration(350L).start()
-                btnAddSearch.startAnimation(AnimationUtils.loadAnimation(context,R.anim.slide_out_down))
-                btnAddScan.startAnimation(AnimationUtils.loadAnimation(context,R.anim.slide_out_down))
-                btnAddManual.startAnimation(AnimationUtils.loadAnimation(context,R.anim.slide_out_down))
+                hideAddOptionButtons()
             }
         }
 
         btnAddSearch.setOnClickListener {
-            btnAddManual.visibility = View.GONE
-            btnAddSearch.visibility = View.GONE
-            btnAddScan.visibility = View.GONE
-            btnAddManual.isClickable = false
-            btnAddSearch.isClickable = false
-            btnAddScan.isClickable = false
-
-            fabAddBook.animate().rotation( 0F).setDuration(350L).start()
-            btnAddSearch.startAnimation(AnimationUtils.loadAnimation(context,R.anim.slide_out_down))
-            btnAddScan.startAnimation(AnimationUtils.loadAnimation(context,R.anim.slide_out_down))
-            btnAddManual.startAnimation(AnimationUtils.loadAnimation(context,R.anim.slide_out_down))
+            hideAddOptionButtons()
 
             findNavController().navigate(
                 R.id.action_toReadFragment_to_addBookSearchFragment)
         }
 
         btnAddScan.setOnClickListener {
-            btnAddManual.visibility = View.GONE
-            btnAddSearch.visibility = View.GONE
-            btnAddScan.visibility = View.GONE
-            btnAddManual.isClickable = false
-            btnAddSearch.isClickable = false
-            btnAddScan.isClickable = false
+            hideAddOptionButtons()
 
-            fabAddBook.animate().rotation( 0F).setDuration(350L).start()
-            btnAddSearch.startAnimation(AnimationUtils.loadAnimation(context,R.anim.slide_out_down))
-            btnAddScan.startAnimation(AnimationUtils.loadAnimation(context,R.anim.slide_out_down))
-            btnAddManual.startAnimation(AnimationUtils.loadAnimation(context,R.anim.slide_out_down))
-
-            findNavController().navigate(
-                R.id.action_toReadFragment_to_addBookScanFragment)
+            if (Functions().checkPermission(activity as ListActivity, android.Manifest.permission.CAMERA)) {
+                findNavController().navigate(R.id.action_toReadFragment_to_addBookScanFragment)
+            } else {
+                Functions().requestPermission(
+                    activity as ListActivity,
+                    android.Manifest.permission.CAMERA,
+                    Constants.PERMISSION_CAMERA_FROM_LIST_3)
+            }
         }
 
         rvBooks.setOnClickListener {
@@ -317,6 +273,34 @@ class ToReadFragment : Fragment(R.layout.fragment_to_read) {
             it.hideKeyboard()
             findNavController().navigate(R.id.settingsFragment, null)
         }
+    }
+
+    private fun hideAddOptionButtons() {
+        btnAddManual.visibility = View.GONE
+        btnAddSearch.visibility = View.GONE
+        btnAddScan.visibility = View.GONE
+        btnAddManual.isClickable = false
+        btnAddSearch.isClickable = false
+        btnAddScan.isClickable = false
+
+        fabAddBook.animate().rotation( 0F).setDuration(350L).start()
+        btnAddSearch.startAnimation(AnimationUtils.loadAnimation(context,R.anim.slide_out_down))
+        btnAddScan.startAnimation(AnimationUtils.loadAnimation(context,R.anim.slide_out_down))
+        btnAddManual.startAnimation(AnimationUtils.loadAnimation(context,R.anim.slide_out_down))
+    }
+
+    private fun showAddOptionButtons() {
+        btnAddManual.visibility = View.VISIBLE
+        btnAddSearch.visibility = View.VISIBLE
+        btnAddScan.visibility = View.VISIBLE
+        btnAddManual.isClickable = true
+        btnAddSearch.isClickable = true
+        btnAddScan.isClickable = true
+
+        fabAddBook.animate().rotation(180F).setDuration(350L).start()
+        btnAddSearch.startAnimation(AnimationUtils.loadAnimation(context,R.anim.slide_in_up))
+        btnAddScan.startAnimation(AnimationUtils.loadAnimation(context,R.anim.slide_in_up))
+        btnAddManual.startAnimation(AnimationUtils.loadAnimation(context,R.anim.slide_in_up))
     }
 
     fun View.hideKeyboard() {
