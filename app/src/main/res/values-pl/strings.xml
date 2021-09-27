@@ -217,4 +217,9 @@
     <string name="finished_books">Książki przeczytane</string>
     <string name="in_progress_books">Książki w trakcie czytania</string>
     <string name="to_read_books">Książki na póżniej</string>
+    <string name="ask_for_rating_dialog_title">Podoba Ci się Books Tracker?</string>
+    <string name="ask_for_rating_dialog_message">Jeżeli tak, to oceń aplikację w Google Play!</string>
+    <string name="ask_for_rating_dialog_pos">Jasne, pokaż mi gdzie</string>
+    <string name="ask_for_rating_dialog_neu">Może następnym razem</string>
+    <string name="ask_for_rating_dialog_neg">O nie, nigdy!</string>
 </resources>

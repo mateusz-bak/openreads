@@ -1,19 +1,24 @@
 package software.mdev.bookstracker.ui.bookslist
 
 import android.annotation.SuppressLint
+import android.content.ActivityNotFoundException
 import android.content.Context
+import android.content.Intent
 import android.content.pm.PackageManager
 import android.net.Uri
 import android.os.Bundle
 import android.view.Menu
 import android.view.View
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.ContextCompat
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.ui.setupWithNavController
 import com.google.android.material.snackbar.Snackbar
 import kotlinx.android.synthetic.main.activity_list.*
+import software.mdev.bookstracker.BuildConfig
 import software.mdev.bookstracker.R
 import software.mdev.bookstracker.data.db.BooksDatabase
 import software.mdev.bookstracker.data.db.LanguageDatabase
@@ -57,6 +62,10 @@ class ListActivity : AppCompatActivity() {
         setContentView(R.layout.activity_list)
 
         updater.checkForAppUpdate(this, false)
+
+        // ask for rating only in gplay release
+        if (BuildConfig.FLAVOR == "gplay" && BuildConfig.BUILD_TYPE == "release")
+            askForRating()
 
         bottomNavigationView.setupWithNavController(booksNavHostFragment.findNavController())
 
@@ -177,5 +186,65 @@ class ListActivity : AppCompatActivity() {
                     .navigate(R.id.action_toReadFragment_to_addBookScanFragment)
             }
         }
+    }
+
+    private fun askForRating() {
+        var askForRatingTime = checkNextAskingTime()
+
+        if (askForRatingTime == 0L)
+            setNextAskingTime(System.currentTimeMillis() + Constants.MS_ONE_WEEK)
+        else if (askForRatingTime == Long.MAX_VALUE) {
+
+        } else {
+            if (askForRatingTime < System.currentTimeMillis())
+                displayAskForRatingDialog()
+        }
+    }
+
+    private fun displayAskForRatingDialog() {
+        val askForRatingDialog = AlertDialog.Builder(this)
+                .setTitle(R.string.ask_for_rating_dialog_title)
+                .setMessage(R.string.ask_for_rating_dialog_message)
+                .setIcon(R.drawable.ic_baseline_star_rate_24)
+                .setPositiveButton(R.string.ask_for_rating_dialog_pos) { _, _ ->
+                    try {
+                        startActivity(Intent(Intent.ACTION_VIEW, Uri.parse("market://details?id=$packageName")))
+                    } catch (e: ActivityNotFoundException) {
+                        startActivity(Intent(Intent.ACTION_VIEW, Uri.parse("https://play.google.com/store/apps/details?id=$packageName")))
+                    }
+                    setNextAskingTime(Long.MAX_VALUE)
+                }
+                .setNeutralButton(R.string.ask_for_rating_dialog_neu) { _, _ ->
+                    setNextAskingTime(System.currentTimeMillis() + Constants.MS_THREE_DAYS)
+                }
+                .setNegativeButton(R.string.ask_for_rating_dialog_neg) { _, _ ->
+                    setNextAskingTime(Long.MAX_VALUE)
+                }
+                .create()
+
+        askForRatingDialog?.show()
+        askForRatingDialog?.getButton(AlertDialog.BUTTON_NEGATIVE)?.setTextColor(ContextCompat.getColor(this.baseContext, R.color.grey_500))
+        askForRatingDialog?.getButton(AlertDialog.BUTTON_NEUTRAL)?.setTextColor(ContextCompat.getColor(this.baseContext, R.color.grey_500))
+    }
+
+    private fun setNextAskingTime(time: Long) {
+        var sharedPrefName = getString(R.string.shared_preferences_name)
+        val sharedPref = getSharedPreferences(sharedPrefName, Context.MODE_PRIVATE)
+        val sharedPrefEditor = sharedPref?.edit()
+
+        sharedPrefEditor?.apply {
+            putLong(Constants.SHARED_PREFERENCES_KEY_TIME_TO_ASK_FOR_RATING, time)
+            apply()
+        }
+    }
+
+    private fun checkNextAskingTime(): Long {
+        var sharedPrefName = getString(R.string.shared_preferences_name)
+        val sharedPref = getSharedPreferences(sharedPrefName, Context.MODE_PRIVATE)
+
+        return sharedPref.getLong(
+            Constants.SHARED_PREFERENCES_KEY_TIME_TO_ASK_FOR_RATING,
+            0L
+        )
     }
 }

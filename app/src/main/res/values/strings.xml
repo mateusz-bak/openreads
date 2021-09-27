@@ -254,4 +254,9 @@
     <string name="finished_books">Books finished</string>
     <string name="in_progress_books">Books in progress</string>
     <string name="to_read_books">Books for later</string>
+    <string name="ask_for_rating_dialog_title">Do you enjoy Books Tracker?</string>
+    <string name="ask_for_rating_dialog_message">If yes please rate it on Google Play!</string>
+    <string name="ask_for_rating_dialog_pos">Ok, take me there</string>
+    <string name="ask_for_rating_dialog_neu">Maybe next time</string>
+    <string name="ask_for_rating_dialog_neg">Nope, never!</string>
 </resources>
