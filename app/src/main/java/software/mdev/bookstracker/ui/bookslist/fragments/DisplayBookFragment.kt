@@ -3,7 +3,6 @@ package software.mdev.bookstracker.ui.bookslist.fragments
 import android.content.Context
 import android.content.res.ColorStateList
 import android.os.Bundle
-import android.view.MotionEvent
 import android.view.View
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
@@ -33,6 +32,8 @@ import androidx.lifecycle.lifecycleScope
 import com.squareup.picasso.Transformation
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
+import android.widget.Toast
+import android.widget.RatingBar.OnRatingBarChangeListener
 
 
 class DisplayBookFragment : Fragment(R.layout.fragment_display_book) {
@@ -243,12 +244,16 @@ class DisplayBookFragment : Fragment(R.layout.fragment_display_book) {
             Snackbar.make(it, R.string.click_edit_button_to_edit_author, Snackbar.LENGTH_SHORT).show()
         }
 
-        rbRatingIndicator.setOnTouchListener(View.OnTouchListener { v, event ->
-                if (event.action == MotionEvent.ACTION_UP) {
-                    Snackbar.make(view, R.string.click_edit_button_to_edit_rating, Snackbar.LENGTH_SHORT).show()
-                }
-                return@OnTouchListener true
-            })
+        rbRatingIndicator.onRatingBarChangeListener =
+            OnRatingBarChangeListener { ratingBar, rating, fromUser ->
+
+                changeBooksRating(book, rating)
+
+                Toast.makeText(
+                    (activity as ListActivity).baseContext,
+                    R.string.rating_changes_succesfully, Toast.LENGTH_SHORT
+                ).show()
+            }
 
         tvBookStatus.setOnClickListener {
             Snackbar.make(it, R.string.click_edit_button_to_edit_status, Snackbar.LENGTH_SHORT).show()
@@ -430,6 +435,27 @@ class DisplayBookFragment : Fragment(R.layout.fragment_display_book) {
         val date = Date(time)
         val format = SimpleDateFormat("yyyy")
         return format.format(date)
+    }
+
+    private fun changeBooksRating(book: Book, newRating: Float) {
+        viewModel.updateBook(
+            book.id,
+            book.bookTitle,
+            book.bookAuthor,
+            newRating,
+            book.bookStatus,
+            book.bookPriority,
+            book.bookStartDate,
+            book.bookFinishDate,
+            book.bookNumberOfPages,
+            book.bookTitle_ASCII,
+            book.bookAuthor_ASCII,
+            book.bookIsDeleted,
+            book.bookCoverUrl,
+            book.bookOLID,
+            book.bookISBN10,
+            book.bookISBN13
+        )
     }
 }
 

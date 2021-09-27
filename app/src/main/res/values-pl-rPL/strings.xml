@@ -139,7 +139,6 @@
     <string name="ivDeleteBookPermanently">Usuń książkę trwale</string>
     <string name="click_edit_button_to_edit_title">Kliknij przycisk edytowania, żeby zmienić tytuł książki</string>
     <string name="click_edit_button_to_edit_author">Kliknij przycisk edytowania, żeby zmienić autora książki</string>
-    <string name="click_edit_button_to_edit_rating">Kliknij przycisk edytowania, żeby zmienić ocenę książki</string>
     <string name="click_edit_button_to_edit_status">Kliknij przycisk edytowania, żeby zmienić status książki</string>
     <string name="click_edit_button_to_edit_date">Kliknij przycisk edytowania, żeby zmienić datę zakończenia książki</string>
     <string name="click_edit_button_to_edit_pages">Kliknij przycisk edytowania, żeby zmienić liczbę stron książki</string>
@@ -222,4 +221,5 @@
     <string name="ask_for_rating_dialog_pos">Jasne, pokaż mi gdzie</string>
     <string name="ask_for_rating_dialog_neu">Może następnym razem</string>
     <string name="ask_for_rating_dialog_neg">O nie, nigdy!</string>
+    <string name="rating_changes_succesfully">Pomyślnie zmieniono ocenę</string>
 </resources>
