@@ -213,4 +213,8 @@
     <string name="tv_less_about_book">Mniej</string>
     <string name="btnAddScan">Skanuj kod kreskowy</string>
     <string name="tbScannerTip">Skanuj kod kreskowy</string>
+    <string name="book_list_title">Strona startowa</string>
+    <string name="finished_books">Książki przeczytane</string>
+    <string name="in_progress_books">Książki w trakcie czytania</string>
+    <string name="to_read_books">Książki na póżniej</string>
 </resources>

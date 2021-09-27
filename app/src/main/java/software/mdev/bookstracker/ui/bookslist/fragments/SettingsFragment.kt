@@ -70,7 +70,6 @@ class SettingsFragment : PreferenceFragmentCompat(), OnSharedPreferenceChangeLis
     override fun onSharedPreferenceChanged(sharedPreferences: SharedPreferences, key: String) {
         when (key) {
             Constants.SHARED_PREFERENCES_KEY_ACCENT -> {
-//                Toast.makeText(context?.applicationContext, R.string.changes_after_app_restart, Toast.LENGTH_LONG).show()
                 hotReloadActivity(activity)
             }
             Constants.SHARED_PREFERENCES_KEY_RECOMMENDATIONS -> {

@@ -250,4 +250,8 @@
     <string name="tv_less_about_book">Less</string>
     <string name="btnAddScan">Scan barcode</string>
     <string name="tbScannerTip">Scan a barcode</string>
+    <string name="book_list_title">Landing page</string>
+    <string name="finished_books">Books finished</string>
+    <string name="in_progress_books">Books in progress</string>
+    <string name="to_read_books">Books for later</string>
 </resources>

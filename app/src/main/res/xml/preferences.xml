@@ -33,6 +33,14 @@
             android:summary="%s"
             android:title="@string/accent_name_title" />
 
+        <ListPreference
+            android:defaultValue="book_list_finished"
+            android:entries="@array/book_lists"
+            android:entryValues="@array/book_lists_values"
+            android:key="KEY_LANDING_PAGE"
+            android:summary="%s"
+            android:title="@string/book_list_title" />
+
 <!--        <SwitchPreference-->
 <!--            android:defaultValue="false"-->
 <!--            android:key="KEY_RECOMMENDATIONS"-->

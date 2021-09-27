@@ -71,6 +71,7 @@ object Constants {
     const val SHARED_PREFERENCES_KEY_SORT_ORDER = "KEY_SORT_ORDER"
     const val SHARED_PREFERENCES_KEY_FILTER_YEARS = "KEY_FILTER_YEARS"
     const val SHARED_PREFERENCES_KEY_ACCENT = "KEY_ACCENT"
+    const val SHARED_PREFERENCES_KEY_LANDING_PAGE = "KEY_LANDING_PAGE"
     const val SHARED_PREFERENCES_KEY_RECOMMENDATIONS = "KEY_RECOMMENDATIONS"
     const val SHARED_PREFERENCES_KEY_SHOW_OL_ALERT = "KEY_SHOW_OL_ALERT"
     const val SHARED_PREFERENCES_REFRESHED = "refreshed"
@@ -92,6 +93,10 @@ object Constants {
     const val THEME_ACCENT_PURPLE_500 = "accent_purple"
     const val THEME_ACCENT_TEAL_500 = "accent_teal"
     const val THEME_ACCENT_YELLOW_500 = "accent_yellow"
+
+    const val KEY_LANDING_PAGE_FINISHED = "book_list_finished"
+    const val KEY_LANDING_PAGE_IN_PROGRESS = "book_list_inProgress"
+    const val KEY_LANDING_PAGE_TO_READ = "book_list_toRead"
 
     const val THEME_ACCENT_DEFAULT = THEME_ACCENT_GREEN_500
 

@@ -34,11 +34,16 @@ class SetupFragment : Fragment(R.layout.fragment_setup) {
             val navOptions = NavOptions.Builder()
                 .setPopUpTo(R.id.setupFragment, true)
                 .build()
-            findNavController().navigate(
-                R.id.action_setupFragment_to_readFragment,
-                savedInstanceState,
-                navOptions
-            )
+
+            when (getPreferenceLandingPage((activity as ListActivity).baseContext)) {
+                Constants.KEY_LANDING_PAGE_FINISHED ->
+                    findNavController().navigate(R.id.action_setupFragment_to_readFragment, savedInstanceState, navOptions)
+                Constants.KEY_LANDING_PAGE_IN_PROGRESS ->
+                    findNavController().navigate(R.id.action_setupFragment_to_inProgressFragment, savedInstanceState, navOptions)
+                Constants.KEY_LANDING_PAGE_TO_READ ->
+                    findNavController().navigate(R.id.action_setupFragment_to_toReadFragment, savedInstanceState, navOptions)
+            }
+
         }
 
         val images = listOf(
@@ -141,7 +146,15 @@ class SetupFragment : Fragment(R.layout.fragment_setup) {
         fabLaunchApp.setOnClickListener {
             hotReloadActivity(activity)
             saveAppsFirstlaunch()
-            Navigation.findNavController(view).navigate(R.id.action_setupFragment_to_readFragment)
+
+            when (getPreferenceLandingPage((activity as ListActivity).baseContext)) {
+                Constants.KEY_LANDING_PAGE_FINISHED ->
+                    Navigation.findNavController(view).navigate(R.id.action_setupFragment_to_readFragment)
+                Constants.KEY_LANDING_PAGE_IN_PROGRESS ->
+                    Navigation.findNavController(view).navigate(R.id.action_setupFragment_to_inProgressFragment)
+                Constants.KEY_LANDING_PAGE_TO_READ ->
+                    Navigation.findNavController(view).navigate(R.id.action_setupFragment_to_toReadFragment)
+            }
         }
     }
 
@@ -224,5 +237,15 @@ class SetupFragment : Fragment(R.layout.fragment_setup) {
             Constants.THEME_ACCENT_YELLOW_500 -> accentColor = ContextCompat.getColor(context, R.color.yellow_500)
         }
         return accentColor
+    }
+
+    private fun getPreferenceLandingPage(context: Context): String {
+        var sharedPreferencesName = context.getString(R.string.shared_preferences_name)
+        val sharedPref = context.getSharedPreferences(sharedPreferencesName, Context.MODE_PRIVATE)
+
+        return sharedPref?.getString(
+            Constants.SHARED_PREFERENCES_KEY_LANDING_PAGE,
+            Constants.KEY_LANDING_PAGE_FINISHED
+        ).toString()
     }
 }
