@@ -31,7 +31,8 @@ android {
             resValue "string", "shared_preferences_name", "software.mdev.bookstracker_preferences"
             manifestPlaceholders = [
                     appIcon: "@mipmap/ic_launcher_three_books",
-                    appIconRound: "@mipmap/ic_launcher_three_books_round"
+                    appIconRound: "@mipmap/ic_launcher_three_books_round",
+                    providerAuthorities: "software.mdev.bookstracker.fileprovider"
             ]
         }
         debug {
@@ -40,7 +41,8 @@ android {
             resValue "string", "shared_preferences_name", "software.mdev.bookstracker.debug_preferences"
             manifestPlaceholders = [
                     appIcon: "@mipmap/ic_launcher_three_books_debug",
-                    appIconRound: "@mipmap/ic_launcher_three_books_debug"
+                    appIconRound: "@mipmap/ic_launcher_three_books_debug",
+                    providerAuthorities: "software.mdev.bookstracker.debug.fileprovider"
             ]
         }
     }

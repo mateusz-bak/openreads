@@ -17,7 +17,7 @@
         android:theme="@style/Theme.Mdev.Bookstracker">
         <provider
             android:name="androidx.core.content.FileProvider"
-            android:authorities="software.mdev.bookstracker.fileprovider"
+            android:authorities="${providerAuthorities}"
             android:exported="false"
             android:grantUriPermissions="true">
             <meta-data
