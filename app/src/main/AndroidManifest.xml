@@ -24,15 +24,18 @@
                 android:name="android.support.FILE_PROVIDER_PATHS"
                 android:resource="@xml/filepaths" />
         </provider>
+
         <activity
-            android:name="software.mdev.bookstracker.ui.bookslist.ListActivity"
-            android:label="@string/app_name"
-            >
+            android:name="software.mdev.bookstracker.ui.bookslist.SplashScreenActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
+        <activity
+            android:name="software.mdev.bookstracker.ui.bookslist.ListActivity">
+        </activity>
+
     </application>
 </manifest>
