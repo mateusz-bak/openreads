@@ -65,7 +65,7 @@
             android:numStars="5"
             android:rating="4"
             android:scaleType="fitStart"
-            android:stepSize="1"
+            android:stepSize="0.5"
             app:layout_constraintStart_toStartOf="@+id/tvBookAuthor"
             app:layout_constraintTop_toBottomOf="@+id/tvBookAuthor" />
 
