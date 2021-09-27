@@ -72,6 +72,7 @@
                 android:textAlignment="center"
                 android:textColor="?colorOnSecondary"
                 android:textSize="26sp"
+                android:fontFamily="sans-serif-light"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/ivBookCover"
@@ -85,6 +86,7 @@
                 android:text="@string/tvBookAuthor"
                 android:textColor="@android:color/darker_gray"
                 android:textSize="16sp"
+                android:fontFamily="sans-serif-thin"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/tvBookTitle" />
@@ -121,6 +123,7 @@
                 android:layout_marginEnd="16dp"
                 android:text="@string/tvBookStatus"
                 android:textSize="12sp"
+                android:fontFamily="sans-serif"
                 app:layout_constraintEnd_toStartOf="@+id/guideline3"
                 app:layout_constraintTop_toBottomOf="@+id/tvBookAuthor" />
 
@@ -190,6 +193,7 @@
                 android:textAlignment="center"
                 android:textColor="@color/grey"
                 android:textSize="18sp"
+                android:fontFamily="sans-serif"
                 app:drawableBottomCompat="@drawable/ic_baseline_keyboard_arrow_down_36"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.5"
@@ -203,6 +207,7 @@
                 android:layout_marginTop="12dp"
                 android:text="@string/tv_date_started_title"
                 android:textStyle="bold"
+                android:fontFamily="sans-serif"
                 app:layout_constraintEnd_toEndOf="@+id/guideline4"
                 app:layout_constraintStart_toStartOf="@+id/guideline4"
                 app:layout_constraintTop_toBottomOf="@+id/tvMoreAboutBook" />
@@ -213,6 +218,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="12dp"
                 android:text="@string/tv_date_finished"
+                android:fontFamily="sans-serif-light"
                 app:layout_constraintEnd_toEndOf="@+id/guideline4"
                 app:layout_constraintStart_toStartOf="@+id/guideline4"
                 app:layout_constraintTop_toBottomOf="@+id/tvDateStartedTitle" />
@@ -223,6 +229,7 @@
                 android:layout_height="wrap_content"
                 android:text="@string/tv_date_finished_title"
                 android:textStyle="bold"
+                android:fontFamily="sans-serif"
                 app:layout_constraintBottom_toBottomOf="@+id/tvDateStartedTitle"
                 app:layout_constraintEnd_toEndOf="@+id/guideline5"
                 app:layout_constraintStart_toStartOf="@+id/guideline5"
@@ -234,6 +241,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="12dp"
                 android:text="@string/tv_date_finished"
+                android:fontFamily="sans-serif-light"
                 app:layout_constraintEnd_toEndOf="@+id/guideline5"
                 app:layout_constraintStart_toStartOf="@+id/guideline5"
                 app:layout_constraintTop_toBottomOf="@+id/tvDateFinishedTitle" />
@@ -245,6 +253,7 @@
                 android:layout_marginTop="12dp"
                 android:text="@string/tv_book_pages_title"
                 android:textStyle="bold"
+                android:fontFamily="sans-serif"
                 app:layout_constraintEnd_toEndOf="@+id/guideline4"
                 app:layout_constraintStart_toStartOf="@+id/guideline4"
                 app:layout_constraintHorizontal_bias="0.5"
@@ -267,6 +276,7 @@
                 android:layout_marginTop="12dp"
                 android:text="@string/tv_book_isbn_title"
                 android:textStyle="bold"
+                android:fontFamily="sans-serif"
                 app:layout_constraintEnd_toEndOf="@+id/guideline5"
                 app:layout_constraintStart_toStartOf="@+id/guideline5"
                 app:layout_constraintHorizontal_bias="0.5"
@@ -278,6 +288,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="12dp"
                 android:text="@string/tv_book_isbn"
+                android:fontFamily="sans-serif-light"
                 app:layout_constraintEnd_toEndOf="@+id/tvBookISBNTitle"
                 app:layout_constraintStart_toStartOf="@+id/tvBookISBNTitle"
                 app:layout_constraintTop_toBottomOf="@+id/tvBookISBNTitle" />
@@ -290,6 +301,7 @@
                 android:layout_marginBottom="24dp"
                 android:gravity="center"
                 android:text="@string/tv_book_url"
+                android:fontFamily="sans-serif"
                 android:autoLink="web"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.5"
