@@ -538,6 +538,7 @@ class AddBookDialog(context: Context, var addBookDialogListener: AddBookDialogLi
         btnAdderSaveBook.setOnClickListener {
             val bookTitle = etAdderBookTitle.text.toString()
             val bookAuthor = etAdderAuthor.text.toString()
+            val bookPublishYear = etPublishYear.text.toString().toInt()
             val bookNumberOfPagesIntOrNull = etPagesNumber.text.toString().toIntOrNull()
             var bookNumberOfPagesInt : Int
 
@@ -565,6 +566,7 @@ class AddBookDialog(context: Context, var addBookDialogListener: AddBookDialogLi
                                                 whatIsClicked,
                                                 bookRating = rbAdderRating.rating,
                                                 bookNumberOfPagesInt,
+                                                bookPublishYear,
                                                 bookStartDateMs,
                                                 bookFinishDateMs,
                                                 bookTitle,
@@ -585,6 +587,7 @@ class AddBookDialog(context: Context, var addBookDialogListener: AddBookDialogLi
                                         whatIsClicked,
                                         bookRating = rbAdderRating.rating,
                                         bookNumberOfPagesInt,
+                                        bookPublishYear,
                                         bookStartDateMs,
                                         bookFinishDateMs,
                                         bookTitle,
@@ -613,6 +616,7 @@ class AddBookDialog(context: Context, var addBookDialogListener: AddBookDialogLi
         whatIsClicked: String,
         bookRating: Float,
         bookNumberOfPagesInt: Int,
+        bookPublishYear: Int,
         bookStartDateMs: Long?,
         bookFinishDateMs: Long?,
         bookTitle: String,
@@ -668,7 +672,8 @@ class AddBookDialog(context: Context, var addBookDialogListener: AddBookDialogLi
             DATABASE_EMPTY_VALUE,
             DATABASE_EMPTY_VALUE,
             DATABASE_EMPTY_VALUE,
-            DATABASE_EMPTY_VALUE
+            DATABASE_EMPTY_VALUE,
+            bookPublishYear = bookPublishYear,
         )
     }
 

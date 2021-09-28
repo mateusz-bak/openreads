@@ -54,6 +54,7 @@ class DisplayBookFragment : Fragment(R.layout.fragment_display_book) {
         tvBookAuthor.text = book.bookAuthor
         rbRatingIndicator.rating = book.bookRating
         tvBookPages.text = book.bookNumberOfPages.toString()
+        tvBookPublishYear.text = book.bookPublishYear.toString()
 
         tvDateFinished.visibility = View.GONE
         tvDateFinishedTitle.visibility = View.GONE
@@ -305,7 +306,8 @@ class DisplayBookFragment : Fragment(R.layout.fragment_display_book) {
                     book.bookCoverUrl,
                     book.bookOLID,
                     book.bookISBN10,
-                    book.bookISBN13
+                    book.bookISBN13,
+                    book.bookPublishYear
                 )
             }
         }
@@ -333,7 +335,8 @@ class DisplayBookFragment : Fragment(R.layout.fragment_display_book) {
                             book.bookCoverUrl,
                             book.bookOLID,
                             book.bookISBN10,
-                            book.bookISBN13
+                            book.bookISBN13,
+                            book.bookPublishYear
                         )
                         recalculateChallenges(book.bookStatus)
 
@@ -454,7 +457,8 @@ class DisplayBookFragment : Fragment(R.layout.fragment_display_book) {
             book.bookCoverUrl,
             book.bookOLID,
             book.bookISBN10,
-            book.bookISBN13
+            book.bookISBN13,
+            book.bookPublishYear
         )
     }
 }

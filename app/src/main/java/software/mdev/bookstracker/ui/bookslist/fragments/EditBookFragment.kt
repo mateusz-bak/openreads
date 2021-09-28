@@ -527,6 +527,7 @@ class EditBookFragment : Fragment(R.layout.fragment_edit_book) {
         fabSaveEditedBook.setOnClickListener {
             val bookTitle = etEditedBookTitle.text.toString()
             val bookAuthor = etEditedBookAuthor.text.toString()
+            val bookPublishYear = etEditedPublishYear.text.toString().toInt()
             var bookRating = 0.0F
             val bookNumberOfPagesIntOrNull = etEditedPagesNumber.text.toString().toIntOrNull()
             var bookNumberOfPagesInt: Int
@@ -613,7 +614,8 @@ class EditBookFragment : Fragment(R.layout.fragment_edit_book) {
                                                 book.bookCoverUrl,
                                                 bookOLID,
                                                 bookISBN10,
-                                                bookISBN13
+                                                bookISBN13,
+                                                bookPublishYear
                                             )
 
                                             recalculateChallenges()
@@ -649,7 +651,8 @@ class EditBookFragment : Fragment(R.layout.fragment_edit_book) {
                     book.bookCoverUrl,
                     book.bookOLID,
                     book.bookISBN10,
-                    book.bookISBN13
+                    book.bookISBN13,
+                    book.bookPublishYear
                 )
             }
         }
@@ -677,7 +680,8 @@ class EditBookFragment : Fragment(R.layout.fragment_edit_book) {
                             book.bookCoverUrl,
                             book.bookOLID,
                             book.bookISBN10,
-                            book.bookISBN13
+                            book.bookISBN13,
+                            book.bookPublishYear
                         )
                         recalculateChallenges()
 

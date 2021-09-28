@@ -220,4 +220,7 @@
     <string name="ask_for_rating_dialog_neu">Może następnym razem</string>
     <string name="ask_for_rating_dialog_neg">O nie, nigdy!</string>
     <string name="rating_changes_succesfully">Pomyślnie zmieniono ocenę</string>
+    <string name="hint_publish_year">Rok publikacji</string>
+    <string name="unknown_pages">Brak liczby stron</string>
+    <string name="unknown_publish_year">Brak roku publikacji</string>
 </resources>

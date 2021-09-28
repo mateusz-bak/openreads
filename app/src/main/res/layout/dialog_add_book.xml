@@ -270,17 +270,32 @@
 
         <EditText
             android:id="@+id/etPagesNumber"
-            android:layout_width="100dp"
+            android:layout_width="120dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="4dp"
             android:autofillHints="@string/autofill_hint_pages_number"
             android:hint="@string/hint_pages_number"
             android:inputType="number"
-            android:maxLength="10"
+            android:maxLength="6"
             android:textColor="?colorOnSecondary"
-            android:textSize="14sp"
-            android:paddingEnd="40dp"
+            android:textSize="13sp"
+            android:paddingEnd="30dp"
             app:layout_constraintStart_toStartOf="@+id/etAdderAuthor"
+            app:layout_constraintTop_toBottomOf="@+id/etAdderAuthor" />
+
+        <EditText
+            android:id="@+id/etPublishYear"
+            android:layout_width="120dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:autofillHints="@string/autofill_hint_publish_year"
+            android:hint="@string/hint_publish_year"
+            android:inputType="number"
+            android:maxLength="4"
+            android:textColor="?colorOnSecondary"
+            android:textSize="13sp"
+            android:paddingEnd="30dp"
+            app:layout_constraintEnd_toEndOf="@+id/etAdderAuthor"
             app:layout_constraintTop_toBottomOf="@+id/etAdderAuthor" />
 
         <ImageView
@@ -295,6 +310,20 @@
             app:layout_constraintBottom_toBottomOf="@+id/etPagesNumber"
             app:layout_constraintEnd_toEndOf="@+id/etPagesNumber"
             app:layout_constraintTop_toTopOf="@+id/etPagesNumber"
+            app:srcCompat="@drawable/ic_baseline_clear_24" />
+
+        <ImageView
+            android:id="@+id/ivClearPublishYear"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:clickable="true"
+            android:focusable="true"
+            android:scaleX="0.8"
+            android:scaleY="0.8"
+            android:layout_marginEnd="8dp"
+            app:layout_constraintBottom_toBottomOf="@+id/etPublishYear"
+            app:layout_constraintEnd_toEndOf="@+id/etPublishYear"
+            app:layout_constraintTop_toTopOf="@+id/etPublishYear"
             app:srcCompat="@drawable/ic_baseline_clear_24" />
 
 

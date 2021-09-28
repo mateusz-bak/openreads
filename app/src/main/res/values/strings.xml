@@ -259,4 +259,8 @@
     <string name="ask_for_rating_dialog_neu">Maybe next time</string>
     <string name="ask_for_rating_dialog_neg">Nope, never!</string>
     <string name="rating_changes_succesfully">Rating changed successfully</string>
+    <string name="autofill_hint_publish_year" translatable="false">bookpublishyear</string>
+    <string name="hint_publish_year">Publish year</string>
+    <string name="unknown_pages">No number of pages</string>
+    <string name="unknown_publish_year">No publish year</string>
 </resources>

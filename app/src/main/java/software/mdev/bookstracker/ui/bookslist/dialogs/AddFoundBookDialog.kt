@@ -97,6 +97,8 @@ class AddFoundBookDialog(
                 etPagesNumber.setText(resource.data!!.number_of_pages.toString())
             }
 
+            displayPublishYear()
+
             if (resource.data!!.covers != null) {
                 val circularProgressDrawable = CircularProgressDrawable(this.context)
                 circularProgressDrawable.strokeWidth = 5f
@@ -628,6 +630,7 @@ class AddFoundBookDialog(
         btnAdderSaveBook.setOnClickListener {
             val bookTitle = etAdderBookTitle.text.toString()
             val bookAuthor = etAdderAuthor.text.toString()
+            val bookPublishYear = etPublishYear.text.toString().toInt()
             val bookNumberOfPagesIntOrNull = etPagesNumber.text.toString().toIntOrNull()
             var bookNumberOfPagesInt: Int
 
@@ -656,6 +659,7 @@ class AddFoundBookDialog(
                                             whatIsClicked,
                                             bookRating = rbAdderRating.rating,
                                             bookNumberOfPagesInt = bookNumberOfPagesInt,
+                                            bookPublishYear,
                                             bookStartDateMs = bookStartDateMs,
                                             bookFinishDateMs = bookFinishDateMs,
                                             bookTitle = bookTitle,
@@ -680,6 +684,7 @@ class AddFoundBookDialog(
                                     whatIsClicked,
                                     bookRating = rbAdderRating.rating,
                                     bookNumberOfPagesInt = bookNumberOfPagesInt,
+                                    bookPublishYear,
                                     bookStartDateMs = bookStartDateMs,
                                     bookFinishDateMs = bookFinishDateMs,
                                     bookTitle = bookTitle,
@@ -708,10 +713,32 @@ class AddFoundBookDialog(
         }
     }
 
+    private fun displayPublishYear() {
+        if (resource.data!!.publish_date != null) {
+            var publishDate = resource.data!!.publish_date
+            var publishYear = 0
+
+            val numbers = Regex("[0-9]+").findAll(publishDate)
+                .map(MatchResult::value)
+                .toList()
+
+            for (i in numbers) {
+                if (i.length == 4)
+                    publishYear = i.toInt()
+            }
+
+            if (publishYear != 0)
+                etPublishYear.setText(publishYear.toString())
+            else
+                etPublishYear.visibility = View.GONE
+        }
+    }
+
     private fun prepareBook(
         whatIsClicked: String,
         bookRating: Float,
         bookNumberOfPagesInt: Int,
+        bookPublishYear: Int,
         bookStartDateMs: Long?,
         bookFinishDateMs: Long?,
         bookTitle: String,
@@ -792,7 +819,8 @@ class AddFoundBookDialog(
             coverID.toString(),
             olid.replace("/books/", ""),
             newIsbn10,
-            newIsbn13
+            newIsbn13,
+            bookPublishYear = bookPublishYear
         )
     }
 

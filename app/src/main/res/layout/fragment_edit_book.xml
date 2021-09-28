@@ -209,16 +209,33 @@
 
             <EditText
                 android:id="@+id/etEditedPagesNumber"
-                android:layout_width="75dp"
+                android:layout_width="120dp"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="12dp"
                 android:autofillHints="@string/autofill_hint_pages_number"
                 android:hint="@string/hint_pages_number"
                 android:inputType="number"
-                android:maxLength="10"
+                android:maxLength="6"
                 android:textColor="?colorOnSecondary"
-                android:textSize="14sp"
+                android:textSize="13sp"
+                android:paddingEnd="30dp"
                 app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/etEditedBookAuthor"
+                tools:ignore="TextViewEdits" />
+
+            <EditText
+                android:id="@+id/etEditedPublishYear"
+                android:layout_width="120dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="12dp"
+                android:autofillHints="@string/autofill_hint_publish_year"
+                android:hint="@string/hint_publish_year"
+                android:inputType="number"
+                android:maxLength="4"
+                android:textColor="?colorOnSecondary"
+                android:textSize="13sp"
+                android:paddingEnd="30dp"
+                app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/etEditedBookAuthor"
                 tools:ignore="TextViewEdits" />
 
