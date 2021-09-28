@@ -24,7 +24,26 @@ data class Year(
         var yearChallengeBooks: Int?,
 
         @ColumnInfo(name = Constants.DATABASE_YEAR_CHALLENGE_PAGES)
-        var yearChallengePages: Int
+        var yearChallengePages: Int,
+
+        @ColumnInfo(name = Constants.DATABASE_YEAR_QUICKEST_BOOK)
+        var yearQuickestBook: String,
+
+        @ColumnInfo(name = Constants.DATABASE_YEAR_QUICKEST_BOOK_VAL)
+        var yearQuickestBookVal: String,
+
+        @ColumnInfo(name = Constants.DATABASE_YEAR_LONGEST_BOOK)
+        var yearLongestBook: String,
+
+        @ColumnInfo(name = Constants.DATABASE_YEAR_LONGEST_BOOK_VAL)
+        var yearLongestBookVal: Int,
+
+        @ColumnInfo(name = Constants.DATABASE_YEAR_AVG_READING_TIME)
+        var yearAvgReadingTime: String,
+
+        @ColumnInfo(name = Constants.DATABASE_YEAR_AVG_PAGES)
+        var yearAvgPages: Int
+
 ): Serializable{
         @PrimaryKey(autoGenerate = false)
         var id: Int? = null
