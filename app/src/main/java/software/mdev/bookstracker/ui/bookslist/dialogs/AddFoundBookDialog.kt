@@ -681,7 +681,13 @@ class AddFoundBookDialog(
         btnAdderSaveBook.setOnClickListener {
             val bookTitle = etAdderBookTitle.text.toString()
             val bookAuthor = etAdderAuthor.text.toString()
-            val bookPublishYear = etPublishYear.text.toString().toInt()
+
+            val bookPublishYear = etPublishYear.text.toString()
+            var bookPublishYearInt = 0
+
+            if (bookPublishYear.isNotEmpty())
+                bookPublishYearInt = bookPublishYear.toInt()
+
             val bookNumberOfPagesIntOrNull = etPagesNumber.text.toString().toIntOrNull()
             var bookNumberOfPagesInt: Int
 
@@ -710,7 +716,7 @@ class AddFoundBookDialog(
                                             whatIsClicked,
                                             bookRating = rbAdderRating.rating,
                                             bookNumberOfPagesInt = bookNumberOfPagesInt,
-                                            bookPublishYear,
+                                            bookPublishYearInt,
                                             bookStartDateMs = bookStartDateMs,
                                             bookFinishDateMs = bookFinishDateMs,
                                             bookTitle = bookTitle,
@@ -735,7 +741,7 @@ class AddFoundBookDialog(
                                     whatIsClicked,
                                     bookRating = rbAdderRating.rating,
                                     bookNumberOfPagesInt = bookNumberOfPagesInt,
-                                    bookPublishYear,
+                                    bookPublishYearInt,
                                     bookStartDateMs = bookStartDateMs,
                                     bookFinishDateMs = bookFinishDateMs,
                                     bookTitle = bookTitle,
