@@ -45,6 +45,7 @@ class AddBookDialog(context: Context, var addBookDialogListener: AddBookDialogLi
         rbAdderRating.visibility = View.GONE
         tvRateThisBook.visibility = View.GONE
         etPagesNumber.visibility = View.GONE
+        etPublishYear.visibility = View.GONE
         btnSetFinishDate.visibility  = View.GONE
         btnSetStartDate.visibility  = View.GONE
         btnSetFinishDate.isClickable = false
@@ -67,6 +68,7 @@ class AddBookDialog(context: Context, var addBookDialogListener: AddBookDialogLi
         ivClearTitle.visibility = View.GONE
         ivClearAuthor.visibility = View.GONE
         ivClearPages.visibility = View.GONE
+        ivClearPublishYear.visibility = View.GONE
 
         ivBookCover.visibility = View.GONE
 
@@ -103,6 +105,15 @@ class AddBookDialog(context: Context, var addBookDialogListener: AddBookDialogLi
             }
         }
 
+        etPublishYear.addTextChangedListener { editable ->
+            editable?.let {
+                if (it.isNotEmpty())
+                    ivClearPublishYear.visibility = View.VISIBLE
+                else
+                    ivClearPublishYear.visibility = View.GONE
+            }
+        }
+
         ivClearTitle.setOnClickListener {
             etAdderBookTitle.setText(Constants.EMPTY_STRING)
             ivClearTitle.visibility = View.GONE
@@ -118,6 +129,11 @@ class AddBookDialog(context: Context, var addBookDialogListener: AddBookDialogLi
             ivClearPages.visibility = View.GONE
         }
 
+        ivClearPublishYear.setOnClickListener {
+            etPublishYear.setText(Constants.EMPTY_STRING)
+            ivClearPublishYear.visibility = View.GONE
+        }
+
         ivBookStatusSetRead.setOnClickListener {
             ivBookStatusSetRead.setColorFilter(accentColor, android.graphics.PorterDuff.Mode.SRC_IN)
             ivBookStatusSetInProgress.setColorFilter(ContextCompat.getColor(context, R.color.grey), android.graphics.PorterDuff.Mode.SRC_IN)
@@ -126,6 +142,7 @@ class AddBookDialog(context: Context, var addBookDialogListener: AddBookDialogLi
             rbAdderRating.visibility = View.VISIBLE
             tvRateThisBook.visibility = View.VISIBLE
             etPagesNumber.visibility = View.VISIBLE
+            etPublishYear.visibility = View.VISIBLE
             btnSetFinishDate.visibility  = View.VISIBLE
             btnSetStartDate.visibility  = View.VISIBLE
             btnSetFinishDate.isClickable = true
@@ -159,6 +176,11 @@ class AddBookDialog(context: Context, var addBookDialogListener: AddBookDialogLi
             else
                 ivClearPages.visibility = View.GONE
 
+            if (etPublishYear.text.isNotEmpty())
+                ivClearPublishYear.visibility = View.VISIBLE
+            else
+                ivClearPublishYear.visibility = View.GONE
+
             it.hideKeyboard()
         }
 
@@ -170,6 +192,7 @@ class AddBookDialog(context: Context, var addBookDialogListener: AddBookDialogLi
             rbAdderRating.visibility = View.GONE
             tvRateThisBook.visibility = View.GONE
             etPagesNumber.visibility = View.GONE
+            etPublishYear.visibility = View.GONE
             btnSetFinishDate.visibility  = View.GONE
             btnSetStartDate.visibility  = View.GONE
             btnSetFinishDate.isClickable = false
@@ -179,6 +202,7 @@ class AddBookDialog(context: Context, var addBookDialogListener: AddBookDialogLi
             tvSetStartDate.visibility  = View.GONE
 
             etPagesNumber.visibility = View.VISIBLE
+            etPublishYear.visibility = View.VISIBLE
             btnSetStartDate.visibility  = View.VISIBLE
             btnSetStartDate.isClickable = true
 
@@ -206,6 +230,11 @@ class AddBookDialog(context: Context, var addBookDialogListener: AddBookDialogLi
             else
                 ivClearPages.visibility = View.GONE
 
+            if (etPublishYear.text.isNotEmpty())
+                ivClearPublishYear.visibility = View.VISIBLE
+            else
+                ivClearPublishYear.visibility = View.GONE
+
             it.hideKeyboard()
         }
 
@@ -217,6 +246,7 @@ class AddBookDialog(context: Context, var addBookDialogListener: AddBookDialogLi
             rbAdderRating.visibility = View.GONE
             tvRateThisBook.visibility = View.GONE
             etPagesNumber.visibility = View.GONE
+            etPublishYear.visibility = View.GONE
             btnSetFinishDate.visibility  = View.GONE
             btnSetStartDate.visibility  = View.GONE
             btnSetFinishDate.isClickable = false
@@ -239,6 +269,7 @@ class AddBookDialog(context: Context, var addBookDialogListener: AddBookDialogLi
                 ivClearAuthor.visibility = View.GONE
 
             ivClearPages.visibility = View.GONE
+            ivClearPublishYear.visibility = View.GONE
 
             it.hideKeyboard()
         }
@@ -266,7 +297,9 @@ class AddBookDialog(context: Context, var addBookDialogListener: AddBookDialogLi
             tvToRead.visibility = View.GONE
 
             etPagesNumber.visibility = View.GONE
+            etPublishYear.visibility = View.GONE
             ivClearPages.visibility = View.GONE
+            ivClearPublishYear.visibility = View.GONE
 
             tvRateThisBook.visibility = View.GONE
             rbAdderRating.visibility = View.GONE
@@ -304,7 +337,9 @@ class AddBookDialog(context: Context, var addBookDialogListener: AddBookDialogLi
             tvToRead.visibility = View.GONE
 
             etPagesNumber.visibility = View.GONE
+            etPublishYear.visibility = View.GONE
             ivClearPages.visibility = View.GONE
+            ivClearPublishYear.visibility = View.GONE
 
             tvRateThisBook.visibility = View.GONE
             rbAdderRating.visibility = View.GONE
@@ -342,8 +377,13 @@ class AddBookDialog(context: Context, var addBookDialogListener: AddBookDialogLi
             tvToRead.visibility = View.VISIBLE
 
             etPagesNumber.visibility = View.VISIBLE
+            etPublishYear.visibility = View.VISIBLE
+
             if (etPagesNumber.text.isNotEmpty())
                 ivClearPages.visibility = View.VISIBLE
+
+            if (etPublishYear.text.isNotEmpty())
+                ivClearPublishYear.visibility = View.VISIBLE
 
             tvRateThisBook.visibility = View.VISIBLE
             rbAdderRating.visibility = View.VISIBLE
@@ -386,8 +426,13 @@ class AddBookDialog(context: Context, var addBookDialogListener: AddBookDialogLi
             tvToRead.visibility = View.VISIBLE
 
             etPagesNumber.visibility = View.VISIBLE
+            etPublishYear.visibility = View.VISIBLE
+
             if (etPagesNumber.text.isNotEmpty())
                 ivClearPages.visibility = View.VISIBLE
+
+            if (etPublishYear.text.isNotEmpty())
+                ivClearPublishYear.visibility = View.VISIBLE
 
             tvRateThisBook.visibility = View.VISIBLE
             rbAdderRating.visibility = View.VISIBLE
@@ -429,8 +474,13 @@ class AddBookDialog(context: Context, var addBookDialogListener: AddBookDialogLi
             tvToRead.visibility = View.VISIBLE
 
             etPagesNumber.visibility = View.VISIBLE
+            etPublishYear.visibility = View.VISIBLE
+
             if (etPagesNumber.text.isNotEmpty())
                 ivClearPages.visibility = View.VISIBLE
+
+            if (etPublishYear.text.isNotEmpty())
+                ivClearPublishYear.visibility = View.VISIBLE
 
             tvRateThisBook.visibility = View.VISIBLE
             rbAdderRating.visibility = View.VISIBLE
@@ -487,8 +537,13 @@ class AddBookDialog(context: Context, var addBookDialogListener: AddBookDialogLi
             tvToRead.visibility = View.VISIBLE
 
             etPagesNumber.visibility = View.VISIBLE
+            etPublishYear.visibility = View.VISIBLE
+
             if (etPagesNumber.text.isNotEmpty())
                 ivClearPages.visibility = View.VISIBLE
+
+            if (etPublishYear.text.isNotEmpty())
+                ivClearPublishYear.visibility = View.VISIBLE
 
             tvRateThisBook.visibility = View.VISIBLE
             rbAdderRating.visibility = View.VISIBLE

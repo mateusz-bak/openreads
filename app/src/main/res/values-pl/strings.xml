@@ -140,6 +140,7 @@
     <string name="click_edit_button_to_edit_status">Kliknij przycisk edytowania, żeby zmienić status książki</string>
     <string name="click_edit_button_to_edit_date">Kliknij przycisk edytowania, żeby zmienić datę zakończenia książki</string>
     <string name="click_edit_button_to_edit_pages">Kliknij przycisk edytowania, żeby zmienić liczbę stron książki</string>
+    <string name="click_edit_button_to_edit_publish_year">Kliknij przycisk edytowania, żeby zmienić datę publikacji książki</string>
     <string name="btnAddSearch">"Wyszukaj w\nOpen Library"</string>
     <string name="btnAddManual">"Wpisz\nręcznie"</string>
     <string name="etAdderBookTitleSearch">Tytuł, autor, ISBN</string>

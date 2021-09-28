@@ -65,6 +65,9 @@ class DisplayBookFragment : Fragment(R.layout.fragment_display_book) {
         tvBookPages.visibility = View.GONE
         tvBookPagesTitle.visibility = View.GONE
 
+        tvBookPublishYear.visibility = View.GONE
+        tvBookPublishYearTitle.visibility = View.GONE
+
         tvBookISBN.visibility = View.GONE
         tvBookISBNTitle.visibility = View.GONE
 
@@ -138,6 +141,10 @@ class DisplayBookFragment : Fragment(R.layout.fragment_display_book) {
                 rbRatingIndicator.visibility = View.GONE
                 tvBookPagesTitle.visibility = View.GONE
                 tvBookPages.visibility = View.GONE
+
+                tvBookPublishYear.visibility = View.GONE
+                tvBookPublishYearTitle.visibility = View.GONE
+
                 tvDateFinishedTitle.visibility = View.GONE
                 tvDateFinished.visibility = View.GONE
             }
@@ -148,6 +155,10 @@ class DisplayBookFragment : Fragment(R.layout.fragment_display_book) {
                 rbRatingIndicator.visibility = View.GONE
                 tvBookPagesTitle.visibility = View.GONE
                 tvBookPages.visibility = View.GONE
+
+                tvBookPublishYear.visibility = View.GONE
+                tvBookPublishYearTitle.visibility = View.GONE
+
                 tvDateFinishedTitle.visibility = View.GONE
                 tvDateFinished.visibility = View.GONE
             }
@@ -183,6 +194,10 @@ class DisplayBookFragment : Fragment(R.layout.fragment_display_book) {
 
                     tvBookPagesTitle.visibility = View.VISIBLE
                     tvBookPages.visibility = View.VISIBLE
+
+                    tvBookPublishYear.visibility = View.VISIBLE
+                    tvBookPublishYearTitle.visibility = View.VISIBLE
+
                     tvBookISBNTitle.visibility = View.VISIBLE
                     tvBookISBN.visibility = View.VISIBLE
                     if (book.bookOLID != Constants.DATABASE_EMPTY_VALUE)
@@ -226,6 +241,10 @@ class DisplayBookFragment : Fragment(R.layout.fragment_display_book) {
 
                     tvBookPagesTitle.visibility = View.GONE
                     tvBookPages.visibility = View.GONE
+
+                    tvBookPublishYear.visibility = View.GONE
+                    tvBookPublishYearTitle.visibility = View.GONE
+
                     tvDateFinishedTitle.visibility = View.GONE
                     tvDateFinished.visibility = View.GONE
                     tvBookISBNTitle.visibility = View.GONE
@@ -286,6 +305,14 @@ class DisplayBookFragment : Fragment(R.layout.fragment_display_book) {
 
         tvBookPages.setOnClickListener {
             Snackbar.make(it, R.string.click_edit_button_to_edit_pages, Snackbar.LENGTH_SHORT).show()
+        }
+
+        tvBookPublishYearTitle.setOnClickListener {
+            Snackbar.make(it, R.string.click_edit_button_to_edit_publish_year, Snackbar.LENGTH_SHORT).show()
+        }
+
+        tvBookPublishYear.setOnClickListener {
+            Snackbar.make(it, R.string.click_edit_button_to_edit_publish_year, Snackbar.LENGTH_SHORT).show()
         }
 
         class UndoBookDeletion : View.OnClickListener {

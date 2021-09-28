@@ -170,6 +170,7 @@
     <string name="click_edit_button_to_edit_status">Click edit button to change book\'s status</string>
     <string name="click_edit_button_to_edit_date">Click edit button to change book\'s finish date</string>
     <string name="click_edit_button_to_edit_pages">Click edit button to change book\'s number of pages</string>
+    <string name="click_edit_button_to_edit_publish_year">Click edit button to change book\'s publish year</string>
     <string name="btnAddSearch">"Search in\nOpen Library"</string>
     <string name="btnAddManual">"Add\nmanually"</string>
     <string name="etAdderBookTitleSearch">Title, author, isbn...</string>
