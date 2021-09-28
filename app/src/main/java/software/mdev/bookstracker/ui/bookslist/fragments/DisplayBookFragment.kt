@@ -15,10 +15,6 @@ import kotlinx.android.synthetic.main.fragment_display_book.*
 import software.mdev.bookstracker.R
 import software.mdev.bookstracker.data.db.entities.Book
 import software.mdev.bookstracker.other.Constants
-import software.mdev.bookstracker.other.Constants.BOOK_STATUS_IN_PROGRESS
-import software.mdev.bookstracker.other.Constants.BOOK_STATUS_READ
-import software.mdev.bookstracker.other.Constants.BOOK_STATUS_TO_READ
-import software.mdev.bookstracker.other.Constants.SERIALIZABLE_BUNDLE_BOOK
 import software.mdev.bookstracker.ui.bookslist.ListActivity
 import software.mdev.bookstracker.ui.bookslist.viewmodel.BooksViewModel
 import java.text.SimpleDateFormat
@@ -48,211 +44,34 @@ class DisplayBookFragment : Fragment(R.layout.fragment_display_book) {
         viewModel = (activity as ListActivity).booksViewModel
         listActivity = activity as ListActivity
 
-        val book = args.book
+        book = args.book
 
-        tvBookTitle.text = book.bookTitle
-        tvBookAuthor.text = book.bookAuthor
-        rbRatingIndicator.rating = book.bookRating
-        tvBookPages.text = book.bookNumberOfPages.toString()
-        tvBookPublishYear.text = book.bookPublishYear.toString()
-
-        tvDateFinished.visibility = View.GONE
-        tvDateFinishedTitle.visibility = View.GONE
-
-        tvDateStarted.visibility = View.GONE
-        tvDateStartedTitle.visibility = View.GONE
-
-        tvBookPages.visibility = View.GONE
-        tvBookPagesTitle.visibility = View.GONE
-
-        tvBookPublishYear.visibility = View.GONE
-        tvBookPublishYearTitle.visibility = View.GONE
-
-        tvBookISBN.visibility = View.GONE
-        tvBookISBNTitle.visibility = View.GONE
-
-        tvBookURL.visibility = View.GONE
-
-        if (book.bookCoverUrl == Constants.DATABASE_EMPTY_VALUE) {
-            ivBookCover.visibility = View.GONE
-        } else {
-            val circularProgressDrawable = CircularProgressDrawable(view.context)
-            circularProgressDrawable.strokeWidth = 5f
-            circularProgressDrawable.centerRadius = 30f
-            circularProgressDrawable.setColorSchemeColors(
-                ContextCompat.getColor(
-                    view.context,
-                    R.color.grey
-                )
-            )
-            circularProgressDrawable.start()
-
-            var coverID = book.bookCoverUrl
-            var coverUrl = "https://covers.openlibrary.org/b/id/$coverID-L.jpg"
-
-            Picasso
-                .get()
-                .load(coverUrl)
-                .placeholder(circularProgressDrawable)
-                .error(R.drawable.ic_baseline_error_outline_24)
-                .transform(RoundCornersTransform(16.0f))
-                .into(ivBookCover)
-        }
-
-        if (book.bookISBN13 != Constants.DATABASE_EMPTY_VALUE) {
-            tvBookISBN.text = book.bookISBN13
-        } else if (book.bookISBN10 != Constants.DATABASE_EMPTY_VALUE) {
-            tvBookISBN.text = book.bookISBN10
-        } else {
-            tvBookISBN.text = getString(R.string.not_set)
-        }
-
-        if (book.bookOLID != Constants.DATABASE_EMPTY_VALUE) {
-            var olid: String = book.bookOLID
-            var url: String = "https://openlibrary.org/books/$olid"
-            tvBookURL.text = url
-        }
-
-        if(book.bookFinishDate == "none" || book.bookFinishDate == "null") {
-            tvDateFinished.text = getString(R.string.not_set)
-        } else {
-            var bookFinishTimeStampLong = book.bookFinishDate.toLong()
-            tvDateFinished.text = convertLongToTime(bookFinishTimeStampLong)
-        }
-
-        if(book.bookStartDate == "none" || book.bookStartDate == "null") {
-            tvDateStarted.text = getString(R.string.not_set)
-        } else {
-            var bookStartTimeStampLong = book.bookStartDate.toLong()
-            tvDateStarted.text = convertLongToTime(bookStartTimeStampLong)
-        }
-
-        when (book.bookStatus) {
-            BOOK_STATUS_READ -> {
-                tvBookStatus.text = getString(R.string.finished)
-                ivBookStatusInProgress.visibility = View.GONE
-                ivBookStatusToRead.visibility = View.GONE
-                rbRatingIndicator.visibility = View.VISIBLE
-            }
-            BOOK_STATUS_IN_PROGRESS -> {
-                tvBookStatus.text = getString(R.string.inProgress)
-                ivBookStatusRead.visibility = View.GONE
-                ivBookStatusToRead.visibility = View.GONE
-                rbRatingIndicator.visibility = View.GONE
-                tvBookPagesTitle.visibility = View.GONE
-                tvBookPages.visibility = View.GONE
-
-                tvBookPublishYear.visibility = View.GONE
-                tvBookPublishYearTitle.visibility = View.GONE
-
-                tvDateFinishedTitle.visibility = View.GONE
-                tvDateFinished.visibility = View.GONE
-            }
-            BOOK_STATUS_TO_READ -> {
-                tvBookStatus.text = getString(R.string.toRead)
-                ivBookStatusInProgress.visibility = View.GONE
-                ivBookStatusRead.visibility = View.GONE
-                rbRatingIndicator.visibility = View.GONE
-                tvBookPagesTitle.visibility = View.GONE
-                tvBookPages.visibility = View.GONE
-
-                tvBookPublishYear.visibility = View.GONE
-                tvBookPublishYearTitle.visibility = View.GONE
-
-                tvDateFinishedTitle.visibility = View.GONE
-                tvDateFinished.visibility = View.GONE
-            }
-        }
+        initialViewsSetup()
+        setCover(view)
+        setISBN()
+        setOLID()
+        setFinishDate()
+        setStartDate()
 
         ivBookCover.setOnClickListener {
-            val bundle = Bundle().apply {
-                putSerializable("cover", book.bookCoverUrl)
-            }
-            findNavController().navigate(
-                R.id.action_displayBookFragment_to_displayCoverFragment,
-                bundle
-            )
+            displayBigCover()
         }
 
         fabEditBook.setOnClickListener {
-            val bundle = Bundle().apply {
-                putSerializable(SERIALIZABLE_BUNDLE_BOOK, book)
-            }
-            findNavController().navigate(
-                R.id.action_displayBookFragment_to_editBookFragment,
-                bundle
-            )
+            editBook()
         }
 
         tvMoreAboutBook.setOnClickListener {
             when(tvBookPagesTitle.visibility){
-                View.GONE -> {
-                    tvMoreAboutBook.setTextColor((activity as ListActivity).getColor(R.color.grey_300))
-                    tvMoreAboutBook.text = (activity as ListActivity).getString(R.string.tv_less_about_book)
-                    tvMoreAboutBook.setCompoundDrawablesRelativeWithIntrinsicBounds(null, (activity as ListActivity).getDrawable(R.drawable.ic_baseline_keyboard_arrow_up_24), null, null)
-                    tvMoreAboutBook.compoundDrawableTintList= ColorStateList.valueOf((activity as ListActivity).getColor(R.color.grey_300))
-
-                    tvBookPagesTitle.visibility = View.VISIBLE
-                    tvBookPages.visibility = View.VISIBLE
-
-                    tvBookPublishYear.visibility = View.VISIBLE
-                    tvBookPublishYearTitle.visibility = View.VISIBLE
-
-                    tvBookISBNTitle.visibility = View.VISIBLE
-                    tvBookISBN.visibility = View.VISIBLE
-                    if (book.bookOLID != Constants.DATABASE_EMPTY_VALUE)
-                        tvBookURL.visibility = View.VISIBLE
-                    if (book.bookStatus == Constants.BOOK_STATUS_READ) {
-
-                        tvDateFinishedTitle.visibility = View.VISIBLE
-                        tvDateFinished.visibility = View.VISIBLE
-
-                        val tvDateStartedTitleLayut = tvDateStartedTitle.layoutParams as ConstraintLayout.LayoutParams // btn is a View here
-                        tvDateStartedTitleLayut.startToStart = R.id.guideline4 // resource ID of new parent field
-                        tvDateStartedTitleLayut.endToEnd = R.id.guideline4 // resource ID of new parent field
-                        tvDateStartedTitle.layoutParams = tvDateStartedTitleLayut
-                        tvDateStartedTitle.visibility = View.VISIBLE
-
-                        val tvDateStartedLayut = tvDateStarted.layoutParams as ConstraintLayout.LayoutParams // btn is a View here
-                        tvDateStartedLayut.startToStart = R.id.guideline4 // resource ID of new parent field
-                        tvDateStartedLayut.endToEnd = R.id.guideline4 // resource ID of new parent field
-                        tvDateStarted.layoutParams = tvDateStartedLayut
-                        tvDateStarted.visibility = View.VISIBLE
-                    } else if (book.bookStatus == Constants.BOOK_STATUS_IN_PROGRESS){
-
-                        val tvDateStartedTitleLayut = tvDateStartedTitle.layoutParams as ConstraintLayout.LayoutParams // btn is a View here
-                        tvDateStartedTitleLayut.startToStart = R.id.guideline3 // resource ID of new parent field
-                        tvDateStartedTitleLayut.endToEnd = R.id.guideline3 // resource ID of new parent field
-                        tvDateStartedTitle.layoutParams = tvDateStartedTitleLayut
-                        tvDateStartedTitle.visibility = View.VISIBLE
-
-                        val tvDateStartedLayut = tvDateStarted.layoutParams as ConstraintLayout.LayoutParams // btn is a View here
-                        tvDateStartedLayut.startToStart = R.id.guideline3 // resource ID of new parent field
-                        tvDateStartedLayut.endToEnd = R.id.guideline3 // resource ID of new parent field
-                        tvDateStarted.layoutParams = tvDateStartedLayut
-                        tvDateStarted.visibility = View.VISIBLE
-                    }
-                }
                 View.VISIBLE -> {
-                    tvMoreAboutBook.setTextColor((activity as ListActivity).getColor(R.color.grey))
-                    tvMoreAboutBook.text = (activity as ListActivity).getString(R.string.tv_more_about_book)
-                    tvMoreAboutBook.setCompoundDrawablesRelativeWithIntrinsicBounds(null, null, null, (activity as ListActivity).getDrawable(R.drawable.ic_baseline_keyboard_arrow_down_24))
-                    tvMoreAboutBook.compoundDrawableTintList= ColorStateList.valueOf((activity as ListActivity).getColor(R.color.grey))
-
-                    tvBookPagesTitle.visibility = View.GONE
-                    tvBookPages.visibility = View.GONE
-
-                    tvBookPublishYear.visibility = View.GONE
-                    tvBookPublishYearTitle.visibility = View.GONE
-
-                    tvDateFinishedTitle.visibility = View.GONE
-                    tvDateFinished.visibility = View.GONE
-                    tvBookISBNTitle.visibility = View.GONE
-                    tvBookISBN.visibility = View.GONE
-                    tvDateStartedTitle.visibility = View.GONE
-                    tvDateStarted.visibility = View.GONE
-                    tvBookURL.visibility = View.GONE
+                    setDetailsButtonToMore()
+                    initialViewsSetup()
                 }
+                else -> {
+                    setDetailsButtonToLess()
+                    showMoreDetails()
+                }
+
             }
         }
 
@@ -381,31 +200,192 @@ class DisplayBookFragment : Fragment(R.layout.fragment_display_book) {
         }
     }
 
-    private fun getAccentColor(context: Context): Int {
+    private fun initialViewsSetup() {
+        tvBookTitle.text = book.bookTitle
+        tvBookAuthor.text = book.bookAuthor
+        rbRatingIndicator.rating = book.bookRating
+        tvBookPages.text = book.bookNumberOfPages.toString()
+        tvBookPublishYear.text = book.bookPublishYear.toString()
 
-        var accentColor = ContextCompat.getColor(context, R.color.purple_500)
+        tvDateFinished.visibility = View.GONE
+        tvDateFinishedTitle.visibility = View.GONE
 
-        var sharedPreferencesName = context.getString(R.string.shared_preferences_name)
-        val sharedPref = context.getSharedPreferences(sharedPreferencesName, Context.MODE_PRIVATE)
+        tvDateStarted.visibility = View.GONE
+        tvDateStartedTitle.visibility = View.GONE
 
-        var accent = sharedPref?.getString(
-            Constants.SHARED_PREFERENCES_KEY_ACCENT,
-            Constants.THEME_ACCENT_DEFAULT
-        ).toString()
+        tvBookPages.visibility = View.GONE
+        tvBookPagesTitle.visibility = View.GONE
 
-        when(accent){
-            Constants.THEME_ACCENT_LIGHT_GREEN -> accentColor = ContextCompat.getColor(context, R.color.light_green)
-            Constants.THEME_ACCENT_ORANGE_500 -> accentColor = ContextCompat.getColor(context, R.color.orange_500)
-            Constants.THEME_ACCENT_CYAN_500 -> accentColor = ContextCompat.getColor(context, R.color.cyan_500)
-            Constants.THEME_ACCENT_GREEN_500 -> accentColor = ContextCompat.getColor(context, R.color.green_500)
-            Constants.THEME_ACCENT_BROWN_400 -> accentColor = ContextCompat.getColor(context, R.color.brown_400)
-            Constants.THEME_ACCENT_LIME_500 -> accentColor = ContextCompat.getColor(context, R.color.lime_500)
-            Constants.THEME_ACCENT_PINK_300 -> accentColor = ContextCompat.getColor(context, R.color.pink_300)
-            Constants.THEME_ACCENT_PURPLE_500 -> accentColor = ContextCompat.getColor(context, R.color.purple_500)
-            Constants.THEME_ACCENT_TEAL_500 -> accentColor = ContextCompat.getColor(context, R.color.teal_500)
-            Constants.THEME_ACCENT_YELLOW_500 -> accentColor = ContextCompat.getColor(context, R.color.yellow_500)
+        tvBookPublishYear.visibility = View.GONE
+        tvBookPublishYearTitle.visibility = View.GONE
+
+        tvBookISBN.visibility = View.GONE
+        tvBookISBNTitle.visibility = View.GONE
+
+        tvBookURL.visibility = View.GONE
+
+        when (book.bookStatus) {
+            Constants.BOOK_STATUS_READ -> {
+                tvBookStatus.text = getString(R.string.finished)
+                ivBookStatusInProgress.visibility = View.GONE
+                ivBookStatusToRead.visibility = View.GONE
+                rbRatingIndicator.visibility = View.VISIBLE
+            }
+            Constants.BOOK_STATUS_IN_PROGRESS -> {
+                tvBookStatus.text = getString(R.string.inProgress)
+                ivBookStatusRead.visibility = View.GONE
+                ivBookStatusToRead.visibility = View.GONE
+                rbRatingIndicator.visibility = View.GONE
+            }
+            Constants.BOOK_STATUS_TO_READ -> {
+                tvBookStatus.text = getString(R.string.toRead)
+                ivBookStatusInProgress.visibility = View.GONE
+                ivBookStatusRead.visibility = View.GONE
+                rbRatingIndicator.visibility = View.GONE
+            }
         }
-        return accentColor
+    }
+
+    private fun showMoreDetails() {
+        tvBookPagesTitle.visibility = View.VISIBLE
+        tvBookPages.visibility = View.VISIBLE
+
+        tvBookPublishYear.visibility = View.VISIBLE
+        tvBookPublishYearTitle.visibility = View.VISIBLE
+
+        tvBookISBNTitle.visibility = View.VISIBLE
+        tvBookISBN.visibility = View.VISIBLE
+        if (book.bookOLID != Constants.DATABASE_EMPTY_VALUE)
+            tvBookURL.visibility = View.VISIBLE
+        if (book.bookStatus == Constants.BOOK_STATUS_READ) {
+
+            tvDateFinishedTitle.visibility = View.VISIBLE
+            tvDateFinished.visibility = View.VISIBLE
+
+            val tvDateStartedTitleLayut = tvDateStartedTitle.layoutParams as ConstraintLayout.LayoutParams // btn is a View here
+            tvDateStartedTitleLayut.startToStart = R.id.guideline4 // resource ID of new parent field
+            tvDateStartedTitleLayut.endToEnd = R.id.guideline4 // resource ID of new parent field
+            tvDateStartedTitle.layoutParams = tvDateStartedTitleLayut
+            tvDateStartedTitle.visibility = View.VISIBLE
+
+            val tvDateStartedLayut = tvDateStarted.layoutParams as ConstraintLayout.LayoutParams // btn is a View here
+            tvDateStartedLayut.startToStart = R.id.guideline4 // resource ID of new parent field
+            tvDateStartedLayut.endToEnd = R.id.guideline4 // resource ID of new parent field
+            tvDateStarted.layoutParams = tvDateStartedLayut
+            tvDateStarted.visibility = View.VISIBLE
+        } else if (book.bookStatus == Constants.BOOK_STATUS_IN_PROGRESS){
+
+            val tvDateStartedTitleLayut = tvDateStartedTitle.layoutParams as ConstraintLayout.LayoutParams // btn is a View here
+            tvDateStartedTitleLayut.startToStart = R.id.guideline3 // resource ID of new parent field
+            tvDateStartedTitleLayut.endToEnd = R.id.guideline3 // resource ID of new parent field
+            tvDateStartedTitle.layoutParams = tvDateStartedTitleLayut
+            tvDateStartedTitle.visibility = View.VISIBLE
+
+            val tvDateStartedLayut = tvDateStarted.layoutParams as ConstraintLayout.LayoutParams // btn is a View here
+            tvDateStartedLayut.startToStart = R.id.guideline3 // resource ID of new parent field
+            tvDateStartedLayut.endToEnd = R.id.guideline3 // resource ID of new parent field
+            tvDateStarted.layoutParams = tvDateStartedLayut
+            tvDateStarted.visibility = View.VISIBLE
+        }
+    }
+
+    private fun setDetailsButtonToLess() {
+        tvMoreAboutBook.setTextColor((activity as ListActivity).getColor(R.color.grey_300))
+        tvMoreAboutBook.text = (activity as ListActivity).getString(R.string.tv_less_about_book)
+        tvMoreAboutBook.setCompoundDrawablesRelativeWithIntrinsicBounds(null, (activity as ListActivity).getDrawable(R.drawable.ic_baseline_keyboard_arrow_up_24), null, null)
+        tvMoreAboutBook.compoundDrawableTintList= ColorStateList.valueOf((activity as ListActivity).getColor(R.color.grey_300))
+    }
+
+    private fun setDetailsButtonToMore() {
+        tvMoreAboutBook.setTextColor((activity as ListActivity).getColor(R.color.grey))
+        tvMoreAboutBook.text = (activity as ListActivity).getString(R.string.tv_more_about_book)
+        tvMoreAboutBook.setCompoundDrawablesRelativeWithIntrinsicBounds(null, null, null, (activity as ListActivity).getDrawable(R.drawable.ic_baseline_keyboard_arrow_down_24))
+        tvMoreAboutBook.compoundDrawableTintList= ColorStateList.valueOf((activity as ListActivity).getColor(R.color.grey))
+
+    }
+
+    private fun setCover(view: View) {
+        if (book.bookCoverUrl == Constants.DATABASE_EMPTY_VALUE) {
+            ivBookCover.visibility = View.GONE
+        } else {
+            val circularProgressDrawable = CircularProgressDrawable(view.context)
+            circularProgressDrawable.strokeWidth = 5f
+            circularProgressDrawable.centerRadius = 30f
+            circularProgressDrawable.setColorSchemeColors(
+                ContextCompat.getColor(
+                    view.context,
+                    R.color.grey
+                )
+            )
+            circularProgressDrawable.start()
+
+            val coverID = book.bookCoverUrl
+            val coverUrl = "https://covers.openlibrary.org/b/id/$coverID-L.jpg"
+
+            Picasso
+                .get()
+                .load(coverUrl)
+                .placeholder(circularProgressDrawable)
+                .error(R.drawable.ic_baseline_error_outline_24)
+                .transform(RoundCornersTransform(16.0f))
+                .into(ivBookCover)
+        }
+    }
+
+    private fun setISBN() {
+        if (book.bookISBN13 != Constants.DATABASE_EMPTY_VALUE) {
+            tvBookISBN.text = book.bookISBN13
+        } else if (book.bookISBN10 != Constants.DATABASE_EMPTY_VALUE) {
+            tvBookISBN.text = book.bookISBN10
+        } else {
+            tvBookISBN.text = getString(R.string.not_set)
+        }
+    }
+
+    private fun setOLID() {
+        if (book.bookOLID != Constants.DATABASE_EMPTY_VALUE) {
+            val olid: String = book.bookOLID
+            val url = "https://openlibrary.org/books/$olid"
+            tvBookURL.text = url
+        }
+    }
+
+    private fun setFinishDate() {
+        if(book.bookFinishDate == "none" || book.bookFinishDate == "null") {
+            tvDateFinished.text = getString(R.string.not_set)
+        } else {
+            val bookFinishTimeStampLong = book.bookFinishDate.toLong()
+            tvDateFinished.text = convertLongToTime(bookFinishTimeStampLong)
+        }
+    }
+
+    private fun setStartDate() {
+        if(book.bookStartDate == "none" || book.bookStartDate == "null") {
+            tvDateStarted.text = getString(R.string.not_set)
+        } else {
+            val bookStartTimeStampLong = book.bookStartDate.toLong()
+            tvDateStarted.text = convertLongToTime(bookStartTimeStampLong)
+        }
+    }
+
+    private fun displayBigCover() {
+        val bundle = Bundle().apply {
+            putSerializable("cover", book.bookCoverUrl)
+        }
+        findNavController().navigate(
+            R.id.action_displayBookFragment_to_displayCoverFragment,
+            bundle
+        )
+    }
+
+    private fun editBook() {
+        val bundle = Bundle().apply {
+            putSerializable(Constants.SERIALIZABLE_BUNDLE_BOOK, book)
+        }
+        findNavController().navigate(
+            R.id.action_displayBookFragment_to_editBookFragment,
+            bundle
+        )
     }
 
     fun View.hideKeyboard() {
