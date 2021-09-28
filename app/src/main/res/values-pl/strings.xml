@@ -7,9 +7,9 @@
     <string name="ivBookStatusToRead">Książka jest do przeczytania</string>
     <string name="fabSaveEditedBook">Zapisz edytowaną książkę</string>
     <string name="fabDeleteBook">Usuń książkę</string>
-    <string name="ivBookStatusSetRead">Ustaw status książki na \"skończona\"</string>
+    <string name="ivBookStatusSetRead">Ustaw status książki na \"przeczytana\"</string>
     <string name="ivBookStatusSetInProgress">Ustaw status książki na \"w trakcie czytania\"</string>
-    <string name="ivBookStatusSetToRead">Ustaw status książki na \"to przeczytania\"</string>
+    <string name="ivBookStatusSetToRead">Ustaw status książki na \"na później\"</string>
     <string name="fabAddBook">Dodaj nową książkę</string>
     <string name="ivSearch">Szukaj książki</string>
     <string name="ivClearSearch">Wyczyść okno szukania</string>
@@ -21,8 +21,6 @@
     <string name="ivInProgressIndicator">Książka jest w trakcie czytania</string>
     <string name="ivToReadIndicator">Książka jest do przeczytania</string>
     <string name="tvSourceCode">Kod żródłowy</string>
-    <string name="ivRepoUrl">https://github.com/mateusz-bak/books-tracker-android/</string>
-    <string name="tvLicenseUrl">https://github.com/mateusz-bak/books-tracker-android/blob/master/LICENSE</string>
     <string name="miAbout">O aplikacji</string>
     <string name="tvAppsAuthor">Autor</string>
     <string name="readFragment">Przeczytane</string>
@@ -48,12 +46,12 @@
     <string name="tvSortTitle">Tytuł</string>
     <string name="tvSortAuthor">Autor</string>
     <string name="tvSortRating">Ocena</string>
-    <string name="notYetImplemented">Jeszcze nie dostępne</string>
+    <string name="notYetImplemented">Jeszcze niedostępne</string>
     <string name="dismiss">Ok</string>
     <string name="bookDeleted">Książka usunięta</string>
     <string name="undo">Cofnij</string>
     <string name="tvWelcomeText_0">Witaj w aplikacji Books Tracker</string>
-    <string name="tvLooksEmpty">Twoja lista książek jest na razie pusta, kliknij przycisk \"plus\" poniżej, w celu dodania nowych książek!</string>
+    <string name="tvLooksEmpty">Trochę tu pusto!\\n\\nŻeby dodać nowe książki kliknij przycisk \"plus\" na dole ekranu.</string>
     <string name="customization">Wygląd aplikacji</string>
     <string name="about">O aplikacji</string>
     <string name="app_version_title">Wersja</string>
@@ -203,7 +201,7 @@
     <string name="backup_import_success">Import zakończony powodzeniem!</string>
     <string name="backup_import_failure">Import zakończony niepowodzeniem. Czy wybrany został poprawny plik?</string>
     <string name="rate_app_title">Oceń aplikację</string>
-    <string name="rate_app">Podoba Ci się Books Tracker? Oceń ją w sklepie!. Kliknij tutaj</string>
+    <string name="rate_app">Podoba Ci się Books Tracker? Oceń ją w sklepie! Kliknij tutaj</string>
     <string name="contact_title">Skontaktuj się</string>
     <string name="restore_backup_warning_title">Ostrożnie!</string>
     <string name="restore_backup_warning_message">Przywrócenie kopii zapasowej nadpisze książki, które aktualnie posiadasz. Pamiętaj żeby mieć ich kopię zapasową.</string>
