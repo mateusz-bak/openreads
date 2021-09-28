@@ -106,18 +106,14 @@ class StatisticsAdapter(
         if (position == 0 && curYear.yearBooks == 0) {
             holder.itemView.apply {
                 tvLooksEmptyStatistics.visibility = View.VISIBLE
-                ivBooksRead.visibility = View.GONE
-                ivPagesRead.visibility = View.GONE
-                rbAvgRatingIndicator.visibility = View.GONE
-                tvBooksReadTitle.visibility = View.GONE
-                tvBooksRead.visibility = View.GONE
-                tvPagesReadTitle.visibility = View.GONE
-                tvPagesRead.visibility = View.GONE
-                tvAvgRatingTitle.visibility = View.GONE
-                tvAvgRating.visibility = View.GONE
-                ivChallenge.visibility = View.INVISIBLE
-                tvChallengeTitle.visibility = View.GONE
-                tvChallenge.visibility = View.GONE
+
+                clBooksRead.visibility = View.GONE
+
+                clPagesRead.visibility = View.GONE
+
+                clAvgRating.visibility = View.GONE
+
+                clChallenge.visibility = View.GONE
             }
         } else {
             holder.itemView.tvLooksEmptyStatistics.visibility = View.GONE
@@ -126,18 +122,11 @@ class StatisticsAdapter(
         var challengeBooksRead = "0"
 
         holder.itemView.apply {
-            tvBooksRead.text = curYear.yearBooks.toString()
-            tvPagesRead.text = curYear.yearPages.toString()
-            rbAvgRatingIndicator.rating = curYear.avgRating
-            when (curYear.avgRating) {
-                0F -> tvAvgRating.text = "0.0"
-                1F -> tvAvgRating.text = "1.0"
-                2F -> tvAvgRating.text = "2.0"
-                3F -> tvAvgRating.text = "3.0"
-                4F -> tvAvgRating.text = "4.0"
-                5F -> tvAvgRating.text = "5.0"
-                else -> tvAvgRating.text = df.format(curYear.avgRating)
-            }
+            tvBooksReadValue.text = curYear.yearBooks.toString()
+
+            tvPagesReadValue.text = curYear.yearPages.toString()
+
+            tvAvgRatingValue.text = curYear.avgRating.toString()
 
             if (position == 0 && itemCount > 1) {
                 if (differ.currentList[1].year == Calendar.getInstance().get(Calendar.YEAR)
@@ -155,31 +144,23 @@ class StatisticsAdapter(
             }
 
             val tvChallengeText = "$challengeBooksRead / $challengeBooksTarget"
-            tvChallenge.text = tvChallengeText
+            tvChallengeValue.text = tvChallengeText
         }
 
         if (position == 0) {
-            holder.itemView.ivChallenge.setOnClickListener {
-                callChallengeDialog(foundYear, it, challengeBooksRead)
-            }
-            holder.itemView.tvChallengeTitle.setOnClickListener {
-                callChallengeDialog(foundYear, it, challengeBooksRead)
-            }
-            holder.itemView.tvChallenge.setOnClickListener {
+            holder.itemView.clChallenge.setOnClickListener {
                 callChallengeDialog(foundYear, it, challengeBooksRead)
             }
 
             holder.itemView.apply {
                 if (foundYear == null) {
-                    tvChallenge.text = resources.getText(R.string.tvChallengeNotSet)
+                    tvChallengeValue.text = resources.getText(R.string.tvChallengeNotSet)
                 }
             }
         } else {
             holder.itemView.apply {
                 if (foundYear == null) {
-                    ivChallenge.visibility = View.INVISIBLE
-                    tvChallengeTitle.visibility = View.GONE
-                    tvChallenge.visibility = View.GONE
+                    clChallenge.visibility = View.GONE
                 }
             }
         }

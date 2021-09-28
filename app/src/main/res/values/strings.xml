@@ -264,4 +264,13 @@
     <string name="hint_publish_year">Publish year</string>
     <string name="unknown_pages">No number of pages</string>
     <string name="unknown_publish_year">No publish year</string>
+    <string name="stats_quickest_read">Quickest read time</string>
+    <string name="stats_longest_book">Longest book</string>
+    <string name="stats_avg_reading_time">Average reading time</string>
+    <string name="stats_avg_pages">Average number of pages</string>
+    <string name="stats_books_read">Books read</string>
+    <string name="stats_pages_read">Pages read</string>
+    <string name="stats_avg_rating">Average books rating</string>
+    <string name="stats_challenge">Reading challenge</string>
+    <string name="stats_months">Monthly stats</string>
 </resources>

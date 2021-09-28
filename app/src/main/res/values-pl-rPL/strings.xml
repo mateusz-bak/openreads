@@ -224,4 +224,13 @@
     <string name="hint_publish_year">Rok publikacji</string>
     <string name="unknown_pages">Brak liczby stron</string>
     <string name="unknown_publish_year">Brak roku publikacji</string>
+    <string name="stats_quickest_read">Najszybciej przeczytana książka</string>
+    <string name="stats_longest_book">Najdłuższa książka</string>
+    <string name="stats_avg_reading_time">Średni czas czytania</string>
+    <string name="stats_avg_pages">Średnia ilość stron</string>
+    <string name="stats_books_read">Przeczytane książki</string>
+    <string name="stats_pages_read">Przeczytane strony</string>
+    <string name="stats_avg_rating">Średnia ocena książek</string>
+    <string name="stats_challenge">Wyzwanie czytelnicze</string>
+    <string name="stats_months">Statystyki miesięczne</string>
 </resources>
