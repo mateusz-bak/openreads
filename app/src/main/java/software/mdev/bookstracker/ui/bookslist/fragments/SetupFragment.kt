@@ -27,10 +27,7 @@ class SetupFragment : Fragment(R.layout.fragment_setup) {
         var sharedPreferencesName = (activity as ListActivity).getString(R.string.shared_preferences_name)
         val sharedPref = (activity as ListActivity).getSharedPreferences(sharedPreferencesName, Context.MODE_PRIVATE)
 
-        if (!sharedPref.getBoolean(Constants.SHARED_PREFERENCES_KEY_FIRST_TIME_TOGGLE, true) &&
-            sharedPref.getString(Constants.SHARED_PREFERENCES_KEY_APP_VERSION, "v0.0.0") ==
-            resources.getString(R.string.app_version)
-        ) {
+        if (!sharedPref.getBoolean(Constants.SHARED_PREFERENCES_KEY_FIRST_TIME_TOGGLE, true)) {
             val navOptions = NavOptions.Builder()
                 .setPopUpTo(R.id.setupFragment, true)
                 .build()
@@ -256,8 +253,6 @@ class SetupFragment : Fragment(R.layout.fragment_setup) {
 
         editor?.apply {
             putBoolean(Constants.SHARED_PREFERENCES_KEY_FIRST_TIME_TOGGLE, false)
-            putString(Constants.SHARED_PREFERENCES_KEY_APP_VERSION, resources.getString(R.string.app_version))
-            putBoolean(Constants.SHARED_PREFERENCES_KEY_SHOW_OL_ALERT, true)
             apply()
         }
     }
