@@ -98,12 +98,12 @@ class ListActivity : AppCompatActivity() {
     }
 
     private fun setBadge(index: Int, count: Int) {
-        val functions = Functions()
         var menuItemId = bottomNavigationView.menu.getItem(index).itemId
 
         if (count > 0) {
             bottomNavigationView.getOrCreateBadge(menuItemId).backgroundColor =
-                functions.getAccentColor(this.applicationContext)
+                resources.getColor(R.color.grey_500)
+
             bottomNavigationView.getOrCreateBadge(menuItemId).number = count
         } else {
             bottomNavigationView.removeBadge(menuItemId)
