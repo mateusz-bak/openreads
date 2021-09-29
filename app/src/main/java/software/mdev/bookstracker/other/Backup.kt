@@ -7,6 +7,7 @@ import android.os.Handler
 import android.os.Looper
 import androidx.core.content.FileProvider.getUriForFile
 import androidx.sqlite.db.SimpleSQLiteQuery
+import software.mdev.bookstracker.BuildConfig
 import software.mdev.bookstracker.R
 import software.mdev.bookstracker.data.db.BooksDatabase
 import software.mdev.bookstracker.ui.bookslist.ListActivity
@@ -62,7 +63,7 @@ class Backup {
     // Share the backup to a supported app
     private fun shareBackup(fileUri: String, activity: ListActivity) {
         val file = File(fileUri)
-        val contentUri: Uri = getUriForFile(activity, "software.mdev.bookstracker.fileprovider", file)
+        val contentUri: Uri = getUriForFile(activity, "${BuildConfig.APPLICATION_ID}.fileprovider", file)
         val shareIntent = Intent().apply {
             action = Intent.ACTION_SEND
             putExtra(Intent.EXTRA_STREAM, contentUri)
