@@ -197,6 +197,16 @@ class StatisticsAdapter(
 
             val tvChallengeText = "$challengeBooksRead / $challengeBooksTarget"
             tvChallengeValue.text = tvChallengeText
+
+            var target = challengeBooksTarget
+            var read = challengeBooksRead
+
+            if (target != "null" && read != "null") {
+                var challengePercent = ((read.toFloat()/target.toFloat())*100).toInt()
+                pbChallenge.progress = challengePercent
+            } else {
+                pbChallenge.visibility = View.GONE
+            }
         }
 
         if (position == 0) {

@@ -41,7 +41,7 @@
                     <androidx.constraintlayout.widget.ConstraintLayout
                         android:id="@+id/clChallengeIn"
                         android:layout_width="match_parent"
-                        android:layout_height="80dp"
+                        android:layout_height="wrap_content"
                         android:padding="8dp"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
@@ -57,6 +57,7 @@
                             android:text="@string/stats_challenge"
                             android:textColor="?colorOnSecondary"
                             android:textSize="16sp"
+                            android:layout_marginTop="8dp"
                             app:layout_constraintBottom_toTopOf="@+id/tvChallengeValue"
                             app:layout_constraintStart_toEndOf="@+id/ivChallenge"
                             app:layout_constraintTop_toTopOf="parent" />
@@ -69,7 +70,6 @@
                             android:gravity="center"
                             android:text="@string/stats_challenge"
                             android:textSize="14sp"
-                            app:layout_constraintBottom_toBottomOf="parent"
                             app:layout_constraintStart_toStartOf="@+id/tvChallengeTitle"
                             app:layout_constraintTop_toBottomOf="@+id/tvChallengeTitle" />
 
@@ -82,6 +82,22 @@
                             app:layout_constraintStart_toStartOf="parent"
                             app:layout_constraintTop_toTopOf="parent"
                             app:srcCompat="@drawable/ic_svg_gold_medal" />
+
+                        <ProgressBar
+                            android:id="@+id/pbChallenge"
+                            style="@style/Widget.AppCompat.ProgressBar.Horizontal"
+                            android:layout_width="0dp"
+                            android:layout_height="20dp"
+                            android:layout_marginTop="4dp"
+                            android:layout_marginEnd="16dp"
+                            android:indeterminate="false"
+                            android:max="100"
+                            android:progress="0"
+                            android:scaleY="2"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintHorizontal_bias="0.5"
+                            app:layout_constraintStart_toStartOf="@+id/tvChallengeValue"
+                            app:layout_constraintTop_toBottomOf="@+id/tvChallengeValue" />
 
                     </androidx.constraintlayout.widget.ConstraintLayout>
                 </androidx.cardview.widget.CardView>
