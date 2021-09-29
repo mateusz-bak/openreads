@@ -69,7 +69,7 @@ class AddBookSearchFragment : Fragment(R.layout.fragment_add_book_search) {
 
         if (isbn == "manual_search") {
             etAdderBookTitleSearch.requestFocus()
-            showKeyboard(etAdderBookTitleSearch, 350)
+            showKeyboard(etAdderBookTitleSearch, 250)
         } else {
             etAdderBookTitleSearch.setText(isbn)
 
@@ -114,6 +114,9 @@ class AddBookSearchFragment : Fragment(R.layout.fragment_add_book_search) {
                                 apply()
                             }
                         }
+
+                        etAdderBookTitleSearch.requestFocus()
+                        showKeyboard(etAdderBookTitleSearch, 100)
                     }
                 }, activity as ListActivity
             ).show()
