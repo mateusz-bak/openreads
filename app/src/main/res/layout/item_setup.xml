@@ -79,32 +79,6 @@
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent" />
 
-    <ImageView
-        android:id="@+id/ivSwipeHint2"
-        android:layout_width="25dp"
-        android:layout_height="22dp"
-        android:rotation="180"
-        android:visibility="invisible"
-        android:layout_marginStart="8dp"
-        app:layout_constraintBottom_toBottomOf="@+id/ivSwipeHint1"
-        app:layout_constraintStart_toStartOf="@+id/ivSwipeHint1"
-        app:layout_constraintTop_toTopOf="@+id/ivSwipeHint1"
-        app:srcCompat="@drawable/ic_baseline_arrow_forward_ios_24"
-        app:tint="@color/grey_500" />
-
-    <ImageView
-        android:id="@+id/ivSwipeHint1"
-        android:layout_width="25dp"
-        android:layout_height="22dp"
-        android:layout_marginStart="4dp"
-        android:rotation="180"
-        android:visibility="invisible"
-        app:layout_constraintBottom_toBottomOf="@+id/tvSetupSwipeHint"
-        app:layout_constraintStart_toEndOf="@+id/tvSetupSwipeHint"
-        app:layout_constraintTop_toTopOf="@+id/tvSetupSwipeHint"
-        app:srcCompat="@drawable/ic_baseline_arrow_forward_ios_24"
-        app:tint="@color/grey_500" />
-
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/clThemeSelector"
         android:layout_width="0dp"

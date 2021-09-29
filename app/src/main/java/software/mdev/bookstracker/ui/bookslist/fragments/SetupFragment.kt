@@ -60,9 +60,12 @@ class SetupFragment : Fragment(R.layout.fragment_setup) {
             images,
             resources.getString(R.string.app_version),
             view.context,
-            vpSetup
+            vpSetup,
+            this
         )
         vpSetup.adapter = adapter
+
+        var animateNext = true
 
         vpSetup.registerOnPageChangeCallback(object: ViewPager2.OnPageChangeCallback() {
             override fun onPageScrolled(
@@ -86,6 +89,40 @@ class SetupFragment : Fragment(R.layout.fragment_setup) {
                         fabLaunchApp.scaleX = 0F
                         fabLaunchApp.scaleY = 0F
 
+                        if (animateNext) {
+                            animateNext = false
+                            tvNext.alpha = 0F
+                            tvNext.visibility = View.VISIBLE
+                            tvNext.animate().alpha(1F).setDuration(500L).setStartDelay(500L)
+                                .start()
+
+                            ivPosition0.alpha = 0F
+                            ivPosition0.visibility = View.VISIBLE
+                            ivPosition1.alpha = 0F
+                            ivPosition1.visibility = View.VISIBLE
+                            ivPosition2.alpha = 0F
+                            ivPosition2.visibility = View.VISIBLE
+                            ivPosition3.alpha = 0F
+                            ivPosition3.visibility = View.VISIBLE
+                            ivPosition4.alpha = 0F
+                            ivPosition4.visibility = View.VISIBLE
+                            ivPosition5.alpha = 0F
+                            ivPosition5.visibility = View.VISIBLE
+
+                            ivPosition0.animate().alpha(1F).setDuration(500L).setStartDelay(500L)
+                                .start()
+                            ivPosition1.animate().alpha(1F).setDuration(500L).setStartDelay(500L)
+                                .start()
+                            ivPosition2.animate().alpha(1F).setDuration(500L).setStartDelay(500L)
+                                .start()
+                            ivPosition3.animate().alpha(1F).setDuration(500L).setStartDelay(500L)
+                                .start()
+                            ivPosition4.animate().alpha(1F).setDuration(500L).setStartDelay(500L)
+                                .start()
+                            ivPosition5.animate().alpha(1F).setDuration(500L).setStartDelay(500L)
+                                .start()
+                        }
+
                         vpSetup.isUserInputEnabled = true
                     }
                     1 -> {
@@ -94,6 +131,10 @@ class SetupFragment : Fragment(R.layout.fragment_setup) {
                         fabLaunchApp.visibility = View.INVISIBLE
                         fabLaunchApp.scaleX = 0F
                         fabLaunchApp.scaleY = 0F
+
+                        tvNext.visibility = View.VISIBLE
+                        tvNext.animate().cancel()
+                        tvNext.alpha = 1F
 
                         vpSetup.isUserInputEnabled = true
                     }
@@ -104,6 +145,8 @@ class SetupFragment : Fragment(R.layout.fragment_setup) {
                         fabLaunchApp.scaleX = 0F
                         fabLaunchApp.scaleY = 0F
 
+                        tvNext.visibility = View.VISIBLE
+
                         vpSetup.isUserInputEnabled = true
                     }
                     3 -> {
@@ -113,6 +156,8 @@ class SetupFragment : Fragment(R.layout.fragment_setup) {
                         fabLaunchApp.scaleX = 0F
                         fabLaunchApp.scaleY = 0F
 
+                        tvNext.visibility = View.VISIBLE
+
                         vpSetup.isUserInputEnabled = true
                     }
                     4 -> {
@@ -120,6 +165,8 @@ class SetupFragment : Fragment(R.layout.fragment_setup) {
 
                         fabLaunchApp.animate().setDuration(250L).scaleX(0F).start()
                         fabLaunchApp.animate().setDuration(250L).scaleY(0F).start()
+
+                        tvNext.visibility = View.INVISIBLE
 
                         vpSetup.isUserInputEnabled = false
                     }
@@ -132,6 +179,8 @@ class SetupFragment : Fragment(R.layout.fragment_setup) {
 
                         fabLaunchApp.animate().setDuration(250L).scaleX(1F).start()
                         fabLaunchApp.animate().setDuration(250L).scaleY(1F).start()
+
+                        tvNext.visibility = View.INVISIBLE
 
                         vpSetup.isUserInputEnabled = false
                     }
@@ -154,6 +203,16 @@ class SetupFragment : Fragment(R.layout.fragment_setup) {
                     Navigation.findNavController(view).navigate(R.id.action_setupFragment_to_inProgressFragment)
                 Constants.KEY_LANDING_PAGE_TO_READ ->
                     Navigation.findNavController(view).navigate(R.id.action_setupFragment_to_toReadFragment)
+            }
+        }
+
+        tvNext.setOnClickListener {
+            when (vpSetup.currentItem) {
+                0 -> vpSetup.setCurrentItem(1, true)
+                1 -> vpSetup.setCurrentItem(2, true)
+                2 -> vpSetup.setCurrentItem(3, true)
+                3 -> vpSetup.setCurrentItem(4, true)
+                4 -> vpSetup.setCurrentItem(5, true)
             }
         }
     }
