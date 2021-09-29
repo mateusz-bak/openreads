@@ -77,6 +77,7 @@
                             android:id="@+id/ivChallenge"
                             android:layout_width="50dp"
                             android:layout_height="50dp"
+                            android:layout_marginStart="16dp"
                             app:layout_constraintBottom_toBottomOf="parent"
                             app:layout_constraintStart_toStartOf="parent"
                             app:layout_constraintTop_toTopOf="parent"
@@ -120,15 +121,70 @@
                             android:id="@+id/tvMonthsTitle"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_marginStart="3dp"
+                            android:layout_marginStart="16dp"
+                            android:layout_marginTop="8dp"
                             android:fontFamily="sans-serif"
                             android:gravity="center"
                             android:text="@string/stats_months"
                             android:textColor="?colorOnSecondary"
                             android:textSize="16sp"
-                            app:layout_constraintBottom_toBottomOf="parent"
                             app:layout_constraintStart_toStartOf="parent"
                             app:layout_constraintTop_toTopOf="parent" />
+
+                        <ImageView
+                            android:id="@+id/ivMonths1"
+                            android:layout_width="0dp"
+                            android:layout_height="50dp"
+                            android:layout_marginStart="16dp"
+                            android:layout_marginTop="12dp"
+                            android:layout_marginBottom="8dp"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintEnd_toStartOf="@+id/ivMonths2"
+                            app:layout_constraintHorizontal_bias="0.5"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toBottomOf="@+id/tvMonthsTitle"
+                            app:srcCompat="@drawable/ic_svg_statistics"
+                            app:tint="?colorPrimary" />
+
+                        <ImageView
+                            android:id="@+id/ivMonths2"
+                            android:layout_width="0dp"
+                            android:layout_height="50dp"
+                            android:layout_marginStart="4dp"
+                            app:layout_constraintBottom_toBottomOf="@+id/ivMonths1"
+                            app:layout_constraintEnd_toStartOf="@+id/ivMonths3"
+                            app:layout_constraintHorizontal_bias="0.5"
+                            app:layout_constraintStart_toEndOf="@+id/ivMonths1"
+                            app:layout_constraintTop_toTopOf="@+id/ivMonths1"
+                            app:srcCompat="@drawable/ic_svg_statistics"
+                            app:tint="?colorPrimary" />
+
+                        <ImageView
+                            android:id="@+id/ivMonths3"
+                            android:layout_width="0dp"
+                            android:layout_height="50dp"
+                            android:layout_marginStart="4dp"
+                            app:layout_constraintBottom_toBottomOf="@+id/ivMonths1"
+                            app:layout_constraintEnd_toStartOf="@+id/ivMonths4"
+                            app:layout_constraintHorizontal_bias="0.5"
+                            app:layout_constraintStart_toEndOf="@+id/ivMonths2"
+                            app:layout_constraintTop_toTopOf="@+id/ivMonths1"
+                            app:srcCompat="@drawable/ic_svg_statistics"
+                            app:tint="?colorPrimary" />
+
+                        <ImageView
+                            android:id="@+id/ivMonths4"
+                            android:layout_width="0dp"
+                            android:layout_height="50dp"
+                            android:layout_marginStart="4dp"
+                            android:layout_marginEnd="16dp"
+                            app:layout_constraintBottom_toBottomOf="@+id/ivMonths1"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintHorizontal_bias="0.5"
+                            app:layout_constraintStart_toEndOf="@+id/ivMonths3"
+                            app:layout_constraintTop_toTopOf="@+id/ivMonths1"
+                            app:srcCompat="@drawable/ic_svg_statistics"
+                            app:tint="?colorPrimary" />
 
 
                     </androidx.constraintlayout.widget.ConstraintLayout>
@@ -196,6 +252,7 @@
                             android:id="@+id/ivBooksRead"
                             android:layout_width="50dp"
                             android:layout_height="50dp"
+                            android:layout_marginStart="16dp"
                             app:layout_constraintBottom_toBottomOf="parent"
                             app:layout_constraintStart_toStartOf="parent"
                             app:layout_constraintTop_toTopOf="parent"
@@ -265,6 +322,7 @@
                             android:id="@+id/ivPagesRead"
                             android:layout_width="50dp"
                             android:layout_height="50dp"
+                            android:layout_marginStart="16dp"
                             app:layout_constraintBottom_toBottomOf="parent"
                             app:layout_constraintStart_toStartOf="parent"
                             app:layout_constraintTop_toTopOf="parent"
@@ -334,6 +392,7 @@
                             android:id="@+id/ivAvgRating"
                             android:layout_width="50dp"
                             android:layout_height="50dp"
+                            android:layout_marginStart="16dp"
                             app:layout_constraintBottom_toBottomOf="parent"
                             app:layout_constraintStart_toStartOf="parent"
                             app:layout_constraintTop_toTopOf="parent"
@@ -416,6 +475,7 @@
                             android:id="@+id/ivQuickestRead"
                             android:layout_width="50dp"
                             android:layout_height="50dp"
+                            android:layout_marginStart="16dp"
                             app:layout_constraintBottom_toBottomOf="parent"
                             app:layout_constraintStart_toStartOf="parent"
                             app:layout_constraintTop_toTopOf="parent"
@@ -498,6 +558,7 @@
                             android:id="@+id/ivLongestBook"
                             android:layout_width="50dp"
                             android:layout_height="50dp"
+                            android:layout_marginStart="16dp"
                             app:layout_constraintBottom_toBottomOf="parent"
                             app:layout_constraintStart_toStartOf="parent"
                             app:layout_constraintTop_toTopOf="parent"
@@ -547,21 +608,9 @@
                             android:text="@string/stats_avg_reading_time"
                             android:textColor="?colorOnSecondary"
                             android:textSize="16sp"
-                            app:layout_constraintBottom_toTopOf="@+id/tvAvgReadingTimeBook"
+                            app:layout_constraintBottom_toTopOf="@+id/tvAvgReadingTimeValue"
                             app:layout_constraintStart_toEndOf="@+id/ivAvgReadingTime"
                             app:layout_constraintTop_toTopOf="parent" />
-
-                        <TextView
-                            android:id="@+id/tvAvgReadingTimeBook"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:fontFamily="sans-serif-light"
-                            android:gravity="center"
-                            android:text="@string/stats_avg_reading_time"
-                            android:textSize="14sp"
-                            app:layout_constraintBottom_toTopOf="@+id/tvAvgReadingTimeValue"
-                            app:layout_constraintStart_toStartOf="@+id/tvAvgReadingTimeTitle"
-                            app:layout_constraintTop_toBottomOf="@+id/tvAvgReadingTimeTitle" />
 
                         <TextView
                             android:id="@+id/tvAvgReadingTimeValue"
@@ -573,12 +622,13 @@
                             android:textSize="14sp"
                             app:layout_constraintBottom_toBottomOf="parent"
                             app:layout_constraintStart_toStartOf="@+id/tvAvgReadingTimeTitle"
-                            app:layout_constraintTop_toBottomOf="@+id/tvAvgReadingTimeBook" />
+                            app:layout_constraintTop_toBottomOf="@+id/tvAvgReadingTimeTitle" />
 
                         <ImageView
                             android:id="@+id/ivAvgReadingTime"
                             android:layout_width="50dp"
                             android:layout_height="50dp"
+                            android:layout_marginStart="16dp"
                             app:layout_constraintBottom_toBottomOf="parent"
                             app:layout_constraintStart_toStartOf="parent"
                             app:layout_constraintTop_toTopOf="parent"
@@ -628,21 +678,9 @@
                             android:text="@string/stats_avg_pages"
                             android:textColor="?colorOnSecondary"
                             android:textSize="16sp"
-                            app:layout_constraintBottom_toTopOf="@+id/tvAvgPagesBook"
+                            app:layout_constraintBottom_toTopOf="@+id/tvAvgPagesValue"
                             app:layout_constraintStart_toEndOf="@+id/ivAvgPages"
                             app:layout_constraintTop_toTopOf="parent" />
-
-                        <TextView
-                            android:id="@+id/tvAvgPagesBook"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:fontFamily="sans-serif-light"
-                            android:gravity="center"
-                            android:text="@string/stats_avg_pages"
-                            android:textSize="14sp"
-                            app:layout_constraintBottom_toTopOf="@+id/tvAvgPagesValue"
-                            app:layout_constraintStart_toStartOf="@+id/tvAvgPagesTitle"
-                            app:layout_constraintTop_toBottomOf="@+id/tvAvgPagesTitle" />
 
                         <TextView
                             android:id="@+id/tvAvgPagesValue"
@@ -654,12 +692,13 @@
                             android:textSize="14sp"
                             app:layout_constraintBottom_toBottomOf="parent"
                             app:layout_constraintStart_toStartOf="@+id/tvAvgPagesTitle"
-                            app:layout_constraintTop_toBottomOf="@+id/tvAvgPagesBook" />
+                            app:layout_constraintTop_toBottomOf="@+id/tvAvgPagesTitle" />
 
                         <ImageView
                             android:id="@+id/ivAvgPages"
                             android:layout_width="50dp"
                             android:layout_height="50dp"
+                            android:layout_marginStart="16dp"
                             app:layout_constraintBottom_toBottomOf="parent"
                             app:layout_constraintStart_toStartOf="parent"
                             app:layout_constraintTop_toTopOf="parent"
@@ -680,7 +719,7 @@
         android:padding="24dp"
         android:text="@string/tvLooksEmptyStatistics"
         android:textColor="@color/grey"
-        android:textSize="16dp"
+        android:textSize="13sp"
         android:visibility="invisible"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"

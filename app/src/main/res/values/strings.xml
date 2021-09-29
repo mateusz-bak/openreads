@@ -147,7 +147,7 @@
     <string name="tvSetupSwipeHint_1">Click the arrow</string>
     <string name="tvAvgRatingTitle">Average rating</string>
     <string name="tvAvgRating" translatable="false">4.9</string>
-    <string name="tvLooksEmptyStatistics">Nothing to see here yet! Add read books and come back here later.</string>
+    <string name="tvLooksEmptyStatistics">Nothing to see here yet! Add read books with finish date and come back here later.</string>
     <string name="btnAdderCancelFinishDate">Cancel</string>
     <string name="tvChallengeTitle">Challenge</string>
     <string name="tvChallenge" translatable="false">6 / 9</string>
@@ -273,4 +273,6 @@
     <string name="stats_avg_rating">Average books rating</string>
     <string name="stats_challenge">Reading challenge</string>
     <string name="stats_months">Monthly stats</string>
+    <string name="need_more_data">Need more data for that</string>
+    <string name="days">days</string>
 </resources>

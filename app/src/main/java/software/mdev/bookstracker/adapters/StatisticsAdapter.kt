@@ -9,6 +9,9 @@ import androidx.recyclerview.widget.AsyncListDiffer
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import kotlinx.android.synthetic.main.item_statistics.view.*
+import kotlinx.coroutines.MainScope
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
 import software.mdev.bookstracker.R
 import software.mdev.bookstracker.data.db.BooksDatabase
 import software.mdev.bookstracker.data.db.LanguageDatabase
@@ -27,6 +30,7 @@ import software.mdev.bookstracker.ui.bookslist.viewmodel.BooksViewModelProviderF
 import java.math.RoundingMode
 import java.text.DecimalFormat
 import java.util.*
+import java.util.concurrent.TimeUnit
 
 class StatisticsAdapter(
     private val statisticsFragment: StatisticsFragment,
@@ -108,12 +112,14 @@ class StatisticsAdapter(
                 tvLooksEmptyStatistics.visibility = View.VISIBLE
 
                 clBooksRead.visibility = View.GONE
-
                 clPagesRead.visibility = View.GONE
-
                 clAvgRating.visibility = View.GONE
-
                 clChallenge.visibility = View.GONE
+                clQuickestRead.visibility = View.GONE
+                clMonths.visibility = View.GONE
+                clAvgReadingTime.visibility = View.GONE
+                clAvgPages.visibility = View.GONE
+                clLongestBook.visibility = View.GONE
             }
         } else {
             holder.itemView.tvLooksEmptyStatistics.visibility = View.GONE
@@ -122,11 +128,47 @@ class StatisticsAdapter(
         var challengeBooksRead = "0"
 
         holder.itemView.apply {
+
+            setCardsAnimation(this)
+
             tvBooksReadValue.text = curYear.yearBooks.toString()
 
             tvPagesReadValue.text = curYear.yearPages.toString()
 
-            tvAvgRatingValue.text = curYear.avgRating.toString()
+            tvAvgRatingValue.text = curYear.avgRating.toBigDecimal().setScale(1, RoundingMode.UP).toDouble().toString()
+
+            if (curYear.yearQuickestBook == "null"){
+                tvQuickestReadBook.text = holder.itemView.resources.getString(R.string.need_more_data)
+                tvQuickestReadValue.visibility = View.GONE
+            } else {
+                var string = convertLongToDays(curYear.yearQuickestBookVal.toLong()) + " " + holder.itemView.resources.getString(R.string.days)
+                tvQuickestReadBook.text = curYear.yearQuickestBook
+                tvQuickestReadValue.text = string
+            }
+
+            if (curYear.yearLongestBook == "null"){
+                tvLongestBook.text = holder.itemView.resources.getString(R.string.need_more_data)
+                tvLongestBookValue.visibility = View.GONE
+            } else {
+                var string = curYear.yearLongestBookVal.toString() + " " + holder.itemView.resources.getString(R.string.pages)
+                tvLongestBookValue.text = string
+                tvLongestBook.text = curYear.yearLongestBook
+            }
+
+            if (curYear.yearAvgReadingTime == "0" || curYear.yearAvgReadingTime == "null"){
+                tvAvgReadingTimeValue.text = holder.itemView.resources.getString(R.string.need_more_data)
+            } else {
+                var string = convertLongToDays(curYear.yearAvgReadingTime.toLong()) + " " + holder.itemView.resources.getString(R.string.days)
+                tvAvgReadingTimeValue.text = string
+            }
+
+            if (curYear.yearAvgPages == 0){
+                tvAvgPagesValue.text = holder.itemView.resources.getString(R.string.need_more_data)
+            } else {
+                tvAvgPagesValue.text = curYear.yearAvgPages.toString()
+            }
+
+
 
             if (position == 0 && itemCount > 1) {
                 if (differ.currentList[1].year == Calendar.getInstance().get(Calendar.YEAR)
@@ -166,6 +208,38 @@ class StatisticsAdapter(
         }
     }
 
+    private fun setCardsAnimation(view: View) {
+        val statCards = listOf<View>(
+            view.clMonths,
+            view.clBooksRead,
+            view.clPagesRead,
+            view.clAvgRating,
+            view.clQuickestRead,
+            view.clLongestBook,
+            view.clAvgReadingTime,
+            view.clAvgPages
+        )
+
+        var animDuration = 200L
+        var scaleSmall = 0.95F
+        var scaleBig = 1F
+
+
+        for (card in statCards) {
+            card.setOnClickListener {
+                card.animate().scaleX(scaleSmall).setDuration(animDuration).start()
+                card.animate().scaleY(scaleSmall).setDuration(animDuration).start()
+
+                MainScope().launch {
+                    delay(animDuration)
+                    card.animate().scaleX(scaleBig).setDuration(animDuration).start()
+                    card.animate().scaleY(scaleBig).setDuration(animDuration).start()
+                }
+            }
+
+        }
+    }
+
     private fun callChallengeDialog(foundYear: Year?, it: View, challengeBooksRead: String) {
         if (foundYear != null) {
             ChallengeDialog(it.context,
@@ -178,7 +252,20 @@ class StatisticsAdapter(
             ).show()
         } else {
             ChallengeDialog(it.context,
-                Year(Calendar.getInstance().get(Calendar.YEAR).toString(), challengeBooksRead.toInt(), 0, 0F, null, 0),
+                Year(
+                    Calendar.getInstance().get(Calendar.YEAR).toString(),
+                    challengeBooksRead.toInt(),
+                    0,
+                    0F,
+                    null,
+                    0,
+                    "null",
+                    "null",
+                    "null",
+                    0,
+                    "null",
+                    0
+                ),
                 object : ChallengeDialogListener {
                     override fun onSaveButtonClicked(year: Year) {
                         viewModel.upsertYear(year)
@@ -186,5 +273,9 @@ class StatisticsAdapter(
                 }
             ).show()
         }
+    }
+
+    private fun convertLongToDays(time: Long): String {
+        return TimeUnit.MILLISECONDS.toDays(time).toString()
     }
 }
