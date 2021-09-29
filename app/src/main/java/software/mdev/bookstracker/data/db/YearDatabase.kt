@@ -59,6 +59,8 @@ abstract class YearDatabase: RoomDatabase() {
                 database.execSQL("ALTER TABLE Year ADD COLUMN item_longest_book_val INTEGER NOT NULL DEFAULT 0")
                 database.execSQL("ALTER TABLE Year ADD COLUMN item_avg_reading_time TEXT NOT NULL DEFAULT 'null'")
                 database.execSQL("ALTER TABLE Year ADD COLUMN item_avg_pages INTEGER NOT NULL DEFAULT 0")
+                database.execSQL("ALTER TABLE Year ADD COLUMN item_shortest_book TEXT NOT NULL DEFAULT 'null'")
+                database.execSQL("ALTER TABLE Year ADD COLUMN item_shortest_book_val INTEGER NOT NULL DEFAULT 0")
             }
         }
     }

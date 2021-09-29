@@ -130,7 +130,9 @@ class BooksViewModel(
         item_longest_book: String,
         item_longest_book_val: Int,
         item_avg_reading_time: String,
-        item_avg_pages: Int
+        item_avg_pages: Int,
+        item_shortest_book: String,
+        item_shortest_book_val: Int
     ) = CoroutineScope(Dispatchers.Main).launch {
         yearRepository.updateYear(
             item_year,
@@ -144,7 +146,9 @@ class BooksViewModel(
             item_longest_book,
             item_longest_book_val,
             item_avg_reading_time,
-            item_avg_pages
+            item_avg_pages,
+            item_shortest_book,
+            item_shortest_book_val
         )
     }
 

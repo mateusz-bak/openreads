@@ -120,6 +120,7 @@ class StatisticsAdapter(
                 clAvgReadingTime.visibility = View.GONE
                 clAvgPages.visibility = View.GONE
                 clLongestBook.visibility = View.GONE
+                clShortestBook.visibility = View.GONE
             }
         } else {
             holder.itemView.tvLooksEmptyStatistics.visibility = View.GONE
@@ -153,6 +154,15 @@ class StatisticsAdapter(
                 var string = curYear.yearLongestBookVal.toString() + " " + holder.itemView.resources.getString(R.string.pages)
                 tvLongestBookValue.text = string
                 tvLongestBook.text = curYear.yearLongestBook
+            }
+
+            if (curYear.yearShortestBook == "null"){
+                tvShortestBook.text = holder.itemView.resources.getString(R.string.need_more_data)
+                tvShortestBookValue.visibility = View.GONE
+            } else {
+                var string = curYear.yearShortestBookVal.toString() + " " + holder.itemView.resources.getString(R.string.pages)
+                tvShortestBookValue.text = string
+                tvShortestBook.text = curYear.yearShortestBook
             }
 
             if (curYear.yearAvgReadingTime == "0" || curYear.yearAvgReadingTime == "null"){
@@ -217,7 +227,8 @@ class StatisticsAdapter(
             view.clQuickestRead,
             view.clLongestBook,
             view.clAvgReadingTime,
-            view.clAvgPages
+            view.clAvgPages,
+            view.clShortestBook
         )
 
         var animDuration = 200L
@@ -254,17 +265,7 @@ class StatisticsAdapter(
             ChallengeDialog(it.context,
                 Year(
                     Calendar.getInstance().get(Calendar.YEAR).toString(),
-                    challengeBooksRead.toInt(),
-                    0,
-                    0F,
-                    null,
-                    0,
-                    "null",
-                    "null",
-                    "null",
-                    0,
-                    "null",
-                    0
+                    challengeBooksRead.toInt()
                 ),
                 object : ChallengeDialogListener {
                     override fun onSaveButtonClicked(year: Year) {

@@ -41,6 +41,8 @@ object Constants {
     const val DATABASE_YEAR_LONGEST_BOOK_VAL = "item_longest_book_val"
     const val DATABASE_YEAR_AVG_READING_TIME = "item_avg_reading_time"
     const val DATABASE_YEAR_AVG_PAGES = "item_avg_pages"
+    const val DATABASE_YEAR_SHORTEST_BOOK = "item_shortest_book"
+    const val DATABASE_YEAR_SHORTEST_BOOK_VAL = "item_shortest_book_val"
 
     const val DATABASE_NAME_LANGUAGE = "Language"
     const val DATABASE_LANGUAGE_FILE_NAME = "LanguageDB.db"

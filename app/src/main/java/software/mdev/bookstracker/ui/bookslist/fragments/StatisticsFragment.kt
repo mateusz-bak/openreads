@@ -91,20 +91,7 @@ class StatisticsFragment : Fragment(R.layout.fragment_statistics) {
         viewModel.getSortedBooksByFinishDateDesc(Constants.BOOK_STATUS_READ)
             .observe(viewLifecycleOwner, Observer { books ->
                 var listOfYears = mutableListOf<Year>()
-                listOfYears.add(Year(
-                    "0000",
-                    0,
-                    0,
-                    0F,
-                    0,
-                    0,
-                    "null",
-                    "null",
-                    "null",
-                    0,
-                    "null",
-                    0
-                ))
+                listOfYears.add(Year())
 
                 var years = calculateHowManyYearsForStats(books)
                 var year: Int
@@ -115,6 +102,9 @@ class StatisticsFragment : Fragment(R.layout.fragment_statistics) {
 
                 var longestBookAllTime = "null"
                 var longestBookValAllTime = 0
+
+                var shortestBookAllTime = "null"
+                var shortestBookValAllTime = Int.MAX_VALUE
 
                 var quickestReadAllTime = "null"
                 var quickestReadValAllTime = Long.MAX_VALUE
@@ -129,6 +119,9 @@ class StatisticsFragment : Fragment(R.layout.fragment_statistics) {
 
                     var longestBook = "null"
                     var longestBookVal = 0
+
+                    var shortestBook = "null"
+                    var shortestBookVal = Int.MAX_VALUE
 
                     var quickestRead = "null"
                     var quickestReadVal = Long.MAX_VALUE
@@ -161,6 +154,20 @@ class StatisticsFragment : Fragment(R.layout.fragment_statistics) {
                                     longestBookValAllTime = item_book.bookNumberOfPages
                                     var string = item_book.bookTitle + " - " + item_book.bookAuthor
                                     longestBookAllTime = string
+                                }
+
+                                // shortest book in a year
+                                if (item_book.bookNumberOfPages < shortestBookVal) {
+                                    shortestBookVal = item_book.bookNumberOfPages
+                                    var string = item_book.bookTitle + " - " + item_book.bookAuthor
+                                    shortestBook = string
+                                }
+
+                                // shortest book all time
+                                if (item_book.bookNumberOfPages < shortestBookValAllTime) {
+                                    shortestBookValAllTime = item_book.bookNumberOfPages
+                                    var string = item_book.bookTitle + " - " + item_book.bookAuthor
+                                    shortestBookAllTime = string
                                 }
 
 
@@ -226,7 +233,9 @@ class StatisticsFragment : Fragment(R.layout.fragment_statistics) {
                         longestBook,
                         longestBookVal,
                         avgReadingTime,
-                        avgPages
+                        avgPages,
+                        shortestBook,
+                        shortestBookVal
                     ))
                 }
 
@@ -253,7 +262,9 @@ class StatisticsFragment : Fragment(R.layout.fragment_statistics) {
                     longestBookAllTime,
                     longestBookValAllTime,
                     avgReadingTimeAllTime,
-                    avgPagesAllTime
+                    avgPagesAllTime,
+                    shortestBookAllTime,
+                    shortestBookValAllTime
                 )
 
                 statisticsAdapter.differ.submitList(listOfYears)

@@ -235,4 +235,5 @@
     <string name="stats_months">Statystyki miesięczne</string>
     <string name="need_more_data">Potrzeba więcej danych</string>
     <string name="days">dni</string>
+    <string name="stats_shortest_book">Najkrótsza książka</string>
 </resources>

@@ -30,7 +30,9 @@ interface YearDao {
             "item_longest_book=:item_longest_book, " +
             "item_longest_book_val=:item_longest_book_val, " +
             "item_avg_reading_time=:item_avg_reading_time, " +
-            "item_avg_pages=:item_avg_pages " +
+            "item_avg_pages=:item_avg_pages, " +
+            "item_longest_book=:item_shortest_book, " +
+            "item_longest_book_val=:item_shortest_book_val " +
             "WHERE item_year=:item_year")
     suspend fun updateYear(
         item_year: String,
@@ -44,7 +46,9 @@ interface YearDao {
         item_longest_book: String,
         item_longest_book_val: Int,
         item_avg_reading_time: String,
-        item_avg_pages: Int
+        item_avg_pages: Int,
+        item_shortest_book: String,
+        item_shortest_book_val: Int
     )
 
     @Query("UPDATE Year SET item_books=:item_books WHERE item_year=:item_year")

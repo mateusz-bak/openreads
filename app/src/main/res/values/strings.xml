@@ -275,4 +275,5 @@
     <string name="stats_months">Monthly stats</string>
     <string name="need_more_data">Need more data for that</string>
     <string name="days">days</string>
+    <string name="stats_shortest_book">Shortest book</string>
 </resources>
