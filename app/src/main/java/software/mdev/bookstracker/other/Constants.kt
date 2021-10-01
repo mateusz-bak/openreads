@@ -90,6 +90,7 @@ object Constants {
     const val KEY_BACKUP = "KEY_BACKUP"
     const val KEY_EXPORT = "KEY_EXPORT"
     const val KEY_IMPORT = "KEY_IMPORT"
+    const val KEY_CHANGELOG = "KEY_CHANGELOG"
 
     const val EMPTY_STRING = ""
 

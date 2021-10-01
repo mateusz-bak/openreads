@@ -56,17 +56,22 @@ class ChangelogFragment : Fragment(R.layout.fragment_changelog) {
         MainScope().launch {
             delay(1500L)
 
-            tvChangeLogTitle.animate().alpha(0F).setDuration(500L).start()
+            if (tvChangeLogTitle != null)
+                tvChangeLogTitle.animate().alpha(0F).setDuration(500L).start()
 
             delay(500L)
-            tvChangeLogSubTitle.animate().alpha(1F).setDuration(500L).start()
-            tvChangeLogSubTitle.animate().translationYBy(-800F).setStartDelay(500L).setDuration(500L).start()
+            if (tvChangeLogSubTitle != null)
+                tvChangeLogSubTitle.animate().alpha(1F).setDuration(500L).start()
+
+            if (tvChangeLogSubTitle != null)
+                tvChangeLogSubTitle.animate().translationYBy(-800F).setStartDelay(500L).setDuration(500L).start()
 
             delay(500L)
             setupRv()
 
             delay(250L)
-            showOkButton()
+            if (context != null)
+                showOkButton()
         }
     }
 
@@ -99,18 +104,23 @@ class ChangelogFragment : Fragment(R.layout.fragment_changelog) {
 
             delay(1300L)
 
-            val animations = arrayOf(1F, 0.3F).map { translation ->
-                ObjectAnimator.ofFloat(tvUpdateOk, "alpha", translation).apply {
-                    duration = 400
-                    repeatCount = ObjectAnimator.INFINITE
-                    repeatMode = ObjectAnimator.REVERSE
+            if (tvUpdateOk != null) {
+
+                val animations = arrayOf(1F, 0.3F).map { translation ->
+                    ObjectAnimator.ofFloat(tvUpdateOk, "alpha", translation).apply {
+                        duration = 400
+                        repeatCount = ObjectAnimator.INFINITE
+                        repeatMode = ObjectAnimator.REVERSE
+                    }
+                }
+
+                if (tvUpdateOk != null) {
+                    delay(400L)
+                    val set = AnimatorSet()
+                    set.playTogether(animations)
+                    set.start()
                 }
             }
-
-            delay(400L)
-            val set = AnimatorSet()
-            set.playTogether(animations)
-            set.start()
         }
     }
 
@@ -126,17 +136,21 @@ class ChangelogFragment : Fragment(R.layout.fragment_changelog) {
     }
 
     private fun setupRv() {
+        if (context !=null) {
+            var versions = getVersionStrings()
 
-        var versions = getVersionStrings()
+            val adapter = ChangelogAdapter(
+                versions.reversed()
+            )
+            rvChangelog.adapter = adapter
+            rvChangelog.layoutManager = LinearLayoutManager(view?.context)
 
-        val adapter = ChangelogAdapter(
-            versions.reversed()
-        )
-        rvChangelog.adapter = adapter
-        rvChangelog.layoutManager = LinearLayoutManager(view?.context)
-
-        // bounce effect on the recyclerview
-        OverScrollDecoratorHelper.setUpOverScroll(rvChangelog, OverScrollDecoratorHelper.ORIENTATION_VERTICAL)
+            // bounce effect on the recyclerview
+            OverScrollDecoratorHelper.setUpOverScroll(
+                rvChangelog,
+                OverScrollDecoratorHelper.ORIENTATION_VERTICAL
+            )
+        }
     }
 
     private fun getVersionStrings(): List<Array<String>> {

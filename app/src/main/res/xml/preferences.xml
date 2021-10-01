@@ -81,11 +81,8 @@
         </Preference>
 
         <Preference
-            android:title="@string/app_changelog"
-            android:summary="@string/url_releases" >
-            <intent
-                android:action="android.intent.action.VIEW"
-                android:data="@string/url_releases" />
+            android:key="KEY_CHANGELOG"
+            android:title="@string/app_changelog" >
         </Preference>
 
         <Preference
@@ -105,8 +102,7 @@
         </Preference>
 
         <Preference
-            android:title="@string/contact_title"
-            android:summary="@string/dev_email" >
+            android:title="@string/contact_title" >
             <intent
                 android:action="android.intent.action.VIEW"
                 android:data="@string/dev_mailto" />
