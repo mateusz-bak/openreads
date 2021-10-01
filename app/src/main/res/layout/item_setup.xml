@@ -3,8 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:padding="16dp">
+    android:layout_height="match_parent">
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guideline1"
@@ -24,14 +23,14 @@
         android:orientation="horizontal"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintGuide_percent="0.75"
+        app:layout_constraintGuide_percent="0.7"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent" />
 
     <ImageView
         android:id="@+id/ivSetupImage"
-        android:layout_width="180dp"
-        android:layout_height="180dp"
+        android:layout_width="300dp"
+        android:layout_height="300dp"
         android:scaleType="centerInside"
         android:src="@drawable/ic_svg_books"
         app:layout_constraintBottom_toTopOf="@+id/guideline1"
@@ -42,12 +41,15 @@
 
     <TextView
         android:id="@+id/tvSetupText"
+        android:padding="24dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/tvWelcomeText_0"
         android:textColor="?colorOnSecondary"
         android:textSize="16sp"
         android:gravity="center"
+        android:lineSpacingMultiplier="1.2"
+        android:fontFamily="sans-serif"
         app:layout_constraintBottom_toTopOf="@+id/guideline2"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
@@ -69,7 +71,7 @@
         android:id="@+id/tvSetupSwipeHint"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="32dp"
+        android:layout_marginBottom="48dp"
         android:text="@string/tvSetupSwipeHint_0"
         android:textColor="@color/grey"
         android:textSize="16sp"

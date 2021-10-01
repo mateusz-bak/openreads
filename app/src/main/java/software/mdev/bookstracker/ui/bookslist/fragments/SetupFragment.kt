@@ -62,11 +62,11 @@ class SetupFragment : Fragment(R.layout.fragment_setup) {
 
         val images = listOf(
             R.drawable.ic_svg_three_books,
-            R.drawable.ic_svg_clipboard,
-            R.drawable.ic_svg_graph,
-            R.drawable.ic_svg_code,
+            R.drawable.ic_svg_phone_list,
+            R.drawable.ic_svg_analytics,
+            R.drawable.ic_svg_open_source_inspection,
             0,
-            R.drawable.ic_svg_like
+            R.drawable.ic_svg_girl_reading
         )
 
         val adapter = SetupAdapter(

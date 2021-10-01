@@ -141,19 +141,13 @@
         android:label="SetupFragment" >
         <action
             android:id="@+id/action_setupFragment_to_readFragment"
-            app:destination="@id/readFragment"
-            app:enterAnim="@anim/slide_in_right"
-            app:exitAnim="@anim/slide_out_left"/>
+            app:destination="@id/readFragment"/>
         <action
             android:id="@+id/action_setupFragment_to_inProgressFragment"
-            app:destination="@id/inProgressFragment"
-            app:enterAnim="@anim/slide_in_right"
-            app:exitAnim="@anim/slide_out_left"/>
+            app:destination="@id/inProgressFragment"/>
         <action
             android:id="@+id/action_setupFragment_to_toReadFragment"
-            app:destination="@id/toReadFragment"
-            app:enterAnim="@anim/slide_in_right"
-            app:exitAnim="@anim/slide_out_left"/>
+            app:destination="@id/toReadFragment"/>
         <action
             android:id="@+id/action_setupFragment_to_changelogFragment"
             app:destination="@id/changelogFragment" />

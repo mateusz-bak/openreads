@@ -40,9 +40,16 @@ class SetupAdapter(
         when (position) {
             0 -> {
                 holder.itemView.apply {
+                    val param = ivSetupImage.layoutParams as ViewGroup.MarginLayoutParams
+                    param.width = 450
+                    param.height = 450
+                    ivSetupImage.layoutParams = param
+
                     ivSetupImage.setImageResource(images[position])
 
-                    tvSetupText.text = resources.getText(R.string.tvWelcomeText_0)
+                    var string = resources.getString(R.string.tvWelcomeText_0) + " " +resources.getString(R.string.app_name)
+
+                    tvSetupText.text = string
                     tvSetupText.textSize = 20F
                     tvSetupVersion.visibility = View.VISIBLE
 
@@ -54,11 +61,11 @@ class SetupAdapter(
                 holder.itemView.apply {
                     ivSetupImage.setImageResource(images[position])
 
-                    val param = ivSetupImage.layoutParams as ViewGroup.MarginLayoutParams
-                    param.setMargins(75,0,0,0)
-                    ivSetupImage.layoutParams = param
+                    viewSlideDown(ivSetupImage)
+                    viewSlideUp(tvSetupText)
 
-                    tvSetupText.text = resources.getText(R.string.tvWelcomeText_1)
+                    var string = resources.getString(R.string.app_name) + " " + resources.getString(R.string.tvWelcomeText_1)
+                    tvSetupText.text = string
                     tvSetupVersion.visibility = View.INVISIBLE
 
                     tvSetupSwipeHint.visibility = View.INVISIBLE
@@ -67,6 +74,9 @@ class SetupAdapter(
             2 -> {
                 holder.itemView.apply {
                     ivSetupImage.setImageResource(images[position])
+
+                    viewSlideLeft(ivSetupImage)
+                    viewSlideRight(tvSetupText)
 
                     tvSetupText.text = resources.getText(R.string.tvWelcomeText_2)
                     tvSetupVersion.visibility = View.INVISIBLE
@@ -78,11 +88,11 @@ class SetupAdapter(
                 holder.itemView.apply {
                     ivSetupImage.setImageResource(images[position])
 
-                    val param = ivSetupImage.layoutParams as ViewGroup.MarginLayoutParams
-                    param.setMargins(150,0,0,0)
-                    ivSetupImage.layoutParams = param
+                    viewSlideLeft(tvSetupText)
+                    viewSlideRight(ivSetupImage)
 
-                    tvSetupText.text = resources.getText(R.string.tvWelcomeText_3)
+                    var string = resources.getString(R.string.app_name) + " " + resources.getString(R.string.tvWelcomeText_3)
+                    tvSetupText.text = string
                     tvSetupVersion.visibility = View.INVISIBLE
 
                     tvSetupSwipeHint.visibility = View.INVISIBLE
@@ -153,6 +163,9 @@ class SetupAdapter(
                 holder.itemView.apply {
                     ivSetupImage.setImageResource(images[position])
 
+                    viewSlideDown(ivSetupImage)
+                    viewSlideUp(tvSetupText)
+
                     tvSetupText.text = resources.getText(R.string.tvWelcomeText_5)
                     tvSetupText.textSize = 20F
                     tvSetupVersion.visibility = View.INVISIBLE
@@ -167,6 +180,38 @@ class SetupAdapter(
 
     override fun getItemCount(): Int {
         return images.size
+    }
+
+    private fun viewSlideDown(view: View) {
+        view.alpha = 0F
+        view.animate().alpha(1F).setDuration(750L).start()
+
+        view.translationY = -1000F
+        view.animate().translationYBy(1000F).setStartDelay(100L).setDuration(500L).start()
+    }
+
+    private fun viewSlideUp(view: View) {
+        view.alpha = 0F
+        view.animate().alpha(1F).setDuration(750L).start()
+
+        view.translationY = 1000F
+        view.animate().translationYBy(-1000F).setStartDelay(100L).setDuration(500L).start()
+    }
+
+    private fun viewSlideLeft(view: View) {
+        view.alpha = 0F
+        view.animate().alpha(1F).setDuration(750L).start()
+
+        view.translationX = 1000F
+        view.animate().translationXBy(-1000F).setStartDelay(100L).setDuration(500L).start()
+    }
+
+    private fun viewSlideRight(view: View) {
+        view.alpha = 0F
+        view.animate().alpha(1F).setDuration(750L).start()
+
+        view.translationX = -1000F
+        view.animate().translationXBy(1000F).setStartDelay(100L).setDuration(500L).start()
     }
 
     private fun selectBtn(holder: ViewPagerViewHolder, selectedBtn: View, position: Int) {
@@ -192,9 +237,13 @@ class SetupAdapter(
             if (btn == selectedBtn) {
                 btn.animate().scaleX(scaleBig).setDuration(250L).start()
                 btn.animate().scaleY(scaleBig).setDuration(250L).start()
+
+                btn.animate().alpha(1F).setDuration(100L).start()
             } else {
                 btn.animate().scaleX(scaleSmall).setDuration(100L).start()
                 btn.animate().scaleY(scaleSmall).setDuration(100L).start()
+
+                btn.animate().alpha(0.6F).setDuration(100L).start()
             }
         }
     }
