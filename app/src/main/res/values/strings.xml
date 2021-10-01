@@ -1,3 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE resources [
+    <!ENTITY appname "Openreads">
+    ]>
 <resources>
     <string name="app_version" translatable="false">v1.6.0</string>
     <string name="ivAuthorUrl">https://github.com/mateusz-bak/</string>
@@ -127,15 +131,15 @@
     <string name="tvNumberOfPages" translatable="false">101 pages</string>
     <string name="tvDateFinished" translatable="false">13 Jun 2021</string>
     <string name="setTitleOnUpdateAvailable">New update!</string>
-    <string name="setContentOnUpdateAvailable_gplay">"Newer version of the Books Tracker app is available in Google Play store.\n\nClick \"update\"  to go to the downloading page."</string>
-    <string name="setContentOnUpdateAvailable_fdroid">"Newer version of the Books Tracker app is available in F-Droid store.\n\nClick \"update\"  to go to the downloading page."</string>
-    <string name="setContentOnUpdateAvailable_github">"Newer version of the Books Tracker app is available in Github repository.\n\nClick \"update\"  to go to the downloading page."</string>
+    <string name="setContentOnUpdateAvailable_gplay">"Newer version of the &appname; app is available in Google Play store.\n\nClick \"update\"  to go to the downloading page."</string>
+    <string name="setContentOnUpdateAvailable_fdroid">"Newer version of the &appname; app is available in F-Droid store.\n\nClick \"update\"  to go to the downloading page."</string>
+    <string name="setContentOnUpdateAvailable_github">"Newer version of the &appname; app is available in Github repository.\n\nClick \"update\"  to go to the downloading page."</string>
     <string name="setButtonUpdate">Update</string>
     <string name="setButtonDismiss">Dismiss</string>
     <string name="setButtonDoNotShowAgain">Ignore</string>
-    <string name="setContentOnUpdateNotAvailable_gplay">You\'ve got the latest version available of Books Tracker app from Google Play store.</string>
-    <string name="setContentOnUpdateNotAvailable_fdroid">You\'ve got the latest version available of Books Tracker app from F-Droid store.</string>
-    <string name="setContentOnUpdateNotAvailable_github">You\'ve got the latest version available of Books Tracker app from Github repository.</string>
+    <string name="setContentOnUpdateNotAvailable_gplay">You\'ve got the latest version available of &appname; app from Google Play store.</string>
+    <string name="setContentOnUpdateNotAvailable_fdroid">You\'ve got the latest version available of &appname; app from F-Droid store.</string>
+    <string name="setContentOnUpdateNotAvailable_github">You\'ve got the latest version available of &appname; app from Github repository.</string>
     <string name="setTitleOnUpdateNotAvailable">No updates available</string>
     <string name="statisticsFragment">Statistics</string>
     <string name="statistics_all">All</string>
@@ -234,11 +238,11 @@
     <string name="no_backups_found">No backups found in Backup/BooksTracker</string>
     <string name="api_29_not_yet_supported">API 29 not yet supported</string>
     <string name="api_30_not_yet_supported">API 30 not yet supported</string>
-    <string name="backup_import_invalid_file">Import failed. The chosen file is not a valid Books Tracker backup!</string>
+    <string name="backup_import_invalid_file">Import failed. The chosen file is not a valid &appname; backup!</string>
     <string name="backup_import_success">Import completed!</string>
     <string name="backup_import_failure">Import failed. Did you choose the file correctly?</string>
     <string name="rate_app_title">Rate the app</string>
-    <string name="rate_app">Do you like Books Tracker? Take a moment to rate it. Click here</string>
+    <string name="rate_app">Do you like &appname;? Take a moment to rate it. Click here</string>
     <string name="app_market_url" translatable="false">market://details?id=software.mdev.bookstracker</string>
     <string name="contact_title">Contact me</string>
     <string name="dev_email" translatable="false">mateusz.bak.dev@gmail.com</string>
@@ -254,7 +258,7 @@
     <string name="finished_books">Books finished</string>
     <string name="in_progress_books">Books in progress</string>
     <string name="to_read_books">Books for later</string>
-    <string name="ask_for_rating_dialog_title">Do you enjoy Books Tracker?</string>
+    <string name="ask_for_rating_dialog_title">Do you enjoy &appname;?</string>
     <string name="ask_for_rating_dialog_message">If yes please rate it on Google Play!</string>
     <string name="ask_for_rating_dialog_pos">Ok, take me there</string>
     <string name="ask_for_rating_dialog_neu">Maybe next time</string>

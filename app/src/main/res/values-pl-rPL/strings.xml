@@ -1,4 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE resources [
+    <!ENTITY appname "Openreads">
+    ]>
 <resources>
     <string name="ivAuthorUrl">https://github.com/mateusz-bak/</string>
     <string name="fabEditBook">Edytuj wyświetloną książkę</string>
@@ -95,15 +98,15 @@
     <string name="not_set">Nie ustawiono</string>
     <string name="tvSortFinishDate">Data zakończenia</string>
     <string name="setTitleOnUpdateAvailable">Aktualizacja!</string>
-    <string name="setContentOnUpdateAvailable_gplay">"Nowsza wersja aplikacji Books Tracker jest dostępna do pobrania z Google Play.\n\nKliknij \"aktualizuj\", żeby przejść na stronę pobierania."</string>
-    <string name="setContentOnUpdateAvailable_fdroid">"Nowsza wersja aplikacji Books Tracker jest dostępna do pobrania z F-Droid.\n\nKliknij \"aktualizuj\", żeby przejść na stronę pobierania."</string>
-    <string name="setContentOnUpdateAvailable_github">"Nowsza wersja aplikacji Books Tracker jest dostępna do pobrania z repozytorium Github.\n\nKliknij \"aktualizuj\", żeby przejść na stronę pobierania."</string>
+    <string name="setContentOnUpdateAvailable_gplay">"Nowsza wersja aplikacji &appname; jest dostępna do pobrania z Google Play.\n\nKliknij \"aktualizuj\", żeby przejść na stronę pobierania."</string>
+    <string name="setContentOnUpdateAvailable_fdroid">"Nowsza wersja aplikacji &appname; jest dostępna do pobrania z F-Droid.\n\nKliknij \"aktualizuj\", żeby przejść na stronę pobierania."</string>
+    <string name="setContentOnUpdateAvailable_github">"Nowsza wersja aplikacji &appname; jest dostępna do pobrania z repozytorium Github.\n\nKliknij \"aktualizuj\", żeby przejść na stronę pobierania."</string>
     <string name="setButtonUpdate">Aktualizuj</string>
     <string name="setButtonDismiss">Później</string>
     <string name="setButtonDoNotShowAgain">Ignoruj</string>
-    <string name="setContentOnUpdateNotAvailable_gplay">Masz zainstalowaną najnowszą wersję aplikacji Books Tracker z Google Play.</string>
-    <string name="setContentOnUpdateNotAvailable_fdroid">Masz zainstalowaną najnowszą wersję aplikacji Books Tracker z F-Droid.</string>
-    <string name="setContentOnUpdateNotAvailable_github">Masz zainstalowaną najnowszą wersję aplikacji Books Tracker z repozytorium Github.</string>
+    <string name="setContentOnUpdateNotAvailable_gplay">Masz zainstalowaną najnowszą wersję aplikacji &appname; z Google Play.</string>
+    <string name="setContentOnUpdateNotAvailable_fdroid">Masz zainstalowaną najnowszą wersję aplikacji &appname; z F-Droid.</string>
+    <string name="setContentOnUpdateNotAvailable_github">Masz zainstalowaną najnowszą wersję aplikacji &appname; z repozytorium Github.</string>
     <string name="setTitleOnUpdateNotAvailable">Brak dostępnych aktualizacji</string>
     <string name="statisticsFragment">Statystyki</string>
     <string name="statistics_all">Wszystko</string>
@@ -112,7 +115,7 @@
     <string name="tvWelcomeText_0">Witaj w</string>
     <string name="tvWelcomeText_1">"pomoże Ci na bieżąco kontrolować Twoje książki.\n\nJest to także świetne narzędzie do organizacji osobistej biblioteki w łatwy i przejrzysty sposób."</string>
     <string name="tvWelcomeText_2">"Rozwijaj siebie i swoje umiejętności dzięki świetnym statystykom.\n\nPodejmij wyzwanie, by być jeszcze lepszym czytelnikiem!"</string>
-    <string name="tvWelcomeText_3">"Books Tracker jest całkowicie open source!\n\nOznacza to, że możesz przejrzeć kod źródłowy aplikacji oraz przyczynić się do jej rozwoju.\n\nGratisowo dostajesz zero reklam i całkowity brak śledzenia!"</string>
+    <string name="tvWelcomeText_3">"jest całkowicie open source!\n\nOznacza to, że możesz przejrzeć kod źródłowy aplikacji oraz przyczynić się do jej rozwoju.\n\nGratisowo dostajesz zero reklam i całkowity brak śledzenia!"</string>
     <string name="tvWelcomeText_4">"Wybierz teraz kolor akcentów.\n\nSpokojnie, możesz go zmienić później."</string>
     <string name="tvWelcomeText_5">Powodzenia w czytaniu!</string>
     <string name="tvSetupSwipeHint_0">Przesuń w lewo</string>
@@ -198,11 +201,11 @@
     <string name="api_29_not_yet_supported">API 29 nie jest jeszcze wspierane</string>
     <string name="api_30_not_yet_supported">API 30 nie jest jeszcze wspierane</string>
     <string name="backup_failure">Tworzenie kopii zapasowaj nie powiodło się!</string>
-    <string name="backup_import_invalid_file">Import zakończony niepowodzeniem. Wybrany plik nie jest poprawą kopią zapasową aplikacji Books Tracker!</string>
+    <string name="backup_import_invalid_file">Import zakończony niepowodzeniem. Wybrany plik nie jest poprawą kopią zapasową aplikacji &appname;!</string>
     <string name="backup_import_success">Import zakończony powodzeniem!</string>
     <string name="backup_import_failure">Import zakończony niepowodzeniem. Czy wybrany został poprawny plik?</string>
     <string name="rate_app_title">Oceń aplikację</string>
-    <string name="rate_app">Podoba Ci się Books Tracker? Oceń ją w sklepie! Kliknij tutaj</string>
+    <string name="rate_app">Podoba Ci się &appname;? Oceń ją w sklepie! Kliknij tutaj</string>
     <string name="contact_title">Skontaktuj się</string>
     <string name="restore_backup_warning_title">Ostrożnie!</string>
     <string name="restore_backup_warning_message">Przywrócenie kopii zapasowej nadpisze książki, które aktualnie posiadasz. Pamiętaj żeby mieć ich kopię zapasową.</string>
@@ -216,7 +219,7 @@
     <string name="in_progress_books">Książki w trakcie czytania</string>
     <string name="finished_books">Książki przeczytane</string>
     <string name="ask_for_rating_dialog_message">Jeżeli tak, to oceń aplikację w Google Play!</string>
-    <string name="ask_for_rating_dialog_title">Podoba Ci się Books Tracker?</string>
+    <string name="ask_for_rating_dialog_title">Podoba Ci się &appname;?</string>
     <string name="ask_for_rating_dialog_pos">Jasne, pokaż mi gdzie</string>
     <string name="ask_for_rating_dialog_neu">Może następnym razem</string>
     <string name="ask_for_rating_dialog_neg">O nie, nigdy!</string>
