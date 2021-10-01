@@ -277,4 +277,13 @@
     <string name="days">days</string>
     <string name="stats_shortest_book">Shortest book</string>
     <string name="setup_next">next</string>
+    <string name="changelog">Changelog</string>
+    <string name="app_updated">Your app just got updated to the newest version!</string>
+    <string name="update_whats_new">What\'s new in</string>
+    <string name="update_ok_1">Cool! Keep it going!</string>
+    <string name="update_ok_2">Great work!</string>
+    <string name="update_ok_3">Awesome changes!</string>
+    <string name="update_ok_4">Keep up the good work!</string>
+    <string name="update_ok_5">Love the new updates!</string>
+    <string name="update_ok_6">A job well done!</string>
 </resources>

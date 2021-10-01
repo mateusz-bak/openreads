@@ -237,4 +237,13 @@
     <string name="days">dni</string>
     <string name="stats_shortest_book">Najkrótsza książka</string>
     <string name="setup_next">dalej</string>
+    <string name="update_ok_1">Super, tak trzymaj!</string>
+    <string name="changelog">Lista zmian</string>
+    <string name="app_updated">Aplikacja została zaktualizowana do najnowszej wersji!</string>
+    <string name="update_whats_new">Co nowego w</string>
+    <string name="update_ok_2">Świetna robota!</string>
+    <string name="update_ok_3">Wspaniałe zmiany!</string>
+    <string name="update_ok_4">Tak trzymaj!</string>
+    <string name="update_ok_5">Kocham nowe aktualizacje!</string>
+    <string name="update_ok_6">Kawał dobrej roboty!</string>
 </resources>

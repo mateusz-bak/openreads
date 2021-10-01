@@ -1,0 +1,274 @@
+package software.mdev.bookstracker.ui.bookslist.fragments
+
+import android.animation.AnimatorSet
+import android.animation.ObjectAnimator
+import android.content.Context
+import android.os.Bundle
+import android.view.View
+import androidx.fragment.app.Fragment
+import androidx.navigation.NavOptions
+import androidx.navigation.fragment.findNavController
+import androidx.recyclerview.widget.LinearLayoutManager
+import kotlinx.android.synthetic.main.fragment_changelog.*
+import kotlinx.coroutines.MainScope
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
+import me.everything.android.ui.overscroll.OverScrollDecoratorHelper
+import software.mdev.bookstracker.BuildConfig
+import software.mdev.bookstracker.R
+import software.mdev.bookstracker.adapters.ChangelogAdapter
+import software.mdev.bookstracker.ui.bookslist.ListActivity
+
+import software.mdev.bookstracker.other.Constants
+
+
+class ChangelogFragment : Fragment(R.layout.fragment_changelog) {
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        initSetupOfTextViews()
+        animateViews()
+
+        tvUpdateOk.setOnClickListener {
+            saveUpdateSeen()
+            navigateToBookList(savedInstanceState)
+        }
+    }
+
+    private fun initSetupOfTextViews(){
+        tvChangeLogTitle.alpha = 0F
+        tvChangeLogSubTitle.alpha = 0F
+
+        val string = getString(R.string.update_whats_new) + " " + getString(R.string.app_name) + "?"
+        tvChangeLogSubTitle.text = string
+
+        tvChangeLogTitle.translationY = 800F
+        tvChangeLogSubTitle.translationY = 800F
+
+        tvChangeLogTitle.visibility = View.VISIBLE
+        tvChangeLogSubTitle.visibility = View.VISIBLE
+    }
+
+    private fun animateViews() {
+        tvChangeLogTitle.animate().alpha(1F).setDuration(1000L).start()
+
+        MainScope().launch {
+            delay(1500L)
+
+            tvChangeLogTitle.animate().alpha(0F).setDuration(500L).start()
+
+            delay(500L)
+            tvChangeLogSubTitle.animate().alpha(1F).setDuration(500L).start()
+            tvChangeLogSubTitle.animate().translationYBy(-800F).setStartDelay(500L).setDuration(500L).start()
+
+            delay(500L)
+            setupRv()
+
+            delay(250L)
+            showOkButton()
+        }
+    }
+
+    private fun navigateToBookList(savedInstanceState: Bundle?) {
+        val navOptions = NavOptions.Builder()
+            .setPopUpTo(R.id.changelogFragment, true)
+            .setExitAnim(R.anim.slide_out_left)
+            .setEnterAnim(R.anim.slide_in_right)
+            .build()
+
+        when (getPreferenceLandingPage((activity as ListActivity).baseContext)) {
+            Constants.KEY_LANDING_PAGE_FINISHED ->
+                findNavController().navigate(R.id.action_changelogFragment_to_readFragment, savedInstanceState, navOptions)
+            Constants.KEY_LANDING_PAGE_IN_PROGRESS ->
+                findNavController().navigate(R.id.action_changelogFragment_to_inProgressFragment, savedInstanceState, navOptions)
+            Constants.KEY_LANDING_PAGE_TO_READ ->
+                findNavController().navigate(R.id.action_changelogFragment_to_toReadFragment, savedInstanceState, navOptions)
+        }
+    }
+
+    private fun showOkButton() {
+        tvUpdateOk.text = shuffleUpdateStrings()
+        tvUpdateOk.bringToFront()
+        tvUpdateOk.alpha = 0F
+        tvUpdateOk.visibility = View.VISIBLE
+        tvUpdateOk.animate().alpha(1F).setStartDelay(1000L).setDuration(400L).start()
+        tvUpdateOk.isClickable = true
+
+        MainScope().launch {
+
+            delay(1300L)
+
+            val animations = arrayOf(1F, 0.3F).map { translation ->
+                ObjectAnimator.ofFloat(tvUpdateOk, "alpha", translation).apply {
+                    duration = 400
+                    repeatCount = ObjectAnimator.INFINITE
+                    repeatMode = ObjectAnimator.REVERSE
+                }
+            }
+
+            delay(400L)
+            val set = AnimatorSet()
+            set.playTogether(animations)
+            set.start()
+        }
+    }
+
+    private fun shuffleUpdateStrings(): String {
+        return when ((1..6).random()) {
+            2    -> getString(R.string.update_ok_2)
+            3    -> getString(R.string.update_ok_3)
+            4    -> getString(R.string.update_ok_4)
+            5    -> getString(R.string.update_ok_5)
+            6    -> getString(R.string.update_ok_6)
+            else -> getString(R.string.update_ok_1)
+        }
+    }
+
+    private fun setupRv() {
+
+        var versions = getVersionStrings()
+
+        val adapter = ChangelogAdapter(
+            versions.reversed()
+        )
+        rvChangelog.adapter = adapter
+        rvChangelog.layoutManager = LinearLayoutManager(view?.context)
+
+        // bounce effect on the recyclerview
+        OverScrollDecoratorHelper.setUpOverScroll(rvChangelog, OverScrollDecoratorHelper.ORIENTATION_VERTICAL)
+    }
+
+    private fun getVersionStrings(): List<Array<String>> {
+
+        val version_1_0_0 = arrayOf(
+            getString(R.string.changelog_ver_1_0_0),
+            getString(R.string.changelog_date_1_0_0),
+            getString(R.string.changelog_1_0_0_a),
+            getString(R.string.changelog_1_0_0_b),
+            getString(R.string.changelog_1_0_0_c),
+            getString(R.string.changelog_1_0_0_d)
+        )
+
+        val version_1_1_0 = arrayOf(
+            getString(R.string.changelog_ver_1_1_0),
+            getString(R.string.changelog_date_1_1_0),
+            getString(R.string.changelog_1_1_0_a),
+            getString(R.string.changelog_1_1_0_b),
+            getString(R.string.changelog_1_1_0_c)
+        )
+
+        val version_1_2_0 = arrayOf(
+            getString(R.string.changelog_ver_1_2_0),
+            getString(R.string.changelog_date_1_2_0),
+            getString(R.string.changelog_1_2_0_a),
+            getString(R.string.changelog_1_2_0_b),
+            getString(R.string.changelog_1_2_0_c),
+            getString(R.string.changelog_1_2_0_d),
+            getString(R.string.changelog_1_2_0_e)
+        )
+
+        val version_1_2_1= arrayOf(
+            getString(R.string.changelog_ver_1_2_1),
+            getString(R.string.changelog_date_1_2_1),
+            getString(R.string.changelog_1_2_1_a)
+        )
+
+        val version_1_3_0 = arrayOf(
+            getString(R.string.changelog_ver_1_3_0),
+            getString(R.string.changelog_date_1_3_0),
+            getString(R.string.changelog_1_3_0_a),
+            getString(R.string.changelog_1_3_0_b),
+            getString(R.string.changelog_1_3_0_c),
+            getString(R.string.changelog_1_3_0_d)
+        )
+
+        val version_1_4_0 = arrayOf(
+            getString(R.string.changelog_ver_1_4_0),
+            getString(R.string.changelog_date_1_4_0),
+            getString(R.string.changelog_1_4_0_a),
+            getString(R.string.changelog_1_4_0_b),
+            getString(R.string.changelog_1_4_0_c)
+        )
+
+        val version_1_4_1 = arrayOf(
+            getString(R.string.changelog_ver_1_4_1),
+            getString(R.string.changelog_date_1_4_1),
+            getString(R.string.changelog_1_4_1_a),
+            getString(R.string.changelog_1_4_1_b),
+            getString(R.string.changelog_1_4_1_c),
+            getString(R.string.changelog_1_4_1_d),
+            getString(R.string.changelog_1_4_1_e),
+            getString(R.string.changelog_1_4_1_f),
+            getString(R.string.changelog_1_4_1_g)
+        )
+
+        val version_1_5_0 = arrayOf(
+            getString(R.string.changelog_ver_1_5_0),
+            getString(R.string.changelog_date_1_5_0),
+            getString(R.string.changelog_1_5_0_a),
+            getString(R.string.changelog_1_5_0_b),
+            getString(R.string.changelog_1_5_0_c),
+            getString(R.string.changelog_1_5_0_d),
+            getString(R.string.changelog_1_5_0_e)
+        )
+
+        val version_1_5_1 = arrayOf(
+            getString(R.string.changelog_ver_1_5_1),
+            getString(R.string.changelog_date_1_5_1),
+            getString(R.string.changelog_1_5_1_a),
+            getString(R.string.changelog_1_5_1_b),
+            getString(R.string.changelog_1_5_1_c)
+        )
+
+        val version_1_6_0 = arrayOf(
+            getString(R.string.changelog_ver_1_6_0),
+            getString(R.string.changelog_date_1_6_0),
+            getString(R.string.changelog_1_6_0_a),
+            getString(R.string.changelog_1_6_0_b),
+            getString(R.string.changelog_1_6_0_c),
+            getString(R.string.changelog_1_6_0_d),
+            getString(R.string.changelog_1_6_0_e),
+            getString(R.string.changelog_1_6_0_f),
+            getString(R.string.changelog_1_6_0_g),
+            getString(R.string.changelog_1_6_0_h),
+            getString(R.string.changelog_1_6_0_i)
+        )
+
+
+        return listOf(
+            version_1_0_0,
+            version_1_1_0,
+            version_1_2_0,
+            version_1_2_1,
+            version_1_3_0,
+            version_1_4_0,
+            version_1_4_1,
+            version_1_5_0,
+            version_1_5_1,
+            version_1_6_0
+        )
+    }
+
+    private fun saveUpdateSeen() {
+        var sharedPreferencesName = (activity as ListActivity).getString(R.string.shared_preferences_name)
+        val sharedPref = (activity as ListActivity).getSharedPreferences(sharedPreferencesName, Context.MODE_PRIVATE)
+
+        val editor = sharedPref?.edit()
+
+        editor?.apply {
+            putString(Constants.SHARED_PREFERENCES_KEY_APP_VERSION, resources.getString(R.string.app_version))
+            apply()
+        }
+    }
+
+    private fun getPreferenceLandingPage(context: Context): String {
+        var sharedPreferencesName = context.getString(R.string.shared_preferences_name)
+        val sharedPref = context.getSharedPreferences(sharedPreferencesName, Context.MODE_PRIVATE)
+
+        return sharedPref?.getString(
+            Constants.SHARED_PREFERENCES_KEY_LANDING_PAGE,
+            Constants.KEY_LANDING_PAGE_FINISHED
+        ).toString()
+    }
+}

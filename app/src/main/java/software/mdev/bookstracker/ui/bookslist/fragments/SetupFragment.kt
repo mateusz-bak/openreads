@@ -32,15 +32,32 @@ class SetupFragment : Fragment(R.layout.fragment_setup) {
                 .setPopUpTo(R.id.setupFragment, true)
                 .build()
 
-            when (getPreferenceLandingPage((activity as ListActivity).baseContext)) {
-                Constants.KEY_LANDING_PAGE_FINISHED ->
-                    findNavController().navigate(R.id.action_setupFragment_to_readFragment, savedInstanceState, navOptions)
-                Constants.KEY_LANDING_PAGE_IN_PROGRESS ->
-                    findNavController().navigate(R.id.action_setupFragment_to_inProgressFragment, savedInstanceState, navOptions)
-                Constants.KEY_LANDING_PAGE_TO_READ ->
-                    findNavController().navigate(R.id.action_setupFragment_to_toReadFragment, savedInstanceState, navOptions)
-            }
+            if (sharedPref.getString(Constants.SHARED_PREFERENCES_KEY_APP_VERSION, "v0.0.0") ==
+                resources.getString(R.string.app_version)) {
 
+                when (getPreferenceLandingPage((activity as ListActivity).baseContext)) {
+                    Constants.KEY_LANDING_PAGE_FINISHED ->
+                        findNavController().navigate(
+                            R.id.action_setupFragment_to_readFragment,
+                            savedInstanceState,
+                            navOptions
+                        )
+                    Constants.KEY_LANDING_PAGE_IN_PROGRESS ->
+                        findNavController().navigate(
+                            R.id.action_setupFragment_to_inProgressFragment,
+                            savedInstanceState,
+                            navOptions
+                        )
+                    Constants.KEY_LANDING_PAGE_TO_READ ->
+                        findNavController().navigate(
+                            R.id.action_setupFragment_to_toReadFragment,
+                            savedInstanceState,
+                            navOptions
+                        )
+                }
+            } else {
+                findNavController().navigate(R.id.action_setupFragment_to_changelogFragment, savedInstanceState, navOptions)
+            }
         }
 
         val images = listOf(
