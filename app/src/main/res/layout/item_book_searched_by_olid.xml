@@ -65,7 +65,6 @@
             android:layout_width="80dp"
             android:layout_height="0dp"
             android:scaleType="fitCenter"
-            android:src="@mipmap/ic_books"
             app:layout_constraintBottom_toTopOf="@+id/tvCoverMissing"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />

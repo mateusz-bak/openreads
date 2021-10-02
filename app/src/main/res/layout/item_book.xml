@@ -21,7 +21,6 @@
             android:adjustViewBounds="true"
             android:paddingEnd="10dp"
             android:scaleType="fitCenter"
-            android:src="@mipmap/ic_books"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />

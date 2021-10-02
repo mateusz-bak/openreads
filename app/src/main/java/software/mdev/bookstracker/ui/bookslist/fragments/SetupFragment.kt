@@ -61,7 +61,7 @@ class SetupFragment : Fragment(R.layout.fragment_setup) {
         }
 
         val images = listOf(
-            R.drawable.ic_svg_three_books,
+            R.drawable.ic_svg_three_books_grey_colored,
             R.drawable.ic_svg_phone_list,
             R.drawable.ic_svg_analytics,
             R.drawable.ic_svg_open_source_inspection,

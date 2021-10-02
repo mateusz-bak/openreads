@@ -17,7 +17,7 @@
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@+id/guideline1"
-        app:srcCompat="@drawable/ic_svg_three_books" />
+        app:srcCompat="@drawable/ic_svg_three_books_grey_colored" />
 
     <TextView
         android:id="@+id/tvAppVersion"
