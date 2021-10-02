@@ -23,6 +23,7 @@ class SettingsBackupFragment : PreferenceFragmentCompat(), OnSharedPreferenceCha
         viewModel = (activity as ListActivity).booksViewModel
 
         var preferenceExport = findPreference<Preference>(Constants.KEY_EXPORT)
+        var preferenceExportLocal = findPreference<Preference>(Constants.KEY_EXPORT_LOCAL)
         var preferenceImport = findPreference<Preference>(Constants.KEY_IMPORT)
 
         if (preferenceExport != null) {
@@ -31,6 +32,13 @@ class SettingsBackupFragment : PreferenceFragmentCompat(), OnSharedPreferenceCha
                 true
             }
         }
+
+//        if (preferenceExportLocal != null) {
+//            preferenceExportLocal.onPreferenceClickListener = Preference.OnPreferenceClickListener {
+//                Backup().exportLocal(activity as ListActivity)
+//                true
+//            }
+//        }
 
         if (preferenceImport != null) {
             preferenceImport.onPreferenceClickListener = Preference.OnPreferenceClickListener {

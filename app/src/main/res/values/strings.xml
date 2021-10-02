@@ -226,7 +226,7 @@
     <string name="warning_delete_book_message">Do you really want to delete this book?</string>
     <string name="warning_delete_book_delete">delete</string>
     <string name="warning_delete_book_cancel">back</string>
-    <string name="export_title">Create backup</string>
+    <string name="export_title">Create cloud backup</string>
     <string name="export_summary">Save your books to the cloud so they won\'t go anywhere! You can save the backup file to your cloud app (Nextcloud, Google Drive, OneDrive, Dropbox, Mega, Proton Drive)</string>
     <string name="import_title">Restore backup</string>
     <string name="import_summary">Load your books from a local file on your phone. You may need to grant storage permissions for the app.</string>
@@ -303,4 +303,6 @@
     <string name="month_11_short">Nov</string>
     <string name="month_12_short">Dec</string>
     <string name="stats_pages_by_months">Read pages by month</string>
+    <string name="export_local_summary">Save your books to a local file so you always have the backup handy!</string>
+    <string name="export_local_title">Create local backup</string>
 </resources>

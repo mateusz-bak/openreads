@@ -189,7 +189,7 @@
     <string name="warning_delete_book_message">Czy na prawdę chcesz usunąć tę książkę?</string>
     <string name="warning_delete_book_delete">usuń</string>
     <string name="warning_delete_book_cancel">wróć</string>
-    <string name="export_title">Stwórz kopię książek</string>
+    <string name="export_title">Stwórz kopię książek w chmurze</string>
     <string name="export_summary">Zapisz książki w chmurze, żeby nigdzie się nie zapodziały! Możesz zapisać bezpośrednio w ulubionej aplikacji (Nextcloud, Google Drive, OneDrive, Dropbox, Mega, Proton Drive)</string>
     <string name="import_title">Wczytaj kopię książek</string>
     <string name="import_summary">Załaduj książki z pliku na Twoim telefonie. Potrzebne może być udzielenie uprawnień dostępu do pamięci.</string>
@@ -262,4 +262,6 @@
     <string name="month_11_short">Lis</string>
     <string name="month_12_short">Gru</string>
     <string name="stats_pages_by_months">Przeczytane strony według miesiąca</string>
+    <string name="export_local_summary">Zapisz książki w pamięci telefonu, żeby mieć je zawsze pod ręką!</string>
+    <string name="export_local_title">Stwórz lokalną kopię książek</string>
 </resources>
