@@ -298,7 +298,7 @@ class StatisticsAdapter(
         itemView.rbcBooksByMonth.description.isEnabled = false
 
         //add animation
-        itemView.rbcBooksByMonth.animateY(750)
+        itemView.rbcBooksByMonth.animateY(600)
 
         itemView.rbcBooksByMonth.xAxis.position = XAxis.XAxisPosition.BOTTOM
 
@@ -307,8 +307,28 @@ class StatisticsAdapter(
         //change x axis label's color
         itemView.rbcBooksByMonth.xAxis.textColor = itemView.resources.getColor(R.color.colorDefaultText)
 
+        //disable touch actions on graph
+        itemView.rbcBooksByMonth.setTouchEnabled(false)
+
         //draw chart
         itemView.rbcBooksByMonth.invalidate()
+
+        itemView.clBooksByMonth.setOnClickListener {
+            var animDuration = 200L
+            var scaleSmall = 0.95F
+            var scaleBig = 1F
+
+            itemView.rbcBooksByMonth.animateY(500)
+
+            itemView.clBooksByMonth.animate().scaleX(scaleSmall).setDuration(animDuration).start()
+            itemView.clBooksByMonth.animate().scaleY(scaleSmall).setDuration(animDuration).start()
+
+            MainScope().launch {
+                delay(animDuration)
+                itemView.clBooksByMonth.animate().scaleX(scaleBig).setDuration(animDuration).start()
+                itemView.clBooksByMonth.animate().scaleY(scaleBig).setDuration(animDuration).start()
+            }
+        }
     }
 
     private fun setupPagesByMonthChart(itemView: View, yearPagesByMonth: Array<Int>) {
@@ -366,23 +386,41 @@ class StatisticsAdapter(
         itemView.rbcPagesByMonth.description.isEnabled = false
 
         //add animation
-        itemView.rbcPagesByMonth.animateY(750)
+        itemView.rbcPagesByMonth.animateY(800)
 
         itemView.rbcPagesByMonth.xAxis.position = XAxis.XAxisPosition.BOTTOM
 
         itemView.rbcPagesByMonth.xAxis.valueFormatter = IndexAxisValueFormatter(monthsList)
 
         //change x axis label's color
-        itemView.rbcBooksByMonth.xAxis.textColor = itemView.resources.getColor(R.color.colorDefaultText)
+        itemView.rbcPagesByMonth.xAxis.textColor = itemView.resources.getColor(R.color.colorDefaultText)
+
+        //disable touch actions on graph
+        itemView.rbcPagesByMonth.setTouchEnabled(false)
 
         //draw chart
         itemView.rbcPagesByMonth.invalidate()
+
+        itemView.clPagesByMonth.setOnClickListener {
+            var animDuration = 200L
+            var scaleSmall = 0.95F
+            var scaleBig = 1F
+
+            itemView.rbcPagesByMonth.animateY(500)
+
+            itemView.clPagesByMonth.animate().scaleX(scaleSmall).setDuration(animDuration).start()
+            itemView.clPagesByMonth.animate().scaleY(scaleSmall).setDuration(animDuration).start()
+
+            MainScope().launch {
+                delay(animDuration)
+                itemView.clPagesByMonth.animate().scaleX(scaleBig).setDuration(animDuration).start()
+                itemView.clPagesByMonth.animate().scaleY(scaleBig).setDuration(animDuration).start()
+            }
+        }
     }
 
     private fun setCardsAnimation(view: View) {
         val statCards = listOf<View>(
-            view.clBooksByMonth,
-            view.clPagesByMonth,
             view.clBooksRead,
             view.clPagesRead,
             view.clAvgRating,
@@ -393,20 +431,37 @@ class StatisticsAdapter(
             view.clShortestBook
         )
 
+        val statImages = listOf<View>(
+            view.ivBooksRead,
+            view.ivPagesRead,
+            view.ivAvgRating,
+            view.ivQuickestRead,
+            view.ivLongestBook,
+            view.ivAvgReadingTime,
+            view.ivAvgPages,
+            view.ivShortestBook
+        )
+
         var animDuration = 200L
         var scaleSmall = 0.95F
         var scaleBig = 1F
 
 
-        for (card in statCards) {
-            card.setOnClickListener {
-                card.animate().scaleX(scaleSmall).setDuration(animDuration).start()
-                card.animate().scaleY(scaleSmall).setDuration(animDuration).start()
+        for (i in statCards.indices) {
+            statCards[i].setOnClickListener {
+                statCards[i].animate().scaleX(scaleSmall).setDuration(animDuration).start()
+                statCards[i].animate().scaleY(scaleSmall).setDuration(animDuration).start()
+
+                if (statImages[i].rotation < 180F)
+                    statImages[i].animate().rotation(360F).setDuration(2 * animDuration).start()
+                else
+                    statImages[i].animate().rotation(0F).setDuration(2 * animDuration).start()
+
 
                 MainScope().launch {
                     delay(animDuration)
-                    card.animate().scaleX(scaleBig).setDuration(animDuration).start()
-                    card.animate().scaleY(scaleBig).setDuration(animDuration).start()
+                    statCards[i].animate().scaleX(scaleBig).setDuration(animDuration).start()
+                    statCards[i].animate().scaleY(scaleBig).setDuration(animDuration).start()
                 }
             }
 
