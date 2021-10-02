@@ -65,10 +65,11 @@ class DisplayBookFragment : Fragment(R.layout.fragment_display_book) {
             when(tvBookPagesTitle.visibility){
                 View.VISIBLE -> {
                     setDetailsButtonToMore()
-                    initialViewsSetup()
+                    animateHidingDetails()
                 }
                 else -> {
                     setDetailsButtonToLess()
+                    animateShowingDetails()
                     showMoreDetails()
                 }
 
@@ -286,6 +287,61 @@ class DisplayBookFragment : Fragment(R.layout.fragment_display_book) {
             tvDateStartedLayut.endToEnd = R.id.guideline3 // resource ID of new parent field
             tvDateStarted.layoutParams = tvDateStartedLayut
             tvDateStarted.visibility = View.VISIBLE
+        }
+    }
+
+    private fun animateShowingDetails() {
+        val views = arrayOf(
+            tvBookPagesTitle,
+            tvBookPages,
+            tvBookPublishYear,
+            tvBookPublishYearTitle,
+            tvBookISBNTitle,
+            tvBookISBN,
+            tvBookURL,
+            tvDateFinishedTitle,
+            tvDateFinished,
+            tvDateStartedTitle,
+            tvDateStarted
+        )
+
+        for (view in views) {
+            val animDuration = 300L
+            val translationY = 300F
+
+            view.alpha = 0F
+            view.translationY = - translationY
+
+            view.animate().alpha(1F).setStartDelay(50L).setDuration(animDuration - 50L).start()
+            view.animate().translationYBy(translationY).setDuration(animDuration).start()
+        }
+    }
+
+    private fun animateHidingDetails() {
+        val views = arrayOf(
+            tvBookPagesTitle,
+            tvBookPages,
+            tvBookPublishYear,
+            tvBookPublishYearTitle,
+            tvBookISBNTitle,
+            tvBookISBN,
+            tvBookURL,
+            tvDateFinishedTitle,
+            tvDateFinished,
+            tvDateStartedTitle,
+            tvDateStarted
+        )
+
+        tvBookPagesTitle.visibility = View.INVISIBLE
+
+        for (view in views) {
+            val animDuration = 300L
+            val translationY = 300F
+
+            view.alpha = 1F
+
+            view.animate().alpha(0F).setDuration(animDuration - 50L).start()
+            view.animate().translationYBy(-translationY).setDuration(animDuration).start()
         }
     }
 
