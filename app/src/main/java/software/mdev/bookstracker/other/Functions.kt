@@ -25,6 +25,12 @@ class Functions {
         return timeStamp.time
     }
 
+    fun convertLongToMonth(time: Long): String {
+        val date = Date(time)
+        val format = SimpleDateFormat("MM")
+        return format.format(date)
+    }
+
     fun calculateYearsFromDb(listOfBooks: List<Book>): Array<String> {
         var arrayOfYears: Array<String>
 

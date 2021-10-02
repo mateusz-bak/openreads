@@ -27,6 +27,7 @@ import software.mdev.bookstracker.data.repositories.LanguageRepository
 import software.mdev.bookstracker.data.repositories.OpenLibraryRepository
 import software.mdev.bookstracker.data.repositories.YearRepository
 import software.mdev.bookstracker.other.Constants
+import software.mdev.bookstracker.other.Functions
 import software.mdev.bookstracker.ui.bookslist.viewmodel.BooksViewModel
 import software.mdev.bookstracker.ui.bookslist.viewmodel.BooksViewModelProviderFactory
 import java.text.SimpleDateFormat
@@ -112,6 +113,9 @@ class StatisticsFragment : Fragment(R.layout.fragment_statistics) {
                 var readingTimeSumAllTime = 0L
                 var averageReadingTimeNumOfBooksAllTime = 0L
 
+                var booksByMonthsAllTime = arrayOf(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0)
+                var pagesByMonthsAllTime = arrayOf(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0)
+
                 for (item_year in years) {
                     var booksInYear = 0
                     var pagesInYear = 0
@@ -129,6 +133,8 @@ class StatisticsFragment : Fragment(R.layout.fragment_statistics) {
                     var readingTimeSum = 0L
                     var averageReadingTimeNumOfBooks = 0L
 
+                    var booksByMonths = arrayOf(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0)
+                    var pagesByMonths = arrayOf(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0)
 
 
                     for (item_book in books) {
@@ -141,6 +147,59 @@ class StatisticsFragment : Fragment(R.layout.fragment_statistics) {
                                 pagesAllTime += item_book.bookNumberOfPages
                                 sumRatingInYear += item_book.bookRating
                                 sumRatingAllTime += item_book.bookRating
+
+                                // books by month
+                                when (Functions().convertLongToMonth(item_book.bookFinishDate.toLong())){
+                                    "01" -> {
+                                        booksByMonths[0] += 1
+                                        booksByMonthsAllTime[0] += 1
+                                    }
+                                    "02" -> {
+                                        booksByMonths[1] += 1
+                                        booksByMonthsAllTime[1] += 1
+                                    }
+                                    "03" -> {
+                                        booksByMonths[2] += 1
+                                        booksByMonthsAllTime[2] += 1
+                                    }
+                                    "04" -> {
+                                        booksByMonths[3] += 1
+                                        booksByMonthsAllTime[3] += 1
+                                    }
+                                    "05" -> {
+                                        booksByMonths[4] += 1
+                                        booksByMonthsAllTime[4] += 1
+                                    }
+                                    "06" -> {
+                                        booksByMonths[5] += 1
+                                        booksByMonthsAllTime[5] += 1
+                                    }
+                                    "07" -> {
+                                        booksByMonths[6] += 1
+                                        booksByMonthsAllTime[6] += 1
+                                    }
+                                    "08" -> {
+                                        booksByMonths[7] += 1
+                                        booksByMonthsAllTime[7] += 1
+                                    }
+                                    "09" -> {
+                                        booksByMonths[8] += 1
+                                        booksByMonthsAllTime[8] += 1
+                                    }
+                                    "10" ->
+                                    {
+                                        booksByMonths[9] += 1
+                                        booksByMonthsAllTime[9] += 1
+                                    }
+                                    "11" -> {
+                                        booksByMonths[10] += 1
+                                        booksByMonthsAllTime[10] += 1
+                                    }
+                                    "12" -> {
+                                        booksByMonths[11] += 1
+                                        booksByMonthsAllTime[11] += 1
+                                    }
+                                }
 
                                 // longest book in a year
                                 if (item_book.bookNumberOfPages > longestBookVal) {
@@ -235,7 +294,8 @@ class StatisticsFragment : Fragment(R.layout.fragment_statistics) {
                         avgReadingTime,
                         avgPages,
                         shortestBook,
-                        shortestBookVal
+                        shortestBookVal,
+                        booksByMonths
                     ))
                 }
 
@@ -264,7 +324,8 @@ class StatisticsFragment : Fragment(R.layout.fragment_statistics) {
                     avgReadingTimeAllTime,
                     avgPagesAllTime,
                     shortestBookAllTime,
-                    shortestBookValAllTime
+                    shortestBookValAllTime,
+                    booksByMonthsAllTime
                 )
 
                 statisticsAdapter.differ.submitList(listOfYears)

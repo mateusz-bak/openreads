@@ -249,4 +249,16 @@
     <string name="update_ok_4">Tak trzymaj!</string>
     <string name="update_ok_5">Kocham nowe aktualizacje!</string>
     <string name="update_ok_6">Kawał dobrej roboty!</string>
+    <string name="month_1_short">Sty</string>
+    <string name="month_2_short">Lut</string>
+    <string name="month_3_short">Mar</string>
+    <string name="month_4_short">Kwi</string>
+    <string name="month_5_short">Maj</string>
+    <string name="month_6_short">Cze</string>
+    <string name="month_7_short">Lip</string>
+    <string name="month_8_short">Sie</string>
+    <string name="month_9_short">Wrz</string>
+    <string name="month_10_short">Paź</string>
+    <string name="month_11_short">Lis</string>
+    <string name="month_12_short">Gru</string>
 </resources>

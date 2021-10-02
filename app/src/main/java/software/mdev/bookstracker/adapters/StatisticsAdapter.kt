@@ -8,6 +8,15 @@ import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.AsyncListDiffer
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
+import com.github.mikephil.charting.components.XAxis
+import com.github.mikephil.charting.data.BarData
+import com.github.mikephil.charting.data.BarDataSet
+import com.github.mikephil.charting.data.BarEntry
+import com.github.mikephil.charting.data.Entry
+import com.github.mikephil.charting.formatter.DefaultValueFormatter
+import com.github.mikephil.charting.formatter.IndexAxisValueFormatter
+import com.github.mikephil.charting.formatter.ValueFormatter
+import com.github.mikephil.charting.utils.ColorTemplate
 import kotlinx.android.synthetic.main.item_statistics.view.*
 import kotlinx.coroutines.MainScope
 import kotlinx.coroutines.delay
@@ -21,7 +30,6 @@ import software.mdev.bookstracker.data.repositories.BooksRepository
 import software.mdev.bookstracker.data.repositories.LanguageRepository
 import software.mdev.bookstracker.data.repositories.OpenLibraryRepository
 import software.mdev.bookstracker.data.repositories.YearRepository
-import software.mdev.bookstracker.other.Constants
 import software.mdev.bookstracker.ui.bookslist.dialogs.ChallengeDialog
 import software.mdev.bookstracker.ui.bookslist.dialogs.ChallengeDialogListener
 import software.mdev.bookstracker.ui.bookslist.fragments.StatisticsFragment
@@ -31,11 +39,15 @@ import java.math.RoundingMode
 import java.text.DecimalFormat
 import java.util.*
 import java.util.concurrent.TimeUnit
+import com.github.mikephil.charting.utils.ViewPortHandler
+
 
 class StatisticsAdapter(
     private val statisticsFragment: StatisticsFragment,
     private val listOfYearsFromDb: List<Year>
 ) : RecyclerView.Adapter<StatisticsAdapter.StatisticsViewHolder>() {
+
+    private var monthsList = ArrayList<String>()
 
     inner class StatisticsViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView)
 
@@ -207,6 +219,8 @@ class StatisticsAdapter(
             } else {
                 pbChallenge.visibility = View.GONE
             }
+
+            setupBooksByMonthChart(holder.itemView, curYear.yearBooksByMonth)
         }
 
         if (position == 0) {
@@ -226,6 +240,82 @@ class StatisticsAdapter(
                 }
             }
         }
+    }
+
+    private fun setupBooksByMonthChart(itemView: View, yearBooksByMonth: Array<Int>) {
+        monthsList = arrayListOf(
+            itemView.resources.getString(R.string.month_1_short),
+            itemView.resources.getString(R.string.month_2_short),
+            itemView.resources.getString(R.string.month_3_short),
+            itemView.resources.getString(R.string.month_4_short),
+            itemView.resources.getString(R.string.month_5_short),
+            itemView.resources.getString(R.string.month_6_short),
+            itemView.resources.getString(R.string.month_7_short),
+            itemView.resources.getString(R.string.month_8_short),
+            itemView.resources.getString(R.string.month_9_short),
+            itemView.resources.getString(R.string.month_10_short),
+            itemView.resources.getString(R.string.month_11_short),
+            itemView.resources.getString(R.string.month_12_short)
+        )
+
+        val entries: ArrayList<BarEntry> = ArrayList()
+        entries.add(BarEntry(0f, yearBooksByMonth[0].toFloat()))
+        entries.add(BarEntry(1f, yearBooksByMonth[1].toFloat()))
+        entries.add(BarEntry(2f, yearBooksByMonth[2].toFloat()))
+        entries.add(BarEntry(3f, yearBooksByMonth[3].toFloat()))
+        entries.add(BarEntry(4f, yearBooksByMonth[4].toFloat()))
+        entries.add(BarEntry(5f, yearBooksByMonth[5].toFloat()))
+        entries.add(BarEntry(6f, yearBooksByMonth[6].toFloat()))
+        entries.add(BarEntry(7f, yearBooksByMonth[7].toFloat()))
+        entries.add(BarEntry(8f, yearBooksByMonth[8].toFloat()))
+        entries.add(BarEntry(9f, yearBooksByMonth[9].toFloat()))
+        entries.add(BarEntry(10f, yearBooksByMonth[10].toFloat()))
+        entries.add(BarEntry(11f, yearBooksByMonth[11].toFloat()))
+
+        val barDataSet = BarDataSet(entries, "")
+        barDataSet.setColors(*ColorTemplate.COLORFUL_COLORS)
+
+        var data = BarData(barDataSet)
+//        data.setValueFormatter(MyValueFormatter())
+
+//        data.setDefaultValueFormatter(DefaultValueFormatter(1))
+        data.setValueFormatter(DefaultValueFormatter(0))
+//        data.setValueFormatter(YourValueFormatter())
+        itemView.lcMonths.data = data
+
+
+        //hide grid lines
+        itemView.lcMonths.axisLeft.setDrawGridLines(false)
+        itemView.lcMonths.xAxis.setDrawGridLines(false)
+        itemView.lcMonths.xAxis.setDrawAxisLine(false)
+
+        //remove right y-axis
+        itemView.lcMonths.axisRight.isEnabled = false
+        //remove left y-axis
+        itemView.lcMonths.axisLeft.isEnabled = false
+
+        //remove legend
+        itemView.lcMonths.legend.isEnabled = false
+
+        //remove description label
+        itemView.lcMonths.description.isEnabled = false
+//        itemView.lcMonths.description.isEnabled = true
+
+
+        //add animation
+//        itemView.lcMonths.animateY(3000)
+        itemView.lcMonths.animateY(750)
+
+
+
+        itemView.lcMonths.xAxis.position = XAxis.XAxisPosition.BOTTOM
+//        itemView.lcMonths.xAxis.labelRotationAngle = -90F
+
+        itemView.lcMonths.xAxis.valueFormatter = IndexAxisValueFormatter(monthsList)
+//        itemView.lcMonths.defaultValueFormatter = MyValueFormatter()
+
+        //draw chart
+        itemView.lcMonths.invalidate()
     }
 
     private fun setCardsAnimation(view: View) {

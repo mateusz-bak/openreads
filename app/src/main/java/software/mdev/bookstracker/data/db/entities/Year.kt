@@ -48,9 +48,32 @@ data class Year(
         var yearShortestBook: String = "null",
 
         @ColumnInfo(name = Constants.DATABASE_YEAR_SHORTEST_BOOK_VAL)
-        var yearShortestBookVal: Int = 0
+        var yearShortestBookVal: Int = 0,
+
+        @ColumnInfo(name = Constants.DATABASE_YEAR_BOOKS_BY_MONTH)
+        var yearBooksByMonth: Array<Int> = arrayOf(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0),
+
+        @ColumnInfo(name = Constants.DATABASE_YEAR_PAGES_BY_MONTH)
+        var yearPagesByMonth: Array<Int> = arrayOf(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0)
 
 ): Serializable{
         @PrimaryKey(autoGenerate = false)
         var id: Int? = null
+        override fun equals(other: Any?): Boolean {
+                if (this === other) return true
+                if (javaClass != other?.javaClass) return false
+
+                other as Year
+
+                if (!yearBooksByMonth.contentEquals(other.yearBooksByMonth)) return false
+                if (!yearPagesByMonth.contentEquals(other.yearPagesByMonth)) return false
+
+                return true
+        }
+
+        override fun hashCode(): Int {
+                var result = yearBooksByMonth.contentHashCode()
+                result = 31 * result + yearPagesByMonth.contentHashCode()
+                return result
+        }
 }

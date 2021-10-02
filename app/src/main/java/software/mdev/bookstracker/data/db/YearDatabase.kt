@@ -4,15 +4,19 @@ import android.content.Context
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
+import androidx.room.TypeConverters
 import androidx.room.migration.Migration
 import androidx.sqlite.db.SupportSQLiteDatabase
 import software.mdev.bookstracker.data.db.entities.Year
 import software.mdev.bookstracker.other.Constants
+import software.mdev.bookstracker.other.Converters
 
 @Database(
         entities = [Year::class],
-        version = 4
+        version = 5
 )
+
+@TypeConverters(Converters::class)
 abstract class YearDatabase: RoomDatabase() {
 
     abstract fun getYearDao(): YearDao
@@ -36,6 +40,7 @@ abstract class YearDatabase: RoomDatabase() {
                     MIGRATION_2_3,
                     MIGRATION_3_4
                 )
+                    .fallbackToDestructiveMigration()
                     .build()
 
         private val MIGRATION_1_2 = object : Migration(1, 2) {

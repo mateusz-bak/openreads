@@ -128,4 +128,10 @@ dependencies {
 
     // https://github.com/yuriy-budiyev/code-scanner
     implementation 'com.budiyev.android:code-scanner:2.1.0'
+
+    //charts
+    implementation 'com.github.PhilJay:MPAndroidChart:v3.1.0'
+
+    // https://stackoverflow.com/questions/44986626/android-room-database-how-to-handle-arraylist-in-an-entity
+    implementation "org.jetbrains.kotlinx:kotlinx-serialization-json:1.0.1"
 }

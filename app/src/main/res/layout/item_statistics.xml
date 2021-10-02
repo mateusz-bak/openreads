@@ -83,9 +83,8 @@
                             app:layout_constraintTop_toTopOf="parent"
                             app:srcCompat="@drawable/ic_svg_gold_medal" />
 
-                        <ProgressBar
+                        <com.google.android.material.progressindicator.LinearProgressIndicator
                             android:id="@+id/pbChallenge"
-                            style="@style/Widget.AppCompat.ProgressBar.Horizontal"
                             android:layout_width="0dp"
                             android:layout_height="20dp"
                             android:layout_marginTop="4dp"
@@ -93,7 +92,8 @@
                             android:indeterminate="false"
                             android:max="100"
                             android:progress="0"
-                            android:scaleY="2"
+                            app:trackThickness="12dp"
+                            app:trackCornerRadius="5dp"
                             app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintHorizontal_bias="0.5"
                             app:layout_constraintStart_toStartOf="@+id/tvChallengeValue"
@@ -147,60 +147,17 @@
                             app:layout_constraintStart_toStartOf="parent"
                             app:layout_constraintTop_toTopOf="parent" />
 
-                        <ImageView
-                            android:id="@+id/ivMonths1"
+                        <software.mdev.bookstracker.other.RoundedBarChart
+                            android:id="@+id/lcMonths"
                             android:layout_width="0dp"
-                            android:layout_height="50dp"
-                            android:layout_marginStart="16dp"
-                            android:layout_marginTop="12dp"
-                            android:layout_marginBottom="8dp"
-                            app:layout_constraintBottom_toBottomOf="parent"
-                            app:layout_constraintEnd_toStartOf="@+id/ivMonths2"
-                            app:layout_constraintHorizontal_bias="0.5"
-                            app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toBottomOf="@+id/tvMonthsTitle"
-                            app:srcCompat="@drawable/ic_svg_statistics"
-                            app:tint="?colorPrimary" />
-
-                        <ImageView
-                            android:id="@+id/ivMonths2"
-                            android:layout_width="0dp"
-                            android:layout_height="50dp"
-                            android:layout_marginStart="4dp"
-                            app:layout_constraintBottom_toBottomOf="@+id/ivMonths1"
-                            app:layout_constraintEnd_toStartOf="@+id/ivMonths3"
-                            app:layout_constraintHorizontal_bias="0.5"
-                            app:layout_constraintStart_toEndOf="@+id/ivMonths1"
-                            app:layout_constraintTop_toTopOf="@+id/ivMonths1"
-                            app:srcCompat="@drawable/ic_svg_statistics"
-                            app:tint="?colorPrimary" />
-
-                        <ImageView
-                            android:id="@+id/ivMonths3"
-                            android:layout_width="0dp"
-                            android:layout_height="50dp"
-                            android:layout_marginStart="4dp"
-                            app:layout_constraintBottom_toBottomOf="@+id/ivMonths1"
-                            app:layout_constraintEnd_toStartOf="@+id/ivMonths4"
-                            app:layout_constraintHorizontal_bias="0.5"
-                            app:layout_constraintStart_toEndOf="@+id/ivMonths2"
-                            app:layout_constraintTop_toTopOf="@+id/ivMonths1"
-                            app:srcCompat="@drawable/ic_svg_statistics"
-                            app:tint="?colorPrimary" />
-
-                        <ImageView
-                            android:id="@+id/ivMonths4"
-                            android:layout_width="0dp"
-                            android:layout_height="50dp"
-                            android:layout_marginStart="4dp"
+                            android:layout_height="150dp"
                             android:layout_marginEnd="16dp"
-                            app:layout_constraintBottom_toBottomOf="@+id/ivMonths1"
+                            android:layout_marginTop="12dp"
+                            app:radius="6dp"
                             app:layout_constraintEnd_toEndOf="parent"
-                            app:layout_constraintHorizontal_bias="0.5"
-                            app:layout_constraintStart_toEndOf="@+id/ivMonths3"
-                            app:layout_constraintTop_toTopOf="@+id/ivMonths1"
-                            app:srcCompat="@drawable/ic_svg_statistics"
-                            app:tint="?colorPrimary" />
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintStart_toStartOf="@+id/tvMonthsTitle"
+                            app:layout_constraintTop_toBottomOf="@+id/tvMonthsTitle" />
 
 
                     </androidx.constraintlayout.widget.ConstraintLayout>

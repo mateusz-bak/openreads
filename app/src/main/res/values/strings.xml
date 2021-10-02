@@ -290,4 +290,16 @@
     <string name="update_ok_4">Keep up the good work!</string>
     <string name="update_ok_5">Love the new updates!</string>
     <string name="update_ok_6">A job well done!</string>
+    <string name="month_1_short">Jan</string>
+    <string name="month_2_short">Feb</string>
+    <string name="month_3_short">Mar</string>
+    <string name="month_4_short">Apr</string>
+    <string name="month_5_short">May</string>
+    <string name="month_6_short">Jun</string>
+    <string name="month_7_short">Jul</string>
+    <string name="month_8_short">Aug</string>
+    <string name="month_9_short">Sep</string>
+    <string name="month_10_short">Oct</string>
+    <string name="month_11_short">Nov</string>
+    <string name="month_12_short">Dec</string>
 </resources>
