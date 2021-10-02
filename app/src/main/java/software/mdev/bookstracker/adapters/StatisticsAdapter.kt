@@ -128,7 +128,8 @@ class StatisticsAdapter(
                 clAvgRating.visibility = View.GONE
                 clChallenge.visibility = View.GONE
                 clQuickestRead.visibility = View.GONE
-                clMonths.visibility = View.GONE
+                clBooksByMonth.visibility = View.GONE
+                clPagesByMonth.visibility = View.GONE
                 clAvgReadingTime.visibility = View.GONE
                 clAvgPages.visibility = View.GONE
                 clLongestBook.visibility = View.GONE
@@ -221,6 +222,7 @@ class StatisticsAdapter(
             }
 
             setupBooksByMonthChart(holder.itemView, curYear.yearBooksByMonth)
+            setupPagesByMonthChart(holder.itemView, curYear.yearPagesByMonth)
         }
 
         if (position == 0) {
@@ -273,54 +275,114 @@ class StatisticsAdapter(
         entries.add(BarEntry(11f, yearBooksByMonth[11].toFloat()))
 
         val barDataSet = BarDataSet(entries, "")
-        barDataSet.setColors(*ColorTemplate.COLORFUL_COLORS)
+        barDataSet.setColors(*ColorTemplate.MATERIAL_COLORS)
 
         var data = BarData(barDataSet)
-//        data.setValueFormatter(MyValueFormatter())
-
-//        data.setDefaultValueFormatter(DefaultValueFormatter(1))
         data.setValueFormatter(DefaultValueFormatter(0))
-//        data.setValueFormatter(YourValueFormatter())
-        itemView.lcMonths.data = data
-
+        itemView.rbcBooksByMonth.data = data
 
         //hide grid lines
-        itemView.lcMonths.axisLeft.setDrawGridLines(false)
-        itemView.lcMonths.xAxis.setDrawGridLines(false)
-        itemView.lcMonths.xAxis.setDrawAxisLine(false)
+        itemView.rbcBooksByMonth.axisLeft.setDrawGridLines(false)
+        itemView.rbcBooksByMonth.xAxis.setDrawGridLines(false)
+        itemView.rbcBooksByMonth.xAxis.setDrawAxisLine(false)
 
         //remove right y-axis
-        itemView.lcMonths.axisRight.isEnabled = false
+        itemView.rbcBooksByMonth.axisRight.isEnabled = false
         //remove left y-axis
-        itemView.lcMonths.axisLeft.isEnabled = false
+        itemView.rbcBooksByMonth.axisLeft.isEnabled = false
 
         //remove legend
-        itemView.lcMonths.legend.isEnabled = false
+        itemView.rbcBooksByMonth.legend.isEnabled = false
 
         //remove description label
-        itemView.lcMonths.description.isEnabled = false
-//        itemView.lcMonths.description.isEnabled = true
-
+        itemView.rbcBooksByMonth.description.isEnabled = false
 
         //add animation
-//        itemView.lcMonths.animateY(3000)
-        itemView.lcMonths.animateY(750)
+        itemView.rbcBooksByMonth.animateY(750)
 
+        itemView.rbcBooksByMonth.xAxis.position = XAxis.XAxisPosition.BOTTOM
 
+        itemView.rbcBooksByMonth.xAxis.valueFormatter = IndexAxisValueFormatter(monthsList)
 
-        itemView.lcMonths.xAxis.position = XAxis.XAxisPosition.BOTTOM
-//        itemView.lcMonths.xAxis.labelRotationAngle = -90F
-
-        itemView.lcMonths.xAxis.valueFormatter = IndexAxisValueFormatter(monthsList)
-//        itemView.lcMonths.defaultValueFormatter = MyValueFormatter()
+        //change x axis label's color
+        itemView.rbcBooksByMonth.xAxis.textColor = itemView.resources.getColor(R.color.colorDefaultText)
 
         //draw chart
-        itemView.lcMonths.invalidate()
+        itemView.rbcBooksByMonth.invalidate()
+    }
+
+    private fun setupPagesByMonthChart(itemView: View, yearPagesByMonth: Array<Int>) {
+        monthsList = arrayListOf(
+            itemView.resources.getString(R.string.month_1_short),
+            itemView.resources.getString(R.string.month_2_short),
+            itemView.resources.getString(R.string.month_3_short),
+            itemView.resources.getString(R.string.month_4_short),
+            itemView.resources.getString(R.string.month_5_short),
+            itemView.resources.getString(R.string.month_6_short),
+            itemView.resources.getString(R.string.month_7_short),
+            itemView.resources.getString(R.string.month_8_short),
+            itemView.resources.getString(R.string.month_9_short),
+            itemView.resources.getString(R.string.month_10_short),
+            itemView.resources.getString(R.string.month_11_short),
+            itemView.resources.getString(R.string.month_12_short)
+        )
+
+        val entries: ArrayList<BarEntry> = ArrayList()
+
+        entries.add(BarEntry(0f, yearPagesByMonth[0].toFloat()))
+        entries.add(BarEntry(1f, yearPagesByMonth[1].toFloat()))
+        entries.add(BarEntry(2f, yearPagesByMonth[2].toFloat()))
+        entries.add(BarEntry(3f, yearPagesByMonth[3].toFloat()))
+        entries.add(BarEntry(4f, yearPagesByMonth[4].toFloat()))
+        entries.add(BarEntry(5f, yearPagesByMonth[5].toFloat()))
+        entries.add(BarEntry(6f, yearPagesByMonth[6].toFloat()))
+        entries.add(BarEntry(7f, yearPagesByMonth[7].toFloat()))
+        entries.add(BarEntry(8f, yearPagesByMonth[8].toFloat()))
+        entries.add(BarEntry(9f, yearPagesByMonth[9].toFloat()))
+        entries.add(BarEntry(10f, yearPagesByMonth[10].toFloat()))
+        entries.add(BarEntry(11f, yearPagesByMonth[11].toFloat()))
+
+        val barDataSet = BarDataSet(entries, "")
+        barDataSet.setColors(*ColorTemplate.JOYFUL_COLORS)
+
+        var data = BarData(barDataSet)
+        data.setValueFormatter(DefaultValueFormatter(0))
+        itemView.rbcPagesByMonth.data = data
+
+        //hide grid lines
+        itemView.rbcPagesByMonth.axisLeft.setDrawGridLines(false)
+        itemView.rbcPagesByMonth.xAxis.setDrawGridLines(false)
+        itemView.rbcPagesByMonth.xAxis.setDrawAxisLine(false)
+
+        //remove right y-axis
+        itemView.rbcPagesByMonth.axisRight.isEnabled = false
+        //remove left y-axis
+        itemView.rbcPagesByMonth.axisLeft.isEnabled = false
+
+        //remove legend
+        itemView.rbcPagesByMonth.legend.isEnabled = false
+
+        //remove description label
+        itemView.rbcPagesByMonth.description.isEnabled = false
+
+        //add animation
+        itemView.rbcPagesByMonth.animateY(750)
+
+        itemView.rbcPagesByMonth.xAxis.position = XAxis.XAxisPosition.BOTTOM
+
+        itemView.rbcPagesByMonth.xAxis.valueFormatter = IndexAxisValueFormatter(monthsList)
+
+        //change x axis label's color
+        itemView.rbcBooksByMonth.xAxis.textColor = itemView.resources.getColor(R.color.colorDefaultText)
+
+        //draw chart
+        itemView.rbcPagesByMonth.invalidate()
     }
 
     private fun setCardsAnimation(view: View) {
         val statCards = listOf<View>(
-            view.clMonths,
+            view.clBooksByMonth,
+            view.clPagesByMonth,
             view.clBooksRead,
             view.clPagesRead,
             view.clAvgRating,

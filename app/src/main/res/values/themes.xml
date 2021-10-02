@@ -25,4 +25,6 @@
     <style name="Theme.Mdev.Bookstracker.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
 
     <style name="Theme.Mdev.Bookstracker.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
+
+    <color name="colorDefaultText">#000000</color>
 </resources>

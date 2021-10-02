@@ -153,51 +153,75 @@ class StatisticsFragment : Fragment(R.layout.fragment_statistics) {
                                     "01" -> {
                                         booksByMonths[0] += 1
                                         booksByMonthsAllTime[0] += 1
+                                        pagesByMonths[0] += item_book.bookNumberOfPages
+                                        pagesByMonthsAllTime[0] += item_book.bookNumberOfPages
                                     }
                                     "02" -> {
                                         booksByMonths[1] += 1
                                         booksByMonthsAllTime[1] += 1
+                                        pagesByMonths[1] += item_book.bookNumberOfPages
+                                        pagesByMonthsAllTime[1] += item_book.bookNumberOfPages
                                     }
                                     "03" -> {
                                         booksByMonths[2] += 1
                                         booksByMonthsAllTime[2] += 1
+                                        pagesByMonths[2] += item_book.bookNumberOfPages
+                                        pagesByMonthsAllTime[2] += item_book.bookNumberOfPages
                                     }
                                     "04" -> {
                                         booksByMonths[3] += 1
                                         booksByMonthsAllTime[3] += 1
+                                        pagesByMonths[3] += item_book.bookNumberOfPages
+                                        pagesByMonthsAllTime[3] += item_book.bookNumberOfPages
                                     }
                                     "05" -> {
                                         booksByMonths[4] += 1
                                         booksByMonthsAllTime[4] += 1
+                                        pagesByMonths[4] += item_book.bookNumberOfPages
+                                        pagesByMonthsAllTime[4] += item_book.bookNumberOfPages
                                     }
                                     "06" -> {
                                         booksByMonths[5] += 1
                                         booksByMonthsAllTime[5] += 1
+                                        pagesByMonths[5] += item_book.bookNumberOfPages
+                                        pagesByMonthsAllTime[5] += item_book.bookNumberOfPages
                                     }
                                     "07" -> {
                                         booksByMonths[6] += 1
                                         booksByMonthsAllTime[6] += 1
+                                        pagesByMonths[6] += item_book.bookNumberOfPages
+                                        pagesByMonthsAllTime[6] += item_book.bookNumberOfPages
                                     }
                                     "08" -> {
                                         booksByMonths[7] += 1
                                         booksByMonthsAllTime[7] += 1
+                                        pagesByMonths[7] += item_book.bookNumberOfPages
+                                        pagesByMonthsAllTime[7] += item_book.bookNumberOfPages
                                     }
                                     "09" -> {
                                         booksByMonths[8] += 1
                                         booksByMonthsAllTime[8] += 1
+                                        pagesByMonths[8] += item_book.bookNumberOfPages
+                                        pagesByMonthsAllTime[8] += item_book.bookNumberOfPages
                                     }
                                     "10" ->
                                     {
                                         booksByMonths[9] += 1
                                         booksByMonthsAllTime[9] += 1
+                                        pagesByMonths[9] += item_book.bookNumberOfPages
+                                        pagesByMonthsAllTime[9] += item_book.bookNumberOfPages
                                     }
                                     "11" -> {
                                         booksByMonths[10] += 1
                                         booksByMonthsAllTime[10] += 1
+                                        pagesByMonths[10] += item_book.bookNumberOfPages
+                                        pagesByMonthsAllTime[10] += item_book.bookNumberOfPages
                                     }
                                     "12" -> {
                                         booksByMonths[11] += 1
                                         booksByMonthsAllTime[11] += 1
+                                        pagesByMonths[11] += item_book.bookNumberOfPages
+                                        pagesByMonthsAllTime[11] += item_book.bookNumberOfPages
                                     }
                                 }
 
@@ -295,7 +319,8 @@ class StatisticsFragment : Fragment(R.layout.fragment_statistics) {
                         avgPages,
                         shortestBook,
                         shortestBookVal,
-                        booksByMonths
+                        booksByMonths,
+                        pagesByMonths
                     ))
                 }
 
@@ -325,7 +350,8 @@ class StatisticsFragment : Fragment(R.layout.fragment_statistics) {
                     avgPagesAllTime,
                     shortestBookAllTime,
                     shortestBookValAllTime,
-                    booksByMonthsAllTime
+                    booksByMonthsAllTime,
+                    pagesByMonthsAllTime
                 )
 
                 statisticsAdapter.differ.submitList(listOfYears)

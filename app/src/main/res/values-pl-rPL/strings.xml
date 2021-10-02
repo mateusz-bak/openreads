@@ -235,7 +235,7 @@
     <string name="stats_pages_read">Przeczytane strony</string>
     <string name="stats_avg_rating">Średnia ocena książek</string>
     <string name="stats_challenge">Wyzwanie czytelnicze</string>
-    <string name="stats_months">Statystyki miesięczne</string>
+    <string name="stats_books_by_months">Przeczytane książki według miesiąca</string>
     <string name="need_more_data">Potrzeba więcej danych</string>
     <string name="days">dni</string>
     <string name="stats_shortest_book">Najkrótsza książka</string>
@@ -261,4 +261,5 @@
     <string name="month_10_short">Paź</string>
     <string name="month_11_short">Lis</string>
     <string name="month_12_short">Gru</string>
+    <string name="stats_pages_by_months">Przeczytane strony według miesiąca</string>
 </resources>
