@@ -149,7 +149,7 @@ class BookAdapter(
                     .load(coverUrl)
                     .placeholder(circularProgressDrawable)
                     .error(R.drawable.ic_baseline_error_outline_24)
-                    .transform(RoundCornersTransform(16.0f))
+                    .transform(RoundCornersTransform(20.0f))
                     .into(ivBookCover)
             }
         }
