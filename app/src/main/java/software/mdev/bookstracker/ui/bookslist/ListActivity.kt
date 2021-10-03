@@ -99,10 +99,17 @@ class ListActivity : AppCompatActivity() {
             else -> R.id.readFragment
         }
 
-        if (selectedItemId == landingPage) {
-            finish()
-        } else {
-            setHomeItem()
+        when (selectedItemId) {
+            landingPage -> finish()
+            R.id.displayBookFragment -> super.onBackPressed()
+            R.id.displayCoverFragment -> super.onBackPressed()
+            R.id.editBookFragment -> super.onBackPressed()
+            R.id.settingsFragment -> super.onBackPressed()
+            R.id.settingsBackupFragment -> super.onBackPressed()
+            R.id.trashFragment -> super.onBackPressed()
+            R.id.changelogFragment -> super.onBackPressed()
+            R.id.addBookScanFragment -> super.onBackPressed()
+            else -> setHomeItem()
         }
     }
 

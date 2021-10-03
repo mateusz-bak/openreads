@@ -142,14 +142,18 @@ class ChangelogFragment : Fragment(R.layout.fragment_changelog) {
             val adapter = ChangelogAdapter(
                 versions.reversed()
             )
-            rvChangelog.adapter = adapter
-            rvChangelog.layoutManager = LinearLayoutManager(view?.context)
+            if (rvChangelog != null)
+                rvChangelog.adapter = adapter
+            if (rvChangelog != null)
+                rvChangelog.layoutManager = LinearLayoutManager(view?.context)
 
             // bounce effect on the recyclerview
-            OverScrollDecoratorHelper.setUpOverScroll(
-                rvChangelog,
-                OverScrollDecoratorHelper.ORIENTATION_VERTICAL
-            )
+            if (rvChangelog != null) {
+                OverScrollDecoratorHelper.setUpOverScroll(
+                    rvChangelog,
+                    OverScrollDecoratorHelper.ORIENTATION_VERTICAL
+                )
+            }
         }
     }
 
