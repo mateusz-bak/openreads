@@ -28,6 +28,7 @@ class AddBookScanFragment : Fragment(R.layout.fragment_add_book_scan) {
         listActivity = activity as ListActivity
 
         (activity as ListActivity).window.addFlags(WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS)
+        (activity as ListActivity).window.addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS)
 
         val scannerView = view.findViewById<CodeScannerView>(R.id.scanner_view)
 
@@ -51,12 +52,17 @@ class AddBookScanFragment : Fragment(R.layout.fragment_add_book_scan) {
     }
 
     override fun onResume() {
-        super.onResume()
+        (activity as ListActivity).window.addFlags(WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS)
+        (activity as ListActivity).window.addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS)
+
         codeScanner.startPreview()
+
+        super.onResume()
     }
 
     override fun onPause() {
         (activity as ListActivity).window.clearFlags(WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS)
+        (activity as ListActivity).window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS)
         codeScanner.releaseResources()
         super.onPause()
     }

@@ -15,9 +15,9 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             app:autoFocusButtonColor="@android:color/white"
-            app:autoFocusButtonVisible="true"
+            app:autoFocusButtonVisible="false"
             app:flashButtonColor="@android:color/white"
-            app:flashButtonVisible="true"
+            app:flashButtonVisible="false"
             app:frameAspectRatioHeight="1"
             app:frameAspectRatioWidth="1"
             app:frameColor="@android:color/white"
@@ -25,7 +25,7 @@
             app:frameCornersSize="50dp"
             app:frameSize="0.75"
             app:frameThickness="2dp"
-            app:maskColor="#77000000"/>
+            app:maskColor="#77000000" />
     </FrameLayout>
 
     <TextView
