@@ -2,7 +2,7 @@
 
 
 <p align='center'>  
- <img src='doc/images/github-banner.png' width='100%'/>
+ <img src='doc/github/github-banner.png' width='100%'/>
 </p>
 
 [![GitHub tag (latest by date)](https://img.shields.io/github/v/tag/mateusz-bak/books-tracker-android?label=latest%20version)](https://github.com/mateusz-bak/books-tracker-android/releases/latest)
