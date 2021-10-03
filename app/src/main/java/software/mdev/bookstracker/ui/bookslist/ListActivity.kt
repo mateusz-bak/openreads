@@ -93,7 +93,13 @@ class ListActivity : AppCompatActivity() {
     override fun onBackPressed() {
         val selectedItemId = booksNavHostFragment.findNavController().currentDestination?.id
 
-        if (selectedItemId == R.id.readFragment) {
+        val landingPage =  when (getPreferenceLandingPage((this).baseContext)) {
+            Constants.KEY_LANDING_PAGE_IN_PROGRESS -> R.id.inProgressFragment
+            Constants.KEY_LANDING_PAGE_TO_READ -> R.id.toReadFragment
+            else -> R.id.readFragment
+        }
+
+        if (selectedItemId == landingPage) {
             finish()
         } else {
             setHomeItem()
@@ -101,7 +107,14 @@ class ListActivity : AppCompatActivity() {
     }
 
     private fun setHomeItem() {
-        bottomNavigationView.selectedItemId = R.id.readFragment
+        when (getPreferenceLandingPage((this).baseContext)) {
+            Constants.KEY_LANDING_PAGE_FINISHED ->
+                bottomNavigationView.selectedItemId = R.id.readFragment
+            Constants.KEY_LANDING_PAGE_IN_PROGRESS ->
+                bottomNavigationView.selectedItemId = R.id.inProgressFragment
+            Constants.KEY_LANDING_PAGE_TO_READ ->
+                bottomNavigationView.selectedItemId = R.id.toReadFragment
+        }
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
@@ -258,5 +271,15 @@ class ListActivity : AppCompatActivity() {
             Constants.SHARED_PREFERENCES_KEY_TIME_TO_ASK_FOR_RATING,
             0L
         )
+    }
+
+    private fun getPreferenceLandingPage(context: Context): String {
+        var sharedPreferencesName = context.getString(R.string.shared_preferences_name)
+        val sharedPref = context.getSharedPreferences(sharedPreferencesName, Context.MODE_PRIVATE)
+
+        return sharedPref?.getString(
+            Constants.SHARED_PREFERENCES_KEY_LANDING_PAGE,
+            Constants.KEY_LANDING_PAGE_FINISHED
+        ).toString()
     }
 }
