@@ -1,7 +1,6 @@
 package software.mdev.bookstracker.ui.bookslist.fragments
 
 import android.content.Context
-import android.content.res.ColorStateList
 import android.os.Bundle
 import android.view.View
 import androidx.core.content.ContextCompat
@@ -20,6 +19,7 @@ import software.mdev.bookstracker.ui.bookslist.viewmodel.BooksViewModel
 import java.text.SimpleDateFormat
 import java.util.*
 import android.graphics.*
+import android.view.animation.AccelerateInterpolator
 import android.view.inputmethod.InputMethodManager
 import androidx.appcompat.app.AlertDialog
 import androidx.constraintlayout.widget.ConstraintLayout
@@ -30,6 +30,7 @@ import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import android.widget.Toast
 import android.widget.RatingBar.OnRatingBarChangeListener
+import kotlinx.coroutines.MainScope
 
 
 class DisplayBookFragment : Fragment(R.layout.fragment_display_book) {
@@ -54,26 +55,19 @@ class DisplayBookFragment : Fragment(R.layout.fragment_display_book) {
         setStartDate()
 
         ivBookCover.setOnClickListener {
-            displayBigCover()
+            animateCover()
         }
 
         fabEditBook.setOnClickListener {
             editBook()
         }
 
-        tvMoreAboutBook.setOnClickListener {
-            when(tvBookPagesTitle.visibility){
-                View.VISIBLE -> {
-                    setDetailsButtonToMore()
-                    animateHidingDetails()
-                }
-                else -> {
-                    setDetailsButtonToLess()
-                    animateShowingDetails()
-                    showMoreDetails()
-                }
+        ivDetails.setOnClickListener {
+            showDetails()
+        }
 
-            }
+        ivDetails2.setOnClickListener {
+            hideDetails()
         }
 
         tvBookTitle.setOnClickListener {
@@ -201,6 +195,35 @@ class DisplayBookFragment : Fragment(R.layout.fragment_display_book) {
         }
     }
 
+    private fun showDetails() {
+        cvBookDisplay2.animate().translationY(0F).setInterpolator(AccelerateInterpolator(0.2F)).setDuration(500L).start()
+        cvBookDisplay1.animate().translationY(0F).setInterpolator(AccelerateInterpolator(0.8F)).setDuration(500L).start()
+
+        ivDetails.animate().rotation(180F).setDuration(500L).start()
+        ivDetails.animate().alpha(0F).setDuration(250L).start()
+
+        ivDetails2.animate().rotation(180F).alpha(1F).setDuration(500L).start()
+        ivDetails2.bringToFront()
+
+        fabDeleteBook.animate().scaleX(1F).scaleY(1F).setDuration(250L).start()
+        fabEditBook.animate().scaleX(1F).scaleY(1F).setDuration(250L).start()
+    }
+
+    private fun hideDetails() {
+        cvBookDisplay2.animate().translationY(-1500F).setInterpolator(AccelerateInterpolator(1.2F)).setDuration(400L).start()
+        cvBookDisplay1.animate().translationY(500F).setDuration(400L).start()
+
+        ivDetails.animate().rotation(0F).setDuration(500L).start()
+        ivDetails.animate().alpha(1F).setDuration(500L).start()
+
+        ivDetails2.animate().rotation(0F).setDuration(500L).start()
+        ivDetails2.animate().alpha(0F).setDuration(250L).start()
+        ivDetails.bringToFront()
+
+        fabDeleteBook.animate().scaleX(0F).scaleY(0F).setDuration(250L).start()
+        fabEditBook.animate().scaleX(0F).scaleY(0F).setDuration(250L).start()
+    }
+
     private fun initialViewsSetup() {
         tvBookTitle.text = book.bookTitle
         tvBookAuthor.text = book.bookAuthor
@@ -208,22 +231,22 @@ class DisplayBookFragment : Fragment(R.layout.fragment_display_book) {
         tvBookPages.text = book.bookNumberOfPages.toString()
         tvBookPublishYear.text = book.bookPublishYear.toString()
 
-        tvDateFinished.visibility = View.GONE
-        tvDateFinishedTitle.visibility = View.GONE
+        cvBookDisplay2.translationY = -1500F
+        cvBookDisplay1.translationY = 500F
 
-        tvDateStarted.visibility = View.GONE
-        tvDateStartedTitle.visibility = View.GONE
+        ivDetails.bringToFront()
 
-        tvBookPages.visibility = View.GONE
-        tvBookPagesTitle.visibility = View.GONE
+        ivDetails2.alpha = 0F
+        ivDetails2.visibility = View.VISIBLE
 
-        tvBookPublishYear.visibility = View.GONE
-        tvBookPublishYearTitle.visibility = View.GONE
+        fabEditBook.scaleX = 0F
+        fabEditBook.scaleY = 0F
+        fabEditBook.visibility = View.VISIBLE
 
-        tvBookISBN.visibility = View.GONE
-        tvBookISBNTitle.visibility = View.GONE
+        fabDeleteBook.scaleX = 0F
+        fabDeleteBook.scaleY = 0F
+        fabDeleteBook.visibility = View.VISIBLE
 
-        tvBookURL.visibility = View.GONE
 
         when (book.bookStatus) {
             Constants.BOOK_STATUS_READ -> {
@@ -247,46 +270,12 @@ class DisplayBookFragment : Fragment(R.layout.fragment_display_book) {
         }
     }
 
-    private fun showMoreDetails() {
-        tvBookPagesTitle.visibility = View.VISIBLE
-        tvBookPages.visibility = View.VISIBLE
+    private fun animateCover() {
+        ivBookCover.animate().scaleX(0.9F).scaleY(0.9F).setDuration(150L).start()
 
-        tvBookPublishYear.visibility = View.VISIBLE
-        tvBookPublishYearTitle.visibility = View.VISIBLE
-
-        tvBookISBNTitle.visibility = View.VISIBLE
-        tvBookISBN.visibility = View.VISIBLE
-        if (book.bookOLID != Constants.DATABASE_EMPTY_VALUE)
-            tvBookURL.visibility = View.VISIBLE
-        if (book.bookStatus == Constants.BOOK_STATUS_READ) {
-
-            tvDateFinishedTitle.visibility = View.VISIBLE
-            tvDateFinished.visibility = View.VISIBLE
-
-            val tvDateStartedTitleLayut = tvDateStartedTitle.layoutParams as ConstraintLayout.LayoutParams // btn is a View here
-            tvDateStartedTitleLayut.startToStart = R.id.guideline4 // resource ID of new parent field
-            tvDateStartedTitleLayut.endToEnd = R.id.guideline4 // resource ID of new parent field
-            tvDateStartedTitle.layoutParams = tvDateStartedTitleLayut
-            tvDateStartedTitle.visibility = View.VISIBLE
-
-            val tvDateStartedLayut = tvDateStarted.layoutParams as ConstraintLayout.LayoutParams // btn is a View here
-            tvDateStartedLayut.startToStart = R.id.guideline4 // resource ID of new parent field
-            tvDateStartedLayut.endToEnd = R.id.guideline4 // resource ID of new parent field
-            tvDateStarted.layoutParams = tvDateStartedLayut
-            tvDateStarted.visibility = View.VISIBLE
-        } else if (book.bookStatus == Constants.BOOK_STATUS_IN_PROGRESS){
-
-            val tvDateStartedTitleLayut = tvDateStartedTitle.layoutParams as ConstraintLayout.LayoutParams // btn is a View here
-            tvDateStartedTitleLayut.startToStart = R.id.guideline3 // resource ID of new parent field
-            tvDateStartedTitleLayut.endToEnd = R.id.guideline3 // resource ID of new parent field
-            tvDateStartedTitle.layoutParams = tvDateStartedTitleLayut
-            tvDateStartedTitle.visibility = View.VISIBLE
-
-            val tvDateStartedLayut = tvDateStarted.layoutParams as ConstraintLayout.LayoutParams // btn is a View here
-            tvDateStartedLayut.startToStart = R.id.guideline3 // resource ID of new parent field
-            tvDateStartedLayut.endToEnd = R.id.guideline3 // resource ID of new parent field
-            tvDateStarted.layoutParams = tvDateStartedLayut
-            tvDateStarted.visibility = View.VISIBLE
+        MainScope().launch {
+            delay(160L)
+            ivBookCover.animate().scaleX(1F).scaleY(1F).setDuration(150L).start()
         }
     }
 
@@ -317,52 +306,13 @@ class DisplayBookFragment : Fragment(R.layout.fragment_display_book) {
         }
     }
 
-    private fun animateHidingDetails() {
-        val views = arrayOf(
-            tvBookPagesTitle,
-            tvBookPages,
-            tvBookPublishYear,
-            tvBookPublishYearTitle,
-            tvBookISBNTitle,
-            tvBookISBN,
-            tvBookURL,
-            tvDateFinishedTitle,
-            tvDateFinished,
-            tvDateStartedTitle,
-            tvDateStarted
-        )
-
-        tvBookPagesTitle.visibility = View.INVISIBLE
-
-        for (view in views) {
-            val animDuration = 300L
-            val translationY = 300F
-
-            view.alpha = 1F
-
-            view.animate().alpha(0F).setDuration(animDuration - 50L).start()
-            view.animate().translationYBy(-translationY).setDuration(animDuration).start()
-        }
-    }
-
-    private fun setDetailsButtonToLess() {
-        tvMoreAboutBook.setTextColor((activity as ListActivity).getColor(R.color.grey_300))
-        tvMoreAboutBook.text = (activity as ListActivity).getString(R.string.tv_less_about_book)
-        tvMoreAboutBook.setCompoundDrawablesRelativeWithIntrinsicBounds(null, (activity as ListActivity).getDrawable(R.drawable.ic_baseline_keyboard_arrow_up_24), null, null)
-        tvMoreAboutBook.compoundDrawableTintList= ColorStateList.valueOf((activity as ListActivity).getColor(R.color.grey_300))
-    }
-
-    private fun setDetailsButtonToMore() {
-        tvMoreAboutBook.setTextColor((activity as ListActivity).getColor(R.color.grey))
-        tvMoreAboutBook.text = (activity as ListActivity).getString(R.string.tv_more_about_book)
-        tvMoreAboutBook.setCompoundDrawablesRelativeWithIntrinsicBounds(null, null, null, (activity as ListActivity).getDrawable(R.drawable.ic_baseline_keyboard_arrow_down_24))
-        tvMoreAboutBook.compoundDrawableTintList= ColorStateList.valueOf((activity as ListActivity).getColor(R.color.grey))
-
-    }
-
     private fun setCover(view: View) {
         if (book.bookCoverUrl == Constants.DATABASE_EMPTY_VALUE) {
             ivBookCover.visibility = View.GONE
+
+            val tvBookTitleLayout = tvBookTitle.layoutParams as ConstraintLayout.LayoutParams
+            tvBookTitleLayout.startToStart = R.id.clBookDisplay1
+            tvBookTitle.layoutParams = tvBookTitleLayout
         } else {
             val circularProgressDrawable = CircularProgressDrawable(view.context)
             circularProgressDrawable.strokeWidth = 5f
@@ -422,16 +372,6 @@ class DisplayBookFragment : Fragment(R.layout.fragment_display_book) {
             val bookStartTimeStampLong = book.bookStartDate.toLong()
             tvDateStarted.text = convertLongToTime(bookStartTimeStampLong)
         }
-    }
-
-    private fun displayBigCover() {
-        val bundle = Bundle().apply {
-            putSerializable("cover", book.bookCoverUrl)
-        }
-        findNavController().navigate(
-            R.id.action_displayBookFragment_to_displayCoverFragment,
-            bundle
-        )
     }
 
     private fun editBook() {
