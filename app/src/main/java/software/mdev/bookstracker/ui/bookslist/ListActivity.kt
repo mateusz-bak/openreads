@@ -29,7 +29,6 @@ import software.mdev.bookstracker.data.repositories.OpenLibraryRepository
 import software.mdev.bookstracker.data.repositories.YearRepository
 import software.mdev.bookstracker.other.Backup
 import software.mdev.bookstracker.other.Constants
-import software.mdev.bookstracker.other.Functions
 import software.mdev.bookstracker.other.Updater
 import software.mdev.bookstracker.ui.bookslist.viewmodel.BooksViewModel
 import software.mdev.bookstracker.ui.bookslist.viewmodel.BooksViewModelProviderFactory
@@ -89,7 +88,20 @@ class ListActivity : AppCompatActivity() {
         booksViewModel.getBookCount(Constants.BOOK_STATUS_TO_READ).observe(this) { count ->
             setBadge(2, count.toInt())
         }
+    }
 
+    override fun onBackPressed() {
+        val selectedItemId = booksNavHostFragment.findNavController().currentDestination?.id
+
+        if (selectedItemId == R.id.readFragment) {
+            finish()
+        } else {
+            setHomeItem()
+        }
+    }
+
+    private fun setHomeItem() {
+        bottomNavigationView.selectedItemId = R.id.readFragment
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
