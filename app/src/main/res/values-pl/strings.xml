@@ -53,7 +53,7 @@
     <string name="dismiss">Ok</string>
     <string name="bookDeleted">Książka usunięta</string>
     <string name="undo">Cofnij</string>
-    <string name="tvLooksEmpty">Trochę tu pusto!\\n\\nŻeby dodać nowe książki kliknij przycisk \"plus\" na dole ekranu.</string>
+    <string name="tvLooksEmpty">Trochę tu pusto!\n\nŻeby dodać nowe książki kliknij przycisk \"plus\" na dole ekranu.</string>
     <string name="customization">Wygląd aplikacji</string>
     <string name="about">O aplikacji</string>
     <string name="app_version_title">Wersja</string>
