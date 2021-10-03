@@ -44,7 +44,7 @@
     <string name="changelog_1_5_1_c">Poprawiono ostrzeżenie o niezaliczeniu książki do wyzwania.</string>
 
     <string name="changelog_1_6_0_a">Możesz teraz tworzyć kopie zapasowe książek.</string>
-    <string name="changelog_1_6_0_b">Książki moę być dodawane przez skanowanie kodów kreskowych.</string>
+    <string name="changelog_1_6_0_b">Książki mogą być dodawane przez skanowanie kodów kreskowych.</string>
     <string name="changelog_1_6_0_c">Wizualne zmiany: ikony, przyciski, widoki.</string>
     <string name="changelog_1_6_0_d">Zmiana wyglądu przycisków w dialogach.</string>
     <string name="changelog_1_6_0_e">Po zmianie koloru akcentu aplikacja nie musi się restartować.</string>
