@@ -5,8 +5,8 @@
  <img src='doc/images/github-banner.png' width='100%'/>
 </p>
 
-[![Build Status](https://git-drone.mateusz.ovh/api/badges/mateusz-bak/books-tracker-android/status.svg)](https://git-drone.mateusz.ovh/mateusz-bak/books-tracker-android)  
 [![GitHub tag (latest by date)](https://img.shields.io/github/v/tag/mateusz-bak/books-tracker-android?label=latest%20version)](https://github.com/mateusz-bak/books-tracker-android/releases/latest)
+[![Build Status](https://git-drone.mateusz.ovh/api/badges/mateusz-bak/books-tracker-android/status.svg)](https://git-drone.mateusz.ovh/mateusz-bak/books-tracker-android)
 
 <br/><br/>
 ### An Android app written in Kotlin for keeping tracks of your books.  
@@ -25,17 +25,9 @@
 <br/><br/>
 ## Screenshots  
 <p align='center'>  
- <img src='doc/images/screenshot-finished.png' width='30%'/>  
- <img src='doc/images/screenshot-in-progress.png' width='30%'/>    
- <img src='doc/images/screenshot-to-read.png' width='30%'/>  
-
- <img src='doc/images/screenshot-display-book.png' width='30%'/>
- <img src='doc/images/screenshot-statistics.png' width='30%'/>
- <img src='doc/images/screenshot-sort-books.png' width='30%'/>
-
- <img src='doc/images/screenshot-filter-books.png' width='30%'/>
- <img src='doc/images/screenshot-book-search.png' width='30%'/>
- <img src='doc/images/screenshot-add-book-manual.png' width='30%'/>
+ <img src='doc/github/screenshot-finished_n_framed.png' width='30%'/>  
+ <img src='doc/github/screenshot-display-book_n_framed.png' width='30%'/>    
+ <img src='doc/github/screenshot-statistics_n_framed.png' width='30%'/>
 </p>  
 
 <br/><br/>
@@ -81,7 +73,9 @@
 [Open Library](https://openlibrary.org/ "Open Library")
 
 
-### Icons made by
+### Icons and illustrations made by
+[Katerina Limpitsouni](https://undraw.co/illustrations "Katerina Limpitsouni")
+
 [Smalllikeart](https://www.flaticon.com/authors/smalllikeart "Smalllikeart") from [www.flaticon.com](https://www.flaticon.com/ "Flaticon")
 
 [Freepik](https://www.freepik.com "Freepik") from [www.flaticon.com](https://www.flaticon.com/ "Flaticon")
@@ -91,3 +85,9 @@
 [photo3idea_studio](https://www.flaticon.com/authors/photo3idea-studio "photo3idea_studio") from [www.flaticon.com](https://www.flaticon.com/ "Flaticon")
 
 [Vaadin](https://vaadin.com/font-icons "Vaadin") from [www.flaticon.com](https://www.flaticon.com/ "Flaticon")
+
+[Vitaly Gorbachev](https://www.flaticon.com/authors/vitaly-gorbachev "Vitaly Gorbachev") from [www.flaticon.com](https://www.flaticon.com/ "Flaticon")
+
+[Becris](https://www.flaticon.com/authors/becris "Becris") from [www.flaticon.com](https://www.flaticon.com/ "Flaticon")
+
+[Smashicons](https://smashicons.com "Smashicons") from [www.flaticon.com](https://www.flaticon.com/ "Flaticon")
