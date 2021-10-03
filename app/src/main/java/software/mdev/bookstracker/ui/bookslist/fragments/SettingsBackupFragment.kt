@@ -3,6 +3,7 @@ package software.mdev.bookstracker.ui.bookslist.fragments
 import android.content.SharedPreferences
 import android.content.SharedPreferences.OnSharedPreferenceChangeListener
 import android.os.Bundle
+import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.core.content.ContextCompat
 import androidx.preference.Preference
@@ -33,12 +34,13 @@ class SettingsBackupFragment : PreferenceFragmentCompat(), OnSharedPreferenceCha
             }
         }
 
-//        if (preferenceExportLocal != null) {
-//            preferenceExportLocal.onPreferenceClickListener = Preference.OnPreferenceClickListener {
+        if (preferenceExportLocal != null) {
+            preferenceExportLocal.onPreferenceClickListener = Preference.OnPreferenceClickListener {
 //                Backup().exportLocal(activity as ListActivity)
-//                true
-//            }
-//        }
+                Toast.makeText((activity as ListActivity), (activity as ListActivity).getString(R.string.notYetImplemented), Toast.LENGTH_SHORT).show()
+                true
+            }
+        }
 
         if (preferenceImport != null) {
             preferenceImport.onPreferenceClickListener = Preference.OnPreferenceClickListener {
