@@ -59,7 +59,7 @@ class DisplayBookFragment : Fragment(R.layout.fragment_display_book) {
             animateCover()
         }
 
-        fabEditBook.setOnClickListener {
+        ivEdit.setOnClickListener {
             editBook()
         }
 
@@ -154,7 +154,7 @@ class DisplayBookFragment : Fragment(R.layout.fragment_display_book) {
             }
         }
 
-        fabDeleteBook.setOnClickListener{
+        ivDelete.setOnClickListener{
             val deleteBookWarningDialog = this.context?.let { it1 ->
                 AlertDialog.Builder(it1)
                     .setTitle(R.string.warning_delete_book_title)
@@ -221,13 +221,12 @@ class DisplayBookFragment : Fragment(R.layout.fragment_display_book) {
         ivDetails2.animate().rotation(180F).alpha(1F).setDuration(500L).start()
         ivDetails2.bringToFront()
 
-        fabDeleteBook.animate().scaleX(1F).scaleY(1F).setDuration(250L).start()
-        fabEditBook.animate().scaleX(1F).scaleY(1F).setDuration(250L).start()
-
         MainScope().launch {
             delay(250L)
             ivDetails.visibility = View.INVISIBLE
         }
+
+        showEditAndDeleteViews()
     }
 
     private fun hideDetails() {
@@ -243,12 +242,32 @@ class DisplayBookFragment : Fragment(R.layout.fragment_display_book) {
         ivDetails2.animate().alpha(0F).setDuration(250L).start()
         ivDetails.bringToFront()
 
-        fabDeleteBook.animate().scaleX(0F).scaleY(0F).setDuration(250L).start()
-        fabEditBook.animate().scaleX(0F).scaleY(0F).setDuration(250L).start()
-
         MainScope().launch {
             delay(250L)
             ivDetails2.visibility = View.INVISIBLE
+        }
+
+        hideEditAndDeleteViews()
+    }
+
+    private fun showEditAndDeleteViews(){
+        ivDelete.alpha = 0F
+        ivDelete.visibility = View.VISIBLE
+        ivDelete.animate().alpha(1F).setDuration(500L).start()
+
+        ivEdit.alpha = 0F
+        ivEdit.visibility = View.VISIBLE
+        ivEdit.animate().alpha(1F).setDuration(500L).start()
+    }
+
+    private fun hideEditAndDeleteViews(){
+        ivDelete.animate().alpha(0F).setDuration(400L).start()
+        ivEdit.animate().alpha(0F).setDuration(400L).start()
+
+        MainScope().launch {
+            delay(400L)
+            ivDelete.visibility = View.INVISIBLE
+            ivEdit.visibility = View.INVISIBLE
         }
     }
 
@@ -267,15 +286,6 @@ class DisplayBookFragment : Fragment(R.layout.fragment_display_book) {
 
         ivDetails2.alpha = 0F
         ivDetails2.visibility = View.INVISIBLE
-
-        fabEditBook.scaleX = 0F
-        fabEditBook.scaleY = 0F
-        fabEditBook.visibility = View.VISIBLE
-
-        fabDeleteBook.scaleX = 0F
-        fabDeleteBook.scaleY = 0F
-        fabDeleteBook.visibility = View.VISIBLE
-
 
         when (book.bookStatus) {
             Constants.BOOK_STATUS_READ -> {
