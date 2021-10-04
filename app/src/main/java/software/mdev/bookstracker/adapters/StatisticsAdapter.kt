@@ -279,6 +279,13 @@ class StatisticsAdapter(
 
         var data = BarData(barDataSet)
         data.setValueFormatter(DefaultValueFormatter(0))
+
+        // color of values
+        data.setValueTextColor(itemView.resources.getColor(R.color.colorDefaultText))
+
+        // size of values
+        data.setValueTextSize(11F)
+
         itemView.rbcBooksByMonth.data = data
 
         //hide grid lines
@@ -309,6 +316,12 @@ class StatisticsAdapter(
 
         //disable touch actions on graph
         itemView.rbcBooksByMonth.setTouchEnabled(false)
+
+        // set x axis' text size
+        itemView.rbcBooksByMonth.xAxis.textSize = 11F
+
+        // the x labels are not cut
+        itemView.rbcBooksByMonth.extraBottomOffset = 8F
 
         //draw chart
         itemView.rbcBooksByMonth.invalidate()
@@ -367,6 +380,13 @@ class StatisticsAdapter(
 
         var data = BarData(barDataSet)
         data.setValueFormatter(DefaultValueFormatter(0))
+
+        // color of values
+        data.setValueTextColor(itemView.resources.getColor(R.color.colorDefaultText))
+
+        // size of values
+        data.setValueTextSize(11F)
+
         itemView.rbcPagesByMonth.data = data
 
         //hide grid lines
@@ -397,6 +417,12 @@ class StatisticsAdapter(
 
         //disable touch actions on graph
         itemView.rbcPagesByMonth.setTouchEnabled(false)
+
+        // set x axis' text size
+        itemView.rbcPagesByMonth.xAxis.textSize = 11F
+
+        // the x labels are not cut
+        itemView.rbcPagesByMonth.extraBottomOffset = 8F
 
         //draw chart
         itemView.rbcPagesByMonth.invalidate()
