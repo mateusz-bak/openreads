@@ -51,8 +51,6 @@ class AddFoundBookDialog(
         this.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
         rbAdderRating.visibility = View.GONE
         tvRateThisBook.visibility = View.GONE
-        etPagesNumber.visibility = View.GONE
-        etPublishYear.visibility = View.GONE
 
         btnSetFinishDate.visibility  = View.GONE
         btnSetStartDate.visibility  = View.GONE
@@ -97,6 +95,7 @@ class AddFoundBookDialog(
 
             if (resource.data!!.number_of_pages != null) {
                 etPagesNumber.setText(resource.data!!.number_of_pages.toString())
+                ivClearPages.visibility = View.VISIBLE
             }
 
             displayPublishYear()
@@ -196,8 +195,7 @@ class AddFoundBookDialog(
             whatIsClicked = BOOK_STATUS_READ
             rbAdderRating.visibility = View.VISIBLE
             tvRateThisBook.visibility = View.VISIBLE
-            etPagesNumber.visibility = View.VISIBLE
-            etPublishYear.visibility = View.VISIBLE
+
             btnSetFinishDate.visibility  = View.VISIBLE
             btnSetStartDate.visibility  = View.VISIBLE
             btnSetFinishDate.isClickable = true
@@ -255,8 +253,7 @@ class AddFoundBookDialog(
             whatIsClicked = BOOK_STATUS_IN_PROGRESS
             rbAdderRating.visibility = View.GONE
             tvRateThisBook.visibility = View.GONE
-            etPagesNumber.visibility = View.GONE
-            etPublishYear.visibility = View.GONE
+
             btnSetFinishDate.visibility  = View.GONE
             btnSetStartDate.visibility  = View.GONE
             btnSetFinishDate.isClickable = false
@@ -265,8 +262,6 @@ class AddFoundBookDialog(
             tvSetFinishDate.visibility  = View.GONE
             tvSetStartDate.visibility  = View.GONE
 
-            etPagesNumber.visibility = View.VISIBLE
-            etPublishYear.visibility = View.VISIBLE
             btnSetStartDate.visibility  = View.VISIBLE
             btnSetStartDate.isClickable = true
 
@@ -318,8 +313,6 @@ class AddFoundBookDialog(
             whatIsClicked = BOOK_STATUS_TO_READ
             rbAdderRating.visibility = View.GONE
             tvRateThisBook.visibility = View.GONE
-            etPagesNumber.visibility = View.GONE
-            etPublishYear.visibility = View.GONE
 
             btnSetFinishDate.visibility = View.GONE
             btnSetStartDate.visibility = View.GONE
@@ -373,8 +366,6 @@ class AddFoundBookDialog(
 
             ivBookCover.visibility = View.GONE
 
-            etPagesNumber.visibility = View.GONE
-            etPublishYear.visibility = View.GONE
             ivClearPages.visibility = View.GONE
             ivClearPublishYear.visibility = View.GONE
 
@@ -413,8 +404,6 @@ class AddFoundBookDialog(
             tvInProgress.visibility = View.GONE
             tvToRead.visibility = View.GONE
 
-            etPagesNumber.visibility = View.GONE
-            etPublishYear.visibility = View.GONE
             ivClearPages.visibility = View.GONE
             ivClearPublishYear.visibility = View.GONE
 
@@ -457,9 +446,6 @@ class AddFoundBookDialog(
 
             if (resource.data!!.covers != null)
                 ivBookCover.visibility = View.VISIBLE
-
-            etPagesNumber.visibility = View.VISIBLE
-            etPublishYear.visibility = View.VISIBLE
 
             if (etPagesNumber.text.isNotEmpty())
                 ivClearPages.visibility = View.VISIBLE
@@ -509,9 +495,6 @@ class AddFoundBookDialog(
             if (resource.data!!.covers != null)
                 ivBookCover.visibility = View.VISIBLE
 
-            etPagesNumber.visibility = View.VISIBLE
-            etPublishYear.visibility = View.VISIBLE
-
             if (etPagesNumber.text.isNotEmpty())
                 ivClearPages.visibility = View.VISIBLE
             if (etPublishYear.text.isNotEmpty())
@@ -555,9 +538,6 @@ class AddFoundBookDialog(
             tvFinished.visibility = View.VISIBLE
             tvInProgress.visibility = View.VISIBLE
             tvToRead.visibility = View.VISIBLE
-
-            etPagesNumber.visibility = View.VISIBLE
-            etPublishYear.visibility = View.VISIBLE
 
             if (etPagesNumber.text.isNotEmpty())
                 ivClearPages.visibility = View.VISIBLE
@@ -620,9 +600,6 @@ class AddFoundBookDialog(
             tvFinished.visibility = View.VISIBLE
             tvInProgress.visibility = View.VISIBLE
             tvToRead.visibility = View.VISIBLE
-
-            etPagesNumber.visibility = View.VISIBLE
-            etPublishYear.visibility = View.VISIBLE
 
             if (etPagesNumber.text.isNotEmpty())
                 ivClearPages.visibility = View.VISIBLE
@@ -784,10 +761,12 @@ class AddFoundBookDialog(
                     publishYear = i.toInt()
             }
 
-            if (publishYear != 0)
+            if (publishYear != 0) {
                 etPublishYear.setText(publishYear.toString())
+                ivClearPublishYear.visibility = View.VISIBLE
+            }
             else
-                etPublishYear.visibility = View.GONE
+                etPublishYear.setText(Constants.EMPTY_STRING)
         }
     }
 

@@ -268,35 +268,63 @@
             app:layout_constraintStart_toStartOf="@+id/ivBookStatusSetToRead"
             app:layout_constraintTop_toBottomOf="@+id/ivBookStatusSetToRead" />
 
+        <TextView
+            android:id="@+id/etPagesNumberTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="4dp"
+            android:layout_marginTop="4dp"
+            android:fontFamily="sans-serif"
+            android:text="@string/tv_book_pages"
+            android:textSize="12sp"
+            app:layout_constraintStart_toStartOf="@+id/etAdderAuthor"
+            app:layout_constraintTop_toBottomOf="@+id/etAdderAuthor" />
+
         <EditText
             android:id="@+id/etPagesNumber"
-            android:layout_width="120dp"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginTop="4dp"
+            android:layout_marginTop="-4dp"
             android:autofillHints="@string/autofill_hint_pages_number"
             android:hint="@string/hint_pages_number"
             android:inputType="number"
             android:maxLength="6"
             android:textColor="?colorOnSecondary"
             android:textSize="13sp"
+            app:layout_constraintEnd_toStartOf="@+id/etPublishYear"
+            app:layout_constraintHorizontal_bias="0.5"
             android:paddingEnd="30dp"
             app:layout_constraintStart_toStartOf="@+id/etAdderAuthor"
+            app:layout_constraintTop_toBottomOf="@+id/etPagesNumberTitle" />
+
+        <TextView
+            android:id="@+id/etPublishYearTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:layout_marginStart="4dp"
+            android:fontFamily="sans-serif"
+            android:text="@string/hint_publish_year"
+            android:textSize="12sp"
+            app:layout_constraintStart_toStartOf="@+id/etPublishYear"
             app:layout_constraintTop_toBottomOf="@+id/etAdderAuthor" />
 
         <EditText
             android:id="@+id/etPublishYear"
-            android:layout_width="120dp"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginTop="4dp"
+            android:layout_marginTop="-4dp"
             android:autofillHints="@string/autofill_hint_publish_year"
             android:hint="@string/hint_publish_year"
             android:inputType="number"
             android:maxLength="4"
+            android:paddingEnd="30dp"
             android:textColor="?colorOnSecondary"
             android:textSize="13sp"
-            android:paddingEnd="30dp"
             app:layout_constraintEnd_toEndOf="@+id/etAdderAuthor"
-            app:layout_constraintTop_toBottomOf="@+id/etAdderAuthor" />
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toEndOf="@+id/etPagesNumber"
+            app:layout_constraintTop_toBottomOf="@+id/etPublishYearTitle" />
 
         <ImageView
             android:id="@+id/ivClearPages"
