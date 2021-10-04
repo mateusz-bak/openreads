@@ -229,6 +229,7 @@ class DisplayBookFragment : Fragment(R.layout.fragment_display_book) {
         MainScope().launch {
             delay(250L)
             ivDetails.visibility = View.INVISIBLE
+            ivDetails2.visibility = View.VISIBLE
         }
 
         showEditAndDeleteViews()
@@ -250,6 +251,7 @@ class DisplayBookFragment : Fragment(R.layout.fragment_display_book) {
         MainScope().launch {
             delay(250L)
             ivDetails2.visibility = View.INVISIBLE
+            ivDetails.visibility = View.VISIBLE
         }
 
         hideEditAndDeleteViews()
