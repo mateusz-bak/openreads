@@ -52,4 +52,15 @@
     <string name="changelog_1_6_0_g">Poprawiono wyświetlanie na telefonach z dużym rozmiarem czcionki lub interfejsu.</string>
     <string name="changelog_1_6_0_h">Ustawianie oceny nowych książek tylko dla przeczytanych.</string>
     <string name="changelog_1_6_0_i">Dodano przycisk wyszukiwania podczas szukania ksiązki w Open Library.</string>
+
+    <string name="changelog_1_7_0_a">Books Tracker to teraz Openreads!</string>
+    <string name="changelog_1_7_0_b">Statystyki zostały ulepszone.</string>
+    <string name="changelog_1_7_0_c">Lista zmian zostanie wyświetlona po aktualizacji.</string>
+    <string name="changelog_1_7_0_d">Można dostosować, która lista będzie wyświetlona po starcie aplikacji.</string>
+    <string name="changelog_1_7_0_e">Ocena książek może być połówkowa, książki mogą mieć rok publikacji.</string>
+    <string name="changelog_1_7_0_f">Szczegóły książki, statystyki, ekrany powitalne i listy książek zostały ulepszone.</string>
+    <string name="changelog_1_7_0_g">Aplikacja zapyta o ocenę po 7 dniach od instalacji lub tej aktualizacji.</string>
+    <string name="changelog_1_7_0_h">Naprawiono zachowanie przycisku wstecz.</string>
+    <string name="changelog_1_7_0_i">Przeszukiwanie zapisanych książek nie uwzględnia już usuniętych.</string>
+    <string name="changelog_1_7_0_j">Poprawiono tłumaczenie.</string>
 </resources>

@@ -9,6 +9,7 @@
     <string name="changelog_ver_1_5_0" translatable="false">v1.5.0</string>
     <string name="changelog_ver_1_5_1" translatable="false">v1.5.1</string>
     <string name="changelog_ver_1_6_0" translatable="false">v1.6.0</string>
+    <string name="changelog_ver_1_7_0" translatable="false">v1.7.0</string>
 
     <string name="changelog_date_1_0_0" translatable="false">5/06/2021</string>
     <string name="changelog_date_1_1_0" translatable="false">10/06/2021</string>
@@ -20,6 +21,7 @@
     <string name="changelog_date_1_5_0" translatable="false">14/09/2021</string>
     <string name="changelog_date_1_5_1" translatable="false">14/09/2021</string>
     <string name="changelog_date_1_6_0" translatable="false">27/09/2021</string>
+    <string name="changelog_date_1_7_0" translatable="false">04/10/2021</string>
 
     <string name="changelog_1_0_0_a">First official release.</string>
     <string name="changelog_1_0_0_b">Added three lists for books: read, in progress and to read.</string>
@@ -74,4 +76,15 @@
     <string name="changelog_1_6_0_g">Corrected display on phones with large interface/font sizes.</string>
     <string name="changelog_1_6_0_h">Corrected rating bar\'s behaviour in add bok dialog.</string>
     <string name="changelog_1_6_0_i">When searching in Open Library button on keyboard can trigger search.</string>
+
+    <string name="changelog_1_7_0_a">Books Tracker is now Openreads!</string>
+    <string name="changelog_1_7_0_b">Improved statistics.</string>
+    <string name="changelog_1_7_0_c">Changelog will be shown after app\'s update.</string>
+    <string name="changelog_1_7_0_d">User can select which list will be shown at app\'s startup.</string>
+    <string name="changelog_1_7_0_e">Rating can be set to half points and can have publish year set.</string>
+    <string name="changelog_1_7_0_f">Displaying book view, statistics, setup screens and books lists got redesigned.</string>
+    <string name="changelog_1_7_0_g">App will ask for feedback after 7 days since install or this update.</string>
+    <string name="changelog_1_7_0_h">Fixed back button\'s behavior.</string>
+    <string name="changelog_1_7_0_i">Saved book\'s search will not show deleted ones.</string>
+    <string name="changelog_1_7_0_j">Corrected translations.</string>
 </resources>
