@@ -20,12 +20,14 @@ import software.mdev.bookstracker.adapters.StatisticsAdapter
 import software.mdev.bookstracker.data.db.BooksDatabase
 import software.mdev.bookstracker.data.db.LanguageDatabase
 import software.mdev.bookstracker.data.db.YearDatabase
+import software.mdev.bookstracker.data.db.entities.Book
 import software.mdev.bookstracker.data.db.entities.Year
 import software.mdev.bookstracker.data.repositories.BooksRepository
 import software.mdev.bookstracker.data.repositories.LanguageRepository
 import software.mdev.bookstracker.data.repositories.OpenLibraryRepository
 import software.mdev.bookstracker.data.repositories.YearRepository
 import software.mdev.bookstracker.other.Constants
+import software.mdev.bookstracker.other.Functions
 import software.mdev.bookstracker.ui.bookslist.viewmodel.BooksViewModel
 import software.mdev.bookstracker.ui.bookslist.viewmodel.BooksViewModelProviderFactory
 import java.text.SimpleDateFormat
@@ -90,28 +92,50 @@ class StatisticsFragment : Fragment(R.layout.fragment_statistics) {
         viewModel.getSortedBooksByFinishDateDesc(Constants.BOOK_STATUS_READ)
             .observe(viewLifecycleOwner, Observer { books ->
                 var listOfYears = mutableListOf<Year>()
-                listOfYears.add(Year("0000", 0, 0, 0F, 0, 0))
+                listOfYears.add(Year())
 
-                var years = listOf<Int>()
+                var years = calculateHowManyYearsForStats(books)
                 var year: Int
-
-                for (item in books) {
-                    if (item.bookFinishDate != "null" && item.bookFinishDate != "none") {
-                        year = convertLongToYear(item.bookFinishDate.toLong()).toInt()
-                        if (year !in years) {
-                            years = years + year
-                        }
-                    }
-                }
 
                 var booksAllTime = 0
                 var pagesAllTime = 0
                 var sumRatingAllTime = 0F
 
+                var longestBookAllTime = "null"
+                var longestBookValAllTime = 0
+
+                var shortestBookAllTime = "null"
+                var shortestBookValAllTime = Int.MAX_VALUE
+
+                var quickestReadAllTime = "null"
+                var quickestReadValAllTime = Long.MAX_VALUE
+
+                var readingTimeSumAllTime = 0L
+                var averageReadingTimeNumOfBooksAllTime = 0L
+
+                var booksByMonthsAllTime = arrayOf(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0)
+                var pagesByMonthsAllTime = arrayOf(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0)
+
                 for (item_year in years) {
                     var booksInYear = 0
                     var pagesInYear = 0
                     var sumRatingInYear = 0F
+
+                    var longestBook = "null"
+                    var longestBookVal = 0
+
+                    var shortestBook = "null"
+                    var shortestBookVal = Int.MAX_VALUE
+
+                    var quickestRead = "null"
+                    var quickestReadVal = Long.MAX_VALUE
+
+                    var readingTimeSum = 0L
+                    var averageReadingTimeNumOfBooks = 0L
+
+                    var booksByMonths = arrayOf(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0)
+                    var pagesByMonths = arrayOf(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0)
+
 
                     for (item_book in books) {
                         if (item_book.bookFinishDate != "none" && item_book.bookFinishDate != "null") {
@@ -123,13 +147,212 @@ class StatisticsFragment : Fragment(R.layout.fragment_statistics) {
                                 pagesAllTime += item_book.bookNumberOfPages
                                 sumRatingInYear += item_book.bookRating
                                 sumRatingAllTime += item_book.bookRating
+
+                                // books by month
+                                when (Functions().convertLongToMonth(item_book.bookFinishDate.toLong())){
+                                    "01" -> {
+                                        booksByMonths[0] += 1
+                                        booksByMonthsAllTime[0] += 1
+                                        pagesByMonths[0] += item_book.bookNumberOfPages
+                                        pagesByMonthsAllTime[0] += item_book.bookNumberOfPages
+                                    }
+                                    "02" -> {
+                                        booksByMonths[1] += 1
+                                        booksByMonthsAllTime[1] += 1
+                                        pagesByMonths[1] += item_book.bookNumberOfPages
+                                        pagesByMonthsAllTime[1] += item_book.bookNumberOfPages
+                                    }
+                                    "03" -> {
+                                        booksByMonths[2] += 1
+                                        booksByMonthsAllTime[2] += 1
+                                        pagesByMonths[2] += item_book.bookNumberOfPages
+                                        pagesByMonthsAllTime[2] += item_book.bookNumberOfPages
+                                    }
+                                    "04" -> {
+                                        booksByMonths[3] += 1
+                                        booksByMonthsAllTime[3] += 1
+                                        pagesByMonths[3] += item_book.bookNumberOfPages
+                                        pagesByMonthsAllTime[3] += item_book.bookNumberOfPages
+                                    }
+                                    "05" -> {
+                                        booksByMonths[4] += 1
+                                        booksByMonthsAllTime[4] += 1
+                                        pagesByMonths[4] += item_book.bookNumberOfPages
+                                        pagesByMonthsAllTime[4] += item_book.bookNumberOfPages
+                                    }
+                                    "06" -> {
+                                        booksByMonths[5] += 1
+                                        booksByMonthsAllTime[5] += 1
+                                        pagesByMonths[5] += item_book.bookNumberOfPages
+                                        pagesByMonthsAllTime[5] += item_book.bookNumberOfPages
+                                    }
+                                    "07" -> {
+                                        booksByMonths[6] += 1
+                                        booksByMonthsAllTime[6] += 1
+                                        pagesByMonths[6] += item_book.bookNumberOfPages
+                                        pagesByMonthsAllTime[6] += item_book.bookNumberOfPages
+                                    }
+                                    "08" -> {
+                                        booksByMonths[7] += 1
+                                        booksByMonthsAllTime[7] += 1
+                                        pagesByMonths[7] += item_book.bookNumberOfPages
+                                        pagesByMonthsAllTime[7] += item_book.bookNumberOfPages
+                                    }
+                                    "09" -> {
+                                        booksByMonths[8] += 1
+                                        booksByMonthsAllTime[8] += 1
+                                        pagesByMonths[8] += item_book.bookNumberOfPages
+                                        pagesByMonthsAllTime[8] += item_book.bookNumberOfPages
+                                    }
+                                    "10" ->
+                                    {
+                                        booksByMonths[9] += 1
+                                        booksByMonthsAllTime[9] += 1
+                                        pagesByMonths[9] += item_book.bookNumberOfPages
+                                        pagesByMonthsAllTime[9] += item_book.bookNumberOfPages
+                                    }
+                                    "11" -> {
+                                        booksByMonths[10] += 1
+                                        booksByMonthsAllTime[10] += 1
+                                        pagesByMonths[10] += item_book.bookNumberOfPages
+                                        pagesByMonthsAllTime[10] += item_book.bookNumberOfPages
+                                    }
+                                    "12" -> {
+                                        booksByMonths[11] += 1
+                                        booksByMonthsAllTime[11] += 1
+                                        pagesByMonths[11] += item_book.bookNumberOfPages
+                                        pagesByMonthsAllTime[11] += item_book.bookNumberOfPages
+                                    }
+                                }
+
+                                // longest book in a year
+                                if (item_book.bookNumberOfPages > longestBookVal) {
+                                    longestBookVal = item_book.bookNumberOfPages
+                                    var string = item_book.bookTitle + " - " + item_book.bookAuthor
+                                    longestBook = string
+                                }
+
+                                // longest book all time
+                                if (item_book.bookNumberOfPages > longestBookValAllTime) {
+                                    longestBookValAllTime = item_book.bookNumberOfPages
+                                    var string = item_book.bookTitle + " - " + item_book.bookAuthor
+                                    longestBookAllTime = string
+                                }
+
+                                // shortest book in a year
+                                if (item_book.bookNumberOfPages < shortestBookVal) {
+                                    shortestBookVal = item_book.bookNumberOfPages
+                                    var string = item_book.bookTitle + " - " + item_book.bookAuthor
+                                    shortestBook = string
+                                }
+
+                                // shortest book all time
+                                if (item_book.bookNumberOfPages < shortestBookValAllTime) {
+                                    shortestBookValAllTime = item_book.bookNumberOfPages
+                                    var string = item_book.bookTitle + " - " + item_book.bookAuthor
+                                    shortestBookAllTime = string
+                                }
+
+
+                                if (item_book.bookStartDate != "none" && item_book.bookStartDate != "null") {
+                                    var readingTime = item_book.bookFinishDate.toLong() - item_book.bookStartDate.toLong()
+
+                                    if (readingTime < quickestReadVal) {
+                                        quickestReadVal = readingTime
+                                        var string = item_book.bookTitle + " - " + item_book.bookAuthor
+                                        quickestRead = string
+                                    }
+
+                                    if (readingTime < quickestReadValAllTime) {
+                                        quickestReadValAllTime = readingTime
+                                        var string = item_book.bookTitle + " - " + item_book.bookAuthor
+                                        quickestReadAllTime = string
+                                    }
+
+                                    readingTimeSum += readingTime
+                                    averageReadingTimeNumOfBooks ++
+
+                                    readingTimeSumAllTime += readingTime
+                                    averageReadingTimeNumOfBooksAllTime ++
+                                }
+
+                                if (item_book.bookStartDate != "none" && item_book.bookStartDate != "null") {
+                                    var readingTime = item_book.bookFinishDate.toLong() - item_book.bookStartDate.toLong()
+
+                                    if (readingTime < quickestReadVal) {
+                                        quickestReadVal = readingTime
+                                        var string = item_book.bookTitle + " - " + item_book.bookAuthor
+                                        quickestRead = string
+                                    }
+
+                                    readingTimeSum += readingTime
+                                    averageReadingTimeNumOfBooks ++
+                                }
                             }
                         }
                     }
-                    listOfYears.add(Year(item_year.toString(), booksInYear, pagesInYear, (sumRatingInYear/booksInYear), 0, 0))
+
+                    var avgReadingTime = "0"
+                    if (averageReadingTimeNumOfBooks != 0L)
+                        avgReadingTime =(readingTimeSum/averageReadingTimeNumOfBooks).toString()
+
+                    var avgPages = 0
+                    if (booksInYear != 0)
+                        avgPages = (pagesInYear/booksInYear)
+
+                    var avgRating = 0F
+                    if (booksInYear != 0)
+                        avgRating = (sumRatingInYear/booksInYear)
+
+                    listOfYears.add(Year(
+                        item_year.toString(),
+                        booksInYear,
+                        pagesInYear,
+                        avgRating,
+                        0,
+                        0,
+                        quickestRead,
+                        quickestReadVal.toString(),
+                        longestBook,
+                        longestBookVal,
+                        avgReadingTime,
+                        avgPages,
+                        shortestBook,
+                        shortestBookVal,
+                        booksByMonths,
+                        pagesByMonths
+                    ))
                 }
 
-                listOfYears[0] = Year("0000", booksAllTime, pagesAllTime, (sumRatingAllTime/booksAllTime), 0, 0)
+                var avgReadingTimeAllTime = "0"
+                if (averageReadingTimeNumOfBooksAllTime != 0L)
+                    avgReadingTimeAllTime =(readingTimeSumAllTime/averageReadingTimeNumOfBooksAllTime).toString()
+
+                var avgPagesAllTime = 0
+                if (booksAllTime != 0)
+                    avgPagesAllTime = (pagesAllTime/booksAllTime)
+
+                var avgRatingAllTime = 0F
+                if (booksAllTime != 0)
+                    avgRatingAllTime = (sumRatingAllTime/booksAllTime)
+
+                listOfYears[0] = Year("0000",
+                    booksAllTime,
+                    pagesAllTime,
+                    avgRatingAllTime,
+                    0,
+                    0,
+                    quickestReadAllTime,
+                    quickestReadValAllTime.toString(),
+                    longestBookAllTime,
+                    longestBookValAllTime,
+                    avgReadingTimeAllTime,
+                    avgPagesAllTime,
+                    shortestBookAllTime,
+                    shortestBookValAllTime,
+                    booksByMonthsAllTime,
+                    pagesByMonthsAllTime
+                )
 
                 statisticsAdapter.differ.submitList(listOfYears)
 
@@ -148,7 +371,22 @@ class StatisticsFragment : Fragment(R.layout.fragment_statistics) {
             )
     }
 
-    fun convertLongToYear(time: Long): String {
+    private fun calculateHowManyYearsForStats(books: List<Book>): List<Int> {
+        var years = listOf<Int>()
+        var year: Int
+
+        for (item in books) {
+            if (item.bookFinishDate != "null" && item.bookFinishDate != "none") {
+                year = convertLongToYear(item.bookFinishDate.toLong()).toInt()
+                if (year !in years) {
+                    years = years + year
+                }
+            }
+        }
+        return years
+    }
+
+    private fun convertLongToYear(time: Long): String {
         val date = Date(time)
         val format = SimpleDateFormat("yyyy")
         return format.format(date)

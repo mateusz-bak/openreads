@@ -13,6 +13,12 @@
             android:title="@string/export_title" />
 
         <Preference
+            android:icon="@drawable/ic_baseline_smartphone_24"
+            android:key="KEY_EXPORT_LOCAL"
+            android:summary="@string/export_local_summary"
+            android:title="@string/export_local_title" />
+
+        <Preference
             android:icon="@drawable/ic_baseline_restore_24"
             android:key="KEY_IMPORT"
             android:summary="@string/import_summary"

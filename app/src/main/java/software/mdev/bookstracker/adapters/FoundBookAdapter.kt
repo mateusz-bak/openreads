@@ -131,11 +131,9 @@ class FoundBookAdapter(
                         tvBookISBN.text = isbn
                     }
 
-                    if (curBook.data.number_of_pages != null) {
-                        var pages: Int? = curBook.data.number_of_pages
-                        var pagesString = pages.toString() + " " + holder.itemView.context.getString(R.string.pages)
-                        tvBookPages.text = pagesString
-                    }
+                    displayNumberOfPages(this, curBook)
+
+                    displayPublishYear(this, curBook)
 
                     if (curBook.data.languages != null) {
                         var languagesList = curBook.data.languages
@@ -162,6 +160,39 @@ class FoundBookAdapter(
             setOnClickListener {
                 onBookClickListener?.let { it(curBook) }
             }
+        }
+    }
+
+    private fun displayPublishYear(view: View, curBook: Resource<OpenLibraryOLIDResponse>) {
+        if (curBook.data?.publish_date != null) {
+            var publishDate = curBook.data.publish_date
+            var publishYear = 0
+
+            val numbers = Regex("[0-9]+").findAll(publishDate)
+                .map(MatchResult::value)
+                .toList()
+
+            for (i in numbers) {
+                if (i.length == 4)
+                    publishYear = i.toInt()
+            }
+
+            if (publishYear != 0)
+                view.tvBookPublishYear.text = publishYear.toString()
+            else
+                view.tvBookPublishYear.visibility = View.GONE
+        }
+    }
+
+    private fun displayNumberOfPages(view: View, curBook: Resource<OpenLibraryOLIDResponse>) {
+        if (curBook.data?.number_of_pages != null) {
+            var pages: Int? = curBook.data.number_of_pages
+
+            if (pages != null && pages > 0) {
+                var pagesString = pages.toString() + " " + view.context.getString(R.string.pages)
+                view.tvBookPages.text = pagesString
+            } else
+                view.tvBookPages.visibility = View.GONE
         }
     }
 

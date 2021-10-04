@@ -44,7 +44,7 @@
         android:rating="4"
         android:scaleX="1.5"
         android:scaleY="1.5"
-        android:stepSize="1"
+        android:stepSize="0.5"
         app:layout_constraintBottom_toBottomOf="@+id/tvBookAuthor"
         app:layout_constraintEnd_toStartOf="@+id/ivDeleteBookPermanently"
         app:layout_constraintStart_toStartOf="@+id/glVertical70"

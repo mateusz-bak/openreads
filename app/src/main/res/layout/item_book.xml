@@ -21,7 +21,6 @@
             android:adjustViewBounds="true"
             android:paddingEnd="10dp"
             android:scaleType="fitCenter"
-            android:src="@mipmap/ic_books"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
@@ -34,6 +33,7 @@
             android:text="@string/unknown_title"
             android:textColor="?colorOnSecondary"
             android:textSize="16sp"
+            android:fontFamily="sans-serif"
             app:layout_constraintEnd_toStartOf="@+id/glVertical70"
             app:layout_constraintHorizontal_weight="1"
             app:layout_constraintStart_toEndOf="@+id/ivBookCover"
@@ -44,7 +44,8 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:text="@string/unknown_author"
-            android:textSize="12sp"
+            android:textSize="14sp"
+            android:fontFamily="sans-serif-light"
             app:layout_constraintEnd_toEndOf="@+id/tvBookTitle"
             app:layout_constraintHorizontal_weight="1"
             app:layout_constraintStart_toStartOf="@+id/tvBookTitle"
@@ -63,7 +64,7 @@
             android:numStars="5"
             android:rating="4"
             android:scaleType="fitStart"
-            android:stepSize="1"
+            android:stepSize="0.5"
             app:layout_constraintStart_toStartOf="@+id/tvBookAuthor"
             app:layout_constraintTop_toBottomOf="@+id/tvBookAuthor" />
 
@@ -80,7 +81,8 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="4dp"
             android:text="@string/tvNumberOfPages"
-            android:textSize="10sp"
+            android:textSize="14sp"
+            android:fontFamily="sans-serif-light"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent" />
 
@@ -90,7 +92,8 @@
             android:layout_height="wrap_content"
             android:layout_marginBottom="4dp"
             android:text="@string/tv_date_started_title"
-            android:textSize="8sp"
+            android:textSize="11sp"
+            android:fontFamily="sans-serif"
             app:layout_constraintBottom_toTopOf="@+id/tvDateStarted"
             app:layout_constraintEnd_toEndOf="@+id/tvDateStarted" />
 
@@ -100,7 +103,8 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="4dp"
             android:text="@string/tvDateFinished"
-            android:textSize="10sp"
+            android:textSize="14sp"
+            android:fontFamily="sans-serif-light"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent" />
 
@@ -110,7 +114,8 @@
             android:layout_height="wrap_content"
             android:layout_marginBottom="4dp"
             android:text="@string/tv_date_finished_title"
-            android:textSize="8sp"
+            android:textSize="11sp"
+            android:fontFamily="sans-serif"
             app:layout_constraintBottom_toTopOf="@+id/tvDateFinished"
             app:layout_constraintEnd_toEndOf="@+id/tvDateFinished" />
 
@@ -120,7 +125,8 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="4dp"
             android:text="@string/tvDateFinished"
-            android:textSize="10sp"
+            android:textSize="14sp"
+            android:fontFamily="sans-serif-light"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent" />
     </androidx.constraintlayout.widget.ConstraintLayout>

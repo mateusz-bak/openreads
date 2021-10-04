@@ -27,4 +27,16 @@
         <item>accent_yellow</item>
     </string-array>
 
+    <string-array name="book_lists">
+        <item>@string/finished_books</item>
+        <item>@string/in_progress_books</item>
+        <item>@string/to_read_books</item>
+    </string-array>
+
+    <string-array name="book_lists_values">
+        <item>book_list_finished</item>
+        <item>book_list_inProgress</item>
+        <item>book_list_toRead</item>
+    </string-array>
+
 </resources>

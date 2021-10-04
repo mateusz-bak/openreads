@@ -27,6 +27,7 @@ class SettingsFragment : PreferenceFragmentCompat(), OnSharedPreferenceChangeLis
 
         var preferenceCheckForUpdates = findPreference<Preference>(Constants.KEY_CHECK_FOR_UPDATES)
         var preferenceTrash = findPreference<Preference>(Constants.KEY_TRASH)
+        var preferenceChangelog = findPreference<Preference>(Constants.KEY_CHANGELOG)
         var preferenceBackup = findPreference<Preference>(Constants.KEY_BACKUP)
 
         if (preferenceCheckForUpdates != null) {
@@ -43,6 +44,13 @@ class SettingsFragment : PreferenceFragmentCompat(), OnSharedPreferenceChangeLis
         if (preferenceTrash != null) {
             preferenceTrash.onPreferenceClickListener = Preference.OnPreferenceClickListener {
                 findNavController().navigate(R.id.trashFragment, null)
+                true
+            }
+        }
+
+        if (preferenceChangelog != null) {
+            preferenceChangelog.onPreferenceClickListener = Preference.OnPreferenceClickListener {
+                findNavController().navigate(R.id.changelogFragment, null)
                 true
             }
         }
@@ -70,7 +78,6 @@ class SettingsFragment : PreferenceFragmentCompat(), OnSharedPreferenceChangeLis
     override fun onSharedPreferenceChanged(sharedPreferences: SharedPreferences, key: String) {
         when (key) {
             Constants.SHARED_PREFERENCES_KEY_ACCENT -> {
-//                Toast.makeText(context?.applicationContext, R.string.changes_after_app_restart, Toast.LENGTH_LONG).show()
                 hotReloadActivity(activity)
             }
             Constants.SHARED_PREFERENCES_KEY_RECOMMENDATIONS -> {

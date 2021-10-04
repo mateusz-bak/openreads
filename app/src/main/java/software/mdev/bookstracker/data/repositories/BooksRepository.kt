@@ -32,7 +32,8 @@ class BooksRepository (
         bookCoverUrl: String,
         bookOLID: String,
         bookISBN10: String,
-        bookISBN13: String
+        bookISBN13: String,
+        bookPublishYear: Int
     ) = db.getBooksDao().updateBook(
         id,
         bookTitle,
@@ -49,7 +50,8 @@ class BooksRepository (
         bookCoverUrl,
         bookOLID,
         bookISBN10,
-        bookISBN13
+        bookISBN13,
+        bookPublishYear
     )
 
     fun searchBooks(searchQuery: String) = db.getBooksDao().searchBooks(searchQuery)

@@ -146,7 +146,8 @@ class DeletedBookAdapter(
                 curBook.bookCoverUrl,
                 curBook.bookOLID,
                 curBook.bookISBN10,
-                curBook.bookISBN13
+                curBook.bookISBN13,
+                curBook.bookPublishYear
             )
         }
     }

@@ -27,27 +27,46 @@ class SetupFragment : Fragment(R.layout.fragment_setup) {
         var sharedPreferencesName = (activity as ListActivity).getString(R.string.shared_preferences_name)
         val sharedPref = (activity as ListActivity).getSharedPreferences(sharedPreferencesName, Context.MODE_PRIVATE)
 
-        if (!sharedPref.getBoolean(Constants.SHARED_PREFERENCES_KEY_FIRST_TIME_TOGGLE, true) &&
-            sharedPref.getString(Constants.SHARED_PREFERENCES_KEY_APP_VERSION, "v0.0.0") ==
-            resources.getString(R.string.app_version)
-        ) {
+        if (!sharedPref.getBoolean(Constants.SHARED_PREFERENCES_KEY_FIRST_TIME_TOGGLE, true)) {
             val navOptions = NavOptions.Builder()
                 .setPopUpTo(R.id.setupFragment, true)
                 .build()
-            findNavController().navigate(
-                R.id.action_setupFragment_to_readFragment,
-                savedInstanceState,
-                navOptions
-            )
+
+            if (sharedPref.getString(Constants.SHARED_PREFERENCES_KEY_APP_VERSION, "v0.0.0") ==
+                resources.getString(R.string.app_version)) {
+
+                when (getPreferenceLandingPage((activity as ListActivity).baseContext)) {
+                    Constants.KEY_LANDING_PAGE_FINISHED ->
+                        findNavController().navigate(
+                            R.id.action_setupFragment_to_readFragment,
+                            savedInstanceState,
+                            navOptions
+                        )
+                    Constants.KEY_LANDING_PAGE_IN_PROGRESS ->
+                        findNavController().navigate(
+                            R.id.action_setupFragment_to_inProgressFragment,
+                            savedInstanceState,
+                            navOptions
+                        )
+                    Constants.KEY_LANDING_PAGE_TO_READ ->
+                        findNavController().navigate(
+                            R.id.action_setupFragment_to_toReadFragment,
+                            savedInstanceState,
+                            navOptions
+                        )
+                }
+            } else {
+                findNavController().navigate(R.id.action_setupFragment_to_changelogFragment, savedInstanceState, navOptions)
+            }
         }
 
         val images = listOf(
-            R.drawable.ic_svg_three_books,
-            R.drawable.ic_svg_clipboard,
-            R.drawable.ic_svg_graph,
-            R.drawable.ic_svg_code,
+            R.drawable.ic_svg_three_books_grey_colored,
+            R.drawable.ic_svg_phone_list,
+            R.drawable.ic_svg_analytics,
+            R.drawable.ic_svg_open_source_inspection,
             0,
-            R.drawable.ic_svg_like
+            R.drawable.ic_svg_girl_reading
         )
 
         val adapter = SetupAdapter(
@@ -55,9 +74,12 @@ class SetupFragment : Fragment(R.layout.fragment_setup) {
             images,
             resources.getString(R.string.app_version),
             view.context,
-            vpSetup
+            vpSetup,
+            this
         )
         vpSetup.adapter = adapter
+
+        var animateNext = true
 
         vpSetup.registerOnPageChangeCallback(object: ViewPager2.OnPageChangeCallback() {
             override fun onPageScrolled(
@@ -81,6 +103,40 @@ class SetupFragment : Fragment(R.layout.fragment_setup) {
                         fabLaunchApp.scaleX = 0F
                         fabLaunchApp.scaleY = 0F
 
+                        if (animateNext) {
+                            animateNext = false
+                            tvNext.alpha = 0F
+                            tvNext.visibility = View.VISIBLE
+                            tvNext.animate().alpha(1F).setDuration(500L).setStartDelay(500L)
+                                .start()
+
+                            ivPosition0.alpha = 0F
+                            ivPosition0.visibility = View.VISIBLE
+                            ivPosition1.alpha = 0F
+                            ivPosition1.visibility = View.VISIBLE
+                            ivPosition2.alpha = 0F
+                            ivPosition2.visibility = View.VISIBLE
+                            ivPosition3.alpha = 0F
+                            ivPosition3.visibility = View.VISIBLE
+                            ivPosition4.alpha = 0F
+                            ivPosition4.visibility = View.VISIBLE
+                            ivPosition5.alpha = 0F
+                            ivPosition5.visibility = View.VISIBLE
+
+                            ivPosition0.animate().alpha(1F).setDuration(500L).setStartDelay(500L)
+                                .start()
+                            ivPosition1.animate().alpha(1F).setDuration(500L).setStartDelay(500L)
+                                .start()
+                            ivPosition2.animate().alpha(1F).setDuration(500L).setStartDelay(500L)
+                                .start()
+                            ivPosition3.animate().alpha(1F).setDuration(500L).setStartDelay(500L)
+                                .start()
+                            ivPosition4.animate().alpha(1F).setDuration(500L).setStartDelay(500L)
+                                .start()
+                            ivPosition5.animate().alpha(1F).setDuration(500L).setStartDelay(500L)
+                                .start()
+                        }
+
                         vpSetup.isUserInputEnabled = true
                     }
                     1 -> {
@@ -89,6 +145,10 @@ class SetupFragment : Fragment(R.layout.fragment_setup) {
                         fabLaunchApp.visibility = View.INVISIBLE
                         fabLaunchApp.scaleX = 0F
                         fabLaunchApp.scaleY = 0F
+
+                        tvNext.visibility = View.VISIBLE
+                        tvNext.animate().cancel()
+                        tvNext.alpha = 1F
 
                         vpSetup.isUserInputEnabled = true
                     }
@@ -99,6 +159,8 @@ class SetupFragment : Fragment(R.layout.fragment_setup) {
                         fabLaunchApp.scaleX = 0F
                         fabLaunchApp.scaleY = 0F
 
+                        tvNext.visibility = View.VISIBLE
+
                         vpSetup.isUserInputEnabled = true
                     }
                     3 -> {
@@ -108,6 +170,8 @@ class SetupFragment : Fragment(R.layout.fragment_setup) {
                         fabLaunchApp.scaleX = 0F
                         fabLaunchApp.scaleY = 0F
 
+                        tvNext.visibility = View.VISIBLE
+
                         vpSetup.isUserInputEnabled = true
                     }
                     4 -> {
@@ -115,6 +179,8 @@ class SetupFragment : Fragment(R.layout.fragment_setup) {
 
                         fabLaunchApp.animate().setDuration(250L).scaleX(0F).start()
                         fabLaunchApp.animate().setDuration(250L).scaleY(0F).start()
+
+                        tvNext.visibility = View.INVISIBLE
 
                         vpSetup.isUserInputEnabled = false
                     }
@@ -127,6 +193,8 @@ class SetupFragment : Fragment(R.layout.fragment_setup) {
 
                         fabLaunchApp.animate().setDuration(250L).scaleX(1F).start()
                         fabLaunchApp.animate().setDuration(250L).scaleY(1F).start()
+
+                        tvNext.visibility = View.INVISIBLE
 
                         vpSetup.isUserInputEnabled = false
                     }
@@ -141,7 +209,25 @@ class SetupFragment : Fragment(R.layout.fragment_setup) {
         fabLaunchApp.setOnClickListener {
             hotReloadActivity(activity)
             saveAppsFirstlaunch()
-            Navigation.findNavController(view).navigate(R.id.action_setupFragment_to_readFragment)
+
+            when (getPreferenceLandingPage((activity as ListActivity).baseContext)) {
+                Constants.KEY_LANDING_PAGE_FINISHED ->
+                    Navigation.findNavController(view).navigate(R.id.action_setupFragment_to_readFragment)
+                Constants.KEY_LANDING_PAGE_IN_PROGRESS ->
+                    Navigation.findNavController(view).navigate(R.id.action_setupFragment_to_inProgressFragment)
+                Constants.KEY_LANDING_PAGE_TO_READ ->
+                    Navigation.findNavController(view).navigate(R.id.action_setupFragment_to_toReadFragment)
+            }
+        }
+
+        tvNext.setOnClickListener {
+            when (vpSetup.currentItem) {
+                0 -> vpSetup.setCurrentItem(1, true)
+                1 -> vpSetup.setCurrentItem(2, true)
+                2 -> vpSetup.setCurrentItem(3, true)
+                3 -> vpSetup.setCurrentItem(4, true)
+                4 -> vpSetup.setCurrentItem(5, true)
+            }
         }
     }
 
@@ -184,8 +270,6 @@ class SetupFragment : Fragment(R.layout.fragment_setup) {
 
         editor?.apply {
             putBoolean(Constants.SHARED_PREFERENCES_KEY_FIRST_TIME_TOGGLE, false)
-            putString(Constants.SHARED_PREFERENCES_KEY_APP_VERSION, resources.getString(R.string.app_version))
-            putBoolean(Constants.SHARED_PREFERENCES_KEY_SHOW_OL_ALERT, true)
             apply()
         }
     }
@@ -224,5 +308,15 @@ class SetupFragment : Fragment(R.layout.fragment_setup) {
             Constants.THEME_ACCENT_YELLOW_500 -> accentColor = ContextCompat.getColor(context, R.color.yellow_500)
         }
         return accentColor
+    }
+
+    private fun getPreferenceLandingPage(context: Context): String {
+        var sharedPreferencesName = context.getString(R.string.shared_preferences_name)
+        val sharedPref = context.getSharedPreferences(sharedPreferencesName, Context.MODE_PRIVATE)
+
+        return sharedPref?.getString(
+            Constants.SHARED_PREFERENCES_KEY_LANDING_PAGE,
+            Constants.KEY_LANDING_PAGE_FINISHED
+        ).toString()
     }
 }

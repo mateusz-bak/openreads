@@ -65,7 +65,8 @@ class BooksViewModel(
         bookCoverUrl: String,
         bookOLID: String,
         bookISBN10: String,
-        bookISBN13: String
+        bookISBN13: String,
+        bookPublishYear: Int
     ) = CoroutineScope(Dispatchers.Main).launch {
         repository.updateBook(
             id,
@@ -83,7 +84,8 @@ class BooksViewModel(
             bookCoverUrl,
             bookOLID,
             bookISBN10,
-            bookISBN13
+            bookISBN13,
+            bookPublishYear
         )
     }
 
@@ -115,24 +117,6 @@ class BooksViewModel(
     fun getYear(year: Int) = yearRepository.getYear(year)
 
     fun getYears() = yearRepository.getYears()
-
-    fun updateYear(
-        item_year: String,
-        item_books: Int,
-        item_pages: Int,
-        item_rating: Float,
-        item_challenge_books: Int,
-        item_challenge_pages: Int
-    ) = CoroutineScope(Dispatchers.Main).launch {
-        yearRepository.updateYear(
-            item_year,
-            item_books,
-            item_pages,
-            item_rating,
-            item_challenge_books,
-            item_challenge_pages
-        )
-    }
 
     fun updateYearsNumberOfBooks(
         item_year: String,

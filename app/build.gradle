@@ -15,8 +15,8 @@ android {
         applicationId "software.mdev.bookstracker"
         minSdkVersion 24
         targetSdkVersion 30
-        versionCode 8
-        versionName "1.6.0"
+        versionCode 9
+        versionName "1.7.0"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
 
@@ -27,20 +27,22 @@ android {
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
-            resValue "string", "app_name", "Books Tracker"
+            resValue "string", "app_name", "Openreads"
             resValue "string", "shared_preferences_name", "software.mdev.bookstracker_preferences"
             manifestPlaceholders = [
                     appIcon: "@mipmap/ic_launcher_three_books",
-                    appIconRound: "@mipmap/ic_launcher_three_books_round"
+                    appIconRound: "@mipmap/ic_launcher_three_books_round",
+                    providerAuthorities: "software.mdev.bookstracker.fileprovider"
             ]
         }
         debug {
             applicationIdSuffix ".debug"
-            resValue "string", "app_name", "Books Tracker debug"
+            resValue "string", "app_name", "Openreads debug"
             resValue "string", "shared_preferences_name", "software.mdev.bookstracker.debug_preferences"
             manifestPlaceholders = [
                     appIcon: "@mipmap/ic_launcher_three_books_debug",
-                    appIconRound: "@mipmap/ic_launcher_three_books_debug"
+                    appIconRound: "@mipmap/ic_launcher_three_books_debug",
+                    providerAuthorities: "software.mdev.bookstracker.debug.fileprovider"
             ]
         }
     }
@@ -74,7 +76,7 @@ dependencies {
     implementation 'androidx.core:core-ktx:1.6.0'
     implementation 'androidx.appcompat:appcompat:1.3.1'
     implementation 'com.google.android.material:material:1.4.0'
-    implementation 'androidx.constraintlayout:constraintlayout:2.1.0'
+    implementation 'androidx.constraintlayout:constraintlayout:2.1.1'
     implementation 'androidx.navigation:navigation-fragment-ktx:2.3.5'
     implementation 'androidx.navigation:navigation-ui-ktx:2.3.5'
     testImplementation 'junit:junit:4.13.2'
@@ -126,4 +128,10 @@ dependencies {
 
     // https://github.com/yuriy-budiyev/code-scanner
     implementation 'com.budiyev.android:code-scanner:2.1.0'
+
+    //charts
+    implementation 'com.github.PhilJay:MPAndroidChart:v3.1.0'
+
+    // https://stackoverflow.com/questions/44986626/android-room-database-how-to-handle-arraylist-in-an-entity
+    implementation "org.jetbrains.kotlinx:kotlinx-serialization-json:1.0.1"
 }

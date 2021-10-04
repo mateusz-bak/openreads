@@ -11,9 +11,9 @@ import software.mdev.bookstracker.R
 import software.mdev.bookstracker.other.Constants
 import software.mdev.bookstracker.ui.bookslist.ListActivity
 import androidx.core.content.ContextCompat
-import androidx.core.view.marginStart
 import androidx.viewpager2.widget.ViewPager2
-import kotlinx.coroutines.*
+import kotlinx.android.synthetic.main.fragment_setup.*
+import software.mdev.bookstracker.ui.bookslist.fragments.SetupFragment
 
 
 class SetupAdapter(
@@ -22,6 +22,7 @@ class SetupAdapter(
     private val appVersion: String,
     private val context: Context,
     private val vpSetup: ViewPager2,
+    private val setupFragment: SetupFragment,
     private var triggerHint: Boolean = true,
     private var triggerHintArrows: Boolean = true,
     private var newTheme: String? = null
@@ -39,70 +40,62 @@ class SetupAdapter(
         when (position) {
             0 -> {
                 holder.itemView.apply {
+                    val param = ivSetupImage.layoutParams as ViewGroup.MarginLayoutParams
+                    param.width = 450
+                    param.height = 450
+                    ivSetupImage.layoutParams = param
+
                     ivSetupImage.setImageResource(images[position])
 
-                    tvSetupText.text = resources.getText(R.string.tvWelcomeText_0)
+                    var string = resources.getString(R.string.tvWelcomeText_0) + " " +resources.getString(R.string.app_name)
+
+                    tvSetupText.text = string
                     tvSetupText.textSize = 20F
                     tvSetupVersion.visibility = View.VISIBLE
 
-                    ivSwipeHint1.visibility = View.INVISIBLE
-                    ivSwipeHint2.visibility = View.INVISIBLE
-
                     tvSetupSwipeHint.visibility = View.INVISIBLE
                     tvSetupSwipeHint.text = resources.getText(R.string.tvSetupSwipeHint_0)
-
-                    triggerHintArrows(holder, position)
                 }
             }
             1 -> {
                 holder.itemView.apply {
                     ivSetupImage.setImageResource(images[position])
 
-                    val param = ivSetupImage.layoutParams as ViewGroup.MarginLayoutParams
-                    param.setMargins(75,0,0,0)
-                    ivSetupImage.layoutParams = param
+                    viewSlideDown(ivSetupImage)
+                    viewSlideUp(tvSetupText)
 
-                    tvSetupText.text = resources.getText(R.string.tvWelcomeText_1)
+                    var string = resources.getString(R.string.app_name) + " " + resources.getString(R.string.tvWelcomeText_1)
+                    tvSetupText.text = string
                     tvSetupVersion.visibility = View.INVISIBLE
 
-                    ivSwipeHint1.visibility = View.INVISIBLE
-                    ivSwipeHint2.visibility = View.INVISIBLE
-
                     tvSetupSwipeHint.visibility = View.INVISIBLE
-
-                    triggerHintArrows(holder, position)
                 }
             }
             2 -> {
                 holder.itemView.apply {
                     ivSetupImage.setImageResource(images[position])
 
+                    viewSlideLeft(ivSetupImage)
+                    viewSlideRight(tvSetupText)
+
                     tvSetupText.text = resources.getText(R.string.tvWelcomeText_2)
                     tvSetupVersion.visibility = View.INVISIBLE
 
-                    ivSwipeHint1.visibility = View.INVISIBLE
-                    ivSwipeHint2.visibility = View.INVISIBLE
                     tvSetupSwipeHint.visibility = View.INVISIBLE
-
-                    triggerHintArrows(holder, position)
                 }
             }
             3 -> {
                 holder.itemView.apply {
                     ivSetupImage.setImageResource(images[position])
 
-                    val param = ivSetupImage.layoutParams as ViewGroup.MarginLayoutParams
-                    param.setMargins(150,0,0,0)
-                    ivSetupImage.layoutParams = param
+                    viewSlideLeft(tvSetupText)
+                    viewSlideRight(ivSetupImage)
 
-                    tvSetupText.text = resources.getText(R.string.tvWelcomeText_3)
+                    var string = resources.getString(R.string.app_name) + " " + resources.getString(R.string.tvWelcomeText_3)
+                    tvSetupText.text = string
                     tvSetupVersion.visibility = View.INVISIBLE
 
-                    ivSwipeHint1.visibility = View.INVISIBLE
-                    ivSwipeHint2.visibility = View.INVISIBLE
                     tvSetupSwipeHint.visibility = View.INVISIBLE
-
-                    triggerHintArrows(holder, position)
                 }
             }
             4 -> {
@@ -113,8 +106,6 @@ class SetupAdapter(
                     tvSetupText.text = resources.getText(R.string.tvWelcomeText_4)
                     tvSetupVersion.visibility = View.INVISIBLE
 
-                    ivSwipeHint1.visibility = View.INVISIBLE
-                    ivSwipeHint2.visibility = View.INVISIBLE
                     tvSetupSwipeHint.visibility = View.INVISIBLE
 
                     btn1.setOnClickListener {
@@ -172,12 +163,13 @@ class SetupAdapter(
                 holder.itemView.apply {
                     ivSetupImage.setImageResource(images[position])
 
+                    viewSlideDown(ivSetupImage)
+                    viewSlideUp(tvSetupText)
+
                     tvSetupText.text = resources.getText(R.string.tvWelcomeText_5)
                     tvSetupText.textSize = 20F
                     tvSetupVersion.visibility = View.INVISIBLE
 
-                    ivSwipeHint1.visibility = View.INVISIBLE
-                    ivSwipeHint2.visibility = View.INVISIBLE
                     tvSetupSwipeHint.text = resources.getText(R.string.tvSetupSwipeHint_1)
 
                     triggerHint(holder, position)
@@ -188,6 +180,38 @@ class SetupAdapter(
 
     override fun getItemCount(): Int {
         return images.size
+    }
+
+    private fun viewSlideDown(view: View) {
+        view.alpha = 0F
+        view.animate().alpha(1F).setDuration(750L).start()
+
+        view.translationY = -1000F
+        view.animate().translationYBy(1000F).setStartDelay(100L).setDuration(500L).start()
+    }
+
+    private fun viewSlideUp(view: View) {
+        view.alpha = 0F
+        view.animate().alpha(1F).setDuration(750L).start()
+
+        view.translationY = 1000F
+        view.animate().translationYBy(-1000F).setStartDelay(100L).setDuration(500L).start()
+    }
+
+    private fun viewSlideLeft(view: View) {
+        view.alpha = 0F
+        view.animate().alpha(1F).setDuration(750L).start()
+
+        view.translationX = 1000F
+        view.animate().translationXBy(-1000F).setStartDelay(100L).setDuration(500L).start()
+    }
+
+    private fun viewSlideRight(view: View) {
+        view.alpha = 0F
+        view.animate().alpha(1F).setDuration(750L).start()
+
+        view.translationX = -1000F
+        view.animate().translationXBy(1000F).setStartDelay(100L).setDuration(500L).start()
     }
 
     private fun selectBtn(holder: ViewPagerViewHolder, selectedBtn: View, position: Int) {
@@ -207,18 +231,21 @@ class SetupAdapter(
         )
 
         vpSetup.isUserInputEnabled = true
+        setupFragment.tvNext.visibility = View.VISIBLE
 
         for (btn in listOfButtons) {
             if (btn == selectedBtn) {
                 btn.animate().scaleX(scaleBig).setDuration(250L).start()
                 btn.animate().scaleY(scaleBig).setDuration(250L).start()
+
+                btn.animate().alpha(1F).setDuration(100L).start()
             } else {
                 btn.animate().scaleX(scaleSmall).setDuration(100L).start()
                 btn.animate().scaleY(scaleSmall).setDuration(100L).start()
+
+                btn.animate().alpha(0.6F).setDuration(100L).start()
             }
         }
-
-        triggerHintArrows(holder, position)
     }
 
     private fun triggerHint(holder: ViewPagerViewHolder, position: Int) {
@@ -234,86 +261,6 @@ class SetupAdapter(
             holder.itemView.tvSetupSwipeHint.alpha = 0F
             holder.itemView.tvSetupSwipeHint.visibility = View.VISIBLE
             holder.itemView.tvSetupSwipeHint.animate().setStartDelay(500L).setDuration(1000L).alpha(1F).start()
-        }
-    }
-
-    private fun triggerHintArrows (holder: ViewPagerViewHolder, position: Int) {
-        var duration = 500L
-        var startDelay = 750L
-        var delay = 950L
-
-        if (position != 3 || (position == 3 && triggerHintArrows)) {
-            if (position == 3)
-                triggerHintArrows = false
-
-            if (position == 0) {
-                startDelay = 750L
-                delay = 950L
-            }
-
-            holder.itemView.ivSwipeHint1.alpha = 0F
-            holder.itemView.ivSwipeHint2.alpha = 0F
-
-            holder.itemView.ivSwipeHint1.visibility = View.VISIBLE
-            holder.itemView.ivSwipeHint2.visibility = View.VISIBLE
-
-            GlobalScope.launch {
-                while (true) {
-                    runBlocking {
-                        withContext(Dispatchers.Main) {
-                            holder.itemView.ivSwipeHint1.animate()
-                                .setStartDelay(750L)
-                                .setDuration(750L)
-                                .translationXBy(-600F)
-                                .withEndAction {
-                                    holder.itemView.ivSwipeHint1.animate()
-                                        .translationXBy(600F)
-                                        .start()
-                                }
-                                .start()
-
-                            holder.itemView.ivSwipeHint2.animate()
-                                .setStartDelay(750L)
-                                .setDuration(750L)
-                                .translationXBy(-600F)
-                                .withEndAction {
-                                    holder.itemView.ivSwipeHint2.animate()
-                                        .translationXBy(600F)
-                                        .start()
-                                }
-                                .start()
-
-                            holder.itemView.ivSwipeHint1.animate()
-                                .setStartDelay(startDelay)
-                                .setDuration(duration)
-                                .alpha(1F)
-                                .start()
-
-                            holder.itemView.ivSwipeHint2.animate()
-                                .setStartDelay(startDelay)
-                                .setDuration(duration)
-                                .alpha(1F)
-                                .start()
-                        }
-
-                        delay(delay)
-
-                        withContext(Dispatchers.Main) {
-                            holder.itemView.ivSwipeHint1.animate()
-                                .setDuration(duration)
-                                .alpha(0F)
-                                .start()
-
-                            holder.itemView.ivSwipeHint2.animate()
-                                .setDuration(duration)
-                                .alpha(0F)
-                                .start()
-                        }
-
-                        delay(2 * delay)
-                    }
-                }
-            }
         }
     }
 

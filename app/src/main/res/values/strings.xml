@@ -1,5 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE resources [
+    <!ENTITY appname "Openreads">
+    ]>
 <resources>
-    <string name="app_version" translatable="false">v1.6.0</string>
+    <string name="app_version" translatable="false">v1.7.0</string>
     <string name="ivAuthorUrl">https://github.com/mateusz-bak/</string>
     <!-- Images descriptions -->
     <string name="ivBookStatusSetRead">Set book as finished</string>
@@ -24,8 +28,8 @@
     <!-- In-app strings -->
     <string name="tvAppsAuthor">Created by</string>
     <string name="tvSourceCode">Source code</string>
-    <string name="ivRepoUrl">https://github.com/mateusz-bak/books-tracker-android/</string>
-    <string name="tvLicenseUrl">https://github.com/mateusz-bak/books-tracker-android/blob/master/LICENSE</string>
+    <string name="ivRepoUrl" translatable="false">https://github.com/mateusz-bak/books-tracker-android/</string>
+    <string name="tvLicenseUrl" translatable="false">https://github.com/mateusz-bak/books-tracker-android/blob/master/LICENSE</string>
     <string name="miAbout">About</string>
     <string name="readFragment">Finished</string>
     <string name="inProgressFragment">In progress</string>
@@ -60,7 +64,12 @@
     <string name="dismiss">Dismiss</string>
     <string name="bookDeleted">Book deleted</string>
     <string name="undo">Undo</string>
-    <string name="tvWelcomeText_0">Welcome to Books Tracker app</string>
+    <string name="tvWelcomeText_0">Welcome to</string>
+    <string name="tvWelcomeText_1">"will help you keep track of your books.\n\nIt is also a great tool for organizing your personal library in an easy and transparent way."</string>
+    <string name="tvWelcomeText_2">"Progress with your readings thanks to awesome statistics.\n\nChallenge yourself to be a better reader!"</string>
+    <string name="tvWelcomeText_3">"is completely open source!\n\nIt means that you can inspect the app's code on your own and contribute to it's development.\n\nAs a bonus you get zero ads and absolutely no tracking!"</string>
+    <string name="tvWelcomeText_4">"Now choose a theme color for the app.\n\nDon\'t worry, you can change it later."</string>
+    <string name="tvWelcomeText_5">Enjoy and keep reading!</string>
     <string name="tvLooksEmpty">Your book list looks empty for now, click plus button below and start adding new books!</string>
     <string name="customization">Customization</string>
     <string name="switch_1" translatable="false">switch_1</string>
@@ -122,15 +131,15 @@
     <string name="tvNumberOfPages" translatable="false">101 pages</string>
     <string name="tvDateFinished" translatable="false">13 Jun 2021</string>
     <string name="setTitleOnUpdateAvailable">New update!</string>
-    <string name="setContentOnUpdateAvailable_gplay">"Newer version of the Books Tracker app is available in Google Play store.\n\nClick \"update\"  to go to the downloading page."</string>
-    <string name="setContentOnUpdateAvailable_fdroid">"Newer version of the Books Tracker app is available in F-Droid store.\n\nClick \"update\"  to go to the downloading page."</string>
-    <string name="setContentOnUpdateAvailable_github">"Newer version of the Books Tracker app is available in Github repository.\n\nClick \"update\"  to go to the downloading page."</string>
+    <string name="setContentOnUpdateAvailable_gplay">"Newer version of the &appname; app is available in Google Play store.\n\nClick \"update\"  to go to the downloading page."</string>
+    <string name="setContentOnUpdateAvailable_fdroid">"Newer version of the &appname; app is available in F-Droid store.\n\nClick \"update\"  to go to the downloading page."</string>
+    <string name="setContentOnUpdateAvailable_github">"Newer version of the &appname; app is available in Github repository.\n\nClick \"update\"  to go to the downloading page."</string>
     <string name="setButtonUpdate">Update</string>
     <string name="setButtonDismiss">Dismiss</string>
     <string name="setButtonDoNotShowAgain">Ignore</string>
-    <string name="setContentOnUpdateNotAvailable_gplay">You\'ve got the latest version available of Books Tracker app from Google Play store.</string>
-    <string name="setContentOnUpdateNotAvailable_fdroid">You\'ve got the latest version available of Books Tracker app from F-Droid store.</string>
-    <string name="setContentOnUpdateNotAvailable_github">You\'ve got the latest version available of Books Tracker app from Github repository.</string>
+    <string name="setContentOnUpdateNotAvailable_gplay">You\'ve got the latest version available of &appname; app from Google Play store.</string>
+    <string name="setContentOnUpdateNotAvailable_fdroid">You\'ve got the latest version available of &appname; app from F-Droid store.</string>
+    <string name="setContentOnUpdateNotAvailable_github">You\'ve got the latest version available of &appname; app from Github repository.</string>
     <string name="setTitleOnUpdateNotAvailable">No updates available</string>
     <string name="statisticsFragment">Statistics</string>
     <string name="statistics_all">All</string>
@@ -138,16 +147,11 @@
     <string name="tvBooksRead" translatable="false">999</string>
     <string name="tvPagesReadTitle">Pages read</string>
     <string name="tvPagesRead" translatable="false">999999</string>
-    <string name="tvWelcomeText_1">It will help you keep track of your books</string>
-    <string name="tvWelcomeText_2">You will also see some cool statistics</string>
-    <string name="tvWelcomeText_3">"Books Tracker is completely open source!\n\nIt means that you can inspect the app's code on your own and contribute to it's development.\n\nAs a bonus you get zero ads and absolutely no tracking!"</string>
-    <string name="tvWelcomeText_4">Now choose theme color for the app</string>
-    <string name="tvWelcomeText_5">Enjoy and keep reading!</string>
     <string name="tvSetupSwipeHint_0">Swipe left</string>
     <string name="tvSetupSwipeHint_1">Click the arrow</string>
     <string name="tvAvgRatingTitle">Average rating</string>
     <string name="tvAvgRating" translatable="false">4.9</string>
-    <string name="tvLooksEmptyStatistics">Nothing to see here yet! Add read books and come back here later.</string>
+    <string name="tvLooksEmptyStatistics">Nothing to see here yet! Add read books with finish date and come back here later.</string>
     <string name="btnAdderCancelFinishDate">Cancel</string>
     <string name="tvChallengeTitle">Challenge</string>
     <string name="tvChallenge" translatable="false">6 / 9</string>
@@ -167,10 +171,10 @@
     <string name="ivDeleteBookPermanently">Delete book permanently</string>
     <string name="click_edit_button_to_edit_title">Click edit button to change book\'s title</string>
     <string name="click_edit_button_to_edit_author">Click edit button to change book\'s author</string>
-    <string name="click_edit_button_to_edit_rating">Click edit button to change book\'s rating</string>
     <string name="click_edit_button_to_edit_status">Click edit button to change book\'s status</string>
     <string name="click_edit_button_to_edit_date">Click edit button to change book\'s finish date</string>
     <string name="click_edit_button_to_edit_pages">Click edit button to change book\'s number of pages</string>
+    <string name="click_edit_button_to_edit_publish_year">Click edit button to change book\'s publish year</string>
     <string name="btnAddSearch">"Search in\nOpen Library"</string>
     <string name="btnAddManual">"Add\nmanually"</string>
     <string name="etAdderBookTitleSearch">Title, author, isbn...</string>
@@ -222,7 +226,7 @@
     <string name="warning_delete_book_message">Do you really want to delete this book?</string>
     <string name="warning_delete_book_delete">delete</string>
     <string name="warning_delete_book_cancel">back</string>
-    <string name="export_title">Create backup</string>
+    <string name="export_title">Create cloud backup</string>
     <string name="export_summary">Save your books to the cloud so they won\'t go anywhere! You can save the backup file to your cloud app (Nextcloud, Google Drive, OneDrive, Dropbox, Mega, Proton Drive)</string>
     <string name="import_title">Restore backup</string>
     <string name="import_summary">Load your books from a local file on your phone. You may need to grant storage permissions for the app.</string>
@@ -234,11 +238,11 @@
     <string name="no_backups_found">No backups found in Backup/BooksTracker</string>
     <string name="api_29_not_yet_supported">API 29 not yet supported</string>
     <string name="api_30_not_yet_supported">API 30 not yet supported</string>
-    <string name="backup_import_invalid_file">Import failed. The chosen file is not a valid Books Tracker backup!</string>
+    <string name="backup_import_invalid_file">Import failed. The chosen file is not a valid &appname; backup!</string>
     <string name="backup_import_success">Import completed!</string>
     <string name="backup_import_failure">Import failed. Did you choose the file correctly?</string>
     <string name="rate_app_title">Rate the app</string>
-    <string name="rate_app">Do you like Books Tracker? Take a moment to rate it. Click here</string>
+    <string name="rate_app">Do you like &appname;? Take a moment to rate it. Click here</string>
     <string name="app_market_url" translatable="false">market://details?id=software.mdev.bookstracker</string>
     <string name="contact_title">Contact me</string>
     <string name="dev_email" translatable="false">mateusz.bak.dev@gmail.com</string>
@@ -250,4 +254,55 @@
     <string name="tv_less_about_book">Less</string>
     <string name="btnAddScan">Scan barcode</string>
     <string name="tbScannerTip">Scan a barcode</string>
+    <string name="book_list_title">Landing page</string>
+    <string name="finished_books">Books finished</string>
+    <string name="in_progress_books">Books in progress</string>
+    <string name="to_read_books">Books for later</string>
+    <string name="ask_for_rating_dialog_title">Do you enjoy &appname;?</string>
+    <string name="ask_for_rating_dialog_message">If yes please rate it on Google Play!</string>
+    <string name="ask_for_rating_dialog_pos">Ok, take me there</string>
+    <string name="ask_for_rating_dialog_neu">Maybe next time</string>
+    <string name="ask_for_rating_dialog_neg">Nope, never!</string>
+    <string name="rating_changes_succesfully">Rating changed successfully</string>
+    <string name="autofill_hint_publish_year" translatable="false">bookpublishyear</string>
+    <string name="hint_publish_year">Publish year</string>
+    <string name="unknown_pages">No number of pages</string>
+    <string name="unknown_publish_year">No publish year</string>
+    <string name="stats_quickest_read">Quickest read time</string>
+    <string name="stats_longest_book">Longest book</string>
+    <string name="stats_avg_reading_time">Average reading time</string>
+    <string name="stats_avg_pages">Average number of pages</string>
+    <string name="stats_books_read">Books read</string>
+    <string name="stats_pages_read">Pages read</string>
+    <string name="stats_avg_rating">Average books rating</string>
+    <string name="stats_challenge">Reading challenge</string>
+    <string name="stats_books_by_months">Read books by month</string>
+    <string name="need_more_data">Need more data for that</string>
+    <string name="days">days</string>
+    <string name="stats_shortest_book">Shortest book</string>
+    <string name="setup_next">next</string>
+    <string name="changelog">Changelog</string>
+    <string name="app_updated">Your app just got updated to the newest version!</string>
+    <string name="update_whats_new">What\'s new in</string>
+    <string name="update_ok_1">Cool! Keep it going!</string>
+    <string name="update_ok_2">Great work!</string>
+    <string name="update_ok_3">Awesome changes!</string>
+    <string name="update_ok_4">Keep up the good work!</string>
+    <string name="update_ok_5">Love the new updates!</string>
+    <string name="update_ok_6">A job well done!</string>
+    <string name="month_1_short">Jan</string>
+    <string name="month_2_short">Feb</string>
+    <string name="month_3_short">Mar</string>
+    <string name="month_4_short">Apr</string>
+    <string name="month_5_short">May</string>
+    <string name="month_6_short">Jun</string>
+    <string name="month_7_short">Jul</string>
+    <string name="month_8_short">Aug</string>
+    <string name="month_9_short">Sep</string>
+    <string name="month_10_short">Oct</string>
+    <string name="month_11_short">Nov</string>
+    <string name="month_12_short">Dec</string>
+    <string name="stats_pages_by_months">Read pages by month</string>
+    <string name="export_local_summary">Save your books to a local file so you always have the backup handy!</string>
+    <string name="export_local_title">Create local backup</string>
 </resources>

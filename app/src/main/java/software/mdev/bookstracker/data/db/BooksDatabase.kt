@@ -11,7 +11,7 @@ import software.mdev.bookstracker.other.Constants.DATABASE_FILE_NAME
 
 @Database(
         entities = [Book::class],
-        version = 6
+        version = 7
 )
 abstract class BooksDatabase: RoomDatabase() {
 
@@ -36,7 +36,8 @@ abstract class BooksDatabase: RoomDatabase() {
                     MIGRATION_2_3,
                     MIGRATION_3_4,
                     MIGRATION_4_5,
-                    MIGRATION_5_6
+                    MIGRATION_5_6,
+                    MIGRATION_6_7
                 )
                 .build()
 
@@ -56,7 +57,8 @@ abstract class BooksDatabase: RoomDatabase() {
                         MIGRATION_2_3,
                         MIGRATION_3_4,
                         MIGRATION_4_5,
-                        MIGRATION_5_6
+                        MIGRATION_5_6,
+                        MIGRATION_6_7
                     )
                     .build()
                 Companion.instance = instance
@@ -71,13 +73,13 @@ abstract class BooksDatabase: RoomDatabase() {
             instance = null
         }
 
-        val MIGRATION_1_2 = object : Migration(1, 2) {
+        private val MIGRATION_1_2 = object : Migration(1, 2) {
             override fun migrate(database: SupportSQLiteDatabase) {
                 database.execSQL("ALTER TABLE Book ADD COLUMN item_bookNumberOfPages INTEGER NOT NULL DEFAULT 0")
             }
         }
 
-        val MIGRATION_2_3 = object : Migration(2, 3) {
+        private val MIGRATION_2_3 = object : Migration(2, 3) {
             override fun migrate(database: SupportSQLiteDatabase) {
                 database.execSQL("ALTER TABLE Book ADD COLUMN item_bookTitle_ASCII TEXT NOT NULL DEFAULT 'not_converted'")
                 database.execSQL("ALTER TABLE Book ADD COLUMN item_bookAuthor_ASCII TEXT NOT NULL DEFAULT 'not_converted'")
@@ -101,6 +103,12 @@ abstract class BooksDatabase: RoomDatabase() {
                 database.execSQL("ALTER TABLE Book ADD COLUMN item_bookOLID TEXT NOT NULL DEFAULT 'none'")
                 database.execSQL("ALTER TABLE Book ADD COLUMN item_bookISBN10 TEXT NOT NULL DEFAULT 'none'")
                 database.execSQL("ALTER TABLE Book ADD COLUMN item_bookISBN13 TEXT NOT NULL DEFAULT 'none'")
+            }
+        }
+
+        private val MIGRATION_6_7 = object : Migration(6, 7) {
+            override fun migrate(database: SupportSQLiteDatabase) {
+                database.execSQL("ALTER TABLE Book ADD COLUMN item_bookPublishYear INTEGER NOT NULL DEFAULT 0")
             }
         }
     }

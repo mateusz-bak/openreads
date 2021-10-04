@@ -1,19 +1,24 @@
 package software.mdev.bookstracker.ui.bookslist
 
 import android.annotation.SuppressLint
+import android.content.ActivityNotFoundException
 import android.content.Context
+import android.content.Intent
 import android.content.pm.PackageManager
 import android.net.Uri
 import android.os.Bundle
 import android.view.Menu
 import android.view.View
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.ContextCompat
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.ui.setupWithNavController
 import com.google.android.material.snackbar.Snackbar
 import kotlinx.android.synthetic.main.activity_list.*
+import software.mdev.bookstracker.BuildConfig
 import software.mdev.bookstracker.R
 import software.mdev.bookstracker.data.db.BooksDatabase
 import software.mdev.bookstracker.data.db.LanguageDatabase
@@ -24,7 +29,6 @@ import software.mdev.bookstracker.data.repositories.OpenLibraryRepository
 import software.mdev.bookstracker.data.repositories.YearRepository
 import software.mdev.bookstracker.other.Backup
 import software.mdev.bookstracker.other.Constants
-import software.mdev.bookstracker.other.Functions
 import software.mdev.bookstracker.other.Updater
 import software.mdev.bookstracker.ui.bookslist.viewmodel.BooksViewModel
 import software.mdev.bookstracker.ui.bookslist.viewmodel.BooksViewModelProviderFactory
@@ -58,6 +62,10 @@ class ListActivity : AppCompatActivity() {
 
         updater.checkForAppUpdate(this, false)
 
+        // ask for rating only in gplay release
+        if (BuildConfig.FLAVOR == "gplay" && BuildConfig.BUILD_TYPE == "release")
+            askForRating()
+
         bottomNavigationView.setupWithNavController(booksNavHostFragment.findNavController())
 
         booksNavHostFragment.findNavController()
@@ -80,7 +88,40 @@ class ListActivity : AppCompatActivity() {
         booksViewModel.getBookCount(Constants.BOOK_STATUS_TO_READ).observe(this) { count ->
             setBadge(2, count.toInt())
         }
+    }
 
+    override fun onBackPressed() {
+        val selectedItemId = booksNavHostFragment.findNavController().currentDestination?.id
+
+        val landingPage =  when (getPreferenceLandingPage((this).baseContext)) {
+            Constants.KEY_LANDING_PAGE_IN_PROGRESS -> R.id.inProgressFragment
+            Constants.KEY_LANDING_PAGE_TO_READ -> R.id.toReadFragment
+            else -> R.id.readFragment
+        }
+
+        when (selectedItemId) {
+            landingPage -> finish()
+            R.id.displayBookFragment -> super.onBackPressed()
+            R.id.displayCoverFragment -> super.onBackPressed()
+            R.id.editBookFragment -> super.onBackPressed()
+            R.id.settingsFragment -> super.onBackPressed()
+            R.id.settingsBackupFragment -> super.onBackPressed()
+            R.id.trashFragment -> super.onBackPressed()
+            R.id.changelogFragment -> super.onBackPressed()
+            R.id.addBookScanFragment -> super.onBackPressed()
+            else -> setHomeItem()
+        }
+    }
+
+    private fun setHomeItem() {
+        when (getPreferenceLandingPage((this).baseContext)) {
+            Constants.KEY_LANDING_PAGE_FINISHED ->
+                bottomNavigationView.selectedItemId = R.id.readFragment
+            Constants.KEY_LANDING_PAGE_IN_PROGRESS ->
+                bottomNavigationView.selectedItemId = R.id.inProgressFragment
+            Constants.KEY_LANDING_PAGE_TO_READ ->
+                bottomNavigationView.selectedItemId = R.id.toReadFragment
+        }
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
@@ -89,12 +130,12 @@ class ListActivity : AppCompatActivity() {
     }
 
     private fun setBadge(index: Int, count: Int) {
-        val functions = Functions()
         var menuItemId = bottomNavigationView.menu.getItem(index).itemId
 
         if (count > 0) {
             bottomNavigationView.getOrCreateBadge(menuItemId).backgroundColor =
-                functions.getAccentColor(this.applicationContext)
+                resources.getColor(R.color.grey_500)
+
             bottomNavigationView.getOrCreateBadge(menuItemId).number = count
         } else {
             bottomNavigationView.removeBadge(menuItemId)
@@ -177,5 +218,75 @@ class ListActivity : AppCompatActivity() {
                     .navigate(R.id.action_toReadFragment_to_addBookScanFragment)
             }
         }
+    }
+
+    private fun askForRating() {
+        var askForRatingTime = checkNextAskingTime()
+
+        if (askForRatingTime == 0L)
+            setNextAskingTime(System.currentTimeMillis() + Constants.MS_ONE_WEEK)
+        else if (askForRatingTime == Long.MAX_VALUE) {
+
+        } else {
+            if (askForRatingTime < System.currentTimeMillis())
+                displayAskForRatingDialog()
+        }
+    }
+
+    private fun displayAskForRatingDialog() {
+        val askForRatingDialog = AlertDialog.Builder(this)
+                .setTitle(R.string.ask_for_rating_dialog_title)
+                .setMessage(R.string.ask_for_rating_dialog_message)
+                .setIcon(R.drawable.ic_baseline_star_rate_24)
+                .setPositiveButton(R.string.ask_for_rating_dialog_pos) { _, _ ->
+                    try {
+                        startActivity(Intent(Intent.ACTION_VIEW, Uri.parse("market://details?id=$packageName")))
+                    } catch (e: ActivityNotFoundException) {
+                        startActivity(Intent(Intent.ACTION_VIEW, Uri.parse("https://play.google.com/store/apps/details?id=$packageName")))
+                    }
+                    setNextAskingTime(Long.MAX_VALUE)
+                }
+                .setNeutralButton(R.string.ask_for_rating_dialog_neu) { _, _ ->
+                    setNextAskingTime(System.currentTimeMillis() + Constants.MS_THREE_DAYS)
+                }
+                .setNegativeButton(R.string.ask_for_rating_dialog_neg) { _, _ ->
+                    setNextAskingTime(Long.MAX_VALUE)
+                }
+                .create()
+
+        askForRatingDialog?.show()
+        askForRatingDialog?.getButton(AlertDialog.BUTTON_NEGATIVE)?.setTextColor(ContextCompat.getColor(this.baseContext, R.color.grey_500))
+        askForRatingDialog?.getButton(AlertDialog.BUTTON_NEUTRAL)?.setTextColor(ContextCompat.getColor(this.baseContext, R.color.grey_500))
+    }
+
+    private fun setNextAskingTime(time: Long) {
+        var sharedPrefName = getString(R.string.shared_preferences_name)
+        val sharedPref = getSharedPreferences(sharedPrefName, Context.MODE_PRIVATE)
+        val sharedPrefEditor = sharedPref?.edit()
+
+        sharedPrefEditor?.apply {
+            putLong(Constants.SHARED_PREFERENCES_KEY_TIME_TO_ASK_FOR_RATING, time)
+            apply()
+        }
+    }
+
+    private fun checkNextAskingTime(): Long {
+        var sharedPrefName = getString(R.string.shared_preferences_name)
+        val sharedPref = getSharedPreferences(sharedPrefName, Context.MODE_PRIVATE)
+
+        return sharedPref.getLong(
+            Constants.SHARED_PREFERENCES_KEY_TIME_TO_ASK_FOR_RATING,
+            0L
+        )
+    }
+
+    private fun getPreferenceLandingPage(context: Context): String {
+        var sharedPreferencesName = context.getString(R.string.shared_preferences_name)
+        val sharedPref = context.getSharedPreferences(sharedPreferencesName, Context.MODE_PRIVATE)
+
+        return sharedPref?.getString(
+            Constants.SHARED_PREFERENCES_KEY_LANDING_PAGE,
+            Constants.KEY_LANDING_PAGE_FINISHED
+        ).toString()
     }
 }

@@ -11,10 +11,10 @@
         <action
             android:id="@+id/action_readFragment_to_displayBookFragment"
             app:destination="@id/displayBookFragment"
-            app:enterAnim="@anim/fade_in"
-            app:exitAnim="@anim/fade_out"
-            app:popEnterAnim="@anim/fade_in"
-            app:popExitAnim="@anim/fade_out"/>
+            app:enterAnim="@anim/slide_in_right_fast"
+            app:exitAnim="@anim/slide_out_left_fast"
+            app:popEnterAnim="@anim/slide_in_left_fast"
+            app:popExitAnim="@anim/slide_out_right_fast"/>
         <action
             android:id="@+id/action_readFragment_to_inProgressFragment"
             app:destination="@id/inProgressFragment" />
@@ -42,10 +42,10 @@
         <action
             android:id="@+id/action_inProgressFragment_to_displayBookFragment"
             app:destination="@id/displayBookFragment"
-            app:enterAnim="@anim/fade_in"
-            app:exitAnim="@anim/fade_out"
-            app:popEnterAnim="@anim/fade_in"
-            app:popExitAnim="@anim/fade_out"/>
+            app:enterAnim="@anim/slide_in_right_fast"
+            app:exitAnim="@anim/slide_out_left_fast"
+            app:popEnterAnim="@anim/slide_in_left_fast"
+            app:popExitAnim="@anim/slide_out_right_fast"/>
         <action
             android:id="@+id/action_inProgressFragment_to_readFragment"
             app:destination="@id/readFragment" />
@@ -73,10 +73,10 @@
         <action
             android:id="@+id/action_toReadFragment_to_displayBookFragment"
             app:destination="@id/displayBookFragment"
-            app:enterAnim="@anim/fade_in"
-            app:exitAnim="@anim/fade_out"
-            app:popEnterAnim="@anim/fade_in"
-            app:popExitAnim="@anim/fade_out"/>
+            app:enterAnim="@anim/slide_in_right_fast"
+            app:exitAnim="@anim/slide_out_left_fast"
+            app:popEnterAnim="@anim/slide_in_left_fast"
+            app:popExitAnim="@anim/slide_out_right_fast"/>
         <action
             android:id="@+id/action_toReadFragment_to_readFragment"
             app:destination="@id/readFragment" />
@@ -141,9 +141,16 @@
         android:label="SetupFragment" >
         <action
             android:id="@+id/action_setupFragment_to_readFragment"
-            app:destination="@id/readFragment"
-            app:enterAnim="@anim/slide_in_right"
-            app:exitAnim="@anim/slide_out_left"/>
+            app:destination="@id/readFragment"/>
+        <action
+            android:id="@+id/action_setupFragment_to_inProgressFragment"
+            app:destination="@id/inProgressFragment"/>
+        <action
+            android:id="@+id/action_setupFragment_to_toReadFragment"
+            app:destination="@id/toReadFragment"/>
+        <action
+            android:id="@+id/action_setupFragment_to_changelogFragment"
+            app:destination="@id/changelogFragment" />
     </fragment>
     <fragment
         android:id="@+id/settingsFragment"
@@ -208,5 +215,19 @@
         <action
             android:id="@+id/action_addBookScanFragment_to_addBookSearchFragment"
             app:destination="@id/addBookSearchFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/changelogFragment"
+        android:name="software.mdev.bookstracker.ui.bookslist.fragments.ChangelogFragment"
+        android:label="ChangelogFragment" >
+        <action
+            android:id="@+id/action_changelogFragment_to_toReadFragment"
+            app:destination="@id/toReadFragment" />
+        <action
+            android:id="@+id/action_changelogFragment_to_inProgressFragment"
+            app:destination="@id/inProgressFragment" />
+        <action
+            android:id="@+id/action_changelogFragment_to_readFragment"
+            app:destination="@id/readFragment" />
     </fragment>
 </navigation>

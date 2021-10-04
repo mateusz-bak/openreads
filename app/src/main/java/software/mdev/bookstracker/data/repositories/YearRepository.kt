@@ -14,22 +14,6 @@ class YearRepository(
 
     fun getYears() = db.getYearDao().getYears()
 
-    suspend fun updateYear(
-        item_year: String,
-        item_books: Int,
-        item_pages: Int,
-        item_rating: Float,
-        item_challenge_books: Int,
-        item_challenge_pages: Int
-    ) = db.getYearDao().updateYear(
-        item_year,
-        item_books,
-        item_pages,
-        item_rating,
-        item_challenge_books,
-        item_challenge_pages
-    )
-
     suspend fun updateYearsNumberOfBooks(
         item_year: String,
         item_books: Int

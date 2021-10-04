@@ -23,6 +23,7 @@ object Constants {
     const val DATABASE_ITEM_BOOK_OLID = "item_bookOLID"
     const val DATABASE_ITEM_BOOK_ISBN10 = "item_bookISBN10"
     const val DATABASE_ITEM_BOOK_ISBN13 = "item_bookISBN13"
+    const val DATABASE_ITEM_BOOK_PUBLISH_YEAR = "item_bookPublishYear"
     const val DATABASE_ITEM_BOOK_IS_DELETED = "item_bookIsDeleted"
     const val DATABASE_EMPTY_VALUE = "none"
 
@@ -34,6 +35,16 @@ object Constants {
     const val DATABASE_YEAR_ITEM_RATING = "item_rating"
     const val DATABASE_YEAR_CHALLENGE_BOOKS = "item_challenge_books"
     const val DATABASE_YEAR_CHALLENGE_PAGES = "item_challenge_pages"
+    const val DATABASE_YEAR_QUICKEST_BOOK = "item_quickest_book"
+    const val DATABASE_YEAR_QUICKEST_BOOK_VAL = "item_quickest_book_val"
+    const val DATABASE_YEAR_LONGEST_BOOK = "item_longest_book"
+    const val DATABASE_YEAR_LONGEST_BOOK_VAL = "item_longest_book_val"
+    const val DATABASE_YEAR_AVG_READING_TIME = "item_avg_reading_time"
+    const val DATABASE_YEAR_AVG_PAGES = "item_avg_pages"
+    const val DATABASE_YEAR_SHORTEST_BOOK = "item_shortest_book"
+    const val DATABASE_YEAR_SHORTEST_BOOK_VAL = "item_shortest_book_val"
+    const val DATABASE_YEAR_BOOKS_BY_MONTH = "item_books_by_month"
+    const val DATABASE_YEAR_PAGES_BY_MONTH = "item_pages_by_month"
 
     const val DATABASE_NAME_LANGUAGE = "Language"
     const val DATABASE_LANGUAGE_FILE_NAME = "LanguageDB.db"
@@ -71,6 +82,8 @@ object Constants {
     const val SHARED_PREFERENCES_KEY_SORT_ORDER = "KEY_SORT_ORDER"
     const val SHARED_PREFERENCES_KEY_FILTER_YEARS = "KEY_FILTER_YEARS"
     const val SHARED_PREFERENCES_KEY_ACCENT = "KEY_ACCENT"
+    const val SHARED_PREFERENCES_KEY_LANDING_PAGE = "KEY_LANDING_PAGE"
+    const val SHARED_PREFERENCES_KEY_TIME_TO_ASK_FOR_RATING = "KEY_TIME_TO_ASK_FOR_RATING"
     const val SHARED_PREFERENCES_KEY_RECOMMENDATIONS = "KEY_RECOMMENDATIONS"
     const val SHARED_PREFERENCES_KEY_SHOW_OL_ALERT = "KEY_SHOW_OL_ALERT"
     const val SHARED_PREFERENCES_REFRESHED = "refreshed"
@@ -78,7 +91,9 @@ object Constants {
     const val KEY_TRASH = "KEY_TRASH"
     const val KEY_BACKUP = "KEY_BACKUP"
     const val KEY_EXPORT = "KEY_EXPORT"
+    const val KEY_EXPORT_LOCAL = "KEY_EXPORT_LOCAL"
     const val KEY_IMPORT = "KEY_IMPORT"
+    const val KEY_CHANGELOG = "KEY_CHANGELOG"
 
     const val EMPTY_STRING = ""
 
@@ -93,6 +108,10 @@ object Constants {
     const val THEME_ACCENT_TEAL_500 = "accent_teal"
     const val THEME_ACCENT_YELLOW_500 = "accent_yellow"
 
+    const val KEY_LANDING_PAGE_FINISHED = "book_list_finished"
+    const val KEY_LANDING_PAGE_IN_PROGRESS = "book_list_inProgress"
+    const val KEY_LANDING_PAGE_TO_READ = "book_list_toRead"
+
     const val THEME_ACCENT_DEFAULT = THEME_ACCENT_GREEN_500
 
     const val GITHUB_USER = "mateusz-bak"
@@ -105,4 +124,7 @@ object Constants {
     const val PERMISSION_CAMERA_FROM_LIST_1 = 1
     const val PERMISSION_CAMERA_FROM_LIST_2 = 2
     const val PERMISSION_CAMERA_FROM_LIST_3 = 3
+
+    const val MS_ONE_WEEK = 604800000L
+    const val MS_THREE_DAYS = 259200000L
 }

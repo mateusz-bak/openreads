@@ -141,7 +141,6 @@ class EditBookFragment : Fragment(R.layout.fragment_edit_book) {
                 ivEditorBookStatusToRead.setColorFilter(ContextCompat.getColor(view.context, R.color.grey), android.graphics.PorterDuff.Mode.SRC_IN)
                 whatIsClicked = Constants.BOOK_STATUS_READ
                 rbEditedRating.visibility = View.VISIBLE
-                etEditedPagesNumber.visibility = View.VISIBLE
                 btnEditStartDate.visibility = View.VISIBLE
                 btnEditFinishDate.visibility = View.VISIBLE
 
@@ -162,7 +161,6 @@ class EditBookFragment : Fragment(R.layout.fragment_edit_book) {
                 ivEditorBookStatusToRead.setColorFilter(ContextCompat.getColor(view.context, R.color.grey), android.graphics.PorterDuff.Mode.SRC_IN)
                 whatIsClicked = Constants.BOOK_STATUS_IN_PROGRESS
                 rbEditedRating.visibility = View.GONE
-                etEditedPagesNumber.visibility = View.GONE
             }
             Constants.BOOK_STATUS_TO_READ -> {
                 ivEditorBookStatusRead.setColorFilter(ContextCompat.getColor(view.context, R.color.grey), android.graphics.PorterDuff.Mode.SRC_IN)
@@ -170,7 +168,6 @@ class EditBookFragment : Fragment(R.layout.fragment_edit_book) {
                 ivEditorBookStatusToRead.setColorFilter(accentColor, android.graphics.PorterDuff.Mode.SRC_IN)
                 whatIsClicked = Constants.BOOK_STATUS_TO_READ
                 rbEditedRating.visibility = View.GONE
-                etEditedPagesNumber.visibility = View.GONE
             }
         }
 
@@ -188,7 +185,6 @@ class EditBookFragment : Fragment(R.layout.fragment_edit_book) {
             ivEditorBookStatusToRead.setColorFilter(ContextCompat.getColor(view.context, R.color.grey), android.graphics.PorterDuff.Mode.SRC_IN)
             whatIsClicked = Constants.BOOK_STATUS_READ
             rbEditedRating.visibility = View.VISIBLE
-            etEditedPagesNumber.visibility = View.VISIBLE
             btnEditStartDate.visibility = View.VISIBLE
             btnEditFinishDate.visibility = View.VISIBLE
 
@@ -210,7 +206,6 @@ class EditBookFragment : Fragment(R.layout.fragment_edit_book) {
             ivEditorBookStatusToRead.setColorFilter(ContextCompat.getColor(view.context, R.color.grey), android.graphics.PorterDuff.Mode.SRC_IN)
             whatIsClicked = Constants.BOOK_STATUS_IN_PROGRESS
             rbEditedRating.visibility = View.GONE
-            etEditedPagesNumber.visibility = View.GONE
             btnEditStartDate.visibility = View.GONE
             btnEditFinishDate.visibility = View.GONE
 
@@ -234,7 +229,6 @@ class EditBookFragment : Fragment(R.layout.fragment_edit_book) {
             ivEditorBookStatusToRead.setColorFilter(accentColor, android.graphics.PorterDuff.Mode.SRC_IN)
             whatIsClicked = Constants.BOOK_STATUS_TO_READ
             rbEditedRating.visibility = View.GONE
-            etEditedPagesNumber.visibility = View.GONE
             btnEditStartDate.visibility = View.GONE
             btnEditFinishDate.visibility = View.GONE
 
@@ -527,6 +521,13 @@ class EditBookFragment : Fragment(R.layout.fragment_edit_book) {
         fabSaveEditedBook.setOnClickListener {
             val bookTitle = etEditedBookTitle.text.toString()
             val bookAuthor = etEditedBookAuthor.text.toString()
+
+            val bookPublishYear = etEditedPublishYear.text.toString()
+            var bookPublishYearInt = 0
+
+            if (bookPublishYear.isNotEmpty())
+                bookPublishYearInt = bookPublishYear.toInt()
+
             var bookRating = 0.0F
             val bookNumberOfPagesIntOrNull = etEditedPagesNumber.text.toString().toIntOrNull()
             var bookNumberOfPagesInt: Int
@@ -613,7 +614,8 @@ class EditBookFragment : Fragment(R.layout.fragment_edit_book) {
                                                 book.bookCoverUrl,
                                                 bookOLID,
                                                 bookISBN10,
-                                                bookISBN13
+                                                bookISBN13,
+                                                bookPublishYearInt
                                             )
 
                                             recalculateChallenges()
@@ -649,7 +651,8 @@ class EditBookFragment : Fragment(R.layout.fragment_edit_book) {
                     book.bookCoverUrl,
                     book.bookOLID,
                     book.bookISBN10,
-                    book.bookISBN13
+                    book.bookISBN13,
+                    book.bookPublishYear
                 )
             }
         }
@@ -677,7 +680,8 @@ class EditBookFragment : Fragment(R.layout.fragment_edit_book) {
                             book.bookCoverUrl,
                             book.bookOLID,
                             book.bookISBN10,
-                            book.bookISBN13
+                            book.bookISBN13,
+                            book.bookPublishYear
                         )
                         recalculateChallenges()
 

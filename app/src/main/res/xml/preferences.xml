@@ -33,6 +33,14 @@
             android:summary="%s"
             android:title="@string/accent_name_title" />
 
+        <ListPreference
+            android:defaultValue="book_list_finished"
+            android:entries="@array/book_lists"
+            android:entryValues="@array/book_lists_values"
+            android:key="KEY_LANDING_PAGE"
+            android:summary="%s"
+            android:title="@string/book_list_title" />
+
 <!--        <SwitchPreference-->
 <!--            android:defaultValue="false"-->
 <!--            android:key="KEY_RECOMMENDATIONS"-->
@@ -73,11 +81,8 @@
         </Preference>
 
         <Preference
-            android:title="@string/app_changelog"
-            android:summary="@string/url_releases" >
-            <intent
-                android:action="android.intent.action.VIEW"
-                android:data="@string/url_releases" />
+            android:key="KEY_CHANGELOG"
+            android:title="@string/app_changelog" >
         </Preference>
 
         <Preference
@@ -97,8 +102,7 @@
         </Preference>
 
         <Preference
-            android:title="@string/contact_title"
-            android:summary="@string/dev_email" >
+            android:title="@string/contact_title" >
             <intent
                 android:action="android.intent.action.VIEW"
                 android:data="@string/dev_mailto" />

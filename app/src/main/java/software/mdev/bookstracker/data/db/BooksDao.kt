@@ -37,7 +37,8 @@ interface BooksDao {
             "item_bookCoverUrl=:bookCoverUrl, " +
             "item_bookOLID=:bookOLID, " +
             "item_bookISBN10=:bookISBN10, " +
-            "item_bookISBN13=:bookISBN13 " +
+            "item_bookISBN13=:bookISBN13, " +
+            "item_bookPublishYear=:bookPublishYear " +
             "WHERE id=:id")
     suspend fun updateBook(id: Int?,
                            bookTitle: String,
@@ -54,10 +55,11 @@ interface BooksDao {
                            bookCoverUrl: String,
                            bookOLID: String,
                            bookISBN10: String,
-                           bookISBN13: String
+                           bookISBN13: String,
+                           bookPublishYear: Int
     )
 
-    @Query("SELECT * FROM Book WHERE (item_bookTitle_ASCII LIKE '%' || :searchQuery || '%' OR item_bookAuthor_ASCII LIKE '%' || :searchQuery || '%')")
+    @Query("SELECT * FROM Book WHERE (item_bookTitle_ASCII LIKE '%' || :searchQuery || '%' OR item_bookAuthor_ASCII LIKE '%' || :searchQuery || '%' AND item_bookIsDeleted LIKE 0)")
     fun searchBooks(searchQuery: String): LiveData<List<Book>>
 
     @Query("SELECT * FROM Book WHERE (item_bookStatus LIKE :bookStatus AND item_bookIsDeleted LIKE 0) ORDER BY item_bookTitle_ASCII DESC")
