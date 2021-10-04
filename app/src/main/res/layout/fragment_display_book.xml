@@ -7,6 +7,17 @@
     android:layout_height="match_parent"
     android:padding="4dp">
 
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:fillViewport="true">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/clStats"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="12dp">
+
     <androidx.cardview.widget.CardView
         android:id="@+id/cvBookDisplay1"
         android:layout_width="match_parent"
@@ -22,7 +33,7 @@
             android:id="@+id/clBookDisplay1"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:padding="16dp">
+            android:padding="12dp">
 
             <androidx.constraintlayout.widget.Guideline
                 android:id="@+id/guideline12"
@@ -115,8 +126,8 @@
                 android:isIndicator="false"
                 android:max="5"
                 android:numStars="5"
-                android:scaleX="0.8"
-                android:scaleY="0.8"
+                android:scaleX="0.7"
+                android:scaleY="0.7"
                 android:transformPivotX="0dp"
                 android:transformPivotY="0dp"
                 app:layout_constraintStart_toStartOf="@+id/tvBookTitle"
@@ -174,6 +185,8 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="-2dp"
                 android:layout_marginTop="8dp"
+                android:scaleX="0.9"
+                android:scaleY="0.9"
                 android:contentDescription="@string/ivBookStatusToRead"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="@+id/rbRatingIndicator"
@@ -186,8 +199,8 @@
                 android:layout_height="wrap_content"
                 android:contentDescription="@string/ivBookStatusToRead"
                 android:scaleType="centerInside"
-                android:scaleX="0.7"
-                android:scaleY="0.7"
+                android:scaleX="0.6"
+                android:scaleY="0.6"
                 android:visibility="invisible"
                 app:layout_constraintBottom_toBottomOf="@+id/ivDetails"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -202,8 +215,8 @@
                 android:layout_height="wrap_content"
                 android:contentDescription="@string/ivBookStatusToRead"
                 android:scaleType="centerInside"
-                android:scaleX="0.7"
-                android:scaleY="0.7"
+                android:scaleX="0.6"
+                android:scaleY="0.6"
                 android:visibility="invisible"
                 app:layout_constraintBottom_toBottomOf="@+id/ivDetails"
                 app:layout_constraintEnd_toStartOf="@+id/ivDelete"
@@ -219,6 +232,8 @@
                 android:contentDescription="@string/ivBookStatusToRead"
                 android:visibility="invisible"
                 android:layout_marginStart="-8dp"
+                android:scaleX="0.9"
+                android:scaleY="0.9"
                 app:layout_constraintBottom_toBottomOf="@+id/ivDetails"
                 app:layout_constraintEnd_toEndOf="@+id/ivDetails"
                 app:layout_constraintStart_toStartOf="@+id/ivDetails"
@@ -251,7 +266,7 @@
                 android:id="@+id/clBookDisplay2"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:padding="24dp">
+                android:padding="12dp">
 
                 <!--            <androidx.constraintlayout.widget.Guideline-->
                 <!--                android:id="@+id/guideline22"-->
@@ -412,7 +427,7 @@
                     android:layout_marginTop="24dp"
                     android:autoLink="web"
                     android:fontFamily="sans-serif"
-                    android:gravity="center"
+                    android:gravity="start"
                     android:text="@string/tv_book_url"
                     app:layout_constraintStart_toStartOf="@+id/tvBookISBN"
                     app:layout_constraintTop_toBottomOf="@+id/tvBookISBN" />
@@ -422,5 +437,6 @@
         </androidx.cardview.widget.CardView>
     </androidx.constraintlayout.widget.ConstraintLayout>
 
-
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </ScrollView>
 </androidx.constraintlayout.widget.ConstraintLayout>
