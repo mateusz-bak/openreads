@@ -1,4 +1,4 @@
-# books-tracker-android   
+# Openreads
 
 
 <p align='center'>  
@@ -9,7 +9,7 @@
 [![Build Status](https://git-drone.mateusz.ovh/api/badges/mateusz-bak/books-tracker-android/status.svg)](https://git-drone.mateusz.ovh/mateusz-bak/books-tracker-android)
 
 <br/><br/>
-### An Android app written in Kotlin for keeping tracks of your books.  
+### Openreads is an Android app written in Kotlin for keeping tracks of your books.  
 #### There are three lists provided so you won't get confused:  
 - books you finished,  
 - books you are currently reading,  
