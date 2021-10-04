@@ -290,20 +290,20 @@ class DisplayBookFragment : Fragment(R.layout.fragment_display_book) {
         when (book.bookStatus) {
             Constants.BOOK_STATUS_READ -> {
                 tvBookStatus.text = getString(R.string.finished)
-                ivBookStatusInProgress.visibility = View.GONE
-                ivBookStatusToRead.visibility = View.GONE
+                ivBookStatusInProgress.visibility = View.INVISIBLE
+                ivBookStatusToRead.visibility = View.INVISIBLE
                 rbRatingIndicator.visibility = View.VISIBLE
             }
             Constants.BOOK_STATUS_IN_PROGRESS -> {
                 tvBookStatus.text = getString(R.string.inProgress)
-                ivBookStatusRead.visibility = View.GONE
-                ivBookStatusToRead.visibility = View.GONE
+                ivBookStatusRead.visibility = View.INVISIBLE
+                ivBookStatusToRead.visibility = View.INVISIBLE
                 rbRatingIndicator.visibility = View.GONE
             }
             Constants.BOOK_STATUS_TO_READ -> {
                 tvBookStatus.text = getString(R.string.toRead)
-                ivBookStatusInProgress.visibility = View.GONE
-                ivBookStatusRead.visibility = View.GONE
+                ivBookStatusInProgress.visibility = View.INVISIBLE
+                ivBookStatusRead.visibility = View.INVISIBLE
                 rbRatingIndicator.visibility = View.GONE
             }
         }
