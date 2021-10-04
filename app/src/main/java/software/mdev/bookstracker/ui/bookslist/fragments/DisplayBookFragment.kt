@@ -57,6 +57,11 @@ class DisplayBookFragment : Fragment(R.layout.fragment_display_book) {
 
         ivBookCover.setOnClickListener {
             animateCover()
+
+            if (ivDetails2.visibility == View.VISIBLE)
+                hideDetails()
+            else
+                showDetails()
         }
 
         ivEdit.setOnClickListener {
