@@ -31,6 +31,7 @@ import kotlinx.coroutines.launch
 import android.widget.Toast
 import android.widget.RatingBar.OnRatingBarChangeListener
 import kotlinx.coroutines.MainScope
+import androidx.activity.OnBackPressedCallback
 
 
 class DisplayBookFragment : Fragment(R.layout.fragment_display_book) {
@@ -193,9 +194,24 @@ class DisplayBookFragment : Fragment(R.layout.fragment_display_book) {
             deleteBookWarningDialog?.show()
             deleteBookWarningDialog?.getButton(AlertDialog.BUTTON_NEGATIVE)?.setTextColor(ContextCompat.getColor(listActivity.baseContext, R.color.grey_500))
         }
+
+        requireActivity()
+            .onBackPressedDispatcher
+            .addCallback(viewLifecycleOwner, object : OnBackPressedCallback(true) {
+
+                override fun handleOnBackPressed() {
+                    if (ivDetails2.visibility == View.VISIBLE)
+                        hideDetails()
+                    else
+                        findNavController().popBackStack()
+                }
+            }
+            )
     }
 
     private fun showDetails() {
+        ivDetails2.visibility = View.VISIBLE
+
         cvBookDisplay2.animate().translationY(0F).setInterpolator(AccelerateInterpolator(0.2F)).setDuration(500L).start()
         cvBookDisplay1.animate().translationY(0F).setInterpolator(AccelerateInterpolator(0.8F)).setDuration(500L).start()
 
@@ -207,9 +223,16 @@ class DisplayBookFragment : Fragment(R.layout.fragment_display_book) {
 
         fabDeleteBook.animate().scaleX(1F).scaleY(1F).setDuration(250L).start()
         fabEditBook.animate().scaleX(1F).scaleY(1F).setDuration(250L).start()
+
+        MainScope().launch {
+            delay(250L)
+            ivDetails.visibility = View.INVISIBLE
+        }
     }
 
     private fun hideDetails() {
+        ivDetails.visibility = View.VISIBLE
+
         cvBookDisplay2.animate().translationY(-1500F).setInterpolator(AccelerateInterpolator(1.2F)).setDuration(400L).start()
         cvBookDisplay1.animate().translationY(500F).setDuration(400L).start()
 
@@ -222,6 +245,11 @@ class DisplayBookFragment : Fragment(R.layout.fragment_display_book) {
 
         fabDeleteBook.animate().scaleX(0F).scaleY(0F).setDuration(250L).start()
         fabEditBook.animate().scaleX(0F).scaleY(0F).setDuration(250L).start()
+
+        MainScope().launch {
+            delay(250L)
+            ivDetails2.visibility = View.INVISIBLE
+        }
     }
 
     private fun initialViewsSetup() {
@@ -235,9 +263,10 @@ class DisplayBookFragment : Fragment(R.layout.fragment_display_book) {
         cvBookDisplay1.translationY = 500F
 
         ivDetails.bringToFront()
+        ivDetails.visibility = View.VISIBLE
 
         ivDetails2.alpha = 0F
-        ivDetails2.visibility = View.VISIBLE
+        ivDetails2.visibility = View.INVISIBLE
 
         fabEditBook.scaleX = 0F
         fabEditBook.scaleY = 0F
