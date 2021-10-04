@@ -63,4 +63,8 @@
     <string name="changelog_1_7_0_h">Naprawiono zachowanie przycisku wstecz.</string>
     <string name="changelog_1_7_0_i">Przeszukiwanie zapisanych książek nie uwzględnia już usuniętych.</string>
     <string name="changelog_1_7_0_j">Poprawiono tłumaczenie.</string>
+
+    <string name="changelog_1_7_1_a">Poprawiono wyświetlanie na ekranach z małym dpi, poprawiono czytelność wykresów, naprawiono przycisk szczegółów książki, naprawiono pola przy dodawaniu książek.</string>
+    <string name="changelog_1_7_1_b">Książki z liczbą stron 0 nie będą uwzględniane w statystykach.</string>
+    <string name="changelog_1_7_1_c">Dopracowano górną belkę w listach, dodano animacje.</string>
 </resources>

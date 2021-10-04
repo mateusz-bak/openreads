@@ -10,6 +10,7 @@
     <string name="changelog_ver_1_5_1" translatable="false">v1.5.1</string>
     <string name="changelog_ver_1_6_0" translatable="false">v1.6.0</string>
     <string name="changelog_ver_1_7_0" translatable="false">v1.7.0</string>
+    <string name="changelog_ver_1_7_1" translatable="false">v1.7.1</string>
 
     <string name="changelog_date_1_0_0" translatable="false">5/06/2021</string>
     <string name="changelog_date_1_1_0" translatable="false">10/06/2021</string>
@@ -22,6 +23,7 @@
     <string name="changelog_date_1_5_1" translatable="false">14/09/2021</string>
     <string name="changelog_date_1_6_0" translatable="false">27/09/2021</string>
     <string name="changelog_date_1_7_0" translatable="false">04/10/2021</string>
+    <string name="changelog_date_1_7_1" translatable="false">05/10/2021</string>
 
     <string name="changelog_1_0_0_a">First official release.</string>
     <string name="changelog_1_0_0_b">Added three lists for books: read, in progress and to read.</string>
@@ -87,4 +89,8 @@
     <string name="changelog_1_7_0_h">Fixed back button\'s behavior.</string>
     <string name="changelog_1_7_0_i">Saved book\'s search will not show deleted ones.</string>
     <string name="changelog_1_7_0_j">Corrected translations.</string>
+
+    <string name="changelog_1_7_1_a">Corrected display on low dpi screens, improved graphs readability, fixed show book\'s details button, fixed fields when adding a book.</string>
+    <string name="changelog_1_7_1_b">Books with 0 pages won\'t be counted as shortest in statistics.</string>
+    <string name="changelog_1_7_1_c">Redesigned top button\'s in lists, added search animation.</string>
 </resources>
