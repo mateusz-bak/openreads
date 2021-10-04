@@ -79,19 +79,16 @@
 
     <ImageView
         android:id="@+id/ivSearch"
-        android:contentDescription="@string/ivSearch"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
         android:clickable="true"
+        android:contentDescription="@string/ivSearch"
         android:focusable="true"
+        android:padding="2dp"
         android:scaleX="1.2"
         android:scaleY="1.2"
-        android:padding="2dp"
         app:layout_constraintBottom_toBottomOf="@+id/ivMore"
         app:layout_constraintEnd_toStartOf="@+id/ivSeparator1"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toEndOf="@id/etSearch"
         app:layout_constraintTop_toTopOf="@+id/ivMore"
         app:srcCompat="@drawable/ic_baseline_search_24" />
 
@@ -113,51 +110,45 @@
 
     <ImageView
         android:id="@+id/ivSort"
-        android:contentDescription="@string/ivSort"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:clickable="true"
+        android:contentDescription="@string/ivSort"
         android:focusable="true"
         android:padding="6dp"
         android:scaleX="2"
         android:scaleY="2"
         app:layout_constraintBottom_toBottomOf="@+id/ivMore"
         app:layout_constraintEnd_toStartOf="@+id/ivSeparator2"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toEndOf="@+id/ivSeparator1"
         app:layout_constraintTop_toTopOf="@+id/ivMore"
         app:srcCompat="@drawable/ic_sort" />
 
     <ImageView
         android:id="@+id/ivFilterBooks"
-        android:contentDescription="@string/ivFilter"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:clickable="true"
+        android:contentDescription="@string/ivFilter"
         android:focusable="true"
+        android:padding="2dp"
         android:scaleX="1.2"
         android:scaleY="1.2"
-        android:padding="2dp"
         app:layout_constraintBottom_toBottomOf="@+id/ivMore"
         app:layout_constraintEnd_toStartOf="@+id/ivSeparator3"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toEndOf="@+id/ivSeparator2"
         app:layout_constraintTop_toTopOf="@+id/ivMore"
         app:srcCompat="@drawable/ic_filter_alt_black_24dp" />
 
     <ImageView
         android:id="@+id/ivMore"
-        android:contentDescription="@string/ivMore"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
         android:layout_marginEnd="16dp"
         android:clickable="true"
+        android:contentDescription="@string/ivMore"
         android:focusable="true"
         android:padding="2dp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toEndOf="@+id/ivSeparator3"
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/ic_baseline_settings_24" />
 
@@ -170,51 +161,45 @@
 
     <ImageView
         android:id="@+id/ivSeparator1"
-        android:contentDescription="@string/ivSeparator1"
         android:layout_width="wrap_content"
         android:layout_height="0dp"
         android:clickable="false"
+        android:contentDescription="@string/ivSeparator1"
         android:rotation="90"
         android:scaleX="0.7"
         android:scaleY="0.5"
         app:layout_constraintBottom_toBottomOf="@+id/ivMore"
         app:layout_constraintEnd_toStartOf="@+id/ivSort"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toEndOf="@+id/ivSearch"
         app:layout_constraintTop_toTopOf="@+id/ivMore"
         app:layout_constraintVertical_bias="0.0"
         app:srcCompat="@drawable/ic_baseline_horizontal_rule_24" />
 
     <ImageView
         android:id="@+id/ivSeparator2"
-        android:contentDescription="@string/ivSeparator2"
         android:layout_width="wrap_content"
         android:layout_height="0dp"
         android:clickable="false"
+        android:contentDescription="@string/ivSeparator2"
         android:rotation="90"
         android:scaleX="0.7"
         android:scaleY="0.5"
         app:layout_constraintBottom_toBottomOf="@+id/ivMore"
         app:layout_constraintEnd_toStartOf="@+id/ivFilterBooks"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toEndOf="@+id/ivSort"
         app:layout_constraintTop_toTopOf="@+id/ivMore"
         app:layout_constraintVertical_bias="0.0"
         app:srcCompat="@drawable/ic_baseline_horizontal_rule_24" />
 
     <ImageView
         android:id="@+id/ivSeparator3"
-        android:contentDescription="@string/ivSeparator3"
         android:layout_width="wrap_content"
         android:layout_height="0dp"
         android:clickable="false"
+        android:contentDescription="@string/ivSeparator3"
         android:rotation="90"
         android:scaleX="0.7"
         android:scaleY="0.5"
         app:layout_constraintBottom_toBottomOf="@+id/ivMore"
         app:layout_constraintEnd_toStartOf="@+id/ivMore"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toEndOf="@+id/ivFilterBooks"
         app:layout_constraintTop_toTopOf="@+id/ivMore"
         app:layout_constraintVertical_bias="0.0"
         app:srcCompat="@drawable/ic_baseline_horizontal_rule_24" />

@@ -4,7 +4,9 @@ import android.content.Context
 import android.os.Bundle
 import android.view.KeyEvent
 import android.view.View
+import android.view.animation.Animation
 import android.view.animation.AnimationUtils
+import android.view.animation.ScaleAnimation
 import android.view.inputmethod.InputMethodManager
 import android.widget.EditText
 import androidx.core.widget.addTextChangedListener
@@ -25,6 +27,7 @@ import software.mdev.bookstracker.ui.bookslist.ListActivity
 import software.mdev.bookstracker.ui.bookslist.viewmodel.BooksViewModel
 import software.mdev.bookstracker.ui.bookslist.viewmodel.BooksViewModelProviderFactory
 import kotlinx.android.synthetic.main.fragment_to_read.*
+import kotlinx.coroutines.MainScope
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import me.everything.android.ui.overscroll.OverScrollDecoratorHelper
@@ -53,7 +56,7 @@ class ToReadFragment : Fragment(R.layout.fragment_to_read) {
         val sharedPref = (activity as ListActivity).getSharedPreferences(sharedPreferencesName, Context.MODE_PRIVATE)
         val editor = sharedPref.edit()
 
-        etSearch.visibility = View.GONE
+        etSearch.visibility = View.INVISIBLE
         ivClearSearch.visibility = View.GONE
         tvLooksEmpty.visibility = View.GONE
         btnAddManual.visibility = View.GONE
@@ -211,19 +214,21 @@ class ToReadFragment : Fragment(R.layout.fragment_to_read) {
                         }
                     }
                 }
-                View.GONE -> {
+                else -> {
+                    var anim = ScaleAnimation(0.0f, 1.0f, 1.0f, 1.0f, Animation.RELATIVE_TO_SELF,0f, Animation.RELATIVE_TO_SELF, 0f)
+                    anim.duration = 250L
+                    etSearch.startAnimation(anim)
+
                     etSearch.visibility = View.VISIBLE
-                    ivClearSearch.visibility = View.VISIBLE
-                    ivClearSearch.isClickable = true
+
+                    MainScope().launch {
+                        delay(200L)
+                        ivClearSearch.visibility = View.VISIBLE
+                        ivClearSearch.isClickable = true
+                    }
+
                     etSearch.requestFocus()
-                    showKeyboard(etSearch, 50)
-                }
-                View.INVISIBLE -> {
-                    etSearch.visibility = View.VISIBLE
-                    ivClearSearch.visibility = View.VISIBLE
-                    ivClearSearch.isClickable = true
-                    etSearch.requestFocus()
-                    showKeyboard(etSearch, 50)
+                    showKeyboard(etSearch, 150)
                 }
             }
         }
@@ -264,8 +269,8 @@ class ToReadFragment : Fragment(R.layout.fragment_to_read) {
                     })
                 }
                 true -> {
-                    etSearch.visibility = View.GONE
-                    ivClearSearch.visibility = View.GONE
+                    etSearch.visibility = View.INVISIBLE
+                    ivClearSearch.visibility = View.INVISIBLE
                     ivClearSearch.isClickable = false
                     it.hideKeyboard()
                     this.getBooks(bookAdapter)
