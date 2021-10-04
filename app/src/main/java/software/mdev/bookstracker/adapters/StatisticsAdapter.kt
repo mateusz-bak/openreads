@@ -169,7 +169,7 @@ class StatisticsAdapter(
                 tvLongestBook.text = curYear.yearLongestBook
             }
 
-            if (curYear.yearShortestBook == "null"){
+            if (curYear.yearShortestBook == "null" || curYear.yearShortestBookVal == 0){
                 tvShortestBook.text = holder.itemView.resources.getString(R.string.need_more_data)
                 tvShortestBookValue.visibility = View.GONE
             } else {
