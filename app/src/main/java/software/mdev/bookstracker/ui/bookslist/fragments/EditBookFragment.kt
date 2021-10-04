@@ -141,7 +141,6 @@ class EditBookFragment : Fragment(R.layout.fragment_edit_book) {
                 ivEditorBookStatusToRead.setColorFilter(ContextCompat.getColor(view.context, R.color.grey), android.graphics.PorterDuff.Mode.SRC_IN)
                 whatIsClicked = Constants.BOOK_STATUS_READ
                 rbEditedRating.visibility = View.VISIBLE
-                etEditedPagesNumber.visibility = View.VISIBLE
                 btnEditStartDate.visibility = View.VISIBLE
                 btnEditFinishDate.visibility = View.VISIBLE
 
@@ -162,7 +161,6 @@ class EditBookFragment : Fragment(R.layout.fragment_edit_book) {
                 ivEditorBookStatusToRead.setColorFilter(ContextCompat.getColor(view.context, R.color.grey), android.graphics.PorterDuff.Mode.SRC_IN)
                 whatIsClicked = Constants.BOOK_STATUS_IN_PROGRESS
                 rbEditedRating.visibility = View.GONE
-                etEditedPagesNumber.visibility = View.GONE
             }
             Constants.BOOK_STATUS_TO_READ -> {
                 ivEditorBookStatusRead.setColorFilter(ContextCompat.getColor(view.context, R.color.grey), android.graphics.PorterDuff.Mode.SRC_IN)
@@ -170,7 +168,6 @@ class EditBookFragment : Fragment(R.layout.fragment_edit_book) {
                 ivEditorBookStatusToRead.setColorFilter(accentColor, android.graphics.PorterDuff.Mode.SRC_IN)
                 whatIsClicked = Constants.BOOK_STATUS_TO_READ
                 rbEditedRating.visibility = View.GONE
-                etEditedPagesNumber.visibility = View.GONE
             }
         }
 
@@ -188,7 +185,6 @@ class EditBookFragment : Fragment(R.layout.fragment_edit_book) {
             ivEditorBookStatusToRead.setColorFilter(ContextCompat.getColor(view.context, R.color.grey), android.graphics.PorterDuff.Mode.SRC_IN)
             whatIsClicked = Constants.BOOK_STATUS_READ
             rbEditedRating.visibility = View.VISIBLE
-            etEditedPagesNumber.visibility = View.VISIBLE
             btnEditStartDate.visibility = View.VISIBLE
             btnEditFinishDate.visibility = View.VISIBLE
 
@@ -210,7 +206,6 @@ class EditBookFragment : Fragment(R.layout.fragment_edit_book) {
             ivEditorBookStatusToRead.setColorFilter(ContextCompat.getColor(view.context, R.color.grey), android.graphics.PorterDuff.Mode.SRC_IN)
             whatIsClicked = Constants.BOOK_STATUS_IN_PROGRESS
             rbEditedRating.visibility = View.GONE
-            etEditedPagesNumber.visibility = View.GONE
             btnEditStartDate.visibility = View.GONE
             btnEditFinishDate.visibility = View.GONE
 
@@ -234,7 +229,6 @@ class EditBookFragment : Fragment(R.layout.fragment_edit_book) {
             ivEditorBookStatusToRead.setColorFilter(accentColor, android.graphics.PorterDuff.Mode.SRC_IN)
             whatIsClicked = Constants.BOOK_STATUS_TO_READ
             rbEditedRating.visibility = View.GONE
-            etEditedPagesNumber.visibility = View.GONE
             btnEditStartDate.visibility = View.GONE
             btnEditFinishDate.visibility = View.GONE
 
