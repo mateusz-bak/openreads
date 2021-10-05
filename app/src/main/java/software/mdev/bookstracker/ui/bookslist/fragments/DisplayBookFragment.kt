@@ -19,7 +19,7 @@ import software.mdev.bookstracker.ui.bookslist.viewmodel.BooksViewModel
 import java.text.SimpleDateFormat
 import java.util.*
 import android.graphics.*
-import android.view.animation.AccelerateInterpolator
+import android.view.animation.AnticipateOvershootInterpolator
 import android.view.inputmethod.InputMethodManager
 import androidx.appcompat.app.AlertDialog
 import androidx.constraintlayout.widget.ConstraintLayout
@@ -215,10 +215,17 @@ class DisplayBookFragment : Fragment(R.layout.fragment_display_book) {
     }
 
     private fun showDetails() {
+        blockDetails()
         ivDetails2.visibility = View.VISIBLE
 
-        cvBookDisplay2.animate().translationY(0F).setInterpolator(AccelerateInterpolator(0.2F)).setDuration(500L).start()
-        cvBookDisplay1.animate().translationY(0F).setInterpolator(AccelerateInterpolator(0.8F)).setDuration(500L).start()
+        cvBookDisplay2.animate().translationY(0F).setInterpolator(AnticipateOvershootInterpolator(1.2F)).setDuration(500L).start()
+        cvBookDisplay1.animate().translationY(0F).setInterpolator(AnticipateOvershootInterpolator(1.2F)).setDuration(500L).start()
+
+        cvBookDisplay2.scaleX = 0.2F
+        cvBookDisplay2.scaleY = 0.2F
+        cvBookDisplay2.animate().scaleX(1F).setInterpolator(AnticipateOvershootInterpolator(1.2F)).setDuration(600L).start()
+        cvBookDisplay2.animate().scaleY(1F).setInterpolator(AnticipateOvershootInterpolator(1.2F)).setDuration(600L).start()
+
 
         ivDetails.animate().rotation(180F).setDuration(500L).start()
         ivDetails.animate().alpha(0F).setDuration(250L).start()
@@ -236,10 +243,14 @@ class DisplayBookFragment : Fragment(R.layout.fragment_display_book) {
     }
 
     private fun hideDetails() {
+        blockDetails()
         ivDetails.visibility = View.VISIBLE
 
-        cvBookDisplay2.animate().translationY(-1500F).setInterpolator(AccelerateInterpolator(1.2F)).setDuration(400L).start()
-        cvBookDisplay1.animate().translationY(500F).setDuration(400L).start()
+        cvBookDisplay2.animate().translationY(-1500F).setInterpolator(AnticipateOvershootInterpolator(1.2F)).setDuration(500L).start()
+        cvBookDisplay1.animate().translationY(500F).setDuration(500L).start()
+
+        cvBookDisplay2.animate().scaleX(0.2F).setInterpolator(AnticipateOvershootInterpolator(1.2F)).setDuration(400L).start()
+        cvBookDisplay2.animate().scaleY(0.2F).setInterpolator(AnticipateOvershootInterpolator(1.2F)).setDuration(400L).start()
 
         ivDetails.animate().rotation(0F).setDuration(500L).start()
         ivDetails.animate().alpha(1F).setDuration(500L).start()
@@ -255,6 +266,20 @@ class DisplayBookFragment : Fragment(R.layout.fragment_display_book) {
         }
 
         hideEditAndDeleteViews()
+    }
+
+    private fun blockDetails() {
+        ivDetails.isClickable = false
+        ivDetails2.isClickable = false
+        ivBookCover.isClickable = false
+
+        MainScope().launch {
+            delay(300)
+
+            ivDetails.isClickable = true
+            ivDetails2.isClickable = true
+            ivBookCover.isClickable = true
+        }
     }
 
     private fun showEditAndDeleteViews(){
