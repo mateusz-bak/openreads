@@ -3,6 +3,7 @@ package software.mdev.bookstracker.adapters
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.WindowManager
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.AsyncListDiffer
@@ -12,10 +13,8 @@ import com.github.mikephil.charting.components.XAxis
 import com.github.mikephil.charting.data.BarData
 import com.github.mikephil.charting.data.BarDataSet
 import com.github.mikephil.charting.data.BarEntry
-import com.github.mikephil.charting.data.Entry
 import com.github.mikephil.charting.formatter.DefaultValueFormatter
 import com.github.mikephil.charting.formatter.IndexAxisValueFormatter
-import com.github.mikephil.charting.formatter.ValueFormatter
 import com.github.mikephil.charting.utils.ColorTemplate
 import kotlinx.android.synthetic.main.item_statistics.view.*
 import kotlinx.coroutines.MainScope
@@ -39,7 +38,6 @@ import java.math.RoundingMode
 import java.text.DecimalFormat
 import java.util.*
 import java.util.concurrent.TimeUnit
-import com.github.mikephil.charting.utils.ViewPortHandler
 
 
 class StatisticsAdapter(
@@ -496,14 +494,20 @@ class StatisticsAdapter(
 
     private fun callChallengeDialog(foundYear: Year?, it: View, challengeBooksRead: String) {
         if (foundYear != null) {
-            ChallengeDialog(it.context,
+            val challengeDialog = ChallengeDialog(it.context,
                 foundYear,
                 object : ChallengeDialogListener {
                     override fun onSaveButtonClicked(year: Year) {
                         viewModel.upsertYear(year)
                     }
                 }
-            ).show()
+            )
+            challengeDialog.show()
+
+            val width = (it.getResources().getDisplayMetrics().widthPixels * 0.80).toInt()
+
+            challengeDialog.getWindow()?.setLayout(width, WindowManager.LayoutParams.WRAP_CONTENT)
+
         } else {
             ChallengeDialog(it.context,
                 Year(
