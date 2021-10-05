@@ -4,9 +4,7 @@ import android.content.Context
 import android.os.Bundle
 import android.view.KeyEvent
 import android.view.View
-import android.view.animation.Animation
-import android.view.animation.AnimationUtils
-import android.view.animation.ScaleAnimation
+import android.view.animation.*
 import android.view.inputmethod.InputMethodManager
 import android.widget.EditText
 import androidx.core.widget.addTextChangedListener
@@ -317,31 +315,67 @@ class ReadFragment : Fragment(R.layout.fragment_read) {
     }
 
     private fun hideAddOptionButtons() {
-        btnAddManual.visibility = View.GONE
-        btnAddSearch.visibility = View.GONE
-        btnAddScan.visibility = View.GONE
-        btnAddManual.isClickable = false
-        btnAddSearch.isClickable = false
-        btnAddScan.isClickable = false
+        btnAddManual.animate().translationY(500F).setDuration(500L).setInterpolator(AnticipateOvershootInterpolator()).start()
+        btnAddSearch.animate().translationY(500F).setDuration(500L).setInterpolator(AnticipateOvershootInterpolator()).start()
+        btnAddScan.animate().translationY(500F).setDuration(500L).setInterpolator(AnticipateOvershootInterpolator()).start()
 
-        fabAddBook.animate().rotation( 0F).setDuration(350L).start()
-        btnAddSearch.startAnimation(AnimationUtils.loadAnimation(context,R.anim.slide_out_down))
-        btnAddScan.startAnimation(AnimationUtils.loadAnimation(context,R.anim.slide_out_down))
-        btnAddManual.startAnimation(AnimationUtils.loadAnimation(context,R.anim.slide_out_down))
+        fabAddBook.animate().rotation( 0F).setDuration(500L).start()
+        fabAddBook.animate().scaleX(0.8F).setDuration(250L).start()
+        fabAddBook.animate().scaleY(0.8F).setDuration(250L).start()
+
+        MainScope().launch {
+            delay(250)
+
+            fabAddBook.animate().scaleX(1F).setDuration(250L).start()
+            fabAddBook.animate().scaleY(1F).setDuration(250L).start()
+
+            delay(250)
+            btnAddManual.visibility = View.GONE
+            btnAddSearch.visibility = View.GONE
+            btnAddScan.visibility = View.GONE
+            btnAddManual.isClickable = false
+            btnAddSearch.isClickable = false
+            btnAddScan.isClickable = false
+        }
     }
 
     private fun showAddOptionButtons() {
+        btnAddManual.translationY = 500F
+        btnAddSearch.translationY = 500F
+        btnAddScan.translationY = 500F
+
         btnAddManual.visibility = View.VISIBLE
         btnAddSearch.visibility = View.VISIBLE
         btnAddScan.visibility = View.VISIBLE
+
         btnAddManual.isClickable = true
         btnAddSearch.isClickable = true
         btnAddScan.isClickable = true
 
-        fabAddBook.animate().rotation(180F).setDuration(350L).start()
-        btnAddSearch.startAnimation(AnimationUtils.loadAnimation(context,R.anim.slide_in_up))
-        btnAddScan.startAnimation(AnimationUtils.loadAnimation(context,R.anim.slide_in_up))
-        btnAddManual.startAnimation(AnimationUtils.loadAnimation(context,R.anim.slide_in_up))
+        fabAddBook.animate().rotation(180F).setDuration(500L).start()
+        fabAddBook.animate().scaleX(0.8F).setDuration(250L).start()
+        fabAddBook.animate().scaleY(0.8F).setDuration(250L).start()
+
+        btnAddManual.animate().translationY(0F).setDuration(500L).setInterpolator(AnticipateOvershootInterpolator()).start()
+        btnAddSearch.animate().translationY(0F).setDuration(500L).setInterpolator(AnticipateOvershootInterpolator()).start()
+        btnAddScan.animate().translationY(0F).setDuration(500L).setInterpolator(AnticipateOvershootInterpolator()).start()
+
+        MainScope().launch {
+            delay(250)
+
+            fabAddBook.animate().scaleX(1F).setDuration(250L).start()
+            fabAddBook.animate().scaleY(1F).setDuration(250L).start()
+
+            delay(250)
+
+            btnAddManual.visibility = View.VISIBLE
+            btnAddSearch.visibility = View.VISIBLE
+            btnAddScan.visibility = View.VISIBLE
+
+            btnAddManual.isClickable = true
+            btnAddSearch.isClickable = true
+            btnAddScan.isClickable = true
+        }
     }
 
     fun View.hideKeyboard() {
