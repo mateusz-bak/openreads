@@ -1,0 +1,476 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/frDisplayBook"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:fillViewport="true">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="24dp">
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/tilBookTitle"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/insert_book_title"
+                app:boxBackgroundColor="@android:color/transparent"
+                app:boxCornerRadiusBottomEnd="@dimen/text_input_layout_radius"
+                app:boxCornerRadiusBottomStart="@dimen/text_input_layout_radius"
+                app:boxCornerRadiusTopEnd="@dimen/text_input_layout_radius"
+                app:boxCornerRadiusTopStart="@dimen/text_input_layout_radius"
+                app:boxStrokeErrorColor="@color/red_800"
+                app:errorContentDescription="@string/insert_book_title"
+                app:errorEnabled="true"
+                app:errorIconDrawable="@drawable/ic_book_black_24dp"
+                app:errorIconTint="?colorAccent"
+                app:errorTextColor="?colorAccent"
+                app:hintAnimationEnabled="true"
+                app:hintTextColor="?colorAccent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:startIconDrawable="@drawable/ic_book_black_24dp"
+                app:startIconTint="?colorPrimary">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/tietBookTitle"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:imeOptions="actionNext"
+                    android:inputType="textCapSentences"
+                    android:maxLength="100"
+                    android:padding="0dp"
+                    android:textSize="16sp" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/tilBookAuthor"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/insert_book_author"
+                app:boxBackgroundColor="@android:color/transparent"
+                app:boxCornerRadiusBottomEnd="@dimen/text_input_layout_radius"
+                app:boxCornerRadiusBottomStart="@dimen/text_input_layout_radius"
+                app:boxCornerRadiusTopEnd="@dimen/text_input_layout_radius"
+                app:boxCornerRadiusTopStart="@dimen/text_input_layout_radius"
+                app:boxStrokeErrorColor="@color/red_800"
+                app:errorContentDescription="@string/insert_book_author"
+                app:errorEnabled="true"
+                app:errorIconDrawable="@drawable/ic_baseline_person_24"
+                app:errorIconTint="?colorAccent"
+                app:errorTextColor="?colorAccent"
+                app:hintAnimationEnabled="true"
+                app:hintTextColor="?colorAccent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tilBookTitle"
+                app:startIconDrawable="@drawable/ic_baseline_person_24"
+                app:startIconTint="?colorPrimary">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/tietBookAuthor"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:imeOptions="actionNext"
+                    android:inputType="textCapWords"
+                    android:maxLength="100"
+                    android:padding="0dp"
+                    android:textSize="16sp" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/tilBookPages"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="12dp"
+                android:layout_marginEnd="8dp"
+                android:hint="@string/insert_book_pages"
+                app:boxBackgroundColor="@android:color/transparent"
+                app:boxCornerRadiusBottomEnd="@dimen/text_input_layout_radius"
+                app:boxCornerRadiusBottomStart="@dimen/text_input_layout_radius"
+                app:boxCornerRadiusTopEnd="@dimen/text_input_layout_radius"
+                app:boxCornerRadiusTopStart="@dimen/text_input_layout_radius"
+                app:boxStrokeErrorColor="@color/red_800"
+                app:errorContentDescription="@string/insert_book_pages"
+                app:errorEnabled="true"
+                app:errorIconDrawable="@drawable/ic_baseline_file_copy_24"
+                app:errorIconTint="?colorAccent"
+                app:errorTextColor="?colorAccent"
+                app:hintAnimationEnabled="true"
+                app:hintTextColor="?colorAccent"
+                app:layout_constraintEnd_toStartOf="@+id/tilBookPublishYear"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/rlBookStatus"
+                app:startIconDrawable="@drawable/ic_baseline_file_copy_24"
+                app:startIconTint="?colorPrimary">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/tietBookPages"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:imeOptions="actionNext"
+                    android:inputType="number"
+                    android:maxLength="6"
+                    android:padding="0dp"
+                    android:textSize="12sp" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/tilBookPublishYear"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:hint="@string/insert_book_publish_year"
+                app:boxBackgroundColor="@android:color/transparent"
+                app:boxCornerRadiusBottomEnd="@dimen/text_input_layout_radius"
+                app:boxCornerRadiusBottomStart="@dimen/text_input_layout_radius"
+                app:boxCornerRadiusTopEnd="@dimen/text_input_layout_radius"
+                app:boxCornerRadiusTopStart="@dimen/text_input_layout_radius"
+                app:boxStrokeErrorColor="@color/red_800"
+                app:errorContentDescription="@string/insert_book_publish_year"
+                app:errorEnabled="true"
+                app:errorIconDrawable="@drawable/ic_baseline_public_24"
+                app:errorIconTint="?colorAccent"
+                app:errorTextColor="?colorAccent"
+                app:hintAnimationEnabled="true"
+                app:hintTextColor="?colorAccent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toEndOf="@+id/tilBookPages"
+                app:layout_constraintTop_toTopOf="@+id/tilBookPages"
+                app:startIconDrawable="@drawable/ic_baseline_public_24"
+                app:startIconTint="?colorPrimary">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/tietBookPublishYear"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:imeOptions="actionNext"
+                    android:inputType="number"
+                    android:maxLength="4"
+                    android:padding="0dp"
+                    android:textSize="12sp" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/tilBookISBN"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="8dp"
+                android:hint="@string/insert_book_isbn"
+                app:boxBackgroundColor="@android:color/transparent"
+                app:boxCornerRadiusBottomEnd="@dimen/text_input_layout_radius"
+                app:boxCornerRadiusBottomStart="@dimen/text_input_layout_radius"
+                app:boxCornerRadiusTopEnd="@dimen/text_input_layout_radius"
+                app:boxCornerRadiusTopStart="@dimen/text_input_layout_radius"
+                app:boxStrokeErrorColor="@color/red_800"
+                app:errorContentDescription="@string/insert_book_isbn"
+                app:errorEnabled="true"
+                app:errorIconDrawable="@drawable/ic_baseline_pin_24"
+                app:errorIconTint="?colorAccent"
+                app:errorTextColor="?colorAccent"
+                app:hintAnimationEnabled="true"
+                app:hintTextColor="?colorAccent"
+                app:layout_constraintEnd_toEndOf="@+id/tilBookPages"
+                app:layout_constraintEnd_toStartOf="@+id/tilBookOLID"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tilBookPages"
+                app:startIconDrawable="@drawable/ic_baseline_pin_24"
+                app:startIconTint="?colorPrimary">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/tietBookISBN"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:imeOptions="actionNext"
+                    android:inputType="number"
+                    android:maxLength="13"
+                    android:padding="0dp"
+                    android:textSize="12sp" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/tilBookOLID"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:hint="@string/insert_book_olid"
+                app:boxBackgroundColor="@android:color/transparent"
+                app:boxCornerRadiusBottomEnd="@dimen/text_input_layout_radius"
+                app:boxCornerRadiusBottomStart="@dimen/text_input_layout_radius"
+                app:boxCornerRadiusTopEnd="@dimen/text_input_layout_radius"
+                app:boxCornerRadiusTopStart="@dimen/text_input_layout_radius"
+                app:boxStrokeErrorColor="@color/red_800"
+                app:errorContentDescription="@string/insert_book_olid"
+                app:errorEnabled="true"
+                app:errorIconDrawable="@drawable/ic_baseline_pin_24"
+                app:errorIconTint="?colorAccent"
+                app:errorTextColor="?colorAccent"
+                app:hintAnimationEnabled="true"
+                app:hintTextColor="?colorAccent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toEndOf="@+id/tilBookISBN"
+                app:layout_constraintTop_toBottomOf="@+id/tilBookPublishYear"
+                app:startIconDrawable="@drawable/ic_baseline_pin_24"
+                app:startIconTint="?colorPrimary">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/tietBookOLID"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:imeOptions="actionNext"
+                    android:inputType="number"
+                    android:maxLength="15"
+                    android:padding="0dp"
+                    android:textSize="12sp" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <TextView
+                android:id="@+id/tvBookStatus"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:gravity="start"
+                android:text="@string/insert_book_status"
+                android:textColor="@color/grey_777"
+                app:layout_constraintEnd_toEndOf="@+id/rlBookStatus"
+                app:layout_constraintStart_toStartOf="@+id/tilBookAuthor"
+                app:layout_constraintTop_toBottomOf="@+id/tilBookAuthor" />
+
+
+            <RelativeLayout
+                android:id="@+id/rlBookStatus"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:background="@drawable/text_field_background"
+                android:orientation="horizontal"
+                app:layout_constraintEnd_toEndOf="@+id/tilBookPages"
+                app:layout_constraintStart_toStartOf="@+id/tilBookAuthor"
+                app:layout_constraintTop_toBottomOf="@+id/tvBookStatus">
+
+                <Spinner
+                    android:id="@+id/spBookStatus"
+                    android:layout_width="match_parent"
+                    android:layout_height="46dp"
+                    android:layout_centerVertical="true"
+                    android:layout_gravity="center"
+                    android:layout_marginLeft="5dp"
+                    android:background="@android:color/transparent"
+                    android:gravity="center"
+                    android:spinnerMode="dropdown" />
+
+            </RelativeLayout>
+
+            <TextView
+                android:id="@+id/tvBookRating"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:gravity="start"
+                android:text="@string/insert_book_rating"
+                android:textColor="@color/grey_777"
+                app:layout_constraintEnd_toEndOf="@+id/rlBookRating"
+                app:layout_constraintStart_toStartOf="@+id/rlBookRating"
+                app:layout_constraintTop_toBottomOf="@+id/tilBookAuthor" />
+
+            <RelativeLayout
+                android:id="@+id/rlBookRating"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:background="@drawable/text_field_background"
+                android:orientation="horizontal"
+                android:padding="8dp"
+                app:layout_constraintBottom_toBottomOf="@+id/rlBookStatus"
+                app:layout_constraintEnd_toEndOf="@+id/tilBookPublishYear"
+                app:layout_constraintStart_toStartOf="@+id/tilBookPublishYear"
+                app:layout_constraintTop_toTopOf="@+id/rlBookStatus">
+
+                <me.zhanghai.android.materialratingbar.MaterialRatingBar
+                    style="@style/Widget.MaterialRatingBar.RatingBar"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent" />
+
+            </RelativeLayout>
+
+            <TextView
+                android:id="@+id/tvBookCover"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:gravity="start"
+                android:text="@string/insert_book_cover"
+                android:textColor="@color/grey_777"
+                app:layout_constraintEnd_toEndOf="@+id/rlBookStatus"
+                app:layout_constraintStart_toStartOf="@+id/tilBookAuthor"
+                app:layout_constraintTop_toBottomOf="@+id/tilBookISBN" />
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/rlBookCover"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:background="@drawable/text_field_background"
+                android:orientation="horizontal"
+                android:paddingBottom="4dp"
+                app:layout_constraintEnd_toEndOf="@+id/tilBookPages"
+                app:layout_constraintStart_toStartOf="@+id/tilBookAuthor"
+                app:layout_constraintTop_toBottomOf="@+id/tvBookCover">
+
+                <ImageView
+                    android:id="@+id/ivBookCover"
+                    android:layout_width="match_parent"
+                    android:layout_height="180dp"
+                    android:scaleType="fitCenter"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.5"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:srcCompat="@drawable/ic_book_black_48dp"
+                    app:tint="?colorPrimary" />
+
+                <ImageButton
+                    android:id="@+id/btnCoverRemove"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="4dp"
+                    android:backgroundTint="@color/grey_777"
+                    android:scaleX="0.8"
+                    android:scaleY="0.8"
+                    android:src="@drawable/ic_baseline_delete_forever_24"
+                    app:circularflow_defaultRadius="6dp"
+                    app:layout_constraintEnd_toStartOf="@+id/btnCoverSave"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/ivBookCover"
+                    app:tint="?colorOnPrimary" />
+
+
+                <ImageButton
+                    android:id="@+id/btnCoverSave"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="4dp"
+                    android:backgroundTint="?colorPrimary"
+                    android:scaleX="0.8"
+                    android:scaleY="0.8"
+                    android:src="@drawable/ic_baseline_upload_24"
+                    app:circularflow_defaultRadius="6dp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toEndOf="@+id/btnCoverRemove"
+                    app:layout_constraintTop_toBottomOf="@+id/ivBookCover"
+                    app:tint="?colorOnPrimary" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/tilBookNotes"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_marginTop="-6dp"
+                android:hint="@string/insert_book_notes"
+                app:boxBackgroundColor="@android:color/transparent"
+                app:boxCornerRadiusBottomEnd="@dimen/text_input_layout_radius"
+                app:boxCornerRadiusBottomStart="@dimen/text_input_layout_radius"
+                app:boxCornerRadiusTopEnd="@dimen/text_input_layout_radius"
+                app:boxCornerRadiusTopStart="@dimen/text_input_layout_radius"
+                app:boxStrokeErrorColor="@color/red_800"
+                app:errorContentDescription="@string/insert_book_notes"
+                app:errorEnabled="true"
+                app:errorIconDrawable="@drawable/ic_baseline_pin_24"
+                app:errorIconTint="?colorAccent"
+                app:errorTextColor="?colorAccent"
+                app:hintAnimationEnabled="true"
+                app:hintTextColor="?colorAccent"
+                app:layout_constraintBottom_toBottomOf="@+id/rlBookCover"
+                app:layout_constraintEnd_toEndOf="@+id/tilBookOLID"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toStartOf="@+id/tilBookOLID"
+                app:layout_constraintTop_toTopOf="@+id/rlBookCover"
+                app:startIconTint="?colorPrimary">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/tietBookNotes"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:gravity="top"
+                    android:imeOptions="actionNext"
+                    android:inputType="textMultiLine|textCapSentences"
+                    android:maxLength="200"
+                    android:padding="16dp"
+                    android:scrollbars="vertical"
+                    android:textSize="16sp"
+                    android:verticalScrollbarPosition="right" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <RelativeLayout
+                android:id="@+id/rlBookCancel"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_marginTop="5dp"
+                android:layout_marginEnd="8dp"
+                android:layout_marginBottom="5dp"
+                android:background="@drawable/button_outline_background"
+                android:orientation="horizontal"
+                app:layout_constraintBottom_toBottomOf="@+id/btnBookSave"
+                app:layout_constraintEnd_toStartOf="@+id/btnBookSave"
+                app:layout_constraintHorizontal_weight="2"
+                app:layout_constraintStart_toStartOf="@+id/rlBookCover"
+                app:layout_constraintTop_toTopOf="@+id/btnBookSave">
+
+                <Button
+                    android:id="@+id/btnBookCancel"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="-2dp"
+                    android:background="@android:color/transparent"
+                    android:gravity="center"
+                    android:text="@string/btnAdderCancelFinishDate"
+                    android:textColor="@color/grey_777" />
+
+            </RelativeLayout>
+
+
+            <Button
+                android:id="@+id/btnBookSave"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="72dp"
+                android:backgroundTint="?colorPrimary"
+                android:text="@string/btnAdderSaveBook"
+                app:layout_constraintEnd_toEndOf="@+id/tilBookNotes"
+                app:layout_constraintHorizontal_weight="3.5"
+                app:layout_constraintStart_toEndOf="@+id/rlBookCancel"
+                app:layout_constraintTop_toBottomOf="@+id/tilBookNotes" />
+
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </ScrollView>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

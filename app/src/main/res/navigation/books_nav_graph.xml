@@ -104,10 +104,10 @@
         <action
             android:id="@+id/action_displayBookFragment_to_editBookFragment"
             app:destination="@id/editBookFragment"
-            app:enterAnim="@anim/fade_in"
-            app:exitAnim="@anim/fade_out"
-            app:popEnterAnim="@anim/fade_in"
-            app:popExitAnim="@anim/fade_out"/>
+            app:enterAnim="@anim/slide_in_up"
+            app:exitAnim="@anim/slide_out_up"
+            app:popEnterAnim="@anim/slide_in_down"
+            app:popExitAnim="@anim/slide_out_down"/>
         <argument
             android:name="book"
             app:argType="software.mdev.bookstracker.data.db.entities.Book" />

@@ -305,4 +305,14 @@
     <string name="stats_pages_by_months">Read pages by month</string>
     <string name="export_local_summary">Save your books to a local file so you always have the backup handy!</string>
     <string name="export_local_title">Create local backup</string>
+    <string name="insert_book_title">Book\'s title</string>
+    <string name="insert_book_author">Book\'s author</string>
+    <string name="insert_book_pages">Number of pages</string>
+    <string name="insert_book_publish_year">Publish year</string>
+    <string name="insert_book_isbn" translatable="false">ISBN</string>
+    <string name="insert_book_olid" translatable="false">Open Library ID</string>
+    <string name="insert_book_status">Book\'s status</string>
+    <string name="insert_book_rating">Your rating</string>
+    <string name="insert_book_cover">Book\'s cover</string>
+    <string name="insert_book_notes">Notes</string>
 </resources>

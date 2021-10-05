@@ -134,4 +134,7 @@ dependencies {
 
     // https://stackoverflow.com/questions/44986626/android-room-database-how-to-handle-arraylist-in-an-entity
     implementation "org.jetbrains.kotlinx:kotlinx-serialization-json:1.0.1"
+
+    // https://github.com/zhanghai/MaterialRatingBar
+    implementation 'me.zhanghai.android.materialratingbar:library:1.4.0'
 }

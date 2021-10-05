@@ -2,9 +2,9 @@
 <set xmlns:android="http://schemas.android.com/apk/res/android">
 
     <translate
-        android:duration="500"
-        android:fromYDelta="0%"
+        android:duration="250"
+        android:fromYDelta="100%"
         android:fromXDelta="0%"
-        android:toYDelta="100%"
+        android:toYDelta="0%"
         android:toXDelta="0%" />
 </set>

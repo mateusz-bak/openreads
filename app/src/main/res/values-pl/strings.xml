@@ -264,4 +264,12 @@
     <string name="stats_pages_by_months">Przeczytane strony według miesiąca</string>
     <string name="export_local_summary">Zapisz książki w pamięci telefonu, żeby mieć je zawsze pod ręką!</string>
     <string name="export_local_title">Stwórz lokalną kopię książek</string>
+    <string name="insert_book_title">Tytuł książki</string>
+    <string name="insert_book_author">Autor książki</string>
+    <string name="insert_book_pages">Liczba stron</string>
+    <string name="insert_book_publish_year">Rok publikacji</string>
+    <string name="insert_book_status">Status książki</string>
+    <string name="insert_book_rating">Twoja ocena</string>
+    <string name="insert_book_cover">Okładka książki</string>
+    <string name="insert_book_notes">Notatki</string>
 </resources>
