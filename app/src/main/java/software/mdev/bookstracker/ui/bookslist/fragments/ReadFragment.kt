@@ -109,7 +109,7 @@ class ReadFragment : Fragment(R.layout.fragment_read) {
         })
 
         btnAddManual.setOnClickListener{
-            hideAddOptionButtons()
+            hideAddOptionButtons(false)
 
             AddBookDialog(view.context,
                 object: AddBookDialogListener {
@@ -141,14 +141,14 @@ class ReadFragment : Fragment(R.layout.fragment_read) {
         }
 
         btnAddSearch.setOnClickListener {
-            hideAddOptionButtons()
+            hideAddOptionButtons(false)
 
             findNavController().navigate(
                 R.id.action_readFragment_to_addBookSearchFragment)
         }
 
         btnAddScan.setOnClickListener {
-            hideAddOptionButtons()
+            hideAddOptionButtons(false)
 
             if (Functions().checkPermission(activity as ListActivity, android.Manifest.permission.CAMERA)) {
                 findNavController().navigate(R.id.action_readFragment_to_addBookScanFragment)
@@ -314,7 +314,7 @@ class ReadFragment : Fragment(R.layout.fragment_read) {
         }
     }
 
-    private fun hideAddOptionButtons() {
+    private fun hideAddOptionButtons(animateHiding: Boolean = true) {
         btnAddManual.animate().translationY(500F).setDuration(500L).setInterpolator(AnticipateOvershootInterpolator()).start()
         btnAddSearch.animate().translationY(500F).setDuration(500L).setInterpolator(AnticipateOvershootInterpolator()).start()
         btnAddScan.animate().translationY(500F).setDuration(500L).setInterpolator(AnticipateOvershootInterpolator()).start()
@@ -323,19 +323,21 @@ class ReadFragment : Fragment(R.layout.fragment_read) {
         fabAddBook.animate().scaleX(0.8F).setDuration(250L).start()
         fabAddBook.animate().scaleY(0.8F).setDuration(250L).start()
 
-        MainScope().launch {
-            delay(250)
+        if (animateHiding) {
+            MainScope().launch {
+                delay(250)
 
-            fabAddBook.animate().scaleX(1F).setDuration(250L).start()
-            fabAddBook.animate().scaleY(1F).setDuration(250L).start()
+                fabAddBook.animate().scaleX(1F).setDuration(250L).start()
+                fabAddBook.animate().scaleY(1F).setDuration(250L).start()
 
-            delay(250)
-            btnAddManual.visibility = View.GONE
-            btnAddSearch.visibility = View.GONE
-            btnAddScan.visibility = View.GONE
-            btnAddManual.isClickable = false
-            btnAddSearch.isClickable = false
-            btnAddScan.isClickable = false
+                delay(250)
+                btnAddManual.visibility = View.GONE
+                btnAddSearch.visibility = View.GONE
+                btnAddScan.visibility = View.GONE
+                btnAddManual.isClickable = false
+                btnAddSearch.isClickable = false
+                btnAddScan.isClickable = false
+            }
         }
     }
 
