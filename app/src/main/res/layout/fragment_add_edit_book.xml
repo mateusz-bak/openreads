@@ -14,20 +14,25 @@
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:padding="24dp">
+            android:paddingStart="24dp"
+            android:paddingTop="24dp"
+            android:paddingEnd="24dp"
+            android:paddingBottom="48dp">
 
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/tilBookTitle"
-                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="@string/insert_book_title"
-                app:boxBackgroundColor="@android:color/transparent"
+                app:boxBackgroundColor="@color/teal_bg"
                 app:boxCornerRadiusBottomEnd="@dimen/text_input_layout_radius"
                 app:boxCornerRadiusBottomStart="@dimen/text_input_layout_radius"
                 app:boxCornerRadiusTopEnd="@dimen/text_input_layout_radius"
                 app:boxCornerRadiusTopStart="@dimen/text_input_layout_radius"
                 app:boxStrokeErrorColor="@color/red_800"
+                app:boxStrokeWidth="0dp"
+                app:boxStrokeWidthFocused="0dp"
                 app:errorContentDescription="@string/insert_book_title"
                 app:errorEnabled="true"
                 app:errorIconDrawable="@drawable/ic_book_black_24dp"
@@ -49,23 +54,24 @@
                     android:imeOptions="actionNext"
                     android:inputType="textCapSentences"
                     android:maxLength="100"
-                    android:padding="0dp"
                     android:textSize="16sp" />
 
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/tilBookAuthor"
-                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="@string/insert_book_author"
-                app:boxBackgroundColor="@android:color/transparent"
+                app:boxBackgroundColor="@color/teal_bg"
                 app:boxCornerRadiusBottomEnd="@dimen/text_input_layout_radius"
                 app:boxCornerRadiusBottomStart="@dimen/text_input_layout_radius"
                 app:boxCornerRadiusTopEnd="@dimen/text_input_layout_radius"
                 app:boxCornerRadiusTopStart="@dimen/text_input_layout_radius"
                 app:boxStrokeErrorColor="@color/red_800"
+                app:boxStrokeWidth="0dp"
+                app:boxStrokeWidthFocused="0dp"
                 app:errorContentDescription="@string/insert_book_author"
                 app:errorEnabled="true"
                 app:errorIconDrawable="@drawable/ic_baseline_person_24"
@@ -87,7 +93,6 @@
                     android:imeOptions="actionNext"
                     android:inputType="textCapWords"
                     android:maxLength="100"
-                    android:padding="0dp"
                     android:textSize="16sp" />
 
             </com.google.android.material.textfield.TextInputLayout>
@@ -95,18 +100,20 @@
 
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/tilBookPages"
-                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="12dp"
+                android:layout_marginTop="20dp"
                 android:layout_marginEnd="8dp"
                 android:hint="@string/insert_book_pages"
-                app:boxBackgroundColor="@android:color/transparent"
+                app:boxBackgroundColor="@color/teal_bg"
                 app:boxCornerRadiusBottomEnd="@dimen/text_input_layout_radius"
                 app:boxCornerRadiusBottomStart="@dimen/text_input_layout_radius"
                 app:boxCornerRadiusTopEnd="@dimen/text_input_layout_radius"
                 app:boxCornerRadiusTopStart="@dimen/text_input_layout_radius"
                 app:boxStrokeErrorColor="@color/red_800"
+                app:boxStrokeWidth="0dp"
+                app:boxStrokeWidthFocused="0dp"
                 app:errorContentDescription="@string/insert_book_pages"
                 app:errorEnabled="true"
                 app:errorIconDrawable="@drawable/ic_baseline_file_copy_24"
@@ -117,7 +124,7 @@
                 app:layout_constraintEnd_toStartOf="@+id/tilBookPublishYear"
                 app:layout_constraintHorizontal_bias="0.5"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/rlBookStatus"
+                app:layout_constraintTop_toBottomOf="@+id/rlBookRating"
                 app:startIconDrawable="@drawable/ic_baseline_file_copy_24"
                 app:startIconTint="?colorPrimary">
 
@@ -128,24 +135,25 @@
                     android:imeOptions="actionNext"
                     android:inputType="number"
                     android:maxLength="6"
-                    android:padding="0dp"
                     android:textSize="12sp" />
 
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/tilBookPublishYear"
-                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"
                 android:hint="@string/insert_book_publish_year"
-                app:boxBackgroundColor="@android:color/transparent"
+                app:boxBackgroundColor="@color/teal_bg"
                 app:boxCornerRadiusBottomEnd="@dimen/text_input_layout_radius"
                 app:boxCornerRadiusBottomStart="@dimen/text_input_layout_radius"
                 app:boxCornerRadiusTopEnd="@dimen/text_input_layout_radius"
                 app:boxCornerRadiusTopStart="@dimen/text_input_layout_radius"
                 app:boxStrokeErrorColor="@color/red_800"
+                app:boxStrokeWidth="0dp"
+                app:boxStrokeWidthFocused="0dp"
                 app:errorContentDescription="@string/insert_book_publish_year"
                 app:errorEnabled="true"
                 app:errorIconDrawable="@drawable/ic_baseline_public_24"
@@ -167,24 +175,25 @@
                     android:imeOptions="actionNext"
                     android:inputType="number"
                     android:maxLength="4"
-                    android:padding="0dp"
                     android:textSize="12sp" />
 
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/tilBookISBN"
-                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="8dp"
                 android:hint="@string/insert_book_isbn"
-                app:boxBackgroundColor="@android:color/transparent"
+                app:boxBackgroundColor="@color/teal_bg"
                 app:boxCornerRadiusBottomEnd="@dimen/text_input_layout_radius"
                 app:boxCornerRadiusBottomStart="@dimen/text_input_layout_radius"
                 app:boxCornerRadiusTopEnd="@dimen/text_input_layout_radius"
                 app:boxCornerRadiusTopStart="@dimen/text_input_layout_radius"
                 app:boxStrokeErrorColor="@color/red_800"
+                app:boxStrokeWidth="0dp"
+                app:boxStrokeWidthFocused="0dp"
                 app:errorContentDescription="@string/insert_book_isbn"
                 app:errorEnabled="true"
                 app:errorIconDrawable="@drawable/ic_baseline_pin_24"
@@ -207,24 +216,25 @@
                     android:imeOptions="actionNext"
                     android:inputType="number"
                     android:maxLength="13"
-                    android:padding="0dp"
                     android:textSize="12sp" />
 
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/tilBookOLID"
-                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"
                 android:hint="@string/insert_book_olid"
-                app:boxBackgroundColor="@android:color/transparent"
+                app:boxBackgroundColor="@color/teal_bg"
                 app:boxCornerRadiusBottomEnd="@dimen/text_input_layout_radius"
                 app:boxCornerRadiusBottomStart="@dimen/text_input_layout_radius"
                 app:boxCornerRadiusTopEnd="@dimen/text_input_layout_radius"
                 app:boxCornerRadiusTopStart="@dimen/text_input_layout_radius"
                 app:boxStrokeErrorColor="@color/red_800"
+                app:boxStrokeWidth="0dp"
+                app:boxStrokeWidthFocused="0dp"
                 app:errorContentDescription="@string/insert_book_olid"
                 app:errorEnabled="true"
                 app:errorIconDrawable="@drawable/ic_baseline_pin_24"
@@ -246,7 +256,6 @@
                     android:imeOptions="actionNext"
                     android:inputType="number"
                     android:maxLength="15"
-                    android:padding="0dp"
                     android:textSize="12sp" />
 
             </com.google.android.material.textfield.TextInputLayout>
@@ -255,7 +264,8 @@
                 android:id="@+id/tvBookStatus"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="8dp"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="-8dp"
                 android:gravity="start"
                 android:text="@string/insert_book_status"
                 android:textColor="@color/grey_777"
@@ -264,52 +274,79 @@
                 app:layout_constraintTop_toBottomOf="@+id/tilBookAuthor" />
 
 
-            <RelativeLayout
+            <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/rlBookStatus"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:background="@drawable/text_field_background"
+                android:backgroundTint="@color/teal_bg"
+                android:backgroundTintMode="screen"
                 android:orientation="horizontal"
-                app:layout_constraintEnd_toEndOf="@+id/tilBookPages"
+                app:layout_constraintEnd_toEndOf="@+id/tilBookAuthor"
                 app:layout_constraintStart_toStartOf="@+id/tilBookAuthor"
                 app:layout_constraintTop_toBottomOf="@+id/tvBookStatus">
+
+                <ImageView
+                    android:id="@+id/ivBookStatus"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="12dp"
+                    android:src="@drawable/ic_book_black_24dp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:tint="?colorPrimary" />
 
                 <Spinner
                     android:id="@+id/spBookStatus"
                     android:layout_width="match_parent"
-                    android:layout_height="46dp"
-                    android:layout_centerVertical="true"
-                    android:layout_gravity="center"
-                    android:layout_marginLeft="5dp"
+                    android:layout_height="match_parent"
                     android:background="@android:color/transparent"
-                    android:gravity="center"
-                    android:spinnerMode="dropdown" />
+                    android:paddingStart="44dp"
+                    android:paddingEnd="44dp"
+                    android:spinnerMode="dropdown"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.5"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
 
-            </RelativeLayout>
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="20dp"
+                    android:src="@drawable/ic_baseline_keyboard_arrow_down_24"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
 
             <TextView
                 android:id="@+id/tvBookRating"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="8dp"
+                android:layout_marginTop="8dp"
                 android:gravity="start"
                 android:text="@string/insert_book_rating"
                 android:textColor="@color/grey_777"
-                app:layout_constraintEnd_toEndOf="@+id/rlBookRating"
-                app:layout_constraintStart_toStartOf="@+id/rlBookRating"
-                app:layout_constraintTop_toBottomOf="@+id/tilBookAuthor" />
+                app:layout_constraintEnd_toEndOf="@+id/rlBookStatus"
+                app:layout_constraintStart_toStartOf="@+id/tvBookStatus"
+                app:layout_constraintTop_toBottomOf="@+id/rlBookStatus" />
 
             <RelativeLayout
                 android:id="@+id/rlBookRating"
                 android:layout_width="0dp"
-                android:layout_height="0dp"
+                android:layout_height="20dp"
                 android:background="@drawable/text_field_background"
+                android:backgroundTint="@color/teal_bg"
+                android:backgroundTintMode="screen"
                 android:orientation="horizontal"
-                android:padding="8dp"
-                app:layout_constraintBottom_toBottomOf="@+id/rlBookStatus"
-                app:layout_constraintEnd_toEndOf="@+id/tilBookPublishYear"
-                app:layout_constraintStart_toStartOf="@+id/tilBookPublishYear"
-                app:layout_constraintTop_toTopOf="@+id/rlBookStatus">
+                android:paddingTop="12dp"
+                android:paddingBottom="12dp"
+                app:layout_constraintEnd_toEndOf="@+id/tilBookAuthor"
+                app:layout_constraintStart_toStartOf="@+id/rlBookStatus"
+                app:layout_constraintTop_toBottomOf="@+id/tvBookRating">
 
                 <me.zhanghai.android.materialratingbar.MaterialRatingBar
                     style="@style/Widget.MaterialRatingBar.RatingBar"
@@ -322,12 +359,11 @@
                 android:id="@+id/tvBookCover"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="8dp"
                 android:gravity="start"
                 android:text="@string/insert_book_cover"
                 android:textColor="@color/grey_777"
                 app:layout_constraintEnd_toEndOf="@+id/rlBookStatus"
-                app:layout_constraintStart_toStartOf="@+id/tilBookAuthor"
+                app:layout_constraintStart_toStartOf="@+id/tvBookRating"
                 app:layout_constraintTop_toBottomOf="@+id/tilBookISBN" />
 
             <androidx.constraintlayout.widget.ConstraintLayout
@@ -335,6 +371,8 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:background="@drawable/text_field_background"
+                android:backgroundTint="@color/teal_bg"
+                android:backgroundTintMode="screen"
                 android:orientation="horizontal"
                 android:paddingBottom="4dp"
                 app:layout_constraintEnd_toEndOf="@+id/tilBookPages"
@@ -344,7 +382,7 @@
                 <ImageView
                     android:id="@+id/ivBookCover"
                     android:layout_width="match_parent"
-                    android:layout_height="180dp"
+                    android:layout_height="200dp"
                     android:scaleType="fitCenter"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintHorizontal_bias="0.5"
@@ -355,10 +393,14 @@
 
                 <ImageButton
                     android:id="@+id/btnCoverRemove"
-                    android:layout_width="0dp"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginEnd="4dp"
+                    android:background="@drawable/rounded_image_button"
                     android:backgroundTint="@color/grey_777"
+                    android:paddingStart="16dp"
+                    android:paddingTop="8dp"
+                    android:paddingEnd="16dp"
+                    android:paddingBottom="8dp"
                     android:scaleX="0.8"
                     android:scaleY="0.8"
                     android:src="@drawable/ic_baseline_delete_forever_24"
@@ -371,10 +413,14 @@
 
                 <ImageButton
                     android:id="@+id/btnCoverSave"
-                    android:layout_width="0dp"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="4dp"
+                    android:background="@drawable/rounded_image_button"
                     android:backgroundTint="?colorPrimary"
+                    android:paddingStart="16dp"
+                    android:paddingTop="8dp"
+                    android:paddingEnd="16dp"
+                    android:paddingBottom="8dp"
                     android:scaleX="0.8"
                     android:scaleY="0.8"
                     android:src="@drawable/ic_baseline_upload_24"
@@ -388,17 +434,19 @@
 
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/tilBookNotes"
-                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox"
                 android:layout_width="0dp"
                 android:layout_height="0dp"
                 android:layout_marginTop="-6dp"
                 android:hint="@string/insert_book_notes"
-                app:boxBackgroundColor="@android:color/transparent"
+                app:boxBackgroundColor="@color/teal_bg"
                 app:boxCornerRadiusBottomEnd="@dimen/text_input_layout_radius"
                 app:boxCornerRadiusBottomStart="@dimen/text_input_layout_radius"
                 app:boxCornerRadiusTopEnd="@dimen/text_input_layout_radius"
                 app:boxCornerRadiusTopStart="@dimen/text_input_layout_radius"
                 app:boxStrokeErrorColor="@color/red_800"
+                app:boxStrokeWidth="0dp"
+                app:boxStrokeWidthFocused="0dp"
                 app:errorContentDescription="@string/insert_book_notes"
                 app:errorEnabled="true"
                 app:errorIconDrawable="@drawable/ic_baseline_pin_24"
@@ -421,52 +469,43 @@
                     android:imeOptions="actionNext"
                     android:inputType="textMultiLine|textCapSentences"
                     android:maxLength="200"
-                    android:padding="16dp"
                     android:scrollbars="vertical"
                     android:textSize="16sp"
                     android:verticalScrollbarPosition="right" />
 
             </com.google.android.material.textfield.TextInputLayout>
 
-            <RelativeLayout
-                android:id="@+id/rlBookCancel"
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btnBookCancel"
+                style="@style/Widget.MaterialComponents.Button.OutlinedButton"
                 android:layout_width="0dp"
-                android:layout_height="0dp"
-                android:layout_marginTop="5dp"
-                android:layout_marginEnd="8dp"
-                android:layout_marginBottom="5dp"
-                android:background="@drawable/button_outline_background"
-                android:orientation="horizontal"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="-2dp"
+                android:gravity="center"
+                android:text="@string/btnAdderCancelFinishDate"
+                android:textColor="@color/grey_777"
+                app:cornerRadius="@dimen/text_input_layout_radius"
                 app:layout_constraintBottom_toBottomOf="@+id/btnBookSave"
                 app:layout_constraintEnd_toStartOf="@+id/btnBookSave"
                 app:layout_constraintHorizontal_weight="2"
                 app:layout_constraintStart_toStartOf="@+id/rlBookCover"
-                app:layout_constraintTop_toTopOf="@+id/btnBookSave">
-
-                <Button
-                    android:id="@+id/btnBookCancel"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="-2dp"
-                    android:background="@android:color/transparent"
-                    android:gravity="center"
-                    android:text="@string/btnAdderCancelFinishDate"
-                    android:textColor="@color/grey_777" />
-
-            </RelativeLayout>
+                app:layout_constraintTop_toTopOf="@+id/btnBookSave"
+                app:strokeColor="@color/grey_777"
+                app:strokeWidth="1dp" />
 
 
-            <Button
+            <com.google.android.material.button.MaterialButton
                 android:id="@+id/btnBookSave"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"
-                android:layout_marginTop="72dp"
+                android:layout_marginTop="48dp"
                 android:backgroundTint="?colorPrimary"
                 android:text="@string/btnAdderSaveBook"
+                app:cornerRadius="@dimen/text_input_layout_radius"
                 app:layout_constraintEnd_toEndOf="@+id/tilBookNotes"
                 app:layout_constraintHorizontal_weight="3.5"
-                app:layout_constraintStart_toEndOf="@+id/rlBookCancel"
+                app:layout_constraintStart_toEndOf="@+id/btnBookCancel"
                 app:layout_constraintTop_toBottomOf="@+id/tilBookNotes" />
 
 

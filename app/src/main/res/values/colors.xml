@@ -17,7 +17,9 @@
     <color name="yellow_500">#FFEB3B</color>
     <color name="grey_300">#E0E0E0</color>
     <color name="grey_500">#9e9e9e</color>
-    <color name="grey_777">#777777</color>
+    <color name="grey_777">#888888</color>
+    <color name="grey_700">#616161</color>
+    <color name="grey_800">#424242</color>
     <color name="grey_900">#212121</color>
     <color name="grey_dialog_night">#4a4a4a</color>
     <color name="brand_color_left">#5f8bd7</color>

@@ -27,4 +27,6 @@
     <style name="Theme.Mdev.Bookstracker.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
 
     <color name="colorDefaultText">#000000</color>
+    <color name="colorGreyText">#616161</color>
+    <color name="teal_bg">#e0f2f1</color>
 </resources>
