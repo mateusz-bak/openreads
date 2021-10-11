@@ -214,7 +214,7 @@
     <string name="hint_isbn10" translatable="false">ISBN 10</string>
     <string name="hint_isbn13" translatable="false">ISBN 13</string>
     <string name="tv_cover_missing">"Cover missing"</string>
-    <string name="set">set</string>
+    <string name="set">Set</string>
     <string name="unknown_title">No title</string>
     <string name="unknown_language">No language</string>
     <string name="unknown_isbn">No ISBN</string>
@@ -315,4 +315,6 @@
     <string name="insert_book_rating">Your rating</string>
     <string name="insert_book_cover">Book\'s cover</string>
     <string name="insert_book_notes">Notes</string>
+    <string name="insert_book_finish_date">Finish date</string>
+    <string name="insert_book_start_date">Start date</string>
 </resources>

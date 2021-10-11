@@ -177,7 +177,7 @@
     <string name="toast_no_results_from_OL">Brak rezultatów</string>
     <string name="tvSortStartDate">Data rozpoczęcia</string>
     <string name="tv_cover_missing">"Brak okładki"</string>
-    <string name="set">ustaw</string>
+    <string name="set">Ustaw</string>
     <string name="unknown_title">Brak tytułu</string>
     <string name="unknown_language">Brak języka</string>
     <string name="unknown_isbn">Brak ISBN</string>
@@ -272,4 +272,6 @@
     <string name="insert_book_rating">Twoja ocena</string>
     <string name="insert_book_cover">Okładka książki</string>
     <string name="insert_book_notes">Notatki</string>
+    <string name="insert_book_finish_date">Data zakończenia</string>
+    <string name="insert_book_start_date">Data rozpoczęcia</string>
 </resources>
