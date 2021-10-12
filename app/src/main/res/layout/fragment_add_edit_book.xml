@@ -7,6 +7,7 @@
     android:layout_height="match_parent">
 
     <ScrollView
+        android:id="@+id/svEditor"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:fillViewport="true">
@@ -14,16 +15,16 @@
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:paddingStart="24dp"
             android:paddingTop="24dp"
-            android:paddingEnd="24dp"
             android:paddingBottom="48dp">
 
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/tilBookTitle"
                 style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox"
-                android:layout_width="match_parent"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
+                android:layout_marginStart="24dp"
+                android:layout_marginEnd="24dp"
                 android:hint="@string/insert_book_title"
                 app:boxBackgroundColor="@color/teal_bg"
                 app:boxCornerRadiusBottomEnd="@dimen/text_input_layout_radius"
@@ -61,7 +62,7 @@
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/tilBookAuthor"
                 style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox"
-                android:layout_width="match_parent"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:hint="@string/insert_book_author"
                 app:boxBackgroundColor="@color/teal_bg"
@@ -79,9 +80,9 @@
                 app:errorTextColor="?colorAccent"
                 app:hintAnimationEnabled="true"
                 app:hintTextColor="?colorAccent"
-                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintEnd_toEndOf="@+id/tilBookTitle"
                 app:layout_constraintHorizontal_bias="0.5"
-                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintStart_toStartOf="@+id/tilBookTitle"
                 app:layout_constraintTop_toBottomOf="@+id/tilBookTitle"
                 app:startIconDrawable="@drawable/ic_baseline_person_24"
                 app:startIconTint="?colorPrimary">
@@ -123,7 +124,7 @@
                 app:hintTextColor="?colorAccent"
                 app:layout_constraintEnd_toStartOf="@+id/tilBookPublishYear"
                 app:layout_constraintHorizontal_bias="0.5"
-                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintStart_toStartOf="@+id/tilBookTitle"
                 app:layout_constraintTop_toBottomOf="@+id/clBookStartDate"
                 app:startIconDrawable="@drawable/ic_baseline_file_copy_24"
                 app:startIconTint="?colorPrimary">
@@ -161,7 +162,7 @@
                 app:errorTextColor="?colorAccent"
                 app:hintAnimationEnabled="true"
                 app:hintTextColor="?colorAccent"
-                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintEnd_toEndOf="@+id/tilBookTitle"
                 app:layout_constraintHorizontal_bias="0.5"
                 app:layout_constraintStart_toEndOf="@+id/tilBookPages"
                 app:layout_constraintTop_toTopOf="@+id/tilBookPages"
@@ -184,7 +185,6 @@
                 style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginEnd="8dp"
                 android:hint="@string/insert_book_isbn"
                 app:boxBackgroundColor="@color/teal_bg"
                 app:boxCornerRadiusBottomEnd="@dimen/text_input_layout_radius"
@@ -204,7 +204,7 @@
                 app:layout_constraintEnd_toEndOf="@+id/tilBookPages"
                 app:layout_constraintEnd_toStartOf="@+id/tilBookOLID"
                 app:layout_constraintHorizontal_bias="0.5"
-                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintStart_toStartOf="@+id/tilBookPages"
                 app:layout_constraintTop_toBottomOf="@+id/tilBookPages"
                 app:startIconDrawable="@drawable/ic_baseline_pin_24"
                 app:startIconTint="?colorPrimary">
@@ -242,7 +242,7 @@
                 app:errorTextColor="?colorAccent"
                 app:hintAnimationEnabled="true"
                 app:hintTextColor="?colorAccent"
-                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintEnd_toEndOf="@+id/tilBookTitle"
                 app:layout_constraintHorizontal_bias="0.5"
                 app:layout_constraintStart_toEndOf="@+id/tilBookISBN"
                 app:layout_constraintTop_toBottomOf="@+id/tilBookPublishYear"
@@ -360,8 +360,8 @@
                 android:id="@+id/tvBookStartDate"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
                 android:layout_marginStart="16dp"
+                android:layout_marginTop="8dp"
                 android:gravity="start"
                 android:text="@string/insert_book_start_date"
                 android:textColor="@color/grey_777"
@@ -397,11 +397,11 @@
                 <TextView
                     android:id="@+id/tvBookStartDateValue"
                     android:layout_width="0dp"
-                    android:layout_marginStart="8dp"
                     android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
+                    app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toEndOf="@id/ivBookStartDate"
-                    app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
             </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -427,7 +427,7 @@
                 android:orientation="horizontal"
                 android:paddingTop="12dp"
                 android:paddingBottom="12dp"
-                app:layout_constraintEnd_toEndOf="@+id/tilBookPublishYear"
+                app:layout_constraintEnd_toEndOf="@+id/tilBookTitle"
                 app:layout_constraintStart_toStartOf="@+id/tilBookPublishYear"
                 app:layout_constraintTop_toBottomOf="@+id/tvBookFinishDate">
 
@@ -445,11 +445,11 @@
                 <TextView
                     android:id="@+id/tvBookFinishDateValue"
                     android:layout_width="0dp"
-                    android:layout_marginStart="8dp"
                     android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
+                    app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toEndOf="@id/ivBookFinishDate"
-                    app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
             </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -609,5 +609,93 @@
 
         </androidx.constraintlayout.widget.ConstraintLayout>
     </ScrollView>
+
+    <DatePicker
+        android:id="@+id/dpBookStartDate"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="12dp"
+        android:calendarViewShown="false"
+        android:datePickerMode="calendar"
+        android:visibility="gone"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/guideline1" />
+
+    <Button
+        android:id="@+id/btnStartDateCancel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:backgroundTint="@color/red_800"
+        android:text="@string/btnAdderCancelFinishDate"
+        android:visibility="gone"
+        app:layout_constraintEnd_toStartOf="@+id/btnStartDateSave"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/dpBookStartDate" />
+
+    <Button
+        android:id="@+id/btnStartDateSave"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:backgroundTint="?colorPrimary"
+        android:text="@string/btnAdderSaveFinishDate"
+        android:visibility="gone"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/btnStartDateCancel"
+        app:layout_constraintTop_toBottomOf="@+id/dpBookStartDate" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintGuide_percent="0.15" />
+
+    <DatePicker
+        android:id="@+id/dpBookFinishDate"
+        android:layout_marginBottom="120dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="12dp"
+        android:calendarViewShown="false"
+        android:datePickerMode="calendar"
+        android:visibility="gone"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/guideline1" />
+
+    <Button
+        android:id="@+id/btnFinishDateCancel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:backgroundTint="@color/red_800"
+        android:text="@string/btnAdderCancelFinishDate"
+        android:visibility="gone"
+        app:layout_constraintEnd_toStartOf="@+id/btnFinishDateSave"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/dpBookFinishDate" />
+
+    <Button
+        android:id="@+id/btnFinishDateSave"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:backgroundTint="?colorPrimary"
+        android:text="@string/btnAdderSaveFinishDate"
+        android:visibility="gone"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/btnFinishDateCancel"
+        app:layout_constraintTop_toBottomOf="@+id/dpBookFinishDate" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
