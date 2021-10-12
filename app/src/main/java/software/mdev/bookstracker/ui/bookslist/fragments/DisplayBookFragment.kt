@@ -448,7 +448,9 @@ class DisplayBookFragment : Fragment(R.layout.fragment_display_book) {
     private fun editBook() {
         val bundle = Bundle().apply {
             putSerializable(Constants.SERIALIZABLE_BUNDLE_BOOK, book)
+            putSerializable(Constants.SERIALIZABLE_BUNDLE_TRUE_FOR_EDIT, true)
         }
+
         findNavController().navigate(
             R.id.action_displayBookFragment_to_editBookFragment,
             bundle

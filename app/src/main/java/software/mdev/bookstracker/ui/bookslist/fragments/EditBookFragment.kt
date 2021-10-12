@@ -1,5 +1,7 @@
 package software.mdev.bookstracker.ui.bookslist.fragments
 
+import android.animation.AnimatorSet
+import android.animation.ObjectAnimator
 import android.content.Context
 import android.os.Bundle
 import android.view.View
@@ -20,7 +22,7 @@ import software.mdev.bookstracker.ui.bookslist.viewmodel.BooksViewModel
 import software.mdev.bookstracker.ui.bookslist.viewmodel.BooksViewModelProviderFactory
 import software.mdev.bookstracker.ui.bookslist.ListActivity
 import com.google.android.material.snackbar.Snackbar
-import kotlinx.android.synthetic.main.fragment_edit_book.*
+import kotlinx.android.synthetic.main.fragment_add_edit_book.*
 import software.mdev.bookstracker.data.db.YearDatabase
 import software.mdev.bookstracker.data.repositories.YearRepository
 import software.mdev.bookstracker.other.Constants
@@ -34,9 +36,22 @@ import kotlinx.coroutines.launch
 import software.mdev.bookstracker.data.db.LanguageDatabase
 import software.mdev.bookstracker.data.repositories.LanguageRepository
 import software.mdev.bookstracker.data.repositories.OpenLibraryRepository
+import android.widget.ArrayAdapter
+import androidx.constraintlayout.widget.ConstraintLayout
+import android.view.ViewGroup
+import android.view.animation.BounceInterpolator
+import androidx.core.view.marginTop
+import kotlinx.coroutines.MainScope
+import android.widget.RelativeLayout
+import android.widget.AdapterView
+
+import android.widget.TextView
+import androidx.activity.OnBackPressedCallback
+import kotlinx.android.synthetic.main.fragment_changelog.*
+import kotlinx.android.synthetic.main.fragment_display_book.*
 
 
-class EditBookFragment : Fragment(R.layout.fragment_edit_book) {
+class EditBookFragment : Fragment(R.layout.fragment_add_edit_book) {
 
     lateinit var viewModel: BooksViewModel
     private val args: EditBookFragmentArgs by navArgs()
@@ -44,13 +59,13 @@ class EditBookFragment : Fragment(R.layout.fragment_edit_book) {
     lateinit var listActivity: ListActivity
     private var bookFinishDateMs: Long? = null
     private var bookStartDateMs: Long? = null
+    private var animateRating = false
+    private var whatIsClicked = Constants.BOOK_STATUS_NOTHING
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         viewModel = (activity as ListActivity).booksViewModel
         listActivity = activity as ListActivity
-
-        var whatIsClicked = Constants.BOOK_STATUS_NOTHING
 
         val database = BooksDatabase(view.context)
         val yearDatabase = YearDatabase(view.context)
@@ -68,635 +83,443 @@ class EditBookFragment : Fragment(R.layout.fragment_edit_book) {
             languageRepository
         )
 
-        val book = args.book
+        book = args.book
+        val trueForEdit = args.trueForEdit
         var accentColor = getAccentColor(view.context)
 
         val viewModel = ViewModelProviders.of(this, booksViewModelProviderFactory).get(BooksViewModel::class.java)
 
-        etEditedBookTitle.setText(book.bookTitle)
-        etEditedBookAuthor.setText(book.bookAuthor)
-        rbEditedRating.rating = book.bookRating
-        etEditedPagesNumber.setText(book.bookNumberOfPages.toString())
 
-        dpEditBookFinishDate.visibility = View.GONE
-        dpEditBookStartDate.visibility = View.GONE
+        startDatePickerVis(false)
+        finishDatePickerVis(false)
+        setSpinner()
+        initConfig()
 
-        btnEditorSaveFinishDate.visibility = View.GONE
-        btnEditorCancelFinishDate.visibility = View.GONE
-        btnEditorSaveStartDate.visibility = View.GONE
-        btnEditorCancelStartDate.visibility = View.GONE
+        if (trueForEdit)
+            populateBooksDetails()
 
-        btnEditFinishDate.visibility = View.GONE
-        btnEditStartDate.visibility = View.GONE
+        setInitialViews()
 
-        tvDateStartedTitle.visibility = View.GONE
-        tvDateFinishedTitle.visibility = View.GONE
+        tietBookTitle.requestFocus()
+        showKeyboard(tietBookTitle,350)
 
-        dpEditBookFinishDate.maxDate = System.currentTimeMillis()
-        dpEditBookStartDate.maxDate = System.currentTimeMillis()
-
-        if(book.bookFinishDate == "none" || book.bookFinishDate == "null") {
-            btnEditFinishDate.text = getString(R.string.set)
-            ivClearFinishDate.visibility = View.INVISIBLE
-        } else {
-            var bookFinishTimeStampLong = book.bookFinishDate.toLong()
-            btnEditFinishDate.text = convertLongToTime(bookFinishTimeStampLong)
-            ivClearFinishDate.visibility = View.VISIBLE
+        btnBookSave.setOnClickListener{
+            view?.hideKeyboard()
+            recalculateChallenges()
         }
 
-        if(book.bookStartDate == "none" || book.bookStartDate == "null") {
-            btnEditStartDate.text = getString(R.string.set)
-            ivClearStartDate.visibility = View.INVISIBLE
-        } else {
-            var bookStartTimeStampLong = book.bookStartDate.toLong()
-            btnEditStartDate.text = convertLongToTime(bookStartTimeStampLong)
-            ivClearStartDate.visibility = View.VISIBLE
+        btnBookCancel.setOnClickListener{
+            view?.hideKeyboard()
+            recalculateChallenges()
         }
 
-        if(book.bookOLID == "none" || book.bookOLID == "null") {
-            etEditedBookOLID.setText(Constants.EMPTY_STRING)
-        } else {
-            etEditedBookOLID.setText(book.bookOLID)
+        clBookStartDate.setOnClickListener {
+            view?.hideKeyboard()
+            svEditor.visibility = View.GONE
+            startDatePickerVis(true)
         }
 
-        if(book.bookISBN10 == "none" || book.bookISBN10 == "null") {
-            etEditedBookISBN10.setText(Constants.EMPTY_STRING)
-        } else {
-            etEditedBookISBN10.setText(book.bookISBN10)
+        clBookFinishDate.setOnClickListener {
+            view?.hideKeyboard()
+            svEditor.visibility = View.GONE
+            finishDatePickerVis(true)
         }
 
-        if(book.bookISBN13 == "none" || book.bookISBN13 == "null") {
-            etEditedBookISBN13.setText(Constants.EMPTY_STRING)
-        } else {
-            etEditedBookISBN13.setText(book.bookISBN13)
+        btnStartDateCancel.setOnClickListener {
+            svEditor.visibility = View.VISIBLE
+            startDatePickerVis(false)
         }
 
-        etEditedBookTitle.requestFocus()
-        showKeyboard(etEditedBookTitle,350)
+        btnStartDateSave.setOnClickListener {
+            svEditor.visibility = View.VISIBLE
+            startDatePickerVis(false)
+        }
+
+        btnFinishDateCancel.setOnClickListener {
+            svEditor.visibility = View.VISIBLE
+            finishDatePickerVis(false)
+        }
+
+        btnFinishDateSave.setOnClickListener {
+            svEditor.visibility = View.VISIBLE
+            finishDatePickerVis(false)
+        }
+
+        requireActivity()
+            .onBackPressedDispatcher
+            .addCallback(viewLifecycleOwner, object : OnBackPressedCallback(true) {
+
+                override fun handleOnBackPressed() {
+                    if (dpBookStartDate.visibility == View.VISIBLE ||
+                        dpBookFinishDate.visibility == View.VISIBLE) {
+                            startDatePickerVis(false)
+                            finishDatePickerVis(false)
+                            svEditor.visibility = View.VISIBLE
+                    }
+                    else
+                        findNavController().popBackStack()
+                }
+            }
+            )
+
+//        fabSaveEditedBook.setOnClickListener {
+//            val bookTitle = etEditedBookTitle.text.toString()
+//            val bookAuthor = etEditedBookAuthor.text.toString()
+//
+//            val bookPublishYear = etEditedPublishYear.text.toString()
+//            var bookPublishYearInt = 0
+//
+//            if (bookPublishYear.isNotEmpty())
+//                bookPublishYearInt = bookPublishYear.toInt()
+//
+//            var bookRating = 0.0F
+//            val bookNumberOfPagesIntOrNull = etEditedPagesNumber.text.toString().toIntOrNull()
+//            var bookNumberOfPagesInt: Int
+//
+//            var bookOLID = etEditedBookOLID.text.toString()
+//            if (bookOLID.isEmpty()) {
+//                bookOLID = Constants.DATABASE_EMPTY_VALUE
+//            }
+//
+//            var bookISBN10 = etEditedBookISBN10.text.toString()
+//            if (bookISBN10.isEmpty()) {
+//                bookISBN10 = Constants.DATABASE_EMPTY_VALUE
+//            }
+//
+//            var bookISBN13 = etEditedBookISBN13.text.toString()
+//            if (bookISBN13.isEmpty()) {
+//                bookISBN13 = Constants.DATABASE_EMPTY_VALUE
+//            }
+//
+//            if (bookTitle.isNotEmpty()) {
+//                if (bookAuthor.isNotEmpty()) {
+//                    if (whatIsClicked != Constants.BOOK_STATUS_NOTHING) {
+//                            bookNumberOfPagesInt = when (bookNumberOfPagesIntOrNull) {
+//                                null -> 0
+//                                else -> bookNumberOfPagesIntOrNull
+//                            }
+//
+//                                    if ((bookFinishDateMs != null && bookStartDateMs != null && bookStartDateMs!! < bookFinishDateMs!!)
+//                                        || whatIsClicked == Constants.BOOK_STATUS_IN_PROGRESS
+//                                        || whatIsClicked == Constants.BOOK_STATUS_TO_READ
+//                                        || bookFinishDateMs == null
+//                                        || bookStartDateMs == null ) {
+//
+//                                        when (whatIsClicked) {
+//                                            Constants.BOOK_STATUS_READ -> {
+//                                                bookRating = rbEditedRating.rating
+//                                            }
+//                                            Constants.BOOK_STATUS_IN_PROGRESS -> {
+//                                                bookRating = 0.0F
+//                                                bookFinishDateMs = null
+//                                            }
+//                                            Constants.BOOK_STATUS_TO_READ -> {
+//                                                bookRating = 0.0F
+//                                                bookNumberOfPagesInt = 0
+//                                                bookStartDateMs = null
+//                                                bookFinishDateMs = null
+//                                            }
+//                                        }
+//
+//                                            val REGEX_UNACCENT =
+//                                                "\\p{InCombiningDiacriticalMarks}+".toRegex()
+//
+//                                            fun CharSequence.unaccent(): String {
+//                                                val temp =
+//                                                    Normalizer.normalize(this, Normalizer.Form.NFD)
+//                                                return REGEX_UNACCENT.replace(temp, "")
+//                                            }
+//
+//                                            val bookStatus = whatIsClicked
+//
+//                                            var newStartDate = bookStartDateMs.toString()
+//                                            var newFinishDate = bookFinishDateMs.toString()
+//
+//                                            if (whatIsClicked == Constants.BOOK_STATUS_IN_PROGRESS || whatIsClicked == Constants.BOOK_STATUS_TO_READ) {
+//                                                newStartDate = Constants.DATABASE_EMPTY_VALUE
+//                                                newFinishDate = Constants.DATABASE_EMPTY_VALUE
+//                                            }
+//
+//                                            viewModel.updateBook(
+//                                                book.id,
+//                                                bookTitle,
+//                                                bookAuthor,
+//                                                bookRating,
+//                                                bookStatus,
+//                                                book.bookPriority,
+//                                                newStartDate,
+//                                                newFinishDate,
+//                                                bookNumberOfPagesInt,
+//                                                bookTitle_ASCII = bookTitle.unaccent()
+//                                                    .replace("ł", "l", false),
+//                                                bookAuthor_ASCII = bookAuthor.unaccent()
+//                                                    .replace("ł", "l", false),
+//                                                false,
+//                                                book.bookCoverUrl,
+//                                                bookOLID,
+//                                                bookISBN10,
+//                                                bookISBN13,
+//                                                bookPublishYearInt
+//                                            )
+//
+//                                            recalculateChallenges()
+//                                        } else {
+//                                            Snackbar.make(it, R.string.sbWarningStartDateMustBeBeforeFinishDate, Snackbar.LENGTH_SHORT).show()
+//                                        }
+//                    } else {
+//                        Snackbar.make(it, getString(R.string.sbWarningState), Snackbar.LENGTH_SHORT).show()
+//                    }
+//                } else {
+//                    Snackbar.make(it, getString(R.string.sbWarningAuthor), Snackbar.LENGTH_SHORT).show()
+//                }
+//            } else {
+//                Snackbar.make(it, getString(R.string.sbWarningTitle), Snackbar.LENGTH_SHORT).show()
+//            }
+//        }
+    }
+
+    private fun setInitialViews() {
+        // add minimal delay to get proper height of views
+        MainScope().launch {
+            delay(50)
+            rlBookStatus.layoutParams.height = tietBookTitle.height
+            rlBookRating.layoutParams.height = tietBookTitle.height
+            clBookStartDate.layoutParams.height = tietBookTitle.height
+            clBookFinishDate.layoutParams.height = tietBookTitle.height
+
+            rlBookStatus.requestLayout()
+            rlBookRating.requestLayout()
+            clBookStartDate.requestLayout()
+            clBookFinishDate.requestLayout()
+            ivBookFinishDate.requestLayout()
+        }
+
+        setRatingAndDatesVis()
+    }
+
+    private fun setSpinner() {
+        val spinner = spBookStatus
+        val bookStatuses = arrayListOf<String>()
+
+        activity?.let {
+            bookStatuses.add(it.getString(R.string.finished))
+            bookStatuses.add(it.getString(R.string.inProgress))
+            bookStatuses.add(it.getString(R.string.toRead))
+
+            val spinnerAdapter = ArrayAdapter(requireActivity().baseContext, android.R.layout.simple_spinner_item, bookStatuses)
+            spinnerAdapter.setDropDownViewResource(R.layout.simple_spinner_dropdown)
+            spinner.adapter = spinnerAdapter
+        }
+
+        val listener: AdapterView.OnItemSelectedListener =
+            object : AdapterView.OnItemSelectedListener {
+                override fun onItemSelected(
+                    parent: AdapterView<*>,
+                    view: View,
+                    position: Int,
+                    id: Long
+                ) {
+                    activity?.resources?.getColor(R.color.colorGreyText)?.let {
+                        (parent.getChildAt(0) as TextView).setTextColor(
+                            it
+                        )
+                    }
+
+                    when (position) {
+                        0 -> ivBookStatus.setImageDrawable(activity?.baseContext?.resources?.getDrawable(R.drawable.ic_book_black_24dp))
+                        1 -> ivBookStatus.setImageDrawable(activity?.baseContext?.resources?.getDrawable(R.drawable.ic_auto_stories_black_24dp))
+                        2 -> ivBookStatus.setImageDrawable(activity?.baseContext?.resources?.getDrawable(R.drawable.ic_library_books_black_24dp))
+                    }
+
+                    when (position) {
+                        0 -> whatIsClicked = Constants.BOOK_STATUS_READ
+                        1 -> whatIsClicked = Constants.BOOK_STATUS_IN_PROGRESS
+                        2 -> whatIsClicked = Constants.BOOK_STATUS_TO_READ
+                    }
+
+                    setRatingAndDatesVis()
+                    animateRating = true
+                }
+                override fun onNothingSelected(parent: AdapterView<*>?) {}
+            }
+
+        spinner.onItemSelectedListener = listener
+    }
+
+    private fun populateBooksDetails() {
+        tietBookTitle.setText(book.bookTitle)
+        tietBookAuthor.setText(book.bookAuthor)
 
         when (book.bookStatus) {
             Constants.BOOK_STATUS_READ -> {
-                ivEditorBookStatusRead.setColorFilter(accentColor, android.graphics.PorterDuff.Mode.SRC_IN)
-                ivEditorBookStatusInProgress.setColorFilter(ContextCompat.getColor(view.context, R.color.grey), android.graphics.PorterDuff.Mode.SRC_IN)
-                ivEditorBookStatusToRead.setColorFilter(ContextCompat.getColor(view.context, R.color.grey), android.graphics.PorterDuff.Mode.SRC_IN)
                 whatIsClicked = Constants.BOOK_STATUS_READ
-                rbEditedRating.visibility = View.VISIBLE
-                btnEditStartDate.visibility = View.VISIBLE
-                btnEditFinishDate.visibility = View.VISIBLE
-
-                tvDateStartedTitle.visibility = View.VISIBLE
-                tvDateFinishedTitle.visibility = View.VISIBLE
-
-                if(book.bookFinishDate != "none" && book.bookFinishDate != "null") {
-                    bookFinishDateMs = book.bookFinishDate.toLong()
-                }
-
-                if(book.bookStartDate != "none" && book.bookStartDate != "null") {
-                    bookStartDateMs = book.bookStartDate.toLong()
-                }
+                rbBookRating.rating = book.bookRating
+                spBookStatus.setSelection(0)
             }
             Constants.BOOK_STATUS_IN_PROGRESS -> {
-                ivEditorBookStatusRead.setColorFilter(ContextCompat.getColor(view.context, R.color.grey), android.graphics.PorterDuff.Mode.SRC_IN)
-                ivEditorBookStatusInProgress.setColorFilter(accentColor, android.graphics.PorterDuff.Mode.SRC_IN)
-                ivEditorBookStatusToRead.setColorFilter(ContextCompat.getColor(view.context, R.color.grey), android.graphics.PorterDuff.Mode.SRC_IN)
                 whatIsClicked = Constants.BOOK_STATUS_IN_PROGRESS
-                rbEditedRating.visibility = View.GONE
+                tvBookRating.visibility = View.GONE
+                rlBookRating.visibility = View.GONE
+                spBookStatus.setSelection(1)
             }
             Constants.BOOK_STATUS_TO_READ -> {
-                ivEditorBookStatusRead.setColorFilter(ContextCompat.getColor(view.context, R.color.grey), android.graphics.PorterDuff.Mode.SRC_IN)
-                ivEditorBookStatusInProgress.setColorFilter(ContextCompat.getColor(view.context, R.color.grey), android.graphics.PorterDuff.Mode.SRC_IN)
-                ivEditorBookStatusToRead.setColorFilter(accentColor, android.graphics.PorterDuff.Mode.SRC_IN)
                 whatIsClicked = Constants.BOOK_STATUS_TO_READ
-                rbEditedRating.visibility = View.GONE
+                tvBookRating.visibility = View.GONE
+                rlBookRating.visibility = View.GONE
+                spBookStatus.setSelection(2)
             }
         }
 
-        fabCancelEditing.setOnClickListener {
-            view?.hideKeyboard()
-            findNavController().popBackStack()
-            findNavController().popBackStack()
-        }
-
-        ivEditorBookStatusRead.setOnClickListener {
-            it.hideKeyboard()
-
-            ivEditorBookStatusRead.setColorFilter(accentColor, android.graphics.PorterDuff.Mode.SRC_IN)
-            ivEditorBookStatusInProgress.setColorFilter(ContextCompat.getColor(view.context, R.color.grey), android.graphics.PorterDuff.Mode.SRC_IN)
-            ivEditorBookStatusToRead.setColorFilter(ContextCompat.getColor(view.context, R.color.grey), android.graphics.PorterDuff.Mode.SRC_IN)
-            whatIsClicked = Constants.BOOK_STATUS_READ
-            rbEditedRating.visibility = View.VISIBLE
-            btnEditStartDate.visibility = View.VISIBLE
-            btnEditFinishDate.visibility = View.VISIBLE
-
-            tvDateStartedTitle.visibility = View.VISIBLE
-            tvDateFinishedTitle.visibility = View.VISIBLE
-
-            if (bookStartDateMs != null)
-                ivClearStartDate.visibility = View.VISIBLE
-
-            if (bookFinishDateMs != null)
-                ivClearFinishDate.visibility = View.VISIBLE
-        }
-
-        ivEditorBookStatusInProgress.setOnClickListener {
-            it.hideKeyboard()
-
-            ivEditorBookStatusRead.setColorFilter(ContextCompat.getColor(view.context, R.color.grey), android.graphics.PorterDuff.Mode.SRC_IN)
-            ivEditorBookStatusInProgress.setColorFilter(accentColor, android.graphics.PorterDuff.Mode.SRC_IN)
-            ivEditorBookStatusToRead.setColorFilter(ContextCompat.getColor(view.context, R.color.grey), android.graphics.PorterDuff.Mode.SRC_IN)
-            whatIsClicked = Constants.BOOK_STATUS_IN_PROGRESS
-            rbEditedRating.visibility = View.GONE
-            btnEditStartDate.visibility = View.GONE
-            btnEditFinishDate.visibility = View.GONE
-
-            tvDateStartedTitle.visibility = View.GONE
-            tvDateFinishedTitle.visibility = View.GONE
-
-            tvDateStartedTitle.visibility = View.VISIBLE
-            btnEditStartDate.visibility = View.VISIBLE
-
-            ivClearFinishDate.visibility = View.INVISIBLE
-
-            if (bookStartDateMs != null)
-                ivClearStartDate.visibility = View.VISIBLE
-        }
-
-        ivEditorBookStatusToRead.setOnClickListener {
-            it.hideKeyboard()
-
-            ivEditorBookStatusRead.setColorFilter(ContextCompat.getColor(view.context, R.color.grey), android.graphics.PorterDuff.Mode.SRC_IN)
-            ivEditorBookStatusInProgress.setColorFilter(ContextCompat.getColor(view.context, R.color.grey), android.graphics.PorterDuff.Mode.SRC_IN)
-            ivEditorBookStatusToRead.setColorFilter(accentColor, android.graphics.PorterDuff.Mode.SRC_IN)
-            whatIsClicked = Constants.BOOK_STATUS_TO_READ
-            rbEditedRating.visibility = View.GONE
-            btnEditStartDate.visibility = View.GONE
-            btnEditFinishDate.visibility = View.GONE
-
-            tvDateStartedTitle.visibility = View.GONE
-            tvDateFinishedTitle.visibility = View.GONE
-
-            ivClearStartDate.visibility = View.INVISIBLE
-            ivClearFinishDate.visibility = View.INVISIBLE
-        }
-
-        btnEditFinishDate.setOnClickListener {
-            it.hideKeyboard()
-
-            dpEditBookFinishDate.visibility = View.VISIBLE
-            btnEditorSaveFinishDate.visibility = View.VISIBLE
-            btnEditorCancelFinishDate.visibility = View.VISIBLE
-            btnEditorSaveFinishDate.isClickable = true
-            btnEditorCancelFinishDate.isClickable = true
-
-            etEditedBookTitle.visibility = View.GONE
-            etEditedBookAuthor.visibility = View.GONE
-
-            ivEditorBookStatusRead.visibility = View.GONE
-            ivEditorBookStatusInProgress.visibility = View.GONE
-            ivEditorBookStatusToRead.visibility = View.GONE
-            tvFinished.visibility = View.GONE
-            tvInProgress.visibility = View.GONE
-            tvToRead.visibility = View.GONE
-
-            etEditedPagesNumber.visibility = View.GONE
-            rbEditedRating.visibility = View.GONE
-            btnEditFinishDate.visibility = View.GONE
-            btnEditStartDate.visibility = View.GONE
-
-            tvDateStartedTitle.visibility = View.GONE
-            tvDateFinishedTitle.visibility = View.GONE
-
-            fabSaveEditedBook.visibility = View.GONE
-            fabDeleteBook.visibility = View.GONE
-
-            etEditedBookOLID.visibility = View.GONE
-            etEditedBookISBN10.visibility = View.GONE
-            etEditedBookISBN13.visibility = View.GONE
-
-            tvEditedOLID.visibility = View.GONE
-            tvEditedISBN10.visibility = View.GONE
-            tvEditedISBN13.visibility = View.GONE
-
-            ivClearStartDate.visibility = View.INVISIBLE
-            ivClearFinishDate.visibility = View.INVISIBLE
-        }
-
-        btnEditorSaveFinishDate.setOnClickListener {
-            bookFinishDateMs = getDateFromDatePickerInMillis(dpEditBookFinishDate)
-
-            dpEditBookFinishDate.visibility = View.GONE
-            btnEditorSaveFinishDate.visibility = View.GONE
-            btnEditorCancelFinishDate.visibility = View.GONE
-            btnEditorSaveFinishDate.isClickable = false
-            btnEditorCancelFinishDate.isClickable = false
-
-            etEditedBookTitle.visibility = View.VISIBLE
-            etEditedBookAuthor.visibility = View.VISIBLE
-
-            ivEditorBookStatusRead.visibility = View.VISIBLE
-            ivEditorBookStatusInProgress.visibility = View.VISIBLE
-            ivEditorBookStatusToRead.visibility = View.VISIBLE
-            tvFinished.visibility = View.VISIBLE
-            tvInProgress.visibility = View.VISIBLE
-            tvToRead.visibility = View.VISIBLE
-
-            etEditedPagesNumber.visibility = View.VISIBLE
-            rbEditedRating.visibility = View.VISIBLE
-            btnEditFinishDate.visibility = View.VISIBLE
-            btnEditStartDate.visibility = View.VISIBLE
-
-            tvDateStartedTitle.visibility = View.VISIBLE
-            tvDateFinishedTitle.visibility = View.VISIBLE
-
-            fabSaveEditedBook.visibility = View.VISIBLE
-            fabDeleteBook.visibility = View.VISIBLE
-
-            etEditedBookOLID.visibility = View.VISIBLE
-            etEditedBookISBN10.visibility = View.VISIBLE
-            etEditedBookISBN13.visibility = View.VISIBLE
-
-            tvEditedOLID.visibility = View.VISIBLE
-            tvEditedISBN10.visibility = View.VISIBLE
-            tvEditedISBN13.visibility = View.VISIBLE
-
-            btnEditFinishDate.text = bookFinishDateMs?.let { it1 -> convertLongToTime(it1) }
-
-            if (bookStartDateMs != null)
-                ivClearStartDate.visibility = View.VISIBLE
-            if (bookFinishDateMs != null)
-                ivClearFinishDate.visibility = View.VISIBLE
-        }
-
-        btnEditorCancelFinishDate.setOnClickListener {
-            dpEditBookFinishDate.visibility = View.GONE
-            btnEditorSaveFinishDate.visibility = View.GONE
-            btnEditorCancelFinishDate.visibility = View.GONE
-            btnEditorSaveFinishDate.isClickable = false
-            btnEditorCancelFinishDate.isClickable = false
-
-            etEditedBookTitle.visibility = View.VISIBLE
-            etEditedBookAuthor.visibility = View.VISIBLE
-
-            ivEditorBookStatusRead.visibility = View.VISIBLE
-            ivEditorBookStatusInProgress.visibility = View.VISIBLE
-            ivEditorBookStatusToRead.visibility = View.VISIBLE
-            tvFinished.visibility = View.VISIBLE
-            tvInProgress.visibility = View.VISIBLE
-            tvToRead.visibility = View.VISIBLE
-
-            etEditedPagesNumber.visibility = View.VISIBLE
-            rbEditedRating.visibility = View.VISIBLE
-            btnEditFinishDate.visibility = View.VISIBLE
-            btnEditStartDate.visibility = View.VISIBLE
-
-            tvDateStartedTitle.visibility = View.VISIBLE
-            tvDateFinishedTitle.visibility = View.VISIBLE
-
-            fabSaveEditedBook.visibility = View.VISIBLE
-            fabDeleteBook.visibility = View.VISIBLE
-
-            etEditedBookOLID.visibility = View.VISIBLE
-            etEditedBookISBN10.visibility = View.VISIBLE
-            etEditedBookISBN13.visibility = View.VISIBLE
-
-            tvEditedOLID.visibility = View.VISIBLE
-            tvEditedISBN10.visibility = View.VISIBLE
-            tvEditedISBN13.visibility = View.VISIBLE
-
-            if (bookStartDateMs != null)
-                ivClearStartDate.visibility = View.VISIBLE
-            if (bookFinishDateMs != null)
-                ivClearFinishDate.visibility = View.VISIBLE
-        }
-
-        btnEditStartDate.setOnClickListener {
-            it.hideKeyboard()
-
-            dpEditBookStartDate.visibility = View.VISIBLE
-            btnEditorSaveStartDate.visibility = View.VISIBLE
-            btnEditorCancelStartDate.visibility = View.VISIBLE
-            btnEditorSaveStartDate.isClickable = true
-            btnEditorCancelStartDate.isClickable = true
-
-            etEditedBookTitle.visibility = View.GONE
-            etEditedBookAuthor.visibility = View.GONE
-
-            ivEditorBookStatusRead.visibility = View.GONE
-            ivEditorBookStatusInProgress.visibility = View.GONE
-            ivEditorBookStatusToRead.visibility = View.GONE
-            tvFinished.visibility = View.GONE
-            tvInProgress.visibility = View.GONE
-            tvToRead.visibility = View.GONE
-
-            etEditedPagesNumber.visibility = View.GONE
-            rbEditedRating.visibility = View.GONE
-            btnEditFinishDate.visibility = View.GONE
-            btnEditStartDate.visibility = View.GONE
-
-            tvDateStartedTitle.visibility = View.GONE
-            tvDateFinishedTitle.visibility = View.GONE
-
-            fabSaveEditedBook.visibility = View.GONE
-            fabDeleteBook.visibility = View.GONE
-
-            etEditedBookOLID.visibility = View.GONE
-            etEditedBookISBN10.visibility = View.GONE
-            etEditedBookISBN13.visibility = View.GONE
-
-            tvEditedOLID.visibility = View.GONE
-            tvEditedISBN10.visibility = View.GONE
-            tvEditedISBN13.visibility = View.GONE
-
-            ivClearStartDate.visibility = View.INVISIBLE
-            ivClearFinishDate.visibility = View.INVISIBLE
-        }
-
-        btnEditorSaveStartDate.setOnClickListener {
-            bookStartDateMs = getDateFromDatePickerInMillis(dpEditBookStartDate)
-
-            dpEditBookStartDate.visibility = View.GONE
-            btnEditorSaveStartDate.visibility = View.GONE
-            btnEditorCancelStartDate.visibility = View.GONE
-            btnEditorSaveStartDate.isClickable = false
-            btnEditorCancelStartDate.isClickable = false
-
-            etEditedBookTitle.visibility = View.VISIBLE
-            etEditedBookAuthor.visibility = View.VISIBLE
-
-            ivEditorBookStatusRead.visibility = View.VISIBLE
-            ivEditorBookStatusInProgress.visibility = View.VISIBLE
-            ivEditorBookStatusToRead.visibility = View.VISIBLE
-            tvFinished.visibility = View.VISIBLE
-            tvInProgress.visibility = View.VISIBLE
-            tvToRead.visibility = View.VISIBLE
-
-            etEditedPagesNumber.visibility = View.VISIBLE
-            rbEditedRating.visibility = View.VISIBLE
-            btnEditStartDate.visibility = View.VISIBLE
-
-            tvDateStartedTitle.visibility = View.VISIBLE
-            if (whatIsClicked == Constants.BOOK_STATUS_READ) {
-                tvDateFinishedTitle.visibility = View.VISIBLE
-                btnEditFinishDate.visibility = View.VISIBLE
-
-                if (bookFinishDateMs != null)
-                    ivClearFinishDate.visibility = View.VISIBLE
-            }
-
-            fabSaveEditedBook.visibility = View.VISIBLE
-            fabDeleteBook.visibility = View.VISIBLE
-
-            etEditedBookOLID.visibility = View.VISIBLE
-            etEditedBookISBN10.visibility = View.VISIBLE
-            etEditedBookISBN13.visibility = View.VISIBLE
-
-            tvEditedOLID.visibility = View.VISIBLE
-            tvEditedISBN10.visibility = View.VISIBLE
-            tvEditedISBN13.visibility = View.VISIBLE
-
-            btnEditStartDate.text = bookStartDateMs?.let { it1 -> convertLongToTime(it1) }
-
-            if (bookStartDateMs != null)
-                ivClearStartDate.visibility = View.VISIBLE
-        }
-
-        btnEditorCancelStartDate.setOnClickListener {
-            dpEditBookStartDate.visibility = View.GONE
-            btnEditorSaveStartDate.visibility = View.GONE
-            btnEditorCancelStartDate.visibility = View.GONE
-            btnEditorSaveStartDate.isClickable = false
-            btnEditorCancelStartDate.isClickable = false
-
-            etEditedBookTitle.visibility = View.VISIBLE
-            etEditedBookAuthor.visibility = View.VISIBLE
-
-            ivEditorBookStatusRead.visibility = View.VISIBLE
-            ivEditorBookStatusInProgress.visibility = View.VISIBLE
-            ivEditorBookStatusToRead.visibility = View.VISIBLE
-            tvFinished.visibility = View.VISIBLE
-            tvInProgress.visibility = View.VISIBLE
-            tvToRead.visibility = View.VISIBLE
-
-            etEditedPagesNumber.visibility = View.VISIBLE
-            rbEditedRating.visibility = View.VISIBLE
-            btnEditStartDate.visibility = View.VISIBLE
-
-            tvDateStartedTitle.visibility = View.VISIBLE
-
-            if (whatIsClicked == Constants.BOOK_STATUS_READ) {
-                tvDateFinishedTitle.visibility = View.VISIBLE
-                btnEditFinishDate.visibility = View.VISIBLE
-
-                if (bookFinishDateMs != null)
-                    ivClearFinishDate.visibility = View.VISIBLE
-            }
-
-            fabSaveEditedBook.visibility = View.VISIBLE
-            fabDeleteBook.visibility = View.VISIBLE
-
-            etEditedBookOLID.visibility = View.VISIBLE
-            etEditedBookISBN10.visibility = View.VISIBLE
-            etEditedBookISBN13.visibility = View.VISIBLE
-
-            tvEditedOLID.visibility = View.VISIBLE
-            tvEditedISBN10.visibility = View.VISIBLE
-            tvEditedISBN13.visibility = View.VISIBLE
-
-            if (bookStartDateMs != null)
-                ivClearStartDate.visibility = View.VISIBLE
-        }
-
-        ivClearStartDate.setOnClickListener {
-            bookStartDateMs = null
-            ivClearStartDate.visibility = View.GONE
-            btnEditStartDate.text = getString(R.string.set)
-        }
-
-        ivClearFinishDate.setOnClickListener {
-            bookFinishDateMs = null
-            ivClearFinishDate.visibility = View.INVISIBLE
-            btnEditFinishDate.text = getString(R.string.set)
-        }
-
-        fabSaveEditedBook.setOnClickListener {
-            val bookTitle = etEditedBookTitle.text.toString()
-            val bookAuthor = etEditedBookAuthor.text.toString()
-
-            val bookPublishYear = etEditedPublishYear.text.toString()
-            var bookPublishYearInt = 0
-
-            if (bookPublishYear.isNotEmpty())
-                bookPublishYearInt = bookPublishYear.toInt()
-
-            var bookRating = 0.0F
-            val bookNumberOfPagesIntOrNull = etEditedPagesNumber.text.toString().toIntOrNull()
-            var bookNumberOfPagesInt: Int
-
-            var bookOLID = etEditedBookOLID.text.toString()
-            if (bookOLID.isEmpty()) {
-                bookOLID = Constants.DATABASE_EMPTY_VALUE
-            }
-
-            var bookISBN10 = etEditedBookISBN10.text.toString()
-            if (bookISBN10.isEmpty()) {
-                bookISBN10 = Constants.DATABASE_EMPTY_VALUE
-            }
-
-            var bookISBN13 = etEditedBookISBN13.text.toString()
-            if (bookISBN13.isEmpty()) {
-                bookISBN13 = Constants.DATABASE_EMPTY_VALUE
-            }
-
-            if (bookTitle.isNotEmpty()) {
-                if (bookAuthor.isNotEmpty()) {
-                    if (whatIsClicked != Constants.BOOK_STATUS_NOTHING) {
-                            bookNumberOfPagesInt = when (bookNumberOfPagesIntOrNull) {
-                                null -> 0
-                                else -> bookNumberOfPagesIntOrNull
-                            }
-
-                                    if ((bookFinishDateMs != null && bookStartDateMs != null && bookStartDateMs!! < bookFinishDateMs!!)
-                                        || whatIsClicked == Constants.BOOK_STATUS_IN_PROGRESS
-                                        || whatIsClicked == Constants.BOOK_STATUS_TO_READ
-                                        || bookFinishDateMs == null
-                                        || bookStartDateMs == null ) {
-
-                                        when (whatIsClicked) {
-                                            Constants.BOOK_STATUS_READ -> {
-                                                bookRating = rbEditedRating.rating
-                                            }
-                                            Constants.BOOK_STATUS_IN_PROGRESS -> {
-                                                bookRating = 0.0F
-                                                bookFinishDateMs = null
-                                            }
-                                            Constants.BOOK_STATUS_TO_READ -> {
-                                                bookRating = 0.0F
-                                                bookNumberOfPagesInt = 0
-                                                bookStartDateMs = null
-                                                bookFinishDateMs = null
-                                            }
-                                        }
-
-                                            val REGEX_UNACCENT =
-                                                "\\p{InCombiningDiacriticalMarks}+".toRegex()
-
-                                            fun CharSequence.unaccent(): String {
-                                                val temp =
-                                                    Normalizer.normalize(this, Normalizer.Form.NFD)
-                                                return REGEX_UNACCENT.replace(temp, "")
-                                            }
-
-                                            val bookStatus = whatIsClicked
-
-                                            var newStartDate = bookStartDateMs.toString()
-                                            var newFinishDate = bookFinishDateMs.toString()
-
-                                            if (whatIsClicked == Constants.BOOK_STATUS_IN_PROGRESS || whatIsClicked == Constants.BOOK_STATUS_TO_READ) {
-                                                newStartDate = Constants.DATABASE_EMPTY_VALUE
-                                                newFinishDate = Constants.DATABASE_EMPTY_VALUE
-                                            }
-
-                                            viewModel.updateBook(
-                                                book.id,
-                                                bookTitle,
-                                                bookAuthor,
-                                                bookRating,
-                                                bookStatus,
-                                                book.bookPriority,
-                                                newStartDate,
-                                                newFinishDate,
-                                                bookNumberOfPagesInt,
-                                                bookTitle_ASCII = bookTitle.unaccent()
-                                                    .replace("ł", "l", false),
-                                                bookAuthor_ASCII = bookAuthor.unaccent()
-                                                    .replace("ł", "l", false),
-                                                false,
-                                                book.bookCoverUrl,
-                                                bookOLID,
-                                                bookISBN10,
-                                                bookISBN13,
-                                                bookPublishYearInt
-                                            )
-
-                                            recalculateChallenges()
-                                        } else {
-                                            Snackbar.make(it, R.string.sbWarningStartDateMustBeBeforeFinishDate, Snackbar.LENGTH_SHORT).show()
-                                        }
-                    } else {
-                        Snackbar.make(it, getString(R.string.sbWarningState), Snackbar.LENGTH_SHORT).show()
-                    }
-                } else {
-                    Snackbar.make(it, getString(R.string.sbWarningAuthor), Snackbar.LENGTH_SHORT).show()
-                }
+        tietBookPages.setText(book.bookNumberOfPages.toString())
+        tietBookPublishYear.setText(book.bookPublishYear.toString())
+        tietBookISBN.setText(book.bookISBN13)
+
+        if(book.bookISBN13 == "none" || book.bookISBN13 == "null") {
+            if(book.bookISBN10 == "none" || book.bookISBN10 == "null") {
+                tietBookISBN.setText(Constants.EMPTY_STRING)
             } else {
-                Snackbar.make(it, getString(R.string.sbWarningTitle), Snackbar.LENGTH_SHORT).show()
+                tietBookISBN.setText(book.bookISBN10)
             }
+        } else {
+            tietBookISBN.setText(book.bookISBN13)
         }
 
-        class UndoBookDeletion : View.OnClickListener {
-            override fun onClick(view: View) {
-                viewModel.updateBook(
-                    book.id,
-                    book.bookTitle,
-                    book.bookAuthor,
-                    book.bookRating,
-                    book.bookStatus,
-                    book.bookPriority,
-                    book.bookStartDate,
-                    book.bookFinishDate,
-                    book.bookNumberOfPages,
-                    book.bookTitle_ASCII,
-                    book.bookAuthor_ASCII,
-                    false,
-                    book.bookCoverUrl,
-                    book.bookOLID,
-                    book.bookISBN10,
-                    book.bookISBN13,
-                    book.bookPublishYear
-                )
-            }
+        if(book.bookOLID == "none" || book.bookOLID == "null") {
+            tietBookOLID.setText(Constants.EMPTY_STRING)
+        } else {
+            tietBookOLID.setText(book.bookOLID)
         }
 
-        fabDeleteBook.setOnClickListener{
-            val deleteBookWarningDialog = this.context?.let { it1 ->
-                AlertDialog.Builder(it1)
-                    .setTitle(R.string.warning_delete_book_title)
-                    .setMessage(R.string.warning_delete_book_message)
-                    .setIcon(R.drawable.ic_baseline_warning_amber_24)
-                    .setPositiveButton(R.string.warning_delete_book_delete) { _, _ ->
-                        viewModel.updateBook(
-                            book.id,
-                            book.bookTitle,
-                            book.bookAuthor,
-                            book.bookRating,
-                            book.bookStatus,
-                            book.bookPriority,
-                            book.bookStartDate,
-                            book.bookFinishDate,
-                            book.bookNumberOfPages,
-                            book.bookTitle_ASCII,
-                            book.bookAuthor_ASCII,
-                            true,
-                            book.bookCoverUrl,
-                            book.bookOLID,
-                            book.bookISBN10,
-                            book.bookISBN13,
-                            book.bookPublishYear
-                        )
-                        recalculateChallenges()
+        if(book.bookStartDate == "none" || book.bookStartDate == "null") {
+            tvBookStartDateValue.text = getString(R.string.set)
+//            ivClearStartDate.visibility = View.INVISIBLE
+        } else {
+            var timeStampLong = book.bookStartDate.toLong()
+            tvBookStartDateValue.text = convertLongToTime(timeStampLong)
+//            ivClearStartDate.visibility = View.VISIBLE
+        }
 
-                        Snackbar.make(it, getString(R.string.bookDeleted), Snackbar.LENGTH_LONG)
-                            .setAction(getString(R.string.undo), UndoBookDeletion())
-                            .show()
-                    }
-                    .setNegativeButton(R.string.warning_delete_book_cancel) { _, _ ->
-                    }
-                    .create()
+        if(book.bookFinishDate == "none" || book.bookFinishDate == "null") {
+            tvBookFinishDateValue.text = getString(R.string.set)
+//            ivClearStartDate.visibility = View.INVISIBLE
+        } else {
+            var timeStampLong = book.bookFinishDate.toLong()
+            tvBookFinishDateValue.text = convertLongToTime(timeStampLong)
+//            ivClearStartDate.visibility = View.VISIBLE
+        }
+    }
+
+    private fun setRatingAndDatesVis() {
+        when (whatIsClicked) {
+            Constants.BOOK_STATUS_READ -> {
+                tvBookRating.visibility = View.VISIBLE
+                rlBookRating.visibility = View.VISIBLE
+
+                tvBookStartDate.visibility = View.VISIBLE
+                clBookStartDate.visibility = View.VISIBLE
+
+                tvBookFinishDate.visibility = View.VISIBLE
+                clBookFinishDate.visibility = View.VISIBLE
+
+                val layoutParams: ConstraintLayout.LayoutParams = clBookStartDate.layoutParams as ConstraintLayout.LayoutParams
+                layoutParams.endToEnd = tilBookPages.id
+                clBookStartDate.layoutParams = layoutParams
+
+                // disable scale anim on loading view when book status is finished
+                if (animateRating)
+                    hintRatingDatesAnim()
+            }
+            Constants.BOOK_STATUS_IN_PROGRESS -> {
+                tvBookRating.visibility = View.GONE
+                rlBookRating.visibility = View.GONE
+
+                tvBookStartDate.visibility = View.VISIBLE
+                clBookStartDate.visibility = View.VISIBLE
+
+                tvBookFinishDate.visibility = View.GONE
+                clBookFinishDate.visibility = View.GONE
+
+                val layoutParams: ConstraintLayout.LayoutParams = clBookStartDate.layoutParams as ConstraintLayout.LayoutParams
+                layoutParams.endToEnd = tilBookPublishYear.id
+                clBookStartDate.layoutParams = layoutParams
+
+                if (animateRating)
+                    hintRatingDatesAnim()
+            }
+            Constants.BOOK_STATUS_TO_READ -> {
+                tvBookRating.visibility = View.GONE
+                rlBookRating.visibility = View.GONE
+
+                tvBookStartDate.visibility = View.GONE
+                clBookStartDate.visibility = View.GONE
+
+                tvBookFinishDate.visibility = View.GONE
+                clBookFinishDate.visibility = View.GONE
+            }
+        }
+    }
+
+    private fun startDatePickerVis(visibility: Boolean) {
+        var viewVisibility = if (visibility)
+            View.VISIBLE
+        else
+            View.GONE
+
+        dpBookStartDate.visibility = viewVisibility
+        btnStartDateCancel.visibility = viewVisibility
+        btnStartDateSave.visibility = viewVisibility
+    }
+
+    private fun finishDatePickerVis(visibility: Boolean) {
+        var viewVisibility = if (visibility)
+            View.VISIBLE
+        else
+            View.GONE
+
+        dpBookFinishDate.visibility = viewVisibility
+        btnFinishDateCancel.visibility = viewVisibility
+        btnFinishDateSave.visibility = viewVisibility
+    }
+
+    private fun initConfig() {
+        dpBookStartDate.maxDate = System.currentTimeMillis()
+//        dpBookFinishDate.maxDate = System.currentTimeMillis()
+    }
+
+    private fun hintRatingDatesAnim() {
+        val scaleMap = arrayOf(1F, 1.1F)
+        val myDuration = 200L
+        val myRepeatCount = 1
+
+        val viewsToAnimate = arrayOf(
+            rlBookRating,
+            clBookStartDate,
+            clBookFinishDate
+        )
+
+        for (view in viewsToAnimate) {
+            val animScaleX = scaleMap.map { map ->
+                ObjectAnimator.ofFloat(view, "scaleX", map).apply {
+                    duration = myDuration
+                    repeatCount = myRepeatCount
+                    repeatMode = ObjectAnimator.REVERSE
+                }
             }
 
-            deleteBookWarningDialog?.show()
-            deleteBookWarningDialog?.getButton(AlertDialog.BUTTON_NEGATIVE)?.setTextColor(ContextCompat.getColor(listActivity.baseContext, R.color.grey_500))
+            val animScaleY = scaleMap.map { map ->
+                ObjectAnimator.ofFloat(view, "scaleY", map).apply {
+                    duration = myDuration
+                    repeatCount = myRepeatCount
+                    repeatMode = ObjectAnimator.REVERSE
+                }
+            }
+
+            val set = AnimatorSet()
+            set.playTogether(animScaleX)
+            set.playTogether(animScaleY)
+            set.start()
         }
+
     }
 
     fun View.hideKeyboard() {
@@ -794,9 +617,8 @@ class EditBookFragment : Fragment(R.layout.fragment_edit_book) {
             }
             )
         lifecycleScope.launch {
-            delay(300L)
+            delay(100L)
             view?.hideKeyboard()
-            findNavController().popBackStack()
             findNavController().popBackStack()
         }
     }
