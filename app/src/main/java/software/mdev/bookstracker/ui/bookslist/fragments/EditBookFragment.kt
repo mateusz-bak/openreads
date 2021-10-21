@@ -39,6 +39,7 @@ import software.mdev.bookstracker.data.repositories.OpenLibraryRepository
 import android.widget.ArrayAdapter
 import androidx.constraintlayout.widget.ConstraintLayout
 import android.view.ViewGroup
+import android.view.animation.AnimationUtils
 import android.view.animation.BounceInterpolator
 import androidx.core.view.marginTop
 import kotlinx.coroutines.MainScope
@@ -282,13 +283,13 @@ class EditBookFragment : Fragment(R.layout.fragment_add_edit_book) {
         // add minimal delay to get proper height of views
         MainScope().launch {
             delay(50)
-            rlBookStatus.layoutParams.height = tietBookTitle.height
-            rlBookRating.layoutParams.height = tietBookTitle.height
+            clBookStatus.layoutParams.height = tietBookTitle.height
+            clBookRating.layoutParams.height = (tietBookTitle.height * 1.4).toInt()
             clBookStartDate.layoutParams.height = tietBookTitle.height
             clBookFinishDate.layoutParams.height = tietBookTitle.height
 
-            rlBookStatus.requestLayout()
-            rlBookRating.requestLayout()
+            clBookStatus.requestLayout()
+            clBookRating.requestLayout()
             clBookStartDate.requestLayout()
             clBookFinishDate.requestLayout()
             ivBookFinishDate.requestLayout()
@@ -319,6 +320,7 @@ class EditBookFragment : Fragment(R.layout.fragment_add_edit_book) {
                     position: Int,
                     id: Long
                 ) {
+                    view.hideKeyboard()
                     activity?.resources?.getColor(R.color.colorGreyText)?.let {
                         (parent.getChildAt(0) as TextView).setTextColor(
                             it
@@ -359,13 +361,13 @@ class EditBookFragment : Fragment(R.layout.fragment_add_edit_book) {
             Constants.BOOK_STATUS_IN_PROGRESS -> {
                 whatIsClicked = Constants.BOOK_STATUS_IN_PROGRESS
                 tvBookRating.visibility = View.GONE
-                rlBookRating.visibility = View.GONE
+                clBookRating.visibility = View.GONE
                 spBookStatus.setSelection(1)
             }
             Constants.BOOK_STATUS_TO_READ -> {
                 whatIsClicked = Constants.BOOK_STATUS_TO_READ
                 tvBookRating.visibility = View.GONE
-                rlBookRating.visibility = View.GONE
+                clBookRating.visibility = View.GONE
                 spBookStatus.setSelection(2)
             }
         }
@@ -413,7 +415,7 @@ class EditBookFragment : Fragment(R.layout.fragment_add_edit_book) {
         when (whatIsClicked) {
             Constants.BOOK_STATUS_READ -> {
                 tvBookRating.visibility = View.VISIBLE
-                rlBookRating.visibility = View.VISIBLE
+                clBookRating.visibility = View.VISIBLE
 
                 tvBookStartDate.visibility = View.VISIBLE
                 clBookStartDate.visibility = View.VISIBLE
@@ -427,11 +429,11 @@ class EditBookFragment : Fragment(R.layout.fragment_add_edit_book) {
 
                 // disable scale anim on loading view when book status is finished
                 if (animateRating)
-                    hintRatingDatesAnim()
+                    hintRatingDatesAnim(arrayOf(clBookRating, clBookStartDate, clBookFinishDate))
             }
             Constants.BOOK_STATUS_IN_PROGRESS -> {
                 tvBookRating.visibility = View.GONE
-                rlBookRating.visibility = View.GONE
+                clBookRating.visibility = View.GONE
 
                 tvBookStartDate.visibility = View.VISIBLE
                 clBookStartDate.visibility = View.VISIBLE
@@ -444,11 +446,11 @@ class EditBookFragment : Fragment(R.layout.fragment_add_edit_book) {
                 clBookStartDate.layoutParams = layoutParams
 
                 if (animateRating)
-                    hintRatingDatesAnim()
+                    hintRatingDatesAnim(arrayOf(clBookStartDate))
             }
             Constants.BOOK_STATUS_TO_READ -> {
                 tvBookRating.visibility = View.GONE
-                rlBookRating.visibility = View.GONE
+                clBookRating.visibility = View.GONE
 
                 tvBookStartDate.visibility = View.GONE
                 clBookStartDate.visibility = View.GONE
@@ -486,40 +488,9 @@ class EditBookFragment : Fragment(R.layout.fragment_add_edit_book) {
 //        dpBookFinishDate.maxDate = System.currentTimeMillis()
     }
 
-    private fun hintRatingDatesAnim() {
-        val scaleMap = arrayOf(1F, 1.1F)
-        val myDuration = 200L
-        val myRepeatCount = 1
-
-        val viewsToAnimate = arrayOf(
-            rlBookRating,
-            clBookStartDate,
-            clBookFinishDate
-        )
-
-        for (view in viewsToAnimate) {
-            val animScaleX = scaleMap.map { map ->
-                ObjectAnimator.ofFloat(view, "scaleX", map).apply {
-                    duration = myDuration
-                    repeatCount = myRepeatCount
-                    repeatMode = ObjectAnimator.REVERSE
-                }
-            }
-
-            val animScaleY = scaleMap.map { map ->
-                ObjectAnimator.ofFloat(view, "scaleY", map).apply {
-                    duration = myDuration
-                    repeatCount = myRepeatCount
-                    repeatMode = ObjectAnimator.REVERSE
-                }
-            }
-
-            val set = AnimatorSet()
-            set.playTogether(animScaleX)
-            set.playTogether(animScaleY)
-            set.start()
-        }
-
+    private fun hintRatingDatesAnim(views: Array<View>) {
+        for (view in views)
+            view.startAnimation(AnimationUtils.loadAnimation(context,R.anim.shake_1))
     }
 
     fun View.hideKeyboard() {
