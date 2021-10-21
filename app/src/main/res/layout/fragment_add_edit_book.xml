@@ -277,12 +277,12 @@
                     android:id="@+id/tvBookStatus"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
+                    android:layout_marginStart="52dp"
                     android:gravity="start"
                     android:paddingTop="8dp"
-                    android:layout_marginStart="52dp"
-                    android:textSize="13sp"
                     android:text="@string/insert_book_status"
                     android:textColor="@color/grey_700"
+                    android:textSize="13sp"
                     app:layout_constraintBottom_toTopOf="@+id/spBookStatus"
                     app:layout_constraintStart_toStartOf="@+id/spBookStatus"
                     app:layout_constraintTop_toTopOf="parent"
@@ -317,9 +317,9 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginEnd="12dp"
-                    android:src="@drawable/ic_baseline_keyboard_arrow_down_48"
                     android:scaleX="0.7"
                     android:scaleY="0.7"
+                    android:src="@drawable/ic_baseline_keyboard_arrow_down_48"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
@@ -330,15 +330,15 @@
                 android:id="@+id/clBookRating"
                 android:layout_width="0dp"
                 android:layout_height="100dp"
+                android:layout_marginTop="20dp"
                 android:background="@drawable/text_field_background"
                 android:backgroundTint="@color/teal_bg"
                 android:backgroundTintMode="screen"
                 android:orientation="horizontal"
-                android:paddingTop="8dp"
                 android:paddingStart="8dp"
+                android:paddingTop="8dp"
                 android:paddingEnd="8dp"
                 android:paddingBottom="16dp"
-                android:layout_marginTop="20dp"
                 app:layout_constraintEnd_toEndOf="@+id/tilBookAuthor"
                 app:layout_constraintStart_toStartOf="@+id/clBookStatus"
                 app:layout_constraintTop_toBottomOf="@+id/clBookStatus">
@@ -347,12 +347,12 @@
                     android:id="@+id/tvBookRating"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:gravity="start"
                     android:layout_marginStart="44dp"
+                    android:gravity="start"
                     android:text="@string/insert_book_rating"
                     android:textColor="@color/grey_700"
-                    app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintBottom_toTopOf="@+id/rbBookRating"
+                    app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
 
@@ -361,39 +361,42 @@
                     style="@style/Widget.MaterialRatingBar.RatingBar"
                     android:layout_width="match_parent"
                     android:layout_height="0dp"
-                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/tvBookRating"
-                    app:layout_constraintBottom_toBottomOf="parent"/>
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/tvBookRating" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>
-
-            <TextView
-                android:id="@+id/tvBookStartDate"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="16dp"
-                android:layout_marginTop="8dp"
-                android:gravity="start"
-                android:text="@string/insert_book_start_date"
-                android:textColor="@color/grey_777"
-                app:layout_constraintEnd_toEndOf="@+id/clBookStartDate"
-                app:layout_constraintStart_toStartOf="@+id/clBookStartDate"
-                app:layout_constraintTop_toBottomOf="@+id/clBookRating" />
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/clBookStartDate"
                 android:layout_width="0dp"
-                android:layout_height="wrap_content"
+                android:layout_height="100dp"
                 android:background="@drawable/text_field_background"
                 android:backgroundTint="@color/teal_bg"
                 android:backgroundTintMode="screen"
                 android:orientation="horizontal"
                 android:paddingTop="12dp"
+                android:layout_marginTop="20dp"
                 android:paddingBottom="12dp"
                 app:layout_constraintEnd_toEndOf="@+id/tilBookPages"
                 app:layout_constraintStart_toStartOf="@+id/clBookStatus"
-                app:layout_constraintTop_toBottomOf="@+id/tvBookStartDate">
+                app:layout_constraintTop_toBottomOf="@+id/clBookRating">
+
+
+                <TextView
+                    android:id="@+id/tvBookStartDate"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:gravity="start"
+                    android:text="@string/insert_book_start_date"
+                    android:textColor="@color/grey_700"
+                    android:textSize="13sp"
+                    android:layout_marginStart="14dp"
+                    app:layout_constraintBottom_toTopOf="@+id/tvBookStartDateValue"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toEndOf="@+id/ivBookStartDate"
+                    app:layout_constraintTop_toTopOf="parent" />
 
                 <ImageView
                     android:id="@+id/ivBookStartDate"
@@ -410,29 +413,18 @@
                     android:id="@+id/tvBookStartDateValue"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="8dp"
+                    android:textColor="@color/colorDefaultText"
+                    android:textSize="14sp"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toEndOf="@id/ivBookStartDate"
-                    app:layout_constraintTop_toTopOf="parent" />
+                    app:layout_constraintStart_toStartOf="@+id/tvBookStartDate"
+                    app:layout_constraintTop_toBottomOf="@+id/tvBookStartDate" />
             </androidx.constraintlayout.widget.ConstraintLayout>
-
-            <TextView
-                android:id="@+id/tvBookFinishDate"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="16dp"
-                android:gravity="start"
-                android:text="@string/insert_book_finish_date"
-                android:textColor="@color/grey_777"
-                app:layout_constraintEnd_toEndOf="@+id/tilBookPublishYear"
-                app:layout_constraintStart_toStartOf="@+id/tilBookPublishYear"
-                app:layout_constraintTop_toTopOf="@+id/tvBookStartDate" />
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/clBookFinishDate"
                 android:layout_width="0dp"
-                android:layout_height="wrap_content"
+                android:layout_height="100dp"
                 android:background="@drawable/text_field_background"
                 android:backgroundTint="@color/teal_bg"
                 android:backgroundTintMode="screen"
@@ -441,7 +433,22 @@
                 android:paddingBottom="12dp"
                 app:layout_constraintEnd_toEndOf="@+id/tilBookTitle"
                 app:layout_constraintStart_toStartOf="@+id/tilBookPublishYear"
-                app:layout_constraintTop_toBottomOf="@+id/tvBookFinishDate">
+                app:layout_constraintTop_toTopOf="@+id/clBookStartDate"
+                app:layout_constraintBottom_toBottomOf="@+id/clBookStartDate">
+
+                <TextView
+                    android:id="@+id/tvBookFinishDate"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:gravity="start"
+                    android:text="@string/insert_book_finish_date"
+                    android:textColor="@color/grey_700"
+                    android:textSize="13sp"
+                    android:layout_marginStart="14dp"
+                    app:layout_constraintBottom_toTopOf="@+id/tvBookFinishDateValue"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toEndOf="@+id/ivBookFinishDate"
+                    app:layout_constraintTop_toTopOf="parent" />
 
                 <ImageView
                     android:id="@+id/ivBookFinishDate"
@@ -458,11 +465,12 @@
                     android:id="@+id/tvBookFinishDateValue"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="8dp"
+                    android:textColor="@color/colorDefaultText"
+                    android:textSize="14sp"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toEndOf="@id/ivBookFinishDate"
-                    app:layout_constraintTop_toTopOf="parent" />
+                    app:layout_constraintStart_toStartOf="@+id/tvBookFinishDate"
+                    app:layout_constraintTop_toBottomOf="@+id/tvBookFinishDate" />
             </androidx.constraintlayout.widget.ConstraintLayout>
 
             <TextView
@@ -626,14 +634,17 @@
         android:id="@+id/dpBookStartDate"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="12dp"
+        android:layout_marginTop="-24dp"
         android:calendarViewShown="false"
         android:datePickerMode="calendar"
+        android:scaleX="1.1"
+        android:scaleY="1.1"
         android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/guideline1" />
+        app:layout_constraintTop_toTopOf="parent" />
 
     <Button
         android:id="@+id/btnStartDateCancel"
@@ -668,14 +679,14 @@
         android:orientation="horizontal"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintGuide_percent="0.15" />
+        app:layout_constraintGuide_percent="0.2" />
 
     <DatePicker
         android:id="@+id/dpBookFinishDate"
-        android:layout_marginBottom="120dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="12dp"
+        android:layout_marginBottom="120dp"
         android:calendarViewShown="false"
         android:datePickerMode="calendar"
         android:visibility="gone"
