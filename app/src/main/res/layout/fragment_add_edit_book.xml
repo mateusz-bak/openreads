@@ -260,31 +260,33 @@
 
             </com.google.android.material.textfield.TextInputLayout>
 
-            <TextView
-                android:id="@+id/tvBookStatus"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="16dp"
-                android:layout_marginTop="-8dp"
-                android:gravity="start"
-                android:text="@string/insert_book_status"
-                android:textColor="@color/grey_777"
-                app:layout_constraintEnd_toEndOf="@+id/rlBookStatus"
-                app:layout_constraintStart_toStartOf="@+id/tilBookAuthor"
-                app:layout_constraintTop_toBottomOf="@+id/tilBookAuthor" />
-
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/rlBookStatus"
                 android:layout_width="0dp"
-                android:layout_height="wrap_content"
+                android:layout_height="100dp"
                 android:background="@drawable/text_field_background"
                 android:backgroundTint="@color/teal_bg"
                 android:backgroundTintMode="screen"
                 android:orientation="horizontal"
                 app:layout_constraintEnd_toEndOf="@+id/tilBookAuthor"
                 app:layout_constraintStart_toStartOf="@+id/tilBookAuthor"
-                app:layout_constraintTop_toBottomOf="@+id/tvBookStatus">
+                app:layout_constraintTop_toBottomOf="@+id/tilBookAuthor">
+
+                <TextView
+                    android:id="@+id/tvBookStatus"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:gravity="start"
+                    android:paddingTop="8dp"
+                    android:layout_marginStart="8dp"
+                    android:textSize="13sp"
+                    android:text="@string/insert_book_status"
+                    android:textColor="@color/grey_800"
+                    app:layout_constraintBottom_toTopOf="@+id/spBookStatus"
+                    app:layout_constraintStart_toStartOf="@+id/spBookStatus"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintVertical_chainStyle="spread" />
 
                 <ImageView
                     android:id="@+id/ivBookStatus"
@@ -300,22 +302,24 @@
                 <Spinner
                     android:id="@+id/spBookStatus"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
+                    android:layout_height="wrap_content"
                     android:background="@android:color/transparent"
-                    android:paddingStart="44dp"
-                    android:paddingEnd="44dp"
+                    android:layout_marginStart="44dp"
+                    android:layout_marginEnd="44dp"
+                    android:paddingBottom="8dp"
                     android:spinnerMode="dropdown"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintHorizontal_bias="0.5"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
+                    app:layout_constraintTop_toBottomOf="@+id/tvBookStatus" />
 
                 <ImageView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginEnd="20dp"
-                    android:src="@drawable/ic_baseline_keyboard_arrow_down_24"
+                    android:layout_marginEnd="12dp"
+                    android:src="@drawable/ic_baseline_keyboard_arrow_down_48"
+                    android:scaleX="0.7"
+                    android:scaleY="0.7"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
