@@ -116,21 +116,17 @@
                 app:layout_constraintStart_toStartOf="@+id/tvBookTitle"
                 app:layout_constraintTop_toBottomOf="@+id/tvBookTitle" />
 
-            <androidx.appcompat.widget.AppCompatRatingBar
+            <me.zhanghai.android.materialratingbar.MaterialRatingBar
                 android:id="@+id/rbRatingIndicator"
-                style="?attr/ratingBarStyleIndicator"
-                android:layout_width="wrap_content"
+                style="@style/Widget.MaterialRatingBar.RatingBar"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="-2dp"
                 android:layout_marginTop="24dp"
-                android:isIndicator="false"
                 android:max="5"
                 android:numStars="5"
-                android:scaleX="0.7"
-                android:scaleY="0.7"
-                android:transformPivotX="0dp"
-                android:transformPivotY="0dp"
                 app:layout_constraintStart_toStartOf="@+id/tvBookTitle"
+                app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/tvBookStatus" />
 
             <TextView
@@ -189,7 +185,7 @@
                 android:scaleY="0.9"
                 android:contentDescription="@string/ivBookStatusToRead"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintStart_toStartOf="@+id/rbRatingIndicator"
+                app:layout_constraintStart_toStartOf="@+id/tvBookTitle"
                 app:layout_constraintTop_toBottomOf="@+id/rbRatingIndicator"
                 app:srcCompat="@drawable/ic_baseline_more_horiz_48" />
 

@@ -80,14 +80,22 @@ class DisplayBookFragment : Fragment(R.layout.fragment_display_book) {
         }
 
         rbRatingIndicator.onRatingBarChangeListener =
-            OnRatingBarChangeListener { ratingBar, rating, fromUser ->
+            OnRatingBarChangeListener { _, rating, fromUser ->
 
-                changeBooksRating(book, rating)
+                if (fromUser) {
+                    var firstCheck = true
+                    viewModel.getBook(book.id).observe(viewLifecycleOwner) { book ->
+                        if (firstCheck) {
+                            firstCheck = false
+                            changeBooksRating(book, rating)
 
-                Toast.makeText(
-                    (activity as ListActivity).baseContext,
-                    R.string.rating_changes_succesfully, Toast.LENGTH_SHORT
-                ).show()
+                            Toast.makeText(
+                                (activity as ListActivity).baseContext,
+                                R.string.rating_changes_succesfully, Toast.LENGTH_SHORT
+                            ).show()
+                        }
+                    }
+                }
             }
 
         tvBookStatus.setOnClickListener {
@@ -317,22 +325,25 @@ class DisplayBookFragment : Fragment(R.layout.fragment_display_book) {
     }
 
     private fun initialViewsSetup() {
+        cvBookDisplay1.bringToFront()
+
+        cvBookDisplay2.translationY = -1500F
+        cvBookDisplay1.translationY = 500F
+
+        ivDetails.bringToFront()
+        ivDetails.visibility = View.VISIBLE
+
+        ivDetails2.alpha = 0F
+        ivDetails2.visibility = View.INVISIBLE
+
+
+
         viewModel.getBook(book.id).observe(viewLifecycleOwner) { book ->
-            cvBookDisplay1.bringToFront()
             tvBookTitle.text = book.bookTitle
             tvBookAuthor.text = book.bookAuthor
-//            rbRatingIndicator.rating = book.bookRating
+            rbRatingIndicator.rating = book.bookRating
             tvBookPages.text = book.bookNumberOfPages.toString()
             tvBookPublishYear.text = book.bookPublishYear.toString()
-
-            cvBookDisplay2.translationY = -1500F
-            cvBookDisplay1.translationY = 500F
-
-            ivDetails.bringToFront()
-            ivDetails.visibility = View.VISIBLE
-
-            ivDetails2.alpha = 0F
-            ivDetails2.visibility = View.INVISIBLE
 
             when (book.bookStatus) {
                 Constants.BOOK_STATUS_READ -> {
@@ -406,6 +417,10 @@ class DisplayBookFragment : Fragment(R.layout.fragment_display_book) {
             val tvBookTitleLayout = tvBookTitle.layoutParams as ConstraintLayout.LayoutParams
             tvBookTitleLayout.startToStart = R.id.clBookDisplay1
             tvBookTitle.layoutParams = tvBookTitleLayout
+
+            val rbRatingIndicatorLayout = rbRatingIndicator.layoutParams as ConstraintLayout.LayoutParams
+            rbRatingIndicatorLayout.marginStart = -50
+            rbRatingIndicator.layoutParams = rbRatingIndicatorLayout
         } else {
             val circularProgressDrawable = CircularProgressDrawable(view.context)
             circularProgressDrawable.strokeWidth = 5f
