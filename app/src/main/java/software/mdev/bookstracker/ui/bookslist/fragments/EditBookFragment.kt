@@ -229,7 +229,7 @@ class EditBookFragment : Fragment(R.layout.fragment_add_edit_book) {
             tietBookTitle.text.toString().unaccent().replace("ł", "l", false),
             tietBookAuthor.text.toString().unaccent().replace("ł", "l", false),
             false,
-            Constants.DATABASE_EMPTY_VALUE,
+            book.bookCoverUrl,
             tietBookOLID.text.toString(),
             Constants.DATABASE_EMPTY_VALUE,
             tietBookISBN.text.toString(),
