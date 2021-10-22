@@ -4,9 +4,7 @@ import android.content.Context
 import android.os.Bundle
 import android.view.KeyEvent
 import android.view.View
-import android.view.animation.Animation
-import android.view.animation.AnticipateOvershootInterpolator
-import android.view.animation.ScaleAnimation
+import android.view.animation.*
 import android.view.inputmethod.InputMethodManager
 import android.widget.EditText
 import androidx.core.widget.addTextChangedListener
@@ -110,26 +108,26 @@ class ToReadFragment : Fragment(R.layout.fragment_to_read) {
         })
 
         btnAddManual.setOnClickListener{
-            hideAddOptionButtons()
+            hideAddOptionButtons(false)
 
-            AddBookDialog(view.context,
-                object: AddBookDialogListener {
-                    override fun onSaveButtonClicked(item: Book) {
-                        viewModel.upsert(item)
-                        recalculateChallenges()
-                        when(item.bookStatus) {
-                            Constants.BOOK_STATUS_READ -> { findNavController().navigate(
-                                R.id.action_toReadFragment_to_readFragment
-                            )
-                            }
-                            Constants.BOOK_STATUS_IN_PROGRESS -> { findNavController().navigate(
-                                R.id.action_toReadFragment_to_inProgressFragment
-                            )
-                            }
-                        }
-                    }
-                }
-            ).show()
+            var emptyBook = Book(
+                "","",0F,"",
+                "","","",
+                0,"",
+                "",true,
+                "","",
+                "","",0)
+
+
+            val bundle = Bundle().apply {
+                putSerializable(Constants.SERIALIZABLE_BUNDLE_BOOK, emptyBook)
+                putSerializable(Constants.SERIALIZABLE_BUNDLE_TRUE_FOR_EDIT, false)
+            }
+
+            findNavController().navigate(
+                R.id.action_toReadFragment_to_addEditBookFragment,
+                bundle
+            )
         }
 
         fabAddBook.setOnClickListener {
@@ -142,14 +140,14 @@ class ToReadFragment : Fragment(R.layout.fragment_to_read) {
         }
 
         btnAddSearch.setOnClickListener {
-            hideAddOptionButtons()
+            hideAddOptionButtons(false)
 
             findNavController().navigate(
                 R.id.action_toReadFragment_to_addBookSearchFragment)
         }
 
         btnAddScan.setOnClickListener {
-            hideAddOptionButtons()
+            hideAddOptionButtons(false)
 
             if (Functions().checkPermission(activity as ListActivity, android.Manifest.permission.CAMERA)) {
                 findNavController().navigate(R.id.action_toReadFragment_to_addBookScanFragment)
@@ -273,7 +271,7 @@ class ToReadFragment : Fragment(R.layout.fragment_to_read) {
                     ivClearSearch.visibility = View.INVISIBLE
                     ivClearSearch.isClickable = false
                     it.hideKeyboard()
-                    this.getBooks(bookAdapter)
+                    getBooks(bookAdapter)
                 }
             }
         }
@@ -284,28 +282,31 @@ class ToReadFragment : Fragment(R.layout.fragment_to_read) {
         }
     }
 
-    private fun hideAddOptionButtons() {
-        btnAddManual.animate().translationY(500F).setDuration(500L).setInterpolator(
-            AnticipateOvershootInterpolator()
-        ).start()
-        btnAddSearch.animate().translationY(500F).setDuration(500L).setInterpolator(
-            AnticipateOvershootInterpolator()
-        ).start()
-        btnAddScan.animate().translationY(500F).setDuration(500L).setInterpolator(
-            AnticipateOvershootInterpolator()
-        ).start()
+    private fun hideAddOptionButtons(animateHiding: Boolean = true) {
+        btnAddManual.animate().translationY(500F).setDuration(500L).setInterpolator(AnticipateOvershootInterpolator()).start()
+        btnAddSearch.animate().translationY(500F).setDuration(500L).setInterpolator(AnticipateOvershootInterpolator()).start()
+        btnAddScan.animate().translationY(500F).setDuration(500L).setInterpolator(AnticipateOvershootInterpolator()).start()
 
         fabAddBook.animate().rotation( 0F).setDuration(500L).start()
         fabAddBook.animate().scaleX(0.8F).setDuration(250L).start()
         fabAddBook.animate().scaleY(0.8F).setDuration(250L).start()
 
-        MainScope().launch {
-            delay(250)
+        if (animateHiding) {
+            MainScope().launch {
+                delay(250)
 
-            fabAddBook.animate().scaleX(1F).setDuration(250L).start()
-            fabAddBook.animate().scaleY(1F).setDuration(250L).start()
+                fabAddBook.animate().scaleX(1F).setDuration(250L).start()
+                fabAddBook.animate().scaleY(1F).setDuration(250L).start()
 
-            delay(250)
+                delay(250)
+                btnAddManual.visibility = View.GONE
+                btnAddSearch.visibility = View.GONE
+                btnAddScan.visibility = View.GONE
+                btnAddManual.isClickable = false
+                btnAddSearch.isClickable = false
+                btnAddScan.isClickable = false
+            }
+        } else {
             btnAddManual.visibility = View.GONE
             btnAddSearch.visibility = View.GONE
             btnAddScan.visibility = View.GONE
@@ -332,15 +333,9 @@ class ToReadFragment : Fragment(R.layout.fragment_to_read) {
         fabAddBook.animate().scaleX(0.8F).setDuration(250L).start()
         fabAddBook.animate().scaleY(0.8F).setDuration(250L).start()
 
-        btnAddManual.animate().translationY(0F).setDuration(500L).setInterpolator(
-            AnticipateOvershootInterpolator()
-        ).start()
-        btnAddSearch.animate().translationY(0F).setDuration(500L).setInterpolator(
-            AnticipateOvershootInterpolator()
-        ).start()
-        btnAddScan.animate().translationY(0F).setDuration(500L).setInterpolator(
-            AnticipateOvershootInterpolator()
-        ).start()
+        btnAddManual.animate().translationY(0F).setDuration(500L).setInterpolator(AnticipateOvershootInterpolator()).start()
+        btnAddSearch.animate().translationY(0F).setDuration(500L).setInterpolator(AnticipateOvershootInterpolator()).start()
+        btnAddScan.animate().translationY(0F).setDuration(500L).setInterpolator(AnticipateOvershootInterpolator()).start()
 
         MainScope().launch {
             delay(250)

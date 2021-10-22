@@ -38,10 +38,10 @@ import kotlinx.coroutines.MainScope
 import androidx.activity.OnBackPressedCallback
 
 
-class EditBookFragment : Fragment(R.layout.fragment_add_edit_book) {
+class AddEditBookFragment : Fragment(R.layout.fragment_add_edit_book) {
 
     lateinit var viewModel: BooksViewModel
-    private val args: EditBookFragmentArgs by navArgs()
+    private val args: AddEditBookFragmentArgs by navArgs()
     lateinit var book: Book
     lateinit var listActivity: ListActivity
     private var bookFinishDateMs: Long? = null
@@ -158,25 +158,35 @@ class EditBookFragment : Fragment(R.layout.fragment_add_edit_book) {
             if (validateDetails()) {
                 val newBook = getDetailsFromInputs()
 
-                viewModel.updateBook(
-                    book.id,
-                    newBook.bookTitle,
-                    newBook.bookAuthor,
-                    newBook.bookRating,
-                    newBook.bookStatus,
-                    newBook.bookPriority,
-                    newBook.bookStartDate,
-                    newBook.bookFinishDate,
-                    newBook.bookNumberOfPages,
-                    newBook.bookTitle_ASCII,
-                    newBook.bookAuthor_ASCII,
-                    newBook.bookIsDeleted,
-                    newBook.bookCoverUrl,
-                    newBook.bookOLID,
-                    newBook.bookISBN10,
-                    newBook.bookISBN13,
-                    newBook.bookPublishYear
-                )
+                if (!trueForEdit) {
+                    newBook.bookCoverUrl = Constants.DATABASE_EMPTY_VALUE
+                    if (newBook.bookOLID == "")
+                        newBook.bookOLID = Constants.DATABASE_EMPTY_VALUE
+                    if (newBook.bookISBN13 == "")
+                        newBook.bookISBN13 = Constants.DATABASE_EMPTY_VALUE
+
+                    viewModel.upsert(newBook)
+                } else {
+                    viewModel.updateBook(
+                        book.id,
+                        newBook.bookTitle,
+                        newBook.bookAuthor,
+                        newBook.bookRating,
+                        newBook.bookStatus,
+                        newBook.bookPriority,
+                        newBook.bookStartDate,
+                        newBook.bookFinishDate,
+                        newBook.bookNumberOfPages,
+                        newBook.bookTitle_ASCII,
+                        newBook.bookAuthor_ASCII,
+                        newBook.bookIsDeleted,
+                        newBook.bookCoverUrl,
+                        newBook.bookOLID,
+                        newBook.bookISBN10,
+                        newBook.bookISBN13,
+                        newBook.bookPublishYear
+                    )
+                }
 
                 recalculateChallenges()
             }

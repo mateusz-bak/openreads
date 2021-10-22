@@ -111,24 +111,24 @@ class ReadFragment : Fragment(R.layout.fragment_read) {
         btnAddManual.setOnClickListener{
             hideAddOptionButtons(false)
 
-            AddBookDialog(view.context,
-                object: AddBookDialogListener {
-                    override fun onSaveButtonClicked(item: Book) {
-                        viewModel.upsert(item)
-                        recalculateChallenges()
-                        when(item.bookStatus) {
-                            Constants.BOOK_STATUS_IN_PROGRESS -> { findNavController().navigate(
-                                R.id.action_readFragment_to_inProgressFragment
-                                )
-                            }
-                            Constants.BOOK_STATUS_TO_READ -> { findNavController().navigate(
-                                R.id.action_readFragment_to_toReadFragment
-                                )
-                            }
-                        }
-                    }
-                }
-            ).show()
+            var emptyBook = Book(
+                "","",0F,"",
+                "","","",
+                0,"",
+                "",true,
+                "","",
+                "","",0)
+
+
+            val bundle = Bundle().apply {
+                putSerializable(Constants.SERIALIZABLE_BUNDLE_BOOK, emptyBook)
+                putSerializable(Constants.SERIALIZABLE_BUNDLE_TRUE_FOR_EDIT, false)
+            }
+
+            findNavController().navigate(
+                R.id.action_readFragment_to_addEditBookFragment,
+                bundle
+            )
         }
 
         fabAddBook.setOnClickListener {
@@ -338,6 +338,13 @@ class ReadFragment : Fragment(R.layout.fragment_read) {
                 btnAddSearch.isClickable = false
                 btnAddScan.isClickable = false
             }
+        } else {
+            btnAddManual.visibility = View.GONE
+            btnAddSearch.visibility = View.GONE
+            btnAddScan.visibility = View.GONE
+            btnAddManual.isClickable = false
+            btnAddSearch.isClickable = false
+            btnAddScan.isClickable = false
         }
     }
 
@@ -449,7 +456,7 @@ class ReadFragment : Fragment(R.layout.fragment_read) {
         }
     }
 
-    fun recalculateChallenges() {
+    private fun recalculateChallenges() {
         viewModel.getSortedBooksByFinishDateDesc(Constants.BOOK_STATUS_READ)
             .observe(viewLifecycleOwner, Observer { books ->
                 var year: Int

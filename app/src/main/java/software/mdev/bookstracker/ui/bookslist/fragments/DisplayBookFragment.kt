@@ -489,7 +489,7 @@ class DisplayBookFragment : Fragment(R.layout.fragment_display_book) {
             }
 
             findNavController().navigate(
-                R.id.action_displayBookFragment_to_editBookFragment,
+                R.id.action_displayBookFragment_to_addEditBookFragment,
                 bundle
             )
         }

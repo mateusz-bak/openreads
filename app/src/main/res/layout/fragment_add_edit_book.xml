@@ -2,7 +2,8 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/frDisplayBook"
+    android:id="@+id/frAddEditBook"
+    android:background="?colorOnPrimary"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
@@ -481,6 +482,7 @@
                 android:backgroundTint="@color/teal_bg"
                 android:backgroundTintMode="screen"
                 android:orientation="horizontal"
+                android:visibility="invisible"
                 app:layout_constraintEnd_toEndOf="@+id/tilBookPages"
                 app:layout_constraintStart_toStartOf="@+id/tilBookAuthor"
                 app:layout_constraintTop_toBottomOf="@+id/tilBookISBN">
@@ -555,6 +557,7 @@
                 app:boxStrokeWidthFocused="0dp"
                 app:errorContentDescription="@string/insert_book_notes"
                 app:errorEnabled="true"
+                android:visibility="invisible"
                 app:errorIconDrawable="@drawable/ic_baseline_pin_24"
                 app:errorIconTint="?colorAccent"
                 app:errorTextColor="?colorAccent"

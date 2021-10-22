@@ -33,6 +33,13 @@
         <action
             android:id="@+id/action_readFragment_to_addBookScanFragment"
             app:destination="@id/addBookScanFragment" />
+        <action
+            android:id="@+id/action_readFragment_to_addEditBookFragment"
+            app:destination="@id/addEditBookFragment"
+            app:enterAnim="@anim/slide_in_up"
+            app:exitAnim="@anim/fade_out"
+            app:popEnterAnim="@anim/fade_in"
+            app:popExitAnim="@anim/slide_out_down"/>
     </fragment>
 
     <fragment
@@ -64,6 +71,13 @@
         <action
             android:id="@+id/action_inProgressFragment_to_addBookScanFragment"
             app:destination="@id/addBookScanFragment" />
+        <action
+            android:id="@+id/action_inProgressFragment_to_addEditBookFragment"
+            app:destination="@id/addEditBookFragment"
+            app:enterAnim="@anim/slide_in_up"
+            app:exitAnim="@anim/fade_out"
+            app:popEnterAnim="@anim/fade_in"
+            app:popExitAnim="@anim/slide_out_down"/>
     </fragment>
 
     <fragment
@@ -95,6 +109,13 @@
         <action
             android:id="@+id/action_toReadFragment_to_addBookScanFragment"
             app:destination="@id/addBookScanFragment" />
+        <action
+            android:id="@+id/action_toReadFragment_to_addEditBookFragment"
+            app:destination="@id/addEditBookFragment"
+            app:enterAnim="@anim/slide_in_up"
+            app:exitAnim="@anim/fade_out"
+            app:popEnterAnim="@anim/fade_in"
+            app:popExitAnim="@anim/slide_out_down"/>
     </fragment>
 
     <fragment
@@ -102,8 +123,8 @@
         android:name="software.mdev.bookstracker.ui.bookslist.fragments.DisplayBookFragment"
         android:label="DisplayBookFragment" >
         <action
-            android:id="@+id/action_displayBookFragment_to_editBookFragment"
-            app:destination="@id/editBookFragment"
+            android:id="@+id/action_displayBookFragment_to_addEditBookFragment"
+            app:destination="@id/addEditBookFragment"
             app:enterAnim="@anim/slide_in_up"
             app:exitAnim="@anim/slide_out_up"
             app:popEnterAnim="@anim/slide_in_down"
@@ -125,14 +146,17 @@
             app:destination="@id/toReadFragment" />
     </fragment>
     <fragment
-        android:id="@+id/editBookFragment"
-        android:name="software.mdev.bookstracker.ui.bookslist.fragments.EditBookFragment"
-        android:label="EditBookFragment" >
+        android:id="@+id/addEditBookFragment"
+        android:name="software.mdev.bookstracker.ui.bookslist.fragments.AddEditBookFragment"
+        android:label="AddEditBookFragment" >
         <argument
             android:name="book"
             app:argType="software.mdev.bookstracker.data.db.entities.Book" />
+        <argument
+            android:name="trueForEdit"
+            app:argType="boolean" />
         <action
-            android:id="@+id/action_editBookFragment_to_displayBookFragment"
+            android:id="@+id/action_addEditBookFragment_to_displayBookFragment"
             app:destination="@id/displayBookFragment" />
     </fragment>
     <fragment
