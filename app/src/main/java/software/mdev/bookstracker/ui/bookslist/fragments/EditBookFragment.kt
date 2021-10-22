@@ -1,14 +1,9 @@
 package software.mdev.bookstracker.ui.bookslist.fragments
 
-import android.animation.AnimatorSet
-import android.animation.ObjectAnimator
 import android.content.Context
 import android.os.Bundle
 import android.view.View
 import android.view.inputmethod.InputMethodManager
-import android.widget.DatePicker
-import android.widget.EditText
-import androidx.appcompat.app.AlertDialog
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProviders
@@ -36,20 +31,11 @@ import kotlinx.coroutines.launch
 import software.mdev.bookstracker.data.db.LanguageDatabase
 import software.mdev.bookstracker.data.repositories.LanguageRepository
 import software.mdev.bookstracker.data.repositories.OpenLibraryRepository
-import android.widget.ArrayAdapter
 import androidx.constraintlayout.widget.ConstraintLayout
-import android.view.ViewGroup
 import android.view.animation.AnimationUtils
-import android.view.animation.BounceInterpolator
-import androidx.core.view.marginTop
+import android.widget.*
 import kotlinx.coroutines.MainScope
-import android.widget.RelativeLayout
-import android.widget.AdapterView
-
-import android.widget.TextView
 import androidx.activity.OnBackPressedCallback
-import kotlinx.android.synthetic.main.fragment_changelog.*
-import kotlinx.android.synthetic.main.fragment_display_book.*
 
 
 class EditBookFragment : Fragment(R.layout.fragment_add_edit_book) {
@@ -104,11 +90,6 @@ class EditBookFragment : Fragment(R.layout.fragment_add_edit_book) {
         tietBookTitle.requestFocus()
         showKeyboard(tietBookTitle,350)
 
-        btnBookSave.setOnClickListener{
-            view?.hideKeyboard()
-            recalculateChallenges()
-        }
-
         btnBookCancel.setOnClickListener{
             view?.hideKeyboard()
             recalculateChallenges()
@@ -132,8 +113,12 @@ class EditBookFragment : Fragment(R.layout.fragment_add_edit_book) {
         }
 
         btnStartDateSave.setOnClickListener {
+            bookStartDateMs = getDateFromDatePickerInMillis(dpBookStartDate)
+            bookStartDateMs = clearDateOfTime(bookStartDateMs!!)
+
             svEditor.visibility = View.VISIBLE
             startDatePickerVis(false)
+            tvBookStartDateValue.text = bookStartDateMs?.let { it1 -> convertLongToTime(it1) }
         }
 
         btnFinishDateCancel.setOnClickListener {
@@ -142,8 +127,12 @@ class EditBookFragment : Fragment(R.layout.fragment_add_edit_book) {
         }
 
         btnFinishDateSave.setOnClickListener {
+            bookFinishDateMs = getDateFromDatePickerInMillis(dpBookFinishDate)
+            bookFinishDateMs = clearDateOfTime(bookFinishDateMs!!)
+
             svEditor.visibility = View.VISIBLE
             finishDatePickerVis(false)
+            tvBookFinishDateValue.text = bookFinishDateMs?.let { it1 -> convertLongToTime(it1) }
         }
 
         requireActivity()
@@ -163,120 +152,117 @@ class EditBookFragment : Fragment(R.layout.fragment_add_edit_book) {
             }
             )
 
-//        fabSaveEditedBook.setOnClickListener {
-//            val bookTitle = etEditedBookTitle.text.toString()
-//            val bookAuthor = etEditedBookAuthor.text.toString()
-//
-//            val bookPublishYear = etEditedPublishYear.text.toString()
-//            var bookPublishYearInt = 0
-//
-//            if (bookPublishYear.isNotEmpty())
-//                bookPublishYearInt = bookPublishYear.toInt()
-//
-//            var bookRating = 0.0F
-//            val bookNumberOfPagesIntOrNull = etEditedPagesNumber.text.toString().toIntOrNull()
-//            var bookNumberOfPagesInt: Int
-//
-//            var bookOLID = etEditedBookOLID.text.toString()
-//            if (bookOLID.isEmpty()) {
-//                bookOLID = Constants.DATABASE_EMPTY_VALUE
-//            }
-//
-//            var bookISBN10 = etEditedBookISBN10.text.toString()
-//            if (bookISBN10.isEmpty()) {
-//                bookISBN10 = Constants.DATABASE_EMPTY_VALUE
-//            }
-//
-//            var bookISBN13 = etEditedBookISBN13.text.toString()
-//            if (bookISBN13.isEmpty()) {
-//                bookISBN13 = Constants.DATABASE_EMPTY_VALUE
-//            }
-//
-//            if (bookTitle.isNotEmpty()) {
-//                if (bookAuthor.isNotEmpty()) {
-//                    if (whatIsClicked != Constants.BOOK_STATUS_NOTHING) {
-//                            bookNumberOfPagesInt = when (bookNumberOfPagesIntOrNull) {
-//                                null -> 0
-//                                else -> bookNumberOfPagesIntOrNull
-//                            }
-//
-//                                    if ((bookFinishDateMs != null && bookStartDateMs != null && bookStartDateMs!! < bookFinishDateMs!!)
-//                                        || whatIsClicked == Constants.BOOK_STATUS_IN_PROGRESS
-//                                        || whatIsClicked == Constants.BOOK_STATUS_TO_READ
-//                                        || bookFinishDateMs == null
-//                                        || bookStartDateMs == null ) {
-//
-//                                        when (whatIsClicked) {
-//                                            Constants.BOOK_STATUS_READ -> {
-//                                                bookRating = rbEditedRating.rating
-//                                            }
-//                                            Constants.BOOK_STATUS_IN_PROGRESS -> {
-//                                                bookRating = 0.0F
-//                                                bookFinishDateMs = null
-//                                            }
-//                                            Constants.BOOK_STATUS_TO_READ -> {
-//                                                bookRating = 0.0F
-//                                                bookNumberOfPagesInt = 0
-//                                                bookStartDateMs = null
-//                                                bookFinishDateMs = null
-//                                            }
-//                                        }
-//
-//                                            val REGEX_UNACCENT =
-//                                                "\\p{InCombiningDiacriticalMarks}+".toRegex()
-//
-//                                            fun CharSequence.unaccent(): String {
-//                                                val temp =
-//                                                    Normalizer.normalize(this, Normalizer.Form.NFD)
-//                                                return REGEX_UNACCENT.replace(temp, "")
-//                                            }
-//
-//                                            val bookStatus = whatIsClicked
-//
-//                                            var newStartDate = bookStartDateMs.toString()
-//                                            var newFinishDate = bookFinishDateMs.toString()
-//
-//                                            if (whatIsClicked == Constants.BOOK_STATUS_IN_PROGRESS || whatIsClicked == Constants.BOOK_STATUS_TO_READ) {
-//                                                newStartDate = Constants.DATABASE_EMPTY_VALUE
-//                                                newFinishDate = Constants.DATABASE_EMPTY_VALUE
-//                                            }
-//
-//                                            viewModel.updateBook(
-//                                                book.id,
-//                                                bookTitle,
-//                                                bookAuthor,
-//                                                bookRating,
-//                                                bookStatus,
-//                                                book.bookPriority,
-//                                                newStartDate,
-//                                                newFinishDate,
-//                                                bookNumberOfPagesInt,
-//                                                bookTitle_ASCII = bookTitle.unaccent()
-//                                                    .replace("ł", "l", false),
-//                                                bookAuthor_ASCII = bookAuthor.unaccent()
-//                                                    .replace("ł", "l", false),
-//                                                false,
-//                                                book.bookCoverUrl,
-//                                                bookOLID,
-//                                                bookISBN10,
-//                                                bookISBN13,
-//                                                bookPublishYearInt
-//                                            )
-//
-//                                            recalculateChallenges()
-//                                        } else {
-//                                            Snackbar.make(it, R.string.sbWarningStartDateMustBeBeforeFinishDate, Snackbar.LENGTH_SHORT).show()
-//                                        }
-//                    } else {
-//                        Snackbar.make(it, getString(R.string.sbWarningState), Snackbar.LENGTH_SHORT).show()
-//                    }
-//                } else {
-//                    Snackbar.make(it, getString(R.string.sbWarningAuthor), Snackbar.LENGTH_SHORT).show()
-//                }
-//            } else {
-//                Snackbar.make(it, getString(R.string.sbWarningTitle), Snackbar.LENGTH_SHORT).show()
-//            }
-//        }
+        btnBookSave.setOnClickListener {
+            view?.hideKeyboard()
+
+            if (validateDetails()) {
+                val newBook = getDetailsFromInputs()
+
+                viewModel.updateBook(
+                    book.id,
+                    newBook.bookTitle,
+                    newBook.bookAuthor,
+                    newBook.bookRating,
+                    newBook.bookStatus,
+                    newBook.bookPriority,
+                    newBook.bookStartDate,
+                    newBook.bookFinishDate,
+                    newBook.bookNumberOfPages,
+                    newBook.bookTitle_ASCII,
+                    newBook.bookAuthor_ASCII,
+                    newBook.bookIsDeleted,
+                    newBook.bookCoverUrl,
+                    newBook.bookOLID,
+                    newBook.bookISBN10,
+                    newBook.bookISBN13,
+                    newBook.bookPublishYear
+                )
+
+                recalculateChallenges()
+            }
+        }
+    }
+
+    private fun getDetailsFromInputs(): Book {
+        val REGEX_UNACCENT =
+            "\\p{InCombiningDiacriticalMarks}+".toRegex()
+
+        fun CharSequence.unaccent(): String {
+            val temp =
+                Normalizer.normalize(this, Normalizer.Form.NFD)
+            return REGEX_UNACCENT.replace(temp, "")
+        }
+
+        var bookRating = 0.0F
+        if (whatIsClicked == Constants.BOOK_STATUS_READ)
+            bookRating = rbBookRating.rating
+
+        var booksPages = 0
+        if (tietBookPages.text != null) {
+            if (tietBookPages.text!!.isNotEmpty())
+                booksPages = tietBookPages.text.toString().toInt()
+        }
+
+        var booksPubYear = 0
+        if (tietBookPublishYear.text != null) {
+            if (tietBookPublishYear.text!!.isNotEmpty())
+                booksPubYear = tietBookPublishYear.text.toString().toInt()
+        }
+
+        var bookStartDate = Constants.DATABASE_EMPTY_VALUE
+        if (whatIsClicked == Constants.BOOK_STATUS_READ || whatIsClicked == Constants.BOOK_STATUS_IN_PROGRESS)
+            bookStartDate = bookStartDateMs.toString()
+
+        var bookFinishDate = Constants.DATABASE_EMPTY_VALUE
+        if (whatIsClicked == Constants.BOOK_STATUS_READ)
+            bookFinishDate = bookFinishDateMs.toString()
+
+        return Book(
+            tietBookTitle.text.toString(),
+            tietBookAuthor.text.toString(),
+            bookRating,
+            whatIsClicked,
+            Constants.DATABASE_EMPTY_VALUE,
+            bookStartDate,
+            bookFinishDate,
+            booksPages,
+            tietBookTitle.text.toString().unaccent().replace("ł", "l", false),
+            tietBookAuthor.text.toString().unaccent().replace("ł", "l", false),
+            false,
+            Constants.DATABASE_EMPTY_VALUE,
+            tietBookOLID.text.toString(),
+            Constants.DATABASE_EMPTY_VALUE,
+            tietBookISBN.text.toString(),
+            booksPubYear
+        )
+    }
+
+    private fun validateDetails(): Boolean {
+        if (tietBookTitle.text != null) {
+            if (tietBookTitle.text!!.isEmpty()) {
+                view?.let { Snackbar.make(it, getString(R.string.sbWarningTitle), Snackbar.LENGTH_SHORT).show() }
+                return false
+            }
+        }
+
+        if (tietBookAuthor.text != null) {
+            if (tietBookAuthor.text!!.isEmpty()) {
+                view?.let { Snackbar.make(it, getString(R.string.sbWarningAuthor), Snackbar.LENGTH_SHORT).show() }
+                return false
+            }
+        }
+
+        when (whatIsClicked) {
+            Constants.BOOK_STATUS_READ -> {
+                if (bookStartDateMs != null && bookFinishDateMs != null) {
+                    if (bookStartDateMs!! > bookFinishDateMs!!) {
+                        view?.let { Snackbar.make(it, getString(R.string.sbWarningStartDateMustBeBeforeFinishDate), Snackbar.LENGTH_SHORT).show() }
+                        return false
+                    }
+                }
+            }
+        }
+        return true
     }
 
     private fun setInitialViews() {
@@ -394,20 +380,16 @@ class EditBookFragment : Fragment(R.layout.fragment_add_edit_book) {
 
         if(book.bookStartDate == "none" || book.bookStartDate == "null") {
             tvBookStartDateValue.text = getString(R.string.set)
-//            ivClearStartDate.visibility = View.INVISIBLE
         } else {
-            var timeStampLong = book.bookStartDate.toLong()
-            tvBookStartDateValue.text = convertLongToTime(timeStampLong)
-//            ivClearStartDate.visibility = View.VISIBLE
+            bookStartDateMs = book.bookStartDate.toLong()
+            tvBookStartDateValue.text = convertLongToTime(bookStartDateMs!!)
         }
 
         if(book.bookFinishDate == "none" || book.bookFinishDate == "null") {
             tvBookFinishDateValue.text = getString(R.string.set)
-//            ivClearStartDate.visibility = View.INVISIBLE
         } else {
-            var timeStampLong = book.bookFinishDate.toLong()
-            tvBookFinishDateValue.text = convertLongToTime(timeStampLong)
-//            ivClearStartDate.visibility = View.VISIBLE
+            bookFinishDateMs = book.bookFinishDate.toLong()
+            tvBookFinishDateValue.text = convertLongToTime(bookFinishDateMs!!)
         }
     }
 
@@ -483,9 +465,30 @@ class EditBookFragment : Fragment(R.layout.fragment_add_edit_book) {
         btnFinishDateSave.visibility = viewVisibility
     }
 
+    private fun clearDateOfTime(orgDate: Long): Long {
+        var date = Calendar.getInstance()
+        date.timeInMillis = orgDate!!
+
+        var year = date.get(Calendar.YEAR)
+        var month = date.get(Calendar.MONTH)
+        var day = date.get(Calendar.DAY_OF_MONTH)
+
+        var dateWithoutTime = Calendar.getInstance()
+        dateWithoutTime.timeInMillis = 0L
+        dateWithoutTime.set(Calendar.YEAR, year)
+        dateWithoutTime.set(Calendar.MONTH, month)
+        dateWithoutTime.set(Calendar.DAY_OF_MONTH, day)
+        dateWithoutTime.set(Calendar.HOUR, 0)
+        dateWithoutTime.set(Calendar.MINUTE, 0)
+        dateWithoutTime.set(Calendar.SECOND, 0)
+        dateWithoutTime.set(Calendar.MILLISECOND, 0)
+
+        return dateWithoutTime.timeInMillis
+    }
+
     private fun initConfig() {
         dpBookStartDate.maxDate = System.currentTimeMillis()
-//        dpBookFinishDate.maxDate = System.currentTimeMillis()
+        dpBookFinishDate.maxDate = System.currentTimeMillis()
     }
 
     private fun hintRatingDatesAnim(views: Array<View>) {

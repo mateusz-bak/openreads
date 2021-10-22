@@ -136,7 +136,7 @@
                     android:imeOptions="actionNext"
                     android:inputType="number"
                     android:maxLength="6"
-                    android:textSize="12sp" />
+                    android:textSize="14sp" />
 
             </com.google.android.material.textfield.TextInputLayout>
 
@@ -176,7 +176,7 @@
                     android:imeOptions="actionNext"
                     android:inputType="number"
                     android:maxLength="4"
-                    android:textSize="12sp" />
+                    android:textSize="14sp" />
 
             </com.google.android.material.textfield.TextInputLayout>
 
@@ -216,7 +216,7 @@
                     android:imeOptions="actionNext"
                     android:inputType="number"
                     android:maxLength="13"
-                    android:textSize="12sp" />
+                    android:textSize="14sp" />
 
             </com.google.android.material.textfield.TextInputLayout>
 
@@ -256,7 +256,7 @@
                     android:imeOptions="actionNext"
                     android:inputType="number"
                     android:maxLength="15"
-                    android:textSize="12sp" />
+                    android:textSize="14sp" />
 
             </com.google.android.material.textfield.TextInputLayout>
 
@@ -473,17 +473,6 @@
                     app:layout_constraintTop_toBottomOf="@+id/tvBookFinishDate" />
             </androidx.constraintlayout.widget.ConstraintLayout>
 
-            <TextView
-                android:id="@+id/tvBookCover"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:gravity="start"
-                android:text="@string/insert_book_cover"
-                android:textColor="@color/grey_777"
-                app:layout_constraintEnd_toEndOf="@+id/clBookStatus"
-                app:layout_constraintStart_toStartOf="@+id/tvBookStatus"
-                app:layout_constraintTop_toBottomOf="@+id/tilBookISBN" />
-
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/rlBookCover"
                 android:layout_width="0dp"
@@ -492,10 +481,9 @@
                 android:backgroundTint="@color/teal_bg"
                 android:backgroundTintMode="screen"
                 android:orientation="horizontal"
-                android:paddingBottom="4dp"
                 app:layout_constraintEnd_toEndOf="@+id/tilBookPages"
                 app:layout_constraintStart_toStartOf="@+id/tilBookAuthor"
-                app:layout_constraintTop_toBottomOf="@+id/tvBookCover">
+                app:layout_constraintTop_toBottomOf="@+id/tilBookISBN">
 
                 <ImageView
                     android:id="@+id/ivBookCover"
