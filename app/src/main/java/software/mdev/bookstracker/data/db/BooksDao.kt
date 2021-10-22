@@ -14,6 +14,9 @@ interface BooksDao {
     @Delete
     suspend fun delete(item: Book)
 
+    @Query("SELECT * FROM Book WHERE id LIKE :id")
+    fun getBook(id: Int?): LiveData<Book>
+
     @Query("SELECT * FROM Book WHERE item_bookStatus LIKE 'read'")
     fun getReadBooks(): LiveData<List<Book>>
 

@@ -10,6 +10,8 @@ class BooksRepository (
 
     suspend fun delete(item: Book) = db.getBooksDao().delete(item)
 
+    fun getBook(id: Int?) = db.getBooksDao().getBook(id)
+
     fun getReadBooks() = db.getBooksDao().getReadBooks()
 
     fun getInProgressBooks() = db.getBooksDao().getInProgressBooks()

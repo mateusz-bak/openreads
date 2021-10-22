@@ -49,11 +49,6 @@ class DisplayBookFragment : Fragment(R.layout.fragment_display_book) {
         book = args.book
 
         initialViewsSetup()
-        setCover(view)
-        setISBN()
-        setOLID()
-        setFinishDate()
-        setStartDate()
 
         ivBookCover.setOnClickListener {
             animateCover()
@@ -135,7 +130,12 @@ class DisplayBookFragment : Fragment(R.layout.fragment_display_book) {
             Snackbar.make(it, R.string.click_edit_button_to_edit_publish_year, Snackbar.LENGTH_SHORT).show()
         }
 
-        class UndoBookDeletion : View.OnClickListener {
+        clDetails.setOnClickListener {
+            hideDetails()
+        }
+
+        class UndoBookDeletion(book: Book) : View.OnClickListener {
+            var book = book
             override fun onClick(view: View) {
                 viewModel.updateBook(
                     book.id,
@@ -160,44 +160,52 @@ class DisplayBookFragment : Fragment(R.layout.fragment_display_book) {
         }
 
         ivDelete.setOnClickListener{
-            val deleteBookWarningDialog = this.context?.let { it1 ->
-                AlertDialog.Builder(it1)
-                    .setTitle(R.string.warning_delete_book_title)
-                    .setMessage(R.string.warning_delete_book_message)
-                    .setIcon(R.drawable.ic_baseline_warning_amber_24)
-                    .setPositiveButton(R.string.warning_delete_book_delete) { _, _ ->
-                        viewModel.updateBook(
-                            book.id,
-                            book.bookTitle,
-                            book.bookAuthor,
-                            book.bookRating,
-                            book.bookStatus,
-                            book.bookPriority,
-                            book.bookStartDate,
-                            book.bookFinishDate,
-                            book.bookNumberOfPages,
-                            book.bookTitle_ASCII,
-                            book.bookAuthor_ASCII,
-                            true,
-                            book.bookCoverUrl,
-                            book.bookOLID,
-                            book.bookISBN10,
-                            book.bookISBN13,
-                            book.bookPublishYear
-                        )
-                        recalculateChallenges(book.bookStatus)
+            var firstCheck = true
+            viewModel.getBook(book.id).observe(viewLifecycleOwner) { book ->
 
-                        Snackbar.make(it, getString(R.string.bookDeleted), Snackbar.LENGTH_LONG)
-                            .setAction(getString(R.string.undo), UndoBookDeletion())
-                            .show()
+                if (firstCheck) {
+                    firstCheck = false
+
+                    val deleteBookWarningDialog = this.context?.let { it1 ->
+                        AlertDialog.Builder(it1)
+                            .setTitle(R.string.warning_delete_book_title)
+                            .setMessage(R.string.warning_delete_book_message)
+                            .setIcon(R.drawable.ic_baseline_warning_amber_24)
+                            .setPositiveButton(R.string.warning_delete_book_delete) { _, _ ->
+                                viewModel.updateBook(
+                                    book.id,
+                                    book.bookTitle,
+                                    book.bookAuthor,
+                                    book.bookRating,
+                                    book.bookStatus,
+                                    book.bookPriority,
+                                    book.bookStartDate,
+                                    book.bookFinishDate,
+                                    book.bookNumberOfPages,
+                                    book.bookTitle_ASCII,
+                                    book.bookAuthor_ASCII,
+                                    true,
+                                    book.bookCoverUrl,
+                                    book.bookOLID,
+                                    book.bookISBN10,
+                                    book.bookISBN13,
+                                    book.bookPublishYear
+                                )
+                                recalculateChallenges(book.bookStatus)
+
+                                Snackbar.make(it, getString(R.string.bookDeleted), Snackbar.LENGTH_LONG)
+                                    .setAction(getString(R.string.undo), UndoBookDeletion(book))
+                                    .show()
+                            }
+                            .setNegativeButton(R.string.warning_delete_book_cancel) { _, _ ->
+                            }
+                            .create()
                     }
-                    .setNegativeButton(R.string.warning_delete_book_cancel) { _, _ ->
-                    }
-                    .create()
+
+                    deleteBookWarningDialog?.show()
+                    deleteBookWarningDialog?.getButton(AlertDialog.BUTTON_NEGATIVE)?.setTextColor(ContextCompat.getColor(listActivity.baseContext, R.color.grey_500))
+                }
             }
-
-            deleteBookWarningDialog?.show()
-            deleteBookWarningDialog?.getButton(AlertDialog.BUTTON_NEGATIVE)?.setTextColor(ContextCompat.getColor(listActivity.baseContext, R.color.grey_500))
         }
 
         requireActivity()
@@ -212,6 +220,11 @@ class DisplayBookFragment : Fragment(R.layout.fragment_display_book) {
                 }
             }
             )
+    }
+
+    override fun onResume() {
+        super.onResume()
+        initialViewsSetup()
     }
 
     private fun showDetails() {
@@ -304,40 +317,49 @@ class DisplayBookFragment : Fragment(R.layout.fragment_display_book) {
     }
 
     private fun initialViewsSetup() {
-        tvBookTitle.text = book.bookTitle
-        tvBookAuthor.text = book.bookAuthor
-        rbRatingIndicator.rating = book.bookRating
-        tvBookPages.text = book.bookNumberOfPages.toString()
-        tvBookPublishYear.text = book.bookPublishYear.toString()
+        viewModel.getBook(book.id).observe(viewLifecycleOwner) { book ->
+            cvBookDisplay1.bringToFront()
+            tvBookTitle.text = book.bookTitle
+            tvBookAuthor.text = book.bookAuthor
+//            rbRatingIndicator.rating = book.bookRating
+            tvBookPages.text = book.bookNumberOfPages.toString()
+            tvBookPublishYear.text = book.bookPublishYear.toString()
 
-        cvBookDisplay2.translationY = -1500F
-        cvBookDisplay1.translationY = 500F
+            cvBookDisplay2.translationY = -1500F
+            cvBookDisplay1.translationY = 500F
 
-        ivDetails.bringToFront()
-        ivDetails.visibility = View.VISIBLE
+            ivDetails.bringToFront()
+            ivDetails.visibility = View.VISIBLE
 
-        ivDetails2.alpha = 0F
-        ivDetails2.visibility = View.INVISIBLE
+            ivDetails2.alpha = 0F
+            ivDetails2.visibility = View.INVISIBLE
 
-        when (book.bookStatus) {
-            Constants.BOOK_STATUS_READ -> {
-                tvBookStatus.text = getString(R.string.finished)
-                ivBookStatusInProgress.visibility = View.INVISIBLE
-                ivBookStatusToRead.visibility = View.INVISIBLE
-                rbRatingIndicator.visibility = View.VISIBLE
+            when (book.bookStatus) {
+                Constants.BOOK_STATUS_READ -> {
+                    tvBookStatus.text = getString(R.string.finished)
+                    ivBookStatusInProgress.visibility = View.INVISIBLE
+                    ivBookStatusToRead.visibility = View.INVISIBLE
+                    rbRatingIndicator.visibility = View.VISIBLE
+                }
+                Constants.BOOK_STATUS_IN_PROGRESS -> {
+                    tvBookStatus.text = getString(R.string.inProgress)
+                    ivBookStatusRead.visibility = View.INVISIBLE
+                    ivBookStatusToRead.visibility = View.INVISIBLE
+                    rbRatingIndicator.visibility = View.GONE
+                }
+                Constants.BOOK_STATUS_TO_READ -> {
+                    tvBookStatus.text = getString(R.string.toRead)
+                    ivBookStatusInProgress.visibility = View.INVISIBLE
+                    ivBookStatusRead.visibility = View.INVISIBLE
+                    rbRatingIndicator.visibility = View.GONE
+                }
             }
-            Constants.BOOK_STATUS_IN_PROGRESS -> {
-                tvBookStatus.text = getString(R.string.inProgress)
-                ivBookStatusRead.visibility = View.INVISIBLE
-                ivBookStatusToRead.visibility = View.INVISIBLE
-                rbRatingIndicator.visibility = View.GONE
-            }
-            Constants.BOOK_STATUS_TO_READ -> {
-                tvBookStatus.text = getString(R.string.toRead)
-                ivBookStatusInProgress.visibility = View.INVISIBLE
-                ivBookStatusRead.visibility = View.INVISIBLE
-                rbRatingIndicator.visibility = View.GONE
-            }
+
+            view?.let { setCover(it, book.bookCoverUrl) }
+            setISBN(book.bookISBN13, book.bookISBN10)
+            setOLID(book.bookOLID)
+            setFinishDate(book.bookFinishDate)
+            setStartDate(book.bookStartDate)
         }
     }
 
@@ -377,8 +399,8 @@ class DisplayBookFragment : Fragment(R.layout.fragment_display_book) {
         }
     }
 
-    private fun setCover(view: View) {
-        if (book.bookCoverUrl == Constants.DATABASE_EMPTY_VALUE) {
+    private fun setCover(view: View, bookCoverUrl: String) {
+        if (bookCoverUrl == Constants.DATABASE_EMPTY_VALUE) {
             ivBookCover.visibility = View.GONE
 
             val tvBookTitleLayout = tvBookTitle.layoutParams as ConstraintLayout.LayoutParams
@@ -396,8 +418,7 @@ class DisplayBookFragment : Fragment(R.layout.fragment_display_book) {
             )
             circularProgressDrawable.start()
 
-            val coverID = book.bookCoverUrl
-            val coverUrl = "https://covers.openlibrary.org/b/id/$coverID-L.jpg"
+            val coverUrl = "https://covers.openlibrary.org/b/id/$bookCoverUrl-L.jpg"
 
             Picasso
                 .get()
@@ -409,52 +430,54 @@ class DisplayBookFragment : Fragment(R.layout.fragment_display_book) {
         }
     }
 
-    private fun setISBN() {
-        if (book.bookISBN13 != Constants.DATABASE_EMPTY_VALUE) {
-            tvBookISBN.text = book.bookISBN13
-        } else if (book.bookISBN10 != Constants.DATABASE_EMPTY_VALUE) {
-            tvBookISBN.text = book.bookISBN10
+    private fun setISBN(bookISBN13: String, bookISBN10: String) {
+        if (bookISBN13 != Constants.DATABASE_EMPTY_VALUE && bookISBN13 != "") {
+            tvBookISBN.text = bookISBN13
+        } else if (bookISBN10 != Constants.DATABASE_EMPTY_VALUE && bookISBN10 != "") {
+            tvBookISBN.text = bookISBN10
         } else {
             tvBookISBN.text = getString(R.string.not_set)
         }
     }
 
-    private fun setOLID() {
-        if (book.bookOLID != Constants.DATABASE_EMPTY_VALUE) {
-            val olid: String = book.bookOLID
+    private fun setOLID(bookOLID: String) {
+        if (bookOLID != Constants.DATABASE_EMPTY_VALUE && bookOLID != "") {
+            val olid: String = bookOLID
             val url = "https://openlibrary.org/books/$olid"
             tvBookURL.text = url
         }
     }
 
-    private fun setFinishDate() {
-        if(book.bookFinishDate == "none" || book.bookFinishDate == "null") {
+    private fun setFinishDate(bookFinishDate: String) {
+        if(bookFinishDate == "none" || bookFinishDate == "null") {
             tvDateFinished.text = getString(R.string.not_set)
         } else {
-            val bookFinishTimeStampLong = book.bookFinishDate.toLong()
+            val bookFinishTimeStampLong = bookFinishDate.toLong()
             tvDateFinished.text = convertLongToTime(bookFinishTimeStampLong)
         }
     }
 
-    private fun setStartDate() {
-        if(book.bookStartDate == "none" || book.bookStartDate == "null") {
+    private fun setStartDate(bookStartDate: String) {
+        if(bookStartDate == "none" || bookStartDate == "null") {
             tvDateStarted.text = getString(R.string.not_set)
         } else {
-            val bookStartTimeStampLong = book.bookStartDate.toLong()
+            val bookStartTimeStampLong = bookStartDate.toLong()
             tvDateStarted.text = convertLongToTime(bookStartTimeStampLong)
         }
     }
 
     private fun editBook() {
-        val bundle = Bundle().apply {
-            putSerializable(Constants.SERIALIZABLE_BUNDLE_BOOK, book)
-            putSerializable(Constants.SERIALIZABLE_BUNDLE_TRUE_FOR_EDIT, true)
-        }
+        viewModel.getBook(book.id).observe(viewLifecycleOwner) { book ->
+            val bundle = Bundle().apply {
+                putSerializable(Constants.SERIALIZABLE_BUNDLE_BOOK, book)
+                putSerializable(Constants.SERIALIZABLE_BUNDLE_TRUE_FOR_EDIT, true)
+            }
 
-        findNavController().navigate(
-            R.id.action_displayBookFragment_to_editBookFragment,
-            bundle
-        )
+            findNavController().navigate(
+                R.id.action_displayBookFragment_to_editBookFragment,
+                bundle
+            )
+        }
     }
 
     fun View.hideKeyboard() {
@@ -517,6 +540,8 @@ class DisplayBookFragment : Fragment(R.layout.fragment_display_book) {
     }
 
     private fun changeBooksRating(book: Book, newRating: Float) {
+        book.bookRating = newRating
+
         viewModel.updateBook(
             book.id,
             book.bookTitle,
