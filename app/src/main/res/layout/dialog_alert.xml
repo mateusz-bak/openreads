@@ -6,10 +6,7 @@
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     android:background="@drawable/dialog_rounded"
-    android:paddingStart="24dp"
-    android:paddingTop="8dp"
-    android:paddingEnd="24dp"
-    android:paddingBottom="8dp">
+    android:padding="12dp">
 
     <TextView
         android:id="@+id/tvAlertTitle"
@@ -31,9 +28,10 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="12dp"
         android:justificationMode="inter_word"
+        android:lineSpacingMultiplier="0.8"
         android:text="@string/tvAlertContent1"
         android:textColor="?colorOnSecondary"
-        android:textSize="16sp"
+        android:textSize="15sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"

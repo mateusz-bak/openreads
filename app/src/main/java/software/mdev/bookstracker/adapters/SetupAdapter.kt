@@ -4,6 +4,7 @@ import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.animation.BounceInterpolator
 import androidx.recyclerview.widget.RecyclerView
 import kotlinx.android.synthetic.main.item_setup.view.*
 import kotlinx.android.synthetic.main.layout_theme_selector.view.*
@@ -215,7 +216,7 @@ class SetupAdapter(
     }
 
     private fun selectBtn(holder: ViewPagerViewHolder, selectedBtn: View, position: Int) {
-        var scaleBig = 1.3F
+        var scaleBig = 1.1F
         var scaleSmall = 0.9F
         var listOfButtons = listOf(
             holder.itemView.btn1,
@@ -235,8 +236,8 @@ class SetupAdapter(
 
         for (btn in listOfButtons) {
             if (btn == selectedBtn) {
-                btn.animate().scaleX(scaleBig).setDuration(250L).start()
-                btn.animate().scaleY(scaleBig).setDuration(250L).start()
+                btn.animate().scaleX(scaleBig).setDuration(500L).setInterpolator(BounceInterpolator()).start()
+                btn.animate().scaleY(scaleBig).setDuration(500L).setInterpolator(BounceInterpolator()).start()
 
                 btn.animate().alpha(1F).setDuration(100L).start()
             } else {
