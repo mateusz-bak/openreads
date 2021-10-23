@@ -317,4 +317,6 @@
     <string name="insert_book_notes">Notes</string>
     <string name="insert_book_finish_date">Finish date</string>
     <string name="insert_book_start_date">Start date</string>
+    <string name="tv_book_olid" translatable="false">1234567890</string>
+    <string name="tv_book_olid_title" translatable="false">Open Library ID</string>
 </resources>

@@ -51,7 +51,7 @@ class DisplayBookFragment : Fragment(R.layout.fragment_display_book) {
         initialViewsSetup()
 
         ivBookCover.setOnClickListener {
-            animateCover()
+            animateClickView(it)
 
             if (ivDetails2.visibility == View.VISIBLE)
                 hideDetails()
@@ -60,7 +60,12 @@ class DisplayBookFragment : Fragment(R.layout.fragment_display_book) {
         }
 
         ivEdit.setOnClickListener {
+            animateClickView(it)
             editBook()
+        }
+
+        ivFav.setOnClickListener {
+            animateClickView(it, 0.6F)
         }
 
         ivDetails.setOnClickListener {
@@ -168,6 +173,7 @@ class DisplayBookFragment : Fragment(R.layout.fragment_display_book) {
         }
 
         ivDelete.setOnClickListener{
+            animateClickView(it)
             var firstCheck = true
             viewModel.getBook(book.id).observe(viewLifecycleOwner) { book ->
 
@@ -260,7 +266,7 @@ class DisplayBookFragment : Fragment(R.layout.fragment_display_book) {
             ivDetails2.visibility = View.VISIBLE
         }
 
-        showEditAndDeleteViews()
+        showFavEditAndDeleteViews()
     }
 
     private fun hideDetails() {
@@ -286,7 +292,7 @@ class DisplayBookFragment : Fragment(R.layout.fragment_display_book) {
             ivDetails.visibility = View.VISIBLE
         }
 
-        hideEditAndDeleteViews()
+        hideFavEditAndDeleteViews()
     }
 
     private fun blockDetails() {
@@ -303,7 +309,11 @@ class DisplayBookFragment : Fragment(R.layout.fragment_display_book) {
         }
     }
 
-    private fun showEditAndDeleteViews(){
+    private fun showFavEditAndDeleteViews(){
+        ivFav.alpha = 0F
+        ivFav.visibility = View.VISIBLE
+        ivFav.animate().alpha(1F).setDuration(500L).start()
+
         ivDelete.alpha = 0F
         ivDelete.visibility = View.VISIBLE
         ivDelete.animate().alpha(1F).setDuration(500L).start()
@@ -313,12 +323,14 @@ class DisplayBookFragment : Fragment(R.layout.fragment_display_book) {
         ivEdit.animate().alpha(1F).setDuration(500L).start()
     }
 
-    private fun hideEditAndDeleteViews(){
+    private fun hideFavEditAndDeleteViews(){
+        ivFav.animate().alpha(0F).setDuration(400L).start()
         ivDelete.animate().alpha(0F).setDuration(400L).start()
         ivEdit.animate().alpha(0F).setDuration(400L).start()
 
         MainScope().launch {
             delay(400L)
+            ivFav.visibility = View.INVISIBLE
             ivDelete.visibility = View.INVISIBLE
             ivEdit.visibility = View.INVISIBLE
         }
@@ -342,8 +354,6 @@ class DisplayBookFragment : Fragment(R.layout.fragment_display_book) {
             tvBookTitle.text = book.bookTitle
             tvBookAuthor.text = book.bookAuthor
             rbRatingIndicator.rating = book.bookRating
-            tvBookPages.text = book.bookNumberOfPages.toString()
-            tvBookPublishYear.text = book.bookPublishYear.toString()
 
             when (book.bookStatus) {
                 Constants.BOOK_STATUS_READ -> {
@@ -369,17 +379,39 @@ class DisplayBookFragment : Fragment(R.layout.fragment_display_book) {
             view?.let { setCover(it, book.bookCoverUrl) }
             setISBN(book.bookISBN13, book.bookISBN10)
             setOLID(book.bookOLID)
+            setPages(book.bookNumberOfPages)
+            setPublishDate(book.bookPublishYear)
             setFinishDate(book.bookFinishDate)
             setStartDate(book.bookStartDate)
         }
     }
 
-    private fun animateCover() {
-        ivBookCover.animate().scaleX(0.9F).scaleY(0.9F).setDuration(150L).start()
+    private fun setPages(bookNumberOfPages: Int) {
+        if (bookNumberOfPages > 0)
+            tvBookPages.text = bookNumberOfPages.toString()
+        else {
+            tvBookPagesTitle.visibility = View.GONE
+            tvBookPages.visibility = View.GONE
+            ivPages.visibility = View.GONE
+        }
+    }
+
+    private fun setPublishDate(bookPublishYear: Int) {
+        if (bookPublishYear > 0)
+            tvBookPublishYear.text = book.bookPublishYear.toString()
+        else {
+            tvBookPublishYearTitle.visibility = View.GONE
+            tvBookPublishYear.visibility = View.GONE
+            ivPublishYear.visibility = View.GONE
+        }
+    }
+
+    private fun animateClickView(view: View, multiplier: Float = 1F) {
+        view.animate().scaleX(0.9F * multiplier).scaleY(0.9F * multiplier).setDuration(150L).start()
 
         MainScope().launch {
             delay(160L)
-            ivBookCover.animate().scaleX(1F).scaleY(1F).setDuration(150L).start()
+            view.animate().scaleX(1F).scaleY(1F).setDuration(150L).start()
         }
     }
 
@@ -419,8 +451,32 @@ class DisplayBookFragment : Fragment(R.layout.fragment_display_book) {
             tvBookTitle.layoutParams = tvBookTitleLayout
 
             val rbRatingIndicatorLayout = rbRatingIndicator.layoutParams as ConstraintLayout.LayoutParams
-            rbRatingIndicatorLayout.marginStart = -50
+            rbRatingIndicatorLayout.marginStart = -60
             rbRatingIndicator.layoutParams = rbRatingIndicatorLayout
+
+            var margin = 25
+            var margin2 = 220
+
+            val ivDetailsLayout = ivDetails.layoutParams as ConstraintLayout.LayoutParams
+            ivDetailsLayout.startToStart = R.id.clBookDisplay1
+            ivDetailsLayout.marginEnd = margin
+            ivDetails.layoutParams = ivDetailsLayout
+
+            val ivFavLayout = ivFav.layoutParams as ConstraintLayout.LayoutParams
+            ivFavLayout.marginStart = margin
+            ivFavLayout.marginEnd = margin
+            ivFav.layoutParams = ivFavLayout
+
+            val ivEditLayout = ivEdit.layoutParams as ConstraintLayout.LayoutParams
+            ivEditLayout.marginStart = margin
+            ivEditLayout.marginEnd = margin
+            ivEdit.layoutParams = ivEditLayout
+
+            val ivDeleteLayout = ivDelete.layoutParams as ConstraintLayout.LayoutParams
+            ivDeleteLayout.marginStart = margin
+            ivDeleteLayout.marginEnd = margin2
+            ivDelete.layoutParams = ivDeleteLayout
+
         } else {
             val circularProgressDrawable = CircularProgressDrawable(view.context)
             circularProgressDrawable.strokeWidth = 5f
@@ -451,7 +507,9 @@ class DisplayBookFragment : Fragment(R.layout.fragment_display_book) {
         } else if (bookISBN10 != Constants.DATABASE_EMPTY_VALUE && bookISBN10 != "") {
             tvBookISBN.text = bookISBN10
         } else {
-            tvBookISBN.text = getString(R.string.not_set)
+            tvBookISBNTitle.visibility = View.GONE
+            tvBookISBN.visibility = View.GONE
+            ivISBN.visibility = View.GONE
         }
     }
 
@@ -459,7 +517,13 @@ class DisplayBookFragment : Fragment(R.layout.fragment_display_book) {
         if (bookOLID != Constants.DATABASE_EMPTY_VALUE && bookOLID != "") {
             val olid: String = bookOLID
             val url = "https://openlibrary.org/books/$olid"
+            tvBookOLID.text = bookOLID
             tvBookURL.text = url
+        } else {
+            tvBookOLIDTitle.visibility = View.GONE
+            tvBookOLID.visibility = View.GONE
+            ivOLID.visibility = View.GONE
+            tvBookURL.visibility = View.GONE
         }
     }
 
