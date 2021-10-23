@@ -255,7 +255,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:imeOptions="actionNext"
-                    android:inputType="number"
+                    android:inputType="textCapCharacters"
                     android:maxLength="15"
                     android:textSize="14sp" />
 
