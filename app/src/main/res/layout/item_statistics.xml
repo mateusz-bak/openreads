@@ -3,8 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:padding="4dp">
+    android:layout_height="match_parent">
 
     <ScrollView
         android:layout_width="match_parent"
@@ -15,7 +14,7 @@
             android:id="@+id/clStats"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:padding="12dp">
+            android:padding="4dp">
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/clChallenge"
@@ -29,8 +28,9 @@
                 <androidx.cardview.widget.CardView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    app:cardCornerRadius="12dp"
-                    app:cardElevation="3dp"
+                    android:backgroundTint="@color/grey_100"
+                    app:cardElevation="1dp"
+                    app:cardCornerRadius="@dimen/text_input_layout_radius"
                     app:cardUseCompatPadding="true"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
@@ -118,8 +118,9 @@
                 <androidx.cardview.widget.CardView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    app:cardCornerRadius="12dp"
-                    app:cardElevation="3dp"
+                    android:backgroundTint="@color/grey_100"
+                    app:cardElevation="1dp"
+                    app:cardCornerRadius="@dimen/text_input_layout_radius"
                     app:cardUseCompatPadding="true"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
@@ -190,8 +191,9 @@
                 <androidx.cardview.widget.CardView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    app:cardCornerRadius="12dp"
-                    app:cardElevation="3dp"
+                    android:backgroundTint="@color/grey_100"
+                    app:cardElevation="1dp"
+                    app:cardCornerRadius="@dimen/text_input_layout_radius"
                     app:cardUseCompatPadding="true"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
@@ -254,8 +256,9 @@
                 <androidx.cardview.widget.CardView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    app:cardCornerRadius="12dp"
-                    app:cardElevation="3dp"
+                    android:backgroundTint="@color/grey_100"
+                    app:cardElevation="1dp"
+                    app:cardCornerRadius="@dimen/text_input_layout_radius"
                     app:cardUseCompatPadding="true"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
@@ -325,8 +328,9 @@
                 <androidx.cardview.widget.CardView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    app:cardCornerRadius="12dp"
-                    app:cardElevation="3dp"
+                    android:backgroundTint="@color/grey_100"
+                    app:cardElevation="1dp"
+                    app:cardCornerRadius="@dimen/text_input_layout_radius"
                     app:cardUseCompatPadding="true"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
@@ -389,8 +393,9 @@
                 <androidx.cardview.widget.CardView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    app:cardCornerRadius="12dp"
-                    app:cardElevation="3dp"
+                    android:backgroundTint="@color/grey_100"
+                    app:cardElevation="1dp"
+                    app:cardCornerRadius="@dimen/text_input_layout_radius"
                     app:cardUseCompatPadding="true"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
@@ -462,8 +467,9 @@
                 <androidx.cardview.widget.CardView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    app:cardCornerRadius="12dp"
-                    app:cardElevation="3dp"
+                    android:backgroundTint="@color/grey_100"
+                    app:cardElevation="1dp"
+                    app:cardCornerRadius="@dimen/text_input_layout_radius"
                     app:cardUseCompatPadding="true"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
@@ -548,8 +554,9 @@
                 <androidx.cardview.widget.CardView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    app:cardCornerRadius="12dp"
-                    app:cardElevation="3dp"
+                    android:backgroundTint="@color/grey_100"
+                    app:cardElevation="1dp"
+                    app:cardCornerRadius="@dimen/text_input_layout_radius"
                     app:cardUseCompatPadding="true"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
@@ -633,8 +640,9 @@
                 <androidx.cardview.widget.CardView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    app:cardCornerRadius="12dp"
-                    app:cardElevation="3dp"
+                    android:backgroundTint="@color/grey_100"
+                    app:cardElevation="1dp"
+                    app:cardCornerRadius="@dimen/text_input_layout_radius"
                     app:cardUseCompatPadding="true"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
@@ -718,8 +726,9 @@
                 <androidx.cardview.widget.CardView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    app:cardCornerRadius="12dp"
-                    app:cardElevation="3dp"
+                    android:backgroundTint="@color/grey_100"
+                    app:cardElevation="1dp"
+                    app:cardCornerRadius="@dimen/text_input_layout_radius"
                     app:cardUseCompatPadding="true"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
@@ -790,8 +799,9 @@
                 <androidx.cardview.widget.CardView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    app:cardCornerRadius="12dp"
-                    app:cardElevation="3dp"
+                    android:backgroundTint="@color/grey_100"
+                    app:cardElevation="1dp"
+                    app:cardCornerRadius="@dimen/text_input_layout_radius"
                     app:cardUseCompatPadding="true"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
