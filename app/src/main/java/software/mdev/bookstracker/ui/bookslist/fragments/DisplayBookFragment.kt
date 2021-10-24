@@ -446,11 +446,11 @@ class DisplayBookFragment : Fragment(R.layout.fragment_display_book) {
             tvBookTitle.layoutParams = tvBookTitleLayout
 
             val rbRatingIndicatorLayout = rbRatingIndicator.layoutParams as ConstraintLayout.LayoutParams
-            rbRatingIndicatorLayout.marginStart = -60
+            rbRatingIndicatorLayout.endToStart = R.id.guideline16
+            rbRatingIndicatorLayout.marginStart = -20
             rbRatingIndicator.layoutParams = rbRatingIndicatorLayout
 
-            var margin = 25
-            var margin2 = 220
+            var margin = 0
 
             val ivDetailsLayout = ivDetails.layoutParams as ConstraintLayout.LayoutParams
             ivDetailsLayout.startToStart = R.id.clBookDisplay1
@@ -468,8 +468,8 @@ class DisplayBookFragment : Fragment(R.layout.fragment_display_book) {
             ivEdit.layoutParams = ivEditLayout
 
             val ivDeleteLayout = ivDelete.layoutParams as ConstraintLayout.LayoutParams
+            ivDeleteLayout.endToStart = R.id.guideline16
             ivDeleteLayout.marginStart = margin
-            ivDeleteLayout.marginEnd = margin2
             ivDelete.layoutParams = ivDeleteLayout
 
         } else {
