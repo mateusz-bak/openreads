@@ -172,6 +172,7 @@ class ReadFragment : Fragment(R.layout.fragment_read) {
         }
 
         ivSort.setOnClickListener{
+            animateClickView(it)
             SortBooksDialog(view.context,
                 object: SortBooksDialogListener {
                     override fun onSaveButtonClicked(sortOrder: String) {
@@ -191,6 +192,7 @@ class ReadFragment : Fragment(R.layout.fragment_read) {
         }
 
         ivFilterBooks.setOnClickListener{
+            animateClickView(it)
             // changes variable to false when ivFilterBooks is clicked
             var willDialogBeShownAfterClick = true
 
@@ -234,6 +236,7 @@ class ReadFragment : Fragment(R.layout.fragment_read) {
         }
 
         ivSearch.setOnClickListener {
+            animateClickView(it)
             when(etSearch.visibility) {
                 View.VISIBLE -> {
                     when (etSearch.text.isEmpty()){
@@ -241,6 +244,13 @@ class ReadFragment : Fragment(R.layout.fragment_read) {
                             viewModel.searchBooks(etSearch.text.toString()).observe(viewLifecycleOwner, Observer { some_books ->
                                 bookAdapter.differ.submitList(some_books)
                             })
+                        }
+                        true -> {
+                            etSearch.visibility = View.INVISIBLE
+                            ivClearSearch.visibility = View.INVISIBLE
+                            ivClearSearch.isClickable = false
+                            it.hideKeyboard()
+                            getBooks(bookAdapter)
                         }
                     }
                 }
@@ -309,6 +319,7 @@ class ReadFragment : Fragment(R.layout.fragment_read) {
         }
 
         ivMore.setOnClickListener{
+            animateClickView(it)
             it.hideKeyboard()
             findNavController().navigate(R.id.settingsFragment, null)
         }
@@ -497,5 +508,14 @@ class ReadFragment : Fragment(R.layout.fragment_read) {
                 inputManager.showSoftInput(et, 0)
             }
         }, delay)
+    }
+
+    private fun animateClickView(view: View, multiplier: Float = 1F) {
+        view.animate().scaleX(0.7F * multiplier).scaleY(0.7F * multiplier).setDuration(150L).start()
+
+        MainScope().launch {
+            delay(160L)
+            view.animate().scaleX(1F).scaleY(1F).setDuration(150L).start()
+        }
     }
 }

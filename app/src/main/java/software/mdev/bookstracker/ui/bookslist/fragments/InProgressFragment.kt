@@ -171,6 +171,7 @@ class InProgressFragment : Fragment(R.layout.fragment_in_progress) {
         }
 
         ivSort.setOnClickListener{
+            animateClickView(it)
             SortBooksDialog(view.context,
                 object: SortBooksDialogListener {
                     override fun onSaveButtonClicked(sortOrder: String) {
@@ -202,6 +203,7 @@ class InProgressFragment : Fragment(R.layout.fragment_in_progress) {
         }
 
         ivSearch.setOnClickListener {
+            animateClickView(it)
             when(etSearch.visibility) {
                 View.VISIBLE -> {
                     when (etSearch.text.isEmpty()){
@@ -209,6 +211,13 @@ class InProgressFragment : Fragment(R.layout.fragment_in_progress) {
                             viewModel.searchBooks(etSearch.text.toString()).observe(viewLifecycleOwner, Observer { some_books ->
                                 bookAdapter.differ.submitList(some_books)
                             })
+                        }
+                        true -> {
+                            etSearch.visibility = View.INVISIBLE
+                            ivClearSearch.visibility = View.INVISIBLE
+                            ivClearSearch.isClickable = false
+                            it.hideKeyboard()
+                            getBooks(bookAdapter)
                         }
                     }
                 }
@@ -277,6 +286,7 @@ class InProgressFragment : Fragment(R.layout.fragment_in_progress) {
         }
 
         ivMore.setOnClickListener{
+            animateClickView(it)
             it.hideKeyboard()
             findNavController().navigate(R.id.settingsFragment, null)
         }
@@ -428,5 +438,14 @@ class InProgressFragment : Fragment(R.layout.fragment_in_progress) {
                 inputManager.showSoftInput(et, 0)
             }
         }, delay)
+    }
+
+    private fun animateClickView(view: View, multiplier: Float = 1F) {
+        view.animate().scaleX(0.7F * multiplier).scaleY(0.7F * multiplier).setDuration(150L).start()
+
+        MainScope().launch {
+            delay(160L)
+            view.animate().scaleX(1F).scaleY(1F).setDuration(150L).start()
+        }
     }
 }
