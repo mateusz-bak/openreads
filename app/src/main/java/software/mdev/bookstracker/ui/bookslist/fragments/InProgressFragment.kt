@@ -391,6 +391,22 @@ class InProgressFragment : Fragment(R.layout.fragment_in_progress) {
                 bookAdapter.differ.submitList(some_books)
             })
 
+            Constants.SORT_ORDER_PAGES_DESC -> viewModel.getSortedBooksByPagesDesc(currentFragment).observe(viewLifecycleOwner, Observer { some_books ->
+                bookAdapter.differ.submitList(some_books)
+            })
+
+            Constants.SORT_ORDER_PAGES_ASC -> viewModel.getSortedBooksByPagesAsc(currentFragment).observe(viewLifecycleOwner, Observer { some_books ->
+                bookAdapter.differ.submitList(some_books)
+            })
+
+            Constants.SORT_ORDER_START_DATE_DESC -> viewModel.getSortedBooksByStartDateDesc(currentFragment).observe(viewLifecycleOwner, Observer { some_books ->
+                bookAdapter.differ.submitList(some_books)
+            })
+
+            Constants.SORT_ORDER_START_DATE_ASC -> viewModel.getSortedBooksByStartDateAsc(currentFragment).observe(viewLifecycleOwner, Observer { some_books ->
+                bookAdapter.differ.submitList(some_books)
+            })
+
             else -> viewModel.getSortedBooksByTitleAsc(currentFragment).observe(viewLifecycleOwner, Observer { some_books ->
                 bookAdapter.differ.submitList(some_books)
             })
