@@ -30,11 +30,9 @@ class SplashScreenActivity : AppCompatActivity() {
     }
 
     private fun prepareSplashScreenViews() {
-        ivLogo.alpha = 0F
         tvAppName.alpha = 0F
         tvAppVersion.alpha = 0F
 
-        ivLogo.visibility = View.VISIBLE
         tvAppName.visibility = View.VISIBLE
         tvAppVersion.visibility = View.VISIBLE
     }
@@ -42,12 +40,6 @@ class SplashScreenActivity : AppCompatActivity() {
     private fun animateSplashScreenViews() {
         var duration = 400L
         var startDelay = 100L
-
-        ivLogo.animate()
-            .setStartDelay(startDelay)
-            .setDuration(duration)
-            .alpha(1F)
-            .start()
 
         tvAppName.animate()
             .setStartDelay(startDelay)
