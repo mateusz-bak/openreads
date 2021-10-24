@@ -137,4 +137,7 @@ dependencies {
 
     // https://github.com/zhanghai/MaterialRatingBar
     implementation 'me.zhanghai.android.materialratingbar:library:1.4.0'
+
+    // https://www.section.io/engineering-education/bottom-sheet-dialogs-using-android-studio/
+    implementation 'com.google.android.material:material:1.4.0'
 }

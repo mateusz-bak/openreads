@@ -43,41 +43,6 @@
         app:srcCompat="@drawable/ic_baseline_add_24"
         app:tint="?colorOnPrimary" />
 
-    <Button
-        android:id="@+id/btnAddManual"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:minWidth="120dp"
-        android:text="@string/btnAddManual"
-        android:textSize="11sp"
-        app:layout_constraintBottom_toBottomOf="@+id/fabAddBook"
-        app:layout_constraintEnd_toStartOf="@+id/btnAddSearch"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/fabAddBook" />
-
-    <Button
-        android:id="@+id/btnAddSearch"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:minWidth="120dp"
-        android:text="@string/btnAddSearch"
-        android:textSize="11sp"
-        app:layout_constraintBottom_toBottomOf="@+id/fabAddBook"
-        app:layout_constraintEnd_toStartOf="@+id/fabAddBook"
-        app:layout_constraintStart_toEndOf="@+id/btnAddManual"
-        app:layout_constraintTop_toTopOf="@+id/fabAddBook" />
-
-    <Button
-        android:id="@+id/btnAddScan"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:minWidth="120dp"
-        android:text="@string/btnAddScan"
-        android:textSize="11sp"
-        app:layout_constraintBottom_toTopOf="@+id/btnAddManual"
-        app:layout_constraintEnd_toEndOf="@+id/btnAddManual"
-        app:layout_constraintStart_toStartOf="@+id/btnAddManual"/>
-
     <ImageView
         android:id="@+id/ivSearch"
         android:layout_width="28dp"

@@ -38,13 +38,15 @@ import software.mdev.bookstracker.other.Constants
 import software.mdev.bookstracker.other.Functions
 import software.mdev.bookstracker.ui.bookslist.dialogs.*
 import java.util.*
+import android.widget.LinearLayout
+import com.google.android.material.bottomsheet.BottomSheetDialog
 
 
 class InProgressFragment : Fragment(R.layout.fragment_in_progress) {
 
     lateinit var viewModel: BooksViewModel
-    val currentFragment = Constants.BOOK_STATUS_IN_PROGRESS
-    val functions = Functions()
+    private val currentFragment = Constants.BOOK_STATUS_IN_PROGRESS
+    private val functions = Functions()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -57,13 +59,9 @@ class InProgressFragment : Fragment(R.layout.fragment_in_progress) {
         etSearch.visibility = View.INVISIBLE
         ivClearSearch.visibility = View.GONE
         tvLooksEmpty.visibility = View.GONE
-        btnAddManual.visibility = View.GONE
-        btnAddSearch.visibility = View.GONE
-        btnAddScan.visibility = View.GONE
+
         ivClearSearch.isClickable = false
-        btnAddManual.isClickable = false
-        btnAddSearch.isClickable = false
-        btnAddScan.isClickable = false
+
         view.hideKeyboard()
 
         val database = BooksDatabase(view.context)
@@ -107,67 +105,8 @@ class InProgressFragment : Fragment(R.layout.fragment_in_progress) {
             }
         })
 
-        btnAddManual.setOnClickListener{
-            hideAddOptionButtons(false)
-
-            var emptyBook = Book(
-                "","",0F,"",
-                "","","",
-                0,"",
-                "",true,
-                "","",
-                "","",0)
-
-
-            val bundle = Bundle().apply {
-                putSerializable(Constants.SERIALIZABLE_BUNDLE_BOOK, emptyBook)
-                putSerializable(Constants.SERIALIZABLE_BUNDLE_BOOK_SOURCE, Constants.NO_SOURCE)
-            }
-
-            findNavController().navigate(
-                R.id.action_inProgressFragment_to_addEditBookFragment,
-                bundle
-            )
-        }
-
         fabAddBook.setOnClickListener {
-            if (btnAddManual.visibility == View.GONE) {
-                showAddOptionButtons()
-            }
-            else {
-                hideAddOptionButtons()
-            }
-        }
-
-        btnAddSearch.setOnClickListener {
-            hideAddOptionButtons(false)
-
-            findNavController().navigate(
-                R.id.action_inProgressFragment_to_addBookSearchFragment)
-        }
-
-        btnAddScan.setOnClickListener {
-            hideAddOptionButtons(false)
-
-            if (Functions().checkPermission(activity as ListActivity, android.Manifest.permission.CAMERA)) {
-                findNavController().navigate(R.id.action_inProgressFragment_to_addBookScanFragment)
-            } else {
-                Functions().requestPermission(
-                    activity as ListActivity,
-                    android.Manifest.permission.CAMERA,
-                    Constants.PERMISSION_CAMERA_FROM_LIST_2)
-            }
-        }
-
-        rvBooks.setOnClickListener {
-            btnAddManual.visibility = View.GONE
-            btnAddSearch.visibility = View.GONE
-            btnAddScan.visibility = View.GONE
-            btnAddManual.isClickable = false
-            btnAddSearch.isClickable = false
-            btnAddScan.isClickable = false
-
-            fabAddBook.animate().rotation( 0F).setDuration(350L).start()
+            showBottomSheetDialog()
         }
 
         ivSort.setOnClickListener{
@@ -292,87 +231,9 @@ class InProgressFragment : Fragment(R.layout.fragment_in_progress) {
         }
     }
 
-    private fun hideAddOptionButtons(animateHiding: Boolean = true) {
-        btnAddManual.animate().translationY(500F).setDuration(500L).setInterpolator(AnticipateOvershootInterpolator()).start()
-        btnAddSearch.animate().translationY(500F).setDuration(500L).setInterpolator(AnticipateOvershootInterpolator()).start()
-        btnAddScan.animate().translationY(500F).setDuration(500L).setInterpolator(AnticipateOvershootInterpolator()).start()
-
-        fabAddBook.animate().rotation( 0F).setDuration(500L).start()
-        fabAddBook.animate().scaleX(0.8F).setDuration(250L).start()
-        fabAddBook.animate().scaleY(0.8F).setDuration(250L).start()
-
-        if (animateHiding) {
-            MainScope().launch {
-                delay(250)
-
-                fabAddBook.animate().scaleX(1F).setDuration(250L).start()
-                fabAddBook.animate().scaleY(1F).setDuration(250L).start()
-
-                delay(250)
-                btnAddManual.visibility = View.GONE
-                btnAddSearch.visibility = View.GONE
-                btnAddScan.visibility = View.GONE
-                btnAddManual.isClickable = false
-                btnAddSearch.isClickable = false
-                btnAddScan.isClickable = false
-            }
-        } else {
-            btnAddManual.visibility = View.GONE
-            btnAddSearch.visibility = View.GONE
-            btnAddScan.visibility = View.GONE
-            btnAddManual.isClickable = false
-            btnAddSearch.isClickable = false
-            btnAddScan.isClickable = false
-        }
-    }
-
-    private fun showAddOptionButtons() {
-        btnAddManual.translationY = 500F
-        btnAddSearch.translationY = 500F
-        btnAddScan.translationY = 500F
-
-        btnAddManual.visibility = View.VISIBLE
-        btnAddSearch.visibility = View.VISIBLE
-        btnAddScan.visibility = View.VISIBLE
-
-        btnAddManual.isClickable = true
-        btnAddSearch.isClickable = true
-        btnAddScan.isClickable = true
-
-        fabAddBook.animate().rotation(180F).setDuration(500L).start()
-        fabAddBook.animate().scaleX(0.8F).setDuration(250L).start()
-        fabAddBook.animate().scaleY(0.8F).setDuration(250L).start()
-
-        btnAddManual.animate().translationY(0F).setDuration(500L).setInterpolator(AnticipateOvershootInterpolator()).start()
-        btnAddSearch.animate().translationY(0F).setDuration(500L).setInterpolator(AnticipateOvershootInterpolator()).start()
-        btnAddScan.animate().translationY(0F).setDuration(500L).setInterpolator(AnticipateOvershootInterpolator()).start()
-
-        MainScope().launch {
-            delay(250)
-
-            fabAddBook.animate().scaleX(1F).setDuration(250L).start()
-            fabAddBook.animate().scaleY(1F).setDuration(250L).start()
-
-            delay(250)
-
-            btnAddManual.visibility = View.VISIBLE
-            btnAddSearch.visibility = View.VISIBLE
-            btnAddScan.visibility = View.VISIBLE
-
-            btnAddManual.isClickable = true
-            btnAddSearch.isClickable = true
-            btnAddScan.isClickable = true
-        }
-    }
-
-    fun View.hideKeyboard() {
+    private fun View.hideKeyboard() {
         val inputManager = context.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
         inputManager.hideSoftInputFromWindow(windowToken, 0)
-    }
-
-    fun View.showKeyboard() {
-        val inputManager = context.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
-        inputManager.toggleSoftInputFromWindow(windowToken, 0, 0)
     }
 
     private fun getBooks(bookAdapter: BookAdapter) {
@@ -413,38 +274,6 @@ class InProgressFragment : Fragment(R.layout.fragment_in_progress) {
         }
     }
 
-    private fun recalculateChallenges() {
-        viewModel.getSortedBooksByFinishDateDesc(Constants.BOOK_STATUS_READ)
-            .observe(viewLifecycleOwner, Observer { books ->
-                var year: Int
-                var years = listOf<Int>()
-
-                for (item in books) {
-                    if (item.bookFinishDate != "null" && item.bookFinishDate != "none") {
-                        year = functions.convertLongToYear(item.bookFinishDate.toLong()).toInt()
-                        if (year !in years) {
-                            years = years + year
-                        }
-                    }
-                }
-
-                for (item_year in years) {
-                    var booksInYear = 0
-
-                    for (item_book in books) {
-                        if (item_book.bookFinishDate != "none" && item_book.bookFinishDate != "null") {
-                            year = functions.convertLongToYear(item_book.bookFinishDate.toLong()).toInt()
-                            if (year == item_year) {
-                                booksInYear++
-                            }
-                        }
-                    }
-                    viewModel.updateYearsNumberOfBooks(item_year.toString(), booksInYear)
-                }
-            }
-            )
-    }
-
     private fun showKeyboard(et: EditText, delay: Long) {
         val timer = Timer()
         timer.schedule(object : TimerTask() {
@@ -463,5 +292,69 @@ class InProgressFragment : Fragment(R.layout.fragment_in_progress) {
             delay(160L)
             view.animate().scaleX(1F).scaleY(1F).setDuration(150L).start()
         }
+    }
+
+    private fun showBottomSheetDialog() {
+        if (context != null) {
+            val bottomSheetDialog = BottomSheetDialog(requireContext(), R.style.AppBottomSheetDialogTheme)
+            bottomSheetDialog.setContentView(R.layout.bottom_sheet_add_books)
+
+            bottomSheetDialog.findViewById<LinearLayout>(R.id.llAddManual)
+                ?.setOnClickListener {
+                    addManualGoToFrag()
+                    bottomSheetDialog.dismiss()
+                }
+
+            bottomSheetDialog.findViewById<LinearLayout>(R.id.llAddScan)
+                ?.setOnClickListener {
+                    addScanGoToFrag()
+                    bottomSheetDialog.dismiss()
+                }
+
+            bottomSheetDialog.findViewById<LinearLayout>(R.id.llAddSearch)
+                ?.setOnClickListener {
+                    addSearchGoToFrag()
+                    bottomSheetDialog.dismiss()
+                }
+
+            bottomSheetDialog.show()
+        }
+    }
+
+    private fun addManualGoToFrag() {
+        var emptyBook = Book(
+            "","",0F,"",
+            "","","",
+            0,"",
+            "",true,
+            "","",
+            "","",0)
+
+
+        val bundle = Bundle().apply {
+            putSerializable(Constants.SERIALIZABLE_BUNDLE_BOOK, emptyBook)
+            putSerializable(Constants.SERIALIZABLE_BUNDLE_BOOK_SOURCE, Constants.NO_SOURCE)
+        }
+
+        findNavController().navigate(
+            R.id.action_inProgressFragment_to_addEditBookFragment,
+            bundle
+        )
+    }
+
+    private fun addScanGoToFrag() {
+        if (Functions().checkPermission(activity as ListActivity, android.Manifest.permission.CAMERA)) {
+            findNavController().navigate(R.id.action_inProgressFragment_to_addBookScanFragment)
+        } else {
+            Functions().requestPermission(
+                activity as ListActivity,
+                android.Manifest.permission.CAMERA,
+                Constants.PERMISSION_CAMERA_FROM_LIST_2)
+        }
+    }
+
+    private fun addSearchGoToFrag() {
+        findNavController().navigate(
+            R.id.action_inProgressFragment_to_addBookSearchFragment)
     }
 }
