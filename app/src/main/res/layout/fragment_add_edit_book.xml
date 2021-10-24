@@ -60,6 +60,22 @@
 
             </com.google.android.material.textfield.TextInputLayout>
 
+            <ImageView
+                android:id="@+id/ivClearBookTitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:clickable="true"
+                android:focusable="true"
+                android:layout_marginBottom="20dp"
+                android:layout_marginEnd="24dp"
+                android:visibility="gone"
+                android:scaleX="0.8"
+                android:scaleY="0.8"
+                app:layout_constraintBottom_toBottomOf="@+id/tilBookTitle"
+                app:layout_constraintEnd_toEndOf="@+id/tilBookTitle"
+                app:layout_constraintTop_toTopOf="@+id/tilBookTitle"
+                app:srcCompat="@drawable/ic_baseline_clear_24" />
+
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/tilBookAuthor"
                 style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox"
@@ -99,6 +115,21 @@
 
             </com.google.android.material.textfield.TextInputLayout>
 
+            <ImageView
+                android:id="@+id/ivClearBookAuthor"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:clickable="true"
+                android:focusable="true"
+                android:layout_marginBottom="20dp"
+                android:layout_marginEnd="24dp"
+                android:visibility="gone"
+                android:scaleX="0.8"
+                android:scaleY="0.8"
+                app:layout_constraintBottom_toBottomOf="@+id/tilBookAuthor"
+                app:layout_constraintEnd_toEndOf="@+id/tilBookAuthor"
+                app:layout_constraintTop_toTopOf="@+id/tilBookAuthor"
+                app:srcCompat="@drawable/ic_baseline_clear_24" />
 
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/tilBookPages"

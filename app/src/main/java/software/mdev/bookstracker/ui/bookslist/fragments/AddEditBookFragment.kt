@@ -36,6 +36,7 @@ import android.view.animation.AnimationUtils
 import android.widget.*
 import kotlinx.coroutines.MainScope
 import androidx.activity.OnBackPressedCallback
+import androidx.core.widget.addTextChangedListener
 
 
 class AddEditBookFragment : Fragment(R.layout.fragment_add_edit_book) {
@@ -100,6 +101,13 @@ class AddEditBookFragment : Fragment(R.layout.fragment_add_edit_book) {
         btnBookCancel.setOnClickListener{
             view?.hideKeyboard()
             recalculateChallenges()
+
+            when (bookSource) {
+                Constants.NO_SOURCE -> popBackStack()
+                Constants.FROM_SEARCH -> popBackStack(2)
+                Constants.FROM_SCAN -> popBackStack(3)
+                Constants.FROM_DISPLAY -> popBackStack()
+            }
         }
 
         clBookStartDate.setOnClickListener {
@@ -211,6 +219,32 @@ class AddEditBookFragment : Fragment(R.layout.fragment_add_edit_book) {
                     }
                 }
             }
+        }
+
+        tietBookTitle.addTextChangedListener { editable ->
+            editable?.let {
+                if (it.isNotEmpty())
+                    ivClearBookTitle.visibility = View.VISIBLE
+                else
+                    ivClearBookTitle.visibility = View.GONE
+            }
+        }
+
+        tietBookAuthor.addTextChangedListener { editable ->
+            editable?.let {
+                if (it.isNotEmpty())
+                    ivClearBookAuthor.visibility = View.VISIBLE
+                else
+                    ivClearBookAuthor.visibility = View.GONE
+            }
+        }
+
+        ivClearBookTitle.setOnClickListener {
+            tietBookTitle.setText("")
+        }
+
+        ivClearBookAuthor.setOnClickListener {
+            tietBookAuthor.setText("")
         }
     }
 
