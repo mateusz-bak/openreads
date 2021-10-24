@@ -274,4 +274,6 @@
     <string name="insert_book_notes">Notatki</string>
     <string name="insert_book_finish_date">Data zakończenia</string>
     <string name="insert_book_start_date">Data rozpoczęcia</string>
+    <string name="removed_from_fav">Usunięto z ulubionych</string>
+    <string name="added_to_fav">Dodano do ulubionych</string>
 </resources>

@@ -25,6 +25,7 @@ object Constants {
     const val DATABASE_ITEM_BOOK_ISBN13 = "item_bookISBN13"
     const val DATABASE_ITEM_BOOK_PUBLISH_YEAR = "item_bookPublishYear"
     const val DATABASE_ITEM_BOOK_IS_DELETED = "item_bookIsDeleted"
+    const val DATABASE_ITEM_BOOK_IS_FAV = "item_bookIsFav"
     const val DATABASE_EMPTY_VALUE = "none"
 
     const val DATABASE_NAME_YEAR = "Year"

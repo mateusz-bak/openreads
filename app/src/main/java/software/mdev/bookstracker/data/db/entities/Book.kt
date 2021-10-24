@@ -55,7 +55,10 @@ data class Book (
         var  bookISBN13: String = Constants.DATABASE_EMPTY_VALUE,
 
         @ColumnInfo(name = Constants.DATABASE_ITEM_BOOK_PUBLISH_YEAR)
-        var  bookPublishYear: Int = 0
+        var  bookPublishYear: Int = 0,
+
+        @ColumnInfo(name = Constants.DATABASE_ITEM_BOOK_IS_FAV)
+        var  bookIsFav: Boolean = false,
 ): Serializable{
     @PrimaryKey(autoGenerate = true)
     var id: Int? = null

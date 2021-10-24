@@ -192,7 +192,7 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:scaleType="fitCenter"
-                android:visibility="invisible"
+                android:visibility="visible"
                 android:padding="8dp"
                 app:layout_constraintBottom_toBottomOf="@+id/ivDetails"
                 app:layout_constraintEnd_toStartOf="@+id/ivEdit"

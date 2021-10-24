@@ -1,6 +1,7 @@
 package software.mdev.bookstracker.ui.bookslist.fragments
 
 import android.content.Context
+import android.content.res.ColorStateList
 import android.os.Bundle
 import android.view.View
 import androidx.core.content.ContextCompat
@@ -66,6 +67,29 @@ class DisplayBookFragment : Fragment(R.layout.fragment_display_book) {
 
         ivFav.setOnClickListener {
             animateClickView(it, 0.6F)
+
+            var firstCheck = true
+            viewModel.getBook(book.id).observe(viewLifecycleOwner) { book ->
+                if (firstCheck) {
+                    firstCheck = false
+
+                    if (book.bookIsFav) {
+                        changeBooksFav(book, false)
+
+                        Toast.makeText(
+                            (activity as ListActivity).baseContext,
+                            R.string.removed_from_fav, Toast.LENGTH_SHORT
+                        ).show()
+                    } else {
+                        changeBooksFav(book, true)
+
+                        Toast.makeText(
+                            (activity as ListActivity).baseContext,
+                            R.string.added_to_fav, Toast.LENGTH_SHORT
+                        ).show()
+                    }
+                }
+            }
         }
 
         ivDetails.setOnClickListener {
@@ -167,7 +191,8 @@ class DisplayBookFragment : Fragment(R.layout.fragment_display_book) {
                     book.bookOLID,
                     book.bookISBN10,
                     book.bookISBN13,
-                    book.bookPublishYear
+                    book.bookPublishYear,
+                    book.bookIsFav
                 )
             }
         }
@@ -203,7 +228,8 @@ class DisplayBookFragment : Fragment(R.layout.fragment_display_book) {
                                     book.bookOLID,
                                     book.bookISBN10,
                                     book.bookISBN13,
-                                    book.bookPublishYear
+                                    book.bookPublishYear,
+                                    book.bookIsFav
                                 )
                                 recalculateChallenges(book.bookStatus)
 
@@ -266,7 +292,7 @@ class DisplayBookFragment : Fragment(R.layout.fragment_display_book) {
             ivDetails2.visibility = View.VISIBLE
         }
 
-        showFavEditAndDeleteViews()
+        showEditAndDeleteViews()
     }
 
     private fun hideDetails() {
@@ -292,7 +318,7 @@ class DisplayBookFragment : Fragment(R.layout.fragment_display_book) {
             ivDetails.visibility = View.VISIBLE
         }
 
-        hideFavEditAndDeleteViews()
+        hideEditAndDeleteViews()
     }
 
     private fun blockDetails() {
@@ -309,11 +335,7 @@ class DisplayBookFragment : Fragment(R.layout.fragment_display_book) {
         }
     }
 
-    private fun showFavEditAndDeleteViews(){
-        ivFav.alpha = 0F
-        ivFav.visibility = View.VISIBLE
-        ivFav.animate().alpha(1F).setDuration(500L).start()
-
+    private fun showEditAndDeleteViews(){
         ivDelete.alpha = 0F
         ivDelete.visibility = View.VISIBLE
         ivDelete.animate().alpha(1F).setDuration(500L).start()
@@ -323,14 +345,13 @@ class DisplayBookFragment : Fragment(R.layout.fragment_display_book) {
         ivEdit.animate().alpha(1F).setDuration(500L).start()
     }
 
-    private fun hideFavEditAndDeleteViews(){
-        ivFav.animate().alpha(0F).setDuration(400L).start()
+    private fun hideEditAndDeleteViews(){
         ivDelete.animate().alpha(0F).setDuration(400L).start()
         ivEdit.animate().alpha(0F).setDuration(400L).start()
 
         MainScope().launch {
             delay(400L)
-            ivFav.visibility = View.INVISIBLE
+
             ivDelete.visibility = View.INVISIBLE
             ivEdit.visibility = View.INVISIBLE
         }
@@ -383,6 +404,7 @@ class DisplayBookFragment : Fragment(R.layout.fragment_display_book) {
             setPublishDate(book.bookPublishYear)
             setFinishDate(book.bookFinishDate)
             setStartDate(book.bookStartDate)
+            setFav(book.bookIsFav, book.bookStatus)
         }
     }
 
@@ -412,33 +434,6 @@ class DisplayBookFragment : Fragment(R.layout.fragment_display_book) {
         MainScope().launch {
             delay(160L)
             view.animate().scaleX(1F).scaleY(1F).setDuration(150L).start()
-        }
-    }
-
-    private fun animateShowingDetails() {
-        val views = arrayOf(
-            tvBookPagesTitle,
-            tvBookPages,
-            tvBookPublishYear,
-            tvBookPublishYearTitle,
-            tvBookISBNTitle,
-            tvBookISBN,
-            tvBookURL,
-            tvDateFinishedTitle,
-            tvDateFinished,
-            tvDateStartedTitle,
-            tvDateStarted
-        )
-
-        for (view in views) {
-            val animDuration = 300L
-            val translationY = 300F
-
-            view.alpha = 0F
-            view.translationY = - translationY
-
-            view.animate().alpha(1F).setStartDelay(50L).setDuration(animDuration - 50L).start()
-            view.animate().translationYBy(translationY).setDuration(animDuration).start()
         }
     }
 
@@ -638,8 +633,75 @@ class DisplayBookFragment : Fragment(R.layout.fragment_display_book) {
             book.bookOLID,
             book.bookISBN10,
             book.bookISBN13,
-            book.bookPublishYear
+            book.bookPublishYear,
+            book.bookIsFav
         )
+    }
+
+    private fun setFav(bookIsFav: Boolean, bookStatus: String) {
+        if (bookIsFav && bookStatus == Constants.BOOK_STATUS_READ) {
+            var color = context?.let { getAccentColor(it) }
+            ivFav.imageTintList = color?.let { ColorStateList.valueOf(it) }
+        } else if (bookStatus == Constants.BOOK_STATUS_IN_PROGRESS || bookStatus == Constants.BOOK_STATUS_TO_READ) {
+            ivFav.visibility = View.GONE
+        }
+    }
+
+    private fun changeBooksFav(book: Book, fav: Boolean) {
+        if (fav) {
+            var color = context?.let { getAccentColor(it) }
+            ivFav.imageTintList = color?.let { ColorStateList.valueOf(it) }
+        } else {
+            ivFav.imageTintList = ColorStateList.valueOf(resources.getColor(R.color.grey_777))
+        }
+
+        viewModel.updateBook(
+            book.id,
+            book.bookTitle,
+            book.bookAuthor,
+            book.bookRating,
+            book.bookStatus,
+            book.bookPriority,
+            book.bookStartDate,
+            book.bookFinishDate,
+            book.bookNumberOfPages,
+            book.bookTitle_ASCII,
+            book.bookAuthor_ASCII,
+            book.bookIsDeleted,
+            book.bookCoverUrl,
+            book.bookOLID,
+            book.bookISBN10,
+            book.bookISBN13,
+            book.bookPublishYear,
+            fav
+        )
+    }
+
+    private fun getAccentColor(context: Context): Int {
+
+        var accentColor = ContextCompat.getColor(context, R.color.purple_500)
+
+        var sharedPreferencesName = context.getString(R.string.shared_preferences_name)
+        val sharedPref = context.getSharedPreferences(sharedPreferencesName, Context.MODE_PRIVATE)
+
+        var accent = sharedPref?.getString(
+            Constants.SHARED_PREFERENCES_KEY_ACCENT,
+            Constants.THEME_ACCENT_DEFAULT
+        ).toString()
+
+        when(accent){
+            Constants.THEME_ACCENT_LIGHT_GREEN -> accentColor = ContextCompat.getColor(context, R.color.light_green)
+            Constants.THEME_ACCENT_ORANGE_500 -> accentColor = ContextCompat.getColor(context, R.color.orange_500)
+            Constants.THEME_ACCENT_CYAN_500 -> accentColor = ContextCompat.getColor(context, R.color.cyan_500)
+            Constants.THEME_ACCENT_GREEN_500 -> accentColor = ContextCompat.getColor(context, R.color.green_500)
+            Constants.THEME_ACCENT_BROWN_400 -> accentColor = ContextCompat.getColor(context, R.color.brown_400)
+            Constants.THEME_ACCENT_LIME_500 -> accentColor = ContextCompat.getColor(context, R.color.lime_500)
+            Constants.THEME_ACCENT_PINK_300 -> accentColor = ContextCompat.getColor(context, R.color.pink_300)
+            Constants.THEME_ACCENT_PURPLE_500 -> accentColor = ContextCompat.getColor(context, R.color.purple_500)
+            Constants.THEME_ACCENT_TEAL_500 -> accentColor = ContextCompat.getColor(context, R.color.teal_500)
+            Constants.THEME_ACCENT_YELLOW_500 -> accentColor = ContextCompat.getColor(context, R.color.yellow_500)
+        }
+        return accentColor
     }
 }
 

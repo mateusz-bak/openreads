@@ -202,7 +202,8 @@ class AddEditBookFragment : Fragment(R.layout.fragment_add_edit_book) {
                             newBook.bookOLID,
                             newBook.bookISBN10,
                             newBook.bookISBN13,
-                            newBook.bookPublishYear
+                            newBook.bookPublishYear,
+                            newBook.bookIsFav
                         )
 
                         recalculateChallenges()
@@ -277,7 +278,8 @@ class AddEditBookFragment : Fragment(R.layout.fragment_add_edit_book) {
             bookOLID,
             Constants.DATABASE_EMPTY_VALUE,
             bookISBN,
-            booksPubYear
+            booksPubYear,
+            book.bookIsFav
         )
     }
 
@@ -358,15 +360,19 @@ class AddEditBookFragment : Fragment(R.layout.fragment_add_edit_book) {
                     }
 
                     when (position) {
-                        0 -> ivBookStatus.setImageDrawable(activity?.baseContext?.resources?.getDrawable(R.drawable.ic_book_black_24dp))
-                        1 -> ivBookStatus.setImageDrawable(activity?.baseContext?.resources?.getDrawable(R.drawable.ic_auto_stories_black_24dp))
-                        2 -> ivBookStatus.setImageDrawable(activity?.baseContext?.resources?.getDrawable(R.drawable.ic_library_books_black_24dp))
-                    }
-
-                    when (position) {
-                        0 -> whatIsClicked = Constants.BOOK_STATUS_READ
-                        1 -> whatIsClicked = Constants.BOOK_STATUS_IN_PROGRESS
-                        2 -> whatIsClicked = Constants.BOOK_STATUS_TO_READ
+                        0 -> {
+                            ivBookStatus.setImageDrawable(activity?.baseContext?.resources?.getDrawable(R.drawable.ic_book_black_24dp))
+                            whatIsClicked = Constants.BOOK_STATUS_READ
+                            setFinishDateToToday()
+                        }
+                        1 -> {
+                            ivBookStatus.setImageDrawable(activity?.baseContext?.resources?.getDrawable(R.drawable.ic_auto_stories_black_24dp))
+                            whatIsClicked = Constants.BOOK_STATUS_IN_PROGRESS
+                        }
+                        2 -> {
+                            ivBookStatus.setImageDrawable(activity?.baseContext?.resources?.getDrawable(R.drawable.ic_library_books_black_24dp))
+                            whatIsClicked = Constants.BOOK_STATUS_TO_READ
+                        }
                     }
 
                     setRatingAndDatesVis()
