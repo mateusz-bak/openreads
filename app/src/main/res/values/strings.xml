@@ -321,4 +321,5 @@
     <string name="tv_book_olid_title" translatable="false">Open Library ID</string>
     <string name="removed_from_fav">Removed from favourites</string>
     <string name="added_to_fav">Added to favourites</string>
+    <string name="only_fav">Only favourites</string>
 </resources>

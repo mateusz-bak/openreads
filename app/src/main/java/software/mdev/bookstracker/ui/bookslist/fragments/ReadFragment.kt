@@ -418,52 +418,81 @@ class ReadFragment : Fragment(R.layout.fragment_read) {
             Constants.SORT_ORDER_TITLE_ASC
         )) {
             Constants.SORT_ORDER_TITLE_DESC -> viewModel.getSortedBooksByTitleDesc(currentFragment).observe(viewLifecycleOwner, Observer { some_books ->
-                functions.filterBooksList(activity as ListActivity, bookAdapter, some_books)
+                var booksFilteredForFav = filterBooksForFav(some_books)
+                functions.filterBooksList(activity as ListActivity, bookAdapter, booksFilteredForFav)
             })
 
             Constants.SORT_ORDER_TITLE_ASC -> viewModel.getSortedBooksByTitleAsc(currentFragment).observe(viewLifecycleOwner, Observer { some_books ->
-                functions.filterBooksList(activity as ListActivity, bookAdapter, some_books)
+                var booksFilteredForFav = filterBooksForFav(some_books)
+                functions.filterBooksList(activity as ListActivity, bookAdapter, booksFilteredForFav)
             })
 
             Constants.SORT_ORDER_AUTHOR_DESC -> viewModel.getSortedBooksByAuthorDesc(currentFragment).observe(viewLifecycleOwner, Observer { some_books ->
-                functions.filterBooksList(activity as ListActivity, bookAdapter, some_books)
+                var booksFilteredForFav = filterBooksForFav(some_books)
+                functions.filterBooksList(activity as ListActivity, bookAdapter, booksFilteredForFav)
             })
 
             Constants.SORT_ORDER_AUTHOR_ASC -> viewModel.getSortedBooksByAuthorAsc(currentFragment).observe(viewLifecycleOwner, Observer { some_books ->
-                functions.filterBooksList(activity as ListActivity, bookAdapter, some_books)
+                var booksFilteredForFav = filterBooksForFav(some_books)
+                functions.filterBooksList(activity as ListActivity, bookAdapter, booksFilteredForFav)
             })
 
             Constants.SORT_ORDER_RATING_DESC -> viewModel.getSortedBooksByRatingDesc(currentFragment).observe(viewLifecycleOwner, Observer { some_books ->
-                functions.filterBooksList(activity as ListActivity, bookAdapter, some_books)
+                var booksFilteredForFav = filterBooksForFav(some_books)
+                functions.filterBooksList(activity as ListActivity, bookAdapter, booksFilteredForFav)
             })
 
             Constants.SORT_ORDER_RATING_ASC -> viewModel.getSortedBooksByRatingAsc(currentFragment).observe(viewLifecycleOwner, Observer { some_books ->
-                functions.filterBooksList(activity as ListActivity, bookAdapter, some_books)
+                var booksFilteredForFav = filterBooksForFav(some_books)
+                functions.filterBooksList(activity as ListActivity, bookAdapter, booksFilteredForFav)
             })
 
             Constants.SORT_ORDER_PAGES_DESC -> viewModel.getSortedBooksByPagesDesc(currentFragment).observe(viewLifecycleOwner, Observer { some_books ->
-                functions.filterBooksList(activity as ListActivity, bookAdapter, some_books)
+                var booksFilteredForFav = filterBooksForFav(some_books)
+                functions.filterBooksList(activity as ListActivity, bookAdapter, booksFilteredForFav)
             })
 
             Constants.SORT_ORDER_PAGES_ASC -> viewModel.getSortedBooksByPagesAsc(currentFragment).observe(viewLifecycleOwner, Observer { some_books ->
-                functions.filterBooksList(activity as ListActivity, bookAdapter, some_books)
+                var booksFilteredForFav = filterBooksForFav(some_books)
+                functions.filterBooksList(activity as ListActivity, bookAdapter, booksFilteredForFav)
             })
 
             Constants.SORT_ORDER_START_DATE_DESC -> viewModel.getSortedBooksByStartDateDesc(currentFragment).observe(viewLifecycleOwner, Observer { some_books ->
-                functions.filterBooksList(activity as ListActivity, bookAdapter, some_books)
+                var booksFilteredForFav = filterBooksForFav(some_books)
+                functions.filterBooksList(activity as ListActivity, bookAdapter, booksFilteredForFav)
             })
 
             Constants.SORT_ORDER_START_DATE_ASC -> viewModel.getSortedBooksByStartDateAsc(currentFragment).observe(viewLifecycleOwner, Observer { some_books ->
-                functions.filterBooksList(activity as ListActivity, bookAdapter, some_books)
+                var booksFilteredForFav = filterBooksForFav(some_books)
+                functions.filterBooksList(activity as ListActivity, bookAdapter, booksFilteredForFav)
             })
 
             Constants.SORT_ORDER_FINISH_DATE_DESC -> viewModel.getSortedBooksByFinishDateDesc(currentFragment).observe(viewLifecycleOwner, Observer { some_books ->
-                functions.filterBooksList(activity as ListActivity, bookAdapter, some_books)
+                var booksFilteredForFav = filterBooksForFav(some_books)
+                functions.filterBooksList(activity as ListActivity, bookAdapter, booksFilteredForFav)
             })
 
             Constants.SORT_ORDER_FINISH_DATE_ASC -> viewModel.getSortedBooksByFinishDateAsc(currentFragment).observe(viewLifecycleOwner, Observer { some_books ->
-                functions.filterBooksList(activity as ListActivity, bookAdapter, some_books)
+                var booksFilteredForFav = filterBooksForFav(some_books)
+                functions.filterBooksList(activity as ListActivity, bookAdapter, booksFilteredForFav)
             })
+        }
+    }
+
+    private fun filterBooksForFav(someBooks: List<Book>): List<Book> {
+        var sharedPreferencesName = (activity as ListActivity).getString(R.string.shared_preferences_name)
+        val sharedPref = (activity as ListActivity).getSharedPreferences(sharedPreferencesName, Context.MODE_PRIVATE)
+
+        if(sharedPref.getBoolean(Constants.SHARED_PREFERENCES_KEY_ONLY_FAV, false)) {
+            val listOnlyFav = emptyList<Book>().toMutableList()
+
+            for (i in someBooks) {
+                if (i.bookIsFav)
+                    listOnlyFav += i
+            }
+            return listOnlyFav
+        } else {
+            return someBooks
         }
     }
 

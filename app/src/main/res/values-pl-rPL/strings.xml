@@ -276,4 +276,5 @@
     <string name="insert_book_start_date">Data rozpoczęcia</string>
     <string name="removed_from_fav">Usunięto z ulubionych</string>
     <string name="added_to_fav">Dodano do ulubionych</string>
+    <string name="only_fav">Tylko ulubione</string>
 </resources>

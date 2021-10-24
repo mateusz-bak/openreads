@@ -642,6 +642,7 @@ class DisplayBookFragment : Fragment(R.layout.fragment_display_book) {
         if (bookIsFav && bookStatus == Constants.BOOK_STATUS_READ) {
             var color = context?.let { getAccentColor(it) }
             ivFav.imageTintList = color?.let { ColorStateList.valueOf(it) }
+            ivFav.setImageDrawable(resources.getDrawable(R.drawable.ic_baseline_favorite_24))
         } else if (bookStatus == Constants.BOOK_STATUS_IN_PROGRESS || bookStatus == Constants.BOOK_STATUS_TO_READ) {
             ivFav.visibility = View.GONE
         }
@@ -651,8 +652,10 @@ class DisplayBookFragment : Fragment(R.layout.fragment_display_book) {
         if (fav) {
             var color = context?.let { getAccentColor(it) }
             ivFav.imageTintList = color?.let { ColorStateList.valueOf(it) }
+            ivFav.setImageDrawable(resources.getDrawable(R.drawable.ic_baseline_favorite_24))
         } else {
             ivFav.imageTintList = ColorStateList.valueOf(resources.getColor(R.color.grey_777))
+            ivFav.setImageDrawable(resources.getDrawable(R.drawable.ic_baseline_favorite_border_24))
         }
 
         viewModel.updateBook(
