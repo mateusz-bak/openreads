@@ -87,6 +87,11 @@ class AddEditBookFragment : Fragment(R.layout.fragment_add_edit_book) {
             || bookSource == Constants.FROM_SEARCH)
             populateBooksDetails()
 
+        if (bookSource == Constants.NO_SOURCE
+            || bookSource == Constants.FROM_SCAN
+            || bookSource == Constants.FROM_SEARCH)
+            setFinishDateToToday()
+
         setInitialViews()
 
         tietBookTitle.requestFocus()
@@ -204,10 +209,6 @@ class AddEditBookFragment : Fragment(R.layout.fragment_add_edit_book) {
                         popBackStack()
                     }
                 }
-
-                Toast.makeText(context, "done", Toast.LENGTH_SHORT).show()
-            } else {
-                Toast.makeText(context, "error", Toast.LENGTH_SHORT).show()
             }
         }
     }
@@ -434,6 +435,12 @@ class AddEditBookFragment : Fragment(R.layout.fragment_add_edit_book) {
             bookFinishDateMs = book.bookFinishDate.toLong()
             tvBookFinishDateValue.text = convertLongToTime(bookFinishDateMs!!)
         }
+    }
+
+    private fun setFinishDateToToday() {
+        bookFinishDateMs = System.currentTimeMillis()
+        bookFinishDateMs = clearDateOfTime(bookFinishDateMs!!)
+        tvBookFinishDateValue.text = convertLongToTime(bookFinishDateMs!!)
     }
 
     private fun setRatingAndDatesVis() {
