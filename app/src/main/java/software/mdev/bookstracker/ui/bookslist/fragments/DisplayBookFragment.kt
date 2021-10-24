@@ -549,7 +549,7 @@ class DisplayBookFragment : Fragment(R.layout.fragment_display_book) {
         viewModel.getBook(book.id).observe(viewLifecycleOwner) { book ->
             val bundle = Bundle().apply {
                 putSerializable(Constants.SERIALIZABLE_BUNDLE_BOOK, book)
-                putSerializable(Constants.SERIALIZABLE_BUNDLE_TRUE_FOR_EDIT, true)
+                putSerializable(Constants.SERIALIZABLE_BUNDLE_BOOK_SOURCE, Constants.FROM_DISPLAY)
             }
 
             findNavController().navigate(

@@ -71,7 +71,7 @@ class AddEditBookFragment : Fragment(R.layout.fragment_add_edit_book) {
         )
 
         book = args.book
-        val trueForEdit = args.trueForEdit
+        val bookSource = args.bookSource
         var accentColor = getAccentColor(view.context)
 
         val viewModel = ViewModelProviders.of(this, booksViewModelProviderFactory).get(BooksViewModel::class.java)
@@ -82,7 +82,9 @@ class AddEditBookFragment : Fragment(R.layout.fragment_add_edit_book) {
         setSpinner()
         initConfig()
 
-        if (trueForEdit)
+        if (bookSource == Constants.FROM_DISPLAY
+            || bookSource == Constants.FROM_SCAN
+            || bookSource == Constants.FROM_SEARCH)
             populateBooksDetails()
 
         setInitialViews()
@@ -158,37 +160,54 @@ class AddEditBookFragment : Fragment(R.layout.fragment_add_edit_book) {
             if (validateDetails()) {
                 val newBook = getDetailsFromInputs()
 
-                if (!trueForEdit) {
-                    newBook.bookCoverUrl = Constants.DATABASE_EMPTY_VALUE
-                    if (newBook.bookOLID == "")
-                        newBook.bookOLID = Constants.DATABASE_EMPTY_VALUE
-                    if (newBook.bookISBN13 == "")
-                        newBook.bookISBN13 = Constants.DATABASE_EMPTY_VALUE
+                when (bookSource) {
+                    Constants.NO_SOURCE -> {
+                        newBook.bookCoverUrl = Constants.DATABASE_EMPTY_VALUE
 
-                    viewModel.upsert(newBook)
-                } else {
-                    viewModel.updateBook(
-                        book.id,
-                        newBook.bookTitle,
-                        newBook.bookAuthor,
-                        newBook.bookRating,
-                        newBook.bookStatus,
-                        newBook.bookPriority,
-                        newBook.bookStartDate,
-                        newBook.bookFinishDate,
-                        newBook.bookNumberOfPages,
-                        newBook.bookTitle_ASCII,
-                        newBook.bookAuthor_ASCII,
-                        newBook.bookIsDeleted,
-                        newBook.bookCoverUrl,
-                        newBook.bookOLID,
-                        newBook.bookISBN10,
-                        newBook.bookISBN13,
-                        newBook.bookPublishYear
-                    )
+                        viewModel.upsert(newBook)
+                        recalculateChallenges()
+                        popBackStack()
+                    }
+                    Constants.FROM_SEARCH -> {
+                        viewModel.upsert(newBook)
+                        recalculateChallenges()
+                        popBackStack(2)
+                    }
+                    Constants.FROM_SCAN -> {
+                        viewModel.upsert(newBook)
+                        recalculateChallenges()
+                        popBackStack(3)
+                    }
+                    Constants.FROM_DISPLAY -> {
+
+                        viewModel.updateBook(
+                            book.id,
+                            newBook.bookTitle,
+                            newBook.bookAuthor,
+                            newBook.bookRating,
+                            newBook.bookStatus,
+                            newBook.bookPriority,
+                            newBook.bookStartDate,
+                            newBook.bookFinishDate,
+                            newBook.bookNumberOfPages,
+                            newBook.bookTitle_ASCII,
+                            newBook.bookAuthor_ASCII,
+                            newBook.bookIsDeleted,
+                            newBook.bookCoverUrl,
+                            newBook.bookOLID,
+                            newBook.bookISBN10,
+                            newBook.bookISBN13,
+                            newBook.bookPublishYear
+                        )
+
+                        recalculateChallenges()
+                        popBackStack()
+                    }
                 }
 
-                recalculateChallenges()
+                Toast.makeText(context, "done", Toast.LENGTH_SHORT).show()
+            } else {
+                Toast.makeText(context, "error", Toast.LENGTH_SHORT).show()
             }
         }
     }
@@ -227,6 +246,20 @@ class AddEditBookFragment : Fragment(R.layout.fragment_add_edit_book) {
         if (whatIsClicked == Constants.BOOK_STATUS_READ)
             bookFinishDate = bookFinishDateMs.toString()
 
+        var bookOLID = Constants.DATABASE_EMPTY_VALUE
+        if (tietBookOLID.text != null) {
+            if (tietBookOLID.text!!.isNotEmpty()) {
+                bookOLID = tietBookOLID.text.toString()!!
+            }
+        }
+
+        var bookISBN = Constants.DATABASE_EMPTY_VALUE
+        if (tietBookISBN.text != null) {
+            if (tietBookISBN.text!!.isNotEmpty()) {
+                bookISBN = tietBookISBN.text.toString()!!
+            }
+        }
+
         return Book(
             tietBookTitle.text.toString(),
             tietBookAuthor.text.toString(),
@@ -240,9 +273,9 @@ class AddEditBookFragment : Fragment(R.layout.fragment_add_edit_book) {
             tietBookAuthor.text.toString().unaccent().replace("ł", "l", false),
             false,
             book.bookCoverUrl,
-            tietBookOLID.text.toString(),
+            bookOLID,
             Constants.DATABASE_EMPTY_VALUE,
-            tietBookISBN.text.toString(),
+            bookISBN,
             booksPubYear
         )
     }
@@ -600,10 +633,16 @@ class AddEditBookFragment : Fragment(R.layout.fragment_add_edit_book) {
                 }
             }
             )
+    }
+
+    private fun popBackStack(times: Int = 1) {
         lifecycleScope.launch {
             delay(100L)
             view?.hideKeyboard()
+
+            for (i in 1..times) {
             findNavController().popBackStack()
+            }
         }
     }
 }

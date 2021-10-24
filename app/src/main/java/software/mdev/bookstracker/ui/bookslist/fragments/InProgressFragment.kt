@@ -121,7 +121,7 @@ class InProgressFragment : Fragment(R.layout.fragment_in_progress) {
 
             val bundle = Bundle().apply {
                 putSerializable(Constants.SERIALIZABLE_BUNDLE_BOOK, emptyBook)
-                putSerializable(Constants.SERIALIZABLE_BUNDLE_TRUE_FOR_EDIT, false)
+                putSerializable(Constants.SERIALIZABLE_BUNDLE_BOOK_SOURCE, Constants.NO_SOURCE)
             }
 
             findNavController().navigate(

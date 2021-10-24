@@ -74,10 +74,6 @@ object Constants {
     const val SORT_ORDER_FINISH_DATE_DESC = "ivSortFinishDateDesc"
     const val SORT_ORDER_FINISH_DATE_ASC = "ivSortFinishDateAsc"
 
-    const val SERIALIZABLE_BUNDLE_BOOK = "book"
-    const val SERIALIZABLE_BUNDLE_ISBN = "isbn"
-    const val SERIALIZABLE_BUNDLE_TRUE_FOR_EDIT = "trueForEdit"
-
     const val SHARED_PREFERENCES_KEY_FIRST_TIME_TOGGLE = "KEY_FIRST_TIME_TOGGLE"
     const val SHARED_PREFERENCES_KEY_APP_VERSION = "SHARED_PREFERENCES_KEY_APP_VERSION"
     const val SHARED_PREFERENCES_KEY_SORT_ORDER = "KEY_SORT_ORDER"
@@ -128,4 +124,16 @@ object Constants {
 
     const val MS_ONE_WEEK = 604800000L
     const val MS_THREE_DAYS = 259200000L
+
+    // arguments between fragments
+    const val SERIALIZABLE_BUNDLE_BOOK = "book"
+    const val SERIALIZABLE_BUNDLE_ISBN = "isbn"
+    const val SERIALIZABLE_BUNDLE_ISBN_DEFAULT = "manual_search"
+    const val SERIALIZABLE_BUNDLE_BOOK_SOURCE = "bookSource"
+
+    // sources of book when passing to add/edit fragment
+    const val NO_SOURCE = 0
+    const val FROM_SEARCH = 1
+    const val FROM_SCAN = 2
+    const val FROM_DISPLAY = 3
 }

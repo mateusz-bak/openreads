@@ -19,7 +19,6 @@ import software.mdev.bookstracker.other.Constants
 import java.text.SimpleDateFormat
 import java.util.*
 import androidx.lifecycle.Observer
-import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
 import kotlinx.coroutines.*
@@ -388,30 +387,7 @@ class AddBookSearchFragment : Fragment(R.layout.fragment_add_book_search) {
         })
 
         foundBooksAdapter.setOnBookClickListener {
-
-            AddFoundBookDialog(it, view.context,
-                object: AddFoundBookDialogListener {
-                    override fun onSaveButtonClicked(item: Book) {
-                        viewModel.upsert(item)
-                        recalculateChallenges()
-
-                        when(item.bookStatus) {
-                            Constants.BOOK_STATUS_READ -> { findNavController().navigate(
-                                R.id.action_addBookSearchFragment_to_readFragment
-                            )
-                            }
-                            Constants.BOOK_STATUS_IN_PROGRESS -> { findNavController().navigate(
-                                R.id.action_addBookSearchFragment_to_inProgressFragment
-                            )
-                            }
-                            Constants.BOOK_STATUS_TO_READ -> { findNavController().navigate(
-                                R.id.action_addBookSearchFragment_to_toReadFragment
-                            )
-                            }
-                        }
-                    }
-                }
-            ).show()
+            goToAddFragment(it, isbn)
         }
 
         etAdderBookTitleSearch.setOnEditorActionListener(OnEditorActionListener { v, actionId, event ->
@@ -421,6 +397,81 @@ class AddBookSearchFragment : Fragment(R.layout.fragment_add_book_search) {
             }
             false
         })
+    }
+
+    private fun goToAddFragment(resource: Resource<OpenLibraryOLIDResponse>, isbn: String) {
+        if (resource.data != null) {
+            var bookTitle = ""
+            var bookAuthor = ""
+            var bookPages = 0
+            var bookPublishYear = 0
+            var bookISBN = ""
+            var bookOLID = ""
+            var bookCoverUrl = ""
+
+            if (resource.data!!.title != null)
+                bookTitle = resource.data!!.title
+
+            if (resource.data!!.authors != null)
+                bookAuthor = resource.data!!.authors[0].key
+
+            if (resource.data!!.number_of_pages != null)
+                bookPages = resource.data!!.number_of_pages
+
+            if (resource.data!!.publish_date != null)
+                bookPublishYear = getYearFromPublishDate(resource.data!!.publish_date)
+
+            if (resource.data!!.isbn_13 != null) {
+                bookISBN = resource.data!!.isbn_13.toString()
+                bookISBN = bookISBN.replace("[", "")
+            }
+
+            if (resource.data!!.key != null) {
+                bookOLID = resource.data!!.key
+                bookOLID = bookOLID.replace("/books/", "")
+            }
+
+            if (resource.data!!.covers != null)
+                bookCoverUrl = resource.data!!.covers[0].toString()
+
+            var book = Book(bookTitle, bookAuthor)
+            book.bookNumberOfPages = bookPages
+            book.bookPublishYear = bookPublishYear
+            book.bookISBN13 = bookISBN
+            book.bookOLID = bookOLID
+            book.bookCoverUrl = bookCoverUrl
+
+            Constants.SERIALIZABLE_BUNDLE_ISBN_DEFAULT
+
+            var bookSource = Constants.FROM_SEARCH
+            if (isbn != Constants.SERIALIZABLE_BUNDLE_ISBN_DEFAULT)
+                bookSource = Constants.FROM_SCAN
+
+            val bundle = Bundle().apply {
+                putSerializable(Constants.SERIALIZABLE_BUNDLE_BOOK, book)
+                putSerializable(Constants.SERIALIZABLE_BUNDLE_BOOK_SOURCE, bookSource)
+            }
+
+            findNavController().navigate(
+                R.id.action_addBookSearchFragment_to_addEditBookFragment,
+                bundle
+            )
+        }
+    }
+
+    private fun getYearFromPublishDate(publishDate: String): Int {
+        var publishYear = 0
+
+        val numbers = Regex("[0-9]+").findAll(publishDate)
+            .map(MatchResult::value)
+            .toList()
+
+        for (i in numbers) {
+            if (i.length == 4)
+                publishYear = i.toInt()
+        }
+
+        return publishYear
     }
 
     private fun performSearch(v: TextView) {
