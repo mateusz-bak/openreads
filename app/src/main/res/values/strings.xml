@@ -322,4 +322,7 @@
     <string name="removed_from_fav">Removed from favourites</string>
     <string name="added_to_fav">Added to favourites</string>
     <string name="only_fav">Only favourites</string>
+    <string name="tvClickToAddCover">Click to add cover</string>
+    <string name="upload_cover_from_storage">Upload cover from storage</string>
+    <string name="upload_cover_from_camera">Take photo of your cover</string>
 </resources>

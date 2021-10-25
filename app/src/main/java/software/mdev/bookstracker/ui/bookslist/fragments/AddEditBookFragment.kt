@@ -42,6 +42,7 @@ import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.graphics.drawable.BitmapDrawable
 import androidx.swiperefreshlayout.widget.CircularProgressDrawable
+import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.squareup.picasso.Picasso
 import software.mdev.bookstracker.other.RoundCornersTransform
 import java.io.ByteArrayOutputStream
@@ -271,6 +272,18 @@ class AddEditBookFragment : Fragment(R.layout.fragment_add_edit_book) {
 
         btnCoverRemove.setOnClickListener {
             ivBookCover.setImageDrawable(null)
+        }
+
+        rlBookCover.setOnClickListener {
+            showBottomSheetDialog()
+        }
+
+        tvClickToAddCover.setOnClickListener {
+            showBottomSheetDialog()
+        }
+
+        ivBookCover.setOnClickListener {
+            showBottomSheetDialog()
         }
     }
 
@@ -768,5 +781,42 @@ class AddEditBookFragment : Fragment(R.layout.fragment_add_edit_book) {
                 .transform(RoundCornersTransform(16.0f))
                 .into(ivBookCover)
         }
+    }
+
+    private fun showBottomSheetDialog() {
+        if (context != null) {
+            val bottomSheetDialog = BottomSheetDialog(requireContext(), R.style.AppBottomSheetDialogTheme)
+            bottomSheetDialog.setContentView(R.layout.bottom_sheet_upload_cover)
+
+            bottomSheetDialog.findViewById<LinearLayout>(R.id.llUploadFromStorage)
+                ?.setOnClickListener {
+                    uploadCoverFromStorage()
+                    bottomSheetDialog.dismiss()
+                }
+
+            bottomSheetDialog.findViewById<LinearLayout>(R.id.llUploadFromCamera)
+                ?.setOnClickListener {
+                    uploadCoverFromCamera()
+                    bottomSheetDialog.dismiss()
+                }
+
+            bottomSheetDialog.show()
+        }
+    }
+
+    private fun uploadCoverFromStorage() {
+        // TODO handle storage permission
+
+        // TODO open files
+
+        // TODO load new cover into image view
+    }
+
+    private fun uploadCoverFromCamera() {
+        // TODO handle camera permission
+
+        // TODO open camera
+
+        // TODO load new cover into image view
     }
 }
