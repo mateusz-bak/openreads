@@ -81,12 +81,12 @@
                 android:orientation="vertical"
                 app:layout_constraintGuide_percent="0.5" />
 
-
-            <ImageView
+            <com.google.android.material.imageview.ShapeableImageView
                 android:id="@+id/ivBookCover"
+                app:shapeAppearanceOverlay="@style/roundedCoverDisplay"
                 android:layout_width="0dp"
                 android:layout_height="250dp"
-                android:scaleType="fitStart"
+                android:scaleType="fitXY"
                 app:layout_constraintEnd_toStartOf="@+id/guideline13"
                 app:layout_constraintHorizontal_bias="0.5"
                 app:layout_constraintStart_toStartOf="parent"

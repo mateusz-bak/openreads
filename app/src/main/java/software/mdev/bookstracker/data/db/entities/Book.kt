@@ -59,7 +59,30 @@ data class Book (
 
         @ColumnInfo(name = Constants.DATABASE_ITEM_BOOK_IS_FAV)
         var  bookIsFav: Boolean = false,
+
+        @ColumnInfo(typeAffinity = ColumnInfo.BLOB, name = Constants.DATABASE_ITEM_BOOK_COVER_IMG)
+        var  bookCoverImg: ByteArray? = null
 ): Serializable{
     @PrimaryKey(autoGenerate = true)
     var id: Int? = null
+        override fun equals(other: Any?): Boolean {
+                if (this === other) return true
+                if (javaClass != other?.javaClass) return false
+
+                other as Book
+
+                if (bookCoverImg != null) {
+                        if (other.bookCoverImg == null) return false
+                        if (!bookCoverImg.contentEquals(other.bookCoverImg)) return false
+                } else if (other.bookCoverImg != null) return false
+                if (id != other.id) return false
+
+                return true
+        }
+
+        override fun hashCode(): Int {
+                var result = bookCoverImg?.contentHashCode() ?: 0
+                result = 31 * result + (id ?: 0)
+                return result
+        }
 }

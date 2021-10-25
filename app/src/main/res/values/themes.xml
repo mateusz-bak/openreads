@@ -35,6 +35,16 @@
         <item name="android:background">@drawable/bottom_sheet_rounded_corners</item>
     </style>
 
+    <style name="roundedCoverEdit" parent="">
+        <item name="cornerFamily">rounded</item>
+        <item name="cornerSize">24dp</item>
+    </style>
+
+    <style name="roundedCoverDisplay" parent="">
+        <item name="cornerFamily">rounded</item>
+        <item name="cornerSize">16dp</item>
+    </style>
+
     <color name="colorDefaultText">#000000</color>
     <color name="colorGreyText">#616161</color>
     <color name="teal_bg">#e0f2f1</color>

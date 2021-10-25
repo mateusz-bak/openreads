@@ -37,6 +37,11 @@ import android.widget.*
 import kotlinx.coroutines.MainScope
 import androidx.activity.OnBackPressedCallback
 import androidx.core.widget.addTextChangedListener
+import kotlinx.android.synthetic.main.fragment_add_edit_book.ivBookCover
+import android.graphics.Bitmap
+import android.graphics.BitmapFactory
+import android.graphics.drawable.BitmapDrawable
+import java.io.ByteArrayOutputStream
 
 
 class AddEditBookFragment : Fragment(R.layout.fragment_add_edit_book) {
@@ -82,6 +87,9 @@ class AddEditBookFragment : Fragment(R.layout.fragment_add_edit_book) {
         finishDatePickerVis(false)
         setSpinner()
         initConfig()
+
+        if (bookSource == Constants.FROM_DISPLAY)
+            setCover(book.bookCoverImg)
 
         if (bookSource == Constants.FROM_DISPLAY
             || bookSource == Constants.FROM_SCAN
@@ -211,7 +219,8 @@ class AddEditBookFragment : Fragment(R.layout.fragment_add_edit_book) {
                             newBook.bookISBN10,
                             newBook.bookISBN13,
                             newBook.bookPublishYear,
-                            newBook.bookIsFav
+                            newBook.bookIsFav,
+                            newBook.bookCoverImg
                         )
 
                         recalculateChallenges()
@@ -245,6 +254,10 @@ class AddEditBookFragment : Fragment(R.layout.fragment_add_edit_book) {
 
         ivClearBookAuthor.setOnClickListener {
             tietBookAuthor.setText("")
+        }
+
+        btnCoverRemove.setOnClickListener {
+            ivBookCover.setImageDrawable(null)
         }
     }
 
@@ -296,6 +309,8 @@ class AddEditBookFragment : Fragment(R.layout.fragment_add_edit_book) {
             }
         }
 
+        var  bookCoverImg: ByteArray? = getCoverFromImageView()
+
         return Book(
             tietBookTitle.text.toString(),
             tietBookAuthor.text.toString(),
@@ -313,7 +328,8 @@ class AddEditBookFragment : Fragment(R.layout.fragment_add_edit_book) {
             Constants.DATABASE_EMPTY_VALUE,
             bookISBN,
             booksPubYear,
-            book.bookIsFav
+            book.bookIsFav,
+            bookCoverImg
         )
     }
 
@@ -690,6 +706,26 @@ class AddEditBookFragment : Fragment(R.layout.fragment_add_edit_book) {
             for (i in 1..times) {
             findNavController().popBackStack()
             }
+        }
+    }
+
+    private fun getCoverFromImageView(): ByteArray? {
+        val imageView = view?.findViewById(R.id.ivBookCover) as ImageView
+
+        if (imageView.drawable != null) {
+            val bitmap = (imageView.drawable as BitmapDrawable).bitmap
+            val baos = ByteArrayOutputStream()
+            bitmap.compress(Bitmap.CompressFormat.JPEG, 100, baos)
+
+            return baos.toByteArray()
+        } else
+            return null
+    }
+
+    private fun setCover(bookCoverImg: ByteArray?) {
+        if (bookCoverImg != null) {
+            val bmp = BitmapFactory.decodeByteArray(bookCoverImg, 0, bookCoverImg.size)
+            ivBookCover.setImageBitmap(bmp)
         }
     }
 }

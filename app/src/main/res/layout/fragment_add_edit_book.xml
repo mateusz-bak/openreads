@@ -233,6 +233,7 @@
                 app:errorTextColor="?colorAccent"
                 app:hintAnimationEnabled="true"
                 app:hintTextColor="?colorAccent"
+                android:layout_marginEnd="8dp"
                 app:layout_constraintEnd_toEndOf="@+id/tilBookPages"
                 app:layout_constraintEnd_toStartOf="@+id/tilBookOLID"
                 app:layout_constraintHorizontal_bias="0.5"
@@ -510,63 +511,49 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:background="@drawable/text_field_background"
-                android:backgroundTint="@color/teal_bg"
+                android:backgroundTint="@color/grey_100"
                 android:backgroundTintMode="screen"
+                android:minHeight="150dp"
                 android:orientation="horizontal"
-                android:visibility="invisible"
+                android:visibility="visible"
                 app:layout_constraintEnd_toEndOf="@+id/tilBookPages"
                 app:layout_constraintStart_toStartOf="@+id/tilBookAuthor"
                 app:layout_constraintTop_toBottomOf="@+id/tilBookISBN">
 
-                <ImageView
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    android:text="Click to add cover"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.5"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+
+                <com.google.android.material.imageview.ShapeableImageView
                     android:id="@+id/ivBookCover"
                     android:layout_width="match_parent"
-                    android:layout_height="200dp"
+                    android:layout_height="wrap_content"
+                    android:adjustViewBounds="true"
                     android:scaleType="fitCenter"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintHorizontal_bias="0.5"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
-                    app:srcCompat="@drawable/ic_book_black_48dp"
-                    app:tint="?colorPrimary" />
+                    app:shapeAppearanceOverlay="@style/roundedCoverEdit" />
 
                 <ImageButton
                     android:id="@+id/btnCoverRemove"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:background="@drawable/rounded_image_button"
-                    android:backgroundTint="@color/grey_777"
-                    android:paddingStart="16dp"
-                    android:paddingTop="8dp"
-                    android:paddingEnd="16dp"
-                    android:paddingBottom="8dp"
-                    android:scaleX="0.8"
-                    android:scaleY="0.8"
+                    android:backgroundTint="@color/red_800"
+                    android:padding="8dp"
                     android:src="@drawable/ic_baseline_delete_forever_24"
                     app:circularflow_defaultRadius="6dp"
-                    app:layout_constraintEnd_toStartOf="@+id/btnCoverSave"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/ivBookCover"
-                    app:tint="?colorOnPrimary" />
-
-
-                <ImageButton
-                    android:id="@+id/btnCoverSave"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:background="@drawable/rounded_image_button"
-                    android:backgroundTint="?colorPrimary"
-                    android:paddingStart="16dp"
-                    android:paddingTop="8dp"
-                    android:paddingEnd="16dp"
-                    android:paddingBottom="8dp"
-                    android:scaleX="0.8"
-                    android:scaleY="0.8"
-                    android:src="@drawable/ic_baseline_upload_24"
-                    app:circularflow_defaultRadius="6dp"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toEndOf="@+id/btnCoverRemove"
-                    app:layout_constraintTop_toBottomOf="@+id/ivBookCover"
+                    app:layout_constraintEnd_toEndOf="@+id/ivBookCover"
+                    app:layout_constraintBottom_toBottomOf="@+id/ivBookCover"
                     app:tint="?colorOnPrimary" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>
@@ -639,7 +626,7 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"
-                android:layout_marginTop="48dp"
+                android:layout_marginTop="24dp"
                 android:backgroundTint="?colorPrimary"
                 android:text="@string/btnAdderSaveBook"
                 app:cornerRadius="@dimen/text_input_layout_radius"
