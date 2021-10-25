@@ -106,7 +106,12 @@ class AddEditBookFragment : Fragment(R.layout.fragment_add_edit_book) {
 
         // set cover image
         when (bookSource) {
-            Constants.FROM_DISPLAY -> setCoverFromDB(book.bookCoverImg)
+            Constants.FROM_DISPLAY -> {
+                if (book.bookCoverImg == null)
+                    setCoverFromURL(view, book.bookCoverUrl)
+                else
+                    setCoverFromDB(book.bookCoverImg)
+            }
             Constants.FROM_SEARCH  -> setCoverFromURL(view, book.bookCoverUrl)
             Constants.FROM_SCAN  -> setCoverFromURL(view, book.bookCoverUrl)
         }
