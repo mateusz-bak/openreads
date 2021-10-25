@@ -45,6 +45,7 @@ import androidx.swiperefreshlayout.widget.CircularProgressDrawable
 import com.squareup.picasso.Picasso
 import software.mdev.bookstracker.other.RoundCornersTransform
 import java.io.ByteArrayOutputStream
+import java.lang.Exception
 
 
 class AddEditBookFragment : Fragment(R.layout.fragment_add_edit_book) {
@@ -717,16 +718,19 @@ class AddEditBookFragment : Fragment(R.layout.fragment_add_edit_book) {
     }
 
     private fun getCoverFromImageView(): ByteArray? {
-        val imageView = view?.findViewById(R.id.ivBookCover) as ImageView
+        try {
+            val imageView = view?.findViewById(R.id.ivBookCover) as ImageView
+            if (imageView.drawable != null) {
+                val bitmap = (imageView.drawable as BitmapDrawable).bitmap
+                val baos = ByteArrayOutputStream()
+                bitmap.compress(Bitmap.CompressFormat.JPEG, 100, baos)
 
-        if (imageView.drawable != null) {
-            val bitmap = (imageView.drawable as BitmapDrawable).bitmap
-            val baos = ByteArrayOutputStream()
-            bitmap.compress(Bitmap.CompressFormat.JPEG, 100, baos)
-
-            return baos.toByteArray()
-        } else
+                return baos.toByteArray()
+            } else
+                return null
+        } catch (e: Exception) {
             return null
+        }
     }
 
     private fun setCoverFromDB(bookCoverImg: ByteArray?) {
