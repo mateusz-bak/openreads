@@ -41,6 +41,9 @@ import kotlinx.android.synthetic.main.fragment_add_edit_book.ivBookCover
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.graphics.drawable.BitmapDrawable
+import androidx.swiperefreshlayout.widget.CircularProgressDrawable
+import com.squareup.picasso.Picasso
+import software.mdev.bookstracker.other.RoundCornersTransform
 import java.io.ByteArrayOutputStream
 
 
@@ -88,9 +91,6 @@ class AddEditBookFragment : Fragment(R.layout.fragment_add_edit_book) {
         setSpinner()
         initConfig()
 
-        if (bookSource == Constants.FROM_DISPLAY)
-            setCover(book.bookCoverImg)
-
         if (bookSource == Constants.FROM_DISPLAY
             || bookSource == Constants.FROM_SCAN
             || bookSource == Constants.FROM_SEARCH)
@@ -102,6 +102,13 @@ class AddEditBookFragment : Fragment(R.layout.fragment_add_edit_book) {
             setFinishDateToToday()
 
         setInitialViews()
+
+        // set cover image
+        when (bookSource) {
+            Constants.FROM_DISPLAY -> setCoverFromDB(book.bookCoverImg)
+            Constants.FROM_SEARCH  -> setCoverFromURL(view, book.bookCoverUrl)
+            Constants.FROM_SCAN  -> setCoverFromURL(view, book.bookCoverUrl)
+        }
 
         tietBookTitle.requestFocus()
         showKeyboard(tietBookTitle,350)
@@ -722,10 +729,35 @@ class AddEditBookFragment : Fragment(R.layout.fragment_add_edit_book) {
             return null
     }
 
-    private fun setCover(bookCoverImg: ByteArray?) {
+    private fun setCoverFromDB(bookCoverImg: ByteArray?) {
         if (bookCoverImg != null) {
             val bmp = BitmapFactory.decodeByteArray(bookCoverImg, 0, bookCoverImg.size)
             ivBookCover.setImageBitmap(bmp)
+        }
+    }
+
+    private fun setCoverFromURL(view: View, bookCoverUrl: String) {
+        if (bookCoverUrl != "none" && bookCoverUrl != "null") {
+            val circularProgressDrawable = CircularProgressDrawable(view.context)
+            circularProgressDrawable.strokeWidth = 5f
+            circularProgressDrawable.centerRadius = 30f
+            circularProgressDrawable.setColorSchemeColors(
+                ContextCompat.getColor(
+                    view.context,
+                    R.color.grey
+                )
+            )
+            circularProgressDrawable.start()
+
+            var coverUrl = "https://covers.openlibrary.org/b/id/$bookCoverUrl-L.jpg"
+
+            Picasso
+                .get()
+                .load(coverUrl)
+                .placeholder(circularProgressDrawable)
+                .error(R.drawable.ic_baseline_error_outline_24)
+                .transform(RoundCornersTransform(16.0f))
+                .into(ivBookCover)
         }
     }
 }
