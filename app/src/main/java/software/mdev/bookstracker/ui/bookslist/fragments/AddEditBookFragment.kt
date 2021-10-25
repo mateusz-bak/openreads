@@ -44,6 +44,7 @@ import android.graphics.drawable.BitmapDrawable
 import androidx.swiperefreshlayout.widget.CircularProgressDrawable
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.squareup.picasso.Picasso
+import software.mdev.bookstracker.other.Functions
 import software.mdev.bookstracker.other.RoundCornersTransform
 import java.io.ByteArrayOutputStream
 import java.lang.Exception
@@ -805,7 +806,14 @@ class AddEditBookFragment : Fragment(R.layout.fragment_add_edit_book) {
     }
 
     private fun uploadCoverFromStorage() {
-        // TODO handle storage permission
+        if (Functions().checkPermission(activity as ListActivity, android.Manifest.permission.READ_EXTERNAL_STORAGE)) {
+            Toast.makeText(context, "ext storage permission already accepted", Toast.LENGTH_SHORT).show()
+        } else {
+            Functions().requestPermission(
+                activity as ListActivity,
+                android.Manifest.permission.READ_EXTERNAL_STORAGE,
+                Constants.PERMISSION_READ_EXTERNAL_STORAGE_FROM_UPLOAD_COVER)
+        }
 
         // TODO open files
 
@@ -813,7 +821,14 @@ class AddEditBookFragment : Fragment(R.layout.fragment_add_edit_book) {
     }
 
     private fun uploadCoverFromCamera() {
-        // TODO handle camera permission
+        if (Functions().checkPermission(activity as ListActivity, android.Manifest.permission.CAMERA)) {
+            Toast.makeText(context, "camera permission already accepted", Toast.LENGTH_SHORT).show()
+        } else {
+            Functions().requestPermission(
+                activity as ListActivity,
+                android.Manifest.permission.CAMERA,
+                Constants.PERMISSION_CAMERA_FROM_UPLOAD_COVER)
+        }
 
         // TODO open camera
 
