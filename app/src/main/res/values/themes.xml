@@ -42,7 +42,12 @@
 
     <style name="roundedCoverDisplay" parent="">
         <item name="cornerFamily">rounded</item>
-        <item name="cornerSize">16dp</item>
+        <item name="cornerSize">12dp</item>
+    </style>
+
+    <style name="roundedCoverAdapter" parent="">
+        <item name="cornerFamily">rounded</item>
+        <item name="cornerSize">6dp</item>
     </style>
 
     <color name="colorDefaultText">#000000</color>

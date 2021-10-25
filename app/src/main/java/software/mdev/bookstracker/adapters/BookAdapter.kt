@@ -1,6 +1,7 @@
 package software.mdev.bookstracker.adapters
 
 import android.content.Context
+import android.graphics.BitmapFactory
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -118,17 +119,23 @@ class BookAdapter(
                 }
             }
 
-            if (curBook.bookCoverUrl == Constants.DATABASE_EMPTY_VALUE) {
-                ivBookCover.visibility = View.GONE
-            } else {
-                // TODO load img from db
-            }
+            setCover (this, curBook.bookCoverImg)
         }
 
         holder.itemView.apply {
             setOnClickListener {
                 onBookClickListener?.let { it(curBook) }
             }
+        }
+    }
+
+    private fun setCover(view: View, bookCoverImg: ByteArray?) {
+
+        if (bookCoverImg == null) {
+            view.ivBookCover.visibility = View.GONE
+        } else {
+            val bmp = BitmapFactory.decodeByteArray(bookCoverImg, 0, bookCoverImg.size)
+            view.ivBookCover.setImageBitmap(bmp)
         }
     }
 
