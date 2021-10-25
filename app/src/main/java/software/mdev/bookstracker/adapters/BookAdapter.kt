@@ -106,10 +106,6 @@ class BookAdapter(
                 }
                 Constants.BOOK_STATUS_IN_PROGRESS -> {
                     rbRatingIndicator.visibility = View.GONE
-                    tvNumberOfPages.visibility = View.GONE
-
-                    tvDateStarted.visibility = View.GONE
-                    tvDateStartedTitle.visibility = View.GONE
 
                     tvDateFinished.visibility = View.GONE
                     tvDateFinishedTitle.visibility = View.GONE

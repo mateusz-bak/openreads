@@ -15,8 +15,8 @@ android {
         applicationId "software.mdev.bookstracker"
         minSdkVersion 24
         targetSdkVersion 30
-        versionCode 9
-        versionName "1.7.0"
+        versionCode 10
+        versionName "1.7.1"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
 
@@ -134,4 +134,10 @@ dependencies {
 
     // https://stackoverflow.com/questions/44986626/android-room-database-how-to-handle-arraylist-in-an-entity
     implementation "org.jetbrains.kotlinx:kotlinx-serialization-json:1.0.1"
+
+    // https://github.com/zhanghai/MaterialRatingBar
+    implementation 'me.zhanghai.android.materialratingbar:library:1.4.0'
+
+    // https://www.section.io/engineering-education/bottom-sheet-dialogs-using-android-studio/
+    implementation 'com.google.android.material:material:1.4.0'
 }

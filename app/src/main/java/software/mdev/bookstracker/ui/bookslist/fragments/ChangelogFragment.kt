@@ -268,6 +268,14 @@ class ChangelogFragment : Fragment(R.layout.fragment_changelog) {
             getString(R.string.changelog_1_7_0_j)
         )
 
+        val version_1_7_1 = arrayOf(
+            getString(R.string.changelog_ver_1_7_1),
+            getString(R.string.changelog_date_1_7_1),
+            getString(R.string.changelog_1_7_1_a),
+            getString(R.string.changelog_1_7_1_b),
+            getString(R.string.changelog_1_7_1_c)
+        )
+
 
         return listOf(
             version_1_0_0,
@@ -280,7 +288,8 @@ class ChangelogFragment : Fragment(R.layout.fragment_changelog) {
             version_1_5_0,
             version_1_5_1,
             version_1_6_0,
-            version_1_7_0
+            version_1_7_0,
+            version_1_7_1
         )
     }
 

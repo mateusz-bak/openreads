@@ -10,6 +10,8 @@ class BooksRepository (
 
     suspend fun delete(item: Book) = db.getBooksDao().delete(item)
 
+    fun getBook(id: Int?) = db.getBooksDao().getBook(id)
+
     fun getReadBooks() = db.getBooksDao().getReadBooks()
 
     fun getInProgressBooks() = db.getBooksDao().getInProgressBooks()
@@ -33,7 +35,8 @@ class BooksRepository (
         bookOLID: String,
         bookISBN10: String,
         bookISBN13: String,
-        bookPublishYear: Int
+        bookPublishYear: Int,
+        bookIsFav: Boolean,
     ) = db.getBooksDao().updateBook(
         id,
         bookTitle,
@@ -51,7 +54,8 @@ class BooksRepository (
         bookOLID,
         bookISBN10,
         bookISBN13,
-        bookPublishYear
+        bookPublishYear,
+        bookIsFav
     )
 
     fun searchBooks(searchQuery: String) = db.getBooksDao().searchBooks(searchQuery)

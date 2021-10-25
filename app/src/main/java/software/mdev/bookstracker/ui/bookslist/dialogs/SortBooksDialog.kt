@@ -41,84 +41,84 @@ class SortBooksDialog(context: Context, var sortBooksDialogListener: SortBooksDi
             Constants.SORT_ORDER_TITLE_DESC -> {
                 ivSortTitle.setColorFilter(ContextCompat.getColor(context, R.color.design_default_color_on_primary))
                 clTitle.setBackgroundResource(R.drawable.sort_background_selected)
-                tvSortTitle.setTextColor(ContextCompat.getColor(context, R.color.design_default_color_on_primary))
+
                 whatIsClicked = Constants.SORT_ORDER_TITLE_DESC
                 ivSortTitle.animate().rotation( 180F).setDuration(1L).start()
             }
             Constants.SORT_ORDER_TITLE_ASC -> {
                 ivSortTitle.setColorFilter(ContextCompat.getColor(context, R.color.design_default_color_on_primary))
                 clTitle.setBackgroundResource(R.drawable.sort_background_selected)
-                tvSortTitle.setTextColor(ContextCompat.getColor(context, R.color.design_default_color_on_primary))
+
                 whatIsClicked = Constants.SORT_ORDER_TITLE_ASC
                 ivSortTitle.animate().rotation( 0F).setDuration(1L).start()
             }
             Constants.SORT_ORDER_AUTHOR_DESC -> {
                 ivSortAuthor.setColorFilter(ContextCompat.getColor(context, R.color.design_default_color_on_primary))
                 clAuthor.setBackgroundResource(R.drawable.sort_background_selected)
-                tvSortAuthor.setTextColor(ContextCompat.getColor(context, R.color.design_default_color_on_primary))
+
                 whatIsClicked = Constants.SORT_ORDER_AUTHOR_DESC
                 ivSortAuthor.animate().rotation( 180F).setDuration(1L).start()
             }
             Constants.SORT_ORDER_AUTHOR_ASC -> {
                 ivSortAuthor.setColorFilter(ContextCompat.getColor(context, R.color.design_default_color_on_primary))
                 clAuthor.setBackgroundResource(R.drawable.sort_background_selected)
-                tvSortAuthor.setTextColor(ContextCompat.getColor(context, R.color.design_default_color_on_primary))
+
                 whatIsClicked = Constants.SORT_ORDER_AUTHOR_ASC
                 ivSortAuthor.animate().rotation( 0F).setDuration(1L).start()
             }
             Constants.SORT_ORDER_RATING_DESC -> {
                 ivSortRating.setColorFilter(ContextCompat.getColor(context, R.color.design_default_color_on_primary))
                 clRating.setBackgroundResource(R.drawable.sort_background_selected)
-                tvSortRating.setTextColor(ContextCompat.getColor(context, R.color.design_default_color_on_primary))
+
                 whatIsClicked = Constants.SORT_ORDER_RATING_DESC
                 ivSortRating.animate().rotation( 180F).setDuration(1L).start()
             }
             Constants.SORT_ORDER_RATING_ASC -> {
                 ivSortRating.setColorFilter(ContextCompat.getColor(context, R.color.design_default_color_on_primary))
                 clRating.setBackgroundResource(R.drawable.sort_background_selected)
-                tvSortRating.setTextColor(ContextCompat.getColor(context, R.color.design_default_color_on_primary))
+
                 whatIsClicked = Constants.SORT_ORDER_RATING_ASC
                 ivSortRating.animate().rotation( 0F).setDuration(1L).start()
             }
             Constants.SORT_ORDER_PAGES_DESC -> {
                 ivSortPages.setColorFilter(ContextCompat.getColor(context, R.color.design_default_color_on_primary))
                 clPages.setBackgroundResource(R.drawable.sort_background_selected)
-                tvSortPages.setTextColor(ContextCompat.getColor(context, R.color.design_default_color_on_primary))
+
                 whatIsClicked = Constants.SORT_ORDER_PAGES_DESC
                 ivSortPages.animate().rotation( 180F).setDuration(1L).start()
             }
             Constants.SORT_ORDER_PAGES_ASC -> {
                 ivSortPages.setColorFilter(ContextCompat.getColor(context, R.color.design_default_color_on_primary))
                 clPages.setBackgroundResource(R.drawable.sort_background_selected)
-                tvSortPages.setTextColor(ContextCompat.getColor(context, R.color.design_default_color_on_primary))
+
                 whatIsClicked = Constants.SORT_ORDER_PAGES_ASC
                 ivSortPages.animate().rotation( 0F).setDuration(1L).start()
             }
             Constants.SORT_ORDER_START_DATE_DESC -> {
                 ivSortStartDate.setColorFilter(ContextCompat.getColor(context, R.color.design_default_color_on_primary))
                 clStartDate.setBackgroundResource(R.drawable.sort_background_selected)
-                tvSortStartDate.setTextColor(ContextCompat.getColor(context, R.color.design_default_color_on_primary))
+
                 whatIsClicked = Constants.SORT_ORDER_START_DATE_DESC
                 ivSortStartDate.animate().rotation( 180F).setDuration(1L).start()
             }
             Constants.SORT_ORDER_START_DATE_ASC -> {
                 ivSortStartDate.setColorFilter(ContextCompat.getColor(context, R.color.design_default_color_on_primary))
                 clStartDate.setBackgroundResource(R.drawable.sort_background_selected)
-                tvSortStartDate.setTextColor(ContextCompat.getColor(context, R.color.design_default_color_on_primary))
+
                 whatIsClicked = Constants.SORT_ORDER_START_DATE_ASC
                 ivSortStartDate.animate().rotation( 0F).setDuration(1L).start()
             }
             Constants.SORT_ORDER_FINISH_DATE_DESC -> {
                 ivSortFinishDate.setColorFilter(ContextCompat.getColor(context, R.color.design_default_color_on_primary))
                 clFinishDate.setBackgroundResource(R.drawable.sort_background_selected)
-                tvSortFinishDate.setTextColor(ContextCompat.getColor(context, R.color.design_default_color_on_primary))
+
                 whatIsClicked = Constants.SORT_ORDER_FINISH_DATE_DESC
                 ivSortFinishDate.animate().rotation( 180F).setDuration(1L).start()
             }
             Constants.SORT_ORDER_FINISH_DATE_ASC -> {
                 ivSortFinishDate.setColorFilter(ContextCompat.getColor(context, R.color.design_default_color_on_primary))
                 clFinishDate.setBackgroundResource(R.drawable.sort_background_selected)
-                tvSortFinishDate.setTextColor(ContextCompat.getColor(context, R.color.design_default_color_on_primary))
+
                 whatIsClicked = Constants.SORT_ORDER_FINISH_DATE_ASC
                 ivSortFinishDate.animate().rotation( 0F).setDuration(1L).start()
             }
@@ -187,13 +187,6 @@ class SortBooksDialog(context: Context, var sortBooksDialogListener: SortBooksDi
         clStartDate.setBackgroundResource(R.drawable.sort_background_unselected)
         clFinishDate.setBackgroundResource(R.drawable.sort_background_unselected)
 
-        tvSortTitle.setTextColor(ContextCompat.getColor(context, R.color.design_default_color_on_primary))
-        tvSortAuthor.setTextColor(ContextCompat.getColor(context, R.color.grey))
-        tvSortRating.setTextColor(ContextCompat.getColor(context, R.color.grey))
-        tvSortPages.setTextColor(ContextCompat.getColor(context, R.color.grey))
-        tvSortStartDate.setTextColor(ContextCompat.getColor(context, R.color.grey))
-        tvSortFinishDate.setTextColor(ContextCompat.getColor(context, R.color.grey))
-
         whatIsClicked = Constants.SORT_ORDER_TITLE_DESC
         ivSortTitle.animate().rotation( 180F).setDuration(350L).start()
     }
@@ -212,13 +205,6 @@ class SortBooksDialog(context: Context, var sortBooksDialogListener: SortBooksDi
         clPages.setBackgroundResource(R.drawable.sort_background_unselected)
         clStartDate.setBackgroundResource(R.drawable.sort_background_unselected)
         clFinishDate.setBackgroundResource(R.drawable.sort_background_unselected)
-
-        tvSortTitle.setTextColor(ContextCompat.getColor(context, R.color.design_default_color_on_primary))
-        tvSortAuthor.setTextColor(ContextCompat.getColor(context, R.color.grey))
-        tvSortRating.setTextColor(ContextCompat.getColor(context, R.color.grey))
-        tvSortPages.setTextColor(ContextCompat.getColor(context, R.color.grey))
-        tvSortStartDate.setTextColor(ContextCompat.getColor(context, R.color.grey))
-        tvSortFinishDate.setTextColor(ContextCompat.getColor(context, R.color.grey))
 
         whatIsClicked = Constants.SORT_ORDER_TITLE_ASC
         ivSortTitle.animate().rotation( 0F).setDuration(350L).start()
@@ -239,13 +225,6 @@ class SortBooksDialog(context: Context, var sortBooksDialogListener: SortBooksDi
         clStartDate.setBackgroundResource(R.drawable.sort_background_unselected)
         clFinishDate.setBackgroundResource(R.drawable.sort_background_unselected)
 
-        tvSortTitle.setTextColor(ContextCompat.getColor(context, R.color.grey))
-        tvSortAuthor.setTextColor(ContextCompat.getColor(context, R.color.design_default_color_on_primary))
-        tvSortRating.setTextColor(ContextCompat.getColor(context, R.color.grey))
-        tvSortPages.setTextColor(ContextCompat.getColor(context, R.color.grey))
-        tvSortStartDate.setTextColor(ContextCompat.getColor(context, R.color.grey))
-        tvSortFinishDate.setTextColor(ContextCompat.getColor(context, R.color.grey))
-
         whatIsClicked = Constants.SORT_ORDER_AUTHOR_DESC
         ivSortAuthor.animate().rotation( 180F).setDuration(350L).start()
     }
@@ -264,13 +243,6 @@ class SortBooksDialog(context: Context, var sortBooksDialogListener: SortBooksDi
         clPages.setBackgroundResource(R.drawable.sort_background_unselected)
         clStartDate.setBackgroundResource(R.drawable.sort_background_unselected)
         clFinishDate.setBackgroundResource(R.drawable.sort_background_unselected)
-
-        tvSortTitle.setTextColor(ContextCompat.getColor(context, R.color.grey))
-        tvSortAuthor.setTextColor(ContextCompat.getColor(context, R.color.design_default_color_on_primary))
-        tvSortRating.setTextColor(ContextCompat.getColor(context, R.color.grey))
-        tvSortPages.setTextColor(ContextCompat.getColor(context, R.color.grey))
-        tvSortStartDate.setTextColor(ContextCompat.getColor(context, R.color.grey))
-        tvSortFinishDate.setTextColor(ContextCompat.getColor(context, R.color.grey))
 
         whatIsClicked = Constants.SORT_ORDER_AUTHOR_ASC
         ivSortAuthor.animate().rotation( 0F).setDuration(350L).start()
@@ -291,13 +263,6 @@ class SortBooksDialog(context: Context, var sortBooksDialogListener: SortBooksDi
         clStartDate.setBackgroundResource(R.drawable.sort_background_unselected)
         clFinishDate.setBackgroundResource(R.drawable.sort_background_unselected)
 
-        tvSortTitle.setTextColor(ContextCompat.getColor(context, R.color.grey))
-        tvSortAuthor.setTextColor(ContextCompat.getColor(context, R.color.grey))
-        tvSortRating.setTextColor(ContextCompat.getColor(context, R.color.design_default_color_on_primary))
-        tvSortPages.setTextColor(ContextCompat.getColor(context, R.color.grey))
-        tvSortStartDate.setTextColor(ContextCompat.getColor(context, R.color.grey))
-        tvSortFinishDate.setTextColor(ContextCompat.getColor(context, R.color.grey))
-
         whatIsClicked = Constants.SORT_ORDER_RATING_DESC
         ivSortRating.animate().rotation( 180F).setDuration(350L).start()
     }
@@ -316,13 +281,6 @@ class SortBooksDialog(context: Context, var sortBooksDialogListener: SortBooksDi
         clPages.setBackgroundResource(R.drawable.sort_background_unselected)
         clStartDate.setBackgroundResource(R.drawable.sort_background_unselected)
         clFinishDate.setBackgroundResource(R.drawable.sort_background_unselected)
-
-        tvSortTitle.setTextColor(ContextCompat.getColor(context, R.color.grey))
-        tvSortAuthor.setTextColor(ContextCompat.getColor(context, R.color.grey))
-        tvSortRating.setTextColor(ContextCompat.getColor(context, R.color.design_default_color_on_primary))
-        tvSortPages.setTextColor(ContextCompat.getColor(context, R.color.grey))
-        tvSortStartDate.setTextColor(ContextCompat.getColor(context, R.color.grey))
-        tvSortFinishDate.setTextColor(ContextCompat.getColor(context, R.color.grey))
 
         whatIsClicked = Constants.SORT_ORDER_RATING_ASC
         ivSortRating.animate().rotation( 0F).setDuration(350L).start()
@@ -343,13 +301,6 @@ class SortBooksDialog(context: Context, var sortBooksDialogListener: SortBooksDi
         clStartDate.setBackgroundResource(R.drawable.sort_background_unselected)
         clFinishDate.setBackgroundResource(R.drawable.sort_background_unselected)
 
-        tvSortTitle.setTextColor(ContextCompat.getColor(context, R.color.grey))
-        tvSortAuthor.setTextColor(ContextCompat.getColor(context, R.color.grey))
-        tvSortRating.setTextColor(ContextCompat.getColor(context, R.color.grey))
-        tvSortPages.setTextColor(ContextCompat.getColor(context, R.color.design_default_color_on_primary))
-        tvSortStartDate.setTextColor(ContextCompat.getColor(context, R.color.grey))
-        tvSortFinishDate.setTextColor(ContextCompat.getColor(context, R.color.grey))
-
         whatIsClicked = Constants.SORT_ORDER_PAGES_DESC
         ivSortPages.animate().rotation( 180F).setDuration(350L).start()
     }
@@ -368,13 +319,6 @@ class SortBooksDialog(context: Context, var sortBooksDialogListener: SortBooksDi
         clPages.setBackgroundResource(R.drawable.sort_background_selected)
         clStartDate.setBackgroundResource(R.drawable.sort_background_unselected)
         clFinishDate.setBackgroundResource(R.drawable.sort_background_unselected)
-
-        tvSortTitle.setTextColor(ContextCompat.getColor(context, R.color.grey))
-        tvSortAuthor.setTextColor(ContextCompat.getColor(context, R.color.grey))
-        tvSortRating.setTextColor(ContextCompat.getColor(context, R.color.grey))
-        tvSortPages.setTextColor(ContextCompat.getColor(context, R.color.design_default_color_on_primary))
-        tvSortStartDate.setTextColor(ContextCompat.getColor(context, R.color.grey))
-        tvSortFinishDate.setTextColor(ContextCompat.getColor(context, R.color.grey))
 
         whatIsClicked = Constants.SORT_ORDER_PAGES_ASC
         ivSortPages.animate().rotation( 0F).setDuration(350L).start()
@@ -395,13 +339,6 @@ class SortBooksDialog(context: Context, var sortBooksDialogListener: SortBooksDi
         clStartDate.setBackgroundResource(R.drawable.sort_background_selected)
         clFinishDate.setBackgroundResource(R.drawable.sort_background_unselected)
 
-        tvSortTitle.setTextColor(ContextCompat.getColor(context, R.color.grey))
-        tvSortAuthor.setTextColor(ContextCompat.getColor(context, R.color.grey))
-        tvSortRating.setTextColor(ContextCompat.getColor(context, R.color.grey))
-        tvSortPages.setTextColor(ContextCompat.getColor(context, R.color.grey))
-        tvSortStartDate.setTextColor(ContextCompat.getColor(context, R.color.design_default_color_on_primary))
-        tvSortFinishDate.setTextColor(ContextCompat.getColor(context, R.color.grey))
-
         whatIsClicked = Constants.SORT_ORDER_START_DATE_DESC
         ivSortStartDate.animate().rotation( 180F).setDuration(350L).start()
     }
@@ -420,13 +357,6 @@ class SortBooksDialog(context: Context, var sortBooksDialogListener: SortBooksDi
         clPages.setBackgroundResource(R.drawable.sort_background_unselected)
         clStartDate.setBackgroundResource(R.drawable.sort_background_selected)
         clFinishDate.setBackgroundResource(R.drawable.sort_background_unselected)
-
-        tvSortTitle.setTextColor(ContextCompat.getColor(context, R.color.grey))
-        tvSortAuthor.setTextColor(ContextCompat.getColor(context, R.color.grey))
-        tvSortRating.setTextColor(ContextCompat.getColor(context, R.color.grey))
-        tvSortPages.setTextColor(ContextCompat.getColor(context, R.color.grey))
-        tvSortStartDate.setTextColor(ContextCompat.getColor(context, R.color.design_default_color_on_primary))
-        tvSortFinishDate.setTextColor(ContextCompat.getColor(context, R.color.grey))
 
         whatIsClicked = Constants.SORT_ORDER_START_DATE_ASC
         ivSortStartDate.animate().rotation( 0F).setDuration(350L).start()
@@ -447,13 +377,6 @@ class SortBooksDialog(context: Context, var sortBooksDialogListener: SortBooksDi
         clStartDate.setBackgroundResource(R.drawable.sort_background_unselected)
         clFinishDate.setBackgroundResource(R.drawable.sort_background_selected)
 
-        tvSortTitle.setTextColor(ContextCompat.getColor(context, R.color.grey))
-        tvSortAuthor.setTextColor(ContextCompat.getColor(context, R.color.grey))
-        tvSortRating.setTextColor(ContextCompat.getColor(context, R.color.grey))
-        tvSortPages.setTextColor(ContextCompat.getColor(context, R.color.grey))
-        tvSortStartDate.setTextColor(ContextCompat.getColor(context, R.color.grey))
-        tvSortFinishDate.setTextColor(ContextCompat.getColor(context, R.color.design_default_color_on_primary))
-
         whatIsClicked = Constants.SORT_ORDER_FINISH_DATE_DESC
         ivSortFinishDate.animate().rotation( 180F).setDuration(350L).start()
     }
@@ -472,13 +395,6 @@ class SortBooksDialog(context: Context, var sortBooksDialogListener: SortBooksDi
         clPages.setBackgroundResource(R.drawable.sort_background_unselected)
         clStartDate.setBackgroundResource(R.drawable.sort_background_unselected)
         clFinishDate.setBackgroundResource(R.drawable.sort_background_selected)
-
-        tvSortTitle.setTextColor(ContextCompat.getColor(context, R.color.grey))
-        tvSortAuthor.setTextColor(ContextCompat.getColor(context, R.color.grey))
-        tvSortRating.setTextColor(ContextCompat.getColor(context, R.color.grey))
-        tvSortPages.setTextColor(ContextCompat.getColor(context, R.color.grey))
-        tvSortStartDate.setTextColor(ContextCompat.getColor(context, R.color.grey))
-        tvSortFinishDate.setTextColor(ContextCompat.getColor(context, R.color.design_default_color_on_primary))
 
         whatIsClicked = Constants.SORT_ORDER_FINISH_DATE_ASC
         ivSortFinishDate.animate().rotation( 0F).setDuration(350L).start()

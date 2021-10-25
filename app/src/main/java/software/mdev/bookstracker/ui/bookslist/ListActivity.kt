@@ -102,8 +102,7 @@ class ListActivity : AppCompatActivity() {
         when (selectedItemId) {
             landingPage -> finish()
             R.id.displayBookFragment -> super.onBackPressed()
-            R.id.displayCoverFragment -> super.onBackPressed()
-            R.id.editBookFragment -> super.onBackPressed()
+            R.id.addEditBookFragment -> super.onBackPressed()
             R.id.settingsFragment -> super.onBackPressed()
             R.id.settingsBackupFragment -> super.onBackPressed()
             R.id.trashFragment -> super.onBackPressed()

@@ -29,7 +29,7 @@
             android:gravity="center"
             android:text="@string/changelog"
             android:textColor="?colorOnSecondary"
-            android:textSize="18sp"
+            android:textSize="14sp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
@@ -41,7 +41,7 @@
             android:gravity="center"
             android:text="@string/changelog"
             android:textColor="?colorOnSecondary"
-            android:textSize="14sp"
+            android:textSize="12sp"
             app:layout_constraintBottom_toBottomOf="@+id/tvChangelogVer"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="@+id/tvChangelogVer" />
@@ -50,12 +50,12 @@
             android:id="@+id/tvChangelog"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            android:fontFamily="sans-serif-condensed-light"
+            android:layout_marginTop="4dp"
+            android:fontFamily="sans-serif-light"
             android:gravity="start"
-            android:lineSpacingMultiplier="1.2"
+            android:lineSpacingMultiplier="1.1"
             android:text="@string/changelog"
-            android:textSize="16sp"
+            android:textSize="15sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="@+id/tvChangelogVer"
             app:layout_constraintTop_toBottomOf="@+id/tvChangelogVer" />

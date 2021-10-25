@@ -11,6 +11,7 @@ import software.mdev.bookstracker.R
 import android.widget.EditText
 import androidx.appcompat.app.AppCompatDialog
 import androidx.core.content.ContextCompat
+import com.google.android.material.slider.Slider
 import com.google.android.material.snackbar.Snackbar
 import kotlinx.android.synthetic.main.dialog_edit_challenge.*
 import software.mdev.bookstracker.data.db.entities.Year
@@ -32,7 +33,9 @@ class ChallengeDialog(
 
         this.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
 
-        tvChallengeEditorYear.text = year.year
+        var string = context.applicationContext.getString(R.string.tvChallengeEditorTitle) + " " + year.year
+        tvChallengeEditorTitle.text = string
+
         if (year.yearChallengeBooks != null) {
             etChallengeEditorBooksNumber.setText(year.yearChallengeBooks.toString())
         } else {
@@ -41,7 +44,6 @@ class ChallengeDialog(
 
         etChallengeEditorBooksNumber.requestFocus()
         etChallengeEditorBooksNumber.setSelection(etChallengeEditorBooksNumber.text.toString().length)
-        showKeyboard(etChallengeEditorBooksNumber,350)
 
         btnChallengeEditorSet.setOnClickListener {
             var chosenDifficulty = etChallengeEditorBooksNumber.text.toString()
@@ -71,6 +73,12 @@ class ChallengeDialog(
         btnChallengeEditorCancel.setOnClickListener {
             dismiss()
         }
+
+        slChallenge.addOnChangeListener(Slider.OnChangeListener { slider, value, fromUser ->
+            etChallengeEditorBooksNumber.setText(value.toInt().toString())
+            etChallengeEditorBooksNumber.requestFocus()
+            etChallengeEditorBooksNumber.setSelection(etChallengeEditorBooksNumber.text.toString().length)
+        })
     }
 
     fun View.hideKeyboard() {

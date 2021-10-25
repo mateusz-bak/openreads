@@ -43,6 +43,8 @@ class BooksViewModel(
         repository.delete(item)
     }
 
+    fun getBook(id: Int?) = repository.getBook(id)
+
     fun getReadBooks() = repository.getReadBooks()
 
     fun getInProgressBooks() = repository.getInProgressBooks()
@@ -66,7 +68,8 @@ class BooksViewModel(
         bookOLID: String,
         bookISBN10: String,
         bookISBN13: String,
-        bookPublishYear: Int
+        bookPublishYear: Int,
+        bookIsFav: Boolean
     ) = CoroutineScope(Dispatchers.Main).launch {
         repository.updateBook(
             id,
@@ -85,7 +88,8 @@ class BooksViewModel(
             bookOLID,
             bookISBN10,
             bookISBN13,
-            bookPublishYear
+            bookPublishYear,
+            bookIsFav
         )
     }
 

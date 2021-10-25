@@ -45,6 +45,43 @@
         app:layout_constraintHeight_max="300dp"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tvFilterTitle" />
+        app:layout_constraintTop_toBottomOf="@+id/clOnlyFav" />
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/clOnlyFav"
+        android:layout_width="220dp"
+        android:layout_marginTop="12dp"
+        android:layout_height="wrap_content"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tvFilterTitle">
+
+
+        <TextView
+            android:id="@+id/tvOnlyFav"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="40dp"
+            android:text="@string/only_fav"
+            android:textColor="@color/colorDefaultText"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.517" />
+
+        <CheckBox
+            android:id="@+id/cbOnlyFav"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="20dp"
+            android:scaleX="1.2"
+            android:scaleY="1.2"
+            android:clickable="false"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.0" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

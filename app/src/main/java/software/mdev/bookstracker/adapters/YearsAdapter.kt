@@ -82,7 +82,7 @@ class YearsAdapter(
 
                 if (cbFilterYear.isChecked) {
                     cbFilterYear.isChecked = false
-                    tvFilterYear.setTextColor(ContextCompat.getColor(context, R.color.grey))
+                    tvFilterYear.setTextColor(ContextCompat.getColor(context, R.color.colorDefaultText))
                     tvFilterYear.setTypeface(null, Typeface.NORMAL)
 
                     if (curYear in currentArray) {

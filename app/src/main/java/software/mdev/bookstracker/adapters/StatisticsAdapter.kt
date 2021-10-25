@@ -3,6 +3,7 @@ package software.mdev.bookstracker.adapters
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.WindowManager
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.AsyncListDiffer
@@ -12,10 +13,8 @@ import com.github.mikephil.charting.components.XAxis
 import com.github.mikephil.charting.data.BarData
 import com.github.mikephil.charting.data.BarDataSet
 import com.github.mikephil.charting.data.BarEntry
-import com.github.mikephil.charting.data.Entry
 import com.github.mikephil.charting.formatter.DefaultValueFormatter
 import com.github.mikephil.charting.formatter.IndexAxisValueFormatter
-import com.github.mikephil.charting.formatter.ValueFormatter
 import com.github.mikephil.charting.utils.ColorTemplate
 import kotlinx.android.synthetic.main.item_statistics.view.*
 import kotlinx.coroutines.MainScope
@@ -39,7 +38,6 @@ import java.math.RoundingMode
 import java.text.DecimalFormat
 import java.util.*
 import java.util.concurrent.TimeUnit
-import com.github.mikephil.charting.utils.ViewPortHandler
 
 
 class StatisticsAdapter(
@@ -169,7 +167,7 @@ class StatisticsAdapter(
                 tvLongestBook.text = curYear.yearLongestBook
             }
 
-            if (curYear.yearShortestBook == "null"){
+            if (curYear.yearShortestBook == "null" || curYear.yearShortestBookVal == 0){
                 tvShortestBook.text = holder.itemView.resources.getString(R.string.need_more_data)
                 tvShortestBookValue.visibility = View.GONE
             } else {
@@ -279,6 +277,13 @@ class StatisticsAdapter(
 
         var data = BarData(barDataSet)
         data.setValueFormatter(DefaultValueFormatter(0))
+
+        // color of values
+        data.setValueTextColor(itemView.resources.getColor(R.color.colorDefaultText))
+
+        // size of values
+        data.setValueTextSize(11F)
+
         itemView.rbcBooksByMonth.data = data
 
         //hide grid lines
@@ -309,6 +314,12 @@ class StatisticsAdapter(
 
         //disable touch actions on graph
         itemView.rbcBooksByMonth.setTouchEnabled(false)
+
+        // set x axis' text size
+        itemView.rbcBooksByMonth.xAxis.textSize = 11F
+
+        // the x labels are not cut
+        itemView.rbcBooksByMonth.extraBottomOffset = 8F
 
         //draw chart
         itemView.rbcBooksByMonth.invalidate()
@@ -367,6 +378,13 @@ class StatisticsAdapter(
 
         var data = BarData(barDataSet)
         data.setValueFormatter(DefaultValueFormatter(0))
+
+        // color of values
+        data.setValueTextColor(itemView.resources.getColor(R.color.colorDefaultText))
+
+        // size of values
+        data.setValueTextSize(11F)
+
         itemView.rbcPagesByMonth.data = data
 
         //hide grid lines
@@ -397,6 +415,12 @@ class StatisticsAdapter(
 
         //disable touch actions on graph
         itemView.rbcPagesByMonth.setTouchEnabled(false)
+
+        // set x axis' text size
+        itemView.rbcPagesByMonth.xAxis.textSize = 11F
+
+        // the x labels are not cut
+        itemView.rbcPagesByMonth.extraBottomOffset = 8F
 
         //draw chart
         itemView.rbcPagesByMonth.invalidate()
@@ -470,14 +494,20 @@ class StatisticsAdapter(
 
     private fun callChallengeDialog(foundYear: Year?, it: View, challengeBooksRead: String) {
         if (foundYear != null) {
-            ChallengeDialog(it.context,
+            val challengeDialog = ChallengeDialog(it.context,
                 foundYear,
                 object : ChallengeDialogListener {
                     override fun onSaveButtonClicked(year: Year) {
                         viewModel.upsertYear(year)
                     }
                 }
-            ).show()
+            )
+            challengeDialog.show()
+
+            val width = (it.getResources().getDisplayMetrics().widthPixels * 0.80).toInt()
+
+            challengeDialog.getWindow()?.setLayout(width, WindowManager.LayoutParams.WRAP_CONTENT)
+
         } else {
             ChallengeDialog(it.context,
                 Year(

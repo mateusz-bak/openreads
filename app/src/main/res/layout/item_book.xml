@@ -2,17 +2,19 @@
 <androidx.cardview.widget.CardView
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/cvBook"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    app:cardElevation="2dp"
-    app:cardUseCompatPadding="true"
-    app:cardCornerRadius="12dp">
+    android:backgroundTint="@color/grey_100"
+    android:layout_marginBottom="12dp"
+    app:cardElevation="1dp"
+    app:cardCornerRadius="@dimen/text_input_layout_radius">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:padding="10dp">
+        android:padding="12dp">
 
         <ImageView
             android:id="@+id/ivBookCover"
