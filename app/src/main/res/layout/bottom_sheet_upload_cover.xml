@@ -21,31 +21,6 @@
         android:src="@drawable/ic_baseline_horizontal_rule_24" />
 
     <LinearLayout
-        android:id="@+id/llUploadFromStorage"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="?android:attr/selectableItemBackground"
-        android:orientation="horizontal"
-        android:padding="4dp">
-
-        <ImageView
-            android:layout_width="24dp"
-            android:layout_height="24dp"
-            android:layout_margin="8dp"
-            android:src="@drawable/ic_baseline_sd_storage_24" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_vertical"
-            android:layout_marginStart="8dp"
-            android:padding="8dp"
-            android:singleLine="true"
-            android:text="@string/upload_cover_from_storage"
-            android:textSize="16sp" />
-    </LinearLayout>
-
-    <LinearLayout
         android:id="@+id/llUploadFromCamera"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -68,6 +43,30 @@
             android:singleLine="true"
             android:text="@string/upload_cover_from_camera"
             android:textSize="16sp" />
+    </LinearLayout>
 
+    <LinearLayout
+        android:id="@+id/llUploadFromStorage"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="?android:attr/selectableItemBackground"
+        android:orientation="horizontal"
+        android:padding="4dp">
+
+        <ImageView
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:layout_margin="8dp"
+            android:src="@drawable/ic_baseline_sd_storage_24" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_marginStart="8dp"
+            android:padding="8dp"
+            android:singleLine="true"
+            android:text="@string/upload_cover_from_storage"
+            android:textSize="16sp" />
     </LinearLayout>
 </LinearLayout>

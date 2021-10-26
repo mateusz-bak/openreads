@@ -41,6 +41,8 @@ import kotlinx.android.synthetic.main.fragment_add_edit_book.ivBookCover
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.graphics.drawable.BitmapDrawable
+import androidx.activity.result.ActivityResultLauncher
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.swiperefreshlayout.widget.CircularProgressDrawable
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.squareup.picasso.Picasso
@@ -60,8 +62,13 @@ class AddEditBookFragment : Fragment(R.layout.fragment_add_edit_book) {
     private var bookStartDateMs: Long? = null
     private var animateRating = false
     private var whatIsClicked = Constants.BOOK_STATUS_NOTHING
+    lateinit var takePhoto: ActivityResultLauncher<Void>
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        takePhoto = registerForActivityResult(ActivityResultContracts.TakePicturePreview()) {
+            ivBookCover.setImageBitmap(it)
+        }
+
         super.onViewCreated(view, savedInstanceState)
         viewModel = (activity as ListActivity).booksViewModel
         listActivity = activity as ListActivity
@@ -785,6 +792,7 @@ class AddEditBookFragment : Fragment(R.layout.fragment_add_edit_book) {
     }
 
     private fun showBottomSheetDialog() {
+        view?.hideKeyboard()
         if (context != null) {
             val bottomSheetDialog = BottomSheetDialog(requireContext(), R.style.AppBottomSheetDialogTheme)
             bottomSheetDialog.setContentView(R.layout.bottom_sheet_upload_cover)
@@ -822,16 +830,12 @@ class AddEditBookFragment : Fragment(R.layout.fragment_add_edit_book) {
 
     private fun uploadCoverFromCamera() {
         if (Functions().checkPermission(activity as ListActivity, android.Manifest.permission.CAMERA)) {
-            Toast.makeText(context, "camera permission already accepted", Toast.LENGTH_SHORT).show()
+            takePhoto.launch(null)
         } else {
             Functions().requestPermission(
                 activity as ListActivity,
                 android.Manifest.permission.CAMERA,
                 Constants.PERMISSION_CAMERA_FROM_UPLOAD_COVER)
         }
-
-        // TODO open camera
-
-        // TODO load new cover into image view
     }
 }
