@@ -62,11 +62,20 @@ class AddEditBookFragment : Fragment(R.layout.fragment_add_edit_book) {
     private var bookStartDateMs: Long? = null
     private var animateRating = false
     private var whatIsClicked = Constants.BOOK_STATUS_NOTHING
-    lateinit var takePhoto: ActivityResultLauncher<Void>
+    private lateinit var takePhoto: ActivityResultLauncher<Void>
+    private lateinit var choosePhoto:  ActivityResultLauncher<Array<String>>
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+
+        // callback for cover from camera
         takePhoto = registerForActivityResult(ActivityResultContracts.TakePicturePreview()) {
             ivBookCover.setImageBitmap(it)
+        }
+
+        // callback for cover from files
+        choosePhoto = registerForActivityResult(ActivityResultContracts.OpenDocument()) {
+            Toast.makeText(context, it.toString(), Toast.LENGTH_SHORT).show()
+            ivBookCover.setImageURI(it)
         }
 
         super.onViewCreated(view, savedInstanceState)
@@ -815,17 +824,13 @@ class AddEditBookFragment : Fragment(R.layout.fragment_add_edit_book) {
 
     private fun uploadCoverFromStorage() {
         if (Functions().checkPermission(activity as ListActivity, android.Manifest.permission.READ_EXTERNAL_STORAGE)) {
-            Toast.makeText(context, "ext storage permission already accepted", Toast.LENGTH_SHORT).show()
+            choosePhoto.launch(null)
         } else {
             Functions().requestPermission(
                 activity as ListActivity,
                 android.Manifest.permission.READ_EXTERNAL_STORAGE,
                 Constants.PERMISSION_READ_EXTERNAL_STORAGE_FROM_UPLOAD_COVER)
         }
-
-        // TODO open files
-
-        // TODO load new cover into image view
     }
 
     private fun uploadCoverFromCamera() {
