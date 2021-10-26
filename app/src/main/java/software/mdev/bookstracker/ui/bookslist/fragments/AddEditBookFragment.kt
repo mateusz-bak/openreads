@@ -449,7 +449,7 @@ class AddEditBookFragment : Fragment(R.layout.fragment_add_edit_book) {
                     id: Long
                 ) {
                     view.hideKeyboard()
-                    activity?.resources?.getColor(R.color.colorGreyText)?.let {
+                    activity?.resources?.getColor(R.color.colorDefaultText)?.let {
                         (parent.getChildAt(0) as TextView).setTextColor(
                             it
                         )

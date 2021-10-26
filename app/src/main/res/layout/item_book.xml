@@ -6,7 +6,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:backgroundTint="@color/grey_100"
+    android:backgroundTint="@color/cardViewBackgroundColor"
     android:layout_marginBottom="12dp"
     app:cardElevation="1dp"
     app:cardCornerRadius="@dimen/text_input_layout_radius">
