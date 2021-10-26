@@ -53,4 +53,6 @@
     <color name="colorDefaultText">#000000</color>
     <color name="colorGreyText">#616161</color>
     <color name="teal_bg">#e0f2f1</color>
+    <color name="cardViewBackgroundColor">@color/grey_100</color>
+    <color name="textInputBackground">@color/grey_100</color>
 </resources>

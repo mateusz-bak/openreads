@@ -7,7 +7,7 @@
     app:cardElevation="1dp"
     app:cardUseCompatPadding="true"
     app:cardCornerRadius="@dimen/text_input_layout_radius"
-    android:backgroundTint="@color/grey_100">
+    android:backgroundTint="@color/cardViewBackgroundColor">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
