@@ -19,12 +19,12 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
             android:layout_marginEnd="8dp"
-            android:gravity="start"
+            android:gravity="center_horizontal"
             android:text="@string/tvChallengeEditorTitle"
             android:textColor="?colorOnSecondary"
             android:textSize="22sp"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.502"
+            app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
@@ -32,37 +32,40 @@
             android:id="@+id/tvChallengeBooks"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
             android:text="@string/tvChallengeBooks"
             android:textColor="?colorOnSecondary"
             android:textSize="20sp"
             app:layout_constraintBottom_toBottomOf="@+id/etChallengeEditorBooksNumber"
-            app:layout_constraintStart_toEndOf="@+id/etChallengeEditorBooksNumber"
+            app:layout_constraintStart_toStartOf="@+id/btnChallengeEditorSet"
             app:layout_constraintTop_toTopOf="@+id/etChallengeEditorBooksNumber" />
 
-        <Button
+        <com.google.android.material.button.MaterialButton
             android:id="@+id/btnChallengeEditorCancel"
+            style="@style/Widget.MaterialComponents.Button.OutlinedButton"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
             android:layout_marginTop="4dp"
             android:layout_marginEnd="8dp"
-            android:background="@android:color/transparent"
             android:text="@string/btnAdderCancelFinishDate"
-            android:textColor="@color/colorDefaultText"
+            android:textColor="@color/grey_777"
+            app:cornerRadius="@dimen/text_input_layout_radius"
             app:layout_constraintEnd_toStartOf="@+id/btnChallengeEditorSet"
             app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/slChallenge" />
+            app:layout_constraintTop_toBottomOf="@+id/slChallenge"
+            app:strokeColor="@color/grey_777"
+            app:strokeWidth="1dp" />
 
         <Button
             android:id="@+id/btnChallengeEditorSet"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
             android:layout_marginEnd="8dp"
             android:backgroundTint="?colorPrimary"
-            android:layout_marginStart="8dp"
             android:text="@string/btnAdderSaveFinishDate"
+            app:cornerRadius="@dimen/text_input_layout_radius"
             app:layout_constraintBottom_toBottomOf="@+id/btnChallengeEditorCancel"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.5"
@@ -73,12 +76,12 @@
             android:id="@+id/etChallengeEditorBooksNumber"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
             android:layout_marginTop="12dp"
             android:ems="3"
+            android:gravity="center_horizontal"
             android:inputType="number"
             android:textSize="20sp"
-            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="@+id/btnChallengeEditorCancel"
             app:layout_constraintTop_toBottomOf="@+id/tvChallengeEditorTitle" />
 
 
