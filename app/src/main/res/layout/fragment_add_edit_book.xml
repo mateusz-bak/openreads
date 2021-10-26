@@ -513,7 +513,7 @@
                 android:background="@drawable/text_field_background"
                 android:backgroundTint="@color/grey_100"
                 android:backgroundTintMode="screen"
-                android:minHeight="150dp"
+                android:minHeight="100dp"
                 android:orientation="horizontal"
                 android:visibility="visible"
                 app:layout_constraintEnd_toEndOf="@+id/tilBookPages"

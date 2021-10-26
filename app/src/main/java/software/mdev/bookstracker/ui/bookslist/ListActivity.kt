@@ -219,7 +219,7 @@ class ListActivity : AppCompatActivity() {
                 Constants.PERMISSION_CAMERA_FROM_UPLOAD_COVER ->
                     Toast.makeText(this.baseContext, R.string.permission_granted_click_cover_again, Toast.LENGTH_SHORT).show()
                 Constants.PERMISSION_READ_EXTERNAL_STORAGE_FROM_UPLOAD_COVER ->
-                    Toast.makeText(this.baseContext, "ext storage permission accepted", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(this.baseContext, R.string.permission_granted_click_cover_again, Toast.LENGTH_SHORT).show()
             }
         }
     }

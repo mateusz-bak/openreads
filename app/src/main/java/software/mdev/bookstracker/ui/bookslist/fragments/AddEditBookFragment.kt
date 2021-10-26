@@ -43,6 +43,7 @@ import android.graphics.BitmapFactory
 import android.graphics.drawable.BitmapDrawable
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.core.graphics.scale
 import androidx.swiperefreshlayout.widget.CircularProgressDrawable
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.squareup.picasso.Picasso
@@ -74,7 +75,6 @@ class AddEditBookFragment : Fragment(R.layout.fragment_add_edit_book) {
 
         // callback for cover from files
         choosePhoto = registerForActivityResult(ActivityResultContracts.OpenDocument()) {
-            Toast.makeText(context, it.toString(), Toast.LENGTH_SHORT).show()
             ivBookCover.setImageURI(it)
         }
 
@@ -292,14 +292,17 @@ class AddEditBookFragment : Fragment(R.layout.fragment_add_edit_book) {
         }
 
         rlBookCover.setOnClickListener {
+            view?.hideKeyboard()
             showBottomSheetDialog()
         }
 
         tvClickToAddCover.setOnClickListener {
+            view?.hideKeyboard()
             showBottomSheetDialog()
         }
 
         ivBookCover.setOnClickListener {
+            view?.hideKeyboard()
             showBottomSheetDialog()
         }
     }
@@ -758,7 +761,9 @@ class AddEditBookFragment : Fragment(R.layout.fragment_add_edit_book) {
             if (imageView.drawable != null) {
                 val bitmap = (imageView.drawable as BitmapDrawable).bitmap
                 val baos = ByteArrayOutputStream()
-                bitmap.compress(Bitmap.CompressFormat.JPEG, 100, baos)
+                val resizedBitmap = resizeCover(bitmap)
+
+                resizedBitmap.compress(Bitmap.CompressFormat.JPEG, 95, baos)
 
                 return baos.toByteArray()
             } else
@@ -766,6 +771,18 @@ class AddEditBookFragment : Fragment(R.layout.fragment_add_edit_book) {
         } catch (e: Exception) {
             return null
         }
+    }
+
+    private fun resizeCover(bitmap: Bitmap): Bitmap {
+        var width = bitmap.width.toFloat()
+        var height = bitmap.height.toFloat()
+        var ratio: Float = width / height
+
+
+        var newWidth = 512
+        var newHeight = (newWidth / ratio).toInt()
+
+        return bitmap.scale(newWidth, newHeight)
     }
 
     private fun setCoverFromDB(bookCoverImg: ByteArray?) {
@@ -801,7 +818,6 @@ class AddEditBookFragment : Fragment(R.layout.fragment_add_edit_book) {
     }
 
     private fun showBottomSheetDialog() {
-        view?.hideKeyboard()
         if (context != null) {
             val bottomSheetDialog = BottomSheetDialog(requireContext(), R.style.AppBottomSheetDialogTheme)
             bottomSheetDialog.setContentView(R.layout.bottom_sheet_upload_cover)
