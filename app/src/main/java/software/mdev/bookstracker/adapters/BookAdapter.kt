@@ -134,6 +134,7 @@ class BookAdapter(
         if (bookCoverImg == null) {
             view.ivBookCover.visibility = View.GONE
         } else {
+            view.ivBookCover.visibility = View.VISIBLE
             val bmp = BitmapFactory.decodeByteArray(bookCoverImg, 0, bookCoverImg.size)
             view.ivBookCover.setImageBitmap(bmp)
         }
