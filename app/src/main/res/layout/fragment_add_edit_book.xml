@@ -54,6 +54,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:imeOptions="actionNext"
+                    android:paddingEnd="50dp"
                     android:inputType="textCapSentences"
                     android:maxLength="100"
                     android:textSize="16sp" />
@@ -108,6 +109,7 @@
                     android:id="@+id/tietBookAuthor"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:paddingEnd="50dp"
                     android:imeOptions="actionNext"
                     android:inputType="textCapWords"
                     android:maxLength="100"

@@ -244,7 +244,7 @@
     <string name="rate_app_title">Rate the app</string>
     <string name="rate_app">Do you like &appname;? Take a moment to rate it. Click here</string>
     <string name="app_market_url" translatable="false">market://details?id=software.mdev.bookstracker</string>
-    <string name="contact_title">Contact me</string>
+    <string name="contact_title">Contact the author</string>
     <string name="dev_email" translatable="false">mateusz.bak.dev@gmail.com</string>
     <string name="dev_mailto" translatable="false">mailto:mateusz.bak.dev@gmail.com</string>
     <string name="restore_backup_warning_title">Watch out!</string>
