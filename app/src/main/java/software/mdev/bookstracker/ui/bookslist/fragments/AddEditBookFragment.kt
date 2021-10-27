@@ -37,6 +37,20 @@ import android.widget.*
 import kotlinx.coroutines.MainScope
 import androidx.activity.OnBackPressedCallback
 import androidx.core.widget.addTextChangedListener
+import kotlinx.android.synthetic.main.fragment_add_edit_book.ivBookCover
+import android.graphics.Bitmap
+import android.graphics.BitmapFactory
+import android.graphics.drawable.BitmapDrawable
+import androidx.activity.result.ActivityResultLauncher
+import androidx.activity.result.contract.ActivityResultContracts
+import androidx.core.graphics.scale
+import androidx.swiperefreshlayout.widget.CircularProgressDrawable
+import com.google.android.material.bottomsheet.BottomSheetDialog
+import com.squareup.picasso.Picasso
+import software.mdev.bookstracker.other.Functions
+import software.mdev.bookstracker.other.RoundCornersTransform
+import java.io.ByteArrayOutputStream
+import java.lang.Exception
 
 
 class AddEditBookFragment : Fragment(R.layout.fragment_add_edit_book) {
@@ -49,8 +63,21 @@ class AddEditBookFragment : Fragment(R.layout.fragment_add_edit_book) {
     private var bookStartDateMs: Long? = null
     private var animateRating = false
     private var whatIsClicked = Constants.BOOK_STATUS_NOTHING
+    private lateinit var takePhoto: ActivityResultLauncher<Void>
+    private lateinit var choosePhoto:  ActivityResultLauncher<Array<String>>
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+
+        // callback for cover from camera
+        takePhoto = registerForActivityResult(ActivityResultContracts.TakePicturePreview()) {
+            ivBookCover.setImageBitmap(it)
+        }
+
+        // callback for cover from files
+        choosePhoto = registerForActivityResult(ActivityResultContracts.OpenDocument()) {
+            ivBookCover.setImageURI(it)
+        }
+
         super.onViewCreated(view, savedInstanceState)
         viewModel = (activity as ListActivity).booksViewModel
         listActivity = activity as ListActivity
@@ -95,6 +122,18 @@ class AddEditBookFragment : Fragment(R.layout.fragment_add_edit_book) {
 
         setInitialViews()
 
+        // set cover image
+        when (bookSource) {
+            Constants.FROM_DISPLAY -> {
+                if (book.bookCoverImg == null)
+                    setCoverFromURL(view, book.bookCoverUrl)
+                else
+                    setCoverFromDB(book.bookCoverImg)
+            }
+            Constants.FROM_SEARCH  -> setCoverFromURL(view, book.bookCoverUrl)
+            Constants.FROM_SCAN  -> setCoverFromURL(view, book.bookCoverUrl)
+        }
+
         tietBookTitle.requestFocus()
         showKeyboard(tietBookTitle,350)
 
@@ -127,6 +166,14 @@ class AddEditBookFragment : Fragment(R.layout.fragment_add_edit_book) {
             startDatePickerVis(false)
         }
 
+        btnStartDateClear.setOnClickListener {
+            bookStartDateMs = null
+            tvBookStartDateValue.text = context?.getString(R.string.set)
+
+            svEditor.visibility = View.VISIBLE
+            startDatePickerVis(false)
+        }
+
         btnStartDateSave.setOnClickListener {
             bookStartDateMs = getDateFromDatePickerInMillis(dpBookStartDate)
             bookStartDateMs = clearDateOfTime(bookStartDateMs!!)
@@ -137,6 +184,14 @@ class AddEditBookFragment : Fragment(R.layout.fragment_add_edit_book) {
         }
 
         btnFinishDateCancel.setOnClickListener {
+            svEditor.visibility = View.VISIBLE
+            finishDatePickerVis(false)
+        }
+
+        btnFinishDateClear.setOnClickListener {
+            bookFinishDateMs = null
+            tvBookFinishDateValue.text = context?.getString(R.string.set)
+
             svEditor.visibility = View.VISIBLE
             finishDatePickerVis(false)
         }
@@ -211,7 +266,8 @@ class AddEditBookFragment : Fragment(R.layout.fragment_add_edit_book) {
                             newBook.bookISBN10,
                             newBook.bookISBN13,
                             newBook.bookPublishYear,
-                            newBook.bookIsFav
+                            newBook.bookIsFav,
+                            newBook.bookCoverImg
                         )
 
                         recalculateChallenges()
@@ -245,6 +301,25 @@ class AddEditBookFragment : Fragment(R.layout.fragment_add_edit_book) {
 
         ivClearBookAuthor.setOnClickListener {
             tietBookAuthor.setText("")
+        }
+
+        btnCoverRemove.setOnClickListener {
+            ivBookCover.setImageDrawable(null)
+        }
+
+        rlBookCover.setOnClickListener {
+            view?.hideKeyboard()
+            showBottomSheetDialog()
+        }
+
+        tvClickToAddCover.setOnClickListener {
+            view?.hideKeyboard()
+            showBottomSheetDialog()
+        }
+
+        ivBookCover.setOnClickListener {
+            view?.hideKeyboard()
+            showBottomSheetDialog()
         }
     }
 
@@ -296,6 +371,8 @@ class AddEditBookFragment : Fragment(R.layout.fragment_add_edit_book) {
             }
         }
 
+        var  bookCoverImg: ByteArray? = getCoverFromImageView()
+
         return Book(
             tietBookTitle.text.toString(),
             tietBookAuthor.text.toString(),
@@ -313,7 +390,8 @@ class AddEditBookFragment : Fragment(R.layout.fragment_add_edit_book) {
             Constants.DATABASE_EMPTY_VALUE,
             bookISBN,
             booksPubYear,
-            book.bookIsFav
+            book.bookIsFav,
+            bookCoverImg
         )
     }
 
@@ -387,7 +465,7 @@ class AddEditBookFragment : Fragment(R.layout.fragment_add_edit_book) {
                     id: Long
                 ) {
                     view.hideKeyboard()
-                    activity?.resources?.getColor(R.color.colorGreyText)?.let {
+                    activity?.resources?.getColor(R.color.colorDefaultText)?.let {
                         (parent.getChildAt(0) as TextView).setTextColor(
                             it
                         )
@@ -397,7 +475,6 @@ class AddEditBookFragment : Fragment(R.layout.fragment_add_edit_book) {
                         0 -> {
                             ivBookStatus.setImageDrawable(activity?.baseContext?.resources?.getDrawable(R.drawable.ic_book_black_24dp))
                             whatIsClicked = Constants.BOOK_STATUS_READ
-                            setFinishDateToToday()
                         }
                         1 -> {
                             ivBookStatus.setImageDrawable(activity?.baseContext?.resources?.getDrawable(R.drawable.ic_auto_stories_black_24dp))
@@ -542,6 +619,7 @@ class AddEditBookFragment : Fragment(R.layout.fragment_add_edit_book) {
         dpBookStartDate.visibility = viewVisibility
         btnStartDateCancel.visibility = viewVisibility
         btnStartDateSave.visibility = viewVisibility
+        btnStartDateClear.visibility = viewVisibility
     }
 
     private fun finishDatePickerVis(visibility: Boolean) {
@@ -553,6 +631,7 @@ class AddEditBookFragment : Fragment(R.layout.fragment_add_edit_book) {
         dpBookFinishDate.visibility = viewVisibility
         btnFinishDateCancel.visibility = viewVisibility
         btnFinishDateSave.visibility = viewVisibility
+        btnFinishDateClear.visibility = viewVisibility
     }
 
     private fun clearDateOfTime(orgDate: Long): Long {
@@ -690,6 +769,111 @@ class AddEditBookFragment : Fragment(R.layout.fragment_add_edit_book) {
             for (i in 1..times) {
             findNavController().popBackStack()
             }
+        }
+    }
+
+    private fun getCoverFromImageView(): ByteArray? {
+        try {
+            val imageView = view?.findViewById(R.id.ivBookCover) as ImageView
+            if (imageView.drawable != null) {
+                val bitmap = (imageView.drawable as BitmapDrawable).bitmap
+                val baos = ByteArrayOutputStream()
+                val resizedBitmap = resizeCover(bitmap)
+
+                resizedBitmap.compress(Bitmap.CompressFormat.JPEG, 95, baos)
+
+                return baos.toByteArray()
+            } else
+                return null
+        } catch (e: Exception) {
+            return null
+        }
+    }
+
+    private fun resizeCover(bitmap: Bitmap): Bitmap {
+        var width = bitmap.width.toFloat()
+        var height = bitmap.height.toFloat()
+        var ratio: Float = width / height
+
+
+        var newWidth = 512
+        var newHeight = (newWidth / ratio).toInt()
+
+        return bitmap.scale(newWidth, newHeight)
+    }
+
+    private fun setCoverFromDB(bookCoverImg: ByteArray?) {
+        if (bookCoverImg != null) {
+            val bmp = BitmapFactory.decodeByteArray(bookCoverImg, 0, bookCoverImg.size)
+            ivBookCover.setImageBitmap(bmp)
+        }
+    }
+
+    private fun setCoverFromURL(view: View, bookCoverUrl: String) {
+        if (bookCoverUrl != "none" && bookCoverUrl != "null") {
+            val circularProgressDrawable = CircularProgressDrawable(view.context)
+            circularProgressDrawable.strokeWidth = 5f
+            circularProgressDrawable.centerRadius = 30f
+            circularProgressDrawable.setColorSchemeColors(
+                ContextCompat.getColor(
+                    view.context,
+                    R.color.grey
+                )
+            )
+            circularProgressDrawable.start()
+
+            var coverUrl = "https://covers.openlibrary.org/b/id/$bookCoverUrl-L.jpg"
+
+            Picasso
+                .get()
+                .load(coverUrl)
+                .placeholder(circularProgressDrawable)
+                .error(R.drawable.ic_baseline_error_outline_24)
+                .transform(RoundCornersTransform(16.0f))
+                .into(ivBookCover)
+        }
+    }
+
+    private fun showBottomSheetDialog() {
+        if (context != null) {
+            val bottomSheetDialog = BottomSheetDialog(requireContext(), R.style.AppBottomSheetDialogTheme)
+            bottomSheetDialog.setContentView(R.layout.bottom_sheet_upload_cover)
+
+            bottomSheetDialog.findViewById<LinearLayout>(R.id.llUploadFromStorage)
+                ?.setOnClickListener {
+                    uploadCoverFromStorage()
+                    bottomSheetDialog.dismiss()
+                }
+
+            bottomSheetDialog.findViewById<LinearLayout>(R.id.llUploadFromCamera)
+                ?.setOnClickListener {
+                    uploadCoverFromCamera()
+                    bottomSheetDialog.dismiss()
+                }
+
+            bottomSheetDialog.show()
+        }
+    }
+
+    private fun uploadCoverFromStorage() {
+        if (Functions().checkPermission(activity as ListActivity, android.Manifest.permission.READ_EXTERNAL_STORAGE)) {
+            choosePhoto.launch(null)
+        } else {
+            Functions().requestPermission(
+                activity as ListActivity,
+                android.Manifest.permission.READ_EXTERNAL_STORAGE,
+                Constants.PERMISSION_READ_EXTERNAL_STORAGE_FROM_UPLOAD_COVER)
+        }
+    }
+
+    private fun uploadCoverFromCamera() {
+        if (Functions().checkPermission(activity as ListActivity, android.Manifest.permission.CAMERA)) {
+            takePhoto.launch(null)
+        } else {
+            Functions().requestPermission(
+                activity as ListActivity,
+                android.Manifest.permission.CAMERA,
+                Constants.PERMISSION_CAMERA_FROM_UPLOAD_COVER)
         }
     }
 }

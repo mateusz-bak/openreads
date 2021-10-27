@@ -3,6 +3,6 @@
     <corners
         android:topLeftRadius="@dimen/text_input_layout_radius"
         android:topRightRadius="@dimen/text_input_layout_radius" />
-    <solid android:color="@color/white" />
+    <solid android:color="@color/cardViewBackgroundColor" />
 
 </shape>

@@ -9,6 +9,7 @@ import android.net.Uri
 import android.os.Bundle
 import android.view.Menu
 import android.view.View
+import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
@@ -215,6 +216,10 @@ class ListActivity : AppCompatActivity() {
                     .navigate(R.id.action_inProgressFragment_to_addBookScanFragment)
                 Constants.PERMISSION_CAMERA_FROM_LIST_3 -> booksNavHostFragment.findNavController()
                     .navigate(R.id.action_toReadFragment_to_addBookScanFragment)
+                Constants.PERMISSION_CAMERA_FROM_UPLOAD_COVER ->
+                    Toast.makeText(this.baseContext, R.string.permission_granted_click_cover_again, Toast.LENGTH_SHORT).show()
+                Constants.PERMISSION_READ_EXTERNAL_STORAGE_FROM_UPLOAD_COVER ->
+                    Toast.makeText(this.baseContext, R.string.permission_granted_click_cover_again, Toast.LENGTH_SHORT).show()
             }
         }
     }

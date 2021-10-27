@@ -3,7 +3,7 @@
     <!ENTITY appname "Openreads">
     ]>
 <resources>
-    <string name="app_version" translatable="false">v1.7.1</string>
+    <string name="app_version" translatable="false">v1.8.0</string>
     <string name="ivAuthorUrl">https://github.com/mateusz-bak/</string>
     <!-- Images descriptions -->
     <string name="ivBookStatusSetRead">Set book as finished</string>
@@ -244,7 +244,7 @@
     <string name="rate_app_title">Rate the app</string>
     <string name="rate_app">Do you like &appname;? Take a moment to rate it. Click here</string>
     <string name="app_market_url" translatable="false">market://details?id=software.mdev.bookstracker</string>
-    <string name="contact_title">Contact me</string>
+    <string name="contact_title">Contact the author</string>
     <string name="dev_email" translatable="false">mateusz.bak.dev@gmail.com</string>
     <string name="dev_mailto" translatable="false">mailto:mateusz.bak.dev@gmail.com</string>
     <string name="restore_backup_warning_title">Watch out!</string>
@@ -322,4 +322,9 @@
     <string name="removed_from_fav">Removed from favourites</string>
     <string name="added_to_fav">Added to favourites</string>
     <string name="only_fav">Only favourites</string>
+    <string name="tvClickToAddCover">Click to add cover</string>
+    <string name="upload_cover_from_storage">Upload cover from storage</string>
+    <string name="upload_cover_from_camera">Take photo of your cover</string>
+    <string name="permission_granted_click_cover_again">Permission granted! Click the cover again</string>
+    <string name="btnAdderClearFinishDate">Clear</string>
 </resources>

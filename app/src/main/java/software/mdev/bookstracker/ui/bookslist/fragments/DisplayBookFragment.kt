@@ -8,9 +8,7 @@ import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
-import androidx.swiperefreshlayout.widget.CircularProgressDrawable
 import com.google.android.material.snackbar.Snackbar
-import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.fragment_display_book.*
 import software.mdev.bookstracker.R
 import software.mdev.bookstracker.data.db.entities.Book
@@ -19,20 +17,19 @@ import software.mdev.bookstracker.ui.bookslist.ListActivity
 import software.mdev.bookstracker.ui.bookslist.viewmodel.BooksViewModel
 import java.text.SimpleDateFormat
 import java.util.*
-import android.graphics.*
 import android.view.animation.AnticipateOvershootInterpolator
 import android.view.inputmethod.InputMethodManager
 import androidx.appcompat.app.AlertDialog
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.lifecycle.Observer
 import androidx.lifecycle.lifecycleScope
-import com.squareup.picasso.Transformation
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import android.widget.Toast
 import android.widget.RatingBar.OnRatingBarChangeListener
 import kotlinx.coroutines.MainScope
 import androidx.activity.OnBackPressedCallback
+import android.graphics.BitmapFactory
 
 
 class DisplayBookFragment : Fragment(R.layout.fragment_display_book) {
@@ -192,7 +189,8 @@ class DisplayBookFragment : Fragment(R.layout.fragment_display_book) {
                     book.bookISBN10,
                     book.bookISBN13,
                     book.bookPublishYear,
-                    book.bookIsFav
+                    book.bookIsFav,
+                    book.bookCoverImg
                 )
             }
         }
@@ -229,7 +227,8 @@ class DisplayBookFragment : Fragment(R.layout.fragment_display_book) {
                                     book.bookISBN10,
                                     book.bookISBN13,
                                     book.bookPublishYear,
-                                    book.bookIsFav
+                                    book.bookIsFav,
+                                    book.bookCoverImg
                                 )
                                 recalculateChallenges(book.bookStatus)
 
@@ -397,7 +396,7 @@ class DisplayBookFragment : Fragment(R.layout.fragment_display_book) {
                 }
             }
 
-            view?.let { setCover(it, book.bookCoverUrl) }
+            setCover(book.bookCoverImg)
             setISBN(book.bookISBN13, book.bookISBN10)
             setOLID(book.bookOLID)
             setPages(book.bookNumberOfPages)
@@ -437,63 +436,50 @@ class DisplayBookFragment : Fragment(R.layout.fragment_display_book) {
         }
     }
 
-    private fun setCover(view: View, bookCoverUrl: String) {
-        if (bookCoverUrl == Constants.DATABASE_EMPTY_VALUE) {
-            ivBookCover.visibility = View.GONE
-
-            val tvBookTitleLayout = tvBookTitle.layoutParams as ConstraintLayout.LayoutParams
-            tvBookTitleLayout.startToStart = R.id.clBookDisplay1
-            tvBookTitle.layoutParams = tvBookTitleLayout
-
-            val rbRatingIndicatorLayout = rbRatingIndicator.layoutParams as ConstraintLayout.LayoutParams
-            rbRatingIndicatorLayout.endToStart = R.id.guideline16
-            rbRatingIndicatorLayout.marginStart = -20
-            rbRatingIndicator.layoutParams = rbRatingIndicatorLayout
-
-            var margin = 0
-
-            val ivDetailsLayout = ivDetails.layoutParams as ConstraintLayout.LayoutParams
-            ivDetailsLayout.startToStart = R.id.clBookDisplay1
-            ivDetailsLayout.marginEnd = margin
-            ivDetails.layoutParams = ivDetailsLayout
-
-            val ivFavLayout = ivFav.layoutParams as ConstraintLayout.LayoutParams
-            ivFavLayout.marginStart = margin
-            ivFavLayout.marginEnd = margin
-            ivFav.layoutParams = ivFavLayout
-
-            val ivEditLayout = ivEdit.layoutParams as ConstraintLayout.LayoutParams
-            ivEditLayout.marginStart = margin
-            ivEditLayout.marginEnd = margin
-            ivEdit.layoutParams = ivEditLayout
-
-            val ivDeleteLayout = ivDelete.layoutParams as ConstraintLayout.LayoutParams
-            ivDeleteLayout.endToStart = R.id.guideline16
-            ivDeleteLayout.marginStart = margin
-            ivDelete.layoutParams = ivDeleteLayout
-
-        } else {
-            val circularProgressDrawable = CircularProgressDrawable(view.context)
-            circularProgressDrawable.strokeWidth = 5f
-            circularProgressDrawable.centerRadius = 30f
-            circularProgressDrawable.setColorSchemeColors(
-                ContextCompat.getColor(
-                    view.context,
-                    R.color.grey
-                )
-            )
-            circularProgressDrawable.start()
-
-            val coverUrl = "https://covers.openlibrary.org/b/id/$bookCoverUrl-L.jpg"
-
-            Picasso
-                .get()
-                .load(coverUrl)
-                .placeholder(circularProgressDrawable)
-                .error(R.drawable.ic_baseline_error_outline_24)
-                .transform(RoundCornersTransform(16.0f))
-                .into(ivBookCover)
+    private fun setCover(bookCoverImg: ByteArray?) {
+        if (bookCoverImg == null)
+            rearrangeViewsWhenCoverMissing()
+        else {
+            val bmp = BitmapFactory.decodeByteArray(bookCoverImg, 0, bookCoverImg.size)
+            ivBookCover.setImageBitmap(bmp)
         }
+    }
+
+    private fun rearrangeViewsWhenCoverMissing() {
+        ivBookCover.visibility = View.GONE
+
+        val tvBookTitleLayout = tvBookTitle.layoutParams as ConstraintLayout.LayoutParams
+        tvBookTitleLayout.startToStart = R.id.clBookDisplay1
+        tvBookTitle.layoutParams = tvBookTitleLayout
+
+        val rbRatingIndicatorLayout = rbRatingIndicator.layoutParams as ConstraintLayout.LayoutParams
+        rbRatingIndicatorLayout.endToStart = R.id.guideline16
+        rbRatingIndicatorLayout.marginStart = -20
+        rbRatingIndicatorLayout.marginEnd = 0
+        rbRatingIndicator.layoutParams = rbRatingIndicatorLayout
+
+        var margin = 0
+
+        val ivDetailsLayout = ivDetails.layoutParams as ConstraintLayout.LayoutParams
+        ivDetailsLayout.startToStart = R.id.clBookDisplay1
+        ivDetailsLayout.marginEnd = margin
+        ivDetails.layoutParams = ivDetailsLayout
+
+        val ivFavLayout = ivFav.layoutParams as ConstraintLayout.LayoutParams
+        ivFavLayout.marginStart = margin
+        ivFavLayout.marginEnd = margin
+        ivFav.layoutParams = ivFavLayout
+
+        val ivEditLayout = ivEdit.layoutParams as ConstraintLayout.LayoutParams
+        ivEditLayout.marginStart = margin
+        ivEditLayout.marginEnd = margin
+        ivEdit.layoutParams = ivEditLayout
+
+        val ivDeleteLayout = ivDelete.layoutParams as ConstraintLayout.LayoutParams
+        ivDeleteLayout.endToStart = R.id.guideline16
+        ivDeleteLayout.marginStart = margin
+        ivDeleteLayout.marginEnd = 0
+        ivDelete.layoutParams = ivDeleteLayout
     }
 
     private fun setISBN(bookISBN13: String, bookISBN10: String) {
@@ -634,7 +620,8 @@ class DisplayBookFragment : Fragment(R.layout.fragment_display_book) {
             book.bookISBN10,
             book.bookISBN13,
             book.bookPublishYear,
-            book.bookIsFav
+            book.bookIsFav,
+            book.bookCoverImg
         )
     }
 
@@ -676,7 +663,8 @@ class DisplayBookFragment : Fragment(R.layout.fragment_display_book) {
             book.bookISBN10,
             book.bookISBN13,
             book.bookPublishYear,
-            fav
+            fav,
+            book.bookCoverImg
         )
     }
 
@@ -706,25 +694,4 @@ class DisplayBookFragment : Fragment(R.layout.fragment_display_book) {
         }
         return accentColor
     }
-}
-
-class RoundCornersTransform(private val radiusInPx: Float) : Transformation {
-
-    override fun transform(source: Bitmap): Bitmap {
-        val bitmap = Bitmap.createBitmap(source.width, source.height, source.config)
-        val canvas = Canvas(bitmap)
-        val paint = Paint(Paint.ANTI_ALIAS_FLAG or Paint.DITHER_FLAG)
-        val shader = BitmapShader(source, Shader.TileMode.CLAMP, Shader.TileMode.CLAMP)
-        paint.shader = shader
-        val rect = RectF(0.0f, 0.0f, source.width.toFloat(), source.height.toFloat())
-        canvas.drawRoundRect(rect, radiusInPx, radiusInPx, paint)
-        source.recycle()
-
-        return bitmap
-    }
-
-    override fun key(): String {
-        return "round_corners"
-    }
-
 }

@@ -28,7 +28,7 @@
                 <androidx.cardview.widget.CardView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:backgroundTint="@color/grey_100"
+                    android:backgroundTint="@color/cardViewBackgroundColor"
                     app:cardElevation="1dp"
                     app:cardCornerRadius="@dimen/text_input_layout_radius"
                     app:cardUseCompatPadding="true"
@@ -118,7 +118,7 @@
                 <androidx.cardview.widget.CardView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:backgroundTint="@color/grey_100"
+                    android:backgroundTint="@color/cardViewBackgroundColor"
                     app:cardElevation="1dp"
                     app:cardCornerRadius="@dimen/text_input_layout_radius"
                     app:cardUseCompatPadding="true"
@@ -191,7 +191,7 @@
                 <androidx.cardview.widget.CardView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:backgroundTint="@color/grey_100"
+                    android:backgroundTint="@color/cardViewBackgroundColor"
                     app:cardElevation="1dp"
                     app:cardCornerRadius="@dimen/text_input_layout_radius"
                     app:cardUseCompatPadding="true"
@@ -256,7 +256,7 @@
                 <androidx.cardview.widget.CardView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:backgroundTint="@color/grey_100"
+                    android:backgroundTint="@color/cardViewBackgroundColor"
                     app:cardElevation="1dp"
                     app:cardCornerRadius="@dimen/text_input_layout_radius"
                     app:cardUseCompatPadding="true"
@@ -328,7 +328,7 @@
                 <androidx.cardview.widget.CardView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:backgroundTint="@color/grey_100"
+                    android:backgroundTint="@color/cardViewBackgroundColor"
                     app:cardElevation="1dp"
                     app:cardCornerRadius="@dimen/text_input_layout_radius"
                     app:cardUseCompatPadding="true"
@@ -393,7 +393,7 @@
                 <androidx.cardview.widget.CardView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:backgroundTint="@color/grey_100"
+                    android:backgroundTint="@color/cardViewBackgroundColor"
                     app:cardElevation="1dp"
                     app:cardCornerRadius="@dimen/text_input_layout_radius"
                     app:cardUseCompatPadding="true"
@@ -467,7 +467,7 @@
                 <androidx.cardview.widget.CardView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:backgroundTint="@color/grey_100"
+                    android:backgroundTint="@color/cardViewBackgroundColor"
                     app:cardElevation="1dp"
                     app:cardCornerRadius="@dimen/text_input_layout_radius"
                     app:cardUseCompatPadding="true"
@@ -554,7 +554,7 @@
                 <androidx.cardview.widget.CardView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:backgroundTint="@color/grey_100"
+                    android:backgroundTint="@color/cardViewBackgroundColor"
                     app:cardElevation="1dp"
                     app:cardCornerRadius="@dimen/text_input_layout_radius"
                     app:cardUseCompatPadding="true"
@@ -640,7 +640,7 @@
                 <androidx.cardview.widget.CardView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:backgroundTint="@color/grey_100"
+                    android:backgroundTint="@color/cardViewBackgroundColor"
                     app:cardElevation="1dp"
                     app:cardCornerRadius="@dimen/text_input_layout_radius"
                     app:cardUseCompatPadding="true"
@@ -726,7 +726,7 @@
                 <androidx.cardview.widget.CardView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:backgroundTint="@color/grey_100"
+                    android:backgroundTint="@color/cardViewBackgroundColor"
                     app:cardElevation="1dp"
                     app:cardCornerRadius="@dimen/text_input_layout_radius"
                     app:cardUseCompatPadding="true"
@@ -799,7 +799,7 @@
                 <androidx.cardview.widget.CardView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:backgroundTint="@color/grey_100"
+                    android:backgroundTint="@color/cardViewBackgroundColor"
                     app:cardElevation="1dp"
                     app:cardCornerRadius="@dimen/text_input_layout_radius"
                     app:cardUseCompatPadding="true"

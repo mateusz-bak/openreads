@@ -6,7 +6,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:backgroundTint="@color/grey_100"
+    android:backgroundTint="@color/cardViewBackgroundColor"
     android:layout_marginBottom="12dp"
     app:cardElevation="1dp"
     app:cardCornerRadius="@dimen/text_input_layout_radius">
@@ -16,16 +16,16 @@
         android:layout_height="wrap_content"
         android:padding="12dp">
 
-        <ImageView
+        <com.google.android.material.imageview.ShapeableImageView
             android:id="@+id/ivBookCover"
-            android:layout_width="70dp"
+            android:layout_width="60dp"
             android:layout_height="wrap_content"
             android:adjustViewBounds="true"
-            android:paddingEnd="10dp"
             android:scaleType="fitCenter"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent"
+            app:shapeAppearanceOverlay="@style/roundedCoverAdapter" />
 
         <TextView
             android:id="@+id/tvBookTitle"

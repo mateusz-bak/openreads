@@ -28,7 +28,7 @@
             android:fontFamily="sans-serif"
             android:gravity="center"
             android:text="@string/changelog"
-            android:textColor="?colorOnSecondary"
+            android:textColor="@color/colorDefaultText"
             android:textSize="14sp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
@@ -40,7 +40,7 @@
             android:fontFamily="sans-serif"
             android:gravity="center"
             android:text="@string/changelog"
-            android:textColor="?colorOnSecondary"
+            android:textColor="@color/colorDefaultText"
             android:textSize="12sp"
             app:layout_constraintBottom_toBottomOf="@+id/tvChangelogVer"
             app:layout_constraintEnd_toEndOf="parent"
@@ -56,6 +56,7 @@
             android:lineSpacingMultiplier="1.1"
             android:text="@string/changelog"
             android:textSize="15sp"
+            android:textColor="@color/colorDefaultText"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="@+id/tvChangelogVer"
             app:layout_constraintTop_toBottomOf="@+id/tvChangelogVer" />

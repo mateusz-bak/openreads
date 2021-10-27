@@ -206,7 +206,7 @@
     <string name="backup_import_failure">Import zakończony niepowodzeniem. Czy wybrany został poprawny plik?</string>
     <string name="rate_app_title">Oceń aplikację</string>
     <string name="rate_app">Podoba Ci się &appname;? Oceń ją w sklepie! Kliknij tutaj</string>
-    <string name="contact_title">Skontaktuj się</string>
+    <string name="contact_title">Skontaktuj się z autorem</string>
     <string name="restore_backup_warning_title">Ostrożnie!</string>
     <string name="restore_backup_warning_message">Przywrócenie kopii zapasowej nadpisze książki, które aktualnie posiadasz. Pamiętaj żeby mieć ich kopię zapasową.</string>
     <string name="warning_understand">Rozumiem</string>
@@ -277,4 +277,9 @@
     <string name="removed_from_fav">Usunięto z ulubionych</string>
     <string name="added_to_fav">Dodano do ulubionych</string>
     <string name="only_fav">Tylko ulubione</string>
+    <string name="tvClickToAddCover">Kliknij, żeby dodać okładkę</string>
+    <string name="upload_cover_from_camera">Zrób zdjęcie okładki</string>
+    <string name="upload_cover_from_storage">Wgraj okładkę z pamięci telefonu</string>
+    <string name="permission_granted_click_cover_again">Uprawnienia uzyskane, kliknij okładkę ponownie</string>
+    <string name="btnAdderClearFinishDate">Wyczyść</string>
 </resources>

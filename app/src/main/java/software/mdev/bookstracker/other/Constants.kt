@@ -26,6 +26,7 @@ object Constants {
     const val DATABASE_ITEM_BOOK_PUBLISH_YEAR = "item_bookPublishYear"
     const val DATABASE_ITEM_BOOK_IS_DELETED = "item_bookIsDeleted"
     const val DATABASE_ITEM_BOOK_IS_FAV = "item_bookIsFav"
+    const val DATABASE_ITEM_BOOK_COVER_IMG = "item_bookCoverImg"
     const val DATABASE_EMPTY_VALUE = "none"
 
     const val DATABASE_NAME_YEAR = "Year"
@@ -123,6 +124,8 @@ object Constants {
     const val PERMISSION_CAMERA_FROM_LIST_1 = 1
     const val PERMISSION_CAMERA_FROM_LIST_2 = 2
     const val PERMISSION_CAMERA_FROM_LIST_3 = 3
+    const val PERMISSION_CAMERA_FROM_UPLOAD_COVER = 4
+    const val PERMISSION_READ_EXTERNAL_STORAGE_FROM_UPLOAD_COVER = 5
 
     const val MS_ONE_WEEK = 604800000L
     const val MS_THREE_DAYS = 259200000L

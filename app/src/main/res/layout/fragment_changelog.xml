@@ -21,6 +21,7 @@
         android:text="@string/app_updated"
         android:textSize="24sp"
         android:visibility="visible"
+        android:textColor="@color/colorDefaultText"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
@@ -36,6 +37,7 @@
         android:text="@string/update_whats_new"
         android:textSize="24sp"
         android:visibility="invisible"
+        android:textColor="@color/colorDefaultText"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
@@ -54,6 +56,7 @@
         android:text="@string/update_ok_1"
         android:textSize="18sp"
         android:visibility="invisible"
+        android:textColor="@color/colorDefaultText"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
 

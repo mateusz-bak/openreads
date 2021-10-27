@@ -67,4 +67,10 @@
     <string name="changelog_1_7_1_a">Poprawiono wyświetlanie na ekranach z małym dpi, poprawiono czytelność wykresów, naprawiono przycisk szczegółów książki, naprawiono pola przy dodawaniu książek.</string>
     <string name="changelog_1_7_1_b">Książki z liczbą stron 0 nie będą uwzględniane w statystykach.</string>
     <string name="changelog_1_7_1_c">Dopracowano górną belkę w listach, dodano animacje.</string>
+
+    <string name="changelog_1_8_0_a">Okładki książek są teraz zapisywane w aplikacji.</string>
+    <string name="changelog_1_8_0_b">Książki mogą być od teraz oznaczane jako "ulubione"</string>
+    <string name="changelog_1_8_0_c">Domyślna data zakończenia czytania to teraz aktualny dzień.</string>
+    <string name="changelog_1_8_0_d">Ujednolicone dodawanie książek oraz wiele zmian wyglądu i zachowania.</string>
+    <string name="changelog_1_8_0_e"><b>Ważne! Jeżeli po tej aktualizacji okładki Twoich książek zniknęły - edytuj te książki i zapisz je bez zmian.</b></string>
 </resources>

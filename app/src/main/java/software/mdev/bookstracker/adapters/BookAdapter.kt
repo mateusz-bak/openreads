@@ -1,20 +1,17 @@
 package software.mdev.bookstracker.adapters
 
 import android.content.Context
+import android.graphics.BitmapFactory
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.AsyncListDiffer
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
-import androidx.swiperefreshlayout.widget.CircularProgressDrawable
-import com.squareup.picasso.Picasso
 import software.mdev.bookstracker.R
 import software.mdev.bookstracker.data.db.entities.Book
 import kotlinx.android.synthetic.main.item_book.view.*
 import software.mdev.bookstracker.other.Constants
-import software.mdev.bookstracker.ui.bookslist.fragments.RoundCornersTransform
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -122,38 +119,24 @@ class BookAdapter(
                 }
             }
 
-            if (curBook.bookCoverUrl == Constants.DATABASE_EMPTY_VALUE) {
-                ivBookCover.visibility = View.GONE
-            } else {
-                ivBookCover.visibility = View.VISIBLE
-                val circularProgressDrawable = CircularProgressDrawable(context)
-                circularProgressDrawable.strokeWidth = 5f
-                circularProgressDrawable.centerRadius = 30f
-                circularProgressDrawable.setColorSchemeColors(
-                    ContextCompat.getColor(
-                        context,
-                        R.color.grey
-                    )
-                )
-                circularProgressDrawable.start()
-
-                var coverID = curBook.bookCoverUrl
-                var coverUrl = "https://covers.openlibrary.org/b/id/$coverID-M.jpg"
-
-                Picasso
-                    .get()
-                    .load(coverUrl)
-                    .placeholder(circularProgressDrawable)
-                    .error(R.drawable.ic_baseline_error_outline_24)
-                    .transform(RoundCornersTransform(20.0f))
-                    .into(ivBookCover)
-            }
+            setCover (this, curBook.bookCoverImg)
         }
 
         holder.itemView.apply {
             setOnClickListener {
                 onBookClickListener?.let { it(curBook) }
             }
+        }
+    }
+
+    private fun setCover(view: View, bookCoverImg: ByteArray?) {
+
+        if (bookCoverImg == null) {
+            view.ivBookCover.visibility = View.GONE
+        } else {
+            view.ivBookCover.visibility = View.VISIBLE
+            val bmp = BitmapFactory.decodeByteArray(bookCoverImg, 0, bookCoverImg.size)
+            view.ivBookCover.setImageBitmap(bmp)
         }
     }
 

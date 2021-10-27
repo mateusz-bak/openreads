@@ -13,7 +13,7 @@ import software.mdev.bookstracker.R
 import kotlinx.android.synthetic.main.item_book_searched_by_olid.view.*
 import software.mdev.bookstracker.api.models.OpenLibraryOLIDResponse
 import software.mdev.bookstracker.other.Resource
-import software.mdev.bookstracker.ui.bookslist.fragments.RoundCornersTransform
+import software.mdev.bookstracker.other.RoundCornersTransform
 import software.mdev.bookstracker.ui.bookslist.viewmodel.BooksViewModel
 
 class FoundBookAdapter(
