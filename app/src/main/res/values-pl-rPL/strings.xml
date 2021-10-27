@@ -281,4 +281,5 @@
     <string name="upload_cover_from_camera">Zrób zdjęcie okładki</string>
     <string name="upload_cover_from_storage">Wgraj okładkę z pamięci telefonu</string>
     <string name="permission_granted_click_cover_again">Uprawnienia uzyskane, kliknij okładkę ponownie</string>
+    <string name="btnAdderClearFinishDate">Wyczyść</string>
 </resources>

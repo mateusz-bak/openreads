@@ -166,6 +166,14 @@ class AddEditBookFragment : Fragment(R.layout.fragment_add_edit_book) {
             startDatePickerVis(false)
         }
 
+        btnStartDateClear.setOnClickListener {
+            bookStartDateMs = null
+            tvBookStartDateValue.text = context?.getString(R.string.set)
+
+            svEditor.visibility = View.VISIBLE
+            startDatePickerVis(false)
+        }
+
         btnStartDateSave.setOnClickListener {
             bookStartDateMs = getDateFromDatePickerInMillis(dpBookStartDate)
             bookStartDateMs = clearDateOfTime(bookStartDateMs!!)
@@ -176,6 +184,14 @@ class AddEditBookFragment : Fragment(R.layout.fragment_add_edit_book) {
         }
 
         btnFinishDateCancel.setOnClickListener {
+            svEditor.visibility = View.VISIBLE
+            finishDatePickerVis(false)
+        }
+
+        btnFinishDateClear.setOnClickListener {
+            bookFinishDateMs = null
+            tvBookFinishDateValue.text = context?.getString(R.string.set)
+
             svEditor.visibility = View.VISIBLE
             finishDatePickerVis(false)
         }
@@ -604,6 +620,7 @@ class AddEditBookFragment : Fragment(R.layout.fragment_add_edit_book) {
         dpBookStartDate.visibility = viewVisibility
         btnStartDateCancel.visibility = viewVisibility
         btnStartDateSave.visibility = viewVisibility
+        btnStartDateClear.visibility = viewVisibility
     }
 
     private fun finishDatePickerVis(visibility: Boolean) {
@@ -615,6 +632,7 @@ class AddEditBookFragment : Fragment(R.layout.fragment_add_edit_book) {
         dpBookFinishDate.visibility = viewVisibility
         btnFinishDateCancel.visibility = viewVisibility
         btnFinishDateSave.visibility = viewVisibility
+        btnFinishDateClear.visibility = viewVisibility
     }
 
     private fun clearDateOfTime(orgDate: Long): Long {

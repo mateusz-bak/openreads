@@ -112,6 +112,7 @@
         android:backgroundTint="?colorPrimary"
         android:text="@string/btn_ok"
         app:cornerRadius="@dimen/text_input_layout_radius"
+        android:textColor="@color/colorDefaultText"
         app:layout_constraintBottom_toBottomOf="@+id/cbDontShowAgain"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"

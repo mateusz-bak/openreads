@@ -326,4 +326,5 @@
     <string name="upload_cover_from_storage">Upload cover from storage</string>
     <string name="upload_cover_from_camera">Take photo of your cover</string>
     <string name="permission_granted_click_cover_again">Permission granted! Click the cover again</string>
+    <string name="btnAdderClearFinishDate">Clear</string>
 </resources>
