@@ -103,7 +103,7 @@
                 android:text="@string/tvBookTitle"
                 android:textAlignment="textStart"
                 android:textColor="?colorOnSecondary"
-                android:textSize="16sp"
+                android:textSize="20sp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="@+id/guideline13"
                 app:layout_constraintTop_toTopOf="parent"
