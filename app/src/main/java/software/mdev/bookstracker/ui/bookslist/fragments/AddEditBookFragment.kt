@@ -475,7 +475,6 @@ class AddEditBookFragment : Fragment(R.layout.fragment_add_edit_book) {
                         0 -> {
                             ivBookStatus.setImageDrawable(activity?.baseContext?.resources?.getDrawable(R.drawable.ic_book_black_24dp))
                             whatIsClicked = Constants.BOOK_STATUS_READ
-                            setFinishDateToToday()
                         }
                         1 -> {
                             ivBookStatus.setImageDrawable(activity?.baseContext?.resources?.getDrawable(R.drawable.ic_auto_stories_black_24dp))
