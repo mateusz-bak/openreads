@@ -115,7 +115,7 @@ object Constants {
     const val THEME_ACCENT_DEFAULT = THEME_ACCENT_GREEN_500
 
     const val GITHUB_USER = "mateusz-bak"
-    const val GITHUB_REPO = "books-tracker-android"
+    const val GITHUB_REPO = "openreads-android"
 
     const val BASE_URL = "https://openlibrary.org/"
     const val OPEN_LIBRARY_SEARCH_DELAY = 500L

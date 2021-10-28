@@ -73,4 +73,6 @@
     <string name="changelog_1_8_0_c">Domyślna data zakończenia czytania to teraz aktualny dzień.</string>
     <string name="changelog_1_8_0_d">Ujednolicone dodawanie książek oraz wiele zmian wyglądu i zachowania.</string>
     <string name="changelog_1_8_0_e"><b>Ważne! Jeżeli po tej aktualizacji okładki Twoich książek zniknęły - edytuj te książki i zapisz je bez zmian.</b></string>
+
+    <string name="changelog_1_8_1_a">Uaktualniono linki do repozytorium.</string>
 </resources>
