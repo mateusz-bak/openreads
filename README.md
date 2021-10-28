@@ -5,8 +5,8 @@
  <img src='doc/github/github-banner.png' width='100%'/>
 </p>
 
-[![GitHub tag (latest by date)](https://img.shields.io/github/v/tag/mateusz-bak/books-tracker-android?label=latest%20version)](https://github.com/mateusz-bak/books-tracker-android/releases/latest)
-[![Build Status](https://git-drone.mateusz.ovh/api/badges/mateusz-bak/books-tracker-android/status.svg)](https://git-drone.mateusz.ovh/mateusz-bak/books-tracker-android)
+[![GitHub tag (latest by date)](https://img.shields.io/github/v/tag/mateusz-bak/openreads-android?label=latest%20version)](https://github.com/mateusz-bak/openreads-android/releases/latest)
+[![Build Status](https://git-drone.mateusz.ovh/api/badges/mateusz-bak/openreads-android/status.svg)](https://git-drone.mateusz.ovh/mateusz-bak/openreads-android)
 
 <br/><br/>
 ### Openreads is an Android app written in Kotlin for keeping tracks of your books.  
@@ -42,8 +42,8 @@
 1. Clone or download this repository
 
    ```sh
-   git clone https://github.com/mateusz-bak/books-tracker-android.git
-   cd books-tracker-android
+   git clone https://github.com/mateusz-bak/openreads-android.git
+   cd openreads-android
    ```
 
 2. Open the project in Android Studio and run it from there or build an APK directly through Gradle:
