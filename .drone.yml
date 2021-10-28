@@ -8,7 +8,7 @@ concurrency:
 
 steps:
 - name: build
-  image: mingc/android-build-box:master
+  image: mingc/android-build-box:1.23.1
   when:
     branch:
     - master
