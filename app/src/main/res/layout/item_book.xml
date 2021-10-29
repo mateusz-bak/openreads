@@ -1,20 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.cardview.widget.CardView
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:id="@+id/cvBook"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/cvBook"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:backgroundTint="@color/cardViewBackgroundColor"
-    android:layout_marginBottom="12dp"
-    app:cardElevation="1dp"
-    app:cardCornerRadius="@dimen/text_input_layout_radius">
+    android:layout_marginBottom="16dp"
+    app:cardElevation="0dp">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:padding="12dp">
+        android:paddingStart="16dp"
+        android:paddingTop="4dp"
+        android:paddingEnd="16dp"
+        android:paddingBottom="4dp">
 
         <com.google.android.material.imageview.ShapeableImageView
             android:id="@+id/ivBookCover"
@@ -30,12 +30,13 @@
         <TextView
             android:id="@+id/tvBookTitle"
             android:layout_width="0dp"
-            android:layout_marginStart="8dp"
             android:layout_height="wrap_content"
+            android:layout_marginStart="24dp"
             android:text="@string/unknown_title"
             android:textColor="?colorOnSecondary"
             android:textSize="16sp"
             app:layout_constraintEnd_toStartOf="@+id/glVertical70"
+            app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintHorizontal_weight="1"
             app:layout_constraintStart_toEndOf="@+id/ivBookCover"
             app:layout_constraintTop_toTopOf="parent" />
@@ -47,6 +48,7 @@
             android:text="@string/unknown_author"
             android:textSize="14sp"
             app:layout_constraintEnd_toEndOf="@+id/tvBookTitle"
+            app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintHorizontal_weight="1"
             app:layout_constraintStart_toStartOf="@+id/tvBookTitle"
             app:layout_constraintTop_toBottomOf="@+id/tvBookTitle" />
@@ -65,6 +67,7 @@
             android:rating="4"
             android:scaleType="fitStart"
             android:stepSize="0.5"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="@+id/tvBookAuthor"
             app:layout_constraintTop_toBottomOf="@+id/tvBookAuthor" />
 
@@ -80,6 +83,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="4dp"
+            android:layout_marginBottom="4dp"
             android:text="@string/tvNumberOfPages"
             android:textSize="14sp"
             app:layout_constraintBottom_toBottomOf="parent"
@@ -100,6 +104,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="4dp"
+            android:layout_marginBottom="4dp"
             android:text="@string/tvDateFinished"
             android:textSize="14sp"
             app:layout_constraintBottom_toBottomOf="parent"
@@ -120,6 +125,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="4dp"
+            android:layout_marginBottom="4dp"
             android:text="@string/tvDateFinished"
             android:textSize="14sp"
             app:layout_constraintBottom_toBottomOf="parent"
