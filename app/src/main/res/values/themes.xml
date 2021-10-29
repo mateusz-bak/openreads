@@ -15,6 +15,8 @@
         <item name="windowNoTitle">true</item>
         <item name="colorAccent">?colorPrimary</item>
         <item name="sortDialogBackgroundColor">@color/white</item>
+
+        <item name="android:fontFamily">@font/jost_400_book</item>
     </style>
 
     <style name="Theme.Mdev.Bookstracker.NoActionBar">

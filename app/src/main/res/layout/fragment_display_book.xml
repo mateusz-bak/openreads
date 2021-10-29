@@ -99,7 +99,6 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="12dp"
-                android:fontFamily="sans-serif"
                 android:text="@string/tvBookTitle"
                 android:textAlignment="textStart"
                 android:textColor="?colorOnSecondary"
@@ -114,7 +113,6 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="4dp"
-                android:fontFamily="sans-serif-light"
                 android:text="@string/tvBookAuthor"
                 android:textAlignment="textStart"
                 android:textColor="@android:color/darker_gray"
@@ -143,7 +141,6 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="12dp"
                 android:layout_marginTop="8dp"
-                android:fontFamily="sans-serif"
                 android:text="@string/tvBookStatus"
                 android:textSize="14sp"
                 app:layout_constraintStart_toEndOf="@+id/ivBookStatusRead"
@@ -330,10 +327,8 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="12dp"
-                    android:fontFamily="sans-serif"
                     android:text="@string/tv_date_started_title"
                     android:textSize="12sp"
-                    android:textStyle="bold"
                     app:layout_constraintStart_toEndOf="@+id/ivDateStarted"
                     app:layout_constraintTop_toTopOf="parent" />
 
@@ -341,7 +336,6 @@
                     android:id="@+id/tvDateStarted"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:fontFamily="sans-serif-light"
                     android:text="@string/tv_date_finished"
                     android:textSize="14sp"
                     app:layout_constraintStart_toStartOf="@+id/tvDateStartedTitle"
@@ -351,11 +345,9 @@
                     android:id="@+id/tvDateFinishedTitle"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:fontFamily="sans-serif"
                     android:text="@string/tv_date_finished_title"
                     android:layout_marginTop="8dp"
                     android:textSize="12sp"
-                    android:textStyle="bold"
                     app:layout_constraintStart_toStartOf="@+id/tvDateStarted"
                     app:layout_constraintTop_toBottomOf="@+id/tvDateStarted" />
 
@@ -363,7 +355,6 @@
                     android:id="@+id/tvDateFinished"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:fontFamily="sans-serif-light"
                     android:text="@string/tv_date_finished"
                     android:textSize="14sp"
                     app:layout_constraintStart_toStartOf="@+id/tvDateFinishedTitle"
@@ -374,10 +365,8 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="8dp"
-                    android:fontFamily="sans-serif"
                     android:text="@string/tv_book_pages_title"
                     android:textSize="12sp"
-                    android:textStyle="bold"
                     app:layout_constraintStart_toStartOf="@+id/tvDateFinished"
                     app:layout_constraintTop_toBottomOf="@+id/tvDateFinished" />
 
@@ -395,10 +384,8 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="8dp"
-                    android:fontFamily="sans-serif"
                     android:text="@string/hint_publish_year"
                     android:textSize="14sp"
-                    android:textStyle="bold"
                     app:layout_constraintStart_toStartOf="@+id/tvBookPages"
                     app:layout_constraintTop_toBottomOf="@+id/tvBookPages" />
 
@@ -416,10 +403,8 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="8dp"
-                    android:fontFamily="sans-serif"
                     android:text="@string/tv_book_isbn_title"
                     android:textSize="14sp"
-                    android:textStyle="bold"
                     app:layout_constraintStart_toStartOf="@+id/tvBookPublishYear"
                     app:layout_constraintTop_toBottomOf="@+id/tvBookPublishYear" />
 
@@ -427,7 +412,6 @@
                     android:id="@+id/tvBookISBN"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:fontFamily="sans-serif-light"
                     android:text="@string/tv_book_isbn"
                     android:textSize="14sp"
                     app:layout_constraintStart_toStartOf="@+id/tvBookISBNTitle"
@@ -438,10 +422,8 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="8dp"
-                    android:fontFamily="sans-serif"
                     android:text="@string/tv_book_olid_title"
                     android:textSize="14sp"
-                    android:textStyle="bold"
                     app:layout_constraintStart_toStartOf="@+id/tvBookISBN"
                     app:layout_constraintTop_toBottomOf="@+id/tvBookISBN" />
 
@@ -449,7 +431,6 @@
                     android:id="@+id/tvBookOLID"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:fontFamily="sans-serif-light"
                     android:text="@string/tv_book_olid"
                     android:textSize="14sp"
                     app:layout_constraintStart_toStartOf="@+id/tvBookOLIDTitle"
@@ -461,7 +442,6 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="12dp"
                     android:autoLink="web"
-                    android:fontFamily="sans-serif"
                     android:gravity="start"
                     android:paddingStart="8dp"
                     android:text="@string/tv_book_url"

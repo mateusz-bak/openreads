@@ -50,7 +50,6 @@
         android:gravity="center"
         android:paddingTop="8dp"
         android:lineSpacingMultiplier="1.2"
-        android:fontFamily="sans-serif"
         app:layout_constraintBottom_toTopOf="@+id/guideline2"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"

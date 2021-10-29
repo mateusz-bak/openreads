@@ -40,7 +40,6 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="2dp"
-        android:fontFamily="monospace"
         android:padding="14dp"
         android:visibility="invisible"
         android:layout_marginEnd="16dp"
