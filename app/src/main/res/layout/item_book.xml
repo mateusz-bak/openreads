@@ -1,134 +1,130 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/cvBook"
+    android:id="@+id/clBook"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_marginBottom="16dp"
-    app:cardElevation="0dp">
+    android:paddingStart="16dp"
+    android:paddingTop="4dp"
+    android:paddingEnd="16dp"
+    android:paddingBottom="20dp">
 
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:layout_width="match_parent"
+    <com.google.android.material.imageview.ShapeableImageView
+        android:id="@+id/ivBookCover"
+        android:layout_width="60dp"
         android:layout_height="wrap_content"
-        android:paddingStart="16dp"
-        android:paddingTop="4dp"
-        android:paddingEnd="16dp"
-        android:paddingBottom="4dp">
+        android:adjustViewBounds="true"
+        android:scaleType="fitCenter"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:shapeAppearanceOverlay="@style/roundedCoverAdapter" />
 
-        <com.google.android.material.imageview.ShapeableImageView
-            android:id="@+id/ivBookCover"
-            android:layout_width="60dp"
-            android:layout_height="wrap_content"
-            android:adjustViewBounds="true"
-            android:scaleType="fitCenter"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:shapeAppearanceOverlay="@style/roundedCoverAdapter" />
+    <TextView
+        android:id="@+id/tvBookTitle"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="24dp"
+        android:layout_marginTop="-4dp"
+        android:paddingBottom="2dp"
+        android:text="@string/unknown_title"
+        android:textColor="@color/colorDefaultText"
+        android:textSize="16sp"
+        android:fontFamily="@font/jost_500_medium"
+        app:layout_constraintEnd_toStartOf="@+id/glVertical70"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintHorizontal_weight="1"
+        app:layout_constraintStart_toEndOf="@+id/ivBookCover"
+        app:layout_constraintTop_toTopOf="@+id/ivBookCover" />
 
-        <TextView
-            android:id="@+id/tvBookTitle"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="24dp"
-            android:text="@string/unknown_title"
-            android:textColor="?colorOnSecondary"
-            android:textSize="16sp"
-            app:layout_constraintEnd_toStartOf="@+id/glVertical70"
-            app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintHorizontal_weight="1"
-            app:layout_constraintStart_toEndOf="@+id/ivBookCover"
-            app:layout_constraintTop_toTopOf="parent" />
+    <TextView
+        android:id="@+id/tvBookAuthor"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="@string/unknown_author"
+        android:textSize="14sp"
+        app:layout_constraintEnd_toEndOf="@+id/tvBookTitle"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintHorizontal_weight="1"
+        app:layout_constraintStart_toStartOf="@+id/tvBookTitle"
+        app:layout_constraintTop_toBottomOf="@+id/tvBookTitle" />
 
-        <TextView
-            android:id="@+id/tvBookAuthor"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:text="@string/unknown_author"
-            android:textSize="14sp"
-            app:layout_constraintEnd_toEndOf="@+id/tvBookTitle"
-            app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintHorizontal_weight="1"
-            app:layout_constraintStart_toStartOf="@+id/tvBookTitle"
-            app:layout_constraintTop_toBottomOf="@+id/tvBookTitle" />
+    <androidx.appcompat.widget.AppCompatRatingBar
+        android:id="@+id/rbRatingIndicator"
+        style="?android:attr/ratingBarStyleSmall"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="-2dp"
+        android:layout_marginTop="4dp"
+        android:contentDescription="@string/rbRatingIndicator"
+        android:foregroundGravity="right"
+        android:isIndicator="true"
+        android:numStars="5"
+        android:rating="4"
+        android:scaleType="fitStart"
+        android:stepSize="0.5"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/tvBookAuthor"
+        app:layout_constraintTop_toBottomOf="@+id/tvBookAuthor" />
 
-        <androidx.appcompat.widget.AppCompatRatingBar
-            android:id="@+id/rbRatingIndicator"
-            style="?android:attr/ratingBarStyleSmall"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="-2dp"
-            android:layout_marginTop="4dp"
-            android:contentDescription="@string/rbRatingIndicator"
-            android:foregroundGravity="right"
-            android:isIndicator="true"
-            android:numStars="5"
-            android:rating="4"
-            android:scaleType="fitStart"
-            android:stepSize="0.5"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toStartOf="@+id/tvBookAuthor"
-            app:layout_constraintTop_toBottomOf="@+id/tvBookAuthor" />
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/glVertical70"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.75" />
 
-        <androidx.constraintlayout.widget.Guideline
-            android:id="@+id/glVertical70"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            app:layout_constraintGuide_percent="0.75" />
+    <TextView
+        android:id="@+id/tvNumberOfPages"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="4dp"
+        android:layout_marginBottom="4dp"
+        android:text="@string/tvNumberOfPages"
+        android:textSize="14sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
 
-        <TextView
-            android:id="@+id/tvNumberOfPages"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="4dp"
-            android:layout_marginBottom="4dp"
-            android:text="@string/tvNumberOfPages"
-            android:textSize="14sp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent" />
+    <TextView
+        android:id="@+id/tvDateStartedTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="4dp"
+        android:text="@string/tv_date_started_title"
+        android:textSize="11sp"
+        app:layout_constraintBottom_toTopOf="@+id/tvDateStarted"
+        app:layout_constraintEnd_toEndOf="@+id/tvDateStarted" />
 
-        <TextView
-            android:id="@+id/tvDateStartedTitle"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="4dp"
-            android:text="@string/tv_date_started_title"
-            android:textSize="11sp"
-            app:layout_constraintBottom_toTopOf="@+id/tvDateStarted"
-            app:layout_constraintEnd_toEndOf="@+id/tvDateStarted" />
+    <TextView
+        android:id="@+id/tvDateStarted"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="4dp"
+        android:layout_marginBottom="4dp"
+        android:text="@string/tvDateFinished"
+        android:textSize="14sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
 
-        <TextView
-            android:id="@+id/tvDateStarted"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="4dp"
-            android:layout_marginBottom="4dp"
-            android:text="@string/tvDateFinished"
-            android:textSize="14sp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent" />
+    <TextView
+        android:id="@+id/tvDateFinishedTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="4dp"
+        android:text="@string/tv_date_finished_title"
+        android:textSize="11sp"
+        app:layout_constraintBottom_toTopOf="@+id/tvDateFinished"
+        app:layout_constraintEnd_toEndOf="@+id/tvDateFinished" />
 
-        <TextView
-            android:id="@+id/tvDateFinishedTitle"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="4dp"
-            android:text="@string/tv_date_finished_title"
-            android:textSize="11sp"
-            app:layout_constraintBottom_toTopOf="@+id/tvDateFinished"
-            app:layout_constraintEnd_toEndOf="@+id/tvDateFinished" />
-
-        <TextView
-            android:id="@+id/tvDateFinished"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="4dp"
-            android:layout_marginBottom="4dp"
-            android:text="@string/tvDateFinished"
-            android:textSize="14sp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent" />
-    </androidx.constraintlayout.widget.ConstraintLayout>
-</androidx.cardview.widget.CardView>
+    <TextView
+        android:id="@+id/tvDateFinished"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="4dp"
+        android:layout_marginBottom="4dp"
+        android:text="@string/tvDateFinished"
+        android:textSize="14sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
+</androidx.constraintlayout.widget.ConstraintLayout>
+<!--</androidx.cardview.widget.CardView>-->
