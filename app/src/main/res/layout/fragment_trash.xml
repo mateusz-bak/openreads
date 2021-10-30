@@ -51,7 +51,7 @@
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="@+id/glVertical33"
         app:layout_constraintTop_toTopOf="@+id/tvTrashTitle"
-        app:srcCompat="@drawable/ic_baseline_delete_outline_24"
+        app:srcCompat="@drawable/ic_iconscout_trash_24"
         app:tint="?colorPrimary" />
 
     <androidx.constraintlayout.widget.Guideline

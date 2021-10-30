@@ -155,7 +155,7 @@
                 app:boxStrokeWidthFocused="0dp"
                 app:errorContentDescription="@string/insert_book_pages"
                 app:errorEnabled="true"
-                app:errorIconDrawable="@drawable/ic_baseline_file_copy_24"
+                app:errorIconDrawable="@drawable/ic_iconscout_file_copy_alt_24"
                 app:errorIconTint="?colorAccent"
                 app:errorTextColor="?colorAccent"
                 app:hintAnimationEnabled="true"
@@ -165,7 +165,7 @@
                 app:layout_constraintHorizontal_bias="0.5"
                 app:layout_constraintStart_toStartOf="@+id/tilBookTitle"
                 app:layout_constraintTop_toBottomOf="@+id/clBookStartDate"
-                app:startIconDrawable="@drawable/ic_baseline_file_copy_24"
+                app:startIconDrawable="@drawable/ic_iconscout_file_copy_alt_24"
                 app:startIconTint="?colorPrimary">
 
                 <com.google.android.material.textfield.TextInputEditText
@@ -197,7 +197,7 @@
                 app:boxStrokeWidthFocused="0dp"
                 app:errorContentDescription="@string/insert_book_publish_year"
                 app:errorEnabled="true"
-                app:errorIconDrawable="@drawable/ic_baseline_public_24"
+                app:errorIconDrawable="@drawable/ic_mdi_earth_24"
                 app:errorIconTint="?colorAccent"
                 app:errorTextColor="?colorAccent"
                 app:hintAnimationEnabled="true"
@@ -207,7 +207,7 @@
                 app:layout_constraintHorizontal_bias="0.5"
                 app:layout_constraintStart_toEndOf="@+id/tilBookPages"
                 app:layout_constraintTop_toTopOf="@+id/tilBookPages"
-                app:startIconDrawable="@drawable/ic_baseline_public_24"
+                app:startIconDrawable="@drawable/ic_mdi_earth_24"
                 app:startIconTint="?colorPrimary">
 
                 <com.google.android.material.textfield.TextInputEditText
@@ -238,7 +238,7 @@
                 app:boxStrokeWidthFocused="0dp"
                 app:errorContentDescription="@string/insert_book_isbn"
                 app:errorEnabled="true"
-                app:errorIconDrawable="@drawable/ic_baseline_pin_24"
+                app:errorIconDrawable="@drawable/ic_iconscout_qrcode_scan_24"
                 app:errorIconTint="?colorAccent"
                 app:errorTextColor="?colorAccent"
                 app:hintAnimationEnabled="true"
@@ -250,7 +250,7 @@
                 app:layout_constraintHorizontal_bias="0.5"
                 app:layout_constraintStart_toStartOf="@+id/tilBookPages"
                 app:layout_constraintTop_toBottomOf="@+id/tilBookPages"
-                app:startIconDrawable="@drawable/ic_baseline_pin_24"
+                app:startIconDrawable="@drawable/ic_iconscout_qrcode_scan_24"
                 app:startIconTint="?colorPrimary">
 
                 <com.google.android.material.textfield.TextInputEditText
@@ -282,7 +282,7 @@
                 app:boxStrokeWidthFocused="0dp"
                 app:errorContentDescription="@string/insert_book_olid"
                 app:errorEnabled="true"
-                app:errorIconDrawable="@drawable/ic_baseline_pin_24"
+                app:errorIconDrawable="@drawable/ic_iconscout_book_24"
                 app:errorIconTint="?colorAccent"
                 app:errorTextColor="?colorAccent"
                 app:hintAnimationEnabled="true"
@@ -292,7 +292,7 @@
                 app:layout_constraintHorizontal_bias="0.5"
                 app:layout_constraintStart_toEndOf="@+id/tilBookISBN"
                 app:layout_constraintTop_toBottomOf="@+id/tilBookPublishYear"
-                app:startIconDrawable="@drawable/ic_baseline_pin_24"
+                app:startIconDrawable="@drawable/ic_iconscout_book_24"
                 app:startIconTint="?colorPrimary">
 
                 <com.google.android.material.textfield.TextInputEditText
@@ -448,7 +448,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="12dp"
-                    android:src="@drawable/ic_baseline_play_circle_outline_24"
+                    android:src="@drawable/ic_iconscout_forward_24"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
@@ -499,7 +499,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="12dp"
-                    android:src="@drawable/ic_baseline_flag_24"
+                    android:src="@drawable/ic_iconscout_clock_nine_24"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
@@ -565,7 +565,7 @@
                     android:background="@drawable/rounded_image_button"
                     android:backgroundTint="@color/red_800"
                     android:padding="8dp"
-                    android:src="@drawable/ic_baseline_delete_forever_24"
+                    android:src="@drawable/ic_iconscout_trash_24"
                     app:circularflow_defaultRadius="6dp"
                     app:layout_constraintEnd_toEndOf="@+id/ivBookCover"
                     app:layout_constraintBottom_toBottomOf="@+id/ivBookCover"
@@ -591,7 +591,7 @@
                 app:errorContentDescription="@string/insert_book_notes"
                 app:errorEnabled="true"
                 android:visibility="invisible"
-                app:errorIconDrawable="@drawable/ic_baseline_pin_24"
+                app:errorIconDrawable="@drawable/ic_iconscout_comment_alt_notes_24"
                 app:errorIconTint="?colorAccent"
                 app:errorTextColor="?colorAccent"
                 app:hintAnimationEnabled="true"

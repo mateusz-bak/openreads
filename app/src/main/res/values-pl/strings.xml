@@ -282,4 +282,6 @@
     <string name="upload_cover_from_camera">Zrób zdjęcie okładki</string>
     <string name="permission_granted_click_cover_again">Uprawnienia uzyskane, kliknij okładkę ponownie</string>
     <string name="btnAdderClearFinishDate">Wyczyść</string>
+    <string name="book_notes">Notatki</string>
+    <string name="book_tags">Tagi</string>
 </resources>

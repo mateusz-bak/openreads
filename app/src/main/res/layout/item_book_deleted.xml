@@ -60,7 +60,7 @@
         app:layout_constraintEnd_toStartOf="@+id/ivRestoreBook"
         app:layout_constraintStart_toStartOf="@+id/glVertical70"
         app:layout_constraintTop_toTopOf="@+id/tvBookTitle"
-        app:srcCompat="@drawable/ic_baseline_hourglass_bottom_24"
+        app:srcCompat="@drawable/ic_auto_stories_black_24dp"
         app:tint="?colorPrimary" />
 
     <ImageView
@@ -73,7 +73,7 @@
         app:layout_constraintEnd_toStartOf="@+id/ivRestoreBook"
         app:layout_constraintStart_toStartOf="@+id/glVertical70"
         app:layout_constraintTop_toTopOf="@+id/tvBookTitle"
-        app:srcCompat="@drawable/ic_baseline_list_24"
+        app:srcCompat="@drawable/ic_library_books_black_24dp"
         app:tint="?colorPrimary" />
 
     <ImageView
@@ -89,7 +89,7 @@
         app:layout_constraintBottom_toTopOf="@+id/rbRatingIndicator"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/ic_baseline_restore_from_trash_24"
+        app:srcCompat="@drawable/ic_mdi_restore_24"
         app:tint="?colorPrimary" />
 
     <ImageView
@@ -105,7 +105,7 @@
         app:layout_constraintEnd_toEndOf="@+id/ivRestoreBook"
         app:layout_constraintStart_toStartOf="@+id/ivRestoreBook"
         app:layout_constraintTop_toBottomOf="@+id/rbRatingIndicator"
-        app:srcCompat="@drawable/ic_baseline_delete_forever_24"
+        app:srcCompat="@drawable/ic_iconscout_trash_24"
         app:tint="@color/red_800" />
 
     <androidx.constraintlayout.widget.Guideline
