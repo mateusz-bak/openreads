@@ -329,4 +329,5 @@
     <string name="btnAdderClearFinishDate">Clear</string>
     <string name="book_notes">Notes</string>
     <string name="book_tags">Tags</string>
+    <string name="settings">Settings</string>
 </resources>

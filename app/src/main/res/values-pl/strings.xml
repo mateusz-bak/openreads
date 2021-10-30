@@ -284,4 +284,5 @@
     <string name="btnAdderClearFinishDate">Wyczyść</string>
     <string name="book_notes">Notatki</string>
     <string name="book_tags">Tagi</string>
+    <string name="settings">Ustawienia</string>
 </resources>

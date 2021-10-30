@@ -8,6 +8,7 @@ import android.content.pm.PackageManager
 import android.net.Uri
 import android.os.Bundle
 import android.view.Menu
+import android.view.MenuItem
 import android.view.View
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
@@ -72,9 +73,18 @@ class ListActivity : AppCompatActivity() {
         booksNavHostFragment.findNavController()
             .addOnDestinationChangedListener { _, destination, _ ->
                 when(destination.id) {
-                    R.id.readFragment, R.id.inProgressFragment, R.id.toReadFragment , R.id.statisticsFragment->
+                    R.id.readFragment,
+                    R.id.inProgressFragment,
+                    R.id.toReadFragment,
+                    R.id.statisticsFragment -> {
                         bottomNavigationView.visibility = View.VISIBLE
-                    else -> bottomNavigationView.visibility = View.GONE
+                        supportActionBar?.show()
+                        invalidateOptionsMenu()
+                    }
+                    else -> {
+                        bottomNavigationView.visibility = View.GONE
+                        supportActionBar?.hide()
+                    }
                 }
             }
 
@@ -126,6 +136,30 @@ class ListActivity : AppCompatActivity() {
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
         menuInflater.inflate(R.menu.app_bar_menu, menu)
+        return true
+    }
+
+    override fun onPrepareOptionsMenu(menu: Menu?): Boolean {
+        when (booksNavHostFragment.findNavController().currentDestination?.id) {
+            R.id.statisticsFragment -> {
+                menu?.findItem(R.id.miSearch)?.isVisible = false
+                menu?.findItem(R.id.miSort)?.isVisible = false
+                menu?.findItem(R.id.miFilter)?.isVisible = false
+            }
+            else -> {
+                menu?.findItem(R.id.miSearch)?.isVisible = true
+                menu?.findItem(R.id.miSort)?.isVisible = true
+                menu?.findItem(R.id.miFilter)?.isVisible = true
+            }
+        }
+
+        return true
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when (item.itemId) {
+            R.id.miSettings -> booksNavHostFragment.findNavController().navigate(R.id.settingsFragment)
+        }
         return true
     }
 
