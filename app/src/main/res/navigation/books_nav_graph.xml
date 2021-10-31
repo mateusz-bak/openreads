@@ -3,121 +3,6 @@
     xmlns:app="http://schemas.android.com/apk/res-auto" android:id="@+id/books_nav_graph"
     app:startDestination="@id/setupFragment">
 
-
-    <fragment
-        android:id="@+id/readFragment"
-        android:name="software.mdev.bookstracker.ui.bookslist.fragments.ReadFragment"
-        android:label="ReadFragment" >
-        <action
-            android:id="@+id/action_readFragment_to_displayBookFragment"
-            app:destination="@id/displayBookFragment"
-            app:enterAnim="@anim/anim_enter_end"
-            app:exitAnim="@anim/anim_exit_start"
-            app:popEnterAnim="@anim/anim_enter_start"
-            app:popExitAnim="@anim/anim_exit_end" />
-        <action
-            android:id="@+id/action_readFragment_to_inProgressFragment"
-            app:destination="@id/inProgressFragment" />
-        <action
-            android:id="@+id/action_readFragment_to_toReadFragment"
-            app:destination="@id/toReadFragment" />
-        <action
-            android:id="@+id/action_readFragment_to_settingsFragment"
-            app:destination="@id/settingsFragment" />
-        <action
-            android:id="@+id/action_readFragment_to_statisticsFragment"
-            app:destination="@id/statisticsFragment" />
-        <action
-            android:id="@+id/action_readFragment_to_addBookSearchFragment"
-            app:destination="@id/addBookSearchFragment" />
-        <action
-            android:id="@+id/action_readFragment_to_addBookScanFragment"
-            app:destination="@id/addBookScanFragment" />
-        <action
-            android:id="@+id/action_readFragment_to_addEditBookFragment"
-            app:destination="@id/addEditBookFragment"
-            app:enterAnim="@anim/slide_in_up"
-            app:exitAnim="@anim/fade_out"
-            app:popEnterAnim="@anim/fade_in"
-            app:popExitAnim="@anim/slide_out_down"/>
-    </fragment>
-
-    <fragment
-        android:id="@+id/inProgressFragment"
-        android:name="software.mdev.bookstracker.ui.bookslist.fragments.InProgressFragment"
-        android:label="InProgressFragment" >
-        <action
-            android:id="@+id/action_inProgressFragment_to_displayBookFragment"
-            app:destination="@id/displayBookFragment"
-            app:enterAnim="@anim/anim_enter_end"
-            app:exitAnim="@anim/anim_exit_start"
-            app:popEnterAnim="@anim/anim_enter_start"
-            app:popExitAnim="@anim/anim_exit_end" />
-        <action
-            android:id="@+id/action_inProgressFragment_to_readFragment"
-            app:destination="@id/readFragment" />
-        <action
-            android:id="@+id/action_inProgressFragment_to_toReadFragment"
-            app:destination="@id/toReadFragment" />
-        <action
-            android:id="@+id/action_inProgressFragment_to_settingsFragment"
-            app:destination="@id/settingsFragment" />
-        <action
-            android:id="@+id/action_inProgressFragment_to_statisticsFragment"
-            app:destination="@id/statisticsFragment" />
-        <action
-            android:id="@+id/action_inProgressFragment_to_addBookSearchFragment"
-            app:destination="@id/addBookSearchFragment" />
-        <action
-            android:id="@+id/action_inProgressFragment_to_addBookScanFragment"
-            app:destination="@id/addBookScanFragment" />
-        <action
-            android:id="@+id/action_inProgressFragment_to_addEditBookFragment"
-            app:destination="@id/addEditBookFragment"
-            app:enterAnim="@anim/slide_in_up"
-            app:exitAnim="@anim/fade_out"
-            app:popEnterAnim="@anim/fade_in"
-            app:popExitAnim="@anim/slide_out_down"/>
-    </fragment>
-
-    <fragment
-        android:id="@+id/toReadFragment"
-        android:name="software.mdev.bookstracker.ui.bookslist.fragments.ToReadFragment"
-        android:label="ToReadFragment" >
-        <action
-            android:id="@+id/action_toReadFragment_to_displayBookFragment"
-            app:destination="@id/displayBookFragment"
-            app:enterAnim="@anim/anim_enter_end"
-            app:exitAnim="@anim/anim_exit_start"
-            app:popEnterAnim="@anim/anim_enter_start"
-            app:popExitAnim="@anim/anim_exit_end" />
-        <action
-            android:id="@+id/action_toReadFragment_to_readFragment"
-            app:destination="@id/readFragment" />
-        <action
-            android:id="@+id/action_toReadFragment_to_inProgressFragment"
-            app:destination="@id/inProgressFragment" />
-        <action
-            android:id="@+id/action_toReadFragment_to_settingsFragment"
-            app:destination="@id/settingsFragment" />
-        <action
-            android:id="@+id/action_toReadFragment_to_statisticsFragment"
-            app:destination="@id/statisticsFragment" />
-        <action
-            android:id="@+id/action_toReadFragment_to_addBookSearchFragment"
-            app:destination="@id/addBookSearchFragment" />
-        <action
-            android:id="@+id/action_toReadFragment_to_addBookScanFragment"
-            app:destination="@id/addBookScanFragment" />
-        <action
-            android:id="@+id/action_toReadFragment_to_addEditBookFragment"
-            app:destination="@id/addEditBookFragment"
-            app:enterAnim="@anim/slide_in_up"
-            app:exitAnim="@anim/fade_out"
-            app:popEnterAnim="@anim/fade_in"
-            app:popExitAnim="@anim/slide_out_down"/>
-    </fragment>
-
     <fragment
         android:id="@+id/displayBookFragment"
         android:name="software.mdev.bookstracker.ui.bookslist.fragments.DisplayBookFragment"
@@ -133,14 +18,8 @@
             android:name="book"
             app:argType="software.mdev.bookstracker.data.db.entities.Book" />
         <action
-            android:id="@+id/action_displayBookFragment_to_readFragment"
-            app:destination="@id/readFragment" />
-        <action
-            android:id="@+id/action_displayBookFragment_to_inProgressFragment"
-            app:destination="@id/inProgressFragment" />
-        <action
-            android:id="@+id/action_displayBookFragment_to_toReadFragment"
-            app:destination="@id/toReadFragment" />
+            android:id="@+id/action_displayBookFragment_to_booksFragment"
+            app:destination="@id/booksFragment" />
     </fragment>
     <fragment
         android:id="@+id/addEditBookFragment"
@@ -161,25 +40,16 @@
         android:name="software.mdev.bookstracker.ui.bookslist.fragments.SetupFragment"
         android:label="SetupFragment" >
         <action
-            android:id="@+id/action_setupFragment_to_readFragment"
-            app:destination="@id/readFragment"/>
-        <action
-            android:id="@+id/action_setupFragment_to_inProgressFragment"
-            app:destination="@id/inProgressFragment"/>
-        <action
-            android:id="@+id/action_setupFragment_to_toReadFragment"
-            app:destination="@id/toReadFragment"/>
-        <action
             android:id="@+id/action_setupFragment_to_changelogFragment"
             app:destination="@id/changelogFragment" />
+        <action
+            android:id="@+id/action_setupFragment_to_booksFragment"
+            app:destination="@id/booksFragment" />
     </fragment>
     <fragment
         android:id="@+id/settingsFragment"
         android:name="software.mdev.bookstracker.ui.bookslist.fragments.SettingsFragment"
         android:label="SettingsFragment" >
-        <action
-            android:id="@+id/action_settingsFragment_to_readFragment"
-            app:destination="@id/readFragment" />
         <action
             android:id="@+id/action_settingsFragment_to_trashFragment"
             app:destination="@id/trashFragment" />
@@ -191,9 +61,6 @@
         android:id="@+id/statisticsFragment"
         android:name="software.mdev.bookstracker.ui.bookslist.fragments.StatisticsFragment"
         android:label="StatisticsFragment" >
-        <action
-            android:id="@+id/action_statisticsFragment_to_settingsFragment"
-            app:destination="@id/settingsFragment" />
     </fragment>
     <fragment
         android:id="@+id/trashFragment"
@@ -207,15 +74,6 @@
             android:name="isbn"
             app:argType="string"
             android:defaultValue="manual_search"/>
-        <action
-            android:id="@+id/action_addBookSearchFragment_to_readFragment"
-            app:destination="@id/readFragment" />
-        <action
-            android:id="@+id/action_addBookSearchFragment_to_inProgressFragment"
-            app:destination="@id/inProgressFragment" />
-        <action
-            android:id="@+id/action_addBookSearchFragment_to_toReadFragment"
-            app:destination="@id/toReadFragment" />
         <action
             android:id="@+id/action_addBookSearchFragment_to_addEditBookFragment"
             app:destination="@id/addEditBookFragment"
@@ -241,13 +99,34 @@
         android:name="software.mdev.bookstracker.ui.bookslist.fragments.ChangelogFragment"
         android:label="ChangelogFragment" >
         <action
-            android:id="@+id/action_changelogFragment_to_toReadFragment"
-            app:destination="@id/toReadFragment" />
+            android:id="@+id/action_changelogFragment_to_booksFragment"
+            app:destination="@id/booksFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/booksFragment"
+        android:name="software.mdev.bookstracker.ui.bookslist.fragments.BooksFragment"
+        android:label="BooksFragment" >
         <action
-            android:id="@+id/action_changelogFragment_to_inProgressFragment"
-            app:destination="@id/inProgressFragment" />
+            android:id="@+id/action_booksFragment_to_displayBookFragment"
+            app:destination="@id/displayBookFragment"
+            app:enterAnim="@anim/anim_enter_end"
+            app:exitAnim="@anim/anim_exit_start"
+            app:popEnterAnim="@anim/anim_enter_start"
+            app:popExitAnim="@anim/anim_exit_end" />
         <action
-            android:id="@+id/action_changelogFragment_to_readFragment"
-            app:destination="@id/readFragment" />
+            android:id="@+id/action_booksFragment_to_settingsFragment"
+            app:destination="@id/settingsFragment" />
+        <action
+            android:id="@+id/action_booksFragment_to_statisticsFragment"
+            app:destination="@id/statisticsFragment" />
+        <action
+            android:id="@+id/action_booksFragment_to_addBookScanFragment"
+            app:destination="@id/addBookScanFragment" />
+        <action
+            android:id="@+id/action_booksFragment_to_addBookSearchFragment"
+            app:destination="@id/addBookSearchFragment" />
+        <action
+            android:id="@+id/action_booksFragment_to_addEditBookFragment"
+            app:destination="@id/addEditBookFragment" />
     </fragment>
 </navigation>

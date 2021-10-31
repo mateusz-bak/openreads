@@ -17,9 +17,9 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
-import androidx.navigation.ui.setupWithNavController
 import com.google.android.material.snackbar.Snackbar
 import kotlinx.android.synthetic.main.activity_list.*
+import kotlinx.android.synthetic.main.fragment_books.*
 import software.mdev.bookstracker.BuildConfig
 import software.mdev.bookstracker.R
 import software.mdev.bookstracker.data.db.BooksDatabase
@@ -68,70 +68,13 @@ class ListActivity : AppCompatActivity() {
         if (BuildConfig.FLAVOR == "gplay" && BuildConfig.BUILD_TYPE == "release")
             askForRating()
 
-        bottomNavigationView.setupWithNavController(booksNavHostFragment.findNavController())
-
         booksNavHostFragment.findNavController()
             .addOnDestinationChangedListener { _, destination, _ ->
                 when(destination.id) {
-                    R.id.readFragment,
-                    R.id.inProgressFragment,
-                    R.id.toReadFragment,
-                    R.id.statisticsFragment -> {
-                        bottomNavigationView.visibility = View.VISIBLE
-                        supportActionBar?.show()
-                        invalidateOptionsMenu()
-                    }
-                    else -> {
-                        bottomNavigationView.visibility = View.GONE
-                        supportActionBar?.hide()
-                    }
+                    R.id.booksFragment -> supportActionBar?.show()
+                    else -> supportActionBar?.hide()
                 }
             }
-
-        booksViewModel.getBookCount(Constants.BOOK_STATUS_READ).observe(this) { count ->
-            setBadge(0, count.toInt())
-        }
-
-        booksViewModel.getBookCount(Constants.BOOK_STATUS_IN_PROGRESS).observe(this) { count ->
-            setBadge(1, count.toInt())
-        }
-
-        booksViewModel.getBookCount(Constants.BOOK_STATUS_TO_READ).observe(this) { count ->
-            setBadge(2, count.toInt())
-        }
-    }
-
-    override fun onBackPressed() {
-        val selectedItemId = booksNavHostFragment.findNavController().currentDestination?.id
-
-        val landingPage =  when (getPreferenceLandingPage((this).baseContext)) {
-            Constants.KEY_LANDING_PAGE_IN_PROGRESS -> R.id.inProgressFragment
-            Constants.KEY_LANDING_PAGE_TO_READ -> R.id.toReadFragment
-            else -> R.id.readFragment
-        }
-
-        when (selectedItemId) {
-            landingPage -> finish()
-            R.id.displayBookFragment -> super.onBackPressed()
-            R.id.addEditBookFragment -> super.onBackPressed()
-            R.id.settingsFragment -> super.onBackPressed()
-            R.id.settingsBackupFragment -> super.onBackPressed()
-            R.id.trashFragment -> super.onBackPressed()
-            R.id.changelogFragment -> super.onBackPressed()
-            R.id.addBookScanFragment -> super.onBackPressed()
-            else -> setHomeItem()
-        }
-    }
-
-    private fun setHomeItem() {
-        when (getPreferenceLandingPage((this).baseContext)) {
-            Constants.KEY_LANDING_PAGE_FINISHED ->
-                bottomNavigationView.selectedItemId = R.id.readFragment
-            Constants.KEY_LANDING_PAGE_IN_PROGRESS ->
-                bottomNavigationView.selectedItemId = R.id.inProgressFragment
-            Constants.KEY_LANDING_PAGE_TO_READ ->
-                bottomNavigationView.selectedItemId = R.id.toReadFragment
-        }
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
@@ -139,41 +82,12 @@ class ListActivity : AppCompatActivity() {
         return true
     }
 
-    override fun onPrepareOptionsMenu(menu: Menu?): Boolean {
-        when (booksNavHostFragment.findNavController().currentDestination?.id) {
-            R.id.statisticsFragment -> {
-                menu?.findItem(R.id.miSearch)?.isVisible = false
-                menu?.findItem(R.id.miSort)?.isVisible = false
-                menu?.findItem(R.id.miFilter)?.isVisible = false
-            }
-            else -> {
-                menu?.findItem(R.id.miSearch)?.isVisible = true
-                menu?.findItem(R.id.miSort)?.isVisible = true
-                menu?.findItem(R.id.miFilter)?.isVisible = true
-            }
-        }
-
-        return true
-    }
-
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
             R.id.miSettings -> booksNavHostFragment.findNavController().navigate(R.id.settingsFragment)
+            R.id.miStatistics -> booksNavHostFragment.findNavController().navigate(R.id.statisticsFragment)
         }
         return true
-    }
-
-    private fun setBadge(index: Int, count: Int) {
-        var menuItemId = bottomNavigationView.menu.getItem(index).itemId
-
-        if (count > 0) {
-            bottomNavigationView.getOrCreateBadge(menuItemId).backgroundColor =
-                resources.getColor(R.color.grey_500)
-
-            bottomNavigationView.getOrCreateBadge(menuItemId).number = count
-        } else {
-            bottomNavigationView.removeBadge(menuItemId)
-        }
     }
 
     private fun setAppTheme(){
@@ -212,7 +126,7 @@ class ListActivity : AppCompatActivity() {
         if (attachView != null)
             snackbar.anchorView = attachView
         else
-            snackbar.anchorView = this.bottomNavigationView
+            snackbar.anchorView = this.fabAddBook
         if (action != null) {
             snackbar.setAction(actionText) {
                 action()
@@ -244,12 +158,8 @@ class ListActivity : AppCompatActivity() {
         if (grantResults.isNotEmpty()
             && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
             when (requestCode) {
-                Constants.PERMISSION_CAMERA_FROM_LIST_1 -> booksNavHostFragment.findNavController()
-                    .navigate(R.id.action_readFragment_to_addBookScanFragment)
-                Constants.PERMISSION_CAMERA_FROM_LIST_2 -> booksNavHostFragment.findNavController()
-                    .navigate(R.id.action_inProgressFragment_to_addBookScanFragment)
-                Constants.PERMISSION_CAMERA_FROM_LIST_3 -> booksNavHostFragment.findNavController()
-                    .navigate(R.id.action_toReadFragment_to_addBookScanFragment)
+                Constants.PERMISSION_CAMERA_FROM_BOOK_LIST -> booksNavHostFragment.findNavController()
+                    .navigate(R.id.action_booksFragment_to_addBookScanFragment)
                 Constants.PERMISSION_CAMERA_FROM_UPLOAD_COVER ->
                     Toast.makeText(this.baseContext, R.string.permission_granted_click_cover_again, Toast.LENGTH_SHORT).show()
                 Constants.PERMISSION_READ_EXTERNAL_STORAGE_FROM_UPLOAD_COVER ->

@@ -82,14 +82,7 @@ class ChangelogFragment : Fragment(R.layout.fragment_changelog) {
             .setEnterAnim(R.anim.slide_in_right)
             .build()
 
-        when (getPreferenceLandingPage((activity as ListActivity).baseContext)) {
-            Constants.KEY_LANDING_PAGE_FINISHED ->
-                findNavController().navigate(R.id.action_changelogFragment_to_readFragment, savedInstanceState, navOptions)
-            Constants.KEY_LANDING_PAGE_IN_PROGRESS ->
-                findNavController().navigate(R.id.action_changelogFragment_to_inProgressFragment, savedInstanceState, navOptions)
-            Constants.KEY_LANDING_PAGE_TO_READ ->
-                findNavController().navigate(R.id.action_changelogFragment_to_toReadFragment, savedInstanceState, navOptions)
-        }
+        findNavController().navigate(R.id.action_changelogFragment_to_booksFragment, savedInstanceState, navOptions)
     }
 
     private fun showOkButton() {
