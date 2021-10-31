@@ -97,6 +97,7 @@
                     android:textAlignment="textStart"
                     android:textColor="?colorOnSecondary"
                     android:textSize="18sp"
+                    android:scrollbars="none"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="@+id/guideline13"
                     app:layout_constraintTop_toTopOf="@+id/ivBookCover"
@@ -120,7 +121,7 @@
                     style="@style/Widget.MaterialRatingBar.RatingBar"
                     android:layout_width="0dp"
                     android:layout_height="36dp"
-                    android:layout_marginStart="-4dp"
+                    android:layout_marginStart="-6dp"
                     android:layout_marginTop="8dp"
                     android:layout_marginEnd="24dp"
                     android:max="5"
@@ -157,10 +158,11 @@
                     android:id="@+id/ivBookStatusInProgress"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_marginStart="0dp"
                     android:contentDescription="@string/ivBookStatusInProgress"
-                    app:layout_constraintBottom_toBottomOf="@+id/ivBookStatusRead"
-                    app:layout_constraintStart_toStartOf="@+id/ivBookStatusRead"
-                    app:layout_constraintTop_toTopOf="@+id/ivBookStatusRead"
+                    app:layout_constraintBottom_toBottomOf="@+id/tvBookStatus"
+                    app:layout_constraintStart_toStartOf="@+id/tvBookAuthor"
+                    app:layout_constraintTop_toTopOf="@+id/tvBookStatus"
                     app:srcCompat="@drawable/ic_auto_stories_black_24dp"
                     app:tint="?colorPrimary" />
 
@@ -168,10 +170,11 @@
                     android:id="@+id/ivBookStatusToRead"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_marginStart="0dp"
                     android:contentDescription="@string/ivBookStatusToRead"
-                    app:layout_constraintBottom_toBottomOf="@+id/ivBookStatusRead"
-                    app:layout_constraintStart_toStartOf="@+id/ivBookStatusRead"
-                    app:layout_constraintTop_toTopOf="@+id/ivBookStatusRead"
+                    app:layout_constraintBottom_toBottomOf="@+id/tvBookStatus"
+                    app:layout_constraintStart_toStartOf="@+id/tvBookAuthor"
+                    app:layout_constraintTop_toTopOf="@+id/tvBookStatus"
                     app:srcCompat="@drawable/ic_library_books_black_24dp"
                     app:tint="?colorPrimary" />
 
@@ -181,9 +184,10 @@
                     android:layout_width="42dp"
                     android:layout_height="42dp"
                     android:layout_marginTop="12dp"
+                    android:layout_marginStart="-6dp"
                     android:padding="4dp"
                     android:scaleType="fitCenter"
-                    app:layout_constraintStart_toStartOf="@+id/rbRatingIndicator"
+                    app:layout_constraintStart_toStartOf="@+id/tvBookAuthor"
                     app:layout_constraintTop_toBottomOf="@+id/rbRatingIndicator"
                     app:srcCompat="@drawable/ic_iconscout_heart_24" />
 
@@ -205,9 +209,9 @@
                     android:layout_height="42dp"
                     android:padding="6dp"
                     android:scaleType="fitCenter"
-                    app:layout_constraintBottom_toBottomOf="@+id/ivFav"
+                    app:layout_constraintBottom_toBottomOf="@+id/ivEdit"
                     app:layout_constraintEnd_toEndOf="@+id/rbRatingIndicator"
-                    app:layout_constraintTop_toTopOf="@+id/ivFav"
+                    app:layout_constraintTop_toTopOf="@+id/ivEdit"
                     app:srcCompat="@drawable/ic_iconscout_trash_24" />
 
 
