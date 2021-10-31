@@ -135,7 +135,7 @@ class AddEditBookFragment : Fragment(R.layout.fragment_add_edit_book) {
         }
 
         tietBookTitle.requestFocus()
-        showKeyboard(tietBookTitle,350)
+        showKeyboard(tietBookTitle,600)
 
         btnBookCancel.setOnClickListener{
             view?.hideKeyboard()
@@ -679,8 +679,11 @@ class AddEditBookFragment : Fragment(R.layout.fragment_add_edit_book) {
         val timer = Timer()
         timer.schedule(object : TimerTask() {
             override fun run() {
-                val inputManager = context?.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
-                inputManager.showSoftInput(et, 0)
+                if (context != null) {
+                    val inputManager =
+                        context?.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+                    inputManager.showSoftInput(et, 0)
+                }
             }
         }, delay)
     }
