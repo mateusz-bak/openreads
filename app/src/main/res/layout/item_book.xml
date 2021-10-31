@@ -27,6 +27,7 @@
         android:layout_marginStart="24dp"
         android:layout_marginTop="-4dp"
         android:paddingBottom="2dp"
+        android:scrollbars="none"
         android:text="@string/unknown_title"
         android:textColor="@color/colorDefaultText"
         android:textSize="16sp"
@@ -127,4 +128,3 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
 </androidx.constraintlayout.widget.ConstraintLayout>
-<!--</androidx.cardview.widget.CardView>-->
