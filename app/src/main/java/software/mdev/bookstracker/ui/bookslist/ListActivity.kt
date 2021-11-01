@@ -138,11 +138,7 @@ class ListActivity : AppCompatActivity() {
                 val cursor = MatrixCursor(arrayOf(BaseColumns._ID, SearchManager.SUGGEST_COLUMN_TEXT_1, SearchManager.SUGGEST_COLUMN_TEXT_2))
                 query?.let {
                     suggestions.forEachIndexed { index, suggestion ->
-                        if (suggestion.bookTitle.contains(query, true)
-                            || suggestion.bookTitle_ASCII.contains(query, true)
-                            || suggestion.bookAuthor.contains(query, true)
-                            || suggestion.bookAuthor_ASCII.contains(query, true)
-                        ) {
+                        if (runSearchQuery(query, suggestion)){
                             val suggestionString = suggestion.bookTitle + " - " + suggestion.bookAuthor
                             cursor.addRow(arrayOf(index, suggestionString, suggestion.id))
                         }
@@ -180,6 +176,26 @@ class ListActivity : AppCompatActivity() {
         })
 
         return true
+    }
+
+    private fun runSearchQuery(query: String, suggestion: Book): Boolean {
+        var queryResult = false
+        var stringResult = true
+
+        val strings = query.split(" ").toTypedArray()
+
+        for (string in strings) {
+            if (suggestion.bookTitle.contains(string, true)
+                || suggestion.bookTitle_ASCII.contains(string, true)
+                || suggestion.bookAuthor.contains(string, true)
+                || suggestion.bookAuthor_ASCII.contains(string, true)) {
+                queryResult = true
+            }
+            else
+                stringResult = false
+        }
+
+       return queryResult && stringResult
     }
 
     private fun displayBookFromSearch(book: Book) {
