@@ -45,11 +45,7 @@ class BooksViewModel(
 
     fun getBook(id: Int?) = repository.getBook(id)
 
-    fun getReadBooks() = repository.getReadBooks()
-
-    fun getInProgressBooks() = repository.getInProgressBooks()
-
-    fun getToReadBooks() = repository.getToReadBooks()
+    fun getNotDeletedBooks() = repository.getNotDeletedBooks()
 
     fun updateBook(
         id: Int?,

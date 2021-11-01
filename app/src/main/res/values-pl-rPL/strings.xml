@@ -286,4 +286,5 @@
     <string name="book_tags">Tagi</string>
     <string name="settings">Ustawienia</string>
     <string name="books">Książki</string>
+    <string name="search_hint">Przeszukaj swoje książki</string>
 </resources>

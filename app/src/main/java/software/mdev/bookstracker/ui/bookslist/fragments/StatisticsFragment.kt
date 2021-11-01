@@ -76,10 +76,6 @@ class StatisticsFragment : Fragment(R.layout.fragment_statistics) {
                 this.getYears(adapter)
             })
 
-        ivMore.setOnClickListener {
-            it.hideKeyboard()
-            findNavController().navigate(R.id.settingsFragment, null)
-        }
     }
 
     fun View.hideKeyboard() {

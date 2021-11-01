@@ -4,9 +4,10 @@
 
     <item
         android:id="@+id/miSearch"
-        android:icon="@drawable/ic_baseline_search_24"
+        android:icon="@drawable/ic_iconscout_search_24"
         android:title="@string/etSearch"
-        app:showAsAction="always" />
+        app:actionViewClass="androidx.appcompat.widget.SearchView"
+        app:showAsAction="always|collapseActionView" />
 
     <item
         android:id="@+id/miSort"
@@ -16,6 +17,11 @@
     <item
         android:id="@+id/miFilter"
         android:title="@string/tvFilterTitle"
+        app:showAsAction="never" />
+
+    <item
+        android:id="@+id/miStatistics"
+        android:title="@string/statisticsFragment"
         app:showAsAction="never" />
 
     <item

@@ -1,6 +1,7 @@
 package software.mdev.bookstracker.ui.bookslist
 
 import android.annotation.SuppressLint
+import android.app.Activity
 import android.content.ActivityNotFoundException
 import android.content.Context
 import android.content.Intent
@@ -35,10 +36,24 @@ import software.mdev.bookstracker.other.Updater
 import software.mdev.bookstracker.ui.bookslist.viewmodel.BooksViewModel
 import software.mdev.bookstracker.ui.bookslist.viewmodel.BooksViewModelProviderFactory
 import java.io.IOException
+import androidx.lifecycle.Observer
+import software.mdev.bookstracker.data.db.entities.Book
+import android.database.MatrixCursor
+import android.app.SearchManager
+import android.database.Cursor
+import android.provider.BaseColumns
+import android.view.inputmethod.InputMethodManager
+import android.widget.AutoCompleteTextView
+import androidx.appcompat.widget.SearchView
+import androidx.core.view.MenuItemCompat
+import androidx.cursoradapter.widget.CursorAdapter
+import androidx.cursoradapter.widget.SimpleCursorAdapter
+
 
 class ListActivity : AppCompatActivity() {
 
     lateinit var booksViewModel: BooksViewModel
+    lateinit var notDeletedBooks: List<Book>
 
     override fun onCreate(savedInstanceState: Bundle?) {
         val booksRepository = BooksRepository(BooksDatabase(this))
@@ -75,17 +90,116 @@ class ListActivity : AppCompatActivity() {
                     else -> supportActionBar?.hide()
                 }
             }
+
+        booksViewModel.getNotDeletedBooks().observe(this, Observer {
+            notDeletedBooks = it
+        })
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
         menuInflater.inflate(R.menu.app_bar_menu, menu)
+
+        val searchItem = menu?.findItem(R.id.miSearch)
+        val searchView = searchItem?.actionView as SearchView
+
+        searchView.queryHint = getString(R.string.search_hint)
+        searchView.findViewById<AutoCompleteTextView>(R.id.search_src_text).threshold = 1
+
+        val from = arrayOf(SearchManager.SUGGEST_COLUMN_TEXT_1)
+        val to = intArrayOf(R.id.tvSearch)
+        val cursorAdapter = SimpleCursorAdapter(baseContext, R.layout.item_search, null, from, to, CursorAdapter.FLAG_REGISTER_CONTENT_OBSERVER)
+        var suggestions = mutableListOf<Book>()
+
+        booksViewModel.getNotDeletedBooks().observe(this, Observer {
+            suggestions = it as MutableList<Book>
+        })
+
+        searchView.suggestionsAdapter = cursorAdapter
+
+        searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
+
+            override fun onQueryTextSubmit(query: String?): Boolean {
+                val cursor = searchView.suggestionsAdapter.getItem(0) as Cursor
+                val selection = cursor.getString(cursor.getColumnIndex(SearchManager.SUGGEST_COLUMN_TEXT_1))
+                val selectionID = cursor.getString(cursor.getColumnIndex(SearchManager.SUGGEST_COLUMN_TEXT_2))
+                searchView.setQuery(selection, false)
+                booksViewModel.getBook(selectionID.toInt()).observe(this@ListActivity) { book ->
+                    displayBookFromSearch(book)
+                }
+
+                searchView.isIconified = true
+                MenuItemCompat.collapseActionView(searchItem)
+                return true
+            }
+
+            override fun onQueryTextChange(query: String?): Boolean {
+                val cursor = MatrixCursor(arrayOf(BaseColumns._ID, SearchManager.SUGGEST_COLUMN_TEXT_1, SearchManager.SUGGEST_COLUMN_TEXT_2))
+                query?.let {
+                    suggestions.forEachIndexed { index, suggestion ->
+                        if (suggestion.bookTitle.contains(query, true)
+                            || suggestion.bookTitle_ASCII.contains(query, true)
+                            || suggestion.bookAuthor.contains(query, true)
+                            || suggestion.bookAuthor_ASCII.contains(query, true)
+                        ) {
+                            val suggestionString = suggestion.bookTitle + " - " + suggestion.bookAuthor
+                            cursor.addRow(arrayOf(index, suggestionString, suggestion.id))
+                        }
+                    }
+                }
+
+                cursorAdapter.changeCursor(cursor)
+                return true
+            }
+        })
+
+        searchView.setOnSuggestionListener(object: SearchView.OnSuggestionListener {
+
+            override fun onSuggestionSelect(position: Int): Boolean {
+                return false
+            }
+
+            override fun onSuggestionClick(position: Int): Boolean {
+                hideKeyboard()
+
+                val cursor = searchView.suggestionsAdapter.getItem(position) as Cursor
+                val selection = cursor.getString(cursor.getColumnIndex(SearchManager.SUGGEST_COLUMN_TEXT_1))
+                val selectionID = cursor.getString(cursor.getColumnIndex(SearchManager.SUGGEST_COLUMN_TEXT_2))
+                searchView.setQuery(selection, false)
+
+                booksViewModel.getBook(selectionID.toInt()).observe(this@ListActivity) { book ->
+                    displayBookFromSearch(book)
+                }
+
+                searchView.isIconified = true
+                MenuItemCompat.collapseActionView(searchItem)
+                return true
+            }
+
+        })
+
         return true
+    }
+
+    private fun displayBookFromSearch(book: Book) {
+        val bundle = Bundle().apply {
+            putSerializable(Constants.SERIALIZABLE_BUNDLE_BOOK, book)
+            putSerializable(
+                Constants.SERIALIZABLE_BUNDLE_BOOK_SOURCE,
+                Constants.FROM_DISPLAY
+            )
+        }
+
+        booksNavHostFragment.findNavController().navigate(
+            R.id.displayBookFragment,
+            bundle
+        )
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
             R.id.miSettings -> booksNavHostFragment.findNavController().navigate(R.id.settingsFragment)
             R.id.miStatistics -> booksNavHostFragment.findNavController().navigate(R.id.statisticsFragment)
+            R.id.miSearch -> onSearchRequested()
         }
         return true
     }
@@ -228,13 +342,12 @@ class ListActivity : AppCompatActivity() {
         )
     }
 
-    private fun getPreferenceLandingPage(context: Context): String {
-        var sharedPreferencesName = context.getString(R.string.shared_preferences_name)
-        val sharedPref = context.getSharedPreferences(sharedPreferencesName, Context.MODE_PRIVATE)
+    private fun Activity.hideKeyboard() {
+        hideKeyboard(currentFocus ?: View(this))
+    }
 
-        return sharedPref?.getString(
-            Constants.SHARED_PREFERENCES_KEY_LANDING_PAGE,
-            Constants.KEY_LANDING_PAGE_FINISHED
-        ).toString()
+    private fun Context.hideKeyboard(view: View) {
+        val inputMethodManager = getSystemService(Activity.INPUT_METHOD_SERVICE) as InputMethodManager
+        inputMethodManager.hideSoftInputFromWindow(view.windowToken, 0)
     }
 }

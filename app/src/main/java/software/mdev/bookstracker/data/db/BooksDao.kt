@@ -17,14 +17,8 @@ interface BooksDao {
     @Query("SELECT * FROM Book WHERE id LIKE :id")
     fun getBook(id: Int?): LiveData<Book>
 
-    @Query("SELECT * FROM Book WHERE item_bookStatus LIKE 'read'")
-    fun getReadBooks(): LiveData<List<Book>>
-
-    @Query("SELECT * FROM Book WHERE item_bookStatus LIKE 'in_progress'")
-    fun getInProgressBooks(): LiveData<List<Book>>
-
-    @Query("SELECT * FROM Book WHERE item_bookStatus LIKE 'to_read'")
-    fun getToReadBooks(): LiveData<List<Book>>
+    @Query("SELECT * FROM Book WHERE item_bookIsDeleted LIKE 0")
+    fun getNotDeletedBooks(): LiveData<List<Book>>
 
     @Query("UPDATE Book SET item_bookTitle =:bookTitle, " +
             "item_bookAuthor=:bookAuthor, " +
