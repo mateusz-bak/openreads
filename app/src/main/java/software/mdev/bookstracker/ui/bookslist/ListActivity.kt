@@ -119,16 +119,18 @@ class ListActivity : AppCompatActivity() {
         searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
 
             override fun onQueryTextSubmit(query: String?): Boolean {
-                val cursor = searchView.suggestionsAdapter.getItem(0) as Cursor
-                val selection = cursor.getString(cursor.getColumnIndex(SearchManager.SUGGEST_COLUMN_TEXT_1))
-                val selectionID = cursor.getString(cursor.getColumnIndex(SearchManager.SUGGEST_COLUMN_TEXT_2))
-                searchView.setQuery(selection, false)
-                booksViewModel.getBook(selectionID.toInt()).observe(this@ListActivity) { book ->
-                    displayBookFromSearch(book)
-                }
+                if (!searchView.suggestionsAdapter.isEmpty) {
+                    val cursor = searchView.suggestionsAdapter.getItem(0) as Cursor
+                    val selection = cursor.getString(cursor.getColumnIndex(SearchManager.SUGGEST_COLUMN_TEXT_1))
+                    val selectionID = cursor.getString(cursor.getColumnIndex(SearchManager.SUGGEST_COLUMN_TEXT_2))
+                    searchView.setQuery(selection, false)
+                    booksViewModel.getBook(selectionID.toInt()).observe(this@ListActivity) { book ->
+                        displayBookFromSearch(book)
+                    }
 
-                searchView.isIconified = true
-                MenuItemCompat.collapseActionView(searchItem)
+                    searchView.isIconified = true
+                    MenuItemCompat.collapseActionView(searchItem)
+                    }
                 return true
             }
 
