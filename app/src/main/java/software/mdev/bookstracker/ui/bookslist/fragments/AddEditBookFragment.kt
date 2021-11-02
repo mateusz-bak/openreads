@@ -497,7 +497,16 @@ class AddEditBookFragment : Fragment(R.layout.fragment_add_edit_book) {
 
     private fun populateBooksDetails() {
         tietBookTitle.setText(book.bookTitle)
+        if (tietBookTitle.text?.isNotEmpty() == true)
+            ivClearBookTitle.visibility = View.VISIBLE
+        else
+            ivClearBookTitle.visibility = View.GONE
+
         tietBookAuthor.setText(book.bookAuthor)
+        if (tietBookAuthor.text?.isNotEmpty() == true)
+            ivClearBookAuthor.visibility = View.VISIBLE
+        else
+            ivClearBookAuthor.visibility = View.GONE
 
         when (book.bookStatus) {
             Constants.BOOK_STATUS_READ -> {
