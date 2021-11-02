@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.WindowManager
+import androidx.appcompat.app.AlertDialog
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.AsyncListDiffer
@@ -263,6 +264,54 @@ class StatisticsAdapter(
                     clChallenge.visibility = View.GONE
                 } else {
                     clChallenge.visibility = View.VISIBLE
+                }
+            }
+        }
+
+        // hints when "more data needed"
+        holder.itemView.apply {
+            val moreDataNeededDialog = this.context?.let { it1 ->
+                AlertDialog.Builder(it1)
+                    .setTitle(R.string.need_more_data_title)
+                    .setMessage(R.string.need_more_data_message)
+                    .setPositiveButton(R.string.warning_understand) { _, _ ->
+                    }
+                    .create()
+            }
+
+            if (curYear.yearQuickestBook == "null") {
+                clQuickestRead.setOnClickListener {
+                    moreDataNeededDialog?.show()
+                }
+            }
+
+            if (curYear.yearLongestReadBook == "null") {
+                clLongestRead.setOnClickListener {
+                    moreDataNeededDialog?.show()
+                }
+            }
+
+            if (curYear.yearShortestBook == "null") {
+                clShortestBook.setOnClickListener {
+                    moreDataNeededDialog?.show()
+                }
+            }
+
+            if (curYear.yearLongestBook == "null") {
+                clLongestBook.setOnClickListener {
+                    moreDataNeededDialog?.show()
+                }
+            }
+
+            if (curYear.yearAvgReadingTime == "0") {
+                clAvgReadingTime.setOnClickListener {
+                    moreDataNeededDialog?.show()
+                }
+            }
+
+            if (curYear.yearAvgPages == 0) {
+                clAvgPages.setOnClickListener {
+                    moreDataNeededDialog?.show()
                 }
             }
         }

@@ -245,4 +245,6 @@
     <string name="github_feature_url" translatable="false"><![CDATA[https://github.com/mateusz-bak/openreads-android/issues/new?assignees=mateusz-bak&labels=enhancement&template=feature_request.md&title=%5BFEATURE_REQUEST%5D+]]></string>
     <string name="stats_longest_read">Longest read time</string>
     <string name="stats_books_by_status">All books by status</string>
+    <string name="need_more_data_title">Do you think this should display something else?</string>
+    <string name="need_more_data_message">Make sure that your books have number of pages, start and finish dates set and come back again.</string>
 </resources>

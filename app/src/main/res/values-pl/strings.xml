@@ -223,4 +223,6 @@
     <string name="github_open_feature_request">Zaproponuj nową funkcję na Githubie</string>
     <string name="stats_longest_read">Najdłużej czytana książka</string>
     <string name="stats_books_by_status">Wszystkie książki według statusu</string>
+    <string name="need_more_data_title">Uważasz, że ta statystyka się nie zgadza?</string>
+    <string name="need_more_data_message">Upewnij się, że Twoje książki mają uzupełnioną liczbę stron oraz daty rozpoczęcia i zakończenia czytania.</string>
 </resources>
