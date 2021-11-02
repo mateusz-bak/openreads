@@ -167,7 +167,7 @@
     <string name="stats_pages_read">Przeczytane strony</string>
     <string name="stats_avg_rating">Średnia ocena książek</string>
     <string name="stats_challenge">Wyzwanie czytelnicze</string>
-    <string name="stats_books_by_months">Przeczytane książki według miesiąca</string>
+    <string name="stats_books_by_months">Przeczytane książki według miesiąca zakończenia</string>
     <string name="need_more_data">Potrzeba więcej danych</string>
     <string name="days">dni</string>
     <string name="stats_shortest_book">Najkrótsza książka</string>
@@ -193,7 +193,7 @@
     <string name="month_10_short">Paź</string>
     <string name="month_11_short">Lis</string>
     <string name="month_12_short">Gru</string>
-    <string name="stats_pages_by_months">Przeczytane strony według miesiąca</string>
+    <string name="stats_pages_by_months">Przeczytane strony według miesiąca zakończenia</string>
     <string name="export_local_summary">Zapisz książki w pamięci telefonu, żeby mieć je zawsze pod ręką!</string>
     <string name="export_local_title">Stwórz lokalną kopię książek</string>
     <string name="insert_book_title">Tytuł książki</string>
@@ -221,4 +221,6 @@
     <string name="send_mail_to_dev">Wyślij email do dewelopera</string>
     <string name="github_open_issue">Zgłoś problem na Githubie</string>
     <string name="github_open_feature_request">Zaproponuj nową funkcję na Githubie</string>
+    <string name="stats_longest_read">Najdłużej czytana książka</string>
+    <string name="stats_books_by_status">Wszystkie książki według statusu</string>
 </resources>

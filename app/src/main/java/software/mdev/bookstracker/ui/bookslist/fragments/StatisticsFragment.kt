@@ -106,6 +106,9 @@ class StatisticsFragment : Fragment(R.layout.fragment_statistics) {
                 var quickestReadAllTime = "null"
                 var quickestReadValAllTime = Long.MAX_VALUE
 
+                var longestReadAllTime = "null"
+                var longestReadValAllTime = Long.MIN_VALUE
+
                 var readingTimeSumAllTime = 0L
                 var averageReadingTimeNumOfBooksAllTime = 0L
 
@@ -125,6 +128,9 @@ class StatisticsFragment : Fragment(R.layout.fragment_statistics) {
 
                     var quickestRead = "null"
                     var quickestReadVal = Long.MAX_VALUE
+
+                    var longestRead = "null"
+                    var longestReadVal = Long.MIN_VALUE
 
                     var readingTimeSum = 0L
                     var averageReadingTimeNumOfBooks = 0L
@@ -236,14 +242,14 @@ class StatisticsFragment : Fragment(R.layout.fragment_statistics) {
                                 }
 
                                 // shortest book in a year
-                                if (item_book.bookNumberOfPages < shortestBookVal) {
+                                if (item_book.bookNumberOfPages < shortestBookVal && item_book.bookNumberOfPages != 0) {
                                     shortestBookVal = item_book.bookNumberOfPages
                                     var string = item_book.bookTitle + " - " + item_book.bookAuthor
                                     shortestBook = string
                                 }
 
                                 // shortest book all time
-                                if (item_book.bookNumberOfPages < shortestBookValAllTime) {
+                                if (item_book.bookNumberOfPages < shortestBookValAllTime && item_book.bookNumberOfPages != 0) {
                                     shortestBookValAllTime = item_book.bookNumberOfPages
                                     var string = item_book.bookTitle + " - " + item_book.bookAuthor
                                     shortestBookAllTime = string
@@ -284,6 +290,22 @@ class StatisticsFragment : Fragment(R.layout.fragment_statistics) {
                                     readingTimeSum += readingTime
                                     averageReadingTimeNumOfBooks ++
                                 }
+
+                                if (item_book.bookStartDate != "none" && item_book.bookStartDate != "null") {
+                                    var readingTime = item_book.bookFinishDate.toLong() - item_book.bookStartDate.toLong()
+
+                                    if (readingTime > longestReadVal) {
+                                        longestReadVal = readingTime
+                                        var string = item_book.bookTitle + " - " + item_book.bookAuthor
+                                        longestRead = string
+                                    }
+
+                                    if (readingTime > longestReadValAllTime) {
+                                        longestReadValAllTime = readingTime
+                                        var string = item_book.bookTitle + " - " + item_book.bookAuthor
+                                        longestReadAllTime = string
+                                    }
+                                }
                             }
                         }
                     }
@@ -316,7 +338,9 @@ class StatisticsFragment : Fragment(R.layout.fragment_statistics) {
                         shortestBook,
                         shortestBookVal,
                         booksByMonths,
-                        pagesByMonths
+                        pagesByMonths,
+                        yearLongestReadBook = longestRead,
+                        yearLongestReadVal = longestReadVal.toString()
                     ))
                 }
 
@@ -347,7 +371,9 @@ class StatisticsFragment : Fragment(R.layout.fragment_statistics) {
                     shortestBookAllTime,
                     shortestBookValAllTime,
                     booksByMonthsAllTime,
-                    pagesByMonthsAllTime
+                    pagesByMonthsAllTime,
+                    yearLongestReadBook = longestReadAllTime,
+                    yearLongestReadVal = longestReadValAllTime.toString()
                 )
 
                 var readBooksAllTime = 0

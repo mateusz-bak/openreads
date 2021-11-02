@@ -63,7 +63,13 @@ data class Year(
         var yearInProgressBooks: Int = 0,
 
         @ColumnInfo(name = Constants.DATABASE_YEAR_TO_READ_BOOKS)
-        var yearToReadBooks: Int = 0
+        var yearToReadBooks: Int = 0,
+
+        @ColumnInfo(name = Constants.DATABASE_YEAR_LONGEST_READ_BOOK)
+        var yearLongestReadBook: String = "null",
+
+        @ColumnInfo(name = Constants.DATABASE_YEAR_LONGEST_READ_VAL)
+        var yearLongestReadVal: String = "null"
 
 ): Serializable{
         @PrimaryKey(autoGenerate = false)

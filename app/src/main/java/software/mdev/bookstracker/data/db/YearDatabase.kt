@@ -13,7 +13,7 @@ import software.mdev.bookstracker.other.Converters
 
 @Database(
         entities = [Year::class],
-        version = 6
+        version = 7
 )
 
 @TypeConverters(Converters::class)
@@ -39,7 +39,8 @@ abstract class YearDatabase: RoomDatabase() {
                     MIGRATION_1_2,
                     MIGRATION_2_3,
                     MIGRATION_3_4,
-                    MIGRATION_5_6
+                    MIGRATION_5_6,
+                    MIGRATION_6_7
                 )
                     .fallbackToDestructiveMigration()
                     .build()
@@ -75,6 +76,13 @@ abstract class YearDatabase: RoomDatabase() {
                 database.execSQL("ALTER TABLE Year ADD COLUMN item_read_books INTEGER NOT NULL DEFAULT 0")
                 database.execSQL("ALTER TABLE Year ADD COLUMN item_in_progress_books INTEGER NOT NULL DEFAULT 0")
                 database.execSQL("ALTER TABLE Year ADD COLUMN item_to_read_books INTEGER NOT NULL DEFAULT 0")
+            }
+        }
+
+        private val MIGRATION_6_7 = object : Migration(6, 7) {
+            override fun migrate(database: SupportSQLiteDatabase) {
+                database.execSQL("ALTER TABLE Year ADD COLUMN item_longest_read_book TEXT NOT NULL DEFAULT 'null'")
+                database.execSQL("ALTER TABLE Year ADD COLUMN item_longest_read_val TEXT NOT NULL DEFAULT 'null'")
             }
         }
     }

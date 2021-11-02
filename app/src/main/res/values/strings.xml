@@ -183,7 +183,7 @@
     <string name="stats_pages_read">Pages read</string>
     <string name="stats_avg_rating">Average books rating</string>
     <string name="stats_challenge">Reading challenge</string>
-    <string name="stats_books_by_months">Read books by month</string>
+    <string name="stats_books_by_months">Read books by finish month</string>
     <string name="need_more_data">Need more data for that</string>
     <string name="days">days</string>
     <string name="stats_shortest_book">Shortest book</string>
@@ -209,7 +209,7 @@
     <string name="month_10_short">Oct</string>
     <string name="month_11_short">Nov</string>
     <string name="month_12_short">Dec</string>
-    <string name="stats_pages_by_months">Read pages by month</string>
+    <string name="stats_pages_by_months">Read pages by finish month</string>
     <string name="export_local_summary">Save your books to a local file so you always have the backup handy!</string>
     <string name="export_local_title">Create local backup</string>
     <string name="insert_book_title">Book\'s title</string>
@@ -243,4 +243,6 @@
     <string name="github_open_feature_request">Propose a new feature on Github</string>
     <string name="github_issue_url" translatable="false"><![CDATA[https://github.com/mateusz-bak/openreads-android/issues/new?assignees=mateusz-bak&labels=bug&template=bug_report.md&title=%5BBUG%5D+]]></string>
     <string name="github_feature_url" translatable="false"><![CDATA[https://github.com/mateusz-bak/openreads-android/issues/new?assignees=mateusz-bak&labels=enhancement&template=feature_request.md&title=%5BFEATURE_REQUEST%5D+]]></string>
+    <string name="stats_longest_read">Longest read time</string>
+    <string name="stats_books_by_status">All books by status</string>
 </resources>

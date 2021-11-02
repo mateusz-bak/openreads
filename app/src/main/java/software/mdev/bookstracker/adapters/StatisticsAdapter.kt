@@ -128,6 +128,7 @@ class StatisticsAdapter(
                 clAvgRating.visibility = View.GONE
                 clChallenge.visibility = View.GONE
                 clQuickestRead.visibility = View.GONE
+                clLongestRead.visibility = View.GONE
                 clBooksByMonth.visibility = View.GONE
                 clPagesByMonth.visibility = View.GONE
                 clAvgReadingTime.visibility = View.GONE
@@ -155,9 +156,6 @@ class StatisticsAdapter(
         var challengeBooksRead = "0"
 
         holder.itemView.apply {
-
-            setCardsAnimation(this)
-
             tvBooksReadValue.text = curYear.yearBooks.toString()
 
             tvPagesReadValue.text = curYear.yearPages.toString()
@@ -173,6 +171,15 @@ class StatisticsAdapter(
                 tvQuickestReadValue.text = string
             }
 
+            if (curYear.yearLongestReadBook == "null"){
+                tvLongestReadBook.text = holder.itemView.resources.getString(R.string.need_more_data)
+                tvLongestReadValue.visibility = View.GONE
+            } else {
+                var string = convertLongToDays(curYear.yearLongestReadVal.toLong()) + " " + holder.itemView.resources.getString(R.string.days)
+                tvLongestReadBook.text = curYear.yearLongestReadBook
+                tvLongestReadValue.text = string
+            }
+
             if (curYear.yearLongestBook == "null"){
                 tvLongestBook.text = holder.itemView.resources.getString(R.string.need_more_data)
                 tvLongestBookValue.visibility = View.GONE
@@ -182,7 +189,7 @@ class StatisticsAdapter(
                 tvLongestBook.text = curYear.yearLongestBook
             }
 
-            if (curYear.yearShortestBook == "null" || curYear.yearShortestBookVal == 0){
+            if (curYear.yearShortestBook == "null"){
                 tvShortestBook.text = holder.itemView.resources.getString(R.string.need_more_data)
                 tvShortestBookValue.visibility = View.GONE
             } else {
@@ -289,7 +296,6 @@ class StatisticsAdapter(
         legend.setDrawInside(false)
         legend.xEntrySpace = 7f
         legend.yEntrySpace = 10f
-        legend.xOffset = 10f
         legend.textSize = 14f
 
         val data = PieData(dataSet)
@@ -506,55 +512,6 @@ class StatisticsAdapter(
                 itemView.clPagesByMonth.animate().scaleX(scaleBig).setDuration(animDuration).start()
                 itemView.clPagesByMonth.animate().scaleY(scaleBig).setDuration(animDuration).start()
             }
-        }
-    }
-
-    private fun setCardsAnimation(view: View) {
-        val statCards = listOf<View>(
-            view.clBooksRead,
-            view.clPagesRead,
-            view.clAvgRating,
-            view.clQuickestRead,
-            view.clLongestBook,
-            view.clAvgReadingTime,
-            view.clAvgPages,
-            view.clShortestBook
-        )
-
-        val statImages = listOf<View>(
-            view.ivBooksRead,
-            view.ivPagesRead,
-            view.ivAvgRating,
-            view.ivQuickestRead,
-            view.ivLongestBook,
-            view.ivAvgReadingTime,
-            view.ivAvgPages,
-            view.ivShortestBook
-        )
-
-        var animDuration = 200L
-        var scaleSmall = 0.95F
-        var scaleBig = 1F
-
-
-        for (i in statCards.indices) {
-            statCards[i].setOnClickListener {
-                statCards[i].animate().scaleX(scaleSmall).setDuration(animDuration).start()
-                statCards[i].animate().scaleY(scaleSmall).setDuration(animDuration).start()
-
-                if (statImages[i].rotation < 180F)
-                    statImages[i].animate().rotation(360F).setDuration(2 * animDuration).start()
-                else
-                    statImages[i].animate().rotation(0F).setDuration(2 * animDuration).start()
-
-
-                MainScope().launch {
-                    delay(animDuration)
-                    statCards[i].animate().scaleX(scaleBig).setDuration(animDuration).start()
-                    statCards[i].animate().scaleY(scaleBig).setDuration(animDuration).start()
-                }
-            }
-
         }
     }
 
