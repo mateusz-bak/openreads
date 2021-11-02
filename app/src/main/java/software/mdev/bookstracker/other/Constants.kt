@@ -47,6 +47,9 @@ object Constants {
     const val DATABASE_YEAR_SHORTEST_BOOK_VAL = "item_shortest_book_val"
     const val DATABASE_YEAR_BOOKS_BY_MONTH = "item_books_by_month"
     const val DATABASE_YEAR_PAGES_BY_MONTH = "item_pages_by_month"
+    const val DATABASE_YEAR_READ_BOOKS = "item_read_books"
+    const val DATABASE_YEAR_IN_PROGRESS_BOOKS = "item_in_progress_books"
+    const val DATABASE_YEAR_TO_READ_BOOKS = "item_to_read_books"
 
     const val DATABASE_NAME_LANGUAGE = "Language"
     const val DATABASE_LANGUAGE_FILE_NAME = "LanguageDB.db"

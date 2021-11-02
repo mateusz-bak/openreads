@@ -1,5 +1,6 @@
 package software.mdev.bookstracker.adapters
 
+import android.graphics.Color
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -9,13 +10,13 @@ import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.AsyncListDiffer
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
+import com.github.mikephil.charting.charts.PieChart
 import com.github.mikephil.charting.components.XAxis
-import com.github.mikephil.charting.data.BarData
-import com.github.mikephil.charting.data.BarDataSet
-import com.github.mikephil.charting.data.BarEntry
+import com.github.mikephil.charting.data.*
 import com.github.mikephil.charting.formatter.DefaultValueFormatter
 import com.github.mikephil.charting.formatter.IndexAxisValueFormatter
 import com.github.mikephil.charting.utils.ColorTemplate
+import com.github.mikephil.charting.utils.MPPointF
 import kotlinx.android.synthetic.main.item_statistics.view.*
 import kotlinx.coroutines.MainScope
 import kotlinx.coroutines.delay
@@ -38,6 +39,7 @@ import java.math.RoundingMode
 import java.text.DecimalFormat
 import java.util.*
 import java.util.concurrent.TimeUnit
+import com.github.mikephil.charting.components.Legend
 
 
 class StatisticsAdapter(
@@ -117,7 +119,7 @@ class StatisticsAdapter(
             foundYear = listOfYearsFromDb.find { it.year == curYear.year }
         }
 
-        if (position == 0 && curYear.yearBooks == 0) {
+        if (curYear.year == "0000" && curYear.yearBooks == 0) {
             holder.itemView.apply {
                 tvLooksEmptyStatistics.visibility = View.VISIBLE
 
@@ -135,6 +137,19 @@ class StatisticsAdapter(
             }
         } else {
             holder.itemView.tvLooksEmptyStatistics.visibility = View.GONE
+        }
+
+        if (curYear.year == "0000" && curYear.yearBooks > 0) {
+            holder.itemView.clBooksByStatus.visibility = View.VISIBLE
+            setupBooksStatusChart(
+                holder.itemView,
+                curYear.yearReadBooks,
+                curYear.yearInProgressBooks,
+                curYear.yearToReadBooks
+            )
+        }
+        else {
+            holder.itemView.clBooksByStatus.visibility = View.GONE
         }
 
         var challengeBooksRead = "0"
@@ -229,6 +244,8 @@ class StatisticsAdapter(
             }
 
             holder.itemView.apply {
+                clChallenge.visibility = View.VISIBLE
+
                 if (foundYear == null) {
                     tvChallengeValue.text = resources.getText(R.string.tvChallengeNotSet)
                 }
@@ -237,9 +254,58 @@ class StatisticsAdapter(
             holder.itemView.apply {
                 if (foundYear == null) {
                     clChallenge.visibility = View.GONE
+                } else {
+                    clChallenge.visibility = View.VISIBLE
                 }
             }
         }
+    }
+
+    private fun setupBooksStatusChart(itemView: View,
+                                      readBooks: Int,
+                                      inProgressBooks: Int,
+                                      toReadBooks: Int) {
+
+        val pieChart: PieChart = itemView.findViewById(R.id.pcBooksByStatus)
+
+        val noOfEmp = ArrayList<PieEntry>()
+
+        noOfEmp.add(PieEntry(readBooks.toFloat(), itemView.resources.getString(R.string.readFragment)))
+        noOfEmp.add(PieEntry(inProgressBooks.toFloat(), itemView.resources.getString(R.string.inProgressFragment)))
+        noOfEmp.add(PieEntry(toReadBooks.toFloat(), itemView.resources.getString(R.string.toReadFragment)))
+
+        val dataSet = PieDataSet(noOfEmp, "")
+
+        dataSet.setDrawIcons(false)
+        dataSet.sliceSpace = 3f
+        dataSet.iconsOffset = MPPointF(0F, 40F)
+        dataSet.selectionShift = 5f
+        dataSet.setColors(*ColorTemplate.PASTEL_COLORS)
+
+        val legend: Legend = pieChart.legend
+        legend.verticalAlignment = Legend.LegendVerticalAlignment.TOP
+        legend.horizontalAlignment = Legend.LegendHorizontalAlignment.LEFT
+        legend.orientation = Legend.LegendOrientation.VERTICAL
+        legend.setDrawInside(false)
+        legend.xEntrySpace = 7f
+        legend.yEntrySpace = 10f
+        legend.xOffset = 10f
+        legend.textSize = 14f
+
+        val data = PieData(dataSet)
+        data.setValueTextSize(14f)
+        data.setValueTextColor(Color.WHITE)
+        data.setValueFormatter(DefaultValueFormatter(0))
+        pieChart.data = data
+        pieChart.highlightValues(null)
+        pieChart.setHoleColor(itemView.resources.getColor(R.color.colorDefaultBg))
+        pieChart.holeRadius = 45f
+
+        pieChart.setDrawSliceText(false)
+        pieChart.description.isEnabled = false
+
+        pieChart.invalidate()
+        pieChart.animateXY(400, 700)
     }
 
     private fun setupBooksByMonthChart(itemView: View, yearBooksByMonth: Array<Int>) {
@@ -273,7 +339,7 @@ class StatisticsAdapter(
         entries.add(BarEntry(11f, yearBooksByMonth[11].toFloat()))
 
         val barDataSet = BarDataSet(entries, "")
-        barDataSet.setColors(*ColorTemplate.MATERIAL_COLORS)
+        barDataSet.setColors(*ColorTemplate.PASTEL_COLORS)
 
         var data = BarData(barDataSet)
         data.setValueFormatter(DefaultValueFormatter(0))
@@ -303,7 +369,7 @@ class StatisticsAdapter(
         itemView.rbcBooksByMonth.description.isEnabled = false
 
         //add animation
-        itemView.rbcBooksByMonth.animateY(600)
+        itemView.rbcBooksByMonth.animateY(800)
 
         itemView.rbcBooksByMonth.xAxis.position = XAxis.XAxisPosition.BOTTOM
 
@@ -374,7 +440,7 @@ class StatisticsAdapter(
         entries.add(BarEntry(11f, yearPagesByMonth[11].toFloat()))
 
         val barDataSet = BarDataSet(entries, "")
-        barDataSet.setColors(*ColorTemplate.JOYFUL_COLORS)
+        barDataSet.setColors(*ColorTemplate.PASTEL_COLORS)
 
         var data = BarData(barDataSet)
         data.setValueFormatter(DefaultValueFormatter(0))
@@ -404,7 +470,7 @@ class StatisticsAdapter(
         itemView.rbcPagesByMonth.description.isEnabled = false
 
         //add animation
-        itemView.rbcPagesByMonth.animateY(800)
+        itemView.rbcPagesByMonth.animateY(900)
 
         itemView.rbcPagesByMonth.xAxis.position = XAxis.XAxisPosition.BOTTOM
 

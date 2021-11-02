@@ -54,7 +54,16 @@ data class Year(
         var yearBooksByMonth: Array<Int> = arrayOf(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0),
 
         @ColumnInfo(name = Constants.DATABASE_YEAR_PAGES_BY_MONTH)
-        var yearPagesByMonth: Array<Int> = arrayOf(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0)
+        var yearPagesByMonth: Array<Int> = arrayOf(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0),
+
+        @ColumnInfo(name = Constants.DATABASE_YEAR_READ_BOOKS)
+        var yearReadBooks: Int = 0,
+
+        @ColumnInfo(name = Constants.DATABASE_YEAR_IN_PROGRESS_BOOKS)
+        var yearInProgressBooks: Int = 0,
+
+        @ColumnInfo(name = Constants.DATABASE_YEAR_TO_READ_BOOKS)
+        var yearToReadBooks: Int = 0
 
 ): Serializable{
         @PrimaryKey(autoGenerate = false)
