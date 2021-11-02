@@ -138,8 +138,8 @@
     <string name="backup_import_success">Import zakończony powodzeniem!</string>
     <string name="backup_import_failure">Import zakończony niepowodzeniem. Czy wybrany został poprawny plik?</string>
     <string name="rate_app_title">Oceń aplikację</string>
-    <string name="rate_app">Podoba Ci się &appname;? Oceń ją w sklepie! Kliknij tutaj</string>
-    <string name="contact_title">Skontaktuj się z autorem</string>
+    <string name="rate_app">Podoba Ci się &appname;? Oceń ją w sklepie!</string>
+    <string name="contact_title">Wyślij opinię</string>
     <string name="restore_backup_warning_title">Ostrożnie!</string>
     <string name="restore_backup_warning_message">Przywrócenie kopii zapasowej nadpisze książki, które aktualnie posiadasz. Pamiętaj żeby mieć ich kopię zapasową.</string>
     <string name="warning_understand">Rozumiem</string>
@@ -217,4 +217,5 @@
     <string name="book_tags">Tagi</string>
     <string name="settings">Ustawienia</string>
     <string name="search_hint">Przeszukaj swoje książki</string>
+    <string name="contact_summary">Masz problem z aplikacją lub pomysł na jej ulepszenie? Skontaktuj się z autorem!</string>
 </resources>

@@ -7,54 +7,42 @@
         android:title="@string/app_name">
 
         <Preference
+            android:icon="@drawable/ic_iconscout_trash_24"
             android:key="KEY_TRASH"
-            android:title="@string/trash_title"
-            android:summary="@string/trash_summary" >
-        </Preference>
+            android:summary="@string/trash_summary"
+            android:title="@string/trash_title"></Preference>
 
         <Preference
+            android:icon="@drawable/ic_iconscout_history_24"
             android:key="KEY_BACKUP"
-            android:title="@string/backup_title"
-            android:summary="@string/backup_summary" >
-        </Preference>
+            android:summary="@string/backup_summary"
+            android:title="@string/backup_title"></Preference>
 
     </PreferenceCategory>
 
     <PreferenceCategory
         android:key="customization"
-        android:title="@string/customization"
-        app:icon="@drawable/ic_iconscout_brush_alt_24">
+        android:title="@string/customization">
 
         <ListPreference
+
             android:defaultValue="accent_green"
             android:entries="@array/accents"
             android:entryValues="@array/accent_values"
             android:key="KEY_ACCENT"
             android:summary="%s"
-            android:title="@string/accent_name_title" />
-
-        <ListPreference
-            android:defaultValue="book_list_finished"
-            android:entries="@array/book_lists"
-            android:entryValues="@array/book_lists_values"
-            android:key="KEY_LANDING_PAGE"
-            android:summary="%s"
-            android:title="@string/book_list_title" />
-
-<!--        <SwitchPreference-->
-<!--            android:defaultValue="false"-->
-<!--            android:key="KEY_RECOMMENDATIONS"-->
-<!--            android:summaryOff="@string/daily_book_recommendations_off"-->
-<!--            android:summaryOn="@string/daily_book_recommendations_on"-->
-<!--            android:title="@string/daily_book_recommendations_title" />-->
+            android:title="@string/accent_name_title"
+            app:icon="@drawable/ic_iconscout_brush_alt_24" />
 
         <SwitchPreference
+            android:icon="@drawable/ic_iconscout_grin_24"
             android:key="KEY_FIRST_TIME_TOGGLE"
             android:summaryOff="@string/first_time_toggle_off"
             android:summaryOn="@string/first_time_toggle_on"
             android:title="@string/first_time_toggle_title" />
 
         <SwitchPreference
+            android:icon="@drawable/ic_iconscout_question_circle_24"
             android:key="KEY_SHOW_OL_ALERT"
             android:summaryOff="@string/show_ol_alert_off"
             android:summaryOn="@string/show_ol_alert_on"
@@ -63,46 +51,49 @@
 
     <PreferenceCategory
         android:key="about"
-        android:title="@string/about"
-        app:icon="@drawable/ic_iconscout_info_circle_24">
+        android:title="@string/about">
 
         <Preference
             android:key="KEY_CHECK_FOR_UPDATES"
+            android:summary="@string/app_version"
             android:title="@string/app_version_title"
-            android:summary="@string/app_version">
-        </Preference>
+            app:icon="@drawable/ic_iconscout_info_circle_24"></Preference>
 
         <Preference
-            android:title="@string/app_source_code_title"
-            android:summary="@string/ivRepoUrl" >
+            android:icon="@drawable/ic_iconscout_brackets_curly_24"
+            android:title="@string/app_source_code_title">
             <intent
                 android:action="android.intent.action.VIEW"
                 android:data="@string/ivRepoUrl" />
         </Preference>
 
         <Preference
+            android:icon="@drawable/ic_iconscout_code_branch_24"
             android:key="KEY_CHANGELOG"
-            android:title="@string/app_changelog" >
-        </Preference>
+            android:title="@string/app_changelog"></Preference>
 
         <Preference
-            android:title="@string/app_licence_title"
-            android:summary="@string/app_licence" >
+            android:icon="@drawable/ic_iconscout_copyright_24"
+            android:summary="@string/app_licence"
+            android:title="@string/app_licence_title">
             <intent
                 android:action="android.intent.action.VIEW"
                 android:data="@string/tvLicenseUrl" />
         </Preference>
 
         <Preference
-            android:title="@string/rate_app_title"
-            android:summary="@string/rate_app" >
+            android:icon="@drawable/ic_iconscout_star_24"
+            android:summary="@string/rate_app"
+            android:title="@string/rate_app_title">
             <intent
                 android:action="android.intent.action.VIEW"
                 android:data="@string/app_market_url" />
         </Preference>
 
         <Preference
-            android:title="@string/contact_title" >
+            android:icon="@drawable/ic_iconscout_user_24"
+            android:summary="@string/contact_summary"
+            android:title="@string/contact_title">
             <intent
                 android:action="android.intent.action.VIEW"
                 android:data="@string/dev_mailto" />
