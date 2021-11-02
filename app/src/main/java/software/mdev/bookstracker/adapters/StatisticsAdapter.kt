@@ -326,8 +326,13 @@ class StatisticsAdapter(
 
         val noOfEmp = ArrayList<PieEntry>()
 
-        noOfEmp.add(PieEntry(readBooks.toFloat(), itemView.resources.getString(R.string.readFragment)))
+        if (readBooks != 0)
+            noOfEmp.add(PieEntry(readBooks.toFloat(), itemView.resources.getString(R.string.readFragment)))
+
+        if (inProgressBooks != 0)
         noOfEmp.add(PieEntry(inProgressBooks.toFloat(), itemView.resources.getString(R.string.inProgressFragment)))
+
+        if (toReadBooks != 0)
         noOfEmp.add(PieEntry(toReadBooks.toFloat(), itemView.resources.getString(R.string.toReadFragment)))
 
         val dataSet = PieDataSet(noOfEmp, "")
