@@ -10,13 +10,27 @@
             android:icon="@drawable/ic_iconscout_trash_24"
             android:key="KEY_TRASH"
             android:summary="@string/trash_summary"
-            android:title="@string/trash_title"></Preference>
+            android:title="@string/trash_title" />
 
         <Preference
             android:icon="@drawable/ic_iconscout_history_24"
             android:key="KEY_BACKUP"
             android:summary="@string/backup_summary"
-            android:title="@string/backup_title"></Preference>
+            android:title="@string/backup_title" />
+
+        <SwitchPreference
+            android:icon="@drawable/ic_iconscout_align_justify_24"
+            android:key="KEY_FIRST_TIME_TOGGLE"
+            android:summaryOff="@string/first_time_toggle_off"
+            android:summaryOn="@string/first_time_toggle_on"
+            android:title="@string/first_time_toggle_title" />
+
+        <SwitchPreference
+            android:icon="@drawable/ic_iconscout_question_circle_24"
+            android:key="KEY_SHOW_OL_ALERT"
+            android:summaryOff="@string/show_ol_alert_off"
+            android:summaryOn="@string/show_ol_alert_on"
+            android:title="@string/show_ol_alert_title" />
 
     </PreferenceCategory>
 
@@ -33,20 +47,6 @@
             android:summary="%s"
             android:title="@string/accent_name_title"
             app:icon="@drawable/ic_iconscout_brush_alt_24" />
-
-        <SwitchPreference
-            android:icon="@drawable/ic_iconscout_grin_24"
-            android:key="KEY_FIRST_TIME_TOGGLE"
-            android:summaryOff="@string/first_time_toggle_off"
-            android:summaryOn="@string/first_time_toggle_on"
-            android:title="@string/first_time_toggle_title" />
-
-        <SwitchPreference
-            android:icon="@drawable/ic_iconscout_question_circle_24"
-            android:key="KEY_SHOW_OL_ALERT"
-            android:summaryOff="@string/show_ol_alert_off"
-            android:summaryOn="@string/show_ol_alert_on"
-            android:title="@string/show_ol_alert_title" />
     </PreferenceCategory>
 
     <PreferenceCategory
@@ -57,7 +57,7 @@
             android:key="KEY_CHECK_FOR_UPDATES"
             android:summary="@string/app_version"
             android:title="@string/app_version_title"
-            app:icon="@drawable/ic_iconscout_info_circle_24"></Preference>
+            app:icon="@drawable/ic_iconscout_info_circle_24" />
 
         <Preference
             android:icon="@drawable/ic_iconscout_brackets_curly_24"
@@ -70,7 +70,7 @@
         <Preference
             android:icon="@drawable/ic_iconscout_code_branch_24"
             android:key="KEY_CHANGELOG"
-            android:title="@string/app_changelog"></Preference>
+            android:title="@string/app_changelog" />
 
         <Preference
             android:icon="@drawable/ic_iconscout_copyright_24"
@@ -91,12 +91,10 @@
         </Preference>
 
         <Preference
-            android:icon="@drawable/ic_iconscout_user_24"
+            android:icon="@drawable/ic_iconscout_grin_24"
+            android:key="KEY_FEEDBACK"
             android:summary="@string/contact_summary"
             android:title="@string/contact_title">
-            <intent
-                android:action="android.intent.action.VIEW"
-                android:data="@string/dev_mailto" />
         </Preference>
     </PreferenceCategory>
 

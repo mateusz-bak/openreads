@@ -218,4 +218,7 @@
     <string name="settings">Ustawienia</string>
     <string name="search_hint">Przeszukaj swoje książki</string>
     <string name="contact_summary">Masz problem z aplikacją lub pomysł na jej ulepszenie? Skontaktuj się z autorem!</string>
+    <string name="send_mail_to_dev">Wyślij email do dewelopera</string>
+    <string name="github_open_issue">Zgłoś problem na Githubie</string>
+    <string name="github_open_feature_request">Zaproponuj nową funkcję na Githubie</string>
 </resources>
