@@ -671,7 +671,7 @@ class AddEditBookFragment : Fragment(R.layout.fragment_add_edit_book) {
 
     private fun hintRatingDatesAnim(views: Array<View>) {
         for (view in views)
-            view.startAnimation(AnimationUtils.loadAnimation(context,R.anim.shake_1))
+            view.startAnimation(AnimationUtils.loadAnimation(context,R.anim.shake_1_minimal))
     }
 
     fun View.hideKeyboard() {
