@@ -60,7 +60,7 @@
         app:layout_constraintEnd_toStartOf="@+id/ivRestoreBook"
         app:layout_constraintStart_toStartOf="@+id/glVertical70"
         app:layout_constraintTop_toTopOf="@+id/tvBookTitle"
-        app:srcCompat="@drawable/ic_auto_stories_black_24dp"
+        app:srcCompat="@drawable/ic_iconscout_book_open_24"
         app:tint="?colorPrimary" />
 
     <ImageView
@@ -73,7 +73,7 @@
         app:layout_constraintEnd_toStartOf="@+id/ivRestoreBook"
         app:layout_constraintStart_toStartOf="@+id/glVertical70"
         app:layout_constraintTop_toTopOf="@+id/tvBookTitle"
-        app:srcCompat="@drawable/ic_library_books_black_24dp"
+        app:srcCompat="@drawable/ic_iconscout_clock_nine_24"
         app:tint="?colorPrimary" />
 
     <ImageView

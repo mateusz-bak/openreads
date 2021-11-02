@@ -26,7 +26,6 @@
 
     <item
         android:id="@+id/miSettings"
-        android:icon="@drawable/ic_baseline_settings_24"
         android:title="@string/settings"
         app:showAsAction="never" />
 </menu>

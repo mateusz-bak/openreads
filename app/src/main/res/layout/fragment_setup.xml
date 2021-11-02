@@ -32,7 +32,7 @@
         app:borderWidth="0dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:srcCompat="@drawable/ic_baseline_arrow_forward_24"
+        app:srcCompat="@drawable/ic_iconscout_arrow_right_24"
         app:tint="?colorOnPrimary" />
 
     <TextView
@@ -59,7 +59,7 @@
         android:scaleY="0.3"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/ivPosition1"
-        app:srcCompat="@drawable/ic_baseline_circle_24"
+        app:srcCompat="@drawable/ic_iconscout_circle_24"
         app:tint="@color/grey_300" />
 
     <ImageView
@@ -71,7 +71,7 @@
         android:layout_marginEnd="-8dp"
         app:layout_constraintEnd_toStartOf="@+id/ivPosition2"
         app:layout_constraintTop_toTopOf="@+id/ivPosition0"
-        app:srcCompat="@drawable/ic_baseline_circle_24"
+        app:srcCompat="@drawable/ic_iconscout_circle_24"
         app:tint="@color/grey_300" />
 
 
@@ -84,7 +84,7 @@
         android:layout_marginEnd="-4dp"
         app:layout_constraintEnd_toStartOf="@+id/guideline1"
         app:layout_constraintTop_toTopOf="@+id/ivPosition1"
-        app:srcCompat="@drawable/ic_baseline_circle_24"
+        app:srcCompat="@drawable/ic_iconscout_circle_24"
         app:tint="@color/grey_300" />
 
 
@@ -97,7 +97,7 @@
         android:layout_marginStart="-4dp"
         app:layout_constraintStart_toStartOf="@+id/guideline1"
         app:layout_constraintTop_toTopOf="@+id/ivPosition2"
-        app:srcCompat="@drawable/ic_baseline_circle_24"
+        app:srcCompat="@drawable/ic_iconscout_circle_24"
         app:tint="@color/grey_300" />
 
 
@@ -110,7 +110,7 @@
         android:layout_marginStart="-8dp"
         app:layout_constraintStart_toEndOf="@+id/ivPosition3"
         app:layout_constraintTop_toTopOf="@+id/ivPosition3"
-        app:srcCompat="@drawable/ic_baseline_circle_24"
+        app:srcCompat="@drawable/ic_iconscout_circle_24"
         app:tint="@color/grey_300" />
 
     <ImageView
@@ -122,7 +122,7 @@
         android:layout_marginStart="-8dp"
         app:layout_constraintStart_toEndOf="@+id/ivPosition4"
         app:layout_constraintTop_toTopOf="@+id/ivPosition3"
-        app:srcCompat="@drawable/ic_baseline_circle_24"
+        app:srcCompat="@drawable/ic_iconscout_circle_24"
         app:tint="@color/grey_300" />
 
     <androidx.constraintlayout.widget.Guideline

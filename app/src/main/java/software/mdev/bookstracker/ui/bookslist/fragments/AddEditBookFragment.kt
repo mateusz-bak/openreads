@@ -473,15 +473,15 @@ class AddEditBookFragment : Fragment(R.layout.fragment_add_edit_book) {
 
                     when (position) {
                         0 -> {
-                            ivBookStatus.setImageDrawable(activity?.baseContext?.resources?.getDrawable(R.drawable.ic_book_black_24dp))
+                            ivBookStatus.setImageDrawable(activity?.baseContext?.resources?.getDrawable(R.drawable.ic_iconscout_check_circle_24))
                             whatIsClicked = Constants.BOOK_STATUS_READ
                         }
                         1 -> {
-                            ivBookStatus.setImageDrawable(activity?.baseContext?.resources?.getDrawable(R.drawable.ic_auto_stories_black_24dp))
+                            ivBookStatus.setImageDrawable(activity?.baseContext?.resources?.getDrawable(R.drawable.ic_iconscout_book_open_24))
                             whatIsClicked = Constants.BOOK_STATUS_IN_PROGRESS
                         }
                         2 -> {
-                            ivBookStatus.setImageDrawable(activity?.baseContext?.resources?.getDrawable(R.drawable.ic_library_books_black_24dp))
+                            ivBookStatus.setImageDrawable(activity?.baseContext?.resources?.getDrawable(R.drawable.ic_iconscout_clock_nine_24))
                             whatIsClicked = Constants.BOOK_STATUS_TO_READ
                         }
                     }
@@ -831,7 +831,7 @@ class AddEditBookFragment : Fragment(R.layout.fragment_add_edit_book) {
                 .get()
                 .load(coverUrl)
                 .placeholder(circularProgressDrawable)
-                .error(R.drawable.ic_baseline_error_outline_24)
+                .error(R.drawable.ic_iconscout_exclamation_octagon_24)
                 .transform(RoundCornersTransform(16.0f))
                 .into(ivBookCover)
         }

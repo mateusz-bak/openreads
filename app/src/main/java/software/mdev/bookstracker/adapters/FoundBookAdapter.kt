@@ -110,7 +110,7 @@ class FoundBookAdapter(
                             .get()
                             .load(coverUrl)
                             .placeholder(circularProgressDrawable)
-                            .error(R.drawable.ic_baseline_error_outline_24)
+                            .error(R.drawable.ic_iconscout_exclamation_octagon_24)
                             .transform(RoundCornersTransform(16.0f))
                             .into(ivBookCover)
 
@@ -118,7 +118,7 @@ class FoundBookAdapter(
 
                         viewModel.showLoadingCircle.postValue(false)
                     } else {
-                        ivBookCover.setImageDrawable(holder.itemView.context.getDrawable(R.drawable.ic_baseline_book_24))
+                        ivBookCover.setImageDrawable(holder.itemView.context.getDrawable(R.drawable.ic_iconscout_book_24))
                     }
 
                     if (curBook.data.isbn_13 != null) {

@@ -140,7 +140,7 @@ class DisplayBookFragment : Fragment(R.layout.fragment_display_book) {
                         AlertDialog.Builder(it1)
                             .setTitle(R.string.warning_delete_book_title)
                             .setMessage(R.string.warning_delete_book_message)
-                            .setIcon(R.drawable.ic_baseline_warning_amber_24)
+                            .setIcon(R.drawable.ic_iconscout_exclamation_triangle_24)
                             .setPositiveButton(R.string.warning_delete_book_delete) { _, _ ->
                                 viewModel.updateBook(
                                     book.id,

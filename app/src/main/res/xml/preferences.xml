@@ -23,7 +23,7 @@
     <PreferenceCategory
         android:key="customization"
         android:title="@string/customization"
-        app:icon="@drawable/ic_baseline_brush_24">
+        app:icon="@drawable/ic_iconscout_brush_alt_24">
 
         <ListPreference
             android:defaultValue="accent_green"
@@ -64,7 +64,7 @@
     <PreferenceCategory
         android:key="about"
         android:title="@string/about"
-        app:icon="@drawable/ic_baseline_info_24">
+        app:icon="@drawable/ic_iconscout_info_circle_24">
 
         <Preference
             android:key="KEY_CHECK_FOR_UPDATES"

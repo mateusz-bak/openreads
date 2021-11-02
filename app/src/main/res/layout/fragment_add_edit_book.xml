@@ -37,7 +37,7 @@
                 app:boxStrokeWidthFocused="0dp"
                 app:errorContentDescription="@string/insert_book_title"
                 app:errorEnabled="true"
-                app:errorIconDrawable="@drawable/ic_book_black_24dp"
+                app:errorIconDrawable="@drawable/ic_iconscout_book_24"
                 app:errorIconTint="?colorAccent"
                 app:errorTextColor="?colorAccent"
                 app:hintAnimationEnabled="true"
@@ -47,7 +47,7 @@
                 app:layout_constraintHorizontal_bias="0.5"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                app:startIconDrawable="@drawable/ic_book_black_24dp"
+                app:startIconDrawable="@drawable/ic_iconscout_book_24"
                 app:startIconTint="?colorPrimary">
 
                 <com.google.android.material.textfield.TextInputEditText
@@ -77,7 +77,8 @@
                 app:layout_constraintBottom_toBottomOf="@+id/tilBookTitle"
                 app:layout_constraintEnd_toEndOf="@+id/tilBookTitle"
                 app:layout_constraintTop_toTopOf="@+id/tilBookTitle"
-                app:srcCompat="@drawable/ic_baseline_clear_24" />
+                android:rotation="45"
+                app:srcCompat="@drawable/ic_iconscout_plus_24" />
 
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/tilBookAuthor"
@@ -95,7 +96,7 @@
                 app:boxStrokeWidthFocused="0dp"
                 app:errorContentDescription="@string/insert_book_author"
                 app:errorEnabled="true"
-                app:errorIconDrawable="@drawable/ic_baseline_person_24"
+                app:errorIconDrawable="@drawable/ic_iconscout_user_24"
                 app:errorIconTint="?colorAccent"
                 app:errorTextColor="?colorAccent"
                 app:hintAnimationEnabled="true"
@@ -105,7 +106,7 @@
                 app:layout_constraintHorizontal_bias="0.5"
                 app:layout_constraintStart_toStartOf="@+id/tilBookTitle"
                 app:layout_constraintTop_toBottomOf="@+id/tilBookTitle"
-                app:startIconDrawable="@drawable/ic_baseline_person_24"
+                app:startIconDrawable="@drawable/ic_iconscout_user_24"
                 app:startIconTint="?colorPrimary">
 
                 <com.google.android.material.textfield.TextInputEditText
@@ -135,7 +136,8 @@
                 app:layout_constraintBottom_toBottomOf="@+id/tilBookAuthor"
                 app:layout_constraintEnd_toEndOf="@+id/tilBookAuthor"
                 app:layout_constraintTop_toTopOf="@+id/tilBookAuthor"
-                app:srcCompat="@drawable/ic_baseline_clear_24" />
+                android:rotation="45"
+                app:srcCompat="@drawable/ic_iconscout_plus_24" />
 
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/tilBookPages"
@@ -340,7 +342,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="12dp"
-                    android:src="@drawable/ic_book_black_24dp"
+                    android:src="@drawable/ic_iconscout_check_circle_24"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
@@ -361,12 +363,11 @@
                     app:layout_constraintTop_toBottomOf="@+id/tvBookStatus" />
 
                 <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_width="32dp"
+                    android:layout_height="32dp"
                     android:layout_marginEnd="12dp"
-                    android:scaleX="0.7"
-                    android:scaleY="0.7"
-                    android:src="@drawable/ic_baseline_keyboard_arrow_down_48"
+                    android:clickable="false"
+                    android:src="@drawable/ic_iconscout_angle_down_24"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />

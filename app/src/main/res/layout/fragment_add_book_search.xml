@@ -60,7 +60,8 @@
                 app:layout_constraintBottom_toBottomOf="@+id/etAdderBookTitleSearch"
                 app:layout_constraintEnd_toEndOf="@+id/etAdderBookTitleSearch"
                 app:layout_constraintTop_toTopOf="@+id/etAdderBookTitleSearch"
-                app:srcCompat="@drawable/ic_baseline_clear_24" />
+                android:rotation="45"
+                app:srcCompat="@drawable/ic_iconscout_plus_24" />
 
             <TextView
                 android:id="@+id/tvResultsNumber"

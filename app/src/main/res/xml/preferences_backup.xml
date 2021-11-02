@@ -7,19 +7,19 @@
         android:title="">
 
         <Preference
-            android:icon="@drawable/ic_baseline_cloud_upload_24"
+            android:icon="@drawable/ic_iconscout_cloud_upload_24"
             android:key="KEY_EXPORT"
             android:summary="@string/export_summary"
             android:title="@string/export_title" />
 
         <Preference
-            android:icon="@drawable/ic_baseline_smartphone_24"
+            android:icon="@drawable/ic_iconscout_mobile_android_24"
             android:key="KEY_EXPORT_LOCAL"
             android:summary="@string/export_local_summary"
             android:title="@string/export_local_title" />
 
         <Preference
-            android:icon="@drawable/ic_baseline_restore_24"
+            android:icon="@drawable/ic_iconscout_history_24"
             android:key="KEY_IMPORT"
             android:summary="@string/import_summary"
             android:title="@string/import_title" />

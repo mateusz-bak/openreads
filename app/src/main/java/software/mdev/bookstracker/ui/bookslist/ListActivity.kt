@@ -317,7 +317,7 @@ class ListActivity : AppCompatActivity() {
         val askForRatingDialog = AlertDialog.Builder(this)
                 .setTitle(R.string.ask_for_rating_dialog_title)
                 .setMessage(R.string.ask_for_rating_dialog_message)
-                .setIcon(R.drawable.ic_baseline_star_rate_24)
+                .setIcon(R.drawable.ic_iconscout_star_24)
                 .setPositiveButton(R.string.ask_for_rating_dialog_pos) { _, _ ->
                     try {
                         startActivity(Intent(Intent.ACTION_VIEW, Uri.parse("market://details?id=$packageName")))

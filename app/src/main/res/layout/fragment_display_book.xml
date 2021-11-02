@@ -126,7 +126,6 @@
                     android:layout_marginEnd="24dp"
                     android:max="5"
                     android:numStars="5"
-                    android:progressDrawable="@drawable/rating_custom_star"
                     app:layout_constraintEnd_toEndOf="@+id/tvBookAuthor"
                     app:layout_constraintStart_toStartOf="@+id/tvBookAuthor"
                     app:layout_constraintTop_toBottomOf="@+id/tvBookStatus" />
@@ -151,7 +150,7 @@
                     app:layout_constraintBottom_toBottomOf="@+id/tvBookStatus"
                     app:layout_constraintStart_toStartOf="@+id/tvBookAuthor"
                     app:layout_constraintTop_toTopOf="@+id/tvBookStatus"
-                    app:srcCompat="@drawable/ic_book_black_24dp"
+                    app:srcCompat="@drawable/ic_iconscout_check_circle_24"
                     app:tint="?colorPrimary" />
 
                 <ImageView
@@ -159,11 +158,12 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="0dp"
+                    android:layout_marginTop="2dp"
                     android:contentDescription="@string/ivBookStatusInProgress"
                     app:layout_constraintBottom_toBottomOf="@+id/tvBookStatus"
                     app:layout_constraintStart_toStartOf="@+id/tvBookAuthor"
                     app:layout_constraintTop_toTopOf="@+id/tvBookStatus"
-                    app:srcCompat="@drawable/ic_auto_stories_black_24dp"
+                    app:srcCompat="@drawable/ic_iconscout_book_open_24"
                     app:tint="?colorPrimary" />
 
                 <ImageView
@@ -175,7 +175,7 @@
                     app:layout_constraintBottom_toBottomOf="@+id/tvBookStatus"
                     app:layout_constraintStart_toStartOf="@+id/tvBookAuthor"
                     app:layout_constraintTop_toTopOf="@+id/tvBookStatus"
-                    app:srcCompat="@drawable/ic_library_books_black_24dp"
+                    app:srcCompat="@drawable/ic_iconscout_clock_nine_24"
                     app:tint="?colorPrimary" />
 
 
