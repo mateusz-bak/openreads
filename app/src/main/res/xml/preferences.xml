@@ -2,10 +2,6 @@
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <PreferenceCategory
-        android:key="application"
-        android:title="@string/app_name">
-
         <Preference
             android:icon="@drawable/ic_iconscout_trash_24"
             android:key="KEY_TRASH"
@@ -31,8 +27,6 @@
             android:summaryOff="@string/show_ol_alert_off"
             android:summaryOn="@string/show_ol_alert_on"
             android:title="@string/show_ol_alert_title" />
-
-    </PreferenceCategory>
 
     <PreferenceCategory
         android:key="customization"

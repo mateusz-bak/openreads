@@ -28,14 +28,14 @@
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="24dp"
-            android:padding="16dp">
+            android:paddingStart="16dp"
+            android:paddingEnd="16dp"
+            android:paddingBottom="16dp">
 
             <EditText
                 android:id="@+id/etAdderBookTitleSearch"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="2dp"
                 android:layout_marginEnd="8dp"
                 android:hint="@string/etAdderBookTitleSearch"
                 android:inputType="textCapSentences"

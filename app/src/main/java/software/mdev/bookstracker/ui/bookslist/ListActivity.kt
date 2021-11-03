@@ -86,8 +86,16 @@ class ListActivity : AppCompatActivity() {
         booksNavHostFragment.findNavController()
             .addOnDestinationChangedListener { _, destination, _ ->
                 when(destination.id) {
-                    R.id.booksFragment -> supportActionBar?.show()
-                    else -> supportActionBar?.hide()
+                    R.id.booksFragment -> {
+                        if (supportActionBar != null) {
+                            supportActionBar?.setDisplayHomeAsUpEnabled(false);
+                        }
+                    }
+                    else -> {
+                        if (supportActionBar != null) {
+                            supportActionBar?.setDisplayHomeAsUpEnabled(true);
+                        }
+                    }
                 }
             }
 
@@ -113,6 +121,30 @@ class ListActivity : AppCompatActivity() {
         booksViewModel.getNotDeletedBooks().observe(this, Observer {
             suggestions = it as MutableList<Book>
         })
+
+        booksNavHostFragment.findNavController()
+            .addOnDestinationChangedListener { _, destination, _ ->
+                when(destination.id) {
+                    R.id.booksFragment -> {
+                        menu.findItem(R.id.miSearch).isVisible = true
+                        menu.findItem(R.id.miSort).isVisible = true
+                        menu.findItem(R.id.miFilter).isVisible = true
+                        menu.findItem(R.id.miStatistics).isVisible = true
+                        menu.findItem(R.id.miSettings).isVisible = true
+                    }
+                    else -> {
+                        searchView.isIconified = true
+                        MenuItemCompat.collapseActionView(searchItem)
+
+                        menu.findItem(R.id.miSearch).isVisible = false
+                        menu.findItem(R.id.miSort).isVisible = false
+                        menu.findItem(R.id.miFilter).isVisible = false
+                        menu.findItem(R.id.miStatistics).isVisible = false
+                        menu.findItem(R.id.miSettings).isVisible = false
+
+                    }
+                }
+            }
 
         searchView.suggestionsAdapter = cursorAdapter
 
@@ -218,6 +250,7 @@ class ListActivity : AppCompatActivity() {
             R.id.miSettings -> booksNavHostFragment.findNavController().navigate(R.id.settingsFragment)
             R.id.miStatistics -> booksNavHostFragment.findNavController().navigate(R.id.statisticsFragment)
             R.id.miSearch -> onSearchRequested()
+            android.R.id.home -> onBackPressed()
         }
         return true
     }

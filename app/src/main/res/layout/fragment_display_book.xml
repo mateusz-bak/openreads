@@ -6,6 +6,15 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
+    <androidx.cardview.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -15,7 +24,9 @@
             android:id="@+id/clBooks"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:padding="24dp">
+            android:paddingStart="24dp"
+            android:paddingEnd="24dp"
+            android:paddingBottom="24dp">
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/clBookDisplay1"
@@ -93,11 +104,11 @@
                     android:layout_marginStart="12dp"
                     android:layout_marginTop="-4dp"
                     android:fontFamily="@font/jost_500_medium"
+                    android:scrollbars="none"
                     android:text="@string/tvBookTitle"
                     android:textAlignment="textStart"
                     android:textColor="?colorOnSecondary"
                     android:textSize="18sp"
-                    android:scrollbars="none"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="@+id/guideline13"
                     app:layout_constraintTop_toTopOf="@+id/ivBookCover"
@@ -183,8 +194,8 @@
                     android:id="@+id/ivFav"
                     android:layout_width="42dp"
                     android:layout_height="42dp"
-                    android:layout_marginTop="12dp"
                     android:layout_marginStart="-6dp"
+                    android:layout_marginTop="12dp"
                     android:padding="4dp"
                     android:scaleType="fitCenter"
                     app:layout_constraintStart_toStartOf="@+id/tvBookAuthor"
@@ -543,4 +554,5 @@
         </androidx.constraintlayout.widget.ConstraintLayout>
 
     </ScrollView>
+    </androidx.cardview.widget.CardView>
 </androidx.constraintlayout.widget.ConstraintLayout>
