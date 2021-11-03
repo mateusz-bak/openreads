@@ -98,15 +98,19 @@ class StatisticsFragment : Fragment(R.layout.fragment_statistics) {
                 var sumRatingAllTime = 0F
 
                 var longestBookAllTime = "null"
+                var longestBookAllTimeID = 0
                 var longestBookValAllTime = 0
 
                 var shortestBookAllTime = "null"
+                var shortestBookAllTimeID = 0
                 var shortestBookValAllTime = Int.MAX_VALUE
 
                 var quickestReadAllTime = "null"
+                var quickestReadAllTimeID = 0
                 var quickestReadValAllTime = Long.MAX_VALUE
 
                 var longestReadAllTime = "null"
+                var longestReadAllTimeID = 0
                 var longestReadValAllTime = Long.MIN_VALUE
 
                 var readingTimeSumAllTime = 0L
@@ -121,15 +125,19 @@ class StatisticsFragment : Fragment(R.layout.fragment_statistics) {
                     var sumRatingInYear = 0F
 
                     var longestBook = "null"
+                    var longestBookID = 0
                     var longestBookVal = 0
 
                     var shortestBook = "null"
+                    var shortestBookID = 0
                     var shortestBookVal = Int.MAX_VALUE
 
                     var quickestRead = "null"
+                    var quickestReadID = 0
                     var quickestReadVal = Long.MAX_VALUE
 
                     var longestRead = "null"
+                    var longestReadID = 0
                     var longestReadVal = Long.MIN_VALUE
 
                     var readingTimeSum = 0L
@@ -232,6 +240,7 @@ class StatisticsFragment : Fragment(R.layout.fragment_statistics) {
                                     longestBookVal = item_book.bookNumberOfPages
                                     var string = item_book.bookTitle + " - " + item_book.bookAuthor
                                     longestBook = string
+                                    longestBookID = item_book.id!!
                                 }
 
                                 // longest book all time
@@ -239,6 +248,7 @@ class StatisticsFragment : Fragment(R.layout.fragment_statistics) {
                                     longestBookValAllTime = item_book.bookNumberOfPages
                                     var string = item_book.bookTitle + " - " + item_book.bookAuthor
                                     longestBookAllTime = string
+                                    longestBookAllTimeID = item_book.id!!
                                 }
 
                                 // shortest book in a year
@@ -246,6 +256,7 @@ class StatisticsFragment : Fragment(R.layout.fragment_statistics) {
                                     shortestBookVal = item_book.bookNumberOfPages
                                     var string = item_book.bookTitle + " - " + item_book.bookAuthor
                                     shortestBook = string
+                                    shortestBookID = item_book.id!!
                                 }
 
                                 // shortest book all time
@@ -253,6 +264,7 @@ class StatisticsFragment : Fragment(R.layout.fragment_statistics) {
                                     shortestBookValAllTime = item_book.bookNumberOfPages
                                     var string = item_book.bookTitle + " - " + item_book.bookAuthor
                                     shortestBookAllTime = string
+                                    shortestBookAllTimeID = item_book.id!!
                                 }
 
 
@@ -263,12 +275,14 @@ class StatisticsFragment : Fragment(R.layout.fragment_statistics) {
                                         quickestReadVal = readingTime
                                         var string = item_book.bookTitle + " - " + item_book.bookAuthor
                                         quickestRead = string
+                                        quickestReadID = item_book.id!!
                                     }
 
                                     if (readingTime < quickestReadValAllTime) {
                                         quickestReadValAllTime = readingTime
                                         var string = item_book.bookTitle + " - " + item_book.bookAuthor
                                         quickestReadAllTime = string
+                                        quickestReadAllTimeID = item_book.id!!
                                     }
 
                                     readingTimeSum += readingTime
@@ -285,6 +299,7 @@ class StatisticsFragment : Fragment(R.layout.fragment_statistics) {
                                         quickestReadVal = readingTime
                                         var string = item_book.bookTitle + " - " + item_book.bookAuthor
                                         quickestRead = string
+                                        quickestReadID = item_book.id!!
                                     }
 
                                     readingTimeSum += readingTime
@@ -298,12 +313,14 @@ class StatisticsFragment : Fragment(R.layout.fragment_statistics) {
                                         longestReadVal = readingTime
                                         var string = item_book.bookTitle + " - " + item_book.bookAuthor
                                         longestRead = string
+                                        longestReadID = item_book.id!!
                                     }
 
                                     if (readingTime > longestReadValAllTime) {
                                         longestReadValAllTime = readingTime
                                         var string = item_book.bookTitle + " - " + item_book.bookAuthor
                                         longestReadAllTime = string
+                                        longestReadAllTimeID = item_book.id!!
                                     }
                                 }
                             }
@@ -330,16 +347,20 @@ class StatisticsFragment : Fragment(R.layout.fragment_statistics) {
                         0,
                         0,
                         quickestRead,
+                        quickestReadID,
                         quickestReadVal.toString(),
                         longestBook,
+                        longestBookID,
                         longestBookVal,
                         avgReadingTime,
                         avgPages,
                         shortestBook,
+                        shortestBookID,
                         shortestBookVal,
                         booksByMonths,
                         pagesByMonths,
                         yearLongestReadBook = longestRead,
+                        yearLongestReadBookID = longestReadID,
                         yearLongestReadVal = longestReadVal.toString()
                     ))
                 }
@@ -363,16 +384,20 @@ class StatisticsFragment : Fragment(R.layout.fragment_statistics) {
                     0,
                     0,
                     quickestReadAllTime,
+                    quickestReadAllTimeID,
                     quickestReadValAllTime.toString(),
                     longestBookAllTime,
+                    longestBookAllTimeID,
                     longestBookValAllTime,
                     avgReadingTimeAllTime,
                     avgPagesAllTime,
                     shortestBookAllTime,
+                    shortestBookAllTimeID,
                     shortestBookValAllTime,
                     booksByMonthsAllTime,
                     pagesByMonthsAllTime,
                     yearLongestReadBook = longestReadAllTime,
+                    yearLongestReadBookID = longestReadAllTimeID,
                     yearLongestReadVal = longestReadValAllTime.toString()
                 )
 

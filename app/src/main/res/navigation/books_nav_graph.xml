@@ -61,6 +61,13 @@
         android:id="@+id/statisticsFragment"
         android:name="software.mdev.bookstracker.ui.bookslist.fragments.StatisticsFragment"
         android:label="StatisticsFragment" >
+        <action
+            android:id="@+id/action_statisticsFragment_to_displayBookFragment"
+            app:destination="@id/displayBookFragment"
+            app:enterAnim="@anim/anim_enter_end"
+            app:exitAnim="@anim/fade_out"
+            app:popEnterAnim="@anim/anim_enter_start"
+            app:popExitAnim="@anim/anim_exit_end" />
     </fragment>
     <fragment
         android:id="@+id/trashFragment"
@@ -110,7 +117,7 @@
             android:id="@+id/action_booksFragment_to_displayBookFragment"
             app:destination="@id/displayBookFragment"
             app:enterAnim="@anim/anim_enter_end"
-            app:exitAnim="@anim/anim_exit_start"
+            app:exitAnim="@anim/fade_out"
             app:popEnterAnim="@anim/anim_enter_start"
             app:popExitAnim="@anim/anim_exit_end" />
         <action

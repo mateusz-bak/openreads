@@ -29,11 +29,17 @@ data class Year(
         @ColumnInfo(name = Constants.DATABASE_YEAR_QUICKEST_BOOK)
         var yearQuickestBook: String = "null",
 
+        @ColumnInfo(name = Constants.DATABASE_YEAR_QUICKEST_BOOK_ID)
+        var yearQuickestBookID: Int = 0,
+
         @ColumnInfo(name = Constants.DATABASE_YEAR_QUICKEST_BOOK_VAL)
         var yearQuickestBookVal: String = "null",
 
         @ColumnInfo(name = Constants.DATABASE_YEAR_LONGEST_BOOK)
         var yearLongestBook: String = "null",
+
+        @ColumnInfo(name = Constants.DATABASE_YEAR_LONGEST_BOOK_ID)
+        var yearLongestBookID: Int = 0,
 
         @ColumnInfo(name = Constants.DATABASE_YEAR_LONGEST_BOOK_VAL)
         var yearLongestBookVal: Int = 0,
@@ -46,6 +52,9 @@ data class Year(
 
         @ColumnInfo(name = Constants.DATABASE_YEAR_SHORTEST_BOOK)
         var yearShortestBook: String = "null",
+
+        @ColumnInfo(name = Constants.DATABASE_YEAR_SHORTEST_BOOK_ID)
+        var yearShortestBookID: Int = 0,
 
         @ColumnInfo(name = Constants.DATABASE_YEAR_SHORTEST_BOOK_VAL)
         var yearShortestBookVal: Int = 0,
@@ -67,6 +76,9 @@ data class Year(
 
         @ColumnInfo(name = Constants.DATABASE_YEAR_LONGEST_READ_BOOK)
         var yearLongestReadBook: String = "null",
+
+        @ColumnInfo(name = Constants.DATABASE_YEAR_LONGEST_READ_BOOK_ID)
+        var yearLongestReadBookID: Int = 0,
 
         @ColumnInfo(name = Constants.DATABASE_YEAR_LONGEST_READ_VAL)
         var yearLongestReadVal: String = "null"

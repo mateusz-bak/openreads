@@ -1,6 +1,7 @@
 package software.mdev.bookstracker.adapters
 
 import android.graphics.Color
+import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -8,6 +9,7 @@ import android.view.WindowManager
 import androidx.appcompat.app.AlertDialog
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelProviders
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.AsyncListDiffer
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
@@ -41,6 +43,7 @@ import java.text.DecimalFormat
 import java.util.*
 import java.util.concurrent.TimeUnit
 import com.github.mikephil.charting.components.Legend
+import software.mdev.bookstracker.other.Constants
 
 
 class StatisticsAdapter(
@@ -279,27 +282,67 @@ class StatisticsAdapter(
                     .create()
             }
 
-            if (curYear.yearQuickestBook == "null") {
-                clQuickestRead.setOnClickListener {
+            clQuickestRead.setOnClickListener {
+                if (curYear.yearQuickestBook == "null")
                     moreDataNeededDialog?.show()
+                else {
+                    viewModel.getBook(curYear.yearQuickestBookID).observe(statisticsFragment.viewLifecycleOwner, androidx.lifecycle.Observer {
+                        val bundle = Bundle().apply {
+                            putSerializable(Constants.SERIALIZABLE_BUNDLE_BOOK, it)
+                        }
+                        statisticsFragment.findNavController().navigate(
+                            R.id.action_statisticsFragment_to_displayBookFragment,
+                            bundle
+                        )
+                    })
                 }
             }
 
-            if (curYear.yearLongestReadBook == "null") {
-                clLongestRead.setOnClickListener {
+            clLongestRead.setOnClickListener {
+                if (curYear.yearLongestReadBook == "null")
                     moreDataNeededDialog?.show()
+                else {
+                    viewModel.getBook(curYear.yearLongestReadBookID).observe(statisticsFragment.viewLifecycleOwner, androidx.lifecycle.Observer {
+                        val bundle = Bundle().apply {
+                            putSerializable(Constants.SERIALIZABLE_BUNDLE_BOOK, it)
+                        }
+                        statisticsFragment.findNavController().navigate(
+                            R.id.action_statisticsFragment_to_displayBookFragment,
+                            bundle
+                        )
+                    })
                 }
             }
 
-            if (curYear.yearShortestBook == "null") {
-                clShortestBook.setOnClickListener {
+            clShortestBook.setOnClickListener {
+                if (curYear.yearShortestBook == "null")
                     moreDataNeededDialog?.show()
+                else {
+                    viewModel.getBook(curYear.yearShortestBookID).observe(statisticsFragment.viewLifecycleOwner, androidx.lifecycle.Observer {
+                        val bundle = Bundle().apply {
+                            putSerializable(Constants.SERIALIZABLE_BUNDLE_BOOK, it)
+                        }
+                        statisticsFragment.findNavController().navigate(
+                            R.id.action_statisticsFragment_to_displayBookFragment,
+                            bundle
+                        )
+                    })
                 }
             }
 
-            if (curYear.yearLongestBook == "null") {
-                clLongestBook.setOnClickListener {
+            clLongestBook.setOnClickListener {
+                if (curYear.yearLongestBook == "null")
                     moreDataNeededDialog?.show()
+                else {
+                    viewModel.getBook(curYear.yearLongestBookID).observe(statisticsFragment.viewLifecycleOwner, androidx.lifecycle.Observer {
+                        val bundle = Bundle().apply {
+                            putSerializable(Constants.SERIALIZABLE_BUNDLE_BOOK, it)
+                        }
+                        statisticsFragment.findNavController().navigate(
+                            R.id.action_statisticsFragment_to_displayBookFragment,
+                            bundle
+                        )
+                    })
                 }
             }
 
