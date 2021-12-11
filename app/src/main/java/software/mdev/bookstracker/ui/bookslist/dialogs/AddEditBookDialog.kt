@@ -47,7 +47,6 @@ import software.mdev.bookstracker.other.Functions
 import software.mdev.bookstracker.other.RoundCornersTransform
 import software.mdev.bookstracker.ui.bookslist.ListActivity
 import software.mdev.bookstracker.ui.bookslist.fragments.AddEditBookFragmentArgs
-import software.mdev.bookstracker.ui.bookslist.fragments.BooksFragment
 import software.mdev.bookstracker.ui.bookslist.viewmodel.BooksViewModel
 import software.mdev.bookstracker.ui.bookslist.viewmodel.BooksViewModelProviderFactory
 import java.io.ByteArrayOutputStream
@@ -58,7 +57,6 @@ import java.util.*
 
 class AddEditBookDialog : DialogFragment() {
 
-    private lateinit var booksFragment: BooksFragment
     lateinit var viewModel: BooksViewModel
     private val args: AddEditBookFragmentArgs by navArgs()
     lateinit var book: Book
@@ -73,9 +71,6 @@ class AddEditBookDialog : DialogFragment() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setStyle(STYLE_NORMAL, R.style.Theme_Mdev_Bookstracker_FullScreenDialog)
-
-        booksFragment = parentFragment as BooksFragment
-//        movieFinderAdapter = MovieFinderAdapter(movieRoomDisplayFragment)
     }
 
     override fun onCreateView(
@@ -180,12 +175,11 @@ class AddEditBookDialog : DialogFragment() {
             view?.hideKeyboard()
             recalculateChallenges()
 
-            // TODO handle all dismiss cases
             when (bookSource) {
                 Constants.NO_SOURCE -> dismiss()
-                Constants.FROM_SEARCH -> popBackStack(2)
-                Constants.FROM_SCAN -> popBackStack(3)
-                Constants.FROM_DISPLAY -> popBackStack()
+                Constants.FROM_SEARCH -> popBackStack(2) // TODO book cancel from search
+                Constants.FROM_SCAN -> popBackStack(3) // TODO book cancel from scan
+                Constants.FROM_DISPLAY -> dismiss()
             }
         }
 
@@ -251,7 +245,6 @@ class AddEditBookDialog : DialogFragment() {
             if (validateDetails()) {
                 val newBook = getDetailsFromInputs()
 
-                // TODO handle all book sources
                 when (bookSource) {
                     Constants.NO_SOURCE -> {
                         newBook.bookCoverUrl = Constants.DATABASE_EMPTY_VALUE
@@ -260,12 +253,12 @@ class AddEditBookDialog : DialogFragment() {
                         recalculateChallenges()
                         dismiss()
                     }
-                    Constants.FROM_SEARCH -> {
+                    Constants.FROM_SEARCH -> { // TODO book save from search
                         viewModel.upsert(newBook)
                         recalculateChallenges()
                         popBackStack(2)
                     }
-                    Constants.FROM_SCAN -> {
+                    Constants.FROM_SCAN -> { // TODO book save from scan
                         viewModel.upsert(newBook)
                         recalculateChallenges()
                         popBackStack(3)
@@ -295,7 +288,7 @@ class AddEditBookDialog : DialogFragment() {
                         )
 
                         recalculateChallenges()
-                        popBackStack()
+                        dismiss()
                     }
                 }
             }

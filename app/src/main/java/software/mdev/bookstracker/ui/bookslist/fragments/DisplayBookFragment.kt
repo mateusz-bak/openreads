@@ -29,6 +29,7 @@ import android.widget.RatingBar.OnRatingBarChangeListener
 import kotlinx.coroutines.MainScope
 import android.graphics.BitmapFactory
 import android.view.animation.AnimationUtils
+import software.mdev.bookstracker.ui.bookslist.dialogs.AddEditBookDialog
 
 
 class DisplayBookFragment : Fragment(R.layout.fragment_display_book) {
@@ -369,16 +370,18 @@ class DisplayBookFragment : Fragment(R.layout.fragment_display_book) {
     }
 
     private fun editBook() {
+        var firstTime = true
         viewModel.getBook(book.id).observe(viewLifecycleOwner) { book ->
-            val bundle = Bundle().apply {
-                putSerializable(Constants.SERIALIZABLE_BUNDLE_BOOK, book)
-                putSerializable(Constants.SERIALIZABLE_BUNDLE_BOOK_SOURCE, Constants.FROM_DISPLAY)
-            }
+            val addEditBookDialog = AddEditBookDialog()
 
-            findNavController().navigate(
-                R.id.action_displayBookFragment_to_addEditBookFragment,
-                bundle
-            )
+            if (addEditBookDialog != null && firstTime) {
+                addEditBookDialog!!.arguments = Bundle().apply {
+                    putSerializable(Constants.SERIALIZABLE_BUNDLE_BOOK, book)
+                    putSerializable(Constants.SERIALIZABLE_BUNDLE_BOOK_SOURCE, Constants.FROM_DISPLAY)
+                }
+                addEditBookDialog!!.show(childFragmentManager, AddEditBookDialog.TAG)
+                firstTime = false
+            }
         }
     }
 
