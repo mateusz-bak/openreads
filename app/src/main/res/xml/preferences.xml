@@ -33,7 +33,6 @@
         android:title="@string/customization">
 
         <ListPreference
-
             android:defaultValue="accent_green"
             android:entries="@array/accents"
             android:entryValues="@array/accent_values"
@@ -41,6 +40,15 @@
             android:summary="%s"
             android:title="@string/accent_name_title"
             app:icon="@drawable/ic_iconscout_brush_alt_24" />
+
+        <ListPreference
+            android:defaultValue="theme_mode_auto"
+            android:entries="@array/theme_modes"
+            android:entryValues="@array/theme_modes_values"
+            android:key="KEY_THEME_MODE"
+            android:summary="%s"
+            android:title="@string/theme_mode_title"
+            app:icon="@drawable/ic_iconscout_sun_24" />
     </PreferenceCategory>
 
     <PreferenceCategory

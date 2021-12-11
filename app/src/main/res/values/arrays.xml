@@ -27,6 +27,18 @@
         <item>accent_yellow</item>
     </string-array>
 
+    <string-array name="theme_modes">
+        <item>@string/theme_mode_auto</item>
+        <item>@string/theme_mode_day</item>
+        <item>@string/theme_mode_night</item>
+    </string-array>
+
+    <string-array name="theme_modes_values">
+        <item>theme_mode_auto</item>
+        <item>theme_mode_day</item>
+        <item>theme_mode_night</item>
+    </string-array>
+
     <string-array name="book_lists">
         <item>@string/finished_books</item>
         <item>@string/in_progress_books</item>

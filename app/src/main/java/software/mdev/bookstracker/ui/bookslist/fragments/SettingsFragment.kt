@@ -92,6 +92,9 @@ class SettingsFragment : PreferenceFragmentCompat(), OnSharedPreferenceChangeLis
             Constants.SHARED_PREFERENCES_KEY_ACCENT -> {
                 hotReloadActivity(activity)
             }
+            Constants.SHARED_PREFERENCES_KEY_THEME_MODE -> {
+                hotReloadActivity(activity)
+            }
             Constants.SHARED_PREFERENCES_KEY_RECOMMENDATIONS -> {
                 Toast.makeText(context?.applicationContext, R.string.notYetImplemented, Toast.LENGTH_LONG).show()
             }

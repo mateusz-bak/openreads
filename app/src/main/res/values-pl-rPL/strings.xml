@@ -225,4 +225,8 @@
     <string name="stats_books_by_status">Wszystkie książki według statusu</string>
     <string name="need_more_data_title">Uważasz, że ta statystyka się nie zgadza?</string>
     <string name="need_more_data_message">Upewnij się, że Twoje książki mają uzupełnioną liczbę stron oraz daty rozpoczęcia i zakończenia czytania.</string>
+    <string name="theme_mode_title">Motyw</string>
+    <string name="theme_mode_auto">Zgodnie z motywem systemu</string>
+    <string name="theme_mode_day">Jasny</string>
+    <string name="theme_mode_night">Ciemny</string>
 </resources>

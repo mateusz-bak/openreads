@@ -44,6 +44,7 @@ import android.database.Cursor
 import android.provider.BaseColumns
 import android.view.inputmethod.InputMethodManager
 import android.widget.AutoCompleteTextView
+import androidx.appcompat.app.AppCompatDelegate
 import androidx.appcompat.widget.SearchView
 import androidx.core.view.MenuItemCompat
 import androidx.cursoradapter.widget.CursorAdapter
@@ -73,7 +74,8 @@ class ListActivity : AppCompatActivity() {
         booksViewModel = ViewModelProvider(this, booksViewModelProviderFactory).get(
             BooksViewModel::class.java)
 
-        setAppTheme()
+        setAppThemeMode()
+        setAppAccent()
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_list)
 
@@ -281,7 +283,7 @@ class ListActivity : AppCompatActivity() {
         return true
     }
 
-    private fun setAppTheme(){
+    private fun setAppAccent(){
         var sharedPreferencesName = getString(R.string.shared_preferences_name)
         val sharedPref = getSharedPreferences(sharedPreferencesName, Context.MODE_PRIVATE)
 
@@ -301,6 +303,22 @@ class ListActivity : AppCompatActivity() {
             Constants.THEME_ACCENT_PURPLE_500 -> setTheme(R.style.Theme_Mdev_Bookstracker_CustomTheme_Purple)
             Constants.THEME_ACCENT_TEAL_500 -> setTheme(R.style.Theme_Mdev_Bookstracker_CustomTheme_Teal)
             Constants.THEME_ACCENT_YELLOW_500 -> setTheme(R.style.Theme_Mdev_Bookstracker_CustomTheme_Yellow)
+        }
+    }
+
+    private fun setAppThemeMode(){
+        var sharedPreferencesName = getString(R.string.shared_preferences_name)
+        val sharedPref = getSharedPreferences(sharedPreferencesName, Context.MODE_PRIVATE)
+
+        var accent = sharedPref.getString(
+            Constants.SHARED_PREFERENCES_KEY_THEME_MODE,
+            Constants.THEME_MODE_AUTO
+        ).toString()
+
+        when(accent){
+            Constants.THEME_MODE_AUTO -> AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM)
+            Constants.THEME_MODE_DAY -> AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
+            Constants.THEME_MODE_NIGHT -> AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
         }
     }
 

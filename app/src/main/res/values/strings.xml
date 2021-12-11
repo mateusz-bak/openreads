@@ -247,4 +247,8 @@
     <string name="stats_books_by_status">All books by status</string>
     <string name="need_more_data_title">Do you think this should display something else?</string>
     <string name="need_more_data_message">Make sure that your books have number of pages, start and finish dates set and come back again.</string>
+    <string name="theme_mode_title">Theme</string>
+    <string name="theme_mode_auto">Follow systems theme</string>
+    <string name="theme_mode_day">Light</string>
+    <string name="theme_mode_night">Dark</string>
 </resources>
