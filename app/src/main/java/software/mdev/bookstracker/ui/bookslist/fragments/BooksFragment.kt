@@ -17,6 +17,7 @@ import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.tabs.TabLayoutMediator
 import kotlinx.android.synthetic.main.fragment_books.*
 import software.mdev.bookstracker.adapters.BookListAdapter
+import software.mdev.bookstracker.ui.bookslist.dialogs.AddEditBookDialog
 
 
 class BooksFragment : Fragment(R.layout.fragment_books) {
@@ -91,16 +92,15 @@ class BooksFragment : Fragment(R.layout.fragment_books) {
 
     private fun addManualGoToFrag() {
         var emptyBook = Book("", "")
+        val addEditBookDialog = AddEditBookDialog()
 
-        val bundle = Bundle().apply {
-            putSerializable(Constants.SERIALIZABLE_BUNDLE_BOOK, emptyBook)
-            putSerializable(Constants.SERIALIZABLE_BUNDLE_BOOK_SOURCE, Constants.NO_SOURCE)
+        if (addEditBookDialog != null) {
+            addEditBookDialog!!.arguments = Bundle().apply {
+                putSerializable(Constants.SERIALIZABLE_BUNDLE_BOOK, emptyBook)
+                putSerializable(Constants.SERIALIZABLE_BUNDLE_BOOK_SOURCE, Constants.NO_SOURCE)
+            }
+            addEditBookDialog!!.show(childFragmentManager, AddEditBookDialog.TAG)
         }
-
-        findNavController().navigate(
-            R.id.action_booksFragment_to_addEditBookFragment,
-            bundle
-        )
     }
 
     private fun addScanGoToFrag() {
