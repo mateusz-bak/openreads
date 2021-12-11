@@ -32,7 +32,7 @@
         android:textColor="@color/colorDefaultText"
         android:textSize="16sp"
         android:fontFamily="@font/jost_500_medium"
-        app:layout_constraintEnd_toStartOf="@+id/glVertical70"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintHorizontal_weight="1"
         app:layout_constraintStart_toEndOf="@+id/ivBookCover"
@@ -91,10 +91,12 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="4dp"
+        android:layout_marginTop="4dp"
         android:text="@string/tv_date_started_title"
         android:textSize="11sp"
         app:layout_constraintBottom_toTopOf="@+id/tvDateStarted"
-        app:layout_constraintEnd_toEndOf="@+id/tvDateStarted" />
+        app:layout_constraintEnd_toEndOf="@+id/tvDateStarted"
+        app:layout_constraintTop_toBottomOf="@+id/tvBookTitle" />
 
     <TextView
         android:id="@+id/tvDateStarted"
@@ -112,10 +114,12 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="4dp"
+        android:layout_marginTop="4dp"
         android:text="@string/tv_date_finished_title"
         android:textSize="11sp"
         app:layout_constraintBottom_toTopOf="@+id/tvDateFinished"
-        app:layout_constraintEnd_toEndOf="@+id/tvDateFinished" />
+        app:layout_constraintEnd_toEndOf="@+id/tvDateFinished"
+        app:layout_constraintTop_toBottomOf="@+id/tvBookTitle" />
 
     <TextView
         android:id="@+id/tvDateFinished"
