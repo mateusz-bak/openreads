@@ -177,7 +177,7 @@ class AddEditBookDialog : DialogFragment() {
 
             when (bookSource) {
                 Constants.NO_SOURCE -> dismiss()
-                Constants.FROM_SEARCH -> popBackStack(2) // TODO book cancel from search
+                Constants.FROM_SEARCH -> popBackStack(1)
                 Constants.FROM_SCAN -> popBackStack(3) // TODO book cancel from scan
                 Constants.FROM_DISPLAY -> dismiss()
             }
@@ -256,7 +256,7 @@ class AddEditBookDialog : DialogFragment() {
                     Constants.FROM_SEARCH -> { // TODO book save from search
                         viewModel.upsert(newBook)
                         recalculateChallenges()
-                        popBackStack(2)
+                        popBackStack(1)
                     }
                     Constants.FROM_SCAN -> { // TODO book save from scan
                         viewModel.upsert(newBook)
