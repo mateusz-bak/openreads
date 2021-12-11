@@ -78,14 +78,13 @@
 
     <ImageView
         android:id="@+id/ivRestoreBook"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
         android:layout_marginTop="12dp"
         android:layout_marginEnd="12dp"
         android:layout_marginBottom="12dp"
         android:contentDescription="@string/ivRestoreBook"
-        android:scaleX="1.6"
-        android:scaleY="1.6"
+
         app:layout_constraintBottom_toTopOf="@+id/rbRatingIndicator"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
@@ -94,13 +93,11 @@
 
     <ImageView
         android:id="@+id/ivDeleteBookPermanently"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
         android:layout_marginTop="12dp"
         android:layout_marginBottom="12dp"
         android:contentDescription="@string/ivDeleteBookPermanently"
-        android:scaleX="1.6"
-        android:scaleY="1.6"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="@+id/ivRestoreBook"
         app:layout_constraintStart_toStartOf="@+id/ivRestoreBook"

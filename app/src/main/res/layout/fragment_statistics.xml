@@ -6,21 +6,6 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <TextView
-        android:id="@+id/tvStatsTitle"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:fontFamily="@font/jost_500_medium"
-        android:layout_marginTop="18dp"
-        android:layout_marginStart="20dp"
-        android:layout_marginBottom="4dp"
-        android:text="@string/statisticsFragment"
-        android:textSize="20sp"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toStartOf="parent" />
-
     <com.google.android.material.tabs.TabLayout
         android:id="@+id/tlStatistics"
         android:layout_width="0dp"
@@ -31,7 +16,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tvStatsTitle"
+        app:layout_constraintTop_toTopOf="parent"
         app:tabMode="scrollable" />
 
     <androidx.viewpager2.widget.ViewPager2

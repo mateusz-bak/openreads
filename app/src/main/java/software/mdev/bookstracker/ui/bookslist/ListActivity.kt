@@ -83,22 +83,6 @@ class ListActivity : AppCompatActivity() {
         if (BuildConfig.FLAVOR == "gplay" && BuildConfig.BUILD_TYPE == "release")
             askForRating()
 
-        booksNavHostFragment.findNavController()
-            .addOnDestinationChangedListener { _, destination, _ ->
-                when(destination.id) {
-                    R.id.booksFragment -> {
-                        if (supportActionBar != null) {
-                            supportActionBar?.setDisplayHomeAsUpEnabled(false);
-                        }
-                    }
-                    else -> {
-                        if (supportActionBar != null) {
-                            supportActionBar?.setDisplayHomeAsUpEnabled(true);
-                        }
-                    }
-                }
-            }
-
         booksViewModel.getNotDeletedBooks().observe(this, Observer {
             notDeletedBooks = it
         })
@@ -126,6 +110,8 @@ class ListActivity : AppCompatActivity() {
             .addOnDestinationChangedListener { _, destination, _ ->
                 when(destination.id) {
                     R.id.booksFragment -> {
+                        supportActionBar?.setDisplayHomeAsUpEnabled(false)
+
                         menu.findItem(R.id.miSearch).isVisible = true
                         menu.findItem(R.id.miSort).isVisible = true
                         menu.findItem(R.id.miFilter).isVisible = true
@@ -133,6 +119,7 @@ class ListActivity : AppCompatActivity() {
                         menu.findItem(R.id.miSettings).isVisible = true
                     }
                     else -> {
+                        supportActionBar?.setDisplayHomeAsUpEnabled(true)
                         searchView.isIconified = true
                         MenuItemCompat.collapseActionView(searchItem)
 
@@ -142,6 +129,45 @@ class ListActivity : AppCompatActivity() {
                         menu.findItem(R.id.miStatistics).isVisible = false
                         menu.findItem(R.id.miSettings).isVisible = false
 
+                    }
+                }
+            }
+
+        // TODO handle addBookScanFragment
+        booksNavHostFragment.findNavController()
+            .addOnDestinationChangedListener { _, destination, _ ->
+                when(destination.id) {
+                    R.id.booksFragment -> {
+                        supportActionBar?.setDisplayShowTitleEnabled(false)
+                        supportActionBar?.title = Constants.EMPTY_STRING
+                    }
+                    R.id.addEditBookFragment -> {
+                        supportActionBar?.setDisplayShowTitleEnabled(false)
+                        supportActionBar?.title = Constants.EMPTY_STRING
+                    }
+                    R.id.addBookSearchFragment -> {
+                        supportActionBar?.setDisplayShowTitleEnabled(true)
+                        supportActionBar?.title = this.getString(R.string.btnAddSearch)
+                    }
+                    R.id.statisticsFragment -> {
+                        supportActionBar?.setDisplayShowTitleEnabled(true)
+                        supportActionBar?.title = this.getString(R.string.statisticsFragment)
+                    }
+                    R.id.settingsFragment -> {
+                        supportActionBar?.setDisplayShowTitleEnabled(true)
+                        supportActionBar?.title = this.getString(R.string.settings)
+                    }
+                    R.id.settingsBackupFragment -> {
+                        supportActionBar?.setDisplayShowTitleEnabled(true)
+                        supportActionBar?.title = this.getString(R.string.backup_title)
+                    }
+                    R.id.trashFragment -> {
+                        supportActionBar?.setDisplayShowTitleEnabled(true)
+                        supportActionBar?.title = this.getString(R.string.trash_title)
+                    }
+                    R.id.displayBookFragment -> {
+                        supportActionBar?.setDisplayShowTitleEnabled(false)
+                        supportActionBar?.title = Constants.EMPTY_STRING
                     }
                 }
             }
