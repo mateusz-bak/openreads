@@ -4,4 +4,12 @@
         <!-- Primary brand color. -->
         <item name="colorPrimary">@color/green_500</item>
     </style>
+
+    <style name="Theme.Mdev.Bookstracker.FullScreenDialog.Green" parent="Theme.Mdev.Bookstracker.CustomTheme.Green">
+        <item name="android:windowIsFloating">false</item>
+        <item name="android:windowBackground">@color/white</item>
+        <item name="actionMenuTextColor">@color/colorDefaultText</item>
+        <item name="android:windowLightStatusBar">true</item>
+        <item name="android:statusBarColor">@color/white</item>
+    </style>
 </resources>

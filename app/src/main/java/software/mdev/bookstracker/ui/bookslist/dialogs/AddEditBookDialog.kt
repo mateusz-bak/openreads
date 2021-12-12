@@ -46,7 +46,7 @@ import software.mdev.bookstracker.other.Constants
 import software.mdev.bookstracker.other.Functions
 import software.mdev.bookstracker.other.RoundCornersTransform
 import software.mdev.bookstracker.ui.bookslist.ListActivity
-import software.mdev.bookstracker.ui.bookslist.fragments.AddEditBookFragmentArgs
+import software.mdev.bookstracker.ui.bookslist.dialogs.AddEditBookDialogArgs
 import software.mdev.bookstracker.ui.bookslist.viewmodel.BooksViewModel
 import software.mdev.bookstracker.ui.bookslist.viewmodel.BooksViewModelProviderFactory
 import java.io.ByteArrayOutputStream
@@ -58,7 +58,7 @@ import java.util.*
 class AddEditBookDialog : DialogFragment() {
 
     lateinit var viewModel: BooksViewModel
-    private val args: AddEditBookFragmentArgs by navArgs()
+    private val args: AddEditBookDialogArgs by navArgs()
     lateinit var book: Book
     lateinit var listActivity: ListActivity
     private var bookFinishDateMs: Long? = null
@@ -70,7 +70,19 @@ class AddEditBookDialog : DialogFragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setStyle(STYLE_NORMAL, R.style.Theme_Mdev_Bookstracker_FullScreenDialog)
+
+        when (args.accent) {
+            0 -> setStyle(STYLE_NORMAL, R.style.Theme_Mdev_Bookstracker_FullScreenDialog_LightGreen)
+            1 -> setStyle(STYLE_NORMAL, R.style.Theme_Mdev_Bookstracker_FullScreenDialog_Orange)
+            2 -> setStyle(STYLE_NORMAL, R.style.Theme_Mdev_Bookstracker_FullScreenDialog_Cyan)
+            3 -> setStyle(STYLE_NORMAL, R.style.Theme_Mdev_Bookstracker_FullScreenDialog_Green)
+            4 -> setStyle(STYLE_NORMAL, R.style.Theme_Mdev_Bookstracker_FullScreenDialog_Brown)
+            5 -> setStyle(STYLE_NORMAL, R.style.Theme_Mdev_Bookstracker_FullScreenDialog_Lime)
+            6 -> setStyle(STYLE_NORMAL, R.style.Theme_Mdev_Bookstracker_FullScreenDialog_Pink)
+            7 -> setStyle(STYLE_NORMAL, R.style.Theme_Mdev_Bookstracker_FullScreenDialog_Purple)
+            8 -> setStyle(STYLE_NORMAL, R.style.Theme_Mdev_Bookstracker_FullScreenDialog_Teal)
+            9 -> setStyle(STYLE_NORMAL, R.style.Theme_Mdev_Bookstracker_FullScreenDialog_Yellow)
+        }
     }
 
     override fun onCreateView(

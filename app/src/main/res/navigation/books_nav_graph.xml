@@ -23,7 +23,7 @@
     </fragment>
     <fragment
         android:id="@+id/addEditBookFragment"
-        android:name="software.mdev.bookstracker.ui.bookslist.fragments.AddEditBookFragment"
+        android:name="software.mdev.bookstracker.ui.bookslist.dialogs.AddEditBookDialog"
         android:label="AddEditBookFragment" >
         <argument
             android:name="book"
@@ -31,6 +31,9 @@
         <argument
             android:name="bookSource"
             app:argType="integer" />
+        <argument
+            android:name="accent"
+            app:argType="integer"/>
         <action
             android:id="@+id/action_addEditBookFragment_to_displayBookFragment"
             app:destination="@id/displayBookFragment" />

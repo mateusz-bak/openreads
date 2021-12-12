@@ -560,7 +560,7 @@ class ListActivity : AppCompatActivity() {
         }
     }
 
-    fun getAccentColor(context: Context): Int {
+    fun getAccentColor(context: Context, asOrderedInt: Boolean = false): Int {
         var accentColor = ContextCompat.getColor(context, R.color.purple_500)
 
         var sharedPreferencesName = context.getString(R.string.shared_preferences_name)
@@ -572,26 +572,66 @@ class ListActivity : AppCompatActivity() {
         ).toString()
 
         when (accent) {
-            Constants.THEME_ACCENT_LIGHT_GREEN -> accentColor =
-                ContextCompat.getColor(context, R.color.light_green)
-            Constants.THEME_ACCENT_ORANGE_500 -> accentColor =
-                ContextCompat.getColor(context, R.color.orange_500)
-            Constants.THEME_ACCENT_CYAN_500 -> accentColor =
-                ContextCompat.getColor(context, R.color.cyan_500)
-            Constants.THEME_ACCENT_GREEN_500 -> accentColor =
-                ContextCompat.getColor(context, R.color.green_500)
-            Constants.THEME_ACCENT_BROWN_400 -> accentColor =
-                ContextCompat.getColor(context, R.color.brown_400)
-            Constants.THEME_ACCENT_LIME_500 -> accentColor =
-                ContextCompat.getColor(context, R.color.lime_500)
-            Constants.THEME_ACCENT_PINK_300 -> accentColor =
-                ContextCompat.getColor(context, R.color.pink_300)
-            Constants.THEME_ACCENT_PURPLE_500 -> accentColor =
-                ContextCompat.getColor(context, R.color.purple_500)
-            Constants.THEME_ACCENT_TEAL_500 -> accentColor =
-                ContextCompat.getColor(context, R.color.teal_500)
-            Constants.THEME_ACCENT_YELLOW_500 -> accentColor =
-                ContextCompat.getColor(context, R.color.yellow_500)
+            Constants.THEME_ACCENT_LIGHT_GREEN -> {
+                accentColor = if (asOrderedInt)
+                    0
+                else
+                    ContextCompat.getColor(context, R.color.light_green)
+            }
+            Constants.THEME_ACCENT_ORANGE_500 -> {
+                accentColor = if (asOrderedInt)
+                    1
+                else
+                    ContextCompat.getColor(context, R.color.orange_500)
+            }
+            Constants.THEME_ACCENT_CYAN_500 -> {
+                accentColor = if (asOrderedInt)
+                    2
+                else
+                    ContextCompat.getColor(context, R.color.cyan_500)
+            }
+            Constants.THEME_ACCENT_GREEN_500 -> {
+                accentColor = if (asOrderedInt)
+                    3
+                else
+                    ContextCompat.getColor(context, R.color.green_500)
+            }
+            Constants.THEME_ACCENT_BROWN_400 -> {
+                accentColor = if (asOrderedInt)
+                    4
+                else
+                    ContextCompat.getColor(context, R.color.brown_400)
+            }
+            Constants.THEME_ACCENT_LIME_500 -> {
+                accentColor = if (asOrderedInt)
+                    5
+                else
+                    ContextCompat.getColor(context, R.color.lime_500)
+            }
+            Constants.THEME_ACCENT_PINK_300 -> {
+                accentColor = if (asOrderedInt)
+                    6
+                else
+                    ContextCompat.getColor(context, R.color.pink_300)
+            }
+            Constants.THEME_ACCENT_PURPLE_500 -> {
+                accentColor = if (asOrderedInt)
+                    7
+                else
+                    ContextCompat.getColor(context, R.color.purple_500)
+            }
+            Constants.THEME_ACCENT_TEAL_500 -> {
+                accentColor = if (asOrderedInt)
+                    8
+                else
+                    ContextCompat.getColor(context, R.color.teal_500)
+            }
+            Constants.THEME_ACCENT_YELLOW_500 -> {
+                accentColor = if (asOrderedInt)
+                    9
+                else
+                    ContextCompat.getColor(context, R.color.yellow_500)
+            }
         }
         return accentColor
     }

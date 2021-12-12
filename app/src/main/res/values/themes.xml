@@ -55,14 +55,6 @@
         <item name="cornerSize">6dp</item>
     </style>
 
-    <style name="Theme.Mdev.Bookstracker.FullScreenDialog" parent="Theme.MaterialComponents.Light.Dialog">
-        <item name="android:windowIsFloating">false</item>
-        <item name="android:windowBackground">@color/white</item>
-        <item name="actionMenuTextColor">@color/colorDefaultText</item>
-        <item name="android:windowLightStatusBar">true</item>
-        <item name="android:statusBarColor">@color/white</item>
-    </style>
-
     <style name="Theme.Mdev.Bookstracker.Slide">
         <item name="android:windowEnterAnimation">@anim/slide_up</item>
         <item name="android:windowExitAnimation">@anim/slide_down</item>

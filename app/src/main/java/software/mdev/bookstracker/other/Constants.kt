@@ -148,6 +148,7 @@ object Constants {
     const val SERIALIZABLE_BUNDLE_ISBN = "isbn"
     const val SERIALIZABLE_BUNDLE_ISBN_DEFAULT = "manual_search"
     const val SERIALIZABLE_BUNDLE_BOOK_SOURCE = "bookSource"
+    const val SERIALIZABLE_BUNDLE_ACCENT = "accent"
 
     // sources of book when passing to add/edit fragment
     const val NO_SOURCE = 0

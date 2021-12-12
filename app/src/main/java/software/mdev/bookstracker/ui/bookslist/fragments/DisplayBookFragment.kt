@@ -378,6 +378,7 @@ class DisplayBookFragment : Fragment(R.layout.fragment_display_book) {
                 addEditBookDialog!!.arguments = Bundle().apply {
                     putSerializable(Constants.SERIALIZABLE_BUNDLE_BOOK, book)
                     putSerializable(Constants.SERIALIZABLE_BUNDLE_BOOK_SOURCE, Constants.FROM_DISPLAY)
+                    putSerializable(Constants.SERIALIZABLE_BUNDLE_ACCENT, (activity as ListActivity).getAccentColor(activity as ListActivity, true))
                 }
                 addEditBookDialog!!.show(childFragmentManager, AddEditBookDialog.TAG)
                 firstTime = false
