@@ -4,7 +4,11 @@ import android.content.Context
 import android.content.pm.PackageManager
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
+import androidx.recyclerview.widget.RecyclerView
 import com.google.gson.Gson
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
 import software.mdev.bookstracker.R
 import software.mdev.bookstracker.adapters.BookAdapter
 import software.mdev.bookstracker.data.db.entities.Book
@@ -54,7 +58,9 @@ class Functions {
     fun filterBooksList(
         activity: ListActivity,
         bookAdapter: BookAdapter,
-        notFilteredBooks: List<Book>
+        notFilteredBooks: List<Book>,
+        rv: RecyclerView?,
+        scrollToTop: Boolean
     ) {
         var sharedPreferencesName = activity.getString(R.string.shared_preferences_name)
         val sharedPref = (activity).getSharedPreferences(sharedPreferencesName, Context.MODE_PRIVATE)
@@ -87,6 +93,14 @@ class Functions {
         }
 
         bookAdapter.differ.submitList(filteredBooks)
+
+        if (scrollToTop && rv != null) {
+            GlobalScope.launch {
+                delay(250L)
+                rv.smoothScrollToPosition(0)
+
+            }
+        }
     }
 
     fun getAccentColor(context: Context): Int {

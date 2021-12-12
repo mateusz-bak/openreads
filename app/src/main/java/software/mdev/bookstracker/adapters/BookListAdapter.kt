@@ -1,9 +1,11 @@
 package software.mdev.bookstracker.adapters
 
+import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.AsyncListDiffer
@@ -16,6 +18,7 @@ import software.mdev.bookstracker.R
 import software.mdev.bookstracker.data.db.BooksDatabase
 import software.mdev.bookstracker.data.db.LanguageDatabase
 import software.mdev.bookstracker.data.db.YearDatabase
+import software.mdev.bookstracker.data.db.entities.Book
 import software.mdev.bookstracker.data.repositories.BooksRepository
 import software.mdev.bookstracker.data.repositories.LanguageRepository
 import software.mdev.bookstracker.data.repositories.OpenLibraryRepository
@@ -69,7 +72,7 @@ class BookListAdapter(
             languageRepository
         )
 
-        viewModel = ViewModelProvider(booksFragment, booksViewModelProviderFactory).get(
+        viewModel = ViewModelProvider(booksFragment.requireActivity(), booksViewModelProviderFactory).get(
             BooksViewModel::class.java
         )
 
@@ -108,104 +111,120 @@ class BookListAdapter(
             )
         }
 
-        var booksMoreThanZero = getBooks(bookAdapter, bookStatus)
+        // triggers after saving new sort mode
+        viewModel.getBooksTrigger.observe(booksFragment.requireActivity(), Observer {
+            getBooks(bookAdapter, bookStatus, holder.itemView.rvBooks, true)
+        })
 
-        if (booksMoreThanZero)
+        if (getBooks(bookAdapter, bookStatus))
             holder.itemView.tvLooksEmpty.visibility = View.VISIBLE
         else
             holder.itemView.tvLooksEmpty.visibility = View.GONE
     }
 
-    private fun getBooks(bookAdapter: BookAdapter, bookStatusInProgress: String): Boolean {
+    private fun getBooks(adapter: BookAdapter, status: String, rv: RecyclerView? = null, scroll: Boolean = false): Boolean {
         var booksMoreThanZero = false
-//        var sharedPreferencesName = (activity as ListActivity).getString(R.string.shared_preferences_name)
-//        val sharedPref = (activity as ListActivity).getSharedPreferences(sharedPreferencesName, Context.MODE_PRIVATE)
+        var sharedPreferencesName = booksFragment.activity?.getString(R.string.shared_preferences_name)
+        val sharedPref = booksFragment.activity?.getSharedPreferences(sharedPreferencesName, Context.MODE_PRIVATE)
 
-//        when(sharedPref.getString(
-//            Constants.SHARED_PREFERENCES_KEY_SORT_ORDER,
-//            Constants.SORT_ORDER_TITLE_ASC
-//        )) {
-
-        viewModel.getSortedBooksByTitleDesc(bookStatusInProgress).observe(booksFragment.viewLifecycleOwner, androidx.lifecycle.Observer { some_books ->
-//            var booksFilteredForFav = filterBooksForFav(some_books)
-            functions.filterBooksList(booksFragment.activity as ListActivity, bookAdapter, some_books)
-
+        viewModel.getSortedBooksByTitleDesc(status).observe(booksFragment.requireActivity(), Observer { some_books ->
             if (some_books.isNotEmpty())
                 booksMoreThanZero = true
         })
 
-//            Constants.SORT_ORDER_TITLE_ASC -> viewModel.getSortedBooksByTitleAsc(currentFragment).observe(viewLifecycleOwner, Observer { some_books ->
-//                var booksFilteredForFav = filterBooksForFav(some_books)
-//                functions.filterBooksList(activity as ListActivity, bookAdapter, booksFilteredForFav)
-//            })
-//
-//            Constants.SORT_ORDER_AUTHOR_DESC -> viewModel.getSortedBooksByAuthorDesc(currentFragment).observe(viewLifecycleOwner, Observer { some_books ->
-//                var booksFilteredForFav = filterBooksForFav(some_books)
-//                functions.filterBooksList(activity as ListActivity, bookAdapter, booksFilteredForFav)
-//            })
-//
-//            Constants.SORT_ORDER_AUTHOR_ASC -> viewModel.getSortedBooksByAuthorAsc(currentFragment).observe(viewLifecycleOwner, Observer { some_books ->
-//                var booksFilteredForFav = filterBooksForFav(some_books)
-//                functions.filterBooksList(activity as ListActivity, bookAdapter, booksFilteredForFav)
-//            })
-//
-//            Constants.SORT_ORDER_RATING_DESC -> viewModel.getSortedBooksByRatingDesc(currentFragment).observe(viewLifecycleOwner, Observer { some_books ->
-//                var booksFilteredForFav = filterBooksForFav(some_books)
-//                functions.filterBooksList(activity as ListActivity, bookAdapter, booksFilteredForFav)
-//            })
-//
-//            Constants.SORT_ORDER_RATING_ASC -> viewModel.getSortedBooksByRatingAsc(currentFragment).observe(viewLifecycleOwner, Observer { some_books ->
-//                var booksFilteredForFav = filterBooksForFav(some_books)
-//                functions.filterBooksList(activity as ListActivity, bookAdapter, booksFilteredForFav)
-//            })
-//
-//            Constants.SORT_ORDER_PAGES_DESC -> viewModel.getSortedBooksByPagesDesc(currentFragment).observe(viewLifecycleOwner, Observer { some_books ->
-//                var booksFilteredForFav = filterBooksForFav(some_books)
-//                functions.filterBooksList(activity as ListActivity, bookAdapter, booksFilteredForFav)
-//            })
-//
-//            Constants.SORT_ORDER_PAGES_ASC -> viewModel.getSortedBooksByPagesAsc(currentFragment).observe(viewLifecycleOwner, Observer { some_books ->
-//                var booksFilteredForFav = filterBooksForFav(some_books)
-//                functions.filterBooksList(activity as ListActivity, bookAdapter, booksFilteredForFav)
-//            })
-//
-//            Constants.SORT_ORDER_START_DATE_DESC -> viewModel.getSortedBooksByStartDateDesc(currentFragment).observe(viewLifecycleOwner, Observer { some_books ->
-//                var booksFilteredForFav = filterBooksForFav(some_books)
-//                functions.filterBooksList(activity as ListActivity, bookAdapter, booksFilteredForFav)
-//            })
-//
-//            Constants.SORT_ORDER_START_DATE_ASC -> viewModel.getSortedBooksByStartDateAsc(currentFragment).observe(viewLifecycleOwner, Observer { some_books ->
-//                var booksFilteredForFav = filterBooksForFav(some_books)
-//                functions.filterBooksList(activity as ListActivity, bookAdapter, booksFilteredForFav)
-//            })
-//
-//            Constants.SORT_ORDER_FINISH_DATE_DESC -> viewModel.getSortedBooksByFinishDateDesc(currentFragment).observe(viewLifecycleOwner, Observer { some_books ->
-//                var booksFilteredForFav = filterBooksForFav(some_books)
-//                functions.filterBooksList(activity as ListActivity, bookAdapter, booksFilteredForFav)
-//            })
-//
-//            Constants.SORT_ORDER_FINISH_DATE_ASC -> viewModel.getSortedBooksByFinishDateAsc(currentFragment).observe(viewLifecycleOwner, Observer { some_books ->
-//                var booksFilteredForFav = filterBooksForFav(some_books)
-//                functions.filterBooksList(activity as ListActivity, bookAdapter, booksFilteredForFav)
-//            })
-//        }
+        when(sharedPref?.getString(
+            Constants.SHARED_PREFERENCES_KEY_SORT_ORDER,
+            Constants.SORT_ORDER_TITLE_ASC
+        )) {
+            Constants.SORT_ORDER_TITLE_ASC -> viewModel.getSortedBooksByTitleAsc(status)
+                .observe(booksFragment.requireActivity(), Observer { some_books ->
+                    var booksFilteredForFav = filterBooksForFav(booksFragment.requireActivity() as ListActivity, some_books)
+                    functions.filterBooksList(booksFragment.requireActivity() as ListActivity, adapter, booksFilteredForFav, rv, scroll)
+                })
+
+            Constants.SORT_ORDER_TITLE_DESC -> viewModel.getSortedBooksByTitleDesc(status)
+                .observe(booksFragment.requireActivity(), Observer { some_books ->
+                var booksFilteredForFav = filterBooksForFav(booksFragment.requireActivity() as ListActivity, some_books)
+                functions.filterBooksList(booksFragment.requireActivity() as ListActivity, adapter, booksFilteredForFav, rv, scroll)
+            })
+
+            Constants.SORT_ORDER_AUTHOR_ASC -> viewModel.getSortedBooksByAuthorAsc(status)
+                .observe(booksFragment.requireActivity(), Observer { some_books ->
+                var booksFilteredForFav = filterBooksForFav(booksFragment.requireActivity() as ListActivity, some_books)
+                functions.filterBooksList(booksFragment.requireActivity() as ListActivity, adapter, booksFilteredForFav, rv, scroll)
+            })
+
+            Constants.SORT_ORDER_AUTHOR_DESC -> viewModel.getSortedBooksByAuthorDesc(status)
+                .observe(booksFragment.requireActivity(), Observer { some_books ->
+                var booksFilteredForFav = filterBooksForFav(booksFragment.requireActivity() as ListActivity, some_books)
+                functions.filterBooksList(booksFragment.requireActivity() as ListActivity, adapter, booksFilteredForFav, rv, scroll)
+            })
+
+            Constants.SORT_ORDER_RATING_ASC -> viewModel.getSortedBooksByRatingAsc(status)
+                .observe(booksFragment.requireActivity(), Observer { some_books ->
+                var booksFilteredForFav = filterBooksForFav(booksFragment.requireActivity() as ListActivity, some_books)
+                functions.filterBooksList(booksFragment.requireActivity() as ListActivity, adapter, booksFilteredForFav, rv, scroll)
+            })
+
+            Constants.SORT_ORDER_RATING_DESC -> viewModel.getSortedBooksByRatingDesc(status)
+                .observe(booksFragment.requireActivity(), Observer { some_books ->
+                var booksFilteredForFav = filterBooksForFav(booksFragment.requireActivity() as ListActivity, some_books)
+                functions.filterBooksList(booksFragment.requireActivity() as ListActivity, adapter, booksFilteredForFav, rv, scroll)
+            })
+
+            Constants.SORT_ORDER_PAGES_ASC -> viewModel.getSortedBooksByPagesAsc(status)
+                .observe(booksFragment.requireActivity(), Observer { some_books ->
+                var booksFilteredForFav = filterBooksForFav(booksFragment.requireActivity() as ListActivity, some_books)
+                functions.filterBooksList(booksFragment.requireActivity() as ListActivity, adapter, booksFilteredForFav, rv, scroll)
+            })
+
+            Constants.SORT_ORDER_PAGES_DESC -> viewModel.getSortedBooksByPagesDesc(status)
+                .observe(booksFragment.requireActivity(), Observer { some_books ->
+                var booksFilteredForFav = filterBooksForFav(booksFragment.requireActivity() as ListActivity, some_books)
+                functions.filterBooksList(booksFragment.requireActivity() as ListActivity, adapter, booksFilteredForFav, rv, scroll)
+            })
+
+            Constants.SORT_ORDER_START_DATE_ASC -> viewModel.getSortedBooksByStartDateAsc(status)
+                .observe(booksFragment.requireActivity(), Observer { some_books ->
+                var booksFilteredForFav = filterBooksForFav(booksFragment.requireActivity() as ListActivity, some_books)
+                functions.filterBooksList(booksFragment.requireActivity() as ListActivity, adapter, booksFilteredForFav, rv, scroll)
+            })
+
+            Constants.SORT_ORDER_START_DATE_DESC -> viewModel.getSortedBooksByStartDateDesc(status)
+                .observe(booksFragment.requireActivity(), Observer { some_books ->
+                var booksFilteredForFav = filterBooksForFav(booksFragment.requireActivity() as ListActivity, some_books)
+                functions.filterBooksList(booksFragment.requireActivity() as ListActivity, adapter, booksFilteredForFav, rv, scroll)
+            })
+
+            Constants.SORT_ORDER_FINISH_DATE_ASC -> viewModel.getSortedBooksByFinishDateAsc(status)
+                .observe(booksFragment.requireActivity(), Observer { some_books ->
+                var booksFilteredForFav = filterBooksForFav(booksFragment.requireActivity() as ListActivity, some_books)
+                functions.filterBooksList(booksFragment.requireActivity() as ListActivity, adapter, booksFilteredForFav, rv, scroll)
+            })
+
+            Constants.SORT_ORDER_FINISH_DATE_DESC -> viewModel.getSortedBooksByFinishDateDesc(status)
+                .observe(booksFragment.requireActivity(), Observer { some_books ->
+                var booksFilteredForFav = filterBooksForFav(booksFragment.requireActivity() as ListActivity, some_books)
+                functions.filterBooksList(booksFragment.requireActivity() as ListActivity, adapter, booksFilteredForFav, rv, scroll)
+            })
+        }
         return booksMoreThanZero
     }
 
-//    private fun filterBooksForFav(someBooks: List<Book>): List<Book> {
-//        var sharedPreferencesName = (activity as ListActivity).getString(R.string.shared_preferences_name)
-//        val sharedPref = (activity as ListActivity).getSharedPreferences(sharedPreferencesName, Context.MODE_PRIVATE)
-//
-//        if(sharedPref.getBoolean(Constants.SHARED_PREFERENCES_KEY_ONLY_FAV, false)) {
-//            val listOnlyFav = emptyList<Book>().toMutableList()
-//
-//            for (i in someBooks) {
-//                if (i.bookIsFav)
-//                    listOnlyFav += i
-//            }
-//            return listOnlyFav
-//        } else {
-//            return someBooks
-//        }
-//    }
+    private fun filterBooksForFav(listActivity: ListActivity, someBooks: List<Book>): List<Book> {
+        var sharedPreferencesName = listActivity.getString(R.string.shared_preferences_name)
+        val sharedPref = listActivity.getSharedPreferences(sharedPreferencesName, Context.MODE_PRIVATE)
+
+        if(sharedPref.getBoolean(Constants.SHARED_PREFERENCES_KEY_ONLY_FAV, false)) {
+            val listOnlyFav = emptyList<Book>().toMutableList()
+
+            for (i in someBooks) {
+                if (i.bookIsFav)
+                    listOnlyFav += i
+            }
+            return listOnlyFav
+        } else {
+            return someBooks
+        }
+    }
 }

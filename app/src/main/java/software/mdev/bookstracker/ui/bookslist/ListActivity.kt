@@ -2,22 +2,35 @@ package software.mdev.bookstracker.ui.bookslist
 
 import android.annotation.SuppressLint
 import android.app.Activity
+import android.app.SearchManager
 import android.content.ActivityNotFoundException
 import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
+import android.content.res.ColorStateList
+import android.database.Cursor
+import android.database.MatrixCursor
 import android.net.Uri
 import android.os.Bundle
+import android.provider.BaseColumns
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
-import android.widget.Toast
+import android.view.inputmethod.InputMethodManager
+import android.widget.*
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.app.AppCompatDelegate
+import androidx.appcompat.widget.SearchView
 import androidx.core.content.ContextCompat
+import androidx.core.view.MenuItemCompat
+import androidx.cursoradapter.widget.CursorAdapter
+import androidx.cursoradapter.widget.SimpleCursorAdapter
+import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
+import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.snackbar.Snackbar
 import kotlinx.android.synthetic.main.activity_list.*
 import kotlinx.android.synthetic.main.fragment_books.*
@@ -26,6 +39,7 @@ import software.mdev.bookstracker.R
 import software.mdev.bookstracker.data.db.BooksDatabase
 import software.mdev.bookstracker.data.db.LanguageDatabase
 import software.mdev.bookstracker.data.db.YearDatabase
+import software.mdev.bookstracker.data.db.entities.Book
 import software.mdev.bookstracker.data.repositories.BooksRepository
 import software.mdev.bookstracker.data.repositories.LanguageRepository
 import software.mdev.bookstracker.data.repositories.OpenLibraryRepository
@@ -36,19 +50,6 @@ import software.mdev.bookstracker.other.Updater
 import software.mdev.bookstracker.ui.bookslist.viewmodel.BooksViewModel
 import software.mdev.bookstracker.ui.bookslist.viewmodel.BooksViewModelProviderFactory
 import java.io.IOException
-import androidx.lifecycle.Observer
-import software.mdev.bookstracker.data.db.entities.Book
-import android.database.MatrixCursor
-import android.app.SearchManager
-import android.database.Cursor
-import android.provider.BaseColumns
-import android.view.inputmethod.InputMethodManager
-import android.widget.AutoCompleteTextView
-import androidx.appcompat.app.AppCompatDelegate
-import androidx.appcompat.widget.SearchView
-import androidx.core.view.MenuItemCompat
-import androidx.cursoradapter.widget.CursorAdapter
-import androidx.cursoradapter.widget.SimpleCursorAdapter
 
 
 class ListActivity : AppCompatActivity() {
@@ -278,9 +279,262 @@ class ListActivity : AppCompatActivity() {
             R.id.miSettings -> booksNavHostFragment.findNavController().navigate(R.id.settingsFragment)
             R.id.miStatistics -> booksNavHostFragment.findNavController().navigate(R.id.statisticsFragment)
             R.id.miSearch -> onSearchRequested()
+            R.id.miSort -> showSortBottomSheetDialog()
             android.R.id.home -> onBackPressed()
         }
         return true
+    }
+
+    private fun showSortBottomSheetDialog() {
+        val bottomSheetDialog =
+            BottomSheetDialog(this, R.style.AppBottomSheetDialogTheme)
+
+        bottomSheetDialog.setContentView(R.layout.bottom_sheet_sort_books)
+
+        setCurrentSortType(bottomSheetDialog)
+
+        setSortBottomSheetDialogColors(bottomSheetDialog)
+        setOnRadioButtonClickListeners(bottomSheetDialog)
+        setAscDescButtonsListeners(bottomSheetDialog)
+
+        bottomSheetDialog.findViewById<Button>(R.id.btnSortSave)
+            ?.setOnClickListener {
+                val sortType = getSortType(bottomSheetDialog)
+                val isOrderAsc = isOrderAsc(bottomSheetDialog)
+                saveSortType(sortType, isOrderAsc)
+                bottomSheetDialog.dismiss()
+            }
+
+        bottomSheetDialog.show()
+    }
+
+    private fun setCurrentSortType(bottomSheetDialog: BottomSheetDialog) {
+        var sharedPrefName = getString(R.string.shared_preferences_name)
+        val sharedPref = getSharedPreferences(sharedPrefName, Context.MODE_PRIVATE)
+
+        val currentSortType = sharedPref.getString(
+            Constants.SHARED_PREFERENCES_KEY_SORT_ORDER,
+            Constants.SORT_ORDER_TITLE_ASC
+        )
+
+        when (currentSortType) {
+            Constants.SORT_ORDER_TITLE_ASC ->
+                setCurrentSortTypeViews(bottomSheetDialog, 0, true)
+
+            Constants.SORT_ORDER_TITLE_DESC ->
+                setCurrentSortTypeViews(bottomSheetDialog, 0, false)
+
+            Constants.SORT_ORDER_AUTHOR_ASC ->
+                setCurrentSortTypeViews(bottomSheetDialog, 1, true)
+
+            Constants.SORT_ORDER_AUTHOR_DESC ->
+                setCurrentSortTypeViews(bottomSheetDialog, 1, false)
+
+            Constants.SORT_ORDER_RATING_ASC ->
+                setCurrentSortTypeViews(bottomSheetDialog, 2, true)
+
+            Constants.SORT_ORDER_RATING_DESC ->
+                setCurrentSortTypeViews(bottomSheetDialog, 2, false)
+
+            Constants.SORT_ORDER_PAGES_ASC ->
+                setCurrentSortTypeViews(bottomSheetDialog, 3, true)
+
+            Constants.SORT_ORDER_PAGES_DESC ->
+                setCurrentSortTypeViews(bottomSheetDialog, 3, false)
+
+            Constants.SORT_ORDER_START_DATE_ASC ->
+                setCurrentSortTypeViews(bottomSheetDialog, 4, true)
+
+            Constants.SORT_ORDER_START_DATE_DESC ->
+                setCurrentSortTypeViews(bottomSheetDialog, 4, false)
+
+            Constants.SORT_ORDER_FINISH_DATE_ASC ->
+                setCurrentSortTypeViews(bottomSheetDialog, 5, true)
+
+            Constants.SORT_ORDER_FINISH_DATE_DESC ->
+                setCurrentSortTypeViews(bottomSheetDialog, 5, false)
+        }
+    }
+
+    private fun setCurrentSortTypeViews(bottomSheetDialog: BottomSheetDialog, sortType: Int, isAsc: Boolean) {
+        val radioButtons = listOf<RadioButton?>(
+            bottomSheetDialog.findViewById(R.id.rbSortByTitle), //sortType 0
+            bottomSheetDialog.findViewById(R.id.rbSortByAuthor), //sortType 1
+            bottomSheetDialog.findViewById(R.id.rbSortByRating), //sortType 2
+            bottomSheetDialog.findViewById(R.id.rbSortByPages), //sortType 3
+            bottomSheetDialog.findViewById(R.id.rbSortByStartDate), //sortType 4
+            bottomSheetDialog.findViewById(R.id.rbSortByFinishDate) //sortType 5
+        )
+
+        val textViews = listOf<TextView?>(
+            bottomSheetDialog.findViewById(R.id.tvOrderAsc),
+            bottomSheetDialog.findViewById(R.id.tvOrderDesc)
+        )
+
+        for (radioButton in radioButtons) {
+            radioButton?.isChecked = radioButton == radioButtons[sortType]
+        }
+
+        if (isAsc) {
+            textViews[0]?.hint = "true"
+            textViews[1]?.hint = "false"
+
+            textViews[0]?.setTextColor(getAccentColor(this))
+            textViews[1]?.setTextColor(this.getColor(R.color.colorDefaultText))
+        } else {
+            textViews[0]?.hint = "false"
+            textViews[1]?.hint = "true"
+
+            textViews[0]?.setTextColor(this.getColor(R.color.colorDefaultText))
+            textViews[1]?.setTextColor(getAccentColor(this))
+        }
+    }
+
+    private fun saveSortType(sortType: Int?, isOrderAsc: Boolean?) {
+        if (sortType != null && isOrderAsc != null) {
+
+            val sortOrder = when (sortType) {
+                1 -> {
+                    if (isOrderAsc)
+                        Constants.SORT_ORDER_AUTHOR_ASC
+                    else
+                        Constants.SORT_ORDER_AUTHOR_DESC
+                }
+                2 -> {
+                    if (isOrderAsc)
+                        Constants.SORT_ORDER_RATING_ASC
+                    else
+                        Constants.SORT_ORDER_RATING_DESC
+                }
+                3 -> {
+                    if (isOrderAsc)
+                        Constants.SORT_ORDER_PAGES_ASC
+                    else
+                        Constants.SORT_ORDER_PAGES_DESC
+                }
+                4 -> {
+                    if (isOrderAsc)
+                        Constants.SORT_ORDER_START_DATE_ASC
+                    else
+                        Constants.SORT_ORDER_START_DATE_DESC
+                }
+                5 -> {
+                    if (isOrderAsc)
+                        Constants.SORT_ORDER_FINISH_DATE_ASC
+                    else
+                        Constants.SORT_ORDER_FINISH_DATE_DESC
+                }
+                else -> {
+                    if (isOrderAsc)
+                        Constants.SORT_ORDER_TITLE_ASC
+                    else
+                        Constants.SORT_ORDER_TITLE_DESC
+                }
+            }
+
+            var sharedPrefName = getString(R.string.shared_preferences_name)
+            val sharedPref = getSharedPreferences(sharedPrefName, Context.MODE_PRIVATE)
+            val sharedPrefEditor = sharedPref?.edit()
+
+            sharedPrefEditor?.apply {
+                putString(Constants.SHARED_PREFERENCES_KEY_SORT_ORDER, sortOrder)
+                apply()
+            }
+            booksViewModel.getBooksTrigger.postValue(System.currentTimeMillis())
+        }
+    }
+
+    private fun getSortType(bottomSheetDialog: BottomSheetDialog): Int? {
+        val radioButtons = listOf<RadioButton?>(
+            bottomSheetDialog.findViewById(R.id.rbSortByTitle),
+            bottomSheetDialog.findViewById(R.id.rbSortByAuthor),
+            bottomSheetDialog.findViewById(R.id.rbSortByRating),
+            bottomSheetDialog.findViewById(R.id.rbSortByPages),
+            bottomSheetDialog.findViewById(R.id.rbSortByStartDate),
+            bottomSheetDialog.findViewById(R.id.rbSortByFinishDate)
+        )
+        for ((i, radioButton) in radioButtons.withIndex()) {
+            if (radioButton?.isChecked == true)
+                return i
+        }
+        return null
+    }
+    private fun isOrderAsc(bottomSheetDialog: BottomSheetDialog): Boolean? {
+        return if (bottomSheetDialog.findViewById<TextView>(R.id.tvOrderAsc)
+                ?.hint == "true")
+            true
+        else if (bottomSheetDialog.findViewById<TextView>(R.id.tvOrderDesc)
+                ?.hint == "true")
+            false
+        else
+            null
+    }
+
+    private fun setAscDescButtonsListeners(bottomSheetDialog: BottomSheetDialog) {
+        bottomSheetDialog.findViewById<TextView>(R.id.tvOrderAsc)?.setOnClickListener {
+            bottomSheetDialog.findViewById<TextView>(R.id.tvOrderAsc)
+                ?.setTextColor(getAccentColor(this))
+            bottomSheetDialog.findViewById<TextView>(R.id.tvOrderAsc)
+                ?.hint = "true"
+
+            bottomSheetDialog.findViewById<TextView>(R.id.tvOrderDesc)
+                ?.setTextColor(this.getColor(R.color.colorDefaultText))
+            bottomSheetDialog.findViewById<TextView>(R.id.tvOrderDesc)
+                ?.hint = "false"
+        }
+
+        bottomSheetDialog.findViewById<TextView>(R.id.tvOrderDesc)?.setOnClickListener {
+            bottomSheetDialog.findViewById<TextView>(R.id.tvOrderDesc)
+                ?.setTextColor(getAccentColor(this))
+            bottomSheetDialog.findViewById<TextView>(R.id.tvOrderDesc)
+                ?.hint = "true"
+
+            bottomSheetDialog.findViewById<TextView>(R.id.tvOrderAsc)
+                ?.setTextColor(this.getColor(R.color.colorDefaultText))
+            bottomSheetDialog.findViewById<TextView>(R.id.tvOrderAsc)
+                ?.hint = "false"
+        }
+    }
+
+    private fun setSortBottomSheetDialogColors(bottomSheetDialog: BottomSheetDialog) {
+        bottomSheetDialog.findViewById<Button>(R.id.btnSortSave)?.backgroundTintList =
+            ColorStateList.valueOf(getAccentColor(this))
+
+        val radioButtons = listOf<RadioButton?>(
+            bottomSheetDialog.findViewById(R.id.rbSortByTitle),
+            bottomSheetDialog.findViewById(R.id.rbSortByAuthor),
+            bottomSheetDialog.findViewById(R.id.rbSortByRating),
+            bottomSheetDialog.findViewById(R.id.rbSortByPages),
+            bottomSheetDialog.findViewById(R.id.rbSortByStartDate),
+            bottomSheetDialog.findViewById(R.id.rbSortByFinishDate)
+        )
+
+        for (radioButton in radioButtons) {
+            radioButton?.buttonTintList =
+                ColorStateList.valueOf(getAccentColor(this))
+        }
+    }
+
+        private fun setOnRadioButtonClickListeners(bottomSheetDialog: BottomSheetDialog) {
+        val radioButtons = listOf<RadioButton?>(
+            bottomSheetDialog.findViewById(R.id.rbSortByTitle),
+            bottomSheetDialog.findViewById(R.id.rbSortByAuthor),
+            bottomSheetDialog.findViewById(R.id.rbSortByRating),
+            bottomSheetDialog.findViewById(R.id.rbSortByPages),
+            bottomSheetDialog.findViewById(R.id.rbSortByStartDate),
+            bottomSheetDialog.findViewById(R.id.rbSortByFinishDate)
+        )
+
+        for (radioButton in radioButtons) {
+            radioButton?.setOnClickListener {
+                for (radioButton2 in radioButtons) {
+                    if (radioButton2 == radioButton)
+                        radioButton2.isChecked = true
+                    else
+                        radioButton2?.isChecked = false
+                }
+            }
+        }
     }
 
     private fun setAppAccent(){
@@ -304,6 +558,42 @@ class ListActivity : AppCompatActivity() {
             Constants.THEME_ACCENT_TEAL_500 -> setTheme(R.style.Theme_Mdev_Bookstracker_CustomTheme_Teal)
             Constants.THEME_ACCENT_YELLOW_500 -> setTheme(R.style.Theme_Mdev_Bookstracker_CustomTheme_Yellow)
         }
+    }
+
+    fun getAccentColor(context: Context): Int {
+        var accentColor = ContextCompat.getColor(context, R.color.purple_500)
+
+        var sharedPreferencesName = context.getString(R.string.shared_preferences_name)
+        val sharedPref = context.getSharedPreferences(sharedPreferencesName, Context.MODE_PRIVATE)
+
+        var accent = sharedPref?.getString(
+            Constants.SHARED_PREFERENCES_KEY_ACCENT,
+            Constants.THEME_ACCENT_DEFAULT
+        ).toString()
+
+        when (accent) {
+            Constants.THEME_ACCENT_LIGHT_GREEN -> accentColor =
+                ContextCompat.getColor(context, R.color.light_green)
+            Constants.THEME_ACCENT_ORANGE_500 -> accentColor =
+                ContextCompat.getColor(context, R.color.orange_500)
+            Constants.THEME_ACCENT_CYAN_500 -> accentColor =
+                ContextCompat.getColor(context, R.color.cyan_500)
+            Constants.THEME_ACCENT_GREEN_500 -> accentColor =
+                ContextCompat.getColor(context, R.color.green_500)
+            Constants.THEME_ACCENT_BROWN_400 -> accentColor =
+                ContextCompat.getColor(context, R.color.brown_400)
+            Constants.THEME_ACCENT_LIME_500 -> accentColor =
+                ContextCompat.getColor(context, R.color.lime_500)
+            Constants.THEME_ACCENT_PINK_300 -> accentColor =
+                ContextCompat.getColor(context, R.color.pink_300)
+            Constants.THEME_ACCENT_PURPLE_500 -> accentColor =
+                ContextCompat.getColor(context, R.color.purple_500)
+            Constants.THEME_ACCENT_TEAL_500 -> accentColor =
+                ContextCompat.getColor(context, R.color.teal_500)
+            Constants.THEME_ACCENT_YELLOW_500 -> accentColor =
+                ContextCompat.getColor(context, R.color.yellow_500)
+        }
+        return accentColor
     }
 
     private fun setAppThemeMode(){

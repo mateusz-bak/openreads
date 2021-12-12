@@ -251,4 +251,6 @@
     <string name="theme_mode_auto">Follow systems theme</string>
     <string name="theme_mode_day">Light</string>
     <string name="theme_mode_night">Dark</string>
+    <string name="ascending">Ascending</string>
+    <string name="descending">Descending</string>
 </resources>

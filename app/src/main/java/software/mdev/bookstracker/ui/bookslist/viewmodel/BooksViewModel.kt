@@ -34,6 +34,7 @@ class BooksViewModel(
     var openLibraryBooksByOLID: MutableLiveData<List<Resource<OpenLibraryOLIDResponse>>> = MutableLiveData()
     var showLoadingCircle: MutableLiveData<Boolean> = MutableLiveData()
     var selectedLanguages: MutableLiveData<List<Language>> = MutableLiveData()
+    var getBooksTrigger: MutableLiveData<Long> = MutableLiveData()
 
     fun upsert(item: Book) = CoroutineScope(Dispatchers.Main).launch {
         repository.upsert(item)

@@ -229,4 +229,6 @@
     <string name="theme_mode_auto">Zgodnie z motywem systemu</string>
     <string name="theme_mode_day">Jasny</string>
     <string name="theme_mode_night">Ciemny</string>
+    <string name="ascending">Rosnąco</string>
+    <string name="descending">Malejąco</string>
 </resources>
