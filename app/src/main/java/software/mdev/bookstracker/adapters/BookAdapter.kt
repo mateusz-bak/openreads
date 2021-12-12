@@ -141,6 +141,13 @@ class BookAdapter(
             view.tvBookTitle.layoutParams = tvBookTitleLayout
         } else {
             view.ivBookCover.visibility = View.VISIBLE
+
+            val tvBookTitleLayout = view.tvBookTitle.layoutParams as ConstraintLayout.LayoutParams
+            tvBookTitleLayout.topToTop = view.ivBookCover.id
+            tvBookTitleLayout.marginStart = 50
+
+            view.tvBookTitle.layoutParams = tvBookTitleLayout
+
             val bmp = BitmapFactory.decodeByteArray(bookCoverImg, 0, bookCoverImg.size)
             view.ivBookCover.setImageBitmap(bmp)
         }
