@@ -121,6 +121,17 @@ class ListActivity : AppCompatActivity() {
                         menu.findItem(R.id.miStatistics).isVisible = true
                         menu.findItem(R.id.miSettings).isVisible = true
                     }
+                    R.id.setupFragment -> {
+                        supportActionBar?.setDisplayHomeAsUpEnabled(false)
+
+                        MenuItemCompat.collapseActionView(searchItem)
+
+                        menu.findItem(R.id.miSearch).isVisible = false
+                        menu.findItem(R.id.miSort).isVisible = false
+                        menu.findItem(R.id.miFilter).isVisible = false
+                        menu.findItem(R.id.miStatistics).isVisible = false
+                        menu.findItem(R.id.miSettings).isVisible = false
+                    }
                     else -> {
                         supportActionBar?.setDisplayHomeAsUpEnabled(true)
                         searchView.isIconified = true
@@ -169,6 +180,10 @@ class ListActivity : AppCompatActivity() {
                         supportActionBar?.title = this.getString(R.string.trash_title)
                     }
                     R.id.displayBookFragment -> {
+                        supportActionBar?.setDisplayShowTitleEnabled(false)
+                        supportActionBar?.title = Constants.EMPTY_STRING
+                    }
+                    R.id.setupFragment -> {
                         supportActionBar?.setDisplayShowTitleEnabled(false)
                         supportActionBar?.title = Constants.EMPTY_STRING
                     }
