@@ -117,7 +117,6 @@ class ListActivity : AppCompatActivity() {
 
                         menu.findItem(R.id.miSearch).isVisible = true
                         menu.findItem(R.id.miSort).isVisible = true
-                        menu.findItem(R.id.miFilter).isVisible = true
                         menu.findItem(R.id.miStatistics).isVisible = true
                         menu.findItem(R.id.miSettings).isVisible = true
                     }
@@ -128,7 +127,6 @@ class ListActivity : AppCompatActivity() {
 
                         menu.findItem(R.id.miSearch).isVisible = false
                         menu.findItem(R.id.miSort).isVisible = false
-                        menu.findItem(R.id.miFilter).isVisible = false
                         menu.findItem(R.id.miStatistics).isVisible = false
                         menu.findItem(R.id.miSettings).isVisible = false
                     }
@@ -139,7 +137,6 @@ class ListActivity : AppCompatActivity() {
 
                         menu.findItem(R.id.miSearch).isVisible = false
                         menu.findItem(R.id.miSort).isVisible = false
-                        menu.findItem(R.id.miFilter).isVisible = false
                         menu.findItem(R.id.miStatistics).isVisible = false
                         menu.findItem(R.id.miSettings).isVisible = false
 
@@ -307,6 +304,7 @@ class ListActivity : AppCompatActivity() {
         bottomSheetDialog.setContentView(R.layout.bottom_sheet_sort_books)
 
         setCurrentSortType(bottomSheetDialog)
+        setCurrentOnlyFav(bottomSheetDialog)
 
         setSortBottomSheetDialogColors(bottomSheetDialog)
         setOnRadioButtonClickListeners(bottomSheetDialog)
@@ -316,7 +314,8 @@ class ListActivity : AppCompatActivity() {
             ?.setOnClickListener {
                 val sortType = getSortType(bottomSheetDialog)
                 val isOrderAsc = isOrderAsc(bottomSheetDialog)
-                saveSortType(sortType, isOrderAsc)
+                val isOnlyFav = isOnlyFav(bottomSheetDialog)
+                saveSortType(sortType, isOrderAsc, isOnlyFav)
                 bottomSheetDialog.dismiss()
             }
 
@@ -371,6 +370,18 @@ class ListActivity : AppCompatActivity() {
         }
     }
 
+    private fun setCurrentOnlyFav(bottomSheetDialog: BottomSheetDialog) {
+        var sharedPrefName = getString(R.string.shared_preferences_name)
+        val sharedPref = getSharedPreferences(sharedPrefName, Context.MODE_PRIVATE)
+
+        val currentOnlyFav = sharedPref.getBoolean(
+            Constants.SHARED_PREFERENCES_KEY_ONLY_FAV,
+            false
+        )
+
+        setCurrentOnlyFavViews(bottomSheetDialog, currentOnlyFav)
+    }
+
     private fun setCurrentSortTypeViews(bottomSheetDialog: BottomSheetDialog, sortType: Int, isAsc: Boolean) {
         val radioButtons = listOf<RadioButton?>(
             bottomSheetDialog.findViewById(R.id.rbSortByTitle), //sortType 0
@@ -405,8 +416,13 @@ class ListActivity : AppCompatActivity() {
         }
     }
 
-    private fun saveSortType(sortType: Int?, isOrderAsc: Boolean?) {
-        if (sortType != null && isOrderAsc != null) {
+    private fun setCurrentOnlyFavViews(bottomSheetDialog: BottomSheetDialog, currentOnlyFav: Boolean) {
+        val checkbox = bottomSheetDialog.findViewById<CheckBox>(R.id.cbFilterFavourite)
+        checkbox?.isChecked = currentOnlyFav
+    }
+
+    private fun saveSortType(sortType: Int?, isOrderAsc: Boolean?, isOnlyFav: Boolean?) {
+        if (sortType != null && isOrderAsc != null && isOnlyFav != null) {
 
             val sortOrder = when (sortType) {
                 1 -> {
@@ -453,6 +469,7 @@ class ListActivity : AppCompatActivity() {
 
             sharedPrefEditor?.apply {
                 putString(Constants.SHARED_PREFERENCES_KEY_SORT_ORDER, sortOrder)
+                putBoolean(Constants.SHARED_PREFERENCES_KEY_ONLY_FAV, isOnlyFav)
                 apply()
             }
             booksViewModel.getBooksTrigger.postValue(System.currentTimeMillis())
@@ -483,6 +500,10 @@ class ListActivity : AppCompatActivity() {
             false
         else
             null
+    }
+
+    private fun isOnlyFav(bottomSheetDialog: BottomSheetDialog): Boolean? {
+        return bottomSheetDialog.findViewById<CheckBox>(R.id.cbFilterFavourite)?.isChecked == true
     }
 
     private fun setAscDescButtonsListeners(bottomSheetDialog: BottomSheetDialog) {

@@ -209,6 +209,24 @@
     </LinearLayout>
 
     <LinearLayout
+        android:id="@+id/llFilterFavourite"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="?android:attr/selectableItemBackground"
+        android:orientation="horizontal"
+        android:padding="0dp">
+
+        <CheckBox
+            android:id="@+id/cbFilterFavourite"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="16dp"
+            android:padding="12dp"
+            android:text="@string/only_fav"
+            android:textSize="16sp" />
+    </LinearLayout>
+
+    <LinearLayout
         android:id="@+id/llSortSave"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

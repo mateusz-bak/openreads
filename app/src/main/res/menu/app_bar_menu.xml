@@ -15,11 +15,6 @@
         app:showAsAction="never" />
 
     <item
-        android:id="@+id/miFilter"
-        android:title="@string/tvFilterTitle"
-        app:showAsAction="never" />
-
-    <item
         android:id="@+id/miStatistics"
         android:title="@string/statisticsFragment"
         app:showAsAction="never" />
