@@ -1,108 +1,101 @@
-<androidx.cardview.widget.CardView
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/clBook"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    app:cardElevation="1dp"
-    app:cardUseCompatPadding="true"
-    app:cardCornerRadius="@dimen/text_input_layout_radius"
-    android:backgroundTint="@color/cardViewBackgroundColor">
+    android:paddingStart="16dp"
+    android:paddingTop="4dp"
+    android:paddingEnd="16dp"
+    android:paddingBottom="20dp">
 
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:layout_width="match_parent"
+    <TextView
+        android:id="@+id/tvBookTitle"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:padding="12dp">
+        android:layout_marginStart="12dp"
+        android:text="@string/unknown_title"
+        android:textColor="?colorOnSecondary"
+        android:textSize="18sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/ivBookCover"
+        app:layout_constraintTop_toTopOf="parent" />
 
-        <TextView
-            android:id="@+id/tvBookTitle"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="12dp"
-            android:text="@string/unknown_title"
-            android:textColor="?colorOnSecondary"
-            android:textSize="18sp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/ivBookCover"
-            app:layout_constraintTop_toTopOf="parent" />
+    <TextView
+        android:id="@+id/tvBookAuthor"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="@string/unknown_author"
+        android:textSize="14sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="@+id/tvBookTitle"
+        app:layout_constraintTop_toBottomOf="@+id/tvBookTitle" />
 
-        <TextView
-            android:id="@+id/tvBookAuthor"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:text="@string/unknown_author"
-            android:textSize="14sp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintStart_toStartOf="@+id/tvBookTitle"
-            app:layout_constraintTop_toBottomOf="@+id/tvBookTitle" />
+    <TextView
+        android:id="@+id/tvBookISBN"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="@string/unknown_isbn"
+        android:textSize="14sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="@+id/tvBookAuthor"
+        app:layout_constraintTop_toBottomOf="@+id/tvBookPublishYear" />
 
-        <TextView
-            android:id="@+id/tvBookISBN"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:text="@string/unknown_isbn"
-            android:textSize="14sp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintStart_toStartOf="@+id/tvBookAuthor"
-            app:layout_constraintTop_toBottomOf="@+id/tvBookPublishYear" />
+    <TextView
+        android:id="@+id/tvBookLanguage"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="@string/unknown_language"
+        android:textSize="14sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="@+id/tvBookISBN"
+        app:layout_constraintTop_toBottomOf="@+id/tvBookISBN" />
 
-        <TextView
-            android:id="@+id/tvBookLanguage"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:text="@string/unknown_language"
-            android:textSize="14sp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintStart_toStartOf="@+id/tvBookISBN"
-            app:layout_constraintTop_toBottomOf="@+id/tvBookISBN" />
+    <ImageView
+        android:id="@+id/ivBookCover"
+        android:layout_width="80dp"
+        android:layout_height="0dp"
+        android:scaleType="fitCenter"
+        app:layout_constraintBottom_toTopOf="@+id/tvCoverMissing"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
-        <ImageView
-            android:id="@+id/ivBookCover"
-            android:layout_width="80dp"
-            android:layout_height="0dp"
-            android:scaleType="fitCenter"
-            app:layout_constraintBottom_toTopOf="@+id/tvCoverMissing"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+    <TextView
+        android:id="@+id/tvCoverMissing"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:justificationMode="inter_word"
+        android:text="@string/tv_cover_missing"
+        android:textSize="8sp"
+        app:layout_constraintEnd_toEndOf="@+id/ivBookCover"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="@+id/ivBookCover"
+        app:layout_constraintTop_toBottomOf="@+id/ivBookCover" />
 
-        <TextView
-            android:id="@+id/tvCoverMissing"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/tv_cover_missing"
-            android:justificationMode="inter_word"
-            android:textSize="8sp"
-            app:layout_constraintEnd_toEndOf="@+id/ivBookCover"
-            app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintStart_toStartOf="@+id/ivBookCover"
-            app:layout_constraintTop_toBottomOf="@+id/ivBookCover" />
+    <TextView
+        android:id="@+id/tvBookPages"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="@string/unknown_pages"
+        android:textSize="14sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="@+id/tvBookLanguage"
+        app:layout_constraintTop_toBottomOf="@+id/tvBookLanguage" />
 
-        <TextView
-            android:id="@+id/tvBookPages"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:text="@string/unknown_pages"
-            android:textSize="14sp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintStart_toStartOf="@+id/tvBookLanguage"
-            app:layout_constraintTop_toBottomOf="@+id/tvBookLanguage"
-            app:layout_constraintBottom_toBottomOf="parent"/>
+    <TextView
+        android:id="@+id/tvBookPublishYear"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="@string/unknown_publish_year"
+        android:textSize="14sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="@+id/tvBookLanguage"
+        app:layout_constraintTop_toBottomOf="@+id/tvBookAuthor" />
 
-        <TextView
-            android:id="@+id/tvBookPublishYear"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:text="@string/unknown_publish_year"
-            android:textSize="14sp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintStart_toStartOf="@+id/tvBookLanguage"
-            app:layout_constraintTop_toBottomOf="@+id/tvBookAuthor" />
-
-    </androidx.constraintlayout.widget.ConstraintLayout>
-
-</androidx.cardview.widget.CardView>
+</androidx.constraintlayout.widget.ConstraintLayout>
