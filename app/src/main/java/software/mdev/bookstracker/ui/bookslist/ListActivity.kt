@@ -144,7 +144,6 @@ class ListActivity : AppCompatActivity() {
                 }
             }
 
-        // TODO handle addBookScanFragment
         booksNavHostFragment.findNavController()
             .addOnDestinationChangedListener { _, destination, _ ->
                 when(destination.id) {

@@ -2,31 +2,37 @@ package software.mdev.bookstracker.ui.bookslist.fragments
 
 import android.os.Bundle
 import android.view.View
-import android.view.animation.*
+import android.view.animation.AnimationUtils
+import android.widget.LinearLayout
+import androidx.activity.result.ActivityResultLauncher
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
-import software.mdev.bookstracker.R
-import software.mdev.bookstracker.data.db.entities.Book
-import software.mdev.bookstracker.ui.bookslist.ListActivity
-import software.mdev.bookstracker.ui.bookslist.viewmodel.BooksViewModel
-import software.mdev.bookstracker.other.Constants
-import software.mdev.bookstracker.other.Functions
-import android.widget.LinearLayout
 import androidx.viewpager2.widget.ViewPager2
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.tabs.TabLayoutMediator
+import com.journeyapps.barcodescanner.ScanContract
+import com.journeyapps.barcodescanner.ScanIntentResult
+import com.journeyapps.barcodescanner.ScanOptions
 import kotlinx.android.synthetic.main.fragment_books.*
+import software.mdev.bookstracker.R
 import software.mdev.bookstracker.adapters.BookListAdapter
+import software.mdev.bookstracker.data.db.entities.Book
+import software.mdev.bookstracker.other.Constants
+import software.mdev.bookstracker.ui.bookslist.ListActivity
 import software.mdev.bookstracker.ui.bookslist.dialogs.AddEditBookDialog
+import software.mdev.bookstracker.ui.bookslist.viewmodel.BooksViewModel
 
 
 class BooksFragment : Fragment(R.layout.fragment_books) {
 
     lateinit var viewModel: BooksViewModel
     private var wiggleBlocker = true
+    lateinit var listActivity: ListActivity
+    private lateinit var barcodeLauncher: ActivityResultLauncher<ScanOptions>
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        listActivity = activity as ListActivity
 
         var listOfTabs = context?.resources?.let {
             listOf(
@@ -60,6 +66,13 @@ class BooksFragment : Fragment(R.layout.fragment_books) {
             fabAddBook.startAnimation(anim)
             showBottomSheetDialog()
         }
+
+        barcodeLauncher = registerForActivityResult(
+            ScanContract()
+        ) { result: ScanIntentResult ->
+            if (result.contents != null)
+                addSearchGoToFrag(result.contents)
+        }
     }
 
     private fun showBottomSheetDialog() {
@@ -76,7 +89,7 @@ class BooksFragment : Fragment(R.layout.fragment_books) {
 
             bottomSheetDialog.findViewById<LinearLayout>(R.id.llAddScan)
                 ?.setOnClickListener {
-                    addScanGoToFrag()
+                    openCodeScanner()
                     bottomSheetDialog.dismiss()
                 }
 
@@ -104,25 +117,25 @@ class BooksFragment : Fragment(R.layout.fragment_books) {
         }
     }
 
-    private fun addScanGoToFrag() {
-        if (Functions().checkPermission(
-                activity as ListActivity,
-                android.Manifest.permission.CAMERA
-            )
-        ) {
-            findNavController().navigate(R.id.action_booksFragment_to_addBookScanFragment)
-        } else {
-            Functions().requestPermission(
-                activity as ListActivity,
-                android.Manifest.permission.CAMERA,
-                Constants.PERMISSION_CAMERA_FROM_BOOK_LIST
-            )
-        }
+    private fun openCodeScanner() {
+        val options = ScanOptions()
+        options.setDesiredBarcodeFormats(ScanOptions.ALL_CODE_TYPES)
+        options.setPrompt(listActivity.getString(R.string.tbScannerTip))
+        options.setCameraId(0)
+        options.setBeepEnabled(true)
+        options.setBarcodeImageEnabled(true)
+        options.setOrientationLocked(true)
+        barcodeLauncher.launch(options)
     }
 
-    private fun addSearchGoToFrag() {
+    private fun addSearchGoToFrag(isbn: String = "") {
+        val bundle = Bundle().apply {
+            putString(Constants.SERIALIZABLE_BUNDLE_ISBN, isbn)
+        }
+
         findNavController().navigate(
-            R.id.action_booksFragment_to_addBookSearchFragment
+            R.id.action_booksFragment_to_addBookSearchFragment,
+            bundle
         )
     }
 }
