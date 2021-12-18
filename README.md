@@ -75,19 +75,4 @@
 
 ### Icons and illustrations made by
 [Katerina Limpitsouni](https://undraw.co/illustrations "Katerina Limpitsouni")
-
-[Smalllikeart](https://www.flaticon.com/authors/smalllikeart "Smalllikeart") from [www.flaticon.com](https://www.flaticon.com/ "Flaticon")
-
-[Freepik](https://www.freepik.com "Freepik") from [www.flaticon.com](https://www.flaticon.com/ "Flaticon")
-
-[Vectors Market](https://www.flaticon.com/authors/vectors-market "Vectors Market") from [www.flaticon.com](https://www.flaticon.com/ "Flaticon")
-
-[photo3idea_studio](https://www.flaticon.com/authors/photo3idea-studio "photo3idea_studio") from [www.flaticon.com](https://www.flaticon.com/ "Flaticon")
-
-[Vaadin](https://vaadin.com/font-icons "Vaadin") from [www.flaticon.com](https://www.flaticon.com/ "Flaticon")
-
-[Vitaly Gorbachev](https://www.flaticon.com/authors/vitaly-gorbachev "Vitaly Gorbachev") from [www.flaticon.com](https://www.flaticon.com/ "Flaticon")
-
-[Becris](https://www.flaticon.com/authors/becris "Becris") from [www.flaticon.com](https://www.flaticon.com/ "Flaticon")
-
-[Smashicons](https://smashicons.com "Smashicons") from [www.flaticon.com](https://www.flaticon.com/ "Flaticon")
+[Iconscout](https://iconscout.com/ "Iconscout")
