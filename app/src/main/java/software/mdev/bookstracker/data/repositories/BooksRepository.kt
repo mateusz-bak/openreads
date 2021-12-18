@@ -33,7 +33,8 @@ class BooksRepository (
         bookISBN13: String,
         bookPublishYear: Int,
         bookIsFav: Boolean,
-        bookCoverImg: ByteArray?
+        bookCoverImg: ByteArray?,
+        bookNotes: String
     ) = db.getBooksDao().updateBook(
         id,
         bookTitle,
@@ -53,7 +54,8 @@ class BooksRepository (
         bookISBN13,
         bookPublishYear,
         bookIsFav,
-        bookCoverImg
+        bookCoverImg,
+        bookNotes
     )
 
     fun searchBooks(searchQuery: String) = db.getBooksDao().searchBooks(searchQuery)
