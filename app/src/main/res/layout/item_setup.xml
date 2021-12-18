@@ -31,8 +31,8 @@
         android:id="@+id/ivSetupImage"
         android:layout_width="300dp"
         android:layout_height="300dp"
-        android:scaleType="centerInside"
-        android:src="@drawable/ic_svg_books"
+        android:scaleType="fitCenter"
+        android:src="@drawable/ic_book_logo"
         app:layout_constraintBottom_toTopOf="@+id/guideline1"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
@@ -55,17 +55,6 @@
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@+id/guideline2" />
-
-    <TextView
-        android:id="@+id/tvSetupVersion"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/app_version"
-        android:textColor="@color/grey_500"
-        android:textSize="12dp"
-        android:visibility="invisible"
-        app:layout_constraintEnd_toEndOf="@+id/ivSetupImage"
-        app:layout_constraintTop_toBottomOf="@+id/ivSetupImage" />
 
     <TextView
         android:id="@+id/tvSetupSwipeHint"
