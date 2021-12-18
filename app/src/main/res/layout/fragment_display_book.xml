@@ -350,7 +350,7 @@
                 android:text="@string/tv_book_url"
                 android:textSize="14sp"
                 app:layout_constraintStart_toStartOf="@+id/tvBookOLIDTitle"
-                app:layout_constraintTop_toBottomOf="@+id/tvBookOLID" />
+                app:layout_constraintTop_toBottomOf="@+id/tvNotes" />
 
 <!--            <TextView-->
 <!--                android:id="@+id/tvBookTagsTitle"-->
@@ -410,26 +410,25 @@
 <!--            </androidx.constraintlayout.widget.ConstraintLayout>-->
 
 
-<!--            <TextView-->
-<!--                android:id="@+id/tvNotesTitle"-->
-<!--                android:layout_width="wrap_content"-->
-<!--                android:layout_height="wrap_content"-->
-<!--                android:layout_marginTop="8dp"-->
-<!--                android:fontFamily="@font/jost_500_medium"-->
-<!--                android:text="@string/book_notes"-->
-<!--                android:textSize="15sp"-->
-<!--                app:layout_constraintStart_toStartOf="@+id/tvBookISBN"-->
-<!--                app:layout_constraintTop_toBottomOf="@+id/clBookTags" />-->
+            <TextView
+                android:id="@+id/tvNotesTitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:fontFamily="@font/jost_500_medium"
+                android:text="@string/book_notes"
+                android:textSize="15sp"
+                app:layout_constraintStart_toStartOf="@+id/tvBookISBN"
+                app:layout_constraintTop_toBottomOf="@+id/tvBookOLID" />
 
-<!--            <TextView-->
-<!--                android:id="@+id/tvNotes"-->
-<!--                android:layout_width="0dp"-->
-<!--                android:layout_height="wrap_content"-->
-<!--                android:text="The main character of Fantastic Mr. Fox is an extremely clever anthropomorphized fox named Mr. Fox. He lives with his wife and four little foxes."-->
-<!--                android:textSize="14sp"-->
-<!--                app:layout_constraintEnd_toEndOf="parent"-->
-<!--                app:layout_constraintStart_toStartOf="@+id/tvNotesTitle"-->
-<!--                app:layout_constraintTop_toBottomOf="@+id/tvNotesTitle" />-->
+            <TextView
+                android:id="@+id/tvNotes"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:textSize="14sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="@+id/tvNotesTitle"
+                app:layout_constraintTop_toBottomOf="@+id/tvNotesTitle" />
 
             <androidx.constraintlayout.widget.Guideline
                 android:id="@+id/guideline21"
@@ -518,16 +517,16 @@
 <!--                app:srcCompat="@drawable/ic_iconscout_tag_alt_24"-->
 <!--                app:tint="?colorPrimary" />-->
 
-<!--            <ImageView-->
-<!--                android:id="@+id/ivBookNotes"-->
-<!--                android:layout_width="32dp"-->
-<!--                android:layout_height="32dp"-->
-<!--                android:padding="3dp"-->
-<!--                android:scaleType="fitCenter"-->
-<!--                app:layout_constraintStart_toStartOf="@+id/ivDateStarted"-->
-<!--                app:layout_constraintTop_toTopOf="@+id/tvNotesTitle"-->
-<!--                app:srcCompat="@drawable/ic_iconscout_comment_alt_notes_24"-->
-<!--                app:tint="?colorPrimary" />-->
+            <ImageView
+                android:id="@+id/ivNotes"
+                android:layout_width="32dp"
+                android:layout_height="32dp"
+                android:padding="3dp"
+                android:scaleType="fitCenter"
+                app:layout_constraintStart_toStartOf="@+id/ivDateStarted"
+                app:layout_constraintTop_toTopOf="@+id/tvNotesTitle"
+                app:srcCompat="@drawable/ic_iconscout_comment_alt_notes_24"
+                app:tint="?colorPrimary" />
 
             <ImageView
                 android:id="@+id/ivUrl"

@@ -143,7 +143,6 @@ class AddEditBookDialog : DialogFragment() {
 
         book = args.book
         val bookSource = args.bookSource
-        var accentColor = getAccentColor(view.context)
 
         val viewModel = ViewModelProviders.of(this, booksViewModelProviderFactory)
             .get(BooksViewModel::class.java)
@@ -296,7 +295,8 @@ class AddEditBookDialog : DialogFragment() {
                             newBook.bookISBN13,
                             newBook.bookPublishYear,
                             newBook.bookIsFav,
-                            newBook.bookCoverImg
+                            newBook.bookCoverImg,
+                            newBook.bookNotes
                         )
 
                         recalculateChallenges()
@@ -423,6 +423,13 @@ class AddEditBookDialog : DialogFragment() {
             }
         }
 
+        var bookNotes = Constants.EMPTY_STRING
+        if (tietBookNotes.text != null) {
+            if (tietBookNotes.text!!.isNotEmpty()) {
+                bookNotes = tietBookNotes.text.toString()!!
+            }
+        }
+
         var bookCoverImg: ByteArray? = getCoverFromImageView()
 
         return Book(
@@ -443,7 +450,8 @@ class AddEditBookDialog : DialogFragment() {
             bookISBN,
             booksPubYear,
             book.bookIsFav,
-            bookCoverImg
+            bookCoverImg,
+            bookNotes
         )
     }
 
@@ -618,6 +626,7 @@ class AddEditBookDialog : DialogFragment() {
         tietBookPages.setText(book.bookNumberOfPages.toString())
         tietBookPublishYear.setText(book.bookPublishYear.toString())
         tietBookISBN.setText(book.bookISBN13)
+        tietBookNotes.setText(book.bookNotes)
 
         if (book.bookISBN13 == "none" || book.bookISBN13 == "null") {
             if (book.bookISBN10 == "none" || book.bookISBN10 == "null") {

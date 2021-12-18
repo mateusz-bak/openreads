@@ -125,7 +125,8 @@ class DisplayBookFragment : Fragment(R.layout.fragment_display_book) {
                     book.bookISBN13,
                     book.bookPublishYear,
                     book.bookIsFav,
-                    book.bookCoverImg
+                    book.bookCoverImg,
+                    book.bookNotes
                 )
             }
         }
@@ -162,7 +163,8 @@ class DisplayBookFragment : Fragment(R.layout.fragment_display_book) {
                                     book.bookISBN13,
                                     book.bookPublishYear,
                                     book.bookIsFav,
-                                    book.bookCoverImg
+                                    book.bookCoverImg,
+                                    book.bookNotes
                                 )
                                 recalculateChallenges()
 
@@ -224,12 +226,18 @@ class DisplayBookFragment : Fragment(R.layout.fragment_display_book) {
             setFinishDate(book.bookFinishDate)
             setStartDate(book.bookStartDate)
             setFav(book.bookIsFav, book.bookStatus)
+            setNotes(book.bookNotes)
         }
     }
 
     private fun setPages(bookNumberOfPages: Int) {
-        if (bookNumberOfPages > 0)
+        if (bookNumberOfPages > 0) {
+            tvBookPagesTitle.visibility = View.VISIBLE
+            tvBookPages.visibility = View.VISIBLE
+            ivPages.visibility = View.VISIBLE
+
             tvBookPages.text = bookNumberOfPages.toString()
+        }
         else {
             tvBookPagesTitle.visibility = View.GONE
             tvBookPages.visibility = View.GONE
@@ -238,8 +246,13 @@ class DisplayBookFragment : Fragment(R.layout.fragment_display_book) {
     }
 
     private fun setPublishDate(bookPublishYear: Int) {
-        if (bookPublishYear > 0)
+        if (bookPublishYear > 0) {
+            tvBookPublishYearTitle.visibility = View.VISIBLE
+            tvBookPublishYear.visibility = View.VISIBLE
+            ivPublishYear.visibility = View.VISIBLE
+
             tvBookPublishYear.text = book.bookPublishYear.toString()
+        }
         else {
             tvBookPublishYearTitle.visibility = View.GONE
             tvBookPublishYear.visibility = View.GONE
@@ -327,8 +340,16 @@ class DisplayBookFragment : Fragment(R.layout.fragment_display_book) {
 
     private fun setISBN(bookISBN13: String, bookISBN10: String) {
         if (bookISBN13 != Constants.DATABASE_EMPTY_VALUE && bookISBN13 != "") {
+            tvBookISBNTitle.visibility = View.VISIBLE
+            tvBookISBN.visibility = View.VISIBLE
+            ivISBN.visibility = View.VISIBLE
+
             tvBookISBN.text = bookISBN13
         } else if (bookISBN10 != Constants.DATABASE_EMPTY_VALUE && bookISBN10 != "") {
+            tvBookISBNTitle.visibility = View.VISIBLE
+            tvBookISBN.visibility = View.VISIBLE
+            ivISBN.visibility = View.VISIBLE
+
             tvBookISBN.text = bookISBN10
         } else {
             tvBookISBNTitle.visibility = View.GONE
@@ -337,8 +358,28 @@ class DisplayBookFragment : Fragment(R.layout.fragment_display_book) {
         }
     }
 
+    private fun setNotes(bookNotes: String) {
+        if (bookNotes != Constants.EMPTY_STRING) {
+            tvNotesTitle.visibility = View.VISIBLE
+            tvNotes.visibility = View.VISIBLE
+            ivNotes.visibility = View.VISIBLE
+
+            tvNotes.text = bookNotes
+        } else {
+            tvNotesTitle.visibility = View.GONE
+            tvNotes.visibility = View.GONE
+            ivNotes.visibility = View.GONE
+        }
+    }
+
     private fun setOLID(bookOLID: String) {
         if (bookOLID != Constants.DATABASE_EMPTY_VALUE && bookOLID != "") {
+            tvBookOLIDTitle.visibility = View.VISIBLE
+            tvBookOLID.visibility = View.VISIBLE
+            ivOLID.visibility = View.VISIBLE
+            tvBookURL.visibility = View.VISIBLE
+            ivUrl.visibility = View.VISIBLE
+
             val olid: String = bookOLID
             val url = "https://openlibrary.org/books/$olid"
             tvBookOLID.text = bookOLID
@@ -348,6 +389,7 @@ class DisplayBookFragment : Fragment(R.layout.fragment_display_book) {
             tvBookOLID.visibility = View.GONE
             ivOLID.visibility = View.GONE
             tvBookURL.visibility = View.GONE
+            ivUrl.visibility = View.GONE
         }
     }
 
@@ -462,7 +504,8 @@ class DisplayBookFragment : Fragment(R.layout.fragment_display_book) {
             book.bookISBN13,
             book.bookPublishYear,
             book.bookIsFav,
-            book.bookCoverImg
+            book.bookCoverImg,
+            book.bookNotes
         )
     }
 
@@ -505,7 +548,8 @@ class DisplayBookFragment : Fragment(R.layout.fragment_display_book) {
             book.bookISBN13,
             book.bookPublishYear,
             fav,
-            book.bookCoverImg
+            book.bookCoverImg,
+            book.bookNotes
         )
     }
 
