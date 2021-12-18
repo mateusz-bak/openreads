@@ -27,6 +27,7 @@ object Constants {
     const val DATABASE_ITEM_BOOK_IS_DELETED = "item_bookIsDeleted"
     const val DATABASE_ITEM_BOOK_IS_FAV = "item_bookIsFav"
     const val DATABASE_ITEM_BOOK_COVER_IMG = "item_bookCoverImg"
+    const val DATABASE_ITEM_BOOK_NOTES = "item_bookNotes"
     const val DATABASE_EMPTY_VALUE = "none"
 
     const val DATABASE_NAME_YEAR = "Year"
@@ -38,15 +39,24 @@ object Constants {
     const val DATABASE_YEAR_CHALLENGE_BOOKS = "item_challenge_books"
     const val DATABASE_YEAR_CHALLENGE_PAGES = "item_challenge_pages"
     const val DATABASE_YEAR_QUICKEST_BOOK = "item_quickest_book"
+    const val DATABASE_YEAR_QUICKEST_BOOK_ID = "item_quickest_book_id"
     const val DATABASE_YEAR_QUICKEST_BOOK_VAL = "item_quickest_book_val"
     const val DATABASE_YEAR_LONGEST_BOOK = "item_longest_book"
+    const val DATABASE_YEAR_LONGEST_BOOK_ID = "item_longest_book_id"
     const val DATABASE_YEAR_LONGEST_BOOK_VAL = "item_longest_book_val"
     const val DATABASE_YEAR_AVG_READING_TIME = "item_avg_reading_time"
     const val DATABASE_YEAR_AVG_PAGES = "item_avg_pages"
     const val DATABASE_YEAR_SHORTEST_BOOK = "item_shortest_book"
+    const val DATABASE_YEAR_SHORTEST_BOOK_ID = "item_shortest_book_id"
     const val DATABASE_YEAR_SHORTEST_BOOK_VAL = "item_shortest_book_val"
     const val DATABASE_YEAR_BOOKS_BY_MONTH = "item_books_by_month"
     const val DATABASE_YEAR_PAGES_BY_MONTH = "item_pages_by_month"
+    const val DATABASE_YEAR_READ_BOOKS = "item_read_books"
+    const val DATABASE_YEAR_IN_PROGRESS_BOOKS = "item_in_progress_books"
+    const val DATABASE_YEAR_TO_READ_BOOKS = "item_to_read_books"
+    const val DATABASE_YEAR_LONGEST_READ_BOOK = "item_longest_read_book"
+    const val DATABASE_YEAR_LONGEST_READ_BOOK_ID = "item_longest_read_book_id"
+    const val DATABASE_YEAR_LONGEST_READ_VAL = "item_longest_read_val"
 
     const val DATABASE_NAME_LANGUAGE = "Language"
     const val DATABASE_LANGUAGE_FILE_NAME = "LanguageDB.db"
@@ -82,6 +92,7 @@ object Constants {
     const val SHARED_PREFERENCES_KEY_FILTER_YEARS = "KEY_FILTER_YEARS"
     const val SHARED_PREFERENCES_KEY_ONLY_FAV = "KEY_ONLY_FAV"
     const val SHARED_PREFERENCES_KEY_ACCENT = "KEY_ACCENT"
+    const val SHARED_PREFERENCES_KEY_THEME_MODE = "KEY_THEME_MODE"
     const val SHARED_PREFERENCES_KEY_LANDING_PAGE = "KEY_LANDING_PAGE"
     const val SHARED_PREFERENCES_KEY_TIME_TO_ASK_FOR_RATING = "KEY_TIME_TO_ASK_FOR_RATING"
     const val SHARED_PREFERENCES_KEY_RECOMMENDATIONS = "KEY_RECOMMENDATIONS"
@@ -94,6 +105,7 @@ object Constants {
     const val KEY_EXPORT_LOCAL = "KEY_EXPORT_LOCAL"
     const val KEY_IMPORT = "KEY_IMPORT"
     const val KEY_CHANGELOG = "KEY_CHANGELOG"
+    const val KEY_FEEDBACK = "KEY_FEEDBACK"
 
     const val EMPTY_STRING = ""
 
@@ -108,6 +120,10 @@ object Constants {
     const val THEME_ACCENT_TEAL_500 = "accent_teal"
     const val THEME_ACCENT_YELLOW_500 = "accent_yellow"
 
+    const val THEME_MODE_AUTO = "theme_mode_auto"
+    const val THEME_MODE_DAY = "theme_mode_day"
+    const val THEME_MODE_NIGHT = "theme_mode_night"
+
     const val KEY_LANDING_PAGE_FINISHED = "book_list_finished"
     const val KEY_LANDING_PAGE_IN_PROGRESS = "book_list_inProgress"
     const val KEY_LANDING_PAGE_TO_READ = "book_list_toRead"
@@ -121,9 +137,7 @@ object Constants {
     const val OPEN_LIBRARY_SEARCH_DELAY = 500L
 
     // permission request codes
-    const val PERMISSION_CAMERA_FROM_LIST_1 = 1
-    const val PERMISSION_CAMERA_FROM_LIST_2 = 2
-    const val PERMISSION_CAMERA_FROM_LIST_3 = 3
+    const val PERMISSION_CAMERA_FROM_BOOK_LIST = 1
     const val PERMISSION_CAMERA_FROM_UPLOAD_COVER = 4
     const val PERMISSION_READ_EXTERNAL_STORAGE_FROM_UPLOAD_COVER = 5
 
@@ -135,6 +149,7 @@ object Constants {
     const val SERIALIZABLE_BUNDLE_ISBN = "isbn"
     const val SERIALIZABLE_BUNDLE_ISBN_DEFAULT = "manual_search"
     const val SERIALIZABLE_BUNDLE_BOOK_SOURCE = "bookSource"
+    const val SERIALIZABLE_BUNDLE_ACCENT = "accent"
 
     // sources of book when passing to add/edit fragment
     const val NO_SOURCE = 0

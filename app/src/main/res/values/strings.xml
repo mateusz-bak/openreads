@@ -3,40 +3,23 @@
     <!ENTITY appname "Openreads">
     ]>
 <resources>
-    <string name="app_version" translatable="false">v1.8.1</string>
-    <string name="ivAuthorUrl">https://github.com/mateusz-bak/</string>
+    <string name="app_version" translatable="false">v1.9.0</string>
     <!-- Images descriptions -->
-    <string name="ivBookStatusSetRead">Set book as finished</string>
-    <string name="ivBookStatusSetInProgress">Set book as in progress</string>
-    <string name="ivBookStatusSetToRead">Set book as "to read"</string>
     <string name="fabEditBook">Edit displayed book</string>
     <string name="ivBookStatusRead">Book is finished</string>
     <string name="ivBookStatusInProgress">Book is in progress</string>
     <string name="ivBookStatusToRead">Book is "to read"</string>
-    <string name="fabSaveEditedBook">Save edited book</string>
-    <string name="fabDeleteBook">Delete current book</string>
     <string name="fabAddBook">Add a new book</string>
-    <string name="ivSearch">Search for a book</string>
-    <string name="ivClearSearch">Clear search window</string>
-    <string name="ivSort">Sort displayed books</string>
-    <string name="ivMore">Show more options</string>
     <string name="ivSeparator1">Separator between search and sort</string>
-    <string name="ivSeparator2">Separator between sort and filter</string>
     <string name="rbRatingIndicator">This book is finished</string>
     <string name="ivInProgressIndicator">This book is in progress</string>
     <string name="ivToReadIndicator">This book is to read</string>
     <!-- In-app strings -->
-    <string name="tvAppsAuthor">Created by</string>
-    <string name="tvSourceCode">Source code</string>
     <string name="ivRepoUrl" translatable="false">https://github.com/mateusz-bak/openreads-android/</string>
     <string name="tvLicenseUrl" translatable="false">https://github.com/mateusz-bak/openreads-android/blob/master/LICENSE</string>
-    <string name="miAbout">About</string>
     <string name="readFragment">Finished</string>
     <string name="inProgressFragment">In progress</string>
     <string name="toReadFragment">For later</string>
-    <string name="etAdderBookTitle">Title</string>
-    <string name="etAdderAuthor">Author</string>
-    <string name="tvAdderTitle">Add a book</string>
     <string name="btnAdderSaveBook">Save</string>
     <string name="finished">Finished</string>
     <string name="inProgress">In progress</string>
@@ -44,24 +27,15 @@
     <string name="tvBookTitle">Enter a title</string>
     <string name="tvBookAuthor">Enter an author</string>
     <string name="tvBookStatus">Book status</string>
-    <string name="etEditedBookTitle">Enter new title</string>
-    <string name="etEditedBookAuthor">Enter new author</string>
     <string name="etSearch">Search</string>
     <string name="sbWarningAuthor">Fill in the author!</string>
     <string name="sbWarningTitle">Fill in the title!</string>
-    <string name="sbWarningState">Select book\'s state!</string>
     <string name="tvSorterTitle">Sort books</string>
     <string name="tvSortTitle">Title</string>
     <string name="tvSortAuthor">Author</string>
     <string name="tvSortRating">Rating</string>
-    <string name="btnSortDecreasing" translatable="false">▼</string>
-    <string name="btnSortIncreasing" translatable="false">▲</string>
     <!-- Autofill hints -->
-    <string name="hintBookTitle" translatable="false">booktitle</string>
-    <string name="hintBookAuthor" translatable="false">bookauthor</string>
-    <string name="hintSearch" translatable="false">booksearch</string>
     <string name="notYetImplemented">Not yet implemented</string>
-    <string name="dismiss">Dismiss</string>
     <string name="bookDeleted">Book deleted</string>
     <string name="undo">Undo</string>
     <string name="tvWelcomeText_0">Welcome to</string>
@@ -72,114 +46,64 @@
     <string name="tvWelcomeText_5">Enjoy and keep reading!</string>
     <string name="tvLooksEmpty">Your book list looks empty for now, click plus button below and start adding new books!</string>
     <string name="customization">Customization</string>
-    <string name="switch_1" translatable="false">switch_1</string>
-    <string name="switch_1_on" translatable="false">switch_1_on</string>
-    <string name="switch_1_off" translatable="false">switch_1_off</string>
-    <string name="list_1" translatable="false">list_1</string>
-    <string name="list_1_1" translatable="false">list_1_1</string>
-    <string name="list_1_2" translatable="false">list_1_2</string>
-    <string name="list_1_3" translatable="false">list_1_3</string>
     <string name="about">About</string>
     <string name="app_version_title">App version</string>
     <string name="app_source_code_title">Source code</string>
-    <string name="app_developer_title">Developer</string>
-    <string name="app_developer" translatable="false">Mateusz Bąk</string>
     <string name="app_changelog">Changelog</string>
-    <string name="url_releases" translatable="false">https://github.com/mateusz-bak/openreads-android/releases</string>
     <string name="app_licence_title">Licence</string>
     <string name="app_licence" translatable="false">GNU General Public License v2.0</string>
-    <string name="daily_book_recommendations_title">Send daily new book recommendation</string>
-    <string name="daily_book_recommendations_on">Send daily notification</string>
-    <string name="daily_book_recommendations_off">Don\'t send daily notification</string>
-    <string name="changes_after_app_restart">Changes will be applied after app restart!</string>
-    <string name="accent_light_green">Light green</string>
+    <string name="accent_light_green">Grey</string>
     <string name="accent_orange">Orange</string>
-    <string name="accent_cyan">Cyan</string>
+    <string name="accent_cyan">Teal</string>
     <string name="accent_green">Green</string>
     <string name="accent_brown">Brown</string>
-    <string name="accent_lime">Lime</string>
+    <string name="accent_lime">Crimson</string>
     <string name="accent_pink">Pink</string>
     <string name="accent_purple">Purple</string>
-    <string name="accent_teal">Teal</string>
+    <string name="accent_teal">Blue</string>
     <string name="accent_yellow">Yellow</string>
     <string name="accent_name_title">Accent color</string>
     <string name="first_time_toggle_title">Show welcome screen</string>
     <string name="first_time_toggle_off">Won\'t be shown after app restart</string>
     <string name="first_time_toggle_on">Will be shown after app restart</string>
-    <string name="rate_this_book">Rate this book:</string>
-    <string name="tv_more_about_book">More</string>
     <string name="tv_book_pages_title">Pages</string>
     <string name="tv_date_finished" translatable="false">DD/MM/RRR</string>
     <string name="tv_book_pages">Pages number</string>
     <string name="tv_date_finished_title">Date finished</string>
-    <string name="hint_pages_number">Pages</string>
-    <string name="autofill_hint_pages_number" translatable="false">bookPages</string>
-    <string name="sbNotAValidNumber">Not a valid number!</string>
-    <string name="sbWarningPagesMissing">Fill in number of pages!</string>
-    <string name="sbWarningPages0">Number of pages cannot be 0!</string>
     <string name="tvSortPages">Pages</string>
     <string name="pages">pages</string>
     <string name="space" translatable="false">" "</string>
-    <string name="tvBookFinishDateTitle">"Date finished:\n%s"</string>
-    <string name="tvBookFinishDate" translatable="false">dd/mm/rrrr</string>
-    <string name="hint_date_finished">Date finished</string>
-    <string name="set_finish_date_title">Set finish date</string>
-    <string name="sbWarningMissingFinishDate">Set the finish date!</string>
     <string name="btnAdderSaveFinishDate">Set</string>
     <string name="not_set">Not set</string>
     <string name="tvSortFinishDate">Finish date</string>
     <string name="tvNumberOfPages" translatable="false">101 pages</string>
     <string name="tvDateFinished" translatable="false">13 Jun 2021</string>
     <string name="setTitleOnUpdateAvailable">New update!</string>
-    <string name="setContentOnUpdateAvailable_gplay">"Newer version of the &appname; app is available in Google Play store.\n\nClick \"update\"  to go to the downloading page."</string>
-    <string name="setContentOnUpdateAvailable_fdroid">"Newer version of the &appname; app is available in F-Droid store.\n\nClick \"update\"  to go to the downloading page."</string>
     <string name="setContentOnUpdateAvailable_github">"Newer version of the &appname; app is available in Github repository.\n\nClick \"update\"  to go to the downloading page."</string>
     <string name="setButtonUpdate">Update</string>
     <string name="setButtonDismiss">Dismiss</string>
     <string name="setButtonDoNotShowAgain">Ignore</string>
-    <string name="setContentOnUpdateNotAvailable_gplay">You\'ve got the latest version available of &appname; app from Google Play store.</string>
-    <string name="setContentOnUpdateNotAvailable_fdroid">You\'ve got the latest version available of &appname; app from F-Droid store.</string>
     <string name="setContentOnUpdateNotAvailable_github">You\'ve got the latest version available of &appname; app from Github repository.</string>
     <string name="setTitleOnUpdateNotAvailable">No updates available</string>
     <string name="statisticsFragment">Statistics</string>
     <string name="statistics_all">All</string>
-    <string name="tvBooksReadTitle">Books read</string>
-    <string name="tvBooksRead" translatable="false">999</string>
-    <string name="tvPagesReadTitle">Pages read</string>
-    <string name="tvPagesRead" translatable="false">999999</string>
     <string name="tvSetupSwipeHint_0">Swipe left</string>
     <string name="tvSetupSwipeHint_1">Click the arrow</string>
-    <string name="tvAvgRatingTitle">Average rating</string>
-    <string name="tvAvgRating" translatable="false">4.9</string>
     <string name="tvLooksEmptyStatistics">Nothing to see here yet! Add read books with finish date and come back here later.</string>
     <string name="btnAdderCancelFinishDate">Cancel</string>
     <string name="tvChallengeTitle">Challenge</string>
-    <string name="tvChallenge" translatable="false">6 / 9</string>
-    <string name="tvChallengeTitleCurrent">Current year challenge</string>
     <string name="tvChallengeEditorTitle">Edit challenge</string>
     <string name="tvChallengeNotSet">None, click to add one!</string>
-    <string name="savingChanges">Saving changes</string>
     <string name="warning_challenge_difficulty_not_set">Choose a difficulty!</string>
     <string name="tvChallengeBooks">books</string>
-    <string name="ivFilter">Filter displayed books</string>
-    <string name="ivSeparator3">Separator between filter and more options</string>
     <string name="tvFilterTitle">Filter books</string>
     <string name="trash_summary">Deleted books</string>
     <string name="trash_title">Trash</string>
-    <string name="preference_application">App</string>
     <string name="ivRestoreBook">Restore deleted book</string>
     <string name="ivDeleteBookPermanently">Delete book permanently</string>
-    <string name="click_edit_button_to_edit_title">Click edit button to change book\'s title</string>
-    <string name="click_edit_button_to_edit_author">Click edit button to change book\'s author</string>
-    <string name="click_edit_button_to_edit_status">Click edit button to change book\'s status</string>
-    <string name="click_edit_button_to_edit_date">Click edit button to change book\'s finish date</string>
-    <string name="click_edit_button_to_edit_pages">Click edit button to change book\'s number of pages</string>
-    <string name="click_edit_button_to_edit_publish_year">Click edit button to change book\'s publish year</string>
     <string name="btnAddSearch">"Search in\nOpen Library"</string>
     <string name="btnAddManual">"Add\nmanually"</string>
     <string name="etAdderBookTitleSearch">Title, author, isbn...</string>
-    <string name="fabAddNewBook">Add new book</string>
-    <string name="fabCancelAddingNewBook">Cancel adding new book</string>
     <string name="unknown_author">No author</string>
     <string name="language">language</string>
     <string name="language_upperCase">Language</string>
@@ -204,24 +128,14 @@
     <string name="tv_book_isbn_title" translatable="false">ISBN</string>
     <string name="tv_book_isbn" translatable="false">1234567890123</string>
     <string name="tv_book_url" translatable="false">https://openlibrary.org/books/OL27755728M</string>
-    <string name="hint_date_started">Date started</string>
-    <string name="set_start_date_title">Set start date</string>
-    <string name="sbWarningMissingStartDate">Set the start date!</string>
     <string name="sbWarningStartDateMustBeBeforeFinishDate">Finish date cannot be set before starting date</string>
     <string name="toast_no_results_from_OL">No results</string>
     <string name="tvSortStartDate">Start date</string>
-    <string name="hint_olid" translatable="false">Open Library ID</string>
-    <string name="hint_isbn10" translatable="false">ISBN 10</string>
-    <string name="hint_isbn13" translatable="false">ISBN 13</string>
     <string name="tv_cover_missing">"Cover missing"</string>
     <string name="set">Set</string>
     <string name="unknown_title">No title</string>
     <string name="unknown_language">No language</string>
     <string name="unknown_isbn">No ISBN</string>
-    <string name="warning_no_finish_date_title">Finish date not set!</string>
-    <string name="warning_no_finish_date_message">This book won\'t be counted for yearly challenge.</string>
-    <string name="warning_no_finish_date_add_anyway">Add anyway</string>
-    <string name="warning_no_finish_date_cancel">Go back</string>
     <string name="warning_delete_book_title">Watch out!</string>
     <string name="warning_delete_book_message">Do you really want to delete this book?</string>
     <string name="warning_delete_book_delete">delete</string>
@@ -232,26 +146,20 @@
     <string name="import_summary">Load your books from a local file on your phone. You may need to grant storage permissions for the app.</string>
     <string name="backup_title">Backup</string>
     <string name="backup_summary">Backup or restore your books</string>
-    <string name="restoreBackup_title">Found backups:</string>
     <string name="backup_success">Backup successfully created!</string>
     <string name="backup_failure">Backup creation failed!</string>
-    <string name="no_backups_found">No backups found in Backup/BooksTracker</string>
-    <string name="api_29_not_yet_supported">API 29 not yet supported</string>
-    <string name="api_30_not_yet_supported">API 30 not yet supported</string>
     <string name="backup_import_invalid_file">Import failed. The chosen file is not a valid &appname; backup!</string>
     <string name="backup_import_success">Import completed!</string>
     <string name="backup_import_failure">Import failed. Did you choose the file correctly?</string>
     <string name="rate_app_title">Rate the app</string>
-    <string name="rate_app">Do you like &appname;? Take a moment to rate it. Click here</string>
+    <string name="rate_app">Do you like &appname;? Take a moment to rate it!</string>
     <string name="app_market_url" translatable="false">market://details?id=software.mdev.bookstracker</string>
-    <string name="contact_title">Contact the author</string>
-    <string name="dev_email" translatable="false">mateusz.bak.dev@gmail.com</string>
+    <string name="contact_title">Send feedback</string>
     <string name="dev_mailto" translatable="false">mailto:mateusz.bak.dev@gmail.com</string>
     <string name="restore_backup_warning_title">Watch out!</string>
     <string name="restore_backup_warning_message">Restoring a backup will overwrite the books you currently have. Remember to have a backup of those.</string>
     <string name="warning_understand">I understand</string>
     <string name="warning_take_me_back">Take me back!</string>
-    <string name="tv_less_about_book">Less</string>
     <string name="btnAddScan">Scan barcode</string>
     <string name="tbScannerTip">Scan a barcode</string>
     <string name="book_list_title">Landing page</string>
@@ -264,7 +172,6 @@
     <string name="ask_for_rating_dialog_neu">Maybe next time</string>
     <string name="ask_for_rating_dialog_neg">Nope, never!</string>
     <string name="rating_changes_succesfully">Rating changed successfully</string>
-    <string name="autofill_hint_publish_year" translatable="false">bookpublishyear</string>
     <string name="hint_publish_year">Publish year</string>
     <string name="unknown_pages">No number of pages</string>
     <string name="unknown_publish_year">No publish year</string>
@@ -276,7 +183,7 @@
     <string name="stats_pages_read">Pages read</string>
     <string name="stats_avg_rating">Average books rating</string>
     <string name="stats_challenge">Reading challenge</string>
-    <string name="stats_books_by_months">Read books by month</string>
+    <string name="stats_books_by_months">Read books by finish month</string>
     <string name="need_more_data">Need more data for that</string>
     <string name="days">days</string>
     <string name="stats_shortest_book">Shortest book</string>
@@ -302,7 +209,7 @@
     <string name="month_10_short">Oct</string>
     <string name="month_11_short">Nov</string>
     <string name="month_12_short">Dec</string>
-    <string name="stats_pages_by_months">Read pages by month</string>
+    <string name="stats_pages_by_months">Read pages by finish month</string>
     <string name="export_local_summary">Save your books to a local file so you always have the backup handy!</string>
     <string name="export_local_title">Create local backup</string>
     <string name="insert_book_title">Book\'s title</string>
@@ -313,7 +220,6 @@
     <string name="insert_book_olid" translatable="false">Open Library ID</string>
     <string name="insert_book_status">Book\'s status</string>
     <string name="insert_book_rating">Your rating</string>
-    <string name="insert_book_cover">Book\'s cover</string>
     <string name="insert_book_notes">Notes</string>
     <string name="insert_book_finish_date">Finish date</string>
     <string name="insert_book_start_date">Start date</string>
@@ -327,4 +233,24 @@
     <string name="upload_cover_from_camera">Take photo of your cover</string>
     <string name="permission_granted_click_cover_again">Permission granted! Click the cover again</string>
     <string name="btnAdderClearFinishDate">Clear</string>
+    <string name="book_notes">Notes</string>
+    <string name="book_tags">Tags</string>
+    <string name="settings">Settings</string>
+    <string name="search_hint">Search in your books</string>
+    <string name="contact_summary">You found a bug or you have a new feature idea? Contact the author!</string>
+    <string name="send_mail_to_dev">Send the dev an email</string>
+    <string name="github_open_issue">Open issue on Github</string>
+    <string name="github_open_feature_request">Propose a new feature on Github</string>
+    <string name="github_issue_url" translatable="false"><![CDATA[https://github.com/mateusz-bak/openreads-android/issues/new?assignees=mateusz-bak&labels=bug&template=bug_report.md&title=%5BBUG%5D+]]></string>
+    <string name="github_feature_url" translatable="false"><![CDATA[https://github.com/mateusz-bak/openreads-android/issues/new?assignees=mateusz-bak&labels=enhancement&template=feature_request.md&title=%5BFEATURE_REQUEST%5D+]]></string>
+    <string name="stats_longest_read">Longest read time</string>
+    <string name="stats_books_by_status">All books by status</string>
+    <string name="need_more_data_title">Do you think this should display something else?</string>
+    <string name="need_more_data_message">Make sure that your books have number of pages, start and finish dates set and come back again.</string>
+    <string name="theme_mode_title">Theme</string>
+    <string name="theme_mode_auto">Follow systems theme</string>
+    <string name="theme_mode_day">Light</string>
+    <string name="theme_mode_night">Dark</string>
+    <string name="ascending">Ascending</string>
+    <string name="descending">Descending</string>
 </resources>

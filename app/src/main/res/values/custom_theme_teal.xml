@@ -4,4 +4,11 @@
         <!-- Primary brand color. -->
         <item name="colorPrimary">@color/teal_500</item>
     </style>
+
+    <style name="Theme.Mdev.Bookstracker.FullScreenDialog.Teal" parent="Theme.Mdev.Bookstracker.CustomTheme.Teal">
+        <item name="android:windowIsFloating">false</item>
+        <item name="android:windowBackground">@color/white</item>
+        <item name="actionMenuTextColor">@color/colorDefaultText</item>
+        <item name="android:statusBarColor">?attr/colorOnPrimary</item>
+    </style>
 </resources>

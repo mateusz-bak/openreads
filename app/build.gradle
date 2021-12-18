@@ -15,8 +15,8 @@ android {
         applicationId "software.mdev.bookstracker"
         minSdkVersion 24
         targetSdkVersion 30
-        versionCode 12
-        versionName "1.8.1"
+        versionCode 13
+        versionName "1.9.0"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
 
@@ -30,8 +30,8 @@ android {
             resValue "string", "app_name", "Openreads"
             resValue "string", "shared_preferences_name", "software.mdev.bookstracker_preferences"
             manifestPlaceholders = [
-                    appIcon: "@mipmap/ic_launcher_three_books",
-                    appIconRound: "@mipmap/ic_launcher_three_books_round",
+                    appIcon: "@mipmap/logo",
+                    appIconRound: "@mipmap/logo_round",
                     providerAuthorities: "software.mdev.bookstracker.fileprovider"
             ]
         }
@@ -40,8 +40,8 @@ android {
             resValue "string", "app_name", "Openreads debug"
             resValue "string", "shared_preferences_name", "software.mdev.bookstracker.debug_preferences"
             manifestPlaceholders = [
-                    appIcon: "@mipmap/ic_launcher_three_books_debug",
-                    appIconRound: "@mipmap/ic_launcher_three_books_debug",
+                    appIcon: "@mipmap/logo_debug",
+                    appIconRound: "@mipmap/logo_debug_round",
                     providerAuthorities: "software.mdev.bookstracker.debug.fileprovider"
             ]
         }
@@ -126,8 +126,8 @@ dependencies {
 
     implementation 'androidx.cardview:cardview:1.0.0'
 
-    // https://github.com/yuriy-budiyev/code-scanner
-    implementation 'com.budiyev.android:code-scanner:2.1.0'
+    // https://github.com/journeyapps/zxing-android-embedded
+    implementation 'com.journeyapps:zxing-android-embedded:4.3.0'
 
     //charts
     implementation 'com.github.PhilJay:MPAndroidChart:v3.1.0'

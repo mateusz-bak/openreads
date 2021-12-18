@@ -76,10 +76,6 @@ class StatisticsFragment : Fragment(R.layout.fragment_statistics) {
                 this.getYears(adapter)
             })
 
-        ivMore.setOnClickListener {
-            it.hideKeyboard()
-            findNavController().navigate(R.id.settingsFragment, null)
-        }
     }
 
     fun View.hideKeyboard() {
@@ -102,13 +98,20 @@ class StatisticsFragment : Fragment(R.layout.fragment_statistics) {
                 var sumRatingAllTime = 0F
 
                 var longestBookAllTime = "null"
+                var longestBookAllTimeID = 0
                 var longestBookValAllTime = 0
 
                 var shortestBookAllTime = "null"
+                var shortestBookAllTimeID = 0
                 var shortestBookValAllTime = Int.MAX_VALUE
 
                 var quickestReadAllTime = "null"
+                var quickestReadAllTimeID = 0
                 var quickestReadValAllTime = Long.MAX_VALUE
+
+                var longestReadAllTime = "null"
+                var longestReadAllTimeID = 0
+                var longestReadValAllTime = Long.MIN_VALUE
 
                 var readingTimeSumAllTime = 0L
                 var averageReadingTimeNumOfBooksAllTime = 0L
@@ -122,13 +125,20 @@ class StatisticsFragment : Fragment(R.layout.fragment_statistics) {
                     var sumRatingInYear = 0F
 
                     var longestBook = "null"
+                    var longestBookID = 0
                     var longestBookVal = 0
 
                     var shortestBook = "null"
+                    var shortestBookID = 0
                     var shortestBookVal = Int.MAX_VALUE
 
                     var quickestRead = "null"
+                    var quickestReadID = 0
                     var quickestReadVal = Long.MAX_VALUE
+
+                    var longestRead = "null"
+                    var longestReadID = 0
+                    var longestReadVal = Long.MIN_VALUE
 
                     var readingTimeSum = 0L
                     var averageReadingTimeNumOfBooks = 0L
@@ -230,6 +240,7 @@ class StatisticsFragment : Fragment(R.layout.fragment_statistics) {
                                     longestBookVal = item_book.bookNumberOfPages
                                     var string = item_book.bookTitle + " - " + item_book.bookAuthor
                                     longestBook = string
+                                    longestBookID = item_book.id!!
                                 }
 
                                 // longest book all time
@@ -237,20 +248,23 @@ class StatisticsFragment : Fragment(R.layout.fragment_statistics) {
                                     longestBookValAllTime = item_book.bookNumberOfPages
                                     var string = item_book.bookTitle + " - " + item_book.bookAuthor
                                     longestBookAllTime = string
+                                    longestBookAllTimeID = item_book.id!!
                                 }
 
                                 // shortest book in a year
-                                if (item_book.bookNumberOfPages < shortestBookVal) {
+                                if (item_book.bookNumberOfPages < shortestBookVal && item_book.bookNumberOfPages != 0) {
                                     shortestBookVal = item_book.bookNumberOfPages
                                     var string = item_book.bookTitle + " - " + item_book.bookAuthor
                                     shortestBook = string
+                                    shortestBookID = item_book.id!!
                                 }
 
                                 // shortest book all time
-                                if (item_book.bookNumberOfPages < shortestBookValAllTime) {
+                                if (item_book.bookNumberOfPages < shortestBookValAllTime && item_book.bookNumberOfPages != 0) {
                                     shortestBookValAllTime = item_book.bookNumberOfPages
                                     var string = item_book.bookTitle + " - " + item_book.bookAuthor
                                     shortestBookAllTime = string
+                                    shortestBookAllTimeID = item_book.id!!
                                 }
 
 
@@ -261,12 +275,14 @@ class StatisticsFragment : Fragment(R.layout.fragment_statistics) {
                                         quickestReadVal = readingTime
                                         var string = item_book.bookTitle + " - " + item_book.bookAuthor
                                         quickestRead = string
+                                        quickestReadID = item_book.id!!
                                     }
 
                                     if (readingTime < quickestReadValAllTime) {
                                         quickestReadValAllTime = readingTime
                                         var string = item_book.bookTitle + " - " + item_book.bookAuthor
                                         quickestReadAllTime = string
+                                        quickestReadAllTimeID = item_book.id!!
                                     }
 
                                     readingTimeSum += readingTime
@@ -283,10 +299,29 @@ class StatisticsFragment : Fragment(R.layout.fragment_statistics) {
                                         quickestReadVal = readingTime
                                         var string = item_book.bookTitle + " - " + item_book.bookAuthor
                                         quickestRead = string
+                                        quickestReadID = item_book.id!!
                                     }
 
                                     readingTimeSum += readingTime
                                     averageReadingTimeNumOfBooks ++
+                                }
+
+                                if (item_book.bookStartDate != "none" && item_book.bookStartDate != "null") {
+                                    var readingTime = item_book.bookFinishDate.toLong() - item_book.bookStartDate.toLong()
+
+                                    if (readingTime > longestReadVal) {
+                                        longestReadVal = readingTime
+                                        var string = item_book.bookTitle + " - " + item_book.bookAuthor
+                                        longestRead = string
+                                        longestReadID = item_book.id!!
+                                    }
+
+                                    if (readingTime > longestReadValAllTime) {
+                                        longestReadValAllTime = readingTime
+                                        var string = item_book.bookTitle + " - " + item_book.bookAuthor
+                                        longestReadAllTime = string
+                                        longestReadAllTimeID = item_book.id!!
+                                    }
                                 }
                             }
                         }
@@ -312,15 +347,21 @@ class StatisticsFragment : Fragment(R.layout.fragment_statistics) {
                         0,
                         0,
                         quickestRead,
+                        quickestReadID,
                         quickestReadVal.toString(),
                         longestBook,
+                        longestBookID,
                         longestBookVal,
                         avgReadingTime,
                         avgPages,
                         shortestBook,
+                        shortestBookID,
                         shortestBookVal,
                         booksByMonths,
-                        pagesByMonths
+                        pagesByMonths,
+                        yearLongestReadBook = longestRead,
+                        yearLongestReadBookID = longestReadID,
+                        yearLongestReadVal = longestReadVal.toString()
                     ))
                 }
 
@@ -343,32 +384,61 @@ class StatisticsFragment : Fragment(R.layout.fragment_statistics) {
                     0,
                     0,
                     quickestReadAllTime,
+                    quickestReadAllTimeID,
                     quickestReadValAllTime.toString(),
                     longestBookAllTime,
+                    longestBookAllTimeID,
                     longestBookValAllTime,
                     avgReadingTimeAllTime,
                     avgPagesAllTime,
                     shortestBookAllTime,
+                    shortestBookAllTimeID,
                     shortestBookValAllTime,
                     booksByMonthsAllTime,
-                    pagesByMonthsAllTime
+                    pagesByMonthsAllTime,
+                    yearLongestReadBook = longestReadAllTime,
+                    yearLongestReadBookID = longestReadAllTimeID,
+                    yearLongestReadVal = longestReadValAllTime.toString()
                 )
 
-                statisticsAdapter.differ.submitList(listOfYears)
+                var readBooksAllTime = 0
+                var inProgressBooksAllTime = 0
+                var toReadBooksAllTime = 0
 
-                // bounce effect on viewpager2
-                vpStatistics.children.filterIsInstance<RecyclerView>().firstOrNull()?.let {
-                    OverScrollDecoratorHelper.setUpOverScroll(it, ORIENTATION_HORIZONTAL)
-                }
+                viewModel.getBookCount(Constants.BOOK_STATUS_READ).observe(viewLifecycleOwner, Observer {it
+                    if (it != null)
+                        readBooksAllTime = it.toInt()
 
-                TabLayoutMediator(tlStatistics, vpStatistics) { tab, position ->
-                    when (position) {
-                        0 -> tab.text = getString(R.string.statistics_all)
-                        else -> tab.text = listOfYears[position].year
-                    }
-                }.attach()
-            }
-            )
+                    viewModel.getBookCount(Constants.BOOK_STATUS_IN_PROGRESS).observe(viewLifecycleOwner, Observer {
+                        if (it != null)
+                            inProgressBooksAllTime = it.toInt()
+
+                        viewModel.getBookCount(Constants.BOOK_STATUS_TO_READ).observe(viewLifecycleOwner, Observer {
+                            if (it != null)
+                                toReadBooksAllTime = it.toInt()
+
+                            listOfYears[0].yearReadBooks = readBooksAllTime
+                            listOfYears[0].yearInProgressBooks = inProgressBooksAllTime
+                            listOfYears[0].yearToReadBooks = toReadBooksAllTime
+
+                            statisticsAdapter.differ.submitList(listOfYears)
+
+                            // bounce effect on viewpager2
+                            vpStatistics.children.filterIsInstance<RecyclerView>().firstOrNull()?.let {
+                                OverScrollDecoratorHelper.setUpOverScroll(it, ORIENTATION_HORIZONTAL)
+                            }
+
+                            TabLayoutMediator(tlStatistics, vpStatistics) { tab, position ->
+                                when (position) {
+                                    0 -> tab.text = getString(R.string.statistics_all)
+                                    else -> tab.text = listOfYears[position].year
+                                }
+                            }.attach()
+                        })
+
+                    })
+                })
+            })
     }
 
     private fun calculateHowManyYearsForStats(books: List<Book>): List<Int> {

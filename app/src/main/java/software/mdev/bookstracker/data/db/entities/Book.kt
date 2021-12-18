@@ -61,7 +61,10 @@ data class Book (
         var  bookIsFav: Boolean = false,
 
         @ColumnInfo(typeAffinity = ColumnInfo.BLOB, name = Constants.DATABASE_ITEM_BOOK_COVER_IMG)
-        var  bookCoverImg: ByteArray? = null
+        var  bookCoverImg: ByteArray? = null,
+
+        @ColumnInfo(name = Constants.DATABASE_ITEM_BOOK_NOTES)
+        var  bookNotes: String = Constants.EMPTY_STRING,
 ): Serializable{
     @PrimaryKey(autoGenerate = true)
     var id: Int? = null

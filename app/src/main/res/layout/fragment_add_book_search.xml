@@ -28,15 +28,14 @@
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="24dp"
-            android:padding="16dp">
+            android:paddingBottom="16dp">
 
             <EditText
                 android:id="@+id/etAdderBookTitleSearch"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="2dp"
                 android:layout_marginEnd="8dp"
+                android:layout_marginStart="16dp"
                 android:hint="@string/etAdderBookTitleSearch"
                 android:inputType="textCapSentences"
                 android:maxLength="200"
@@ -60,7 +59,8 @@
                 app:layout_constraintBottom_toBottomOf="@+id/etAdderBookTitleSearch"
                 app:layout_constraintEnd_toEndOf="@+id/etAdderBookTitleSearch"
                 app:layout_constraintTop_toTopOf="@+id/etAdderBookTitleSearch"
-                app:srcCompat="@drawable/ic_baseline_clear_24" />
+                android:rotation="45"
+                app:srcCompat="@drawable/ic_iconscout_plus_24" />
 
             <TextView
                 android:id="@+id/tvResultsNumber"
@@ -74,6 +74,7 @@
                 android:id="@+id/frLanguages"
                 android:layout_width="0dp"
                 android:layout_height="200dp"
+                android:layout_marginStart="16dp"
                 android:layout_marginTop="24dp"
                 android:layout_marginEnd="12dp"
                 android:clipToPadding="false"
@@ -135,6 +136,7 @@
                 android:gravity="center"
                 android:text="@string/button_search"
                 app:cornerRadius="@dimen/text_input_layout_radius"
+                android:layout_marginEnd="16dp"
                 app:layout_constraintBottom_toBottomOf="@+id/etAdderBookTitleSearch"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="@+id/etAdderBookTitleSearch" />
@@ -147,6 +149,7 @@
                 android:gravity="center"
                 android:text="@string/button_language"
                 app:cornerRadius="@dimen/text_input_layout_radius"
+                android:layout_marginEnd="16dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/btnSearchInOL"
                 style="@style/Widget.MaterialComponents.Button.OutlinedButton"

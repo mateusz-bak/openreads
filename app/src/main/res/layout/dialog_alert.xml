@@ -16,7 +16,6 @@
         android:text="@string/tvAlertTitle"
         android:textColor="?colorOnSecondary"
         android:textSize="20sp"
-        android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"

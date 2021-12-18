@@ -11,14 +11,13 @@
         <item name="android:statusBarColor" tools:targetApi="l">?attr/colorPrimarySurface</item>
         <item name="android:windowLightStatusBar">false</item>
         <!-- Customize your theme here. -->
-        <item name="windowActionBar">false</item>
-        <item name="windowNoTitle">true</item>
         <item name="colorAccent">?colorPrimary</item>
         <item name="sortDialogBackgroundColor">@color/grey_dialog_night</item>
         <item name="android:navigationBarColor">?attr/colorPrimarySurface</item>
     </style>
 
     <color name="colorDefaultText">#FFFFFF</color>
+    <color name="colorDefaultBg">#000000</color>
     <color name="colorGreyText">#9e9e9e</color>
     <color name="teal_bg">#00251a</color>
     <color name="cardViewBackgroundColor">@color/grey_800</color>

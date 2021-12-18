@@ -4,4 +4,11 @@
         <!-- Primary brand color. -->
         <item name="colorPrimary">@color/pink_300</item>
     </style>
+
+    <style name="Theme.Mdev.Bookstracker.FullScreenDialog.Pink" parent="Theme.Mdev.Bookstracker.CustomTheme.Pink">
+        <item name="android:windowIsFloating">false</item>
+        <item name="android:windowBackground">@color/white</item>
+        <item name="actionMenuTextColor">@color/colorDefaultText</item>
+        <item name="android:statusBarColor">?attr/colorOnPrimary</item>
+    </style>
 </resources>

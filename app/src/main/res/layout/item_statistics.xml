@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
@@ -23,87 +22,127 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.5"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent">
+                app:layout_constraintTop_toBottomOf="@+id/clBooksByStatus">
 
-                <androidx.cardview.widget.CardView
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/clChallengeIn"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:backgroundTint="@color/cardViewBackgroundColor"
-                    app:cardElevation="1dp"
-                    app:cardCornerRadius="@dimen/text_input_layout_radius"
-                    app:cardUseCompatPadding="true"
-                    app:layout_constraintBottom_toBottomOf="parent"
+                    android:padding="8dp"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintHorizontal_bias="0.5"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent">
 
-                    <androidx.constraintlayout.widget.ConstraintLayout
-                        android:id="@+id/clChallengeIn"
-                        android:layout_width="match_parent"
+                    <TextView
+                        android:id="@+id/tvChallengeTitle"
+                        android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:padding="8dp"
+                        android:layout_marginStart="8dp"
+                        android:layout_marginEnd="8dp"
+                        android:fontFamily="@font/jost_500_medium"
+                        android:gravity="start"
+                        android:text="@string/stats_challenge"
+                        android:textColor="?colorPrimary"
+                        android:textSize="16sp"
+                        app:layout_constraintBottom_toTopOf="@+id/tvChallengeValue"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent">
+                        app:layout_constraintTop_toTopOf="parent" />
 
-                        <TextView
-                            android:id="@+id/tvChallengeTitle"
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_marginStart="16dp"
-                            android:fontFamily="sans-serif"
-                            android:gravity="start"
-                            android:text="@string/stats_challenge"
-                            android:textColor="?colorOnSecondary"
-                            android:textSize="16sp"
-                            android:layout_marginEnd="8dp"
-                            app:layout_constraintBottom_toTopOf="@+id/tvChallengeValue"
-                            app:layout_constraintEnd_toEndOf="parent"
-                            app:layout_constraintStart_toEndOf="@+id/ivChallenge"
-                            app:layout_constraintTop_toTopOf="parent" />
+                    <TextView
+                        android:id="@+id/tvChallengeValue"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="8dp"
+                        android:layout_marginEnd="8dp"
+                        android:gravity="start"
+                        android:text="@string/stats_challenge"
+                        android:textSize="14sp"
+                        android:textColor="@color/colorDefaultText"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/tvChallengeTitle" />
 
-                        <TextView
-                            android:id="@+id/tvChallengeValue"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:fontFamily="sans-serif-light"
-                            android:gravity="center"
-                            android:text="@string/stats_challenge"
-                            android:textSize="14sp"
-                            app:layout_constraintStart_toStartOf="@+id/tvChallengeTitle"
-                            app:layout_constraintTop_toBottomOf="@+id/tvChallengeTitle" />
+                    <!--                        <ImageView-->
+                    <!--                            android:id="@+id/ivChallenge"-->
+                    <!--                            android:layout_width="50dp"-->
+                    <!--                            android:layout_height="50dp"-->
+                    <!--                            android:layout_marginStart="8dp"-->
+                    <!--                            app:layout_constraintBottom_toBottomOf="parent"-->
+                    <!--                            app:layout_constraintStart_toStartOf="parent"-->
+                    <!--                            app:layout_constraintTop_toTopOf="parent"-->
+                    <!--                            app:srcCompat="@drawable/ic_svg_gold_medal" />-->
 
-                        <ImageView
-                            android:id="@+id/ivChallenge"
-                            android:layout_width="50dp"
-                            android:layout_height="50dp"
-                            android:layout_marginStart="8dp"
-                            app:layout_constraintBottom_toBottomOf="parent"
-                            app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toTopOf="parent"
-                            app:srcCompat="@drawable/ic_svg_gold_medal" />
+                    <com.google.android.material.progressindicator.LinearProgressIndicator
+                        android:id="@+id/pbChallenge"
+                        android:layout_width="0dp"
+                        android:layout_height="20dp"
+                        android:layout_marginStart="8dp"
+                        android:layout_marginTop="4dp"
+                        android:layout_marginEnd="8dp"
+                        android:layout_marginBottom="4dp"
+                        android:indeterminate="false"
+                        android:max="100"
+                        android:progress="0"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintHorizontal_bias="0.5"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/tvChallengeValue"
+                        app:trackCornerRadius="5dp"
+                        app:trackThickness="12dp" />
 
-                        <com.google.android.material.progressindicator.LinearProgressIndicator
-                            android:id="@+id/pbChallenge"
-                            android:layout_width="0dp"
-                            android:layout_height="20dp"
-                            android:layout_marginTop="4dp"
-                            android:layout_marginEnd="8dp"
-                            android:layout_marginBottom="4dp"
-                            android:indeterminate="false"
-                            android:max="100"
-                            android:progress="0"
-                            app:trackThickness="12dp"
-                            app:trackCornerRadius="5dp"
-                            app:layout_constraintEnd_toEndOf="parent"
-                            app:layout_constraintHorizontal_bias="0.5"
-                            app:layout_constraintBottom_toBottomOf="parent"
-                            app:layout_constraintStart_toStartOf="@+id/tvChallengeValue"
-                            app:layout_constraintTop_toBottomOf="@+id/tvChallengeValue" />
+                </androidx.constraintlayout.widget.ConstraintLayout>
+            </androidx.constraintlayout.widget.ConstraintLayout>
 
-                    </androidx.constraintlayout.widget.ConstraintLayout>
-                </androidx.cardview.widget.CardView>
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/clBooksByStatus"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/clBooksByStatusIn"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="8dp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent">
+
+                    <TextView
+                        android:id="@+id/tvBooksByStatusTitle"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="8dp"
+                        android:layout_marginTop="8dp"
+                        android:layout_marginEnd="8dp"
+                        android:fontFamily="@font/jost_500_medium"
+                        android:gravity="start"
+                        android:text="@string/stats_books_by_status"
+                        android:textColor="?colorPrimary"
+                        android:textSize="16sp"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <com.github.mikephil.charting.charts.PieChart
+                        android:id="@+id/pcBooksByStatus"
+                        android:layout_width="match_parent"
+                        android:layout_height="200dp"
+                        android:layout_marginStart="8dp"
+                        android:layout_marginTop="12dp"
+                        android:layout_marginEnd="8dp"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintHorizontal_bias="0.5"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/tvBooksByStatusTitle" />
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
             </androidx.constraintlayout.widget.ConstraintLayout>
 
             <androidx.constraintlayout.widget.ConstraintLayout
@@ -115,68 +154,57 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/clChallenge">
 
-                <androidx.cardview.widget.CardView
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/clBooksReadIn"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:backgroundTint="@color/cardViewBackgroundColor"
-                    app:cardElevation="1dp"
-                    app:cardCornerRadius="@dimen/text_input_layout_radius"
-                    app:cardUseCompatPadding="true"
-                    app:layout_constraintBottom_toBottomOf="parent"
+                    android:layout_height="80dp"
+                    android:padding="8dp"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintHorizontal_bias="0.5"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent">
 
-                    <androidx.constraintlayout.widget.ConstraintLayout
-                        android:id="@+id/clBooksReadIn"
-                        android:layout_width="match_parent"
-                        android:layout_height="80dp"
-                        android:padding="8dp"
+                    <TextView
+                        android:id="@+id/tvBooksReadTitle"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="8dp"
+                        android:layout_marginEnd="8dp"
+                        android:fontFamily="@font/jost_500_medium"
+                        android:gravity="start"
+                        android:text="@string/stats_books_read"
+                        android:textColor="?colorPrimary"
+                        android:textSize="16sp"
+                        app:layout_constraintBottom_toTopOf="@+id/tvBooksReadValue"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent">
+                        app:layout_constraintTop_toTopOf="parent" />
 
-                        <TextView
-                            android:id="@+id/tvBooksReadTitle"
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_marginStart="16dp"
-                            android:fontFamily="sans-serif"
-                            android:gravity="start"
-                            android:text="@string/stats_books_read"
-                            android:textColor="?colorOnSecondary"
-                            android:textSize="16sp"
-                            android:layout_marginEnd="8dp"
-                            app:layout_constraintBottom_toTopOf="@+id/tvBooksReadValue"
-                            app:layout_constraintEnd_toEndOf="parent"
-                            app:layout_constraintStart_toEndOf="@+id/ivBooksRead"
-                            app:layout_constraintTop_toTopOf="parent" />
+                    <TextView
+                        android:id="@+id/tvBooksReadValue"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="8dp"
+                        android:layout_marginEnd="8dp"
+                        android:gravity="start"
+                        android:text="@string/stats_books_read"
+                        android:textSize="14sp"
+                        android:textColor="@color/colorDefaultText"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/tvBooksReadTitle" />
 
-                        <TextView
-                            android:id="@+id/tvBooksReadValue"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:fontFamily="sans-serif-light"
-                            android:gravity="center"
-                            android:text="@string/stats_books_read"
-                            android:textSize="14sp"
-                            app:layout_constraintBottom_toBottomOf="parent"
-                            app:layout_constraintStart_toStartOf="@+id/tvBooksReadTitle"
-                            app:layout_constraintTop_toBottomOf="@+id/tvBooksReadTitle" />
+                    <!--                        <ImageView-->
+                    <!--                            android:id="@+id/ivBooksRead"-->
+                    <!--                            android:layout_width="50dp"-->
+                    <!--                            android:layout_height="50dp"-->
+                    <!--                            android:layout_marginStart="8dp"-->
+                    <!--                            app:layout_constraintBottom_toBottomOf="parent"-->
+                    <!--                            app:layout_constraintStart_toStartOf="parent"-->
+                    <!--                            app:layout_constraintTop_toTopOf="parent"-->
+                    <!--                            app:srcCompat="@drawable/ic_svg_three_books_grey_colored" />-->
 
-                        <ImageView
-                            android:id="@+id/ivBooksRead"
-                            android:layout_width="50dp"
-                            android:layout_height="50dp"
-                            android:layout_marginStart="8dp"
-                            app:layout_constraintBottom_toBottomOf="parent"
-                            app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toTopOf="parent"
-                            app:srcCompat="@drawable/ic_svg_three_books_grey_colored" />
-
-                    </androidx.constraintlayout.widget.ConstraintLayout>
-                </androidx.cardview.widget.CardView>
+                </androidx.constraintlayout.widget.ConstraintLayout>
             </androidx.constraintlayout.widget.ConstraintLayout>
 
             <androidx.constraintlayout.widget.ConstraintLayout
@@ -186,62 +214,48 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.5"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/clBooksRead">
+                app:layout_constraintTop_toBottomOf="@+id/clPagesRead">
 
-                <androidx.cardview.widget.CardView
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/clBooksByMonthIn"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:backgroundTint="@color/cardViewBackgroundColor"
-                    app:cardElevation="1dp"
-                    app:cardCornerRadius="@dimen/text_input_layout_radius"
-                    app:cardUseCompatPadding="true"
-                    app:layout_constraintBottom_toBottomOf="parent"
+                    android:padding="8dp"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintHorizontal_bias="0.5"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent">
 
-                    <androidx.constraintlayout.widget.ConstraintLayout
-                        android:id="@+id/clBooksByMonthIn"
-                        android:layout_width="match_parent"
+                    <TextView
+                        android:id="@+id/tvBooksByMonthsTitle"
+                        android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:padding="8dp"
+                        android:layout_marginStart="8dp"
+                        android:layout_marginTop="8dp"
+                        android:layout_marginEnd="8dp"
+                        android:fontFamily="@font/jost_500_medium"
+                        android:gravity="start"
+                        android:text="@string/stats_books_by_months"
+                        android:textColor="?colorPrimary"
+                        android:textSize="16sp"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent">
+                        app:layout_constraintTop_toTopOf="parent" />
 
-                        <TextView
-                            android:id="@+id/tvBooksByMonthsTitle"
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="8dp"
-                            android:layout_marginStart="8dp"
-                            android:layout_marginEnd="8dp"
-                            android:fontFamily="sans-serif"
-                            android:gravity="start"
-                            android:text="@string/stats_books_by_months"
-                            android:textColor="?colorOnSecondary"
-                            android:textSize="16sp"
-                            app:layout_constraintEnd_toEndOf="parent"
-                            app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toTopOf="parent" />
-
-                        <software.mdev.bookstracker.other.RoundedBarChart
-                            android:id="@+id/rbcBooksByMonth"
-                            android:layout_width="0dp"
-                            android:layout_height="150dp"
-                            android:layout_marginTop="12dp"
-                            android:layout_marginStart="-8dp"
-                            android:layout_marginEnd="-8dp"
-                            app:layout_constraintBottom_toBottomOf="parent"
-                            app:layout_constraintEnd_toEndOf="@+id/tvBooksByMonthsTitle"
-                            app:layout_constraintStart_toStartOf="@+id/tvBooksByMonthsTitle"
-                            app:layout_constraintTop_toBottomOf="@+id/tvBooksByMonthsTitle"
-                            app:radius="6dp" />
+                    <software.mdev.bookstracker.other.RoundedBarChart
+                        android:id="@+id/rbcBooksByMonth"
+                        android:layout_width="0dp"
+                        android:layout_height="150dp"
+                        android:layout_marginStart="-16dp"
+                        android:layout_marginTop="12dp"
+                        android:layout_marginEnd="-16dp"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="@+id/tvBooksByMonthsTitle"
+                        app:layout_constraintStart_toStartOf="@+id/tvBooksByMonthsTitle"
+                        app:layout_constraintTop_toBottomOf="@+id/tvBooksByMonthsTitle"
+                        app:radius="6dp" />
 
 
-                    </androidx.constraintlayout.widget.ConstraintLayout>
-                </androidx.cardview.widget.CardView>
+                </androidx.constraintlayout.widget.ConstraintLayout>
             </androidx.constraintlayout.widget.ConstraintLayout>
 
             <androidx.constraintlayout.widget.ConstraintLayout
@@ -251,69 +265,59 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.5"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/clBooksByMonth">
+                app:layout_constraintTop_toBottomOf="@id/clBooksRead">
 
-                <androidx.cardview.widget.CardView
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/clPagesReadIn"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:backgroundTint="@color/cardViewBackgroundColor"
-                    app:cardElevation="1dp"
-                    app:cardCornerRadius="@dimen/text_input_layout_radius"
-                    app:cardUseCompatPadding="true"
-                    app:layout_constraintBottom_toBottomOf="parent"
+                    android:layout_height="80dp"
+                    android:padding="8dp"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintHorizontal_bias="0.5"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent">
 
-                    <androidx.constraintlayout.widget.ConstraintLayout
-                        android:id="@+id/clPagesReadIn"
-                        android:layout_width="match_parent"
-                        android:layout_height="80dp"
-                        android:padding="8dp"
+                    <TextView
+                        android:id="@+id/tvPagesReadTitle"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="8dp"
+                        android:layout_marginEnd="8dp"
+                        android:fontFamily="@font/jost_500_medium"
+                        android:gravity="start"
+                        android:text="@string/stats_pages_read"
+                        android:textColor="?colorPrimary"
+                        android:textSize="16sp"
+                        app:layout_constraintBottom_toTopOf="@+id/tvPagesReadValue"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent">
+                        app:layout_constraintTop_toTopOf="parent" />
 
-                        <TextView
-                            android:id="@+id/tvPagesReadTitle"
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_marginStart="16dp"
-                            android:fontFamily="sans-serif"
-                            android:gravity="start"
-                            android:text="@string/stats_pages_read"
-                            android:textColor="?colorOnSecondary"
-                            android:textSize="16sp"
-                            android:layout_marginEnd="8dp"
-                            app:layout_constraintBottom_toTopOf="@+id/tvPagesReadValue"
-                            app:layout_constraintStart_toEndOf="@+id/ivPagesRead"
-                            app:layout_constraintTop_toTopOf="parent" />
+                    <TextView
+                        android:id="@+id/tvPagesReadValue"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="8dp"
+                        android:layout_marginEnd="8dp"
+                        android:gravity="start"
+                        android:text="@string/stats_pages_read"
+                        android:textSize="14sp"
+                        android:textColor="@color/colorDefaultText"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/tvPagesReadTitle" />
 
-                        <TextView
-                            android:id="@+id/tvPagesReadValue"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:fontFamily="sans-serif-light"
-                            android:gravity="center"
-                            android:text="@string/stats_pages_read"
-                            android:textSize="14sp"
-                            app:layout_constraintBottom_toBottomOf="parent"
-                            app:layout_constraintStart_toStartOf="@+id/tvPagesReadTitle"
-                            app:layout_constraintTop_toBottomOf="@+id/tvPagesReadTitle" />
+                    <!--                        <ImageView-->
+                    <!--                            android:id="@+id/ivPagesRead"-->
+                    <!--                            android:layout_width="50dp"-->
+                    <!--                            android:layout_height="50dp"-->
+                    <!--                            android:layout_marginStart="8dp"-->
+                    <!--                            app:layout_constraintBottom_toBottomOf="parent"-->
+                    <!--                            app:layout_constraintStart_toStartOf="parent"-->
+                    <!--                            app:layout_constraintTop_toTopOf="parent"-->
+                    <!--                            app:srcCompat="@drawable/ic_svg_files" />-->
 
-                        <ImageView
-                            android:id="@+id/ivPagesRead"
-                            android:layout_width="50dp"
-                            android:layout_height="50dp"
-                            android:layout_marginStart="8dp"
-                            app:layout_constraintBottom_toBottomOf="parent"
-                            app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toTopOf="parent"
-                            app:srcCompat="@drawable/ic_svg_files" />
-
-                    </androidx.constraintlayout.widget.ConstraintLayout>
-                </androidx.cardview.widget.CardView>
+                </androidx.constraintlayout.widget.ConstraintLayout>
             </androidx.constraintlayout.widget.ConstraintLayout>
 
             <androidx.constraintlayout.widget.ConstraintLayout
@@ -323,62 +327,48 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.5"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/clPagesRead">
+                app:layout_constraintTop_toBottomOf="@+id/clBooksByMonth">
 
-                <androidx.cardview.widget.CardView
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/clPagesByMonthIn"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:backgroundTint="@color/cardViewBackgroundColor"
-                    app:cardElevation="1dp"
-                    app:cardCornerRadius="@dimen/text_input_layout_radius"
-                    app:cardUseCompatPadding="true"
-                    app:layout_constraintBottom_toBottomOf="parent"
+                    android:padding="8dp"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintHorizontal_bias="0.5"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent">
 
-                    <androidx.constraintlayout.widget.ConstraintLayout
-                        android:id="@+id/clPagesByMonthIn"
-                        android:layout_width="match_parent"
+                    <TextView
+                        android:id="@+id/tvPagesByMonthsTitle"
+                        android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:padding="8dp"
+                        android:layout_marginStart="8dp"
+                        android:layout_marginTop="8dp"
+                        android:layout_marginEnd="8dp"
+                        android:fontFamily="@font/jost_500_medium"
+                        android:gravity="start"
+                        android:text="@string/stats_pages_by_months"
+                        android:textColor="?colorPrimary"
+                        android:textSize="16sp"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent">
+                        app:layout_constraintTop_toTopOf="parent" />
 
-                        <TextView
-                            android:id="@+id/tvPagesByMonthsTitle"
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="8dp"
-                            android:layout_marginStart="16dp"
-                            android:layout_marginEnd="8dp"
-                            android:fontFamily="sans-serif"
-                            android:gravity="start"
-                            android:text="@string/stats_pages_by_months"
-                            android:textColor="?colorOnSecondary"
-                            android:textSize="16sp"
-                            app:layout_constraintEnd_toEndOf="parent"
-                            app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toTopOf="parent" />
-
-                        <software.mdev.bookstracker.other.RoundedBarChart
-                            android:id="@+id/rbcPagesByMonth"
-                            android:layout_width="0dp"
-                            android:layout_height="150dp"
-                            android:layout_marginTop="12dp"
-                            android:layout_marginStart="-8dp"
-                            android:layout_marginEnd="-8dp"
-                            app:layout_constraintBottom_toBottomOf="parent"
-                            app:layout_constraintEnd_toEndOf="@+id/tvPagesByMonthsTitle"
-                            app:layout_constraintStart_toStartOf="@+id/tvPagesByMonthsTitle"
-                            app:layout_constraintTop_toBottomOf="@+id/tvPagesByMonthsTitle"
-                            app:radius="6dp" />
+                    <software.mdev.bookstracker.other.RoundedBarChart
+                        android:id="@+id/rbcPagesByMonth"
+                        android:layout_width="0dp"
+                        android:layout_height="150dp"
+                        android:layout_marginStart="-16dp"
+                        android:layout_marginTop="12dp"
+                        android:layout_marginEnd="-16dp"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="@+id/tvPagesByMonthsTitle"
+                        app:layout_constraintStart_toStartOf="@+id/tvPagesByMonthsTitle"
+                        app:layout_constraintTop_toBottomOf="@+id/tvPagesByMonthsTitle"
+                        app:radius="6dp" />
 
 
-                    </androidx.constraintlayout.widget.ConstraintLayout>
-                </androidx.cardview.widget.CardView>
+                </androidx.constraintlayout.widget.ConstraintLayout>
             </androidx.constraintlayout.widget.ConstraintLayout>
 
             <androidx.constraintlayout.widget.ConstraintLayout
@@ -390,69 +380,58 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/clPagesByMonth">
 
-                <androidx.cardview.widget.CardView
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/clAvgRatingIn"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:backgroundTint="@color/cardViewBackgroundColor"
-                    app:cardElevation="1dp"
-                    app:cardCornerRadius="@dimen/text_input_layout_radius"
-                    app:cardUseCompatPadding="true"
-                    app:layout_constraintBottom_toBottomOf="parent"
+                    android:layout_height="80dp"
+                    android:padding="8dp"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintHorizontal_bias="0.5"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent">
 
-                    <androidx.constraintlayout.widget.ConstraintLayout
-                        android:id="@+id/clAvgRatingIn"
-                        android:layout_width="match_parent"
-                        android:layout_height="80dp"
-                        android:padding="8dp"
+                    <TextView
+                        android:id="@+id/tvAvgRatingTitle"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="8dp"
+                        android:layout_marginEnd="8dp"
+                        android:fontFamily="@font/jost_500_medium"
+                        android:gravity="start"
+                        android:text="@string/stats_avg_rating"
+                        android:textColor="?colorPrimary"
+                        android:textSize="16sp"
+                        app:layout_constraintBottom_toTopOf="@+id/tvAvgRatingValue"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent">
+                        app:layout_constraintTop_toTopOf="parent" />
 
-                        <TextView
-                            android:id="@+id/tvAvgRatingTitle"
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_marginStart="16dp"
-                            android:layout_marginEnd="8dp"
-                            android:fontFamily="sans-serif"
-                            android:gravity="start"
-                            android:text="@string/stats_avg_rating"
-                            android:textColor="?colorOnSecondary"
-                            android:textSize="16sp"
-                            app:layout_constraintBottom_toTopOf="@+id/tvAvgRatingValue"
-                            app:layout_constraintEnd_toEndOf="parent"
-                            app:layout_constraintStart_toEndOf="@+id/ivAvgRating"
-                            app:layout_constraintTop_toTopOf="parent" />
+                    <TextView
+                        android:id="@+id/tvAvgRatingValue"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="8dp"
+                        android:layout_marginEnd="8dp"
+                        android:gravity="start"
+                        android:text="@string/stats_avg_rating"
+                        android:textSize="14sp"
+                        android:textColor="@color/colorDefaultText"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/tvAvgRatingTitle" />
 
-                        <TextView
-                            android:id="@+id/tvAvgRatingValue"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:fontFamily="sans-serif-light"
-                            android:gravity="center"
-                            android:text="@string/stats_avg_rating"
-                            android:textSize="14sp"
-                            app:layout_constraintBottom_toBottomOf="parent"
-                            app:layout_constraintStart_toStartOf="@+id/tvAvgRatingTitle"
-                            app:layout_constraintTop_toBottomOf="@+id/tvAvgRatingTitle" />
+                    <!--                        <ImageView-->
+                    <!--                            android:id="@+id/ivAvgRating"-->
+                    <!--                            android:layout_width="50dp"-->
+                    <!--                            android:layout_height="50dp"-->
+                    <!--                            android:layout_marginStart="8dp"-->
+                    <!--                            app:layout_constraintBottom_toBottomOf="parent"-->
+                    <!--                            app:layout_constraintStart_toStartOf="parent"-->
+                    <!--                            app:layout_constraintTop_toTopOf="parent"-->
+                    <!--                            app:srcCompat="@drawable/ic_iconscout_star_24"-->
+                    <!--                            app:tint="?colorPrimary" />-->
 
-                        <ImageView
-                            android:id="@+id/ivAvgRating"
-                            android:layout_width="50dp"
-                            android:layout_height="50dp"
-                            android:layout_marginStart="8dp"
-                            app:layout_constraintBottom_toBottomOf="parent"
-                            app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toTopOf="parent"
-                            app:srcCompat="@drawable/ic_baseline_star_rate_24"
-                            app:tint="?colorPrimary" />
-
-                    </androidx.constraintlayout.widget.ConstraintLayout>
-                </androidx.cardview.widget.CardView>
+                </androidx.constraintlayout.widget.ConstraintLayout>
             </androidx.constraintlayout.widget.ConstraintLayout>
 
             <androidx.constraintlayout.widget.ConstraintLayout
@@ -464,81 +443,149 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/clAvgRating">
 
-                <androidx.cardview.widget.CardView
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/clQuickestReadIn"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:backgroundTint="@color/cardViewBackgroundColor"
-                    app:cardElevation="1dp"
-                    app:cardCornerRadius="@dimen/text_input_layout_radius"
-                    app:cardUseCompatPadding="true"
-                    app:layout_constraintBottom_toBottomOf="parent"
+                    android:padding="8dp"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintHorizontal_bias="0.5"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent">
 
-                    <androidx.constraintlayout.widget.ConstraintLayout
-                        android:id="@+id/clQuickestReadIn"
-                        android:layout_width="match_parent"
+                    <TextView
+                        android:id="@+id/tvQuickestReadTitle"
+                        android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:padding="8dp"
+                        android:layout_marginStart="8dp"
+                        android:layout_marginEnd="8dp"
+                        android:fontFamily="@font/jost_500_medium"
+                        android:gravity="start"
+                        android:text="@string/stats_quickest_read"
+                        android:textColor="?colorPrimary"
+                        android:textSize="16sp"
+                        app:layout_constraintBottom_toTopOf="@+id/tvQuickestReadBook"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent">
+                        app:layout_constraintTop_toTopOf="parent" />
 
-                        <TextView
-                            android:id="@+id/tvQuickestReadTitle"
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_marginStart="16dp"
-                            android:layout_marginEnd="8dp"
-                            android:fontFamily="sans-serif"
-                            android:gravity="start"
-                            android:text="@string/stats_quickest_read"
-                            android:textColor="?colorOnSecondary"
-                            android:textSize="16sp"
-                            app:layout_constraintBottom_toTopOf="@+id/tvQuickestReadBook"
-                            app:layout_constraintEnd_toEndOf="parent"
-                            app:layout_constraintStart_toEndOf="@+id/ivQuickestRead"
-                            app:layout_constraintTop_toTopOf="parent" />
+                    <TextView
+                        android:id="@+id/tvQuickestReadBook"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="8dp"
+                        android:layout_marginEnd="8dp"
+                        android:gravity="start"
+                        android:text="@string/stats_quickest_read"
+                        android:textSize="14sp"
+                        android:textColor="@color/colorDefaultText"
+                        app:layout_constraintBottom_toTopOf="@+id/tvQuickestReadValue"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/tvQuickestReadTitle" />
 
-                        <TextView
-                            android:id="@+id/tvQuickestReadBook"
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:fontFamily="sans-serif-light"
-                            android:gravity="start"
-                            android:text="@string/stats_quickest_read"
-                            android:textSize="14sp"
-                            app:layout_constraintBottom_toTopOf="@+id/tvQuickestReadValue"
-                            app:layout_constraintEnd_toEndOf="@+id/tvQuickestReadTitle"
-                            app:layout_constraintStart_toStartOf="@+id/tvQuickestReadTitle"
-                            app:layout_constraintTop_toBottomOf="@+id/tvQuickestReadTitle" />
+                    <TextView
+                        android:id="@+id/tvQuickestReadValue"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="8dp"
+                        android:layout_marginEnd="8dp"
+                        android:gravity="start"
+                        android:text="@string/stats_quickest_read"
+                        android:textSize="14sp"
+                        android:textColor="@color/colorDefaultText"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/tvQuickestReadBook" />
 
-                        <TextView
-                            android:id="@+id/tvQuickestReadValue"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:fontFamily="sans-serif-light"
-                            android:gravity="center"
-                            android:text="@string/stats_quickest_read"
-                            android:textSize="14sp"
-                            app:layout_constraintBottom_toBottomOf="parent"
-                            app:layout_constraintStart_toStartOf="@+id/tvQuickestReadTitle"
-                            app:layout_constraintTop_toBottomOf="@+id/tvQuickestReadBook" />
+                    <!--                        <ImageView-->
+                    <!--                            android:id="@+id/ivQuickestRead"-->
+                    <!--                            android:layout_width="50dp"-->
+                    <!--                            android:layout_height="50dp"-->
+                    <!--                            android:layout_marginStart="8dp"-->
+                    <!--                            app:layout_constraintBottom_toBottomOf="parent"-->
+                    <!--                            app:layout_constraintStart_toStartOf="parent"-->
+                    <!--                            app:layout_constraintTop_toTopOf="parent"-->
+                    <!--                            app:srcCompat="@drawable/ic_svg_speedometer" />-->
 
-                        <ImageView
-                            android:id="@+id/ivQuickestRead"
-                            android:layout_width="50dp"
-                            android:layout_height="50dp"
-                            android:layout_marginStart="8dp"
-                            app:layout_constraintBottom_toBottomOf="parent"
-                            app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toTopOf="parent"
-                            app:srcCompat="@drawable/ic_svg_speedometer" />
+                </androidx.constraintlayout.widget.ConstraintLayout>
+            </androidx.constraintlayout.widget.ConstraintLayout>
 
-                    </androidx.constraintlayout.widget.ConstraintLayout>
-                </androidx.cardview.widget.CardView>
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/clLongestRead"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/clQuickestRead">
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/clLongestReadIn"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="8dp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent">
+
+                    <TextView
+                        android:id="@+id/tvLongestReadTitle"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="8dp"
+                        android:layout_marginEnd="8dp"
+                        android:fontFamily="@font/jost_500_medium"
+                        android:gravity="start"
+                        android:text="@string/stats_longest_read"
+                        android:textColor="?colorPrimary"
+                        android:textSize="16sp"
+                        app:layout_constraintBottom_toTopOf="@+id/tvLongestReadBook"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <TextView
+                        android:id="@+id/tvLongestReadBook"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="8dp"
+                        android:layout_marginEnd="8dp"
+                        android:gravity="start"
+                        android:text="@string/stats_longest_read"
+                        android:textSize="14sp"
+                        android:textColor="@color/colorDefaultText"
+                        app:layout_constraintBottom_toTopOf="@+id/tvLongestReadValue"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/tvLongestReadTitle" />
+
+                    <TextView
+                        android:id="@+id/tvLongestReadValue"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="8dp"
+                        android:layout_marginEnd="8dp"
+                        android:gravity="start"
+                        android:text="@string/stats_longest_read"
+                        android:textSize="14sp"
+                        android:textColor="@color/colorDefaultText"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/tvLongestReadBook" />
+
+                    <!--                        <ImageView-->
+                    <!--                            android:id="@+id/ivQuickestRead"-->
+                    <!--                            android:layout_width="50dp"-->
+                    <!--                            android:layout_height="50dp"-->
+                    <!--                            android:layout_marginStart="8dp"-->
+                    <!--                            app:layout_constraintBottom_toBottomOf="parent"-->
+                    <!--                            app:layout_constraintStart_toStartOf="parent"-->
+                    <!--                            app:layout_constraintTop_toTopOf="parent"-->
+                    <!--                            app:srcCompat="@drawable/ic_svg_speedometer" />-->
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
             </androidx.constraintlayout.widget.ConstraintLayout>
 
 
@@ -549,83 +596,74 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.5"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/clQuickestRead">
+                app:layout_constraintTop_toBottomOf="@id/clShortestBook">
 
-                <androidx.cardview.widget.CardView
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/clLongestBookIn"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:backgroundTint="@color/cardViewBackgroundColor"
-                    app:cardElevation="1dp"
-                    app:cardCornerRadius="@dimen/text_input_layout_radius"
-                    app:cardUseCompatPadding="true"
-                    app:layout_constraintBottom_toBottomOf="parent"
+                    android:padding="8dp"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintHorizontal_bias="0.5"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent">
 
-                    <androidx.constraintlayout.widget.ConstraintLayout
-                        android:id="@+id/clLongestBookIn"
-                        android:layout_width="match_parent"
+                    <TextView
+                        android:id="@+id/tvLongestBookTitle"
+                        android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:padding="8dp"
+                        android:layout_marginStart="8dp"
+                        android:layout_marginEnd="8dp"
+                        android:fontFamily="@font/jost_500_medium"
+                        android:gravity="start"
+                        android:text="@string/stats_longest_book"
+                        android:textColor="?colorPrimary"
+                        android:textSize="16sp"
+                        app:layout_constraintBottom_toTopOf="@+id/tvLongestBook"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent">
+                        app:layout_constraintTop_toTopOf="parent" />
 
-                        <TextView
-                            android:id="@+id/tvLongestBookTitle"
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_marginStart="16dp"
-                            android:layout_marginEnd="8dp"
-                            android:fontFamily="sans-serif"
-                            android:gravity="start"
-                            android:text="@string/stats_longest_book"
-                            android:textColor="?colorOnSecondary"
-                            android:textSize="16sp"
-                            app:layout_constraintBottom_toTopOf="@+id/tvLongestBook"
-                            app:layout_constraintEnd_toEndOf="parent"
-                            app:layout_constraintStart_toEndOf="@+id/ivLongestBook"
-                            app:layout_constraintTop_toTopOf="parent" />
+                    <TextView
+                        android:id="@+id/tvLongestBook"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="8dp"
+                        android:layout_marginEnd="8dp"
+                        android:gravity="start"
+                        android:text="@string/stats_longest_book"
+                        android:textSize="14sp"
+                        android:textColor="@color/colorDefaultText"
+                        app:layout_constraintBottom_toTopOf="@+id/tvLongestBookValue"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/tvLongestBookTitle" />
 
-                        <TextView
-                            android:id="@+id/tvLongestBook"
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:fontFamily="sans-serif-light"
-                            android:gravity="start"
-                            android:text="@string/stats_longest_book"
-                            android:textSize="14sp"
-                            app:layout_constraintBottom_toTopOf="@+id/tvLongestBookValue"
-                            app:layout_constraintStart_toStartOf="@+id/tvLongestBookTitle"
-                            app:layout_constraintEnd_toEndOf="@+id/tvLongestBookTitle"
-                            app:layout_constraintTop_toBottomOf="@+id/tvLongestBookTitle" />
+                    <TextView
+                        android:id="@+id/tvLongestBookValue"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="8dp"
+                        android:layout_marginEnd="8dp"
+                        android:gravity="start"
+                        android:text="@string/stats_longest_book"
+                        android:textSize="14sp"
+                        android:textColor="@color/colorDefaultText"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/tvLongestBook" />
 
-                        <TextView
-                            android:id="@+id/tvLongestBookValue"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:fontFamily="sans-serif-light"
-                            android:gravity="center"
-                            android:text="@string/stats_longest_book"
-                            android:textSize="14sp"
-                            app:layout_constraintBottom_toBottomOf="parent"
-                            app:layout_constraintStart_toStartOf="@+id/tvLongestBookTitle"
-                            app:layout_constraintTop_toBottomOf="@+id/tvLongestBook" />
+                    <!--                        <ImageView-->
+                    <!--                            android:id="@+id/ivLongestBook"-->
+                    <!--                            android:layout_width="50dp"-->
+                    <!--                            android:layout_height="50dp"-->
+                    <!--                            android:layout_marginStart="8dp"-->
+                    <!--                            app:layout_constraintBottom_toBottomOf="parent"-->
+                    <!--                            app:layout_constraintStart_toStartOf="parent"-->
+                    <!--                            app:layout_constraintTop_toTopOf="parent"-->
+                    <!--                            app:srcCompat="@drawable/ic_svg_weight" />-->
 
-                        <ImageView
-                            android:id="@+id/ivLongestBook"
-                            android:layout_width="50dp"
-                            android:layout_height="50dp"
-                            android:layout_marginStart="8dp"
-                            app:layout_constraintBottom_toBottomOf="parent"
-                            app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toTopOf="parent"
-                            app:srcCompat="@drawable/ic_svg_weight" />
-
-                    </androidx.constraintlayout.widget.ConstraintLayout>
-                </androidx.cardview.widget.CardView>
+                </androidx.constraintlayout.widget.ConstraintLayout>
             </androidx.constraintlayout.widget.ConstraintLayout>
 
             <androidx.constraintlayout.widget.ConstraintLayout
@@ -635,83 +673,74 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.5"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/clLongestBook">
+                app:layout_constraintTop_toBottomOf="@id/clLongestRead">
 
-                <androidx.cardview.widget.CardView
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/clShortestBookIn"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:backgroundTint="@color/cardViewBackgroundColor"
-                    app:cardElevation="1dp"
-                    app:cardCornerRadius="@dimen/text_input_layout_radius"
-                    app:cardUseCompatPadding="true"
-                    app:layout_constraintBottom_toBottomOf="parent"
+                    android:padding="8dp"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintHorizontal_bias="0.5"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent">
 
-                    <androidx.constraintlayout.widget.ConstraintLayout
-                        android:id="@+id/clShortestBookIn"
-                        android:layout_width="match_parent"
+                    <TextView
+                        android:id="@+id/tvShortestBookTitle"
+                        android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:padding="8dp"
+                        android:layout_marginStart="8dp"
+                        android:layout_marginEnd="8dp"
+                        android:fontFamily="@font/jost_500_medium"
+                        android:gravity="start"
+                        android:text="@string/stats_shortest_book"
+                        android:textColor="?colorPrimary"
+                        android:textSize="16sp"
+                        app:layout_constraintBottom_toTopOf="@+id/tvShortestBook"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent">
+                        app:layout_constraintTop_toTopOf="parent" />
 
-                        <TextView
-                            android:id="@+id/tvShortestBookTitle"
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_marginStart="16dp"
-                            android:layout_marginEnd="8dp"
-                            android:fontFamily="sans-serif"
-                            android:gravity="start"
-                            android:text="@string/stats_shortest_book"
-                            android:textColor="?colorOnSecondary"
-                            android:textSize="16sp"
-                            app:layout_constraintBottom_toTopOf="@+id/tvShortestBook"
-                            app:layout_constraintEnd_toEndOf="parent"
-                            app:layout_constraintStart_toEndOf="@+id/ivShortestBook"
-                            app:layout_constraintTop_toTopOf="parent" />
+                    <TextView
+                        android:id="@+id/tvShortestBook"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="8dp"
+                        android:layout_marginEnd="8dp"
+                        android:gravity="start"
+                        android:text="@string/stats_shortest_book"
+                        android:textSize="14sp"
+                        android:textColor="@color/colorDefaultText"
+                        app:layout_constraintBottom_toTopOf="@+id/tvShortestBookValue"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/tvShortestBookTitle" />
 
-                        <TextView
-                            android:id="@+id/tvShortestBook"
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:fontFamily="sans-serif-light"
-                            android:gravity="start"
-                            android:text="@string/stats_shortest_book"
-                            android:textSize="14sp"
-                            app:layout_constraintBottom_toTopOf="@+id/tvShortestBookValue"
-                            app:layout_constraintStart_toStartOf="@+id/tvShortestBookTitle"
-                            app:layout_constraintEnd_toEndOf="@+id/tvShortestBookTitle"
-                            app:layout_constraintTop_toBottomOf="@+id/tvShortestBookTitle" />
+                    <TextView
+                        android:id="@+id/tvShortestBookValue"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="8dp"
+                        android:layout_marginEnd="8dp"
+                        android:gravity="start"
+                        android:text="@string/stats_shortest_book"
+                        android:textSize="14sp"
+                        android:textColor="@color/colorDefaultText"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/tvShortestBook" />
 
-                        <TextView
-                            android:id="@+id/tvShortestBookValue"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:fontFamily="sans-serif-light"
-                            android:gravity="center"
-                            android:text="@string/stats_shortest_book"
-                            android:textSize="14sp"
-                            app:layout_constraintBottom_toBottomOf="parent"
-                            app:layout_constraintStart_toStartOf="@+id/tvShortestBookTitle"
-                            app:layout_constraintTop_toBottomOf="@+id/tvShortestBook" />
+                    <!--                        <ImageView-->
+                    <!--                            android:id="@+id/ivShortestBook"-->
+                    <!--                            android:layout_width="50dp"-->
+                    <!--                            android:layout_height="50dp"-->
+                    <!--                            android:layout_marginStart="8dp"-->
+                    <!--                            app:layout_constraintBottom_toBottomOf="parent"-->
+                    <!--                            app:layout_constraintStart_toStartOf="parent"-->
+                    <!--                            app:layout_constraintTop_toTopOf="parent"-->
+                    <!--                            app:srcCompat="@drawable/ic_svg_feather" />-->
 
-                        <ImageView
-                            android:id="@+id/ivShortestBook"
-                            android:layout_width="50dp"
-                            android:layout_height="50dp"
-                            android:layout_marginStart="8dp"
-                            app:layout_constraintBottom_toBottomOf="parent"
-                            app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toTopOf="parent"
-                            app:srcCompat="@drawable/ic_svg_feather" />
-
-                    </androidx.constraintlayout.widget.ConstraintLayout>
-                </androidx.cardview.widget.CardView>
+                </androidx.constraintlayout.widget.ConstraintLayout>
             </androidx.constraintlayout.widget.ConstraintLayout>
 
             <androidx.constraintlayout.widget.ConstraintLayout
@@ -721,70 +750,59 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.5"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/clShortestBook">
+                app:layout_constraintTop_toBottomOf="@id/clLongestBook">
 
-                <androidx.cardview.widget.CardView
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/clAvgReadingTimeIn"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:backgroundTint="@color/cardViewBackgroundColor"
-                    app:cardElevation="1dp"
-                    app:cardCornerRadius="@dimen/text_input_layout_radius"
-                    app:cardUseCompatPadding="true"
-                    app:layout_constraintBottom_toBottomOf="parent"
+                    android:layout_height="80dp"
+                    android:padding="8dp"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintHorizontal_bias="0.5"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent">
 
-                    <androidx.constraintlayout.widget.ConstraintLayout
-                        android:id="@+id/clAvgReadingTimeIn"
-                        android:layout_width="match_parent"
-                        android:layout_height="80dp"
-                        android:padding="8dp"
+                    <TextView
+                        android:id="@+id/tvAvgReadingTimeTitle"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="8dp"
+                        android:layout_marginEnd="8dp"
+                        android:fontFamily="@font/jost_500_medium"
+                        android:gravity="start"
+                        android:text="@string/stats_avg_reading_time"
+                        android:textColor="?colorPrimary"
+                        android:textSize="16sp"
+                        app:layout_constraintBottom_toTopOf="@+id/tvAvgReadingTimeValue"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent">
+                        app:layout_constraintTop_toTopOf="parent" />
 
-                        <TextView
-                            android:id="@+id/tvAvgReadingTimeTitle"
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_marginStart="16dp"
-                            android:layout_marginEnd="8dp"
-                            android:fontFamily="sans-serif"
-                            android:gravity="start"
-                            android:text="@string/stats_avg_reading_time"
-                            android:textColor="?colorOnSecondary"
-                            android:textSize="16sp"
-                            app:layout_constraintBottom_toTopOf="@+id/tvAvgReadingTimeValue"
-                            app:layout_constraintEnd_toEndOf="parent"
-                            app:layout_constraintStart_toEndOf="@+id/ivAvgReadingTime"
-                            app:layout_constraintTop_toTopOf="parent" />
+                    <TextView
+                        android:id="@+id/tvAvgReadingTimeValue"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="8dp"
+                        android:layout_marginEnd="8dp"
+                        android:gravity="start"
+                        android:text="@string/stats_avg_reading_time"
+                        android:textSize="14sp"
+                        android:textColor="@color/colorDefaultText"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/tvAvgReadingTimeTitle" />
 
-                        <TextView
-                            android:id="@+id/tvAvgReadingTimeValue"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:fontFamily="sans-serif-light"
-                            android:gravity="center"
-                            android:text="@string/stats_avg_reading_time"
-                            android:textSize="14sp"
-                            app:layout_constraintBottom_toBottomOf="parent"
-                            app:layout_constraintStart_toStartOf="@+id/tvAvgReadingTimeTitle"
-                            app:layout_constraintTop_toBottomOf="@+id/tvAvgReadingTimeTitle" />
+                    <!--                        <ImageView-->
+                    <!--                            android:id="@+id/ivAvgReadingTime"-->
+                    <!--                            android:layout_width="50dp"-->
+                    <!--                            android:layout_height="50dp"-->
+                    <!--                            android:layout_marginStart="8dp"-->
+                    <!--                            app:layout_constraintBottom_toBottomOf="parent"-->
+                    <!--                            app:layout_constraintStart_toStartOf="parent"-->
+                    <!--                            app:layout_constraintTop_toTopOf="parent"-->
+                    <!--                            app:srcCompat="@drawable/ic_svg_stopwatch" />-->
 
-                        <ImageView
-                            android:id="@+id/ivAvgReadingTime"
-                            android:layout_width="50dp"
-                            android:layout_height="50dp"
-                            android:layout_marginStart="8dp"
-                            app:layout_constraintBottom_toBottomOf="parent"
-                            app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toTopOf="parent"
-                            app:srcCompat="@drawable/ic_svg_stopwatch" />
-
-                    </androidx.constraintlayout.widget.ConstraintLayout>
-                </androidx.cardview.widget.CardView>
+                </androidx.constraintlayout.widget.ConstraintLayout>
             </androidx.constraintlayout.widget.ConstraintLayout>
 
             <androidx.constraintlayout.widget.ConstraintLayout
@@ -796,67 +814,57 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/clAvgReadingTime">
 
-                <androidx.cardview.widget.CardView
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/clAvgPagesIn"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:backgroundTint="@color/cardViewBackgroundColor"
-                    app:cardElevation="1dp"
-                    app:cardCornerRadius="@dimen/text_input_layout_radius"
-                    app:cardUseCompatPadding="true"
-                    app:layout_constraintBottom_toBottomOf="parent"
+                    android:layout_height="80dp"
+                    android:padding="8dp"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintHorizontal_bias="0.5"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent">
 
-                    <androidx.constraintlayout.widget.ConstraintLayout
-                        android:id="@+id/clAvgPagesIn"
-                        android:layout_width="match_parent"
-                        android:layout_height="80dp"
-                        android:padding="8dp"
+                    <TextView
+                        android:id="@+id/tvAvgPagesTitle"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="8dp"
+                        android:layout_marginEnd="8dp"
+                        android:fontFamily="@font/jost_500_medium"
+                        android:gravity="start"
+                        android:text="@string/stats_avg_pages"
+                        android:textColor="?colorPrimary"
+                        android:textSize="16sp"
+                        app:layout_constraintBottom_toTopOf="@+id/tvAvgPagesValue"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent">
+                        app:layout_constraintTop_toTopOf="parent" />
 
-                        <TextView
-                            android:id="@+id/tvAvgPagesTitle"
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_marginStart="16dp"
-                            android:layout_marginEnd="8dp"
-                            android:fontFamily="sans-serif"
-                            android:gravity="start"
-                            android:text="@string/stats_avg_pages"
-                            android:textColor="?colorOnSecondary"
-                            android:textSize="16sp"
-                            app:layout_constraintBottom_toTopOf="@+id/tvAvgPagesValue"
-                            app:layout_constraintStart_toEndOf="@+id/ivAvgPages"
-                            app:layout_constraintTop_toTopOf="parent" />
+                    <TextView
+                        android:id="@+id/tvAvgPagesValue"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="8dp"
+                        android:layout_marginEnd="8dp"
+                        android:gravity="start"
+                        android:text="@string/stats_avg_pages"
+                        android:textSize="14sp"
+                        android:textColor="@color/colorDefaultText"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/tvAvgPagesTitle" />
 
-                        <TextView
-                            android:id="@+id/tvAvgPagesValue"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:fontFamily="sans-serif-light"
-                            android:gravity="center"
-                            android:text="@string/stats_avg_pages"
-                            android:textSize="14sp"
-                            app:layout_constraintBottom_toBottomOf="parent"
-                            app:layout_constraintStart_toStartOf="@+id/tvAvgPagesTitle"
-                            app:layout_constraintTop_toBottomOf="@+id/tvAvgPagesTitle" />
+                    <!--                        <ImageView-->
+                    <!--                            android:id="@+id/ivAvgPages"-->
+                    <!--                            android:layout_width="50dp"-->
+                    <!--                            android:layout_height="50dp"-->
+                    <!--                            android:layout_marginStart="8dp"-->
+                    <!--                            app:layout_constraintBottom_toBottomOf="parent"-->
+                    <!--                            app:layout_constraintStart_toStartOf="parent"-->
+                    <!--                            app:layout_constraintTop_toTopOf="parent"-->
+                    <!--                            app:srcCompat="@drawable/ic_svg_document" />-->
 
-                        <ImageView
-                            android:id="@+id/ivAvgPages"
-                            android:layout_width="50dp"
-                            android:layout_height="50dp"
-                            android:layout_marginStart="8dp"
-                            app:layout_constraintBottom_toBottomOf="parent"
-                            app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toTopOf="parent"
-                            app:srcCompat="@drawable/ic_svg_document" />
-
-                    </androidx.constraintlayout.widget.ConstraintLayout>
-                </androidx.cardview.widget.CardView>
+                </androidx.constraintlayout.widget.ConstraintLayout>
             </androidx.constraintlayout.widget.ConstraintLayout>
 
         </androidx.constraintlayout.widget.ConstraintLayout>

@@ -60,7 +60,7 @@
         app:layout_constraintEnd_toStartOf="@+id/ivRestoreBook"
         app:layout_constraintStart_toStartOf="@+id/glVertical70"
         app:layout_constraintTop_toTopOf="@+id/tvBookTitle"
-        app:srcCompat="@drawable/ic_baseline_hourglass_bottom_24"
+        app:srcCompat="@drawable/ic_iconscout_book_open_24"
         app:tint="?colorPrimary" />
 
     <ImageView
@@ -73,39 +73,36 @@
         app:layout_constraintEnd_toStartOf="@+id/ivRestoreBook"
         app:layout_constraintStart_toStartOf="@+id/glVertical70"
         app:layout_constraintTop_toTopOf="@+id/tvBookTitle"
-        app:srcCompat="@drawable/ic_baseline_list_24"
+        app:srcCompat="@drawable/ic_iconscout_clock_nine_24"
         app:tint="?colorPrimary" />
 
     <ImageView
         android:id="@+id/ivRestoreBook"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
         android:layout_marginTop="12dp"
         android:layout_marginEnd="12dp"
         android:layout_marginBottom="12dp"
         android:contentDescription="@string/ivRestoreBook"
-        android:scaleX="1.6"
-        android:scaleY="1.6"
+
         app:layout_constraintBottom_toTopOf="@+id/rbRatingIndicator"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/ic_baseline_restore_from_trash_24"
+        app:srcCompat="@drawable/ic_mdi_restore_24"
         app:tint="?colorPrimary" />
 
     <ImageView
         android:id="@+id/ivDeleteBookPermanently"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
         android:layout_marginTop="12dp"
         android:layout_marginBottom="12dp"
         android:contentDescription="@string/ivDeleteBookPermanently"
-        android:scaleX="1.6"
-        android:scaleY="1.6"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="@+id/ivRestoreBook"
         app:layout_constraintStart_toStartOf="@+id/ivRestoreBook"
         app:layout_constraintTop_toBottomOf="@+id/rbRatingIndicator"
-        app:srcCompat="@drawable/ic_baseline_delete_forever_24"
+        app:srcCompat="@drawable/ic_iconscout_trash_24"
         app:tint="@color/red_800" />
 
     <androidx.constraintlayout.widget.Guideline

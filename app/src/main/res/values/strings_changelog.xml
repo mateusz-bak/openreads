@@ -13,6 +13,7 @@
     <string name="changelog_ver_1_7_1" translatable="false">v1.7.1</string>
     <string name="changelog_ver_1_8_0" translatable="false">v1.8.0</string>
     <string name="changelog_ver_1_8_1" translatable="false">v1.8.1</string>
+    <string name="changelog_ver_1_9_0" translatable="false">v1.9.0</string>
 
     <string name="changelog_date_1_0_0" translatable="false">5/06/2021</string>
     <string name="changelog_date_1_1_0" translatable="false">10/06/2021</string>
@@ -28,6 +29,7 @@
     <string name="changelog_date_1_7_1" translatable="false">05/10/2021</string>
     <string name="changelog_date_1_8_0" translatable="false">27/10/2021</string>
     <string name="changelog_date_1_8_1" translatable="false">28/10/2021</string>
+    <string name="changelog_date_1_9_0" translatable="false">18/12/2021</string>
 
     <string name="changelog_1_0_0_a">First official release.</string>
     <string name="changelog_1_0_0_b">Added three lists for books: read, in progress and to read.</string>
@@ -105,4 +107,10 @@
     <string name="changelog_1_8_0_e"><b>Important! If after this update your book\'s covers are missing - edit book\'s details and save with no changes.</b></string>
 
     <string name="changelog_1_8_1_a">Updated code\'s repository links.</string>
+
+    <string name="changelog_1_9_0_a">You can now add notes to your books.</string>
+    <string name="changelog_1_9_0_b">A lot of visual changes.</string>
+    <string name="changelog_1_9_0_c">Added new statistics.</string>
+    <string name="changelog_1_9_0_d">Day/night mode change in settings.</string>
+    <string name="changelog_1_9_0_e">Improved app\'s colours.</string>
 </resources>

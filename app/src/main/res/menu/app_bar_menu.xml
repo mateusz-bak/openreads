@@ -1,20 +1,26 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-
-    >
-
-<!--    <item-->
-<!--        android:id="@+id/miSettings"-->
-<!--        android:title="Settings"-->
-<!--        android:icon="@drawable/ic_baseline_settings_24"-->
-<!--        app:showAsAction="never"/>-->
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <item
-        android:id="@+id/miAbout"
-        android:title="@string/miAbout"
-        android:icon="@drawable/ic_baseline_info_24"
-        app:showAsAction="never"/>
+        android:id="@+id/miSearch"
+        android:icon="@drawable/ic_iconscout_search_24"
+        android:title="@string/etSearch"
+        app:actionViewClass="androidx.appcompat.widget.SearchView"
+        app:showAsAction="always|collapseActionView" />
 
+    <item
+        android:id="@+id/miSort"
+        android:title="@string/tvSorterTitle"
+        app:showAsAction="never" />
 
+    <item
+        android:id="@+id/miStatistics"
+        android:title="@string/statisticsFragment"
+        app:showAsAction="never" />
+
+    <item
+        android:id="@+id/miSettings"
+        android:title="@string/settings"
+        app:showAsAction="never" />
 </menu>

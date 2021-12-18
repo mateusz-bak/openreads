@@ -1,6 +1,6 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
     <!-- Base application theme. -->
-    <style name="Theme.Mdev.Bookstracker" parent="Theme.MaterialComponents.DayNight.DarkActionBar">
+    <style name="Theme.Mdev.Bookstracker" parent="Theme.MaterialComponents.DayNight">
         <!-- Primary brand color. -->
         <item name="colorPrimary">@color/green_500</item>
         <item name="colorOnPrimary">@color/white</item>
@@ -10,16 +10,21 @@
         <!-- Status bar color. -->
         <item name="android:statusBarColor" tools:targetApi="l">?attr/colorOnPrimary</item>
         <item name="android:windowLightStatusBar">true</item>
-        <!-- Customize your theme here. -->
-        <item name="windowActionBar">false</item>
-        <item name="windowNoTitle">true</item>
+
         <item name="colorAccent">?colorPrimary</item>
         <item name="sortDialogBackgroundColor">@color/white</item>
+
+        <item name="android:fontFamily">@font/jost_400_book</item>
+        <item name="actionBarStyle">@style/Custom.ActionBarStyle</item>
     </style>
 
-    <style name="Theme.Mdev.Bookstracker.NoActionBar">
-        <item name="windowActionBar">false</item>
-        <item name="windowNoTitle">true</item>
+    <style name="Custom.ActionBarStyle" parent="Theme.MaterialComponents.DayNight.DarkActionBar">
+        <item name="background">?attr/colorOnPrimary</item>
+        <item name="actionOverflowButtonStyle">@style/actionOverflowButtonStyle</item>
+    </style>
+
+    <style name="actionOverflowButtonStyle" parent="@style/Widget.AppCompat.ActionButton.Overflow">
+        <item name="android:tint">@color/black</item>
     </style>
 
     <style name="Theme.Mdev.Bookstracker.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
@@ -50,7 +55,13 @@
         <item name="cornerSize">6dp</item>
     </style>
 
+    <style name="Theme.Mdev.Bookstracker.Slide">
+        <item name="android:windowEnterAnimation">@anim/slide_up</item>
+        <item name="android:windowExitAnimation">@anim/slide_down</item>
+    </style>
+
     <color name="colorDefaultText">#000000</color>
+    <color name="colorDefaultBg">#FFFFFF</color>
     <color name="colorGreyText">#616161</color>
     <color name="teal_bg">#e0f2f1</color>
     <color name="cardViewBackgroundColor">@color/grey_100</color>

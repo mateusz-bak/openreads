@@ -17,7 +17,6 @@ import software.mdev.bookstracker.ui.bookslist.ListActivity
 import software.mdev.bookstracker.ui.bookslist.viewmodel.BooksViewModel
 import java.text.SimpleDateFormat
 import java.util.*
-import android.view.animation.AnticipateOvershootInterpolator
 import android.view.inputmethod.InputMethodManager
 import androidx.appcompat.app.AlertDialog
 import androidx.constraintlayout.widget.ConstraintLayout
@@ -28,8 +27,9 @@ import kotlinx.coroutines.launch
 import android.widget.Toast
 import android.widget.RatingBar.OnRatingBarChangeListener
 import kotlinx.coroutines.MainScope
-import androidx.activity.OnBackPressedCallback
 import android.graphics.BitmapFactory
+import android.view.animation.AnimationUtils
+import software.mdev.bookstracker.ui.bookslist.dialogs.AddEditBookDialog
 
 
 class DisplayBookFragment : Fragment(R.layout.fragment_display_book) {
@@ -50,20 +50,14 @@ class DisplayBookFragment : Fragment(R.layout.fragment_display_book) {
 
         ivBookCover.setOnClickListener {
             animateClickView(it)
-
-            if (ivDetails2.visibility == View.VISIBLE)
-                hideDetails()
-            else
-                showDetails()
         }
 
         ivEdit.setOnClickListener {
-            animateClickView(it)
             editBook()
         }
 
         ivFav.setOnClickListener {
-            animateClickView(it, 0.6F)
+            animatShakeView(it)
 
             var firstCheck = true
             viewModel.getBook(book.id).observe(viewLifecycleOwner) { book ->
@@ -89,22 +83,6 @@ class DisplayBookFragment : Fragment(R.layout.fragment_display_book) {
             }
         }
 
-        ivDetails.setOnClickListener {
-            showDetails()
-        }
-
-        ivDetails2.setOnClickListener {
-            hideDetails()
-        }
-
-        tvBookTitle.setOnClickListener {
-            Snackbar.make(it, R.string.click_edit_button_to_edit_title, Snackbar.LENGTH_SHORT).show()
-        }
-
-        tvBookAuthor.setOnClickListener {
-            Snackbar.make(it, R.string.click_edit_button_to_edit_author, Snackbar.LENGTH_SHORT).show()
-        }
-
         rbRatingIndicator.onRatingBarChangeListener =
             OnRatingBarChangeListener { _, rating, fromUser ->
 
@@ -124,49 +102,6 @@ class DisplayBookFragment : Fragment(R.layout.fragment_display_book) {
                 }
             }
 
-        tvBookStatus.setOnClickListener {
-            Snackbar.make(it, R.string.click_edit_button_to_edit_status, Snackbar.LENGTH_SHORT).show()
-        }
-
-        ivBookStatusRead.setOnClickListener {
-            Snackbar.make(it, R.string.click_edit_button_to_edit_status, Snackbar.LENGTH_SHORT).show()
-        }
-
-        ivBookStatusInProgress.setOnClickListener {
-            Snackbar.make(it, R.string.click_edit_button_to_edit_status, Snackbar.LENGTH_SHORT).show()
-        }
-
-        ivBookStatusToRead.setOnClickListener {
-            Snackbar.make(it, R.string.click_edit_button_to_edit_status, Snackbar.LENGTH_SHORT).show()
-        }
-
-        tvDateFinishedTitle.setOnClickListener {
-            Snackbar.make(it, R.string.click_edit_button_to_edit_date, Snackbar.LENGTH_SHORT).show()
-        }
-
-        tvDateFinished.setOnClickListener {
-            Snackbar.make(it, R.string.click_edit_button_to_edit_date, Snackbar.LENGTH_SHORT).show()
-        }
-
-        tvBookPagesTitle.setOnClickListener {
-            Snackbar.make(it, R.string.click_edit_button_to_edit_pages, Snackbar.LENGTH_SHORT).show()
-        }
-
-        tvBookPages.setOnClickListener {
-            Snackbar.make(it, R.string.click_edit_button_to_edit_pages, Snackbar.LENGTH_SHORT).show()
-        }
-
-        tvBookPublishYearTitle.setOnClickListener {
-            Snackbar.make(it, R.string.click_edit_button_to_edit_publish_year, Snackbar.LENGTH_SHORT).show()
-        }
-
-        tvBookPublishYear.setOnClickListener {
-            Snackbar.make(it, R.string.click_edit_button_to_edit_publish_year, Snackbar.LENGTH_SHORT).show()
-        }
-
-        clDetails.setOnClickListener {
-            hideDetails()
-        }
 
         class UndoBookDeletion(book: Book) : View.OnClickListener {
             var book = book
@@ -190,13 +125,13 @@ class DisplayBookFragment : Fragment(R.layout.fragment_display_book) {
                     book.bookISBN13,
                     book.bookPublishYear,
                     book.bookIsFav,
-                    book.bookCoverImg
+                    book.bookCoverImg,
+                    book.bookNotes
                 )
             }
         }
 
         ivDelete.setOnClickListener{
-            animateClickView(it)
             var firstCheck = true
             viewModel.getBook(book.id).observe(viewLifecycleOwner) { book ->
 
@@ -207,7 +142,7 @@ class DisplayBookFragment : Fragment(R.layout.fragment_display_book) {
                         AlertDialog.Builder(it1)
                             .setTitle(R.string.warning_delete_book_title)
                             .setMessage(R.string.warning_delete_book_message)
-                            .setIcon(R.drawable.ic_baseline_warning_amber_24)
+                            .setIcon(R.drawable.ic_iconscout_exclamation_triangle_24)
                             .setPositiveButton(R.string.warning_delete_book_delete) { _, _ ->
                                 viewModel.updateBook(
                                     book.id,
@@ -228,9 +163,10 @@ class DisplayBookFragment : Fragment(R.layout.fragment_display_book) {
                                     book.bookISBN13,
                                     book.bookPublishYear,
                                     book.bookIsFav,
-                                    book.bookCoverImg
+                                    book.bookCoverImg,
+                                    book.bookNotes
                                 )
-                                recalculateChallenges(book.bookStatus)
+                                recalculateChallenges()
 
                                 Snackbar.make(it, getString(R.string.bookDeleted), Snackbar.LENGTH_LONG)
                                     .setAction(getString(R.string.undo), UndoBookDeletion(book))
@@ -246,19 +182,6 @@ class DisplayBookFragment : Fragment(R.layout.fragment_display_book) {
                 }
             }
         }
-
-        requireActivity()
-            .onBackPressedDispatcher
-            .addCallback(viewLifecycleOwner, object : OnBackPressedCallback(true) {
-
-                override fun handleOnBackPressed() {
-                    if (ivDetails2.visibility == View.VISIBLE)
-                        hideDetails()
-                    else
-                        findNavController().popBackStack()
-                }
-            }
-            )
     }
 
     override fun onResume() {
@@ -266,110 +189,7 @@ class DisplayBookFragment : Fragment(R.layout.fragment_display_book) {
         initialViewsSetup()
     }
 
-    private fun showDetails() {
-        blockDetails()
-        ivDetails2.visibility = View.VISIBLE
-
-        cvBookDisplay2.animate().translationY(0F).setInterpolator(AnticipateOvershootInterpolator(1.2F)).setDuration(500L).start()
-        cvBookDisplay1.animate().translationY(0F).setInterpolator(AnticipateOvershootInterpolator(1.2F)).setDuration(500L).start()
-
-        cvBookDisplay2.scaleX = 0.2F
-        cvBookDisplay2.scaleY = 0.2F
-        cvBookDisplay2.animate().scaleX(1F).setInterpolator(AnticipateOvershootInterpolator(1.2F)).setDuration(600L).start()
-        cvBookDisplay2.animate().scaleY(1F).setInterpolator(AnticipateOvershootInterpolator(1.2F)).setDuration(600L).start()
-
-
-        ivDetails.animate().rotation(180F).setDuration(500L).start()
-        ivDetails.animate().alpha(0F).setDuration(250L).start()
-
-        ivDetails2.animate().rotation(180F).alpha(1F).setDuration(500L).start()
-        ivDetails2.bringToFront()
-
-        MainScope().launch {
-            delay(250L)
-            ivDetails.visibility = View.INVISIBLE
-            ivDetails2.visibility = View.VISIBLE
-        }
-
-        showEditAndDeleteViews()
-    }
-
-    private fun hideDetails() {
-        blockDetails()
-        ivDetails.visibility = View.VISIBLE
-
-        cvBookDisplay2.animate().translationY(-1500F).setInterpolator(AnticipateOvershootInterpolator(1.2F)).setDuration(500L).start()
-        cvBookDisplay1.animate().translationY(500F).setDuration(500L).start()
-
-        cvBookDisplay2.animate().scaleX(0.2F).setInterpolator(AnticipateOvershootInterpolator(1.2F)).setDuration(400L).start()
-        cvBookDisplay2.animate().scaleY(0.2F).setInterpolator(AnticipateOvershootInterpolator(1.2F)).setDuration(400L).start()
-
-        ivDetails.animate().rotation(0F).setDuration(500L).start()
-        ivDetails.animate().alpha(1F).setDuration(500L).start()
-
-        ivDetails2.animate().rotation(0F).setDuration(500L).start()
-        ivDetails2.animate().alpha(0F).setDuration(250L).start()
-        ivDetails.bringToFront()
-
-        MainScope().launch {
-            delay(250L)
-            ivDetails2.visibility = View.INVISIBLE
-            ivDetails.visibility = View.VISIBLE
-        }
-
-        hideEditAndDeleteViews()
-    }
-
-    private fun blockDetails() {
-        ivDetails.isClickable = false
-        ivDetails2.isClickable = false
-        ivBookCover.isClickable = false
-
-        MainScope().launch {
-            delay(300)
-
-            ivDetails.isClickable = true
-            ivDetails2.isClickable = true
-            ivBookCover.isClickable = true
-        }
-    }
-
-    private fun showEditAndDeleteViews(){
-        ivDelete.alpha = 0F
-        ivDelete.visibility = View.VISIBLE
-        ivDelete.animate().alpha(1F).setDuration(500L).start()
-
-        ivEdit.alpha = 0F
-        ivEdit.visibility = View.VISIBLE
-        ivEdit.animate().alpha(1F).setDuration(500L).start()
-    }
-
-    private fun hideEditAndDeleteViews(){
-        ivDelete.animate().alpha(0F).setDuration(400L).start()
-        ivEdit.animate().alpha(0F).setDuration(400L).start()
-
-        MainScope().launch {
-            delay(400L)
-
-            ivDelete.visibility = View.INVISIBLE
-            ivEdit.visibility = View.INVISIBLE
-        }
-    }
-
     private fun initialViewsSetup() {
-        cvBookDisplay1.bringToFront()
-
-        cvBookDisplay2.translationY = -1500F
-        cvBookDisplay1.translationY = 500F
-
-        ivDetails.bringToFront()
-        ivDetails.visibility = View.VISIBLE
-
-        ivDetails2.alpha = 0F
-        ivDetails2.visibility = View.INVISIBLE
-
-
-
         viewModel.getBook(book.id).observe(viewLifecycleOwner) { book ->
             tvBookTitle.text = book.bookTitle
             tvBookAuthor.text = book.bookAuthor
@@ -387,12 +207,14 @@ class DisplayBookFragment : Fragment(R.layout.fragment_display_book) {
                     ivBookStatusRead.visibility = View.INVISIBLE
                     ivBookStatusToRead.visibility = View.INVISIBLE
                     rbRatingIndicator.visibility = View.GONE
+                    rearrangeViewsWhenNotFinished()
                 }
                 Constants.BOOK_STATUS_TO_READ -> {
                     tvBookStatus.text = getString(R.string.toRead)
                     ivBookStatusInProgress.visibility = View.INVISIBLE
                     ivBookStatusRead.visibility = View.INVISIBLE
                     rbRatingIndicator.visibility = View.GONE
+                    rearrangeViewsWhenNotFinished()
                 }
             }
 
@@ -404,12 +226,18 @@ class DisplayBookFragment : Fragment(R.layout.fragment_display_book) {
             setFinishDate(book.bookFinishDate)
             setStartDate(book.bookStartDate)
             setFav(book.bookIsFav, book.bookStatus)
+            setNotes(book.bookNotes)
         }
     }
 
     private fun setPages(bookNumberOfPages: Int) {
-        if (bookNumberOfPages > 0)
+        if (bookNumberOfPages > 0) {
+            tvBookPagesTitle.visibility = View.VISIBLE
+            tvBookPages.visibility = View.VISIBLE
+            ivPages.visibility = View.VISIBLE
+
             tvBookPages.text = bookNumberOfPages.toString()
+        }
         else {
             tvBookPagesTitle.visibility = View.GONE
             tvBookPages.visibility = View.GONE
@@ -418,8 +246,13 @@ class DisplayBookFragment : Fragment(R.layout.fragment_display_book) {
     }
 
     private fun setPublishDate(bookPublishYear: Int) {
-        if (bookPublishYear > 0)
+        if (bookPublishYear > 0) {
+            tvBookPublishYearTitle.visibility = View.VISIBLE
+            tvBookPublishYear.visibility = View.VISIBLE
+            ivPublishYear.visibility = View.VISIBLE
+
             tvBookPublishYear.text = book.bookPublishYear.toString()
+        }
         else {
             tvBookPublishYearTitle.visibility = View.GONE
             tvBookPublishYear.visibility = View.GONE
@@ -436,6 +269,11 @@ class DisplayBookFragment : Fragment(R.layout.fragment_display_book) {
         }
     }
 
+    private fun animatShakeView(view: View) {
+        var anim = AnimationUtils.loadAnimation(context, R.anim.shake_1)
+        view.startAnimation(anim)
+    }
+
     private fun setCover(bookCoverImg: ByteArray?) {
         if (bookCoverImg == null)
             rearrangeViewsWhenCoverMissing()
@@ -443,6 +281,29 @@ class DisplayBookFragment : Fragment(R.layout.fragment_display_book) {
             val bmp = BitmapFactory.decodeByteArray(bookCoverImg, 0, bookCoverImg.size)
             ivBookCover.setImageBitmap(bmp)
         }
+    }
+
+    private fun rearrangeViewsWhenNotFinished() {
+        val ivEditLayout = ivEdit.layoutParams as ConstraintLayout.LayoutParams
+        ivEditLayout.bottomToBottom = ConstraintLayout.LayoutParams.UNSET
+        ivEditLayout.endToStart = ConstraintLayout.LayoutParams.UNSET
+        ivEditLayout.startToEnd = ConstraintLayout.LayoutParams.UNSET
+        ivEditLayout.topToTop = ConstraintLayout.LayoutParams.UNSET
+
+        ivEditLayout.startToStart = R.id.tvBookAuthor
+        ivEditLayout.topToBottom = R.id.tvBookStatus
+
+        ivEditLayout.marginStart = -20
+        ivEditLayout.topMargin = 36
+        ivEdit.layoutParams = ivEditLayout
+
+        val ivDeleteLayout = ivDelete.layoutParams as ConstraintLayout.LayoutParams
+        ivDeleteLayout.bottomToBottom = ConstraintLayout.LayoutParams.UNSET
+        ivDeleteLayout.endToEnd = ConstraintLayout.LayoutParams.UNSET
+
+        ivDeleteLayout.startToEnd = R.id.ivEdit
+
+        ivDelete.layoutParams = ivDeleteLayout
     }
 
     private fun rearrangeViewsWhenCoverMissing() {
@@ -460,13 +321,8 @@ class DisplayBookFragment : Fragment(R.layout.fragment_display_book) {
 
         var margin = 0
 
-        val ivDetailsLayout = ivDetails.layoutParams as ConstraintLayout.LayoutParams
-        ivDetailsLayout.startToStart = R.id.clBookDisplay1
-        ivDetailsLayout.marginEnd = margin
-        ivDetails.layoutParams = ivDetailsLayout
-
         val ivFavLayout = ivFav.layoutParams as ConstraintLayout.LayoutParams
-        ivFavLayout.marginStart = margin
+        ivFavLayout.marginStart = -24
         ivFavLayout.marginEnd = margin
         ivFav.layoutParams = ivFavLayout
 
@@ -484,8 +340,16 @@ class DisplayBookFragment : Fragment(R.layout.fragment_display_book) {
 
     private fun setISBN(bookISBN13: String, bookISBN10: String) {
         if (bookISBN13 != Constants.DATABASE_EMPTY_VALUE && bookISBN13 != "") {
+            tvBookISBNTitle.visibility = View.VISIBLE
+            tvBookISBN.visibility = View.VISIBLE
+            ivISBN.visibility = View.VISIBLE
+
             tvBookISBN.text = bookISBN13
         } else if (bookISBN10 != Constants.DATABASE_EMPTY_VALUE && bookISBN10 != "") {
+            tvBookISBNTitle.visibility = View.VISIBLE
+            tvBookISBN.visibility = View.VISIBLE
+            ivISBN.visibility = View.VISIBLE
+
             tvBookISBN.text = bookISBN10
         } else {
             tvBookISBNTitle.visibility = View.GONE
@@ -494,8 +358,28 @@ class DisplayBookFragment : Fragment(R.layout.fragment_display_book) {
         }
     }
 
+    private fun setNotes(bookNotes: String) {
+        if (bookNotes != Constants.EMPTY_STRING) {
+            tvNotesTitle.visibility = View.VISIBLE
+            tvNotes.visibility = View.VISIBLE
+            ivNotes.visibility = View.VISIBLE
+
+            tvNotes.text = bookNotes
+        } else {
+            tvNotesTitle.visibility = View.GONE
+            tvNotes.visibility = View.GONE
+            ivNotes.visibility = View.GONE
+        }
+    }
+
     private fun setOLID(bookOLID: String) {
         if (bookOLID != Constants.DATABASE_EMPTY_VALUE && bookOLID != "") {
+            tvBookOLIDTitle.visibility = View.VISIBLE
+            tvBookOLID.visibility = View.VISIBLE
+            ivOLID.visibility = View.VISIBLE
+            tvBookURL.visibility = View.VISIBLE
+            ivUrl.visibility = View.VISIBLE
+
             val olid: String = bookOLID
             val url = "https://openlibrary.org/books/$olid"
             tvBookOLID.text = bookOLID
@@ -505,6 +389,7 @@ class DisplayBookFragment : Fragment(R.layout.fragment_display_book) {
             tvBookOLID.visibility = View.GONE
             ivOLID.visibility = View.GONE
             tvBookURL.visibility = View.GONE
+            ivUrl.visibility = View.GONE
         }
     }
 
@@ -527,16 +412,19 @@ class DisplayBookFragment : Fragment(R.layout.fragment_display_book) {
     }
 
     private fun editBook() {
+        var firstTime = true
         viewModel.getBook(book.id).observe(viewLifecycleOwner) { book ->
-            val bundle = Bundle().apply {
-                putSerializable(Constants.SERIALIZABLE_BUNDLE_BOOK, book)
-                putSerializable(Constants.SERIALIZABLE_BUNDLE_BOOK_SOURCE, Constants.FROM_DISPLAY)
-            }
+            val addEditBookDialog = AddEditBookDialog()
 
-            findNavController().navigate(
-                R.id.action_displayBookFragment_to_addEditBookFragment,
-                bundle
-            )
+            if (addEditBookDialog != null && firstTime) {
+                addEditBookDialog!!.arguments = Bundle().apply {
+                    putSerializable(Constants.SERIALIZABLE_BUNDLE_BOOK, book)
+                    putSerializable(Constants.SERIALIZABLE_BUNDLE_BOOK_SOURCE, Constants.FROM_DISPLAY)
+                    putSerializable(Constants.SERIALIZABLE_BUNDLE_ACCENT, (activity as ListActivity).getAccentColor(activity as ListActivity, true))
+                }
+                addEditBookDialog!!.show(childFragmentManager, AddEditBookDialog.TAG)
+                firstTime = false
+            }
         }
     }
 
@@ -551,7 +439,7 @@ class DisplayBookFragment : Fragment(R.layout.fragment_display_book) {
         return format.format(date)
     }
 
-    private fun recalculateChallenges(bookStatus: String) {
+    private fun recalculateChallenges() {
         viewModel.getSortedBooksByFinishDateDesc(Constants.BOOK_STATUS_READ)
             .observe(viewLifecycleOwner, Observer { books ->
                 var year: Int
@@ -584,12 +472,7 @@ class DisplayBookFragment : Fragment(R.layout.fragment_display_book) {
         lifecycleScope.launch {
             delay(300L)
             view?.hideKeyboard()
-
-            when (bookStatus) {
-                Constants.BOOK_STATUS_READ -> findNavController().navigate(R.id.action_displayBookFragment_to_readFragment)
-                Constants.BOOK_STATUS_IN_PROGRESS -> findNavController().navigate(R.id.action_displayBookFragment_to_inProgressFragment)
-                Constants.BOOK_STATUS_TO_READ -> findNavController().navigate(R.id.action_displayBookFragment_to_toReadFragment)
-            }
+            findNavController().navigate(R.id.action_displayBookFragment_to_booksFragment)
         }
     }
 
@@ -621,7 +504,8 @@ class DisplayBookFragment : Fragment(R.layout.fragment_display_book) {
             book.bookISBN13,
             book.bookPublishYear,
             book.bookIsFav,
-            book.bookCoverImg
+            book.bookCoverImg,
+            book.bookNotes
         )
     }
 
@@ -629,7 +513,7 @@ class DisplayBookFragment : Fragment(R.layout.fragment_display_book) {
         if (bookIsFav && bookStatus == Constants.BOOK_STATUS_READ) {
             var color = context?.let { getAccentColor(it) }
             ivFav.imageTintList = color?.let { ColorStateList.valueOf(it) }
-            ivFav.setImageDrawable(resources.getDrawable(R.drawable.ic_baseline_favorite_24))
+            ivFav.setImageDrawable(resources.getDrawable(R.drawable.ic_iconscout_heart_filled_24))
         } else if (bookStatus == Constants.BOOK_STATUS_IN_PROGRESS || bookStatus == Constants.BOOK_STATUS_TO_READ) {
             ivFav.visibility = View.GONE
         }
@@ -639,10 +523,10 @@ class DisplayBookFragment : Fragment(R.layout.fragment_display_book) {
         if (fav) {
             var color = context?.let { getAccentColor(it) }
             ivFav.imageTintList = color?.let { ColorStateList.valueOf(it) }
-            ivFav.setImageDrawable(resources.getDrawable(R.drawable.ic_baseline_favorite_24))
+            ivFav.setImageDrawable(resources.getDrawable(R.drawable.ic_iconscout_heart_filled_24))
         } else {
             ivFav.imageTintList = ColorStateList.valueOf(resources.getColor(R.color.grey_777))
-            ivFav.setImageDrawable(resources.getDrawable(R.drawable.ic_baseline_favorite_border_24))
+            ivFav.setImageDrawable(resources.getDrawable(R.drawable.ic_iconscout_heart_24))
         }
 
         viewModel.updateBook(
@@ -664,7 +548,8 @@ class DisplayBookFragment : Fragment(R.layout.fragment_display_book) {
             book.bookISBN13,
             book.bookPublishYear,
             fav,
-            book.bookCoverImg
+            book.bookCoverImg,
+            book.bookNotes
         )
     }
 

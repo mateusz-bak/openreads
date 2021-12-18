@@ -10,7 +10,7 @@
 
     <ImageView
         android:id="@+id/ivSeparator"
-        android:layout_width="100dp"
+        android:layout_width="150dp"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:layout_marginTop="-4dp"
@@ -19,7 +19,7 @@
         android:contentDescription="@string/ivSeparator1"
         android:scaleType="fitXY"
         app:tint="@color/colorDefaultText"
-        android:src="@drawable/ic_baseline_horizontal_rule_24" />
+        android:src="@drawable/ic_iconscout_horizontal_line_24" />
 
     <LinearLayout
         android:id="@+id/llUploadFromCamera"
@@ -34,7 +34,7 @@
             android:layout_height="24dp"
             android:layout_margin="8dp"
             app:tint="@color/colorDefaultText"
-            android:src="@drawable/ic_baseline_camera_24" />
+            android:src="@drawable/ic_iconscout_camera_24" />
 
         <TextView
             android:layout_width="wrap_content"
@@ -61,7 +61,7 @@
             android:layout_height="24dp"
             android:layout_margin="8dp"
             app:tint="@color/colorDefaultText"
-            android:src="@drawable/ic_baseline_sd_storage_24" />
+            android:src="@drawable/ic_iconscout_folder_24" />
 
         <TextView
             android:layout_width="wrap_content"

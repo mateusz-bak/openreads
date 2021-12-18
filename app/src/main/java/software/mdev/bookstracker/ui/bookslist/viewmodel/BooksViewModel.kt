@@ -34,6 +34,7 @@ class BooksViewModel(
     var openLibraryBooksByOLID: MutableLiveData<List<Resource<OpenLibraryOLIDResponse>>> = MutableLiveData()
     var showLoadingCircle: MutableLiveData<Boolean> = MutableLiveData()
     var selectedLanguages: MutableLiveData<List<Language>> = MutableLiveData()
+    var getBooksTrigger: MutableLiveData<Long> = MutableLiveData()
 
     fun upsert(item: Book) = CoroutineScope(Dispatchers.Main).launch {
         repository.upsert(item)
@@ -45,11 +46,7 @@ class BooksViewModel(
 
     fun getBook(id: Int?) = repository.getBook(id)
 
-    fun getReadBooks() = repository.getReadBooks()
-
-    fun getInProgressBooks() = repository.getInProgressBooks()
-
-    fun getToReadBooks() = repository.getToReadBooks()
+    fun getNotDeletedBooks() = repository.getNotDeletedBooks()
 
     fun updateBook(
         id: Int?,
@@ -70,7 +67,8 @@ class BooksViewModel(
         bookISBN13: String,
         bookPublishYear: Int,
         bookIsFav: Boolean,
-        bookCoverImg: ByteArray?
+        bookCoverImg: ByteArray?,
+        bookNotes: String
     ) = CoroutineScope(Dispatchers.Main).launch {
         repository.updateBook(
             id,
@@ -91,7 +89,8 @@ class BooksViewModel(
             bookISBN13,
             bookPublishYear,
             bookIsFav,
-            bookCoverImg
+            bookCoverImg,
+            bookNotes
         )
     }
 

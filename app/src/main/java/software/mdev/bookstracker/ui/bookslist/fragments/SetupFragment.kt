@@ -34,39 +34,23 @@ class SetupFragment : Fragment(R.layout.fragment_setup) {
 
             if (sharedPref.getString(Constants.SHARED_PREFERENCES_KEY_APP_VERSION, "v0.0.0") ==
                 resources.getString(R.string.app_version)) {
-
-                when (getPreferenceLandingPage((activity as ListActivity).baseContext)) {
-                    Constants.KEY_LANDING_PAGE_FINISHED ->
-                        findNavController().navigate(
-                            R.id.action_setupFragment_to_readFragment,
-                            savedInstanceState,
-                            navOptions
-                        )
-                    Constants.KEY_LANDING_PAGE_IN_PROGRESS ->
-                        findNavController().navigate(
-                            R.id.action_setupFragment_to_inProgressFragment,
-                            savedInstanceState,
-                            navOptions
-                        )
-                    Constants.KEY_LANDING_PAGE_TO_READ ->
-                        findNavController().navigate(
-                            R.id.action_setupFragment_to_toReadFragment,
-                            savedInstanceState,
-                            navOptions
-                        )
-                }
+                findNavController().navigate(
+                    R.id.action_setupFragment_to_booksFragment,
+                    savedInstanceState,
+                    navOptions
+                )
             } else {
                 findNavController().navigate(R.id.action_setupFragment_to_changelogFragment, savedInstanceState, navOptions)
             }
         }
 
         val images = listOf(
-            R.drawable.ic_svg_three_books_grey_colored,
-            R.drawable.ic_svg_phone_list,
-            R.drawable.ic_svg_analytics,
-            R.drawable.ic_svg_open_source_inspection,
+            R.drawable.ic_book_logo,
+            R.drawable.ic_undraw_post_online,
+            R.drawable.ic_undraw_fast_loading,
+            R.drawable.ic_undraw_mobile_development,
             0,
-            R.drawable.ic_svg_girl_reading
+            R.drawable.ic_undraw_reading
         )
 
         val adapter = SetupAdapter(
@@ -210,14 +194,7 @@ class SetupFragment : Fragment(R.layout.fragment_setup) {
             hotReloadActivity(activity)
             saveAppsFirstlaunch()
 
-            when (getPreferenceLandingPage((activity as ListActivity).baseContext)) {
-                Constants.KEY_LANDING_PAGE_FINISHED ->
-                    Navigation.findNavController(view).navigate(R.id.action_setupFragment_to_readFragment)
-                Constants.KEY_LANDING_PAGE_IN_PROGRESS ->
-                    Navigation.findNavController(view).navigate(R.id.action_setupFragment_to_inProgressFragment)
-                Constants.KEY_LANDING_PAGE_TO_READ ->
-                    Navigation.findNavController(view).navigate(R.id.action_setupFragment_to_toReadFragment)
-            }
+            Navigation.findNavController(view).navigate(R.id.action_setupFragment_to_booksFragment)
         }
 
         tvNext.setOnClickListener {

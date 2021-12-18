@@ -41,6 +41,9 @@ class SetupAdapter(
         when (position) {
             0 -> {
                 holder.itemView.apply {
+                    ivSetupImage.scaleX = 0F
+                    ivSetupImage.scaleY = 0F
+
                     val param = ivSetupImage.layoutParams as ViewGroup.MarginLayoutParams
                     param.width = 450
                     param.height = 450
@@ -52,10 +55,12 @@ class SetupAdapter(
 
                     tvSetupText.text = string
                     tvSetupText.textSize = 20F
-                    tvSetupVersion.visibility = View.VISIBLE
 
                     tvSetupSwipeHint.visibility = View.INVISIBLE
                     tvSetupSwipeHint.text = resources.getText(R.string.tvSetupSwipeHint_0)
+
+                    ivSetupImage.animate().scaleX(1F).setInterpolator(BounceInterpolator()).setDuration(700L).start()
+                    ivSetupImage.animate().scaleY(1F).setInterpolator(BounceInterpolator()).setDuration(700L).start()
                 }
             }
             1 -> {
@@ -67,7 +72,6 @@ class SetupAdapter(
 
                     var string = resources.getString(R.string.app_name) + " " + resources.getString(R.string.tvWelcomeText_1)
                     tvSetupText.text = string
-                    tvSetupVersion.visibility = View.INVISIBLE
 
                     tvSetupSwipeHint.visibility = View.INVISIBLE
                 }
@@ -80,7 +84,6 @@ class SetupAdapter(
                     viewSlideRight(tvSetupText)
 
                     tvSetupText.text = resources.getText(R.string.tvWelcomeText_2)
-                    tvSetupVersion.visibility = View.INVISIBLE
 
                     tvSetupSwipeHint.visibility = View.INVISIBLE
                 }
@@ -94,7 +97,6 @@ class SetupAdapter(
 
                     var string = resources.getString(R.string.app_name) + " " + resources.getString(R.string.tvWelcomeText_3)
                     tvSetupText.text = string
-                    tvSetupVersion.visibility = View.INVISIBLE
 
                     tvSetupSwipeHint.visibility = View.INVISIBLE
                 }
@@ -105,7 +107,6 @@ class SetupAdapter(
 
                     clThemeSelector.visibility = View.VISIBLE
                     tvSetupText.text = resources.getText(R.string.tvWelcomeText_4)
-                    tvSetupVersion.visibility = View.INVISIBLE
 
                     tvSetupSwipeHint.visibility = View.INVISIBLE
 
@@ -169,7 +170,6 @@ class SetupAdapter(
 
                     tvSetupText.text = resources.getText(R.string.tvWelcomeText_5)
                     tvSetupText.textSize = 20F
-                    tvSetupVersion.visibility = View.INVISIBLE
 
                     tvSetupSwipeHint.text = resources.getText(R.string.tvSetupSwipeHint_1)
 

@@ -5,6 +5,7 @@ import android.graphics.BitmapFactory
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.recyclerview.widget.AsyncListDiffer
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
@@ -17,7 +18,7 @@ import java.util.*
 
 class BookAdapter(
     var context: Context,
-    val whichFragment: String
+    private val whichFragment: String
 
 ) : RecyclerView.Adapter<BookAdapter.BookViewHolder>() {
     inner class BookViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView)
@@ -130,11 +131,23 @@ class BookAdapter(
     }
 
     private fun setCover(view: View, bookCoverImg: ByteArray?) {
-
         if (bookCoverImg == null) {
             view.ivBookCover.visibility = View.GONE
+
+            val tvBookTitleLayout = view.tvBookTitle.layoutParams as ConstraintLayout.LayoutParams
+            tvBookTitleLayout.topToTop = ConstraintLayout.LayoutParams.PARENT_ID
+            tvBookTitleLayout.marginStart = 0
+
+            view.tvBookTitle.layoutParams = tvBookTitleLayout
         } else {
             view.ivBookCover.visibility = View.VISIBLE
+
+            val tvBookTitleLayout = view.tvBookTitle.layoutParams as ConstraintLayout.LayoutParams
+            tvBookTitleLayout.topToTop = view.ivBookCover.id
+            tvBookTitleLayout.marginStart = 50
+
+            view.tvBookTitle.layoutParams = tvBookTitleLayout
+
             val bmp = BitmapFactory.decodeByteArray(bookCoverImg, 0, bookCoverImg.size)
             view.ivBookCover.setImageBitmap(bmp)
         }

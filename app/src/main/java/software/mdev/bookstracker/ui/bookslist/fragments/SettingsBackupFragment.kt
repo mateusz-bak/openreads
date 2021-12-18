@@ -70,7 +70,7 @@ class SettingsBackupFragment : PreferenceFragmentCompat(), OnSharedPreferenceCha
             AlertDialog.Builder(it1)
                 .setTitle(R.string.restore_backup_warning_title)
                 .setMessage(R.string.restore_backup_warning_message)
-                .setIcon(R.drawable.ic_baseline_warning_amber_24)
+                .setIcon(R.drawable.ic_iconscout_exclamation_triangle_24)
                 .setNegativeButton(R.string.warning_take_me_back) { _, _ ->
                 }
                 .setPositiveButton(R.string.warning_understand) { _, _ ->
