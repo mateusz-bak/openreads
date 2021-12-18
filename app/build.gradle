@@ -30,8 +30,8 @@ android {
             resValue "string", "app_name", "Openreads"
             resValue "string", "shared_preferences_name", "software.mdev.bookstracker_preferences"
             manifestPlaceholders = [
-                    appIcon: "@mipmap/ic_launcher_three_books",
-                    appIconRound: "@mipmap/ic_launcher_three_books_round",
+                    appIcon: "@mipmap/logo",
+                    appIconRound: "@mipmap/logo_round",
                     providerAuthorities: "software.mdev.bookstracker.fileprovider"
             ]
         }
@@ -40,8 +40,8 @@ android {
             resValue "string", "app_name", "Openreads debug"
             resValue "string", "shared_preferences_name", "software.mdev.bookstracker.debug_preferences"
             manifestPlaceholders = [
-                    appIcon: "@mipmap/ic_launcher_three_books_debug",
-                    appIconRound: "@mipmap/ic_launcher_three_books_debug",
+                    appIcon: "@mipmap/logo_debug",
+                    appIconRound: "@mipmap/logo_debug_round",
                     providerAuthorities: "software.mdev.bookstracker.debug.fileprovider"
             ]
         }
