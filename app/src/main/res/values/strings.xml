@@ -52,15 +52,15 @@
     <string name="app_changelog">Changelog</string>
     <string name="app_licence_title">Licence</string>
     <string name="app_licence" translatable="false">GNU General Public License v2.0</string>
-    <string name="accent_light_green">Light green</string>
+    <string name="accent_light_green">Grey</string>
     <string name="accent_orange">Orange</string>
-    <string name="accent_cyan">Cyan</string>
+    <string name="accent_cyan">Mint</string>
     <string name="accent_green">Green</string>
     <string name="accent_brown">Brown</string>
-    <string name="accent_lime">Lime</string>
+    <string name="accent_lime">Crimson</string>
     <string name="accent_pink">Pink</string>
     <string name="accent_purple">Purple</string>
-    <string name="accent_teal">Teal</string>
+    <string name="accent_teal">Blue</string>
     <string name="accent_yellow">Yellow</string>
     <string name="accent_name_title">Accent color</string>
     <string name="first_time_toggle_title">Show welcome screen</string>
