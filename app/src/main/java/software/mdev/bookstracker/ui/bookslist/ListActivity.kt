@@ -538,6 +538,10 @@ class ListActivity : AppCompatActivity() {
         bottomSheetDialog.findViewById<CheckBox>(R.id.cbFilterFavourite)?.buttonTintList =
             ColorStateList.valueOf(getAccentColor(this))
 
+        bottomSheetDialog.findViewById<CheckBox>(R.id.cbFilterFavourite)?.setTextColor(
+            ColorStateList.valueOf(this.getColor(R.color.colorDefaultText))
+        )
+
         val radioButtons = listOf<RadioButton?>(
             bottomSheetDialog.findViewById(R.id.rbSortByTitle),
             bottomSheetDialog.findViewById(R.id.rbSortByAuthor),
@@ -550,6 +554,8 @@ class ListActivity : AppCompatActivity() {
         for (radioButton in radioButtons) {
             radioButton?.buttonTintList =
                 ColorStateList.valueOf(getAccentColor(this))
+
+            radioButton?.setTextColor(ColorStateList.valueOf(this.getColor(R.color.colorDefaultText)))
         }
     }
 

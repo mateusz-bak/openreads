@@ -13,6 +13,8 @@
         android:layout_marginTop="0dp"
         android:paddingStart="12dp"
         android:paddingEnd="12dp"
+        app:tabTextColor="@color/colorDefaultText"
+        app:tabSelectedTextColor="?colorPrimary"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"

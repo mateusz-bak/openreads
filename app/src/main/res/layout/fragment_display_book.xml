@@ -6,15 +6,6 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <androidx.cardview.widget.CardView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
-
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -358,87 +349,87 @@
                 android:gravity="start"
                 android:text="@string/tv_book_url"
                 android:textSize="14sp"
-                app:layout_constraintStart_toStartOf="@+id/tvNotes"
-                app:layout_constraintTop_toBottomOf="@+id/tvNotes" />
-
-            <TextView
-                android:id="@+id/tvBookTagsTitle"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
-                android:fontFamily="@font/jost_500_medium"
-                android:text="@string/book_tags"
-                android:textSize="15sp"
-                app:layout_constraintStart_toStartOf="@+id/tvBookISBN"
+                app:layout_constraintStart_toStartOf="@+id/tvBookOLIDTitle"
                 app:layout_constraintTop_toBottomOf="@+id/tvBookOLID" />
 
-            <androidx.constraintlayout.widget.ConstraintLayout
-                android:id="@+id/clBookTags"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="@+id/tvBookTagsTitle"
-                app:layout_constraintTop_toBottomOf="@id/tvBookTagsTitle">
+<!--            <TextView-->
+<!--                android:id="@+id/tvBookTagsTitle"-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:layout_marginTop="8dp"-->
+<!--                android:fontFamily="@font/jost_500_medium"-->
+<!--                android:text="@string/book_tags"-->
+<!--                android:textSize="15sp"-->
+<!--                app:layout_constraintStart_toStartOf="@+id/tvBookISBN"-->
+<!--                app:layout_constraintTop_toBottomOf="@+id/tvBookOLID" />-->
 
-                <com.google.android.material.chip.ChipGroup
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintHorizontal_bias="0.5"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent">
+<!--            <androidx.constraintlayout.widget.ConstraintLayout-->
+<!--                android:id="@+id/clBookTags"-->
+<!--                android:layout_width="0dp"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                app:layout_constraintEnd_toEndOf="parent"-->
+<!--                app:layout_constraintStart_toStartOf="@+id/tvBookTagsTitle"-->
+<!--                app:layout_constraintTop_toBottomOf="@id/tvBookTagsTitle">-->
 
-                    <com.google.android.material.chip.Chip
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:backgroundTint="?colorPrimary"
-                        android:text="tag_1" />
+<!--                <com.google.android.material.chip.ChipGroup-->
+<!--                    android:layout_width="match_parent"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    app:layout_constraintBottom_toBottomOf="parent"-->
+<!--                    app:layout_constraintEnd_toEndOf="parent"-->
+<!--                    app:layout_constraintHorizontal_bias="0.5"-->
+<!--                    app:layout_constraintStart_toStartOf="parent"-->
+<!--                    app:layout_constraintTop_toTopOf="parent">-->
 
-                    <com.google.android.material.chip.Chip
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:backgroundTint="?colorPrimary"
-                        android:text="tag_2" />
+<!--                    <com.google.android.material.chip.Chip-->
+<!--                        android:layout_width="wrap_content"-->
+<!--                        android:layout_height="wrap_content"-->
+<!--                        android:backgroundTint="?colorPrimary"-->
+<!--                        android:text="tag_1" />-->
 
-                    <com.google.android.material.chip.Chip
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:backgroundTint="?colorPrimary"
-                        android:text="tag_long_3" />
+<!--                    <com.google.android.material.chip.Chip-->
+<!--                        android:layout_width="wrap_content"-->
+<!--                        android:layout_height="wrap_content"-->
+<!--                        android:backgroundTint="?colorPrimary"-->
+<!--                        android:text="tag_2" />-->
 
-                    <com.google.android.material.chip.Chip
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:backgroundTint="?colorPrimary"
-                        android:text="tag_long_4" />
+<!--                    <com.google.android.material.chip.Chip-->
+<!--                        android:layout_width="wrap_content"-->
+<!--                        android:layout_height="wrap_content"-->
+<!--                        android:backgroundTint="?colorPrimary"-->
+<!--                        android:text="tag_long_3" />-->
 
-                </com.google.android.material.chip.ChipGroup>
+<!--                    <com.google.android.material.chip.Chip-->
+<!--                        android:layout_width="wrap_content"-->
+<!--                        android:layout_height="wrap_content"-->
+<!--                        android:backgroundTint="?colorPrimary"-->
+<!--                        android:text="tag_long_4" />-->
+
+<!--                </com.google.android.material.chip.ChipGroup>-->
 
 
-            </androidx.constraintlayout.widget.ConstraintLayout>
+<!--            </androidx.constraintlayout.widget.ConstraintLayout>-->
 
 
-            <TextView
-                android:id="@+id/tvNotesTitle"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
-                android:fontFamily="@font/jost_500_medium"
-                android:text="@string/book_notes"
-                android:textSize="15sp"
-                app:layout_constraintStart_toStartOf="@+id/tvBookISBN"
-                app:layout_constraintTop_toBottomOf="@+id/clBookTags" />
+<!--            <TextView-->
+<!--                android:id="@+id/tvNotesTitle"-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:layout_marginTop="8dp"-->
+<!--                android:fontFamily="@font/jost_500_medium"-->
+<!--                android:text="@string/book_notes"-->
+<!--                android:textSize="15sp"-->
+<!--                app:layout_constraintStart_toStartOf="@+id/tvBookISBN"-->
+<!--                app:layout_constraintTop_toBottomOf="@+id/clBookTags" />-->
 
-            <TextView
-                android:id="@+id/tvNotes"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:text="The main character of Fantastic Mr. Fox is an extremely clever anthropomorphized fox named Mr. Fox. He lives with his wife and four little foxes."
-                android:textSize="14sp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="@+id/tvNotesTitle"
-                app:layout_constraintTop_toBottomOf="@+id/tvNotesTitle" />
+<!--            <TextView-->
+<!--                android:id="@+id/tvNotes"-->
+<!--                android:layout_width="0dp"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:text="The main character of Fantastic Mr. Fox is an extremely clever anthropomorphized fox named Mr. Fox. He lives with his wife and four little foxes."-->
+<!--                android:textSize="14sp"-->
+<!--                app:layout_constraintEnd_toEndOf="parent"-->
+<!--                app:layout_constraintStart_toStartOf="@+id/tvNotesTitle"-->
+<!--                app:layout_constraintTop_toBottomOf="@+id/tvNotesTitle" />-->
 
             <androidx.constraintlayout.widget.Guideline
                 android:id="@+id/guideline21"
@@ -516,27 +507,27 @@
                 app:srcCompat="@drawable/ic_iconscout_book_24"
                 app:tint="?colorPrimary" />
 
-            <ImageView
-                android:id="@+id/ivBookTags"
-                android:layout_width="32dp"
-                android:layout_height="32dp"
-                android:padding="3dp"
-                android:scaleType="fitCenter"
-                app:layout_constraintStart_toStartOf="@+id/ivDateStarted"
-                app:layout_constraintTop_toTopOf="@+id/tvBookTagsTitle"
-                app:srcCompat="@drawable/ic_iconscout_tag_alt_24"
-                app:tint="?colorPrimary" />
+<!--            <ImageView-->
+<!--                android:id="@+id/ivBookTags"-->
+<!--                android:layout_width="32dp"-->
+<!--                android:layout_height="32dp"-->
+<!--                android:padding="3dp"-->
+<!--                android:scaleType="fitCenter"-->
+<!--                app:layout_constraintStart_toStartOf="@+id/ivDateStarted"-->
+<!--                app:layout_constraintTop_toTopOf="@+id/tvBookTagsTitle"-->
+<!--                app:srcCompat="@drawable/ic_iconscout_tag_alt_24"-->
+<!--                app:tint="?colorPrimary" />-->
 
-            <ImageView
-                android:id="@+id/ivBookNotes"
-                android:layout_width="32dp"
-                android:layout_height="32dp"
-                android:padding="3dp"
-                android:scaleType="fitCenter"
-                app:layout_constraintStart_toStartOf="@+id/ivDateStarted"
-                app:layout_constraintTop_toTopOf="@+id/tvNotesTitle"
-                app:srcCompat="@drawable/ic_iconscout_comment_alt_notes_24"
-                app:tint="?colorPrimary" />
+<!--            <ImageView-->
+<!--                android:id="@+id/ivBookNotes"-->
+<!--                android:layout_width="32dp"-->
+<!--                android:layout_height="32dp"-->
+<!--                android:padding="3dp"-->
+<!--                android:scaleType="fitCenter"-->
+<!--                app:layout_constraintStart_toStartOf="@+id/ivDateStarted"-->
+<!--                app:layout_constraintTop_toTopOf="@+id/tvNotesTitle"-->
+<!--                app:srcCompat="@drawable/ic_iconscout_comment_alt_notes_24"-->
+<!--                app:tint="?colorPrimary" />-->
 
             <ImageView
                 android:id="@+id/ivUrl"
@@ -554,5 +545,4 @@
         </androidx.constraintlayout.widget.ConstraintLayout>
 
     </ScrollView>
-    </androidx.cardview.widget.CardView>
 </androidx.constraintlayout.widget.ConstraintLayout>

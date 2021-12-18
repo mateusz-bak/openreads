@@ -9,7 +9,6 @@
         <item name="android:windowIsFloating">false</item>
         <item name="android:windowBackground">@color/white</item>
         <item name="actionMenuTextColor">@color/colorDefaultText</item>
-        <item name="android:windowLightStatusBar">true</item>
-        <item name="android:statusBarColor">@color/white</item>
+        <item name="android:statusBarColor">?attr/colorOnPrimary</item>
     </style>
 </resources>

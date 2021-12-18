@@ -11,8 +11,6 @@
         <item name="android:statusBarColor" tools:targetApi="l">?attr/colorPrimarySurface</item>
         <item name="android:windowLightStatusBar">false</item>
         <!-- Customize your theme here. -->
-        <item name="windowActionBar">false</item>
-        <item name="windowNoTitle">true</item>
         <item name="colorAccent">?colorPrimary</item>
         <item name="sortDialogBackgroundColor">@color/grey_dialog_night</item>
         <item name="android:navigationBarColor">?attr/colorPrimarySurface</item>

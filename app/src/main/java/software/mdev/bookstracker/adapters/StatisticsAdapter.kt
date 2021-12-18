@@ -394,6 +394,7 @@ class StatisticsAdapter(
         legend.xEntrySpace = 7f
         legend.yEntrySpace = 10f
         legend.textSize = 14f
+        legend.textColor = itemView.resources.getColor(R.color.colorDefaultText)
 
         val data = PieData(dataSet)
         data.setValueTextSize(14f)
