@@ -296,7 +296,8 @@ class AddEditBookDialog : DialogFragment() {
                             newBook.bookPublishYear,
                             newBook.bookIsFav,
                             newBook.bookCoverImg,
-                            newBook.bookNotes
+                            newBook.bookNotes,
+                            newBook.bookTags
                         )
 
                         recalculateChallenges()

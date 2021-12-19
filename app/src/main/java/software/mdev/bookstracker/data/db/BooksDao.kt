@@ -38,7 +38,8 @@ interface BooksDao {
             "item_bookPublishYear=:bookPublishYear, " +
             "item_bookIsFav=:bookIsFav, " +
             "item_bookCoverImg=:bookCoverImg, " +
-            "item_bookNotes=:bookNotes " +
+            "item_bookNotes=:bookNotes, " +
+            "item_bookTags=:bookTags " +
             "WHERE id=:id")
     suspend fun updateBook(id: Int?,
                            bookTitle: String,
@@ -59,7 +60,8 @@ interface BooksDao {
                            bookPublishYear: Int,
                            bookIsFav: Boolean,
                            bookCoverImg: ByteArray?,
-                           bookNotes: String
+                           bookNotes: String,
+                           bookTags: Array<String>?
     )
 
     @Query("SELECT * FROM Book WHERE (item_bookTitle_ASCII LIKE '%' || :searchQuery || '%' OR item_bookAuthor_ASCII LIKE '%' || :searchQuery || '%' AND item_bookIsDeleted LIKE 0)")

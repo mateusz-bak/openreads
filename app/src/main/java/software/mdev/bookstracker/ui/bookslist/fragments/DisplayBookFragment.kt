@@ -126,7 +126,8 @@ class DisplayBookFragment : Fragment(R.layout.fragment_display_book) {
                     book.bookPublishYear,
                     book.bookIsFav,
                     book.bookCoverImg,
-                    book.bookNotes
+                    book.bookNotes,
+                    book.bookTags
                 )
             }
         }
@@ -164,7 +165,8 @@ class DisplayBookFragment : Fragment(R.layout.fragment_display_book) {
                                     book.bookPublishYear,
                                     book.bookIsFav,
                                     book.bookCoverImg,
-                                    book.bookNotes
+                                    book.bookNotes,
+                                    book.bookTags
                                 )
                                 recalculateChallenges()
 
@@ -505,7 +507,8 @@ class DisplayBookFragment : Fragment(R.layout.fragment_display_book) {
             book.bookPublishYear,
             book.bookIsFav,
             book.bookCoverImg,
-            book.bookNotes
+            book.bookNotes,
+            book.bookTags
         )
     }
 
@@ -549,7 +552,8 @@ class DisplayBookFragment : Fragment(R.layout.fragment_display_book) {
             book.bookPublishYear,
             fav,
             book.bookCoverImg,
-            book.bookNotes
+            book.bookNotes,
+            book.bookTags
         )
     }
 

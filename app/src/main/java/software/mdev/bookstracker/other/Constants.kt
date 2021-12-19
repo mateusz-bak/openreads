@@ -28,6 +28,7 @@ object Constants {
     const val DATABASE_ITEM_BOOK_IS_FAV = "item_bookIsFav"
     const val DATABASE_ITEM_BOOK_COVER_IMG = "item_bookCoverImg"
     const val DATABASE_ITEM_BOOK_NOTES = "item_bookNotes"
+    const val DATABASE_ITEM_BOOK_TAGS = "item_bookTags"
     const val DATABASE_EMPTY_VALUE = "none"
 
     const val DATABASE_NAME_YEAR = "Year"

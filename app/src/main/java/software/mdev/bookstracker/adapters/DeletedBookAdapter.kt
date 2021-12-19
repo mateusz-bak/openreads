@@ -150,7 +150,8 @@ class DeletedBookAdapter(
                 curBook.bookPublishYear,
                 curBook.bookIsFav,
                 curBook.bookCoverImg,
-                curBook.bookNotes
+                curBook.bookNotes,
+                curBook.bookTags
             )
         }
     }

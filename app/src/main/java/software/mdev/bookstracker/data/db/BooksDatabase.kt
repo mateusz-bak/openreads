@@ -4,15 +4,18 @@ import android.content.Context
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
+import androidx.room.TypeConverters
 import androidx.room.migration.Migration
 import androidx.sqlite.db.SupportSQLiteDatabase
 import software.mdev.bookstracker.data.db.entities.Book
 import software.mdev.bookstracker.other.Constants.DATABASE_FILE_NAME
+import software.mdev.bookstracker.other.Converters
 
 @Database(
         entities = [Book::class],
-        version = 10
+        version = 11
 )
+@TypeConverters(Converters::class)
 abstract class BooksDatabase: RoomDatabase() {
 
     abstract fun getBooksDao(): BooksDao
@@ -40,7 +43,8 @@ abstract class BooksDatabase: RoomDatabase() {
                     MIGRATION_6_7,
                     MIGRATION_7_8,
                     MIGRATION_8_9,
-                    MIGRATION_9_10
+                    MIGRATION_9_10,
+                    MIGRATION_10_11
                 )
                 .build()
 
@@ -64,7 +68,8 @@ abstract class BooksDatabase: RoomDatabase() {
                         MIGRATION_6_7,
                         MIGRATION_7_8,
                         MIGRATION_8_9,
-                        MIGRATION_9_10
+                        MIGRATION_9_10,
+                        MIGRATION_10_11
                     )
                     .build()
                 Companion.instance = instance
@@ -133,6 +138,12 @@ abstract class BooksDatabase: RoomDatabase() {
         private val MIGRATION_9_10 = object : Migration(9, 10) {
             override fun migrate(database: SupportSQLiteDatabase) {
                 database.execSQL("ALTER TABLE Book ADD COLUMN item_bookNotes TEXT NOT NULL DEFAULT ''")
+            }
+        }
+
+        private val MIGRATION_10_11 = object : Migration(10, 11) {
+            override fun migrate(database: SupportSQLiteDatabase) {
+                database.execSQL("ALTER TABLE Book ADD COLUMN item_bookTags TEXT")
             }
         }
     }
