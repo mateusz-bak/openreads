@@ -231,4 +231,6 @@
     <string name="theme_mode_night">Ciemny</string>
     <string name="ascending">Rosnąco</string>
     <string name="descending">Malejąco</string>
+    <string name="setContentOnUpdateAvailable_gplay">"Nowsza wersja aplikacji &appname; jest dostępna do pobrania z Google Play.\n\nKliknij \"aktualizuj\", żeby przejść na stronę pobierania."</string>
+    <string name="setContentOnUpdateNotAvailable_gplay">Masz zainstalowaną najnowszą wersję aplikacji &appname; z Google Play.</string>
 </resources>
