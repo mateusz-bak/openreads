@@ -29,6 +29,10 @@ import android.widget.RatingBar.OnRatingBarChangeListener
 import kotlinx.coroutines.MainScope
 import android.graphics.BitmapFactory
 import android.view.animation.AnimationUtils
+import com.google.android.material.chip.Chip
+import kotlinx.android.synthetic.main.fragment_display_book.clBookTags
+import kotlinx.android.synthetic.main.fragment_display_book.ivBookCover
+import kotlinx.android.synthetic.main.fragment_display_book.tvBookStatus
 import software.mdev.bookstracker.ui.bookslist.dialogs.AddEditBookDialog
 
 
@@ -186,11 +190,6 @@ class DisplayBookFragment : Fragment(R.layout.fragment_display_book) {
         }
     }
 
-    override fun onResume() {
-        super.onResume()
-        initialViewsSetup()
-    }
-
     private fun initialViewsSetup() {
         viewModel.getBook(book.id).observe(viewLifecycleOwner) { book ->
             tvBookTitle.text = book.bookTitle
@@ -229,6 +228,41 @@ class DisplayBookFragment : Fragment(R.layout.fragment_display_book) {
             setStartDate(book.bookStartDate)
             setFav(book.bookIsFav, book.bookStatus)
             setNotes(book.bookNotes)
+            setTags(book.bookTags)
+        }
+    }
+
+    private fun setTags(tags: List<String>?) {
+        if (tags != null) {
+            tvBookTagsTitle.visibility = View.VISIBLE
+            clBookTags.visibility = View.VISIBLE
+            ivBookTags.visibility = View.VISIBLE
+
+            // remove current chips
+            val numberOfChips = cgTags.childCount
+            if (numberOfChips > 0) {
+                for (i in 0 until numberOfChips) {
+                    val child = cgTags.getChildAt(0) as Chip
+                    cgTags.removeView(child)
+                }
+            }
+
+            // add up to date chips
+            for (tag in tags) {
+                val chip = Chip(context)
+                chip.isCloseIconVisible = false
+                chip.text = tag
+                chip.isCloseIconEnabled = false
+                chip.isClickable = false
+                chip.isCheckable = false
+                chip.chipBackgroundColor = ColorStateList.valueOf(getAccentColor(listActivity))
+                cgTags.addView(chip as View)
+            }
+        }
+        else {
+            tvBookTagsTitle.visibility = View.GONE
+            clBookTags.visibility = View.GONE
+            ivBookTags.visibility = View.GONE
         }
     }
 

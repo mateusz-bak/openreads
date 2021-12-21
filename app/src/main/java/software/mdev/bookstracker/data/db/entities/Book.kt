@@ -67,7 +67,7 @@ data class Book (
         var  bookNotes: String = Constants.EMPTY_STRING,
 
         @ColumnInfo(name = Constants.DATABASE_ITEM_BOOK_TAGS)
-        var bookTags: Array<String>? = null
+        var bookTags: List<String>? = null
 ): Serializable{
     @PrimaryKey(autoGenerate = true)
     var id: Int? = null

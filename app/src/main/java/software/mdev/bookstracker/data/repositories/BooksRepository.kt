@@ -35,7 +35,7 @@ class BooksRepository (
         bookIsFav: Boolean,
         bookCoverImg: ByteArray?,
         bookNotes: String,
-        bookTags: Array<String>?
+        bookTags: List<String>?
     ) = db.getBooksDao().updateBook(
         id,
         bookTitle,

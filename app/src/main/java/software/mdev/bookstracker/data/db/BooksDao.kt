@@ -61,7 +61,7 @@ interface BooksDao {
                            bookIsFav: Boolean,
                            bookCoverImg: ByteArray?,
                            bookNotes: String,
-                           bookTags: Array<String>?
+                           bookTags: List<String>?
     )
 
     @Query("SELECT * FROM Book WHERE (item_bookTitle_ASCII LIKE '%' || :searchQuery || '%' OR item_bookAuthor_ASCII LIKE '%' || :searchQuery || '%' AND item_bookIsDeleted LIKE 0)")

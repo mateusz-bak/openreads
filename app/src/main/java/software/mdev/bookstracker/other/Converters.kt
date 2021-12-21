@@ -11,8 +11,8 @@ class Converters {
     fun jsonToIntArray(value: String) = Gson().fromJson(value, Array<Int>::class.java)
 
     @TypeConverter
-    fun stringArrayToJson(value: Array<String>?) = Gson().toJson(value)
+    fun listToJson(value: List<String>?) = Gson().toJson(value)
 
     @TypeConverter
-    fun jsonToStringArray(value: String?) = Gson().fromJson(value, Array<String>::class.java)
+    fun jsonToList(value: String) = Gson().fromJson(value, Array<String>::class.java)?.toList()
 }

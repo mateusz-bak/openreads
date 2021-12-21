@@ -27,9 +27,11 @@ import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import androidx.swiperefreshlayout.widget.CircularProgressDrawable
 import com.google.android.material.bottomsheet.BottomSheetDialog
+import com.google.android.material.chip.Chip
 import com.google.android.material.snackbar.Snackbar
 import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.dialog_add_edit_book.*
+import kotlinx.android.synthetic.main.dialog_add_edit_book.ivBookCover
 import kotlinx.coroutines.MainScope
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
@@ -352,6 +354,9 @@ class AddEditBookDialog : DialogFragment() {
             showBottomSheetDialog()
         }
 
+        btnBookAddTag.setOnClickListener {
+            addTag()
+        }
     }
 
     override fun onStart() {
@@ -373,6 +378,24 @@ class AddEditBookDialog : DialogFragment() {
             val exampleDialog = AddEditBookDialog()
             exampleDialog.show(fragmentManager!!, TAG)
             return exampleDialog
+        }
+    }
+
+    private fun addTag() {
+        val newTag = tietBookTags.text
+
+        if (newTag != null && newTag.isNotEmpty()) {
+            val chip = Chip(context)
+            chip.isCloseIconVisible = true
+            chip.text = newTag
+            chip.isCloseIconEnabled = true
+            chip.isClickable = false
+            chip.isCheckable = false
+            chip.setOnCloseIconClickListener {
+                chipGroup.removeView(it)
+            }
+            chipGroup.addView(chip as View)
+            tietBookTags?.setText("")
         }
     }
 
@@ -433,6 +456,15 @@ class AddEditBookDialog : DialogFragment() {
 
         var bookCoverImg: ByteArray? = getCoverFromImageView()
 
+        var tags: List<String>? = null
+        if (chipGroup.childCount > 0) {
+            tags = emptyList()
+            for (chipIndex in 1 .. chipGroup.childCount) {
+                val chip: Chip = chipGroup.getChildAt(chipIndex - 1) as Chip
+                tags += chip.text.toString()
+            }
+        }
+
         return Book(
             tietBookTitle.text.toString(),
             tietBookAuthor.text.toString(),
@@ -452,7 +484,8 @@ class AddEditBookDialog : DialogFragment() {
             booksPubYear,
             book.bookIsFav,
             bookCoverImg,
-            bookNotes
+            bookNotes,
+            tags
         )
     }
 
@@ -657,6 +690,21 @@ class AddEditBookDialog : DialogFragment() {
         } else {
             bookFinishDateMs = book.bookFinishDate.toLong()
             tvBookFinishDateValue.text = convertLongToTime(bookFinishDateMs!!)
+        }
+
+        if (book.bookTags != null) {
+            for (tag in book.bookTags!!) {
+                val chip = Chip(context)
+                chip.isCloseIconVisible = true
+                chip.text = tag
+                chip.isCloseIconEnabled = true
+                chip.isClickable = false
+                chip.isCheckable = false
+                chip.setOnCloseIconClickListener {
+                    chipGroup.removeView(it)
+                }
+                chipGroup.addView(chip as View)
+            }
         }
     }
 
