@@ -676,6 +676,7 @@
                         android:layout_height="0dp"
                         android:layout_marginTop="0dp"
                         android:hint="@string/insert_book_notes"
+                        android:textColorHint="@color/colorDefaultText"
                         app:boxBackgroundColor="@color/textInputBackground"
                         app:boxCornerRadiusBottomEnd="@dimen/text_input_layout_radius"
                         app:boxCornerRadiusBottomStart="@dimen/text_input_layout_radius"
@@ -708,6 +709,7 @@
                             android:maxLength="200"
                             android:scrollbars="vertical"
                             android:textSize="16sp"
+                            android:textColor="@color/colorDefaultText"
                             android:verticalScrollbarPosition="right" />
 
                     </com.google.android.material.textfield.TextInputLayout>
