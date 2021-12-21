@@ -199,21 +199,25 @@ class DisplayBookFragment : Fragment(R.layout.fragment_display_book) {
             when (book.bookStatus) {
                 Constants.BOOK_STATUS_READ -> {
                     tvBookStatus.text = getString(R.string.finished)
+                    ivBookStatusRead.visibility = View.VISIBLE
                     ivBookStatusInProgress.visibility = View.INVISIBLE
                     ivBookStatusToRead.visibility = View.INVISIBLE
                     rbRatingIndicator.visibility = View.VISIBLE
+                    rearrangeViewsWhenFinished()
                 }
                 Constants.BOOK_STATUS_IN_PROGRESS -> {
                     tvBookStatus.text = getString(R.string.inProgress)
                     ivBookStatusRead.visibility = View.INVISIBLE
+                    ivBookStatusInProgress.visibility = View.VISIBLE
                     ivBookStatusToRead.visibility = View.INVISIBLE
                     rbRatingIndicator.visibility = View.GONE
                     rearrangeViewsWhenNotFinished()
                 }
                 Constants.BOOK_STATUS_TO_READ -> {
                     tvBookStatus.text = getString(R.string.toRead)
-                    ivBookStatusInProgress.visibility = View.INVISIBLE
                     ivBookStatusRead.visibility = View.INVISIBLE
+                    ivBookStatusInProgress.visibility = View.INVISIBLE
+                    ivBookStatusToRead.visibility = View.VISIBLE
                     rbRatingIndicator.visibility = View.GONE
                     rearrangeViewsWhenNotFinished()
                 }
@@ -314,6 +318,9 @@ class DisplayBookFragment : Fragment(R.layout.fragment_display_book) {
         if (bookCoverImg == null)
             rearrangeViewsWhenCoverMissing()
         else {
+            if (ivBookCover.visibility == View.GONE)
+                rearrangeViewsWhenCoverNotMissing()
+
             val bmp = BitmapFactory.decodeByteArray(bookCoverImg, 0, bookCoverImg.size)
             ivBookCover.setImageBitmap(bmp)
         }
@@ -340,6 +347,29 @@ class DisplayBookFragment : Fragment(R.layout.fragment_display_book) {
         ivDeleteLayout.startToEnd = R.id.ivEdit
 
         ivDelete.layoutParams = ivDeleteLayout
+
+        ivFav.visibility = View.GONE
+    }
+
+    private fun rearrangeViewsWhenFinished() {
+        ivFav.visibility = View.VISIBLE
+
+        val ivEditLayout = ivEdit.layoutParams as ConstraintLayout.LayoutParams
+        ivEditLayout.bottomToBottom = ConstraintLayout.LayoutParams.UNSET
+        ivEditLayout.endToStart = ConstraintLayout.LayoutParams.UNSET
+        ivEditLayout.startToEnd = ConstraintLayout.LayoutParams.UNSET
+        ivEditLayout.startToStart = ConstraintLayout.LayoutParams.UNSET
+        ivEditLayout.topToTop = ConstraintLayout.LayoutParams.UNSET
+
+        ivEditLayout.startToEnd = R.id.ivFav
+        ivEditLayout.endToStart = R.id.ivDelete
+        ivEditLayout.topToTop = R.id.ivFav
+        ivEditLayout.bottomToBottom = R.id.ivFav
+
+        ivEditLayout.marginStart = 0
+        ivEditLayout.marginEnd = 0
+        ivEditLayout.topMargin = 0
+        ivEdit.layoutParams = ivEditLayout
     }
 
     private fun rearrangeViewsWhenCoverMissing() {
@@ -354,24 +384,20 @@ class DisplayBookFragment : Fragment(R.layout.fragment_display_book) {
         rbRatingIndicatorLayout.marginStart = -20
         rbRatingIndicatorLayout.marginEnd = 0
         rbRatingIndicator.layoutParams = rbRatingIndicatorLayout
+    }
+    private fun rearrangeViewsWhenCoverNotMissing() {
+        ivBookCover.visibility = View.VISIBLE
 
-        var margin = 0
+        val tvBookTitleLayout = tvBookTitle.layoutParams as ConstraintLayout.LayoutParams
+        tvBookTitleLayout.startToStart = R.id.guideline13
+        tvBookTitle.layoutParams = tvBookTitleLayout
 
-        val ivFavLayout = ivFav.layoutParams as ConstraintLayout.LayoutParams
-        ivFavLayout.marginStart = -24
-        ivFavLayout.marginEnd = margin
-        ivFav.layoutParams = ivFavLayout
-
-        val ivEditLayout = ivEdit.layoutParams as ConstraintLayout.LayoutParams
-        ivEditLayout.marginStart = margin
-        ivEditLayout.marginEnd = margin
-        ivEdit.layoutParams = ivEditLayout
-
-        val ivDeleteLayout = ivDelete.layoutParams as ConstraintLayout.LayoutParams
-        ivDeleteLayout.endToStart = R.id.guideline16
-        ivDeleteLayout.marginStart = margin
-        ivDeleteLayout.marginEnd = 0
-        ivDelete.layoutParams = ivDeleteLayout
+        val rbRatingIndicatorLayout = rbRatingIndicator.layoutParams as ConstraintLayout.LayoutParams
+        rbRatingIndicatorLayout.endToStart = ConstraintLayout.LayoutParams.UNSET
+        rbRatingIndicatorLayout.endToEnd = R.id.tvBookAuthor
+        rbRatingIndicatorLayout.marginStart = -20 // TODO ???
+        rbRatingIndicatorLayout.marginEnd = 0 // TODO ???
+        rbRatingIndicator.layoutParams = rbRatingIndicatorLayout
     }
 
     private fun setISBN(bookISBN13: String, bookISBN10: String) {
