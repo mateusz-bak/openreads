@@ -1,5 +1,6 @@
 package software.mdev.bookstracker.other
 
+import android.annotation.SuppressLint
 import android.content.Context
 import android.content.pm.PackageManager
 import androidx.core.app.ActivityCompat
@@ -55,6 +56,7 @@ class Functions {
     }
 
 
+    @SuppressLint("NotifyDataSetChanged")
     fun filterBooksList(
         activity: ListActivity,
         bookAdapter: BookAdapter,
@@ -93,6 +95,9 @@ class Functions {
         }
 
         bookAdapter.differ.submitList(filteredBooks)
+        // required to reload RecyclerView in order to correctly display pages or dates according
+        // to sort type
+        bookAdapter.notifyDataSetChanged()
 
         if (scrollToTop && rv != null) {
             GlobalScope.launch {

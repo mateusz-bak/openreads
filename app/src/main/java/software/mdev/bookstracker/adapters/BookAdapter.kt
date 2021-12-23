@@ -82,16 +82,8 @@ class BookAdapter(
                 Constants.SORT_ORDER_TITLE_ASC
             )
 
-            if (sortOrder == Constants.SORT_ORDER_PAGES_DESC || sortOrder == Constants.SORT_ORDER_PAGES_ASC) {
-                tvNumberOfPages.visibility = View.VISIBLE
-            }
-            if (sortOrder == Constants.SORT_ORDER_START_DATE_DESC || sortOrder == Constants.SORT_ORDER_START_DATE_ASC) {
-                tvDateStarted.visibility = View.VISIBLE
-                tvDateStartedTitle.visibility = View.VISIBLE
-            }
-            if (sortOrder == Constants.SORT_ORDER_FINISH_DATE_DESC || sortOrder == Constants.SORT_ORDER_FINISH_DATE_ASC) {
-                tvDateFinished.visibility = View.VISIBLE
-                tvDateFinishedTitle.visibility = View.VISIBLE
+            if (sortOrder != null) {
+                setViewsAccordingToSort(this, sortOrder)
             }
 
             when (whichFragment ){
@@ -150,6 +142,53 @@ class BookAdapter(
 
             val bmp = BitmapFactory.decodeByteArray(bookCoverImg, 0, bookCoverImg.size)
             view.ivBookCover.setImageBitmap(bmp)
+        }
+    }
+
+    private fun setViewsAccordingToSort(view: View, sortOrder: String) {
+        when (sortOrder) {
+            Constants.SORT_ORDER_PAGES_DESC -> {
+                view.tvNumberOfPages.visibility = View.VISIBLE
+                view.tvDateStarted.visibility = View.GONE
+                view.tvDateStartedTitle.visibility = View.GONE
+                view.tvDateFinished.visibility = View.GONE
+                view.tvDateFinishedTitle.visibility = View.GONE
+            }
+            Constants.SORT_ORDER_PAGES_ASC -> {
+                view.tvNumberOfPages.visibility = View.VISIBLE
+                view.tvDateStarted.visibility = View.GONE
+                view.tvDateStartedTitle.visibility = View.GONE
+                view.tvDateFinished.visibility = View.GONE
+                view.tvDateFinishedTitle.visibility = View.GONE
+            }
+            Constants.SORT_ORDER_START_DATE_DESC -> {
+                view.tvNumberOfPages.visibility = View.GONE
+                view.tvDateStarted.visibility = View.VISIBLE
+                view.tvDateStartedTitle.visibility = View.VISIBLE
+                view.tvDateFinished.visibility = View.GONE
+                view.tvDateFinishedTitle.visibility = View.GONE
+            }
+            Constants.SORT_ORDER_START_DATE_ASC -> {
+                view.tvNumberOfPages.visibility = View.GONE
+                view.tvDateStarted.visibility = View.VISIBLE
+                view.tvDateStartedTitle.visibility = View.VISIBLE
+                view.tvDateFinished.visibility = View.GONE
+                view.tvDateFinishedTitle.visibility = View.GONE
+            }
+            Constants.SORT_ORDER_FINISH_DATE_DESC -> {
+                view.tvNumberOfPages.visibility = View.GONE
+                view.tvDateStarted.visibility = View.GONE
+                view.tvDateStartedTitle.visibility = View.GONE
+                view.tvDateFinished.visibility = View.VISIBLE
+                view.tvDateFinishedTitle.visibility = View.VISIBLE
+            }
+            Constants.SORT_ORDER_FINISH_DATE_ASC -> {
+                view.tvNumberOfPages.visibility = View.GONE
+                view.tvDateStarted.visibility = View.GONE
+                view.tvDateStartedTitle.visibility = View.GONE
+                view.tvDateFinished.visibility = View.VISIBLE
+                view.tvDateFinishedTitle.visibility = View.VISIBLE
+            }
         }
     }
 
