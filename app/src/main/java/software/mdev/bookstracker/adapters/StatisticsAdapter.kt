@@ -241,8 +241,13 @@ class StatisticsAdapter(
             if (target != "null" && read != "null") {
                 var challengePercent = ((read.toFloat()/target.toFloat())*100).toInt()
                 pbChallenge.progress = challengePercent
+                if (challengePercent >= 100)
+                    ivChallenge.visibility = View.VISIBLE
+                else
+                    ivChallenge.visibility = View.GONE
             } else {
                 pbChallenge.visibility = View.GONE
+                ivChallenge.visibility = View.GONE
             }
 
             setupBooksByMonthChart(holder.itemView, curYear.yearBooksByMonth)
