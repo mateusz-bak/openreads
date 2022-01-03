@@ -329,10 +329,14 @@ class AddEditBookDialog : DialogFragment() {
 
         ivClearBookTitle.setOnClickListener {
             tietBookTitle.setText("")
+            tietBookTitle.requestFocus()
+            showKeyboard(tietBookTitle, 150)
         }
 
         ivClearBookAuthor.setOnClickListener {
             tietBookAuthor.setText("")
+            tietBookAuthor.requestFocus()
+            showKeyboard(tietBookAuthor, 150)
         }
 
         btnCoverRemove.setOnClickListener {
