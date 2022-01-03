@@ -308,6 +308,7 @@ class ListActivity : AppCompatActivity() {
 
         setCurrentSortType(bottomSheetDialog)
         setCurrentOnlyFav(bottomSheetDialog)
+        setTags(bottomSheetDialog)
 
         setSortBottomSheetDialogColors(bottomSheetDialog)
         setOnRadioButtonClickListeners(bottomSheetDialog)
@@ -325,7 +326,25 @@ class ListActivity : AppCompatActivity() {
         bottomSheetDialog.show()
     }
 
-    private fun setTags(bottomSheetDialog: BottomSheetDialog, tags: List<String>?) {
+    private fun setTags(bottomSheetDialog: BottomSheetDialog) {
+        booksViewModel.getSortedBooksByTitleAsc(Constants.BOOK_STATUS_READ).observe(this@ListActivity) { books ->
+            var tags = emptyList<String>()
+            for (book in books) {
+                if (book.bookTags != null && book.bookTags!!.isNotEmpty()) {
+                    for (tag in book.bookTags!!) {
+                        if (tag !in tags)
+                            tags += tag
+                    }
+                }
+            }
+
+            displayTags(bottomSheetDialog,
+                tags.sortedWith(String.CASE_INSENSITIVE_ORDER)
+            )
+        }
+    }
+
+    private fun displayTags(bottomSheetDialog: BottomSheetDialog, tags: List<String>?) {
         if (tags != null) {
             bottomSheetDialog.findViewById<LinearLayout>(R.id.llFilterTagsTitle)?.visibility = View.VISIBLE
             bottomSheetDialog.findViewById<LinearLayout>(R.id.llFilterTags)?.visibility = View.VISIBLE
@@ -352,6 +371,7 @@ class ListActivity : AppCompatActivity() {
                 chip.isCloseIconEnabled = false
                 chip.isClickable = true
                 chip.chipBackgroundColor = ColorStateList.valueOf(getAccentColor(this))
+                chip.setTextColor(this.getColor(R.color.white))
                 chipGroup?.addView(chip as View)
             }
         }

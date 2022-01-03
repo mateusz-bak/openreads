@@ -260,6 +260,7 @@ class DisplayBookFragment : Fragment(R.layout.fragment_display_book) {
                 chip.isClickable = false
                 chip.isCheckable = false
                 chip.chipBackgroundColor = ColorStateList.valueOf(getAccentColor(listActivity))
+                chip.setTextColor(listActivity.getColor(R.color.white))
                 cgTags.addView(chip as View)
             }
         }
