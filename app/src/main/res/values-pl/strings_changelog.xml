@@ -81,4 +81,6 @@
     <string name="changelog_1_9_0_c">Dodano nowe statystyki.</string>
     <string name="changelog_1_9_0_d">Możesz zmieniać tryb nocny/dzienny w ustawieniach.</string>
     <string name="changelog_1_9_0_e">Ulepszono kolory aplikacji.</string>
+
+    <string name="changelog_1_9_1_a">Naprawiono noworoczny problem gdzie wyświetlane były tylko książki z obecnego roku.</string>
 </resources>

@@ -3,7 +3,7 @@
     <!ENTITY appname "Openreads">
     ]>
 <resources>
-    <string name="app_version" translatable="false">v1.9.0</string>
+    <string name="app_version" translatable="false">v1.9.1</string>
     <!-- Images descriptions -->
     <string name="fabEditBook">Edit displayed book</string>
     <string name="ivBookStatusRead">Book is finished</string>
@@ -253,4 +253,6 @@
     <string name="theme_mode_night">Dark</string>
     <string name="ascending">Ascending</string>
     <string name="descending">Descending</string>
+    <string name="setContentOnUpdateAvailable_gplay">"Newer version of the &appname; app is available in Google Play store.\n\nClick \"update\"  to go to the downloading page."</string>
+    <string name="setContentOnUpdateNotAvailable_gplay">You\'ve got the latest version available of &appname; app from Google Play store.</string>
 </resources>
