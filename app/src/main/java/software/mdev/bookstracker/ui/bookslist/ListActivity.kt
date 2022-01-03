@@ -31,9 +31,13 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import com.google.android.material.bottomsheet.BottomSheetDialog
+import com.google.android.material.chip.Chip
+import com.google.android.material.chip.ChipGroup
 import com.google.android.material.snackbar.Snackbar
 import kotlinx.android.synthetic.main.activity_list.*
+import kotlinx.android.synthetic.main.bottom_sheet_sort_books.*
 import kotlinx.android.synthetic.main.fragment_books.*
+import kotlinx.android.synthetic.main.fragment_display_book.*
 import software.mdev.bookstracker.BuildConfig
 import software.mdev.bookstracker.R
 import software.mdev.bookstracker.data.db.BooksDatabase
@@ -319,6 +323,42 @@ class ListActivity : AppCompatActivity() {
             }
 
         bottomSheetDialog.show()
+    }
+
+    private fun setTags(bottomSheetDialog: BottomSheetDialog, tags: List<String>?) {
+        if (tags != null) {
+            bottomSheetDialog.findViewById<LinearLayout>(R.id.llFilterTagsTitle)?.visibility = View.VISIBLE
+            bottomSheetDialog.findViewById<LinearLayout>(R.id.llFilterTags)?.visibility = View.VISIBLE
+
+            // remove current chips
+            val chipGroup = bottomSheetDialog.findViewById<ChipGroup>(R.id.cgFilterTags)
+            val numberOfChips = chipGroup?.childCount
+            if (numberOfChips != null) {
+                if (numberOfChips > 0) {
+                    for (i in 0 until numberOfChips) {
+                        val child = chipGroup.getChildAt(0) as Chip
+                        chipGroup.removeView(child)
+                    }
+                }
+            }
+
+            // add up to date chips
+            for (tag in tags) {
+                val chip = Chip(this)
+                chip.isCheckable = true
+                chip.isChecked = false
+                chip.isCloseIconVisible = false
+                chip.text = tag
+                chip.isCloseIconEnabled = false
+                chip.isClickable = true
+                chip.chipBackgroundColor = ColorStateList.valueOf(getAccentColor(this))
+                chipGroup?.addView(chip as View)
+            }
+        }
+        else {
+            llFilterTagsTitle.visibility = View.GONE
+            llFilterTags.visibility = View.GONE
+        }
     }
 
     private fun setCurrentSortType(bottomSheetDialog: BottomSheetDialog) {
