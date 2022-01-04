@@ -344,6 +344,7 @@ class ListActivity : AppCompatActivity() {
             displayTags(bottomSheetDialog,
                 tags.sortedWith(String.CASE_INSENSITIVE_ORDER)
             )
+            setCurrentTags(bottomSheetDialog)
         }
     }
 
@@ -481,6 +482,37 @@ class ListActivity : AppCompatActivity() {
     private fun setCurrentOnlyFavViews(bottomSheetDialog: BottomSheetDialog, currentOnlyFav: Boolean) {
         val checkbox = bottomSheetDialog.findViewById<CheckBox>(R.id.cbFilterFavourite)
         checkbox?.isChecked = currentOnlyFav
+    }
+
+    private fun setCurrentTags(bottomSheetDialog: BottomSheetDialog) {
+        var sharedPrefName = getString(R.string.shared_preferences_name)
+        val sharedPref = getSharedPreferences(sharedPrefName, Context.MODE_PRIVATE)
+
+        val tagsToFilterJson = sharedPref.getString(
+            Constants.SHARED_PREFERENCES_KEY_FILTER_TAGS,
+            "null"
+        )
+
+        if (tagsToFilterJson != null && tagsToFilterJson != "null") {
+            val tagsToFilter = gson.fromJson(tagsToFilterJson, Array<String>::class.java).toList()
+            setCurrentTagsViews(bottomSheetDialog, tagsToFilter)
+        }
+    }
+
+    private fun setCurrentTagsViews(bottomSheetDialog: BottomSheetDialog, tagsToFilter: List<String>) {
+        bottomSheetDialog.findViewById<LinearLayout>(R.id.llFilterTagsTitle)?.visibility = View.VISIBLE
+        bottomSheetDialog.findViewById<LinearLayout>(R.id.llFilterTags)?.visibility = View.VISIBLE
+
+        val chipGroup = bottomSheetDialog.findViewById<ChipGroup>(R.id.cgFilterTags)
+        val numberOfChips = chipGroup?.childCount
+        if (numberOfChips != null) {
+            if (numberOfChips > 0) {
+                for (i in 0 until numberOfChips) {
+                    val child = chipGroup.getChildAt(i) as Chip
+                    child.isChecked = child.text.toString() in tagsToFilter
+                }
+            }
+        }
     }
 
     private fun saveSortType(sortType: Int?, isOrderAsc: Boolean?, isOnlyFav: Boolean?, tagsToFilterJson: String?) {
