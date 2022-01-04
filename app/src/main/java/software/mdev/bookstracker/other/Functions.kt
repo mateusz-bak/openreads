@@ -12,6 +12,7 @@ import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import software.mdev.bookstracker.R
 import software.mdev.bookstracker.adapters.BookAdapter
+import software.mdev.bookstracker.api.RetrofitInstance.Companion.gson
 import software.mdev.bookstracker.data.db.entities.Book
 import software.mdev.bookstracker.ui.bookslist.ListActivity
 import java.text.SimpleDateFormat
@@ -66,14 +67,13 @@ class Functions {
     ) {
         var sharedPreferencesName = activity.getString(R.string.shared_preferences_name)
         val sharedPref = (activity).getSharedPreferences(sharedPreferencesName, Context.MODE_PRIVATE)
-        var filteredBooks: List<Book> = emptyList()
+        var filteredBooks1: List<Book> = emptyList()
 
         var gson1 = Gson()
         var emptyArray1: Array<String> =
             arrayOf(Calendar.getInstance().get(Calendar.YEAR).toString())
         var jsonString1 = gson1.toJson(emptyArray1)
-        jsonString1 =
-            sharedPref.getString(Constants.SHARED_PREFERENCES_KEY_FILTER_YEARS, jsonString1)
+        jsonString1 = sharedPref.getString(Constants.SHARED_PREFERENCES_KEY_FILTER_YEARS, jsonString1)
         var currentArray1 = gson1.fromJson(jsonString1, Array<String>::class.java).toList()
 
 
@@ -89,13 +89,30 @@ class Functions {
 //                            filteredBooks += book
 //                    }
 //                } else {
-                if (book !in filteredBooks)
-                    filteredBooks += book
+                if (book !in filteredBooks1)
+                    filteredBooks1 += book
 //                }
             }
         }
 
-        bookAdapter.differ.submitList(filteredBooks)
+        var filteredBooks2: List<Book> = emptyList()
+        val tagsToFilterJson = sharedPref.getString(Constants.SHARED_PREFERENCES_KEY_FILTER_TAGS, "null")
+
+        if (tagsToFilterJson != null && tagsToFilterJson != "null") {
+            val tagsToFilter = gson.fromJson(tagsToFilterJson, Array<String>::class.java).toList()
+
+            for (book in filteredBooks1) {
+                if (book.bookTags != null && book.bookTags!!.isNotEmpty()) {
+                    for (tag in book.bookTags!!) {
+                        if (tag in tagsToFilter)
+                            filteredBooks2 += book
+                    }
+                }
+            }
+        } else
+            filteredBooks2 = filteredBooks1
+
+        bookAdapter.differ.submitList(filteredBooks2)
         // required to reload RecyclerView in order to correctly display pages or dates according
         // to sort type
         bookAdapter.notifyDataSetChanged()

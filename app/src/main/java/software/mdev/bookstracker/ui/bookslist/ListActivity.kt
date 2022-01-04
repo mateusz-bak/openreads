@@ -40,6 +40,7 @@ import kotlinx.android.synthetic.main.fragment_books.*
 import kotlinx.android.synthetic.main.fragment_display_book.*
 import software.mdev.bookstracker.BuildConfig
 import software.mdev.bookstracker.R
+import software.mdev.bookstracker.api.RetrofitInstance.Companion.gson
 import software.mdev.bookstracker.data.db.BooksDatabase
 import software.mdev.bookstracker.data.db.LanguageDatabase
 import software.mdev.bookstracker.data.db.YearDatabase
@@ -319,7 +320,9 @@ class ListActivity : AppCompatActivity() {
                 val sortType = getSortType(bottomSheetDialog)
                 val isOrderAsc = isOrderAsc(bottomSheetDialog)
                 val isOnlyFav = isOnlyFav(bottomSheetDialog)
-                saveSortType(sortType, isOrderAsc, isOnlyFav)
+                val tagsToFilter = getTagsToFilter(bottomSheetDialog)
+                val tagsToFilterJson = convertListToJson(tagsToFilter)
+                saveSortType(sortType, isOrderAsc, isOnlyFav, tagsToFilterJson)
                 bottomSheetDialog.dismiss()
             }
 
@@ -480,7 +483,7 @@ class ListActivity : AppCompatActivity() {
         checkbox?.isChecked = currentOnlyFav
     }
 
-    private fun saveSortType(sortType: Int?, isOrderAsc: Boolean?, isOnlyFav: Boolean?) {
+    private fun saveSortType(sortType: Int?, isOrderAsc: Boolean?, isOnlyFav: Boolean?, tagsToFilterJson: String?) {
         if (sortType != null && isOrderAsc != null && isOnlyFav != null) {
 
             val sortOrder = when (sortType) {
@@ -522,13 +525,14 @@ class ListActivity : AppCompatActivity() {
                 }
             }
 
-            var sharedPrefName = getString(R.string.shared_preferences_name)
+            val sharedPrefName = getString(R.string.shared_preferences_name)
             val sharedPref = getSharedPreferences(sharedPrefName, Context.MODE_PRIVATE)
             val sharedPrefEditor = sharedPref?.edit()
 
             sharedPrefEditor?.apply {
                 putString(Constants.SHARED_PREFERENCES_KEY_SORT_ORDER, sortOrder)
                 putBoolean(Constants.SHARED_PREFERENCES_KEY_ONLY_FAV, isOnlyFav)
+                putString(Constants.SHARED_PREFERENCES_KEY_FILTER_TAGS, tagsToFilterJson)
                 apply()
             }
             booksViewModel.getBooksTrigger.postValue(System.currentTimeMillis())
@@ -563,6 +567,29 @@ class ListActivity : AppCompatActivity() {
 
     private fun isOnlyFav(bottomSheetDialog: BottomSheetDialog): Boolean? {
         return bottomSheetDialog.findViewById<CheckBox>(R.id.cbFilterFavourite)?.isChecked == true
+    }
+
+    private fun getTagsToFilter(bottomSheetDialog: BottomSheetDialog): List<String>? {
+        val chipGroup = bottomSheetDialog.findViewById<ChipGroup>(R.id.cgFilterTags)
+        val numberOfChips = chipGroup?.childCount
+
+        return if (numberOfChips != null && numberOfChips > 0) {
+            var tags = emptyList<String>()
+            for (i in 0 until numberOfChips) {
+                val child = chipGroup.getChildAt(i) as Chip
+                if (child.isChecked)
+                    tags += child.text.toString()
+            }
+            if (tags.isNotEmpty())
+                tags
+            else
+                null
+        } else
+            null
+    }
+
+    private fun convertListToJson(list: List<String>?): String {
+        return gson.toJson(list)
     }
 
     private fun setAscDescButtonsListeners(bottomSheetDialog: BottomSheetDialog) {
