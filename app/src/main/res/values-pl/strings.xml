@@ -234,4 +234,6 @@
     <string name="setContentOnUpdateAvailable_gplay">"Nowsza wersja aplikacji &appname; jest dostępna do pobrania z Google Play.\n\nKliknij \"aktualizuj\", żeby przejść na stronę pobierania."</string>
     <string name="setContentOnUpdateNotAvailable_gplay">Masz zainstalowaną najnowszą wersję aplikacji &appname; z Google Play.</string>
     <string name="select_book_tags">Dodaj tagi</string>
+    <string name="filter_tags">Tagi</string>
+    <string name="filter_years">Rok zakończenia</string>
 </resources>

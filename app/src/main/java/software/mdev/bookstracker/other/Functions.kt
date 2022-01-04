@@ -67,33 +67,28 @@ class Functions {
     ) {
         var sharedPreferencesName = activity.getString(R.string.shared_preferences_name)
         val sharedPref = (activity).getSharedPreferences(sharedPreferencesName, Context.MODE_PRIVATE)
+
         var filteredBooks1: List<Book> = emptyList()
 
-        var gson1 = Gson()
-        var emptyArray1: Array<String> =
-            arrayOf(Calendar.getInstance().get(Calendar.YEAR).toString())
-        var jsonString1 = gson1.toJson(emptyArray1)
-        jsonString1 = sharedPref.getString(Constants.SHARED_PREFERENCES_KEY_FILTER_YEARS, jsonString1)
-        var currentArray1 = gson1.fromJson(jsonString1, Array<String>::class.java).toList()
+        val yearsToFilterJson = sharedPref.getString(Constants.SHARED_PREFERENCES_KEY_FILTER_YEARS, "null")
 
+        if (yearsToFilterJson != null && yearsToFilterJson != "null") {
+            val yearsToFilter = gson.fromJson(yearsToFilterJson, Array<String>::class.java).toList()
+            for (book in notFilteredBooks) {
+                for (yearToBeShown in yearsToFilter) {
+                    val startTimeStamp = convertYearToLong(yearToBeShown)
+                    val endTimeStamp = convertYearToLong((yearToBeShown.toInt() + 1).toString())
 
-        for (book in notFilteredBooks) {
-            for (yearToBeShown in currentArray1) {
-                val startTimeStamp = convertYearToLong(yearToBeShown)
-                val endTimeStamp = convertYearToLong((yearToBeShown.toInt() + 1).toString())
-
-                // TODO temp fix until finish year filtering is implemented back
-//                if (book.bookFinishDate != "null" && book.bookFinishDate != "none") {
-//                    if (book.bookFinishDate.toLong() in startTimeStamp..endTimeStamp) {
-//                        if (book !in filteredBooks)
-//                            filteredBooks += book
-//                    }
-//                } else {
-                if (book !in filteredBooks1)
-                    filteredBooks1 += book
-//                }
+                    if (book.bookFinishDate != "null" && book.bookFinishDate != "none") {
+                        if (book.bookFinishDate.toLong() in startTimeStamp..endTimeStamp) {
+                            if (book !in filteredBooks1)
+                                filteredBooks1 += book
+                        }
+                    }
+                }
             }
-        }
+        } else
+            filteredBooks1 = notFilteredBooks
 
         var filteredBooks2: List<Book> = emptyList()
         val tagsToFilterJson = sharedPref.getString(Constants.SHARED_PREFERENCES_KEY_FILTER_TAGS, "null")
