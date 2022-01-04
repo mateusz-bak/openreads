@@ -274,6 +274,93 @@
 
                     </com.google.android.material.textfield.TextInputLayout>
 
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:id="@+id/clBookTags"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="0dp"
+                        android:background="@drawable/text_field_background"
+                        android:backgroundTint="@color/textInputBackground"
+                        android:backgroundTintMode="screen"
+                        android:orientation="horizontal"
+                        android:paddingStart="0dp"
+                        android:paddingTop="0dp"
+                        android:paddingEnd="8dp"
+                        android:paddingBottom="0dp"
+                        app:layout_constraintEnd_toEndOf="@+id/tilBookAuthor"
+                        app:layout_constraintStart_toStartOf="@+id/clBookStatus"
+                        app:layout_constraintTop_toBottomOf="@+id/tilBookISBN">
+
+                        <com.google.android.material.textfield.TextInputLayout
+                            android:id="@+id/tilBookTags"
+                            style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="0dp"
+                            android:layout_marginEnd="4dp"
+                            android:hint="@string/select_book_tags"
+                            android:textColorHint="@color/colorDefaultText"
+                            app:boxBackgroundColor="@color/textInputBackground"
+                            app:boxCornerRadiusBottomEnd="@dimen/text_input_layout_radius"
+                            app:boxCornerRadiusBottomStart="@dimen/text_input_layout_radius"
+                            app:boxCornerRadiusTopEnd="@dimen/text_input_layout_radius"
+                            app:boxCornerRadiusTopStart="@dimen/text_input_layout_radius"
+                            app:boxStrokeErrorColor="@color/red_800"
+                            app:boxStrokeWidth="0dp"
+                            app:boxStrokeWidthFocused="0dp"
+                            app:errorContentDescription="@string/insert_book_pages"
+                            app:errorEnabled="true"
+                            app:errorIconDrawable="@drawable/ic_iconscout_file_copy_alt_24"
+                            app:errorIconTint="?colorAccent"
+                            app:errorTextColor="?colorAccent"
+                            app:hintAnimationEnabled="true"
+                            app:hintTextColor="?colorAccent"
+                            app:layout_constraintTop_toTopOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintEnd_toStartOf="@+id/btnBookAddTag"
+                            app:startIconDrawable="@drawable/ic_iconscout_tag_alt_24"
+                            app:startIconTint="?colorPrimary">
+
+                            <com.google.android.material.textfield.TextInputEditText
+                                android:id="@+id/tietBookTags"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:imeOptions="actionNext"
+                                android:inputType="text"
+                                android:maxLength="20"
+                                android:textColor="@color/colorDefaultText"
+                                android:textSize="14sp" />
+
+                        </com.google.android.material.textfield.TextInputLayout>
+
+                        <com.google.android.material.button.MaterialButton
+                            android:id="@+id/btnBookAddTag"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="0dp"
+                            android:layout_marginTop="2dp"
+                            android:backgroundTint="?colorPrimary"
+                            android:text="Add"
+                            app:cornerRadius="@dimen/text_input_layout_radius"
+                            app:layout_constraintTop_toTopOf="parent"
+                            app:layout_constraintStart_toEndOf="@+id/tilBookTags"
+                            app:layout_constraintEnd_toEndOf="parent"/>
+
+                        <com.google.android.material.chip.ChipGroup
+                            android:id="@+id/chipGroup"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="12dp"
+                            android:layout_marginTop="4dp"
+                            android:layout_marginEnd="12dp"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toBottomOf="@+id/btnBookAddTag"
+                            app:layout_constraintBottom_toBottomOf="parent"/>
+
+
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+
                     <com.google.android.material.textfield.TextInputLayout
                         android:id="@+id/tilBookOLID"
                         style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox"
@@ -533,12 +620,13 @@
                         android:background="@drawable/text_field_background"
                         android:backgroundTint="@color/textInputBackground"
                         android:backgroundTintMode="screen"
+                        android:layout_marginTop="20dp"
                         android:minHeight="200dp"
                         android:orientation="horizontal"
                         android:visibility="visible"
                         app:layout_constraintEnd_toEndOf="@+id/tilBookPages"
                         app:layout_constraintStart_toStartOf="@+id/tilBookAuthor"
-                        app:layout_constraintTop_toBottomOf="@+id/tilBookISBN">
+                        app:layout_constraintTop_toBottomOf="@+id/clBookTags">
 
                         <TextView
                             android:id="@+id/tvClickToAddCover"
@@ -588,6 +676,7 @@
                         android:layout_height="0dp"
                         android:layout_marginTop="0dp"
                         android:hint="@string/insert_book_notes"
+                        android:textColorHint="@color/colorDefaultText"
                         app:boxBackgroundColor="@color/textInputBackground"
                         app:boxCornerRadiusBottomEnd="@dimen/text_input_layout_radius"
                         app:boxCornerRadiusBottomStart="@dimen/text_input_layout_radius"
@@ -620,6 +709,7 @@
                             android:maxLength="200"
                             android:scrollbars="vertical"
                             android:textSize="16sp"
+                            android:textColor="@color/colorDefaultText"
                             android:verticalScrollbarPosition="right" />
 
                     </com.google.android.material.textfield.TextInputLayout>

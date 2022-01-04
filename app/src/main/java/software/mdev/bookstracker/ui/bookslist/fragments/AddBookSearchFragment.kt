@@ -69,8 +69,10 @@ class AddBookSearchFragment : Fragment(R.layout.fragment_add_book_search) {
         if (isbn == "manual_search") {
             etAdderBookTitleSearch.requestFocus()
             showKeyboard(etAdderBookTitleSearch, 250)
+            ivClearTitleSearch.visibility = View.GONE
         } else {
             etAdderBookTitleSearch.setText(isbn)
+            ivClearTitleSearch.visibility = View.VISIBLE
 
             searchQueryJob?.cancel()
             searchQueryAutoJob?.cancel()
@@ -120,8 +122,6 @@ class AddBookSearchFragment : Fragment(R.layout.fragment_add_book_search) {
                 }, activity as ListActivity
             ).show()
         }
-
-        ivClearTitleSearch.visibility = View.GONE
 
         etAdderBookTitleSearch.addTextChangedListener { editable ->
             editable?.let {

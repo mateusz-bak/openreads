@@ -3,7 +3,7 @@
     <!ENTITY appname "Openreads">
     ]>
 <resources>
-    <string name="app_version" translatable="false">v1.9.1</string>
+    <string name="app_version" translatable="false">v1.10.0</string>
     <!-- Images descriptions -->
     <string name="fabEditBook">Edit displayed book</string>
     <string name="ivBookStatusRead">Book is finished</string>
@@ -80,10 +80,12 @@
     <string name="tvDateFinished" translatable="false">13 Jun 2021</string>
     <string name="setTitleOnUpdateAvailable">New update!</string>
     <string name="setContentOnUpdateAvailable_github">"Newer version of the &appname; app is available in Github repository.\n\nClick \"update\"  to go to the downloading page."</string>
+    <string name="setContentOnUpdateAvailable_fdroid">"Newer version of the &appname; app is available in F-Droid repository.\n\nClick \"update\"  to go to the downloading page."</string>
     <string name="setButtonUpdate">Update</string>
     <string name="setButtonDismiss">Dismiss</string>
     <string name="setButtonDoNotShowAgain">Ignore</string>
     <string name="setContentOnUpdateNotAvailable_github">You\'ve got the latest version available of &appname; app from Github repository.</string>
+    <string name="setContentOnUpdateNotAvailable_fdroid">You\'ve got the latest version available of &appname; app from F-Droid repository.</string>
     <string name="setTitleOnUpdateNotAvailable">No updates available</string>
     <string name="statisticsFragment">Statistics</string>
     <string name="statistics_all">All</string>
@@ -255,4 +257,7 @@
     <string name="descending">Descending</string>
     <string name="setContentOnUpdateAvailable_gplay">"Newer version of the &appname; app is available in Google Play store.\n\nClick \"update\"  to go to the downloading page."</string>
     <string name="setContentOnUpdateNotAvailable_gplay">You\'ve got the latest version available of &appname; app from Google Play store.</string>
+    <string name="select_book_tags">Add book\'s tags</string>
+    <string name="filter_tags">Tags</string>
+    <string name="filter_years">Finish year</string>
 </resources>

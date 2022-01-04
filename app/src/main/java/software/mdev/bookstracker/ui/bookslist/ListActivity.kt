@@ -31,11 +31,16 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import com.google.android.material.bottomsheet.BottomSheetDialog
+import com.google.android.material.chip.Chip
+import com.google.android.material.chip.ChipGroup
 import com.google.android.material.snackbar.Snackbar
 import kotlinx.android.synthetic.main.activity_list.*
+import kotlinx.android.synthetic.main.bottom_sheet_sort_books.*
 import kotlinx.android.synthetic.main.fragment_books.*
+import kotlinx.android.synthetic.main.fragment_display_book.*
 import software.mdev.bookstracker.BuildConfig
 import software.mdev.bookstracker.R
+import software.mdev.bookstracker.api.RetrofitInstance.Companion.gson
 import software.mdev.bookstracker.data.db.BooksDatabase
 import software.mdev.bookstracker.data.db.LanguageDatabase
 import software.mdev.bookstracker.data.db.YearDatabase
@@ -46,6 +51,7 @@ import software.mdev.bookstracker.data.repositories.OpenLibraryRepository
 import software.mdev.bookstracker.data.repositories.YearRepository
 import software.mdev.bookstracker.other.Backup
 import software.mdev.bookstracker.other.Constants
+import software.mdev.bookstracker.other.Functions
 import software.mdev.bookstracker.other.Updater
 import software.mdev.bookstracker.ui.bookslist.viewmodel.BooksViewModel
 import software.mdev.bookstracker.ui.bookslist.viewmodel.BooksViewModelProviderFactory
@@ -304,6 +310,8 @@ class ListActivity : AppCompatActivity() {
 
         setCurrentSortType(bottomSheetDialog)
         setCurrentOnlyFav(bottomSheetDialog)
+        setTags(bottomSheetDialog)
+        setYears(bottomSheetDialog)
 
         setSortBottomSheetDialogColors(bottomSheetDialog)
         setOnRadioButtonClickListeners(bottomSheetDialog)
@@ -314,11 +322,140 @@ class ListActivity : AppCompatActivity() {
                 val sortType = getSortType(bottomSheetDialog)
                 val isOrderAsc = isOrderAsc(bottomSheetDialog)
                 val isOnlyFav = isOnlyFav(bottomSheetDialog)
-                saveSortType(sortType, isOrderAsc, isOnlyFav)
+
+                val tagsToFilter = getTagsToFilter(bottomSheetDialog)
+                val tagsToFilterJson = convertListToJson(tagsToFilter)
+
+                val yearsToFilter = getYearsToFilter(bottomSheetDialog)
+                val yearsToFilterJson = convertListToJson(yearsToFilter)
+
+                saveSortType(sortType, isOrderAsc, isOnlyFav, tagsToFilterJson, yearsToFilterJson)
                 bottomSheetDialog.dismiss()
             }
 
         bottomSheetDialog.show()
+    }
+
+    private fun setTags(bottomSheetDialog: BottomSheetDialog) {
+        bottomSheetDialog.findViewById<LinearLayout>(R.id.llFilterTagsTitle)?.visibility = View.GONE
+        bottomSheetDialog.findViewById<LinearLayout>(R.id.llFilterTags)?.visibility = View.GONE
+
+        booksViewModel.getSortedBooksByTitleAsc(Constants.BOOK_STATUS_READ).observe(this@ListActivity) { books ->
+            var tags = emptyList<String>()
+            for (book in books) {
+                if (book.bookTags != null && book.bookTags!!.isNotEmpty()) {
+                    for (tag in book.bookTags!!) {
+                        if (tag !in tags)
+                            tags += tag
+                    }
+                }
+            }
+
+            displayTags(bottomSheetDialog,
+                tags.sortedWith(String.CASE_INSENSITIVE_ORDER)
+            )
+            setCurrentTags(bottomSheetDialog)
+        }
+    }
+
+    private fun setYears(bottomSheetDialog: BottomSheetDialog) {
+        bottomSheetDialog.findViewById<LinearLayout>(R.id.llFilterYearsTitle)?.visibility = View.GONE
+        bottomSheetDialog.findViewById<LinearLayout>(R.id.llFilterYears)?.visibility = View.GONE
+
+        val functions = Functions()
+
+        booksViewModel.getSortedBooksByFinishDateDesc(Constants.BOOK_STATUS_READ).observe(this@ListActivity) { books ->
+            var years = emptyList<String>()
+            for (book in books) {
+
+                if (book.bookFinishDate != "null"
+                    && book.bookFinishDate != Constants.DATABASE_EMPTY_VALUE
+                    && book.bookFinishDate != Constants.EMPTY_STRING) {
+
+                    val year = functions.convertLongToYear(book.bookFinishDate.toLong())
+
+                    if (year !in years)
+                        years += year
+                }
+            }
+
+            displayYears(bottomSheetDialog, years)
+            setCurrentYears(bottomSheetDialog)
+        }
+    }
+
+    private fun displayTags(bottomSheetDialog: BottomSheetDialog, tags: List<String>?) {
+        if (tags != null && tags.isNotEmpty()) {
+            bottomSheetDialog.findViewById<LinearLayout>(R.id.llFilterTagsTitle)?.visibility = View.VISIBLE
+            bottomSheetDialog.findViewById<LinearLayout>(R.id.llFilterTags)?.visibility = View.VISIBLE
+
+            // remove current chips
+            val chipGroup = bottomSheetDialog.findViewById<ChipGroup>(R.id.cgFilterTags)
+            val numberOfChips = chipGroup?.childCount
+            if (numberOfChips != null) {
+                if (numberOfChips > 0) {
+                    for (i in 0 until numberOfChips) {
+                        val child = chipGroup.getChildAt(0) as Chip
+                        chipGroup.removeView(child)
+                    }
+                }
+            }
+
+            // add up to date chips
+            for (tag in tags) {
+                val chip = Chip(this)
+                chip.isCheckable = true
+                chip.isChecked = false
+                chip.isCloseIconVisible = false
+                chip.text = tag
+                chip.isCloseIconEnabled = false
+                chip.isClickable = true
+                chip.chipBackgroundColor = ColorStateList.valueOf(getAccentColor(this))
+                chip.setTextColor(this.getColor(R.color.colorDefaultBg))
+                chipGroup?.addView(chip as View)
+            }
+        }
+        else {
+            bottomSheetDialog.findViewById<LinearLayout>(R.id.llFilterTagsTitle)?.visibility = View.GONE
+            bottomSheetDialog.findViewById<LinearLayout>(R.id.llFilterTags)?.visibility = View.GONE
+        }
+    }
+
+    private fun displayYears(bottomSheetDialog: BottomSheetDialog, years: List<String>) {
+        if (years.isNotEmpty()) {
+            bottomSheetDialog.findViewById<LinearLayout>(R.id.llFilterYearsTitle)?.visibility = View.VISIBLE
+            bottomSheetDialog.findViewById<LinearLayout>(R.id.llFilterYears)?.visibility = View.VISIBLE
+
+            // remove current chips
+            val chipGroup = bottomSheetDialog.findViewById<ChipGroup>(R.id.cgFilterYears)
+            val numberOfChips = chipGroup?.childCount
+            if (numberOfChips != null) {
+                if (numberOfChips > 0) {
+                    for (i in 0 until numberOfChips) {
+                        val child = chipGroup.getChildAt(0) as Chip
+                        chipGroup.removeView(child)
+                    }
+                }
+            }
+
+            // add up to date chips
+            for (tag in years) {
+                val chip = Chip(this)
+                chip.isCheckable = true
+                chip.isChecked = false
+                chip.isCloseIconVisible = false
+                chip.text = tag
+                chip.isCloseIconEnabled = false
+                chip.isClickable = true
+                chip.chipBackgroundColor = ColorStateList.valueOf(getAccentColor(this))
+                chip.setTextColor(this.getColor(R.color.colorDefaultBg))
+                chipGroup?.addView(chip as View)
+            }
+        }
+        else {
+            bottomSheetDialog.findViewById<LinearLayout>(R.id.llFilterYearsTitle)?.visibility = View.GONE
+            bottomSheetDialog.findViewById<LinearLayout>(R.id.llFilterYears)?.visibility = View.GONE
+        }
     }
 
     private fun setCurrentSortType(bottomSheetDialog: BottomSheetDialog) {
@@ -420,7 +557,63 @@ class ListActivity : AppCompatActivity() {
         checkbox?.isChecked = currentOnlyFav
     }
 
-    private fun saveSortType(sortType: Int?, isOrderAsc: Boolean?, isOnlyFav: Boolean?) {
+    private fun setCurrentTags(bottomSheetDialog: BottomSheetDialog) {
+        var sharedPrefName = getString(R.string.shared_preferences_name)
+        val sharedPref = getSharedPreferences(sharedPrefName, Context.MODE_PRIVATE)
+
+        val tagsToFilterJson = sharedPref.getString(
+            Constants.SHARED_PREFERENCES_KEY_FILTER_TAGS,
+            "null"
+        )
+
+        if (tagsToFilterJson != null && tagsToFilterJson != "null") {
+            val tagsToFilter = gson.fromJson(tagsToFilterJson, Array<String>::class.java).toList()
+            setCurrentTagsViews(bottomSheetDialog, tagsToFilter)
+        }
+    }
+
+    private fun setCurrentTagsViews(bottomSheetDialog: BottomSheetDialog, tagsToFilter: List<String>) {
+        val chipGroup = bottomSheetDialog.findViewById<ChipGroup>(R.id.cgFilterTags)
+        val numberOfChips = chipGroup?.childCount
+        if (numberOfChips != null) {
+            if (numberOfChips > 0) {
+                for (i in 0 until numberOfChips) {
+                    val child = chipGroup.getChildAt(i) as Chip
+                    child.isChecked = child.text.toString() in tagsToFilter
+                }
+            }
+        }
+    }
+
+    private fun setCurrentYears(bottomSheetDialog: BottomSheetDialog) {
+        var sharedPrefName = getString(R.string.shared_preferences_name)
+        val sharedPref = getSharedPreferences(sharedPrefName, Context.MODE_PRIVATE)
+
+        val yearsToFilterJson = sharedPref.getString(
+            Constants.SHARED_PREFERENCES_KEY_FILTER_YEARS,
+            "null"
+        )
+
+        if (yearsToFilterJson != null && yearsToFilterJson != "null") {
+            val yearsToFilter = gson.fromJson(yearsToFilterJson, Array<String>::class.java).toList()
+            setCurrentYearsViews(bottomSheetDialog, yearsToFilter)
+        }
+    }
+
+    private fun setCurrentYearsViews(bottomSheetDialog: BottomSheetDialog, yearsToFilter: List<String>) {
+        val chipGroup = bottomSheetDialog.findViewById<ChipGroup>(R.id.cgFilterYears)
+        val numberOfChips = chipGroup?.childCount
+        if (numberOfChips != null) {
+            if (numberOfChips > 0) {
+                for (i in 0 until numberOfChips) {
+                    val child = chipGroup.getChildAt(i) as Chip
+                    child.isChecked = child.text.toString() in yearsToFilter
+                }
+            }
+        }
+    }
+
+    private fun saveSortType(sortType: Int?, isOrderAsc: Boolean?, isOnlyFav: Boolean?, tagsToFilterJson: String, yearsToFilterJson: String) {
         if (sortType != null && isOrderAsc != null && isOnlyFav != null) {
 
             val sortOrder = when (sortType) {
@@ -462,13 +655,15 @@ class ListActivity : AppCompatActivity() {
                 }
             }
 
-            var sharedPrefName = getString(R.string.shared_preferences_name)
+            val sharedPrefName = getString(R.string.shared_preferences_name)
             val sharedPref = getSharedPreferences(sharedPrefName, Context.MODE_PRIVATE)
             val sharedPrefEditor = sharedPref?.edit()
 
             sharedPrefEditor?.apply {
                 putString(Constants.SHARED_PREFERENCES_KEY_SORT_ORDER, sortOrder)
                 putBoolean(Constants.SHARED_PREFERENCES_KEY_ONLY_FAV, isOnlyFav)
+                putString(Constants.SHARED_PREFERENCES_KEY_FILTER_TAGS, tagsToFilterJson)
+                putString(Constants.SHARED_PREFERENCES_KEY_FILTER_YEARS, yearsToFilterJson)
                 apply()
             }
             booksViewModel.getBooksTrigger.postValue(System.currentTimeMillis())
@@ -503,6 +698,48 @@ class ListActivity : AppCompatActivity() {
 
     private fun isOnlyFav(bottomSheetDialog: BottomSheetDialog): Boolean? {
         return bottomSheetDialog.findViewById<CheckBox>(R.id.cbFilterFavourite)?.isChecked == true
+    }
+
+    private fun getTagsToFilter(bottomSheetDialog: BottomSheetDialog): List<String>? {
+        val chipGroup = bottomSheetDialog.findViewById<ChipGroup>(R.id.cgFilterTags)
+        val numberOfChips = chipGroup?.childCount
+
+        return if (numberOfChips != null && numberOfChips > 0) {
+            var tags = emptyList<String>()
+            for (i in 0 until numberOfChips) {
+                val child = chipGroup.getChildAt(i) as Chip
+                if (child.isChecked)
+                    tags += child.text.toString()
+            }
+            if (tags.isNotEmpty())
+                tags
+            else
+                null
+        } else
+            null
+    }
+
+    private fun getYearsToFilter(bottomSheetDialog: BottomSheetDialog): List<String>? {
+        val chipGroup = bottomSheetDialog.findViewById<ChipGroup>(R.id.cgFilterYears)
+        val numberOfChips = chipGroup?.childCount
+
+        return if (numberOfChips != null && numberOfChips > 0) {
+            var years = emptyList<String>()
+            for (i in 0 until numberOfChips) {
+                val child = chipGroup.getChildAt(i) as Chip
+                if (child.isChecked)
+                    years += child.text.toString()
+            }
+            if (years.isNotEmpty())
+                years
+            else
+                null
+        } else
+            null
+    }
+
+    private fun convertListToJson(list: List<String>?): String {
+        return gson.toJson(list)
     }
 
     private fun setAscDescButtonsListeners(bottomSheetDialog: BottomSheetDialog) {

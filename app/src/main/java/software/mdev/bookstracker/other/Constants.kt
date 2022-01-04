@@ -28,6 +28,7 @@ object Constants {
     const val DATABASE_ITEM_BOOK_IS_FAV = "item_bookIsFav"
     const val DATABASE_ITEM_BOOK_COVER_IMG = "item_bookCoverImg"
     const val DATABASE_ITEM_BOOK_NOTES = "item_bookNotes"
+    const val DATABASE_ITEM_BOOK_TAGS = "item_bookTags"
     const val DATABASE_EMPTY_VALUE = "none"
 
     const val DATABASE_NAME_YEAR = "Year"
@@ -91,6 +92,7 @@ object Constants {
     const val SHARED_PREFERENCES_KEY_SORT_ORDER = "KEY_SORT_ORDER"
     const val SHARED_PREFERENCES_KEY_FILTER_YEARS = "KEY_FILTER_YEARS"
     const val SHARED_PREFERENCES_KEY_ONLY_FAV = "KEY_ONLY_FAV"
+    const val SHARED_PREFERENCES_KEY_FILTER_TAGS = "KEY_FILTER_TAGS"
     const val SHARED_PREFERENCES_KEY_ACCENT = "KEY_ACCENT"
     const val SHARED_PREFERENCES_KEY_THEME_MODE = "KEY_THEME_MODE"
     const val SHARED_PREFERENCES_KEY_LANDING_PAGE = "KEY_LANDING_PAGE"

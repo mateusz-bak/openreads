@@ -128,7 +128,7 @@ class BooksFragment : Fragment(R.layout.fragment_books) {
         barcodeLauncher.launch(options)
     }
 
-    private fun addSearchGoToFrag(isbn: String = "") {
+    private fun addSearchGoToFrag(isbn: String = "manual_search") {
         val bundle = Bundle().apply {
             putString(Constants.SERIALIZABLE_BUNDLE_ISBN, isbn)
         }

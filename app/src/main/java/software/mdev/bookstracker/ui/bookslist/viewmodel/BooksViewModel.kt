@@ -68,7 +68,8 @@ class BooksViewModel(
         bookPublishYear: Int,
         bookIsFav: Boolean,
         bookCoverImg: ByteArray?,
-        bookNotes: String
+        bookNotes: String,
+        bookTags: List<String>?
     ) = CoroutineScope(Dispatchers.Main).launch {
         repository.updateBook(
             id,
@@ -90,7 +91,8 @@ class BooksViewModel(
             bookPublishYear,
             bookIsFav,
             bookCoverImg,
-            bookNotes
+            bookNotes,
+            bookTags
         )
     }
 

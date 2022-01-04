@@ -35,7 +35,7 @@
 
                     <TextView
                         android:id="@+id/tvChallengeTitle"
-                        android:layout_width="0dp"
+                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="8dp"
                         android:layout_marginEnd="8dp"
@@ -45,7 +45,6 @@
                         android:textColor="?colorPrimary"
                         android:textSize="16sp"
                         app:layout_constraintBottom_toTopOf="@+id/tvChallengeValue"
-                        app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />
 
@@ -54,24 +53,26 @@
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="8dp"
-                        android:layout_marginEnd="8dp"
                         android:gravity="start"
                         android:text="@string/stats_challenge"
-                        android:textSize="14sp"
                         android:textColor="@color/colorDefaultText"
-                        app:layout_constraintEnd_toEndOf="parent"
+                        android:textSize="14sp"
+                        app:layout_constraintEnd_toEndOf="@+id/tvChallengeTitle"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toBottomOf="@+id/tvChallengeTitle" />
 
-                    <!--                        <ImageView-->
-                    <!--                            android:id="@+id/ivChallenge"-->
-                    <!--                            android:layout_width="50dp"-->
-                    <!--                            android:layout_height="50dp"-->
-                    <!--                            android:layout_marginStart="8dp"-->
-                    <!--                            app:layout_constraintBottom_toBottomOf="parent"-->
-                    <!--                            app:layout_constraintStart_toStartOf="parent"-->
-                    <!--                            app:layout_constraintTop_toTopOf="parent"-->
-                    <!--                            app:srcCompat="@drawable/ic_svg_gold_medal" />-->
+                    <ImageView
+                        android:id="@+id/ivChallenge"
+                        android:layout_width="wrap_content"
+                        android:layout_height="0dp"
+                        android:layout_marginStart="9dp"
+                        android:padding="3dp"
+                        android:visibility="gone"
+                        app:layout_constraintBottom_toBottomOf="@+id/tvChallengeTitle"
+                        app:layout_constraintStart_toEndOf="@+id/tvChallengeTitle"
+                        app:layout_constraintTop_toTopOf="@+id/tvChallengeTitle"
+                        app:srcCompat="@drawable/ic_iconscout_trophy_24"
+                        app:tint="?colorPrimary" />
 
                     <com.google.android.material.progressindicator.LinearProgressIndicator
                         android:id="@+id/pbChallenge"

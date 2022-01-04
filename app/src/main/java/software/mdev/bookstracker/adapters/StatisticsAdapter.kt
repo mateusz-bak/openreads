@@ -241,8 +241,13 @@ class StatisticsAdapter(
             if (target != "null" && read != "null") {
                 var challengePercent = ((read.toFloat()/target.toFloat())*100).toInt()
                 pbChallenge.progress = challengePercent
+                if (challengePercent >= 100)
+                    ivChallenge.visibility = View.VISIBLE
+                else
+                    ivChallenge.visibility = View.GONE
             } else {
                 pbChallenge.visibility = View.GONE
+                ivChallenge.visibility = View.GONE
             }
 
             setupBooksByMonthChart(holder.itemView, curYear.yearBooksByMonth)
@@ -393,7 +398,7 @@ class StatisticsAdapter(
         legend.setDrawInside(false)
         legend.xEntrySpace = 7f
         legend.yEntrySpace = 10f
-        legend.textSize = 14f
+        legend.textSize = 12f
         legend.textColor = itemView.resources.getColor(R.color.colorDefaultText)
 
         val data = PieData(dataSet)

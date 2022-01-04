@@ -39,7 +39,6 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
                 android:layout_marginStart="14dp"
-                android:padding="8dp"
                 android:singleLine="true"
                 android:text="@string/tvSorterTitle"
                 android:textColor="@color/colorDefaultText"
@@ -60,6 +59,7 @@
                 android:textColor="@color/colorDefaultText"
                 android:textSize="14sp"
                 app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintEnd_toStartOf="@+id/tvOrderDesc" />
 
             <TextView
@@ -74,6 +74,7 @@
                 android:textColor="@color/colorDefaultText"
                 android:textSize="14sp"
                 app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintEnd_toEndOf="parent" />
         </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -93,7 +94,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginLeft="16dp"
-            android:padding="12dp"
+            android:padding="8dp"
             android:text="@string/tvSortTitle"
             android:textSize="16sp" />
     </LinearLayout>
@@ -111,7 +112,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginLeft="16dp"
-            android:padding="12dp"
+            android:padding="8dp"
             android:text="@string/tvSortAuthor"
             android:textSize="16sp" />
     </LinearLayout>
@@ -129,7 +130,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginLeft="16dp"
-            android:padding="12dp"
+            android:padding="8dp"
             android:text="@string/tvSortRating"
             android:textSize="16sp" />
     </LinearLayout>
@@ -147,7 +148,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginLeft="16dp"
-            android:padding="12dp"
+            android:padding="8dp"
             android:text="@string/tvSortPages"
             android:textSize="16sp" />
     </LinearLayout>
@@ -165,7 +166,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginLeft="16dp"
-            android:padding="12dp"
+            android:padding="8dp"
             android:text="@string/tvSortStartDate"
             android:textSize="16sp" />
     </LinearLayout>
@@ -183,7 +184,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginLeft="16dp"
-            android:padding="12dp"
+            android:padding="8dp"
             android:text="@string/tvSortFinishDate"
             android:textSize="16sp" />
     </LinearLayout>
@@ -193,8 +194,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="?android:attr/selectableItemBackground"
-        android:orientation="horizontal"
-        android:padding="8dp">
+        android:orientation="horizontal">
 
         <TextView
             android:layout_width="wrap_content"
@@ -221,9 +221,99 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginLeft="16dp"
-            android:padding="12dp"
+            android:padding="8dp"
             android:text="@string/only_fav"
             android:textSize="16sp" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/llFilterTagsTitle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="?android:attr/selectableItemBackground"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_marginStart="14dp"
+            android:padding="0dp"
+            android:singleLine="true"
+            android:text="@string/filter_tags"
+            android:textColor="@color/colorDefaultText"
+            android:textSize="18sp" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/llFilterTags"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="?android:attr/selectableItemBackground"
+        android:orientation="horizontal"
+        android:padding="0dp">
+
+        <HorizontalScrollView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="20dp"
+            android:layout_marginEnd="20dp">
+
+            <com.google.android.material.chip.ChipGroup
+                android:id="@+id/cgFilterTags"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"/>
+        </HorizontalScrollView>
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/llFilterYearsTitle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="?android:attr/selectableItemBackground"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_marginStart="14dp"
+            android:padding="0dp"
+            android:singleLine="true"
+            android:text="@string/filter_years"
+            android:textColor="@color/colorDefaultText"
+            android:textSize="18sp" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/llFilterYears"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="?android:attr/selectableItemBackground"
+        android:orientation="horizontal"
+        android:padding="0dp">
+
+        <HorizontalScrollView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="20dp"
+            android:layout_marginEnd="20dp">
+
+            <com.google.android.material.chip.ChipGroup
+                android:id="@+id/cgFilterYears"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"/>
+        </HorizontalScrollView>
     </LinearLayout>
 
     <LinearLayout
@@ -232,9 +322,9 @@
         android:layout_height="wrap_content"
         android:background="?android:attr/selectableItemBackground"
         android:orientation="horizontal"
-        android:paddingStart="20dp"
+        android:paddingStart="14dp"
         android:paddingTop="4dp"
-        android:paddingEnd="20dp"
+        android:paddingEnd="14dp"
         android:paddingBottom="4dp">
 
         <Button
