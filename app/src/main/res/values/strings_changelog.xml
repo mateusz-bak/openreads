@@ -14,6 +14,7 @@
     <string name="changelog_ver_1_8_0" translatable="false">v1.8.0</string>
     <string name="changelog_ver_1_8_1" translatable="false">v1.8.1</string>
     <string name="changelog_ver_1_9_0" translatable="false">v1.9.0</string>
+    <string name="changelog_ver_1_9_1" translatable="false">v1.9.1</string>
     <string name="changelog_ver_1_10_0" translatable="false">v1.10.0</string>
 
     <string name="changelog_date_1_0_0" translatable="false">5/06/2021</string>
@@ -31,6 +32,7 @@
     <string name="changelog_date_1_8_0" translatable="false">27/10/2021</string>
     <string name="changelog_date_1_8_1" translatable="false">28/10/2021</string>
     <string name="changelog_date_1_9_0" translatable="false">18/12/2021</string>
+    <string name="changelog_date_1_9_1" translatable="false">01/01/2022</string>
     <string name="changelog_date_1_10_0" translatable="false">04/01/2021</string>
 
     <string name="changelog_1_0_0_a">First official release.</string>
@@ -115,6 +117,8 @@
     <string name="changelog_1_9_0_c">Added new statistics.</string>
     <string name="changelog_1_9_0_d">Day/night mode change in settings.</string>
     <string name="changelog_1_9_0_e">Improved app\'s colours.</string>
+  
+    <string name="changelog_1_9_1_a">Fixed new year bug that only current year\'s books are displayed.</string>
 
     <string name="changelog_1_10_0_a">You can now add tags to your books.</string>
     <string name="changelog_1_10_0_b">Books can be filtered by tags and finish date.</string>
