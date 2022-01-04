@@ -81,4 +81,10 @@
     <string name="changelog_1_9_0_c">Dodano nowe statystyki.</string>
     <string name="changelog_1_9_0_d">Możesz zmieniać tryb nocny/dzienny w ustawieniach.</string>
     <string name="changelog_1_9_0_e">Ulepszono kolory aplikacji.</string>
+
+    <string name="changelog_1_10_0_a">Możesz teraz dodawać tagi do książek.</string>
+    <string name="changelog_1_10_0_b">Książki mogą być filtrowane ze względu na tagi oraz rok zakończenia.</string>
+    <string name="changelog_1_10_0_c">Po ukończeniu wyzwania czytelniczego dostaniesz trofeum!</string>
+    <string name="changelog_1_10_0_d">Naprawiono zmianę oceny z widoku książki.</string>
+    <string name="changelog_1_10_0_e">Naprawiono widok książki psujący się po zmianie statusu.</string>
 </resources>

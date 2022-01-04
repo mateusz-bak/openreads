@@ -63,10 +63,12 @@
     <string name="tvSortFinishDate">Data zakończenia</string>
     <string name="setTitleOnUpdateAvailable">Aktualizacja!</string>
     <string name="setContentOnUpdateAvailable_github">"Nowsza wersja aplikacji jest dostępna do pobrania z repozytorium Github.\n\nKliknij \"aktualizuj\", żeby przejść na stronę pobierania."</string>
+    <string name="setContentOnUpdateAvailable_fdroid">"Nowsza wersja aplikacji jest dostępna do pobrania z repozytorium F-Droid.\n\nKliknij \"aktualizuj\", żeby przejść na stronę pobierania."</string>
     <string name="setButtonUpdate">Aktualizuj</string>
     <string name="setButtonDismiss">Później</string>
     <string name="setButtonDoNotShowAgain">Ignoruj</string>
     <string name="setContentOnUpdateNotAvailable_github">Masz zainstalowaną najnowszą wersję aplikacji z repozytorium Github.</string>
+    <string name="setContentOnUpdateNotAvailable_fdroid">Masz zainstalowaną najnowszą wersję aplikacji z repozytorium F-Droid.</string>
     <string name="setTitleOnUpdateNotAvailable">Brak dostępnych aktualizacji</string>
     <string name="statisticsFragment">Statystyki</string>
     <string name="statistics_all">Wszystko</string>
