@@ -330,6 +330,9 @@ class ListActivity : AppCompatActivity() {
     }
 
     private fun setTags(bottomSheetDialog: BottomSheetDialog) {
+        bottomSheetDialog.findViewById<LinearLayout>(R.id.llFilterTagsTitle)?.visibility = View.GONE
+        bottomSheetDialog.findViewById<LinearLayout>(R.id.llFilterTags)?.visibility = View.GONE
+
         booksViewModel.getSortedBooksByTitleAsc(Constants.BOOK_STATUS_READ).observe(this@ListActivity) { books ->
             var tags = emptyList<String>()
             for (book in books) {
@@ -349,7 +352,7 @@ class ListActivity : AppCompatActivity() {
     }
 
     private fun displayTags(bottomSheetDialog: BottomSheetDialog, tags: List<String>?) {
-        if (tags != null) {
+        if (tags != null && tags.isNotEmpty()) {
             bottomSheetDialog.findViewById<LinearLayout>(R.id.llFilterTagsTitle)?.visibility = View.VISIBLE
             bottomSheetDialog.findViewById<LinearLayout>(R.id.llFilterTags)?.visibility = View.VISIBLE
 
@@ -380,8 +383,8 @@ class ListActivity : AppCompatActivity() {
             }
         }
         else {
-            llFilterTagsTitle.visibility = View.GONE
-            llFilterTags.visibility = View.GONE
+            bottomSheetDialog.findViewById<LinearLayout>(R.id.llFilterTagsTitle)?.visibility = View.GONE
+            bottomSheetDialog.findViewById<LinearLayout>(R.id.llFilterTags)?.visibility = View.GONE
         }
     }
 
@@ -500,9 +503,6 @@ class ListActivity : AppCompatActivity() {
     }
 
     private fun setCurrentTagsViews(bottomSheetDialog: BottomSheetDialog, tagsToFilter: List<String>) {
-        bottomSheetDialog.findViewById<LinearLayout>(R.id.llFilterTagsTitle)?.visibility = View.VISIBLE
-        bottomSheetDialog.findViewById<LinearLayout>(R.id.llFilterTags)?.visibility = View.VISIBLE
-
         val chipGroup = bottomSheetDialog.findViewById<ChipGroup>(R.id.cgFilterTags)
         val numberOfChips = chipGroup?.childCount
         if (numberOfChips != null) {
