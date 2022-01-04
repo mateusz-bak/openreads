@@ -100,5 +100,5 @@ interface BooksDao {
 
     // Checkpoint functionality, not yet supported in room but useful to avoid closing the db during the backup creation
     @RawQuery
-    fun checkpoint(supportSQLiteQuery: SupportSQLiteQuery?): Int
+    fun checkpoint(supportSQLiteQuery: SupportSQLiteQuery): Int
 }
