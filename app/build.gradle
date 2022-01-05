@@ -140,4 +140,7 @@ dependencies {
 
     // https://www.section.io/engineering-education/bottom-sheet-dialogs-using-android-studio/
     implementation 'com.google.android.material:material:1.4.0'
+
+    // https://github.com/doyaaaaaken/kotlin-csv
+    implementation("com.github.doyaaaaaken:kotlin-csv-jvm:1.2.0") //for JVM platform
 }
