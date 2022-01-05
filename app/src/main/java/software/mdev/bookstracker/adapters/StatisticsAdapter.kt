@@ -232,13 +232,13 @@ class StatisticsAdapter(
                 challengeBooksTarget = foundYear?.yearChallengeBooks.toString()
             }
 
-            val tvChallengeText = "$challengeBooksRead / $challengeBooksTarget"
-            tvChallengeValue.text = tvChallengeText
-
             var target = challengeBooksTarget
             var read = challengeBooksRead
 
             if (target != "null" && read != "null") {
+                val tvChallengeText = "$challengeBooksRead / $challengeBooksTarget"
+                tvChallengeValue.text = tvChallengeText
+
                 var challengePercent = ((read.toFloat()/target.toFloat())*100).toInt()
                 pbChallenge.progress = challengePercent
                 if (challengePercent >= 100)
@@ -246,6 +246,9 @@ class StatisticsAdapter(
                 else
                     ivChallenge.visibility = View.GONE
             } else {
+                val tvChallengeText = challengeBooksRead
+                tvChallengeValue.text = tvChallengeText
+
                 pbChallenge.visibility = View.GONE
                 ivChallenge.visibility = View.GONE
             }
@@ -260,19 +263,17 @@ class StatisticsAdapter(
             }
 
             holder.itemView.apply {
-                clChallenge.visibility = View.VISIBLE
 
                 if (foundYear == null) {
                     tvChallengeValue.text = resources.getText(R.string.tvChallengeNotSet)
                 }
             }
         } else {
-            holder.itemView.apply {
-                if (foundYear == null) {
-                    clChallenge.visibility = View.GONE
-                } else {
-                    clChallenge.visibility = View.VISIBLE
-                }
+            holder.itemView.clChallenge.setOnClickListener {
+                if (foundYear != null)
+                    callChallengeDialog(foundYear, it, challengeBooksRead)
+                else
+                    callChallengeDialog(Year(curYear.year), it, challengeBooksRead)
             }
         }
 
