@@ -46,6 +46,31 @@ abstract class YearDatabase: RoomDatabase() {
                     .fallbackToDestructiveMigration()
                     .build()
 
+        fun getYearDatabase(context: Context): YearDatabase {
+            val tempInstance = instance
+            if (tempInstance != null) {
+                return tempInstance
+            }
+            synchronized(this) {
+                val instance = Room.databaseBuilder(
+                    context.applicationContext,
+                    YearDatabase::class.java,
+                    Constants.DATABASE_YEAR_FILE_NAME
+                )
+                    .addMigrations(
+                        MIGRATION_1_2,
+                        MIGRATION_2_3,
+                        MIGRATION_3_4,
+                        MIGRATION_5_6,
+                        MIGRATION_6_7,
+                        MIGRATION_7_8
+                    )
+                    .build()
+                YearDatabase.instance = instance
+                return instance
+            }
+        }
+
         private val MIGRATION_1_2 = object : Migration(1, 2) {
             override fun migrate(database: SupportSQLiteDatabase) {
                 database.execSQL("ALTER TABLE Year ADD COLUMN year_challenge_books INTEGER NOT NULL DEFAULT 0")

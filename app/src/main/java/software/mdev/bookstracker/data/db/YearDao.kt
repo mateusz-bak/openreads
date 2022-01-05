@@ -21,4 +21,7 @@ interface YearDao {
 
     @Query("UPDATE Year SET item_books=:item_books WHERE item_year=:item_year")
     suspend fun updateYearsNumberOfBooks(item_year: String, item_books: Int)
+
+    @Query("SELECT * FROM Year ORDER BY item_year ASC")
+    fun getYearsForBackup(): List<Year>
 }

@@ -10,7 +10,9 @@ import software.mdev.bookstracker.BuildConfig
 import software.mdev.bookstracker.R
 import software.mdev.bookstracker.api.RetrofitInstance.Companion.gson
 import software.mdev.bookstracker.data.db.BooksDatabase
+import software.mdev.bookstracker.data.db.YearDatabase
 import software.mdev.bookstracker.data.db.entities.Book
+import software.mdev.bookstracker.data.db.entities.Year
 import software.mdev.bookstracker.ui.bookslist.ListActivity
 import java.io.File
 import java.io.FileOutputStream
@@ -32,9 +34,18 @@ class Backup {
     private fun exportBackupAsCsv(context: Context): String {
         // Perform a checkpoint to empty the write ahead logging temporary files and avoid closing the entire db
         val getBooksDao = BooksDatabase.getBooksDatabase(context).getBooksDao()
+        val getYearDao = YearDatabase.getYearDatabase(context).getYearDao()
 
         val books = getBooksDao.getBooksForBackup()
         val booksJson = gson.toJson(books)
+        val years = getYearDao.getYearsForBackup()
+        val yearsJson = gson.toJson(years)
+
+        val combined = listOf(
+            booksJson,
+            yearsJson
+        )
+        val combinedJson = gson.toJson(combined)
 
         val appDirectory = File(context.getExternalFilesDir(null)!!.absolutePath)
 
@@ -46,7 +57,7 @@ class Backup {
 
         // Snackbar need the ui thread to work, so they must be forced on that thread
         try {
-            File(fileFullPath).writeText(booksJson)
+            File(fileFullPath).writeText(combinedJson)
             (context as ListActivity).runOnUiThread {
                 (context as ListActivity).showSnackbar(context.getString(R.string.backup_success))
             }
@@ -104,19 +115,35 @@ class Backup {
                 BooksDatabase.destroyInstance()
 
                 val fileStream = context.contentResolver.openInputStream(fileUri)!!
-                val json = fileStream.readBytes().toString(Charsets.UTF_8)
+                val combinedJson = fileStream.readBytes().toString(Charsets.UTF_8)
 
                 try {
-                    val booksBackup = gson.fromJson(json, Array<Book>::class.java).toList()
+                    val combined = gson.fromJson(combinedJson, Array<String>::class.java).toList()
+
+                    val booksJson = combined[0]
+                    val yearsJson = combined[1]
+
+                    val booksFromBackup = gson.fromJson(booksJson, Array<Book>::class.java).toList()
+                    val yearsFromBackup = gson.fromJson(yearsJson, Array<Year>::class.java).toList()
 
                     val getBooksDao = BooksDatabase.getBooksDatabase(context).getBooksDao()
-                    val books = getBooksDao.getBooksForBackup()
+                    val getYearDao = YearDatabase.getYearDatabase(context).getYearDao()
 
-                    for (book in books)
-                            getBooksDao.delete(book)
+                    val currentBooks = getBooksDao.getBooksForBackup()
+                    val currentYears = getYearDao.getYearsForBackup()
 
-                    for (book in booksBackup)
-                            getBooksDao.upsert(book)
+                    for (book in currentBooks)
+                        getBooksDao.delete(book)
+
+                    for (year in currentYears)
+                        getYearDao.delete(year)
+
+                    for (book in booksFromBackup)
+                        getBooksDao.upsert(book)
+
+                    for (year in yearsFromBackup) {
+                        getYearDao.upsert(year)
+                    }
 
                     (context as ListActivity).showSnackbar(context.getString(R.string.backup_import_success))
                 } catch (e: Exception) {
