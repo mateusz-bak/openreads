@@ -20,10 +20,10 @@ import java.util.*
 
 class Backup {
 
-    fun exportAndShare(activity: ListActivity) {
+    fun exportAndShare(activity: ListActivity, share: Boolean) {
         val thread = Thread {
             val exported = exportBackupAsCsv(activity)
-            if (exported.isNotBlank()) shareBackup(exported, activity)
+            if (share && exported.isNotBlank()) shareBackup(exported, activity)
         }
         thread.start()
     }

@@ -148,7 +148,7 @@
     <string name="import_summary">Load your books from a local file on your phone. You may need to grant storage permissions for the app.</string>
     <string name="backup_title">Backup</string>
     <string name="backup_summary">Backup or restore your books</string>
-    <string name="backup_success">Backup successfully created!</string>
+    <string name="backup_success">Success! File saved to: Internal Storage/Android/data/software.mdev.bookstracker/files</string>
     <string name="backup_failure">Backup creation failed!</string>
     <string name="backup_import_invalid_file">Import failed. The chosen file is not a valid &appname; backup!</string>
     <string name="backup_import_success">Import completed!</string>
