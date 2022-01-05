@@ -5,7 +5,11 @@ import android.content.Intent
 import android.net.Uri
 import android.os.Handler
 import android.os.Looper
+import android.view.View
+import android.widget.ProgressBar
 import androidx.core.content.FileProvider.getUriForFile
+import kotlinx.android.synthetic.main.fragment_add_book_search.*
+import kotlinx.coroutines.*
 import software.mdev.bookstracker.BuildConfig
 import software.mdev.bookstracker.R
 import software.mdev.bookstracker.api.RetrofitInstance.Companion.gson
@@ -14,20 +18,25 @@ import software.mdev.bookstracker.data.db.YearDatabase
 import software.mdev.bookstracker.data.db.entities.Book
 import software.mdev.bookstracker.data.db.entities.Year
 import software.mdev.bookstracker.ui.bookslist.ListActivity
-import java.io.File
-import java.io.FileOutputStream
+import java.io.*
+import java.lang.StringBuilder
 import java.text.SimpleDateFormat
 import java.util.*
+import java.util.zip.GZIPInputStream
+import java.util.zip.GZIPOutputStream
 
 
 class Backup {
 
     fun exportAndShare(activity: ListActivity, share: Boolean) {
-        val thread = Thread {
+        CoroutineScope(Dispatchers.IO).launch {
+            controlProgressBar(activity, true)
+
             val exported = exportBackupAsCsv(activity)
             if (share && exported.isNotBlank()) shareBackup(exported, activity)
+
+            controlProgressBar(activity, false)
         }
-        thread.start()
     }
 
     // Export the room database to a file in Android/data/software.mdev.bookstracker(.debug)/files
@@ -46,6 +55,7 @@ class Backup {
             yearsJson
         )
         val combinedJson = gson.toJson(combined)
+        val compressedJson = compressString(combinedJson)
 
         val appDirectory = File(context.getExternalFilesDir(null)!!.absolutePath)
 
@@ -57,7 +67,7 @@ class Backup {
 
         // Snackbar need the ui thread to work, so they must be forced on that thread
         try {
-            File(fileFullPath).writeText(combinedJson)
+            File(fileFullPath).writeBytes(compressedJson)
             (context as ListActivity).runOnUiThread {
                 (context as ListActivity).showSnackbar(context.getString(R.string.backup_success))
             }
@@ -94,6 +104,7 @@ class Backup {
     suspend fun importBackup(context: Context, fileUri: Uri): Boolean {
         when (validateBackup(fileUri, context)) {
             1 -> {
+                controlProgressBar(context as ListActivity, true)
                 BooksDatabase.destroyInstance()
 
                 val fileStream = context.contentResolver.openInputStream(fileUri)!!
@@ -108,16 +119,20 @@ class Backup {
                     e.printStackTrace()
                     return false
                 }
+
+                controlProgressBar(context as ListActivity, false)
                 restartActivity(context)
                 return true
             }
             2 -> {
+                controlProgressBar(context as ListActivity, true)
                 BooksDatabase.destroyInstance()
 
                 val fileStream = context.contentResolver.openInputStream(fileUri)!!
-                val combinedJson = fileStream.readBytes().toString(Charsets.UTF_8)
+                val compressedJson = fileStream.readBytes()
 
                 try {
+                    val combinedJson = decompressString(compressedJson)
                     val combined = gson.fromJson(combinedJson, Array<String>::class.java).toList()
 
                     val booksJson = combined[0]
@@ -152,6 +167,7 @@ class Backup {
                     e.printStackTrace()
                     return false
                 }
+                controlProgressBar(context as ListActivity, false)
                 restartActivity(context)
                 return true
             }
@@ -181,5 +197,45 @@ class Backup {
             2
         } else
             0
+    }
+
+    @Throws(IOException::class)
+    private fun compressString (data: String): ByteArray {
+        val bos = ByteArrayOutputStream(data.length)
+        val gzip = GZIPOutputStream(bos)
+        gzip.write(data.toByteArray())
+        gzip.close()
+        val compressed: ByteArray = bos.toByteArray()
+        bos.close()
+        return compressed
+    }
+
+    @Throws(IOException::class)
+    private fun decompressString (compressed: ByteArray?): String {
+        val bis = ByteArrayInputStream(compressed)
+        val gis = GZIPInputStream(bis)
+        val br = BufferedReader(InputStreamReader(gis, "UTF-8"))
+        val sb = StringBuilder()
+        var line: String?
+        while (br.readLine().also { line = it } != null) {
+            sb.append(line)
+        }
+        br.close()
+        gis.close()
+        bis.close()
+        return sb.toString()
+    }
+
+    private suspend fun controlProgressBar(activity: ListActivity, state: Boolean) {
+        withContext(Dispatchers.Main) {
+            val progressBar = activity.findViewById<ProgressBar>(R.id.pbActivityLoading)
+            if (state)
+                progressBar?.visibility = View.VISIBLE
+            else
+                progressBar?.visibility = View.INVISIBLE
+
+            if (state)
+                progressBar?.bringToFront()
+        }
     }
 }
