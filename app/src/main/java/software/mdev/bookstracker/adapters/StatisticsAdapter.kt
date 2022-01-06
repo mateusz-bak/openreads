@@ -10,9 +10,7 @@ import androidx.appcompat.app.AlertDialog
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.fragment.findNavController
-import androidx.recyclerview.widget.AsyncListDiffer
-import androidx.recyclerview.widget.DiffUtil
-import androidx.recyclerview.widget.RecyclerView
+import androidx.recyclerview.widget.*
 import com.github.mikephil.charting.charts.PieChart
 import com.github.mikephil.charting.components.XAxis
 import com.github.mikephil.charting.data.*
@@ -43,7 +41,9 @@ import java.text.DecimalFormat
 import java.util.*
 import java.util.concurrent.TimeUnit
 import com.github.mikephil.charting.components.Legend
+import software.mdev.bookstracker.data.db.entities.Book
 import software.mdev.bookstracker.other.Constants
+import java.text.SimpleDateFormat
 
 
 class StatisticsAdapter(
@@ -56,6 +56,7 @@ class StatisticsAdapter(
     inner class StatisticsViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView)
 
     lateinit var viewModel: BooksViewModel
+    private lateinit var statsCoversAdapter: StatsCoversAdapter
 
     private val differCallback = object : DiffUtil.ItemCallback<Year>() {
         override fun areItemsTheSame(oldItem: Year, newItem: Year): Boolean {
@@ -364,6 +365,36 @@ class StatisticsAdapter(
                 }
             }
         }
+
+        setupCoversRV(holder.itemView)
+        loadCoversToRV(curYear, this)
+    }
+
+    private fun setupCoversRV(itemView: View) {
+        statsCoversAdapter = StatsCoversAdapter(itemView.context)
+        itemView.rvStatsCovers.adapter = statsCoversAdapter
+        itemView.rvStatsCovers.layoutManager = StaggeredGridLayoutManager(4, RecyclerView.VERTICAL)
+    }
+
+    private fun loadCoversToRV(curYear: Year, statisticsAdapter: StatisticsAdapter) {
+        viewModel.getSortedBooksByFinishDateAsc(Constants.BOOK_STATUS_READ).observe(statisticsFragment.viewLifecycleOwner, androidx.lifecycle.Observer {books ->
+            var booksInCurrentYear = emptyList<Book>()
+            for (book in books) {
+                if (book.bookCoverImg != null) {
+                    val finish = book.bookFinishDate
+
+                    if (finish != "null" && finish != "none" && finish != "") {
+                        val finishYear = convertLongToYear(finish.toLong())
+
+                        if (finishYear == curYear.year)
+                            booksInCurrentYear += book
+                    }
+                }
+            }
+
+            statsCoversAdapter.differ.submitList(booksInCurrentYear)
+            statsCoversAdapter.notifyDataSetChanged()
+        })
     }
 
     private fun setupBooksStatusChart(itemView: View,
@@ -652,5 +683,11 @@ class StatisticsAdapter(
 
     private fun convertLongToDays(time: Long): String {
         return TimeUnit.MILLISECONDS.toDays(time).toString()
+    }
+
+    private fun convertLongToYear(time: Long): String {
+        val date = Date(time)
+        val format = SimpleDateFormat("yyyy")
+        return format.format(date)
     }
 }
