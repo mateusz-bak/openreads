@@ -46,18 +46,10 @@ class ChallengeDialog(
             if (chosenPages.isNotEmpty() && chosenPages.toInt() > 0 && cbPagesChallenge.isChecked)
                 chosenPagesInt = chosenPages.toInt()
 
-            if (chosenBooksInt != null || chosenPagesInt != null) {
-                year.yearChallengeBooks = chosenBooksInt
-                year.yearChallengePagesCorrected = chosenPagesInt
-                challengeDialogListener.onSaveButtonClicked(year)
-                dismiss()
-            } else {
-                Snackbar.make(
-                    it,
-                    R.string.warning_challenge_difficulty_not_set,
-                    Snackbar.LENGTH_SHORT
-                ).show()
-            }
+            year.yearChallengeBooks = chosenBooksInt
+            year.yearChallengePagesCorrected = chosenPagesInt
+            challengeDialogListener.onSaveButtonClicked(year)
+            dismiss()
         }
 
         btnChallengeEditorCancel.setOnClickListener {
@@ -83,12 +75,30 @@ class ChallengeDialog(
 
         if (year.yearChallengeBooks != null) {
             etChallengeEditorBooksNumber.setText(year.yearChallengeBooks.toString())
+
+            when {
+                year.yearChallengeBooks!!.toFloat() > slChallengeBooks.valueTo ->
+                    slChallengeBooks.value = slChallengeBooks.valueTo
+                year.yearChallengeBooks!!.toFloat() < slChallengeBooks.valueFrom ->
+                    slChallengeBooks.value = slChallengeBooks.valueFrom
+                else ->
+                    slChallengeBooks.value = year.yearChallengeBooks!!.toFloat()
+            }
         } else {
             etChallengeEditorBooksNumber.setText("0")
         }
 
         if (year.yearChallengePagesCorrected != null) {
             etChallengeEditorPagesNumber.setText(year.yearChallengePagesCorrected.toString())
+
+            when {
+                year.yearChallengePagesCorrected!!.toFloat() > slChallengePages.valueTo ->
+                    slChallengePages.value = slChallengePages.valueTo
+                year.yearChallengePagesCorrected!!.toFloat() < slChallengePages.valueFrom ->
+                    slChallengePages.value = slChallengePages.valueFrom
+                else ->
+                    slChallengePages.value = year.yearChallengePagesCorrected!!.toFloat()
+            }
         } else {
             etChallengeEditorPagesNumber.setText("0")
         }

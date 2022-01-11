@@ -238,4 +238,5 @@
     <string name="select_book_tags">Dodaj tagi</string>
     <string name="filter_tags">Tagi</string>
     <string name="filter_years">Rok zakończenia</string>
+    <string name="stats_challenge_add">kliknij, żeby dodać cel</string>
 </resources>
