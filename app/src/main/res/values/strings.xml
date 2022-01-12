@@ -3,7 +3,7 @@
     <!ENTITY appname "Openreads">
     ]>
 <resources>
-    <string name="app_version" translatable="false">v1.10.0</string>
+    <string name="app_version" translatable="false">v1.11.0</string>
     <!-- Images descriptions -->
     <string name="fabEditBook">Edit displayed book</string>
     <string name="ivBookStatusRead">Book is finished</string>
@@ -199,6 +199,10 @@
     <string name="update_ok_4">Keep up the good work!</string>
     <string name="update_ok_5">Love the new updates!</string>
     <string name="update_ok_6">A job well done!</string>
+    <string name="update_ok_7">Amazing progress!</string>
+    <string name="update_ok_8">Yay! Another update!</string>
+    <string name="update_ok_9">That\'s what I\'m talking about!</string>
+    <string name="update_ok_10">Good stuff!</string>
     <string name="month_1_short">Jan</string>
     <string name="month_2_short">Feb</string>
     <string name="month_3_short">Mar</string>
