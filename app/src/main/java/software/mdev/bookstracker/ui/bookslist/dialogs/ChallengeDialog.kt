@@ -12,6 +12,7 @@ import com.google.android.material.slider.Slider
 import com.google.android.material.snackbar.Snackbar
 import kotlinx.android.synthetic.main.dialog_edit_challenge.*
 import software.mdev.bookstracker.data.db.entities.Year
+import kotlin.math.roundToInt
 
 
 class ChallengeDialog(
@@ -81,6 +82,15 @@ class ChallengeDialog(
                     slChallengeBooks.value = slChallengeBooks.valueTo
                 year.yearChallengeBooks!!.toFloat() < slChallengeBooks.valueFrom ->
                     slChallengeBooks.value = slChallengeBooks.valueFrom
+                // Find a numbers closest to actual value
+                (year.yearChallengeBooks!!.toFloat().mod(slChallengeBooks.stepSize) != 0F) -> {
+                    val number = (year.yearChallengeBooks!!.toFloat() -
+                            year.yearChallengeBooks!!.toFloat()
+                                .mod(slChallengeBooks.stepSize))
+                        .roundToInt()
+
+                    slChallengeBooks.value = number.toFloat()
+                }
                 else ->
                     slChallengeBooks.value = year.yearChallengeBooks!!.toFloat()
             }
@@ -96,6 +106,14 @@ class ChallengeDialog(
                     slChallengePages.value = slChallengePages.valueTo
                 year.yearChallengePagesCorrected!!.toFloat() < slChallengePages.valueFrom ->
                     slChallengePages.value = slChallengePages.valueFrom
+                // Find a numbers closest to actual value
+                (year.yearChallengePagesCorrected!!.toFloat().mod(slChallengePages.stepSize) != 0F) -> {
+                    val number = (year.yearChallengePagesCorrected!!.toFloat() -
+                            year.yearChallengePagesCorrected!!.toFloat()
+                                .mod(slChallengePages.stepSize))
+                        .roundToInt()
+                    slChallengePages.value = number.toFloat()
+                }
                 else ->
                     slChallengePages.value = year.yearChallengePagesCorrected!!.toFloat()
             }
