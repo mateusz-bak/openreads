@@ -17,7 +17,7 @@ data class OpenLibraryOLIDResponse(
     val local_id: List<String>,
     val number_of_pages: Int,
     val ocaid: String,
-    val publish_date: String,
+    var publish_date: String,
     val publishers: List<String>,
     val revision: Int,
     val source_records: List<String>,

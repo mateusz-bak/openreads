@@ -195,6 +195,7 @@ class BooksViewModel(
                                     authorsList += OpenLibraryOLIDResponse.Author(item.author_name[j])
                                 }
                                 handledResponse.data?.authors = authorsList
+                                handledResponse.data?.publish_date = item.first_publish_year.toString()
 
                             if (openLibraryBooksByOLID.value == null) {
                                 var emptyList = emptyList<Resource<OpenLibraryOLIDResponse>>()
