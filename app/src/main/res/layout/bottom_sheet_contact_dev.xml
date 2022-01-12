@@ -60,7 +60,7 @@
             android:layout_width="24dp"
             android:layout_height="24dp"
             android:layout_margin="8dp"
-            android:src="@drawable/ic_iconscout_github_alt_24"
+            android:src="@drawable/ic_iconscout_exclamation_octagon_24"
             app:tint="@color/colorDefaultText" />
 
         <TextView
