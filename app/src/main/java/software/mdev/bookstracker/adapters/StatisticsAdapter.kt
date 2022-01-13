@@ -6,13 +6,13 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.WindowManager
+import android.widget.ImageView
+import android.widget.TextView
 import androidx.appcompat.app.AlertDialog
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.fragment.findNavController
-import androidx.recyclerview.widget.AsyncListDiffer
-import androidx.recyclerview.widget.DiffUtil
-import androidx.recyclerview.widget.RecyclerView
+import androidx.recyclerview.widget.*
 import com.github.mikephil.charting.charts.PieChart
 import com.github.mikephil.charting.components.XAxis
 import com.github.mikephil.charting.data.*
@@ -39,11 +39,13 @@ import software.mdev.bookstracker.ui.bookslist.fragments.StatisticsFragment
 import software.mdev.bookstracker.ui.bookslist.viewmodel.BooksViewModel
 import software.mdev.bookstracker.ui.bookslist.viewmodel.BooksViewModelProviderFactory
 import java.math.RoundingMode
-import java.text.DecimalFormat
 import java.util.*
 import java.util.concurrent.TimeUnit
 import com.github.mikephil.charting.components.Legend
+import com.google.android.material.progressindicator.LinearProgressIndicator
+import software.mdev.bookstracker.data.db.entities.Book
 import software.mdev.bookstracker.other.Constants
+import java.text.SimpleDateFormat
 
 
 class StatisticsAdapter(
@@ -56,6 +58,7 @@ class StatisticsAdapter(
     inner class StatisticsViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView)
 
     lateinit var viewModel: BooksViewModel
+    private lateinit var statsCoversAdapter: StatsCoversAdapter
 
     private val differCallback = object : DiffUtil.ItemCallback<Year>() {
         override fun areItemsTheSame(oldItem: Year, newItem: Year): Boolean {
@@ -105,32 +108,22 @@ class StatisticsAdapter(
 
     override fun onBindViewHolder(holder: StatisticsViewHolder, position: Int) {
         val curYear = differ.currentList[position]
-        val df = DecimalFormat("#.#")
-        df.roundingMode = RoundingMode.CEILING
 
-        val foundYear: Year?
-        if (position == 0) {
-            val tvChallengeTitleText = holder.itemView.resources.getString(R.string.tvChallengeTitle) + " " + Calendar.getInstance().get(Calendar.YEAR).toString()
-            holder.itemView.tvChallengeTitle.text = tvChallengeTitleText
-
-            foundYear = listOfYearsFromDb.find {
+        val foundYear: Year? = if (position == 0) {
+            listOfYearsFromDb.find {
                 it.year == Calendar.getInstance().get(Calendar.YEAR).toString()
             }
         } else {
-            val tvChallengeTitleText = holder.itemView.resources.getString(R.string.tvChallengeTitle) + " " + curYear.year
-            holder.itemView.tvChallengeTitle.text = tvChallengeTitleText
-
-            foundYear = listOfYearsFromDb.find { it.year == curYear.year }
+            listOfYearsFromDb.find { it.year == curYear.year }
         }
 
         if (curYear.year == "0000" && curYear.yearBooks == 0) {
             holder.itemView.apply {
                 tvLooksEmptyStatistics.visibility = View.VISIBLE
 
-                clBooksRead.visibility = View.GONE
-                clPagesRead.visibility = View.GONE
+                clChallengeBooks.visibility = View.GONE
+                clChallengePages.visibility = View.GONE
                 clAvgRating.visibility = View.GONE
-                clChallenge.visibility = View.GONE
                 clQuickestRead.visibility = View.GONE
                 clLongestRead.visibility = View.GONE
                 clBooksByMonth.visibility = View.GONE
@@ -158,12 +151,9 @@ class StatisticsAdapter(
         }
 
         var challengeBooksRead = "0"
+        var challengePagesRead = "0"
 
         holder.itemView.apply {
-            tvBooksReadValue.text = curYear.yearBooks.toString()
-
-            tvPagesReadValue.text = curYear.yearPages.toString()
-
             tvAvgRatingValue.text = curYear.avgRating.toBigDecimal().setScale(1, RoundingMode.UP).toDouble().toString()
 
             if (curYear.yearQuickestBook == "null"){
@@ -215,16 +205,16 @@ class StatisticsAdapter(
                 tvAvgPagesValue.text = curYear.yearAvgPages.toString()
             }
 
-
-
             if (position == 0 && itemCount > 1) {
                 if (differ.currentList[1].year == Calendar.getInstance().get(Calendar.YEAR)
                         .toString()
                 ) {
                     challengeBooksRead = differ.currentList[1].yearBooks.toString()
+                    challengePagesRead = differ.currentList[1].yearPages.toString()
                 }
             } else {
                 challengeBooksRead = curYear.yearBooks.toString()
+                challengePagesRead = curYear.yearPages.toString()
             }
 
             var challengeBooksTarget = "null"
@@ -232,47 +222,53 @@ class StatisticsAdapter(
                 challengeBooksTarget = foundYear?.yearChallengeBooks.toString()
             }
 
-            val tvChallengeText = "$challengeBooksRead / $challengeBooksTarget"
-            tvChallengeValue.text = tvChallengeText
+            var challengePagesTarget = "null"
+            if (foundYear?.yearChallengePagesCorrected != null) {
+                challengePagesTarget = foundYear?.yearChallengePagesCorrected.toString()
+            }
 
-            var target = challengeBooksTarget
-            var read = challengeBooksRead
+            var targetBooks = challengeBooksTarget
+            var readBooks = challengeBooksRead
+            var targetPages = challengePagesTarget
+            var readPages = challengePagesRead
 
-            if (target != "null" && read != "null") {
-                var challengePercent = ((read.toFloat()/target.toFloat())*100).toInt()
-                pbChallenge.progress = challengePercent
-                if (challengePercent >= 100)
-                    ivChallenge.visibility = View.VISIBLE
-                else
-                    ivChallenge.visibility = View.GONE
+            if (position == 0) {
+                tvChallengeBooksValue.text = curYear.yearBooks.toString()
+                tvChallengePagesValue.text = curYear.yearPages.toString()
+
+                pbChallengeBooks.visibility = View.GONE
+                pbChallengePages.visibility = View.GONE
             } else {
-                pbChallenge.visibility = View.GONE
-                ivChallenge.visibility = View.GONE
+                if (targetBooks != "null" && readBooks != "null") {
+                    setReadValues(tvChallengeBooksValue, pbChallengeBooks, readBooks, targetBooks)
+                    setProgressBar(pbChallengeBooks, ivChallengeBooks, readBooks, targetBooks)
+                } else
+                    setReadValues(tvChallengeBooksValue, pbChallengeBooks, challengeBooksRead)
+
+                if (targetPages != "null" && readPages != "null") {
+                    setReadValues(tvChallengePagesValue, pbChallengePages, readPages, targetPages)
+                    setProgressBar(pbChallengePages, ivChallengePages, readPages, targetPages)
+                } else
+                    setReadValues(tvChallengePagesValue, pbChallengePages, challengePagesRead)
             }
 
             setupBooksByMonthChart(holder.itemView, curYear.yearBooksByMonth)
             setupPagesByMonthChart(holder.itemView, curYear.yearPagesByMonth)
         }
 
-        if (position == 0) {
-            holder.itemView.clChallenge.setOnClickListener {
-                callChallengeDialog(foundYear, it, challengeBooksRead)
+        if (position != 0) {
+            holder.itemView.clChallengeBooks.setOnClickListener {
+                if (foundYear != null)
+                    callChallengeDialog(foundYear, it, challengeBooksRead)
+                else
+                    callChallengeDialog(Year(curYear.year), it, challengeBooksRead)
             }
 
-            holder.itemView.apply {
-                clChallenge.visibility = View.VISIBLE
-
-                if (foundYear == null) {
-                    tvChallengeValue.text = resources.getText(R.string.tvChallengeNotSet)
-                }
-            }
-        } else {
-            holder.itemView.apply {
-                if (foundYear == null) {
-                    clChallenge.visibility = View.GONE
-                } else {
-                    clChallenge.visibility = View.VISIBLE
-                }
+            holder.itemView.clChallengePages.setOnClickListener {
+                if (foundYear != null)
+                    callChallengeDialog(foundYear, it, challengeBooksRead)
+                else
+                    callChallengeDialog(Year(curYear.year), it, challengeBooksRead)
             }
         }
 
@@ -363,6 +359,87 @@ class StatisticsAdapter(
                 }
             }
         }
+
+        setupCoversRV(holder.itemView)
+        loadCoversToRV(curYear, this)
+
+        if (itemCount > 1 &&
+            position > 0 &&
+            curYear.year == Calendar.getInstance().get(Calendar.YEAR).toString() &&
+            foundYear?.yearChallengeBooks == null &&
+            foundYear?.yearChallengePagesCorrected == null) {
+            holder.itemView.apply {
+                val text = resources.getText(R.string.stats_books_read).toString() +
+                        " - " +
+                        resources.getText(R.string.stats_challenge_add).toString()
+                tvChallengeBooksTitle.text = text
+            }
+        }
+        else {
+            holder.itemView.tvChallengeBooksTitle.text =
+                holder.itemView.resources.getText(R.string.stats_books_read)
+        }
+    }
+
+    private fun setProgressBar(
+        pb: LinearProgressIndicator,
+        iv: ImageView,
+        read: String,
+        target: String
+    ) {
+        var challengePercent =
+            ((read.toFloat() / target.toFloat()) * 100).toInt()
+        pb.progress = challengePercent
+        pb.visibility = View.VISIBLE
+
+        if (challengePercent >= 100)
+            iv.visibility = View.VISIBLE
+        else
+            iv.visibility = View.GONE
+    }
+
+    private fun setReadValues(
+        tv: TextView,
+        pb: LinearProgressIndicator,
+        read: String,
+        target: String? = null
+    ) {
+        val text = if (target != null)
+            "$read / $target"
+        else
+            read
+
+        tv.text = text
+
+        if (target == null)
+            pb.visibility = View.GONE
+    }
+
+    private fun setupCoversRV(itemView: View) {
+        statsCoversAdapter = StatsCoversAdapter(itemView.context)
+        itemView.rvStatsCovers.adapter = statsCoversAdapter
+        itemView.rvStatsCovers.layoutManager = StaggeredGridLayoutManager(4, RecyclerView.VERTICAL)
+    }
+
+    private fun loadCoversToRV(curYear: Year, statisticsAdapter: StatisticsAdapter) {
+        viewModel.getSortedBooksByFinishDateAsc(Constants.BOOK_STATUS_READ).observe(statisticsFragment.viewLifecycleOwner, androidx.lifecycle.Observer {books ->
+            var booksInCurrentYear = emptyList<Book>()
+            for (book in books) {
+                if (book.bookCoverImg != null) {
+                    val finish = book.bookFinishDate
+
+                    if (finish != "null" && finish != "none" && finish != "") {
+                        val finishYear = convertLongToYear(finish.toLong())
+
+                        if (finishYear == curYear.year)
+                            booksInCurrentYear += book
+                    }
+                }
+            }
+
+            statsCoversAdapter.differ.submitList(booksInCurrentYear)
+            statsCoversAdapter.notifyDataSetChanged()
+        })
     }
 
     private fun setupBooksStatusChart(itemView: View,
@@ -651,5 +728,11 @@ class StatisticsAdapter(
 
     private fun convertLongToDays(time: Long): String {
         return TimeUnit.MILLISECONDS.toDays(time).toString()
+    }
+
+    private fun convertLongToYear(time: Long): String {
+        val date = Date(time)
+        val format = SimpleDateFormat("yyyy")
+        return format.format(date)
     }
 }

@@ -92,6 +92,9 @@ interface BooksDao {
     @Query("SELECT * FROM Book WHERE (item_bookStatus LIKE :bookStatus AND item_bookIsDeleted LIKE 0) ORDER BY item_bookFinishDate ASC")
     fun getSortedBooksByFinishDateAsc(bookStatus: String): LiveData<List<Book>>
 
+    @Query("SELECT * FROM Book ORDER BY item_bookTitle_ASCII ASC")
+    fun getBooksForBackup(): List<Book>
+
     @Query("SELECT COUNT(id) FROM Book WHERE (item_bookStatus LIKE :bookStatus AND item_bookIsDeleted LIKE 0)")
     fun getBookCount(bookStatus: String): LiveData<Integer>
 
@@ -100,5 +103,5 @@ interface BooksDao {
 
     // Checkpoint functionality, not yet supported in room but useful to avoid closing the db during the backup creation
     @RawQuery
-    fun checkpoint(supportSQLiteQuery: SupportSQLiteQuery?): Int
+    fun checkpoint(supportSQLiteQuery: SupportSQLiteQuery): Int
 }

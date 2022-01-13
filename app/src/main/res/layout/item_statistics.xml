@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
@@ -16,7 +17,7 @@
             android:padding="4dp">
 
             <androidx.constraintlayout.widget.ConstraintLayout
-                android:id="@+id/clChallenge"
+                android:id="@+id/clChallengeBooks"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -25,7 +26,7 @@
                 app:layout_constraintTop_toBottomOf="@+id/clBooksByStatus">
 
                 <androidx.constraintlayout.widget.ConstraintLayout
-                    android:id="@+id/clChallengeIn"
+                    android:id="@+id/clChallengeBooksIn"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:padding="8dp"
@@ -34,48 +35,47 @@
                     app:layout_constraintTop_toTopOf="parent">
 
                     <TextView
-                        android:id="@+id/tvChallengeTitle"
+                        android:id="@+id/tvChallengeBooksTitle"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="8dp"
                         android:layout_marginEnd="8dp"
                         android:fontFamily="@font/jost_500_medium"
                         android:gravity="start"
-                        android:text="@string/stats_challenge"
+                        android:text="@string/stats_books_read"
                         android:textColor="?colorPrimary"
                         android:textSize="16sp"
-                        app:layout_constraintBottom_toTopOf="@+id/tvChallengeValue"
+                        app:layout_constraintBottom_toTopOf="@+id/tvChallengeBooksValue"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />
 
                     <TextView
-                        android:id="@+id/tvChallengeValue"
-                        android:layout_width="0dp"
+                        android:id="@+id/tvChallengeBooksValue"
+                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="8dp"
                         android:gravity="start"
                         android:text="@string/stats_challenge"
                         android:textColor="@color/colorDefaultText"
                         android:textSize="14sp"
-                        app:layout_constraintEnd_toEndOf="@+id/tvChallengeTitle"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/tvChallengeTitle" />
+                        app:layout_constraintTop_toBottomOf="@+id/tvChallengeBooksTitle" />
 
                     <ImageView
-                        android:id="@+id/ivChallenge"
+                        android:id="@+id/ivChallengeBooks"
                         android:layout_width="wrap_content"
                         android:layout_height="0dp"
                         android:layout_marginStart="9dp"
                         android:padding="3dp"
                         android:visibility="gone"
-                        app:layout_constraintBottom_toBottomOf="@+id/tvChallengeTitle"
-                        app:layout_constraintStart_toEndOf="@+id/tvChallengeTitle"
-                        app:layout_constraintTop_toTopOf="@+id/tvChallengeTitle"
+                        app:layout_constraintBottom_toBottomOf="@+id/tvChallengeBooksTitle"
+                        app:layout_constraintStart_toEndOf="@+id/tvChallengeBooksTitle"
+                        app:layout_constraintTop_toTopOf="@+id/tvChallengeBooksTitle"
                         app:srcCompat="@drawable/ic_iconscout_trophy_24"
                         app:tint="?colorPrimary" />
 
                     <com.google.android.material.progressindicator.LinearProgressIndicator
-                        android:id="@+id/pbChallenge"
+                        android:id="@+id/pbChallengeBooks"
                         android:layout_width="0dp"
                         android:layout_height="20dp"
                         android:layout_marginStart="8dp"
@@ -89,7 +89,87 @@
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintHorizontal_bias="0.5"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/tvChallengeValue"
+                        app:layout_constraintTop_toBottomOf="@+id/tvChallengeBooksValue"
+                        app:trackCornerRadius="5dp"
+                        app:trackThickness="12dp" />
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/clChallengePages"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/clChallengeBooks">
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/clChallengePagesIn"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="8dp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent">
+
+                    <TextView
+                        android:id="@+id/tvChallengePagesTitle"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="8dp"
+                        android:layout_marginEnd="8dp"
+                        android:fontFamily="@font/jost_500_medium"
+                        android:gravity="start"
+                        android:text="@string/stats_pages_read"
+                        android:textColor="?colorPrimary"
+                        android:textSize="16sp"
+                        app:layout_constraintBottom_toTopOf="@+id/tvChallengePagesValue"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <TextView
+                        android:id="@+id/tvChallengePagesValue"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="8dp"
+                        android:gravity="start"
+                        android:text="@string/stats_challenge"
+                        android:textColor="@color/colorDefaultText"
+                        android:textSize="14sp"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/tvChallengePagesTitle" />
+
+                    <ImageView
+                        android:id="@+id/ivChallengePages"
+                        android:layout_width="wrap_content"
+                        android:layout_height="0dp"
+                        android:layout_marginStart="9dp"
+                        android:padding="3dp"
+                        android:visibility="gone"
+                        app:layout_constraintBottom_toBottomOf="@+id/tvChallengePagesTitle"
+                        app:layout_constraintStart_toEndOf="@+id/tvChallengePagesTitle"
+                        app:layout_constraintTop_toTopOf="@+id/tvChallengePagesTitle"
+                        app:srcCompat="@drawable/ic_iconscout_trophy_24"
+                        app:tint="?colorPrimary" />
+
+                    <com.google.android.material.progressindicator.LinearProgressIndicator
+                        android:id="@+id/pbChallengePages"
+                        android:layout_width="0dp"
+                        android:layout_height="20dp"
+                        android:layout_marginStart="8dp"
+                        android:layout_marginTop="4dp"
+                        android:layout_marginEnd="8dp"
+                        android:layout_marginBottom="4dp"
+                        android:indeterminate="false"
+                        android:max="100"
+                        android:progress="0"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintHorizontal_bias="0.5"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/tvChallengePagesValue"
                         app:trackCornerRadius="5dp"
                         app:trackThickness="12dp" />
 
@@ -147,75 +227,13 @@
             </androidx.constraintlayout.widget.ConstraintLayout>
 
             <androidx.constraintlayout.widget.ConstraintLayout
-                android:id="@+id/clBooksRead"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.5"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/clChallenge">
-
-                <androidx.constraintlayout.widget.ConstraintLayout
-                    android:id="@+id/clBooksReadIn"
-                    android:layout_width="match_parent"
-                    android:layout_height="80dp"
-                    android:padding="8dp"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent">
-
-                    <TextView
-                        android:id="@+id/tvBooksReadTitle"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="8dp"
-                        android:layout_marginEnd="8dp"
-                        android:fontFamily="@font/jost_500_medium"
-                        android:gravity="start"
-                        android:text="@string/stats_books_read"
-                        android:textColor="?colorPrimary"
-                        android:textSize="16sp"
-                        app:layout_constraintBottom_toTopOf="@+id/tvBooksReadValue"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent" />
-
-                    <TextView
-                        android:id="@+id/tvBooksReadValue"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="8dp"
-                        android:layout_marginEnd="8dp"
-                        android:gravity="start"
-                        android:text="@string/stats_books_read"
-                        android:textSize="14sp"
-                        android:textColor="@color/colorDefaultText"
-                        app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/tvBooksReadTitle" />
-
-                    <!--                        <ImageView-->
-                    <!--                            android:id="@+id/ivBooksRead"-->
-                    <!--                            android:layout_width="50dp"-->
-                    <!--                            android:layout_height="50dp"-->
-                    <!--                            android:layout_marginStart="8dp"-->
-                    <!--                            app:layout_constraintBottom_toBottomOf="parent"-->
-                    <!--                            app:layout_constraintStart_toStartOf="parent"-->
-                    <!--                            app:layout_constraintTop_toTopOf="parent"-->
-                    <!--                            app:srcCompat="@drawable/ic_svg_three_books_grey_colored" />-->
-
-                </androidx.constraintlayout.widget.ConstraintLayout>
-            </androidx.constraintlayout.widget.ConstraintLayout>
-
-            <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/clBooksByMonth"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.5"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/clPagesRead">
+                app:layout_constraintTop_toBottomOf="@+id/clChallengePages">
 
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:id="@+id/clBooksByMonthIn"
@@ -255,68 +273,6 @@
                         app:layout_constraintTop_toBottomOf="@+id/tvBooksByMonthsTitle"
                         app:radius="6dp" />
 
-
-                </androidx.constraintlayout.widget.ConstraintLayout>
-            </androidx.constraintlayout.widget.ConstraintLayout>
-
-            <androidx.constraintlayout.widget.ConstraintLayout
-                android:id="@+id/clPagesRead"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.5"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/clBooksRead">
-
-                <androidx.constraintlayout.widget.ConstraintLayout
-                    android:id="@+id/clPagesReadIn"
-                    android:layout_width="match_parent"
-                    android:layout_height="80dp"
-                    android:padding="8dp"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent">
-
-                    <TextView
-                        android:id="@+id/tvPagesReadTitle"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="8dp"
-                        android:layout_marginEnd="8dp"
-                        android:fontFamily="@font/jost_500_medium"
-                        android:gravity="start"
-                        android:text="@string/stats_pages_read"
-                        android:textColor="?colorPrimary"
-                        android:textSize="16sp"
-                        app:layout_constraintBottom_toTopOf="@+id/tvPagesReadValue"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent" />
-
-                    <TextView
-                        android:id="@+id/tvPagesReadValue"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="8dp"
-                        android:layout_marginEnd="8dp"
-                        android:gravity="start"
-                        android:text="@string/stats_pages_read"
-                        android:textSize="14sp"
-                        android:textColor="@color/colorDefaultText"
-                        app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/tvPagesReadTitle" />
-
-                    <!--                        <ImageView-->
-                    <!--                            android:id="@+id/ivPagesRead"-->
-                    <!--                            android:layout_width="50dp"-->
-                    <!--                            android:layout_height="50dp"-->
-                    <!--                            android:layout_marginStart="8dp"-->
-                    <!--                            app:layout_constraintBottom_toBottomOf="parent"-->
-                    <!--                            app:layout_constraintStart_toStartOf="parent"-->
-                    <!--                            app:layout_constraintTop_toTopOf="parent"-->
-                    <!--                            app:srcCompat="@drawable/ic_svg_files" />-->
 
                 </androidx.constraintlayout.widget.ConstraintLayout>
             </androidx.constraintlayout.widget.ConstraintLayout>
@@ -868,6 +824,38 @@
                 </androidx.constraintlayout.widget.ConstraintLayout>
             </androidx.constraintlayout.widget.ConstraintLayout>
 
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/clAvgCovers"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/clAvgPages">
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/clAvgCoversIn"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="12dp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent">
+
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/rvStatsCovers"
+                        android:nestedScrollingEnabled="false"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintHorizontal_bias="0.5"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+            </androidx.constraintlayout.widget.ConstraintLayout>
         </androidx.constraintlayout.widget.ConstraintLayout>
     </ScrollView>
 

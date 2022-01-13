@@ -165,20 +165,12 @@ class FoundBookAdapter(
 
     private fun displayPublishYear(view: View, curBook: Resource<OpenLibraryOLIDResponse>) {
         if (curBook.data?.publish_date != null) {
-            var publishDate = curBook.data.publish_date
-            var publishYear = 0
+            var publishYear = curBook.data.publish_date
 
-            val numbers = Regex("[0-9]+").findAll(publishDate)
-                .map(MatchResult::value)
-                .toList()
-
-            for (i in numbers) {
-                if (i.length == 4)
-                    publishYear = i.toInt()
+            if (publishYear != "0") {
+                view.tvBookPublishYear.text = publishYear
+                view.tvBookPublishYear.visibility = View.VISIBLE
             }
-
-            if (publishYear != 0)
-                view.tvBookPublishYear.text = publishYear.toString()
             else
                 view.tvBookPublishYear.visibility = View.GONE
         }

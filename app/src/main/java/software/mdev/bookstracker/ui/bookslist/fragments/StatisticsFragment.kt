@@ -73,6 +73,7 @@ class StatisticsFragment : Fragment(R.layout.fragment_statistics) {
                 listOfYearsFromDb = years
                 val adapter = StatisticsAdapter(this, listOfYearsFromDb)
                 vpStatistics.adapter = adapter
+                vpStatistics.offscreenPageLimit = 1
                 this.getYears(adapter)
             })
 

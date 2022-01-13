@@ -16,6 +16,7 @@
     <string name="changelog_ver_1_9_0" translatable="false">v1.9.0</string>
     <string name="changelog_ver_1_9_1" translatable="false">v1.9.1</string>
     <string name="changelog_ver_1_10_0" translatable="false">v1.10.0</string>
+    <string name="changelog_ver_1_11_0" translatable="false">v1.11.0</string>
 
     <string name="changelog_date_1_0_0" translatable="false">5/06/2021</string>
     <string name="changelog_date_1_1_0" translatable="false">10/06/2021</string>
@@ -34,6 +35,7 @@
     <string name="changelog_date_1_9_0" translatable="false">18/12/2021</string>
     <string name="changelog_date_1_9_1" translatable="false">01/01/2022</string>
     <string name="changelog_date_1_10_0" translatable="false">04/01/2021</string>
+    <string name="changelog_date_1_11_0" translatable="false">12/01/2021</string>
 
     <string name="changelog_1_0_0_a">First official release.</string>
     <string name="changelog_1_0_0_b">Added three lists for books: read, in progress and to read.</string>
@@ -125,4 +127,10 @@
     <string name="changelog_1_10_0_c">After reaching yearly goal you get a trophy!</string>
     <string name="changelog_1_10_0_d">Fixed updating rating from display book view.</string>
     <string name="changelog_1_10_0_e">Fixed book display view breaking after status change.</string>
+
+    <string name="changelog_1_11_0_a">Statistics show covers of read books.</string>
+    <string name="changelog_1_11_0_b">Reading targets can be set now both for books and pages.</string>
+    <string name="changelog_1_11_0_c">Reading targets for previous years can be edited.</string>
+    <string name="changelog_1_11_0_d">Fixed bug where filtering finished books by year would hide not read books.</string>
+    <string name="changelog_1_11_0_e">First publish date is now correctly pulled from Open Library.</string>
 </resources>

@@ -3,7 +3,7 @@
     <!ENTITY appname "Openreads">
     ]>
 <resources>
-    <string name="app_version" translatable="false">v1.10.0</string>
+    <string name="app_version" translatable="false">v1.11.0</string>
     <!-- Images descriptions -->
     <string name="fabEditBook">Edit displayed book</string>
     <string name="ivBookStatusRead">Book is finished</string>
@@ -148,7 +148,7 @@
     <string name="import_summary">Load your books from a local file on your phone. You may need to grant storage permissions for the app.</string>
     <string name="backup_title">Backup</string>
     <string name="backup_summary">Backup or restore your books</string>
-    <string name="backup_success">Backup successfully created!</string>
+    <string name="backup_success">Success! File saved to: Internal Storage/Android/data/software.mdev.bookstracker/files</string>
     <string name="backup_failure">Backup creation failed!</string>
     <string name="backup_import_invalid_file">Import failed. The chosen file is not a valid &appname; backup!</string>
     <string name="backup_import_success">Import completed!</string>
@@ -199,6 +199,10 @@
     <string name="update_ok_4">Keep up the good work!</string>
     <string name="update_ok_5">Love the new updates!</string>
     <string name="update_ok_6">A job well done!</string>
+    <string name="update_ok_7">Amazing progress!</string>
+    <string name="update_ok_8">Yay! Another update!</string>
+    <string name="update_ok_9">That\'s what I\'m talking about!</string>
+    <string name="update_ok_10">Good stuff!</string>
     <string name="month_1_short">Jan</string>
     <string name="month_2_short">Feb</string>
     <string name="month_3_short">Mar</string>
@@ -260,4 +264,5 @@
     <string name="select_book_tags">Add book\'s tags</string>
     <string name="filter_tags">Tags</string>
     <string name="filter_years">Finish year</string>
+    <string name="stats_challenge_add">click to add a target</string>
 </resources>

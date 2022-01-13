@@ -38,6 +38,9 @@ import kotlinx.android.synthetic.main.activity_list.*
 import kotlinx.android.synthetic.main.bottom_sheet_sort_books.*
 import kotlinx.android.synthetic.main.fragment_books.*
 import kotlinx.android.synthetic.main.fragment_display_book.*
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 import software.mdev.bookstracker.BuildConfig
 import software.mdev.bookstracker.R
 import software.mdev.bookstracker.api.RetrofitInstance.Companion.gson
@@ -62,8 +65,10 @@ class ListActivity : AppCompatActivity() {
 
     lateinit var booksViewModel: BooksViewModel
     lateinit var notDeletedBooks: List<Book>
+    lateinit var listActivity: ListActivity
 
     override fun onCreate(savedInstanceState: Bundle?) {
+        listActivity = this
         val booksRepository = BooksRepository(BooksDatabase(this))
         val yearRepository = YearRepository(YearDatabase(this))
         val openLibraryRepository = OpenLibraryRepository()
@@ -199,8 +204,8 @@ class ListActivity : AppCompatActivity() {
             override fun onQueryTextSubmit(query: String?): Boolean {
                 if (!searchView.suggestionsAdapter.isEmpty) {
                     val cursor = searchView.suggestionsAdapter.getItem(0) as Cursor
-                    val selection = cursor.getString(cursor.getColumnIndex(SearchManager.SUGGEST_COLUMN_TEXT_1))
-                    val selectionID = cursor.getString(cursor.getColumnIndex(SearchManager.SUGGEST_COLUMN_TEXT_2))
+                    val selection = cursor.getString(cursor.getColumnIndexOrThrow(SearchManager.SUGGEST_COLUMN_TEXT_1))
+                    val selectionID = cursor.getString(cursor.getColumnIndexOrThrow(SearchManager.SUGGEST_COLUMN_TEXT_2))
                     searchView.setQuery(selection, false)
                     booksViewModel.getBook(selectionID.toInt()).observe(this@ListActivity) { book ->
                         displayBookFromSearch(book)
@@ -238,8 +243,8 @@ class ListActivity : AppCompatActivity() {
                 hideKeyboard()
 
                 val cursor = searchView.suggestionsAdapter.getItem(position) as Cursor
-                val selection = cursor.getString(cursor.getColumnIndex(SearchManager.SUGGEST_COLUMN_TEXT_1))
-                val selectionID = cursor.getString(cursor.getColumnIndex(SearchManager.SUGGEST_COLUMN_TEXT_2))
+                val selection = cursor.getString(cursor.getColumnIndexOrThrow(SearchManager.SUGGEST_COLUMN_TEXT_1))
+                val selectionID = cursor.getString(cursor.getColumnIndexOrThrow(SearchManager.SUGGEST_COLUMN_TEXT_2))
                 searchView.setQuery(selection, false)
 
                 booksViewModel.getBook(selectionID.toInt()).observe(this@ListActivity) { book ->
@@ -960,8 +965,10 @@ class ListActivity : AppCompatActivity() {
         registerForActivityResult(ActivityResultContracts.GetContent()) { fileUri: Uri? ->
 
             try {
-                val backupImporter = Backup()
-                if (fileUri != null) backupImporter.importBackup(this, fileUri)
+                CoroutineScope(Dispatchers.IO).launch {
+                    val backupImporter = Backup()
+                    if (fileUri != null) backupImporter.importBackup(listActivity, fileUri)
+                }
             } catch (e: IOException) {
                 showSnackbar(e.toString())
                 e.printStackTrace()

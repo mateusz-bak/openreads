@@ -29,15 +29,14 @@ class SettingsBackupFragment : PreferenceFragmentCompat(), OnSharedPreferenceCha
 
         if (preferenceExport != null) {
             preferenceExport.onPreferenceClickListener = Preference.OnPreferenceClickListener {
-                Backup().exportAndShare(activity as ListActivity)
+                Backup().exportAndShare(activity as ListActivity, true)
                 true
             }
         }
 
         if (preferenceExportLocal != null) {
             preferenceExportLocal.onPreferenceClickListener = Preference.OnPreferenceClickListener {
-//                Backup().exportLocal(activity as ListActivity)
-                Toast.makeText((activity as ListActivity), (activity as ListActivity).getString(R.string.notYetImplemented), Toast.LENGTH_SHORT).show()
+                Backup().exportAndShare(activity as ListActivity, false)
                 true
             }
         }

@@ -99,7 +99,7 @@ class ChangelogFragment : Fragment(R.layout.fragment_changelog) {
 
             if (tvUpdateOk != null) {
 
-                val animations = arrayOf(1F, 0.3F).map { translation ->
+                val animations = arrayOf(1F, 0.2F).map { translation ->
                     ObjectAnimator.ofFloat(tvUpdateOk, "alpha", translation).apply {
                         duration = 400
                         repeatCount = ObjectAnimator.INFINITE
@@ -118,12 +118,16 @@ class ChangelogFragment : Fragment(R.layout.fragment_changelog) {
     }
 
     private fun shuffleUpdateStrings(): String {
-        return when ((1..6).random()) {
+        return when ((1..10).random()) {
             2    -> getString(R.string.update_ok_2)
             3    -> getString(R.string.update_ok_3)
             4    -> getString(R.string.update_ok_4)
             5    -> getString(R.string.update_ok_5)
             6    -> getString(R.string.update_ok_6)
+            7    -> getString(R.string.update_ok_7)
+            8    -> getString(R.string.update_ok_8)
+            9    -> getString(R.string.update_ok_9)
+            10    -> getString(R.string.update_ok_10)
             else -> getString(R.string.update_ok_1)
         }
     }
@@ -311,6 +315,17 @@ class ChangelogFragment : Fragment(R.layout.fragment_changelog) {
             getString(R.string.changelog_1_10_0_e)
         )
 
+        val version_1_11_0 = arrayOf(
+            getString(R.string.changelog_ver_1_11_0),
+            getString(R.string.changelog_date_1_11_0),
+            getString(R.string.changelog_1_11_0_a),
+            getString(R.string.changelog_1_11_0_b),
+            getString(R.string.changelog_1_11_0_c),
+            getString(R.string.changelog_1_11_0_d),
+            getString(R.string.changelog_1_11_0_e)
+        )
+
+
         return listOf(
             version_1_0_0,
             version_1_1_0,
@@ -328,7 +343,8 @@ class ChangelogFragment : Fragment(R.layout.fragment_changelog) {
             version_1_8_1,
             version_1_9_0,
             version_1_9_1,
-            version_1_10_0
+            version_1_10_0,
+            version_1_11_0
         )
     }
 

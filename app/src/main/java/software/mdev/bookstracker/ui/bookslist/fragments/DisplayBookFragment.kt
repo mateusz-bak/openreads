@@ -292,7 +292,7 @@ class DisplayBookFragment : Fragment(R.layout.fragment_display_book) {
             tvBookPublishYear.visibility = View.VISIBLE
             ivPublishYear.visibility = View.VISIBLE
 
-            tvBookPublishYear.text = book.bookPublishYear.toString()
+            tvBookPublishYear.text = bookPublishYear.toString()
         }
         else {
             tvBookPublishYearTitle.visibility = View.GONE

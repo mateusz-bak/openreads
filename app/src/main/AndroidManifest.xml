@@ -28,7 +28,8 @@
         </provider>
 
         <activity
-            android:name="software.mdev.bookstracker.ui.bookslist.SplashScreenActivity">
+            android:name="software.mdev.bookstracker.ui.bookslist.SplashScreenActivity"
+            android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
@@ -36,7 +37,8 @@
         </activity>
 
         <activity
-            android:name="software.mdev.bookstracker.ui.bookslist.ListActivity">
+            android:name="software.mdev.bookstracker.ui.bookslist.ListActivity"
+            android:exported="false">
             <intent-filter>
                 <action android:name="android.intent.action.SEARCH" />
             </intent-filter>

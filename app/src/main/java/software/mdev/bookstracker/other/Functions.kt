@@ -79,7 +79,11 @@ class Functions {
                     val startTimeStamp = convertYearToLong(yearToBeShown)
                     val endTimeStamp = convertYearToLong((yearToBeShown.toInt() + 1).toString())
 
-                    if (book.bookFinishDate != "null" && book.bookFinishDate != "none") {
+                    if (book.bookStatus == Constants.BOOK_STATUS_IN_PROGRESS ||
+                        book.bookStatus == Constants.BOOK_STATUS_TO_READ) {
+                        if (book !in filteredBooks1)
+                            filteredBooks1 += book
+                    } else if ((book.bookFinishDate != "null" && book.bookFinishDate != "none")) {
                         if (book.bookFinishDate.toLong() in startTimeStamp..endTimeStamp) {
                             if (book !in filteredBooks1)
                                 filteredBooks1 += book

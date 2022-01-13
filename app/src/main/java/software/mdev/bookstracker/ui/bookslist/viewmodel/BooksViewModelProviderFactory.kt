@@ -15,7 +15,7 @@ class BooksViewModelProviderFactory(
         private val languageRepository: LanguageRepository
 ): ViewModelProvider.Factory {
 
-    override fun <T : ViewModel?> create(modelClass: Class<T>): T {
+    override fun <T : ViewModel> create(modelClass: Class<T>): T {
         return BooksViewModel(repository, yearRepository, openLibraryRepository, languageRepository) as T
     }
 }

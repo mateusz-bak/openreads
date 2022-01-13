@@ -89,4 +89,10 @@
     <string name="changelog_1_10_0_c">Po ukończeniu wyzwania czytelniczego dostaniesz trofeum!</string>
     <string name="changelog_1_10_0_d">Naprawiono zmianę oceny z widoku książki.</string>
     <string name="changelog_1_10_0_e">Naprawiono widok książki psujący się po zmianie statusu.</string>
+
+    <string name="changelog_1_11_0_a">W statystykach zobaczysz okładki przeczytanych książek!</string>
+    <string name="changelog_1_11_0_b">Przeczytane książki oraz strony mogą być teraz celem wyzwania rocznego.</string>
+    <string name="changelog_1_11_0_c">Wyzwania z poprzednich lat mogą być edytowane.</string>
+    <string name="changelog_1_11_0_d">Naprawiono błąd powodujący zniknięcie nieprzeczytanych książek przy filtrowaniu roku zakończenia czytania.</string>
+    <string name="changelog_1_11_0_e">Rok pierwszego wydania jest teraz poprawnie pobierany z Open Library.</string>
 </resources>

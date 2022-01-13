@@ -81,7 +81,10 @@ data class Year(
         var yearLongestReadBookID: Int = 0,
 
         @ColumnInfo(name = Constants.DATABASE_YEAR_LONGEST_READ_VAL)
-        var yearLongestReadVal: String = "null"
+        var yearLongestReadVal: String = "null",
+
+        @ColumnInfo(name = Constants.DATABASE_YEAR_CHALLENGE_PAGES_CORRECTED)
+        var yearChallengePagesCorrected: Int? = null
 
 ): Serializable{
         @PrimaryKey(autoGenerate = false)

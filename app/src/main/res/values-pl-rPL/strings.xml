@@ -134,7 +134,7 @@
     <string name="import_summary">Załaduj książki z pliku na Twoim telefonie. Potrzebne może być udzielenie uprawnień dostępu do pamięci.</string>
     <string name="backup_title">Kopia zapasowa</string>
     <string name="backup_summary">Utwórz lub przywróć kopię zapasową Twoich książek</string>
-    <string name="backup_success">Pomyślnie utworzono kopię zapasową</string>
+    <string name="backup_success">Sukces! Plik zapisany w: Pamięć Wewnętrzna/Android/data/software.mdev.bookstracker/files</string>
     <string name="backup_failure">Tworzenie kopii zapasowaj nie powiodło się!</string>
     <string name="backup_import_invalid_file">Import zakończony niepowodzeniem. Wybrany plik nie jest poprawą kopią zapasową aplikacji &appname;!</string>
     <string name="backup_import_success">Import zakończony powodzeniem!</string>
@@ -158,7 +158,7 @@
     <string name="ask_for_rating_dialog_neu">Może następnym razem</string>
     <string name="ask_for_rating_dialog_neg">O nie, nigdy!</string>
     <string name="rating_changes_succesfully">Pomyślnie zmieniono ocenę</string>
-    <string name="hint_publish_year">Rok publikacji</string>
+    <string name="hint_publish_year">Rok wydania</string>
     <string name="unknown_pages">Brak liczby stron</string>
     <string name="unknown_publish_year">Brak roku publikacji</string>
     <string name="stats_quickest_read">Najszybciej przeczytana książka</string>
@@ -183,6 +183,10 @@
     <string name="update_ok_4">Tak trzymaj!</string>
     <string name="update_ok_5">Kocham nowe aktualizacje!</string>
     <string name="update_ok_6">Kawał dobrej roboty!</string>
+    <string name="update_ok_7">Świetny progres!</string>
+    <string name="update_ok_8">Tak! Kolejna aktualizacja!</string>
+    <string name="update_ok_9">Tego mi trzeba!</string>
+    <string name="update_ok_10">Superowo!</string>
     <string name="month_1_short">Sty</string>
     <string name="month_2_short">Lut</string>
     <string name="month_3_short">Mar</string>
@@ -201,7 +205,7 @@
     <string name="insert_book_title">Tytuł książki</string>
     <string name="insert_book_author">Autor książki</string>
     <string name="insert_book_pages">Liczba stron</string>
-    <string name="insert_book_publish_year">Rok publikacji</string>
+    <string name="insert_book_publish_year">Rok wydania</string>
     <string name="insert_book_status">Status książki</string>
     <string name="insert_book_rating">Twoja ocena</string>
     <string name="insert_book_notes">Notatki</string>
@@ -238,4 +242,5 @@
     <string name="select_book_tags">Dodaj tagi</string>
     <string name="filter_tags">Tagi</string>
     <string name="filter_years">Rok zakończenia</string>
+    <string name="stats_challenge_add">kliknij, żeby dodać cel</string>
 </resources>

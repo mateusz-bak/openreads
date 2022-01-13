@@ -7,7 +7,8 @@
 
 [![GitHub tag (latest by date)](https://img.shields.io/github/v/tag/mateusz-bak/openreads-android?label=latest%20version)](https://github.com/mateusz-bak/openreads-android/releases/latest)
 [![Build Status](https://git-drone.mateusz.ovh/api/badges/mateusz-bak/openreads-android/status.svg)](https://git-drone.mateusz.ovh/mateusz-bak/openreads-android)
-
+<br/>
+<a href='https://play.google.com/store/apps/details?id=software.mdev.bookstracker'><img height=100 alt='Get it on Google Play' src='https://play.google.com/intl/en_us/badges/images/generic/en_badge_web_generic.png'/></a>
 <br/><br/>
 ### Openreads is an Android app written in Kotlin for keeping tracks of your books.  
 #### There are three lists provided so you won't get confused:  
