@@ -265,4 +265,5 @@
     <string name="filter_tags">Tags</string>
     <string name="filter_years">Finish year</string>
     <string name="stats_challenge_add">click to add a target</string>
+    <string name="pages_challenge_add">Add pages challenge?</string>
 </resources>
