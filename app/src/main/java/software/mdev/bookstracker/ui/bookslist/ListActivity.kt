@@ -159,8 +159,8 @@ class ListActivity : AppCompatActivity() {
             .addOnDestinationChangedListener { _, destination, _ ->
                 when(destination.id) {
                     R.id.booksFragment -> {
-                        supportActionBar?.setDisplayShowTitleEnabled(false)
-                        supportActionBar?.title = Constants.EMPTY_STRING
+                        supportActionBar?.setDisplayShowTitleEnabled(true)
+                        supportActionBar?.title = this.getString(R.string.app_name)
                     }
                     R.id.addEditBookFragment -> {
                         supportActionBar?.setDisplayShowTitleEnabled(false)
