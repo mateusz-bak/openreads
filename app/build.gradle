@@ -143,4 +143,7 @@ dependencies {
 
     // https://github.com/doyaaaaaken/kotlin-csv
     implementation("com.github.doyaaaaaken:kotlin-csv-jvm:1.2.0") //for JVM platform
+
+    // https://androidrepo.com/repo/ybq-AndroidSpinKit-android-progressbar
+    implementation 'com.github.ybq:Android-SpinKit:1.4.0'
 }
