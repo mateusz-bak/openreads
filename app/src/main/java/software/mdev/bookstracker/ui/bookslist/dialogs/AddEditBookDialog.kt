@@ -16,6 +16,7 @@ import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.content.ContextCompat
+import androidx.core.content.res.ResourcesCompat
 import androidx.core.graphics.scale
 import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.DialogFragment
@@ -594,25 +595,31 @@ class AddEditBookDialog : DialogFragment() {
                     when (position) {
                         0 -> {
                             ivBookStatus.setImageDrawable(
-                                activity?.baseContext?.resources?.getDrawable(
-                                    R.drawable.ic_iconscout_check_circle_24
-                                )
+                                activity?.baseContext?.resources?.let {
+                                    ResourcesCompat.getDrawable(
+                                        it, R.drawable.ic_iconscout_check_circle_24, null
+                                    )
+                                }
                             )
                             whatIsClicked = Constants.BOOK_STATUS_READ
                         }
                         1 -> {
                             ivBookStatus.setImageDrawable(
-                                activity?.baseContext?.resources?.getDrawable(
-                                    R.drawable.ic_iconscout_book_open_24
-                                )
+                                activity?.baseContext?.resources?.let {
+                                    ResourcesCompat.getDrawable(
+                                        it, R.drawable.ic_iconscout_book_open_24, null
+                                    )
+                                }
                             )
                             whatIsClicked = Constants.BOOK_STATUS_IN_PROGRESS
                         }
                         2 -> {
                             ivBookStatus.setImageDrawable(
-                                activity?.baseContext?.resources?.getDrawable(
-                                    R.drawable.ic_iconscout_clock_nine_24
-                                )
+                                activity?.baseContext?.resources?.let {
+                                    ResourcesCompat.getDrawable(
+                                        it, R.drawable.ic_iconscout_clock_nine_24, null
+                                    )
+                                }
                             )
                             whatIsClicked = Constants.BOOK_STATUS_TO_READ
                         }

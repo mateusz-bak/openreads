@@ -4,6 +4,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.content.ContextCompat
+import androidx.core.content.res.ResourcesCompat
 import androidx.recyclerview.widget.AsyncListDiffer
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
@@ -118,7 +119,11 @@ class FoundBookAdapter(
 
                         viewModel.showLoadingCircle.postValue(false)
                     } else {
-                        ivBookCover.setImageDrawable(holder.itemView.context.getDrawable(R.drawable.ic_iconscout_book_24))
+                        ivBookCover.setImageDrawable(holder.itemView.context.resources?.let {
+                            ResourcesCompat.getDrawable(
+                                it, R.drawable.ic_iconscout_book_24, null
+                            )
+                        })
                     }
 
                     if (curBook.data.isbn_13 != null) {

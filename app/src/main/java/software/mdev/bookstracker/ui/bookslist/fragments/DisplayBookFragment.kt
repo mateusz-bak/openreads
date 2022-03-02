@@ -29,6 +29,7 @@ import android.widget.RatingBar.OnRatingBarChangeListener
 import kotlinx.coroutines.MainScope
 import android.graphics.BitmapFactory
 import android.view.animation.AnimationUtils
+import androidx.core.content.res.ResourcesCompat
 import com.google.android.material.chip.Chip
 import kotlinx.android.synthetic.main.fragment_display_book.clBookTags
 import kotlinx.android.synthetic.main.fragment_display_book.ivBookCover
@@ -577,7 +578,11 @@ class DisplayBookFragment : Fragment(R.layout.fragment_display_book) {
         if (bookIsFav && bookStatus == Constants.BOOK_STATUS_READ) {
             var color = context?.let { getAccentColor(it) }
             ivFav.imageTintList = color?.let { ColorStateList.valueOf(it) }
-            ivFav.setImageDrawable(resources.getDrawable(R.drawable.ic_iconscout_heart_filled_24))
+            ivFav.setImageDrawable(activity?.baseContext?.resources?.let {
+                ResourcesCompat.getDrawable(
+                    it, R.drawable.ic_iconscout_heart_filled_24, null
+                )
+            })
         } else if (bookStatus == Constants.BOOK_STATUS_IN_PROGRESS || bookStatus == Constants.BOOK_STATUS_TO_READ) {
             ivFav.visibility = View.GONE
         }
@@ -587,10 +592,18 @@ class DisplayBookFragment : Fragment(R.layout.fragment_display_book) {
         if (fav) {
             var color = context?.let { getAccentColor(it) }
             ivFav.imageTintList = color?.let { ColorStateList.valueOf(it) }
-            ivFav.setImageDrawable(resources.getDrawable(R.drawable.ic_iconscout_heart_filled_24))
+            ivFav.setImageDrawable(activity?.baseContext?.resources?.let {
+                ResourcesCompat.getDrawable(
+                    it, R.drawable.ic_iconscout_heart_filled_24, null
+                )
+            })
         } else {
             ivFav.imageTintList = ColorStateList.valueOf(resources.getColor(R.color.grey_777))
-            ivFav.setImageDrawable(resources.getDrawable(R.drawable.ic_iconscout_heart_24))
+            ivFav.setImageDrawable(activity?.baseContext?.resources?.let {
+                ResourcesCompat.getDrawable(
+                    it, R.drawable.ic_iconscout_heart_24, null
+                )
+            })
         }
 
         viewModel.updateBook(
