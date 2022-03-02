@@ -111,6 +111,9 @@ class BookListAdapter(
             )
         }
 
+        bookAdapter.setOnBookLongClickListener {
+        }
+
         // triggers after saving new sort mode
         viewModel.getBooksTrigger.observe(booksFragment.requireActivity(), Observer {
             getBooks(bookAdapter, bookStatus, holder.itemView, true)

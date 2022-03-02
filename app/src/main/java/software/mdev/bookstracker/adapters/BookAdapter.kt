@@ -40,6 +40,7 @@ class BookAdapter(
     }
 
     private var onBookClickListener: ((Book) -> Unit)? = null
+    private var onBookLongClickListener: ((Book) -> Unit)? = null
 
     override fun onBindViewHolder(holder: BookViewHolder, position: Int) {
         val curBook = differ.currentList[position]
@@ -119,6 +120,10 @@ class BookAdapter(
             setOnClickListener {
                 onBookClickListener?.let { it(curBook) }
             }
+            setOnLongClickListener {
+                onBookLongClickListener?.let { it(curBook) }
+                true
+            }
         }
     }
 
@@ -194,6 +199,10 @@ class BookAdapter(
 
     fun setOnBookClickListener(listener: (Book) -> Unit) {
         onBookClickListener = listener
+    }
+
+    fun setOnBookLongClickListener(listener: (Book) -> Unit) {
+        onBookLongClickListener = listener
     }
 
     override fun getItemCount(): Int {
