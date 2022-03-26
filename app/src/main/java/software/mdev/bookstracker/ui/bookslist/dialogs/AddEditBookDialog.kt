@@ -154,6 +154,25 @@ class AddEditBookDialog : DialogFragment() {
         startDatePickerVis(false)
         finishDatePickerVis(false)
         setSpinner()
+        when (args.bookStatus) {
+            1 -> {
+                whatIsClicked = Constants.BOOK_STATUS_IN_PROGRESS
+                tvBookRating.visibility = View.GONE
+                clBookRating.visibility = View.GONE
+                spBookStatus.setSelection(1)
+            }
+            2 -> {
+                whatIsClicked = Constants.BOOK_STATUS_TO_READ
+                tvBookRating.visibility = View.GONE
+                clBookRating.visibility = View.GONE
+                spBookStatus.setSelection(2)
+            }
+            else -> {
+                whatIsClicked = Constants.BOOK_STATUS_READ
+                rbBookRating.rating = book.bookRating
+                spBookStatus.setSelection(0)
+            }
+        }
         initConfig()
 
         if (bookSource == Constants.FROM_DISPLAY

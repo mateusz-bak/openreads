@@ -480,11 +480,18 @@ class DisplayBookFragment : Fragment(R.layout.fragment_display_book) {
         viewModel.getBook(book.id).observe(viewLifecycleOwner) { book ->
             val addEditBookDialog = AddEditBookDialog()
 
+            val bookStatusInt = when (book.bookStatus) {
+                Constants.BOOK_STATUS_IN_PROGRESS -> 1
+                Constants.BOOK_STATUS_TO_READ -> 2
+                else -> 0
+            }
+
             if (addEditBookDialog != null && firstTime) {
                 addEditBookDialog!!.arguments = Bundle().apply {
                     putSerializable(Constants.SERIALIZABLE_BUNDLE_BOOK, book)
                     putSerializable(Constants.SERIALIZABLE_BUNDLE_BOOK_SOURCE, Constants.FROM_DISPLAY)
                     putSerializable(Constants.SERIALIZABLE_BUNDLE_ACCENT, (activity as ListActivity).getAccentColor(activity as ListActivity, true))
+                    putInt(Constants.SERIALIZABLE_BUNDLE_BOOK_STATUS, bookStatusInt)
                 }
                 addEditBookDialog!!.show(childFragmentManager, AddEditBookDialog.TAG)
                 firstTime = false

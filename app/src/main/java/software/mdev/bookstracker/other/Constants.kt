@@ -149,6 +149,7 @@ object Constants {
 
     // arguments between fragments
     const val SERIALIZABLE_BUNDLE_BOOK = "book"
+    const val SERIALIZABLE_BUNDLE_BOOK_STATUS = "bookStatus"
     const val SERIALIZABLE_BUNDLE_ISBN = "isbn"
     const val SERIALIZABLE_BUNDLE_ISBN_DEFAULT = "manual_search"
     const val SERIALIZABLE_BUNDLE_BOOK_SOURCE = "bookSource"
