@@ -295,9 +295,9 @@ class DisplayBookFragment : Fragment(R.layout.fragment_display_book) {
         bookFinishDate: String,
         resources: Resources
     ) {
-        if (bookFinishDate != "none" ||
-            bookFinishDate != "null" ||
-            bookStartDate != "none" ||
+        if (bookFinishDate != "none" &&
+            bookFinishDate != "null" &&
+            bookStartDate != "none" &&
             bookStartDate != "null"
         ) {
 
