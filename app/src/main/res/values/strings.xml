@@ -266,4 +266,6 @@
     <string name="filter_years">Finish year</string>
     <string name="stats_challenge_add">click to add a target</string>
     <string name="pages_challenge_add">Add pages challenge?</string>
+    <string name="tv_book_reading_time_title">Reading time</string>
+    <string name="day">day</string>
 </resources>

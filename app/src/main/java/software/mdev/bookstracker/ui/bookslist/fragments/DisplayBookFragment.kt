@@ -2,6 +2,7 @@ package software.mdev.bookstracker.ui.bookslist.fragments
 
 import android.content.Context
 import android.content.res.ColorStateList
+import android.content.res.Resources
 import android.os.Bundle
 import android.view.View
 import androidx.core.content.ContextCompat
@@ -34,6 +35,7 @@ import com.google.android.material.chip.Chip
 import kotlinx.android.synthetic.main.fragment_display_book.clBookTags
 import kotlinx.android.synthetic.main.fragment_display_book.ivBookCover
 import kotlinx.android.synthetic.main.fragment_display_book.tvBookStatus
+import software.mdev.bookstracker.other.Functions
 import software.mdev.bookstracker.ui.bookslist.dialogs.AddEditBookDialog
 
 
@@ -228,6 +230,7 @@ class DisplayBookFragment : Fragment(R.layout.fragment_display_book) {
             setISBN(book.bookISBN13, book.bookISBN10)
             setOLID(book.bookOLID)
             setPages(book.bookNumberOfPages)
+            activity?.let { setReadingTime(book.bookStartDate, book.bookFinishDate, it.resources) }
             setPublishDate(book.bookPublishYear)
             setFinishDate(book.bookFinishDate)
             setStartDate(book.bookStartDate)
@@ -284,6 +287,34 @@ class DisplayBookFragment : Fragment(R.layout.fragment_display_book) {
             tvBookPagesTitle.visibility = View.GONE
             tvBookPages.visibility = View.GONE
             ivPages.visibility = View.GONE
+        }
+    }
+
+    private fun setReadingTime(
+        bookStartDate: String,
+        bookFinishDate: String,
+        resources: Resources
+    ) {
+        if (bookFinishDate != "none" ||
+            bookFinishDate != "null" ||
+            bookStartDate != "none" ||
+            bookStartDate != "null"
+        ) {
+
+            val bookStartTimeStampLong = bookStartDate.toLong()
+            val bookFinishTimeStampLong = bookFinishDate.toLong()
+            val diff = bookFinishTimeStampLong - bookStartTimeStampLong
+            val result = Functions().convertLongToDays(diff, resources)
+
+            tvBookReadingTime.text = (result)
+
+            tvBookReadingTimeTitle.visibility = View.VISIBLE
+            tvBookReadingTime.visibility = View.VISIBLE
+            ivBookReadingTime.visibility = View.VISIBLE
+        } else {
+            tvBookReadingTimeTitle.visibility = View.GONE
+            tvBookReadingTime.visibility = View.GONE
+            ivBookReadingTime.visibility = View.GONE
         }
     }
 

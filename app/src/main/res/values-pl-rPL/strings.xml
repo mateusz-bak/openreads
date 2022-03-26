@@ -244,4 +244,6 @@
     <string name="filter_years">Rok zakończenia</string>
     <string name="stats_challenge_add">kliknij, żeby dodać cel</string>
     <string name="pages_challenge_add">Dodać wyzwanie przeczytanych stron?</string>
+    <string name="tv_book_reading_time_title">Czas czytania</string>
+    <string name="day">dzień</string>
 </resources>
