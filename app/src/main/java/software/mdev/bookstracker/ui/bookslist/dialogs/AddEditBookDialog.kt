@@ -16,6 +16,7 @@ import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.content.ContextCompat
+import androidx.core.content.res.ResourcesCompat
 import androidx.core.graphics.scale
 import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.DialogFragment
@@ -31,7 +32,6 @@ import com.google.android.material.chip.Chip
 import com.google.android.material.snackbar.Snackbar
 import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.dialog_add_edit_book.*
-import kotlinx.android.synthetic.main.dialog_add_edit_book.ivBookCover
 import kotlinx.coroutines.MainScope
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
@@ -48,7 +48,6 @@ import software.mdev.bookstracker.other.Constants
 import software.mdev.bookstracker.other.Functions
 import software.mdev.bookstracker.other.RoundCornersTransform
 import software.mdev.bookstracker.ui.bookslist.ListActivity
-import software.mdev.bookstracker.ui.bookslist.dialogs.AddEditBookDialogArgs
 import software.mdev.bookstracker.ui.bookslist.viewmodel.BooksViewModel
 import software.mdev.bookstracker.ui.bookslist.viewmodel.BooksViewModelProviderFactory
 import java.io.ByteArrayOutputStream
@@ -113,6 +112,8 @@ class AddEditBookDialog : DialogFragment() {
 
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        setToolbar()
+
         // callback for cover from camera
         takePhoto = registerForActivityResult(ActivityResultContracts.TakePicturePreview()) {
             ivBookCover.setImageBitmap(it)
@@ -153,6 +154,25 @@ class AddEditBookDialog : DialogFragment() {
         startDatePickerVis(false)
         finishDatePickerVis(false)
         setSpinner()
+        when (args.bookStatus) {
+            1 -> {
+                whatIsClicked = Constants.BOOK_STATUS_IN_PROGRESS
+                tvBookRating.visibility = View.GONE
+                clBookRating.visibility = View.GONE
+                spBookStatus.setSelection(1)
+            }
+            2 -> {
+                whatIsClicked = Constants.BOOK_STATUS_TO_READ
+                tvBookRating.visibility = View.GONE
+                clBookRating.visibility = View.GONE
+                spBookStatus.setSelection(2)
+            }
+            else -> {
+                whatIsClicked = Constants.BOOK_STATUS_READ
+                rbBookRating.rating = book.bookRating
+                spBookStatus.setSelection(0)
+            }
+        }
         initConfig()
 
         if (bookSource == Constants.FROM_DISPLAY
@@ -385,6 +405,16 @@ class AddEditBookDialog : DialogFragment() {
         }
     }
 
+    private fun setToolbar() {
+        tlAddBookToolbar.title = context?.getString(R.string.fabAddBook)
+        tlAddBookToolbar.setNavigationIcon(R.drawable.ic_baseline_arrow_back_24)
+        context?.getColor(R.color.colorDefaultText)
+            ?.let { tlAddBookToolbar.setNavigationIconTint(it) }
+        tlAddBookToolbar.setNavigationOnClickListener {
+            dismiss()
+        }
+    }
+
     private fun addTag() {
         val newTag = tietBookTags.text
 
@@ -594,25 +624,31 @@ class AddEditBookDialog : DialogFragment() {
                     when (position) {
                         0 -> {
                             ivBookStatus.setImageDrawable(
-                                activity?.baseContext?.resources?.getDrawable(
-                                    R.drawable.ic_iconscout_check_circle_24
-                                )
+                                activity?.baseContext?.resources?.let {
+                                    ResourcesCompat.getDrawable(
+                                        it, R.drawable.ic_iconscout_check_circle_24, null
+                                    )
+                                }
                             )
                             whatIsClicked = Constants.BOOK_STATUS_READ
                         }
                         1 -> {
                             ivBookStatus.setImageDrawable(
-                                activity?.baseContext?.resources?.getDrawable(
-                                    R.drawable.ic_iconscout_book_open_24
-                                )
+                                activity?.baseContext?.resources?.let {
+                                    ResourcesCompat.getDrawable(
+                                        it, R.drawable.ic_iconscout_book_open_24, null
+                                    )
+                                }
                             )
                             whatIsClicked = Constants.BOOK_STATUS_IN_PROGRESS
                         }
                         2 -> {
                             ivBookStatus.setImageDrawable(
-                                activity?.baseContext?.resources?.getDrawable(
-                                    R.drawable.ic_iconscout_clock_nine_24
-                                )
+                                activity?.baseContext?.resources?.let {
+                                    ResourcesCompat.getDrawable(
+                                        it, R.drawable.ic_iconscout_clock_nine_24, null
+                                    )
+                                }
                             )
                             whatIsClicked = Constants.BOOK_STATUS_TO_READ
                         }

@@ -159,8 +159,8 @@ class ListActivity : AppCompatActivity() {
             .addOnDestinationChangedListener { _, destination, _ ->
                 when(destination.id) {
                     R.id.booksFragment -> {
-                        supportActionBar?.setDisplayShowTitleEnabled(false)
-                        supportActionBar?.title = Constants.EMPTY_STRING
+                        supportActionBar?.setDisplayShowTitleEnabled(true)
+                        supportActionBar?.title = this.getString(R.string.app_name)
                     }
                     R.id.addEditBookFragment -> {
                         supportActionBar?.setDisplayShowTitleEnabled(false)
@@ -985,8 +985,6 @@ class ListActivity : AppCompatActivity() {
         if (grantResults.isNotEmpty()
             && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
             when (requestCode) {
-                Constants.PERMISSION_CAMERA_FROM_BOOK_LIST -> booksNavHostFragment.findNavController()
-                    .navigate(R.id.action_booksFragment_to_addBookScanFragment)
                 Constants.PERMISSION_CAMERA_FROM_UPLOAD_COVER ->
                     Toast.makeText(this.baseContext, R.string.permission_granted_click_cover_again, Toast.LENGTH_SHORT).show()
                 Constants.PERMISSION_READ_EXTERNAL_STORAGE_FROM_UPLOAD_COVER ->

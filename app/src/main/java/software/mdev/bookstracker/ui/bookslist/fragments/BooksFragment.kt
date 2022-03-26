@@ -64,18 +64,18 @@ class BooksFragment : Fragment(R.layout.fragment_books) {
         fabAddBook.setOnClickListener {
             var anim = AnimationUtils.loadAnimation(context, R.anim.shake_1)
             fabAddBook.startAnimation(anim)
-            showBottomSheetDialog()
+            showBottomSheetDialog(vpBooks.currentItem)
         }
 
         barcodeLauncher = registerForActivityResult(
             ScanContract()
         ) { result: ScanIntentResult ->
             if (result.contents != null)
-                addSearchGoToFrag(result.contents)
+                addSearchGoToFrag(result.contents, vpBooks.currentItem)
         }
     }
 
-    private fun showBottomSheetDialog() {
+    private fun showBottomSheetDialog(currentItem: Int) {
         if (context != null) {
             val bottomSheetDialog =
                 BottomSheetDialog(requireContext(), R.style.AppBottomSheetDialogTheme)
@@ -83,7 +83,7 @@ class BooksFragment : Fragment(R.layout.fragment_books) {
 
             bottomSheetDialog.findViewById<LinearLayout>(R.id.llAddManual)
                 ?.setOnClickListener {
-                    addManualGoToFrag()
+                    addManualGoToFrag(currentItem)
                     bottomSheetDialog.dismiss()
                 }
 
@@ -95,7 +95,7 @@ class BooksFragment : Fragment(R.layout.fragment_books) {
 
             bottomSheetDialog.findViewById<LinearLayout>(R.id.llAddSearch)
                 ?.setOnClickListener {
-                    addSearchGoToFrag()
+                    addSearchGoToFrag("manual_search", currentItem)
                     bottomSheetDialog.dismiss()
                 }
 
@@ -103,8 +103,8 @@ class BooksFragment : Fragment(R.layout.fragment_books) {
         }
     }
 
-    private fun addManualGoToFrag() {
-        var emptyBook = Book("", "")
+    private fun addManualGoToFrag(currentItem: Int) {
+        val emptyBook = Book("", "")
         val addEditBookDialog = AddEditBookDialog()
 
         if (addEditBookDialog != null) {
@@ -112,6 +112,7 @@ class BooksFragment : Fragment(R.layout.fragment_books) {
                 putSerializable(Constants.SERIALIZABLE_BUNDLE_BOOK, emptyBook)
                 putSerializable(Constants.SERIALIZABLE_BUNDLE_BOOK_SOURCE, Constants.NO_SOURCE)
                 putSerializable(Constants.SERIALIZABLE_BUNDLE_ACCENT, (activity as ListActivity).getAccentColor(activity as ListActivity, true))
+                putInt(Constants.SERIALIZABLE_BUNDLE_BOOK_STATUS, currentItem)
             }
             addEditBookDialog!!.show(childFragmentManager, AddEditBookDialog.TAG)
         }
@@ -128,9 +129,10 @@ class BooksFragment : Fragment(R.layout.fragment_books) {
         barcodeLauncher.launch(options)
     }
 
-    private fun addSearchGoToFrag(isbn: String = "manual_search") {
+    private fun addSearchGoToFrag(isbn: String = "manual_search", currentItem: Int) {
         val bundle = Bundle().apply {
             putString(Constants.SERIALIZABLE_BUNDLE_ISBN, isbn)
+            putInt(Constants.SERIALIZABLE_BUNDLE_BOOK_STATUS, currentItem)
         }
 
         findNavController().navigate(

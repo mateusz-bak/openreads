@@ -3,6 +3,7 @@ package software.mdev.bookstracker.other
 import android.annotation.SuppressLint
 import android.content.Context
 import android.content.pm.PackageManager
+import android.content.res.Resources
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
@@ -17,6 +18,7 @@ import software.mdev.bookstracker.data.db.entities.Book
 import software.mdev.bookstracker.ui.bookslist.ListActivity
 import java.text.SimpleDateFormat
 import java.util.*
+import java.util.concurrent.TimeUnit
 
 class Functions {
 
@@ -35,6 +37,15 @@ class Functions {
         val date = Date(time)
         val format = SimpleDateFormat("MM")
         return format.format(date)
+    }
+
+    fun convertLongToDays(time: Long, resources: Resources): String {
+        val days = TimeUnit.MILLISECONDS.toDays(time)
+
+        return if (days == 1L)
+            "$days ${resources.getString(R.string.day)}"
+        else
+            "$days ${resources.getString(R.string.days)}"
     }
 
     fun calculateYearsFromDb(listOfBooks: List<Book>): Array<String> {

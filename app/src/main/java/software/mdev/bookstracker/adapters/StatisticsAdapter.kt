@@ -40,12 +40,11 @@ import software.mdev.bookstracker.ui.bookslist.viewmodel.BooksViewModel
 import software.mdev.bookstracker.ui.bookslist.viewmodel.BooksViewModelProviderFactory
 import java.math.RoundingMode
 import java.util.*
-import java.util.concurrent.TimeUnit
 import com.github.mikephil.charting.components.Legend
 import com.google.android.material.progressindicator.LinearProgressIndicator
 import software.mdev.bookstracker.data.db.entities.Book
 import software.mdev.bookstracker.other.Constants
-import java.text.SimpleDateFormat
+import software.mdev.bookstracker.other.Functions
 
 
 class StatisticsAdapter(
@@ -107,6 +106,7 @@ class StatisticsAdapter(
     }
 
     override fun onBindViewHolder(holder: StatisticsViewHolder, position: Int) {
+        val functions = Functions()
         val curYear = differ.currentList[position]
 
         val foundYear: Year? = if (position == 0) {
@@ -160,7 +160,10 @@ class StatisticsAdapter(
                 tvQuickestReadBook.text = holder.itemView.resources.getString(R.string.need_more_data)
                 tvQuickestReadValue.visibility = View.GONE
             } else {
-                var string = convertLongToDays(curYear.yearQuickestBookVal.toLong()) + " " + holder.itemView.resources.getString(R.string.days)
+                var string = functions.convertLongToDays(
+                    curYear.yearQuickestBookVal.toLong(),
+                    holder.itemView.resources
+                )
                 tvQuickestReadBook.text = curYear.yearQuickestBook
                 tvQuickestReadValue.text = string
             }
@@ -169,7 +172,7 @@ class StatisticsAdapter(
                 tvLongestReadBook.text = holder.itemView.resources.getString(R.string.need_more_data)
                 tvLongestReadValue.visibility = View.GONE
             } else {
-                var string = convertLongToDays(curYear.yearLongestReadVal.toLong()) + " " + holder.itemView.resources.getString(R.string.days)
+                var string = functions.convertLongToDays(curYear.yearLongestReadVal.toLong(), holder.itemView.resources)
                 tvLongestReadBook.text = curYear.yearLongestReadBook
                 tvLongestReadValue.text = string
             }
@@ -195,7 +198,10 @@ class StatisticsAdapter(
             if (curYear.yearAvgReadingTime == "0" || curYear.yearAvgReadingTime == "null"){
                 tvAvgReadingTimeValue.text = holder.itemView.resources.getString(R.string.need_more_data)
             } else {
-                var string = convertLongToDays(curYear.yearAvgReadingTime.toLong()) + " " + holder.itemView.resources.getString(R.string.days)
+                var string = functions.convertLongToDays(
+                    curYear.yearAvgReadingTime.toLong(),
+                    holder.itemView.resources
+                )
                 tvAvgReadingTimeValue.text = string
             }
 
@@ -422,6 +428,7 @@ class StatisticsAdapter(
     }
 
     private fun loadCoversToRV(curYear: Year, statisticsAdapter: StatisticsAdapter) {
+        val functions  = Functions()
         viewModel.getSortedBooksByFinishDateAsc(Constants.BOOK_STATUS_READ).observe(statisticsFragment.viewLifecycleOwner, androidx.lifecycle.Observer {books ->
             var booksInCurrentYear = emptyList<Book>()
             for (book in books) {
@@ -429,7 +436,7 @@ class StatisticsAdapter(
                     val finish = book.bookFinishDate
 
                     if (finish != "null" && finish != "none" && finish != "") {
-                        val finishYear = convertLongToYear(finish.toLong())
+                        val finishYear = functions.convertLongToYear(finish.toLong())
 
                         if (finishYear == curYear.year)
                             booksInCurrentYear += book
@@ -724,15 +731,5 @@ class StatisticsAdapter(
                 }
             ).show()
         }
-    }
-
-    private fun convertLongToDays(time: Long): String {
-        return TimeUnit.MILLISECONDS.toDays(time).toString()
-    }
-
-    private fun convertLongToYear(time: Long): String {
-        val date = Date(time)
-        val format = SimpleDateFormat("yyyy")
-        return format.format(date)
     }
 }

@@ -17,6 +17,7 @@
     <string name="changelog_ver_1_9_1" translatable="false">v1.9.1</string>
     <string name="changelog_ver_1_10_0" translatable="false">v1.10.0</string>
     <string name="changelog_ver_1_11_0" translatable="false">v1.11.0</string>
+    <string name="changelog_ver_1_12_0" translatable="false">v1.12.0</string>
 
     <string name="changelog_date_1_0_0" translatable="false">5/06/2021</string>
     <string name="changelog_date_1_1_0" translatable="false">10/06/2021</string>
@@ -34,8 +35,9 @@
     <string name="changelog_date_1_8_1" translatable="false">28/10/2021</string>
     <string name="changelog_date_1_9_0" translatable="false">18/12/2021</string>
     <string name="changelog_date_1_9_1" translatable="false">01/01/2022</string>
-    <string name="changelog_date_1_10_0" translatable="false">04/01/2021</string>
-    <string name="changelog_date_1_11_0" translatable="false">12/01/2021</string>
+    <string name="changelog_date_1_10_0" translatable="false">04/01/2022</string>
+    <string name="changelog_date_1_11_0" translatable="false">12/01/2022</string>
+    <string name="changelog_date_1_12_0" translatable="false">26/03/2022</string>
 
     <string name="changelog_1_0_0_a">First official release.</string>
     <string name="changelog_1_0_0_b">Added three lists for books: read, in progress and to read.</string>
@@ -133,4 +135,10 @@
     <string name="changelog_1_11_0_c">Reading targets for previous years can be edited.</string>
     <string name="changelog_1_11_0_d">Fixed bug where filtering finished books by year would hide not read books.</string>
     <string name="changelog_1_11_0_e">First publish date is now correctly pulled from Open Library.</string>
+
+    <string name="changelog_1_12_0_a">Books details display reading duration.</string>
+    <string name="changelog_1_12_0_b">New book\'s status will default to list from which adding was started.</string>
+    <string name="changelog_1_12_0_c">Added app\'s name to book lists, decreased buttons and text fields radius.</string>
+    <string name="changelog_1_12_0_d">Changed loading progress indicator.</string>
+    <string name="changelog_1_12_0_e">Added missing translations.</string>
 </resources>

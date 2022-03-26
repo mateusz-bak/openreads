@@ -2,6 +2,7 @@ package software.mdev.bookstracker.ui.bookslist.fragments
 
 import android.content.Context
 import android.content.res.ColorStateList
+import android.content.res.Resources
 import android.os.Bundle
 import android.view.View
 import androidx.core.content.ContextCompat
@@ -29,10 +30,12 @@ import android.widget.RatingBar.OnRatingBarChangeListener
 import kotlinx.coroutines.MainScope
 import android.graphics.BitmapFactory
 import android.view.animation.AnimationUtils
+import androidx.core.content.res.ResourcesCompat
 import com.google.android.material.chip.Chip
 import kotlinx.android.synthetic.main.fragment_display_book.clBookTags
 import kotlinx.android.synthetic.main.fragment_display_book.ivBookCover
 import kotlinx.android.synthetic.main.fragment_display_book.tvBookStatus
+import software.mdev.bookstracker.other.Functions
 import software.mdev.bookstracker.ui.bookslist.dialogs.AddEditBookDialog
 
 
@@ -227,6 +230,7 @@ class DisplayBookFragment : Fragment(R.layout.fragment_display_book) {
             setISBN(book.bookISBN13, book.bookISBN10)
             setOLID(book.bookOLID)
             setPages(book.bookNumberOfPages)
+            activity?.let { setReadingTime(book.bookStartDate, book.bookFinishDate, it.resources) }
             setPublishDate(book.bookPublishYear)
             setFinishDate(book.bookFinishDate)
             setStartDate(book.bookStartDate)
@@ -283,6 +287,34 @@ class DisplayBookFragment : Fragment(R.layout.fragment_display_book) {
             tvBookPagesTitle.visibility = View.GONE
             tvBookPages.visibility = View.GONE
             ivPages.visibility = View.GONE
+        }
+    }
+
+    private fun setReadingTime(
+        bookStartDate: String,
+        bookFinishDate: String,
+        resources: Resources
+    ) {
+        if (bookFinishDate != "none" &&
+            bookFinishDate != "null" &&
+            bookStartDate != "none" &&
+            bookStartDate != "null"
+        ) {
+
+            val bookStartTimeStampLong = bookStartDate.toLong()
+            val bookFinishTimeStampLong = bookFinishDate.toLong()
+            val diff = bookFinishTimeStampLong - bookStartTimeStampLong
+            val result = Functions().convertLongToDays(diff, resources)
+
+            tvBookReadingTime.text = (result)
+
+            tvBookReadingTimeTitle.visibility = View.VISIBLE
+            tvBookReadingTime.visibility = View.VISIBLE
+            ivBookReadingTime.visibility = View.VISIBLE
+        } else {
+            tvBookReadingTimeTitle.visibility = View.GONE
+            tvBookReadingTime.visibility = View.GONE
+            ivBookReadingTime.visibility = View.GONE
         }
     }
 
@@ -479,11 +511,18 @@ class DisplayBookFragment : Fragment(R.layout.fragment_display_book) {
         viewModel.getBook(book.id).observe(viewLifecycleOwner) { book ->
             val addEditBookDialog = AddEditBookDialog()
 
+            val bookStatusInt = when (book.bookStatus) {
+                Constants.BOOK_STATUS_IN_PROGRESS -> 1
+                Constants.BOOK_STATUS_TO_READ -> 2
+                else -> 0
+            }
+
             if (addEditBookDialog != null && firstTime) {
                 addEditBookDialog!!.arguments = Bundle().apply {
                     putSerializable(Constants.SERIALIZABLE_BUNDLE_BOOK, book)
                     putSerializable(Constants.SERIALIZABLE_BUNDLE_BOOK_SOURCE, Constants.FROM_DISPLAY)
                     putSerializable(Constants.SERIALIZABLE_BUNDLE_ACCENT, (activity as ListActivity).getAccentColor(activity as ListActivity, true))
+                    putInt(Constants.SERIALIZABLE_BUNDLE_BOOK_STATUS, bookStatusInt)
                 }
                 addEditBookDialog!!.show(childFragmentManager, AddEditBookDialog.TAG)
                 firstTime = false
@@ -577,7 +616,11 @@ class DisplayBookFragment : Fragment(R.layout.fragment_display_book) {
         if (bookIsFav && bookStatus == Constants.BOOK_STATUS_READ) {
             var color = context?.let { getAccentColor(it) }
             ivFav.imageTintList = color?.let { ColorStateList.valueOf(it) }
-            ivFav.setImageDrawable(resources.getDrawable(R.drawable.ic_iconscout_heart_filled_24))
+            ivFav.setImageDrawable(activity?.baseContext?.resources?.let {
+                ResourcesCompat.getDrawable(
+                    it, R.drawable.ic_iconscout_heart_filled_24, null
+                )
+            })
         } else if (bookStatus == Constants.BOOK_STATUS_IN_PROGRESS || bookStatus == Constants.BOOK_STATUS_TO_READ) {
             ivFav.visibility = View.GONE
         }
@@ -587,10 +630,18 @@ class DisplayBookFragment : Fragment(R.layout.fragment_display_book) {
         if (fav) {
             var color = context?.let { getAccentColor(it) }
             ivFav.imageTintList = color?.let { ColorStateList.valueOf(it) }
-            ivFav.setImageDrawable(resources.getDrawable(R.drawable.ic_iconscout_heart_filled_24))
+            ivFav.setImageDrawable(activity?.baseContext?.resources?.let {
+                ResourcesCompat.getDrawable(
+                    it, R.drawable.ic_iconscout_heart_filled_24, null
+                )
+            })
         } else {
             ivFav.imageTintList = ColorStateList.valueOf(resources.getColor(R.color.grey_777))
-            ivFav.setImageDrawable(resources.getDrawable(R.drawable.ic_iconscout_heart_24))
+            ivFav.setImageDrawable(activity?.baseContext?.resources?.let {
+                ResourcesCompat.getDrawable(
+                    it, R.drawable.ic_iconscout_heart_24, null
+                )
+            })
         }
 
         viewModel.updateBook(

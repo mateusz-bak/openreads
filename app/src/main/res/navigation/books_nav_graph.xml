@@ -34,6 +34,9 @@
         <argument
             android:name="accent"
             app:argType="integer"/>
+        <argument
+            android:name="bookStatus"
+            app:argType="integer"/>
         <action
             android:id="@+id/action_addEditBookFragment_to_displayBookFragment"
             app:destination="@id/displayBookFragment" />
@@ -84,6 +87,9 @@
             android:name="isbn"
             app:argType="string"
             android:defaultValue="manual_search"/>
+        <argument
+            android:name="bookStatus"
+            app:argType="integer"/>
         <action
             android:id="@+id/action_addBookSearchFragment_to_addEditBookFragment"
             app:destination="@id/addEditBookFragment"
@@ -96,14 +102,6 @@
         android:id="@+id/settingsBackupFragment"
         android:name="software.mdev.bookstracker.ui.bookslist.fragments.SettingsBackupFragment"
         android:label="SettingsBackupFragment" />
-    <fragment
-        android:id="@+id/addBookScanFragment"
-        android:name="software.mdev.bookstracker.ui.bookslist.fragments.AddBookScanFragment"
-        android:label="AddBookScanFragment" >
-        <action
-            android:id="@+id/action_addBookScanFragment_to_addBookSearchFragment"
-            app:destination="@id/addBookSearchFragment" />
-    </fragment>
     <fragment
         android:id="@+id/changelogFragment"
         android:name="software.mdev.bookstracker.ui.bookslist.fragments.ChangelogFragment"
@@ -129,9 +127,6 @@
         <action
             android:id="@+id/action_booksFragment_to_statisticsFragment"
             app:destination="@id/statisticsFragment" />
-        <action
-            android:id="@+id/action_booksFragment_to_addBookScanFragment"
-            app:destination="@id/addBookScanFragment" />
         <action
             android:id="@+id/action_booksFragment_to_addBookSearchFragment"
             app:destination="@id/addBookSearchFragment" />

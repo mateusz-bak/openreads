@@ -387,7 +387,7 @@ class AddBookSearchFragment : Fragment(R.layout.fragment_add_book_search) {
         })
 
         foundBooksAdapter.setOnBookClickListener {
-            goToAddFragment(it, isbn)
+            goToAddFragment(it, isbn, args.bookStatus)
         }
 
         etAdderBookTitleSearch.setOnEditorActionListener(OnEditorActionListener { v, actionId, event ->
@@ -399,7 +399,7 @@ class AddBookSearchFragment : Fragment(R.layout.fragment_add_book_search) {
         })
     }
 
-    private fun goToAddFragment(resource: Resource<OpenLibraryOLIDResponse>, isbn: String) {
+    private fun goToAddFragment(resource: Resource<OpenLibraryOLIDResponse>, isbn: String, bookStatusArgs: Int) {
         if (resource.data != null) {
             var bookTitle = ""
             var bookAuthor = ""
@@ -454,6 +454,7 @@ class AddBookSearchFragment : Fragment(R.layout.fragment_add_book_search) {
                     putSerializable(Constants.SERIALIZABLE_BUNDLE_BOOK, book)
                     putSerializable(Constants.SERIALIZABLE_BUNDLE_BOOK_SOURCE, bookSource)
                     putSerializable(Constants.SERIALIZABLE_BUNDLE_ACCENT, (activity as ListActivity).getAccentColor(activity as ListActivity, true))
+                    putInt(Constants.SERIALIZABLE_BUNDLE_BOOK_STATUS, bookStatusArgs)
                 }
                 addEditBookDialog!!.show(childFragmentManager, AddEditBookDialog.TAG)
             }

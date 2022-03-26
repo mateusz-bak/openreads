@@ -3,7 +3,7 @@
     <!ENTITY appname "Openreads">
     ]>
 <resources>
-    <string name="app_version" translatable="false">v1.11.0</string>
+    <string name="app_version" translatable="false">v1.12.0</string>
     <!-- Images descriptions -->
     <string name="fabEditBook">Edit displayed book</string>
     <string name="ivBookStatusRead">Book is finished</string>
@@ -265,4 +265,7 @@
     <string name="filter_tags">Tags</string>
     <string name="filter_years">Finish year</string>
     <string name="stats_challenge_add">click to add a target</string>
+    <string name="pages_challenge_add">Add pages challenge?</string>
+    <string name="tv_book_reading_time_title">Reading time</string>
+    <string name="day">day</string>
 </resources>

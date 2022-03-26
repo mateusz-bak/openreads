@@ -5,6 +5,21 @@
     android:layout_height="match_parent"
     android:background="@color/colorDefaultBg">
 
+    <com.google.android.material.appbar.AppBarLayout
+        android:id="@+id/ablAddBookActionBar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/colorDefaultBg"
+        app:elevation="0dp">
+
+        <com.google.android.material.appbar.MaterialToolbar
+            android:id="@+id/tlAddBookToolbar"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            android:background="@color/colorDefaultBg" />
+
+    </com.google.android.material.appbar.AppBarLayout>
+
     <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -24,7 +39,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:paddingStart="12dp"
-                    android:paddingTop="24dp"
+                    android:paddingTop="12dp"
                     android:paddingEnd="12dp"
                     android:paddingBottom="48dp">
 

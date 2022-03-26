@@ -261,6 +261,26 @@
                 app:layout_constraintTop_toBottomOf="@+id/tvDateFinishedTitle" />
 
             <TextView
+                android:id="@+id/tvBookReadingTimeTitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:fontFamily="@font/jost_500_medium"
+                android:text="@string/tv_book_reading_time_title"
+                android:textSize="15sp"
+                app:layout_constraintStart_toStartOf="@+id/tvDateFinished"
+                app:layout_constraintTop_toBottomOf="@+id/tvDateFinished" />
+
+            <TextView
+                android:id="@+id/tvBookReadingTime"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/tv_book_reading_time_title"
+                android:textSize="14sp"
+                app:layout_constraintStart_toStartOf="@+id/tvBookReadingTimeTitle"
+                app:layout_constraintTop_toBottomOf="@+id/tvBookReadingTimeTitle" />
+
+            <TextView
                 android:id="@+id/tvBookPagesTitle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -268,8 +288,8 @@
                 android:fontFamily="@font/jost_500_medium"
                 android:text="@string/tv_book_pages_title"
                 android:textSize="15sp"
-                app:layout_constraintStart_toStartOf="@+id/tvDateFinished"
-                app:layout_constraintTop_toBottomOf="@+id/tvDateFinished" />
+                app:layout_constraintStart_toStartOf="@+id/tvBookReadingTime"
+                app:layout_constraintTop_toBottomOf="@+id/tvBookReadingTime" />
 
             <TextView
                 android:id="@+id/tvBookPages"
@@ -438,12 +458,23 @@
                 app:tint="?colorPrimary" />
 
             <ImageView
-                android:id="@+id/ivPages"
+                android:id="@+id/ivBookReadingTime"
                 android:layout_width="32dp"
                 android:layout_height="32dp"
                 android:padding="2dp"
                 android:scaleType="fitCenter"
                 app:layout_constraintStart_toStartOf="@+id/ivDateStarted"
+                app:layout_constraintTop_toTopOf="@+id/tvBookReadingTimeTitle"
+                app:srcCompat="@drawable/ic_iconscout_stopwatch_24"
+                app:tint="?colorPrimary" />
+
+            <ImageView
+                android:id="@+id/ivPages"
+                android:layout_width="32dp"
+                android:layout_height="32dp"
+                android:padding="2dp"
+                android:scaleType="fitCenter"
+                app:layout_constraintStart_toStartOf="@+id/ivBookReadingTime"
                 app:layout_constraintTop_toTopOf="@+id/tvBookPagesTitle"
                 app:srcCompat="@drawable/ic_iconscout_file_copy_alt_24"
                 app:tint="?colorPrimary" />

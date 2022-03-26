@@ -233,8 +233,8 @@ class SetupFragment : Fragment(R.layout.fragment_setup) {
 
     private fun hotReloadActivity(activity: Activity?) {
         if (activity == null) return
-        val sharedPref = PreferenceManager.getDefaultSharedPreferences(context?.applicationContext)
-        sharedPref.edit().putBoolean(Constants.SHARED_PREFERENCES_REFRESHED, true).apply()
+        val sharedPref = context?.let { PreferenceManager.getDefaultSharedPreferences(it.applicationContext) }
+        sharedPref?.edit()?.putBoolean(Constants.SHARED_PREFERENCES_REFRESHED, true)?.apply()
 
         (activity as ListActivity).recreate()
     }
