@@ -95,4 +95,10 @@
     <string name="changelog_1_11_0_c">Wyzwania z poprzednich lat mogą być edytowane.</string>
     <string name="changelog_1_11_0_d">Naprawiono błąd powodujący zniknięcie nieprzeczytanych książek przy filtrowaniu roku zakończenia czytania.</string>
     <string name="changelog_1_11_0_e">Rok pierwszego wydania jest teraz poprawnie pobierany z Open Library.</string>
+
+    <string name="changelog_1_12_0_a">Szczegóły książki pokazują teraz czas czytania.</string>
+    <string name="changelog_1_12_0_b">Status dodawanej nowej książki zostanie początkowo ustawiony na podstawie listy z której zaczęto dodawanie.</string>
+    <string name="changelog_1_12_0_c">Dodano nazwę aplikacji do listy książek, zredukowano zaokrąglenie przycisków i pól tekstowych.</string>
+    <string name="changelog_1_12_0_d">Zmieniono wygląd wskaźnika ładowania.</string>
+    <string name="changelog_1_12_0_e">Dodano pominięte tłumaczenie.</string>
 </resources>
