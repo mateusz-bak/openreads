@@ -7,8 +7,12 @@
 
 [![GitHub tag (latest by date)](https://img.shields.io/github/v/tag/mateusz-bak/openreads-android?label=latest%20version)](https://github.com/mateusz-bak/openreads-android/releases/latest)
 [![Build Status](https://git-drone.mateusz.ovh/api/badges/mateusz-bak/openreads-android/status.svg)](https://git-drone.mateusz.ovh/mateusz-bak/openreads-android)
+[![Crowdin](https://badges.crowdin.net/openreads-android/localized.svg)](https://crowdin.com/project/openreads-android)
 <br/>
+
 <a href='https://play.google.com/store/apps/details?id=software.mdev.bookstracker'><img height=100 alt='Get it on Google Play' src='https://play.google.com/intl/en_us/badges/images/generic/en_badge_web_generic.png'/></a>
+<a href='https://github.com/mateusz-bak/openreads-android/releases/latest'><img height=100 alt='Get it on Github' src='https://raw.githubusercontent.com/mateusz-bak/openreads-android/master/doc/github/get-it-on-github.png'/></a>
+
 <br/><br/>
 ### Openreads is an Android app written in Kotlin for keeping tracks of your books.  
 #### There are three lists provided so you won't get confused:  
@@ -30,6 +34,21 @@
  <img src='doc/github/screenshot-display-book_n_framed.png' width='30%'/>    
  <img src='doc/github/screenshot-statistics_n_framed.png' width='30%'/>
 </p>  
+
+<br/><br/>
+
+## Contributing
+
+Do you want to support Openreads' development? You are welcome to take below actions:
+
+### Help translate Openreads:
+Go to [Crowdin project](https://crwd.in/openreads-android) and start translating!
+
+### Have you found a bug in Openreads?
+Submit an issue here: [Openreads' issues](https://github.com/mateusz-bak/openreads-android/issues).
+
+### Do you have an idea that could improve Openreads for everyone?
+Submit a feature request here: [Openreads' issues](https://github.com/mateusz-bak/openreads-android/issues).
 
 <br/><br/>
 ## Build Process
