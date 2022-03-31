@@ -39,16 +39,16 @@
 
 ## Contributing
 
-Do you want to support Openread's development? You are welcome to take below actions:
+Do you want to support Openreads' development? You are welcome to take below actions:
 
 ### Help translate Openreads:
 Go to [Crowdin project](https://crwd.in/openreads-android) and start translating!
 
 ### Have you found a bug in Openreads?
-Submit an issue here: [Openread's issues](https://github.com/mateusz-bak/openreads-android/issues).
+Submit an issue here: [Openreads' issues](https://github.com/mateusz-bak/openreads-android/issues).
 
 ### Do you have an idea that could improve Openreads for everyone?
-Submit a feature request here: [Openread's issues](https://github.com/mateusz-bak/openreads-android/issues).
+Submit a feature request here: [Openreads' issues](https://github.com/mateusz-bak/openreads-android/issues).
 
 <br/><br/>
 ## Build Process
