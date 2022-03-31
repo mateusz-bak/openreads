@@ -37,11 +37,11 @@
     <string name="undo">Desfazer</string>
     <string name="tvWelcomeText_0">Bem-vindo ao</string>
     <string name="tvWelcomeText_1">"te ajudará a manter um registro dos teus livros.\n\nÉ também uma ótima ferramenta para organizar sua biblioteca pessoal de forma fácil e transparente."</string>
-    <string name="tvWelcomeText_2">"Progress with your readings thanks to awesome statistics.\n\nChallenge yourself to be a better reader!"</string>
-    <string name="tvWelcomeText_3">"is completely open source!\n\nIt means that you can inspect the app's code on your own and contribute to it's development.\n\nAs a bonus you get zero ads and absolutely no tracking!"</string>
-    <string name="tvWelcomeText_4">"Now choose a theme color for the app.\n\nDon't worry, you can change it later."</string>
+    <string name="tvWelcomeText_2">"Melhore suas leituras com estatísticas incriveis.\n\nAceite o desafio de ser um leitor ainda melhor!"</string>
+    <string name="tvWelcomeText_3">"é completamente open-source!\n\nIsso significa que você pode inspecionar o código do aplicativo por conta própria e contribuir para o seu desenvolvimento.\n\nComo bônus, você recebe zero anúncios e absolutamente nenhum rastreamento!"</string>
+    <string name="tvWelcomeText_4">"Agora escolha uma cor de tema para o aplicativo.\n\nNão se preocupe, você pode mudá-la mais tarde."</string>
     <string name="tvWelcomeText_5">Aproveite e continue lendo!</string>
-    <string name="tvLooksEmpty">Your book list looks empty for now, click plus button below and start adding new books!</string>
+    <string name="tvLooksEmpty">Sua lista de livros está vazia por enquanto, clique no botão mais abaixo e comece a adicionar novos livros!</string>
     <string name="customization">Personalização</string>
     <string name="about">Sobre</string>
     <string name="app_version_title">Versão do app</string>
@@ -108,7 +108,7 @@
     <string name="results_5_">results</string>
     <string name="btn_ok">OK</string>
     <string name="cb_dont_show_again">Não mostrar novamente</string>
-    <string name="tvAlertContent1">Searching books uses openlibrary.org database. It is free to use but can have some limitations.</string>
+    <string name="tvAlertContent1">A pesquisa de livros usa o banco de dados openlibrary.org. É gratuito para usar, mas pode ter algumas limitações.</string>
     <string name="tvAlertContent2">You can search for a book’s title and author’s name. Try to be specific, it will be faster.</string>
     <string name="tvAlertContent3">If no results found then try a more broad query (just authors name or one word from the title) but it can take a long time (even a couple of minutes).</string>
     <string name="tvAlertContent4">If book’s title or author’s name contain diactric characters try to use non-diactric characters.</string>
