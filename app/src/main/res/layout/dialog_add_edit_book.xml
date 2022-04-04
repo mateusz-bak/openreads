@@ -766,144 +766,162 @@
                 </androidx.constraintlayout.widget.ConstraintLayout>
             </ScrollView>
 
-            <DatePicker
-                android:id="@+id/dpBookStartDate"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:calendarViewShown="false"
-                android:datePickerMode="calendar"
+            <ScrollView
+                android:id="@+id/datePickerView"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
                 android:visibility="gone"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.5"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/guideline1" />
+                android:fillViewport="true">
 
-            <com.google.android.material.button.MaterialButton
-                android:id="@+id/btnStartDateCancel"
-                style="@style/Widget.MaterialComponents.Button.OutlinedButton"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="8dp"
-                android:layout_marginTop="8dp"
-                android:layout_marginEnd="8dp"
-                android:text="@string/btnAdderCancelFinishDate"
-                android:textColor="@color/colorDefaultText"
-                android:visibility="gone"
-                app:cornerRadius="@dimen/text_input_layout_radius"
-                app:layout_constraintEnd_toStartOf="@+id/btnStartDateClear"
-                app:layout_constraintHorizontal_bias="0.5"
-                app:layout_constraintStart_toStartOf="@id/dpBookStartDate"
-                app:layout_constraintTop_toBottomOf="@+id/dpBookStartDate"
-                app:strokeColor="@color/grey_777"
-                app:strokeWidth="1dp" />
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingStart="12dp"
+                    android:paddingTop="12dp"
+                    android:paddingEnd="12dp"
+                    android:paddingBottom="48dp">
 
-            <com.google.android.material.button.MaterialButton
-                android:id="@+id/btnStartDateClear"
-                style="@style/Widget.MaterialComponents.Button.OutlinedButton"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="8dp"
-                android:layout_marginTop="8dp"
-                android:layout_marginEnd="8dp"
-                android:text="@string/btnAdderClearFinishDate"
-                android:textColor="@color/colorDefaultText"
-                android:visibility="gone"
-                app:cornerRadius="@dimen/text_input_layout_radius"
-                app:layout_constraintEnd_toEndOf="@+id/dpBookStartDate"
-                app:layout_constraintHorizontal_bias="0.5"
-                app:layout_constraintStart_toEndOf="@+id/btnStartDateCancel"
-                app:layout_constraintTop_toBottomOf="@+id/dpBookStartDate"
-                app:strokeColor="@color/grey_777"
-                app:strokeWidth="1dp" />
+                    <DatePicker
+                        android:id="@+id/dpBookStartDate"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:calendarViewShown="false"
+                        android:datePickerMode="calendar"
+                        android:visibility="gone"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintHorizontal_bias="0.5"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/guideline1" />
 
-            <Button
-                android:id="@+id/btnStartDateSave"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
-                android:backgroundTint="?colorPrimary"
-                android:text="@string/btnAdderSaveFinishDate"
-                android:textColor="@color/colorDefaultText"
-                android:visibility="gone"
-                app:cornerRadius="@dimen/text_input_layout_radius"
-                app:layout_constraintEnd_toEndOf="@+id/btnStartDateClear"
-                app:layout_constraintHorizontal_bias="0.5"
-                app:layout_constraintStart_toStartOf="@+id/btnStartDateCancel"
-                app:layout_constraintTop_toBottomOf="@+id/btnStartDateClear" />
+                    <com.google.android.material.button.MaterialButton
+                        android:id="@+id/btnStartDateCancel"
+                        style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="8dp"
+                        android:layout_marginTop="8dp"
+                        android:layout_marginEnd="8dp"
+                        android:text="@string/btnAdderCancelFinishDate"
+                        android:textColor="@color/colorDefaultText"
+                        android:visibility="gone"
+                        app:cornerRadius="@dimen/text_input_layout_radius"
+                        app:layout_constraintEnd_toStartOf="@+id/btnStartDateClear"
+                        app:layout_constraintHorizontal_bias="0.5"
+                        app:layout_constraintStart_toStartOf="@id/dpBookStartDate"
+                        app:layout_constraintTop_toBottomOf="@+id/dpBookStartDate"
+                        app:strokeColor="@color/grey_777"
+                        app:strokeWidth="1dp" />
 
-            <androidx.constraintlayout.widget.Guideline
-                android:id="@+id/guideline1"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintGuide_percent="0.1" />
+                    <com.google.android.material.button.MaterialButton
+                        android:id="@+id/btnStartDateClear"
+                        style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="8dp"
+                        android:layout_marginTop="8dp"
+                        android:layout_marginEnd="8dp"
+                        android:text="@string/btnAdderClearFinishDate"
+                        android:textColor="@color/colorDefaultText"
+                        android:visibility="gone"
+                        app:cornerRadius="@dimen/text_input_layout_radius"
+                        app:layout_constraintEnd_toEndOf="@+id/dpBookStartDate"
+                        app:layout_constraintHorizontal_bias="0.5"
+                        app:layout_constraintStart_toEndOf="@+id/btnStartDateCancel"
+                        app:layout_constraintTop_toBottomOf="@+id/dpBookStartDate"
+                        app:strokeColor="@color/grey_777"
+                        app:strokeWidth="1dp" />
 
-            <DatePicker
-                android:id="@+id/dpBookFinishDate"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:calendarViewShown="false"
-                android:datePickerMode="calendar"
-                android:visibility="gone"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.5"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/guideline1" />
+                    <Button
+                        android:id="@+id/btnStartDateSave"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="8dp"
+                        android:backgroundTint="?colorPrimary"
+                        android:text="@string/btnAdderSaveFinishDate"
+                        android:textColor="@color/colorDefaultText"
+                        android:visibility="gone"
+                        app:cornerRadius="@dimen/text_input_layout_radius"
+                        app:layout_constraintEnd_toEndOf="@+id/btnStartDateClear"
+                        app:layout_constraintHorizontal_bias="0.5"
+                        app:layout_constraintStart_toStartOf="@+id/btnStartDateCancel"
+                        app:layout_constraintTop_toBottomOf="@+id/btnStartDateClear" />
 
-            <com.google.android.material.button.MaterialButton
-                android:id="@+id/btnFinishDateCancel"
-                style="@style/Widget.MaterialComponents.Button.OutlinedButton"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="8dp"
-                android:layout_marginTop="8dp"
-                android:layout_marginEnd="8dp"
-                android:text="@string/btnAdderCancelFinishDate"
-                android:textColor="@color/colorDefaultText"
-                android:visibility="gone"
-                app:cornerRadius="@dimen/text_input_layout_radius"
-                app:layout_constraintEnd_toStartOf="@+id/btnFinishDateClear"
-                app:layout_constraintHorizontal_bias="0.5"
-                app:layout_constraintStart_toStartOf="@id/dpBookFinishDate"
-                app:layout_constraintTop_toBottomOf="@+id/dpBookFinishDate"
-                app:strokeColor="@color/grey_777"
-                app:strokeWidth="1dp" />
+                    <androidx.constraintlayout.widget.Guideline
+                        android:id="@+id/guideline1"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintGuide_percent="0.1" />
 
-            <com.google.android.material.button.MaterialButton
-                android:id="@+id/btnFinishDateClear"
-                style="@style/Widget.MaterialComponents.Button.OutlinedButton"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="8dp"
-                android:layout_marginTop="8dp"
-                android:layout_marginEnd="8dp"
-                android:text="@string/btnAdderClearFinishDate"
-                android:textColor="@color/colorDefaultText"
-                android:visibility="gone"
-                app:cornerRadius="@dimen/text_input_layout_radius"
-                app:layout_constraintEnd_toEndOf="@+id/dpBookFinishDate"
-                app:layout_constraintHorizontal_bias="0.5"
-                app:layout_constraintStart_toEndOf="@+id/btnFinishDateCancel"
-                app:layout_constraintTop_toBottomOf="@+id/dpBookFinishDate"
-                app:strokeColor="@color/grey_777"
-                app:strokeWidth="1dp" />
+                    <DatePicker
+                        android:id="@+id/dpBookFinishDate"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:calendarViewShown="false"
+                        android:datePickerMode="calendar"
+                        android:visibility="gone"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintHorizontal_bias="0.5"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/guideline1" />
 
-            <Button
-                android:id="@+id/btnFinishDateSave"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
-                android:backgroundTint="?colorPrimary"
-                android:text="@string/btnAdderSaveFinishDate"
-                android:textColor="@color/colorDefaultText"
-                android:visibility="gone"
-                app:cornerRadius="@dimen/text_input_layout_radius"
-                app:layout_constraintEnd_toEndOf="@+id/btnFinishDateClear"
-                app:layout_constraintHorizontal_bias="0.5"
-                app:layout_constraintStart_toStartOf="@+id/btnFinishDateCancel"
-                app:layout_constraintTop_toBottomOf="@+id/btnFinishDateClear" />
+                    <com.google.android.material.button.MaterialButton
+                        android:id="@+id/btnFinishDateCancel"
+                        style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="8dp"
+                        android:layout_marginTop="8dp"
+                        android:layout_marginEnd="8dp"
+                        android:text="@string/btnAdderCancelFinishDate"
+                        android:textColor="@color/colorDefaultText"
+                        android:visibility="gone"
+                        app:cornerRadius="@dimen/text_input_layout_radius"
+                        app:layout_constraintEnd_toStartOf="@+id/btnFinishDateClear"
+                        app:layout_constraintHorizontal_bias="0.5"
+                        app:layout_constraintStart_toStartOf="@id/dpBookFinishDate"
+                        app:layout_constraintTop_toBottomOf="@+id/dpBookFinishDate"
+                        app:strokeColor="@color/grey_777"
+                        app:strokeWidth="1dp" />
+
+                    <com.google.android.material.button.MaterialButton
+                        android:id="@+id/btnFinishDateClear"
+                        style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="8dp"
+                        android:layout_marginTop="8dp"
+                        android:layout_marginEnd="8dp"
+                        android:text="@string/btnAdderClearFinishDate"
+                        android:textColor="@color/colorDefaultText"
+                        android:visibility="gone"
+                        app:cornerRadius="@dimen/text_input_layout_radius"
+                        app:layout_constraintEnd_toEndOf="@+id/dpBookFinishDate"
+                        app:layout_constraintHorizontal_bias="0.5"
+                        app:layout_constraintStart_toEndOf="@+id/btnFinishDateCancel"
+                        app:layout_constraintTop_toBottomOf="@+id/dpBookFinishDate"
+                        app:strokeColor="@color/grey_777"
+                        app:strokeWidth="1dp" />
+
+                    <Button
+                        android:id="@+id/btnFinishDateSave"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="8dp"
+                        android:backgroundTint="?colorPrimary"
+                        android:text="@string/btnAdderSaveFinishDate"
+                        android:textColor="@color/colorDefaultText"
+                        android:visibility="gone"
+                        app:cornerRadius="@dimen/text_input_layout_radius"
+                        app:layout_constraintEnd_toEndOf="@+id/btnFinishDateClear"
+                        app:layout_constraintHorizontal_bias="0.5"
+                        app:layout_constraintStart_toStartOf="@+id/btnFinishDateCancel"
+                        app:layout_constraintTop_toBottomOf="@+id/btnFinishDateClear" />
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+            </ScrollView>
 
         </androidx.constraintlayout.widget.ConstraintLayout>
     </FrameLayout>
