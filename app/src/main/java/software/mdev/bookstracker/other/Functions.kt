@@ -114,8 +114,10 @@ class Functions {
             for (book in filteredBooks1) {
                 if (book.bookTags != null && book.bookTags!!.isNotEmpty()) {
                     for (tag in book.bookTags!!) {
-                        if (tag in tagsToFilter)
-                            filteredBooks2 += book
+                        if (tag in tagsToFilter) {
+                            if (book !in filteredBooks2)
+                                filteredBooks2 += book
+                        }
                     }
                 }
             }
