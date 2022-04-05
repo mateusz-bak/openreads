@@ -345,7 +345,7 @@ class ListActivity : AppCompatActivity() {
         bottomSheetDialog.findViewById<LinearLayout>(R.id.llFilterTagsTitle)?.visibility = View.GONE
         bottomSheetDialog.findViewById<LinearLayout>(R.id.llFilterTags)?.visibility = View.GONE
 
-        booksViewModel.getSortedBooksByTitleAsc(Constants.BOOK_STATUS_READ).observe(this@ListActivity) { books ->
+        booksViewModel.getAllSortedBooksByTitleAsc().observe(this@ListActivity) { books ->
             var tags = emptyList<String>()
             for (book in books) {
                 if (book.bookTags != null && book.bookTags!!.isNotEmpty()) {
