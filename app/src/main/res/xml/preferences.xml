@@ -2,35 +2,42 @@
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
-        <Preference
-            android:icon="@drawable/ic_iconscout_trash_24"
-            android:key="KEY_TRASH"
-            android:summary="@string/trash_summary"
-            android:title="@string/trash_title" />
+    <Preference
+        android:icon="@drawable/ic_iconscout_trash_24"
+        android:key="KEY_TRASH"
+        android:summary="@string/trash_summary"
+        android:title="@string/trash_title" />
 
-        <Preference
-            android:icon="@drawable/ic_iconscout_history_24"
-            android:key="KEY_BACKUP"
-            android:summary="@string/backup_summary"
-            android:title="@string/backup_title" />
+    <SwitchPreference
+        android:icon="@drawable/ic_iconscout_align_justify_24"
+        android:key="KEY_FIRST_TIME_TOGGLE"
+        android:summaryOff="@string/first_time_toggle_off"
+        android:summaryOn="@string/first_time_toggle_on"
+        android:title="@string/first_time_toggle_title" />
 
-        <SwitchPreference
-            android:icon="@drawable/ic_iconscout_align_justify_24"
-            android:key="KEY_FIRST_TIME_TOGGLE"
-            android:summaryOff="@string/first_time_toggle_off"
-            android:summaryOn="@string/first_time_toggle_on"
-            android:title="@string/first_time_toggle_title" />
+    <SwitchPreference
+        android:icon="@drawable/ic_iconscout_question_circle_24"
+        android:key="KEY_SHOW_OL_ALERT"
+        android:summaryOff="@string/show_ol_alert_off"
+        android:summaryOn="@string/show_ol_alert_on"
+        android:title="@string/show_ol_alert_title" />
 
-        <SwitchPreference
-            android:icon="@drawable/ic_iconscout_question_circle_24"
-            android:key="KEY_SHOW_OL_ALERT"
-            android:summaryOff="@string/show_ol_alert_off"
-            android:summaryOn="@string/show_ol_alert_on"
-            android:title="@string/show_ol_alert_title" />
+    <Preference
+        android:icon="@drawable/ic_iconscout_history_24"
+        android:key="KEY_BACKUP"
+        android:summary="@string/backup_summary"
+        android:title="@string/backup_title" />
 
     <PreferenceCategory
         android:key="customization"
         android:title="@string/customization">
+
+        <SwitchPreference
+            android:icon="@drawable/ic_iconscout_tag_alt_24"
+            android:key="KEY_SHOW_TAGS"
+            android:summaryOff="@string/show_tags_toggle_off"
+            android:summaryOn="@string/show_tags_toggle_on"
+            android:title="@string/show_tags_toggle_title" />
 
         <ListPreference
             android:defaultValue="accent_green"
@@ -96,8 +103,7 @@
             android:icon="@drawable/ic_iconscout_grin_24"
             android:key="KEY_FEEDBACK"
             android:summary="@string/contact_summary"
-            android:title="@string/contact_title">
-        </Preference>
+            android:title="@string/contact_title"/>
     </PreferenceCategory>
 
 </PreferenceScreen>
