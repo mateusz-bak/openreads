@@ -249,4 +249,7 @@
     <string name="pages_challenge_add">Dodać wyzwanie przeczytanych stron?</string>
     <string name="tv_book_reading_time_title">Czas czytania</string>
     <string name="day">dzień</string>
+    <string name="show_tags_toggle_title">Show book tags in lists</string>
+    <string name="show_tags_toggle_on">Tags will be shown</string>
+    <string name="show_tags_toggle_off">Tags won\'t be shown</string>
 </resources>
