@@ -249,4 +249,7 @@
     <string name="pages_challenge_add">Seiten Challenge hinzufügen?</string>
     <string name="tv_book_reading_time_title">Lese-Zeit</string>
     <string name="day">tag</string>
+    <string name="show_tags_toggle_title">Show book tags in lists</string>
+    <string name="show_tags_toggle_on">Tags will be shown</string>
+    <string name="show_tags_toggle_off">Tags won\'t be shown</string>
 </resources>
