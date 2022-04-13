@@ -111,6 +111,8 @@ class BooksViewModel(
     fun getSortedBooksByFinishDateDesc(bookStatus: String) = repository.getSortedBooksByFinishDateDesc(bookStatus)
     fun getSortedBooksByFinishDateAsc(bookStatus: String) = repository.getSortedBooksByFinishDateAsc(bookStatus)
 
+    fun getAllSortedBooksByTitleAsc() = repository.getAllSortedBooksByTitleAsc()
+
     fun getBookCount(bookStatus: String) = repository.getBookCount(bookStatus)
 
     fun upsertYear(item: Year) = CoroutineScope(Dispatchers.Main).launch {

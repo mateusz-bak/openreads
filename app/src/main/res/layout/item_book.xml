@@ -5,9 +5,9 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:paddingStart="16dp"
-    android:paddingTop="4dp"
+    android:paddingTop="8dp"
     android:paddingEnd="16dp"
-    android:paddingBottom="20dp">
+    android:paddingBottom="16dp">
 
     <com.google.android.material.imageview.ShapeableImageView
         android:id="@+id/ivBookCover"
@@ -15,7 +15,6 @@
         android:layout_height="wrap_content"
         android:adjustViewBounds="true"
         android:scaleType="fitCenter"
-        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:shapeAppearanceOverlay="@style/roundedCoverAdapter" />
@@ -64,9 +63,31 @@
         android:rating="4"
         android:scaleType="fitStart"
         android:stepSize="0.5"
-        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="@+id/tvBookAuthor"
         app:layout_constraintTop_toBottomOf="@+id/tvBookAuthor" />
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/clBookTags"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="4dp"
+        android:layout_marginTop="4dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/rbRatingIndicator"
+        app:layout_constraintTop_toBottomOf="@+id/rbRatingIndicator">
+
+        <com.google.android.material.chip.ChipGroup
+            android:id="@+id/cgTags"
+            android:layout_width="match_parent"
+            android:layout_height="30dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+        </com.google.android.material.chip.ChipGroup>
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/glVertical70"

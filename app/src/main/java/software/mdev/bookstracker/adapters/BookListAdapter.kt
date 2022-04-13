@@ -94,7 +94,7 @@ class BookListAdapter(
             else -> Constants.BOOK_STATUS_TO_READ
         }
 
-        val bookAdapter = BookAdapter(holder.itemView.context, bookStatus)
+        val bookAdapter = BookAdapter(holder.itemView.context, bookStatus, setTagsVisibility(holder.itemView.context))
         holder.itemView.rvBooks.adapter = bookAdapter
         holder.itemView.rvBooks.layoutManager = LinearLayoutManager(holder.itemView.context)
 
@@ -120,6 +120,13 @@ class BookListAdapter(
         })
 
         getBooks(bookAdapter, bookStatus, holder.itemView)
+    }
+
+    private fun setTagsVisibility(context: Context): Boolean {
+        var sharedPreferencesName = context.getString(R.string.shared_preferences_name)
+        val sharedPref = context.getSharedPreferences(sharedPreferencesName, Context.MODE_PRIVATE)
+
+        return sharedPref.getBoolean(Constants.SHARED_PREFERENCES_KEY_SHOW_TAGS, false)
     }
 
     private fun getBooks(adapter: BookAdapter, status: String, itemView: View, scroll: Boolean = false) {
