@@ -610,13 +610,13 @@ class AddEditBookDialog : DialogFragment() {
             object : AdapterView.OnItemSelectedListener {
                 override fun onItemSelected(
                     parent: AdapterView<*>,
-                    view: View,
+                    view: View?,
                     position: Int,
                     id: Long
                 ) {
-                    view.hideKeyboard()
+                    view?.hideKeyboard()
                     activity?.resources?.getColor(R.color.colorDefaultText)?.let {
-                        (parent.getChildAt(0) as TextView).setTextColor(
+                        (parent.getChildAt(0) as TextView?)?.setTextColor(
                             it
                         )
                     }
