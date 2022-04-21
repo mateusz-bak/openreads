@@ -249,4 +249,6 @@
     <string name="show_tags_toggle_title">Pokaż tagi książek w listach</string>
     <string name="show_tags_toggle_off">Nie zostaną pokazane</string>
     <string name="show_tags_toggle_on">Zostaną pokazane</string>
+    <string name="help_translate_summary">Przyłóż się do rozwoju &appname; tłumacząc na znane Ci języki!</string>
+    <string name="help_translate_title">Pomóż w tłumaczeniu</string>
 </resources>
