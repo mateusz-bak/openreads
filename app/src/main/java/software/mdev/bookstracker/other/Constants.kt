@@ -160,4 +160,16 @@ object Constants {
     const val FROM_SEARCH = 1
     const val FROM_SCAN = 2
     const val FROM_DISPLAY = 3
+
+    // books details
+    const val detailStartDate = 0
+    const val detailFinishDate = 1
+    const val detailReadingTime = 2
+    const val detailPages = 3
+    const val detailPublishYear = 4
+    const val detailTags = 5
+    const val detailISBN = 6
+    const val detailOLID = 7
+    const val detailNotes = 8
+    const val detailUrl = 9
 }
