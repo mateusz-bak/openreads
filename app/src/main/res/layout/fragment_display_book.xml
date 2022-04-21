@@ -212,218 +212,49 @@
                     android:padding="6dp"
                     android:scaleType="fitCenter"
                     app:layout_constraintBottom_toBottomOf="@+id/ivEdit"
-                    app:layout_constraintEnd_toEndOf="@+id/rbRatingIndicator"
+                    app:layout_constraintEnd_toStartOf="@+id/ivGrid"
+                    app:layout_constraintStart_toEndOf="@+id/ivEdit"
                     app:layout_constraintTop_toTopOf="@+id/ivEdit"
                     app:srcCompat="@drawable/ic_iconscout_trash_24" />
 
-
+                <ImageView
+                    android:id="@+id/ivGrid"
+                    android:layout_width="42dp"
+                    android:layout_height="42dp"
+                    android:paddingStart="8dp"
+                    android:paddingTop="8dp"
+                    android:paddingEnd="8dp"
+                    android:paddingBottom="6dp"
+                    android:scaleType="fitCenter"
+                    app:layout_constraintBottom_toBottomOf="@+id/ivEdit"
+                    app:layout_constraintEnd_toEndOf="@+id/rbRatingIndicator"
+                    app:layout_constraintTop_toTopOf="@+id/ivEdit"
+                    app:srcCompat="@drawable/ic_iconscout_apps_24" />
             </androidx.constraintlayout.widget.ConstraintLayout>
 
-            <TextView
-                android:id="@+id/tvDateStartedTitle"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="12dp"
-                android:layout_marginTop="24dp"
-                android:fontFamily="@font/jost_500_medium"
-                android:text="@string/tv_date_started_title"
-                android:textSize="15sp"
-                app:layout_constraintStart_toEndOf="@+id/ivDateStarted"
-                app:layout_constraintTop_toBottomOf="@+id/clBookDisplay1" />
-
-            <TextView
-                android:id="@+id/tvDateStarted"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/tv_date_finished"
-                android:textSize="14sp"
-                app:layout_constraintStart_toStartOf="@+id/tvDateStartedTitle"
-                app:layout_constraintTop_toBottomOf="@+id/tvDateStartedTitle" />
-
-            <TextView
-                android:id="@+id/tvDateFinishedTitle"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
-                android:fontFamily="@font/jost_500_medium"
-                android:text="@string/tv_date_finished_title"
-                android:textSize="15sp"
-                app:layout_constraintStart_toStartOf="@+id/tvDateStarted"
-                app:layout_constraintTop_toBottomOf="@+id/tvDateStarted" />
-
-            <TextView
-                android:id="@+id/tvDateFinished"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/tv_date_finished"
-                android:textSize="14sp"
-                app:layout_constraintStart_toStartOf="@+id/tvDateFinishedTitle"
-                app:layout_constraintTop_toBottomOf="@+id/tvDateFinishedTitle" />
-
-            <TextView
-                android:id="@+id/tvBookReadingTimeTitle"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
-                android:fontFamily="@font/jost_500_medium"
-                android:text="@string/tv_book_reading_time_title"
-                android:textSize="15sp"
-                app:layout_constraintStart_toStartOf="@+id/tvDateFinished"
-                app:layout_constraintTop_toBottomOf="@+id/tvDateFinished" />
-
-            <TextView
-                android:id="@+id/tvBookReadingTime"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/tv_book_reading_time_title"
-                android:textSize="14sp"
-                app:layout_constraintStart_toStartOf="@+id/tvBookReadingTimeTitle"
-                app:layout_constraintTop_toBottomOf="@+id/tvBookReadingTimeTitle" />
-
-            <TextView
-                android:id="@+id/tvBookPagesTitle"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
-                android:fontFamily="@font/jost_500_medium"
-                android:text="@string/tv_book_pages_title"
-                android:textSize="15sp"
-                app:layout_constraintStart_toStartOf="@+id/tvBookReadingTime"
-                app:layout_constraintTop_toBottomOf="@+id/tvBookReadingTime" />
-
-            <TextView
-                android:id="@+id/tvBookPages"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/tv_book_pages"
-                android:textSize="14sp"
-                app:layout_constraintStart_toStartOf="@+id/tvBookPagesTitle"
-                app:layout_constraintTop_toBottomOf="@+id/tvBookPagesTitle" />
-
-            <TextView
-                android:id="@+id/tvBookPublishYearTitle"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
-                android:fontFamily="@font/jost_500_medium"
-                android:text="@string/hint_publish_year"
-                android:textSize="15sp"
-                app:layout_constraintStart_toStartOf="@+id/tvBookPages"
-                app:layout_constraintTop_toBottomOf="@+id/tvBookPages" />
-
-            <TextView
-                android:id="@+id/tvBookPublishYear"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/hint_publish_year"
-                android:textSize="14sp"
-                app:layout_constraintStart_toStartOf="@+id/tvBookPublishYearTitle"
-                app:layout_constraintTop_toBottomOf="@+id/tvBookPublishYearTitle" />
-
-            <TextView
-                android:id="@+id/tvBookISBNTitle"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
-                android:fontFamily="@font/jost_500_medium"
-                android:text="@string/tv_book_isbn_title"
-                android:textSize="15sp"
-                app:layout_constraintStart_toStartOf="@+id/tvBookPublishYear"
-                app:layout_constraintTop_toBottomOf="@+id/tvBookPublishYear" />
-
-            <TextView
-                android:id="@+id/tvBookISBN"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/tv_book_isbn"
-                android:textSize="14sp"
-                app:layout_constraintStart_toStartOf="@+id/tvBookISBNTitle"
-                app:layout_constraintTop_toBottomOf="@+id/tvBookISBNTitle" />
-
-            <TextView
-                android:id="@+id/tvBookOLIDTitle"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
-                android:fontFamily="@font/jost_500_medium"
-                android:text="@string/tv_book_olid_title"
-                android:textSize="15sp"
-                app:layout_constraintStart_toStartOf="@+id/tvBookISBN"
-                app:layout_constraintTop_toBottomOf="@+id/tvBookISBN" />
-
-            <TextView
-                android:id="@+id/tvBookOLID"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/tv_book_olid"
-                android:textSize="14sp"
-                app:layout_constraintStart_toStartOf="@+id/tvBookOLIDTitle"
-                app:layout_constraintTop_toBottomOf="@+id/tvBookOLIDTitle" />
-
-            <TextView
-                android:id="@+id/tvBookURL"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="12dp"
-                android:autoLink="web"
-                android:gravity="start"
-                android:text="@string/tv_book_url"
-                android:textSize="14sp"
-                app:layout_constraintStart_toStartOf="@+id/tvBookOLIDTitle"
-                app:layout_constraintTop_toBottomOf="@+id/tvNotes" />
-
-            <TextView
-                android:id="@+id/tvBookTagsTitle"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
-                android:fontFamily="@font/jost_500_medium"
-                android:text="@string/book_tags"
-                android:textSize="15sp"
-                app:layout_constraintStart_toStartOf="@+id/tvBookISBN"
-                app:layout_constraintTop_toBottomOf="@+id/tvBookOLID" />
-
-            <androidx.constraintlayout.widget.ConstraintLayout
-                android:id="@+id/clBookTags"
+            <FrameLayout
                 android:layout_width="0dp"
-                android:layout_height="wrap_content"
+                android:layout_height="0dp"
+                android:layout_marginTop="20dp"
+                android:clipToPadding="false"
+                app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="@+id/tvBookTagsTitle"
-                app:layout_constraintTop_toBottomOf="@id/tvBookTagsTitle">
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/clBookDisplay1">
 
-                <com.google.android.material.chip.ChipGroup
-                    android:id="@+id/cgTags"
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/rvBookDetails"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_height="match_parent"
+                    android:clipToPadding="false"
+                    android:paddingBottom="0dp"
+                    android:scrollbars="vertical"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintHorizontal_bias="0.5"
+                    app:layout_constraintHorizontal_bias="1.0"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent">
-
-                </com.google.android.material.chip.ChipGroup>
-            </androidx.constraintlayout.widget.ConstraintLayout>
-
-
-            <TextView
-                android:id="@+id/tvNotesTitle"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
-                android:fontFamily="@font/jost_500_medium"
-                android:text="@string/book_notes"
-                android:textSize="15sp"
-                app:layout_constraintStart_toStartOf="@+id/tvBookISBN"
-                app:layout_constraintTop_toBottomOf="@+id/clBookTags" />
-
-            <TextView
-                android:id="@+id/tvNotes"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:textSize="14sp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="@+id/tvNotesTitle"
-                app:layout_constraintTop_toBottomOf="@+id/tvNotesTitle" />
+                    app:layout_constraintVertical_bias="1.0" />
+            </FrameLayout>
 
             <androidx.constraintlayout.widget.Guideline
                 android:id="@+id/guideline21"
@@ -431,121 +262,6 @@
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
                 app:layout_constraintGuide_percent="0.5" />
-
-
-            <ImageView
-                android:id="@+id/ivDateStarted"
-                android:layout_width="32dp"
-                android:layout_height="32dp"
-                android:layout_marginStart="-4dp"
-                android:layout_marginTop="-2dp"
-                android:padding="2dp"
-                android:scaleType="fitCenter"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="@+id/tvDateStartedTitle"
-                app:srcCompat="@drawable/ic_iconscout_forward_24"
-                app:tint="?colorPrimary" />
-
-            <ImageView
-                android:id="@+id/ivDateFinished"
-                android:layout_width="32dp"
-                android:layout_height="32dp"
-                android:padding="2dp"
-                android:scaleType="fitCenter"
-                app:layout_constraintStart_toStartOf="@+id/ivDateStarted"
-                app:layout_constraintTop_toTopOf="@+id/tvDateFinishedTitle"
-                app:srcCompat="@drawable/ic_iconscout_clock_nine_24"
-                app:tint="?colorPrimary" />
-
-            <ImageView
-                android:id="@+id/ivBookReadingTime"
-                android:layout_width="32dp"
-                android:layout_height="32dp"
-                android:padding="2dp"
-                android:scaleType="fitCenter"
-                app:layout_constraintStart_toStartOf="@+id/ivDateStarted"
-                app:layout_constraintTop_toTopOf="@+id/tvBookReadingTimeTitle"
-                app:srcCompat="@drawable/ic_iconscout_stopwatch_24"
-                app:tint="?colorPrimary" />
-
-            <ImageView
-                android:id="@+id/ivPages"
-                android:layout_width="32dp"
-                android:layout_height="32dp"
-                android:padding="2dp"
-                android:scaleType="fitCenter"
-                app:layout_constraintStart_toStartOf="@+id/ivBookReadingTime"
-                app:layout_constraintTop_toTopOf="@+id/tvBookPagesTitle"
-                app:srcCompat="@drawable/ic_iconscout_file_copy_alt_24"
-                app:tint="?colorPrimary" />
-
-            <ImageView
-                android:id="@+id/ivPublishYear"
-                android:layout_width="32dp"
-                android:layout_height="32dp"
-                android:padding="2dp"
-                android:scaleType="fitCenter"
-                app:layout_constraintStart_toStartOf="@+id/ivDateStarted"
-                app:layout_constraintTop_toTopOf="@+id/tvBookPublishYearTitle"
-                app:srcCompat="@drawable/ic_mdi_earth_24"
-                app:tint="?colorPrimary" />
-
-            <ImageView
-                android:id="@+id/ivISBN"
-                android:layout_width="32dp"
-                android:layout_height="32dp"
-                android:padding="3dp"
-                android:scaleType="fitCenter"
-                app:layout_constraintStart_toStartOf="@+id/ivDateStarted"
-                app:layout_constraintTop_toTopOf="@+id/tvBookISBNTitle"
-                app:srcCompat="@drawable/ic_iconscout_qrcode_scan_24"
-                app:tint="?colorPrimary" />
-
-            <ImageView
-                android:id="@+id/ivOLID"
-                android:layout_width="32dp"
-                android:layout_height="32dp"
-                android:padding="3dp"
-                android:scaleType="fitCenter"
-                app:layout_constraintStart_toStartOf="@+id/ivDateStarted"
-                app:layout_constraintTop_toTopOf="@+id/tvBookOLIDTitle"
-                app:srcCompat="@drawable/ic_iconscout_book_24"
-                app:tint="?colorPrimary" />
-
-            <ImageView
-                android:id="@+id/ivBookTags"
-                android:layout_width="32dp"
-                android:layout_height="32dp"
-                android:padding="3dp"
-                android:scaleType="fitCenter"
-                app:layout_constraintStart_toStartOf="@+id/ivDateStarted"
-                app:layout_constraintTop_toTopOf="@+id/tvBookTagsTitle"
-                app:srcCompat="@drawable/ic_iconscout_tag_alt_24"
-                app:tint="?colorPrimary" />
-
-            <ImageView
-                android:id="@+id/ivNotes"
-                android:layout_width="32dp"
-                android:layout_height="32dp"
-                android:padding="3dp"
-                android:scaleType="fitCenter"
-                app:layout_constraintStart_toStartOf="@+id/ivDateStarted"
-                app:layout_constraintTop_toTopOf="@+id/tvNotesTitle"
-                app:srcCompat="@drawable/ic_iconscout_comment_alt_notes_24"
-                app:tint="?colorPrimary" />
-
-            <ImageView
-                android:id="@+id/ivUrl"
-                android:layout_width="32dp"
-                android:layout_height="32dp"
-                android:padding="4dp"
-                android:scaleType="fitCenter"
-                app:layout_constraintBottom_toBottomOf="@+id/tvBookURL"
-                app:layout_constraintStart_toStartOf="@+id/ivDateStarted"
-                app:layout_constraintTop_toTopOf="@+id/tvBookURL"
-                app:srcCompat="@drawable/ic_iconscout_external_link_alt_24"
-                app:tint="?colorPrimary" />
-
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 

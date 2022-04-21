@@ -2,7 +2,6 @@ package software.mdev.bookstracker.ui.bookslist.fragments
 
 import android.content.Context
 import android.content.res.ColorStateList
-import android.content.res.Resources
 import android.os.Bundle
 import android.view.View
 import androidx.core.content.ContextCompat
@@ -31,10 +30,10 @@ import kotlinx.coroutines.MainScope
 import android.graphics.BitmapFactory
 import android.view.animation.AnimationUtils
 import androidx.core.content.res.ResourcesCompat
-import com.google.android.material.chip.Chip
-import kotlinx.android.synthetic.main.fragment_display_book.clBookTags
-import kotlinx.android.synthetic.main.fragment_display_book.ivBookCover
-import kotlinx.android.synthetic.main.fragment_display_book.tvBookStatus
+import androidx.recyclerview.widget.GridLayoutManager
+import com.google.gson.Gson
+import software.mdev.bookstracker.adapters.BookDetailsAdapter
+import software.mdev.bookstracker.data.db.entities.BookDetail
 import software.mdev.bookstracker.other.Functions
 import software.mdev.bookstracker.ui.bookslist.dialogs.AddEditBookDialog
 
@@ -45,6 +44,8 @@ class DisplayBookFragment : Fragment(R.layout.fragment_display_book) {
     private val args: DisplayBookFragmentArgs by navArgs()
     lateinit var book: Book
     lateinit var listActivity: ListActivity
+    private var layoutManager: GridLayoutManager? = null
+    private var adapter: BookDetailsAdapter? = null
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -53,6 +54,8 @@ class DisplayBookFragment : Fragment(R.layout.fragment_display_book) {
 
         book = args.book
 
+        val span = readDetailsMode()
+        setDetailsRV(listActivity, span)
         initialViewsSetup()
 
         ivBookCover.setOnClickListener {
@@ -191,6 +194,67 @@ class DisplayBookFragment : Fragment(R.layout.fragment_display_book) {
                 }
             }
         }
+
+        ivGrid.setOnClickListener {
+            animatShakeView(it)
+            if (layoutManager?.spanCount == 1) {
+                layoutManager?.spanCount = 2
+                showGridIcon(false)
+                saveDetailsMode(true)
+            } else {
+                layoutManager?.spanCount = 1
+                showGridIcon(true)
+                saveDetailsMode(false)
+            }
+
+            adapter?.notifyItemRangeChanged(0, adapter?.itemCount ?: 0)
+        }
+    }
+
+    private fun showGridIcon(show: Boolean) {
+        if (show) {
+            ivGrid.setImageDrawable(activity?.resources?.getDrawable(R.drawable.ic_iconscout_apps_24))
+            ivGrid.imageTintList = ColorStateList.valueOf(resources.getColor(R.color.grey_777))
+        } else {
+            ivGrid.setImageDrawable(activity?.resources?.getDrawable(R.drawable.ic_iconscout_align_justify_24))
+            ivGrid.imageTintList = ColorStateList.valueOf(resources.getColor(R.color.grey_777))
+        }
+    }
+
+    private fun saveDetailsMode(show: Boolean) {
+        var sharedPreferencesName = context?.getString(R.string.shared_preferences_name)
+        val sharedPref = context?.getSharedPreferences(sharedPreferencesName, Context.MODE_PRIVATE)
+        val editor = sharedPref?.edit()
+
+        editor?.apply {
+            putBoolean(Constants.SHARED_PREFERENCES_KEY_DETAILS_MODE, show)
+            apply()
+        }
+    }
+
+    private fun readDetailsMode(): Int {
+        var sharedPreferencesName = context?.getString(R.string.shared_preferences_name)
+        val sharedPref = context?.getSharedPreferences(sharedPreferencesName, Context.MODE_PRIVATE)
+
+        return if (sharedPref?.getBoolean(
+                Constants.SHARED_PREFERENCES_KEY_DETAILS_MODE,
+                true
+            ) == true
+        ) {
+            showGridIcon(false)
+            2
+        } else {
+            showGridIcon(true)
+            1
+        }
+    }
+
+    private fun setDetailsRV(activity: ListActivity, span: Int) {
+        layoutManager = GridLayoutManager(activity, span)
+        rvBookDetails.layoutManager = layoutManager
+
+        adapter = BookDetailsAdapter(requireContext())
+        rvBookDetails.adapter = adapter
     }
 
     private fun initialViewsSetup() {
@@ -226,110 +290,74 @@ class DisplayBookFragment : Fragment(R.layout.fragment_display_book) {
                 }
             }
 
-            setCover(book.bookCoverImg)
-            setISBN(book.bookISBN13, book.bookISBN10)
-            setOLID(book.bookOLID)
-            setPages(book.bookNumberOfPages)
-            activity?.let { setReadingTime(book.bookStartDate, book.bookFinishDate, it.resources) }
-            setPublishDate(book.bookPublishYear)
-            setFinishDate(book.bookFinishDate)
-            setStartDate(book.bookStartDate)
-            setFav(book.bookIsFav, book.bookStatus)
-            setNotes(book.bookNotes)
-            setTags(book.bookTags)
+            setDetails(book)
         }
     }
 
-    private fun setTags(tags: List<String>?) {
-        if (tags != null) {
-            tvBookTagsTitle.visibility = View.VISIBLE
-            clBookTags.visibility = View.VISIBLE
-            ivBookTags.visibility = View.VISIBLE
+    private fun setDetails(book: Book) {
+        setCover(book.bookCoverImg)
+        setFav(book.bookIsFav, book.bookStatus)
 
-            // remove current chips
-            val numberOfChips = cgTags.childCount
-            if (numberOfChips > 0) {
-                for (i in 0 until numberOfChips) {
-                    val child = cgTags.getChildAt(0) as Chip
-                    cgTags.removeView(child)
-                }
-            }
+        var details = emptyList<BookDetail>()
 
-            // add up to date chips
-            for (tag in tags) {
-                val chip = Chip(context)
-                chip.isCloseIconVisible = false
-                chip.text = tag
-                chip.isCloseIconEnabled = false
-                chip.isClickable = false
-                chip.isCheckable = false
-                chip.chipBackgroundColor = ColorStateList.valueOf(getAccentColor(listActivity))
-                context?.let { chip.setTextColor(it.getColor(R.color.colorDefaultBg)) }
-                cgTags.addView(chip as View)
-            }
-        }
-        else {
-            tvBookTagsTitle.visibility = View.GONE
-            clBookTags.visibility = View.GONE
-            ivBookTags.visibility = View.GONE
+        // below lines set order for displaying details
+        details = getBookDate(book.bookStartDate, details, Constants.detailStartDate)
+        details = getBookDate(book.bookFinishDate, details, Constants.detailFinishDate)
+        details = getReadingTime(book.bookStartDate, book.bookFinishDate, details)
+        details = getPages(book.bookNumberOfPages, details)
+        details = getPublishDate(book.bookPublishYear, details)
+        details = getTags(book.bookTags, details)
+        details = getISBN(book.bookISBN13, book.bookISBN10, details)
+        details = getOLID(book.bookOLID, details)
+        details = getNotes(book.bookNotes, details)
+        details = getOLIDURL(book.bookOLID, details)
+
+        adapter?.differ?.submitList(details)
+        adapter?.notifyDataSetChanged()
+    }
+
+    private fun getTags(tags: List<String>?, details: List<BookDetail>): List<BookDetail> {
+        return if (tags != null) {
+            val json = Gson().toJson(tags)
+            details + BookDetail(Constants.detailTags, json)
+        } else
+            details
+    }
+
+    private fun getPages(bookNumberOfPages: Int, details: List<BookDetail>): List<BookDetail> {
+        return if (bookNumberOfPages > 0) {
+            details + BookDetail(Constants.detailPages, bookNumberOfPages.toString())
+        } else {
+            details
         }
     }
 
-    private fun setPages(bookNumberOfPages: Int) {
-        if (bookNumberOfPages > 0) {
-            tvBookPagesTitle.visibility = View.VISIBLE
-            tvBookPages.visibility = View.VISIBLE
-            ivPages.visibility = View.VISIBLE
-
-            tvBookPages.text = bookNumberOfPages.toString()
-        }
-        else {
-            tvBookPagesTitle.visibility = View.GONE
-            tvBookPages.visibility = View.GONE
-            ivPages.visibility = View.GONE
-        }
-    }
-
-    private fun setReadingTime(
-        bookStartDate: String,
-        bookFinishDate: String,
-        resources: Resources
-    ) {
-        if (bookFinishDate != "none" &&
-            bookFinishDate != "null" &&
-            bookStartDate != "none" &&
-            bookStartDate != "null"
+    private fun getReadingTime(
+        start: String,
+        finish: String,
+        details: List<BookDetail>
+    ): List<BookDetail> {
+        return if (finish != "none" &&
+            finish != "null" &&
+            start != "none" &&
+            start != "null"
         ) {
-
-            val bookStartTimeStampLong = bookStartDate.toLong()
-            val bookFinishTimeStampLong = bookFinishDate.toLong()
-            val diff = bookFinishTimeStampLong - bookStartTimeStampLong
+            val startTimeStampLong = start.toLong()
+            val finishTimeStampLong = finish.toLong()
+            val diff = finishTimeStampLong - startTimeStampLong
             val result = Functions().convertLongToDays(diff, resources)
 
-            tvBookReadingTime.text = (result)
-
-            tvBookReadingTimeTitle.visibility = View.VISIBLE
-            tvBookReadingTime.visibility = View.VISIBLE
-            ivBookReadingTime.visibility = View.VISIBLE
+            details + BookDetail(Constants.detailReadingTime, result)
         } else {
-            tvBookReadingTimeTitle.visibility = View.GONE
-            tvBookReadingTime.visibility = View.GONE
-            ivBookReadingTime.visibility = View.GONE
+            details
         }
     }
 
-    private fun setPublishDate(bookPublishYear: Int) {
-        if (bookPublishYear > 0) {
-            tvBookPublishYearTitle.visibility = View.VISIBLE
-            tvBookPublishYear.visibility = View.VISIBLE
-            ivPublishYear.visibility = View.VISIBLE
-
-            tvBookPublishYear.text = bookPublishYear.toString()
-        }
-        else {
-            tvBookPublishYearTitle.visibility = View.GONE
-            tvBookPublishYear.visibility = View.GONE
-            ivPublishYear.visibility = View.GONE
+    private fun getPublishDate(bookPublishYear: Int, details: List<BookDetail>): List<BookDetail> {
+        return if (bookPublishYear > 0) {
+            details + BookDetail(Constants.detailPublishYear, bookPublishYear.toString())
+        } else {
+            details
         }
     }
 
@@ -343,7 +371,7 @@ class DisplayBookFragment : Fragment(R.layout.fragment_display_book) {
     }
 
     private fun animatShakeView(view: View) {
-        var anim = AnimationUtils.loadAnimation(context, R.anim.shake_1)
+        var anim = AnimationUtils.loadAnimation(context, R.anim.shake_1_light)
         view.startAnimation(anim)
     }
 
@@ -433,76 +461,49 @@ class DisplayBookFragment : Fragment(R.layout.fragment_display_book) {
         rbRatingIndicator.layoutParams = rbRatingIndicatorLayout
     }
 
-    private fun setISBN(bookISBN13: String, bookISBN10: String) {
-        if (bookISBN13 != Constants.DATABASE_EMPTY_VALUE && bookISBN13 != "") {
-            tvBookISBNTitle.visibility = View.VISIBLE
-            tvBookISBN.visibility = View.VISIBLE
-            ivISBN.visibility = View.VISIBLE
-
-            tvBookISBN.text = bookISBN13
-        } else if (bookISBN10 != Constants.DATABASE_EMPTY_VALUE && bookISBN10 != "") {
-            tvBookISBNTitle.visibility = View.VISIBLE
-            tvBookISBN.visibility = View.VISIBLE
-            ivISBN.visibility = View.VISIBLE
-
-            tvBookISBN.text = bookISBN10
-        } else {
-            tvBookISBNTitle.visibility = View.GONE
-            tvBookISBN.visibility = View.GONE
-            ivISBN.visibility = View.GONE
-        }
+    private fun getISBN(
+        bookISBN13: String,
+        bookISBN10: String,
+        details: List<BookDetail>
+    ): List<BookDetail> {
+        return if (bookISBN13 != Constants.DATABASE_EMPTY_VALUE && bookISBN13 != "")
+            details + BookDetail(Constants.detailISBN, bookISBN13)
+        else if (bookISBN10 != Constants.DATABASE_EMPTY_VALUE && bookISBN10 != "")
+            details + BookDetail(Constants.detailISBN, bookISBN10)
+        else
+            details
     }
 
-    private fun setNotes(bookNotes: String) {
-        if (bookNotes != Constants.EMPTY_STRING) {
-            tvNotesTitle.visibility = View.VISIBLE
-            tvNotes.visibility = View.VISIBLE
-            ivNotes.visibility = View.VISIBLE
-
-            tvNotes.text = bookNotes
-        } else {
-            tvNotesTitle.visibility = View.GONE
-            tvNotes.visibility = View.GONE
-            ivNotes.visibility = View.GONE
-        }
+    private fun getNotes(bookNotes: String, details: List<BookDetail>): List<BookDetail> {
+        return if (bookNotes != Constants.EMPTY_STRING)
+            details + BookDetail(Constants.detailNotes, bookNotes)
+        else
+            details
     }
 
-    private fun setOLID(bookOLID: String) {
-        if (bookOLID != Constants.DATABASE_EMPTY_VALUE && bookOLID != "") {
-            tvBookOLIDTitle.visibility = View.VISIBLE
-            tvBookOLID.visibility = View.VISIBLE
-            ivOLID.visibility = View.VISIBLE
-            tvBookURL.visibility = View.VISIBLE
-            ivUrl.visibility = View.VISIBLE
+    private fun getOLID(bookOLID: String, details: List<BookDetail>): List<BookDetail> {
+        return if (bookOLID != Constants.DATABASE_EMPTY_VALUE && bookOLID != "")
+            details + BookDetail(Constants.detailOLID, bookOLID)
+        else
+            details
+    }
 
+    private fun getOLIDURL(bookOLID: String, details: List<BookDetail>): List<BookDetail> {
+        return if (bookOLID != Constants.DATABASE_EMPTY_VALUE && bookOLID != "") {
             val olid: String = bookOLID
             val url = "https://openlibrary.org/books/$olid"
-            tvBookOLID.text = bookOLID
-            tvBookURL.text = url
-        } else {
-            tvBookOLIDTitle.visibility = View.GONE
-            tvBookOLID.visibility = View.GONE
-            ivOLID.visibility = View.GONE
-            tvBookURL.visibility = View.GONE
-            ivUrl.visibility = View.GONE
-        }
+
+            details + BookDetail(Constants.detailUrl, url)
+        } else
+            details
     }
 
-    private fun setFinishDate(bookFinishDate: String) {
-        if(bookFinishDate == "none" || bookFinishDate == "null") {
-            tvDateFinished.text = getString(R.string.not_set)
+    private fun getBookDate(date: String, details: List<BookDetail>, id: Int): List<BookDetail> {
+        return if (date == "none" || date == "null") {
+            details
         } else {
-            val bookFinishTimeStampLong = bookFinishDate.toLong()
-            tvDateFinished.text = convertLongToTime(bookFinishTimeStampLong)
-        }
-    }
-
-    private fun setStartDate(bookStartDate: String) {
-        if(bookStartDate == "none" || bookStartDate == "null") {
-            tvDateStarted.text = getString(R.string.not_set)
-        } else {
-            val bookStartTimeStampLong = bookStartDate.toLong()
-            tvDateStarted.text = convertLongToTime(bookStartTimeStampLong)
+            val dateTimeStampLong = date.toLong()
+            details + BookDetail(id, convertLongToTime(dateTimeStampLong))
         }
     }
 

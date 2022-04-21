@@ -101,6 +101,7 @@ object Constants {
     const val SHARED_PREFERENCES_KEY_TIME_TO_ASK_FOR_RATING = "KEY_TIME_TO_ASK_FOR_RATING"
     const val SHARED_PREFERENCES_KEY_RECOMMENDATIONS = "KEY_RECOMMENDATIONS"
     const val SHARED_PREFERENCES_KEY_SHOW_OL_ALERT = "KEY_SHOW_OL_ALERT"
+    const val SHARED_PREFERENCES_KEY_DETAILS_MODE = "KEY_SHOW_OL_ALERT"
     const val SHARED_PREFERENCES_REFRESHED = "refreshed"
     const val KEY_CHECK_FOR_UPDATES = "KEY_CHECK_FOR_UPDATES"
     const val KEY_TRASH = "KEY_TRASH"
@@ -161,4 +162,16 @@ object Constants {
     const val FROM_SEARCH = 1
     const val FROM_SCAN = 2
     const val FROM_DISPLAY = 3
+
+    // books details
+    const val detailStartDate = 0
+    const val detailFinishDate = 1
+    const val detailReadingTime = 2
+    const val detailPages = 3
+    const val detailPublishYear = 4
+    const val detailTags = 5
+    const val detailISBN = 6
+    const val detailOLID = 7
+    const val detailNotes = 8
+    const val detailUrl = 9
 }
