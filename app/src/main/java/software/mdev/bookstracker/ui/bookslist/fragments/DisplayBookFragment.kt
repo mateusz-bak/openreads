@@ -54,7 +54,8 @@ class DisplayBookFragment : Fragment(R.layout.fragment_display_book) {
 
         book = args.book
 
-        setDetailsRV(listActivity)
+        val span = readDetailsMode()
+        setDetailsRV(listActivity, span)
         initialViewsSetup()
 
         ivBookCover.setOnClickListener {
@@ -194,20 +195,62 @@ class DisplayBookFragment : Fragment(R.layout.fragment_display_book) {
             }
         }
 
-        // TODO save preference to shared preferences
-        // TODO animate button
         ivGrid.setOnClickListener {
-            if (layoutManager?.spanCount == 1)
+            animatShakeView(it)
+            if (layoutManager?.spanCount == 1) {
                 layoutManager?.spanCount = 2
-            else
+                showGridIcon(false)
+                saveDetailsMode(true)
+            } else {
                 layoutManager?.spanCount = 1
+                showGridIcon(true)
+                saveDetailsMode(false)
+            }
 
             adapter?.notifyItemRangeChanged(0, adapter?.itemCount ?: 0)
         }
     }
 
-    private fun setDetailsRV(activity: ListActivity) {
-        layoutManager = GridLayoutManager(activity, 2)
+    private fun showGridIcon(show: Boolean) {
+        if (show) {
+            ivGrid.setImageDrawable(activity?.resources?.getDrawable(R.drawable.ic_iconscout_apps_24))
+            ivGrid.imageTintList = ColorStateList.valueOf(resources.getColor(R.color.grey_777))
+        } else {
+            ivGrid.setImageDrawable(activity?.resources?.getDrawable(R.drawable.ic_iconscout_align_justify_24))
+            ivGrid.imageTintList = ColorStateList.valueOf(resources.getColor(R.color.grey_777))
+        }
+    }
+
+    private fun saveDetailsMode(show: Boolean) {
+        var sharedPreferencesName = context?.getString(R.string.shared_preferences_name)
+        val sharedPref = context?.getSharedPreferences(sharedPreferencesName, Context.MODE_PRIVATE)
+        val editor = sharedPref?.edit()
+
+        editor?.apply {
+            putBoolean(Constants.SHARED_PREFERENCES_KEY_DETAILS_MODE, show)
+            apply()
+        }
+    }
+
+    private fun readDetailsMode(): Int {
+        var sharedPreferencesName = context?.getString(R.string.shared_preferences_name)
+        val sharedPref = context?.getSharedPreferences(sharedPreferencesName, Context.MODE_PRIVATE)
+
+        return if (sharedPref?.getBoolean(
+                Constants.SHARED_PREFERENCES_KEY_DETAILS_MODE,
+                true
+            ) == true
+        ) {
+            showGridIcon(false)
+            2
+        } else {
+            showGridIcon(true)
+            1
+        }
+    }
+
+    private fun setDetailsRV(activity: ListActivity, span: Int) {
+        layoutManager = GridLayoutManager(activity, span)
         rvBookDetails.layoutManager = layoutManager
 
         adapter = BookDetailsAdapter(requireContext())
@@ -328,7 +371,7 @@ class DisplayBookFragment : Fragment(R.layout.fragment_display_book) {
     }
 
     private fun animatShakeView(view: View) {
-        var anim = AnimationUtils.loadAnimation(context, R.anim.shake_1)
+        var anim = AnimationUtils.loadAnimation(context, R.anim.shake_1_light)
         view.startAnimation(anim)
     }
 
