@@ -824,6 +824,7 @@ class AddEditBookDialog : DialogFragment() {
         btnStartDateCancel.visibility = viewVisibility
         btnStartDateSave.visibility = viewVisibility
         btnStartDateClear.visibility = viewVisibility
+        datePickerView.visibility = viewVisibility
     }
 
     private fun finishDatePickerVis(visibility: Boolean) {
@@ -836,6 +837,7 @@ class AddEditBookDialog : DialogFragment() {
         btnFinishDateCancel.visibility = viewVisibility
         btnFinishDateSave.visibility = viewVisibility
         btnFinishDateClear.visibility = viewVisibility
+        datePickerView.visibility = viewVisibility
     }
 
     private fun clearDateOfTime(orgDate: Long): Long {
