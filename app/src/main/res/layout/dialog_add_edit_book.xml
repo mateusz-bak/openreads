@@ -78,7 +78,7 @@
                             android:layout_height="wrap_content"
                             android:imeOptions="actionNext"
                             android:inputType="textCapSentences"
-                            android:maxLength="100"
+                            android:maxLength="200"
                             android:paddingEnd="50dp"
                             android:textColor="@color/colorDefaultText"
                             android:textSize="16sp" />
@@ -137,7 +137,7 @@
                             android:layout_height="wrap_content"
                             android:imeOptions="actionNext"
                             android:inputType="textCapWords"
-                            android:maxLength="100"
+                            android:maxLength="200"
                             android:paddingEnd="50dp"
                             android:textColor="@color/colorDefaultText"
                             android:textSize="16sp" />
