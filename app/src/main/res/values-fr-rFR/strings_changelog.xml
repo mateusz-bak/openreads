@@ -84,4 +84,17 @@
     <string name="changelog_1_12_0_c">Ajout du nom de l\'application aux listes de livres, diminution du rayon des boutons et des champs de texte.</string>
     <string name="changelog_1_12_0_d">Modification de l\'indicateur de progression du chargement.</string>
     <string name="changelog_1_12_0_e">Ajout des traductions manquantes.</string>
+    <string name="changelog_1_13_0_a">Books tags can be displayed in books lists (on/off switch in settings).</string>
+    <string name="changelog_1_13_0_b">Books details can be displayed as a list and as a grid.</string>
+    <string name="changelog_1_13_0_c">Sped up app\'s launch.</string>
+    <string name="changelog_1_13_0_d">Improved animation when going into book\'s details.</string>
+    <string name="changelog_1_13_0_e">Added German translation.</string>
+    <string name="changelog_1_13_0_f">Added French translation.</string>
+    <string name="changelog_1_13_0_g">Date picker can be scrolled in landscape mode. Thanks to @vbh </string>
+    <string name="changelog_1_13_0_h">Add/edit dialog won\'t crash on screen rotation. Thanks to @vbh </string>
+    <string name="changelog_1_13_0_i">Books with multiple tags will not be shown multiple times in books lists.</string>
+    <string name="changelog_1_13_0_j">Sort dialog now shows tags from \"to read\" books.</string>
+    <string name="changelog_1_13_0_k">Corrected tag\'s text color in book details page.</string>
+    <string name="changelog_1_13_0_l">Increased book title\'s and author\'s character limit to 200.</string>
+    <string name="changelog_1_13_0_m">In add/edit dialog 0 will not be displayed for number of pages and publish year.</string>
 </resources>
