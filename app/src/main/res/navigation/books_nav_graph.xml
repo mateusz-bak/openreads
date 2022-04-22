@@ -117,10 +117,10 @@
         <action
             android:id="@+id/action_booksFragment_to_displayBookFragment"
             app:destination="@id/displayBookFragment"
-            app:enterAnim="@anim/anim_enter_end"
-            app:exitAnim="@anim/fade_out"
-            app:popEnterAnim="@anim/anim_enter_start"
-            app:popExitAnim="@anim/anim_exit_end" />
+            app:enterAnim="@anim/enter_frag"
+            app:exitAnim="@anim/exit_frag"
+            app:popEnterAnim="@anim/pop_enter_frag"
+            app:popExitAnim="@anim/pop_exit_frag" />
         <action
             android:id="@+id/action_booksFragment_to_settingsFragment"
             app:destination="@id/settingsFragment" />
