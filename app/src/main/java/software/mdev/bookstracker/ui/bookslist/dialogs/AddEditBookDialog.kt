@@ -610,13 +610,13 @@ class AddEditBookDialog : DialogFragment() {
             object : AdapterView.OnItemSelectedListener {
                 override fun onItemSelected(
                     parent: AdapterView<*>,
-                    view: View,
+                    view: View?,
                     position: Int,
                     id: Long
                 ) {
-                    view.hideKeyboard()
+                    view?.hideKeyboard()
                     activity?.resources?.getColor(R.color.colorDefaultText)?.let {
-                        (parent.getChildAt(0) as TextView).setTextColor(
+                        (parent.getChildAt(0) as TextView?)?.setTextColor(
                             it
                         )
                     }
@@ -697,8 +697,16 @@ class AddEditBookDialog : DialogFragment() {
             }
         }
 
-        tietBookPages.setText(book.bookNumberOfPages.toString())
-        tietBookPublishYear.setText(book.bookPublishYear.toString())
+        if (book.bookNumberOfPages == 0)
+            tietBookPages.setText("")
+        else
+            tietBookPages.setText(book.bookNumberOfPages.toString())
+
+        if (book.bookPublishYear == 0)
+            tietBookPublishYear.setText("")
+        else
+            tietBookPublishYear.setText(book.bookPublishYear.toString())
+
         tietBookISBN.setText(book.bookISBN13)
         tietBookNotes.setText(book.bookNotes)
 

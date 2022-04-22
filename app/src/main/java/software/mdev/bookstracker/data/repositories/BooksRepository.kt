@@ -75,6 +75,8 @@ class BooksRepository (
     fun getSortedBooksByFinishDateDesc(bookStatus: String) = db.getBooksDao().getSortedBooksByFinishDateDesc(bookStatus)
     fun getSortedBooksByFinishDateAsc(bookStatus: String) = db.getBooksDao().getSortedBooksByFinishDateAsc(bookStatus)
 
+    fun getAllSortedBooksByTitleAsc() = db.getBooksDao().getAllSortedBooksByTitleAsc()
+
     fun getBookCount(bookStatus: String) = db.getBooksDao().getBookCount(bookStatus)
 
     fun getDeletedBooks() = db.getBooksDao().getDeletedBooks()

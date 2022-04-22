@@ -1,7 +1,9 @@
 package software.mdev.bookstracker.adapters
 
 import android.content.Context
+import android.content.res.ColorStateList
 import android.graphics.BitmapFactory
+import android.util.TypedValue
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -9,16 +11,20 @@ import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.recyclerview.widget.AsyncListDiffer
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
+import com.google.android.material.chip.Chip
+import kotlinx.android.synthetic.main.item_book.view.*
+import kotlinx.coroutines.MainScope
+import kotlinx.coroutines.launch
 import software.mdev.bookstracker.R
 import software.mdev.bookstracker.data.db.entities.Book
-import kotlinx.android.synthetic.main.item_book.view.*
 import software.mdev.bookstracker.other.Constants
 import java.text.SimpleDateFormat
 import java.util.*
 
 class BookAdapter(
     var context: Context,
-    private val whichFragment: String
+    private val whichFragment: String,
+    private val showTags: Boolean
 
 ) : RecyclerView.Adapter<BookAdapter.BookViewHolder>() {
     inner class BookViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView)
@@ -114,6 +120,12 @@ class BookAdapter(
             }
 
             setCover (this, curBook.bookCoverImg)
+
+            setTagsVisibility(showTags, holder.itemView)
+            MainScope().launch {
+                val tags = getTags(curBook.bookTags)
+                setTags(tags, holder.itemView)
+            }
         }
 
         holder.itemView.apply {
@@ -213,5 +225,53 @@ class BookAdapter(
         val date = Date(time)
         val format = SimpleDateFormat("dd MMM yyyy")
         return format.format(date)
+    }
+
+    private fun setTagsVisibility(showTags: Boolean, itemView: View) {
+        if (showTags) {
+            itemView.clBookTags.visibility = View.VISIBLE
+        } else {
+            itemView.clBookTags.visibility = View.GONE
+        }
+    }
+
+    private fun getTags(tags: List<String>?): List<String>? {
+        return if (tags != null && tags.isNotEmpty()) {
+            tags.sortedWith(String.CASE_INSENSITIVE_ORDER)
+        } else
+            null
+    }
+
+    private fun setTags(tags: List<String>?, itemView: View) {
+        if (tags != null) {
+            itemView.cgTags.removeAllViews()
+
+            for (tag in tags) {
+                val chip = Chip(context)
+                chip.text = tag
+                chip.isClickable = false
+                chip.isCheckable = false
+                chip.chipBackgroundColor = ColorStateList.valueOf(getThemeAccentColor(context))
+                chip.setTextColor(context.getColor(R.color.colorDefaultBg))
+                chip.ensureAccessibleTouchTarget(0)
+                chip.setEnsureMinTouchTargetSize(false)
+                chip.isContextClickable = false
+                chip.chipStartPadding = 0F
+                chip.chipEndPadding = 0F
+                chip.textStartPadding = 10F
+                chip.textEndPadding = 10F
+                chip.textSize = 12F
+                chip.minimumWidth = 0
+                chip.textAlignment = View.TEXT_ALIGNMENT_CENTER
+
+                itemView.cgTags.addView(chip as View)
+            }
+        }
+    }
+
+    private fun getThemeAccentColor(context: Context): Int {
+        val value = TypedValue()
+        context.theme.resolveAttribute(R.attr.colorAccent, value, true)
+        return value.data
     }
 }

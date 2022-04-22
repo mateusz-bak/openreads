@@ -92,6 +92,9 @@ interface BooksDao {
     @Query("SELECT * FROM Book WHERE (item_bookStatus LIKE :bookStatus AND item_bookIsDeleted LIKE 0) ORDER BY item_bookFinishDate ASC")
     fun getSortedBooksByFinishDateAsc(bookStatus: String): LiveData<List<Book>>
 
+    @Query("SELECT * FROM Book WHERE (item_bookIsDeleted LIKE 0) ORDER BY item_bookTitle_ASCII ASC")
+    fun getAllSortedBooksByTitleAsc(): LiveData<List<Book>>
+
     @Query("SELECT * FROM Book ORDER BY item_bookTitle_ASCII ASC")
     fun getBooksForBackup(): List<Book>
 
