@@ -151,7 +151,7 @@
     <string name="warning_take_me_back">Revenir en arrière !</string>
     <string name="btnAddScan">Scanner code à barres</string>
     <string name="tbScannerTip">Scanner le code-barre</string>
-    <string name="book_list_title">Landing page</string>
+    <string name="book_list_title">Page d\'accueil</string>
     <string name="finished_books">Livres terminés</string>
     <string name="in_progress_books">Livres en cours de lecture</string>
     <string name="to_read_books">Livres à lire</string>
@@ -172,7 +172,7 @@
     <string name="stats_pages_read">Pages lues</string>
     <string name="stats_avg_rating">Note moyenne des livres</string>
     <string name="stats_challenge">Défi de lecture</string>
-    <string name="stats_books_by_months">Read books by finish month</string>
+    <string name="stats_books_by_months">Lire les livres par mois de fin</string>
     <string name="need_more_data">Il faut plus de données pour cela</string>
     <string name="days">jours</string>
     <string name="stats_shortest_book">Le livre le plus court</string>
@@ -202,7 +202,7 @@
     <string name="month_10_short">oct</string>
     <string name="month_11_short">nov</string>
     <string name="month_12_short">déc</string>
-    <string name="stats_pages_by_months">Read pages by finish month</string>
+    <string name="stats_pages_by_months">Lire les pages par mois de fin</string>
     <string name="export_local_summary">Enregistrez vos livres dans un fichier local pour avoir toujours une sauvegarde à portée de main !</string>
     <string name="export_local_title">Créer une sauvegarde locale</string>
     <string name="insert_book_title">Titre du livre</string>
@@ -249,9 +249,9 @@
     <string name="pages_challenge_add">Ajouter des pages défi ?</string>
     <string name="tv_book_reading_time_title">Temps de lecture</string>
     <string name="day">jour</string>
-    <string name="show_tags_toggle_title">Show book tags in lists</string>
-    <string name="show_tags_toggle_on">Tags will be shown</string>
-    <string name="show_tags_toggle_off">Tags won\'t be shown</string>
-    <string name="help_translate_summary">Contribute by translating &appname; to languages you know!</string>
-    <string name="help_translate_title">Help translate</string>
+    <string name="show_tags_toggle_title">Afficher les étiquettes du livre dans les listes</string>
+    <string name="show_tags_toggle_on">Les étiquettes seront affichées</string>
+    <string name="show_tags_toggle_off">Les étiquettes ne seront pas affichées</string>
+    <string name="help_translate_summary">Contribuez en traduisant &appname; dans les langues que vous connaissez!</string>
+    <string name="help_translate_title">Aidez à la traduction</string>
 </resources>
