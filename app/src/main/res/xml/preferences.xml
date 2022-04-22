@@ -104,6 +104,15 @@
             android:key="KEY_FEEDBACK"
             android:summary="@string/contact_summary"
             android:title="@string/contact_title"/>
+
+        <Preference
+            android:icon="@drawable/ic_iconscout_language_24"
+            android:summary="@string/help_translate_summary"
+            android:title="@string/help_translate_title">
+            <intent
+                android:action="android.intent.action.VIEW"
+                android:data="@string/help_translate_url" />
+        </Preference>
     </PreferenceCategory>
 
 </PreferenceScreen>
