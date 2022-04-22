@@ -252,6 +252,6 @@
     <string name="show_tags_toggle_title">Pokaż tagi książek w listach</string>
     <string name="show_tags_toggle_on">Tagi zostaną wyświetlone</string>
     <string name="show_tags_toggle_off">Tagi nie zostaną wyświetlone</string>
-    <string name="help_translate_summary">Contribute by translating &appname; to languages you know!</string>
-    <string name="help_translate_title">Help translate</string>
+    <string name="help_translate_summary">Przyłóż się do rozwoju &appname; tłumacząc na znane Ci języki!</string>
+    <string name="help_translate_title">Pomóż w tłumaczeniu</string>
 </resources>
