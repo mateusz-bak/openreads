@@ -1,30 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="changelog_1_0_0_a">Pierwsza oficjalna wersja.</string>
     <string name="changelog_1_0_0_b">Trzy listy książek: przeczytane, w trakcie, na później.</string>
     <string name="changelog_1_0_0_c">Można teraz sortować i wyszukiwać książki.</string>
     <string name="changelog_1_0_0_d">Polskie tłumaczenie.</string>
-
     <string name="changelog_1_1_0_a">10 różnych kolorów akcentów.</string>
     <string name="changelog_1_1_0_b">Dodano ustawienia aplikacji.</string>
     <string name="changelog_1_1_0_c">Kosmetyczne zmiany interfejsu.</string>
-
     <string name="changelog_1_2_0_a">Skończone książki mają nowy parametr - data zakończenia czytania.</string>
     <string name="changelog_1_2_0_b">Zmiana koloru akcentu nie wymaga restartu aplikacji.</string>
     <string name="changelog_1_2_0_c">Rearanżacja UI/UX redesign, poprawiono kolory akcentów.</string>
     <string name="changelog_1_2_0_d">Wyszukiwanie i sortowanie książek ignoruje znaki diaktryczne.</string>
     <string name="changelog_1_2_0_e">Poprawiono zachowanie klawiatury podczas dodawania książek.</string>
-
     <string name="changelog_1_2_1_a">Dodano sprawdzanie aktualizacji na starcie oraz po kliknięciu na numer wersji w ustawieniach.</string>
-
     <string name="changelog_1_3_0_a">Dodano statystyki i roczne wyzwanie czytelnicze.</string>
     <string name="changelog_1_3_0_b">Książki mogą być filtrowane ze względu na datę zakończenia czytania.</string>
     <string name="changelog_1_3_0_c">Usunięte książki są przenoszone do kosza.</string>
     <string name="changelog_1_3_0_d">Zmiany w wyglądzie aplikacji.</string>
-
     <string name="changelog_1_4_0_a">Książki mogą być dodawane przez wyszukiwanie w bazie Open Library.</string>
     <string name="changelog_1_4_0_b">Książki dodane z Open Library posiadają okładki.</string>
     <string name="changelog_1_4_0_c">Książki mogą mieć także: datę rozpoczęcia czytania, ISBN oraz Open Library ID.</string>
-
     <string name="changelog_1_4_1_a">Naprawiono zdublowane wyświetlanie książek w listach.</string>
     <string name="changelog_1_4_1_b">Poprawiono wyświetlanie list: \'w trakcie\' i \'na później\'.</string>
     <string name="changelog_1_4_1_c">Poprawiono wyświetlanie przycisków ustawiania dat podczas dodawania ksiązek.</string>
@@ -32,17 +27,14 @@
     <string name="changelog_1_4_1_e">Podczas dodania ksiażki z Open Library użytkownik przekierowany jest na odpowiednią listę.</string>
     <string name="changelog_1_4_1_f">Wyniki wyszukiwania z Open Library bez okładek są odpowiednio oznaczone.</string>
     <string name="changelog_1_4_1_g">Wyzwanie czytelnicze nie może być ustawione na 0.</string>
-
     <string name="changelog_1_5_0_a">Dodano przyciski do kasowania tekstu z pól edycji i do kasowania ustawionych dat.</string>
     <string name="changelog_1_5_0_b">Poprawiono wyświetlanie książek na listach.</string>
     <string name="changelog_1_5_0_c">Daty i liczba stron nie są już wymagane.</string>
     <string name="changelog_1_5_0_d">Listy posiadają licznik książek na dolnym pasku.</string>
     <string name="changelog_1_5_0_e">Poprawiono wyświetlanie okładek przy dodawaniu książek.</string>
-
     <string name="changelog_1_5_1_a">Przy usuwaniu książki wymagane jest potwierdzenie.</string>
     <string name="changelog_1_5_1_b">Książka może być usunięta z poziomu wyświetlania szczegółów.</string>
     <string name="changelog_1_5_1_c">Poprawiono ostrzeżenie o niezaliczeniu książki do wyzwania.</string>
-
     <string name="changelog_1_6_0_a">Możesz teraz tworzyć kopie zapasowe książek.</string>
     <string name="changelog_1_6_0_b">Książki mogą być dodawane przez skanowanie kodów kreskowych.</string>
     <string name="changelog_1_6_0_c">Wizualne zmiany: ikony, przyciski, widoki.</string>
@@ -52,7 +44,6 @@
     <string name="changelog_1_6_0_g">Poprawiono wyświetlanie na telefonach z dużym rozmiarem czcionki lub interfejsu.</string>
     <string name="changelog_1_6_0_h">Ustawianie oceny nowych książek tylko dla przeczytanych.</string>
     <string name="changelog_1_6_0_i">Dodano przycisk wyszukiwania podczas szukania ksiązki w Open Library.</string>
-
     <string name="changelog_1_7_0_a">Books Tracker to teraz Openreads!</string>
     <string name="changelog_1_7_0_b">Statystyki zostały ulepszone.</string>
     <string name="changelog_1_7_0_c">Lista zmian zostanie wyświetlona po aktualizacji.</string>
@@ -63,42 +54,47 @@
     <string name="changelog_1_7_0_h">Naprawiono zachowanie przycisku wstecz.</string>
     <string name="changelog_1_7_0_i">Przeszukiwanie zapisanych książek nie uwzględnia już usuniętych.</string>
     <string name="changelog_1_7_0_j">Poprawiono tłumaczenie.</string>
-
     <string name="changelog_1_7_1_a">Poprawiono wyświetlanie na ekranach z małym dpi, poprawiono czytelność wykresów, naprawiono przycisk szczegółów książki, naprawiono pola przy dodawaniu książek.</string>
     <string name="changelog_1_7_1_b">Książki z liczbą stron 0 nie będą uwzględniane w statystykach.</string>
     <string name="changelog_1_7_1_c">Dopracowano górną belkę w listach, dodano animacje.</string>
-
     <string name="changelog_1_8_0_a">Okładki książek są teraz zapisywane w aplikacji.</string>
-    <string name="changelog_1_8_0_b">Książki mogą być od teraz oznaczane jako "ulubione"</string>
+    <string name="changelog_1_8_0_b">Książki mogą być od teraz oznaczane jako \"ulubione\"</string>
     <string name="changelog_1_8_0_c">Domyślna data zakończenia czytania to teraz aktualny dzień.</string>
     <string name="changelog_1_8_0_d">Ujednolicone dodawanie książek oraz wiele zmian wyglądu i zachowania.</string>
     <string name="changelog_1_8_0_e"><b>Ważne! Jeżeli po tej aktualizacji okładki Twoich książek zniknęły - edytuj te książki i zapisz je bez zmian.</b></string>
-
     <string name="changelog_1_8_1_a">Uaktualniono linki do repozytorium.</string>
-
     <string name="changelog_1_9_0_a">Możesz teraz dodawać notatki do książek.</string>
     <string name="changelog_1_9_0_b">Wiele zmian wizualnych.</string>
     <string name="changelog_1_9_0_c">Dodano nowe statystyki.</string>
     <string name="changelog_1_9_0_d">Możesz zmieniać tryb nocny/dzienny w ustawieniach.</string>
     <string name="changelog_1_9_0_e">Ulepszono kolory aplikacji.</string>
-
     <string name="changelog_1_9_1_a">Naprawiono noworoczny problem gdzie wyświetlane były tylko książki z obecnego roku.</string>
-
     <string name="changelog_1_10_0_a">Możesz teraz dodawać tagi do książek.</string>
     <string name="changelog_1_10_0_b">Książki mogą być filtrowane ze względu na tagi oraz rok zakończenia.</string>
     <string name="changelog_1_10_0_c">Po ukończeniu wyzwania czytelniczego dostaniesz trofeum!</string>
     <string name="changelog_1_10_0_d">Naprawiono zmianę oceny z widoku książki.</string>
     <string name="changelog_1_10_0_e">Naprawiono widok książki psujący się po zmianie statusu.</string>
-
     <string name="changelog_1_11_0_a">W statystykach zobaczysz okładki przeczytanych książek!</string>
     <string name="changelog_1_11_0_b">Przeczytane książki oraz strony mogą być teraz celem wyzwania rocznego.</string>
     <string name="changelog_1_11_0_c">Wyzwania z poprzednich lat mogą być edytowane.</string>
     <string name="changelog_1_11_0_d">Naprawiono błąd powodujący zniknięcie nieprzeczytanych książek przy filtrowaniu roku zakończenia czytania.</string>
     <string name="changelog_1_11_0_e">Rok pierwszego wydania jest teraz poprawnie pobierany z Open Library.</string>
-
     <string name="changelog_1_12_0_a">Szczegóły książki pokazują teraz czas czytania.</string>
     <string name="changelog_1_12_0_b">Status dodawanej nowej książki zostanie początkowo ustawiony na podstawie listy z której zaczęto dodawanie.</string>
     <string name="changelog_1_12_0_c">Dodano nazwę aplikacji do listy książek, zredukowano zaokrąglenie przycisków i pól tekstowych.</string>
     <string name="changelog_1_12_0_d">Zmieniono wygląd wskaźnika ładowania.</string>
     <string name="changelog_1_12_0_e">Dodano pominięte tłumaczenie.</string>
+    <string name="changelog_1_13_0_a">Tagi książek mogą być wyświetlane na listach książek (włącz/wyłącz w ustawieniach).</string>
+    <string name="changelog_1_13_0_b">Szczegóły książek mogą być wyświetlane jako lista i siatka.</string>
+    <string name="changelog_1_13_0_c">Przyśpieszono uruchamianie aplikacji.</string>
+    <string name="changelog_1_13_0_d">Ulepszono animację podczas wchodzenia do szczegółów książki.</string>
+    <string name="changelog_1_13_0_e">Dodano tłumaczenie niemieckie.</string>
+    <string name="changelog_1_13_0_f">Dodano tłumaczenie francuskie.</string>
+    <string name="changelog_1_13_0_g">Wybór daty może być przewijany w trybie poziomym. Podziękowania dla @vbh </string>
+    <string name="changelog_1_13_0_h">Okno dialogowe dodaj/edytuj książkę nie ulegnie awarii przy rotacji ekranu. Podziękowania dla @vbh </string>
+    <string name="changelog_1_13_0_i">Książki z wieloma tagami nie będą wyświetlane wielokrotnie na listach książek.</string>
+    <string name="changelog_1_13_0_j">Okno sortowania pokazuje teraz tagi z książek \"do przeczytania\".</string>
+    <string name="changelog_1_13_0_k">Poprawiono kolor tekstu tagu na stronie szczegółów książki.</string>
+    <string name="changelog_1_13_0_l">Zwiększony limit znaków w tytułach i autorach książki do 200.</string>
+    <string name="changelog_1_13_0_m">W oknie dodaj/edytuj 0 nie będzie wyświetlane dla liczby stron i roku publikacji.</string>
 </resources>
