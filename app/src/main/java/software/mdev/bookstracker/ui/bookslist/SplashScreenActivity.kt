@@ -56,7 +56,7 @@ class SplashScreenActivity : AppCompatActivity() {
 
     private fun launchListActivityDelay() {
         MainScope().launch {
-            delay(750L)
+            delay(500L)
 
             val intent = Intent(this@SplashScreenActivity, ListActivity::class.java)
             startActivity(intent)
