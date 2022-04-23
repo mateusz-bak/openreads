@@ -1,0 +1,7 @@
+- New: Books tags can be displayed in books lists (on/off switch in settings).
+- New: Books details can be displayed as a list and as a grid.
+- New: Added German translation.
+- New: Added French translation.
+- Fixed: Date picker can be scrolled in landscape mode. Thanks to @vbh
+- Fixed: Add/edit dialog won't crash on screen rotation. Thanks to @vbh
+- Fixed: Books with multiple tags will not be shown multiple times in books lists.
