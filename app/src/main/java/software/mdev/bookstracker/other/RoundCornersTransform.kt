@@ -6,7 +6,8 @@ import com.squareup.picasso.Transformation
 class RoundCornersTransform(private val radiusInPx: Float) : Transformation {
 
     override fun transform(source: Bitmap): Bitmap {
-        val bitmap = Bitmap.createBitmap(source.width, source.height, source.config)
+        val config = if (source.config != null) source.config else Bitmap.Config.ARGB_8888
+        val bitmap = Bitmap.createBitmap(source.width, source.height, config)
         val canvas = Canvas(bitmap)
         val paint = Paint(Paint.ANTI_ALIAS_FLAG or Paint.DITHER_FLAG)
         val shader = BitmapShader(source, Shader.TileMode.CLAMP, Shader.TileMode.CLAMP)
