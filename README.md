@@ -26,7 +26,7 @@
 - scanning book's barcode,
 - adding book's details manually.
 
-####  You can also see come cool statistics!  
+####  You can also see some cool statistics!  
 
 <br/><br/>
 ## Screenshots  
