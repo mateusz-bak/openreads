@@ -379,8 +379,7 @@ class DisplayBookFragment : Fragment(R.layout.fragment_display_book) {
         if (bookCoverImg == null)
             rearrangeViewsWhenCoverMissing()
         else {
-            if (ivBookCover.visibility == View.GONE)
-                rearrangeViewsWhenCoverNotMissing()
+            rearrangeViewsWhenCoverNotMissing()
 
             val bmp = BitmapFactory.decodeByteArray(bookCoverImg, 0, bookCoverImg.size)
             ivBookCover.setImageBitmap(bmp)
@@ -406,8 +405,16 @@ class DisplayBookFragment : Fragment(R.layout.fragment_display_book) {
         ivDeleteLayout.endToEnd = ConstraintLayout.LayoutParams.UNSET
 
         ivDeleteLayout.startToEnd = R.id.ivEdit
-
+        ivDeleteLayout.endToStart = R.id.ivGrid
         ivDelete.layoutParams = ivDeleteLayout
+
+        val ivGridLayout = ivGrid.layoutParams as ConstraintLayout.LayoutParams
+        ivGridLayout.bottomToBottom = ConstraintLayout.LayoutParams.UNSET
+        ivGridLayout.endToEnd = ConstraintLayout.LayoutParams.UNSET
+
+        ivGridLayout.endToEnd = R.id.guideline16
+        ivGridLayout.startToEnd = R.id.ivDelete
+        ivGrid.layoutParams = ivGridLayout
 
         ivFav.visibility = View.GONE
     }
@@ -459,6 +466,16 @@ class DisplayBookFragment : Fragment(R.layout.fragment_display_book) {
         rbRatingIndicatorLayout.marginStart = -20 // TODO ???
         rbRatingIndicatorLayout.marginEnd = 0 // TODO ???
         rbRatingIndicator.layoutParams = rbRatingIndicatorLayout
+
+        val ivDeleteLayout = ivDelete.layoutParams as ConstraintLayout.LayoutParams
+        ivDeleteLayout.startToEnd = R.id.ivEdit
+        ivDeleteLayout.endToStart = R.id.ivGrid
+        ivDelete.layoutParams = ivDeleteLayout
+
+        val ivGridLayout = ivGrid.layoutParams as ConstraintLayout.LayoutParams
+        ivGridLayout.startToEnd = R.id.ivDelete
+        ivGridLayout.endToEnd = R.id.tvBookAuthor
+        ivGrid.layoutParams = ivGridLayout
     }
 
     private fun getISBN(
