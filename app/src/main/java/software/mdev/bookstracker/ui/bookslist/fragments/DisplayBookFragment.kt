@@ -269,6 +269,7 @@ class DisplayBookFragment : Fragment(R.layout.fragment_display_book) {
                     ivBookStatusRead.visibility = View.VISIBLE
                     ivBookStatusInProgress.visibility = View.INVISIBLE
                     ivBookStatusToRead.visibility = View.INVISIBLE
+                    ivBookStatusNotFinished.visibility = View.INVISIBLE
                     rbRatingIndicator.visibility = View.VISIBLE
                     rearrangeViewsWhenFinished()
                 }
@@ -277,6 +278,16 @@ class DisplayBookFragment : Fragment(R.layout.fragment_display_book) {
                     ivBookStatusRead.visibility = View.INVISIBLE
                     ivBookStatusInProgress.visibility = View.VISIBLE
                     ivBookStatusToRead.visibility = View.INVISIBLE
+                    ivBookStatusNotFinished.visibility = View.INVISIBLE
+                    rbRatingIndicator.visibility = View.GONE
+                    rearrangeViewsWhenNotFinished()
+                }
+                Constants.BOOK_STATUS_NOT_FINISHED -> {
+                    tvBookStatus.text = getString(R.string.notFinished)
+                    ivBookStatusRead.visibility = View.INVISIBLE
+                    ivBookStatusInProgress.visibility = View.INVISIBLE
+                    ivBookStatusToRead.visibility = View.INVISIBLE
+                    ivBookStatusNotFinished.visibility = View.VISIBLE
                     rbRatingIndicator.visibility = View.GONE
                     rearrangeViewsWhenNotFinished()
                 }
@@ -285,6 +296,7 @@ class DisplayBookFragment : Fragment(R.layout.fragment_display_book) {
                     ivBookStatusRead.visibility = View.INVISIBLE
                     ivBookStatusInProgress.visibility = View.INVISIBLE
                     ivBookStatusToRead.visibility = View.VISIBLE
+                    ivBookStatusNotFinished.visibility = View.INVISIBLE
                     rbRatingIndicator.visibility = View.GONE
                     rearrangeViewsWhenNotFinished()
                 }
@@ -515,6 +527,7 @@ class DisplayBookFragment : Fragment(R.layout.fragment_display_book) {
             val bookStatusInt = when (book.bookStatus) {
                 Constants.BOOK_STATUS_IN_PROGRESS -> 1
                 Constants.BOOK_STATUS_TO_READ -> 2
+                Constants.BOOK_STATUS_NOT_FINISHED -> 3
                 else -> 0
             }
 

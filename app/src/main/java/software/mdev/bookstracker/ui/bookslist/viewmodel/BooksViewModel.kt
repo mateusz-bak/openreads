@@ -19,6 +19,7 @@ import software.mdev.bookstracker.api.models.OpenLibraryOLIDResponse
 import software.mdev.bookstracker.api.models.OpenLibrarySearchTitleResponse
 import software.mdev.bookstracker.data.db.entities.Language
 import software.mdev.bookstracker.data.repositories.LanguageRepository
+import software.mdev.bookstracker.other.Constants
 import software.mdev.bookstracker.other.Resource
 import java.lang.Exception
 import java.net.UnknownHostException
@@ -138,6 +139,8 @@ class BooksViewModel(
     }
 
     fun getDeletedBooks() = repository.getDeletedBooks()
+
+    fun getNotFinishedBooks() = repository.getSortedBooksByStartDateDesc(Constants.BOOK_STATUS_NOT_FINISHED)
 
     // OPEN LIBRARY API
     private fun handleSearchBooksInOpenLibraryResponse(response: Response<OpenLibrarySearchTitleResponse>): Resource<OpenLibrarySearchTitleResponse> {

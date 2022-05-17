@@ -20,6 +20,11 @@
         app:showAsAction="never" />
 
     <item
+        android:id="@+id/miNotFinished"
+        android:title="@string/notFinishedFragment"
+        app:showAsAction="never" />
+
+    <item
         android:id="@+id/miSettings"
         android:title="@string/settings"
         app:showAsAction="never" />

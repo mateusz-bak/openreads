@@ -133,5 +133,20 @@
         <action
             android:id="@+id/action_booksFragment_to_addEditBookFragment"
             app:destination="@id/addEditBookFragment" />
+        <action
+            android:id="@+id/action_booksFragment_to_notFinishedFragment"
+            app:destination="@id/notFinishedFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/notFinishedFragment"
+        android:name="software.mdev.bookstracker.ui.bookslist.fragments.NotFinishedFragment"
+        android:label="NotFinishedFragment" >
+        <action
+            android:id="@+id/action_notFinishedFragment_to_displayBookFragment"
+            app:destination="@id/displayBookFragment"
+            app:enterAnim="@anim/enter_frag"
+            app:exitAnim="@anim/exit_frag"
+            app:popEnterAnim="@anim/pop_enter_frag"
+            app:popExitAnim="@anim/pop_exit_frag" />
     </fragment>
 </navigation>

@@ -167,6 +167,12 @@ class AddEditBookDialog : DialogFragment() {
                 clBookRating.visibility = View.GONE
                 spBookStatus.setSelection(2)
             }
+            3 -> {
+                whatIsClicked = Constants.BOOK_STATUS_NOT_FINISHED
+                tvBookRating.visibility = View.GONE
+                clBookRating.visibility = View.GONE
+                spBookStatus.setSelection(3)
+            }
             else -> {
                 whatIsClicked = Constants.BOOK_STATUS_READ
                 rbBookRating.rating = book.bookRating
@@ -596,6 +602,7 @@ class AddEditBookDialog : DialogFragment() {
             bookStatuses.add(it.getString(R.string.finished))
             bookStatuses.add(it.getString(R.string.inProgress))
             bookStatuses.add(it.getString(R.string.toRead))
+            bookStatuses.add(it.getString(R.string.notFinished))
 
             val spinnerAdapter = ArrayAdapter(
                 requireActivity().baseContext,
@@ -652,6 +659,16 @@ class AddEditBookDialog : DialogFragment() {
                             )
                             whatIsClicked = Constants.BOOK_STATUS_TO_READ
                         }
+                        3 -> {
+                            ivBookStatus.setImageDrawable(
+                                activity?.baseContext?.resources?.let {
+                                    ResourcesCompat.getDrawable(
+                                        it, R.drawable.ic_iconscout_meh_24, null
+                                    )
+                                }
+                            )
+                            whatIsClicked = Constants.BOOK_STATUS_NOT_FINISHED
+                        }
                     }
 
                     setRatingAndDatesVis()
@@ -688,6 +705,12 @@ class AddEditBookDialog : DialogFragment() {
                 tvBookRating.visibility = View.GONE
                 clBookRating.visibility = View.GONE
                 spBookStatus.setSelection(1)
+            }
+            Constants.BOOK_STATUS_NOT_FINISHED -> {
+                whatIsClicked = Constants.BOOK_STATUS_NOT_FINISHED
+                tvBookRating.visibility = View.GONE
+                clBookRating.visibility = View.GONE
+                spBookStatus.setSelection(3)
             }
             Constants.BOOK_STATUS_TO_READ -> {
                 whatIsClicked = Constants.BOOK_STATUS_TO_READ
@@ -811,6 +834,24 @@ class AddEditBookDialog : DialogFragment() {
                 tvBookFinishDate.visibility = View.GONE
                 clBookFinishDate.visibility = View.GONE
             }
+            Constants.BOOK_STATUS_NOT_FINISHED -> {
+                tvBookRating.visibility = View.GONE
+                clBookRating.visibility = View.GONE
+
+                tvBookStartDate.visibility = View.VISIBLE
+                clBookStartDate.visibility = View.VISIBLE
+
+                tvBookFinishDate.visibility = View.GONE
+                clBookFinishDate.visibility = View.GONE
+
+                val layoutParams: ConstraintLayout.LayoutParams =
+                    clBookStartDate.layoutParams as ConstraintLayout.LayoutParams
+                layoutParams.endToEnd = tilBookPublishYear.id
+                clBookStartDate.layoutParams = layoutParams
+
+                if (animateRating)
+                    hintRatingDatesAnim(arrayOf(clBookStartDate))
+            }
         }
     }
 
@@ -877,13 +918,7 @@ class AddEditBookDialog : DialogFragment() {
         inputManager.hideSoftInputFromWindow(windowToken, 0)
     }
 
-    fun View.showKeyboard() {
-        val inputManager =
-            context.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
-        inputManager.toggleSoftInputFromWindow(windowToken, 0, 0)
-    }
-
-    fun showKeyboard(et: EditText, delay: Long) {
+    private fun showKeyboard(et: EditText, delay: Long) {
         val timer = Timer()
         timer.schedule(object : TimerTask() {
             override fun run() {
@@ -896,13 +931,13 @@ class AddEditBookDialog : DialogFragment() {
         }, delay)
     }
 
-    fun convertLongToTime(time: Long): String {
+    private fun convertLongToTime(time: Long): String {
         val date = Date(time)
         val format = SimpleDateFormat("dd MMM yyyy")
         return format.format(date)
     }
 
-    fun getDateFromDatePickerInMillis(datePicker: DatePicker): Long? {
+    private fun getDateFromDatePickerInMillis(datePicker: DatePicker): Long? {
         val day = datePicker.dayOfMonth
         val month = datePicker.month
         val year = datePicker.year
@@ -911,43 +946,7 @@ class AddEditBookDialog : DialogFragment() {
         return calendar.timeInMillis
     }
 
-    fun getAccentColor(context: Context): Int {
-        var accentColor = ContextCompat.getColor(context, R.color.green_500)
-
-        var sharedPreferencesName = context.getString(R.string.shared_preferences_name)
-        val sharedPref = context.getSharedPreferences(sharedPreferencesName, Context.MODE_PRIVATE)
-
-        var accent = sharedPref.getString(
-            Constants.SHARED_PREFERENCES_KEY_ACCENT,
-            Constants.THEME_ACCENT_DEFAULT
-        ).toString()
-
-        when (accent) {
-            Constants.THEME_ACCENT_LIGHT_GREEN -> accentColor =
-                ContextCompat.getColor(context, R.color.light_green)
-            Constants.THEME_ACCENT_ORANGE_500 -> accentColor =
-                ContextCompat.getColor(context, R.color.orange_500)
-            Constants.THEME_ACCENT_CYAN_500 -> accentColor =
-                ContextCompat.getColor(context, R.color.cyan_500)
-            Constants.THEME_ACCENT_GREEN_500 -> accentColor =
-                ContextCompat.getColor(context, R.color.green_500)
-            Constants.THEME_ACCENT_BROWN_400 -> accentColor =
-                ContextCompat.getColor(context, R.color.brown_400)
-            Constants.THEME_ACCENT_LIME_500 -> accentColor =
-                ContextCompat.getColor(context, R.color.lime_500)
-            Constants.THEME_ACCENT_PINK_300 -> accentColor =
-                ContextCompat.getColor(context, R.color.pink_300)
-            Constants.THEME_ACCENT_PURPLE_500 -> accentColor =
-                ContextCompat.getColor(context, R.color.purple_500)
-            Constants.THEME_ACCENT_TEAL_500 -> accentColor =
-                ContextCompat.getColor(context, R.color.teal_500)
-            Constants.THEME_ACCENT_YELLOW_500 -> accentColor =
-                ContextCompat.getColor(context, R.color.yellow_500)
-        }
-        return accentColor
-    }
-
-    fun convertLongToYear(time: Long): String {
+    private fun convertLongToYear(time: Long): String {
         val date = Date(time)
         val format = SimpleDateFormat("yyyy")
         return format.format(date)
