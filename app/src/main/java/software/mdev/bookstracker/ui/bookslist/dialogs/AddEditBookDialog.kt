@@ -67,7 +67,7 @@ class AddEditBookDialog : DialogFragment() {
     private var animateRating = false
     private var whatIsClicked = Constants.BOOK_STATUS_NOTHING
     private lateinit var takePhoto: ActivityResultLauncher<Void>
-    private lateinit var choosePhoto: ActivityResultLauncher<Array<String>>
+    private lateinit var choosePhoto: ActivityResultLauncher<String>
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -120,7 +120,7 @@ class AddEditBookDialog : DialogFragment() {
         }
 
         // callback for cover from files
-        choosePhoto = registerForActivityResult(ActivityResultContracts.OpenDocument()) {
+        choosePhoto = registerForActivityResult(ActivityResultContracts.GetContent()) {
             ivBookCover.setImageURI(it)
         }
 
@@ -1081,19 +1081,7 @@ class AddEditBookDialog : DialogFragment() {
     }
 
     private fun uploadCoverFromStorage() {
-        if (Functions().checkPermission(
-                activity as ListActivity,
-                android.Manifest.permission.READ_EXTERNAL_STORAGE
-            )
-        ) {
-            choosePhoto.launch(null)
-        } else {
-            Functions().requestPermission(
-                activity as ListActivity,
-                android.Manifest.permission.READ_EXTERNAL_STORAGE,
-                Constants.PERMISSION_READ_EXTERNAL_STORAGE_FROM_UPLOAD_COVER
-            )
-        }
+        choosePhoto.launch("*/*")
     }
 
     private fun uploadCoverFromCamera() {
