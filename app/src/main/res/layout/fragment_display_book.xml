@@ -169,6 +169,19 @@
                     app:tint="?colorPrimary" />
 
                 <ImageView
+                    android:id="@+id/ivBookStatusNotFinished"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="0dp"
+                    android:layout_marginTop="2dp"
+                    android:contentDescription="@string/ivBookStatusNotFinished"
+                    app:layout_constraintBottom_toBottomOf="@+id/tvBookStatus"
+                    app:layout_constraintStart_toStartOf="@+id/tvBookAuthor"
+                    app:layout_constraintTop_toTopOf="@+id/tvBookStatus"
+                    app:srcCompat="@drawable/ic_iconscout_meh_24"
+                    app:tint="?colorPrimary" />
+
+                <ImageView
                     android:id="@+id/ivBookStatusToRead"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"

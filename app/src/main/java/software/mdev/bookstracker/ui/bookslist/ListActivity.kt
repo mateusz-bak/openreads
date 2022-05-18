@@ -129,6 +129,7 @@ class ListActivity : AppCompatActivity() {
                         menu.findItem(R.id.miSearch).isVisible = true
                         menu.findItem(R.id.miSort).isVisible = true
                         menu.findItem(R.id.miStatistics).isVisible = true
+                        menu.findItem(R.id.miNotFinished).isVisible = true
                         menu.findItem(R.id.miSettings).isVisible = true
                     }
                     R.id.setupFragment -> {
@@ -139,6 +140,7 @@ class ListActivity : AppCompatActivity() {
                         menu.findItem(R.id.miSearch).isVisible = false
                         menu.findItem(R.id.miSort).isVisible = false
                         menu.findItem(R.id.miStatistics).isVisible = false
+                        menu.findItem(R.id.miNotFinished).isVisible = false
                         menu.findItem(R.id.miSettings).isVisible = false
                     }
                     else -> {
@@ -149,6 +151,7 @@ class ListActivity : AppCompatActivity() {
                         menu.findItem(R.id.miSearch).isVisible = false
                         menu.findItem(R.id.miSort).isVisible = false
                         menu.findItem(R.id.miStatistics).isVisible = false
+                        menu.findItem(R.id.miNotFinished).isVisible = false
                         menu.findItem(R.id.miSettings).isVisible = false
 
                     }
@@ -173,6 +176,10 @@ class ListActivity : AppCompatActivity() {
                     R.id.statisticsFragment -> {
                         supportActionBar?.setDisplayShowTitleEnabled(true)
                         supportActionBar?.title = this.getString(R.string.statisticsFragment)
+                    }
+                    R.id.notFinishedFragment -> {
+                        supportActionBar?.setDisplayShowTitleEnabled(true)
+                        supportActionBar?.title = this.getString(R.string.notFinishedFragment)
                     }
                     R.id.settingsFragment -> {
                         supportActionBar?.setDisplayShowTitleEnabled(true)
@@ -300,6 +307,7 @@ class ListActivity : AppCompatActivity() {
         when (item.itemId) {
             R.id.miSettings -> booksNavHostFragment.findNavController().navigate(R.id.settingsFragment)
             R.id.miStatistics -> booksNavHostFragment.findNavController().navigate(R.id.statisticsFragment)
+            R.id.miNotFinished -> booksNavHostFragment.findNavController().navigate(R.id.notFinishedFragment)
             R.id.miSearch -> onSearchRequested()
             R.id.miSort -> showSortBottomSheetDialog()
             android.R.id.home -> onBackPressed()

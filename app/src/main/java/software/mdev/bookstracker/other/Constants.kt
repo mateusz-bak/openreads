@@ -5,6 +5,7 @@ object Constants {
     const val BOOK_STATUS_READ = "read"
     const val BOOK_STATUS_IN_PROGRESS = "in_progress"
     const val BOOK_STATUS_TO_READ = "to_read"
+    const val BOOK_STATUS_NOT_FINISHED = "not_finished"
     const val BOOK_STATUS_NOTHING = "nothing"
 
     const val DATABASE_NAME = "Book"

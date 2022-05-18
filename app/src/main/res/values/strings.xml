@@ -274,4 +274,7 @@
     <string name="help_translate_summary">Contribute by translating &appname; to languages you know!</string>
     <string name="help_translate_title">Help translate</string>
     <string name="help_translate_url" translatable="false">https://crwd.in/openreads-android</string>
+    <string name="notFinishedFragment">Not finished books</string>
+    <string name="notFinished">Not finished</string>
+    <string name="ivBookStatusNotFinished">Book is not finished</string>
 </resources>
