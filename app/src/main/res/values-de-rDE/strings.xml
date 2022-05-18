@@ -254,4 +254,7 @@
     <string name="show_tags_toggle_off">Tags werden nicht angezeigt</string>
     <string name="help_translate_summary">Beteiligen Sie sich, indem Sie &appname; in Sprachen übersetzen, die Sie kennen!</string>
     <string name="help_translate_title">Beim Übersetzen helfen</string>
+    <string name="notFinishedFragment">Not finished books</string>
+    <string name="notFinished">Not finished</string>
+    <string name="ivBookStatusNotFinished">Book is not finished</string>
 </resources>
