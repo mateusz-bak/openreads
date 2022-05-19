@@ -266,7 +266,8 @@ class BookAdapter(
 
                 itemView.cgTags.addView(chip as View)
             }
-        }
+        } else
+            itemView.cgTags.removeAllViews()
     }
 
     private fun getThemeAccentColor(context: Context): Int {
