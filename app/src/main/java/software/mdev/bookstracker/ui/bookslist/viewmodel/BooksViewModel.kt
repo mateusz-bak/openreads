@@ -191,6 +191,8 @@ class BooksViewModel(
                             for (isbn in item.isbn) {
 
                                 try {
+                                    val coverId = item.cover_i
+
                                     showLoadingCircle.postValue(true)
                                     val response =
                                         openLibraryRepository.getBookFromISBN("$isbn.json")
@@ -207,6 +209,11 @@ class BooksViewModel(
                                     handledResponse.data?.authors = authorsList
                                     handledResponse.data?.publish_date =
                                         item.first_publish_year.toString()
+                                    if (handledResponse.data?.covers == null) {
+                                        if (coverId != 0) {
+                                            handledResponse.data?.covers = listOf(coverId)
+                                        }
+                                    }
 
                                     if (openLibraryBooksByOLID.value == null) {
                                         var emptyList =
