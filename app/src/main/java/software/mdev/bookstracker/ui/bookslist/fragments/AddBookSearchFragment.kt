@@ -431,8 +431,8 @@ class AddBookSearchFragment : Fragment(R.layout.fragment_add_book_search) {
                 bookOLID = bookOLID.replace("/books/", "")
             }
 
-            if (resource.data!!.covers != null)
-                bookCoverUrl = resource.data!!.covers[0].toString()
+            if (resource.data!!.covers != null && resource.data!!.covers!!.isNotEmpty())
+                bookCoverUrl = resource.data!!.covers!![0].toString()
 
             var book = Book(bookTitle, bookAuthor)
             book.bookNumberOfPages = bookPages
