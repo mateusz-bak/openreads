@@ -1,5 +1,8 @@
 package software.mdev.bookstracker.adapters
 
+import android.content.Context
+import android.content.res.ColorStateList
+import android.util.TypedValue
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -89,8 +92,9 @@ class FoundBookAdapter(
                         tvBookAuthor.text = holder.itemView.context.getString(R.string.unknown_author)
                     }
 
-                    if (curBook.data.covers != null) {
+                    if (curBook.data.covers != null && curBook.data.covers!!.isNotEmpty()) {
                         viewModel.showLoadingCircle.postValue(true)
+                        ivBookCover.setImageTintList(null)
                         val circularProgressDrawable = CircularProgressDrawable(this.context)
                         circularProgressDrawable.strokeWidth = 5f
                         circularProgressDrawable.centerRadius = 30f
@@ -102,7 +106,7 @@ class FoundBookAdapter(
                         )
                         circularProgressDrawable.start()
 
-                        var coverID = curBook.data.covers[0]
+                        var coverID = curBook.data.covers!![0]
                         var coverUrl = "https://covers.openlibrary.org/b/id/$coverID-M.jpg"
 
                         viewModel.showLoadingCircle.postValue(true)
@@ -119,11 +123,15 @@ class FoundBookAdapter(
 
                         viewModel.showLoadingCircle.postValue(false)
                     } else {
+                        tvCoverMissing.visibility = View.VISIBLE
                         ivBookCover.setImageDrawable(holder.itemView.context.resources?.let {
                             ResourcesCompat.getDrawable(
                                 it, R.drawable.ic_iconscout_book_24, null
                             )
                         })
+                        val themeColor = getThemeAccentColor(holder.itemView.context)
+                        val colorStateList = ColorStateList.valueOf(themeColor)
+                        ivBookCover.setImageTintList(colorStateList)
                     }
 
                     if (curBook.data.isbn_13 != null) {
@@ -166,6 +174,12 @@ class FoundBookAdapter(
                 onBookClickListener?.let { it(curBook) }
             }
         }
+    }
+
+    private fun getThemeAccentColor(context: Context): Int {
+        val value = TypedValue()
+        context.theme.resolveAttribute(R.attr.colorAccent, value, true)
+        return value.data
     }
 
     private fun displayPublishYear(view: View, curBook: Resource<OpenLibraryOLIDResponse>) {

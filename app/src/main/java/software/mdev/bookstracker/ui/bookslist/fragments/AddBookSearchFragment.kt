@@ -234,7 +234,7 @@ class AddBookSearchFragment : Fragment(R.layout.fragment_add_book_search) {
                         if (booksResponseCleaned != null) {
                             if (booksResponseCleaned.isNotEmpty()) {
                                 searchByOLIDJob =
-                                    viewModel.getBooksByOLID(booksResponseCleaned, context)
+                                    viewModel.getBooksFromOpenLibrary(booksResponseCleaned, context)
                             } else {
                                 Toast.makeText(context?.applicationContext, R.string.toast_no_results_from_OL, Toast.LENGTH_SHORT).show()
                             }
@@ -412,7 +412,7 @@ class AddBookSearchFragment : Fragment(R.layout.fragment_add_book_search) {
             if (resource.data!!.title != null)
                 bookTitle = resource.data!!.title
 
-            if (resource.data!!.authors != null)
+            if (resource.data!!.authors != null && resource.data!!.authors.isNotEmpty())
                 bookAuthor = resource.data!!.authors[0].key
 
             if (resource.data!!.number_of_pages != null)
@@ -431,8 +431,8 @@ class AddBookSearchFragment : Fragment(R.layout.fragment_add_book_search) {
                 bookOLID = bookOLID.replace("/books/", "")
             }
 
-            if (resource.data!!.covers != null)
-                bookCoverUrl = resource.data!!.covers[0].toString()
+            if (resource.data!!.covers != null && resource.data!!.covers!!.isNotEmpty())
+                bookCoverUrl = resource.data!!.covers!![0].toString()
 
             var book = Book(bookTitle, bookAuthor)
             book.bookNumberOfPages = bookPages

@@ -7,6 +7,9 @@ class OpenLibraryRepository {
     suspend fun searchBooksInOpenLibrary(searchQuery: String) =
         RetrofitInstance.api.getBooksFromOpenLibrary(searchQuery)
 
+    suspend fun getBookFromISBN(isbn: String) =
+        RetrofitInstance.apiOLID.getBookFromISBN(isbn)
+
     suspend fun getBookFromOLID(olid: String) =
         RetrofitInstance.apiOLID.getBookFromOLID(olid)
 
