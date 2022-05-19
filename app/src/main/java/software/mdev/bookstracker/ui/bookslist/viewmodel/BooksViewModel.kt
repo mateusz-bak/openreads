@@ -179,31 +179,102 @@ class BooksViewModel(
         return Resource.Error(response.message())
     }
 
-    fun getBooksByOLID(list: MutableList<OpenLibraryBook>?, context: Context?) = viewModelScope.launch {
-        showLoadingCircle.postValue(true)
+    fun getBooksFromOpenLibrary(list: MutableList<OpenLibraryBook>?, context: Context?) =
+        viewModelScope.launch {
+            showLoadingCircle.postValue(true)
 
-        if (list != null) {
-            for (item in list) {
+            if (list != null && list.isNotEmpty()) {
+                for (item in list) {
 
-                item.isbn?.let {
-                    for (isbn in it) {
+                    if (item.isbn != null) {
+                        if (item.isbn.isNotEmpty()) {
+                            for (isbn in item.isbn) {
 
+                                try {
+                                    showLoadingCircle.postValue(true)
+                                    val response =
+                                        openLibraryRepository.getBookFromISBN("$isbn.json")
+                                    showLoadingCircle.postValue(true)
+                                    val handledResponse = handleGetBooksByOLIDResponse(response)
+
+                                    var authorsList = emptyList<OpenLibraryOLIDResponse.Author>()
+
+                                    if ( item.author_name != null && item.author_name.isNotEmpty()) {
+                                        for ((j, _) in item.author_name.withIndex()) {
+                                            authorsList += OpenLibraryOLIDResponse.Author(item.author_name[j])
+                                        }
+                                    }
+                                    handledResponse.data?.authors = authorsList
+                                    handledResponse.data?.publish_date =
+                                        item.first_publish_year.toString()
+
+                                    if (openLibraryBooksByOLID.value == null) {
+                                        var emptyList =
+                                            emptyList<Resource<OpenLibraryOLIDResponse>>()
+                                        var listToPost: List<Resource<OpenLibraryOLIDResponse>> =
+                                            emptyList + handledResponse
+
+                                        showLoadingCircle.postValue(false)
+                                        if (isActive) {
+                                            showLoadingCircle.postValue(true)
+                                            openLibraryBooksByOLID.postValue(listToPost)
+                                        }
+                                    } else {
+                                        showLoadingCircle.postValue(false)
+                                        if (isActive) {
+                                            showLoadingCircle.postValue(true)
+                                            openLibraryBooksByOLID.postValue(
+                                                openLibraryBooksByOLID.value?.plus(
+                                                    handleGetBooksByOLIDResponse(response)
+                                                )
+                                            )
+                                        }
+                                    }
+                                    showLoadingCircle.postValue(false)
+                                } catch (e: Exception) {
+                                    Log.e("OpenLibrary connection error", "in getBooksByOLID: $e")
+                                    showLoadingCircle.postValue(false)
+
+                                    when (e) {
+                                        is UnknownHostException -> Toast.makeText(
+                                            context?.applicationContext,
+                                            R.string.toast_no_connection_to_OL,
+                                            Toast.LENGTH_SHORT
+                                        ).show()
+                                    }
+                                }
+                            }
+                        }
+                    } else {
                         try {
+                            val coverId = item.cover_i
+
                             showLoadingCircle.postValue(true)
-                            val response = openLibraryRepository.getBookFromOLID("$isbn.json")
+                            val key = item.key.replace("/works/", "")
+                            val response =
+                                openLibraryRepository.getBookFromOLID(key)
                             showLoadingCircle.postValue(true)
                             val handledResponse = handleGetBooksByOLIDResponse(response)
 
-                                var authorsList = emptyList<OpenLibraryOLIDResponse.Author>()
+                            var authorsList = emptyList<OpenLibraryOLIDResponse.Author>()
 
-                                for ((j, i) in item.author_name.withIndex()) {
+                            if ( item.author_name != null && item.author_name.isNotEmpty()) {
+                                for ((j, _) in item.author_name.withIndex()) {
                                     authorsList += OpenLibraryOLIDResponse.Author(item.author_name[j])
                                 }
-                                handledResponse.data?.authors = authorsList
-                                handledResponse.data?.publish_date = item.first_publish_year.toString()
+                            }
+                            handledResponse.data?.authors = authorsList
+                            handledResponse.data?.publish_date =
+                                item.first_publish_year.toString()
+                            if (handledResponse.data?.covers == null) {
+                                if (coverId != 0) {
+                                    handledResponse.data?.covers = listOf(coverId)
+                                }
+                            }
 
                             if (openLibraryBooksByOLID.value == null) {
-                                var emptyList = emptyList<Resource<OpenLibraryOLIDResponse>>()
+                                var emptyList =
+                                    emptyList<Resource<OpenLibraryOLIDResponse>>()
                                 var listToPost: List<Resource<OpenLibraryOLIDResponse>> =
                                     emptyList + handledResponse
 
@@ -236,18 +307,6 @@ class BooksViewModel(
                 }
             }
         }
-    }
-
-//    fun handleGetAuthorFromOLID(response: Response<OpenLibraryAuthor>): Resource<OpenLibraryAuthor> {
-//        if (response.isSuccessful) {
-//            response.body()?.let { resultResponse ->
-//                return Resource.Success(resultResponse)
-//            }
-//        }
-//        return Resource.Error(response.message())
-//    }
-//
-//    suspend fun getAuthorFromOLID(author: String) =  openLibraryRepository.getAuthorFromOLID(author)
 
     fun getLanguages() = languageRepository.getLanguages()
 
