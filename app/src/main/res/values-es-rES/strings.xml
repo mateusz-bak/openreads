@@ -57,8 +57,8 @@
     <string name="accent_pink">Rosa</string>
     <string name="accent_purple">Morado</string>
     <string name="accent_teal">Azul</string>
-    <string name="accent_yellow">Yellow</string>
-    <string name="accent_name_title">Color principal</string>
+    <string name="accent_yellow">Amarillo</string>
+    <string name="accent_name_title">Accent color</string>
     <string name="first_time_toggle_title">Mostrar pantalla de bienvenida</string>
     <string name="first_time_toggle_off">No se mostrará después de reiniciar la aplicación</string>
     <string name="first_time_toggle_on">Se mostrará después de reiniciar la aplicación</string>
