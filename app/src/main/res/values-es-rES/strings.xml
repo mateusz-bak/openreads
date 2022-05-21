@@ -4,26 +4,26 @@
 ]>
 <resources>
     <!-- Images descriptions -->
-    <string name="fabEditBook">Edit displayed book</string>
+    <string name="fabEditBook">Editar el libro mostrado</string>
     <string name="ivBookStatusRead">Libros terminados</string>
-    <string name="ivBookStatusInProgress">Book is in progress</string>
-    <string name="ivBookStatusToRead">Book is \"to read\"</string>
-    <string name="fabAddBook">Add a new book</string>
-    <string name="ivSeparator1">Separator between search and sort</string>
-    <string name="rbRatingIndicator">This book is finished</string>
-    <string name="ivInProgressIndicator">This book is in progress</string>
-    <string name="ivToReadIndicator">This book is to read</string>
+    <string name="ivBookStatusInProgress">Libro está en progreso</string>
+    <string name="ivBookStatusToRead">Libro está \"por leer\"</string>
+    <string name="fabAddBook">Añade un nuevo libro</string>
+    <string name="ivSeparator1">Separador entre buscar y ordenar</string>
+    <string name="rbRatingIndicator">Este libro está finalizado</string>
+    <string name="ivInProgressIndicator">Este libro está en curso</string>
+    <string name="ivToReadIndicator">Este libro es para leer</string>
     <!-- In-app strings -->
-    <string name="readFragment">Finished</string>
-    <string name="inProgressFragment">In progress</string>
-    <string name="toReadFragment">For later</string>
-    <string name="btnAdderSaveBook">Save</string>
-    <string name="finished">Finished</string>
-    <string name="inProgress">In progress</string>
-    <string name="toRead">For later</string>
-    <string name="tvBookTitle">Enter a title</string>
-    <string name="tvBookAuthor">Enter an author</string>
-    <string name="tvBookStatus">Book status</string>
+    <string name="readFragment">Terminado</string>
+    <string name="inProgressFragment">En progreso</string>
+    <string name="toReadFragment">Para más tarde</string>
+    <string name="btnAdderSaveBook">Guardar</string>
+    <string name="finished">Terminado</string>
+    <string name="inProgress">En progreso</string>
+    <string name="toRead">Para más tarde</string>
+    <string name="tvBookTitle">Introduzca un título</string>
+    <string name="tvBookAuthor">Introduzca un autor</string>
+    <string name="tvBookStatus">Estado del libro</string>
     <string name="etSearch">Search</string>
     <string name="sbWarningAuthor">Fill in the author!</string>
     <string name="sbWarningTitle">Fill in the title!</string>
