@@ -269,6 +269,7 @@ class DisplayBookFragment : Fragment(R.layout.fragment_display_book) {
                     ivBookStatusRead.visibility = View.VISIBLE
                     ivBookStatusInProgress.visibility = View.INVISIBLE
                     ivBookStatusToRead.visibility = View.INVISIBLE
+                    ivBookStatusNotFinished.visibility = View.INVISIBLE
                     rbRatingIndicator.visibility = View.VISIBLE
                     rearrangeViewsWhenFinished()
                 }
@@ -277,6 +278,16 @@ class DisplayBookFragment : Fragment(R.layout.fragment_display_book) {
                     ivBookStatusRead.visibility = View.INVISIBLE
                     ivBookStatusInProgress.visibility = View.VISIBLE
                     ivBookStatusToRead.visibility = View.INVISIBLE
+                    ivBookStatusNotFinished.visibility = View.INVISIBLE
+                    rbRatingIndicator.visibility = View.GONE
+                    rearrangeViewsWhenNotFinished()
+                }
+                Constants.BOOK_STATUS_NOT_FINISHED -> {
+                    tvBookStatus.text = getString(R.string.notFinished)
+                    ivBookStatusRead.visibility = View.INVISIBLE
+                    ivBookStatusInProgress.visibility = View.INVISIBLE
+                    ivBookStatusToRead.visibility = View.INVISIBLE
+                    ivBookStatusNotFinished.visibility = View.VISIBLE
                     rbRatingIndicator.visibility = View.GONE
                     rearrangeViewsWhenNotFinished()
                 }
@@ -285,6 +296,7 @@ class DisplayBookFragment : Fragment(R.layout.fragment_display_book) {
                     ivBookStatusRead.visibility = View.INVISIBLE
                     ivBookStatusInProgress.visibility = View.INVISIBLE
                     ivBookStatusToRead.visibility = View.VISIBLE
+                    ivBookStatusNotFinished.visibility = View.INVISIBLE
                     rbRatingIndicator.visibility = View.GONE
                     rearrangeViewsWhenNotFinished()
                 }
@@ -379,8 +391,7 @@ class DisplayBookFragment : Fragment(R.layout.fragment_display_book) {
         if (bookCoverImg == null)
             rearrangeViewsWhenCoverMissing()
         else {
-            if (ivBookCover.visibility == View.GONE)
-                rearrangeViewsWhenCoverNotMissing()
+            rearrangeViewsWhenCoverNotMissing()
 
             val bmp = BitmapFactory.decodeByteArray(bookCoverImg, 0, bookCoverImg.size)
             ivBookCover.setImageBitmap(bmp)
@@ -406,8 +417,16 @@ class DisplayBookFragment : Fragment(R.layout.fragment_display_book) {
         ivDeleteLayout.endToEnd = ConstraintLayout.LayoutParams.UNSET
 
         ivDeleteLayout.startToEnd = R.id.ivEdit
-
+        ivDeleteLayout.endToStart = R.id.ivGrid
         ivDelete.layoutParams = ivDeleteLayout
+
+        val ivGridLayout = ivGrid.layoutParams as ConstraintLayout.LayoutParams
+        ivGridLayout.bottomToBottom = ConstraintLayout.LayoutParams.UNSET
+        ivGridLayout.endToEnd = ConstraintLayout.LayoutParams.UNSET
+
+        ivGridLayout.endToEnd = R.id.guideline16
+        ivGridLayout.startToEnd = R.id.ivDelete
+        ivGrid.layoutParams = ivGridLayout
 
         ivFav.visibility = View.GONE
     }
@@ -459,6 +478,16 @@ class DisplayBookFragment : Fragment(R.layout.fragment_display_book) {
         rbRatingIndicatorLayout.marginStart = -20 // TODO ???
         rbRatingIndicatorLayout.marginEnd = 0 // TODO ???
         rbRatingIndicator.layoutParams = rbRatingIndicatorLayout
+
+        val ivDeleteLayout = ivDelete.layoutParams as ConstraintLayout.LayoutParams
+        ivDeleteLayout.startToEnd = R.id.ivEdit
+        ivDeleteLayout.endToStart = R.id.ivGrid
+        ivDelete.layoutParams = ivDeleteLayout
+
+        val ivGridLayout = ivGrid.layoutParams as ConstraintLayout.LayoutParams
+        ivGridLayout.startToEnd = R.id.ivDelete
+        ivGridLayout.endToEnd = R.id.tvBookAuthor
+        ivGrid.layoutParams = ivGridLayout
     }
 
     private fun getISBN(
@@ -515,6 +544,7 @@ class DisplayBookFragment : Fragment(R.layout.fragment_display_book) {
             val bookStatusInt = when (book.bookStatus) {
                 Constants.BOOK_STATUS_IN_PROGRESS -> 1
                 Constants.BOOK_STATUS_TO_READ -> 2
+                Constants.BOOK_STATUS_NOT_FINISHED -> 3
                 else -> 0
             }
 

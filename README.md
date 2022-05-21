@@ -10,8 +10,9 @@
 [![Crowdin](https://badges.crowdin.net/openreads-android/localized.svg)](https://crowdin.com/project/openreads-android)
 <br/>
 
-<a href='https://play.google.com/store/apps/details?id=software.mdev.bookstracker'><img height=100 alt='Get it on Google Play' src='https://play.google.com/intl/en_us/badges/images/generic/en_badge_web_generic.png'/></a>
-<a href='https://github.com/mateusz-bak/openreads-android/releases/latest'><img height=100 alt='Get it on Github' src='https://raw.githubusercontent.com/mateusz-bak/openreads-android/master/doc/github/get-it-on-github.png'/></a>
+<a href='https://f-droid.org/en/packages/software.mdev.bookstracker'><img height=75 alt='Get it on F-Droid' src='https://fdroid.gitlab.io/artwork/badge/get-it-on.png'/></a>
+<a href='https://play.google.com/store/apps/details?id=software.mdev.bookstracker'><img height=75 alt='Get it on Google Play' src='https://play.google.com/intl/en_us/badges/images/generic/en_badge_web_generic.png'/></a>
+<a href='https://github.com/mateusz-bak/openreads-android/releases/latest'><img height=75 alt='Get it on Github' src='https://raw.githubusercontent.com/mateusz-bak/openreads-android/master/doc/github/get-it-on-github.png'/></a>
 
 <br/><br/>
 ### Openreads is an Android app written in Kotlin for keeping tracks of your books.  
@@ -25,7 +26,7 @@
 - scanning book's barcode,
 - adding book's details manually.
 
-####  You can also see come cool statistics!  
+####  You can also see some cool statistics!  
 
 <br/><br/>
 ## Screenshots  

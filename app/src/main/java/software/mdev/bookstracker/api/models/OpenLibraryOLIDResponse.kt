@@ -4,8 +4,10 @@ data class OpenLibraryOLIDResponse(
     var authors: List<Author>,
     val classifications: Classifications,
     val contributions: List<String>,
-    val covers: List<Int>,
+    val copyright_date: String?,
+    var covers: List<Int>?,
     val created: Created,
+    val edition_name: String?,
     val first_sentence: FirstSentence,
     val identifiers: Identifiers,
     val isbn_10: List<String>,
@@ -17,13 +19,15 @@ data class OpenLibraryOLIDResponse(
     val local_id: List<String>,
     val number_of_pages: Int,
     val ocaid: String,
+    val physical_format: String?,
+    val publish_places: List<String>?,
     var publish_date: String,
     val publishers: List<String>,
     val revision: Int,
     val source_records: List<String>,
     val title: String,
     val type: Type,
-    val works: List<Work>
+    val works: List<Work>,
 ) {
     data class Author(
         var key: String
@@ -62,5 +66,10 @@ data class OpenLibraryOLIDResponse(
 
     data class Work(
         val key: String
+    )
+
+    data class Notes(
+        val type: String,
+        val value: String
     )
 }

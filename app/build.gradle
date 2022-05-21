@@ -51,10 +51,10 @@ android {
     productFlavors {
         github {
             dimension = "variant"
-            isDefault = true
         }
         fdroid {
             dimension = "variant"
+            isDefault = true
         }
         gplay {
             dimension = "variant"

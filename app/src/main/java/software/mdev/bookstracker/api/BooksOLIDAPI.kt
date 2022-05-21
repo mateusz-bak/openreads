@@ -7,8 +7,14 @@ import software.mdev.bookstracker.api.models.OpenLibraryOLIDResponse
 
 interface BooksOLIDAPI {
     @GET("isbn/{isbn}")
-    suspend fun getBookFromOLID(
+    suspend fun getBookFromISBN(
         @Path("isbn")
         isbn: String
+    ): Response<OpenLibraryOLIDResponse>
+
+    @GET("books/{olid}.json")
+    suspend fun getBookFromOLID(
+        @Path("olid")
+        olid: String
     ): Response<OpenLibraryOLIDResponse>
 }

@@ -32,7 +32,7 @@ data class OpenLibraryBook(
     val id_overdrive: List<String>,
     val id_paperback_swap: List<String>,
     val id_wikidata: List<String>,
-    val isbn: List<String>,
+    val isbn: List<String>?,
     val key: String,
     val language: List<String>,
     val last_modified_i: Int,
