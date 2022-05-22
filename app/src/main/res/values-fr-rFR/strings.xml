@@ -254,9 +254,9 @@
     <string name="show_tags_toggle_off">Les étiquettes ne seront pas affichées</string>
     <string name="help_translate_summary">Contribuez en traduisant &appname; dans les langues que vous connaissez!</string>
     <string name="help_translate_title">Aidez à la traduction</string>
-    <string name="notFinishedFragment">Not finished books</string>
-    <string name="notFinished">Not finished</string>
-    <string name="ivBookStatusNotFinished">Book is not finished</string>
+    <string name="notFinishedFragment">Livres non terminés</string>
+    <string name="notFinished">Non terminée</string>
+    <string name="ivBookStatusNotFinished">Le livre n\'est pas terminé</string>
     <string name="changelog_1_10_0_a">Vous pouvez désormais ajouter des étiquettes à vos livres.</string>
     <string name="changelog_1_10_0_b">Les livres peuvent être filtrés par étiquette et par date de fin.</string>
     <string name="changelog_1_10_0_c">Après avoir atteint l\'objectif annuel, vous recevrez un trophée !</string>
