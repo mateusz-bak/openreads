@@ -285,4 +285,12 @@
     <string name="changelog_1_13_0_k">Color de texto de la etiqueta corregida en la página de detalles del libro.</string>
     <string name="changelog_1_13_0_l">Aumento del límite de caracteres del título del libro y del autor a 200.</string>
     <string name="changelog_1_13_0_m">En añadir/editar el diálogo 0 no se mostrará para el número de páginas y el año de publicación.</string>
+    <string name="changelog_1_14_0_a">Released app in F-Droid Store.</string>
+    <string name="changelog_1_14_0_b">Added \"not finished\" status for books.</string>
+    <string name="changelog_1_14_0_c">Added Danish, Italian and Spanish translations.</string>
+    <string name="changelog_1_14_0_d">Fixed displaying books details without cover in in progress/ for later state.</string>
+    <string name="changelog_1_14_0_e">Open Library search results include books without ISBN.</string>
+    <string name="changelog_1_14_0_f">More books from Open Library will have cover shown.</string>
+    <string name="changelog_1_14_0_g">Tags are properly updated in books lists.</string>
+    <string name="changelog_1_14_0_h">Fixed backup in F-Droid variant.</string>
 </resources>
