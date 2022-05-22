@@ -285,12 +285,12 @@
     <string name="changelog_1_13_0_k">Textfarbe des Tags in der Buchdetails Seite korrigiert.</string>
     <string name="changelog_1_13_0_l">Das Zeichenlimit des Buchtitels und des Autors wurde auf 200 erhöht.</string>
     <string name="changelog_1_13_0_m">Im Hinzufügen/Bearbeiten-Dialog wird 0 für die Anzahl der Seiten nicht angezeigt und das Jahr veröffentlicht.</string>
-    <string name="changelog_1_14_0_a">Released app in F-Droid Store.</string>
-    <string name="changelog_1_14_0_b">Added \"not finished\" status for books.</string>
-    <string name="changelog_1_14_0_c">Added Danish, Italian and Spanish translations.</string>
-    <string name="changelog_1_14_0_d">Fixed displaying books details without cover in in progress/ for later state.</string>
-    <string name="changelog_1_14_0_e">Open Library search results include books without ISBN.</string>
-    <string name="changelog_1_14_0_f">More books from Open Library will have cover shown.</string>
-    <string name="changelog_1_14_0_g">Tags are properly updated in books lists.</string>
-    <string name="changelog_1_14_0_h">Fixed backup in F-Droid variant.</string>
+    <string name="changelog_1_14_0_a">Veröffentlichte App im F-Droid Store.</string>
+    <string name="changelog_1_14_0_b">Status \"Nicht fertiggestellt\" für Bücher hinzugefügt.</string>
+    <string name="changelog_1_14_0_c">Hinzugefügt dänische, italienische und spanische Übersetzungen.</string>
+    <string name="changelog_1_14_0_d">Behobene Anzeige der Buchdetails ohne Deckung für einen späteren Zustand.</string>
+    <string name="changelog_1_14_0_e">Open Library Suchergebnisse enthalten Bücher ohne ISBN.</string>
+    <string name="changelog_1_14_0_f">Mehr Bücher aus der Open Library werden mit einem Cover gezeigt.</string>
+    <string name="changelog_1_14_0_g">Tags werden in Buchlisten korrekt aktualisiert.</string>
+    <string name="changelog_1_14_0_h">Fehlerkorrektur in F-Droid Variante.</string>
 </resources>
