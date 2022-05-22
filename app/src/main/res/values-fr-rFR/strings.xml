@@ -285,12 +285,12 @@
     <string name="changelog_1_13_0_k">Couleur du texte du tag corrigé dans la page de détails du livre.</string>
     <string name="changelog_1_13_0_l">Augmentation de la limite de caractères du titre du livre et de l\'auteur à 200.</string>
     <string name="changelog_1_13_0_m">Dans la boîte de dialogue Ajout/Édition 0 ne sera pas affiché pour le nombre de pages et pour l\'année de publication.</string>
-    <string name="changelog_1_14_0_a">Released app in F-Droid Store.</string>
-    <string name="changelog_1_14_0_b">Added \"not finished\" status for books.</string>
-    <string name="changelog_1_14_0_c">Added Danish, Italian and Spanish translations.</string>
-    <string name="changelog_1_14_0_d">Fixed displaying books details without cover in in progress/ for later state.</string>
-    <string name="changelog_1_14_0_e">Open Library search results include books without ISBN.</string>
-    <string name="changelog_1_14_0_f">More books from Open Library will have cover shown.</string>
-    <string name="changelog_1_14_0_g">Tags are properly updated in books lists.</string>
-    <string name="changelog_1_14_0_h">Fixed backup in F-Droid variant.</string>
+    <string name="changelog_1_14_0_a">Application publiée dans le F-Droid Store.</string>
+    <string name="changelog_1_14_0_b">Ajout du statut « non terminé» pour les livres.</string>
+    <string name="changelog_1_14_0_c">Ajout de traductions danoise, italienne et espagnole.</string>
+    <string name="changelog_1_14_0_d">Correction de l\'affichage des détails des livres sans couverture en cours / pour l\'état ultérieur.</string>
+    <string name="changelog_1_14_0_e">Les résultats de la recherche dans la bibliothèque ouverte incluent des livres sans ISBN.</string>
+    <string name="changelog_1_14_0_f">Plus de livres de l\'Open Library auront une couverture montrée.</string>
+    <string name="changelog_1_14_0_g">Les balises sont correctement mises à jour dans les listes de livres.</string>
+    <string name="changelog_1_14_0_h">Sauvegarde réparée dans la variante F-Droid.</string>
 </resources>
