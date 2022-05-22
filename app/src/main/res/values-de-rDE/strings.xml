@@ -255,8 +255,8 @@
     <string name="help_translate_summary">Beteiligen Sie sich, indem Sie &appname; in Sprachen übersetzen, die Sie kennen!</string>
     <string name="help_translate_title">Beim Übersetzen helfen</string>
     <string name="notFinishedFragment">Nicht fertige Bücher</string>
-    <string name="notFinished">Nicht fertig</string>
-    <string name="ivBookStatusNotFinished">Buch ist nicht fertig</string>
+    <string name="notFinished">Nicht fertig gelesen</string>
+    <string name="ivBookStatusNotFinished">Buch ist nicht fertig gelesen</string>
     <string name="changelog_1_10_0_a">Du kannst nun Tags zu deinen Büchern hinzufügen.</string>
     <string name="changelog_1_10_0_b">Bücher können durch Tags und Enddatum gefiltert werden.</string>
     <string name="changelog_1_10_0_c">Nach Erreichen des Jahresziels erhältst du eine Trophäe!</string>
@@ -286,9 +286,9 @@
     <string name="changelog_1_13_0_l">Das Zeichenlimit des Buchtitels und des Autors wurde auf 200 erhöht.</string>
     <string name="changelog_1_13_0_m">Im Hinzufügen/Bearbeiten-Dialog wird 0 für die Anzahl der Seiten nicht angezeigt und das Jahr veröffentlicht.</string>
     <string name="changelog_1_14_0_a">Veröffentlichte App im F-Droid Store.</string>
-    <string name="changelog_1_14_0_b">Status \"Nicht fertiggestellt\" für Bücher hinzugefügt.</string>
+    <string name="changelog_1_14_0_b">Status \"Nicht fertig gelesen\" für Bücher hinzugefügt.</string>
     <string name="changelog_1_14_0_c">Hinzugefügt dänische, italienische und spanische Übersetzungen.</string>
-    <string name="changelog_1_14_0_d">Behobene Anzeige der Buchdetails ohne Deckung für einen späteren Zustand.</string>
+    <string name="changelog_1_14_0_d">Anzeige von Buchdetails ohne Cover im Status \"in Bearbeitung/Für später\" korrigiert.</string>
     <string name="changelog_1_14_0_e">Open Library Suchergebnisse enthalten Bücher ohne ISBN.</string>
     <string name="changelog_1_14_0_f">Mehr Bücher aus der Open Library werden mit einem Cover gezeigt.</string>
     <string name="changelog_1_14_0_g">Tags werden in Buchlisten korrekt aktualisiert.</string>
