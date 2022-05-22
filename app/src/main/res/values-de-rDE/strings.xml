@@ -6,7 +6,7 @@
     <!-- Images descriptions -->
     <string name="fabEditBook">Angezeigtes Buch bearbeiten</string>
     <string name="ivBookStatusRead">Buch ist beendet</string>
-    <string name="ivBookStatusInProgress">Buch ist in Bearbeitung</string>
+    <string name="ivBookStatusInProgress">Buch wird derzeit gelesen</string>
     <string name="ivBookStatusToRead">Buch ist \"zum Lesen\"</string>
     <string name="fabAddBook">Neues Buch hinzufügen</string>
     <string name="ivSeparator1">Trennzeichen zwischen Suche und Sortierung</string>
@@ -254,7 +254,7 @@
     <string name="show_tags_toggle_off">Tags werden nicht angezeigt</string>
     <string name="help_translate_summary">Beteiligen Sie sich, indem Sie &appname; in Sprachen übersetzen, die Sie kennen!</string>
     <string name="help_translate_title">Beim Übersetzen helfen</string>
-    <string name="notFinishedFragment">Nicht fertige Bücher</string>
+    <string name="notFinishedFragment">Nicht fertig gelesene Bücher</string>
     <string name="notFinished">Nicht fertig gelesen</string>
     <string name="ivBookStatusNotFinished">Buch ist nicht fertig gelesen</string>
     <string name="changelog_1_10_0_a">Du kannst nun Tags zu deinen Büchern hinzufügen.</string>
@@ -264,9 +264,9 @@
     <string name="changelog_1_10_0_e">Fehlende Buchanzeige nach Änderung des Status.</string>
     <string name="changelog_1_11_0_a">Statistiken zeigen Cover von gelesenen Büchern.</string>
     <string name="changelog_1_11_0_b">Leseziele können jetzt sowohl für Bücher als auch für Seiten gesetzt werden.</string>
-    <string name="changelog_1_11_0_c">Das Lesen von Zielen der vergangenen Jahre kann bearbeitet werden.</string>
+    <string name="changelog_1_11_0_c">Das Leseziel der vergangenen Jahre kann bearbeitet werden.</string>
     <string name="changelog_1_11_0_d">Bug behoben, bei dem das Filtern fertiger Bücher nach Jahr nicht gelesener Bücher ausblenden sollte.</string>
-    <string name="changelog_1_11_0_e">Das erste Veröffentlichungsdatum wurde nun korrekt aus der Offenen Bibliothek gezogen.</string>
+    <string name="changelog_1_11_0_e">Das erste Veröffentlichungsdatum wird nun korrekt aus der Open Library gezogen.</string>
     <string name="changelog_1_12_0_a">Buchdetails zeigen die Lesedauer an.</string>
     <string name="changelog_1_12_0_b">Der Status des neuen Buches wird standardmäßig in der Liste angezeigt, von der das Hinzufügen gestartet wurde.</string>
     <string name="changelog_1_12_0_c">Der Name der App wurde zu Buchlisten, reduzierten Schaltflächen und Textfeldradius hinzugefügt.</string>
@@ -275,7 +275,7 @@
     <string name="changelog_1_13_0_a">Buch-Tags können in der Buchliste angezeigt werden (Ein-/Ausschalten in den Einstellungen).</string>
     <string name="changelog_1_13_0_b">Buchdetails können als Liste und als Raster angezeigt werden.</string>
     <string name="changelog_1_13_0_c">Start der App wurde beschleunigt.</string>
-    <string name="changelog_1_13_0_d">Verbesserte Animation beim Betreten der Details des Buches.</string>
+    <string name="changelog_1_13_0_d">Verbesserte Animation beim Aufruf der Buchsetails.</string>
     <string name="changelog_1_13_0_e">Deutsche Übersetzung hinzugefügt.</string>
     <string name="changelog_1_13_0_f">Französische Übersetzung hinzugefügt.</string>
     <string name="changelog_1_13_0_g">Datumsauswahl kann im Querformat gescrollt werden. Dank @vbh </string>
