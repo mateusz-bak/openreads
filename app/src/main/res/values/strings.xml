@@ -277,4 +277,40 @@
     <string name="notFinishedFragment">Not finished books</string>
     <string name="notFinished">Not finished</string>
     <string name="ivBookStatusNotFinished">Book is not finished</string>
+    <string name="changelog_ver_1_10_0" translatable="false">v1.10.0</string>
+    <string name="changelog_ver_1_11_0" translatable="false">v1.11.0</string>
+    <string name="changelog_ver_1_12_0" translatable="false">v1.12.0</string>
+    <string name="changelog_ver_1_13_0" translatable="false">v1.13.0</string>
+    <string name="changelog_date_1_10_0" translatable="false">04/01/2022</string>
+    <string name="changelog_date_1_11_0" translatable="false">12/01/2022</string>
+    <string name="changelog_date_1_12_0" translatable="false">26/03/2022</string>
+    <string name="changelog_date_1_13_0" translatable="false">22/04/2022</string>
+    <string name="changelog_1_10_0_a">You can now add tags to your books.</string>
+    <string name="changelog_1_10_0_b">Books can be filtered by tags and finish date.</string>
+    <string name="changelog_1_10_0_c">After reaching yearly goal you get a trophy!</string>
+    <string name="changelog_1_10_0_d">Fixed updating rating from display book view.</string>
+    <string name="changelog_1_10_0_e">Fixed book display view breaking after status change.</string>
+    <string name="changelog_1_11_0_a">Statistics show covers of read books.</string>
+    <string name="changelog_1_11_0_b">Reading targets can be set now both for books and pages.</string>
+    <string name="changelog_1_11_0_c">Reading targets for previous years can be edited.</string>
+    <string name="changelog_1_11_0_d">Fixed bug where filtering finished books by year would hide not read books.</string>
+    <string name="changelog_1_11_0_e">First publish date is now correctly pulled from Open Library.</string>
+    <string name="changelog_1_12_0_a">Books details display reading duration.</string>
+    <string name="changelog_1_12_0_b">New book\'s status will default to list from which adding was started.</string>
+    <string name="changelog_1_12_0_c">Added app\'s name to book lists, decreased buttons and text fields radius.</string>
+    <string name="changelog_1_12_0_d">Changed loading progress indicator.</string>
+    <string name="changelog_1_12_0_e">Added missing translations.</string>
+    <string name="changelog_1_13_0_a">Books tags can be displayed in books lists (on/off switch in settings).</string>
+    <string name="changelog_1_13_0_b">Books details can be displayed as a list and as a grid.</string>
+    <string name="changelog_1_13_0_c">Sped up app\'s launch.</string>
+    <string name="changelog_1_13_0_d">Improved animation when going into book\'s details.</string>
+    <string name="changelog_1_13_0_e">Added German translation.</string>
+    <string name="changelog_1_13_0_f">Added French translation.</string>
+    <string name="changelog_1_13_0_g">Date picker can be scrolled in landscape mode. Thanks to @vbh </string>
+    <string name="changelog_1_13_0_h">Add/edit dialog won\'t crash on screen rotation. Thanks to @vbh </string>
+    <string name="changelog_1_13_0_i">Books with multiple tags will not be shown multiple times in books lists.</string>
+    <string name="changelog_1_13_0_j">Sort dialog now shows tags from "to read" books.</string>
+    <string name="changelog_1_13_0_k">Corrected tag\'s text color in book details page.</string>
+    <string name="changelog_1_13_0_l">Increased book title\'s and author\'s character limit to 200.</string>
+    <string name="changelog_1_13_0_m">In add/edit dialog 0 will not be displayed for number of pages and publish year.</string>
 </resources>
