@@ -8,6 +8,7 @@ import android.os.Looper
 import android.view.View
 import android.widget.ProgressBar
 import androidx.core.content.FileProvider.getUriForFile
+import androidx.sqlite.db.SimpleSQLiteQuery
 import kotlinx.android.synthetic.main.fragment_add_book_search.*
 import kotlinx.coroutines.*
 import software.mdev.bookstracker.BuildConfig
@@ -22,8 +23,7 @@ import java.io.*
 import java.lang.StringBuilder
 import java.text.SimpleDateFormat
 import java.util.*
-import java.util.zip.GZIPInputStream
-import java.util.zip.GZIPOutputStream
+import java.util.zip.*
 
 
 class Backup {
@@ -32,54 +32,79 @@ class Backup {
         CoroutineScope(Dispatchers.IO).launch {
             controlProgressBar(activity, true)
 
-            val exported = exportBackupAsCsv(activity)
+            val exported = exportBackup(activity)
             if (share && exported.isNotBlank()) shareBackup(exported, activity)
 
             controlProgressBar(activity, false)
         }
     }
 
-    // Export the room database to a file in Android/data/software.mdev.bookstracker(.debug)/files
-    private fun exportBackupAsCsv(context: Context): String {
+    private fun exportBackup(context: Context): String {
         // Perform a checkpoint to empty the write ahead logging temporary files and avoid closing the entire db
-        val getBooksDao = BooksDatabase.getBooksDatabase(context).getBooksDao()
-        val getYearDao = YearDatabase.getYearDatabase(context).getYearDao()
+        val booksDao = BooksDatabase.getBooksDatabase(context).getBooksDao()
+        booksDao.checkpoint(SimpleSQLiteQuery("pragma wal_checkpoint(full)"))
+        val booksDbFile = context.getDatabasePath(Constants.DATABASE_FILE_NAME).absoluteFile
 
-        val books = getBooksDao.getBooksForBackup()
-        val booksJson = gson.toJson(books)
-        val years = getYearDao.getYearsForBackup()
-        val yearsJson = gson.toJson(years)
-
-        val combined = listOf(
-            booksJson,
-            yearsJson
-        )
-        val combinedJson = gson.toJson(combined)
-        val compressedJson = compressString(combinedJson)
+        val yearsDao = YearDatabase.getYearDatabase(context).getYearDao()
+        yearsDao.checkpoint(SimpleSQLiteQuery("pragma wal_checkpoint(full)"))
+        val yearsDbFile = context.getDatabasePath(Constants.DATABASE_YEAR_FILE_NAME).absoluteFile
 
         val appDirectory = File(context.getExternalFilesDir(null)!!.absolutePath)
 
         val sdf = SimpleDateFormat("yyyy-MM-dd_HH-mm-ss")
         val currentDate = sdf.format(Date())
 
-        val fileName = "openreads_$currentDate.backup"
-        val fileFullPath: String = appDirectory.path + File.separator.toString() + fileName
+        val appVersion = context.resources.getString(R.string.app_version)
+        val backupVersion = "3"
+        val backupName = "openreads_${backupVersion}_${appVersion}_${currentDate}"
+
+        val booksFileName = "books.sql"
+        val booksFileFullPath: String = appDirectory.path + File.separator.toString() + backupName +
+                File.separator.toString() + booksFileName
+
+        val yearsFileName = "years.sql"
+        val yearsFileFullPath: String = appDirectory.path + File.separator.toString() + backupName +
+                File.separator.toString() + yearsFileName
 
         // Snackbar need the ui thread to work, so they must be forced on that thread
         try {
-            File(fileFullPath).writeBytes(compressedJson)
+            booksDbFile.copyTo(File(booksFileFullPath), true)
             (context as ListActivity).runOnUiThread {
-                (context as ListActivity).showSnackbar(context.getString(R.string.backup_success))
+                context.showSnackbar(context.getString(R.string.backup_success))
             }
         } catch (e: Exception) {
             (context as ListActivity).runOnUiThread {
-                val string = context.getString(R.string.backup_failure) + " ERROR: ${e.toString()}"
-                (context as ListActivity).showSnackbar(string)
+                val string = "${context.getString(R.string.backup_failure)} ERROR: $e"
+                context.showSnackbar(string)
             }
             e.printStackTrace()
             return ""
         }
-        return fileFullPath
+
+        try {
+            yearsDbFile.copyTo(File(yearsFileFullPath), true)
+            context.runOnUiThread {
+                context.showSnackbar(context.getString(R.string.backup_success))
+            }
+        } catch (e: Exception) {
+            context.runOnUiThread {
+                val string = "${context.getString(R.string.backup_failure)} ERROR: $e"
+                context.showSnackbar(string)
+            }
+            e.printStackTrace()
+            return ""
+        }
+
+        val fullPath: String = appDirectory.path + File.separator.toString() + backupName
+        val zipFilePath = File(appDirectory.path, "$backupName.zip")// new zip file
+
+        zipAll(fullPath, zipFilePath.absolutePath)
+
+        File(booksFileFullPath).delete()
+        File(yearsFileFullPath).delete()
+        File(appDirectory.path + File.separator.toString() + backupName).delete()
+
+        return zipFilePath.absolutePath
     }
 
     // Share the backup to a supported app
@@ -171,10 +196,94 @@ class Backup {
                 restartActivity(context)
                 return true
             }
+
+            3 -> {
+                controlProgressBar(context as ListActivity, true)
+
+                try {
+                    BooksDatabase.destroyInstance()
+                    YearDatabase.destroyInstance()
+
+                    val fileStream = context.contentResolver.openInputStream(fileUri)!!
+
+                    val booksDbFile =
+                        context.getDatabasePath(Constants.DATABASE_FILE_NAME).absoluteFile
+                    val yearsDbFile =
+                        context.getDatabasePath(Constants.DATABASE_YEAR_FILE_NAME).absoluteFile
+
+                    val appDirectory = File(context.getExternalFilesDir(null)!!.absolutePath)
+                    val tempDir = appDirectory.path + File.separator.toString() + "temp"
+                    val unzippedDir = appDirectory.path + File.separator.toString() + "unzipped"
+
+                    fileStream.copyTo(FileOutputStream(tempDir))
+                    File(tempDir).unzip(File(unzippedDir))
+
+                    val unzippedBooksDbFile = unzippedDir + File.separator.toString() + "books.sql"
+                    val unzippedYearsDbFile = unzippedDir + File.separator.toString() + "years.sql"
+
+                    val booksFIS = FileInputStream(unzippedBooksDbFile)
+                    val yearsFIS = FileInputStream(unzippedYearsDbFile)
+
+                    booksFIS.copyTo(FileOutputStream(booksDbFile))
+                    yearsFIS.copyTo(FileOutputStream(yearsDbFile))
+
+                    File(unzippedBooksDbFile).delete()
+                    File(unzippedYearsDbFile).delete()
+                    File(unzippedDir).delete()
+                    File(tempDir).delete()
+
+                    context.showSnackbar(context.getString(R.string.backup_import_success))
+                } catch (e: Exception) {
+                    val string = "${context.getString(R.string.backup_import_failure)} ERROR: $e"
+                    context.showSnackbar(string)
+                    e.printStackTrace()
+                    return false
+                }
+
+                controlProgressBar(context, false)
+                restartActivity(context)
+                return true
+            }
             else -> {
                 (context as ListActivity).showSnackbar(context.getString(R.string.backup_import_invalid_file))
                 return false
             }
+        }
+    }
+
+    private fun zipAll(directory: String, zipFile: String) {
+        val sourceFile = File(directory)
+        val outputZipFile = File(zipFile)
+
+        ZipOutputStream(BufferedOutputStream(FileOutputStream(outputZipFile))).use { zos ->
+            sourceFile.walkTopDown().forEach { file ->
+                val zipFileName =
+                    file.absolutePath.removePrefix(sourceFile.absolutePath).removePrefix("/")
+                val entry = ZipEntry("$zipFileName${(if (file.isDirectory) "/" else "")}")
+                zos.putNextEntry(entry)
+                if (file.isFile) {
+                    file.inputStream().copyTo(zos)
+                }
+            }
+        }
+    }
+
+    fun File.unzip(to: File? = null) {
+        val destinationDir = to ?: File(parentFile, nameWithoutExtension)
+        destinationDir.mkdirs()
+
+        ZipFile(this).use { zipFile ->
+            zipFile
+                .entries()
+                .asSequence()
+                .filter { !it.isDirectory }
+                .forEach { zipEntry ->
+                    val currFile = File(destinationDir, zipEntry.name)
+                    currFile.parentFile?.mkdirs()
+                    zipFile.getInputStream(zipEntry).use { input ->
+                        currFile.outputStream().use { output -> input.copyTo(output) }
+                    }
+                }
         }
     }
 
@@ -192,22 +301,16 @@ class Backup {
         val uri = fileUri.path ?: ""
 
         return if (uri.contains("books_tracker_", true)) {
+            // First backup convention - only books db
             1
+        } else if (uri.contains("openreads_3_", true)) {
+            // Third convention - books and years dbs zipped
+            3
         } else if (uri.contains("openreads_", true)) {
+            // Second backup convention - books & years in a JSON (very slow)
             2
         } else
             0
-    }
-
-    @Throws(IOException::class)
-    private fun compressString (data: String): ByteArray {
-        val bos = ByteArrayOutputStream(data.length)
-        val gzip = GZIPOutputStream(bos)
-        gzip.write(data.toByteArray())
-        gzip.close()
-        val compressed: ByteArray = bos.toByteArray()
-        bos.close()
-        return compressed
     }
 
     @Throws(IOException::class)
