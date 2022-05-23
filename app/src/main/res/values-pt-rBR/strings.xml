@@ -293,4 +293,6 @@
     <string name="changelog_1_14_0_f">More books from Open Library will have cover shown.</string>
     <string name="changelog_1_14_0_g">Tags are properly updated in books lists.</string>
     <string name="changelog_1_14_0_h">Fixed backup in F-Droid variant.</string>
+    <string name="changelog_1_14_2_a">Improved backup for bigger libraries.</string>
+    <string name="changelog_1_14_2_b">Improved translations.</string>
 </resources>

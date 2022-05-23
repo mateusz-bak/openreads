@@ -293,4 +293,6 @@
     <string name="changelog_1_14_0_f">Altri libri della Libreria Aperta saranno mostrati nella copertina.</string>
     <string name="changelog_1_14_0_g">I tag sono aggiornati correttamente negli elenchi dei libri.</string>
     <string name="changelog_1_14_0_h">Backup fisso nella variante F-Droid.</string>
+    <string name="changelog_1_14_2_a">Improved backup for bigger libraries.</string>
+    <string name="changelog_1_14_2_b">Improved translations.</string>
 </resources>

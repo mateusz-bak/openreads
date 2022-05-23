@@ -3,7 +3,7 @@
     <!ENTITY appname "Openreads">
     ]>
 <resources>
-    <string name="app_version" translatable="false">v1.14.0</string>
+    <string name="app_version" translatable="false">v1.14.2</string>
     <!-- Images descriptions -->
     <string name="fabEditBook">Edit displayed book</string>
     <string name="ivBookStatusRead">Book is finished</string>
@@ -282,11 +282,13 @@
     <string name="changelog_ver_1_12_0" translatable="false">v1.12.0</string>
     <string name="changelog_ver_1_13_0" translatable="false">v1.13.0</string>
     <string name="changelog_ver_1_14_0" translatable="false">v1.14.0</string>
+    <string name="changelog_ver_1_14_2" translatable="false">v1.14.2</string>
     <string name="changelog_date_1_10_0" translatable="false">04/01/2022</string>
     <string name="changelog_date_1_11_0" translatable="false">12/01/2022</string>
     <string name="changelog_date_1_12_0" translatable="false">26/03/2022</string>
     <string name="changelog_date_1_13_0" translatable="false">22/04/2022</string>
     <string name="changelog_date_1_14_0" translatable="false">22/05/2022</string>
+    <string name="changelog_date_1_14_2" translatable="false">23/05/2022</string>
     <string name="changelog_1_10_0_a">You can now add tags to your books.</string>
     <string name="changelog_1_10_0_b">Books can be filtered by tags and finish date.</string>
     <string name="changelog_1_10_0_c">After reaching yearly goal you get a trophy!</string>
@@ -323,4 +325,6 @@
     <string name="changelog_1_14_0_f">More books from Open Library will have cover shown.</string>
     <string name="changelog_1_14_0_g">Tags are properly updated in books lists.</string>
     <string name="changelog_1_14_0_h">Fixed backup in F-Droid variant.</string>
+    <string name="changelog_1_14_2_a">Improved backup for bigger libraries.</string>
+    <string name="changelog_1_14_2_b">Improved translations.</string>
 </resources>
