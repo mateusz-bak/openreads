@@ -73,6 +73,13 @@ abstract class YearDatabase: RoomDatabase() {
             }
         }
 
+        fun destroyInstance() {
+            if (instance?.isOpen == true) {
+                instance?.close()
+            }
+            instance = null
+        }
+
         private val MIGRATION_1_2 = object : Migration(1, 2) {
             override fun migrate(database: SupportSQLiteDatabase) {
                 database.execSQL("ALTER TABLE Year ADD COLUMN year_challenge_books INTEGER NOT NULL DEFAULT 0")

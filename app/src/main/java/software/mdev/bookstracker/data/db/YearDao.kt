@@ -2,6 +2,7 @@ package software.mdev.bookstracker.data.db
 
 import androidx.lifecycle.LiveData
 import androidx.room.*
+import androidx.sqlite.db.SupportSQLiteQuery
 import software.mdev.bookstracker.data.db.entities.Year
 
 @Dao
@@ -24,4 +25,8 @@ interface YearDao {
 
     @Query("SELECT * FROM Year ORDER BY item_year ASC")
     fun getYearsForBackup(): List<Year>
+
+    // Checkpoint functionality, not yet supported in room but useful to avoid closing the db during the backup creation
+    @RawQuery
+    fun checkpoint(supportSQLiteQuery: SupportSQLiteQuery): Int
 }
