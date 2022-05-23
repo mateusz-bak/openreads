@@ -1,0 +1,8 @@
+- Released app in F-Droid Store.
+- Added "not finished" status for books.
+- Added Danish, Italian and Spanish translations.
+- Fixed displaying books details without cover in in progress/ for later state.
+- Open Library search results include books without ISBN.
+- More books from Open Library will have cover shown.
+- Tags are properly updated in books lists.
+- Fixed backup in F-Droid variant.
