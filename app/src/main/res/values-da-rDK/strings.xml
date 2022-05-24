@@ -293,6 +293,6 @@
     <string name="changelog_1_14_0_f">Flere bøger fra Open Library vil have dækning vist.</string>
     <string name="changelog_1_14_0_g">Tags er korrekt opdateret i bøger lister.</string>
     <string name="changelog_1_14_0_h">Fast backup i F-Droid variant.</string>
-    <string name="changelog_1_14_2_a">Improved backup for bigger libraries.</string>
-    <string name="changelog_1_14_2_b">Improved translations.</string>
+    <string name="changelog_1_14_2_a">Forbedret backup af større biblioteker.</string>
+    <string name="changelog_1_14_2_b">Forbedrede oversættelser.</string>
 </resources>
