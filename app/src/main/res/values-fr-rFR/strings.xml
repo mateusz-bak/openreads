@@ -293,6 +293,6 @@
     <string name="changelog_1_14_0_f">Plus de livres de l\'Open Library auront une couverture montrée.</string>
     <string name="changelog_1_14_0_g">Les balises sont correctement mises à jour dans les listes de livres.</string>
     <string name="changelog_1_14_0_h">Sauvegarde réparée dans la variante F-Droid.</string>
-    <string name="changelog_1_14_2_a">Improved backup for bigger libraries.</string>
-    <string name="changelog_1_14_2_b">Improved translations.</string>
+    <string name="changelog_1_14_2_a">Amélioration de la sauvegarde pour les bibliothèques plus grandes.</string>
+    <string name="changelog_1_14_2_b">Traductions améliorées.</string>
 </resources>
