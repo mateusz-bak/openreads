@@ -293,6 +293,6 @@
     <string name="changelog_1_14_0_f">Más libros de Open Library tendrán portada.</string>
     <string name="changelog_1_14_0_g">Las etiquetas se actualizan correctamente en las listas de libros.</string>
     <string name="changelog_1_14_0_h">Copia de seguridad fija en la variante F-Droid.</string>
-    <string name="changelog_1_14_2_a">Improved backup for bigger libraries.</string>
-    <string name="changelog_1_14_2_b">Improved translations.</string>
+    <string name="changelog_1_14_2_a">Copia de seguridad mejorada para bibliotecas más grandes.</string>
+    <string name="changelog_1_14_2_b">Traducciones mejoradas.</string>
 </resources>
