@@ -5,17 +5,15 @@
 # For more details, see
 #   http://developer.android.com/guide/developing/tools/proguard.html
 
-# If your project uses WebView with JS, uncomment the following
-# and specify the fully qualified class name to the JavaScript interface
-# class:
-#-keepclassmembers class fqcn.of.javascript.interface.for.webview {
-#   public *;
-#}
+# Keep names of all Openreads classes
+-keepnames class software.mdev.bookstracker.**.* { *; }
+-keepnames interface software.mdev.bookstracker.**.* { *; }
 
-# Uncomment this to preserve the line number information for
-# debugging stack traces.
-#-keepattributes SourceFile,LineNumberTable
+# Keep file names/line numbers
+-keepattributes SourceFile,LineNumberTable
 
-# If you keep the line number information, uncomment this to
-# hide the original source file name.
-#-renamesourcefileattribute SourceFile
+# Keep custom exceptions
+-keep public class * extends java.lang.Exception
+
+# Keep AndroidX ComponentFactory
+-keep class androidx.core.app.CoreComponentFactory { *; }
