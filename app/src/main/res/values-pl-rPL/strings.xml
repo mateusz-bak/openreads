@@ -293,6 +293,6 @@
     <string name="changelog_1_14_0_f">Więcej książek z Open Library będzie miało widoczną okładkę.</string>
     <string name="changelog_1_14_0_g">Tagi są poprawnie aktualizowane na listach książek.</string>
     <string name="changelog_1_14_0_h">Naprawiono kopię zapasową w wariancie F-Droid.</string>
-    <string name="changelog_1_14_2_a">Improved backup for bigger libraries.</string>
-    <string name="changelog_1_14_2_b">Improved translations.</string>
+    <string name="changelog_1_14_2_a">Ulepszono kopię zapasową dla większych bilbiotek.</string>
+    <string name="changelog_1_14_2_b">Ulepszono tłumaczenia.</string>
 </resources>
