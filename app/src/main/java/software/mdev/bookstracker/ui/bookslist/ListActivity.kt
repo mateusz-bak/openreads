@@ -983,6 +983,18 @@ class ListActivity : AppCompatActivity() {
             }
         }
 
+    val selectCSV =
+        registerForActivityResult(ActivityResultContracts.GetContent()) { fileUri: Uri? ->
+            try {
+                CoroutineScope(Dispatchers.IO).launch {
+                    if (fileUri != null) Backup().importCSV(listActivity, fileUri)
+                }
+            } catch (e: IOException) {
+                showSnackbar(e.toString())
+                e.printStackTrace()
+            }
+        }
+
     override fun onRequestPermissionsResult(
         requestCode: Int,
         permissions: Array<out String>,

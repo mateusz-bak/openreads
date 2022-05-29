@@ -295,4 +295,7 @@
     <string name="changelog_1_14_0_h">Sauvegarde réparée dans la variante F-Droid.</string>
     <string name="changelog_1_14_2_a">Amélioration de la sauvegarde pour les bibliothèques plus grandes.</string>
     <string name="changelog_1_14_2_b">Traductions améliorées.</string>
+    <string name="import_csv_summary">Migrate from other reading apps</string>
+    <string name="import_csv_title">Import books from CSV</string>
+    <string name="csv_import_failure">CSV import failed</string>
 </resources>

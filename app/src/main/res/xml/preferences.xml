@@ -28,6 +28,12 @@
         android:summary="@string/backup_summary"
         android:title="@string/backup_title" />
 
+    <Preference
+        android:icon="@drawable/ic_iconscout_file_import_24"
+        android:key="KEY_CSV_IMPORT"
+        android:summary="@string/import_csv_summary"
+        android:title="@string/import_csv_title" />
+
     <PreferenceCategory
         android:key="customization"
         android:title="@string/customization">

@@ -19,6 +19,7 @@ import software.mdev.bookstracker.ui.bookslist.viewmodel.BooksViewModel
 import android.content.Intent
 import android.net.Uri
 import android.os.Build
+import software.mdev.bookstracker.other.Backup
 
 
 class SettingsFragment : PreferenceFragmentCompat(), OnSharedPreferenceChangeListener {
@@ -34,6 +35,7 @@ class SettingsFragment : PreferenceFragmentCompat(), OnSharedPreferenceChangeLis
         val preferenceChangelog = findPreference<Preference>(Constants.KEY_CHANGELOG)
         val preferenceBackup = findPreference<Preference>(Constants.KEY_BACKUP)
         val preferenceFeedback = findPreference<Preference>(Constants.KEY_FEEDBACK)
+        val preferenceCsvImport = findPreference<Preference>(Constants.KEY_CSV_IMPORT)
 
         if (preferenceCheckForUpdates != null) {
             val updater = Updater()
@@ -70,6 +72,13 @@ class SettingsFragment : PreferenceFragmentCompat(), OnSharedPreferenceChangeLis
         if (preferenceFeedback != null) {
             preferenceFeedback.onPreferenceClickListener = Preference.OnPreferenceClickListener {
                 showBottomSheetDialog()
+                true
+            }
+        }
+
+        if (preferenceCsvImport != null) {
+            preferenceCsvImport.onPreferenceClickListener = Preference.OnPreferenceClickListener {
+                Backup().runImporterCSV(activity as ListActivity)
                 true
             }
         }

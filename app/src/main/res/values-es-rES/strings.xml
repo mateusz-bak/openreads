@@ -295,4 +295,7 @@
     <string name="changelog_1_14_0_h">Copia de seguridad fija en la variante F-Droid.</string>
     <string name="changelog_1_14_2_a">Copia de seguridad mejorada para bibliotecas más grandes.</string>
     <string name="changelog_1_14_2_b">Traducciones mejoradas.</string>
+    <string name="import_csv_summary">Migrate from other reading apps</string>
+    <string name="import_csv_title">Import books from CSV</string>
+    <string name="csv_import_failure">CSV import failed</string>
 </resources>

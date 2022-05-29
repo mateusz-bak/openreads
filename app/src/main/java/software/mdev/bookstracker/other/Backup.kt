@@ -9,6 +9,7 @@ import android.view.View
 import android.widget.ProgressBar
 import androidx.core.content.FileProvider.getUriForFile
 import androidx.sqlite.db.SimpleSQLiteQuery
+import com.github.doyaaaaaken.kotlincsv.dsl.csvReader
 import kotlinx.android.synthetic.main.fragment_add_book_search.*
 import kotlinx.coroutines.*
 import software.mdev.bookstracker.BuildConfig
@@ -21,6 +22,7 @@ import software.mdev.bookstracker.data.db.entities.Year
 import software.mdev.bookstracker.ui.bookslist.ListActivity
 import java.io.*
 import java.lang.StringBuilder
+import java.text.Normalizer
 import java.text.SimpleDateFormat
 import java.util.*
 import java.util.zip.*
@@ -123,6 +125,10 @@ class Backup {
 
     fun runImporter(activity: ListActivity) {
         activity.selectBackup.launch("*/*")
+    }
+
+    fun runImporterCSV(activity: ListActivity) {
+        activity.selectCSV.launch("text/*")
     }
 
     // Import a backup overwriting any existing data and checking if the file is valid
@@ -251,6 +257,26 @@ class Backup {
         }
     }
 
+    fun importCSV(context: Context, fileUri: Uri): Boolean {
+        try {
+            val fileStream = context.contentResolver.openInputStream(fileUri)!!
+            val books = parseGoodReadsCSV(fileStream)
+
+            for (book in books)
+                (context as ListActivity).booksViewModel.upsert(book)
+
+            (context as ListActivity).showSnackbar(context.getString(R.string.backup_import_success))
+        } catch (e: Exception) {
+            val string = "${context.getString(R.string.csv_import_failure)}: $e"
+            (context as ListActivity).showSnackbar(string)
+            e.printStackTrace()
+            return false
+        }
+
+        restartActivity(context)
+        return true
+    }
+
     private fun zipAll(directory: String, zipFile: String) {
         val sourceFile = File(directory)
         val outputZipFile = File(zipFile)
@@ -340,5 +366,85 @@ class Backup {
             if (state)
                 progressBar?.bringToFront()
         }
+    }
+
+    private fun parseGoodReadsCSV(inputStream: InputStream): List<Book> {
+        val rows = csvReader().readAllWithHeader(inputStream)
+        var newBooks: MutableList<Book> = ArrayList()
+
+        for (row in rows)
+            newBooks.add(parseGoodReadsBook(row))
+
+        return newBooks
+    }
+
+    private fun parseGoodReadsBook(row: Map<String, String>): Book {
+        val regexUnaccented = "\\p{InCombiningDiacriticalMarks}+".toRegex()
+
+        fun CharSequence.unaccented(): String {
+            val temp = Normalizer.normalize(this, Normalizer.Form.NFD)
+            return regexUnaccented.replace(temp, "")
+        }
+
+        val title = row["Title"] ?: Constants.EMPTY_STRING
+
+        var author: String = row["Author"] ?: Constants.EMPTY_STRING
+        val additionalAuthors = row["Additional Authors"] ?: Constants.EMPTY_STRING
+        if (additionalAuthors.isNotEmpty())
+            author = "$author, $additionalAuthors"
+
+        var dateAdded = Constants.DATABASE_EMPTY_VALUE
+        if (row["Date Added"]?.isNotEmpty() == true) {
+            dateAdded = row["Date Added"]?.let {
+                SimpleDateFormat("yyyy/MM/dd").parse(it).time
+            }.toString()
+        }
+
+        var dateStarted = Constants.DATABASE_EMPTY_VALUE
+        if (row["Date Started"]?.isNotEmpty() == true) {
+            dateStarted = row["Date Started"]?.let {
+                SimpleDateFormat("yyyy/MM/dd").parse(it).time
+            }.toString()
+        }
+
+        val bookStatus = when (row["Exclusive Shelf"]) {
+            "currently-reading" -> Constants.BOOK_STATUS_IN_PROGRESS
+            "to-read" -> Constants.BOOK_STATUS_TO_READ
+            else -> Constants.BOOK_STATUS_READ
+        }
+
+        var dateFinished = Constants.DATABASE_EMPTY_VALUE
+        if (row["Date Read"]?.isNotEmpty() == true) {
+            dateFinished = row["Date Read"]?.let {
+                SimpleDateFormat("yyyy/MM/dd").parse(it).time
+            }.toString()
+        } else if (bookStatus == Constants.BOOK_STATUS_READ) {
+            dateFinished = dateAdded
+        }
+
+        return Book(
+            bookTitle = title,
+            bookAuthor = author,
+            bookRating = row["My Rating"]?.toFloatOrNull() ?: 0F,
+            bookStatus = bookStatus,
+            bookPriority = Constants.DATABASE_EMPTY_VALUE,
+            bookStartDate = dateStarted,
+            bookFinishDate = dateFinished,
+            bookNumberOfPages = row["Number of Pages"]?.toIntOrNull() ?: 0,
+            bookTitle_ASCII = title.unaccented().replace("ł", "l", false),
+            bookAuthor_ASCII = author.unaccented().replace("ł", "l", false),
+            bookIsDeleted = false,
+            bookCoverUrl = Constants.DATABASE_EMPTY_VALUE,
+            bookOLID = Constants.DATABASE_EMPTY_VALUE,
+            bookISBN10 = row["ISBN"]?.removeSurrounding("=\"", "\"")
+                ?: Constants.DATABASE_EMPTY_VALUE,
+            bookISBN13 = row["ISBN13"]?.removeSurrounding("=\"", "\"")
+                ?: Constants.DATABASE_EMPTY_VALUE,
+            bookPublishYear = row["Original Publication Year"]?.toIntOrNull() ?: 0,
+            bookIsFav = false,
+            bookCoverImg = null,
+            bookNotes = row["My Review"] ?: Constants.DATABASE_EMPTY_VALUE,
+            bookTags = null,
+        )
     }
 }
