@@ -5,5 +5,5 @@
    <li>books you want to read later</li>
    <li>books you didn't finish.</li></ul>
 You can also use custom tags and filter through them.</p>
-<p>Openreads supports adding a book by looking it up in the Open Library database, scanning its barcode or by entering the book's details manually.</p>
+<p>Openreads supports adding a book by looking it up in the Open Library database, scanning its barcode or entering the book's details manually.</p>
 <p>You can also view come cool statistics!</p>
