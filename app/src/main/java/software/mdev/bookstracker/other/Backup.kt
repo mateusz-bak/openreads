@@ -467,6 +467,17 @@ class Backup {
             dateFinished = dateAdded
         }
 
+        var tags: List<String>? = emptyList()
+        if (row["Bookshelves"]?.isNotEmpty() == true) {
+            val unfilteredTags = row["Bookshelves"]!!.split(", ")
+            for (unfilteredTag in unfilteredTags) {
+                if (unfilteredTag != row["Exclusive Shelf"])
+                    tags = tags!! + unfilteredTag
+            }
+        }
+        if (tags?.isEmpty() == true)
+            tags = null
+
         return Book(
             bookTitle = title,
             bookAuthor = author,
@@ -489,7 +500,7 @@ class Backup {
             bookIsFav = false,
             bookCoverImg = null,
             bookNotes = row["My Review"] ?: Constants.DATABASE_EMPTY_VALUE,
-            bookTags = null,
+            bookTags = tags,
         )
     }
 }
