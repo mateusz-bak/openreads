@@ -1,8 +1,9 @@
 <p>Openreads is the best app for keeping track of your books that is free, open source, with no ads and no tracking!</p>
-<p>It is a reading list app that will help you organize your library with three lists provided:</p><ul>
-   <li>books you finished</li>
+<p>It is a reading list app that will help you organize your library with four lists provided:<ul>
+   <li>books you finished,</li>
    <li>books you are currently reading,</li>
-   <li>books you want to read later.</li>
-</ul>
-<p>You can add the books by searching them up in Open Library, scanning their barcode or by entering the book's details manually.</p>
-<p>You can also see come cool statistics!</p>
+   <li>books you want to read later,</li>
+   <li>books you didn't finish.</li></ul>
+You can also use custom tags and filter through them.</p>
+<p>Openreads supports adding a book by looking it up in the Open Library database, scanning its barcode or entering the book's details manually.</p>
+<p>You can also view come cool statistics!</p>
