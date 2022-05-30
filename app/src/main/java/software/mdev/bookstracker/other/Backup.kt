@@ -304,7 +304,9 @@ class Backup {
                     .setItems(notFinishedCandidates.toTypedArray()) { _, pos ->
                         importCSV(context, fileUri, notFinishedCandidates[pos])
                     }
-                    .setPositiveButton(context.getString(R.string.skip_choosing_shelf)) { _, _ -> }
+                    .setPositiveButton(context.getString(R.string.skip_choosing_shelf)) { _, _ ->
+                        importCSV(context, fileUri)
+                    }
                     .show()
             }
         } else {
