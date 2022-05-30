@@ -7,6 +7,7 @@ import android.os.Handler
 import android.os.Looper
 import android.view.View
 import android.widget.ProgressBar
+import androidx.appcompat.app.AlertDialog
 import androidx.core.content.FileProvider.getUriForFile
 import androidx.sqlite.db.SimpleSQLiteQuery
 import com.github.doyaaaaaken.kotlincsv.dsl.csvReader
@@ -257,10 +258,14 @@ class Backup {
         }
     }
 
-    fun importCSV(context: Context, fileUri: Uri): Boolean {
+    private fun importCSV(
+        context: Context,
+        fileUri: Uri,
+        notFinishedShelf: String? = null
+    ): Boolean {
         try {
             val fileStream = context.contentResolver.openInputStream(fileUri)!!
-            val books = parseGoodReadsCSV(fileStream)
+            val books = parseGoodReadsCSV(fileStream, notFinishedShelf)
 
             for (book in books)
                 (context as ListActivity).booksViewModel.upsert(book)
@@ -275,6 +280,36 @@ class Backup {
 
         restartActivity(context)
         return true
+    }
+
+    fun decideNotFinishedShelf(context: Context, fileUri: Uri) {
+        val fileStream = context.contentResolver.openInputStream(fileUri)!!
+        val rows = csvReader().readAllWithHeader(fileStream)
+        var notFinishedCandidates: MutableList<String> = ArrayList()
+
+        for (row in rows) {
+            if (row["Exclusive Shelf"] != null &&
+                row["Exclusive Shelf"] != "" &&
+                row["Exclusive Shelf"] != "read" &&
+                row["Exclusive Shelf"] != "currently-reading" &&
+                row["Exclusive Shelf"] != "to-read"
+            )
+                notFinishedCandidates.add(row["Exclusive Shelf"]!!)
+        }
+
+        if (notFinishedCandidates.isNotEmpty()) {
+            (context as ListActivity).runOnUiThread {
+                AlertDialog.Builder(context)
+                    .setTitle(context.getString(R.string.choose_a_shelf))
+                    .setItems(notFinishedCandidates.toTypedArray()) { _, pos ->
+                        importCSV(context, fileUri, notFinishedCandidates[pos])
+                    }
+                    .setPositiveButton(context.getString(R.string.skip_choosing_shelf)) { _, _ -> }
+                    .show()
+            }
+        } else {
+            importCSV(context, fileUri)
+        }
     }
 
     private fun zipAll(directory: String, zipFile: String) {
@@ -368,17 +403,17 @@ class Backup {
         }
     }
 
-    private fun parseGoodReadsCSV(inputStream: InputStream): List<Book> {
+    private fun parseGoodReadsCSV(inputStream: InputStream, notFinishedShelf: String?): List<Book> {
         val rows = csvReader().readAllWithHeader(inputStream)
         var newBooks: MutableList<Book> = ArrayList()
 
         for (row in rows)
-            newBooks.add(parseGoodReadsBook(row))
+            newBooks.add(parseGoodReadsBook(row, notFinishedShelf))
 
         return newBooks
     }
 
-    private fun parseGoodReadsBook(row: Map<String, String>): Book {
+    private fun parseGoodReadsBook(row: Map<String, String>, notFinishedShelf: String?): Book {
         val regexUnaccented = "\\p{InCombiningDiacriticalMarks}+".toRegex()
 
         fun CharSequence.unaccented(): String {
@@ -407,10 +442,20 @@ class Backup {
             }.toString()
         }
 
-        val bookStatus = when (row["Exclusive Shelf"]) {
-            "currently-reading" -> Constants.BOOK_STATUS_IN_PROGRESS
-            "to-read" -> Constants.BOOK_STATUS_TO_READ
-            else -> Constants.BOOK_STATUS_READ
+        // need to check if notFinishedShelf != null to assign proper status
+        val bookStatus = if (notFinishedShelf != null) {
+            when (row["Exclusive Shelf"]) {
+                "currently-reading" -> Constants.BOOK_STATUS_IN_PROGRESS
+                "to-read" -> Constants.BOOK_STATUS_TO_READ
+                notFinishedShelf -> Constants.BOOK_STATUS_NOT_FINISHED
+                else -> Constants.BOOK_STATUS_READ
+            }
+        } else {
+            when (row["Exclusive Shelf"]) {
+                "currently-reading" -> Constants.BOOK_STATUS_IN_PROGRESS
+                "to-read" -> Constants.BOOK_STATUS_TO_READ
+                else -> Constants.BOOK_STATUS_READ
+            }
         }
 
         var dateFinished = Constants.DATABASE_EMPTY_VALUE

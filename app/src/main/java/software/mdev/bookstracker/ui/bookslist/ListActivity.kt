@@ -987,7 +987,7 @@ class ListActivity : AppCompatActivity() {
         registerForActivityResult(ActivityResultContracts.GetContent()) { fileUri: Uri? ->
             try {
                 CoroutineScope(Dispatchers.IO).launch {
-                    if (fileUri != null) Backup().importCSV(listActivity, fileUri)
+                    if (fileUri != null) Backup().decideNotFinishedShelf(listActivity, fileUri)
                 }
             } catch (e: IOException) {
                 showSnackbar(e.toString())
