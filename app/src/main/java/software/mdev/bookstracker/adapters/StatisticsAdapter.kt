@@ -14,12 +14,14 @@ import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.*
 import com.github.mikephil.charting.charts.PieChart
+import com.github.mikephil.charting.components.Legend
 import com.github.mikephil.charting.components.XAxis
 import com.github.mikephil.charting.data.*
 import com.github.mikephil.charting.formatter.DefaultValueFormatter
 import com.github.mikephil.charting.formatter.IndexAxisValueFormatter
 import com.github.mikephil.charting.utils.ColorTemplate
 import com.github.mikephil.charting.utils.MPPointF
+import com.google.android.material.progressindicator.LinearProgressIndicator
 import kotlinx.android.synthetic.main.item_statistics.view.*
 import kotlinx.coroutines.MainScope
 import kotlinx.coroutines.delay
@@ -28,11 +30,15 @@ import software.mdev.bookstracker.R
 import software.mdev.bookstracker.data.db.BooksDatabase
 import software.mdev.bookstracker.data.db.LanguageDatabase
 import software.mdev.bookstracker.data.db.YearDatabase
+import software.mdev.bookstracker.data.db.entities.Book
 import software.mdev.bookstracker.data.db.entities.Year
 import software.mdev.bookstracker.data.repositories.BooksRepository
 import software.mdev.bookstracker.data.repositories.LanguageRepository
 import software.mdev.bookstracker.data.repositories.OpenLibraryRepository
 import software.mdev.bookstracker.data.repositories.YearRepository
+import software.mdev.bookstracker.other.Constants
+import software.mdev.bookstracker.other.Functions
+import software.mdev.bookstracker.other.RoundedSlicesPieChartRenderer
 import software.mdev.bookstracker.ui.bookslist.dialogs.ChallengeDialog
 import software.mdev.bookstracker.ui.bookslist.dialogs.ChallengeDialogListener
 import software.mdev.bookstracker.ui.bookslist.fragments.StatisticsFragment
@@ -40,11 +46,6 @@ import software.mdev.bookstracker.ui.bookslist.viewmodel.BooksViewModel
 import software.mdev.bookstracker.ui.bookslist.viewmodel.BooksViewModelProviderFactory
 import java.math.RoundingMode
 import java.util.*
-import com.github.mikephil.charting.components.Legend
-import com.google.android.material.progressindicator.LinearProgressIndicator
-import software.mdev.bookstracker.data.db.entities.Book
-import software.mdev.bookstracker.other.Constants
-import software.mdev.bookstracker.other.Functions
 
 
 class StatisticsAdapter(
@@ -143,7 +144,8 @@ class StatisticsAdapter(
                 holder.itemView,
                 curYear.yearReadBooks,
                 curYear.yearInProgressBooks,
-                curYear.yearToReadBooks
+                curYear.yearToReadBooks,
+                curYear.yearNotFinishedBooks
             )
         }
         else {

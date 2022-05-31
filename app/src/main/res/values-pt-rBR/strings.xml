@@ -300,4 +300,5 @@
     <string name="csv_import_failure">CSV import failed</string>
     <string name="choose_a_shelf">Choose a shelf which represents unfinished books:</string>
     <string name="skip_choosing_shelf">Skip and set those as read books</string>
+    <string name="not_finished_for_statistics">Not finished</string>
 </resources>
