@@ -294,7 +294,8 @@ class Backup {
                 row["Exclusive Shelf"] != "currently-reading" &&
                 row["Exclusive Shelf"] != "to-read"
             )
-                notFinishedCandidates.add(row["Exclusive Shelf"]!!)
+                if (!notFinishedCandidates.contains(row["Exclusive Shelf"]!!))
+                    notFinishedCandidates.add(row["Exclusive Shelf"]!!)
         }
 
         if (notFinishedCandidates.isNotEmpty()) {
