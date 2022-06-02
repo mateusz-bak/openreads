@@ -74,6 +74,9 @@ data class Year(
         @ColumnInfo(name = Constants.DATABASE_YEAR_TO_READ_BOOKS)
         var yearToReadBooks: Int = 0,
 
+        @ColumnInfo(name = Constants.DATABASE_YEAR_NOT_FINISHED_BOOKS)
+        var yearNotFinishedBooks: Int = 0,
+
         @ColumnInfo(name = Constants.DATABASE_YEAR_LONGEST_READ_BOOK)
         var yearLongestReadBook: String = "null",
 
