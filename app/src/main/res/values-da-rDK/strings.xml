@@ -211,7 +211,6 @@
     <string name="insert_book_publish_year">Udgivelsesår</string>
     <string name="insert_book_status">Bogstatus</string>
     <string name="insert_book_rating">Din bedømmelse</string>
-    <string name="insert_book_notes">Noter</string>
     <string name="insert_book_finish_date">Slutdato</string>
     <string name="insert_book_start_date">Startdato</string>
     <string name="removed_from_fav">Fjernet fra favoritter</string>
@@ -222,7 +221,6 @@
     <string name="upload_cover_from_camera">Tag foto af dit omslag</string>
     <string name="permission_granted_click_cover_again">Tilladelse givet! Klik på omslaget igen</string>
     <string name="btnAdderClearFinishDate">Ryd</string>
-    <string name="book_notes">Noter</string>
     <string name="book_tags">Etiketter</string>
     <string name="settings">Indstillinger</string>
     <string name="search_hint">Søg i dine bøger</string>
@@ -301,4 +299,5 @@
     <string name="choose_a_shelf">Choose a shelf which represents unfinished books:</string>
     <string name="skip_choosing_shelf">Skip and set those as read books</string>
     <string name="not_finished_for_statistics">Not finished</string>
+    <string name="insert_my_review">My review</string>
 </resources>

@@ -211,7 +211,6 @@
     <string name="insert_book_publish_year">Anno di pubblicazione</string>
     <string name="insert_book_status">Stato del libro</string>
     <string name="insert_book_rating">Il tuo voto</string>
-    <string name="insert_book_notes">Note</string>
     <string name="insert_book_finish_date">Data di fine</string>
     <string name="insert_book_start_date">Data d\'inizio</string>
     <string name="removed_from_fav">Rimosso dai preferiti</string>
@@ -222,7 +221,6 @@
     <string name="upload_cover_from_camera">Scatta una foto della copertina</string>
     <string name="permission_granted_click_cover_again">Autorizzazione concessa! Clicca nuovamente sulla copertina</string>
     <string name="btnAdderClearFinishDate">Pulisci</string>
-    <string name="book_notes">Note</string>
     <string name="book_tags">Etichette</string>
     <string name="settings">Impostazioni</string>
     <string name="search_hint">Cerca nei tuoi libri</string>
@@ -301,4 +299,5 @@
     <string name="choose_a_shelf">Choose a shelf which represents unfinished books:</string>
     <string name="skip_choosing_shelf">Skip and set those as read books</string>
     <string name="not_finished_for_statistics">Not finished</string>
+    <string name="insert_my_review">My review</string>
 </resources>
