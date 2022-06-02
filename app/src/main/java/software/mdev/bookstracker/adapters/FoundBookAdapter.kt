@@ -93,6 +93,9 @@ class FoundBookAdapter(
                     }
 
                     if (curBook.data.covers != null && curBook.data.covers!!.isNotEmpty()) {
+
+                        var coverID = curBook.data.covers!![0]
+
                         viewModel.showLoadingCircle.postValue(true)
                         ivBookCover.setImageTintList(null)
                         val circularProgressDrawable = CircularProgressDrawable(this.context)
@@ -106,7 +109,6 @@ class FoundBookAdapter(
                         )
                         circularProgressDrawable.start()
 
-                        var coverID = curBook.data.covers!![0]
                         var coverUrl = "https://covers.openlibrary.org/b/id/$coverID-M.jpg"
 
                         viewModel.showLoadingCircle.postValue(true)
