@@ -15,8 +15,8 @@ android {
         applicationId "software.mdev.bookstracker"
         minSdkVersion 24
         targetSdkVersion 32
-        versionCode 21
-        versionName "1.14.2"
+        versionCode 26
+        versionName "1.15.0"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
 

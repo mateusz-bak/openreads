@@ -257,16 +257,6 @@
     <string name="notFinishedFragment">Livres non terminés</string>
     <string name="notFinished">Non terminée</string>
     <string name="ivBookStatusNotFinished">Le livre n\'est pas terminé</string>
-    <string name="changelog_1_10_0_a">Vous pouvez désormais ajouter des étiquettes à vos livres.</string>
-    <string name="changelog_1_10_0_b">Les livres peuvent être filtrés par étiquette et par date de fin.</string>
-    <string name="changelog_1_10_0_c">Après avoir atteint l\'objectif annuel, vous recevrez un trophée !</string>
-    <string name="changelog_1_10_0_d">Correction de la mise à jour du classement à partir de l\'affichage du livre.</string>
-    <string name="changelog_1_10_0_e">Correction de la rupture de l\'affichage du livre après un changement de statut.</string>
-    <string name="changelog_1_11_0_a">Les statistiques montrent les couvertures des livres lus.</string>
-    <string name="changelog_1_11_0_b">Les objectifs de lecture peuvent être fixés à la fois pour les livres et les pages.</string>
-    <string name="changelog_1_11_0_c">Les objectifs de lecture des années précédentes peuvent être édités.</string>
-    <string name="changelog_1_11_0_d">Correction d\'un bug où le filtrage des livres terminés par année cachait les livres non lus.</string>
-    <string name="changelog_1_11_0_e">La date de première publication est maintenant correctement tirée de Open Library.</string>
     <string name="changelog_1_12_0_a">Les détails des livres affichent la durée de lecture.</string>
     <string name="changelog_1_12_0_b">Le statut du nouveau livre sera par défaut la liste à partir de laquelle l\'ajout a été commencé.</string>
     <string name="changelog_1_12_0_c">Ajout du nom de l\'application aux listes de livres, diminution du rayon des boutons et des champs de texte.</string>
@@ -301,4 +291,9 @@
     <string name="choose_a_shelf">Choose a shelf which represents unfinished books:</string>
     <string name="skip_choosing_shelf">Skip and set those as read books</string>
     <string name="not_finished_for_statistics">Not finished</string>
+    <string name="changelog_1_15_0_a">Books can be imported from other apps with CSV file</string>
+    <string name="changelog_1_15_0_b">Books with no rating won\'t be counted in average rating</string>
+    <string name="changelog_1_15_0_c">Changelog will be shown only after update.</string>
+    <string name="changelog_1_15_0_d">Fixed app crashes</string>
+    <string name="changelog_1_15_0_e">Added Ukrainian translation</string>
 </resources>

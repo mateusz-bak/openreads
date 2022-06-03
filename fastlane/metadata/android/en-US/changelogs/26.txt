@@ -1,0 +1,4 @@
+- Books can be imported from other apps with CSV file
+- Books with no rating won't be counted in average rating
+- Changelog will be shown only after update
+- Fixed app crashes
