@@ -301,4 +301,9 @@
     <string name="choose_a_shelf">Choose a shelf which represents unfinished books:</string>
     <string name="skip_choosing_shelf">Skip and set those as read books</string>
     <string name="not_finished_for_statistics">Not finished</string>
+    <string name="changelog_1_15_0_a">Books can be imported from other apps with CSV file</string>
+    <string name="changelog_1_15_0_b">Books with no rating won\'t be counted in average rating</string>
+    <string name="changelog_1_15_0_c">Changelog will be shown only after update.</string>
+    <string name="changelog_1_15_0_d">Fixed app crashes</string>
+    <string name="changelog_1_15_0_e">Added Ukrainian translation</string>
 </resources>
