@@ -6,7 +6,7 @@
 </p>
 
 [![GitHub tag (latest by date)](https://img.shields.io/github/v/tag/mateusz-bak/openreads-android?label=latest%20version)](https://github.com/mateusz-bak/openreads-android/releases/latest)
-[![Pull request](https://github.com/mateusz-bak/openreads-android/actions/workflows/test_build.yml/badge.svg?branch=master)](https://github.com/mateusz-bak/openreads-android/actions/workflows/test_build.yml)
+[![Pull request](https://github.com/mateusz-bak/openreads-android/actions/workflows/test_build.yml/badge.svg?branch=master&event=push)](https://github.com/mateusz-bak/openreads-android/actions/workflows/test_build.yml)
 [![Crowdin](https://badges.crowdin.net/openreads-android/localized.svg)](https://crowdin.com/project/openreads-android)
 <br/>
 
