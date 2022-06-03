@@ -257,16 +257,6 @@
     <string name="notFinishedFragment">Libri non terminati</string>
     <string name="notFinished">Non completato</string>
     <string name="ivBookStatusNotFinished">Libro non completato</string>
-    <string name="changelog_1_10_0_a">È ora possibile aggiungere tag ai tuoi libri.</string>
-    <string name="changelog_1_10_0_b">I libri possono essere filtrati per tag e data di fine.</string>
-    <string name="changelog_1_10_0_c">Dopo aver raggiunto l\'obiettivo annuale si ottiene un trofeo!</string>
-    <string name="changelog_1_10_0_d">Corretto l\'aggiornamento della valutazione dalla visualizzazione del libro.</string>
-    <string name="changelog_1_10_0_e">Corretta la visualizzazione del libro dopo il cambio di stato.</string>
-    <string name="changelog_1_11_0_a">Le statistiche mostrano le copertine dei libri letti.</string>
-    <string name="changelog_1_11_0_b">Gli obiettivi di lettura possono essere impostati sia per i libri che per le pagine.</string>
-    <string name="changelog_1_11_0_c">È possibile modificare gli obiettivi di lettura degli anni precedenti.</string>
-    <string name="changelog_1_11_0_d">Corretto l\'errore per cui il filtro dei libri finiti per anno nascondeva i libri non letti.</string>
-    <string name="changelog_1_11_0_e">La data di prima pubblicazione viene ora estratta correttamente da Open Library.</string>
     <string name="changelog_1_12_0_a">I dettagli dei libri mostrano la durata di lettura.</string>
     <string name="changelog_1_12_0_b">Lo stato del nuovo libro viene impostato di default sull\'elenco da cui è stata avviata l\'aggiunta.</string>
     <string name="changelog_1_12_0_c">Aggiunto il nome dell\'app agli elenchi di libri, ai pulsanti diminuiti e al raggio dei campi di testo.</string>

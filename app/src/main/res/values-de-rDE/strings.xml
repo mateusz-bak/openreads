@@ -257,16 +257,6 @@
     <string name="notFinishedFragment">Nicht fertig gelesene Bücher</string>
     <string name="notFinished">Nicht fertig gelesen</string>
     <string name="ivBookStatusNotFinished">Buch ist nicht fertig gelesen</string>
-    <string name="changelog_1_10_0_a">Du kannst nun Tags zu deinen Büchern hinzufügen.</string>
-    <string name="changelog_1_10_0_b">Bücher können durch Tags und Enddatum gefiltert werden.</string>
-    <string name="changelog_1_10_0_c">Nach Erreichen des Jahresziels erhältst du eine Trophäe!</string>
-    <string name="changelog_1_10_0_d">Korrekte Aktualisierung der Bewertung aus der Anzeige der Buchansicht.</string>
-    <string name="changelog_1_10_0_e">Fehlende Buchanzeige nach Änderung des Status.</string>
-    <string name="changelog_1_11_0_a">Statistiken zeigen Cover von gelesenen Büchern.</string>
-    <string name="changelog_1_11_0_b">Leseziele können jetzt sowohl für Bücher als auch für Seiten gesetzt werden.</string>
-    <string name="changelog_1_11_0_c">Das Leseziel der vergangenen Jahre kann bearbeitet werden.</string>
-    <string name="changelog_1_11_0_d">Bug behoben, bei dem das Filtern fertiger Bücher nach Jahr nicht gelesener Bücher ausblenden sollte.</string>
-    <string name="changelog_1_11_0_e">Das erste Veröffentlichungsdatum wird nun korrekt aus der Open Library gezogen.</string>
     <string name="changelog_1_12_0_a">Buchdetails zeigen die Lesedauer an.</string>
     <string name="changelog_1_12_0_b">Der Status des neuen Buches wird standardmäßig in der Liste angezeigt, von der das Hinzufügen gestartet wurde.</string>
     <string name="changelog_1_12_0_c">Der Name der App wurde zu Buchlisten, reduzierten Schaltflächen und Textfeldradius hinzugefügt.</string>
