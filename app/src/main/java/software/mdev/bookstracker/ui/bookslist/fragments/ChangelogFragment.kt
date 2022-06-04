@@ -211,7 +211,8 @@ class ChangelogFragment : Fragment(R.layout.fragment_changelog) {
             getString(R.string.changelog_1_15_0_b),
             getString(R.string.changelog_1_15_0_c),
             getString(R.string.changelog_1_15_0_d),
-            getString(R.string.changelog_1_15_0_e)
+            getString(R.string.changelog_1_15_0_e),
+            getString(R.string.changelog_1_15_0_f)
         )
 
 
