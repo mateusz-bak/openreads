@@ -548,21 +548,22 @@ class AddBookSearchFragment : Fragment(R.layout.fragment_add_book_search) {
         paginationProgressBar.bringToFront()
     }
 
-    fun View.hideKeyboard() {
+    private fun View.hideKeyboard() {
         val inputManager =
             context.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
         inputManager.hideSoftInputFromWindow(windowToken, 0)
     }
 
     private fun showKeyboard(et: EditText, delay: Long) {
-        val timer = Timer()
-        timer.schedule(object : TimerTask() {
-            override fun run() {
-                val inputManager =
-                    context?.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
-                inputManager.showSoftInput(et, 0)
-            }
-        }, delay)
+        GlobalScope.launch {
+            delay(delay)
+
+            val inputManager = context?.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+
+            if (et != null)
+                inputManager?.showSoftInput(et, 0)
+
+        }
     }
 
     private fun convertLongToYear(time: Long): String {

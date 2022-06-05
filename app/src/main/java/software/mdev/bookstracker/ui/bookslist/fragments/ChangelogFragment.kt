@@ -155,26 +155,6 @@ class ChangelogFragment : Fragment(R.layout.fragment_changelog) {
     }
 
     private fun getVersionStrings(): List<Array<String>> {
-            
-        val version_1_10_0 = arrayOf(
-            getString(R.string.changelog_ver_1_10_0),
-            getString(R.string.changelog_date_1_10_0),
-            getString(R.string.changelog_1_10_0_a),
-            getString(R.string.changelog_1_10_0_b),
-            getString(R.string.changelog_1_10_0_c),
-            getString(R.string.changelog_1_10_0_d),
-            getString(R.string.changelog_1_10_0_e)
-        )
-
-        val version_1_11_0 = arrayOf(
-            getString(R.string.changelog_ver_1_11_0),
-            getString(R.string.changelog_date_1_11_0),
-            getString(R.string.changelog_1_11_0_a),
-            getString(R.string.changelog_1_11_0_b),
-            getString(R.string.changelog_1_11_0_c),
-            getString(R.string.changelog_1_11_0_d),
-            getString(R.string.changelog_1_11_0_e)
-        )
 
         val version_1_12_0 = arrayOf(
             getString(R.string.changelog_ver_1_12_0),
@@ -217,13 +197,31 @@ class ChangelogFragment : Fragment(R.layout.fragment_changelog) {
             getString(R.string.changelog_1_14_0_h)
         )
 
+        val version_1_14_2 = arrayOf(
+            getString(R.string.changelog_ver_1_14_2),
+            getString(R.string.changelog_date_1_14_2),
+            getString(R.string.changelog_1_14_2_a),
+            getString(R.string.changelog_1_14_2_b)
+        )
+
+        val version_1_15_0 = arrayOf(
+            getString(R.string.changelog_ver_1_15_0),
+            getString(R.string.changelog_date_1_15_0),
+            getString(R.string.changelog_1_15_0_a),
+            getString(R.string.changelog_1_15_0_b),
+            getString(R.string.changelog_1_15_0_c),
+            getString(R.string.changelog_1_15_0_d),
+            getString(R.string.changelog_1_15_0_e),
+            getString(R.string.changelog_1_15_0_f)
+        )
+
 
         return listOf(
-            version_1_10_0,
-            version_1_11_0,
             version_1_12_0,
             version_1_13_0,
-            version_1_14_0
+            version_1_14_0,
+            version_1_14_2,
+            version_1_15_0
         )
     }
 

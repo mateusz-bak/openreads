@@ -14,12 +14,14 @@ import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.*
 import com.github.mikephil.charting.charts.PieChart
+import com.github.mikephil.charting.components.Legend
 import com.github.mikephil.charting.components.XAxis
 import com.github.mikephil.charting.data.*
 import com.github.mikephil.charting.formatter.DefaultValueFormatter
 import com.github.mikephil.charting.formatter.IndexAxisValueFormatter
 import com.github.mikephil.charting.utils.ColorTemplate
 import com.github.mikephil.charting.utils.MPPointF
+import com.google.android.material.progressindicator.LinearProgressIndicator
 import kotlinx.android.synthetic.main.item_statistics.view.*
 import kotlinx.coroutines.MainScope
 import kotlinx.coroutines.delay
@@ -28,11 +30,15 @@ import software.mdev.bookstracker.R
 import software.mdev.bookstracker.data.db.BooksDatabase
 import software.mdev.bookstracker.data.db.LanguageDatabase
 import software.mdev.bookstracker.data.db.YearDatabase
+import software.mdev.bookstracker.data.db.entities.Book
 import software.mdev.bookstracker.data.db.entities.Year
 import software.mdev.bookstracker.data.repositories.BooksRepository
 import software.mdev.bookstracker.data.repositories.LanguageRepository
 import software.mdev.bookstracker.data.repositories.OpenLibraryRepository
 import software.mdev.bookstracker.data.repositories.YearRepository
+import software.mdev.bookstracker.other.Constants
+import software.mdev.bookstracker.other.Functions
+import software.mdev.bookstracker.other.RoundedSlicesPieChartRenderer
 import software.mdev.bookstracker.ui.bookslist.dialogs.ChallengeDialog
 import software.mdev.bookstracker.ui.bookslist.dialogs.ChallengeDialogListener
 import software.mdev.bookstracker.ui.bookslist.fragments.StatisticsFragment
@@ -40,11 +46,6 @@ import software.mdev.bookstracker.ui.bookslist.viewmodel.BooksViewModel
 import software.mdev.bookstracker.ui.bookslist.viewmodel.BooksViewModelProviderFactory
 import java.math.RoundingMode
 import java.util.*
-import com.github.mikephil.charting.components.Legend
-import com.google.android.material.progressindicator.LinearProgressIndicator
-import software.mdev.bookstracker.data.db.entities.Book
-import software.mdev.bookstracker.other.Constants
-import software.mdev.bookstracker.other.Functions
 
 
 class StatisticsAdapter(
@@ -143,7 +144,8 @@ class StatisticsAdapter(
                 holder.itemView,
                 curYear.yearReadBooks,
                 curYear.yearInProgressBooks,
-                curYear.yearToReadBooks
+                curYear.yearToReadBooks,
+                curYear.yearNotFinishedBooks
             )
         }
         else {
@@ -449,23 +451,29 @@ class StatisticsAdapter(
         })
     }
 
-    private fun setupBooksStatusChart(itemView: View,
-                                      readBooks: Int,
-                                      inProgressBooks: Int,
-                                      toReadBooks: Int) {
+    private fun setupBooksStatusChart(
+        itemView: View,
+        readBooks: Int,
+        inProgressBooks: Int,
+        toReadBooks: Int,
+        notFinishedBooks: Int
+    ) {
 
         val pieChart: PieChart = itemView.findViewById(R.id.pcBooksByStatus)
 
         val noOfEmp = ArrayList<PieEntry>()
 
         if (readBooks != 0)
-            noOfEmp.add(PieEntry(readBooks.toFloat(), itemView.resources.getString(R.string.readFragment)))
+            noOfEmp.add(PieEntry(readBooks.toFloat(), "${itemView.resources.getString(R.string.readFragment)} ($readBooks)"))
 
         if (inProgressBooks != 0)
-        noOfEmp.add(PieEntry(inProgressBooks.toFloat(), itemView.resources.getString(R.string.inProgressFragment)))
+            noOfEmp.add(PieEntry(inProgressBooks.toFloat(), "${itemView.resources.getString(R.string.inProgressFragment)} ($inProgressBooks)"))
 
         if (toReadBooks != 0)
-        noOfEmp.add(PieEntry(toReadBooks.toFloat(), itemView.resources.getString(R.string.toReadFragment)))
+            noOfEmp.add(PieEntry(toReadBooks.toFloat(), "${itemView.resources.getString(R.string.toReadFragment)} ($toReadBooks)"))
+
+        if (notFinishedBooks != 0)
+            noOfEmp.add(PieEntry(notFinishedBooks.toFloat(), "${itemView.resources.getString(R.string.not_finished_for_statistics)} ($notFinishedBooks)"))
 
         val dataSet = PieDataSet(noOfEmp, "")
 
@@ -473,7 +481,12 @@ class StatisticsAdapter(
         dataSet.sliceSpace = 3f
         dataSet.iconsOffset = MPPointF(0F, 40F)
         dataSet.selectionShift = 5f
-        dataSet.setColors(*ColorTemplate.PASTEL_COLORS)
+        dataSet.setColors(
+            Color.rgb(109, 139, 116),
+            Color.rgb(255, 248, 154),
+            Color.rgb(21, 114, 161),
+            Color.rgb(187, 100, 100)
+        )
 
         val legend: Legend = pieChart.legend
         legend.verticalAlignment = Legend.LegendVerticalAlignment.TOP
@@ -482,20 +495,25 @@ class StatisticsAdapter(
         legend.setDrawInside(false)
         legend.xEntrySpace = 7f
         legend.yEntrySpace = 10f
-        legend.textSize = 12f
+        legend.textSize = 14f
         legend.textColor = itemView.resources.getColor(R.color.colorDefaultText)
 
         val data = PieData(dataSet)
-        data.setValueTextSize(14f)
-        data.setValueTextColor(Color.WHITE)
+        data.setValueTextSize(0f)
         data.setValueFormatter(DefaultValueFormatter(0))
         pieChart.data = data
         pieChart.highlightValues(null)
-        pieChart.setHoleColor(itemView.resources.getColor(R.color.colorDefaultBg))
-        pieChart.holeRadius = 45f
+        pieChart.holeRadius = 65f
+        pieChart.extraLeftOffset = 50f
 
         pieChart.setDrawSliceText(false)
         pieChart.description.isEnabled = false
+        pieChart.renderer = RoundedSlicesPieChartRenderer(
+            pieChart,
+            pieChart.animator,
+            pieChart.viewPortHandler
+        )
+        pieChart.setHoleColor(itemView.resources.getColor(R.color.transparent))
 
         pieChart.invalidate()
         pieChart.animateXY(400, 700)

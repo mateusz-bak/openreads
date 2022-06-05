@@ -6,7 +6,7 @@
 </p>
 
 [![GitHub tag (latest by date)](https://img.shields.io/github/v/tag/mateusz-bak/openreads-android?label=latest%20version)](https://github.com/mateusz-bak/openreads-android/releases/latest)
-[![Build Status](https://git-drone.mateusz.ovh/api/badges/mateusz-bak/openreads-android/status.svg)](https://git-drone.mateusz.ovh/mateusz-bak/openreads-android)
+[![Pull request](https://github.com/mateusz-bak/openreads-android/actions/workflows/test_build.yml/badge.svg?branch=master&event=push)](https://github.com/mateusz-bak/openreads-android/actions/workflows/test_build.yml)
 [![Crowdin](https://badges.crowdin.net/openreads-android/localized.svg)](https://crowdin.com/project/openreads-android)
 <br/>
 
@@ -16,17 +16,20 @@
 
 <br/><br/>
 ### Openreads is an Android app written in Kotlin for keeping tracks of your books.  
-#### There are three lists provided so you won't get confused:  
+#### There are four lists provided so you won't get confused:  
 - books you finished,  
 - books you are currently reading,  
-- books you want to read later.
+- books you want to read later,
+- books you didn't finish.
 
-#### The books can be added by:
-- looking up in Open Library database,
-- scanning book's barcode,
-- adding book's details manually.
+You can also use custom tags and filter through them.
 
-####  You can also see some cool statistics!  
+#### A book can be added by:
+- looking it up in the Open Library database,
+- scanning its barcode,
+- adding its details manually.
+
+####  You can also view some cool statistics!  
 
 <br/><br/>
 ## Screenshots  

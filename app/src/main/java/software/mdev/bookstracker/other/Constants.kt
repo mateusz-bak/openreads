@@ -57,6 +57,7 @@ object Constants {
     const val DATABASE_YEAR_READ_BOOKS = "item_read_books"
     const val DATABASE_YEAR_IN_PROGRESS_BOOKS = "item_in_progress_books"
     const val DATABASE_YEAR_TO_READ_BOOKS = "item_to_read_books"
+    const val DATABASE_YEAR_NOT_FINISHED_BOOKS = "item_not_finished_books"
     const val DATABASE_YEAR_LONGEST_READ_BOOK = "item_longest_read_book"
     const val DATABASE_YEAR_LONGEST_READ_BOOK_ID = "item_longest_read_book_id"
     const val DATABASE_YEAR_LONGEST_READ_VAL = "item_longest_read_val"
@@ -112,6 +113,7 @@ object Constants {
     const val KEY_IMPORT = "KEY_IMPORT"
     const val KEY_CHANGELOG = "KEY_CHANGELOG"
     const val KEY_FEEDBACK = "KEY_FEEDBACK"
+    const val KEY_CSV_IMPORT = "KEY_CSV_IMPORT"
 
     const val EMPTY_STRING = ""
 

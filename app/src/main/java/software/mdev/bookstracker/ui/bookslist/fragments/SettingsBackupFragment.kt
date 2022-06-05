@@ -3,7 +3,6 @@ package software.mdev.bookstracker.ui.bookslist.fragments
 import android.content.SharedPreferences
 import android.content.SharedPreferences.OnSharedPreferenceChangeListener
 import android.os.Bundle
-import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.core.content.ContextCompat
 import androidx.preference.Preference
@@ -26,6 +25,7 @@ class SettingsBackupFragment : PreferenceFragmentCompat(), OnSharedPreferenceCha
         var preferenceExport = findPreference<Preference>(Constants.KEY_EXPORT)
         var preferenceExportLocal = findPreference<Preference>(Constants.KEY_EXPORT_LOCAL)
         var preferenceImport = findPreference<Preference>(Constants.KEY_IMPORT)
+        val preferenceCsvImport = findPreference<Preference>(Constants.KEY_CSV_IMPORT)
 
         if (preferenceExport != null) {
             preferenceExport.onPreferenceClickListener = Preference.OnPreferenceClickListener {
@@ -44,6 +44,13 @@ class SettingsBackupFragment : PreferenceFragmentCompat(), OnSharedPreferenceCha
         if (preferenceImport != null) {
             preferenceImport.onPreferenceClickListener = Preference.OnPreferenceClickListener {
                 confirmBackupImportAndExecute(activity as ListActivity)
+                true
+            }
+        }
+
+        if (preferenceCsvImport != null) {
+            preferenceCsvImport.onPreferenceClickListener = Preference.OnPreferenceClickListener {
+                Backup().runImporterCSV(activity as ListActivity)
                 true
             }
         }

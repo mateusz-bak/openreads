@@ -95,6 +95,7 @@ class StatisticsFragment : Fragment(R.layout.fragment_statistics) {
                 var year: Int
 
                 var booksAllTime = 0
+                var booksAllTimeWithRating = 0
                 var pagesAllTime = 0
                 var sumRatingAllTime = 0F
 
@@ -122,6 +123,7 @@ class StatisticsFragment : Fragment(R.layout.fragment_statistics) {
 
                 for (item_year in years) {
                     var booksInYear = 0
+                    var booksInYearWithRating = 0
                     var pagesInYear = 0
                     var sumRatingInYear = 0F
 
@@ -158,6 +160,10 @@ class StatisticsFragment : Fragment(R.layout.fragment_statistics) {
                                 pagesAllTime += item_book.bookNumberOfPages
                                 sumRatingInYear += item_book.bookRating
                                 sumRatingAllTime += item_book.bookRating
+                                if (item_book.bookRating > 0F) {
+                                    booksInYearWithRating++
+                                    booksAllTimeWithRating++
+                                }
 
                                 // books by month
                                 when (Functions().convertLongToMonth(item_book.bookFinishDate.toLong())){
@@ -337,8 +343,8 @@ class StatisticsFragment : Fragment(R.layout.fragment_statistics) {
                         avgPages = (pagesInYear/booksInYear)
 
                     var avgRating = 0F
-                    if (booksInYear != 0)
-                        avgRating = (sumRatingInYear/booksInYear)
+                    if (booksInYearWithRating != 0)
+                        avgRating = (sumRatingInYear/booksInYearWithRating)
 
                     listOfYears.add(Year(
                         item_year.toString(),
@@ -375,8 +381,8 @@ class StatisticsFragment : Fragment(R.layout.fragment_statistics) {
                     avgPagesAllTime = (pagesAllTime/booksAllTime)
 
                 var avgRatingAllTime = 0F
-                if (booksAllTime != 0)
-                    avgRatingAllTime = (sumRatingAllTime/booksAllTime)
+                if (booksAllTimeWithRating != 0)
+                    avgRatingAllTime = (sumRatingAllTime/booksAllTimeWithRating)
 
                 listOfYears[0] = Year("0000",
                     booksAllTime,
@@ -405,6 +411,7 @@ class StatisticsFragment : Fragment(R.layout.fragment_statistics) {
                 var readBooksAllTime = 0
                 var inProgressBooksAllTime = 0
                 var toReadBooksAllTime = 0
+                var notFinishedBooksAllTime = 0
 
                 viewModel.getBookCount(Constants.BOOK_STATUS_READ).observe(viewLifecycleOwner, Observer {it
                     if (it != null)
@@ -418,23 +425,29 @@ class StatisticsFragment : Fragment(R.layout.fragment_statistics) {
                             if (it != null)
                                 toReadBooksAllTime = it.toInt()
 
-                            listOfYears[0].yearReadBooks = readBooksAllTime
-                            listOfYears[0].yearInProgressBooks = inProgressBooksAllTime
-                            listOfYears[0].yearToReadBooks = toReadBooksAllTime
+                            viewModel.getBookCount(Constants.BOOK_STATUS_NOT_FINISHED).observe(viewLifecycleOwner, Observer {
+                                if (it != null)
+                                    notFinishedBooksAllTime = it.toInt()
 
-                            statisticsAdapter.differ.submitList(listOfYears)
+                                listOfYears[0].yearReadBooks = readBooksAllTime
+                                listOfYears[0].yearInProgressBooks = inProgressBooksAllTime
+                                listOfYears[0].yearToReadBooks = toReadBooksAllTime
+                                listOfYears[0].yearNotFinishedBooks = notFinishedBooksAllTime
 
-                            // bounce effect on viewpager2
-                            vpStatistics.children.filterIsInstance<RecyclerView>().firstOrNull()?.let {
-                                OverScrollDecoratorHelper.setUpOverScroll(it, ORIENTATION_HORIZONTAL)
-                            }
+                                statisticsAdapter.differ.submitList(listOfYears)
 
-                            TabLayoutMediator(tlStatistics, vpStatistics) { tab, position ->
-                                when (position) {
-                                    0 -> tab.text = getString(R.string.statistics_all)
-                                    else -> tab.text = listOfYears[position].year
+                                // bounce effect on viewpager2
+                                vpStatistics.children.filterIsInstance<RecyclerView>().firstOrNull()?.let {
+                                    OverScrollDecoratorHelper.setUpOverScroll(it, ORIENTATION_HORIZONTAL)
                                 }
-                            }.attach()
+
+                                TabLayoutMediator(tlStatistics, vpStatistics) { tab, position ->
+                                    when (position) {
+                                        0 -> tab.text = getString(R.string.statistics_all)
+                                        else -> tab.text = listOfYears[position].year
+                                    }
+                                }.attach()
+                            })
                         })
 
                     })
