@@ -99,7 +99,7 @@
     <string name="btnAddManual">"Manuell\nhinzufügen"</string>
     <string name="etAdderBookTitleSearch">Titel, Autor, ISBN...</string>
     <string name="unknown_author">Kein Autor</string>
-    <string name="language">sprache</string>
+    <string name="language">Sprache</string>
     <string name="language_upperCase">Sprache</string>
     <string name="button_search">Suche</string>
     <string name="button_language">filtersprachen</string>
@@ -127,7 +127,7 @@
     <string name="unknown_title">Kein Titel</string>
     <string name="unknown_language">Keine Sprache</string>
     <string name="unknown_isbn">Keine ISBN</string>
-    <string name="warning_delete_book_title">Achten Sie darauf!</string>
+    <string name="warning_delete_book_title">Achtung!</string>
     <string name="warning_delete_book_message">Möchtest du dieses Buch wirklich löschen?</string>
     <string name="warning_delete_book_delete">löschen</string>
     <string name="warning_delete_book_cancel">zurück</string>
@@ -291,10 +291,10 @@
     <string name="choose_a_shelf">Wähle ein Regal, das für die noch nicht gelesenen Bücher steht:</string>
     <string name="skip_choosing_shelf">Überspringen und diese Bücher als gelesen markieren</string>
     <string name="not_finished_for_statistics">Nicht fertig gelesen</string>
-    <string name="changelog_1_15_0_a">Books can be imported from other apps with CSV file</string>
-    <string name="changelog_1_15_0_b">Books with no rating won\'t be counted in average rating</string>
-    <string name="changelog_1_15_0_c">Changelog will be shown only after update.</string>
-    <string name="changelog_1_15_0_d">Fixed app crashes</string>
-    <string name="changelog_1_15_0_e">Added Ukrainian translation</string>
-    <string name="changelog_1_15_0_f">Added Czech translation</string>
+    <string name="changelog_1_15_0_a">Bücher können mit einer CSV-Datei aus anderen Apps importiert werden</string>
+    <string name="changelog_1_15_0_b">Bücher ohne Bewertung werden nicht in die Durchschnittsbewertung einbezogen</string>
+    <string name="changelog_1_15_0_c">Das Changelog wird nur nach Aktualisierungen angezeigt.</string>
+    <string name="changelog_1_15_0_d">Abstürze der App behoben</string>
+    <string name="changelog_1_15_0_e">Ukrainische Übersetzung hinzugefügt</string>
+    <string name="changelog_1_15_0_f">Tschechische Übersetzung hinzugefügt</string>
 </resources>
