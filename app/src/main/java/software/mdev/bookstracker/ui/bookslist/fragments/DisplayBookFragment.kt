@@ -238,7 +238,7 @@ class DisplayBookFragment : Fragment(R.layout.fragment_display_book) {
 
         return if (sharedPref?.getBoolean(
                 Constants.SHARED_PREFERENCES_KEY_DETAILS_MODE,
-                true
+                false
             ) == true
         ) {
             showGridIcon(false)
