@@ -299,4 +299,6 @@
     <string name="editBook">Edit book</string>
     <string name="deleteBook">Delete book</string>
     <string name="showAsGridList">Show as grid / list</string>
+    <string name="and">And</string>
+    <string name="or">Or</string>
 </resources>
