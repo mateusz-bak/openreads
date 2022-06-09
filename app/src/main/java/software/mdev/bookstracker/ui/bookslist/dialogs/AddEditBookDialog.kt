@@ -353,6 +353,16 @@ class AddEditBookDialog : DialogFragment() {
             }
         }
 
+        tietBookNotes.addTextChangedListener { editable ->
+            editable?.let {
+                val string = context?.getString(R.string.insert_my_review)
+                if (editable.isNotEmpty())
+                    tilBookNotes.hint = "$string ${editable.length}/2000"
+                else
+                    tilBookNotes.hint = string
+            }
+        }
+
         ivClearBookTitle.setOnClickListener {
             tietBookTitle.setText("")
             tietBookTitle.requestFocus()
