@@ -30,6 +30,9 @@ import androidx.swiperefreshlayout.widget.CircularProgressDrawable
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.chip.Chip
 import com.google.android.material.snackbar.Snackbar
+import com.journeyapps.barcodescanner.ScanContract
+import com.journeyapps.barcodescanner.ScanIntentResult
+import com.journeyapps.barcodescanner.ScanOptions
 import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.dialog_add_edit_book.*
 import kotlinx.coroutines.MainScope
@@ -68,6 +71,7 @@ class AddEditBookDialog : DialogFragment() {
     private var whatIsClicked = Constants.BOOK_STATUS_NOTHING
     private lateinit var takePhoto: ActivityResultLauncher<Void>
     private lateinit var choosePhoto: ActivityResultLauncher<String>
+    private lateinit var barcodeLauncher: ActivityResultLauncher<ScanOptions>
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -396,6 +400,17 @@ class AddEditBookDialog : DialogFragment() {
 
         btnBookAddTag.setOnClickListener {
             addTag()
+        }
+
+        barcodeLauncher = registerForActivityResult(
+            ScanContract()
+        ) { result: ScanIntentResult ->
+            if (result.contents != null)
+                tietBookISBN.setText(result.contents)
+        }
+
+        tilBookISBN.setEndIconOnClickListener {
+            openCodeScanner()
         }
     }
 
@@ -1107,5 +1122,16 @@ class AddEditBookDialog : DialogFragment() {
                 Constants.PERMISSION_CAMERA_FROM_UPLOAD_COVER
             )
         }
+    }
+
+    private fun openCodeScanner() {
+        val options = ScanOptions()
+        options.setDesiredBarcodeFormats(ScanOptions.ALL_CODE_TYPES)
+        options.setPrompt(listActivity.getString(R.string.tbScannerTip))
+        options.setCameraId(0)
+        options.setBeepEnabled(true)
+        options.setBarcodeImageEnabled(true)
+        options.setOrientationLocked(true)
+        barcodeLauncher.launch(options)
     }
 }

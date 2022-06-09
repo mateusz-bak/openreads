@@ -296,4 +296,7 @@
     <string name="changelog_1_15_0_e">Added Ukrainian translation</string>
     <string name="changelog_1_15_0_f">Added Czech translation</string>
     <string name="insert_my_review">My review</string>
+    <string name="editBook">Edit book</string>
+    <string name="deleteBook">Delete book</string>
+    <string name="showAsGridList">Show as grid / list</string>
 </resources>

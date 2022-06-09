@@ -298,4 +298,7 @@ Vděčíme @vbh </string>
     <string name="changelog_1_15_0_e">Přidán ukrajinský překlad</string>
     <string name="changelog_1_15_0_f">Přidán český překlad</string>
     <string name="insert_my_review">My review</string>
+    <string name="editBook">Edit book</string>
+    <string name="deleteBook">Delete book</string>
+    <string name="showAsGridList">Show as grid / list</string>
 </resources>
