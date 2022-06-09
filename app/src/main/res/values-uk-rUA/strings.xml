@@ -211,7 +211,6 @@
     <string name="insert_book_publish_year">Рік публікації</string>
     <string name="insert_book_status">Статус книги</string>
     <string name="insert_book_rating">Ваш рейтинг</string>
-    <string name="insert_book_notes">Опис</string>
     <string name="insert_book_finish_date">Дата закінчення</string>
     <string name="insert_book_start_date">Дата початку</string>
     <string name="removed_from_fav">Видалено з обраного</string>
@@ -222,7 +221,6 @@
     <string name="upload_cover_from_camera">Сфотографувати вашу обкладинку</string>
     <string name="permission_granted_click_cover_again">Дозвіл надано! Натисніть на обкладинку знову</string>
     <string name="btnAdderClearFinishDate">Очистити</string>
-    <string name="book_notes">Опис</string>
     <string name="book_tags">Мітки</string>
     <string name="settings">Налаштування</string>
     <string name="search_hint">Шукайте у своїх книгах</string>
