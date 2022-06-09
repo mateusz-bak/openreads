@@ -361,7 +361,7 @@ class AddEditBookDialog : DialogFragment() {
             editable?.let {
                 val string = context?.getString(R.string.insert_my_review)
                 if (editable.isNotEmpty())
-                    tilBookNotes.hint = "$string ${editable.length}/2000"
+                    tilBookNotes.hint = "$string ${editable.length}/5000"
                 else
                     tilBookNotes.hint = string
             }
