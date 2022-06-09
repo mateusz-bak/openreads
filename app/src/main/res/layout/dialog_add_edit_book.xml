@@ -264,17 +264,19 @@
                         app:boxStrokeWidthFocused="0dp"
                         app:errorContentDescription="@string/insert_book_isbn"
                         app:errorEnabled="true"
-                        app:errorIconDrawable="@drawable/ic_iconscout_qrcode_scan_24"
+                        app:errorIconDrawable="@drawable/ic_iconscout_book_24"
                         app:errorIconTint="?colorAccent"
                         app:errorTextColor="?colorAccent"
                         app:hintAnimationEnabled="true"
                         app:hintTextColor="?colorAccent"
-                        app:layout_constraintEnd_toEndOf="@+id/tilBookPages"
-                        app:layout_constraintEnd_toStartOf="@+id/tilBookOLID"
+                        app:layout_constraintEnd_toEndOf="@+id/tilBookPublishYear"
                         app:layout_constraintHorizontal_bias="0.5"
                         app:layout_constraintStart_toStartOf="@+id/tilBookPages"
                         app:layout_constraintTop_toBottomOf="@+id/tilBookPages"
-                        app:startIconDrawable="@drawable/ic_iconscout_qrcode_scan_24"
+                        app:endIconDrawable="@drawable/ic_iconscout_qrcode_scan_24"
+                        app:endIconTint="?colorPrimary"
+                        app:endIconMode="custom"
+                        app:startIconDrawable="@drawable/ic_iconscout_book_24"
                         app:startIconTint="?colorPrimary">
 
                         <com.google.android.material.textfield.TextInputEditText
@@ -304,7 +306,7 @@
                         android:paddingBottom="0dp"
                         app:layout_constraintEnd_toEndOf="@+id/tilBookAuthor"
                         app:layout_constraintStart_toStartOf="@+id/clBookStatus"
-                        app:layout_constraintTop_toBottomOf="@+id/tilBookISBN">
+                        app:layout_constraintTop_toBottomOf="@+id/tilBookOLID">
 
                         <com.google.android.material.textfield.TextInputLayout
                             android:id="@+id/tilBookTags"
@@ -399,10 +401,10 @@
                         app:errorTextColor="?colorAccent"
                         app:hintAnimationEnabled="true"
                         app:hintTextColor="?colorAccent"
-                        app:layout_constraintEnd_toEndOf="@+id/tilBookTitle"
+                        app:layout_constraintEnd_toEndOf="@+id/tilBookISBN"
                         app:layout_constraintHorizontal_bias="0.5"
-                        app:layout_constraintStart_toEndOf="@+id/tilBookISBN"
-                        app:layout_constraintTop_toBottomOf="@+id/tilBookPublishYear"
+                        app:layout_constraintStart_toStartOf="@+id/tilBookISBN"
+                        app:layout_constraintTop_toBottomOf="@+id/tilBookISBN"
                         app:startIconDrawable="@drawable/ic_iconscout_book_24"
                         app:startIconTint="?colorPrimary">
 
