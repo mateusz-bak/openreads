@@ -211,7 +211,6 @@
     <string name="insert_book_publish_year">Udgivelsesår</string>
     <string name="insert_book_status">Bogstatus</string>
     <string name="insert_book_rating">Din bedømmelse</string>
-    <string name="insert_book_notes">Noter</string>
     <string name="insert_book_finish_date">Slutdato</string>
     <string name="insert_book_start_date">Startdato</string>
     <string name="removed_from_fav">Fjernet fra favoritter</string>
@@ -222,7 +221,6 @@
     <string name="upload_cover_from_camera">Tag foto af dit omslag</string>
     <string name="permission_granted_click_cover_again">Tilladelse givet! Klik på omslaget igen</string>
     <string name="btnAdderClearFinishDate">Ryd</string>
-    <string name="book_notes">Noter</string>
     <string name="book_tags">Etiketter</string>
     <string name="settings">Indstillinger</string>
     <string name="search_hint">Søg i dine bøger</string>
@@ -297,4 +295,8 @@
     <string name="changelog_1_15_0_d">Løste app-nedbrud</string>
     <string name="changelog_1_15_0_e">Tilføjet ukrainsk oversættelse</string>
     <string name="changelog_1_15_0_f">Tilføjet tjekkisk oversættelse</string>
+    <string name="insert_my_review">My review</string>
+    <string name="editBook">Edit book</string>
+    <string name="deleteBook">Delete book</string>
+    <string name="showAsGridList">Show as grid / list</string>
 </resources>
