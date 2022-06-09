@@ -7,7 +7,7 @@ import android.content.res.Resources
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
-import com.google.gson.Gson
+import kotlinx.android.synthetic.main.item_book_list.view.*
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
@@ -79,6 +79,10 @@ class Functions {
         var sharedPreferencesName = activity.getString(R.string.shared_preferences_name)
         val sharedPref = (activity).getSharedPreferences(sharedPreferencesName, Context.MODE_PRIVATE)
 
+        val isTagsAnd = sharedPref?.getBoolean(
+            Constants.SHARED_PREFERENCES_KEY_TAGS_AND_MODE,
+            false
+        )
         var filteredBooks1: List<Book> = emptyList()
 
         val yearsToFilterJson = sharedPref.getString(Constants.SHARED_PREFERENCES_KEY_FILTER_YEARS, "null")
@@ -111,12 +115,26 @@ class Functions {
         if (tagsToFilterJson != null && tagsToFilterJson != "null") {
             val tagsToFilter = gson.fromJson(tagsToFilterJson, Array<String>::class.java).toList()
 
-            for (book in filteredBooks1) {
-                if (book.bookTags != null && book.bookTags!!.isNotEmpty()) {
-                    for (tag in book.bookTags!!) {
-                        if (tag in tagsToFilter) {
-                            if (book !in filteredBooks2)
-                                filteredBooks2 += book
+            if (isTagsAnd == true) {
+                for (book in filteredBooks1) {
+                    if (book.bookTags != null && book.bookTags!!.isNotEmpty()) {
+                        var allTagsFit = true
+                        for (tag in tagsToFilter) {
+                            if (tag !in book.bookTags!!)
+                                allTagsFit = false
+                        }
+                        if (allTagsFit && book !in filteredBooks2)
+                            filteredBooks2 += book
+                    }
+                }
+            } else {
+                for (book in filteredBooks1) {
+                    if (book.bookTags != null && book.bookTags!!.isNotEmpty()) {
+                        for (tag in book.bookTags!!) {
+                            if (tag in tagsToFilter) {
+                                if (book !in filteredBooks2)
+                                    filteredBooks2 += book
+                            }
                         }
                     }
                 }

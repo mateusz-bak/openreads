@@ -66,6 +66,8 @@ class ListActivity : AppCompatActivity() {
     lateinit var booksViewModel: BooksViewModel
     lateinit var notDeletedBooks: List<Book>
     lateinit var listActivity: ListActivity
+    var isSortAscActive: Boolean? = null
+    var isTagsAndActive: Boolean? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         listActivity = this
@@ -355,11 +357,13 @@ class ListActivity : AppCompatActivity() {
         setSortBottomSheetDialogColors(bottomSheetDialog)
         setOnRadioButtonClickListeners(bottomSheetDialog)
         setAscDescButtonsListeners(bottomSheetDialog)
+        setAndOrButtonsListeners(bottomSheetDialog)
 
         bottomSheetDialog.findViewById<Button>(R.id.btnSortSave)
             ?.setOnClickListener {
                 val sortType = getSortType(bottomSheetDialog)
-                val isOrderAsc = isOrderAsc(bottomSheetDialog)
+                val isOrderAsc = isSortAscActive
+                val isTagsAnd = isTagsAndActive
                 val isOnlyFav = isOnlyFav(bottomSheetDialog)
 
                 val tagsToFilter = getTagsToFilter(bottomSheetDialog)
@@ -368,7 +372,7 @@ class ListActivity : AppCompatActivity() {
                 val yearsToFilter = getYearsToFilter(bottomSheetDialog)
                 val yearsToFilterJson = convertListToJson(yearsToFilter)
 
-                saveSortType(sortType, isOrderAsc, isOnlyFav, tagsToFilterJson, yearsToFilterJson)
+                saveSortType(sortType, isOrderAsc, isTagsAnd, isOnlyFav, tagsToFilterJson, yearsToFilterJson)
                 bottomSheetDialog.dismiss()
             }
 
@@ -506,42 +510,47 @@ class ListActivity : AppCompatActivity() {
             Constants.SORT_ORDER_TITLE_ASC
         )
 
+        val isAndMode = sharedPref.getBoolean(
+            Constants.SHARED_PREFERENCES_KEY_TAGS_AND_MODE,
+            false
+        )
+
         when (currentSortType) {
             Constants.SORT_ORDER_TITLE_ASC ->
-                setCurrentSortTypeViews(bottomSheetDialog, 0, true)
+                setCurrentSortTypeViews(bottomSheetDialog, 0, true, isAndMode)
 
             Constants.SORT_ORDER_TITLE_DESC ->
-                setCurrentSortTypeViews(bottomSheetDialog, 0, false)
+                setCurrentSortTypeViews(bottomSheetDialog, 0, false, isAndMode)
 
             Constants.SORT_ORDER_AUTHOR_ASC ->
-                setCurrentSortTypeViews(bottomSheetDialog, 1, true)
+                setCurrentSortTypeViews(bottomSheetDialog, 1, true, isAndMode)
 
             Constants.SORT_ORDER_AUTHOR_DESC ->
-                setCurrentSortTypeViews(bottomSheetDialog, 1, false)
+                setCurrentSortTypeViews(bottomSheetDialog, 1, false, isAndMode)
 
             Constants.SORT_ORDER_RATING_ASC ->
-                setCurrentSortTypeViews(bottomSheetDialog, 2, true)
+                setCurrentSortTypeViews(bottomSheetDialog, 2, true, isAndMode)
 
             Constants.SORT_ORDER_RATING_DESC ->
-                setCurrentSortTypeViews(bottomSheetDialog, 2, false)
+                setCurrentSortTypeViews(bottomSheetDialog, 2, false, isAndMode)
 
             Constants.SORT_ORDER_PAGES_ASC ->
-                setCurrentSortTypeViews(bottomSheetDialog, 3, true)
+                setCurrentSortTypeViews(bottomSheetDialog, 3, true, isAndMode)
 
             Constants.SORT_ORDER_PAGES_DESC ->
-                setCurrentSortTypeViews(bottomSheetDialog, 3, false)
+                setCurrentSortTypeViews(bottomSheetDialog, 3, false, isAndMode)
 
             Constants.SORT_ORDER_START_DATE_ASC ->
-                setCurrentSortTypeViews(bottomSheetDialog, 4, true)
+                setCurrentSortTypeViews(bottomSheetDialog, 4, true, isAndMode)
 
             Constants.SORT_ORDER_START_DATE_DESC ->
-                setCurrentSortTypeViews(bottomSheetDialog, 4, false)
+                setCurrentSortTypeViews(bottomSheetDialog, 4, false, isAndMode)
 
             Constants.SORT_ORDER_FINISH_DATE_ASC ->
-                setCurrentSortTypeViews(bottomSheetDialog, 5, true)
+                setCurrentSortTypeViews(bottomSheetDialog, 5, true, isAndMode)
 
             Constants.SORT_ORDER_FINISH_DATE_DESC ->
-                setCurrentSortTypeViews(bottomSheetDialog, 5, false)
+                setCurrentSortTypeViews(bottomSheetDialog, 5, false, isAndMode)
         }
     }
 
@@ -557,7 +566,7 @@ class ListActivity : AppCompatActivity() {
         setCurrentOnlyFavViews(bottomSheetDialog, currentOnlyFav)
     }
 
-    private fun setCurrentSortTypeViews(bottomSheetDialog: BottomSheetDialog, sortType: Int, isAsc: Boolean) {
+    private fun setCurrentSortTypeViews(bottomSheetDialog: BottomSheetDialog, sortType: Int, isAsc: Boolean, isAnd: Boolean) {
         val radioButtons = listOf<RadioButton?>(
             bottomSheetDialog.findViewById(R.id.rbSortByTitle), //sortType 0
             bottomSheetDialog.findViewById(R.id.rbSortByAuthor), //sortType 1
@@ -567,9 +576,14 @@ class ListActivity : AppCompatActivity() {
             bottomSheetDialog.findViewById(R.id.rbSortByFinishDate) //sortType 5
         )
 
-        val textViews = listOf<TextView?>(
+        val textViewsOrder = listOf<TextView?>(
             bottomSheetDialog.findViewById(R.id.tvOrderAsc),
             bottomSheetDialog.findViewById(R.id.tvOrderDesc)
+        )
+
+        val textViewsTags = listOf<TextView?>(
+            bottomSheetDialog.findViewById(R.id.tvTagsAnd),
+            bottomSheetDialog.findViewById(R.id.tvTagsOr)
         )
 
         for (radioButton in radioButtons) {
@@ -577,17 +591,23 @@ class ListActivity : AppCompatActivity() {
         }
 
         if (isAsc) {
-            textViews[0]?.hint = "true"
-            textViews[1]?.hint = "false"
-
-            textViews[0]?.setTextColor(getAccentColor(this))
-            textViews[1]?.setTextColor(this.getColor(R.color.colorDefaultText))
+            isSortAscActive = true
+            textViewsOrder[0]?.setTextColor(getAccentColor(this))
+            textViewsOrder[1]?.setTextColor(this.getColor(R.color.colorDefaultText))
         } else {
-            textViews[0]?.hint = "false"
-            textViews[1]?.hint = "true"
+            isSortAscActive = false
+            textViewsOrder[0]?.setTextColor(this.getColor(R.color.colorDefaultText))
+            textViewsOrder[1]?.setTextColor(getAccentColor(this))
+        }
 
-            textViews[0]?.setTextColor(this.getColor(R.color.colorDefaultText))
-            textViews[1]?.setTextColor(getAccentColor(this))
+        if (isAnd) {
+            isTagsAndActive = true
+            textViewsTags[0]?.setTextColor(getAccentColor(this))
+            textViewsTags[1]?.setTextColor(this.getColor(R.color.colorDefaultText))
+        } else {
+            isTagsAndActive = false
+            textViewsTags[0]?.setTextColor(this.getColor(R.color.colorDefaultText))
+            textViewsTags[1]?.setTextColor(getAccentColor(this))
         }
     }
 
@@ -652,8 +672,8 @@ class ListActivity : AppCompatActivity() {
         }
     }
 
-    private fun saveSortType(sortType: Int?, isOrderAsc: Boolean?, isOnlyFav: Boolean?, tagsToFilterJson: String, yearsToFilterJson: String) {
-        if (sortType != null && isOrderAsc != null && isOnlyFav != null) {
+    private fun saveSortType(sortType: Int?, isOrderAsc: Boolean?, isTagsAnd: Boolean?, isOnlyFav: Boolean?, tagsToFilterJson: String, yearsToFilterJson: String) {
+        if (sortType != null && isOrderAsc != null && isTagsAnd != null && isOnlyFav != null) {
 
             val sortOrder = when (sortType) {
                 1 -> {
@@ -700,6 +720,7 @@ class ListActivity : AppCompatActivity() {
 
             sharedPrefEditor?.apply {
                 putString(Constants.SHARED_PREFERENCES_KEY_SORT_ORDER, sortOrder)
+                putBoolean(Constants.SHARED_PREFERENCES_KEY_TAGS_AND_MODE, isTagsAnd)
                 putBoolean(Constants.SHARED_PREFERENCES_KEY_ONLY_FAV, isOnlyFav)
                 putString(Constants.SHARED_PREFERENCES_KEY_FILTER_TAGS, tagsToFilterJson)
                 putString(Constants.SHARED_PREFERENCES_KEY_FILTER_YEARS, yearsToFilterJson)
@@ -723,16 +744,6 @@ class ListActivity : AppCompatActivity() {
                 return i
         }
         return null
-    }
-    private fun isOrderAsc(bottomSheetDialog: BottomSheetDialog): Boolean? {
-        return if (bottomSheetDialog.findViewById<TextView>(R.id.tvOrderAsc)
-                ?.hint == "true")
-            true
-        else if (bottomSheetDialog.findViewById<TextView>(R.id.tvOrderDesc)
-                ?.hint == "true")
-            false
-        else
-            null
     }
 
     private fun isOnlyFav(bottomSheetDialog: BottomSheetDialog): Boolean? {
@@ -785,25 +796,39 @@ class ListActivity : AppCompatActivity() {
         bottomSheetDialog.findViewById<TextView>(R.id.tvOrderAsc)?.setOnClickListener {
             bottomSheetDialog.findViewById<TextView>(R.id.tvOrderAsc)
                 ?.setTextColor(getAccentColor(this))
-            bottomSheetDialog.findViewById<TextView>(R.id.tvOrderAsc)
-                ?.hint = "true"
+            isSortAscActive = true
 
             bottomSheetDialog.findViewById<TextView>(R.id.tvOrderDesc)
                 ?.setTextColor(this.getColor(R.color.colorDefaultText))
-            bottomSheetDialog.findViewById<TextView>(R.id.tvOrderDesc)
-                ?.hint = "false"
         }
 
         bottomSheetDialog.findViewById<TextView>(R.id.tvOrderDesc)?.setOnClickListener {
             bottomSheetDialog.findViewById<TextView>(R.id.tvOrderDesc)
                 ?.setTextColor(getAccentColor(this))
-            bottomSheetDialog.findViewById<TextView>(R.id.tvOrderDesc)
-                ?.hint = "true"
+            isSortAscActive = false
 
             bottomSheetDialog.findViewById<TextView>(R.id.tvOrderAsc)
                 ?.setTextColor(this.getColor(R.color.colorDefaultText))
-            bottomSheetDialog.findViewById<TextView>(R.id.tvOrderAsc)
-                ?.hint = "false"
+        }
+    }
+
+    private fun setAndOrButtonsListeners(bottomSheetDialog: BottomSheetDialog) {
+        bottomSheetDialog.findViewById<TextView>(R.id.tvTagsAnd)?.setOnClickListener {
+            bottomSheetDialog.findViewById<TextView>(R.id.tvTagsAnd)
+                ?.setTextColor(getAccentColor(this))
+            isTagsAndActive = true
+
+            bottomSheetDialog.findViewById<TextView>(R.id.tvTagsOr)
+                ?.setTextColor(this.getColor(R.color.colorDefaultText))
+        }
+
+        bottomSheetDialog.findViewById<TextView>(R.id.tvTagsOr)?.setOnClickListener {
+            bottomSheetDialog.findViewById<TextView>(R.id.tvTagsOr)
+                ?.setTextColor(getAccentColor(this))
+            isTagsAndActive = false
+
+            bottomSheetDialog.findViewById<TextView>(R.id.tvTagsAnd)
+                ?.setTextColor(this.getColor(R.color.colorDefaultText))
         }
     }
 
