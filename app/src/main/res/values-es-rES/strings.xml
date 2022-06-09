@@ -211,7 +211,6 @@
     <string name="insert_book_publish_year">Año de publicación</string>
     <string name="insert_book_status">Estado del libro</string>
     <string name="insert_book_rating">Tu calificación</string>
-    <string name="insert_book_notes">Notas</string>
     <string name="insert_book_finish_date">Fecha de finalización</string>
     <string name="insert_book_start_date">Fecha de inicio</string>
     <string name="removed_from_fav">Eliminado de favoritos</string>
@@ -222,7 +221,6 @@
     <string name="upload_cover_from_camera">Toma una foto de tu portada</string>
     <string name="permission_granted_click_cover_again">¡Permiso concedido! Haz clic de nuevo en la portada</string>
     <string name="btnAdderClearFinishDate">Limpiar</string>
-    <string name="book_notes">Notas</string>
     <string name="book_tags">Etiquetas</string>
     <string name="settings">Configuraciones</string>
     <string name="search_hint">Buscar en tus libros</string>
@@ -297,4 +295,8 @@
     <string name="changelog_1_15_0_d">Fallos de aplicación resueltos</string>
     <string name="changelog_1_15_0_e">Añadida traducción ucraniana</string>
     <string name="changelog_1_15_0_f">Añadida traducción checa</string>
+    <string name="insert_my_review">My review</string>
+    <string name="editBook">Edit book</string>
+    <string name="deleteBook">Delete book</string>
+    <string name="showAsGridList">Show as grid / list</string>
 </resources>
