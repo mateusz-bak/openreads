@@ -192,7 +192,7 @@ class SetupFragment : Fragment(R.layout.fragment_setup) {
 
         fabLaunchApp.setOnClickListener {
             hotReloadActivity(activity)
-            saveAppsFirstlaunch()
+            saveAppsFirstLaunch()
 
             Navigation.findNavController(view).navigate(R.id.action_setupFragment_to_booksFragment)
         }
@@ -239,7 +239,7 @@ class SetupFragment : Fragment(R.layout.fragment_setup) {
         (activity as ListActivity).recreate()
     }
 
-    private fun saveAppsFirstlaunch() {
+    private fun saveAppsFirstLaunch() {
         var sharedPreferencesName = (activity as ListActivity).getString(R.string.shared_preferences_name)
         val sharedPref = (activity as ListActivity).getSharedPreferences(sharedPreferencesName, Context.MODE_PRIVATE)
 
@@ -247,6 +247,7 @@ class SetupFragment : Fragment(R.layout.fragment_setup) {
 
         editor?.apply {
             putBoolean(Constants.SHARED_PREFERENCES_KEY_FIRST_TIME_TOGGLE, false)
+            putString(Constants.SHARED_PREFERENCES_KEY_APP_VERSION, resources.getString(R.string.app_version))
             apply()
         }
     }

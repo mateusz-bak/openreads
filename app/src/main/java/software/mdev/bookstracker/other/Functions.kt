@@ -132,7 +132,7 @@ class Functions {
         if (scrollToTop && rv != null) {
             GlobalScope.launch {
                 delay(250L)
-                rv.smoothScrollToPosition(0)
+                rv?.smoothScrollToPosition(0) //null check because of the delay
 
             }
         }
