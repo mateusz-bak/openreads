@@ -211,7 +211,6 @@
     <string name="insert_book_publish_year">Rok vydání</string>
     <string name="insert_book_status">Stav knihy</string>
     <string name="insert_book_rating">Vaše hodnocení</string>
-    <string name="insert_book_notes">Poznámky</string>
     <string name="insert_book_finish_date">Datum dočtení</string>
     <string name="insert_book_start_date">Data začátku čtení</string>
     <string name="removed_from_fav">Odebráno z oblíbených</string>
@@ -222,7 +221,6 @@
     <string name="upload_cover_from_camera">Vyfotit obálku</string>
     <string name="permission_granted_click_cover_again">Oprávnění uděleno! Znovu prosím klepněte na obálku</string>
     <string name="btnAdderClearFinishDate">Odstranit</string>
-    <string name="book_notes">Poznámky</string>
     <string name="book_tags">Štítky</string>
     <string name="settings">Nastavení</string>
     <string name="search_hint">Vyhledávat knihy</string>
@@ -299,6 +297,7 @@ Vděčíme @vbh </string>
     <string name="changelog_1_15_0_d">Opraveny pády aplikace</string>
     <string name="changelog_1_15_0_e">Přidán ukrajinský překlad</string>
     <string name="changelog_1_15_0_f">Přidán český překlad</string>
+    <string name="insert_my_review">My review</string>
     <string name="editBook">Edit book</string>
     <string name="deleteBook">Delete book</string>
     <string name="showAsGridList">Show as grid / list</string>

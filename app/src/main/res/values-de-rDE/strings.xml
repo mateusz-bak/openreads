@@ -211,7 +211,6 @@
     <string name="insert_book_publish_year">Veröffentlichungsjahr</string>
     <string name="insert_book_status">Bücherstatus</string>
     <string name="insert_book_rating">Deine Bewertung</string>
-    <string name="insert_book_notes">Hinweise</string>
     <string name="insert_book_finish_date">Enddatum</string>
     <string name="insert_book_start_date">Startdatum</string>
     <string name="removed_from_fav">Aus Favoriten entfernt</string>
@@ -222,7 +221,6 @@
     <string name="upload_cover_from_camera">Foto von deinem Cover machen</string>
     <string name="permission_granted_click_cover_again">Berechtigung erteilt! Klicke erneut auf das Cover</string>
     <string name="btnAdderClearFinishDate">Löschen</string>
-    <string name="book_notes">Hinweise</string>
     <string name="book_tags">Schlagwörter</string>
     <string name="settings">Einstellungen</string>
     <string name="search_hint">In deinen Büchern suchen</string>
@@ -297,6 +295,7 @@
     <string name="changelog_1_15_0_d">Abstürze der App behoben</string>
     <string name="changelog_1_15_0_e">Ukrainische Übersetzung hinzugefügt</string>
     <string name="changelog_1_15_0_f">Tschechische Übersetzung hinzugefügt</string>
+    <string name="insert_my_review">My review</string>
     <string name="editBook">Edit book</string>
     <string name="deleteBook">Delete book</string>
     <string name="showAsGridList">Show as grid / list</string>
