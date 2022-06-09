@@ -131,6 +131,10 @@ class ListActivity : AppCompatActivity() {
                         menu.findItem(R.id.miStatistics).isVisible = true
                         menu.findItem(R.id.miNotFinished).isVisible = true
                         menu.findItem(R.id.miSettings).isVisible = true
+
+                        menu.findItem(R.id.miEdit).isVisible = false
+                        menu.findItem(R.id.miDelete).isVisible = false
+                        menu.findItem(R.id.miGridList).isVisible = false
                     }
                     R.id.setupFragment -> {
                         supportActionBar?.setDisplayHomeAsUpEnabled(false)
@@ -142,6 +146,25 @@ class ListActivity : AppCompatActivity() {
                         menu.findItem(R.id.miStatistics).isVisible = false
                         menu.findItem(R.id.miNotFinished).isVisible = false
                         menu.findItem(R.id.miSettings).isVisible = false
+
+                        menu.findItem(R.id.miEdit).isVisible = false
+                        menu.findItem(R.id.miDelete).isVisible = false
+                        menu.findItem(R.id.miGridList).isVisible = false
+                    }
+                    R.id.displayBookFragment -> {
+                        supportActionBar?.setDisplayHomeAsUpEnabled(true)
+
+                        MenuItemCompat.collapseActionView(searchItem)
+
+                        menu.findItem(R.id.miSearch).isVisible = false
+                        menu.findItem(R.id.miSort).isVisible = false
+                        menu.findItem(R.id.miStatistics).isVisible = false
+                        menu.findItem(R.id.miNotFinished).isVisible = false
+                        menu.findItem(R.id.miSettings).isVisible = false
+
+                        menu.findItem(R.id.miEdit).isVisible = true
+                        menu.findItem(R.id.miDelete).isVisible = true
+                        menu.findItem(R.id.miGridList).isVisible = true
                     }
                     else -> {
                         supportActionBar?.setDisplayHomeAsUpEnabled(true)
@@ -154,6 +177,9 @@ class ListActivity : AppCompatActivity() {
                         menu.findItem(R.id.miNotFinished).isVisible = false
                         menu.findItem(R.id.miSettings).isVisible = false
 
+                        menu.findItem(R.id.miEdit).isVisible = false
+                        menu.findItem(R.id.miDelete).isVisible = false
+                        menu.findItem(R.id.miGridList).isVisible = false
                     }
                 }
             }
@@ -312,7 +338,7 @@ class ListActivity : AppCompatActivity() {
             R.id.miSort -> showSortBottomSheetDialog()
             android.R.id.home -> onBackPressed()
         }
-        return true
+        return false
     }
 
     private fun showSortBottomSheetDialog() {

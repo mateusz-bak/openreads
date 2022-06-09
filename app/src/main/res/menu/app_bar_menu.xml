@@ -28,4 +28,19 @@
         android:id="@+id/miSettings"
         android:title="@string/settings"
         app:showAsAction="never" />
+
+    <item
+        android:id="@+id/miEdit"
+        android:title="@string/editBook"
+        app:showAsAction="never" />
+
+    <item
+        android:id="@+id/miDelete"
+        android:title="@string/deleteBook"
+        app:showAsAction="never" />
+
+    <item
+        android:id="@+id/miGridList"
+        android:title="@string/showAsGridList"
+        app:showAsAction="never" />
 </menu>

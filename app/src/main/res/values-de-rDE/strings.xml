@@ -297,4 +297,7 @@
     <string name="changelog_1_15_0_d">Abstürze der App behoben</string>
     <string name="changelog_1_15_0_e">Ukrainische Übersetzung hinzugefügt</string>
     <string name="changelog_1_15_0_f">Tschechische Übersetzung hinzugefügt</string>
+    <string name="editBook">Edit book</string>
+    <string name="deleteBook">Delete book</string>
+    <string name="showAsGridList">Show as grid / list</string>
 </resources>

@@ -297,4 +297,7 @@
     <string name="changelog_1_15_0_d">Correction des plantages de l\'application</string>
     <string name="changelog_1_15_0_e">Ajout de la traduction ukrainienne</string>
     <string name="changelog_1_15_0_f">Ajout de la traduction tchèque</string>
+    <string name="editBook">Edit book</string>
+    <string name="deleteBook">Delete book</string>
+    <string name="showAsGridList">Show as grid / list</string>
 </resources>
