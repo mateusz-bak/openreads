@@ -297,4 +297,7 @@
     <string name="changelog_1_15_0_d">Виправлено збої програми</string>
     <string name="changelog_1_15_0_e">Додано український переклад</string>
     <string name="changelog_1_15_0_f">Додано чеський переклад</string>
+    <string name="editBook">Edit book</string>
+    <string name="deleteBook">Delete book</string>
+    <string name="showAsGridList">Show as grid / list</string>
 </resources>
