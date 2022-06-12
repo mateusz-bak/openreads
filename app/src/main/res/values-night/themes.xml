@@ -13,7 +13,10 @@
         <!-- Customize your theme here. -->
         <item name="colorAccent">?colorPrimary</item>
         <item name="sortDialogBackgroundColor">@color/grey_dialog_night</item>
+
         <item name="android:navigationBarColor">?attr/colorPrimarySurface</item>
+        <item name="android:windowTranslucentNavigation">false</item>
+
         <item name="actionBarStyle">@style/Custom.ActionBarStyle</item>
     </style>
 
