@@ -11,6 +11,9 @@
         <item name="android:statusBarColor" tools:targetApi="l">?attr/colorOnPrimary</item>
         <item name="android:windowLightStatusBar">true</item>
 
+        <item name="android:navigationBarColor">@android:color/transparent</item>
+        <item name="android:windowTranslucentNavigation">false</item>
+
         <item name="colorAccent">?colorPrimary</item>
         <item name="sortDialogBackgroundColor">@color/white</item>
 
