@@ -5,12 +5,12 @@
 <resources>
     <!-- Images descriptions -->
     <string name="fabEditBook">Upravit zobrazenou knihu</string>
-    <string name="ivBookStatusRead">Kniha je dokončená</string>
+    <string name="ivBookStatusRead">Book is finished</string>
     <string name="ivBookStatusInProgress">Kniha probíhá</string>
     <string name="ivBookStatusToRead">Kniha je \"ke čtení\"</string>
     <string name="fabAddBook">Přidat novou knihu</string>
     <string name="ivSeparator1">Oddělovač mezi vyhledáváním a řazením</string>
-    <string name="rbRatingIndicator">Tato kniha je dokončena</string>
+    <string name="rbRatingIndicator">This book is finished</string>
     <string name="ivInProgressIndicator">Tato kniha probíhá</string>
     <string name="ivToReadIndicator">Tato kniha je ke čtení</string>
     <!-- In-app strings -->
@@ -18,7 +18,7 @@
     <string name="inProgressFragment">Probíhá</string>
     <string name="toReadFragment">Na později</string>
     <string name="btnAdderSaveBook">Uložit</string>
-    <string name="finished">Dokončená</string>
+    <string name="finished">Finished</string>
     <string name="inProgress">Rozečtená</string>
     <string name="toRead">Na později</string>
     <string name="tvBookTitle">Zadejte název</string>
@@ -67,7 +67,7 @@
     <string name="tv_date_finished_title">Datum dočtení</string>
     <string name="tvSortPages">Stránky</string>
     <string name="pages">stránky</string>
-    <string name="btnAdderSaveFinishDate">Nastaveno</string>
+    <string name="btnAdderSaveFinishDate">Set</string>
     <string name="not_set">Nenastaveno</string>
     <string name="tvSortFinishDate">Datum dočtení</string>
     <string name="setTitleOnUpdateAvailable">Nová aktualizace!</string>
