@@ -83,7 +83,7 @@
     <string name="statistics_all">Todos</string>
     <string name="tvSetupSwipeHint_0">Deslize para esquerda</string>
     <string name="tvSetupSwipeHint_1">Clique na seta</string>
-    <string name="tvLooksEmptyStatistics">Nothing to see here yet! Add read books with finish date and come back here later.</string>
+    <string name="tvLooksEmptyStatistics">Nada para ver aqui ainda! Adicione livros lidos com data de término e volte aqui mais tarde.</string>
     <string name="btnAdderCancelFinishDate">Cancel</string>
     <string name="tvChallengeTitle">Challenge</string>
     <string name="tvChallengeEditorTitle">Edit challenge</string>
@@ -95,8 +95,8 @@
     <string name="trash_title">Trash</string>
     <string name="ivRestoreBook">Restore deleted book</string>
     <string name="ivDeleteBookPermanently">Delete book permanently</string>
-    <string name="btnAddSearch">"Search in\nOpen Library"</string>
-    <string name="btnAddManual">"Add\nmanually"</string>
+    <string name="btnAddSearch">"Pesquisar na\nOpen Library"</string>
+    <string name="btnAddManual">"Adicionar\nmanualmente"</string>
     <string name="etAdderBookTitleSearch">Title, author, isbn...</string>
     <string name="unknown_author">No author</string>
     <string name="language">language</string>
@@ -123,7 +123,7 @@
     <string name="toast_no_results_from_OL">No results</string>
     <string name="tvSortStartDate">Start date</string>
     <string name="tv_cover_missing">"Cover missing"</string>
-    <string name="set">Set</string>
+    <string name="set">Aplicar</string>
     <string name="unknown_title">No title</string>
     <string name="unknown_language">No language</string>
     <string name="unknown_isbn">No ISBN</string>
@@ -132,14 +132,14 @@
     <string name="warning_delete_book_delete">delete</string>
     <string name="warning_delete_book_cancel">back</string>
     <string name="export_title">Create cloud backup</string>
-    <string name="export_summary">Save your books to the cloud so they won\'t go anywhere! You can save the backup file to your cloud app (Nextcloud, Google Drive, OneDrive, Dropbox, Mega, Proton Drive)</string>
+    <string name="export_summary">Salve seus livros na nuvem para que eles não sumam! Você pode salvar o arquivo de “backup” em seu aplicativo de nuvem (Nextcloud, Google Drive, OneDrive, Dropbox, Mega, Proton Drive)</string>
     <string name="import_title">Restore backup</string>
     <string name="import_summary">Load your books from a local file on your phone. You may need to grant storage permissions for the app.</string>
     <string name="backup_title">Backup</string>
     <string name="backup_summary">Backup or restore your books</string>
-    <string name="backup_success">Success! File saved to: Internal Storage/Android/data/software.mdev.bookstracker/files</string>
+    <string name="backup_success">Sucesso! Arquivo salvo em: Armazenamento Interno/Android/data/software.mdev.bookstracker/files</string>
     <string name="backup_failure">Backup creation failed!</string>
-    <string name="backup_import_invalid_file">Import failed. The chosen file is not a valid &appname; backup!</string>
+    <string name="backup_import_invalid_file">Falha na importação. O arquivo escolhido não é um backup válido &appname; backup!</string>
     <string name="backup_import_success">Import completed!</string>
     <string name="backup_import_failure">Import failed. Did you choose the file correctly?</string>
     <string name="rate_app_title">Rate the app</string>
@@ -150,7 +150,7 @@
     <string name="warning_understand">I understand</string>
     <string name="warning_take_me_back">Take me back!</string>
     <string name="btnAddScan">Scan barcode</string>
-    <string name="tbScannerTip">Scan a barcode</string>
+    <string name="tbScannerTip">Escanear código de barras</string>
     <string name="book_list_title">Landing page</string>
     <string name="finished_books">Books finished</string>
     <string name="in_progress_books">Books in progress</string>
@@ -161,7 +161,7 @@
     <string name="ask_for_rating_dialog_neu">Maybe next time</string>
     <string name="ask_for_rating_dialog_neg">Nope, never!</string>
     <string name="rating_changes_succesfully">Rating changed successfully</string>
-    <string name="hint_publish_year">Publish year</string>
+    <string name="hint_publish_year">Ano de publicação</string>
     <string name="unknown_pages">No number of pages</string>
     <string name="unknown_publish_year">No publish year</string>
     <string name="stats_quickest_read">Quickest read time</string>
@@ -255,11 +255,6 @@
     <string name="notFinishedFragment">Not finished books</string>
     <string name="notFinished">Not finished</string>
     <string name="ivBookStatusNotFinished">Book is not finished</string>
-    <string name="changelog_1_12_0_a">Books details display reading duration.</string>
-    <string name="changelog_1_12_0_b">New book\'s status will default to list from which adding was started.</string>
-    <string name="changelog_1_12_0_c">Added app\'s name to book lists, decreased buttons and text fields radius.</string>
-    <string name="changelog_1_12_0_d">Changed loading progress indicator.</string>
-    <string name="changelog_1_12_0_e">Added missing translations.</string>
     <string name="changelog_1_13_0_a">Books tags can be displayed in books lists (on/off switch in settings).</string>
     <string name="changelog_1_13_0_b">Books details can be displayed as a list and as a grid.</string>
     <string name="changelog_1_13_0_c">Sped up app\'s launch.</string>
@@ -288,13 +283,22 @@
     <string name="csv_import_failure">CSV import failed</string>
     <string name="choose_a_shelf">Choose a shelf which represents unfinished books:</string>
     <string name="skip_choosing_shelf">Skip and set those as read books</string>
-    <string name="not_finished_for_statistics">Not finished</string>
+    <string name="not_finished_for_statistics">Não concluído</string>
     <string name="changelog_1_15_0_a">Books can be imported from other apps with CSV file</string>
     <string name="changelog_1_15_0_b">Books with no rating won\'t be counted in average rating</string>
     <string name="changelog_1_15_0_c">Changelog will be shown only after update.</string>
     <string name="changelog_1_15_0_d">Fixed app crashes</string>
     <string name="changelog_1_15_0_e">Added Ukrainian translation</string>
     <string name="changelog_1_15_0_f">Added Czech translation</string>
+    <string name="changelog_1_16_0_a">Added isbn scanning when adding new book manually.</string>
+    <string name="changelog_1_16_0_b">Redesigned book details screen.</string>
+    <string name="changelog_1_16_0_c">Changed Notes to My Review and increased it\'s size.</string>
+    <string name="changelog_1_16_0_d">Tags filtering can be combined using AND and OR.</string>
+    <string name="changelog_1_16_0_e">Changed navigation bar to transparent.</string>
+    <string name="changelog_1_16_0_f">All covers are now being shown in statistics.</string>
+    <string name="changelog_1_16_0_g">Book status can be changed by long click in lists (thanks to vbh).</string>
+    <string name="changelog_1_16_0_h">Improved results from Open Library.</string>
+    <string name="changelog_1_16_0_i">Added Brazilian Portuguese translation.</string>
     <string name="insert_my_review">My review</string>
     <string name="editBook">Edit book</string>
     <string name="deleteBook">Delete book</string>
@@ -303,4 +307,5 @@
     <string name="or">Or</string>
     <string name="menu_start_reading_book">Start Reading</string>
     <string name="menu_finished_reading_book">Finished Reading</string>
+    <string name="add_tag">Add</string>
 </resources>
