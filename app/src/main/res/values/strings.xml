@@ -3,7 +3,7 @@
     <!ENTITY appname "Openreads">
     ]>
 <resources>
-    <string name="app_version" translatable="false">1.15.0</string>
+    <string name="app_version" translatable="false">1.16.0</string>
     <!-- Images descriptions -->
     <string name="fabEditBook">Edit displayed book</string>
     <string name="ivBookStatusRead">Book is finished</string>
@@ -275,21 +275,16 @@
     <string name="notFinishedFragment">Not finished books</string>
     <string name="notFinished">Not finished</string>
     <string name="ivBookStatusNotFinished">Book is not finished</string>
-    <string name="changelog_ver_1_12_0" translatable="false">v1.12.0</string>
     <string name="changelog_ver_1_13_0" translatable="false">v1.13.0</string>
     <string name="changelog_ver_1_14_0" translatable="false">v1.14.0</string>
     <string name="changelog_ver_1_14_2" translatable="false">v1.14.2</string>
     <string name="changelog_ver_1_15_0" translatable="false">v1.15.0</string>
-    <string name="changelog_date_1_12_0" translatable="false">26/03/2022</string>
+    <string name="changelog_ver_1_16_0" translatable="false">v1.16.0</string>
     <string name="changelog_date_1_13_0" translatable="false">22/04/2022</string>
     <string name="changelog_date_1_14_0" translatable="false">22/05/2022</string>
     <string name="changelog_date_1_14_2" translatable="false">23/05/2022</string>
     <string name="changelog_date_1_15_0" translatable="false">03/06/2022</string>
-    <string name="changelog_1_12_0_a">Books details display reading duration.</string>
-    <string name="changelog_1_12_0_b">New book\'s status will default to list from which adding was started.</string>
-    <string name="changelog_1_12_0_c">Added app\'s name to book lists, decreased buttons and text fields radius.</string>
-    <string name="changelog_1_12_0_d">Changed loading progress indicator.</string>
-    <string name="changelog_1_12_0_e">Added missing translations.</string>
+    <string name="changelog_date_1_16_0" translatable="false">26/06/2022</string>
     <string name="changelog_1_13_0_a">Books tags can be displayed in books lists (on/off switch in settings).</string>
     <string name="changelog_1_13_0_b">Books details can be displayed as a list and as a grid.</string>
     <string name="changelog_1_13_0_c">Sped up app\'s launch.</string>
@@ -325,6 +320,15 @@
     <string name="changelog_1_15_0_d">Fixed app crashes</string>
     <string name="changelog_1_15_0_e">Added Ukrainian translation</string>
     <string name="changelog_1_15_0_f">Added Czech translation</string>
+    <string name="changelog_1_16_0_a">Added isbn scanning when adding new book manually.</string>
+    <string name="changelog_1_16_0_b">Redesigned book details screen.</string>
+    <string name="changelog_1_16_0_c">Changed Notes to My Review and increased it\'s size.</string>
+    <string name="changelog_1_16_0_d">Tags filtering can be combined using AND and OR.</string>
+    <string name="changelog_1_16_0_e">Changed navigation bar to transparent.</string>
+    <string name="changelog_1_16_0_f">All covers are now being shown in statistics.</string>
+    <string name="changelog_1_16_0_g">Book status can be changed by long click in lists (thanks to vbh).</string>
+    <string name="changelog_1_16_0_h">Improved results from Open Library.</string>
+    <string name="changelog_1_16_0_i">Added Brazilian Portuguese translation.</string>
     <string name="insert_my_review">My review</string>
     <string name="editBook">Edit book</string>
     <string name="deleteBook">Delete book</string>
@@ -333,4 +337,5 @@
     <string name="or">Or</string>
     <string name="menu_start_reading_book">Start Reading</string>
     <string name="menu_finished_reading_book">Finished Reading</string>
+    <string name="add_tag">Add</string>
 </resources>

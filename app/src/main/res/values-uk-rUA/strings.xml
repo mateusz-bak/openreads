@@ -255,11 +255,6 @@
     <string name="notFinishedFragment">Не закінчені книги</string>
     <string name="notFinished">Не завершено</string>
     <string name="ivBookStatusNotFinished">Книга не завершена</string>
-    <string name="changelog_1_12_0_a">Деталі книг показують тривалість читання.</string>
-    <string name="changelog_1_12_0_b">Статус нової книги за замовчуванням відповідатиме списку, з якого було розпочато додавання.</string>
-    <string name="changelog_1_12_0_c">Додано назву додатку до списків книг, зменшено радіус кнопок і текстових полів.</string>
-    <string name="changelog_1_12_0_d">Змінено ідикатор завантаження.</string>
-    <string name="changelog_1_12_0_e">Додано відсутні переклади.</string>
     <string name="changelog_1_13_0_a">Мітки книг можуть відображатись у списку книг (перемикач увімкнення/вимкнення в налаштуваннях).</string>
     <string name="changelog_1_13_0_b">Деталі книг можна показати у вигляді списку та сітки.</string>
     <string name="changelog_1_13_0_c">Пришвидшено запуск додатку.</string>

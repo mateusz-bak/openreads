@@ -255,11 +255,6 @@
     <string name="notFinishedFragment">Nedočtené knihy</string>
     <string name="notFinished">Nedočtené</string>
     <string name="ivBookStatusNotFinished">Kniha není dočtená</string>
-    <string name="changelog_1_12_0_a">Detaily knih zobrazují dobu čtení.</string>
-    <string name="changelog_1_12_0_b">Výchozí stav nové knihy bude nastaven na stejný, jako seznam, ze kterého byla kniha přidána.</string>
-    <string name="changelog_1_12_0_c">Přidán název aplikace do seznamů knih, zmenšen poloměr tlačítek a textových polí.</string>
-    <string name="changelog_1_12_0_d">Změněn indikátor postupu načítání.</string>
-    <string name="changelog_1_12_0_e">Přidány chybějící překlady.</string>
     <string name="changelog_1_13_0_a">Štítky knih můžou být zobrazeny v seznamech knih (zap/vyp lze v nastavení).</string>
     <string name="changelog_1_13_0_b">Detaily knih mohou být zobrazeny jako seznamy nebo v mřížce.</string>
     <string name="changelog_1_13_0_c">Zrycheno spouštění aplikace.</string>

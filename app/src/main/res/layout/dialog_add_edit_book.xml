@@ -357,7 +357,7 @@
                             android:layout_marginStart="0dp"
                             android:layout_marginTop="2dp"
                             android:backgroundTint="?colorPrimary"
-                            android:text="Add"
+                            android:text="@string/add_tag"
                             app:cornerRadius="@dimen/text_input_layout_radius"
                             app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintStart_toEndOf="@+id/tilBookTags"
