@@ -255,11 +255,6 @@
     <string name="notFinishedFragment">Не закінчені книги</string>
     <string name="notFinished">Не завершено</string>
     <string name="ivBookStatusNotFinished">Книга не завершена</string>
-    <string name="changelog_1_12_0_a">Деталі книг показують тривалість читання.</string>
-    <string name="changelog_1_12_0_b">Статус нової книги за замовчуванням відповідатиме списку, з якого було розпочато додавання.</string>
-    <string name="changelog_1_12_0_c">Додано назву додатку до списків книг, зменшено радіус кнопок і текстових полів.</string>
-    <string name="changelog_1_12_0_d">Змінено ідикатор завантаження.</string>
-    <string name="changelog_1_12_0_e">Додано відсутні переклади.</string>
     <string name="changelog_1_13_0_a">Мітки книг можуть відображатись у списку книг (перемикач увімкнення/вимкнення в налаштуваннях).</string>
     <string name="changelog_1_13_0_b">Деталі книг можна показати у вигляді списку та сітки.</string>
     <string name="changelog_1_13_0_c">Пришвидшено запуск додатку.</string>
@@ -295,6 +290,15 @@
     <string name="changelog_1_15_0_d">Виправлено збої програми</string>
     <string name="changelog_1_15_0_e">Додано український переклад</string>
     <string name="changelog_1_15_0_f">Додано чеський переклад</string>
+    <string name="changelog_1_16_0_a">Added isbn scanning when adding new book manually.</string>
+    <string name="changelog_1_16_0_b">Redesigned book details screen.</string>
+    <string name="changelog_1_16_0_c">Changed Notes to My Review and increased it\'s size.</string>
+    <string name="changelog_1_16_0_d">Tags filtering can be combined using AND and OR.</string>
+    <string name="changelog_1_16_0_e">Changed navigation bar to transparent.</string>
+    <string name="changelog_1_16_0_f">All covers are now being shown in statistics.</string>
+    <string name="changelog_1_16_0_g">Book status can be changed by long click in lists (thanks to vbh).</string>
+    <string name="changelog_1_16_0_h">Improved results from Open Library.</string>
+    <string name="changelog_1_16_0_i">Added Brazilian Portuguese translation.</string>
     <string name="insert_my_review">My review</string>
     <string name="editBook">Edit book</string>
     <string name="deleteBook">Delete book</string>
@@ -303,4 +307,5 @@
     <string name="or">Or</string>
     <string name="menu_start_reading_book">Start Reading</string>
     <string name="menu_finished_reading_book">Finished Reading</string>
+    <string name="add_tag">Add</string>
 </resources>
