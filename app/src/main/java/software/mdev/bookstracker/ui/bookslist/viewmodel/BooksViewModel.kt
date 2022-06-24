@@ -252,63 +252,66 @@ class BooksViewModel(
                                 }
                             }
                         }
-                    } else {
-                        try {
-                            val coverId = item.cover_i
+                    }
+                    try {
+                        val coverId = item.cover_i
 
-                            showLoadingCircle.postValue(true)
-                            val key = item.key.replace("/works/", "")
-                            val response =
-                                openLibraryRepository.getBookFromOLID(key)
-                            showLoadingCircle.postValue(true)
-                            val handledResponse = handleGetBooksByOLIDResponse(response)
+                        showLoadingCircle.postValue(true)
+                        val key = item.key.replace("/works/", "")
+                        val response =
+                            openLibraryRepository.getBookFromOLID(key)
+                        showLoadingCircle.postValue(true)
+                        val handledResponse = handleGetBooksByOLIDResponse(response)
 
-                            var authorsList = emptyList<OpenLibraryOLIDResponse.Author>()
+                        var authorsList = emptyList<OpenLibraryOLIDResponse.Author>()
 
-                            if ( item.author_name != null && item.author_name.isNotEmpty()) {
-                                for ((j, _) in item.author_name.withIndex()) {
-                                    authorsList += OpenLibraryOLIDResponse.Author(item.author_name[j])
-                                }
+                        if (item.author_name != null && item.author_name.isNotEmpty()) {
+                            for ((j, _) in item.author_name.withIndex()) {
+                                authorsList += OpenLibraryOLIDResponse.Author(item.author_name[j])
                             }
-                            handledResponse.data?.authors = authorsList
-                            handledResponse.data?.publish_date =
-                                item.first_publish_year.toString()
-                            if (handledResponse.data?.covers == null) {
-                                if (coverId != 0) {
-                                    handledResponse.data?.covers = listOf(coverId)
-                                }
+                        }
+                        handledResponse.data?.authors = authorsList
+                        handledResponse.data?.publish_date =
+                            item.first_publish_year.toString()
+                        if (handledResponse.data?.covers == null) {
+                            if (coverId != 0) {
+                                handledResponse.data?.covers = listOf(coverId)
                             }
+                        }
 
-                            if (openLibraryBooksByOLID.value == null) {
-                                var emptyList =
-                                    emptyList<Resource<OpenLibraryOLIDResponse>>()
-                                var listToPost: List<Resource<OpenLibraryOLIDResponse>> =
-                                    emptyList + handledResponse
+                        if (openLibraryBooksByOLID.value == null) {
+                            var emptyList =
+                                emptyList<Resource<OpenLibraryOLIDResponse>>()
+                            var listToPost: List<Resource<OpenLibraryOLIDResponse>> =
+                                emptyList + handledResponse
 
-                                showLoadingCircle.postValue(false)
-                                if (isActive) {
-                                    showLoadingCircle.postValue(true)
-                                    openLibraryBooksByOLID.postValue(listToPost)
-                                }
-                            } else {
-                                showLoadingCircle.postValue(false)
-                                if (isActive) {
-                                    showLoadingCircle.postValue(true)
-                                    openLibraryBooksByOLID.postValue(
-                                        openLibraryBooksByOLID.value?.plus(
-                                            handleGetBooksByOLIDResponse(response)
-                                        )
+                            showLoadingCircle.postValue(false)
+                            if (isActive) {
+                                showLoadingCircle.postValue(true)
+                                openLibraryBooksByOLID.postValue(listToPost)
+                            }
+                        } else {
+                            showLoadingCircle.postValue(false)
+                            if (isActive) {
+                                showLoadingCircle.postValue(true)
+                                openLibraryBooksByOLID.postValue(
+                                    openLibraryBooksByOLID.value?.plus(
+                                        handleGetBooksByOLIDResponse(response)
                                     )
-                                }
+                                )
                             }
-                            showLoadingCircle.postValue(false)
-                        } catch (e: Exception) {
-                            Log.e("OpenLibrary connection error", "in getBooksByOLID: $e")
-                            showLoadingCircle.postValue(false)
+                        }
+                        showLoadingCircle.postValue(false)
+                    } catch (e: Exception) {
+                        Log.e("OpenLibrary connection error", "in getBooksByOLID: $e")
+                        showLoadingCircle.postValue(false)
 
-                            when(e) {
-                                is UnknownHostException -> Toast.makeText(context?.applicationContext, R.string.toast_no_connection_to_OL, Toast.LENGTH_SHORT).show()
-                            }
+                        when (e) {
+                            is UnknownHostException -> Toast.makeText(
+                                context?.applicationContext,
+                                R.string.toast_no_connection_to_OL,
+                                Toast.LENGTH_SHORT
+                            ).show()
                         }
                     }
                 }
