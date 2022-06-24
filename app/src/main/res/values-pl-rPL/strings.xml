@@ -301,4 +301,6 @@
     <string name="showAsGridList">Show as grid / list</string>
     <string name="and">And</string>
     <string name="or">Or</string>
+    <string name="menu_start_reading_book">Start Reading</string>
+    <string name="menu_finished_reading_book">Finished Reading</string>
 </resources>
