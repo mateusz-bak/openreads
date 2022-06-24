@@ -336,4 +336,5 @@
     <string name="or">Or</string>
     <string name="menu_start_reading_book">Start Reading</string>
     <string name="menu_finished_reading_book">Finished Reading</string>
+    <string name="add_tag">Add</string>
 </resources>
