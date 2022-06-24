@@ -255,11 +255,6 @@
     <string name="notFinishedFragment">Livres non terminés</string>
     <string name="notFinished">Non terminée</string>
     <string name="ivBookStatusNotFinished">Le livre n\'est pas terminé</string>
-    <string name="changelog_1_12_0_a">Les détails des livres affichent la durée de lecture.</string>
-    <string name="changelog_1_12_0_b">Le statut du nouveau livre sera par défaut la liste à partir de laquelle l\'ajout a été commencé.</string>
-    <string name="changelog_1_12_0_c">Ajout du nom de l\'application aux listes de livres, diminution du rayon des boutons et des champs de texte.</string>
-    <string name="changelog_1_12_0_d">Modification de l\'indicateur de progression du chargement.</string>
-    <string name="changelog_1_12_0_e">Ajout des traductions manquantes.</string>
     <string name="changelog_1_13_0_a">Les étiquettes de livres peuvent être affichées dans les listes de livres (allumé/éteint dans les paramètres).</string>
     <string name="changelog_1_13_0_b">Les détails des livres peuvent être affichés en tant que liste et en tant que grille.</string>
     <string name="changelog_1_13_0_c">Lancement de l\'application épuisée.</string>
@@ -295,6 +290,15 @@
     <string name="changelog_1_15_0_d">Correction des plantages de l\'application</string>
     <string name="changelog_1_15_0_e">Ajout de la traduction ukrainienne</string>
     <string name="changelog_1_15_0_f">Ajout de la traduction tchèque</string>
+    <string name="changelog_1_16_0_a">Added isbn scanning when adding new book manually.</string>
+    <string name="changelog_1_16_0_b">Redesigned book details screen.</string>
+    <string name="changelog_1_16_0_c">Changed Notes to My Review and increased it\'s size.</string>
+    <string name="changelog_1_16_0_d">Tags filtering can be combined using AND and OR.</string>
+    <string name="changelog_1_16_0_e">Changed navigation bar to transparent.</string>
+    <string name="changelog_1_16_0_f">All covers are now being shown in statistics.</string>
+    <string name="changelog_1_16_0_g">Book status can be changed by long click in lists (thanks to vbh).</string>
+    <string name="changelog_1_16_0_h">Improved results from Open Library.</string>
+    <string name="changelog_1_16_0_i">Added Brazilian Portuguese translation.</string>
     <string name="insert_my_review">My review</string>
     <string name="editBook">Edit book</string>
     <string name="deleteBook">Delete book</string>
@@ -303,4 +307,5 @@
     <string name="or">Or</string>
     <string name="menu_start_reading_book">Start Reading</string>
     <string name="menu_finished_reading_book">Finished Reading</string>
+    <string name="add_tag">Add</string>
 </resources>
