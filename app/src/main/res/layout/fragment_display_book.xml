@@ -15,14 +15,16 @@
             android:id="@+id/clBooks"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:paddingStart="24dp"
-            android:paddingEnd="24dp"
-            android:paddingBottom="24dp">
+            android:paddingStart="0dp"
+            android:paddingEnd="0dp"
+            android:paddingBottom="0dp">
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/clBookDisplay1"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:paddingStart="24dp"
+                android:paddingEnd="24dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.5"
                 app:layout_constraintStart_toStartOf="parent"
@@ -223,7 +225,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:clipToPadding="false"
-                    android:paddingBottom="0dp"
+                    android:paddingBottom="24dp"
                     android:scrollbars="vertical"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
