@@ -255,11 +255,6 @@
     <string name="notFinishedFragment">Ingen afsluttede bøger</string>
     <string name="notFinished">Ikke afsluttet</string>
     <string name="ivBookStatusNotFinished">Bog er ikke afsluttet</string>
-    <string name="changelog_1_12_0_a">Bogdetaljer viser læsevarighed.</string>
-    <string name="changelog_1_12_0_b">Ny bogstatus vil vende tilbage til listen, hvortil tilføjelsen blev startet.</string>
-    <string name="changelog_1_12_0_c">Tilføjet app navn til boglister, reduceret knapper og radius af tekstfelter.</string>
-    <string name="changelog_1_12_0_d">Ændret indikator for indlæsning.</string>
-    <string name="changelog_1_12_0_e">Tilføjet manglende oversættelser.</string>
     <string name="changelog_1_13_0_a">Bogetiketter kan vises i boglister (tænd/sluk knap i indstillinger).</string>
     <string name="changelog_1_13_0_b">Bogdetaljer kan vises som en liste og som et gitter.</string>
     <string name="changelog_1_13_0_c">Hurtigere opstart af appen.</string>
@@ -295,6 +290,15 @@
     <string name="changelog_1_15_0_d">Løste app-nedbrud</string>
     <string name="changelog_1_15_0_e">Tilføjet ukrainsk oversættelse</string>
     <string name="changelog_1_15_0_f">Tilføjet tjekkisk oversættelse</string>
+    <string name="changelog_1_16_0_a">Added isbn scanning when adding new book manually.</string>
+    <string name="changelog_1_16_0_b">Redesigned book details screen.</string>
+    <string name="changelog_1_16_0_c">Changed Notes to My Review and increased it\'s size.</string>
+    <string name="changelog_1_16_0_d">Tags filtering can be combined using AND and OR.</string>
+    <string name="changelog_1_16_0_e">Changed navigation bar to transparent.</string>
+    <string name="changelog_1_16_0_f">All covers are now being shown in statistics.</string>
+    <string name="changelog_1_16_0_g">Book status can be changed by long click in lists (thanks to vbh).</string>
+    <string name="changelog_1_16_0_h">Improved results from Open Library.</string>
+    <string name="changelog_1_16_0_i">Added Brazilian Portuguese translation.</string>
     <string name="insert_my_review">My review</string>
     <string name="editBook">Edit book</string>
     <string name="deleteBook">Delete book</string>
@@ -303,4 +307,5 @@
     <string name="or">Or</string>
     <string name="menu_start_reading_book">Start Reading</string>
     <string name="menu_finished_reading_book">Finished Reading</string>
+    <string name="add_tag">Add</string>
 </resources>
