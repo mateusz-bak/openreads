@@ -2,6 +2,7 @@ package software.mdev.bookstracker.adapters
 
 import android.content.Context
 import android.os.Bundle
+import android.view.ContextMenu
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -36,9 +37,31 @@ class BookListAdapter(
 
 ) : RecyclerView.Adapter<BookListAdapter.BookListViewHolder>() {
 
-    inner class BookListViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView)
+    inner class BookListViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView), View.OnCreateContextMenuListener {
+        init {
+            itemView.setOnCreateContextMenuListener(this)
+        }
+        override fun onCreateContextMenu(
+            menu: ContextMenu?,
+            view: View?,
+            p2: ContextMenu.ContextMenuInfo?
+        ) {
+            when (adapterPosition) {
+                1 -> {
+                    menu?.add(R.string.menu_finished_reading_book)
+                }
+                2 -> {
+                    menu?.add(R.string.menu_start_reading_book)
+                    menu?.add(R.string.menu_finished_reading_book)
+                }
+            }
+        }
+    }
+
     lateinit var viewModel: BooksViewModel
     private val functions = Functions()
+    var selectedBook: Book? = null
+        private set
 
     private val differCallback = object : DiffUtil.ItemCallback<String>() {
         override fun areItemsTheSame(oldItem: String, newItem: String): Boolean {
@@ -111,7 +134,10 @@ class BookListAdapter(
             )
         }
 
+        booksFragment.registerForContextMenu(holder.itemView.rvBooks)
+
         bookAdapter.setOnBookLongClickListener {
+            selectedBook = it
         }
 
         // triggers after saving new sort mode

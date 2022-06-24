@@ -53,6 +53,7 @@ import software.mdev.bookstracker.other.RoundCornersTransform
 import software.mdev.bookstracker.ui.bookslist.ListActivity
 import software.mdev.bookstracker.ui.bookslist.viewmodel.BooksViewModel
 import software.mdev.bookstracker.ui.bookslist.viewmodel.BooksViewModelProviderFactory
+import software.mdev.bookstracker.utils.DateTimeUtils.clearDateOfTime
 import java.io.ByteArrayOutputStream
 import java.text.Normalizer
 import java.text.SimpleDateFormat
@@ -904,27 +905,6 @@ class AddEditBookDialog : DialogFragment() {
         btnFinishDateSave.visibility = viewVisibility
         btnFinishDateClear.visibility = viewVisibility
         datePickerView.visibility = viewVisibility
-    }
-
-    private fun clearDateOfTime(orgDate: Long): Long {
-        var date = Calendar.getInstance()
-        date.timeInMillis = orgDate!!
-
-        var year = date.get(Calendar.YEAR)
-        var month = date.get(Calendar.MONTH)
-        var day = date.get(Calendar.DAY_OF_MONTH)
-
-        var dateWithoutTime = Calendar.getInstance()
-        dateWithoutTime.timeInMillis = 0L
-        dateWithoutTime.set(Calendar.YEAR, year)
-        dateWithoutTime.set(Calendar.MONTH, month)
-        dateWithoutTime.set(Calendar.DAY_OF_MONTH, day)
-        dateWithoutTime.set(Calendar.HOUR, 0)
-        dateWithoutTime.set(Calendar.MINUTE, 0)
-        dateWithoutTime.set(Calendar.SECOND, 0)
-        dateWithoutTime.set(Calendar.MILLISECOND, 0)
-
-        return dateWithoutTime.timeInMillis
     }
 
     private fun initConfig() {
