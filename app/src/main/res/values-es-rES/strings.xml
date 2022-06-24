@@ -255,11 +255,6 @@
     <string name="notFinishedFragment">Libros no terminados</string>
     <string name="notFinished">Sin terminar</string>
     <string name="ivBookStatusNotFinished">El libro no está terminado</string>
-    <string name="changelog_1_12_0_a">Los detalles de los libros muestran la duración de la lectura.</string>
-    <string name="changelog_1_12_0_b">El estado del libro nuevo predeterminado para la lista desde la que se inició la adición.</string>
-    <string name="changelog_1_12_0_c">Añadido el nombre de la aplicación a las listas de libros, botones disminuidos y radio de campos de texto.</string>
-    <string name="changelog_1_12_0_d">Se ha cambiado el indicador de progreso de la carga.</string>
-    <string name="changelog_1_12_0_e">Añadidas traducciones faltantes.</string>
     <string name="changelog_1_13_0_a">Las etiquetas de libros se pueden mostrar en las listas de libros (interruptor de encendido/apagado en ajustes).</string>
     <string name="changelog_1_13_0_b">Los detalles de los libros pueden mostrarse como una lista y como una cuadrícula.</string>
     <string name="changelog_1_13_0_c">Ejecutó el lanzamiento de la aplicación.</string>

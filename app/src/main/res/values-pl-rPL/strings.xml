@@ -255,11 +255,6 @@
     <string name="notFinishedFragment">Nieukończone książki</string>
     <string name="notFinished">Nieukończona</string>
     <string name="ivBookStatusNotFinished">Książka nie została zakończona</string>
-    <string name="changelog_1_12_0_a">Szczegóły książki pokazują teraz czas czytania.</string>
-    <string name="changelog_1_12_0_b">Status dodawanej nowej książki zostanie początkowo ustawiony na podstawie listy z której zaczęto dodawanie.</string>
-    <string name="changelog_1_12_0_c">Dodano nazwę aplikacji do listy książek, zredukowano zaokrąglenie przycisków i pól tekstowych.</string>
-    <string name="changelog_1_12_0_d">Zmieniono wygląd wskaźnika ładowania.</string>
-    <string name="changelog_1_12_0_e">Dodano pominięte tłumaczenie.</string>
     <string name="changelog_1_13_0_a">Tagi książek mogą być wyświetlane na listach książek (włącz/wyłącz w ustawieniach).</string>
     <string name="changelog_1_13_0_b">Szczegóły książek mogą być wyświetlane jako lista i siatka.</string>
     <string name="changelog_1_13_0_c">Przyśpieszono uruchamianie aplikacji.</string>

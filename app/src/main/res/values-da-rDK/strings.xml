@@ -255,11 +255,6 @@
     <string name="notFinishedFragment">Ingen afsluttede bøger</string>
     <string name="notFinished">Ikke afsluttet</string>
     <string name="ivBookStatusNotFinished">Bog er ikke afsluttet</string>
-    <string name="changelog_1_12_0_a">Bogdetaljer viser læsevarighed.</string>
-    <string name="changelog_1_12_0_b">Ny bogstatus vil vende tilbage til listen, hvortil tilføjelsen blev startet.</string>
-    <string name="changelog_1_12_0_c">Tilføjet app navn til boglister, reduceret knapper og radius af tekstfelter.</string>
-    <string name="changelog_1_12_0_d">Ændret indikator for indlæsning.</string>
-    <string name="changelog_1_12_0_e">Tilføjet manglende oversættelser.</string>
     <string name="changelog_1_13_0_a">Bogetiketter kan vises i boglister (tænd/sluk knap i indstillinger).</string>
     <string name="changelog_1_13_0_b">Bogdetaljer kan vises som en liste og som et gitter.</string>
     <string name="changelog_1_13_0_c">Hurtigere opstart af appen.</string>

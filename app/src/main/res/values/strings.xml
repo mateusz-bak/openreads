@@ -328,6 +328,7 @@
     <string name="changelog_1_16_0_f">All covers are now being shown in statistics.</string>
     <string name="changelog_1_16_0_g">Book status can be changed by long click in lists (thanks to vbh).</string>
     <string name="changelog_1_16_0_h">Improved results from Open Library.</string>
+    <string name="changelog_1_16_0_i">Added Brazilian Portuguese translation.</string>
     <string name="insert_my_review">My review</string>
     <string name="editBook">Edit book</string>
     <string name="deleteBook">Delete book</string>
