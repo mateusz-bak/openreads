@@ -134,19 +134,19 @@
     <string name="export_title">Cloud-Backup erstellen</string>
     <string name="export_summary">Speichere deine Bücher in der Cloud, damit sie nirgendwo hingehen! Du kannst die Sicherungsdatei in deiner Cloud-App speichern (Nextcloud, Google Drive, OneDrive, Dropbox, Mega, Proton Drive)</string>
     <string name="import_title">Sicherung wiederherstellen</string>
-    <string name="import_summary">Laden Sie Ihre Bücher aus einer lokalen Datei auf Ihrem Telefon. Möglicherweise müssen Sie Speicherberechtigungen für die App erteilen.</string>
+    <string name="import_summary">Lade deine Bücher aus einer lokalen Datei auf deinem Telefon. Möglicherweise musst du Speicherberechtigungen für die App erteilen.</string>
     <string name="backup_title">Sicherung</string>
     <string name="backup_summary">Sichern oder Wiederherstellen deiner Bücher</string>
     <string name="backup_success">Erfolgreich! Datei gespeichert auf: Interner Speicher/Android/data/software.mdev.bookstracker/files</string>
     <string name="backup_failure">Sicherung fehlgeschlagen!</string>
     <string name="backup_import_invalid_file">Import fehlgeschlagen. Die gewählte Datei ist kein gültiges &appname; Backup!</string>
     <string name="backup_import_success">Import abgeschlossen!</string>
-    <string name="backup_import_failure">Import fehlgeschlagen. Haben Sie die Datei richtig ausgewählt?</string>
+    <string name="backup_import_failure">Import fehlgeschlagen. Hast du die richtige Datei ausgewählt?</string>
     <string name="rate_app_title">Bewerte die App</string>
     <string name="rate_app">Gefällt dir &appname;? Nimm dir einen Moment Zeit, um es zu bewerten!</string>
     <string name="contact_title">Sende Feedback</string>
     <string name="restore_backup_warning_title">Aufgepasst!</string>
-    <string name="restore_backup_warning_message">Das Wiederherstellen einer Sicherung wird die Bücher, die Sie derzeit haben, überschreiben. Denken Sie daran, eine Sicherung davon zu haben.</string>
+    <string name="restore_backup_warning_message">Beim Wiederherstellen einer Sicherung werden die Bücher überschrieben, die du gerade hast. Denke daran, eine Sicherung dieser Bücher zu erstellen.</string>
     <string name="warning_understand">Ich habe verstanden</string>
     <string name="warning_take_me_back">Bring mich zurück!</string>
     <string name="btnAddScan">Barcode scannen</string>
@@ -230,8 +230,8 @@
     <string name="github_open_feature_request">Neue Funktion auf Github vorschlagen</string>
     <string name="stats_longest_read">Längste Lesezeit</string>
     <string name="stats_books_by_status">Alle Bücher nach Status</string>
-    <string name="need_more_data_title">Meinen Sie, dass dies etwas anderes anzeigt?</string>
-    <string name="need_more_data_message">Vergewissern Sie sich, dass Ihre Bücher die Anzahl der Seiten haben, beginnen und beenden Sie die Termine und kommen Sie wieder.</string>
+    <string name="need_more_data_title">Sollte hier deiner Meinung nach etwas anderes angezeigt werden?</string>
+    <string name="need_more_data_message">Vergewissere dich, dass in deinen Büchern Seitenzahl, Anfangs- und Enddatum festgelegt sind und komme wieder.</string>
     <string name="theme_mode_title">Design</string>
     <string name="theme_mode_auto">Systemdesign folgen</string>
     <string name="theme_mode_day">Hell</string>
@@ -239,7 +239,7 @@
     <string name="ascending">Aufsteigend</string>
     <string name="descending">Absteigend</string>
     <string name="setContentOnUpdateAvailable_gplay">"Eine neuere Version der &appname; App ist im Google Play Store verfügbar.\n\nKlicke auf \"Aktualisieren\", um zur Downloadseite zu gelangen."</string>
-    <string name="setContentOnUpdateNotAvailable_gplay">Sie haben die neueste Version von &appname; App aus dem Google Play Store erhalten.</string>
+    <string name="setContentOnUpdateNotAvailable_gplay">Du hast die neueste Version von &appname; App aus dem Google Play Store erhalten.</string>
     <string name="select_book_tags">Buch-Tags hinzufügen</string>
     <string name="filter_tags">Schlagwörter</string>
     <string name="filter_years">Jahr beenden</string>
@@ -250,11 +250,11 @@
     <string name="show_tags_toggle_title">Zeige Buch-Tags in Listen</string>
     <string name="show_tags_toggle_on">Tags werden angezeigt</string>
     <string name="show_tags_toggle_off">Tags werden nicht angezeigt</string>
-    <string name="help_translate_summary">Beteiligen Sie sich, indem Sie &appname; in Sprachen übersetzen, die Sie kennen!</string>
+    <string name="help_translate_summary">Hilf mit, indem du &appname; in Sprachen übersetzst, die du kannst!</string>
     <string name="help_translate_title">Beim Übersetzen helfen</string>
     <string name="notFinishedFragment">Nicht fertig gelesene Bücher</string>
     <string name="notFinished">Nicht fertig gelesen</string>
-    <string name="ivBookStatusNotFinished">Buch ist nicht fertig gelesen</string>
+    <string name="ivBookStatusNotFinished">Book is not finished</string>
     <string name="changelog_1_13_0_a">Buch-Tags können in der Buchliste angezeigt werden (Ein-/Ausschalten in den Einstellungen).</string>
     <string name="changelog_1_13_0_b">Buchdetails können als Liste und als Raster angezeigt werden.</string>
     <string name="changelog_1_13_0_c">Start der App wurde beschleunigt.</string>
@@ -306,6 +306,6 @@
     <string name="and">And</string>
     <string name="or">Or</string>
     <string name="menu_start_reading_book">Start Reading</string>
-    <string name="menu_finished_reading_book">Finished Reading</string>
+    <string name="menu_finished_reading_book">Zu Ende gelesen</string>
     <string name="add_tag">Add</string>
 </resources>
