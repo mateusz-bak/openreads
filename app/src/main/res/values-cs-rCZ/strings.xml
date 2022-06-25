@@ -5,20 +5,20 @@
 <resources>
     <!-- Images descriptions -->
     <string name="fabEditBook">Upravit zobrazenou knihu</string>
-    <string name="ivBookStatusRead">Book is finished</string>
-    <string name="ivBookStatusInProgress">Book is in progress</string>
+    <string name="ivBookStatusRead">Kniha je dočtená</string>
+    <string name="ivBookStatusInProgress">Kniha je rozečtená</string>
     <string name="ivBookStatusToRead">Kniha je \"ke čtení\"</string>
     <string name="fabAddBook">Přidat novou knihu</string>
     <string name="ivSeparator1">Oddělovač mezi vyhledáváním a řazením</string>
-    <string name="rbRatingIndicator">This book is finished</string>
-    <string name="ivInProgressIndicator">This book is in progress</string>
+    <string name="rbRatingIndicator">Tato kniha je dočtená</string>
+    <string name="ivInProgressIndicator">Tato kniha je rozečtená</string>
     <string name="ivToReadIndicator">Tato kniha je ke čtení</string>
     <!-- In-app strings -->
     <string name="readFragment">Dočtená</string>
-    <string name="inProgressFragment">In progress</string>
+    <string name="inProgressFragment">Rozečtená</string>
     <string name="toReadFragment">Na později</string>
     <string name="btnAdderSaveBook">Uložit</string>
-    <string name="finished">Finished</string>
+    <string name="finished">Dočtená</string>
     <string name="inProgress">Rozečtená</string>
     <string name="toRead">Na později</string>
     <string name="tvBookTitle">Zadejte název</string>
@@ -153,7 +153,7 @@
     <string name="tbScannerTip">Naskenujte čárový kód</string>
     <string name="book_list_title">Úvodní stránka</string>
     <string name="finished_books">Dokončené knihy</string>
-    <string name="in_progress_books">Books in progress</string>
+    <string name="in_progress_books">Rozečtené knihy</string>
     <string name="to_read_books">Knihy na později</string>
     <string name="ask_for_rating_dialog_title">Máte rádi &appname;?</string>
     <string name="ask_for_rating_dialog_message">Pokud ano, ohodnoďte nás prosím na Google Play!</string>
@@ -292,22 +292,22 @@ Vděčíme @vbh </string>
     <string name="changelog_1_15_0_d">Opraveny pády aplikace</string>
     <string name="changelog_1_15_0_e">Přidán ukrajinský překlad</string>
     <string name="changelog_1_15_0_f">Přidán český překlad</string>
-    <string name="changelog_1_16_0_a">Added isbn scanning when adding new book manually.</string>
-    <string name="changelog_1_16_0_b">Redesigned book details screen.</string>
-    <string name="changelog_1_16_0_c">Changed Notes to My Review and increased it\'s size.</string>
-    <string name="changelog_1_16_0_d">Tags filtering can be combined using AND and OR.</string>
-    <string name="changelog_1_16_0_e">Changed navigation bar to transparent.</string>
-    <string name="changelog_1_16_0_f">All covers are now being shown in statistics.</string>
-    <string name="changelog_1_16_0_g">Book status can be changed by long click in lists (thanks to vbh).</string>
-    <string name="changelog_1_16_0_h">Improved results from Open Library.</string>
-    <string name="changelog_1_16_0_i">Added Brazilian Portuguese translation.</string>
-    <string name="insert_my_review">My review</string>
-    <string name="editBook">Edit book</string>
-    <string name="deleteBook">Delete book</string>
-    <string name="showAsGridList">Show as grid / list</string>
-    <string name="and">And</string>
+    <string name="changelog_1_16_0_a">Přidáno skenování isbn při manuálním přidávání knihy.</string>
+    <string name="changelog_1_16_0_b">Nový design informací o knize.</string>
+    <string name="changelog_1_16_0_c">Poznámky byly změněny na Mé recenze a zvětšena velikost.</string>
+    <string name="changelog_1_16_0_d">Filtrování štítků může být kombinováno pomocí A a NEBO.</string>
+    <string name="changelog_1_16_0_e">Navigační panel byl změněn na průhledný.</string>
+    <string name="changelog_1_16_0_f">Všechny obálky se nyní zobrazují ve statistikách.</string>
+    <string name="changelog_1_16_0_g">Stav knihy může být změněn dlouhým podržením v seznamu (Díky vbh).</string>
+    <string name="changelog_1_16_0_h">Vylepšené výsledky z Open Library.</string>
+    <string name="changelog_1_16_0_i">Přidán brazilský portugalský překlad.</string>
+    <string name="insert_my_review">Moje hodnocení</string>
+    <string name="editBook">Upravit knihu</string>
+    <string name="deleteBook">Odstranit knihu</string>
+    <string name="showAsGridList">Zobrazit jako mřížku / seznam</string>
+    <string name="and">A</string>
     <string name="or">Nebo</string>
-    <string name="menu_start_reading_book">Start Reading</string>
-    <string name="menu_finished_reading_book">Finished Reading</string>
-    <string name="add_tag">Add</string>
+    <string name="menu_start_reading_book">Rozečtené</string>
+    <string name="menu_finished_reading_book">Dočtené</string>
+    <string name="add_tag">Přidat</string>
 </resources>
