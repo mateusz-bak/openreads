@@ -1,0 +1,9 @@
+- Added isbn scanning when adding new book manually.
+- Redesigned book details screen.
+- Changed Notes to My Review and increased it\'s size.
+- Tags filtering can be combined using AND and OR.
+- Changed navigation bar to transparent.
+- All covers are now being shown in statistics.
+- Book status can be changed by long click in lists (thanks to vbh).
+- Improved results from Open Library.
+- Added Brazilian Portuguese translation.
