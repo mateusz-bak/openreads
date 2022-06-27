@@ -290,15 +290,15 @@
     <string name="changelog_1_15_0_d">Løste app-nedbrud</string>
     <string name="changelog_1_15_0_e">Tilføjet ukrainsk oversættelse</string>
     <string name="changelog_1_15_0_f">Tilføjet tjekkisk oversættelse</string>
-    <string name="changelog_1_16_0_a">Added isbn scanning when adding new book manually.</string>
-    <string name="changelog_1_16_0_b">Redesigned book details screen.</string>
-    <string name="changelog_1_16_0_c">Changed Notes to My Review and increased it\'s size.</string>
-    <string name="changelog_1_16_0_d">Tags filtering can be combined using AND and OR.</string>
-    <string name="changelog_1_16_0_e">Changed navigation bar to transparent.</string>
-    <string name="changelog_1_16_0_f">All covers are now being shown in statistics.</string>
-    <string name="changelog_1_16_0_g">Book status can be changed by long click in lists (thanks to vbh).</string>
-    <string name="changelog_1_16_0_h">Improved results from Open Library.</string>
-    <string name="changelog_1_16_0_i">Added Brazilian Portuguese translation.</string>
+    <string name="changelog_1_16_0_a">Tilføjet isbn scanning, når du tilføjer ny bog manuelt.</string>
+    <string name="changelog_1_16_0_b">Redesignet skærmen med bogdetaljer.</string>
+    <string name="changelog_1_16_0_c">Ændrede noter til min anmeldelse og øgede dens størrelse.</string>
+    <string name="changelog_1_16_0_d">Tags filtrering kan kombineres ved hjælp af OG og OR.</string>
+    <string name="changelog_1_16_0_e">Ændret navigationslinje til gennemsigtig.</string>
+    <string name="changelog_1_16_0_f">Alle omslag vises nu i statistikker.</string>
+    <string name="changelog_1_16_0_g">Bogstatus kan ændres ved langt klik i lister (takket være vbh).</string>
+    <string name="changelog_1_16_0_h">Forbedrede resultater fra Open Library.</string>
+    <string name="changelog_1_16_0_i">Tilføjet brasiliansk portugisisk oversættelse.</string>
     <string name="insert_my_review">Min anmeldelse</string>
     <string name="editBook">Rediger bog</string>
     <string name="deleteBook">Slet bog</string>
@@ -307,5 +307,5 @@
     <string name="or">Eller</string>
     <string name="menu_start_reading_book">Læs nu</string>
     <string name="menu_finished_reading_book">Færdig med at læse</string>
-    <string name="add_tag">Add</string>
+    <string name="add_tag">Tilføj</string>
 </resources>
