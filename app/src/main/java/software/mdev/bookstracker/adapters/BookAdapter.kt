@@ -134,7 +134,7 @@ class BookAdapter(
             }
             setOnLongClickListener {
                 onBookLongClickListener?.let { it(curBook) }
-                true
+                onBookLongClickListener == null
             }
         }
     }

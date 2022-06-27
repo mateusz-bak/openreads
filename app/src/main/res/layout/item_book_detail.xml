@@ -4,9 +4,9 @@
     android:id="@+id/clBook"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:paddingStart="0dp"
+    android:paddingStart="24dp"
     android:paddingTop="4dp"
-    android:paddingEnd="8dp"
+    android:paddingEnd="32dp"
     android:paddingBottom="4dp">
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -364,7 +364,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="12dp"
             android:fontFamily="@font/jost_500_medium"
-            android:text="@string/book_notes"
+            android:text="@string/insert_my_review"
             android:textSize="15sp"
             app:layout_constraintStart_toEndOf="@+id/ivNotes"
             app:layout_constraintTop_toTopOf="parent" />

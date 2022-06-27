@@ -1,10 +1,13 @@
 package software.mdev.bookstracker.ui.bookslist.fragments
 
 import android.os.Bundle
+import android.view.MenuItem
 import android.view.View
 import android.view.animation.AnimationUtils
 import android.widget.LinearLayout
+import android.widget.RatingBar
 import androidx.activity.result.ActivityResultLauncher
+import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import androidx.viewpager2.widget.ViewPager2
@@ -21,6 +24,8 @@ import software.mdev.bookstracker.other.Constants
 import software.mdev.bookstracker.ui.bookslist.ListActivity
 import software.mdev.bookstracker.ui.bookslist.dialogs.AddEditBookDialog
 import software.mdev.bookstracker.ui.bookslist.viewmodel.BooksViewModel
+import software.mdev.bookstracker.utils.DateTimeUtils.clearDateOfTime
+import java.util.*
 
 
 class BooksFragment : Fragment(R.layout.fragment_books) {
@@ -29,11 +34,13 @@ class BooksFragment : Fragment(R.layout.fragment_books) {
     private var wiggleBlocker = true
     lateinit var listActivity: ListActivity
     private lateinit var barcodeLauncher: ActivityResultLauncher<ScanOptions>
+    private lateinit var adapter: BookListAdapter
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         listActivity = activity as ListActivity
 
+        viewModel = (activity as ListActivity).booksViewModel
         var listOfTabs = context?.resources?.let {
             listOf(
                 it.getString(R.string.readFragment),
@@ -42,7 +49,7 @@ class BooksFragment : Fragment(R.layout.fragment_books) {
             )
         }
 
-        val adapter = BookListAdapter(this)
+        adapter = BookListAdapter(this)
         vpBooks.adapter = adapter
 
         adapter?.differ?.submitList(listOfTabs)
@@ -139,5 +146,71 @@ class BooksFragment : Fragment(R.layout.fragment_books) {
             R.id.action_booksFragment_to_addBookSearchFragment,
             bundle
         )
+    }
+
+    override fun onContextItemSelected(item: MenuItem): Boolean {
+        val selectedBook: Book? = adapter.selectedBook
+        val currentDate = clearDateOfTime(Calendar.getInstance().timeInMillis).toString()
+        when (item.title) {
+            activity?.getString(R.string.menu_start_reading_book) -> {
+                selectedBook?.bookStartDate = currentDate
+                selectedBook?.bookStatus = Constants.BOOK_STATUS_IN_PROGRESS
+                updateBookFromContext(selectedBook)
+            }
+            activity?.getString(R.string.menu_finished_reading_book) -> {
+                selectedBook?.bookStatus = Constants.BOOK_STATUS_READ
+                selectedBook?.bookFinishDate = currentDate
+                showRatingBarDialog(selectedBook)
+            }
+        }
+        return super.onContextItemSelected(item)
+    }
+
+    private fun showRatingBarDialog(book: Book?) {
+        val view = activity?.layoutInflater?.inflate(R.layout.dialog_rating, null)
+        val rbView = view?.findViewById<RatingBar>(R.id.rbBookRating)
+        context?.let { it ->
+            val dialog = AlertDialog.Builder(it)
+                .setView(view)
+                .setTitle(R.string.insert_book_rating)
+                .setPositiveButton(R.string.btnAdderSaveBook) { dialog, id ->
+                    rbView?.let {rv ->
+                        book?.bookRating = rv.rating
+                        updateBookFromContext(book)
+                    }
+                }
+                .setNegativeButton(R.string.btnAdderCancelFinishDate) {dialog, _ ->
+                    dialog.cancel()
+                }
+                .create()
+            dialog.show()
+        }
+    }
+
+    private fun updateBookFromContext(book: Book?) {
+        book?.let {
+            viewModel.updateBook(it.id,
+                it.bookTitle,
+                it.bookAuthor,
+                it.bookRating,
+                it.bookStatus,
+                it.bookPriority,
+                it.bookStartDate,
+                it.bookFinishDate,
+                it.bookNumberOfPages,
+                it.bookTitle_ASCII,
+                it.bookAuthor_ASCII,
+                it.bookIsDeleted,
+                it.bookCoverUrl,
+                it.bookOLID,
+                it.bookISBN10,
+                it.bookISBN13,
+                it.bookPublishYear,
+                it.bookIsFav,
+                it.bookCoverImg,
+                it.bookNotes,
+                it.bookTags
+            )
+        }
     }
 }

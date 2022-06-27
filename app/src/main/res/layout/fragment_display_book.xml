@@ -15,14 +15,16 @@
             android:id="@+id/clBooks"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:paddingStart="24dp"
-            android:paddingEnd="24dp"
-            android:paddingBottom="24dp">
+            android:paddingStart="0dp"
+            android:paddingEnd="0dp"
+            android:paddingBottom="0dp">
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/clBookDisplay1"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:paddingStart="24dp"
+                android:paddingEnd="24dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.5"
                 app:layout_constraintStart_toStartOf="parent"
@@ -206,43 +208,6 @@
                     app:layout_constraintTop_toBottomOf="@+id/rbRatingIndicator"
                     app:srcCompat="@drawable/ic_iconscout_heart_24" />
 
-                <ImageView
-                    android:id="@+id/ivEdit"
-                    android:layout_width="42dp"
-                    android:layout_height="42dp"
-                    android:padding="6dp"
-                    android:scaleType="fitCenter"
-                    app:layout_constraintBottom_toBottomOf="@+id/ivFav"
-                    app:layout_constraintEnd_toStartOf="@+id/ivDelete"
-                    app:layout_constraintStart_toEndOf="@+id/ivFav"
-                    app:layout_constraintTop_toTopOf="@+id/ivFav"
-                    app:srcCompat="@drawable/ic_iconscout_edit_24" />
-
-                <ImageView
-                    android:id="@+id/ivDelete"
-                    android:layout_width="42dp"
-                    android:layout_height="42dp"
-                    android:padding="6dp"
-                    android:scaleType="fitCenter"
-                    app:layout_constraintBottom_toBottomOf="@+id/ivEdit"
-                    app:layout_constraintEnd_toStartOf="@+id/ivGrid"
-                    app:layout_constraintStart_toEndOf="@+id/ivEdit"
-                    app:layout_constraintTop_toTopOf="@+id/ivEdit"
-                    app:srcCompat="@drawable/ic_iconscout_trash_24" />
-
-                <ImageView
-                    android:id="@+id/ivGrid"
-                    android:layout_width="42dp"
-                    android:layout_height="42dp"
-                    android:paddingStart="8dp"
-                    android:paddingTop="8dp"
-                    android:paddingEnd="8dp"
-                    android:paddingBottom="6dp"
-                    android:scaleType="fitCenter"
-                    app:layout_constraintBottom_toBottomOf="@+id/ivEdit"
-                    app:layout_constraintEnd_toEndOf="@+id/rbRatingIndicator"
-                    app:layout_constraintTop_toTopOf="@+id/ivEdit"
-                    app:srcCompat="@drawable/ic_iconscout_apps_24" />
             </androidx.constraintlayout.widget.ConstraintLayout>
 
             <FrameLayout
@@ -260,7 +225,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:clipToPadding="false"
-                    android:paddingBottom="0dp"
+                    android:paddingBottom="24dp"
                     android:scrollbars="vertical"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"

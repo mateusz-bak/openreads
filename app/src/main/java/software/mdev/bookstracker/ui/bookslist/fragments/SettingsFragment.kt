@@ -19,6 +19,7 @@ import software.mdev.bookstracker.ui.bookslist.viewmodel.BooksViewModel
 import android.content.Intent
 import android.net.Uri
 import android.os.Build
+import software.mdev.bookstracker.BuildConfig
 
 
 class SettingsFragment : PreferenceFragmentCompat(), OnSharedPreferenceChangeListener {
@@ -142,15 +143,17 @@ class SettingsFragment : PreferenceFragmentCompat(), OnSharedPreferenceChangeLis
         val intent = Intent(Intent.ACTION_VIEW)
         val mail = requireContext().resources.getString(R.string.dev_mailto)
         val appName = requireContext().resources.getString(R.string.app_name)
-        val appVersion = requireContext().resources.getString(R.string.app_version)
-        val sdkVersion = android.os.Build.VERSION.SDK_INT
+        val sdkVersion = Build.VERSION.SDK_INT
+        val appBuildType = BuildConfig.BUILD_TYPE
+        val appFlavor = BuildConfig.FLAVOR
+        val appVersionCode = BuildConfig.VERSION_CODE
+        val appVersionName = BuildConfig.VERSION_NAME
 
         val subject = "$appName feedback"
-        val body = "\n\n\n\n" +
-                "App name: $appName" + "\n" +
-                "App version: $appVersion" + "\n" +
-                "SDK: $sdkVersion" + "\n" +
-                "Device: ${getDeviceName()}"
+        val body = "App name: $appName" + "\n" +
+                "App version: $appVersionName ($appVersionCode)" + "\n" +
+                "App build: $appFlavor $appBuildType" + "\n" +
+                "Device: ${getDeviceName()} SDK $sdkVersion" + "\n"
 
         val data: Uri = Uri.parse(
             "$mail?subject=" + Uri.encode(subject)

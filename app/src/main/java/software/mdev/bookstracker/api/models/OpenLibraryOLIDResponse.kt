@@ -5,7 +5,7 @@ data class OpenLibraryOLIDResponse(
     val classifications: Classifications,
     val contributions: List<String>,
     val copyright_date: String?,
-    var covers: List<Int>?,
+    var covers: List<Int?>?,
     val created: Created,
     val edition_name: String?,
     val first_sentence: FirstSentence,

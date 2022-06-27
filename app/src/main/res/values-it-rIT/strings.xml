@@ -308,4 +308,10 @@
     <string name="menu_start_reading_book">Inizia la lettura</string>
     <string name="menu_finished_reading_book">Lettura Finita</string>
     <string name="add_tag">Aggiungi</string>
+    <string name="insert_my_review">My review</string>
+    <string name="editBook">Edit book</string>
+    <string name="deleteBook">Delete book</string>
+    <string name="showAsGridList">Show as grid / list</string>
+    <string name="and">And</string>
+    <string name="or">Or</string>
 </resources>

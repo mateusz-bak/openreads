@@ -30,6 +30,9 @@ import androidx.swiperefreshlayout.widget.CircularProgressDrawable
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.chip.Chip
 import com.google.android.material.snackbar.Snackbar
+import com.journeyapps.barcodescanner.ScanContract
+import com.journeyapps.barcodescanner.ScanIntentResult
+import com.journeyapps.barcodescanner.ScanOptions
 import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.dialog_add_edit_book.*
 import kotlinx.coroutines.MainScope
@@ -50,6 +53,7 @@ import software.mdev.bookstracker.other.RoundCornersTransform
 import software.mdev.bookstracker.ui.bookslist.ListActivity
 import software.mdev.bookstracker.ui.bookslist.viewmodel.BooksViewModel
 import software.mdev.bookstracker.ui.bookslist.viewmodel.BooksViewModelProviderFactory
+import software.mdev.bookstracker.utils.DateTimeUtils.clearDateOfTime
 import java.io.ByteArrayOutputStream
 import java.text.Normalizer
 import java.text.SimpleDateFormat
@@ -68,6 +72,7 @@ class AddEditBookDialog : DialogFragment() {
     private var whatIsClicked = Constants.BOOK_STATUS_NOTHING
     private lateinit var takePhoto: ActivityResultLauncher<Void>
     private lateinit var choosePhoto: ActivityResultLauncher<String>
+    private lateinit var barcodeLauncher: ActivityResultLauncher<ScanOptions>
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -353,6 +358,16 @@ class AddEditBookDialog : DialogFragment() {
             }
         }
 
+        tietBookNotes.addTextChangedListener { editable ->
+            editable?.let {
+                val string = context?.getString(R.string.insert_my_review)
+                if (editable.isNotEmpty())
+                    tilBookNotes.hint = "$string ${editable.length}/5000"
+                else
+                    tilBookNotes.hint = string
+            }
+        }
+
         ivClearBookTitle.setOnClickListener {
             tietBookTitle.setText("")
             tietBookTitle.requestFocus()
@@ -386,6 +401,17 @@ class AddEditBookDialog : DialogFragment() {
 
         btnBookAddTag.setOnClickListener {
             addTag()
+        }
+
+        barcodeLauncher = registerForActivityResult(
+            ScanContract()
+        ) { result: ScanIntentResult ->
+            if (result.contents != null)
+                tietBookISBN.setText(result.contents)
+        }
+
+        tilBookISBN.setEndIconOnClickListener {
+            openCodeScanner()
         }
     }
 
@@ -881,27 +907,6 @@ class AddEditBookDialog : DialogFragment() {
         datePickerView.visibility = viewVisibility
     }
 
-    private fun clearDateOfTime(orgDate: Long): Long {
-        var date = Calendar.getInstance()
-        date.timeInMillis = orgDate!!
-
-        var year = date.get(Calendar.YEAR)
-        var month = date.get(Calendar.MONTH)
-        var day = date.get(Calendar.DAY_OF_MONTH)
-
-        var dateWithoutTime = Calendar.getInstance()
-        dateWithoutTime.timeInMillis = 0L
-        dateWithoutTime.set(Calendar.YEAR, year)
-        dateWithoutTime.set(Calendar.MONTH, month)
-        dateWithoutTime.set(Calendar.DAY_OF_MONTH, day)
-        dateWithoutTime.set(Calendar.HOUR, 0)
-        dateWithoutTime.set(Calendar.MINUTE, 0)
-        dateWithoutTime.set(Calendar.SECOND, 0)
-        dateWithoutTime.set(Calendar.MILLISECOND, 0)
-
-        return dateWithoutTime.timeInMillis
-    }
-
     private fun initConfig() {
         dpBookStartDate.maxDate = System.currentTimeMillis()
         dpBookFinishDate.maxDate = System.currentTimeMillis()
@@ -1097,5 +1102,16 @@ class AddEditBookDialog : DialogFragment() {
                 Constants.PERMISSION_CAMERA_FROM_UPLOAD_COVER
             )
         }
+    }
+
+    private fun openCodeScanner() {
+        val options = ScanOptions()
+        options.setDesiredBarcodeFormats(ScanOptions.ALL_CODE_TYPES)
+        options.setPrompt(listActivity.getString(R.string.tbScannerTip))
+        options.setCameraId(0)
+        options.setBeepEnabled(true)
+        options.setBarcodeImageEnabled(true)
+        options.setOrientationLocked(true)
+        barcodeLauncher.launch(options)
     }
 }

@@ -2,40 +2,42 @@ package software.mdev.bookstracker.ui.bookslist.fragments
 
 import android.content.Context
 import android.content.res.ColorStateList
+import android.graphics.BitmapFactory
 import android.os.Bundle
+import android.view.MenuItem
 import android.view.View
+import android.view.animation.AnimationUtils
+import android.view.inputmethod.InputMethodManager
+import android.widget.RatingBar.OnRatingBarChangeListener
+import android.widget.Toast
+import androidx.appcompat.app.AlertDialog
+import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.content.ContextCompat
+import androidx.core.content.res.ResourcesCompat
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.Observer
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
+import androidx.recyclerview.widget.GridLayoutManager
 import com.google.android.material.snackbar.Snackbar
+import com.google.gson.Gson
+import kotlinx.android.synthetic.main.activity_list.*
 import kotlinx.android.synthetic.main.fragment_display_book.*
+import kotlinx.coroutines.MainScope
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
 import software.mdev.bookstracker.R
+import software.mdev.bookstracker.adapters.BookDetailsAdapter
 import software.mdev.bookstracker.data.db.entities.Book
+import software.mdev.bookstracker.data.db.entities.BookDetail
 import software.mdev.bookstracker.other.Constants
+import software.mdev.bookstracker.other.Functions
 import software.mdev.bookstracker.ui.bookslist.ListActivity
+import software.mdev.bookstracker.ui.bookslist.dialogs.AddEditBookDialog
 import software.mdev.bookstracker.ui.bookslist.viewmodel.BooksViewModel
 import java.text.SimpleDateFormat
 import java.util.*
-import android.view.inputmethod.InputMethodManager
-import androidx.appcompat.app.AlertDialog
-import androidx.constraintlayout.widget.ConstraintLayout
-import androidx.lifecycle.Observer
-import androidx.lifecycle.lifecycleScope
-import kotlinx.coroutines.delay
-import kotlinx.coroutines.launch
-import android.widget.Toast
-import android.widget.RatingBar.OnRatingBarChangeListener
-import kotlinx.coroutines.MainScope
-import android.graphics.BitmapFactory
-import android.view.animation.AnimationUtils
-import androidx.core.content.res.ResourcesCompat
-import androidx.recyclerview.widget.GridLayoutManager
-import com.google.gson.Gson
-import software.mdev.bookstracker.adapters.BookDetailsAdapter
-import software.mdev.bookstracker.data.db.entities.BookDetail
-import software.mdev.bookstracker.other.Functions
-import software.mdev.bookstracker.ui.bookslist.dialogs.AddEditBookDialog
 
 
 class DisplayBookFragment : Fragment(R.layout.fragment_display_book) {
@@ -60,10 +62,6 @@ class DisplayBookFragment : Fragment(R.layout.fragment_display_book) {
 
         ivBookCover.setOnClickListener {
             animateClickView(it)
-        }
-
-        ivEdit.setOnClickListener {
-            editBook()
         }
 
         ivFav.setOnClickListener {
@@ -111,114 +109,118 @@ class DisplayBookFragment : Fragment(R.layout.fragment_display_book) {
                     }
                 }
             }
+    }
 
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setHasOptionsMenu(true)
+    }
 
-        class UndoBookDeletion(book: Book) : View.OnClickListener {
-            var book = book
-            override fun onClick(view: View) {
-                viewModel.updateBook(
-                    book.id,
-                    book.bookTitle,
-                    book.bookAuthor,
-                    book.bookRating,
-                    book.bookStatus,
-                    book.bookPriority,
-                    book.bookStartDate,
-                    book.bookFinishDate,
-                    book.bookNumberOfPages,
-                    book.bookTitle_ASCII,
-                    book.bookAuthor_ASCII,
-                    false,
-                    book.bookCoverUrl,
-                    book.bookOLID,
-                    book.bookISBN10,
-                    book.bookISBN13,
-                    book.bookPublishYear,
-                    book.bookIsFav,
-                    book.bookCoverImg,
-                    book.bookNotes,
-                    book.bookTags
-                )
-            }
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when (item.itemId) {
+            R.id.miEdit -> editBook()
+            R.id.miDelete -> deleteBook(activity as ListActivity)
+            R.id.miGridList -> switchGridListView()
+
         }
+        return true
+    }
 
-        ivDelete.setOnClickListener{
-            var firstCheck = true
-            viewModel.getBook(book.id).observe(viewLifecycleOwner) { book ->
-
-                if (firstCheck) {
-                    firstCheck = false
-
-                    val deleteBookWarningDialog = this.context?.let { it1 ->
-                        AlertDialog.Builder(it1)
-                            .setTitle(R.string.warning_delete_book_title)
-                            .setMessage(R.string.warning_delete_book_message)
-                            .setIcon(R.drawable.ic_iconscout_exclamation_triangle_24)
-                            .setPositiveButton(R.string.warning_delete_book_delete) { _, _ ->
-                                viewModel.updateBook(
-                                    book.id,
-                                    book.bookTitle,
-                                    book.bookAuthor,
-                                    book.bookRating,
-                                    book.bookStatus,
-                                    book.bookPriority,
-                                    book.bookStartDate,
-                                    book.bookFinishDate,
-                                    book.bookNumberOfPages,
-                                    book.bookTitle_ASCII,
-                                    book.bookAuthor_ASCII,
-                                    true,
-                                    book.bookCoverUrl,
-                                    book.bookOLID,
-                                    book.bookISBN10,
-                                    book.bookISBN13,
-                                    book.bookPublishYear,
-                                    book.bookIsFav,
-                                    book.bookCoverImg,
-                                    book.bookNotes,
-                                    book.bookTags
-                                )
-                                recalculateChallenges()
-
-                                Snackbar.make(it, getString(R.string.bookDeleted), Snackbar.LENGTH_LONG)
-                                    .setAction(getString(R.string.undo), UndoBookDeletion(book))
-                                    .show()
-                            }
-                            .setNegativeButton(R.string.warning_delete_book_cancel) { _, _ ->
-                            }
-                            .create()
-                    }
-
-                    deleteBookWarningDialog?.show()
-                    deleteBookWarningDialog?.getButton(AlertDialog.BUTTON_NEGATIVE)?.setTextColor(ContextCompat.getColor(listActivity.baseContext, R.color.grey_500))
-                }
-            }
-        }
-
-        ivGrid.setOnClickListener {
-            animatShakeView(it)
-            if (layoutManager?.spanCount == 1) {
-                layoutManager?.spanCount = 2
-                showGridIcon(false)
-                saveDetailsMode(true)
-            } else {
-                layoutManager?.spanCount = 1
-                showGridIcon(true)
-                saveDetailsMode(false)
-            }
-
-            adapter?.notifyItemRangeChanged(0, adapter?.itemCount ?: 0)
+    class UndoBookDeletion(book: Book, activity: ListActivity) : View.OnClickListener {
+        val viewModel = activity.booksViewModel
+        var book = book
+        override fun onClick(view: View) {
+            viewModel.updateBook(
+                book.id,
+                book.bookTitle,
+                book.bookAuthor,
+                book.bookRating,
+                book.bookStatus,
+                book.bookPriority,
+                book.bookStartDate,
+                book.bookFinishDate,
+                book.bookNumberOfPages,
+                book.bookTitle_ASCII,
+                book.bookAuthor_ASCII,
+                false,
+                book.bookCoverUrl,
+                book.bookOLID,
+                book.bookISBN10,
+                book.bookISBN13,
+                book.bookPublishYear,
+                book.bookIsFav,
+                book.bookCoverImg,
+                book.bookNotes,
+                book.bookTags
+            )
         }
     }
 
-    private fun showGridIcon(show: Boolean) {
-        if (show) {
-            ivGrid.setImageDrawable(activity?.resources?.getDrawable(R.drawable.ic_iconscout_apps_24))
-            ivGrid.imageTintList = ColorStateList.valueOf(resources.getColor(R.color.grey_777))
-        } else {
-            ivGrid.setImageDrawable(activity?.resources?.getDrawable(R.drawable.ic_iconscout_align_justify_24))
-            ivGrid.imageTintList = ColorStateList.valueOf(resources.getColor(R.color.grey_777))
+    private fun deleteBook(activity: ListActivity) {
+        var firstCheck = true
+        viewModel.getBook(book.id).observe(viewLifecycleOwner) { book ->
+
+            if (firstCheck) {
+                firstCheck = false
+
+                val deleteBookWarningDialog = this.context?.let { it1 ->
+                    AlertDialog.Builder(it1)
+                        .setTitle(R.string.warning_delete_book_title)
+                        .setMessage(R.string.warning_delete_book_message)
+                        .setIcon(R.drawable.ic_iconscout_exclamation_triangle_24)
+                        .setPositiveButton(R.string.warning_delete_book_delete) { _, _ ->
+                            viewModel.updateBook(
+                                book.id,
+                                book.bookTitle,
+                                book.bookAuthor,
+                                book.bookRating,
+                                book.bookStatus,
+                                book.bookPriority,
+                                book.bookStartDate,
+                                book.bookFinishDate,
+                                book.bookNumberOfPages,
+                                book.bookTitle_ASCII,
+                                book.bookAuthor_ASCII,
+                                true,
+                                book.bookCoverUrl,
+                                book.bookOLID,
+                                book.bookISBN10,
+                                book.bookISBN13,
+                                book.bookPublishYear,
+                                book.bookIsFav,
+                                book.bookCoverImg,
+                                book.bookNotes,
+                                book.bookTags
+                            )
+                            recalculateChallenges()
+
+                            this.view?.let {
+                                Snackbar.make(it, getString(R.string.bookDeleted), Snackbar.LENGTH_LONG)
+                                    .setAction(getString(R.string.undo), UndoBookDeletion(book, activity))
+                                    .show()
+                            }
+                        }
+                        .setNegativeButton(R.string.warning_delete_book_cancel) { _, _ ->
+                        }
+                        .create()
+                }
+
+                deleteBookWarningDialog?.show()
+                deleteBookWarningDialog?.getButton(AlertDialog.BUTTON_NEGATIVE)?.setTextColor(ContextCompat.getColor(listActivity.baseContext, R.color.grey_500))
+            }
         }
+    }
+
+    private fun switchGridListView() {
+        if (layoutManager?.spanCount == 1) {
+            layoutManager?.spanCount = 2
+            saveDetailsMode(true)
+        } else {
+            layoutManager?.spanCount = 1
+            saveDetailsMode(false)
+        }
+
+        adapter?.notifyItemRangeChanged(0, adapter?.itemCount ?: 0)
     }
 
     private fun saveDetailsMode(show: Boolean) {
@@ -238,15 +240,12 @@ class DisplayBookFragment : Fragment(R.layout.fragment_display_book) {
 
         return if (sharedPref?.getBoolean(
                 Constants.SHARED_PREFERENCES_KEY_DETAILS_MODE,
-                true
+                false
             ) == true
-        ) {
-            showGridIcon(false)
+        )
             2
-        } else {
-            showGridIcon(true)
+        else
             1
-        }
     }
 
     private fun setDetailsRV(activity: ListActivity, span: Int) {
@@ -399,57 +398,11 @@ class DisplayBookFragment : Fragment(R.layout.fragment_display_book) {
     }
 
     private fun rearrangeViewsWhenNotFinished() {
-        val ivEditLayout = ivEdit.layoutParams as ConstraintLayout.LayoutParams
-        ivEditLayout.bottomToBottom = ConstraintLayout.LayoutParams.UNSET
-        ivEditLayout.endToStart = ConstraintLayout.LayoutParams.UNSET
-        ivEditLayout.startToEnd = ConstraintLayout.LayoutParams.UNSET
-        ivEditLayout.topToTop = ConstraintLayout.LayoutParams.UNSET
-
-        ivEditLayout.startToStart = R.id.tvBookAuthor
-        ivEditLayout.topToBottom = R.id.tvBookStatus
-
-        ivEditLayout.marginStart = -20
-        ivEditLayout.topMargin = 36
-        ivEdit.layoutParams = ivEditLayout
-
-        val ivDeleteLayout = ivDelete.layoutParams as ConstraintLayout.LayoutParams
-        ivDeleteLayout.bottomToBottom = ConstraintLayout.LayoutParams.UNSET
-        ivDeleteLayout.endToEnd = ConstraintLayout.LayoutParams.UNSET
-
-        ivDeleteLayout.startToEnd = R.id.ivEdit
-        ivDeleteLayout.endToStart = R.id.ivGrid
-        ivDelete.layoutParams = ivDeleteLayout
-
-        val ivGridLayout = ivGrid.layoutParams as ConstraintLayout.LayoutParams
-        ivGridLayout.bottomToBottom = ConstraintLayout.LayoutParams.UNSET
-        ivGridLayout.endToEnd = ConstraintLayout.LayoutParams.UNSET
-
-        ivGridLayout.endToEnd = R.id.guideline16
-        ivGridLayout.startToEnd = R.id.ivDelete
-        ivGrid.layoutParams = ivGridLayout
-
         ivFav.visibility = View.GONE
     }
 
     private fun rearrangeViewsWhenFinished() {
         ivFav.visibility = View.VISIBLE
-
-        val ivEditLayout = ivEdit.layoutParams as ConstraintLayout.LayoutParams
-        ivEditLayout.bottomToBottom = ConstraintLayout.LayoutParams.UNSET
-        ivEditLayout.endToStart = ConstraintLayout.LayoutParams.UNSET
-        ivEditLayout.startToEnd = ConstraintLayout.LayoutParams.UNSET
-        ivEditLayout.startToStart = ConstraintLayout.LayoutParams.UNSET
-        ivEditLayout.topToTop = ConstraintLayout.LayoutParams.UNSET
-
-        ivEditLayout.startToEnd = R.id.ivFav
-        ivEditLayout.endToStart = R.id.ivDelete
-        ivEditLayout.topToTop = R.id.ivFav
-        ivEditLayout.bottomToBottom = R.id.ivFav
-
-        ivEditLayout.marginStart = 0
-        ivEditLayout.marginEnd = 0
-        ivEditLayout.topMargin = 0
-        ivEdit.layoutParams = ivEditLayout
     }
 
     private fun rearrangeViewsWhenCoverMissing() {
@@ -478,16 +431,6 @@ class DisplayBookFragment : Fragment(R.layout.fragment_display_book) {
         rbRatingIndicatorLayout.marginStart = -20 // TODO ???
         rbRatingIndicatorLayout.marginEnd = 0 // TODO ???
         rbRatingIndicator.layoutParams = rbRatingIndicatorLayout
-
-        val ivDeleteLayout = ivDelete.layoutParams as ConstraintLayout.LayoutParams
-        ivDeleteLayout.startToEnd = R.id.ivEdit
-        ivDeleteLayout.endToStart = R.id.ivGrid
-        ivDelete.layoutParams = ivDeleteLayout
-
-        val ivGridLayout = ivGrid.layoutParams as ConstraintLayout.LayoutParams
-        ivGridLayout.startToEnd = R.id.ivDelete
-        ivGridLayout.endToEnd = R.id.tvBookAuthor
-        ivGrid.layoutParams = ivGridLayout
     }
 
     private fun getISBN(

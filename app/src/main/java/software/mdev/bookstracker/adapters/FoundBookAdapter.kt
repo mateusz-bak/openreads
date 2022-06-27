@@ -92,7 +92,9 @@ class FoundBookAdapter(
                         tvBookAuthor.text = holder.itemView.context.getString(R.string.unknown_author)
                     }
 
-                    if (curBook.data.covers != null && curBook.data.covers!!.isNotEmpty()) {
+                    if (curBook.data.covers != null &&
+                        curBook.data.covers!!.isNotEmpty() &&
+                        curBook.data.covers!![0] != null) {
 
                         var coverID = curBook.data.covers!![0]
 
