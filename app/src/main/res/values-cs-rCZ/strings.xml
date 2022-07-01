@@ -14,8 +14,8 @@
     <string name="ivInProgressIndicator">Tato kniha je rozečtená</string>
     <string name="ivToReadIndicator">Tato kniha je ke čtení</string>
     <!-- In-app strings -->
-    <string name="readFragment">Dočtená</string>
-    <string name="inProgressFragment">Rozečtená</string>
+    <string name="readFragment">Finished</string>
+    <string name="inProgressFragment">In progress</string>
     <string name="toReadFragment">Na později</string>
     <string name="btnAdderSaveBook">Uložit</string>
     <string name="finished">Dočtená</string>
