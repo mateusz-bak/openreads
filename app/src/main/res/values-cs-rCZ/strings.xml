@@ -270,4 +270,6 @@
     <string name="menu_start_reading_book">Rozečtené</string>
     <string name="menu_finished_reading_book">Dočtené</string>
     <string name="add_tag">Přidat</string>
+    <string name="join_element_summary">Click here to join Openreads community on Element Messenger</string>
+    <string name="join_element_title">Join the community</string>
 </resources>
