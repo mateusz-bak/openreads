@@ -17,6 +17,7 @@
 <a href='https://matrix.to/#/#openreads:matrix.org'><img height=75 alt='Join the community on Element' src='https://raw.githubusercontent.com/mateusz-bak/openreads-android/master/doc/github/join_element.png'/></a>
 
 <br/>
+
 ### Openreads is a privacy oriented and open source Android app written in Kotlin for keeping tracks of your books.  
 #### There are four lists provided so you won't get confused:  
 - books you finished,  
