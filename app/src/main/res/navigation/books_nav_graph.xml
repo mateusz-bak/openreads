@@ -46,9 +46,6 @@
         android:name="software.mdev.bookstracker.ui.bookslist.fragments.SetupFragment"
         android:label="SetupFragment" >
         <action
-            android:id="@+id/action_setupFragment_to_changelogFragment"
-            app:destination="@id/changelogFragment" />
-        <action
             android:id="@+id/action_setupFragment_to_booksFragment"
             app:destination="@id/booksFragment" />
     </fragment>
@@ -102,14 +99,6 @@
         android:id="@+id/settingsBackupFragment"
         android:name="software.mdev.bookstracker.ui.bookslist.fragments.SettingsBackupFragment"
         android:label="SettingsBackupFragment" />
-    <fragment
-        android:id="@+id/changelogFragment"
-        android:name="software.mdev.bookstracker.ui.bookslist.fragments.ChangelogFragment"
-        android:label="ChangelogFragment" >
-        <action
-            android:id="@+id/action_changelogFragment_to_booksFragment"
-            app:destination="@id/booksFragment" />
-    </fragment>
     <fragment
         android:id="@+id/booksFragment"
         android:name="software.mdev.bookstracker.ui.bookslist.fragments.BooksFragment"
