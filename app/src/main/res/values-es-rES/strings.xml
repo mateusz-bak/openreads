@@ -270,4 +270,6 @@
     <string name="menu_start_reading_book">Comenzar a leer</string>
     <string name="menu_finished_reading_book">Lectura terminada</string>
     <string name="add_tag">Añadir</string>
+    <string name="join_element_summary">Click here to join Openreads community on Element Messenger</string>
+    <string name="join_element_title">Join the community</string>
 </resources>
