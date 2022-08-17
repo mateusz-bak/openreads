@@ -13,21 +13,25 @@
 <a href='https://f-droid.org/en/packages/software.mdev.bookstracker'><img height=75 alt='Get it on F-Droid' src='https://fdroid.gitlab.io/artwork/badge/get-it-on.png'/></a>
 <a href='https://play.google.com/store/apps/details?id=software.mdev.bookstracker'><img height=75 alt='Get it on Google Play' src='https://play.google.com/intl/en_us/badges/images/generic/en_badge_web_generic.png'/></a>
 <a href='https://github.com/mateusz-bak/openreads-android/releases/latest'><img height=75 alt='Get it on Github' src='https://raw.githubusercontent.com/mateusz-bak/openreads-android/master/doc/github/get-it-on-github.png'/></a>
+<br/>
+:sparkles: :sparkles: :sparkles: :sparkles: :sparkles:
+<a href='https://matrix.to/#/#openreads:matrix.org'><img height=75 alt='Join the community on Element' src='https://raw.githubusercontent.com/mateusz-bak/openreads-android/master/doc/github/join_element.png'/></a>
+:sparkles: :sparkles: :sparkles: :sparkles: :sparkles:
 
 <br/><br/>
-### Openreads is an Android app written in Kotlin for keeping tracks of your books.  
+### Openreads is a privacy oriented and open source Android app written in Kotlin for keeping tracks of your books.  
 #### There are four lists provided so you won't get confused:  
 - books you finished,  
 - books you are currently reading,  
 - books you want to read later,
 - books you didn't finish.
 
-You can also use custom tags and filter through them.
+You can use custom tags and filter through them.
 
 #### A book can be added by:
 - looking it up in the Open Library database,
-- scanning its barcode,
-- adding its details manually.
+- scanning it's barcode,
+- adding it's details manually.
 
 ####  You can also view some cool statistics!  
 
@@ -43,16 +47,16 @@ You can also use custom tags and filter through them.
 
 ## Contributing
 
-Do you want to support Openreads' development? You are welcome to take below actions:
+Do you want to support Openreads development? You are welcome to take below actions:
 
 ### Help translate Openreads:
 Go to [Crowdin project](https://crwd.in/openreads-android) and start translating!
 
 ### Have you found a bug in Openreads?
-Submit an issue here: [Openreads' issues](https://github.com/mateusz-bak/openreads-android/issues).
+Submit an issue here: [Openreads issues](https://github.com/mateusz-bak/openreads-android/issues).
 
 ### Do you have an idea that could improve Openreads for everyone?
-Submit a feature request here: [Openreads' issues](https://github.com/mateusz-bak/openreads-android/issues).
+Submit a feature request here: [Openreads issues](https://github.com/mateusz-bak/openreads-android/issues).
 
 <br/><br/>
 ## Build Process
@@ -99,4 +103,5 @@ Submit a feature request here: [Openreads' issues](https://github.com/mateusz-ba
 
 ### Icons and illustrations made by
 [Katerina Limpitsouni](https://undraw.co/illustrations "Katerina Limpitsouni")
+<br/>
 [Iconscout](https://iconscout.com/ "Iconscout")
