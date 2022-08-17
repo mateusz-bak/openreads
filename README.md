@@ -14,11 +14,11 @@
 <a href='https://play.google.com/store/apps/details?id=software.mdev.bookstracker'><img height=75 alt='Get it on Google Play' src='https://play.google.com/intl/en_us/badges/images/generic/en_badge_web_generic.png'/></a>
 <a href='https://github.com/mateusz-bak/openreads-android/releases/latest'><img height=75 alt='Get it on Github' src='https://raw.githubusercontent.com/mateusz-bak/openreads-android/master/doc/github/get-it-on-github.png'/></a>
 <br/>
-:sparkles: :sparkles: :sparkles: :sparkles: :sparkles:
+:sparkles: :sparkles: :sparkles: :sparkles: :sparkles: :sparkles: :sparkles: :sparkles:
 <br/>
 <a href='https://matrix.to/#/#openreads:matrix.org'><img height=75 alt='Join the community on Element' src='https://raw.githubusercontent.com/mateusz-bak/openreads-android/master/doc/github/join_element.png'/></a>
 <br/>
-:sparkles: :sparkles: :sparkles: :sparkles: :sparkles:
+:sparkles: :sparkles: :sparkles: :sparkles: :sparkles: :sparkles: :sparkles: :sparkles:
 
 <br/><br/>
 ### Openreads is a privacy oriented and open source Android app written in Kotlin for keeping tracks of your books.  
