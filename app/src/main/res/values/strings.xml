@@ -17,6 +17,7 @@
     <!-- In-app strings -->
     <string name="ivRepoUrl" translatable="false">https://github.com/mateusz-bak/openreads-android/</string>
     <string name="latestReleaseUrl" translatable="false">https://github.com/mateusz-bak/openreads-android/releases/latest</string>
+    <string name="elementInvitationUrl" translatable="false">https://matrix.to/#/#openreads:matrix.org</string>
     <string name="tvLicenseUrl" translatable="false">https://github.com/mateusz-bak/openreads-android/blob/master/LICENSE</string>
     <string name="readFragment">Finished</string>
     <string name="inProgressFragment">In progress</string>
@@ -291,4 +292,6 @@
     <string name="menu_start_reading_book">Start Reading</string>
     <string name="menu_finished_reading_book">Finished Reading</string>
     <string name="add_tag">Add</string>
+    <string name="join_element_summary">Click here to join Openreads community on Element Messenger</string>
+    <string name="join_element_title">Join the community</string>
 </resources>
