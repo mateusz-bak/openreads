@@ -155,7 +155,8 @@ class AddEditBookDialog : DialogFragment() {
             languageRepository
         )
 
-        book = args.book
+        book = correctOLID(args.book)
+
         val bookSource = args.bookSource
 
         val viewModel = ViewModelProviders.of(this, booksViewModelProviderFactory)
@@ -419,6 +420,14 @@ class AddEditBookDialog : DialogFragment() {
         tilBookISBN.setEndIconOnClickListener {
             openCodeScanner()
         }
+    }
+
+    private fun correctOLID(book: Book): Book {
+        return if (book.bookOLID.contains("/works/")) {
+            book.bookOLID = book.bookOLID.replace("/works/", "")
+            book
+        } else
+            book
     }
 
     override fun onStart() {
