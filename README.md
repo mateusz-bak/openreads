@@ -29,8 +29,8 @@ You can use custom tags and filter through them.
 
 #### A book can be added by:
 - looking it up in the Open Library database,
-- scanning it's barcode,
-- adding it's details manually.
+- scanning its barcode,
+- adding its details manually.
 
 ####  You can also view some cool statistics!  
 
