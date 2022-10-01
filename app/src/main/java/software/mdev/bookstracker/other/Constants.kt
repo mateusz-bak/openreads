@@ -177,4 +177,6 @@ object Constants {
     const val detailOLID = 7
     const val detailNotes = 8
     const val detailUrl = 9
+
+    const val BACKUP_VERSION = "3"
 }
