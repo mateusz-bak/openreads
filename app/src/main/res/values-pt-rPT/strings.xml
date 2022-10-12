@@ -9,16 +9,16 @@
     <string name="ivBookStatusInProgress">Book is in progress</string>
     <string name="ivBookStatusToRead">Book is \"to read\"</string>
     <string name="fabAddBook">Add a new book</string>
-    <string name="ivSeparator1">Separator between search and sort</string>
+    <string name="ivSeparator1">Separador entre pesquisa e ordenação</string>
     <string name="rbRatingIndicator">This book is finished</string>
-    <string name="ivInProgressIndicator">This book is in progress</string>
+    <string name="ivInProgressIndicator">Livro em progresso</string>
     <string name="ivToReadIndicator">This book is to read</string>
     <!-- In-app strings -->
-    <string name="readFragment">Finished</string>
-    <string name="inProgressFragment">In progress</string>
+    <string name="readFragment">Terminado</string>
+    <string name="inProgressFragment">Em progresso</string>
     <string name="toReadFragment">For later</string>
-    <string name="btnAdderSaveBook">Save</string>
-    <string name="finished">Finished</string>
+    <string name="btnAdderSaveBook">Guardar</string>
+    <string name="finished">Terminado</string>
     <string name="inProgress">In progress</string>
     <string name="toRead">For later</string>
     <string name="tvBookTitle">Enter a title</string>
