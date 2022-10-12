@@ -3,9 +3,9 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <Preference
-        android:icon="@drawable/ic_baseline_new_releases_24"
-        android:summary="@string/join_element_summary"
-        android:title="@string/join_element_title">
+        android:icon="@drawable/ic_iconscout_rocket_24"
+        android:summary="@string/join_matrix_summary"
+        android:title="@string/join_matrix_title">
         <intent
             android:action="android.intent.action.VIEW"
             android:data="@string/elementInvitationUrl" />
