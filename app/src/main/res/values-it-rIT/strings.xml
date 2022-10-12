@@ -173,7 +173,7 @@
     <string name="stats_pages_read">Pagine lette</string>
     <string name="stats_avg_rating">Valutazione media dei libri</string>
     <string name="stats_challenge">Sfida lettura</string>
-    <string name="stats_books_by_months">Leggi i libri per mese finale</string>
+    <string name="stats_books_by_months">Read books by finish month</string>
     <string name="need_more_data">Servono più dati per questo</string>
     <string name="days">giorni</string>
     <string name="stats_shortest_book">Libro più corto</string>
@@ -203,7 +203,7 @@
     <string name="month_10_short">Ott</string>
     <string name="month_11_short">Nov</string>
     <string name="month_12_short">Dic</string>
-    <string name="stats_pages_by_months">Leggi pagine per mese di fine</string>
+    <string name="stats_pages_by_months">Pagine lette per mese di completamento</string>
     <string name="export_local_summary">Salva i tuoi libri in un file locale in modo da avere sempre il backup a portata di mano!</string>
     <string name="export_local_title">Crea backup locale</string>
     <string name="insert_book_title">Titolo del libro</string>
