@@ -138,6 +138,7 @@
     <string name="backup_title">Sicherung</string>
     <string name="backup_summary">Sichern oder Wiederherstellen deiner Bücher</string>
     <string name="backup_success">Erfolgreich! Datei gespeichert auf: Interner Speicher/Android/data/software.mdev.bookstracker/files</string>
+    <string name="backup_export_success">Exported</string>
     <string name="backup_failure">Sicherung fehlgeschlagen!</string>
     <string name="backup_import_invalid_file">Import fehlgeschlagen. Die gewählte Datei ist kein gültiges &appname; Backup!</string>
     <string name="backup_import_success">Import abgeschlossen!</string>
