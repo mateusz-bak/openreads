@@ -138,6 +138,7 @@
     <string name="backup_title">Sikkerhedskopi</string>
     <string name="backup_summary">Sikkerhedskopiér eller gendan dine bøger</string>
     <string name="backup_success">Succes! Fil gemt til: Intern lagerplads/Android/data/software.mdev.bookstracker/files</string>
+    <string name="backup_export_success">Exported</string>
     <string name="backup_failure">Oprettelse af sikkerhedskopi mislykkedes!</string>
     <string name="backup_import_invalid_file">Import mislykkedes. Den valgte fil er ikke en gyldig &appname; sikkerhedskopi!</string>
     <string name="backup_import_success">Import fuldført!</string>
