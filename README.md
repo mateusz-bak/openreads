@@ -35,6 +35,11 @@ You can use custom tags and filter through them.
 ####  You can also view some cool statistics!  
 
 <br/><br/>
+### :construction: Currently feature development is stopped due to refactor work :construction:
+The app codebase is being migrated from Android Native (Kotlin) to Flutter (Dart).
+Main point for this is to enable iOS release with a single codebase.
+If you want to be involved in the process and help out with work, design or feedback you can join [Openreads Community on Matrix.org](https://matrix.to/#/#openreads:matrix.org).
+<br/><br/>
 ## Screenshots  
 <p align='center'>  
  <img src='doc/github/screenshot-finished_n_framed.png' width='30%'/>  

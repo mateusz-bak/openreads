@@ -1,0 +1,7 @@
+- Removed in app changelog, upgraded dependencies. by @mateusz-bak in #140
+- Fixed some Open Library IDs being cut short by @mateusz-bak in #141
+- Improved Readme, added matrix.org badge. by @mateusz-bak in #142
+- matrix.org invitation in the app by @mateusz-bak in #143
+- Reverting it's (= it is) to its (possessive) by @nobkd in #144
+- Add support to export local backup to selected path by @vbh in #156
+- Added Hindi, Portuguese and Turkish translations.
