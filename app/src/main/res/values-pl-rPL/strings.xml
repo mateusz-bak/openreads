@@ -271,6 +271,6 @@
     <string name="menu_start_reading_book">Rozpocznij czytanie</string>
     <string name="menu_finished_reading_book">Zakończ czytanie</string>
     <string name="add_tag">Dodaj</string>
-    <string name="join_matrix_summary">Click here to join &appname; community on Matrix.org</string>
-    <string name="join_matrix_title">Join the community</string>
+    <string name="join_matrix_summary">Kliknij tutaj, aby dołączyć do społeczności &appname; na Matrix.org</string>
+    <string name="join_matrix_title">Dołącz do społeczności</string>
 </resources>
