@@ -138,6 +138,7 @@
     <string name="backup_title">Резервне копіювання</string>
     <string name="backup_summary">Резервне копіювання або відновлення ваших книг</string>
     <string name="backup_success">Успіх! Файл збережено: Внутрішня Пам’ять/Android/data/software.mdev.bookstracker/files</string>
+    <string name="backup_export_success">Exported</string>
     <string name="backup_failure">Не вдалося створити резервну копію!</string>
     <string name="backup_import_invalid_file">Помилка імпорту. Вибраний файл не є дійсним для &appname;!</string>
     <string name="backup_import_success">Імпорт завершено!</string>
