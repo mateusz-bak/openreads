@@ -138,6 +138,7 @@
     <string name="backup_title">Záloha</string>
     <string name="backup_summary">Zálohujte nebo obnovte svoje knihy</string>
     <string name="backup_success">Povedlo se! Soubor byl uložen do: interní úložiště/Android/data/software.mdev.bookstracker/soubory</string>
+    <string name="backup_export_success">Exported</string>
     <string name="backup_failure">Vytvoření zálohy se nezdařilo!</string>
     <string name="backup_import_invalid_file">Import se nezdařil. Zvolený soubor není platná záloha &appname;!</string>
     <string name="backup_import_success">Import dokončen!</string>
