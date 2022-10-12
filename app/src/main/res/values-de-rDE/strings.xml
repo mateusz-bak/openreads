@@ -270,6 +270,6 @@
     <string name="menu_start_reading_book">Anfangen zu lesen</string>
     <string name="menu_finished_reading_book">Zu Ende gelesen</string>
     <string name="add_tag">Hinzufügen</string>
-    <string name="join_element_summary">Click here to join Openreads community on Element Messenger</string>
-    <string name="join_element_title">Join the community</string>
+    <string name="join_matrix_summary">Click here to join &appname; community on Matrix.org</string>
+    <string name="join_matrix_title">Join the community</string>
 </resources>
