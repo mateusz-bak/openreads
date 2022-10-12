@@ -138,6 +138,7 @@
     <string name="backup_title">Kopia zapasowa</string>
     <string name="backup_summary">Utwórz lub przywróć kopię zapasową Twoich książek</string>
     <string name="backup_success">Sukces! Plik zapisany w: Pamięć Wewnętrzna/Android/data/software.mdev.bookstracker/files</string>
+    <string name="backup_export_success">Exported</string>
     <string name="backup_failure">Tworzenie kopii zapasowaj nie powiodło się!</string>
     <string name="backup_import_invalid_file">Import zakończony niepowodzeniem. Wybrany plik nie jest poprawą kopią zapasową aplikacji &appname;!</string>
     <string name="backup_import_success">Import zakończony powodzeniem!</string>
