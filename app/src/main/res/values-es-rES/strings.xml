@@ -138,6 +138,7 @@
     <string name="backup_title">Copia de seguridad</string>
     <string name="backup_summary">Respaldar o restaurar sus libros</string>
     <string name="backup_success">¡Éxito! Archivo guardado en: Almacenamiento/Android/data/software.mdev.bookstracker/files</string>
+    <string name="backup_export_success">Exported</string>
     <string name="backup_failure">Creación de la copia de seguridad falló!</string>
     <string name="backup_import_invalid_file">Importación fallida. ¡El archivo elegido no es una copia de seguridad de &appname; válida!</string>
     <string name="backup_import_success">¡Importación completada!</string>
