@@ -4,21 +4,21 @@
 ]>
 <resources>
     <!-- Images descriptions -->
-    <string name="fabEditBook">Angezeigtes Buch bearbeiten</string>
-    <string name="ivBookStatusRead">Buch ist beendet</string>
+    <string name="fabEditBook">Edit displayed book</string>
+    <string name="ivBookStatusRead">Buch gelesen</string>
     <string name="ivBookStatusInProgress">Buch wird derzeit gelesen</string>
     <string name="ivBookStatusToRead">Buch ist \"zum Lesen\"</string>
     <string name="fabAddBook">Neues Buch hinzufügen</string>
     <string name="ivSeparator1">Trennzeichen zwischen Suche und Sortierung</string>
-    <string name="rbRatingIndicator">Das Buch ist fertig</string>
+    <string name="rbRatingIndicator">This book is finished</string>
     <string name="ivInProgressIndicator">Dieses wird derzeit gelesen</string>
     <string name="ivToReadIndicator">Dieses Buch ist zu lesen</string>
     <!-- In-app strings -->
-    <string name="readFragment">Beendet</string>
+    <string name="readFragment">Gelesen</string>
     <string name="inProgressFragment">Wird derzeit gelesen</string>
     <string name="toReadFragment">Für später</string>
     <string name="btnAdderSaveBook">Speichern</string>
-    <string name="finished">Beendet</string>
+    <string name="finished">Finished</string>
     <string name="inProgress">Wird derzeit gelesen</string>
     <string name="toRead">Für später</string>
     <string name="tvBookTitle">Titel eingeben</string>
@@ -34,7 +34,7 @@
     <!-- Autofill hints -->
     <string name="notYetImplemented">Noch nicht implementiert</string>
     <string name="bookDeleted">Buch gelöscht</string>
-    <string name="undo">Rückgängig</string>
+    <string name="undo">Rückgängig machen</string>
     <string name="tvWelcomeText_0">Willkommen zu</string>
     <string name="tvWelcomeText_1">"hilft dir, den Überblick über deine Bücher zu behalten.\n\nEs ist auch ein großartiges Werkzeug, um deine persönliche Bibliothek auf einfache und transparente Weise zu organisieren."</string>
     <string name="tvWelcomeText_2">"Mache Fortschritte beim Lesen dank toller Statistiken.\n\nFordere dich sich selbst heraus, um ein besserer Leser zu werden!"</string>
