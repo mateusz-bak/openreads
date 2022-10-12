@@ -138,7 +138,7 @@
     <string name="backup_title">Kopia zapasowa</string>
     <string name="backup_summary">Utwórz lub przywróć kopię zapasową Twoich książek</string>
     <string name="backup_success">Sukces! Plik zapisany w: Pamięć Wewnętrzna/Android/data/software.mdev.bookstracker/files</string>
-    <string name="backup_export_success">Exported</string>
+    <string name="backup_export_success">Wyeksportowano</string>
     <string name="backup_failure">Tworzenie kopii zapasowaj nie powiodło się!</string>
     <string name="backup_import_invalid_file">Import zakończony niepowodzeniem. Wybrany plik nie jest poprawą kopią zapasową aplikacji &appname;!</string>
     <string name="backup_import_success">Import zakończony powodzeniem!</string>
@@ -271,6 +271,6 @@
     <string name="menu_start_reading_book">Rozpocznij czytanie</string>
     <string name="menu_finished_reading_book">Zakończ czytanie</string>
     <string name="add_tag">Dodaj</string>
-    <string name="join_element_summary">Click here to join Openreads community on Element Messenger</string>
-    <string name="join_element_title">Join the community</string>
+    <string name="join_matrix_summary">Click here to join &appname; community on Matrix.org</string>
+    <string name="join_matrix_title">Join the community</string>
 </resources>
