@@ -138,7 +138,7 @@
     <string name="backup_title">Copia de seguridad</string>
     <string name="backup_summary">Respaldar o restaurar sus libros</string>
     <string name="backup_success">¡Éxito! Archivo guardado en: Almacenamiento/Android/data/software.mdev.bookstracker/files</string>
-    <string name="backup_export_success">Exported</string>
+    <string name="backup_export_success">Exportado</string>
     <string name="backup_failure">Creación de la copia de seguridad falló!</string>
     <string name="backup_import_invalid_file">Importación fallida. ¡El archivo elegido no es una copia de seguridad de &appname; válida!</string>
     <string name="backup_import_success">¡Importación completada!</string>
@@ -271,6 +271,6 @@
     <string name="menu_start_reading_book">Comenzar a leer</string>
     <string name="menu_finished_reading_book">Lectura terminada</string>
     <string name="add_tag">Añadir</string>
-    <string name="join_matrix_summary">Click here to join &appname; community on Matrix.org</string>
-    <string name="join_matrix_title">Join the community</string>
+    <string name="join_matrix_summary">Haz clic aquí para unirte a &appname; comunidad en Matrix.org</string>
+    <string name="join_matrix_title">Únete a la comunidad</string>
 </resources>
