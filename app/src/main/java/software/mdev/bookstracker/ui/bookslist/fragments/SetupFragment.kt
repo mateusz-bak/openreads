@@ -32,16 +32,11 @@ class SetupFragment : Fragment(R.layout.fragment_setup) {
                 .setPopUpTo(R.id.setupFragment, true)
                 .build()
 
-            if (sharedPref.getString(Constants.SHARED_PREFERENCES_KEY_APP_VERSION, "v0.0.0") ==
-                resources.getString(R.string.app_version)) {
-                findNavController().navigate(
-                    R.id.action_setupFragment_to_booksFragment,
-                    savedInstanceState,
-                    navOptions
-                )
-            } else {
-                findNavController().navigate(R.id.action_setupFragment_to_changelogFragment, savedInstanceState, navOptions)
-            }
+            findNavController().navigate(
+                R.id.action_setupFragment_to_booksFragment,
+                savedInstanceState,
+                navOptions
+            )
         }
 
         val images = listOf(

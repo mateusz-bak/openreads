@@ -112,7 +112,6 @@ object Constants {
     const val KEY_EXPORT = "KEY_EXPORT"
     const val KEY_EXPORT_LOCAL = "KEY_EXPORT_LOCAL"
     const val KEY_IMPORT = "KEY_IMPORT"
-    const val KEY_CHANGELOG = "KEY_CHANGELOG"
     const val KEY_FEEDBACK = "KEY_FEEDBACK"
     const val KEY_CSV_IMPORT = "KEY_CSV_IMPORT"
 
@@ -178,4 +177,6 @@ object Constants {
     const val detailOLID = 7
     const val detailNotes = 8
     const val detailUrl = 9
+
+    const val BACKUP_VERSION = "3"
 }

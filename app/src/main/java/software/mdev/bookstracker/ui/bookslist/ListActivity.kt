@@ -52,10 +52,7 @@ import software.mdev.bookstracker.data.repositories.BooksRepository
 import software.mdev.bookstracker.data.repositories.LanguageRepository
 import software.mdev.bookstracker.data.repositories.OpenLibraryRepository
 import software.mdev.bookstracker.data.repositories.YearRepository
-import software.mdev.bookstracker.other.Backup
-import software.mdev.bookstracker.other.Constants
-import software.mdev.bookstracker.other.Functions
-import software.mdev.bookstracker.other.Updater
+import software.mdev.bookstracker.other.*
 import software.mdev.bookstracker.ui.bookslist.viewmodel.BooksViewModel
 import software.mdev.bookstracker.ui.bookslist.viewmodel.BooksViewModelProviderFactory
 import java.io.IOException
@@ -1045,6 +1042,21 @@ class ListActivity : AppCompatActivity() {
                 e.printStackTrace()
             }
         }
+
+    val selectExportPath =
+        registerForActivityResult(ExportHelper()) { uri ->
+            uri?.let {
+                try {
+                    CoroutineScope(Dispatchers.IO).launch {
+                        Backup().exportAndShare(listActivity, false, it)
+                    }
+                } catch (e: Exception) {
+                    showSnackbar(e.toString())
+                    e.printStackTrace()
+                }
+            }
+        }
+
 
     override fun onRequestPermissionsResult(
         requestCode: Int,

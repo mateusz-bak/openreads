@@ -32,7 +32,6 @@ class SettingsFragment : PreferenceFragmentCompat(), OnSharedPreferenceChangeLis
 
         val preferenceCheckForUpdates = findPreference<Preference>(Constants.KEY_CHECK_FOR_UPDATES)
         val preferenceTrash = findPreference<Preference>(Constants.KEY_TRASH)
-        val preferenceChangelog = findPreference<Preference>(Constants.KEY_CHANGELOG)
         val preferenceBackup = findPreference<Preference>(Constants.KEY_BACKUP)
         val preferenceFeedback = findPreference<Preference>(Constants.KEY_FEEDBACK)
 
@@ -50,13 +49,6 @@ class SettingsFragment : PreferenceFragmentCompat(), OnSharedPreferenceChangeLis
         if (preferenceTrash != null) {
             preferenceTrash.onPreferenceClickListener = Preference.OnPreferenceClickListener {
                 findNavController().navigate(R.id.trashFragment, null)
-                true
-            }
-        }
-
-        if (preferenceChangelog != null) {
-            preferenceChangelog.onPreferenceClickListener = Preference.OnPreferenceClickListener {
-                findNavController().navigate(R.id.changelogFragment, null)
                 true
             }
         }

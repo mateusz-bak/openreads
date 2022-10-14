@@ -21,6 +21,7 @@ import software.mdev.bookstracker.data.db.YearDatabase
 import software.mdev.bookstracker.data.db.entities.Book
 import software.mdev.bookstracker.data.db.entities.Year
 import software.mdev.bookstracker.ui.bookslist.ListActivity
+import software.mdev.bookstracker.utils.FileUtils
 import java.io.*
 import java.lang.StringBuilder
 import java.text.Normalizer
@@ -31,18 +32,18 @@ import java.util.zip.*
 
 class Backup {
 
-    fun exportAndShare(activity: ListActivity, share: Boolean) {
+    fun exportAndShare(activity: ListActivity, share: Boolean, selectedPath: Uri? = null) {
         CoroutineScope(Dispatchers.IO).launch {
             controlProgressBar(activity, true)
 
-            val exported = exportBackup(activity)
+            val exported = exportBackup(activity, selectedPath)
             if (share && exported.isNotBlank()) shareBackup(exported, activity)
 
             controlProgressBar(activity, false)
         }
     }
 
-    private fun exportBackup(context: Context): String {
+    private fun exportBackup(context: Context, selectedPath: Uri?): String {
         // Perform a checkpoint to empty the write ahead logging temporary files and avoid closing the entire db
         val booksDao = BooksDatabase.getBooksDatabase(context).getBooksDao()
         booksDao.checkpoint(SimpleSQLiteQuery("pragma wal_checkpoint(full)"))
@@ -58,7 +59,7 @@ class Backup {
         val currentDate = sdf.format(Date())
 
         val appVersion = context.resources.getString(R.string.app_version)
-        val backupVersion = "3"
+        val backupVersion = Constants.BACKUP_VERSION
         val backupName = "openreads_${backupVersion}_${appVersion}_${currentDate}"
 
         val booksFileName = "books.sql"
@@ -73,7 +74,7 @@ class Backup {
         try {
             booksDbFile.copyTo(File(booksFileFullPath), true)
             (context as ListActivity).runOnUiThread {
-                context.showSnackbar(context.getString(R.string.backup_success))
+                context.showSnackbar(context.resources.getString(R.string.backup_export_success))
             }
         } catch (e: Exception) {
             (context as ListActivity).runOnUiThread {
@@ -87,7 +88,7 @@ class Backup {
         try {
             yearsDbFile.copyTo(File(yearsFileFullPath), true)
             context.runOnUiThread {
-                context.showSnackbar(context.getString(R.string.backup_success))
+                context.showSnackbar(context.getString(R.string.backup_export_success))
             }
         } catch (e: Exception) {
             context.runOnUiThread {
@@ -101,11 +102,11 @@ class Backup {
         val fullPath: String = appDirectory.path + File.separator.toString() + backupName
         val zipFilePath = File(appDirectory.path, "$backupName.zip")// new zip file
 
-        zipAll(fullPath, zipFilePath.absolutePath)
+        zipAll(context, fullPath, zipFilePath.absolutePath, selectedPath)
 
         File(booksFileFullPath).delete()
         File(yearsFileFullPath).delete()
-        File(appDirectory.path + File.separator.toString() + backupName).delete()
+        File(fullPath).delete()
 
         return zipFilePath.absolutePath
     }
@@ -122,6 +123,10 @@ class Backup {
         // Verify that the intent will resolve to an activity
         if (shareIntent.resolveActivity(activity.packageManager) != null)
             activity.startActivity(shareIntent)
+    }
+
+    fun runExporter(activity: ListActivity) {
+        activity.selectExportPath.launch("")
     }
 
     fun runImporter(activity: ListActivity) {
@@ -315,11 +320,15 @@ class Backup {
         }
     }
 
-    private fun zipAll(directory: String, zipFile: String) {
+    private fun zipAll(context: Context, directory: String, zipFile: String, zipUri: Uri? = null) {
         val sourceFile = File(directory)
-        val outputZipFile = File(zipFile)
+        val outputStream = if  (zipUri == null) {
+            FileOutputStream(File(zipFile))
+        } else {
+            context.contentResolver.openOutputStream(zipUri)
+        }
 
-        ZipOutputStream(BufferedOutputStream(FileOutputStream(outputZipFile))).use { zos ->
+        ZipOutputStream(BufferedOutputStream(outputStream)).use { zos ->
             sourceFile.walkTopDown().forEach { file ->
                 val zipFileName =
                     file.absolutePath.removePrefix(sourceFile.absolutePath).removePrefix("/")
@@ -362,7 +371,7 @@ class Backup {
 
     // Check if a backup file is valid. A wrong import would result in a crash or empty db
     private fun validateBackup(fileUri: Uri, context: Context): Int {
-        val uri = fileUri.path ?: ""
+        val uri = FileUtils.getFilenameFromUri(context, fileUri) ?: ""
 
         return if (uri.contains("books_tracker_", true)) {
             // First backup convention - only books db

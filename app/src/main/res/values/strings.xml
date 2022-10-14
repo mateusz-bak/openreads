@@ -3,7 +3,7 @@
     <!ENTITY appname "Openreads">
     ]>
 <resources>
-    <string name="app_version" translatable="false">1.16.0</string>
+    <string name="app_version" translatable="false">1.17.0</string>
     <!-- Images descriptions -->
     <string name="fabEditBook">Edit displayed book</string>
     <string name="ivBookStatusRead">Book is finished</string>
@@ -16,6 +16,8 @@
     <string name="ivToReadIndicator">This book is to read</string>
     <!-- In-app strings -->
     <string name="ivRepoUrl" translatable="false">https://github.com/mateusz-bak/openreads-android/</string>
+    <string name="latestReleaseUrl" translatable="false">https://github.com/mateusz-bak/openreads-android/releases/latest</string>
+    <string name="elementInvitationUrl" translatable="false">https://matrix.to/#/#openreads:matrix.org</string>
     <string name="tvLicenseUrl" translatable="false">https://github.com/mateusz-bak/openreads-android/blob/master/LICENSE</string>
     <string name="readFragment">Finished</string>
     <string name="inProgressFragment">In progress</string>
@@ -149,6 +151,7 @@
     <string name="backup_title">Backup</string>
     <string name="backup_summary">Backup or restore your books</string>
     <string name="backup_success">Success! File saved to: Internal Storage/Android/data/software.mdev.bookstracker/files</string>
+    <string name="backup_export_success">Exported</string>
     <string name="backup_failure">Backup creation failed!</string>
     <string name="backup_import_invalid_file">Import failed. The chosen file is not a valid &appname; backup!</string>
     <string name="backup_import_success">Import completed!</string>
@@ -275,60 +278,12 @@
     <string name="notFinishedFragment">Not finished books</string>
     <string name="notFinished">Not finished</string>
     <string name="ivBookStatusNotFinished">Book is not finished</string>
-    <string name="changelog_ver_1_13_0" translatable="false">v1.13.0</string>
-    <string name="changelog_ver_1_14_0" translatable="false">v1.14.0</string>
-    <string name="changelog_ver_1_14_2" translatable="false">v1.14.2</string>
-    <string name="changelog_ver_1_15_0" translatable="false">v1.15.0</string>
-    <string name="changelog_ver_1_16_0" translatable="false">v1.16.0</string>
-    <string name="changelog_date_1_13_0" translatable="false">22/04/2022</string>
-    <string name="changelog_date_1_14_0" translatable="false">22/05/2022</string>
-    <string name="changelog_date_1_14_2" translatable="false">23/05/2022</string>
-    <string name="changelog_date_1_15_0" translatable="false">03/06/2022</string>
-    <string name="changelog_date_1_16_0" translatable="false">26/06/2022</string>
-    <string name="changelog_1_13_0_a">Books tags can be displayed in books lists (on/off switch in settings).</string>
-    <string name="changelog_1_13_0_b">Books details can be displayed as a list and as a grid.</string>
-    <string name="changelog_1_13_0_c">Sped up app\'s launch.</string>
-    <string name="changelog_1_13_0_d">Improved animation when going into book\'s details.</string>
-    <string name="changelog_1_13_0_e">Added German translation.</string>
-    <string name="changelog_1_13_0_f">Added French translation.</string>
-    <string name="changelog_1_13_0_g">Date picker can be scrolled in landscape mode. Thanks to @vbh </string>
-    <string name="changelog_1_13_0_h">Add/edit dialog won\'t crash on screen rotation. Thanks to @vbh </string>
-    <string name="changelog_1_13_0_i">Books with multiple tags will not be shown multiple times in books lists.</string>
-    <string name="changelog_1_13_0_j">Sort dialog now shows tags from "to read" books.</string>
-    <string name="changelog_1_13_0_k">Corrected tag\'s text color in book details page.</string>
-    <string name="changelog_1_13_0_l">Increased book title\'s and author\'s character limit to 200.</string>
-    <string name="changelog_1_13_0_m">In add/edit dialog 0 will not be displayed for number of pages and publish year.</string>
-    <string name="changelog_1_14_0_a">Released app in F-Droid Store.</string>
-    <string name="changelog_1_14_0_b">Added \"not finished\" status for books.</string>
-    <string name="changelog_1_14_0_c">Added Danish, Italian and Spanish translations.</string>
-    <string name="changelog_1_14_0_d">Fixed displaying books details without cover in in progress/ for later state.</string>
-    <string name="changelog_1_14_0_e">Open Library search results include books without ISBN.</string>
-    <string name="changelog_1_14_0_f">More books from Open Library will have cover shown.</string>
-    <string name="changelog_1_14_0_g">Tags are properly updated in books lists.</string>
-    <string name="changelog_1_14_0_h">Fixed backup in F-Droid variant.</string>
-    <string name="changelog_1_14_2_a">Improved backup for bigger libraries.</string>
-    <string name="changelog_1_14_2_b">Improved translations.</string>
     <string name="import_csv_summary">Migrate from other reading apps</string>
     <string name="import_csv_title">Import books from CSV</string>
     <string name="csv_import_failure">CSV import failed</string>
     <string name="choose_a_shelf">Choose a shelf which represents unfinished books:</string>
     <string name="skip_choosing_shelf">Skip and set those as read books</string>
     <string name="not_finished_for_statistics">Not finished</string>
-    <string name="changelog_1_15_0_a">Books can be imported from other apps with CSV file</string>
-    <string name="changelog_1_15_0_b">Books with no rating won\'t be counted in average rating</string>
-    <string name="changelog_1_15_0_c">Changelog will be shown only after update.</string>
-    <string name="changelog_1_15_0_d">Fixed app crashes</string>
-    <string name="changelog_1_15_0_e">Added Ukrainian translation</string>
-    <string name="changelog_1_15_0_f">Added Czech translation</string>
-    <string name="changelog_1_16_0_a">Added isbn scanning when adding new book manually.</string>
-    <string name="changelog_1_16_0_b">Redesigned book details screen.</string>
-    <string name="changelog_1_16_0_c">Changed Notes to My Review and increased it\'s size.</string>
-    <string name="changelog_1_16_0_d">Tags filtering can be combined using AND and OR.</string>
-    <string name="changelog_1_16_0_e">Changed navigation bar to transparent.</string>
-    <string name="changelog_1_16_0_f">All covers are now being shown in statistics.</string>
-    <string name="changelog_1_16_0_g">Book status can be changed by long click in lists (thanks to vbh).</string>
-    <string name="changelog_1_16_0_h">Improved results from Open Library.</string>
-    <string name="changelog_1_16_0_i">Added Brazilian Portuguese translation.</string>
     <string name="insert_my_review">My review</string>
     <string name="editBook">Edit book</string>
     <string name="deleteBook">Delete book</string>
@@ -338,4 +293,6 @@
     <string name="menu_start_reading_book">Start Reading</string>
     <string name="menu_finished_reading_book">Finished Reading</string>
     <string name="add_tag">Add</string>
+    <string name="join_matrix_summary">Click here to join &appname; community on Matrix.org</string>
+    <string name="join_matrix_title">Join the community</string>
 </resources>
