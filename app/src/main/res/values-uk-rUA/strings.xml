@@ -138,7 +138,7 @@
     <string name="backup_title">Резервне копіювання</string>
     <string name="backup_summary">Резервне копіювання або відновлення ваших книг</string>
     <string name="backup_success">Успіх! Файл збережено: Внутрішня Пам’ять/Android/data/software.mdev.bookstracker/files</string>
-    <string name="backup_export_success">Exported</string>
+    <string name="backup_export_success">Експорт</string>
     <string name="backup_failure">Не вдалося створити резервну копію!</string>
     <string name="backup_import_invalid_file">Помилка імпорту. Вибраний файл не є дійсним для &appname;!</string>
     <string name="backup_import_success">Імпорт завершено!</string>
@@ -271,6 +271,6 @@
     <string name="menu_start_reading_book">Почати читання</string>
     <string name="menu_finished_reading_book">Завершене читання</string>
     <string name="add_tag">Додати</string>
-    <string name="join_matrix_summary">Click here to join &appname; community on Matrix.org</string>
-    <string name="join_matrix_title">Join the community</string>
+    <string name="join_matrix_summary">Клацніть тут, щоб приєднатися до спільноти &appname; на Matrix.org</string>
+    <string name="join_matrix_title">Приєднуйтеся до спільноти</string>
 </resources>
