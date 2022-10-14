@@ -6,7 +6,7 @@
     <!-- Images descriptions -->
     <string name="fabEditBook">Modifier le livre affiché</string>
     <string name="ivBookStatusRead">Le livre est terminé</string>
-    <string name="ivBookStatusInProgress">Le livre est en progrès</string>
+    <string name="ivBookStatusInProgress">Book is in progress</string>
     <string name="ivBookStatusToRead">Le livre est \"à lire\"</string>
     <string name="fabAddBook">Ajouter un nouveau livre</string>
     <string name="ivSeparator1">Séparateur entre la recherche et le tri</string>
