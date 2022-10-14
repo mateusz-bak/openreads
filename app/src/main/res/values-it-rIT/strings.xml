@@ -138,6 +138,7 @@
     <string name="backup_title">Backup</string>
     <string name="backup_summary">Backup o ripristino dei tuoi libri</string>
     <string name="backup_success">Successo! File salvato in: Storage/Android/data/software.mdev.bookstracker/files</string>
+    <string name="backup_export_success">Esportato</string>
     <string name="backup_failure">Creazione backup fallita!</string>
     <string name="backup_import_invalid_file">Importazione non riuscita. Il file scelto non è un backup valido!</string>
     <string name="backup_import_success">Importazione completata!</string>
@@ -172,7 +173,7 @@
     <string name="stats_pages_read">Pagine lette</string>
     <string name="stats_avg_rating">Valutazione media dei libri</string>
     <string name="stats_challenge">Sfida lettura</string>
-    <string name="stats_books_by_months">Leggi i libri per mese finale</string>
+    <string name="stats_books_by_months">Libri letti per mese di completamento</string>
     <string name="need_more_data">Servono più dati per questo</string>
     <string name="days">giorni</string>
     <string name="stats_shortest_book">Libro più corto</string>
@@ -202,7 +203,7 @@
     <string name="month_10_short">Ott</string>
     <string name="month_11_short">Nov</string>
     <string name="month_12_short">Dic</string>
-    <string name="stats_pages_by_months">Leggi pagine per mese di fine</string>
+    <string name="stats_pages_by_months">Pagine lette per mese di completamento</string>
     <string name="export_local_summary">Salva i tuoi libri in un file locale in modo da avere sempre il backup a portata di mano!</string>
     <string name="export_local_title">Crea backup locale</string>
     <string name="insert_book_title">Titolo del libro</string>
@@ -270,6 +271,6 @@
     <string name="menu_start_reading_book">Inizia la lettura</string>
     <string name="menu_finished_reading_book">Lettura Finita</string>
     <string name="add_tag">Aggiungi</string>
-    <string name="join_matrix_summary">Click here to join &appname; community on Matrix.org</string>
-    <string name="join_matrix_title">Join the community</string>
+    <string name="join_matrix_summary">Clicca qui per unirti a &appname; community su Matrix.org</string>
+    <string name="join_matrix_title">Effettua l’iscrizione alla community</string>
 </resources>

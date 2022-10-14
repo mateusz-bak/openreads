@@ -14,8 +14,8 @@
     <string name="ivInProgressIndicator">Tato kniha je rozečtená</string>
     <string name="ivToReadIndicator">Tato kniha je ke čtení</string>
     <!-- In-app strings -->
-    <string name="readFragment">Dočtená</string>
-    <string name="inProgressFragment">Rozečtená</string>
+    <string name="readFragment">Dočtené</string>
+    <string name="inProgressFragment">Rozečtené</string>
     <string name="toReadFragment">Na později</string>
     <string name="btnAdderSaveBook">Uložit</string>
     <string name="finished">Dočtená</string>
@@ -39,7 +39,7 @@
     <string name="tvWelcomeText_1">"vám pomůže udržet si přehled o vašich knihách.\n\nJe to také skvělý nástroj pro snadnou a transparentní organizaci vaší osobní knihovny."</string>
     <string name="tvWelcomeText_2">"Pokročte s čtením díky úžasným statistikám.\n\nVyzvěte se k tomu, aby z vás byl lepší čtenář!"</string>
     <string name="tvWelcomeText_3">"je zcela open source!\n\nTo znamená, že si sami můžete prohlédnout zdrojový kód a přispět k vývoji aplikace.\n\nJako bonus vás tu nečekají žádné reklamy a žádné sledování!"</string>
-    <string name="tvWelcomeText_4">"Nyní si prosím zvolte barvu motivu aplikace.\n\nNičeho se nebojte, motiv můžete později změnit."</string>
+    <string name="tvWelcomeText_4">"Nyní si prosím zvolte barvu motivu aplikace.\n\nNemějte strach, motiv můžete později změnit."</string>
     <string name="tvWelcomeText_5">Užívejte a nepřestávejte číst!</string>
     <string name="tvLooksEmpty">Seznam vašich knih vypadá prázdně, klepněte na tlačítko plus a přidejte vaší první knihu!</string>
     <string name="customization">Přizpůsobení</string>
@@ -48,16 +48,16 @@
     <string name="app_source_code_title">Zdrojový kód</string>
     <string name="app_changelog">Seznam změn</string>
     <string name="app_licence_title">Licence</string>
-    <string name="accent_light_green">Šedý</string>
-    <string name="accent_orange">Oranžový</string>
-    <string name="accent_cyan">Modrozelený</string>
-    <string name="accent_green">Zelený</string>
-    <string name="accent_brown">Hnědý</string>
-    <string name="accent_lime">Karmínový</string>
-    <string name="accent_pink">Růžový</string>
-    <string name="accent_purple">Fialový</string>
-    <string name="accent_teal">Modrý</string>
-    <string name="accent_yellow">Žlutý</string>
+    <string name="accent_light_green">Šedá</string>
+    <string name="accent_orange">Oranžová</string>
+    <string name="accent_cyan">Modrozelená</string>
+    <string name="accent_green">Zelená</string>
+    <string name="accent_brown">Hnědá</string>
+    <string name="accent_lime">Karmínová</string>
+    <string name="accent_pink">Růžová</string>
+    <string name="accent_purple">Fialová</string>
+    <string name="accent_teal">Modrá</string>
+    <string name="accent_yellow">Žlutá</string>
     <string name="accent_name_title">Doplňková barva</string>
     <string name="first_time_toggle_title">Zobrazit uvítací obrazovku</string>
     <string name="first_time_toggle_off">Po restartování aplikace se nezobrazí</string>
@@ -83,7 +83,7 @@
     <string name="statistics_all">Všechny</string>
     <string name="tvSetupSwipeHint_0">Přejetí doleva</string>
     <string name="tvSetupSwipeHint_1">Klepněte na šipku</string>
-    <string name="tvLooksEmptyStatistics">Zatím zde není nic k vidění! Přidejte knížky s datem dočtení a vraťte se později.</string>
+    <string name="tvLooksEmptyStatistics">Zatím zde není nic k vidění! Přidejte knihy s datem dočtení a vraťte se později.</string>
     <string name="btnAdderCancelFinishDate">Zrušit</string>
     <string name="tvChallengeTitle">Výzva</string>
     <string name="tvChallengeEditorTitle">Upravit výzvu</string>
@@ -115,13 +115,13 @@
     <string name="tvAlertTitle">Nápověda pro hledání knih</string>
     <string name="tvAlertContent5">A konečně, kniha kterou hledáte možná není v databáze. Zvolte si proto podobný titul a upravte detaily podle vašich představ.</string>
     <string name="toast_no_connection_to_OL">Chyba: žádné připojení k openlibrary.org</string>
-    <string name="show_ol_alert_off">Nebude zobrazeno</string>
-    <string name="show_ol_alert_on">Zobrazí se</string>
+    <string name="show_ol_alert_off">Nebude zobrazena</string>
+    <string name="show_ol_alert_on">Bude zobrazena</string>
     <string name="show_ol_alert_title">Nápověda pro hledání knih</string>
     <string name="tv_date_started_title">Datum začátku čtení</string>
     <string name="sbWarningStartDateMustBeBeforeFinishDate">Datum dočtení nemůže být nastaven před datem začátku čtení</string>
     <string name="toast_no_results_from_OL">Žádné výsledky</string>
-    <string name="tvSortStartDate">Data začátku čtení</string>
+    <string name="tvSortStartDate">Datum začátku čtení</string>
     <string name="tv_cover_missing">"Chybějící obálka"</string>
     <string name="set">Nastavit</string>
     <string name="unknown_title">Bez názvu</string>
@@ -138,6 +138,7 @@
     <string name="backup_title">Záloha</string>
     <string name="backup_summary">Zálohujte nebo obnovte svoje knihy</string>
     <string name="backup_success">Povedlo se! Soubor byl uložen do: interní úložiště/Android/data/software.mdev.bookstracker/soubory</string>
+    <string name="backup_export_success">Exportováno</string>
     <string name="backup_failure">Vytvoření zálohy se nezdařilo!</string>
     <string name="backup_import_invalid_file">Import se nezdařil. Zvolený soubor není platná záloha &appname;!</string>
     <string name="backup_import_success">Import dokončen!</string>
@@ -179,7 +180,7 @@
     <string name="setup_next">další</string>
     <string name="changelog">Seznam změn</string>
     <string name="app_updated">Vaše aplikace se právě aktualizovala na nejnovější verzi!</string>
-    <string name="update_whats_new">Co je nového?</string>
+    <string name="update_whats_new">Co je nového v</string>
     <string name="update_ok_1">Skvělé! Pokračujte!</string>
     <string name="update_ok_2">Skvělá práce!</string>
     <string name="update_ok_3">Úžasné změny!</string>
@@ -250,7 +251,7 @@
     <string name="show_tags_toggle_title">Zobrazovat štítky knih v seznamech</string>
     <string name="show_tags_toggle_on">Štítky budou zobrazeny</string>
     <string name="show_tags_toggle_off">Štítky nebudou zobrazeny</string>
-    <string name="help_translate_summary">Přispějte přeložením &appname; do vámi z znaných jazyků!</string>
+    <string name="help_translate_summary">Přispějte překladem &appname; do jazyků, které znáte!</string>
     <string name="help_translate_title">Pomozte s překladem</string>
     <string name="notFinishedFragment">Nedočtené knihy</string>
     <string name="notFinished">Nedočtené</string>
@@ -270,6 +271,6 @@
     <string name="menu_start_reading_book">Rozečtené</string>
     <string name="menu_finished_reading_book">Dočtené</string>
     <string name="add_tag">Přidat</string>
-    <string name="join_matrix_summary">Click here to join &appname; community on Matrix.org</string>
-    <string name="join_matrix_title">Join the community</string>
+    <string name="join_matrix_summary">Kliknutím sem se připojíte k &appname; komunitě na Matrix.org</string>
+    <string name="join_matrix_title">Přidat se ke komunitě</string>
 </resources>
