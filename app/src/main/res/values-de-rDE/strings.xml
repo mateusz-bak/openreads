@@ -4,13 +4,13 @@
 ]>
 <resources>
     <!-- Images descriptions -->
-    <string name="fabEditBook">Edit displayed book</string>
+    <string name="fabEditBook">Angezeigtes Buch bearbeiten</string>
     <string name="ivBookStatusRead">Buch gelesen</string>
     <string name="ivBookStatusInProgress">Buch wird derzeit gelesen</string>
     <string name="ivBookStatusToRead">Buch ist \"zum Lesen\"</string>
     <string name="fabAddBook">Neues Buch hinzufügen</string>
     <string name="ivSeparator1">Trennzeichen zwischen Suche und Sortierung</string>
-    <string name="rbRatingIndicator">This book is finished</string>
+    <string name="rbRatingIndicator">Das Buch ist gelesen</string>
     <string name="ivInProgressIndicator">Dieses wird derzeit gelesen</string>
     <string name="ivToReadIndicator">Dieses Buch ist zu lesen</string>
     <!-- In-app strings -->
@@ -18,7 +18,7 @@
     <string name="inProgressFragment">Wird derzeit gelesen</string>
     <string name="toReadFragment">Für später</string>
     <string name="btnAdderSaveBook">Speichern</string>
-    <string name="finished">Finished</string>
+    <string name="finished">Gelesen</string>
     <string name="inProgress">Wird derzeit gelesen</string>
     <string name="toRead">Für später</string>
     <string name="tvBookTitle">Titel eingeben</string>
@@ -138,7 +138,7 @@
     <string name="backup_title">Sicherung</string>
     <string name="backup_summary">Sichern oder Wiederherstellen deiner Bücher</string>
     <string name="backup_success">Erfolgreich! Datei gespeichert auf: Interner Speicher/Android/data/software.mdev.bookstracker/files</string>
-    <string name="backup_export_success">Exported</string>
+    <string name="backup_export_success">Exportiert</string>
     <string name="backup_failure">Sicherung fehlgeschlagen!</string>
     <string name="backup_import_invalid_file">Import fehlgeschlagen. Die gewählte Datei ist kein gültiges &appname; Backup!</string>
     <string name="backup_import_success">Import abgeschlossen!</string>
@@ -271,6 +271,6 @@
     <string name="menu_start_reading_book">Anfangen zu lesen</string>
     <string name="menu_finished_reading_book">Zu Ende gelesen</string>
     <string name="add_tag">Hinzufügen</string>
-    <string name="join_matrix_summary">Click here to join &appname; community on Matrix.org</string>
-    <string name="join_matrix_title">Join the community</string>
+    <string name="join_matrix_summary">Klicke hier, um der &appname; Community auf Matrix.org beizutreten</string>
+    <string name="join_matrix_title">Tritt der Community bei</string>
 </resources>
