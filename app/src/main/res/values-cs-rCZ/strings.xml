@@ -138,7 +138,7 @@
     <string name="backup_title">Záloha</string>
     <string name="backup_summary">Zálohujte nebo obnovte svoje knihy</string>
     <string name="backup_success">Povedlo se! Soubor byl uložen do: interní úložiště/Android/data/software.mdev.bookstracker/soubory</string>
-    <string name="backup_export_success">Exported</string>
+    <string name="backup_export_success">Exportováno</string>
     <string name="backup_failure">Vytvoření zálohy se nezdařilo!</string>
     <string name="backup_import_invalid_file">Import se nezdařil. Zvolený soubor není platná záloha &appname;!</string>
     <string name="backup_import_success">Import dokončen!</string>
@@ -271,6 +271,6 @@
     <string name="menu_start_reading_book">Rozečtené</string>
     <string name="menu_finished_reading_book">Dočtené</string>
     <string name="add_tag">Přidat</string>
-    <string name="join_matrix_summary">Click here to join &appname; community on Matrix.org</string>
-    <string name="join_matrix_title">Join the community</string>
+    <string name="join_matrix_summary">Kliknutím sem se připojíte k &appname; komunitě na Matrix.org</string>
+    <string name="join_matrix_title">Přidat se ke komunitě</string>
 </resources>
