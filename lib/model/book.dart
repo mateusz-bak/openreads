@@ -4,8 +4,8 @@ class Book {
   String? author;
   int? status;
   int? rating;
-  int? startDate;
-  int? finishDate;
+  String? startDate;
+  String? finishDate;
   int? pages;
   int? publicationYear;
   String? isbn;

@@ -38,7 +38,9 @@ class _AddBookState extends State<AddBook> {
 
   final _defaultHeight = 60.0;
   late int _status;
-  late int _rating;
+  int? _rating;
+  DateTime? _startDate;
+  DateTime? _finishDate;
 
   //TODO: implement new book validation
   bool _validate() {
@@ -53,13 +55,17 @@ class _AddBookState extends State<AddBook> {
       title: _titleController.text,
       author: _authorController.text,
       status: _status,
-      rating: _rating,
-      // startDate: _startDate,
-      // finishDate: _finishDate,
-      pages: int.parse(_pagesController.text),
-      publicationYear: int.parse(_pubYearController.text),
-      isbn: _isbnController.text,
-      olid: _olidController.text,
+      rating: (_rating == null) ? 0 : _rating,
+      startDate: _startDate?.toIso8601String(),
+      finishDate: _finishDate?.toIso8601String(),
+      pages: _pagesController.text.isEmpty
+          ? null
+          : int.parse(_pagesController.text),
+      publicationYear: _pubYearController.text.isEmpty
+          ? null
+          : int.parse(_pubYearController.text),
+      isbn: _isbnController.text.isEmpty ? null : _isbnController.text,
+      olid: _olidController.text.isEmpty ? null : _olidController.text,
       // tags: _tags,
       myReview: _myReviewController.text,
     ));
@@ -233,64 +239,54 @@ class _AddBookState extends State<AddBook> {
                 const SizedBox(height: 15.0),
                 Row(
                   children: [
-                    Expanded(
-                      child: Container(
-                        height: _defaultHeight,
-                        padding: const EdgeInsets.symmetric(
-                          horizontal: 8,
-                          vertical: 10,
-                        ),
-                        decoration: BoxDecoration(
-                          color: Colors.white,
-                          borderRadius: BorderRadius.circular(5),
-                        ),
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Row(
-                              children: const [
-                                Icon(Icons.timer_outlined),
-                                SizedBox(width: 10),
-                                Text(
-                                  'Start Date',
-                                  style: TextStyle(fontSize: 14),
-                                ),
-                              ],
-                            ),
-                          ],
-                        ),
-                      ),
+                    SetDateButton(
+                      defaultHeight: _defaultHeight,
+                      icon: Icons.timer_outlined,
+                      text: (_startDate == null)
+                          ? 'Start Date'
+                          : '${_startDate?.day}/${_startDate?.month}/${_startDate?.year}',
+                      onPressed: () async {
+                        FocusManager.instance.primaryFocus?.unfocus();
+
+                        final startDate = await showDatePicker(
+                          context: context,
+                          initialDate: DateTime.now(),
+                          firstDate: DateTime(1970),
+                          lastDate: DateTime.now(),
+                          helpText: 'Select reading start date',
+                        );
+
+                        if (startDate != null) {
+                          setState(() {
+                            _startDate = startDate;
+                          });
+                        }
+                      },
                     ),
                     const SizedBox(width: 10),
-                    Expanded(
-                      child: Container(
-                        height: _defaultHeight,
-                        padding: const EdgeInsets.symmetric(
-                          horizontal: 8,
-                          vertical: 10,
-                        ),
-                        decoration: BoxDecoration(
-                          color: Colors.white,
-                          borderRadius: BorderRadius.circular(5),
-                        ),
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Row(
-                              children: const [
-                                Icon(Icons.timer_off_outlined),
-                                SizedBox(width: 10),
-                                Text(
-                                  'Finish Date',
-                                  style: TextStyle(fontSize: 14),
-                                ),
-                              ],
-                            ),
-                          ],
-                        ),
-                      ),
+                    SetDateButton(
+                      defaultHeight: _defaultHeight,
+                      icon: Icons.timer_off_outlined,
+                      text: (_finishDate == null)
+                          ? 'Finish Date'
+                          : '${_finishDate?.day}/${_finishDate?.month}/${_finishDate?.year}',
+                      onPressed: () async {
+                        FocusManager.instance.primaryFocus?.unfocus();
+
+                        final finishDate = await showDatePicker(
+                          context: context,
+                          initialDate: DateTime.now(),
+                          firstDate: DateTime(1970),
+                          lastDate: DateTime.now(),
+                          helpText: 'Select reading finish date',
+                        );
+
+                        if (finishDate != null) {
+                          setState(() {
+                            _finishDate = finishDate;
+                          });
+                        }
+                      },
                     ),
                   ],
                 ),
