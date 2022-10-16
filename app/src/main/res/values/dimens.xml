@@ -1,6 +1,0 @@
-<resources>
-
-    <!-- Screen resolution related dimensions -->
-    <dimen name="text_input_layout_radius">12dp</dimen>
-
-</resources>
