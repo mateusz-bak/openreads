@@ -88,3 +88,6 @@ lint/tmp/
 lint/outputs/
 lint/tmp/
 # lint/reports/
+
+# Flutter
+.dart_tool/*
