@@ -3,7 +3,7 @@ import 'package:openreads/bloc/book_bloc.dart';
 import 'package:openreads/model/book.dart';
 import 'package:openreads/ui/book_screen/book_screen.dart';
 import 'package:openreads/ui/books_screen/widgets/widgets.dart';
-import 'package:openreads/ui/widgets/widgets.dart';
+import 'package:openreads/ui/add_book_screen/widgets/widgets.dart';
 
 class BooksScreen extends StatelessWidget {
   const BooksScreen({Key? key}) : super(key: key);

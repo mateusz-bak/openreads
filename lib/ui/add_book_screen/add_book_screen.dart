@@ -4,7 +4,7 @@ import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:openreads/bloc/book_bloc.dart';
 import 'package:openreads/model/book.dart';
 import 'package:openreads/ui/books_screen/widgets/widgets.dart';
-import 'package:openreads/ui/widgets/widgets.dart';
+import 'package:openreads/ui/add_book_screen/widgets/widgets.dart';
 
 class AddBook extends StatefulWidget {
   const AddBook({
