@@ -32,4 +32,19 @@ class DatabaseController {
 
     return await db.delete("booksTable", where: 'id = ?', whereArgs: [id]);
   }
+
+  Future<Book?> getBook(int id) async {
+    final db = await dbClient.db;
+
+    var result = await db.query(
+      "booksTable",
+      limit: 1,
+      where: 'id = ?',
+      whereArgs: [id],
+    );
+
+    return result.isNotEmpty
+        ? result.map((item) => Book.fromJSON(item)).toList()[0]
+        : null;
+  }
 }

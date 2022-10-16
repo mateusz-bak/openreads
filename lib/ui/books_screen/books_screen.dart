@@ -1,8 +1,8 @@
-import 'dart:ui';
-
 import 'package:flutter/material.dart';
 import 'package:openreads/bloc/book_bloc.dart';
 import 'package:openreads/model/book.dart';
+import 'package:openreads/ui/book_screen/book_screen.dart';
+import 'package:openreads/ui/books_screen/widgets/widgets.dart';
 import 'package:openreads/ui/widgets/widgets.dart';
 
 class BooksScreen extends StatelessWidget {
@@ -16,20 +16,11 @@ class BooksScreen extends StatelessWidget {
 
     return Scaffold(
       extendBodyBehindAppBar: true,
-      backgroundColor: Colors.white,
+      backgroundColor: Colors.grey.shade50,
       appBar: AppBar(
         title: const Text('Openreads Flutter'),
-        backgroundColor: Colors.transparent,
-        elevation: 0,
-        scrolledUnderElevation: 20,
-        flexibleSpace: ClipRect(
-          child: BackdropFilter(
-            filter: ImageFilter.blur(sigmaX: 10, sigmaY: 10),
-            child: Container(
-              color: Colors.transparent,
-            ),
-          ),
-        ),
+        backgroundColor: Colors.grey.shade50,
+        surfaceTintColor: Colors.grey.shade400,
       ),
       floatingActionButton: Padding(
         padding: const EdgeInsets.only(bottom: 50),
@@ -68,6 +59,17 @@ class BooksScreen extends StatelessWidget {
                               return BookCard(
                                 title: snapshot.data![index].title.toString(),
                                 author: snapshot.data![index].author.toString(),
+                                onPressed: () {
+                                  if (snapshot.data![index].id == null) return;
+
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) => BookScreen(
+                                              id: snapshot.data![index].id!,
+                                            )),
+                                  );
+                                },
                               );
                             },
                           );

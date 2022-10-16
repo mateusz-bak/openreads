@@ -6,9 +6,11 @@ class Repository {
 
   Future getAllBooks() => dbController.getAllBooks();
 
-  Future insertBook(Book todo) => dbController.createBook(todo);
+  Future insertBook(Book book) => dbController.createBook(book);
 
-  Future updateBook(Book todo) => dbController.updateBook(todo);
+  Future updateBook(Book book) => dbController.updateBook(book);
 
   Future deleteBook(int index) => dbController.deleteBook(index);
+
+  Future getBook(int index) => dbController.getBook(index);
 }

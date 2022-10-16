@@ -5,9 +5,11 @@ import 'package:rxdart/rxdart.dart';
 class BookBloc {
   final Repository repository = Repository();
 
-  final PublishSubject<List<Book>> _bookFetcher = PublishSubject<List<Book>>();
+  final PublishSubject<List<Book>> _booksFetcher = PublishSubject<List<Book>>();
+  final PublishSubject<Book> _bookFetcher = PublishSubject<Book>();
 
-  Stream<List<Book>> get allBooks => _bookFetcher.stream;
+  Stream<List<Book>> get allBooks => _booksFetcher.stream;
+  Stream<Book> get book => _bookFetcher.stream;
 
   BookBloc() {
     getAllBooks();
@@ -15,7 +17,7 @@ class BookBloc {
 
   getAllBooks() async {
     List<Book> book = await repository.getAllBooks();
-    _bookFetcher.sink.add(book);
+    _booksFetcher.sink.add(book);
   }
 
   addBook(Book book) async {
@@ -31,6 +33,11 @@ class BookBloc {
   deleteBook(int id) async {
     repository.deleteBook(id);
     getAllBooks();
+  }
+
+  getBook(int id) async {
+    Book book = await repository.getBook(id);
+    _bookFetcher.sink.add(book);
   }
 }
 

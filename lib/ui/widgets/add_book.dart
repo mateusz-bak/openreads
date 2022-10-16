@@ -3,6 +3,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:openreads/bloc/book_bloc.dart';
 import 'package:openreads/model/book.dart';
+import 'package:openreads/ui/books_screen/widgets/widgets.dart';
 import 'package:openreads/ui/widgets/widgets.dart';
 
 class AddBook extends StatefulWidget {
@@ -35,7 +36,7 @@ class _AddBookState extends State<AddBook> {
     Colors.black87,
   ];
 
-  final _defaultHeight = 55.0;
+  final _defaultHeight = 60.0;
   late int _status;
   late int _rating;
 
@@ -120,6 +121,7 @@ class _AddBookState extends State<AddBook> {
           backgroundColor: Colors.grey.shade100,
           surfaceTintColor: Colors.grey.shade400,
           actions: [
+            //TODO: change button color based on validation
             TextButton(
               onPressed: _saveBook,
               child: const Text(
@@ -392,7 +394,7 @@ class _AddBookState extends State<AddBook> {
                       flex: 1,
                       child: MaterialButton(
                         color: Colors.grey,
-                        onPressed: _saveBook,
+                        onPressed: () => Navigator.pop(context),
                         child: const Center(
                           child: Text("Cancel"),
                         ),
