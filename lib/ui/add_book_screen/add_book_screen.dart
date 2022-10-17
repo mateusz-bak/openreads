@@ -28,7 +28,7 @@ class _AddBookState extends State<AddBook> {
   final _olidController = TextEditingController();
   final _myReviewController = TextEditingController();
 
-  final _animDuration = const Duration(milliseconds: 150);
+  final _animDuration = const Duration(milliseconds: 250);
   final _flex = [1, 1, 1, 1];
   final _colors = [
     Colors.black87,
@@ -38,7 +38,7 @@ class _AddBookState extends State<AddBook> {
   ];
 
   final _defaultHeight = 60.0;
-  late int _status;
+  int? _status;
   int? _rating;
   DateTime? _startDate;
   DateTime? _finishDate;
@@ -77,7 +77,7 @@ class _AddBookState extends State<AddBook> {
       myReview: _myReviewController.text,
       cover: cover,
     ));
-    
+
     if (!mounted) return;
     Navigator.pop(context);
   }
@@ -205,59 +205,86 @@ class _AddBookState extends State<AddBook> {
     );
   }
 
-  Row _buildDateRow(BuildContext context) {
-    return Row(
-      children: [
-        SetDateButton(
-          defaultHeight: _defaultHeight,
-          icon: Icons.timer_outlined,
-          text: (_startDate == null)
-              ? 'Start Date'
-              : '${_startDate?.day}/${_startDate?.month}/${_startDate?.year}',
-          onPressed: () async {
-            FocusManager.instance.primaryFocus?.unfocus();
+  Widget _buildDateRow(BuildContext context) {
+    return AnimatedContainer(
+      duration: _animDuration,
+      height: (_status == 2 || _status == null) ? 0 : _defaultHeight,
+      child: Container(
+        clipBehavior: Clip.hardEdge,
+        decoration: const BoxDecoration(),
+        child: Row(
+          children: [
+            AnimatedContainer(
+              duration: _animDuration,
+              width: (_status == 1 || _status == 3)
+                  ? (MediaQuery.of(context).size.width - 20)
+                  : (_status == 2)
+                      ? (MediaQuery.of(context).size.width - 20)
+                      : (MediaQuery.of(context).size.width - 30) / 2,
+              child: SetDateButton(
+                defaultHeight: _defaultHeight,
+                icon: Icons.timer_outlined,
+                text: (_startDate == null)
+                    ? 'Start Date'
+                    : '${_startDate?.day}/${_startDate?.month}/${_startDate?.year}',
+                onPressed: () async {
+                  FocusManager.instance.primaryFocus?.unfocus();
 
-            final startDate = await showDatePicker(
-              context: context,
-              initialDate: DateTime.now(),
-              firstDate: DateTime(1970),
-              lastDate: DateTime.now(),
-              helpText: 'Select reading start date',
-            );
+                  final startDate = await showDatePicker(
+                    context: context,
+                    initialDate: DateTime.now(),
+                    firstDate: DateTime(1970),
+                    lastDate: DateTime.now(),
+                    helpText: 'Select reading start date',
+                  );
 
-            if (startDate != null) {
-              setState(() {
-                _startDate = startDate;
-              });
-            }
-          },
+                  if (startDate != null) {
+                    setState(() {
+                      _startDate = startDate;
+                    });
+                  }
+                },
+              ),
+            ),
+            AnimatedContainer(
+              duration: _animDuration,
+              width: (_status == 0) ? 10 : 0,
+            ),
+            AnimatedContainer(
+              clipBehavior: Clip.hardEdge,
+              decoration: const BoxDecoration(),
+              duration: _animDuration,
+              width: (_status == 0)
+                  ? (MediaQuery.of(context).size.width - 30) / 2
+                  : 0,
+              child: SetDateButton(
+                defaultHeight: _defaultHeight,
+                icon: Icons.timer_off_outlined,
+                text: (_finishDate == null)
+                    ? 'Finish Date'
+                    : '${_finishDate?.day}/${_finishDate?.month}/${_finishDate?.year}',
+                onPressed: () async {
+                  FocusManager.instance.primaryFocus?.unfocus();
+
+                  final finishDate = await showDatePicker(
+                    context: context,
+                    initialDate: DateTime.now(),
+                    firstDate: DateTime(1970),
+                    lastDate: DateTime.now(),
+                    helpText: 'Select reading finish date',
+                  );
+
+                  if (finishDate != null) {
+                    setState(() {
+                      _finishDate = finishDate;
+                    });
+                  }
+                },
+              ),
+            ),
+          ],
         ),
-        const SizedBox(width: 10),
-        SetDateButton(
-          defaultHeight: _defaultHeight,
-          icon: Icons.timer_off_outlined,
-          text: (_finishDate == null)
-              ? 'Finish Date'
-              : '${_finishDate?.day}/${_finishDate?.month}/${_finishDate?.year}',
-          onPressed: () async {
-            FocusManager.instance.primaryFocus?.unfocus();
-
-            final finishDate = await showDatePicker(
-              context: context,
-              initialDate: DateTime.now(),
-              firstDate: DateTime(1970),
-              lastDate: DateTime.now(),
-              helpText: 'Select reading finish date',
-            );
-
-            if (finishDate != null) {
-              setState(() {
-                _finishDate = finishDate;
-              });
-            }
-          },
-        ),
-      ],
+      ),
     );
   }
 
@@ -326,36 +353,46 @@ class _AddBookState extends State<AddBook> {
                 const SizedBox(height: 15.0),
                 _buildStatusRow(widths),
                 const SizedBox(height: 15.0),
-                Container(
-                  width: double.infinity,
-                  height: _defaultHeight,
-                  decoration: BoxDecoration(
-                    color: Colors.white,
-                    borderRadius: BorderRadius.circular(5),
-                  ),
-                  child: Center(
-                    child: RatingBar.builder(
-                      initialRating: 0,
-                      allowHalfRating: true,
-                      glow: false,
-                      unratedColor: Colors.black12,
-                      glowRadius: 1,
-                      itemSize: 42,
-                      itemPadding: const EdgeInsets.all(5),
-                      wrapAlignment: WrapAlignment.center,
-                      itemBuilder: (_, __) => Icon(
-                        Icons.star,
-                        color: Colors.amber.shade300,
+                AnimatedContainer(
+                  duration: _animDuration,
+                  height: (_status == 0) ? _defaultHeight : 0,
+                  child: Container(
+                    width: double.infinity,
+                    clipBehavior: Clip.hardEdge,
+                    decoration: BoxDecoration(
+                      color: Colors.white,
+                      borderRadius: BorderRadius.circular(5),
+                    ),
+                    child: Center(
+                      child: RatingBar.builder(
+                        initialRating: 0,
+                        allowHalfRating: true,
+                        glow: false,
+                        unratedColor: Colors.black12,
+                        glowRadius: 1,
+                        itemSize: 42,
+                        itemPadding: const EdgeInsets.all(5),
+                        wrapAlignment: WrapAlignment.center,
+                        itemBuilder: (_, __) => Icon(
+                          Icons.star,
+                          color: Colors.amber.shade300,
+                        ),
+                        onRatingUpdate: (rating) {
+                          _rating = (rating * 10).toInt();
+                        },
                       ),
-                      onRatingUpdate: (rating) {
-                        _rating = (rating * 10).toInt();
-                      },
                     ),
                   ),
                 ),
-                const SizedBox(height: 15.0),
+                AnimatedContainer(
+                  duration: _animDuration,
+                  height: (_status == 0) ? 15 : 0,
+                ),
                 _buildDateRow(context),
-                const SizedBox(height: 15.0),
+                AnimatedContainer(
+                  duration: _animDuration,
+                  height: (_status == 2 || _status == null) ? 0 : 15,
+                ),
                 Row(
                   children: [
                     Expanded(
