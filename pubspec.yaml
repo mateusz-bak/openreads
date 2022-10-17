@@ -18,6 +18,8 @@ dependencies:
   rxdart: ^0.27.5
   path: ^1.8.2
   flutter_displaymode: ^0.4.0
+  image_picker: ^0.8.6
+  image_cropper: ^3.0.0
 
 dev_dependencies:
   flutter_test:

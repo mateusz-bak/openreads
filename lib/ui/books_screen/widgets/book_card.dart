@@ -1,16 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
+import 'package:openreads/model/book.dart';
 
 class BookCard extends StatelessWidget {
   const BookCard({
     Key? key,
-    required this.title,
-    required this.author,
+    required this.book,
     required this.onPressed,
   }) : super(key: key);
 
-  final String title;
-  final String author;
+  final Book book;
   final Function() onPressed;
 
   @override
@@ -27,10 +26,17 @@ class BookCard extends StatelessWidget {
           ),
           child: Row(
             children: [
-              const SizedBox(
-                height: 80,
+              SizedBox(
                 width: 60,
-                child: Placeholder(),
+                child: (book.cover != null)
+                    ? ClipRRect(
+                        borderRadius: BorderRadius.circular(5),
+                        child: Image.memory(
+                          book.cover!,
+                          fit: BoxFit.cover,
+                        ),
+                      )
+                    : const SizedBox(),
               ),
               const SizedBox(width: 20),
               Expanded(
@@ -39,7 +45,7 @@ class BookCard extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Text(
-                      title,
+                      '${book.title}',
                       softWrap: true,
                       overflow: TextOverflow.clip,
                       style: const TextStyle(
@@ -48,7 +54,7 @@ class BookCard extends StatelessWidget {
                       ),
                     ),
                     Text(
-                      author,
+                      '${book.author}',
                       softWrap: true,
                       overflow: TextOverflow.clip,
                       style: const TextStyle(

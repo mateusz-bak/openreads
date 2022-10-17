@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
+import 'package:image_cropper/image_cropper.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:openreads/bloc/book_bloc.dart';
 import 'package:openreads/model/book.dart';
-import 'package:openreads/ui/books_screen/widgets/widgets.dart';
 import 'package:openreads/ui/add_book_screen/widgets/widgets.dart';
 
 class AddBook extends StatefulWidget {
@@ -42,13 +43,19 @@ class _AddBookState extends State<AddBook> {
   DateTime? _startDate;
   DateTime? _finishDate;
 
+  XFile? photoXFile;
+  CroppedFile? croppedPhoto;
+  CroppedFile? croppedPhotoPreview;
+
   //TODO: implement new book validation
   bool _validate() {
     return true;
   }
 
-  void _saveBook() {
+  void _saveBook() async {
     if (!_validate()) return;
+
+    final cover = await croppedPhoto!.readAsBytes();
 
     //TODO: finish all parameters
     bookBloc.addBook(Book(
@@ -68,9 +75,49 @@ class _AddBookState extends State<AddBook> {
       olid: _olidController.text.isEmpty ? null : _olidController.text,
       // tags: _tags,
       myReview: _myReviewController.text,
+      cover: cover,
     ));
-
+    
+    if (!mounted) return;
     Navigator.pop(context);
+  }
+
+  void _loadCover() async {
+    FocusManager.instance.primaryFocus?.unfocus();
+    photoXFile = await ImagePicker().pickImage(
+      source: ImageSource.gallery,
+    );
+
+    if (photoXFile == null) return;
+
+    croppedPhoto = await ImageCropper().cropImage(
+      maxWidth: 1024,
+      maxHeight: 1024,
+      sourcePath: photoXFile!.path,
+      aspectRatio: const CropAspectRatio(ratioX: 2, ratioY: 3),
+      compressQuality: 90,
+      uiSettings: [
+        AndroidUiSettings(
+          toolbarTitle: 'Edit cover',
+          toolbarColor: Colors.black,
+          statusBarColor: Colors.black,
+          toolbarWidgetColor: Colors.white,
+          backgroundColor: Colors.black87,
+          cropGridColor: Colors.black87,
+          activeControlsWidgetColor: Colors.teal,
+          cropFrameColor: Colors.black87,
+          initAspectRatio: CropAspectRatioPreset.ratio3x2,
+          lockAspectRatio: false,
+          hideBottomControls: false,
+        ),
+      ],
+    );
+
+    if (croppedPhoto == null) return;
+
+    setState(() {
+      croppedPhotoPreview = croppedPhoto;
+    });
   }
 
   void _changeStatus(int position) {
@@ -108,6 +155,112 @@ class _AddBookState extends State<AddBook> {
     super.dispose();
   }
 
+  Row _buildStatusRow(List<double> widths) {
+    return Row(
+      children: [
+        AnimatedStatusButton(
+            duration: _animDuration,
+            width: widths[0],
+            height: _defaultHeight,
+            icon: Icons.done,
+            text: 'Done',
+            color: _colors[0],
+            onPressed: () {
+              _changeStatus(0);
+            }),
+        const SizedBox(width: 10),
+        AnimatedStatusButton(
+            duration: _animDuration,
+            width: widths[1],
+            height: _defaultHeight,
+            icon: Icons.autorenew,
+            text: 'Reading',
+            color: _colors[1],
+            onPressed: () {
+              _changeStatus(1);
+            }),
+        const SizedBox(width: 10),
+        AnimatedStatusButton(
+            duration: _animDuration,
+            width: widths[2],
+            height: _defaultHeight,
+            icon: Icons.timelapse,
+            text: 'For later',
+            color: _colors[2],
+            onPressed: () {
+              _changeStatus(2);
+            }),
+        const SizedBox(width: 10),
+        AnimatedStatusButton(
+            duration: _animDuration,
+            width: widths[3],
+            height: _defaultHeight,
+            icon: Icons.not_interested,
+            text: 'Unfinished',
+            color: _colors[3],
+            onPressed: () {
+              _changeStatus(3);
+            }),
+      ],
+    );
+  }
+
+  Row _buildDateRow(BuildContext context) {
+    return Row(
+      children: [
+        SetDateButton(
+          defaultHeight: _defaultHeight,
+          icon: Icons.timer_outlined,
+          text: (_startDate == null)
+              ? 'Start Date'
+              : '${_startDate?.day}/${_startDate?.month}/${_startDate?.year}',
+          onPressed: () async {
+            FocusManager.instance.primaryFocus?.unfocus();
+
+            final startDate = await showDatePicker(
+              context: context,
+              initialDate: DateTime.now(),
+              firstDate: DateTime(1970),
+              lastDate: DateTime.now(),
+              helpText: 'Select reading start date',
+            );
+
+            if (startDate != null) {
+              setState(() {
+                _startDate = startDate;
+              });
+            }
+          },
+        ),
+        const SizedBox(width: 10),
+        SetDateButton(
+          defaultHeight: _defaultHeight,
+          icon: Icons.timer_off_outlined,
+          text: (_finishDate == null)
+              ? 'Finish Date'
+              : '${_finishDate?.day}/${_finishDate?.month}/${_finishDate?.year}',
+          onPressed: () async {
+            FocusManager.instance.primaryFocus?.unfocus();
+
+            final finishDate = await showDatePicker(
+              context: context,
+              initialDate: DateTime.now(),
+              firstDate: DateTime(1970),
+              lastDate: DateTime.now(),
+              helpText: 'Select reading finish date',
+            );
+
+            if (finishDate != null) {
+              setState(() {
+                _finishDate = finishDate;
+              });
+            }
+          },
+        ),
+      ],
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     double width = MediaQuery.of(context).size.width - 50;
@@ -142,6 +295,16 @@ class _AddBookState extends State<AddBook> {
             padding: const EdgeInsets.all(10.0),
             child: Column(
               children: <Widget>[
+                (croppedPhotoPreview == null)
+                    ? CoverPlaceholder(
+                        defaultHeight: _defaultHeight,
+                        onPressed: _loadCover,
+                      )
+                    : CoverView(
+                        croppedPhotoPreview: croppedPhotoPreview,
+                        onPressed: _loadCover,
+                      ),
+                const SizedBox(height: 15.0),
                 BookTextField(
                   controller: _titleController,
                   hint: 'Enter a title',
@@ -161,53 +324,7 @@ class _AddBookState extends State<AddBook> {
                   maxLength: 255,
                 ),
                 const SizedBox(height: 15.0),
-                Row(
-                  children: [
-                    AnimatedStatusButton(
-                        duration: _animDuration,
-                        width: widths[0],
-                        height: _defaultHeight,
-                        icon: Icons.done,
-                        text: 'Done',
-                        color: _colors[0],
-                        onPressed: () {
-                          _changeStatus(0);
-                        }),
-                    const SizedBox(width: 10),
-                    AnimatedStatusButton(
-                        duration: _animDuration,
-                        width: widths[1],
-                        height: _defaultHeight,
-                        icon: Icons.autorenew,
-                        text: 'Reading',
-                        color: _colors[1],
-                        onPressed: () {
-                          _changeStatus(1);
-                        }),
-                    const SizedBox(width: 10),
-                    AnimatedStatusButton(
-                        duration: _animDuration,
-                        width: widths[2],
-                        height: _defaultHeight,
-                        icon: Icons.timelapse,
-                        text: 'For later',
-                        color: _colors[2],
-                        onPressed: () {
-                          _changeStatus(2);
-                        }),
-                    const SizedBox(width: 10),
-                    AnimatedStatusButton(
-                        duration: _animDuration,
-                        width: widths[3],
-                        height: _defaultHeight,
-                        icon: Icons.not_interested,
-                        text: 'Unfinished',
-                        color: _colors[3],
-                        onPressed: () {
-                          _changeStatus(3);
-                        }),
-                  ],
-                ),
+                _buildStatusRow(widths),
                 const SizedBox(height: 15.0),
                 Container(
                   width: double.infinity,
@@ -237,59 +354,7 @@ class _AddBookState extends State<AddBook> {
                   ),
                 ),
                 const SizedBox(height: 15.0),
-                Row(
-                  children: [
-                    SetDateButton(
-                      defaultHeight: _defaultHeight,
-                      icon: Icons.timer_outlined,
-                      text: (_startDate == null)
-                          ? 'Start Date'
-                          : '${_startDate?.day}/${_startDate?.month}/${_startDate?.year}',
-                      onPressed: () async {
-                        FocusManager.instance.primaryFocus?.unfocus();
-
-                        final startDate = await showDatePicker(
-                          context: context,
-                          initialDate: DateTime.now(),
-                          firstDate: DateTime(1970),
-                          lastDate: DateTime.now(),
-                          helpText: 'Select reading start date',
-                        );
-
-                        if (startDate != null) {
-                          setState(() {
-                            _startDate = startDate;
-                          });
-                        }
-                      },
-                    ),
-                    const SizedBox(width: 10),
-                    SetDateButton(
-                      defaultHeight: _defaultHeight,
-                      icon: Icons.timer_off_outlined,
-                      text: (_finishDate == null)
-                          ? 'Finish Date'
-                          : '${_finishDate?.day}/${_finishDate?.month}/${_finishDate?.year}',
-                      onPressed: () async {
-                        FocusManager.instance.primaryFocus?.unfocus();
-
-                        final finishDate = await showDatePicker(
-                          context: context,
-                          initialDate: DateTime.now(),
-                          firstDate: DateTime(1970),
-                          lastDate: DateTime.now(),
-                          helpText: 'Select reading finish date',
-                        );
-
-                        if (finishDate != null) {
-                          setState(() {
-                            _finishDate = finishDate;
-                          });
-                        }
-                      },
-                    ),
-                  ],
-                ),
+                _buildDateRow(context),
                 const SizedBox(height: 15.0),
                 Row(
                   children: [
@@ -376,12 +441,6 @@ class _AddBookState extends State<AddBook> {
                   maxLength: 5000,
                   hideCounter: false,
                   maxLines: 15,
-                ),
-                const SizedBox(height: 15.0),
-                SizedBox(
-                  height: (MediaQuery.of(context).size.width - 20) / 3 * 3 / 2,
-                  width: (MediaQuery.of(context).size.width - 20) / 3,
-                  child: const Placeholder(),
                 ),
                 const SizedBox(height: 25.0),
                 Row(

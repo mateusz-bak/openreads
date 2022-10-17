@@ -1,3 +1,5 @@
+import 'package:flutter/foundation.dart';
+
 class Book {
   int? id;
   String? title;
@@ -12,6 +14,7 @@ class Book {
   String? olid;
   String? tags;
   String? myReview;
+  final Uint8List? cover;
 
   Book({
     this.id,
@@ -27,6 +30,7 @@ class Book {
     this.olid,
     this.tags,
     this.myReview,
+    this.cover,
   });
 
   factory Book.fromJSON(Map<String, dynamic> json) {
@@ -44,6 +48,7 @@ class Book {
       olid: json['olid'],
       tags: json['tags'],
       myReview: json['my_review'],
+      cover: json['cover'],
     );
   }
 
@@ -62,6 +67,7 @@ class Book {
       'olid': olid,
       'tags': tags,
       'my_review': myReview,
+      'cover': cover,
     };
   }
 }

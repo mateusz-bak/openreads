@@ -42,7 +42,8 @@ class DatabaseProvider {
             "isbn TEXT, "
             "olid TEXT, "
             "tags TEXT, "
-            "my_review TEXT "
+            "my_review TEXT, "
+            "cover BLOB "
             ")");
       },
       onUpgrade: (Database db, int oldVersion, int newVersion) {

@@ -57,8 +57,7 @@ class BooksScreen extends StatelessWidget {
                             itemCount: snapshot.data!.length,
                             itemBuilder: (context, index) {
                               return BookCard(
-                                title: snapshot.data![index].title.toString(),
-                                author: snapshot.data![index].author.toString(),
+                                book: snapshot.data![index],
                                 onPressed: () {
                                   if (snapshot.data![index].id == null) return;
 

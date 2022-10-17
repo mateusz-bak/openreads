@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:openreads/bloc/book_bloc.dart';
 import 'package:openreads/model/book.dart';
+import 'package:openreads/ui/add_book_screen/widgets/widgets.dart';
 import 'package:openreads/ui/book_screen/widgets/widgets.dart';
 
 class BookScreen extends StatelessWidget {
@@ -84,24 +85,16 @@ class BookScreen extends StatelessWidget {
                               20,
                         ),
                         Padding(
-                          padding: const EdgeInsets.all(10),
+                          padding: const EdgeInsets.fromLTRB(10, 0, 10, 10),
                           child: Center(
-                            child: Container(
-                              width: (MediaQuery.of(context).size.width) / 2.3,
-                              height: (MediaQuery.of(context).size.width) /
-                                  2.3 *
-                                  3 /
-                                  2,
-                              decoration: BoxDecoration(
-                                color: Colors.greenAccent,
-                                borderRadius: BorderRadius.circular(5),
-                              ),
+                            child: CoverView(
+                              onPressed: () {},
+                              photoBytes: snapshot.data!.cover,
                             ),
                           ),
                         ),
                       ],
                     ),
-                    const SizedBox(height: 20),
                     BookTitleDetail(
                       title: snapshot.data!.title.toString(),
                       author: snapshot.data!.author.toString(),
