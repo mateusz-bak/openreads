@@ -3,7 +3,7 @@
     <!ENTITY appname "Openreads">
     ]>
 <resources>
-    <string name="app_version" translatable="false">1.17.0</string>
+    <string name="app_version" translatable="false">1.17.1</string>
     <!-- Images descriptions -->
     <string name="fabEditBook">Edit displayed book</string>
     <string name="ivBookStatusRead">Book is finished</string>

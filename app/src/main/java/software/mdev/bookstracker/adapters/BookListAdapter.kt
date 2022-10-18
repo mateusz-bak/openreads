@@ -171,7 +171,7 @@ class BookListAdapter(
             Constants.SORT_ORDER_TITLE_ASC
         )) {
             Constants.SORT_ORDER_TITLE_ASC -> viewModel.getSortedBooksByTitleAsc(status)
-                .observe(booksFragment.requireActivity(), Observer { some_books ->
+                .observe(booksFragment?.requireActivity(), Observer { some_books ->
                     if (booksFragment != null && adapter != null && some_books != null) {
                         var booksFilteredForFav = filterBooksForFav(booksFragment.requireActivity() as ListActivity, some_books)
                         functions.filterBooksList(booksFragment.requireActivity() as ListActivity, adapter, booksFilteredForFav, itemView?.rvBooks, scroll)
@@ -179,92 +179,92 @@ class BookListAdapter(
                 })
 
             Constants.SORT_ORDER_TITLE_DESC -> viewModel.getSortedBooksByTitleDesc(status)
-                .observe(booksFragment.requireActivity(), Observer { some_books ->
+                .observe(booksFragment?.requireActivity(), Observer { some_books ->
                     if (booksFragment != null && adapter != null && some_books != null) {
                         var booksFilteredForFav = filterBooksForFav(booksFragment.requireActivity() as ListActivity, some_books)
                         functions.filterBooksList(booksFragment.requireActivity() as ListActivity, adapter, booksFilteredForFav, itemView?.rvBooks, scroll)
                     }
-            })
+                })
 
             Constants.SORT_ORDER_AUTHOR_ASC -> viewModel.getSortedBooksByAuthorAsc(status)
-                .observe(booksFragment.requireActivity(), Observer { some_books ->
+                .observe(booksFragment?.requireActivity(), Observer { some_books ->
                     if (booksFragment != null && adapter != null && some_books != null) {
                         var booksFilteredForFav = filterBooksForFav(booksFragment.requireActivity() as ListActivity, some_books)
                         functions.filterBooksList(booksFragment.requireActivity() as ListActivity, adapter, booksFilteredForFav, itemView?.rvBooks, scroll)
                     }
-            })
+                })
 
             Constants.SORT_ORDER_AUTHOR_DESC -> viewModel.getSortedBooksByAuthorDesc(status)
-                .observe(booksFragment.requireActivity(), Observer { some_books ->
+                .observe(booksFragment?.requireActivity(), Observer { some_books ->
                     if (booksFragment != null && adapter != null && some_books != null) {
                         var booksFilteredForFav = filterBooksForFav(booksFragment.requireActivity() as ListActivity, some_books)
                         functions.filterBooksList(booksFragment.requireActivity() as ListActivity, adapter, booksFilteredForFav, itemView?.rvBooks, scroll)
                     }
-            })
+                })
 
             Constants.SORT_ORDER_RATING_ASC -> viewModel.getSortedBooksByRatingAsc(status)
-                .observe(booksFragment.requireActivity(), Observer { some_books ->
+                .observe(booksFragment?.requireActivity(), Observer { some_books ->
                     if (booksFragment != null && adapter != null && some_books != null) {
                         var booksFilteredForFav = filterBooksForFav(booksFragment.requireActivity() as ListActivity, some_books)
                         functions.filterBooksList(booksFragment.requireActivity() as ListActivity, adapter, booksFilteredForFav, itemView?.rvBooks, scroll)
                     }
-            })
+                })
 
             Constants.SORT_ORDER_RATING_DESC -> viewModel.getSortedBooksByRatingDesc(status)
-                .observe(booksFragment.requireActivity(), Observer { some_books ->
+                .observe(booksFragment?.requireActivity(), Observer { some_books ->
                     if (booksFragment != null && adapter != null && some_books != null) {
                         var booksFilteredForFav = filterBooksForFav(booksFragment.requireActivity() as ListActivity, some_books)
                         functions.filterBooksList(booksFragment.requireActivity() as ListActivity, adapter, booksFilteredForFav, itemView?.rvBooks, scroll)
                     }
-            })
+                })
 
             Constants.SORT_ORDER_PAGES_ASC -> viewModel.getSortedBooksByPagesAsc(status)
-                .observe(booksFragment.requireActivity(), Observer { some_books ->
+                .observe(booksFragment?.requireActivity(), Observer { some_books ->
                     if (booksFragment != null && adapter != null && some_books != null) {
                         var booksFilteredForFav = filterBooksForFav(booksFragment.requireActivity() as ListActivity, some_books)
                         functions.filterBooksList(booksFragment.requireActivity() as ListActivity, adapter, booksFilteredForFav, itemView?.rvBooks, scroll)
                     }
-            })
+                })
 
             Constants.SORT_ORDER_PAGES_DESC -> viewModel.getSortedBooksByPagesDesc(status)
-                .observe(booksFragment.requireActivity(), Observer { some_books ->
+                .observe(booksFragment?.requireActivity(), Observer { some_books ->
                     if (booksFragment != null && adapter != null && some_books != null) {
                         var booksFilteredForFav = filterBooksForFav(booksFragment.requireActivity() as ListActivity, some_books)
                         functions.filterBooksList(booksFragment.requireActivity() as ListActivity, adapter, booksFilteredForFav, itemView?.rvBooks, scroll)
                     }
-            })
+                })
 
             Constants.SORT_ORDER_START_DATE_ASC -> viewModel.getSortedBooksByStartDateAsc(status)
-                .observe(booksFragment.requireActivity(), Observer { some_books ->
+                .observe(booksFragment?.requireActivity(), Observer { some_books ->
                     if (booksFragment != null && adapter != null && some_books != null) {
                         var booksFilteredForFav = filterBooksForFav(booksFragment.requireActivity() as ListActivity, some_books)
                         functions.filterBooksList(booksFragment.requireActivity() as ListActivity, adapter, booksFilteredForFav, itemView?.rvBooks, scroll)
                     }
-            })
+                })
 
             Constants.SORT_ORDER_START_DATE_DESC -> viewModel.getSortedBooksByStartDateDesc(status)
-                .observe(booksFragment.requireActivity(), Observer { some_books ->
+                .observe(booksFragment?.requireActivity(), Observer { some_books ->
                     if (booksFragment != null && adapter != null && some_books != null) {
                         var booksFilteredForFav = filterBooksForFav(booksFragment.requireActivity() as ListActivity, some_books)
                         functions.filterBooksList(booksFragment.requireActivity() as ListActivity, adapter, booksFilteredForFav, itemView?.rvBooks, scroll)
                     }
-            })
+                })
 
             Constants.SORT_ORDER_FINISH_DATE_ASC -> viewModel.getSortedBooksByFinishDateAsc(status)
-                .observe(booksFragment.requireActivity(), Observer { some_books ->
+                .observe(booksFragment?.requireActivity(), Observer { some_books ->
                     if (booksFragment != null && adapter != null && some_books != null) {
                         var booksFilteredForFav = filterBooksForFav(booksFragment.requireActivity() as ListActivity, some_books)
                         functions.filterBooksList(booksFragment.requireActivity() as ListActivity, adapter, booksFilteredForFav, itemView?.rvBooks, scroll)
                     }
-            })
+                })
 
             Constants.SORT_ORDER_FINISH_DATE_DESC -> viewModel.getSortedBooksByFinishDateDesc(status)
-                .observe(booksFragment.requireActivity(), Observer { some_books ->
+                .observe(booksFragment?.requireActivity(), Observer { some_books ->
                     if (booksFragment != null && adapter != null && some_books != null) {
                         var booksFilteredForFav = filterBooksForFav(booksFragment.requireActivity() as ListActivity, some_books)
                         functions.filterBooksList(booksFragment.requireActivity() as ListActivity, adapter, booksFilteredForFav, itemView?.rvBooks, scroll)
                     }
-            })
+                })
         }
     }
 
