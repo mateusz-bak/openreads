@@ -1043,21 +1043,6 @@ class ListActivity : AppCompatActivity() {
             }
         }
 
-    val selectExportPath =
-        registerForActivityResult(ExportHelper()) { uri ->
-            uri?.let {
-                try {
-                    CoroutineScope(Dispatchers.IO).launch {
-                        Backup().exportAndShare(listActivity, false, it)
-                    }
-                } catch (e: Exception) {
-                    showSnackbar(e.toString())
-                    e.printStackTrace()
-                }
-            }
-        }
-
-
     override fun onRequestPermissionsResult(
         requestCode: Int,
         permissions: Array<out String>,

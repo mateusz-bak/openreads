@@ -6,14 +6,12 @@ import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.graphics.drawable.BitmapDrawable
 import android.os.Bundle
-import android.view.KeyEvent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.animation.AnimationUtils
 import android.view.inputmethod.InputMethodManager
 import android.widget.*
-import androidx.activity.addCallback
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.constraintlayout.widget.ConstraintLayout
@@ -72,7 +70,7 @@ class AddEditBookDialog : DialogFragment() {
     private var bookStartDateMs: Long? = null
     private var animateRating = false
     private var whatIsClicked = Constants.BOOK_STATUS_NOTHING
-    private lateinit var takePhoto: ActivityResultLauncher<Void?>
+    private lateinit var takePhoto: ActivityResultLauncher<Void>
     private lateinit var choosePhoto: ActivityResultLauncher<String>
     private lateinit var barcodeLauncher: ActivityResultLauncher<ScanOptions>
 
@@ -102,6 +100,22 @@ class AddEditBookDialog : DialogFragment() {
         return inflater.inflate(R.layout.dialog_add_edit_book, container, false)
     }
 
+    override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
+        return object : Dialog(requireActivity(), theme) {
+            override fun onBackPressed() {
+                if (dpBookStartDate.visibility == View.VISIBLE ||
+                    dpBookFinishDate.visibility == View.VISIBLE
+                ) {
+                    startDatePickerVis(false)
+                    finishDatePickerVis(false)
+                    svEditor.visibility = View.VISIBLE
+                } else
+                    dismiss()
+            }
+        }
+    }
+
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         setToolbar()
 
@@ -116,26 +130,6 @@ class AddEditBookDialog : DialogFragment() {
         }
 
         super.onViewCreated(view, savedInstanceState)
-
-        requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner) {
-            if (dpBookStartDate.visibility == View.VISIBLE ||
-                dpBookFinishDate.visibility == View.VISIBLE
-            ) {
-                startDatePickerVis(false)
-                finishDatePickerVis(false)
-                svEditor.visibility = View.VISIBLE
-            } else
-                dismiss()
-        }
-
-        dialog?.setOnKeyListener { _, keyCode, event ->
-            if (keyCode == KeyEvent.KEYCODE_BACK && event.action == KeyEvent.ACTION_UP) {
-                requireActivity().onBackPressed()
-                return@setOnKeyListener true
-            }
-            false
-        }
-
         viewModel = (activity as ListActivity).booksViewModel
         listActivity = activity as ListActivity
 
@@ -155,8 +149,7 @@ class AddEditBookDialog : DialogFragment() {
             languageRepository
         )
 
-        book = correctOLID(args.book)
-
+        book = args.book
         val bookSource = args.bookSource
 
         val viewModel = ViewModelProviders.of(this, booksViewModelProviderFactory)
@@ -420,14 +413,6 @@ class AddEditBookDialog : DialogFragment() {
         tilBookISBN.setEndIconOnClickListener {
             openCodeScanner()
         }
-    }
-
-    private fun correctOLID(book: Book): Book {
-        return if (book.bookOLID.contains("/works/")) {
-            book.bookOLID = book.bookOLID.replace("/works/", "")
-            book
-        } else
-            book
     }
 
     override fun onStart() {

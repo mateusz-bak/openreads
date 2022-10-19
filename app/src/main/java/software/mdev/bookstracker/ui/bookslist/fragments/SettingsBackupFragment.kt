@@ -36,7 +36,7 @@ class SettingsBackupFragment : PreferenceFragmentCompat(), OnSharedPreferenceCha
 
         if (preferenceExportLocal != null) {
             preferenceExportLocal.onPreferenceClickListener = Preference.OnPreferenceClickListener {
-                Backup().runExporter(activity as ListActivity)
+                Backup().exportAndShare(activity as ListActivity, false)
                 true
             }
         }
