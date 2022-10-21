@@ -5,12 +5,12 @@
 <resources>
     <!-- Images descriptions -->
     <string name="fabEditBook">Редагувати показану книгу</string>
-    <string name="ivBookStatusRead">Book is finished</string>
+    <string name="ivBookStatusRead">Книга завершена</string>
     <string name="ivBookStatusInProgress">Книга в процесі</string>
     <string name="ivBookStatusToRead">Книга \"для читання\"</string>
     <string name="fabAddBook">Додати нову книгу</string>
     <string name="ivSeparator1">Роздільник між пошуком та сортуванням</string>
-    <string name="rbRatingIndicator">This book is finished</string>
+    <string name="rbRatingIndicator">Ця книга завершена</string>
     <string name="ivInProgressIndicator">Ця книга в процесі</string>
     <string name="ivToReadIndicator">Ця книжка для читання</string>
     <!-- In-app strings -->
