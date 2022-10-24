@@ -153,7 +153,7 @@
     <string name="btnAddScan">Barcode scannen</string>
     <string name="tbScannerTip">Scanne einen Barcode</string>
     <string name="book_list_title">Startseite</string>
-    <string name="finished_books">Bücher beendet</string>
+    <string name="finished_books">Bücher gelesen</string>
     <string name="in_progress_books">Bücher in Bearbeitung</string>
     <string name="to_read_books">Bücher für später</string>
     <string name="ask_for_rating_dialog_title">Gefällt dir &appname;?</string>
