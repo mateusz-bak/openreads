@@ -104,7 +104,8 @@ class _AddBookState extends State<AddBook> {
           toolbarWidgetColor: Colors.white,
           backgroundColor: Colors.black87,
           cropGridColor: Colors.black87,
-          activeControlsWidgetColor: Colors.teal,
+          activeControlsWidgetColor:
+              (mounted) ? Theme.of(context).primaryColor : Colors.teal,
           cropFrameColor: Colors.black87,
           initAspectRatio: CropAspectRatioPreset.ratio3x2,
           lockAspectRatio: false,
@@ -132,7 +133,7 @@ class _AddBookState extends State<AddBook> {
       if (position == index) {
         setState(() {
           _flex[index] = 2;
-          _colors[index] = Colors.teal;
+          _colors[index] = Theme.of(context).primaryColor;
         });
       } else {
         setState(() {
@@ -301,15 +302,16 @@ class _AddBookState extends State<AddBook> {
     return Padding(
       padding: EdgeInsets.only(top: widget.topPadding),
       child: Scaffold(
-        backgroundColor: Colors.grey.shade100,
+        backgroundColor: Theme.of(context).scaffoldBackgroundColor,
         appBar: AppBar(
           title: const Text('Add new book'),
-          backgroundColor: Colors.grey.shade100,
-          surfaceTintColor: Colors.grey.shade400,
+          backgroundColor: Theme.of(context).scaffoldBackgroundColor,
+          surfaceTintColor: Theme.of(context).scaffoldBackgroundColor,
+          // surfaceTintColor: Colors.grey.shade400,
           actions: [
             //TODO: change button color based on validation
             TextButton(
-              onPressed: _saveBook,
+              onPressed: (widget.book == null) ? _saveBook : _updateBook,
               child: const Text(
                 'Save',
                 style: TextStyle(fontSize: 18),
@@ -360,7 +362,7 @@ class _AddBookState extends State<AddBook> {
                     width: double.infinity,
                     clipBehavior: Clip.hardEdge,
                     decoration: BoxDecoration(
-                      color: Colors.white,
+                      color: Theme.of(context).backgroundColor,
                       borderRadius: BorderRadius.circular(5),
                     ),
                     child: Center(
@@ -375,7 +377,7 @@ class _AddBookState extends State<AddBook> {
                         wrapAlignment: WrapAlignment.center,
                         itemBuilder: (_, __) => Icon(
                           Icons.star,
-                          color: Colors.amber.shade300,
+                          color: Theme.of(context).primaryColor,
                         ),
                         onRatingUpdate: (rating) {
                           _rating = (rating * 10).toInt();
@@ -449,7 +451,7 @@ class _AddBookState extends State<AddBook> {
                     vertical: 10,
                   ),
                   decoration: BoxDecoration(
-                    color: Colors.white,
+                    color: Theme.of(context).backgroundColor,
                     borderRadius: BorderRadius.circular(5),
                   ),
                   child: Column(
@@ -496,8 +498,7 @@ class _AddBookState extends State<AddBook> {
                     Expanded(
                       flex: 2,
                       child: MaterialButton(
-                        color: Colors.teal,
-                        onPressed: _saveBook,
+                        color: Theme.of(context).primaryColor,
                         child: const Center(
                           child: Text("Add"),
                         ),

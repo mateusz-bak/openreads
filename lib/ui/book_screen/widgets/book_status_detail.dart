@@ -18,18 +18,19 @@ class BookStatusDetail extends StatelessWidget {
     return Container(
       padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 5),
       decoration: BoxDecoration(
-        color: Colors.white,
+        color: Theme.of(context).backgroundColor,
         borderRadius: BorderRadius.circular(5),
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
+          const SizedBox(height: 5),
           Row(
             children: [
               Expanded(
                 child: Container(
                   decoration: BoxDecoration(
-                    color: Colors.teal.shade400,
+                    color: Theme.of(context).primaryColor,
                     borderRadius: BorderRadius.circular(5),
                   ),
                   child: Padding(
@@ -45,16 +46,17 @@ class BookStatusDetail extends StatelessWidget {
                           Icon(
                             statusIcon,
                             size: 32,
-                            color: Colors.white,
+                            color: Theme.of(context).backgroundColor,
                           ),
                           const SizedBox(width: 15),
                           Text(
                             statusText,
                             maxLines: 1,
-                            style: const TextStyle(
-                                fontSize: 16,
-                                fontWeight: FontWeight.bold,
-                                color: Colors.white),
+                            style: TextStyle(
+                              fontSize: 16,
+                              fontWeight: FontWeight.bold,
+                              color: Theme.of(context).backgroundColor,
+                            ),
                           ),
                         ],
                       ),
@@ -69,8 +71,9 @@ class BookStatusDetail extends StatelessWidget {
           const Text(
             '12 feb 2022 - 03 mar 2022',
             style: TextStyle(
-              fontSize: 16,
+              fontSize: 14,
               fontWeight: FontWeight.normal,
+              color: Colors.black54,
             ),
           ),
           const SizedBox(height: 15),
@@ -90,7 +93,7 @@ class BookStatusDetail extends StatelessWidget {
             ignoreGestures: true,
             itemBuilder: (context, _) => Icon(
               Icons.star_rounded,
-              color: Colors.teal.shade400,
+              color: Theme.of(context).primaryColor,
             ),
             onRatingUpdate: (_) {},
           ),

@@ -17,7 +17,7 @@ class BookTitleDetail extends StatelessWidget {
     return Container(
       padding: const EdgeInsets.symmetric(vertical: 18, horizontal: 5),
       decoration: BoxDecoration(
-        color: Colors.white,
+        color: Theme.of(context).backgroundColor,
         borderRadius: BorderRadius.circular(5),
       ),
       child: Column(
@@ -33,17 +33,19 @@ class BookTitleDetail extends StatelessWidget {
           Text(
             author,
             style: const TextStyle(
-                fontSize: 18,
-                fontWeight: FontWeight.normal,
-                color: Colors.black54),
+              fontSize: 18,
+              fontWeight: FontWeight.normal,
+              color: Colors.black54,
+            ),
           ),
           const SizedBox(height: 5),
           Text(
             publicationYear,
             style: const TextStyle(
-                fontSize: 14,
-                fontWeight: FontWeight.bold,
-                color: Colors.black54),
+              fontSize: 14,
+              fontWeight: FontWeight.bold,
+              color: Colors.black54,
+            ),
           ),
         ],
       ),

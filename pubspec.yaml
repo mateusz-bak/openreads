@@ -20,6 +20,8 @@ dependencies:
   flutter_displaymode: ^0.4.0
   image_picker: ^0.8.6
   image_cropper: ^3.0.0
+  flutter_bloc: ^8.1.1
+  colours: ^0.0.2
 
 dev_dependencies:
   flutter_test:

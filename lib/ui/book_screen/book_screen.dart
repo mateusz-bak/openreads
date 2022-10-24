@@ -45,10 +45,11 @@ class BookScreen extends StatelessWidget {
     bookBloc.getBook(id);
 
     return Scaffold(
-      backgroundColor: Colors.grey.shade50,
+      backgroundColor: Theme.of(context).scaffoldBackgroundColor,
       appBar: AppBar(
-        backgroundColor: Colors.grey.shade50,
-        surfaceTintColor: Colors.grey.shade400,
+        backgroundColor: Theme.of(context).scaffoldBackgroundColor,
+        surfaceTintColor: Theme.of(context).scaffoldBackgroundColor,
+        // surfaceTintColor: Colors.grey.shade400,
         actions: [
           IconButton(
             onPressed: () async {
@@ -76,7 +77,7 @@ class BookScreen extends StatelessWidget {
                     Stack(
                       children: [
                         Container(
-                          color: Colors.white,
+                          color: Theme.of(context).backgroundColor,
                           width: MediaQuery.of(context).size.width - 20,
                           height: (MediaQuery.of(context).size.width /
                                   2.3 *

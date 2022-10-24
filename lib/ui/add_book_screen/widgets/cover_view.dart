@@ -23,7 +23,7 @@ class CoverView extends StatelessWidget {
       child: Stack(
         children: [
           Container(
-            color: Colors.white,
+            color: Theme.of(context).backgroundColor,
             width: MediaQuery.of(context).size.width - 20,
             height: MediaQuery.of(context).size.height / 3,
           ),

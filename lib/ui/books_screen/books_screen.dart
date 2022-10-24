@@ -16,16 +16,17 @@ class BooksScreen extends StatelessWidget {
 
     return Scaffold(
       extendBodyBehindAppBar: true,
-      backgroundColor: Colors.grey.shade50,
+      backgroundColor: Theme.of(context).scaffoldBackgroundColor,
       appBar: AppBar(
         title: const Text('Openreads Flutter'),
-        backgroundColor: Colors.grey.shade50,
-        surfaceTintColor: Colors.grey.shade400,
+        backgroundColor: Theme.of(context).scaffoldBackgroundColor,
+        // surfaceTintColor: Colors.grey.shade400,
+        surfaceTintColor: Theme.of(context).scaffoldBackgroundColor,
       ),
       floatingActionButton: Padding(
         padding: const EdgeInsets.only(bottom: 50),
         child: FloatingActionButton(
-          child: const Icon(Icons.add),
+          backgroundColor: Theme.of(context).primaryColor,
           onPressed: () {
             showModalBottomSheet(
                 context: context,
@@ -36,6 +37,7 @@ class BooksScreen extends StatelessWidget {
                   );
                 });
           },
+          child: const Icon(Icons.add),
         ),
       ),
       body: DefaultTabController(
@@ -104,13 +106,13 @@ class BooksScreen extends StatelessWidget {
                 padding: const EdgeInsets.symmetric(horizontal: 10),
                 child: Container(
                   decoration: BoxDecoration(
-                    color: Colors.white,
+                    color: Theme.of(context).backgroundColor,
                     borderRadius: BorderRadius.circular(10),
                   ),
-                  child: const TabBar(
-                    unselectedLabelColor: Colors.black,
-                    labelColor: Colors.teal,
-                    tabs: [
+                  child: TabBar(
+                    labelColor: Theme.of(context).primaryColor,
+                    indicatorColor: Theme.of(context).primaryColor,
+                    tabs: const [
                       Tab(
                         child: Text('Finished'),
                       ),
