@@ -12,10 +12,12 @@ class AddBook extends StatefulWidget {
     Key? key,
     required this.topPadding,
     this.book,
+    this.previousContext,
   }) : super(key: key);
 
   final double topPadding;
   final Book? book;
+  final BuildContext? previousContext;
 
   @override
   State<AddBook> createState() => _AddBookState();
@@ -49,6 +51,8 @@ class _AddBookState extends State<AddBook> {
   CroppedFile? croppedPhoto;
   CroppedFile? croppedPhotoPreview;
 
+  Uint8List? coverForEdit;
+
   void _prefillBookDetails() {
     _titleController.text = widget.book?.title ?? '';
     _authorController.text = widget.book?.author ?? '';
@@ -58,8 +62,7 @@ class _AddBookState extends State<AddBook> {
     _olidController.text = widget.book?.olid ?? '';
     _myReviewController.text = widget.book?.myReview ?? '';
 
-    // setState(() {
-    // _status = widget.book?.status;
+    coverForEdit = widget.book?.cover;
 
     if (widget.book?.status != null) {
       _changeStatus(widget.book!.status!);
@@ -96,7 +99,7 @@ class _AddBookState extends State<AddBook> {
     final cover = await croppedPhoto!.readAsBytes();
 
     //TODO: finish all parameters
-    bookBloc.addBook(Book(
+    bookCubit.addBook(Book(
       title: _titleController.text,
       author: _authorController.text,
       status: _status,
@@ -123,10 +126,10 @@ class _AddBookState extends State<AddBook> {
   void _updateBook() async {
     if (!_validate()) return;
 
-    // final cover = await croppedPhoto!.readAsBytes();
+    final cover = await croppedPhoto!.readAsBytes();
 
     //TODO: finish all parameters
-    bookBloc.updateBook(Book(
+    bookCubit.updateBook(Book(
       id: widget.book?.id,
       title: _titleController.text,
       author: _authorController.text,
@@ -144,7 +147,7 @@ class _AddBookState extends State<AddBook> {
       olid: _olidController.text.isEmpty ? null : _olidController.text,
       // tags: _tags,
       myReview: _myReviewController.text,
-      // cover: cover,
+      cover: cover,
     ));
 
     if (!mounted) return;
@@ -186,6 +189,7 @@ class _AddBookState extends State<AddBook> {
     if (croppedPhoto == null) return;
 
     setState(() {
+      coverForEdit = null;
       croppedPhotoPreview = croppedPhoto;
     });
   }
@@ -393,14 +397,19 @@ class _AddBookState extends State<AddBook> {
             padding: const EdgeInsets.all(10.0),
             child: Column(
               children: <Widget>[
-                (croppedPhotoPreview == null)
-                    ? CoverPlaceholder(
-                        defaultHeight: _defaultHeight,
+                (coverForEdit != null)
+                    ? CoverView(
+                        photoBytes: coverForEdit,
                         onPressed: _loadCover,
                       )
-                    : CoverView(
+                    : (croppedPhotoPreview != null)
+                        ? CoverView(
                         croppedPhotoPreview: croppedPhotoPreview,
                         onPressed: _loadCover,
+                          )
+                        : CoverPlaceholder(
+                            defaultHeight: _defaultHeight,
+                            onPressed: _loadCover,
                       ),
                 const SizedBox(height: 15.0),
                 BookTextField(

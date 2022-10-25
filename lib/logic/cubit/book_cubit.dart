@@ -29,6 +29,7 @@ class BookCubit extends Cubit {
 
   updateBook(Book book) async {
     repository.updateBook(book);
+    getBook(book.id!);
     getAllBooks();
   }
 
@@ -43,4 +44,4 @@ class BookCubit extends Cubit {
   }
 }
 
-final bookBloc = BookCubit();
+final bookCubit = BookCubit();

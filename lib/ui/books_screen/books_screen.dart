@@ -12,7 +12,7 @@ class BooksScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     final statusBarHeight = MediaQuery.of(context).padding.top;
 
-    bookBloc.getAllBooks();
+    bookCubit.getAllBooks();
 
     return Scaffold(
       extendBodyBehindAppBar: true,
@@ -48,7 +48,7 @@ class BooksScreen extends StatelessWidget {
                 child: TabBarView(
                   children: [
                     StreamBuilder<List<Book>>(
-                      stream: bookBloc.allBooks,
+                      stream: bookCubit.allBooks,
                       builder: (context, AsyncSnapshot<List<Book>> snapshot) {
                         if (snapshot.hasData) {
                           if (snapshot.data == null || snapshot.data!.isEmpty) {

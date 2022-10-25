@@ -8,9 +8,11 @@ class BookScreen extends StatelessWidget {
   const BookScreen({
     Key? key,
     required this.id,
+    required this.heroTag,
   }) : super(key: key);
 
   final int id;
+  final String heroTag;
 
   IconData? _decideStatusIcon(int? status) {
     if (status == 0) {
@@ -44,7 +46,7 @@ class BookScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     final statusBarHeight = MediaQuery.of(context).padding.top;
 
-    bookBloc.getBook(id);
+    bookCubit.getBook(id);
 
     return Scaffold(
       backgroundColor: Theme.of(context).scaffoldBackgroundColor,
@@ -54,7 +56,7 @@ class BookScreen extends StatelessWidget {
         // surfaceTintColor: Colors.grey.shade400,
         actions: [
           StreamBuilder<Book>(
-              stream: bookBloc.book,
+              stream: bookCubit.book,
               builder: (context, AsyncSnapshot<Book> snapshot) {
                 if (snapshot.hasData) {
                   if (snapshot.data == null) {
@@ -70,6 +72,7 @@ class BookScreen extends StatelessWidget {
                           return AddBook(
                             topPadding: statusBarHeight,
                             book: snapshot.data,
+                            previousContext: context,
                           );
                         });
                   },
@@ -79,7 +82,7 @@ class BookScreen extends StatelessWidget {
           IconButton(
             onPressed: () async {
               final navigator = Navigator.of(context);
-              await bookBloc.deleteBook(id);
+              await bookCubit.deleteBook(id);
               navigator.pop();
             },
             icon: const Icon(Icons.delete),
@@ -88,7 +91,7 @@ class BookScreen extends StatelessWidget {
       ),
       body: SingleChildScrollView(
         child: StreamBuilder<Book>(
-          stream: bookBloc.book,
+          stream: bookCubit.book,
           builder: (context, AsyncSnapshot<Book> snapshot) {
             if (snapshot.hasData) {
               if (snapshot.data == null) {
@@ -115,6 +118,7 @@ class BookScreen extends StatelessWidget {
                           child: Center(
                             child: CoverView(
                               onPressed: () {},
+                              heroTag: heroTag,
                               photoBytes: snapshot.data!.cover,
                             ),
                           ),
