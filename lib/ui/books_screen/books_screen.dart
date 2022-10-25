@@ -34,6 +34,7 @@ class BooksScreen extends StatelessWidget {
                 builder: (context) {
                   return AddBook(
                     topPadding: statusBarHeight,
+                    previousContext: context,
                   );
                 });
           },
@@ -60,6 +61,7 @@ class BooksScreen extends StatelessWidget {
                             itemBuilder: (context, index) {
                               return BookCard(
                                 book: snapshot.data![index],
+                                heroTag: "tag_$index",
                                 onPressed: () {
                                   if (snapshot.data![index].id == null) return;
 
@@ -68,6 +70,7 @@ class BooksScreen extends StatelessWidget {
                                     MaterialPageRoute(
                                         builder: (context) => BookScreen(
                                               id: snapshot.data![index].id!,
+                                              heroTag: "tag_$index",
                                             )),
                                   );
                                 },

@@ -9,12 +9,14 @@ class CoverView extends StatelessWidget {
     Key? key,
     this.croppedPhotoPreview,
     this.photoBytes,
-    required this.onPressed,
+    this.heroTag,
+    this.onPressed,
   }) : super(key: key);
 
   final CroppedFile? croppedPhotoPreview;
   final Uint8List? photoBytes;
-  final Function() onPressed;
+  final Function()? onPressed;
+  final String? heroTag;
 
   @override
   Widget build(BuildContext context) {
@@ -23,8 +25,11 @@ class CoverView extends StatelessWidget {
       child: Stack(
         children: [
           Container(
-            color: Theme.of(context).backgroundColor,
-            width: MediaQuery.of(context).size.width - 20,
+            decoration: BoxDecoration(
+              color: Theme.of(context).backgroundColor,
+              borderRadius: BorderRadius.circular(5),
+            ),
+            width: MediaQuery.of(context).size.width,
             height: MediaQuery.of(context).size.height / 3,
           ),
           Padding(
@@ -44,9 +49,12 @@ class CoverView extends StatelessWidget {
                           fit: BoxFit.fill,
                         )
                       : (photoBytes != null)
-                          ? Image.memory(
-                              photoBytes!,
-                              fit: BoxFit.fill,
+                          ? Hero(
+                              tag: heroTag ?? "",
+                              child: Image.memory(
+                                photoBytes!,
+                                fit: BoxFit.fill,
+                              ),
                             )
                           : const SizedBox(),
                 ),

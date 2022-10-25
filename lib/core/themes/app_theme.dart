@@ -19,7 +19,7 @@ class AppTheme {
   static final lightTheme = ThemeData(
     brightness: Brightness.light,
     primaryColor: lightPrimaryColor,
-    backgroundColor: Colors.white,
+    backgroundColor: Colors.white38,
     scaffoldBackgroundColor: lightBackgroundColor,
     visualDensity: VisualDensity.adaptivePlatformDensity,
     useMaterial3: true,
@@ -29,7 +29,7 @@ class AppTheme {
   static final darkTheme = ThemeData(
     brightness: Brightness.dark,
     primaryColor: darkPrimaryColor,
-    backgroundColor: Colors.black54,
+    backgroundColor: Colors.black38,
     scaffoldBackgroundColor: darkBackgroundColor,
     visualDensity: VisualDensity.adaptivePlatformDensity,
     useMaterial3: true,
@@ -62,4 +62,7 @@ extension ThemeExtras on ThemeData {
   Color get secondaryTextColor => brightness == Brightness.light
       ? AppTheme.lightSecondaryText
       : AppTheme.darkSecondaryText;
+
+  // Color get onPrimary =>
+  //     brightness == Brightness.light ? Colors.white : Colors.black;
 }

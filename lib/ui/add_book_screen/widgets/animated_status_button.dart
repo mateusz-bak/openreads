@@ -10,6 +10,7 @@ class AnimatedStatusButton extends StatelessWidget {
     required this.icon,
     required this.text,
     required this.color,
+    required this.backgroundColor,
   })  : _duration = duration,
         super(key: key);
 
@@ -20,6 +21,7 @@ class AnimatedStatusButton extends StatelessWidget {
   final IconData icon;
   final String text;
   final Color color;
+  final Color backgroundColor;
 
   @override
   Widget build(BuildContext context) {
@@ -36,7 +38,7 @@ class AnimatedStatusButton extends StatelessWidget {
         child: Ink(
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(5),
-            color: Theme.of(context).backgroundColor,
+            color: backgroundColor,
           ),
           child: Padding(
             padding: const EdgeInsets.all(4.0),

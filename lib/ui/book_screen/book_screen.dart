@@ -104,20 +104,11 @@ class BookScreen extends StatelessWidget {
                   children: [
                     Stack(
                       children: [
-                        Container(
-                          color: Theme.of(context).backgroundColor,
-                          width: MediaQuery.of(context).size.width - 20,
-                          height: (MediaQuery.of(context).size.width /
-                                  2.3 *
-                                  3 /
-                                  2) +
-                              20,
-                        ),
                         Padding(
-                          padding: const EdgeInsets.fromLTRB(10, 0, 10, 10),
+                          padding: const EdgeInsets.only(bottom: 10),
                           child: Center(
                             child: CoverView(
-                              onPressed: () {},
+                              onPressed: null,
                               heroTag: heroTag,
                               photoBytes: snapshot.data!.cover,
                             ),
