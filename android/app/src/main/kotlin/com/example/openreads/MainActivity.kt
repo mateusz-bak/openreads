@@ -1,4 +1,4 @@
-package com.example.openreads
+package dev.flutter.openreads
 
 import io.flutter.embedding.android.FlutterActivity
 
