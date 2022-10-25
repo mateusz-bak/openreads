@@ -63,8 +63,6 @@ class _OpenreadsAppState extends State<OpenreadsApp>
       title: 'Openreads Flutter',
       theme: AppTheme.lightTheme,
       darkTheme: AppTheme.darkTheme,
-      themeMode:
-          context.select((ThemeCubit themeCubit) => themeCubit.state.themeMode),
       home: const BooksScreen(),
     );
   }

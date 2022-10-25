@@ -6,9 +6,13 @@ import 'package:flutter/services.dart';
 class AppTheme {
   static Color lightBackgroundColor = const Color(0xfff2f2f2);
   static Color lightPrimaryColor = const Color(0xff344e41);
+  static Color lightMainText = Colors.black;
+  static Color lightSecondaryText = Colors.black54;
 
   static Color darkBackgroundColor = const Color.fromARGB(255, 22, 22, 22);
   static Color darkPrimaryColor = const Color(0xff3a5a40);
+  static Color darkMainText = Colors.white;
+  static Color darkSecondaryText = Colors.white70;
 
   const AppTheme._();
 
@@ -48,4 +52,14 @@ class AppTheme {
       systemNavigationBarDividerColor: Colors.transparent,
     ));
   }
+}
+
+extension ThemeExtras on ThemeData {
+  Color get mainTextColor => brightness == Brightness.light
+      ? AppTheme.lightMainText
+      : AppTheme.darkMainText;
+
+  Color get secondaryTextColor => brightness == Brightness.light
+      ? AppTheme.lightSecondaryText
+      : AppTheme.darkSecondaryText;
 }

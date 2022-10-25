@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:openreads/core/themes/app_theme.dart';
 
 class BookTitleDetail extends StatelessWidget {
   const BookTitleDetail({
@@ -25,26 +26,27 @@ class BookTitleDetail extends StatelessWidget {
         children: [
           Text(
             title,
-            style: const TextStyle(
+            style: TextStyle(
               fontSize: 20,
               fontWeight: FontWeight.bold,
+              color: Theme.of(context).mainTextColor,
             ),
           ),
           Text(
             author,
-            style: const TextStyle(
+            style: TextStyle(
               fontSize: 18,
               fontWeight: FontWeight.normal,
-              color: Colors.black54,
+              color: Theme.of(context).secondaryTextColor,
             ),
           ),
           const SizedBox(height: 5),
           Text(
             publicationYear,
-            style: const TextStyle(
+            style: TextStyle(
               fontSize: 14,
               fontWeight: FontWeight.bold,
-              color: Colors.black54,
+              color: Theme.of(context).secondaryTextColor,
             ),
           ),
         ],
