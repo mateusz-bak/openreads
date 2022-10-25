@@ -3,7 +3,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:image_cropper/image_cropper.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:openreads/bloc/book_bloc.dart';
+import 'package:openreads/logic/cubit/book_cubit.dart';
 import 'package:openreads/model/book.dart';
 import 'package:openreads/ui/add_book_screen/widgets/widgets.dart';
 
@@ -11,22 +11,24 @@ class AddBook extends StatefulWidget {
   const AddBook({
     Key? key,
     required this.topPadding,
+    this.book,
   }) : super(key: key);
 
   final double topPadding;
+  final Book? book;
 
   @override
   State<AddBook> createState() => _AddBookState();
 }
 
 class _AddBookState extends State<AddBook> {
-  final _titleController = TextEditingController();
-  final _authorController = TextEditingController();
-  final _pagesController = TextEditingController();
-  final _pubYearController = TextEditingController();
-  final _isbnController = TextEditingController();
-  final _olidController = TextEditingController();
-  final _myReviewController = TextEditingController();
+  late TextEditingController _titleController,
+      _authorController,
+      _pagesController,
+      _pubYearController,
+      _isbnController,
+      _olidController,
+      _myReviewController;
 
   final _animDuration = const Duration(milliseconds: 250);
   final _flex = [1, 1, 1, 1];
@@ -46,6 +48,42 @@ class _AddBookState extends State<AddBook> {
   XFile? photoXFile;
   CroppedFile? croppedPhoto;
   CroppedFile? croppedPhotoPreview;
+
+  void _prefillBookDetails() {
+    _titleController.text = widget.book?.title ?? '';
+    _authorController.text = widget.book?.author ?? '';
+    _pagesController.text = widget.book?.pages.toString() ?? '';
+    _pubYearController.text = widget.book?.publicationYear.toString() ?? '';
+    _isbnController.text = widget.book?.isbn ?? '';
+    _olidController.text = widget.book?.olid ?? '';
+    _myReviewController.text = widget.book?.myReview ?? '';
+
+    // setState(() {
+    // _status = widget.book?.status;
+
+    if (widget.book?.status != null) {
+      _changeStatus(widget.book!.status!);
+    }
+    // });
+    _rating = widget.book?.rating;
+  }
+
+  @override
+  void initState() {
+    super.initState();
+
+    _titleController = TextEditingController();
+    _authorController = TextEditingController();
+    _pagesController = TextEditingController();
+    _pubYearController = TextEditingController();
+    _isbnController = TextEditingController();
+    _olidController = TextEditingController();
+    _myReviewController = TextEditingController();
+
+    if (widget.book != null) {
+      _prefillBookDetails();
+    }
+  }
 
   //TODO: implement new book validation
   bool _validate() {
@@ -76,6 +114,37 @@ class _AddBookState extends State<AddBook> {
       // tags: _tags,
       myReview: _myReviewController.text,
       cover: cover,
+    ));
+
+    if (!mounted) return;
+    Navigator.pop(context);
+  }
+
+  void _updateBook() async {
+    if (!_validate()) return;
+
+    // final cover = await croppedPhoto!.readAsBytes();
+
+    //TODO: finish all parameters
+    bookBloc.updateBook(Book(
+      id: widget.book?.id,
+      title: _titleController.text,
+      author: _authorController.text,
+      status: _status,
+      rating: (_rating == null) ? 0 : _rating,
+      startDate: _startDate?.toIso8601String(),
+      finishDate: _finishDate?.toIso8601String(),
+      pages: _pagesController.text.isEmpty
+          ? null
+          : int.parse(_pagesController.text),
+      publicationYear: _pubYearController.text.isEmpty
+          ? null
+          : int.parse(_pubYearController.text),
+      isbn: _isbnController.text.isEmpty ? null : _isbnController.text,
+      olid: _olidController.text.isEmpty ? null : _olidController.text,
+      // tags: _tags,
+      myReview: _myReviewController.text,
+      // cover: cover,
     ));
 
     if (!mounted) return;
@@ -499,6 +568,8 @@ class _AddBookState extends State<AddBook> {
                       flex: 2,
                       child: MaterialButton(
                         color: Theme.of(context).primaryColor,
+                        onPressed:
+                            (widget.book == null) ? _saveBook : _updateBook,
                         child: const Center(
                           child: Text("Add"),
                         ),

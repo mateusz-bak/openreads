@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:openreads/bloc/book_bloc.dart';
+import 'package:openreads/logic/cubit/book_cubit.dart';
 import 'package:openreads/model/book.dart';
 import 'package:openreads/ui/add_book_screen/widgets/widgets.dart';
 import 'package:openreads/ui/book_screen/widgets/widgets.dart';
@@ -42,6 +42,8 @@ class BookScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final statusBarHeight = MediaQuery.of(context).padding.top;
+
     bookBloc.getBook(id);
 
     return Scaffold(
@@ -51,6 +53,29 @@ class BookScreen extends StatelessWidget {
         surfaceTintColor: Theme.of(context).scaffoldBackgroundColor,
         // surfaceTintColor: Colors.grey.shade400,
         actions: [
+          StreamBuilder<Book>(
+              stream: bookBloc.book,
+              builder: (context, AsyncSnapshot<Book> snapshot) {
+                if (snapshot.hasData) {
+                  if (snapshot.data == null) {
+                    return const Center(child: Text('Error getting the book'));
+                  }
+                }
+                return IconButton(
+                  onPressed: () {
+                    showModalBottomSheet(
+                        context: context,
+                        isScrollControlled: true,
+                        builder: (context) {
+                          return AddBook(
+                            topPadding: statusBarHeight,
+                            book: snapshot.data,
+                          );
+                        });
+                  },
+                  icon: const Icon(Icons.edit),
+                );
+              }),
           IconButton(
             onPressed: () async {
               final navigator = Navigator.of(context);

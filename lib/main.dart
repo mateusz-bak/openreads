@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_displaymode/flutter_displaymode.dart';
+import 'package:openreads/logic/cubit/book_cubit.dart';
 import 'package:openreads/core/themes/app_theme.dart';
 import 'package:openreads/logic/cubit/theme_cubit.dart';
 import 'package:openreads/ui/books_screen/books_screen.dart';
@@ -19,6 +20,9 @@ class App extends StatelessWidget {
   Widget build(BuildContext context) {
     return MultiBlocProvider(
       providers: [
+        BlocProvider<BookCubit>(
+          create: (context) => BookCubit(),
+        ),
         BlocProvider<ThemeCubit>(
           create: (context) => ThemeCubit(),
         ),

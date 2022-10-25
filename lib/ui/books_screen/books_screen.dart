@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:openreads/bloc/book_bloc.dart';
+import 'package:openreads/logic/cubit/book_cubit.dart';
 import 'package:openreads/model/book.dart';
 import 'package:openreads/ui/book_screen/book_screen.dart';
 import 'package:openreads/ui/books_screen/widgets/widgets.dart';
