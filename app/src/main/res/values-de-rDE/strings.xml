@@ -38,7 +38,7 @@
     <string name="tvWelcomeText_0">Willkommen zu</string>
     <string name="tvWelcomeText_1">"hilft dir, den Überblick über deine Bücher zu behalten.\n\nEs ist auch ein großartiges Werkzeug, um deine persönliche Bibliothek auf einfache und transparente Weise zu organisieren."</string>
     <string name="tvWelcomeText_2">"Mache Fortschritte beim Lesen dank toller Statistiken.\n\nFordere dich sich selbst heraus, um ein besserer Leser zu werden!"</string>
-    <string name="tvWelcomeText_3">"ist komplett Open Source!\n\nDas bedeutet, dass du kannst den Code der App selbst überprüfen und zu seiner Entwicklung beitragen.\n\nAls Bonus ist keine Werbung und keinerlei Tracking enthalten!"</string>
+    <string name="tvWelcomeText_3">"ist komplett Open Source!\n\nDas bedeutet, dass du den Code der App selbst überprüfen und zu seiner Entwicklung beitragen kannst.\n\nAls Bonus ist keine Werbung und keinerlei Tracking enthalten!"</string>
     <string name="tvWelcomeText_4">"Wähle nun eine Designfarbe für die App.\n\nKeine Sorge, du kannst sie später ändern."</string>
     <string name="tvWelcomeText_5">Genieße und lies weiter!</string>
     <string name="tvLooksEmpty">Deine Buchliste sieht im Moment leer aus, klicke auf den Plus-Button unten und fange an, neue Bücher hinzuzufügen!</string>
