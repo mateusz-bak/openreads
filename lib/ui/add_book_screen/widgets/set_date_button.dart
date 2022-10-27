@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:openreads/core/themes/app_theme.dart';
 
 class SetDateButton extends StatelessWidget {
   const SetDateButton({
@@ -38,14 +39,18 @@ class SetDateButton extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.start,
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
-                  Icon(icon),
+                  Icon(
+                    icon,
+                    color: Theme.of(context).secondaryTextColor,
+                  ),
                   const SizedBox(width: 15),
                   FittedBox(
                     child: Text(
                       text,
                       maxLines: 1,
-                      style: const TextStyle(
+                      style: TextStyle(
                         fontSize: 14,
+                        color: Theme.of(context).secondaryTextColor,
                       ),
                     ),
                   ),

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:openreads/core/themes/app_theme.dart';
 
 class CoverPlaceholder extends StatelessWidget {
   const CoverPlaceholder({
@@ -30,15 +31,20 @@ class CoverPlaceholder extends StatelessWidget {
           ),
           child: Center(
             child: Row(
-              children: const [
-                SizedBox(width: 8),
+              children: [
+                const SizedBox(width: 8),
                 Icon(
                   Icons.image,
                   size: 24,
-                  color: Colors.black54,
+                  color: Theme.of(context).secondaryTextColor,
                 ),
-                SizedBox(width: 15),
-                Text('Click to add a cover'),
+                const SizedBox(width: 15),
+                Text(
+                  'Click to add a cover',
+                  style: TextStyle(
+                    color: Theme.of(context).secondaryTextColor,
+                  ),
+                ),
               ],
             ),
           ),

@@ -4,3 +4,6 @@ export 'set_date_button.dart';
 export 'book_text_field.dart';
 export 'cover_view.dart';
 export 'cover_placeholder.dart';
+export 'book_status_row.dart';
+export 'date_row.dart';
+export 'book_rating_bar.dart';

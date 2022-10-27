@@ -5,11 +5,15 @@ import 'package:flutter/services.dart';
 
 class AppTheme {
   static Color lightBackgroundColor = const Color(0xfff2f2f2);
+  static Color lightSecondaryBackgroundColor =
+      const Color.fromARGB(255, 211, 211, 211);
   static Color lightPrimaryColor = const Color(0xff344e41);
   static Color lightMainText = Colors.black;
   static Color lightSecondaryText = Colors.black54;
 
   static Color darkBackgroundColor = const Color.fromARGB(255, 22, 22, 22);
+  static Color darkSecondaryBackgroundColor =
+      const Color.fromARGB(255, 63, 63, 63);
   static Color darkPrimaryColor = const Color(0xff3a5a40);
   static Color darkMainText = Colors.white;
   static Color darkSecondaryText = Colors.white70;
@@ -63,6 +67,10 @@ extension ThemeExtras on ThemeData {
       ? AppTheme.lightSecondaryText
       : AppTheme.darkSecondaryText;
 
-  // Color get onPrimary =>
-  //     brightness == Brightness.light ? Colors.white : Colors.black;
+  Color get secondaryBackgroundColor => brightness == Brightness.light
+      ? AppTheme.lightSecondaryBackgroundColor
+      : AppTheme.darkSecondaryBackgroundColor;
+
+  Color get onPrimary =>
+      brightness == Brightness.light ? Colors.white : Colors.black;
 }
