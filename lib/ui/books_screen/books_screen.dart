@@ -49,33 +49,14 @@ class BooksScreen extends StatelessWidget {
                 child: TabBarView(
                   children: [
                     StreamBuilder<List<Book>>(
-                      stream: bookCubit.allBooks,
+                      stream: bookCubit.finishedBooks,
                       builder: (context, AsyncSnapshot<List<Book>> snapshot) {
                         if (snapshot.hasData) {
                           if (snapshot.data == null || snapshot.data!.isEmpty) {
                             return const Center(child: Text('No books'));
                           }
-
-                          return ListView.builder(
-                            itemCount: snapshot.data!.length,
-                            itemBuilder: (context, index) {
-                              return BookCard(
-                                book: snapshot.data![index],
-                                heroTag: "tag_$index",
-                                onPressed: () {
-                                  if (snapshot.data![index].id == null) return;
-
-                                  Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                        builder: (context) => BookScreen(
-                                              id: snapshot.data![index].id!,
-                                              heroTag: "tag_$index",
-                                            )),
-                                  );
-                                },
-                              );
-                            },
+                          return BooksList(
+                            books: snapshot.data!,
                           );
                         } else if (snapshot.hasError) {
                           return Text(snapshot.error.toString());
@@ -86,21 +67,43 @@ class BooksScreen extends StatelessWidget {
                         }
                       },
                     ),
-                    ListView(
-                      padding: EdgeInsets.only(
-                          top: MediaQuery.of(context).padding.top +
-                              AppBar().preferredSize.height +
-                              10,
-                          bottom: 70),
-                      children: [],
+                    StreamBuilder<List<Book>>(
+                      stream: bookCubit.inProgressBooks,
+                      builder: (context, AsyncSnapshot<List<Book>> snapshot) {
+                        if (snapshot.hasData) {
+                          if (snapshot.data == null || snapshot.data!.isEmpty) {
+                            return const Center(child: Text('No books'));
+                          }
+                          return BooksList(
+                            books: snapshot.data!,
+                          );
+                        } else if (snapshot.hasError) {
+                          return Text(snapshot.error.toString());
+                        } else {
+                          return const Center(
+                            child: CircularProgressIndicator(),
+                          );
+                        }
+                      },
                     ),
-                    ListView(
-                      padding: EdgeInsets.only(
-                          top: MediaQuery.of(context).padding.top +
-                              AppBar().preferredSize.height +
-                              10,
-                          bottom: 70),
-                      children: [],
+                    StreamBuilder<List<Book>>(
+                      stream: bookCubit.toReadBooks,
+                      builder: (context, AsyncSnapshot<List<Book>> snapshot) {
+                        if (snapshot.hasData) {
+                          if (snapshot.data == null || snapshot.data!.isEmpty) {
+                            return const Center(child: Text('No books'));
+                          }
+                          return BooksList(
+                            books: snapshot.data!,
+                          );
+                        } else if (snapshot.hasError) {
+                          return Text(snapshot.error.toString());
+                        } else {
+                          return const Center(
+                            child: CircularProgressIndicator(),
+                          );
+                        }
+                      },
                     ),
                   ],
                 ),
@@ -131,6 +134,40 @@ class BooksScreen extends StatelessWidget {
               ),
             ],
           )),
+    );
+  }
+}
+
+class BooksList extends StatelessWidget {
+  const BooksList({
+    Key? key,
+    required this.books,
+  }) : super(key: key);
+
+  final List<Book> books;
+
+  @override
+  Widget build(BuildContext context) {
+    return ListView.builder(
+      itemCount: books.length,
+      itemBuilder: (context, index) {
+        return BookCard(
+          book: books[index],
+          heroTag: "tag_$index",
+          onPressed: () {
+            if (books[index].id == null) return;
+
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                  builder: (context) => BookScreen(
+                        id: books[index].id!,
+                        heroTag: "tag_$index",
+                      )),
+            );
+          },
+        );
+      },
     );
   }
 }

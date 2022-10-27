@@ -8,18 +8,45 @@ class BookCubit extends Cubit {
 
   final BehaviorSubject<List<Book>> _booksFetcher =
       BehaviorSubject<List<Book>>();
+  final BehaviorSubject<List<Book>> _finishedBooksFetcher =
+      BehaviorSubject<List<Book>>();
+  final BehaviorSubject<List<Book>> _inProgressBooksFetcher =
+      BehaviorSubject<List<Book>>();
+  final BehaviorSubject<List<Book>> _toReadBooksFetcher =
+      BehaviorSubject<List<Book>>();
   final BehaviorSubject<Book> _bookFetcher = BehaviorSubject<Book>();
 
   Stream<List<Book>> get allBooks => _booksFetcher.stream;
+  Stream<List<Book>> get finishedBooks => _finishedBooksFetcher.stream;
+  Stream<List<Book>> get inProgressBooks => _inProgressBooksFetcher.stream;
+  Stream<List<Book>> get toReadBooks => _toReadBooksFetcher.stream;
   Stream<Book> get book => _bookFetcher.stream;
 
   BookCubit() : super(null) {
-    getAllBooks();
+    getFinishedBooks();
+    getInProgressBooks();
+    getToReadBooks();
   }
 
   getAllBooks() async {
-    List<Book> book = await repository.getAllBooks();
-    _booksFetcher.sink.add(book);
+    getFinishedBooks();
+    getInProgressBooks();
+    getToReadBooks();
+  }
+
+  getFinishedBooks() async {
+    List<Book> books = await repository.getBooks(0);
+    _finishedBooksFetcher.sink.add(books);
+  }
+
+  getInProgressBooks() async {
+    List<Book> books = await repository.getBooks(1);
+    _inProgressBooksFetcher.sink.add(books);
+  }
+
+  getToReadBooks() async {
+    List<Book> books = await repository.getBooks(2);
+    _toReadBooksFetcher.sink.add(books);
   }
 
   addBook(Book book) async {

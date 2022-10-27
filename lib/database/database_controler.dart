@@ -20,6 +20,22 @@ class DatabaseController {
         : [];
   }
 
+  Future<List<Book>> getBooks(
+      {List<String>? columns, required int status}) async {
+    final db = await dbClient.db;
+
+    var result = await db.query(
+      "booksTable",
+      columns: columns,
+      where: 'status = ?',
+      whereArgs: [status],
+    );
+
+    return result.isNotEmpty
+        ? result.map((item) => Book.fromJSON(item)).toList()
+        : [];
+  }
+
   Future<int> updateBook(Book book) async {
     final db = await dbClient.db;
 
