@@ -25,7 +25,6 @@ class BookCard extends StatelessWidget {
           padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 15),
           decoration: BoxDecoration(
             color: Theme.of(context).backgroundColor,
-            // color: Colors.white,
             borderRadius: BorderRadius.circular(5),
           ),
           child: Row(
@@ -74,16 +73,17 @@ class BookCard extends StatelessWidget {
                     ),
                     const SizedBox(height: 5),
                     RatingBar.builder(
-                      initialRating: 3,
+                      initialRating:
+                          (book.rating == null) ? 0 : (book.rating! / 10),
                       allowHalfRating: true,
-                      unratedColor: Colors.black12,
+                      unratedColor: Colors.transparent,
                       glow: false,
                       glowRadius: 1,
                       itemSize: 24,
                       ignoreGestures: true,
                       itemBuilder: (context, _) => Icon(
                         Icons.star,
-                        color: Colors.amber.shade300,
+                        color: Theme.of(context).primaryColor,
                       ),
                       onRatingUpdate: (_) {},
                     ),
