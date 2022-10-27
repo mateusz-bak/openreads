@@ -47,16 +47,16 @@ class BookStatusDetail extends StatelessWidget {
                           Icon(
                             statusIcon,
                             size: 32,
-                            color: Theme.of(context).mainTextColor,
+                            color: Colors.white,
                           ),
                           const SizedBox(width: 15),
                           Text(
                             statusText,
                             maxLines: 1,
-                            style: TextStyle(
+                            style: const TextStyle(
                               fontSize: 16,
                               fontWeight: FontWeight.bold,
-                              color: Theme.of(context).mainTextColor,
+                              color: Colors.white,
                             ),
                           ),
                         ],
@@ -88,7 +88,7 @@ class BookStatusDetail extends StatelessWidget {
           RatingBar.builder(
             initialRating: (rating != null) ? rating! / 10 : 0,
             allowHalfRating: true,
-            unratedColor: Colors.black12,
+            unratedColor: Theme.of(context).secondaryBackgroundColor,
             glow: false,
             itemSize: 48,
             ignoreGestures: true,

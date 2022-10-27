@@ -6,6 +6,8 @@ import 'package:openreads/logic/cubit/book_cubit.dart';
 import 'package:openreads/model/book.dart';
 import 'package:openreads/ui/add_book_screen/widgets/widgets.dart';
 import 'package:openreads/core/themes/app_theme.dart';
+import 'package:blurhash_dart/blurhash_dart.dart' as blurhash_dart;
+import 'package:image/image.dart' as img;
 
 class AddBook extends StatefulWidget {
   const AddBook({
@@ -52,11 +54,13 @@ class _AddBookState extends State<AddBook> {
 
   Uint8List? coverForEdit;
 
+  String? blurHashString;
+
   void _prefillBookDetails() {
     _titleController.text = widget.book?.title ?? '';
     _authorController.text = widget.book?.author ?? '';
-    _pubYearController.text = widget.book?.publicationYear.toString() ?? '';
-    _pagesController.text = widget.book?.pages.toString() ?? '';
+    _pubYearController.text = (widget.book?.publicationYear ?? '').toString();
+    _pagesController.text = (widget.book?.pages ?? '').toString();
     _isbnController.text = widget.book?.isbn ?? '';
     _olidController.text = widget.book?.olid ?? '';
     _myReviewController.text = widget.book?.myReview ?? '';
@@ -70,6 +74,8 @@ class _AddBookState extends State<AddBook> {
     if (widget.book?.status != null) {
       _changeBookStatus(widget.book!.status!);
     }
+
+    blurHashString = widget.book?.blurHash;
   }
 
   //TODO: finish new book validation
@@ -120,6 +126,7 @@ class _AddBookState extends State<AddBook> {
       myReview:
           _myReviewController.text.isEmpty ? null : _myReviewController.text,
       cover: cover,
+      blurHash: blurHashString,
     ));
 
     if (!mounted) return;
@@ -158,6 +165,7 @@ class _AddBookState extends State<AddBook> {
       myReview:
           _myReviewController.text.isEmpty ? null : _myReviewController.text,
       cover: cover,
+      blurHash: blurHashString,
     ));
 
     if (!mounted) return;
@@ -202,6 +210,8 @@ class _AddBookState extends State<AddBook> {
       coverForEdit = null;
       croppedPhotoPreview = croppedPhoto;
     });
+
+    _generateBlurHash();
   }
 
   void _changeBookStatus(int position) {
@@ -269,6 +279,29 @@ class _AddBookState extends State<AddBook> {
 
   void changeRating(double rating) {
     _rating = (rating * 10).toInt();
+  }
+
+  void _generateBlurHash() async {
+    late Uint8List data;
+
+    if (croppedPhotoPreview == null && coverForEdit == null) return;
+
+    if (croppedPhotoPreview != null) {
+      data = await croppedPhotoPreview!.readAsBytes();
+
+      if (coverForEdit != null) {
+        data = coverForEdit!;
+      }
+
+      final image = img.decodeImage(data.toList());
+
+      if (!mounted) return;
+
+      setState(() {
+        blurHashString =
+            blurhash_dart.BlurHash.encode(image!, numCompX: 4, numCompY: 3).hash;
+      });
+    }
   }
 
   @override

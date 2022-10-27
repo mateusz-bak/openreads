@@ -15,6 +15,7 @@ class Book {
   String? tags;
   String? myReview;
   final Uint8List? cover;
+  final String? blurHash;
 
   Book({
     this.id,
@@ -31,6 +32,7 @@ class Book {
     this.tags,
     this.myReview,
     this.cover,
+    this.blurHash,
   });
 
   factory Book.fromJSON(Map<String, dynamic> json) {
@@ -49,6 +51,7 @@ class Book {
       tags: json['tags'],
       myReview: json['my_review'],
       cover: json['cover'],
+      blurHash: json['blur_hash'],
     );
   }
 
@@ -68,6 +71,7 @@ class Book {
       'tags': tags,
       'my_review': myReview,
       'cover': cover,
+      'blur_hash': blurHash,
     };
   }
 }

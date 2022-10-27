@@ -22,6 +22,9 @@ dependencies:
   image_cropper: ^3.0.0
   flutter_bloc: ^8.1.1
   colours: ^0.0.2
+  flutter_blurhash: ^0.7.0
+  blurhash_dart: ^1.1.0
+  image: ^3.2.2
 
 dev_dependencies:
   flutter_test:

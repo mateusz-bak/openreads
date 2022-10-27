@@ -43,7 +43,8 @@ class DatabaseProvider {
             "olid TEXT, "
             "tags TEXT, "
             "my_review TEXT, "
-            "cover BLOB "
+            "cover BLOB, "
+            "blur_hash TEXT "
             ")");
       },
       onUpgrade: (Database db, int oldVersion, int newVersion) {

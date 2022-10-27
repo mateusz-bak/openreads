@@ -97,71 +97,71 @@ class BookScreen extends StatelessWidget {
               if (snapshot.data == null) {
                 return const Center(child: Text('Error getting the book'));
               }
-              return Padding(
-                padding: const EdgeInsets.all(10.0),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Stack(
-                      children: [
-                        Padding(
-                          padding: const EdgeInsets.only(bottom: 10),
-                          child: Center(
-                            child: CoverView(
-                              onPressed: null,
-                              heroTag: heroTag,
-                              photoBytes: snapshot.data!.cover,
-                            ),
+              return Column(
+                children: [
+                  (snapshot.data!.cover == null)
+                      ? const SizedBox()
+                      : Center(
+                          child: CoverView(
+                            onPressed: null,
+                            heroTag: heroTag,
+                            photoBytes: snapshot.data!.cover,
+                            blurHash: snapshot.data!.blurHash,
                           ),
+                        ),
+                  Padding(
+                    padding: const EdgeInsets.all(10.0),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        BookTitleDetail(
+                          title: snapshot.data!.title.toString(),
+                          author: snapshot.data!.author.toString(),
+                          publicationYear:
+                              (snapshot.data!.publicationYear ?? "").toString(),
+                        ),
+                        const SizedBox(height: 10),
+                        BookStatusDetail(
+                          statusIcon: _decideStatusIcon(snapshot.data!.status),
+                          statusText: _decideStatusText(snapshot.data!.status),
+                          rating: snapshot.data!.rating,
+                        ),
+                        const SizedBox(height: 10),
+                        //TODO: calculate reading time
+                        const BookDetail(
+                          title: 'Reading time',
+                          text: '12 days 3 hours',
+                        ),
+                        const SizedBox(height: 10),
+                        BookDetail(
+                          title: 'Pages',
+                          text: (snapshot.data!.pages ?? "").toString(),
+                        ),
+                        const SizedBox(height: 10),
+                        BookDetail(
+                          title: 'ISBN',
+                          text: (snapshot.data!.isbn ?? "").toString(),
+                        ),
+                        const SizedBox(height: 10),
+                        BookDetail(
+                          title: 'Open Library ID',
+                          text: (snapshot.data!.olid ?? "").toString(),
+                        ),
+                        const SizedBox(height: 10),
+                        //TODO: add tags
+                        const BookDetail(
+                          title: 'Tags',
+                          text: '',
+                        ),
+                        const SizedBox(height: 10),
+                        BookDetail(
+                          title: 'My review',
+                          text: (snapshot.data!.myReview ?? "").toString(),
                         ),
                       ],
                     ),
-                    BookTitleDetail(
-                      title: snapshot.data!.title.toString(),
-                      author: snapshot.data!.author.toString(),
-                      publicationYear:
-                          snapshot.data!.publicationYear.toString(),
-                    ),
-                    const SizedBox(height: 10),
-                    BookStatusDetail(
-                      statusIcon: _decideStatusIcon(snapshot.data!.status),
-                      statusText: _decideStatusText(snapshot.data!.status),
-                      rating: snapshot.data!.rating,
-                    ),
-                    const SizedBox(height: 10),
-                    //TODO: calculate reading time
-                    const BookDetail(
-                      title: 'Reading time',
-                      text: '12 days 3 hours',
-                    ),
-                    const SizedBox(height: 10),
-                    BookDetail(
-                      title: 'Pages',
-                      text: snapshot.data!.pages.toString(),
-                    ),
-                    const SizedBox(height: 10),
-                    BookDetail(
-                      title: 'ISBN',
-                      text: snapshot.data!.isbn.toString(),
-                    ),
-                    const SizedBox(height: 10),
-                    BookDetail(
-                      title: 'Open Library ID',
-                      text: snapshot.data!.olid.toString(),
-                    ),
-                    const SizedBox(height: 10),
-                    //TODO: add tags
-                    const BookDetail(
-                      title: 'Tags',
-                      text: '',
-                    ),
-                    const SizedBox(height: 10),
-                    BookDetail(
-                      title: 'My review',
-                      text: snapshot.data!.myReview.toString(),
-                    ),
-                  ],
-                ),
+                  ),
+                ],
               );
             } else if (snapshot.hasError) {
               return Text(snapshot.error.toString());
