@@ -2,8 +2,8 @@ import 'package:flutter/foundation.dart';
 
 class Book {
   int? id;
-  String? title;
-  String? author;
+  String title;
+  String author;
   int? status;
   int? rating;
   String? startDate;
@@ -19,8 +19,8 @@ class Book {
 
   Book({
     this.id,
-    this.title,
-    this.author,
+    required this.title,
+    required this.author,
     this.status,
     this.rating,
     this.startDate,
