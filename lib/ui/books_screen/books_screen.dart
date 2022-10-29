@@ -6,7 +6,12 @@ import 'package:openreads/ui/books_screen/widgets/widgets.dart';
 import 'package:openreads/ui/statistics_screen/statistics_screen.dart';
 
 class BooksScreen extends StatelessWidget {
-  const BooksScreen({Key? key}) : super(key: key);
+  const BooksScreen({
+    Key? key,
+    required this.appVersion,
+  }) : super(key: key);
+
+  final String appVersion;
 
   @override
   Widget build(BuildContext context) {
@@ -16,9 +21,23 @@ class BooksScreen extends StatelessWidget {
       extendBodyBehindAppBar: true,
       backgroundColor: Theme.of(context).scaffoldBackgroundColor,
       appBar: AppBar(
-        title: const Text('Openreads Flutter'),
+        title: Row(
+          crossAxisAlignment: CrossAxisAlignment.end,
+          children: [
+            const Text(
+              'Openreads',
+            ),
+            const SizedBox(width: 15),
+            Padding(
+              padding: const EdgeInsets.only(bottom: 3),
+              child: Text(
+                appVersion,
+                style: const TextStyle(fontSize: 14),
+              ),
+            ),
+          ],
+        ),
         backgroundColor: Theme.of(context).scaffoldBackgroundColor,
-        // surfaceTintColor: Colors.grey.shade400,
         surfaceTintColor: Theme.of(context).scaffoldBackgroundColor,
         actions: [
           IconButton(

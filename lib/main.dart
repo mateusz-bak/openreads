@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_displaymode/flutter_displaymode.dart';
-import 'package:openreads/logic/cubit/book_cubit.dart';
 import 'package:openreads/core/themes/app_theme.dart';
 import 'package:openreads/logic/cubit/theme_cubit.dart';
 import 'package:openreads/ui/books_screen/books_screen.dart';
@@ -16,6 +15,8 @@ void main() async {
 class App extends StatelessWidget {
   const App({super.key});
 
+  final appVersion = '2.0.0-alpha1';
+
   @override
   Widget build(BuildContext context) {
     return MultiBlocProvider(
@@ -24,7 +25,7 @@ class App extends StatelessWidget {
           create: (context) => ThemeCubit(),
         ),
       ],
-      child: const OpenreadsApp(),
+      child: OpenreadsApp(appVersion: appVersion),
     );
   }
 }
@@ -32,7 +33,10 @@ class App extends StatelessWidget {
 class OpenreadsApp extends StatefulWidget {
   const OpenreadsApp({
     Key? key,
+    required this.appVersion,
   }) : super(key: key);
+
+  final String appVersion;
 
   @override
   State<OpenreadsApp> createState() => _OpenreadsAppState();
@@ -64,7 +68,7 @@ class _OpenreadsAppState extends State<OpenreadsApp>
       title: 'Openreads Flutter',
       theme: AppTheme.lightTheme,
       darkTheme: AppTheme.darkTheme,
-      home: const BooksScreen(),
+      home: BooksScreen(appVersion: widget.appVersion),
     );
   }
 }
