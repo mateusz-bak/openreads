@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:openreads/logic/cubit/book_cubit.dart';
 import 'package:openreads/model/book.dart';
 import 'package:openreads/ui/add_book_screen/widgets/widgets.dart';
@@ -42,6 +43,29 @@ class BookScreen extends StatelessWidget {
     }
   }
 
+  String? _generateDate(String? date) {
+    if (date == null) return null;
+
+    final DateFormat formatter = DateFormat('dd/MM/yyyy');
+    return formatter.format(DateTime.parse(date));
+  }
+
+  String? _generateReadingTime({
+    required String? startDate,
+    required String? finishDate,
+  }) {
+    if (startDate != null && finishDate != null) {
+      final diff = DateTime.parse(finishDate)
+          .difference(DateTime.parse(startDate))
+          .inDays
+          .toString();
+
+      return '$diff days';
+    } else {
+      return null;
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     final statusBarHeight = MediaQuery.of(context).padding.top;
@@ -53,7 +77,6 @@ class BookScreen extends StatelessWidget {
       appBar: AppBar(
         backgroundColor: Theme.of(context).scaffoldBackgroundColor,
         surfaceTintColor: Theme.of(context).scaffoldBackgroundColor,
-        // surfaceTintColor: Colors.grey.shade400,
         actions: [
           StreamBuilder<Book>(
               stream: bookCubit.book,
@@ -125,12 +148,17 @@ class BookScreen extends StatelessWidget {
                           statusIcon: _decideStatusIcon(snapshot.data!.status),
                           statusText: _decideStatusText(snapshot.data!.status),
                           rating: snapshot.data!.rating,
+                          startDate: _generateDate(snapshot.data!.startDate),
+                          finishDate: _generateDate(snapshot.data!.finishDate),
                         ),
                         const SizedBox(height: 10),
-                        //TODO: calculate reading time
-                        const BookDetail(
+                        BookDetail(
                           title: 'Reading time',
-                          text: '12 days 3 hours',
+                          text: _generateReadingTime(
+                                finishDate: snapshot.data!.finishDate,
+                                startDate: snapshot.data!.startDate,
+                              ) ??
+                              "",
                         ),
                         const SizedBox(height: 10),
                         BookDetail(
@@ -147,12 +175,12 @@ class BookScreen extends StatelessWidget {
                           title: 'Open Library ID',
                           text: (snapshot.data!.olid ?? "").toString(),
                         ),
-                        const SizedBox(height: 10),
+                        // const SizedBox(height: 10),
                         //TODO: add tags
-                        const BookDetail(
-                          title: 'Tags',
-                          text: '',
-                        ),
+                        // const BookDetail(
+                        //   title: 'Tags',
+                        //   text: '',
+                        // ),
                         const SizedBox(height: 10),
                         BookDetail(
                           title: 'My review',

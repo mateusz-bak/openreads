@@ -65,10 +65,18 @@ class _AddBookState extends State<AddBook> {
     _olidController.text = widget.book?.olid ?? '';
     _myReviewController.text = widget.book?.myReview ?? '';
 
+    if (widget.book != null && widget.book!.startDate != null) {
+      _startDate = DateTime.parse(widget.book!.startDate!);
+    }
+
+    if (widget.book != null && widget.book!.finishDate != null) {
+      _finishDate = DateTime.parse(widget.book!.finishDate!);
+    }
+
     coverForEdit = widget.book?.cover;
 
     if (widget.book?.rating != null) {
-      _rating = widget.book!.rating! ~/ 10;
+      _rating = widget.book!.rating!;
     }
 
     if (widget.book?.status != null) {
@@ -78,18 +86,29 @@ class _AddBookState extends State<AddBook> {
     blurHashString = widget.book?.blurHash;
   }
 
+  void _showSnackbar(String message) {
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        content: Text(message),
+      ),
+    );
+  }
+
   //TODO: finish new book validation
   bool _validate() {
     if (_titleController.text.isEmpty) {
+      _showSnackbar('Title cannot be empty');
       return false;
     }
 
     if (_authorController.text.isEmpty) {
+      _showSnackbar('Author cannot be empty');
       return false;
     }
 
     if (_startDate != null && _finishDate != null) {
-      if (_startDate!.isBefore(_finishDate!)) {
+      if (_finishDate!.isBefore(_startDate!)) {
+        _showSnackbar('Start date cannot be before finish date');
         return false;
       }
     }
@@ -277,6 +296,18 @@ class _AddBookState extends State<AddBook> {
     }
   }
 
+  void _clearStartDate() {
+    setState(() {
+      _startDate = null;
+    });
+  }
+
+  void _clearFinishDate() {
+    setState(() {
+      _finishDate = null;
+    });
+  }
+
   void changeRating(double rating) {
     _rating = (rating * 10).toInt();
   }
@@ -298,8 +329,11 @@ class _AddBookState extends State<AddBook> {
       if (!mounted) return;
 
       setState(() {
-        blurHashString =
-            blurhash_dart.BlurHash.encode(image!, numCompX: 4, numCompY: 3).hash;
+        blurHashString = blurhash_dart.BlurHash.encode(
+          image!,
+          numCompX: 4,
+          numCompY: 3,
+        ).hash;
       });
     }
   }
@@ -430,7 +464,7 @@ class _AddBookState extends State<AddBook> {
                     animDuration: _animDuration,
                     status: _status,
                     defaultHeight: _defaultHeight,
-                    rating: _rating,
+                    rating: (_rating == null) ? 0.0 : _rating! / 10,
                     onRatingUpdate: changeRating,
                   ),
                   AnimatedContainer(
@@ -445,6 +479,10 @@ class _AddBookState extends State<AddBook> {
                     finishDate: _finishDate,
                     showStartDatePicker: _showStartDatePicker,
                     showFinishDatePicker: _showFinishDatePicker,
+                    clearStartDate: _clearStartDate,
+                    clearFinishDate: _clearFinishDate,
+                    showClearStartDate: (_startDate == null) ? false : true,
+                    showClearFinishDate: (_finishDate == null) ? false : true,
                   ),
                   AnimatedContainer(
                     duration: _animDuration,
@@ -567,7 +605,7 @@ class _AddBookState extends State<AddBook> {
                               (widget.book == null) ? _saveBook : _updateBook,
                           child: const Center(
                             child: Text(
-                              "Add",
+                              "Save",
                               style: TextStyle(color: Colors.white),
                             ),
                           ),

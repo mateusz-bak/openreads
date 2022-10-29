@@ -11,6 +11,10 @@ class DateRow extends StatelessWidget {
     required this.finishDate,
     required this.showStartDatePicker,
     required this.showFinishDatePicker,
+    required this.clearStartDate,
+    required this.clearFinishDate,
+    required this.showClearStartDate,
+    required this.showClearFinishDate,
   }) : super(key: key);
 
   final Duration animDuration;
@@ -20,6 +24,10 @@ class DateRow extends StatelessWidget {
   final DateTime? finishDate;
   final Function() showStartDatePicker;
   final Function() showFinishDatePicker;
+  final Function() clearStartDate;
+  final Function() clearFinishDate;
+  final bool showClearStartDate;
+  final bool showClearFinishDate;
 
   @override
   Widget build(BuildContext context) {
@@ -45,6 +53,8 @@ class DateRow extends StatelessWidget {
                     ? 'Start Date'
                     : '${startDate?.day}/${startDate?.month}/${startDate?.year}',
                 onPressed: showStartDatePicker,
+                onClearPressed: clearStartDate,
+                showClearButton: showClearStartDate,
               ),
             ),
             AnimatedContainer(
@@ -65,6 +75,8 @@ class DateRow extends StatelessWidget {
                     ? 'Finish Date'
                     : '${finishDate?.day}/${finishDate?.month}/${finishDate?.year}',
                 onPressed: showFinishDatePicker,
+                onClearPressed: clearFinishDate,
+                showClearButton: showClearFinishDate,
               ),
             ),
           ],

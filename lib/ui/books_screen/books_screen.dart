@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:openreads/logic/cubit/book_cubit.dart';
 import 'package:openreads/model/book.dart';
-import 'package:openreads/ui/book_screen/book_screen.dart';
-import 'package:openreads/ui/books_screen/widgets/widgets.dart';
 import 'package:openreads/ui/add_book_screen/widgets/widgets.dart';
+import 'package:openreads/ui/books_screen/widgets/widgets.dart';
+import 'package:openreads/ui/statistics_screen/statistics_screen.dart';
 
 class BooksScreen extends StatelessWidget {
   const BooksScreen({Key? key}) : super(key: key);
@@ -11,8 +11,6 @@ class BooksScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final statusBarHeight = MediaQuery.of(context).padding.top;
-
-    bookCubit.getAllBooks();
 
     return Scaffold(
       extendBodyBehindAppBar: true,
@@ -22,6 +20,19 @@ class BooksScreen extends StatelessWidget {
         backgroundColor: Theme.of(context).scaffoldBackgroundColor,
         // surfaceTintColor: Colors.grey.shade400,
         surfaceTintColor: Theme.of(context).scaffoldBackgroundColor,
+        actions: [
+          IconButton(
+              onPressed: () {
+                FocusManager.instance.primaryFocus?.unfocus();
+
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) => const StatisticsScreen()),
+                );
+              },
+              icon: const Icon(Icons.bar_chart_rounded))
+        ],
       ),
       floatingActionButton: Padding(
         padding: const EdgeInsets.only(bottom: 50),
@@ -134,40 +145,6 @@ class BooksScreen extends StatelessWidget {
               ),
             ],
           )),
-    );
-  }
-}
-
-class BooksList extends StatelessWidget {
-  const BooksList({
-    Key? key,
-    required this.books,
-  }) : super(key: key);
-
-  final List<Book> books;
-
-  @override
-  Widget build(BuildContext context) {
-    return ListView.builder(
-      itemCount: books.length,
-      itemBuilder: (context, index) {
-        return BookCard(
-          book: books[index],
-          heroTag: "tag_$index",
-          onPressed: () {
-            if (books[index].id == null) return;
-
-            Navigator.push(
-              context,
-              MaterialPageRoute(
-                  builder: (context) => BookScreen(
-                        id: books[index].id!,
-                        heroTag: "tag_$index",
-                      )),
-            );
-          },
-        );
-      },
     );
   }
 }

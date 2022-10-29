@@ -15,7 +15,7 @@ class BookRatingBar extends StatelessWidget {
   final Duration animDuration;
   final int? status;
   final double defaultHeight;
-  final int? rating;
+  final double rating;
   final Function(double) onRatingUpdate;
 
   @override
@@ -32,7 +32,7 @@ class BookRatingBar extends StatelessWidget {
         ),
         child: Center(
           child: RatingBar.builder(
-            initialRating: (rating != null) ? rating!.toDouble() : 0,
+            initialRating: rating,
             allowHalfRating: true,
             glow: false,
             unratedColor: Theme.of(context).secondaryBackgroundColor,

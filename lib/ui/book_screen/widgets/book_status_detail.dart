@@ -8,11 +8,52 @@ class BookStatusDetail extends StatelessWidget {
     required this.statusIcon,
     required this.statusText,
     required this.rating,
+    required this.startDate,
+    required this.finishDate,
   }) : super(key: key);
 
   final IconData? statusIcon;
   final String statusText;
+  final String? startDate;
+  final String? finishDate;
   final int? rating;
+
+  Widget _buildStartAndFinishDate(BuildContext context) {
+    if (startDate != null && finishDate != null) {
+      return Text(
+        '$startDate - $finishDate',
+        style: TextStyle(
+          fontSize: 14,
+          fontWeight: FontWeight.normal,
+          color: Theme.of(context).secondaryTextColor,
+        ),
+      );
+    }
+
+    if (startDate == null && finishDate != null) {
+      return Text(
+        'Finished on $finishDate',
+        style: TextStyle(
+          fontSize: 14,
+          fontWeight: FontWeight.normal,
+          color: Theme.of(context).secondaryTextColor,
+        ),
+      );
+    }
+
+    if (startDate != null && finishDate == null) {
+      return Text(
+        'Started on $startDate',
+        style: TextStyle(
+          fontSize: 14,
+          fontWeight: FontWeight.normal,
+          color: Theme.of(context).secondaryTextColor,
+        ),
+      );
+    }
+
+    return const SizedBox();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -67,16 +108,8 @@ class BookStatusDetail extends StatelessWidget {
               ),
             ],
           ),
-          //TODO: add start and finish dates
           const SizedBox(height: 5),
-          Text(
-            '12 feb 2022 - 03 mar 2022',
-            style: TextStyle(
-              fontSize: 14,
-              fontWeight: FontWeight.normal,
-              color: Theme.of(context).secondaryTextColor,
-            ),
-          ),
+          _buildStartAndFinishDate(context),
           const SizedBox(height: 15),
           const Text(
             'Your rating',
@@ -88,7 +121,7 @@ class BookStatusDetail extends StatelessWidget {
           RatingBar.builder(
             initialRating: (rating != null) ? rating! / 10 : 0,
             allowHalfRating: true,
-            unratedColor: Theme.of(context).secondaryBackgroundColor,
+            unratedColor: Colors.transparent,
             glow: false,
             itemSize: 48,
             ignoreGestures: true,
