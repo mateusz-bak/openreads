@@ -11,7 +11,7 @@
     <string name="fabAddBook">Neues Buch hinzufügen</string>
     <string name="ivSeparator1">Trennzeichen zwischen Suche und Sortierung</string>
     <string name="rbRatingIndicator">Das Buch ist gelesen</string>
-    <string name="ivInProgressIndicator">Dieses wird derzeit gelesen</string>
+    <string name="ivInProgressIndicator">Dieses Buch wird derzeit gelesen</string>
     <string name="ivToReadIndicator">Dieses Buch ist zu lesen</string>
     <!-- In-app strings -->
     <string name="readFragment">Gelesen</string>
@@ -38,7 +38,7 @@
     <string name="tvWelcomeText_0">Willkommen zu</string>
     <string name="tvWelcomeText_1">"hilft dir, den Überblick über deine Bücher zu behalten.\n\nEs ist auch ein großartiges Werkzeug, um deine persönliche Bibliothek auf einfache und transparente Weise zu organisieren."</string>
     <string name="tvWelcomeText_2">"Mache Fortschritte beim Lesen dank toller Statistiken.\n\nFordere dich sich selbst heraus, um ein besserer Leser zu werden!"</string>
-    <string name="tvWelcomeText_3">"ist komplett Open Source!\n\nDas bedeutet, dass du kannst den Code der App selbst überprüfen und zu seiner Entwicklung beitragen.\n\nAls Bonus ist keine Werbung und keinerlei Tracking enthalten!"</string>
+    <string name="tvWelcomeText_3">"ist komplett Open Source!\n\nDas bedeutet, dass du den Code der App selbst überprüfen und zu seiner Entwicklung beitragen kannst.\n\nAls Bonus ist keine Werbung und keinerlei Tracking enthalten!"</string>
     <string name="tvWelcomeText_4">"Wähle nun eine Designfarbe für die App.\n\nKeine Sorge, du kannst sie später ändern."</string>
     <string name="tvWelcomeText_5">Genieße und lies weiter!</string>
     <string name="tvLooksEmpty">Deine Buchliste sieht im Moment leer aus, klicke auf den Plus-Button unten und fange an, neue Bücher hinzuzufügen!</string>
@@ -88,8 +88,8 @@
     <string name="tvChallengeTitle">Challenge</string>
     <string name="tvChallengeEditorTitle">Challenge bearbeiten</string>
     <string name="tvChallengeNotSet">Keine, klicke um eins hinzuzufügen!</string>
-    <string name="warning_challenge_difficulty_not_set">Wähle einen Schwierigkeit!</string>
-    <string name="tvChallengeBooks">bücher</string>
+    <string name="warning_challenge_difficulty_not_set">Wähle einen Schwierigkeitsgrad!</string>
+    <string name="tvChallengeBooks">Bücher</string>
     <string name="tvFilterTitle">Bücher filtern</string>
     <string name="trash_summary">Gelöschte Bücher</string>
     <string name="trash_title">Papierkorb</string>
@@ -102,7 +102,7 @@
     <string name="language">Sprache</string>
     <string name="language_upperCase">Sprache</string>
     <string name="button_search">Suche</string>
-    <string name="button_language">filtersprachen</string>
+    <string name="button_language">Sprachen filtern</string>
     <string name="results_1">Ergebnis</string>
     <string name="results_2_4">Ergebnisse</string>
     <string name="results_5_">Ergebnisse</string>
@@ -129,8 +129,8 @@
     <string name="unknown_isbn">Keine ISBN</string>
     <string name="warning_delete_book_title">Achtung!</string>
     <string name="warning_delete_book_message">Möchtest du dieses Buch wirklich löschen?</string>
-    <string name="warning_delete_book_delete">löschen</string>
-    <string name="warning_delete_book_cancel">zurück</string>
+    <string name="warning_delete_book_delete">Löschen</string>
+    <string name="warning_delete_book_cancel">Zurück</string>
     <string name="export_title">Cloud-Backup erstellen</string>
     <string name="export_summary">Speichere deine Bücher in der Cloud, damit sie nirgendwo hingehen! Du kannst die Sicherungsdatei in deiner Cloud-App speichern (Nextcloud, Google Drive, OneDrive, Dropbox, Mega, Proton Drive)</string>
     <string name="import_title">Sicherung wiederherstellen</string>
@@ -146,15 +146,15 @@
     <string name="rate_app_title">Bewerte die App</string>
     <string name="rate_app">Gefällt dir &appname;? Nimm dir einen Moment Zeit, um es zu bewerten!</string>
     <string name="contact_title">Sende Feedback</string>
-    <string name="restore_backup_warning_title">Aufgepasst!</string>
+    <string name="restore_backup_warning_title">Achtung!</string>
     <string name="restore_backup_warning_message">Beim Wiederherstellen einer Sicherung werden die Bücher überschrieben, die du gerade hast. Denke daran, eine Sicherung dieser Bücher zu erstellen.</string>
     <string name="warning_understand">Ich habe verstanden</string>
     <string name="warning_take_me_back">Bring mich zurück!</string>
     <string name="btnAddScan">Barcode scannen</string>
     <string name="tbScannerTip">Scanne einen Barcode</string>
     <string name="book_list_title">Startseite</string>
-    <string name="finished_books">Bücher beendet</string>
-    <string name="in_progress_books">Bücher in Bearbeitung</string>
+    <string name="finished_books">Bücher gelesen</string>
+    <string name="in_progress_books">Bücher werden derzeit gelesen</string>
     <string name="to_read_books">Bücher für später</string>
     <string name="ask_for_rating_dialog_title">Gefällt dir &appname;?</string>
     <string name="ask_for_rating_dialog_message">Wenn ja, bewerte es bitte auf Google Play!</string>
@@ -167,8 +167,8 @@
     <string name="unknown_publish_year">Kein Veröffentlichungsjahr</string>
     <string name="stats_quickest_read">Schnellste Lesezeit</string>
     <string name="stats_longest_book">Längstes Buch</string>
-    <string name="stats_avg_reading_time">Durchschnittliche Lese-Zeit</string>
-    <string name="stats_avg_pages">Durchschnittliche Anzahl der Seiten</string>
+    <string name="stats_avg_reading_time">Durchschnittliche Lesezeit</string>
+    <string name="stats_avg_pages">Durchschnittliche Seitenzahl</string>
     <string name="stats_books_read">Bücher gelesen</string>
     <string name="stats_pages_read">Seiten gelesen</string>
     <string name="stats_avg_rating">Durchschnittliche Buchbewertung</string>
@@ -177,7 +177,7 @@
     <string name="need_more_data">Benötigt mehr Daten für dieses</string>
     <string name="days">Tage</string>
     <string name="stats_shortest_book">Kürzeste Buch</string>
-    <string name="setup_next">nächste</string>
+    <string name="setup_next">Weiter</string>
     <string name="changelog">Änderungsprotokoll</string>
     <string name="app_updated">Deine App wurde gerade auf die neueste Version aktualisiert!</string>
     <string name="update_whats_new">Was ist neu in</string>
@@ -206,11 +206,11 @@
     <string name="stats_pages_by_months">Seiten nach Ende des Monats lesen</string>
     <string name="export_local_summary">Speichere deine Bücher in einer lokalen Datei, so dass du immer eine Sicherung hast!</string>
     <string name="export_local_title">Lokale Sicherung erstellen</string>
-    <string name="insert_book_title">Büchertitel</string>
+    <string name="insert_book_title">Buchtitel</string>
     <string name="insert_book_author">Buchautor</string>
-    <string name="insert_book_pages">Seitenanzahl</string>
+    <string name="insert_book_pages">Seitenzahl</string>
     <string name="insert_book_publish_year">Veröffentlichungsjahr</string>
-    <string name="insert_book_status">Bücherstatus</string>
+    <string name="insert_book_status">Buchstatus</string>
     <string name="insert_book_rating">Deine Bewertung</string>
     <string name="insert_book_finish_date">Enddatum</string>
     <string name="insert_book_start_date">Startdatum</string>
@@ -243,7 +243,7 @@
     <string name="setContentOnUpdateNotAvailable_gplay">Du hast die neueste Version von &appname; App aus dem Google Play Store erhalten.</string>
     <string name="select_book_tags">Buch-Tags hinzufügen</string>
     <string name="filter_tags">Schlagwörter</string>
-    <string name="filter_years">Jahr beenden</string>
+    <string name="filter_years">Jahr gelesen</string>
     <string name="stats_challenge_add">Klicke hier, um ein Ziel hinzuzufügen</string>
     <string name="pages_challenge_add">Seiten Challenge hinzufügen?</string>
     <string name="tv_book_reading_time_title">Lesezeit</string>

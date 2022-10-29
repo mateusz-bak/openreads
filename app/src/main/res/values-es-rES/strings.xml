@@ -131,7 +131,7 @@
     <string name="warning_delete_book_message">¿Seguro que quieres eliminar este libro?</string>
     <string name="warning_delete_book_delete">eliminado</string>
     <string name="warning_delete_book_cancel">atrás</string>
-    <string name="export_title">Eliminar copia de seguridad en la nube</string>
+    <string name="export_title">Crear copia de seguridad en la nube</string>
     <string name="export_summary">¡Guarda tus libros en la nube para que no vayan a ninguna parte! Puede guardar el archivo de copia de seguridad en su aplicación en la nube (Nextcloud, Google Drive, OneDrive, Dropbox, Mega, Proton Drive)</string>
     <string name="import_title">Restaurar copia de seguridad</string>
     <string name="import_summary">Carga tus libros desde un archivo local en tu teléfono. Es posible que necesites conceder permisos de almacenamiento a la aplicación.</string>
