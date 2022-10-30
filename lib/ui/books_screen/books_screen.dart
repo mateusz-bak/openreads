@@ -1,11 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:openreads/core/constants.dart/enums.dart';
 import 'package:openreads/logic/cubit/book_cubit.dart';
+import 'package:openreads/logic/cubit/sort_cubit.dart';
 import 'package:openreads/model/book.dart';
 import 'package:openreads/ui/add_book_screen/widgets/widgets.dart';
 import 'package:openreads/ui/books_screen/widgets/widgets.dart';
 import 'package:openreads/ui/statistics_screen/statistics_screen.dart';
 
-class BooksScreen extends StatelessWidget {
+class BooksScreen extends StatefulWidget {
   const BooksScreen({
     Key? key,
     required this.appVersion,
@@ -13,6 +16,11 @@ class BooksScreen extends StatelessWidget {
 
   final String appVersion;
 
+  @override
+  State<BooksScreen> createState() => _BooksScreenState();
+}
+
+class _BooksScreenState extends State<BooksScreen> {
   @override
   Widget build(BuildContext context) {
     final statusBarHeight = MediaQuery.of(context).padding.top;
@@ -31,7 +39,7 @@ class BooksScreen extends StatelessWidget {
             Padding(
               padding: const EdgeInsets.only(bottom: 3),
               child: Text(
-                appVersion,
+                widget.appVersion,
                 style: const TextStyle(fontSize: 14),
               ),
             ),
@@ -41,16 +49,29 @@ class BooksScreen extends StatelessWidget {
         surfaceTintColor: Theme.of(context).scaffoldBackgroundColor,
         actions: [
           IconButton(
-              onPressed: () {
-                FocusManager.instance.primaryFocus?.unfocus();
+            onPressed: () {
+              showModalBottomSheet(
+                  context: context,
+                  isScrollControlled: true,
+                  backgroundColor: Colors.transparent,
+                  builder: (context) {
+                    return const SortBottomSheet();
+                  });
+            },
+            icon: const Icon(Icons.sort),
+          ),
+          IconButton(
+            onPressed: () {
+              FocusManager.instance.primaryFocus?.unfocus();
 
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                      builder: (context) => const StatisticsScreen()),
-                );
-              },
-              icon: const Icon(Icons.bar_chart_rounded))
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                    builder: (context) => const StatisticsScreen()),
+              );
+            },
+            icon: const Icon(Icons.bar_chart_rounded),
+          )
         ],
       ),
       floatingActionButton: Padding(
@@ -85,8 +106,57 @@ class BooksScreen extends StatelessWidget {
                           if (snapshot.data == null || snapshot.data!.isEmpty) {
                             return const Center(child: Text('No books'));
                           }
-                          return BooksList(
-                            books: snapshot.data!,
+                          return BlocBuilder<SortCubit, SortState>(
+                            builder: (context, sortState) {
+                              switch (sortState.sortType) {
+                                case SortType.byAuthor:
+                                  sortState.ascending
+                                      ? snapshot.data!.sort((a, b) {
+                                          return a.author
+                                              .toString()
+                                              .toLowerCase()
+                                              .compareTo(b.author
+                                                  .toString()
+                                                  .toLowerCase());
+                                        })
+                                      : snapshot.data!.sort((b, a) {
+                                          return a.author
+                                              .toString()
+                                              .toLowerCase()
+                                              .compareTo(b.author
+                                                  .toString()
+                                                  .toLowerCase());
+                                        });
+                                  break;
+                                case SortType.byRating:
+                                  break;
+                                case SortType.byPages:
+                                  break;
+                                default:
+                                  sortState.ascending
+                                      ? snapshot.data!.sort((a, b) {
+                                          return a.title
+                                              .toString()
+                                              .toLowerCase()
+                                              .compareTo(b.title
+                                                  .toString()
+                                                  .toLowerCase());
+                                        })
+                                      : snapshot.data!.sort((b, a) {
+                                          return a.author
+                                              .toString()
+                                              .toLowerCase()
+                                              .compareTo(b.title
+                                                  .toString()
+                                                  .toLowerCase());
+                                        });
+
+                                  break;
+                              }
+                              return BooksList(
+                                books: snapshot.data!,
+                              );
+                            },
                           );
                         } else if (snapshot.hasError) {
                           return Text(snapshot.error.toString());

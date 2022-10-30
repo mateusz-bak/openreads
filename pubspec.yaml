@@ -27,6 +27,7 @@ dependencies:
   image: ^3.2.2
   fl_chart: ^0.55.2
   intl: ^0.17.0
+  dropdown_button2: ^1.8.9
 
 dev_dependencies:
   flutter_test:
