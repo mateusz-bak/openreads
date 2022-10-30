@@ -138,28 +138,22 @@ class BooksScreen extends StatelessWidget {
                   ],
                 ),
               ),
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 10),
-                child: Container(
-                  decoration: BoxDecoration(
-                    color: Theme.of(context).backgroundColor,
-                    borderRadius: BorderRadius.circular(10),
-                  ),
-                  child: TabBar(
-                    labelColor: Theme.of(context).primaryColor,
-                    indicatorColor: Theme.of(context).primaryColor,
-                    tabs: const [
-                      Tab(
-                        child: Text('Finished'),
-                      ),
-                      Tab(
-                        child: Text('In progress'),
-                      ),
-                      Tab(
-                        child: Text('For later'),
-                      ),
-                    ],
-                  ),
+              Container(
+                color: Theme.of(context).backgroundColor,
+                child: TabBar(
+                  labelColor: Theme.of(context).primaryColor,
+                  indicatorColor: Theme.of(context).primaryColor,
+                  tabs: const [
+                    Tab(
+                      child: Text('Finished'),
+                    ),
+                    Tab(
+                      child: Text('In progress'),
+                    ),
+                    Tab(
+                      child: Text('For later'),
+                    ),
+                  ],
                 ),
               ),
             ],
