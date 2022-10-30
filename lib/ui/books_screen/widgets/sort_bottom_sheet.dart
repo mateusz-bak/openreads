@@ -14,25 +14,47 @@ class SortBottomSheet extends StatefulWidget {
   State<SortBottomSheet> createState() => _SortBottomSheetState();
 }
 
-String _getDropdownValue(SortType sortType) {
-  switch (sortType) {
-    case SortType.byAuthor:
-      return 'Author';
-    case SortType.byRating:
-      return 'Rating';
-    case SortType.byPages:
-      return 'Pages';
-    default:
-      return 'Title';
-  }
-}
-
-List<String> sortingOptions = [
+List<String> sortOptions = [
   'Title',
   'Author',
   'Rating',
   'Pages',
+  'Start date',
+  'Finish date',
 ];
+
+String _getDropdownValue(SortType sortType) {
+  switch (sortType) {
+    case SortType.byAuthor:
+      return sortOptions[1];
+    case SortType.byRating:
+      return sortOptions[2];
+    case SortType.byPages:
+      return sortOptions[3];
+    case SortType.byStartDate:
+      return sortOptions[4];
+    case SortType.byFinishDate:
+      return sortOptions[5];
+    default:
+      return sortOptions[0];
+  }
+}
+
+void _updateSort(BuildContext context, String? value) {
+  if (value == sortOptions[0]) {
+    context.read<SortCubit>().updateSortMode(sortType: SortType.byTitle);
+  } else if (value == sortOptions[1]) {
+    context.read<SortCubit>().updateSortMode(sortType: SortType.byAuthor);
+  } else if (value == sortOptions[2]) {
+    context.read<SortCubit>().updateSortMode(sortType: SortType.byRating);
+  } else if (value == sortOptions[3]) {
+    context.read<SortCubit>().updateSortMode(sortType: SortType.byPages);
+  } else if (value == sortOptions[4]) {
+    context.read<SortCubit>().updateSortMode(sortType: SortType.byStartDate);
+  } else if (value == sortOptions[5]) {
+    context.read<SortCubit>().updateSortMode(sortType: SortType.byFinishDate);
+  }
+}
 
 class _SortBottomSheetState extends State<SortBottomSheet> {
   @override
@@ -70,7 +92,7 @@ class _SortBottomSheetState extends State<SortBottomSheet> {
                     CustomDropdownButton2(
                       hint: 'Select Item',
                       buttonHeight: 50,
-                      dropdownItems: sortingOptions,
+                      dropdownItems: sortOptions,
                       value: _getDropdownValue(sortState.sortType),
                       buttonDecoration: BoxDecoration(
                         border: Border.all(
@@ -78,11 +100,7 @@ class _SortBottomSheetState extends State<SortBottomSheet> {
                         ),
                         borderRadius: BorderRadius.circular(5),
                       ),
-                      onChanged: (value) {
-                        context.read<SortCubit>().updateSortMode(
-                              sortTypeString: value,
-                            );
-                      },
+                      onChanged: (value) => _updateSort(context, value),
                     ),
                     const SizedBox(width: 15),
                     Container(

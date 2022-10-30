@@ -3,4 +3,6 @@ enum SortType {
   byAuthor,
   byRating,
   byPages,
+  byStartDate,
+  byFinishDate,
 }
