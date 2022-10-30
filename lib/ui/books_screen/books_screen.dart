@@ -20,7 +20,8 @@ class BooksScreen extends StatefulWidget {
   State<BooksScreen> createState() => _BooksScreenState();
 }
 
-class _BooksScreenState extends State<BooksScreen> {
+class _BooksScreenState extends State<BooksScreen>
+    with AutomaticKeepAliveClientMixin {
   List<Book> _sortList({
     required SortState sortState,
     required List<Book> list,
@@ -53,7 +54,7 @@ class _BooksScreenState extends State<BooksScreen> {
     required List<Book> list,
     required bool isAsc,
   }) {
-    isAsc
+    !isAsc
         ? list.sort((a, b) {
             return a.title
                 .toString()
@@ -74,7 +75,7 @@ class _BooksScreenState extends State<BooksScreen> {
     required List<Book> list,
     required bool isAsc,
   }) {
-    isAsc
+    !isAsc
         ? list.sort((a, b) {
             return a.author
                 .toString()
@@ -102,7 +103,7 @@ class _BooksScreenState extends State<BooksScreen> {
       (book.rating != null) ? booksRated.add(book) : booksNotRated.add(book);
     }
 
-    isAsc
+    !isAsc
         ? booksRated.sort((a, b) {
             return a.rating!.compareTo(b.rating!);
           })
@@ -126,7 +127,7 @@ class _BooksScreenState extends State<BooksScreen> {
           : booksWithoutPages.add(book);
     }
 
-    isAsc
+    !isAsc
         ? booksWithPages.sort((a, b) {
             return a.pages!.compareTo(b.pages!);
           })
@@ -192,7 +193,12 @@ class _BooksScreenState extends State<BooksScreen> {
   }
 
   @override
+  bool get wantKeepAlive => true;
+
+  @override
   Widget build(BuildContext context) {
+    super.build(context);
+
     final statusBarHeight = MediaQuery.of(context).padding.top;
 
     return Scaffold(

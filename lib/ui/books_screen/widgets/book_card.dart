@@ -1,5 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
+import 'package:intl/intl.dart';
+import 'package:openreads/core/constants.dart/enums.dart';
+import 'package:openreads/logic/cubit/sort_cubit.dart';
 import 'package:openreads/model/book.dart';
 import 'package:openreads/core/themes/app_theme.dart';
 
@@ -9,16 +13,68 @@ class BookCard extends StatelessWidget {
     required this.book,
     required this.onPressed,
     required this.heroTag,
+    required this.addBottomPadding,
   }) : super(key: key);
 
   final Book book;
   final String heroTag;
+  final bool addBottomPadding;
   final Function() onPressed;
+
+  Widget _buildSortAttribute() {
+    return BlocBuilder<SortCubit, SortState>(
+      builder: (context, sortState) {
+        switch (sortState.sortType) {
+          case SortType.byPages:
+            return (book.pages != null)
+                ? Text('${book.pages} pages')
+                : const SizedBox();
+          case SortType.byStartDate:
+            return (book.startDate != null)
+                ? Column(
+                    crossAxisAlignment: CrossAxisAlignment.end,
+                    children: [
+                      const Text('Started on', style: TextStyle(fontSize: 12)),
+                      Text(
+                        '${_generateDate(book.startDate)}',
+                        style: const TextStyle(
+                            fontSize: 13, fontWeight: FontWeight.bold),
+                      ),
+                    ],
+                  )
+                : const SizedBox();
+          case SortType.byFinishDate:
+            return (book.finishDate != null)
+                ? Column(
+                    crossAxisAlignment: CrossAxisAlignment.end,
+                    children: [
+                      const Text('Finished on', style: TextStyle(fontSize: 12)),
+                      Text(
+                        '${_generateDate(book.finishDate)}',
+                        style: const TextStyle(
+                            fontSize: 13, fontWeight: FontWeight.bold),
+                      ),
+                    ],
+                  )
+                : const SizedBox();
+          default:
+            return const SizedBox();
+        }
+      },
+    );
+  }
+
+  String? _generateDate(String? date) {
+    if (date == null) return null;
+
+    final DateFormat formatter = DateFormat('dd/MM/yyyy');
+    return formatter.format(DateTime.parse(date));
+  }
 
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.fromLTRB(10, 10, 10, 0),
+      padding: EdgeInsets.fromLTRB(10, 10, 10, addBottomPadding ? 90 : 0),
       child: InkWell(
         onTap: onPressed,
         child: Container(
@@ -51,7 +107,7 @@ class BookCard extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Text(
-                      '${book.title}',
+                      book.title,
                       softWrap: true,
                       overflow: TextOverflow.clip,
                       style: TextStyle(
@@ -62,7 +118,7 @@ class BookCard extends StatelessWidget {
                       ),
                     ),
                     Text(
-                      '${book.author}',
+                      book.author,
                       softWrap: true,
                       overflow: TextOverflow.clip,
                       style: TextStyle(
@@ -72,20 +128,27 @@ class BookCard extends StatelessWidget {
                       ),
                     ),
                     const SizedBox(height: 5),
-                    RatingBar.builder(
-                      initialRating:
-                          (book.rating == null) ? 0 : (book.rating! / 10),
-                      allowHalfRating: true,
-                      unratedColor: Colors.transparent,
-                      glow: false,
-                      glowRadius: 1,
-                      itemSize: 24,
-                      ignoreGestures: true,
-                      itemBuilder: (context, _) => Icon(
-                        Icons.star,
-                        color: Theme.of(context).primaryColor,
-                      ),
-                      onRatingUpdate: (_) {},
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        RatingBar.builder(
+                          initialRating:
+                              (book.rating == null) ? 0 : (book.rating! / 10),
+                          allowHalfRating: true,
+                          unratedColor: Colors.transparent,
+                          glow: false,
+                          glowRadius: 1,
+                          itemSize: 24,
+                          ignoreGestures: true,
+                          itemBuilder: (context, _) => Icon(
+                            Icons.star,
+                            color: Theme.of(context).primaryColor,
+                          ),
+                          onRatingUpdate: (_) {},
+                        ),
+                        _buildSortAttribute(),
+                      ],
                     ),
                   ],
                 ),

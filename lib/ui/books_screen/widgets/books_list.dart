@@ -19,16 +19,18 @@ class BooksList extends StatelessWidget {
         return BookCard(
           book: books[index],
           heroTag: "tag_$index",
+          addBottomPadding: (books.length == index + 1),
           onPressed: () {
             if (books[index].id == null) return;
 
             Navigator.push(
               context,
               MaterialPageRoute(
-                  builder: (context) => BookScreen(
-                        id: books[index].id!,
-                        heroTag: "tag_$index",
-                      )),
+                builder: (context) => BookScreen(
+                  id: books[index].id!,
+                  heroTag: "tag_$index",
+                ),
+              ),
             );
           },
         );
