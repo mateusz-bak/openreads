@@ -130,7 +130,7 @@ class _AddBookState extends State<AddBook> {
       title: _titleController.text,
       author: _authorController.text,
       status: _status,
-      rating: _rating,
+      rating: (_rating == 0) ? null : _rating,
       startDate: _startDate?.toIso8601String(),
       finishDate: _finishDate?.toIso8601String(),
       pages: _pagesController.text.isEmpty
@@ -169,7 +169,7 @@ class _AddBookState extends State<AddBook> {
       title: _titleController.text,
       author: _authorController.text,
       status: _status,
-      rating: _rating,
+      rating: (_rating == 0) ? null : _rating,
       startDate: _startDate?.toIso8601String(),
       finishDate: _finishDate?.toIso8601String(),
       pages: _pagesController.text.isEmpty

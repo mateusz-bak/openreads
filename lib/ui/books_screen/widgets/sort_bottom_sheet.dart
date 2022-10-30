@@ -60,16 +60,16 @@ class _SortBottomSheetState extends State<SortBottomSheet> {
             children: [
               const SizedBox(height: 5),
               const Text(
-                'Sort books',
-                style: TextStyle(fontSize: 18),
+                'Sort finished books',
+                style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
               ),
-              const SizedBox(height: 10),
+              const SizedBox(height: 5),
               BlocBuilder<SortCubit, SortState>(
                 builder: (context, sortState) => Row(
                   children: [
                     CustomDropdownButton2(
                       hint: 'Select Item',
-                      buttonHeight: 48,
+                      buttonHeight: 50,
                       dropdownItems: sortingOptions,
                       value: _getDropdownValue(sortState.sortType),
                       buttonDecoration: BoxDecoration(
@@ -92,7 +92,7 @@ class _SortBottomSheetState extends State<SortBottomSheet> {
                           color: Theme.of(context).mainTextColor,
                         ),
                       ),
-                      child: (sortState.ascending)
+                      child: (sortState.isAsc)
                           ? IconButton(
                               onPressed: () => context
                                   .read<SortCubit>()

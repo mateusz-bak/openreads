@@ -4,14 +4,13 @@ import 'package:openreads/core/constants.dart/enums.dart';
 part 'sort_state.dart';
 
 class SortCubit extends Cubit<SortState> {
-  SortCubit() : super(SortState(sortType: SortType.byTitle, ascending: true)) {
+  SortCubit() : super(SortState(sortType: SortType.byTitle, isAsc: true)) {
     updateSortMode(
       sortTypeString: null,
-      ascending: true,
     );
   }
 
-  void updateSortMode({String? sortTypeString, bool? ascending}) {
+  void updateSortMode({String? sortTypeString}) {
     switch (sortTypeString) {
       case 'Author':
         emit(state.copyWith(sortType: SortType.byAuthor));
@@ -28,7 +27,7 @@ class SortCubit extends Cubit<SortState> {
     }
   }
 
-  void updateSortOrder(bool ascending) {
-    emit(state.copyWith(ascending: ascending));
+  void updateSortOrder(bool isAsc) {
+    emit(state.copyWith(isAsc: isAsc));
   }
 }

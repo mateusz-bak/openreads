@@ -2,20 +2,20 @@ part of 'sort_cubit.dart';
 
 class SortState {
   final SortType sortType;
-  final bool ascending;
+  final bool isAsc;
 
   SortState({
     required this.sortType,
-    required this.ascending,
+    required this.isAsc,
   });
 
   SortState copyWith({
     SortType? sortType,
-    bool? ascending,
+    bool? isAsc,
   }) {
     return SortState(
       sortType: sortType ?? this.sortType,
-      ascending: ascending ?? this.ascending,
+      isAsc: isAsc ?? this.isAsc,
     );
   }
 }

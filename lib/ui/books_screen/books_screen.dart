@@ -21,6 +21,116 @@ class BooksScreen extends StatefulWidget {
 }
 
 class _BooksScreenState extends State<BooksScreen> {
+  List<Book> _sortList({
+    required SortState sortState,
+    required List<Book> list,
+  }) {
+    switch (sortState.sortType) {
+      case SortType.byAuthor:
+        list = _sortByAuthor(list: list, isAsc: sortState.isAsc);
+        break;
+      case SortType.byRating:
+        list = _sortByRating(list: list, isAsc: sortState.isAsc);
+        break;
+      case SortType.byPages:
+        list = _sortByPages(list: list, isAsc: sortState.isAsc);
+        break;
+      default:
+        list = _sortByTitle(list: list, isAsc: sortState.isAsc);
+        break;
+    }
+
+    return list;
+  }
+
+  List<Book> _sortByTitle({
+    required List<Book> list,
+    required bool isAsc,
+  }) {
+    isAsc
+        ? list.sort((a, b) {
+            return a.title
+                .toString()
+                .toLowerCase()
+                .compareTo(b.title.toString().toLowerCase());
+          })
+        : list.sort((b, a) {
+            return a.author
+                .toString()
+                .toLowerCase()
+                .compareTo(b.title.toString().toLowerCase());
+          });
+
+    return list;
+  }
+
+  List<Book> _sortByAuthor({
+    required List<Book> list,
+    required bool isAsc,
+  }) {
+    isAsc
+        ? list.sort((a, b) {
+            return a.author
+                .toString()
+                .toLowerCase()
+                .compareTo(b.author.toString().toLowerCase());
+          })
+        : list.sort((b, a) {
+            return a.author
+                .toString()
+                .toLowerCase()
+                .compareTo(b.author.toString().toLowerCase());
+          });
+
+    return list;
+  }
+
+  List<Book> _sortByRating({
+    required List<Book> list,
+    required bool isAsc,
+  }) {
+    List<Book> booksNotRated = List.empty(growable: true);
+    List<Book> booksRated = List.empty(growable: true);
+
+    for (Book book in list) {
+      (book.rating != null) ? booksRated.add(book) : booksNotRated.add(book);
+    }
+
+    isAsc
+        ? booksRated.sort((a, b) {
+            return a.rating!.compareTo(b.rating!);
+          })
+        : booksRated.sort((b, a) {
+            return a.rating!.compareTo(b.rating!);
+          });
+
+    return booksRated + booksNotRated;
+  }
+
+  List<Book> _sortByPages({
+    required List<Book> list,
+    required bool isAsc,
+  }) {
+    List<Book> booksWithoutPages = List.empty(growable: true);
+    List<Book> booksWithPages = List.empty(growable: true);
+
+    for (Book book in list) {
+      (book.pages != null)
+          ? booksWithPages.add(book)
+          : booksWithoutPages.add(book);
+    }
+
+    isAsc
+        ? booksWithPages.sort((a, b) {
+            return a.pages!.compareTo(b.pages!);
+          })
+        : booksWithPages.sort((b, a) {
+            return a.pages!.compareTo(b.pages!);
+          });
+
+    return booksWithPages + booksWithoutPages;
+  }
+
   @override
   Widget build(BuildContext context) {
     final statusBarHeight = MediaQuery.of(context).padding.top;
@@ -108,53 +218,11 @@ class _BooksScreenState extends State<BooksScreen> {
                           }
                           return BlocBuilder<SortCubit, SortState>(
                             builder: (context, sortState) {
-                              switch (sortState.sortType) {
-                                case SortType.byAuthor:
-                                  sortState.ascending
-                                      ? snapshot.data!.sort((a, b) {
-                                          return a.author
-                                              .toString()
-                                              .toLowerCase()
-                                              .compareTo(b.author
-                                                  .toString()
-                                                  .toLowerCase());
-                                        })
-                                      : snapshot.data!.sort((b, a) {
-                                          return a.author
-                                              .toString()
-                                              .toLowerCase()
-                                              .compareTo(b.author
-                                                  .toString()
-                                                  .toLowerCase());
-                                        });
-                                  break;
-                                case SortType.byRating:
-                                  break;
-                                case SortType.byPages:
-                                  break;
-                                default:
-                                  sortState.ascending
-                                      ? snapshot.data!.sort((a, b) {
-                                          return a.title
-                                              .toString()
-                                              .toLowerCase()
-                                              .compareTo(b.title
-                                                  .toString()
-                                                  .toLowerCase());
-                                        })
-                                      : snapshot.data!.sort((b, a) {
-                                          return a.author
-                                              .toString()
-                                              .toLowerCase()
-                                              .compareTo(b.title
-                                                  .toString()
-                                                  .toLowerCase());
-                                        });
-
-                                  break;
-                              }
                               return BooksList(
-                                books: snapshot.data!,
+                                books: _sortList(
+                                  sortState: sortState,
+                                  list: snapshot.data!,
+                                ),
                               );
                             },
                           );
