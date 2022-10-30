@@ -1,4 +1,4 @@
-import 'package:openreads/database/database.dart';
+import 'package:openreads/database/database_provider.dart';
 import 'package:openreads/model/book.dart';
 
 class DatabaseController {

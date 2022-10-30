@@ -13,12 +13,12 @@ class AddBook extends StatefulWidget {
   const AddBook({
     Key? key,
     required this.topPadding,
-    required this.previousContext,
+    required this.previousThemeData,
     this.book,
   }) : super(key: key);
 
   final double topPadding;
-  final BuildContext previousContext;
+  final ThemeData previousThemeData;
   final Book? book;
 
   @override
@@ -246,15 +246,13 @@ class _AddBookState extends State<AddBook> {
         setState(() {
           _flex[index] = 2;
           _colors[index] = Colors.white;
-          _backgroundColors[index] =
-              Theme.of(widget.previousContext).primaryColor;
+          _backgroundColors[index] = widget.previousThemeData.primaryColor;
         });
       } else {
         setState(() {
           _flex[index] = 1;
-          _colors[index] = Theme.of(widget.previousContext).secondaryTextColor;
-          _backgroundColors[index] =
-              Theme.of(widget.previousContext).backgroundColor;
+          _colors[index] = widget.previousThemeData.secondaryTextColor;
+          _backgroundColors[index] = widget.previousThemeData.backgroundColor;
         });
       }
     });
@@ -343,17 +341,17 @@ class _AddBookState extends State<AddBook> {
     super.initState();
 
     _colors = [
-      Theme.of(widget.previousContext).secondaryTextColor,
-      Theme.of(widget.previousContext).secondaryTextColor,
-      Theme.of(widget.previousContext).secondaryTextColor,
-      Theme.of(widget.previousContext).secondaryTextColor,
+      widget.previousThemeData.secondaryTextColor,
+      widget.previousThemeData.secondaryTextColor,
+      widget.previousThemeData.secondaryTextColor,
+      widget.previousThemeData.secondaryTextColor,
     ];
 
     _backgroundColors = [
-      Theme.of(widget.previousContext).backgroundColor,
-      Theme.of(widget.previousContext).backgroundColor,
-      Theme.of(widget.previousContext).backgroundColor,
-      Theme.of(widget.previousContext).backgroundColor,
+      widget.previousThemeData.backgroundColor,
+      widget.previousThemeData.backgroundColor,
+      widget.previousThemeData.backgroundColor,
+      widget.previousThemeData.backgroundColor,
     ];
 
     _titleController = TextEditingController();

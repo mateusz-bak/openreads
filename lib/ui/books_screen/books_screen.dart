@@ -64,7 +64,7 @@ class BooksScreen extends StatelessWidget {
                 builder: (context) {
                   return AddBook(
                     topPadding: statusBarHeight,
-                    previousContext: context,
+                    previousThemeData: Theme.of(context),
                   );
                 });
           },

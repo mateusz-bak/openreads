@@ -6,16 +6,7 @@ import 'package:sqflite/sqflite.dart';
 class DatabaseProvider {
   static final DatabaseProvider dbProvider = DatabaseProvider();
 
-  Database? database;
-
-  Future<Database> get db async {
-    if (database != null) {
-      return database!;
-    } else {
-      database = await createDatabase();
-      return database!;
-    }
-  }
+  late final Future<Database> db = createDatabase();
 
   Future<Database> createDatabase() async {
     Directory docDirectory = await getApplicationDocumentsDirectory();
@@ -25,7 +16,7 @@ class DatabaseProvider {
       "Books.db",
     );
 
-    var database = await openDatabase(
+    return await openDatabase(
       path,
       version: 1,
       onCreate: (Database db, int version) async {
@@ -51,7 +42,5 @@ class DatabaseProvider {
         if (newVersion > oldVersion) {}
       },
     );
-
-    return database;
   }
 }
