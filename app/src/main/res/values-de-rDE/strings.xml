@@ -132,7 +132,7 @@
     <string name="warning_delete_book_delete">Löschen</string>
     <string name="warning_delete_book_cancel">Zurück</string>
     <string name="export_title">Cloud-Backup erstellen</string>
-    <string name="export_summary">Speichere deine Bücher in der Cloud, damit sie nirgendwo hingehen! Du kannst die Sicherungsdatei in deiner Cloud-App speichern (Nextcloud, Google Drive, OneDrive, Dropbox, Mega, Proton Drive)</string>
+    <string name="export_summary">Speichere deine Bücher in der Cloud, damit sie nicht verloren gehen! Du kannst die Sicherungsdatei in deiner Cloud-App speichern (Nextcloud, Google Drive, OneDrive, Dropbox, Mega, Proton Drive)</string>
     <string name="import_title">Sicherung wiederherstellen</string>
     <string name="import_summary">Lade deine Bücher aus einer lokalen Datei auf deinem Telefon. Möglicherweise musst du Speicherberechtigungen für die App erteilen.</string>
     <string name="backup_title">Sicherung</string>
