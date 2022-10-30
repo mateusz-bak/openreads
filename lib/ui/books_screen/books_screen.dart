@@ -35,6 +35,12 @@ class _BooksScreenState extends State<BooksScreen> {
       case SortType.byPages:
         list = _sortByPages(list: list, isAsc: sortState.isAsc);
         break;
+      case SortType.byStartDate:
+        list = _sortByStartDate(list: list, isAsc: sortState.isAsc);
+        break;
+      case SortType.byFinishDate:
+        list = _sortByFinishDate(list: list, isAsc: sortState.isAsc);
+        break;
       default:
         list = _sortByTitle(list: list, isAsc: sortState.isAsc);
         break;
@@ -129,6 +135,60 @@ class _BooksScreenState extends State<BooksScreen> {
           });
 
     return booksWithPages + booksWithoutPages;
+  }
+
+  List<Book> _sortByStartDate({
+    required List<Book> list,
+    required bool isAsc,
+  }) {
+    List<Book> booksWithoutStartDate = List.empty(growable: true);
+    List<Book> booksWithStartDate = List.empty(growable: true);
+
+    for (Book book in list) {
+      (book.startDate != null)
+          ? booksWithStartDate.add(book)
+          : booksWithoutStartDate.add(book);
+    }
+
+    !isAsc
+        ? booksWithStartDate.sort((a, b) {
+            return (DateTime.parse(a.startDate!).millisecondsSinceEpoch)
+                .compareTo(DateTime.parse(b.startDate!).millisecondsSinceEpoch);
+          })
+        : booksWithStartDate.sort((b, a) {
+            return (DateTime.parse(a.startDate!).millisecondsSinceEpoch)
+                .compareTo(DateTime.parse(b.startDate!).millisecondsSinceEpoch);
+          });
+
+    return booksWithStartDate + booksWithoutStartDate;
+  }
+
+  List<Book> _sortByFinishDate({
+    required List<Book> list,
+    required bool isAsc,
+  }) {
+    List<Book> booksWithoutFinishDate = List.empty(growable: true);
+    List<Book> booksWithFinishDate = List.empty(growable: true);
+
+    for (Book book in list) {
+      (book.finishDate != null)
+          ? booksWithFinishDate.add(book)
+          : booksWithoutFinishDate.add(book);
+    }
+
+    !isAsc
+        ? booksWithFinishDate.sort((a, b) {
+            return (DateTime.parse(a.finishDate!).millisecondsSinceEpoch)
+                .compareTo(
+                    DateTime.parse(b.finishDate!).millisecondsSinceEpoch);
+          })
+        : booksWithFinishDate.sort((b, a) {
+            return (DateTime.parse(a.finishDate!).millisecondsSinceEpoch)
+                .compareTo(
+                    DateTime.parse(b.finishDate!).millisecondsSinceEpoch);
+          });
+
+    return booksWithFinishDate + booksWithoutFinishDate;
   }
 
   @override
