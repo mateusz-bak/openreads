@@ -1,5 +1,6 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:loading_animation_widget/loading_animation_widget.dart';
 import 'package:openreads/core/themes/app_theme.dart';
 
 class BookCardExtra extends StatelessWidget {
@@ -18,7 +19,7 @@ class BookCardExtra extends StatelessWidget {
 
   static const String coverBaseUrl = 'https://covers.openlibrary.org/';
 
-  late final String coverUrl = '$coverBaseUrl/b/olid/$openLibraryKey-M.jpg';
+  late final String coverUrl = '${coverBaseUrl}b/olid/$openLibraryKey-M.jpg';
 
   @override
   Widget build(BuildContext context) {
@@ -44,9 +45,10 @@ class BookCardExtra extends StatelessWidget {
                           placeholder: (context, url) => Center(
                             child: Container(
                               padding: const EdgeInsets.all(5),
-                              width: 24,
-                              height: 24,
-                              child: const CircularProgressIndicator(),
+                              child: LoadingAnimationWidget.threeArchedCircle(
+                                color: Theme.of(context).primaryColor,
+                                size: 24,
+                              ),
                             ),
                           ),
                           errorWidget: (context, url, error) =>

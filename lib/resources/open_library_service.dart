@@ -2,10 +2,9 @@ import 'package:http/http.dart';
 import 'package:openreads/model/open_library_search_result.dart';
 
 class OpenLibraryService {
-  Future<OpenLibrarySearchResult> getResults(String query) async {
+  Future<OpenLibrarySearchResult> getResults(String query, int offset) async {
     const baseUrl = 'http://openlibrary.org/';
     const limit = '20';
-    const offset = '0';
 
     final response = await get(
       Uri.parse(

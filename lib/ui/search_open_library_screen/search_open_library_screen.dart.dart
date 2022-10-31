@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:loading_animation_widget/loading_animation_widget.dart';
 import 'package:openreads/logic/bloc/open_library_bloc.dart';
 import 'package:openreads/ui/add_book_screen/widgets/widgets.dart';
-import 'package:openreads/ui/search_open_library_screen.dart/widgets/widgets.dart';
+import 'package:openreads/ui/search_open_library_screen/widgets/widgets.dart';
 
 class SearchOpenLibrary extends StatefulWidget {
   const SearchOpenLibrary({super.key});
@@ -13,12 +14,20 @@ class SearchOpenLibrary extends StatefulWidget {
 
 class _SearchOpenLibraryState extends State<SearchOpenLibrary> {
   late TextEditingController _searchController;
+  int offset = 0;
 
-  void _startOpenLibrarySearch() {
+  void _startOpenLibrarySearch(bool nextPage) {
     if (_searchController.text.isEmpty) return;
+
+    if (nextPage) {
+      offset += 20;
+    } else {
+      offset = 0;
+    }
 
     BlocProvider.of<OpenLibraryBloc>(context).add(LoadApiEvent(
       _searchController.text,
+      offset,
     ));
   }
 
@@ -63,7 +72,7 @@ class _SearchOpenLibraryState extends State<SearchOpenLibrary> {
                   child: ElevatedButton(
                     onPressed: () {
                       FocusManager.instance.primaryFocus?.unfocus();
-                      _startOpenLibrarySearch();
+                      _startOpenLibrarySearch(false);
                     },
                     style: ElevatedButton.styleFrom(
                       elevation: 0,
@@ -82,9 +91,12 @@ class _SearchOpenLibraryState extends State<SearchOpenLibrary> {
           BlocBuilder<OpenLibraryBloc, OpenLibraryState>(
               builder: (context, state) {
             if (state is OpenLibraryLoadingState) {
-              return const Expanded(
+              return Expanded(
                 child: Center(
-                  child: CircularProgressIndicator(),
+                  child: LoadingAnimationWidget.staggeredDotsWave(
+                    color: Theme.of(context).primaryColor,
+                    size: 50,
+                  ),
                 ),
               );
             } else if (state is OpenLibraryLoadedState) {
@@ -93,17 +105,36 @@ class _SearchOpenLibraryState extends State<SearchOpenLibrary> {
                   child: Column(
                     children: [
                       Padding(
-                        padding: const EdgeInsets.fromLTRB(10, 0, 0, 10),
+                        padding: const EdgeInsets.fromLTRB(10, 0, 10, 10),
                         child: Row(
-                          mainAxisAlignment: MainAxisAlignment.start,
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-                                Text('Found ${state.docs!.length} results'),
+                                Text('${offset + 20}/${state.numFound}'),
                                 Text('numFound: ${state.numFound}'),
                                 Text('numFoundExact: ${state.numFoundExact}'),
                               ],
+                            ),
+                            SizedBox(
+                              height: 51,
+                              child: ElevatedButton(
+                                onPressed: () {
+                                  FocusManager.instance.primaryFocus?.unfocus();
+                                  _startOpenLibrarySearch(true);
+                                },
+                                style: ElevatedButton.styleFrom(
+                                  elevation: 0,
+                                  backgroundColor:
+                                      Theme.of(context).primaryColor,
+                                  foregroundColor: Colors.white,
+                                  shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(5.0),
+                                  ),
+                                ),
+                                child: const Text("Next page"),
+                              ),
                             ),
                           ],
                         ),

@@ -6,7 +6,8 @@ abstract class OpenLibraryEvent extends Equatable {
 
 class LoadApiEvent extends OpenLibraryEvent {
   final String query;
-  const LoadApiEvent(this.query);
+  final int offset;
+  const LoadApiEvent(this.query, this.offset);
 
   @override
   List<Object?> get props => [query];

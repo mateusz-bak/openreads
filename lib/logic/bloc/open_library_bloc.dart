@@ -27,7 +27,10 @@ class OpenLibraryBloc extends Bloc<OpenLibraryEvent, OpenLibraryState> {
     on<LoadApiEvent>((event, emit) async {
       emit(OpenLibraryLoadingState());
 
-      final result = await _openLibraryService.getResults(event.query);
+      final result = await _openLibraryService.getResults(
+        event.query,
+        event.offset,
+      );
 
       emit(OpenLibraryLoadedState(
         result.docs,
