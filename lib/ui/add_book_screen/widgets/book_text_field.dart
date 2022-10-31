@@ -44,7 +44,7 @@ class _BookTextFieldState extends State<BookTextField> {
       decoration: BoxDecoration(
         color: Theme.of(context).backgroundColor,
         borderRadius: BorderRadius.circular(5),
-        border: Border.all(color: Theme.of(context).secondaryTextColor),
+        border: Border.all(color: Theme.of(context).outlineColor),
       ),
       child: Scrollbar(
         child: TextField(

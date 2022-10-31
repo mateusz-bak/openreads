@@ -96,7 +96,7 @@ class _SortBottomSheetState extends State<SortBottomSheet> {
                       value: _getDropdownValue(sortState.sortType),
                       buttonDecoration: BoxDecoration(
                         border: Border.all(
-                          color: Theme.of(context).mainTextColor,
+                          color: Theme.of(context).secondaryTextColor,
                         ),
                         borderRadius: BorderRadius.circular(5),
                       ),
@@ -107,7 +107,7 @@ class _SortBottomSheetState extends State<SortBottomSheet> {
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(5),
                         border: Border.all(
-                          color: Theme.of(context).mainTextColor,
+                          color: Theme.of(context).secondaryTextColor,
                         ),
                       ),
                       child: (sortState.isAsc)

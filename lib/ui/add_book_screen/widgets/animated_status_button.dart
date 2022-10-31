@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:openreads/core/themes/app_theme.dart';
 
 class AnimatedStatusButton extends StatelessWidget {
   const AnimatedStatusButton({
@@ -39,6 +40,7 @@ class AnimatedStatusButton extends StatelessWidget {
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(5),
             color: backgroundColor,
+            border: Border.all(color: Theme.of(context).outlineColor),
           ),
           child: Padding(
             padding: const EdgeInsets.all(4.0),

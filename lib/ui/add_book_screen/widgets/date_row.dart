@@ -45,7 +45,7 @@ class DateRow extends StatelessWidget {
                   ? (MediaQuery.of(context).size.width - 20)
                   : (status == 2)
                       ? (MediaQuery.of(context).size.width - 20)
-                      : (MediaQuery.of(context).size.width - 30) / 2,
+                      : (MediaQuery.of(context).size.width - 40) / 2,
               child: SetDateButton(
                 defaultHeight: defaultHeight,
                 icon: Icons.timer_outlined,
@@ -59,14 +59,14 @@ class DateRow extends StatelessWidget {
             ),
             AnimatedContainer(
               duration: animDuration,
-              width: (status == 0) ? 10 : 0,
+              width: (status == 0) ? 20 : 0,
             ),
             AnimatedContainer(
               clipBehavior: Clip.hardEdge,
               decoration: const BoxDecoration(),
               duration: animDuration,
               width: (status == 0)
-                  ? (MediaQuery.of(context).size.width - 30) / 2
+                  ? (MediaQuery.of(context).size.width - 40) / 2
                   : 0,
               child: SetDateButton(
                 defaultHeight: defaultHeight,

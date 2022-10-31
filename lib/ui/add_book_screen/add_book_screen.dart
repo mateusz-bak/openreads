@@ -429,7 +429,7 @@ class _AddBookState extends State<AddBook> {
                               defaultHeight: _defaultHeight,
                               onPressed: _loadCoverFromStorage,
                             ),
-                  const SizedBox(height: 15.0),
+                  const SizedBox(height: 20),
                   BookTextField(
                     controller: _titleController,
                     hint: 'Enter a title',
@@ -439,7 +439,7 @@ class _AddBookState extends State<AddBook> {
                     maxLines: 5,
                     maxLength: 255,
                   ),
-                  const SizedBox(height: 15.0),
+                  const SizedBox(height: 20),
                   BookTextField(
                     controller: _authorController,
                     hint: 'Enter an author',
@@ -448,7 +448,7 @@ class _AddBookState extends State<AddBook> {
                     maxLines: 5,
                     maxLength: 255,
                   ),
-                  const SizedBox(height: 15.0),
+                  const SizedBox(height: 20),
                   BookStatusRow(
                     animDuration: _animDuration,
                     defaultHeight: _defaultHeight,
@@ -457,7 +457,7 @@ class _AddBookState extends State<AddBook> {
                     widths: widths,
                     onPressed: _changeBookStatus,
                   ),
-                  const SizedBox(height: 15.0),
+                  const SizedBox(height: 20),
                   BookRatingBar(
                     animDuration: _animDuration,
                     status: _status,
@@ -467,7 +467,7 @@ class _AddBookState extends State<AddBook> {
                   ),
                   AnimatedContainer(
                     duration: _animDuration,
-                    height: (_status == 0) ? 15 : 0,
+                    height: (_status == 0) ? 20 : 0,
                   ),
                   DateRow(
                     animDuration: _animDuration,
@@ -484,7 +484,7 @@ class _AddBookState extends State<AddBook> {
                   ),
                   AnimatedContainer(
                     duration: _animDuration,
-                    height: (_status == 2 || _status == null) ? 0 : 15,
+                    height: (_status == 2 || _status == null) ? 0 : 20,
                   ),
                   Row(
                     children: [
@@ -500,7 +500,7 @@ class _AddBookState extends State<AddBook> {
                           maxLength: 10,
                         ),
                       ),
-                      const SizedBox(width: 10),
+                      const SizedBox(width: 20),
                       Expanded(
                         child: BookTextField(
                           controller: _pubYearController,
@@ -515,7 +515,7 @@ class _AddBookState extends State<AddBook> {
                       ),
                     ],
                   ),
-                  const SizedBox(height: 15.0),
+                  const SizedBox(height: 20),
                   BookTextField(
                     controller: _isbnController,
                     hint: 'ISBN',
@@ -526,7 +526,7 @@ class _AddBookState extends State<AddBook> {
                     ],
                     maxLength: 20,
                   ),
-                  const SizedBox(height: 15.0),
+                  const SizedBox(height: 20),
                   BookTextField(
                     controller: _olidController,
                     hint: 'Open Library ID',
@@ -534,7 +534,7 @@ class _AddBookState extends State<AddBook> {
                     keyboardType: TextInputType.text,
                     maxLength: 20,
                   ),
-                  const SizedBox(height: 15.0),
+                  const SizedBox(height: 20),
                   Container(
                     height: _defaultHeight,
                     padding: const EdgeInsets.symmetric(
@@ -544,6 +544,7 @@ class _AddBookState extends State<AddBook> {
                     decoration: BoxDecoration(
                       color: Theme.of(context).backgroundColor,
                       borderRadius: BorderRadius.circular(5),
+                      border: Border.all(color: Theme.of(context).outlineColor),
                     ),
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.center,
@@ -568,7 +569,7 @@ class _AddBookState extends State<AddBook> {
                       ],
                     ),
                   ),
-                  const SizedBox(height: 15.0),
+                  const SizedBox(height: 20),
                   BookTextField(
                     controller: _myReviewController,
                     hint: 'My review',

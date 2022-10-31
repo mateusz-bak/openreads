@@ -34,6 +34,7 @@ class SetDateButton extends StatelessWidget {
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(5),
                 color: Theme.of(context).backgroundColor,
+                border: Border.all(color: Theme.of(context).outlineColor),
               ),
               child: Padding(
                 padding: const EdgeInsets.symmetric(

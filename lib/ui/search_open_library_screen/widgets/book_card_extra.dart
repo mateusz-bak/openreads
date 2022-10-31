@@ -24,7 +24,7 @@ class BookCardExtra extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.fromLTRB(10, 10, 10, 0),
+      padding: const EdgeInsets.fromLTRB(10, 0, 10, 20),
       child: InkWell(
         onTap: onPressed,
         child: Container(
@@ -32,6 +32,7 @@ class BookCardExtra extends StatelessWidget {
           decoration: BoxDecoration(
             color: Theme.of(context).backgroundColor,
             borderRadius: BorderRadius.circular(5),
+            border: Border.all(color: Theme.of(context).outlineColor),
           ),
           child: Row(
             children: [

@@ -10,6 +10,7 @@ class AppTheme {
   static Color lightPrimaryColor = const Color(0xff344e41);
   static Color lightMainText = Colors.black;
   static Color lightSecondaryText = Colors.black54;
+  static Color lightOutlineColor = const Color.fromARGB(255, 134, 134, 134);
 
   static Color darkBackgroundColor = const Color.fromARGB(255, 22, 22, 22);
   static Color darkSecondaryBackgroundColor =
@@ -17,6 +18,7 @@ class AppTheme {
   static Color darkPrimaryColor = const Color(0xff3a5a40);
   static Color darkMainText = Colors.white;
   static Color darkSecondaryText = Colors.white70;
+  static Color darkOutlineColor = const Color.fromARGB(255, 90, 90, 90);
 
   const AppTheme._();
 
@@ -73,4 +75,8 @@ extension ThemeExtras on ThemeData {
 
   Color get onPrimary =>
       brightness == Brightness.light ? Colors.white : Colors.black;
+
+  Color get outlineColor => brightness == Brightness.light
+      ? AppTheme.lightOutlineColor
+      : AppTheme.darkOutlineColor;
 }
