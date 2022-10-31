@@ -6,6 +6,7 @@ import 'package:openreads/logic/cubit/sort_cubit.dart';
 import 'package:openreads/model/book.dart';
 import 'package:openreads/ui/add_book_screen/widgets/widgets.dart';
 import 'package:openreads/ui/books_screen/widgets/widgets.dart';
+import 'package:openreads/ui/search_open_library_screen.dart/search_open_library_screen.dart.dart';
 import 'package:openreads/ui/statistics_screen/statistics_screen.dart';
 
 class BooksScreen extends StatefulWidget {
@@ -226,13 +227,16 @@ class _BooksScreenState extends State<BooksScreen>
         actions: [
           IconButton(
             onPressed: () {
+              FocusManager.instance.primaryFocus?.unfocus();
+
               showModalBottomSheet(
-                  context: context,
-                  isScrollControlled: true,
-                  backgroundColor: Colors.transparent,
-                  builder: (context) {
-                    return const SortBottomSheet();
-                  });
+                context: context,
+                isScrollControlled: true,
+                backgroundColor: Colors.transparent,
+                builder: (context) {
+                  return const SortBottomSheet();
+                },
+              );
             },
             icon: const Icon(Icons.sort),
           ),
@@ -243,7 +247,8 @@ class _BooksScreenState extends State<BooksScreen>
               Navigator.push(
                 context,
                 MaterialPageRoute(
-                    builder: (context) => const StatisticsScreen()),
+                  builder: (context) => const StatisticsScreen(),
+                ),
               );
             },
             icon: const Icon(Icons.bar_chart_rounded),
@@ -256,14 +261,46 @@ class _BooksScreenState extends State<BooksScreen>
           backgroundColor: Theme.of(context).primaryColor,
           onPressed: () {
             showModalBottomSheet(
-                context: context,
-                isScrollControlled: true,
-                builder: (context) {
-                  return AddBook(
-                    topPadding: statusBarHeight,
-                    previousThemeData: Theme.of(context),
-                  );
-                });
+              context: context,
+              isScrollControlled: true,
+              backgroundColor: Colors.transparent,
+              builder: (context) {
+                return AddBookSheet(
+                  addManually: () async {
+                    Navigator.pop(context);
+                    await Future.delayed(const Duration(milliseconds: 100));
+                    if (!mounted) return;
+
+                    showModalBottomSheet(
+                        context: context,
+                        isScrollControlled: true,
+                        builder: (context) {
+                          return AddBook(
+                            topPadding: statusBarHeight,
+                            previousThemeData: Theme.of(context),
+                          );
+                        });
+                  },
+                  searchInOpenLibrary: () async {
+                    Navigator.pop(context);
+                    await Future.delayed(const Duration(milliseconds: 100));
+                    if (!mounted) return;
+
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => const SearchOpenLibrary(),
+                      ),
+                    );
+                  },
+                  scanBarcode: () async {
+                    Navigator.pop(context);
+                    await Future.delayed(const Duration(milliseconds: 100));
+                    if (!mounted) return;
+                  },
+                );
+              },
+            );
           },
           child: const Icon(Icons.add),
         ),

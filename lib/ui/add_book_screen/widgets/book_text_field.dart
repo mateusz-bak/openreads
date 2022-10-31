@@ -1,12 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:openreads/core/themes/app_theme.dart';
 
 class BookTextField extends StatefulWidget {
   const BookTextField({
     Key? key,
     required this.controller,
-    required this.hint,
-    required this.icon,
+    this.hint,
+    this.icon,
     required this.keyboardType,
     required this.maxLength,
     this.inputFormatters,
@@ -16,8 +17,8 @@ class BookTextField extends StatefulWidget {
   }) : super(key: key);
 
   final TextEditingController controller;
-  final String hint;
-  final IconData icon;
+  final String? hint;
+  final IconData? icon;
   final TextInputType? keyboardType;
   final List<TextInputFormatter>? inputFormatters;
   final bool autofocus;
@@ -43,6 +44,7 @@ class _BookTextFieldState extends State<BookTextField> {
       decoration: BoxDecoration(
         color: Theme.of(context).backgroundColor,
         borderRadius: BorderRadius.circular(5),
+        border: Border.all(color: Theme.of(context).secondaryTextColor),
       ),
       child: Scrollbar(
         child: TextField(
@@ -66,7 +68,7 @@ class _BookTextFieldState extends State<BookTextField> {
           },
           decoration: InputDecoration(
             labelText: widget.hint,
-            icon: Icon(widget.icon),
+            icon: (widget.icon != null) ? Icon(widget.icon) : null,
             border: InputBorder.none,
             counterText: widget.hideCounter ? "" : null,
             suffixIcon: showClearButton

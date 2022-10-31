@@ -2,8 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_displaymode/flutter_displaymode.dart';
 import 'package:openreads/core/themes/app_theme.dart';
+import 'package:openreads/logic/bloc/open_library_bloc.dart';
 import 'package:openreads/logic/cubit/sort_cubit.dart';
 import 'package:openreads/logic/cubit/theme_cubit.dart';
+import 'package:openreads/resources/connectivity_service.dart';
+import 'package:openreads/resources/open_library_service.dart';
 import 'package:openreads/ui/books_screen/books_screen.dart';
 
 void main() async {
@@ -20,16 +23,32 @@ class App extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MultiBlocProvider(
+    return MultiRepositoryProvider(
       providers: [
-        BlocProvider<ThemeCubit>(
-          create: (context) => ThemeCubit(),
+        RepositoryProvider(
+          create: (context) => OpenLibraryService(),
         ),
-        BlocProvider<SortCubit>(
-          create: (context) => SortCubit(),
+        RepositoryProvider(
+          create: (context) => ConnectivityService(),
         ),
       ],
-      child: OpenreadsApp(appVersion: appVersion),
+      child: MultiBlocProvider(
+        providers: [
+          BlocProvider<ThemeCubit>(
+            create: (context) => ThemeCubit(),
+          ),
+          BlocProvider<SortCubit>(
+            create: (context) => SortCubit(),
+          ),
+          BlocProvider<OpenLibraryBloc>(
+            create: (context) => OpenLibraryBloc(
+              RepositoryProvider.of<OpenLibraryService>(context),
+              RepositoryProvider.of<ConnectivityService>(context),
+            ),
+          ),
+        ],
+        child: OpenreadsApp(appVersion: appVersion),
+      ),
     );
   }
 }

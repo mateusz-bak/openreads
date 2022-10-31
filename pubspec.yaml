@@ -28,6 +28,10 @@ dependencies:
   fl_chart: ^0.55.2
   intl: ^0.17.0
   dropdown_button2: ^1.8.9
+  equatable: ^2.0.5
+  connectivity_plus: ^3.0.2
+  http: ^0.13.5
+  cached_network_image: ^3.2.2
 
 dev_dependencies:
   flutter_test:
