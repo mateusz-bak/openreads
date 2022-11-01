@@ -4,7 +4,7 @@ import 'package:connectivity_plus/connectivity_plus.dart';
 
 class ConnectivityService {
   final _connectivity = Connectivity();
-  final connectivityStream = StreamController<ConnectivityResult>();
+  final connectivityStream = StreamController<ConnectivityResult>.broadcast();
 
   ConnectivityService() {
     _connectivity.onConnectivityChanged.listen((event) {

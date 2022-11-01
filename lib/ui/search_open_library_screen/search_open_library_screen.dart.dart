@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:loading_animation_widget/loading_animation_widget.dart';
 import 'package:openreads/logic/bloc/open_library_bloc.dart';
 import 'package:openreads/ui/add_book_screen/widgets/widgets.dart';
+import 'package:openreads/ui/search_open_lib_editions_screen/search_open_lib_editions_screen.dart';
 import 'package:openreads/ui/search_open_library_screen/widgets/widgets.dart';
 
 class SearchOpenLibrary extends StatefulWidget {
@@ -12,15 +13,22 @@ class SearchOpenLibrary extends StatefulWidget {
   State<SearchOpenLibrary> createState() => _SearchOpenLibraryState();
 }
 
-class _SearchOpenLibraryState extends State<SearchOpenLibrary> {
+class _SearchOpenLibraryState extends State<SearchOpenLibrary>
+    with AutomaticKeepAliveClientMixin {
   late TextEditingController _searchController;
   int offset = 0;
 
-  void _startOpenLibrarySearch(bool nextPage) {
+  void _startOpenLibrarySearch({bool? nextPage, bool? previousPage}) {
     if (_searchController.text.isEmpty) return;
 
-    if (nextPage) {
+    if (nextPage == true) {
       offset += 20;
+    } else if (previousPage == true) {
+      offset -= 20;
+
+      if (offset < 0) {
+        offset = 0;
+      }
     } else {
       offset = 0;
     }
@@ -45,7 +53,11 @@ class _SearchOpenLibraryState extends State<SearchOpenLibrary> {
   }
 
   @override
+  bool get wantKeepAlive => true;
+
+  @override
   Widget build(BuildContext context) {
+    super.build(context);
     return Scaffold(
       appBar: AppBar(
         title: const Text('Search in Open Library'),
@@ -72,7 +84,7 @@ class _SearchOpenLibraryState extends State<SearchOpenLibrary> {
                   child: ElevatedButton(
                     onPressed: () {
                       FocusManager.instance.primaryFocus?.unfocus();
-                      _startOpenLibrarySearch(false);
+                      _startOpenLibrarySearch();
                     },
                     style: ElevatedButton.styleFrom(
                       elevation: 0,
@@ -113,28 +125,56 @@ class _SearchOpenLibraryState extends State<SearchOpenLibrary> {
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 Text('${offset + 20}/${state.numFound}'),
-                                Text('numFound: ${state.numFound}'),
-                                Text('numFoundExact: ${state.numFoundExact}'),
                               ],
                             ),
-                            SizedBox(
-                              height: 51,
-                              child: ElevatedButton(
-                                onPressed: () {
-                                  FocusManager.instance.primaryFocus?.unfocus();
-                                  _startOpenLibrarySearch(true);
-                                },
-                                style: ElevatedButton.styleFrom(
-                                  elevation: 0,
-                                  backgroundColor:
-                                      Theme.of(context).primaryColor,
-                                  foregroundColor: Colors.white,
-                                  shape: RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(5.0),
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.end,
+                              children: [
+                                (offset != 0)
+                                    ? SizedBox(
+                                        child: ElevatedButton(
+                                          onPressed: () {
+                                            FocusManager.instance.primaryFocus
+                                                ?.unfocus();
+                                            _startOpenLibrarySearch(
+                                                previousPage: true);
+                                          },
+                                          style: ElevatedButton.styleFrom(
+                                            elevation: 0,
+                                            backgroundColor:
+                                                Theme.of(context).primaryColor,
+                                            foregroundColor: Colors.white,
+                                            shape: RoundedRectangleBorder(
+                                              borderRadius:
+                                                  BorderRadius.circular(5.0),
+                                            ),
+                                          ),
+                                          child: const Text("Previous page"),
+                                        ),
+                                      )
+                                    : const SizedBox(),
+                                const SizedBox(width: 10),
+                                SizedBox(
+                                  child: ElevatedButton(
+                                    onPressed: () {
+                                      FocusManager.instance.primaryFocus
+                                          ?.unfocus();
+                                      _startOpenLibrarySearch(nextPage: true);
+                                    },
+                                    style: ElevatedButton.styleFrom(
+                                      elevation: 0,
+                                      backgroundColor:
+                                          Theme.of(context).primaryColor,
+                                      foregroundColor: Colors.white,
+                                      shape: RoundedRectangleBorder(
+                                        borderRadius:
+                                            BorderRadius.circular(5.0),
+                                      ),
+                                    ),
+                                    child: const Text("Next page"),
                                   ),
                                 ),
-                                child: const Text("Next page"),
-                              ),
+                              ],
                             ),
                           ],
                         ),
@@ -144,17 +184,27 @@ class _SearchOpenLibraryState extends State<SearchOpenLibrary> {
                           child: ListView.builder(
                             itemCount: state.docs!.length,
                             itemBuilder: (context, index) {
+                              final doc = state.docs![index];
                               return BookCardExtra(
-                                title: state.docs![index].title ?? '',
-                                author:
-                                    (state.docs![index].authorName != null &&
-                                            state.docs![index].authorName!
-                                                .isNotEmpty)
-                                        ? state.docs![index].authorName![0]
-                                        : '',
-                                openLibraryKey:
-                                    state.docs![index].coverEditionKey,
-                                onPressed: () {},
+                                title: doc.title ?? '',
+                                author: (doc.authorName != null &&
+                                        doc.authorName!.isNotEmpty)
+                                    ? doc.authorName![0]
+                                    : '',
+                                openLibraryKey: doc.coverEditionKey,
+                                doc: doc,
+                                onPressed: () {
+                                  if (doc.seed == null) return;
+
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (context) =>
+                                          SearchOpenLibEditions(
+                                              editions: doc.seed!),
+                                    ),
+                                  );
+                                },
                               );
                             },
                           ),

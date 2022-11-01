@@ -25,21 +25,13 @@ class App extends StatelessWidget {
   Widget build(BuildContext context) {
     return MultiRepositoryProvider(
       providers: [
-        RepositoryProvider(
-          create: (context) => OpenLibraryService(),
-        ),
-        RepositoryProvider(
-          create: (context) => ConnectivityService(),
-        ),
+        RepositoryProvider(create: (context) => OpenLibraryService()),
+        RepositoryProvider(create: (context) => ConnectivityService()),
       ],
       child: MultiBlocProvider(
         providers: [
-          BlocProvider<ThemeCubit>(
-            create: (context) => ThemeCubit(),
-          ),
-          BlocProvider<SortCubit>(
-            create: (context) => SortCubit(),
-          ),
+          BlocProvider<ThemeCubit>(create: (context) => ThemeCubit()),
+          BlocProvider<SortCubit>(create: (context) => SortCubit()),
           BlocProvider<OpenLibraryBloc>(
             create: (context) => OpenLibraryBloc(
               RepositoryProvider.of<OpenLibraryService>(context),

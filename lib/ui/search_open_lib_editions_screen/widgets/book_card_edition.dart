@@ -2,27 +2,22 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:loading_animation_widget/loading_animation_widget.dart';
 import 'package:openreads/core/themes/app_theme.dart';
-import 'package:openreads/model/open_library_search_result.dart';
+import 'package:openreads/model/open_library_edition_result.dart';
 
-class BookCardExtra extends StatelessWidget {
-  BookCardExtra({
+class BookCardEdition extends StatelessWidget {
+  BookCardEdition({
     Key? key,
-    required this.title,
-    required this.author,
-    required this.openLibraryKey,
+    required this.result,
     required this.onPressed,
-    required this.doc,
   }) : super(key: key);
 
-  final String title;
-  final String author;
-  final String? openLibraryKey;
-  final Doc doc;
+  final OpenLibraryEditionResult result;
+
   final Function() onPressed;
 
   static const String coverBaseUrl = 'https://covers.openlibrary.org/';
 
-  late final String coverUrl = '${coverBaseUrl}b/olid/$openLibraryKey-M.jpg';
+  late final String coverUrl = '${coverBaseUrl}b/id/${result.covers}-M.jpg';
 
   @override
   Widget build(BuildContext context) {
@@ -41,11 +36,12 @@ class BookCardExtra extends StatelessWidget {
             children: [
               SizedBox(
                 width: 100,
-                child: (openLibraryKey != null)
+                child: (result.covers != null && result.covers!.isNotEmpty)
                     ? ClipRRect(
                         borderRadius: BorderRadius.circular(2),
                         child: CachedNetworkImage(
-                          imageUrl: coverUrl,
+                          imageUrl:
+                              'https://covers.openlibrary.org/b/id/${result.covers![0]}-M.jpg',
                           placeholder: (context, url) => Center(
                             child: Container(
                               padding: const EdgeInsets.all(5),
@@ -76,7 +72,7 @@ class BookCardExtra extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Text(
-                      title,
+                      result.title.toString(),
                       softWrap: true,
                       overflow: TextOverflow.clip,
                       style: TextStyle(
@@ -87,7 +83,9 @@ class BookCardExtra extends StatelessWidget {
                       ),
                     ),
                     Text(
-                      author,
+                      (result.authors != null && result.authors!.isNotEmpty)
+                          ? result.authors![0].key.toString()
+                          : '',
                       softWrap: true,
                       overflow: TextOverflow.clip,
                       style: TextStyle(
@@ -96,22 +94,10 @@ class BookCardExtra extends StatelessWidget {
                         color: Theme.of(context).secondaryTextColor,
                       ),
                     ),
-                    Text(
-                      'openLibraryKey: $openLibraryKey',
-                      softWrap: true,
-                      overflow: TextOverflow.clip,
-                      style: TextStyle(
-                        fontSize: 15,
-                        letterSpacing: 1,
-                        color: Theme.of(context).secondaryTextColor,
-                      ),
-                    ),
-                    Text('type: ${doc.type}'),
-                    Text('numberOfPagesMedian: ${doc.numberOfPagesMedian}'),
-                    Text('firstPublishYear: ${doc.firstPublishYear}'),
-                    Text('subtitle: ${doc.subtitle}'),
-                    Text('ISBN count: ${doc.isbn?.length}'),
-                    Text('seed count: ${doc.seed?.length}'),
+                    Text('covers: ${result.covers}'),
+                    Text('numberOfPages: ${result.numberOfPages}'),
+                    Text('publishDate: ${result.publishDate}'),
+                    Text('languages: ${result.languages?[0].key}'),
                   ],
                 ),
               ),
