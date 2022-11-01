@@ -85,29 +85,31 @@ class _SortBottomSheetState extends State<SortBottomSheet> {
                 'Sort finished books',
                 style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
               ),
-              const SizedBox(height: 5),
+              const SizedBox(height: 10),
               BlocBuilder<SortCubit, SortState>(
                 builder: (context, sortState) => Row(
                   children: [
-                    CustomDropdownButton2(
-                      hint: 'Select Item',
-                      buttonHeight: 50,
-                      dropdownItems: sortOptions,
-                      value: _getDropdownValue(sortState.sortType),
-                      buttonDecoration: BoxDecoration(
-                        border: Border.all(
-                          color: Theme.of(context).secondaryTextColor,
+                    Expanded(
+                      child: CustomDropdownButton2(
+                        hint: 'Select Item',
+                        buttonHeight: 50,
+                        dropdownItems: sortOptions,
+                        value: _getDropdownValue(sortState.sortType),
+                        buttonDecoration: BoxDecoration(
+                          border: Border.all(
+                            color: Theme.of(context).outlineColor,
+                          ),
+                          borderRadius: BorderRadius.circular(5),
                         ),
-                        borderRadius: BorderRadius.circular(5),
+                        onChanged: (value) => _updateSort(context, value),
                       ),
-                      onChanged: (value) => _updateSort(context, value),
                     ),
                     const SizedBox(width: 15),
                     Container(
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(5),
                         border: Border.all(
-                          color: Theme.of(context).secondaryTextColor,
+                          color: Theme.of(context).outlineColor,
                         ),
                       ),
                       child: (sortState.isAsc)

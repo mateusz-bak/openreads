@@ -94,8 +94,9 @@ class _AddBookState extends State<AddBook> {
     );
   }
 
-  //TODO: finish new book validation
   bool _validate() {
+    ScaffoldMessenger.of(context).removeCurrentSnackBar();
+
     if (_titleController.text.isEmpty) {
       _showSnackbar('Title cannot be empty');
       return false;
@@ -103,6 +104,11 @@ class _AddBookState extends State<AddBook> {
 
     if (_authorController.text.isEmpty) {
       _showSnackbar('Author cannot be empty');
+      return false;
+    }
+
+    if (_status == null) {
+      _showSnackbar('Set book status');
       return false;
     }
 
@@ -203,7 +209,6 @@ class _AddBookState extends State<AddBook> {
       maxWidth: 1024,
       maxHeight: 1024,
       sourcePath: photoXFile!.path,
-      aspectRatio: const CropAspectRatio(ratioX: 2, ratioY: 3),
       compressQuality: 90,
       uiSettings: [
         AndroidUiSettings(
@@ -216,7 +221,6 @@ class _AddBookState extends State<AddBook> {
           activeControlsWidgetColor:
               (mounted) ? Theme.of(context).primaryColor : Colors.teal,
           cropFrameColor: Colors.black87,
-          initAspectRatio: CropAspectRatioPreset.ratio3x2,
           lockAspectRatio: false,
           hideBottomControls: false,
         ),
@@ -400,12 +404,14 @@ class _AddBookState extends State<AddBook> {
             backgroundColor: Theme.of(context).scaffoldBackgroundColor,
             surfaceTintColor: Theme.of(context).scaffoldBackgroundColor,
             actions: [
-              //TODO: change button color based on validation
               TextButton(
                 onPressed: (widget.book == null) ? _saveBook : _updateBook,
-                child: const Text(
+                child: Text(
                   'Save',
-                  style: TextStyle(fontSize: 18),
+                  style: TextStyle(
+                    fontSize: 18,
+                    color: Theme.of(context).mainTextColor,
+                  ),
                 ),
               )
             ],
@@ -579,18 +585,29 @@ class _AddBookState extends State<AddBook> {
                     hideCounter: false,
                     maxLines: 15,
                   ),
-                  const SizedBox(height: 25.0),
+                  const SizedBox(height: 30),
                   Row(
                     children: [
                       Expanded(
-                        flex: 11,
-                        child: MaterialButton(
-                          color: Theme.of(context).secondaryTextColor,
-                          onPressed: () => Navigator.pop(context),
-                          child: const Center(
-                            child: Text(
-                              "Cancel",
-                              style: TextStyle(color: Colors.black),
+                        flex: 10,
+                        child: SizedBox(
+                          height: 51,
+                          child: ElevatedButton(
+                            onPressed: () => Navigator.pop(context),
+                            style: ElevatedButton.styleFrom(
+                              elevation: 0,
+                              backgroundColor:
+                                  Theme.of(context).secondaryTextColor,
+                              foregroundColor: Colors.white,
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(5.0),
+                              ),
+                            ),
+                            child: const Center(
+                              child: Text(
+                                "Cancel",
+                                style: TextStyle(color: Colors.black),
+                              ),
                             ),
                           ),
                         ),
@@ -598,14 +615,24 @@ class _AddBookState extends State<AddBook> {
                       const SizedBox(width: 20),
                       Expanded(
                         flex: 19,
-                        child: MaterialButton(
-                          color: Theme.of(context).primaryColor,
-                          onPressed:
-                              (widget.book == null) ? _saveBook : _updateBook,
-                          child: const Center(
-                            child: Text(
-                              "Save",
-                              style: TextStyle(color: Colors.white),
+                        child: SizedBox(
+                          height: 51,
+                          child: ElevatedButton(
+                            onPressed:
+                                (widget.book == null) ? _saveBook : _updateBook,
+                            style: ElevatedButton.styleFrom(
+                              elevation: 0,
+                              backgroundColor: Theme.of(context).primaryColor,
+                              foregroundColor: Colors.white,
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(5.0),
+                              ),
+                            ),
+                            child: const Center(
+                              child: Text(
+                                "Save",
+                                style: TextStyle(color: Colors.white),
+                              ),
                             ),
                           ),
                         ),

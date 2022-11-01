@@ -4,8 +4,6 @@ import 'package:openreads/model/book_stat.dart';
 import 'package:openreads/resources/repository.dart';
 import 'package:rxdart/rxdart.dart';
 
-final statsCubit = StatsCubit();
-
 class StatsCubit extends Cubit {
   final Repository repository = Repository();
 

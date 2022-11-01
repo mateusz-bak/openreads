@@ -82,11 +82,12 @@ class BookCard extends StatelessWidget {
           decoration: BoxDecoration(
             color: Theme.of(context).backgroundColor,
             borderRadius: BorderRadius.circular(5),
+            border: Border.all(color: Theme.of(context).outlineColor),
           ),
           child: Row(
             children: [
               SizedBox(
-                width: 60,
+                width: (book.cover != null) ? 60 : 0,
                 child: (book.cover != null)
                     ? ClipRRect(
                         borderRadius: BorderRadius.circular(2),
@@ -100,7 +101,7 @@ class BookCard extends StatelessWidget {
                       )
                     : const SizedBox(),
               ),
-              const SizedBox(width: 20),
+              SizedBox(width: (book.cover != null) ? 20 : 0),
               Expanded(
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,

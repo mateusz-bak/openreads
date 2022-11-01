@@ -17,7 +17,13 @@ class ReadStats extends StatelessWidget {
   Widget build(BuildContext context) {
     return Card(
       elevation: 0,
-      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(4)),
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(5),
+        side: BorderSide(
+          color: Theme.of(context).outlineColor,
+          width: 1,
+        ),
+      ),
       color: Theme.of(context).backgroundColor,
       child: Padding(
         padding: const EdgeInsets.all(10.0),

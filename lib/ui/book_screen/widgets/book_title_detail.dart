@@ -16,10 +16,11 @@ class BookTitleDetail extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: const EdgeInsets.symmetric(vertical: 18, horizontal: 5),
+      padding: const EdgeInsets.all(10),
       decoration: BoxDecoration(
         color: Theme.of(context).backgroundColor,
         borderRadius: BorderRadius.circular(5),
+        border: Border.all(color: Theme.of(context).outlineColor),
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
