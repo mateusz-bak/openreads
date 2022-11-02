@@ -63,6 +63,7 @@ class _SearchOLEditionsScreenState extends State<SearchOLEditionsScreen> {
   void _saveEdition({
     required double statusBarHeight,
     required OLEditionResult result,
+    required int cover,
   }) {
     showModalBottomSheet(
       context: context,
@@ -71,20 +72,22 @@ class _SearchOLEditionsScreenState extends State<SearchOLEditionsScreen> {
         return AddBook(
           topPadding: statusBarHeight,
           previousThemeData: Theme.of(context),
-          book: Book(
-              title: result.title!,
-              author: widget.author,
-              pages: result.numberOfPages,
-              isbn: (result.isbn13 != null && result.isbn13!.isNotEmpty)
-                  ? result.isbn13![0]
-                  : (result.isbn10 != null && result.isbn10!.isNotEmpty)
-                      ? result.isbn10![0]
-                      : null,
-              olid: (result.key != null)
-                  ? result.key!.replaceAll('/books/', '')
-                  : null,
-              publicationYear: widget.firstPublishYear),
           fromOpenLibrary: true,
+          cover: cover,
+          book: Book(
+            title: result.title!,
+            author: widget.author,
+            pages: result.numberOfPages,
+            isbn: (result.isbn13 != null && result.isbn13!.isNotEmpty)
+                ? result.isbn13![0]
+                : (result.isbn10 != null && result.isbn10!.isNotEmpty)
+                    ? result.isbn10![0]
+                    : null,
+            olid: (result.key != null)
+                ? result.key!.replaceAll('/books/', '')
+                : null,
+            publicationYear: widget.firstPublishYear,
+          ),
         );
       },
     );
@@ -100,6 +103,7 @@ class _SearchOLEditionsScreenState extends State<SearchOLEditionsScreen> {
           return AddBook(
             topPadding: statusBarHeight,
             previousThemeData: Theme.of(context),
+            fromOpenLibrary: true,
             book: Book(
               title: widget.title,
               author: widget.author,
@@ -112,7 +116,6 @@ class _SearchOLEditionsScreenState extends State<SearchOLEditionsScreen> {
                   : null,
               publicationYear: widget.firstPublishYear,
             ),
-            fromOpenLibrary: true,
           );
         });
   }
@@ -157,6 +160,7 @@ class _SearchOLEditionsScreenState extends State<SearchOLEditionsScreen> {
                             onPressed: () => _saveEdition(
                               statusBarHeight: statusBarHeight,
                               result: filteredList[index],
+                              cover: filteredList[index].covers![0],
                             ),
                           );
                         },

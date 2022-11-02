@@ -2,12 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:image_cropper/image_cropper.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:loading_animation_widget/loading_animation_widget.dart';
 import 'package:openreads/logic/cubit/book_cubit.dart';
 import 'package:openreads/model/book.dart';
 import 'package:openreads/ui/add_book_screen/widgets/widgets.dart';
 import 'package:openreads/core/themes/app_theme.dart';
 import 'package:blurhash_dart/blurhash_dart.dart' as blurhash_dart;
 import 'package:image/image.dart' as img;
+import 'package:http/http.dart' as http;
 
 class AddBook extends StatefulWidget {
   const AddBook({
@@ -17,6 +19,7 @@ class AddBook extends StatefulWidget {
     this.fromOpenLibrary = false,
     this.editingExistingBook = false,
     this.book,
+    this.cover,
   }) : super(key: key);
 
   final double topPadding;
@@ -24,6 +27,7 @@ class AddBook extends StatefulWidget {
   final Book? book;
   final bool fromOpenLibrary;
   final bool editingExistingBook;
+  final int? cover;
 
   @override
   State<AddBook> createState() => _AddBookState();
@@ -59,6 +63,9 @@ class _AddBookState extends State<AddBook> {
   Uint8List? coverForEdit;
 
   String? blurHashString;
+
+  static const String coverBaseUrl = 'https://covers.openlibrary.org/';
+  late final String coverUrl = '${coverBaseUrl}b/id/${widget.cover}-L.jpg';
 
   void _prefillBookDetails() {
     _titleController.text = widget.book?.title ?? '';
@@ -130,7 +137,10 @@ class _AddBookState extends State<AddBook> {
     if (!_validate()) return;
 
     late Uint8List? cover;
-    if (croppedPhoto != null) {
+
+    if (widget.fromOpenLibrary) {
+      cover = coverForEdit;
+    } else if (croppedPhoto != null) {
       cover = await croppedPhoto!.readAsBytes();
     } else {
       cover = null;
@@ -330,22 +340,71 @@ class _AddBookState extends State<AddBook> {
 
     if (croppedPhotoPreview != null) {
       data = await croppedPhotoPreview!.readAsBytes();
+    }
 
-      if (coverForEdit != null) {
-        data = coverForEdit!;
+    if (coverForEdit != null) {
+      data = coverForEdit!;
+    }
+
+    final image = img.decodeImage(data.toList());
+
+    if (!mounted) return;
+
+    setState(() {
+      blurHashString = blurhash_dart.BlurHash.encode(
+        image!,
+        numCompX: 4,
+        numCompY: 3,
+      ).hash;
+    });
+  }
+
+  _downloadCover() async {
+    final response = await http.get(Uri.parse(coverUrl));
+    Uint8List bodyBytes = response.bodyBytes;
+
+    setState(() {
+      coverForEdit = bodyBytes;
+    });
+
+    _generateBlurHash();
+  }
+
+  Widget _buildCover() {
+    if (widget.fromOpenLibrary) {
+      if (coverForEdit == null) {
+        return Padding(
+          padding: const EdgeInsets.symmetric(vertical: 20),
+          child: LoadingAnimationWidget.inkDrop(
+            color: Theme.of(context).primaryColor,
+            size: 32,
+          ),
+        );
+      } else {
+        return CoverView(
+          photoBytes: coverForEdit,
+          onPressed: _loadCoverFromStorage,
+        );
       }
+    }
 
-      final image = img.decodeImage(data.toList());
-
-      if (!mounted) return;
-
-      setState(() {
-        blurHashString = blurhash_dart.BlurHash.encode(
-          image!,
-          numCompX: 4,
-          numCompY: 3,
-        ).hash;
-      });
+    if (coverForEdit != null) {
+      return CoverView(
+        photoBytes: coverForEdit,
+        onPressed: _loadCoverFromStorage,
+      );
+    } else {
+      if (croppedPhotoPreview != null) {
+        return CoverView(
+          croppedPhotoPreview: croppedPhotoPreview,
+          onPressed: _loadCoverFromStorage,
+        );
+      } else {
+        return CoverPlaceholder(
+          defaultHeight: _defaultHeight,
+          onPressed: _loadCoverFromStorage,
+        );
+      }
     }
   }
 
@@ -377,6 +436,10 @@ class _AddBookState extends State<AddBook> {
 
     if (widget.book != null) {
       _prefillBookDetails();
+    }
+
+    if (widget.fromOpenLibrary) {
+      _downloadCover();
     }
   }
 
@@ -433,20 +496,7 @@ class _AddBookState extends State<AddBook> {
               padding: const EdgeInsets.all(10.0),
               child: Column(
                 children: <Widget>[
-                  (coverForEdit != null)
-                      ? CoverView(
-                          photoBytes: coverForEdit,
-                          onPressed: _loadCoverFromStorage,
-                        )
-                      : (croppedPhotoPreview != null)
-                          ? CoverView(
-                              croppedPhotoPreview: croppedPhotoPreview,
-                              onPressed: _loadCoverFromStorage,
-                            )
-                          : CoverPlaceholder(
-                              defaultHeight: _defaultHeight,
-                              onPressed: _loadCoverFromStorage,
-                            ),
+                  _buildCover(),
                   const SizedBox(height: 20),
                   BookTextField(
                     controller: _titleController,

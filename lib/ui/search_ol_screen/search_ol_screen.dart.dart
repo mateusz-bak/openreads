@@ -209,15 +209,14 @@ class _SearchOLScreenState extends State<SearchOLScreen>
                                     MaterialPageRoute(
                                       builder: (context) =>
                                           SearchOLEditionsScreen(
-                                              editions: doc.seed!,
-                                              title: doc.title!,
-                                              author: doc.authorName![0],
-                                              pagesMedian:
-                                                  doc.numberOfPagesMedian,
-                                              isbn: doc.isbn,
-                                              olid: doc.key,
-                                              firstPublishYear:
-                                                  doc.firstPublishYear),
+                                        editions: doc.seed!,
+                                        title: doc.title!,
+                                        author: doc.authorName![0],
+                                        pagesMedian: doc.numberOfPagesMedian,
+                                        isbn: doc.isbn,
+                                        olid: doc.key,
+                                        firstPublishYear: doc.firstPublishYear,
+                                      ),
                                     ),
                                   );
                                 },
