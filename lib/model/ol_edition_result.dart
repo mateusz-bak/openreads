@@ -1,10 +1,10 @@
 import 'dart:convert';
 
-OpenLibraryEditionResult openLibraryEditionResultFromJson(String str) =>
-    OpenLibraryEditionResult.fromJson(json.decode(str));
+OLEditionResult openLibraryEditionResultFromJson(String str) =>
+    OLEditionResult.fromJson(json.decode(str));
 
-class OpenLibraryEditionResult {
-  OpenLibraryEditionResult({
+class OLEditionResult {
+  OLEditionResult({
     this.publishers,
     this.numberOfPages,
     this.isbn10,
@@ -54,8 +54,8 @@ class OpenLibraryEditionResult {
   final Created? created;
   final Created? lastModified;
 
-  factory OpenLibraryEditionResult.fromJson(Map<String, dynamic> json) =>
-      OpenLibraryEditionResult(
+  factory OLEditionResult.fromJson(Map<String, dynamic> json) =>
+      OLEditionResult(
         publishers: json["publishers"] == null
             ? null
             : List<String>.from(json["publishers"].map((x) => x)),

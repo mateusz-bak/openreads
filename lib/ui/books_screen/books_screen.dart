@@ -1,12 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:openreads/core/constants.dart/enums.dart';
+import 'package:openreads/core/themes/app_theme.dart';
 import 'package:openreads/logic/cubit/book_cubit.dart';
 import 'package:openreads/logic/cubit/sort_cubit.dart';
 import 'package:openreads/model/book.dart';
 import 'package:openreads/ui/add_book_screen/widgets/widgets.dart';
 import 'package:openreads/ui/books_screen/widgets/widgets.dart';
-import 'package:openreads/ui/search_open_library_screen/search_open_library_screen.dart.dart';
+import 'package:openreads/ui/search_ol_screen/search_ol_screen.dart.dart';
 import 'package:openreads/ui/statistics_screen/statistics_screen.dart';
 
 class BooksScreen extends StatefulWidget {
@@ -289,7 +290,7 @@ class _BooksScreenState extends State<BooksScreen>
                     Navigator.push(
                       context,
                       MaterialPageRoute(
-                        builder: (context) => const SearchOpenLibrary(),
+                        builder: (context) => const SearchOLScreen(),
                       ),
                     );
                   },
@@ -382,8 +383,18 @@ class _BooksScreenState extends State<BooksScreen>
               Container(
                 color: Theme.of(context).backgroundColor,
                 child: TabBar(
+                  // labelColor: Theme.of(context).mainTextColor,
                   labelColor: Theme.of(context).primaryColor,
                   indicatorColor: Theme.of(context).primaryColor,
+                  // unselectedLabelColor: Theme.of(context).primaryColor,
+                  unselectedLabelColor: Theme.of(context).mainTextColor,
+                  indicator: BoxDecoration(
+                    borderRadius: BorderRadius.circular(5),
+                    border: Border.all(
+                      color: Theme.of(context).outlineColor,
+                    ),
+                    // color: Colors.greenAccent,
+                  ),
                   tabs: const [
                     Tab(
                       child: Text('Finished'),

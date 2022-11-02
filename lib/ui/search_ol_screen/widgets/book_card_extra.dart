@@ -2,7 +2,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:loading_animation_widget/loading_animation_widget.dart';
 import 'package:openreads/core/themes/app_theme.dart';
-import 'package:openreads/model/open_library_search_result.dart';
+import 'package:openreads/model/ol_search_result.dart';
 
 class BookCardExtra extends StatelessWidget {
   BookCardExtra({
@@ -21,7 +21,6 @@ class BookCardExtra extends StatelessWidget {
   final Function() onPressed;
 
   static const String coverBaseUrl = 'https://covers.openlibrary.org/';
-
   late final String coverUrl = '${coverBaseUrl}b/olid/$openLibraryKey-M.jpg';
 
   @override
@@ -40,7 +39,7 @@ class BookCardExtra extends StatelessWidget {
           child: Row(
             children: [
               SizedBox(
-                width: 100,
+                width: 120,
                 child: (openLibraryKey != null)
                     ? ClipRRect(
                         borderRadius: BorderRadius.circular(2),
@@ -96,22 +95,22 @@ class BookCardExtra extends StatelessWidget {
                         color: Theme.of(context).secondaryTextColor,
                       ),
                     ),
-                    Text(
-                      'openLibraryKey: $openLibraryKey',
-                      softWrap: true,
-                      overflow: TextOverflow.clip,
-                      style: TextStyle(
-                        fontSize: 15,
-                        letterSpacing: 1,
-                        color: Theme.of(context).secondaryTextColor,
-                      ),
-                    ),
-                    Text('type: ${doc.type}'),
-                    Text('numberOfPagesMedian: ${doc.numberOfPagesMedian}'),
-                    Text('firstPublishYear: ${doc.firstPublishYear}'),
-                    Text('subtitle: ${doc.subtitle}'),
-                    Text('ISBN count: ${doc.isbn?.length}'),
-                    Text('seed count: ${doc.seed?.length}'),
+                    // Text(
+                    //   'openLibraryKey: $openLibraryKey',
+                    //   softWrap: true,
+                    //   overflow: TextOverflow.clip,
+                    //   style: TextStyle(
+                    //     fontSize: 15,
+                    //     letterSpacing: 1,
+                    //     color: Theme.of(context).secondaryTextColor,
+                    //   ),
+                    // ),
+                    // Text('type: ${doc.type}'),
+                    // Text('numberOfPagesMedian: ${doc.numberOfPagesMedian}'),
+                    // Text('firstPublishYear: ${doc.firstPublishYear}'),
+                    // Text('subtitle: ${doc.subtitle}'),
+                    // Text('ISBN count: ${doc.isbn?.length}'),
+                    // Text('seed count: ${doc.seed?.length}'),
                   ],
                 ),
               ),

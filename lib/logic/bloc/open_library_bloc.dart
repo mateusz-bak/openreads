@@ -3,7 +3,7 @@ import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:openreads/resources/connectivity_service.dart';
 import 'package:openreads/resources/open_library_service.dart';
-import 'package:openreads/model/open_library_search_result.dart';
+import 'package:openreads/model/ol_search_result.dart';
 
 part 'open_library_event.dart';
 part 'open_library_state.dart';

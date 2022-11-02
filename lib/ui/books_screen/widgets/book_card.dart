@@ -74,7 +74,7 @@ class BookCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: EdgeInsets.fromLTRB(10, 10, 10, addBottomPadding ? 90 : 0),
+      padding: EdgeInsets.fromLTRB(10, 0, 10, addBottomPadding ? 90 : 15),
       child: InkWell(
         onTap: onPressed,
         child: Container(

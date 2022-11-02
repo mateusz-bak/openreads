@@ -14,12 +14,16 @@ class AddBook extends StatefulWidget {
     Key? key,
     required this.topPadding,
     required this.previousThemeData,
+    this.fromOpenLibrary = false,
+    this.editingExistingBook = false,
     this.book,
   }) : super(key: key);
 
   final double topPadding;
   final ThemeData previousThemeData;
   final Book? book;
+  final bool fromOpenLibrary;
+  final bool editingExistingBook;
 
   @override
   State<AddBook> createState() => _AddBookState();
@@ -156,6 +160,11 @@ class _AddBookState extends State<AddBook> {
 
     if (!mounted) return;
     Navigator.pop(context);
+
+    if (widget.fromOpenLibrary) {
+      Navigator.pop(context);
+      Navigator.pop(context);
+    }
   }
 
   void _updateBook() async {
@@ -400,12 +409,15 @@ class _AddBookState extends State<AddBook> {
         padding: EdgeInsets.only(top: widget.topPadding),
         child: Scaffold(
           appBar: AppBar(
-            title: const Text('Add new book'),
+            title: Text(
+              widget.editingExistingBook ? 'Edit book' : 'Add new book',
+            ),
             backgroundColor: Theme.of(context).scaffoldBackgroundColor,
             surfaceTintColor: Theme.of(context).scaffoldBackgroundColor,
             actions: [
               TextButton(
-                onPressed: (widget.book == null) ? _saveBook : _updateBook,
+                onPressed:
+                    (widget.editingExistingBook) ? _updateBook : _saveBook,
                 child: Text(
                   'Save',
                   style: TextStyle(
@@ -441,7 +453,10 @@ class _AddBookState extends State<AddBook> {
                     hint: 'Enter a title',
                     icon: Icons.book,
                     keyboardType: TextInputType.text,
-                    autofocus: true,
+                    autofocus:
+                        (widget.fromOpenLibrary || widget.editingExistingBook)
+                            ? false
+                            : true,
                     maxLines: 5,
                     maxLength: 255,
                   ),

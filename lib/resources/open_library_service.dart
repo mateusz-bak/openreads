@@ -1,9 +1,9 @@
 import 'package:http/http.dart';
-import 'package:openreads/model/open_library_edition_result.dart';
-import 'package:openreads/model/open_library_search_result.dart';
+import 'package:openreads/model/ol_edition_result.dart';
+import 'package:openreads/model/ol_search_result.dart';
 
 class OpenLibraryService {
-  Future<OpenLibrarySearchResult> getResults(String query, int offset) async {
+  Future<OLSearchResult> getResults(String query, int offset) async {
     const baseUrl = 'http://openlibrary.org/';
     const limit = '20';
 
@@ -15,7 +15,7 @@ class OpenLibraryService {
     return openLibrarySearchResultFromJson(response.body);
   }
 
-  Future<OpenLibraryEditionResult> getEdition(String edition) async {
+  Future<OLEditionResult> getEdition(String edition) async {
     const baseUrl = 'http://openlibrary.org';
 
     final response = await get(

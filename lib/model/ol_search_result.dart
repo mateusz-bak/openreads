@@ -1,10 +1,10 @@
 import 'dart:convert';
 
-OpenLibrarySearchResult openLibrarySearchResultFromJson(String str) =>
-    OpenLibrarySearchResult.fromJson(json.decode(str));
+OLSearchResult openLibrarySearchResultFromJson(String str) =>
+    OLSearchResult.fromJson(json.decode(str));
 
-class OpenLibrarySearchResult {
-  OpenLibrarySearchResult({
+class OLSearchResult {
+  OLSearchResult({
     this.numFound,
     this.start,
     this.numFoundExact,
@@ -22,8 +22,7 @@ class OpenLibrarySearchResult {
   final String? q;
   final dynamic offset;
 
-  factory OpenLibrarySearchResult.fromJson(Map<String, dynamic> json) =>
-      OpenLibrarySearchResult(
+  factory OLSearchResult.fromJson(Map<String, dynamic> json) => OLSearchResult(
         numFound: json["numFound"],
         start: json["start"],
         numFoundExact: json["numFoundExact"],

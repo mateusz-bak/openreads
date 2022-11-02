@@ -2,18 +2,19 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:loading_animation_widget/loading_animation_widget.dart';
 import 'package:openreads/logic/bloc/open_library_bloc.dart';
+import 'package:openreads/model/ol_search_result.dart';
 import 'package:openreads/ui/add_book_screen/widgets/widgets.dart';
-import 'package:openreads/ui/search_open_lib_editions_screen/search_open_lib_editions_screen.dart';
-import 'package:openreads/ui/search_open_library_screen/widgets/widgets.dart';
+import 'package:openreads/ui/search_ol_editions_screen/search_ol_editions_screen.dart';
+import 'package:openreads/ui/search_ol_screen/widgets/widgets.dart';
 
-class SearchOpenLibrary extends StatefulWidget {
-  const SearchOpenLibrary({super.key});
+class SearchOLScreen extends StatefulWidget {
+  const SearchOLScreen({super.key});
 
   @override
-  State<SearchOpenLibrary> createState() => _SearchOpenLibraryState();
+  State<SearchOLScreen> createState() => _SearchOLScreenState();
 }
 
-class _SearchOpenLibraryState extends State<SearchOpenLibrary>
+class _SearchOLScreenState extends State<SearchOLScreen>
     with AutomaticKeepAliveClientMixin {
   late TextEditingController _searchController;
   int offset = 0;
@@ -42,7 +43,7 @@ class _SearchOpenLibraryState extends State<SearchOpenLibrary>
   @override
   void initState() {
     super.initState();
-    _searchController = TextEditingController();
+    _searchController = TextEditingController(text: 'Harry Potter');
     BlocProvider.of<OpenLibraryBloc>(context).add(ReadyEvent());
   }
 
@@ -113,6 +114,16 @@ class _SearchOpenLibraryState extends State<SearchOpenLibrary>
               );
             } else if (state is OpenLibraryLoadedState) {
               if (state.docs != null) {
+                final filteredResults = List<Doc>.empty(growable: true);
+
+                for (var result in state.docs!) {
+                  if (result.title != null &&
+                      result.authorName != null &&
+                      result.authorName!.isNotEmpty) {
+                    filteredResults.add(result);
+                  }
+                }
+
                 return Expanded(
                   child: Column(
                     children: [
@@ -182,15 +193,12 @@ class _SearchOpenLibraryState extends State<SearchOpenLibrary>
                       Expanded(
                         child: Scrollbar(
                           child: ListView.builder(
-                            itemCount: state.docs!.length,
+                            itemCount: filteredResults.length,
                             itemBuilder: (context, index) {
-                              final doc = state.docs![index];
+                              final doc = filteredResults[index];
                               return BookCardExtra(
-                                title: doc.title ?? '',
-                                author: (doc.authorName != null &&
-                                        doc.authorName!.isNotEmpty)
-                                    ? doc.authorName![0]
-                                    : '',
+                                title: doc.title!,
+                                author: doc.authorName![0],
                                 openLibraryKey: doc.coverEditionKey,
                                 doc: doc,
                                 onPressed: () {
@@ -200,8 +208,16 @@ class _SearchOpenLibraryState extends State<SearchOpenLibrary>
                                     context,
                                     MaterialPageRoute(
                                       builder: (context) =>
-                                          SearchOpenLibEditions(
-                                              editions: doc.seed!),
+                                          SearchOLEditionsScreen(
+                                              editions: doc.seed!,
+                                              title: doc.title!,
+                                              author: doc.authorName![0],
+                                              pagesMedian:
+                                                  doc.numberOfPagesMedian,
+                                              isbn: doc.isbn,
+                                              olid: doc.key,
+                                              firstPublishYear:
+                                                  doc.firstPublishYear),
                                     ),
                                   );
                                 },
