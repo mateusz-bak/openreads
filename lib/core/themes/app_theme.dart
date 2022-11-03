@@ -18,7 +18,7 @@ class AppTheme {
   static Color darkPrimaryColor = const Color(0xff3a5a40);
   static Color darkMainText = Colors.white;
   static Color darkSecondaryText = Colors.white70;
-  static Color darkOutlineColor = const Color.fromARGB(255, 90, 90, 90);
+  static Color darkOutlineColor = const Color.fromARGB(255, 58, 58, 58);
 
   const AppTheme._();
 
@@ -30,6 +30,7 @@ class AppTheme {
     visualDensity: VisualDensity.adaptivePlatformDensity,
     useMaterial3: true,
     primarySwatch: Colours.swatch(lightPrimaryColor),
+    dividerColor: lightOutlineColor,
   );
 
   static final darkTheme = ThemeData(
@@ -40,6 +41,7 @@ class AppTheme {
     visualDensity: VisualDensity.adaptivePlatformDensity,
     useMaterial3: true,
     primarySwatch: Colours.swatch(darkPrimaryColor),
+    dividerColor: darkOutlineColor,
   );
 
   static Brightness get currentSystemBrightness =>
@@ -75,8 +77,4 @@ extension ThemeExtras on ThemeData {
 
   Color get onPrimary =>
       brightness == Brightness.light ? Colors.white : Colors.black;
-
-  Color get outlineColor => brightness == Brightness.light
-      ? AppTheme.lightOutlineColor
-      : AppTheme.darkOutlineColor;
 }

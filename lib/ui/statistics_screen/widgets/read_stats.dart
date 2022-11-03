@@ -20,7 +20,7 @@ class ReadStats extends StatelessWidget {
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(5),
         side: BorderSide(
-          color: Theme.of(context).outlineColor,
+          color: Theme.of(context).dividerColor,
           width: 1,
         ),
       ),

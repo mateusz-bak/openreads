@@ -374,10 +374,10 @@ class _AddBookState extends State<AddBook> {
     if (widget.fromOpenLibrary) {
       if (coverForEdit == null) {
         return Padding(
-          padding: const EdgeInsets.symmetric(vertical: 20),
+          padding: const EdgeInsets.symmetric(vertical: 50),
           child: LoadingAnimationWidget.inkDrop(
             color: Theme.of(context).primaryColor,
-            size: 32,
+            size: 38,
           ),
         );
       } else {
@@ -615,7 +615,7 @@ class _AddBookState extends State<AddBook> {
                     decoration: BoxDecoration(
                       color: Theme.of(context).backgroundColor,
                       borderRadius: BorderRadius.circular(5),
-                      border: Border.all(color: Theme.of(context).outlineColor),
+                      border: Border.all(color: Theme.of(context).dividerColor),
                     ),
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.center,

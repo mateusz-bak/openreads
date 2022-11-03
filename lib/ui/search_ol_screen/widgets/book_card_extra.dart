@@ -34,7 +34,7 @@ class BookCardExtra extends StatelessWidget {
           decoration: BoxDecoration(
             color: Theme.of(context).backgroundColor,
             borderRadius: BorderRadius.circular(5),
-            border: Border.all(color: Theme.of(context).outlineColor),
+            border: Border.all(color: Theme.of(context).dividerColor),
           ),
           child: Row(
             children: [

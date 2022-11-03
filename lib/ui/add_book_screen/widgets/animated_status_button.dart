@@ -40,7 +40,7 @@ class AnimatedStatusButton extends StatelessWidget {
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(5),
             color: backgroundColor,
-            border: Border.all(color: Theme.of(context).outlineColor),
+            border: Border.all(color: Theme.of(context).dividerColor),
           ),
           child: Padding(
             padding: const EdgeInsets.all(4.0),

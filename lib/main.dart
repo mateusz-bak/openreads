@@ -4,6 +4,7 @@ import 'package:flutter_displaymode/flutter_displaymode.dart';
 import 'package:hydrated_bloc/hydrated_bloc.dart';
 import 'package:openreads/core/themes/app_theme.dart';
 import 'package:openreads/logic/bloc/open_lib_bloc/open_lib_bloc.dart';
+import 'package:openreads/logic/bloc/outlines_bloc/outlines_bloc.dart';
 import 'package:openreads/logic/cubit/sort_cubit.dart';
 import 'package:openreads/logic/bloc/theme_bloc/theme_bloc.dart';
 import 'package:openreads/resources/connectivity_service.dart';
@@ -38,6 +39,7 @@ class App extends StatelessWidget {
       child: MultiBlocProvider(
         providers: [
           BlocProvider<ThemeBloc>(create: (context) => ThemeBloc()),
+          BlocProvider<OutlinesBloc>(create: (context) => OutlinesBloc()),
           BlocProvider<SortCubit>(create: (context) => SortCubit()),
           BlocProvider<OpenLibBloc>(
             create: (context) => OpenLibBloc(
@@ -62,6 +64,7 @@ class OpenreadsApp extends StatefulWidget {
 class _OpenreadsAppState extends State<OpenreadsApp>
     with WidgetsBindingObserver {
   late ThemeMode themeMode;
+  late bool outlinesMode;
 
   _decideThemeMode(ThemeState themeState) {
     if (themeState is ThemeLightState) {
@@ -73,18 +76,40 @@ class _OpenreadsAppState extends State<OpenreadsApp>
     }
   }
 
+  _decideOutlinesMode(OutlinesState outlinesState) {
+    if (outlinesState is ShowOutlinesState) {
+      outlinesMode = true;
+    } else {
+      outlinesMode = false;
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<ThemeBloc, ThemeState>(
       builder: (_, themeState) {
         _decideThemeMode(themeState);
 
-        return MaterialApp(
-          title: 'Openreads Flutter',
-          theme: AppTheme.lightTheme,
-          darkTheme: AppTheme.darkTheme,
-          themeMode: themeMode,
-          home: const BooksScreen(),
+        return BlocBuilder<OutlinesBloc, OutlinesState>(
+          builder: (_, outlinesState) {
+            _decideOutlinesMode(outlinesState);
+
+            return MaterialApp(
+              title: 'Openreads Flutter',
+              theme: outlinesMode
+                  ? AppTheme.lightTheme
+                  : AppTheme.lightTheme.copyWith(
+                      dividerColor: Colors.transparent,
+                    ),
+              darkTheme: outlinesMode
+                  ? AppTheme.darkTheme
+                  : AppTheme.darkTheme.copyWith(
+                      dividerColor: Colors.transparent,
+                    ),
+              themeMode: themeMode,
+              home: const BooksScreen(),
+            );
+          },
         );
       },
     );

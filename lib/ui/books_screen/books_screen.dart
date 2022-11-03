@@ -382,17 +382,14 @@ class _BooksScreenState extends State<BooksScreen>
               Container(
                 color: Theme.of(context).backgroundColor,
                 child: TabBar(
-                  // labelColor: Theme.of(context).mainTextColor,
                   labelColor: Theme.of(context).primaryColor,
                   indicatorColor: Theme.of(context).primaryColor,
-                  // unselectedLabelColor: Theme.of(context).primaryColor,
                   unselectedLabelColor: Theme.of(context).mainTextColor,
                   indicator: BoxDecoration(
                     borderRadius: BorderRadius.circular(5),
                     border: Border.all(
-                      color: Theme.of(context).outlineColor,
+                      color: Theme.of(context).dividerColor,
                     ),
-                    // color: Colors.greenAccent,
                   ),
                   tabs: const [
                     Tab(

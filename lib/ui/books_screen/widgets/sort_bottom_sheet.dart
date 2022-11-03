@@ -97,8 +97,9 @@ class _SortBottomSheetState extends State<SortBottomSheet> {
                         value: _getDropdownValue(sortState.sortType),
                         buttonDecoration: BoxDecoration(
                           border: Border.all(
-                            color: Theme.of(context).outlineColor,
+                            color: Theme.of(context).dividerColor,
                           ),
+                          color: Theme.of(context).backgroundColor,
                           borderRadius: BorderRadius.circular(5),
                         ),
                         onChanged: (value) => _updateSort(context, value),
@@ -107,9 +108,10 @@ class _SortBottomSheetState extends State<SortBottomSheet> {
                     const SizedBox(width: 15),
                     Container(
                       decoration: BoxDecoration(
+                        color: Theme.of(context).backgroundColor,
                         borderRadius: BorderRadius.circular(5),
                         border: Border.all(
-                          color: Theme.of(context).outlineColor,
+                          color: Theme.of(context).dividerColor,
                         ),
                       ),
                       child: (sortState.isAsc)

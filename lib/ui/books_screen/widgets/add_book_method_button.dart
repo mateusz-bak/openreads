@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:openreads/core/themes/app_theme.dart';
 
 class AddBookMethodButton extends StatelessWidget {
   const AddBookMethodButton({
@@ -16,6 +15,9 @@ class AddBookMethodButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Material(
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(5),
+      ),
       child: InkWell(
         customBorder: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(5),
@@ -26,7 +28,7 @@ class AddBookMethodButton extends StatelessWidget {
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(5),
             color: Theme.of(context).backgroundColor,
-            border: Border.all(color: Theme.of(context).outlineColor),
+            border: Border.all(color: Theme.of(context).dividerColor),
           ),
           child: Column(
             children: [
