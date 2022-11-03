@@ -1,20 +1,28 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_displaymode/flutter_displaymode.dart';
-import 'package:openreads/core/constants.dart/enums.dart';
+import 'package:hydrated_bloc/hydrated_bloc.dart';
 import 'package:openreads/core/themes/app_theme.dart';
 import 'package:openreads/logic/bloc/open_library_bloc.dart';
 import 'package:openreads/logic/cubit/sort_cubit.dart';
-import 'package:openreads/logic/cubit/theme_cubit.dart';
+import 'package:openreads/logic/bloc/theme_bloc.dart';
 import 'package:openreads/resources/connectivity_service.dart';
 import 'package:openreads/resources/open_library_service.dart';
 import 'package:openreads/ui/books_screen/books_screen.dart';
+import 'package:path_provider/path_provider.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await FlutterDisplayMode.setHighRefreshRate();
 
-  runApp(const App());
+  final storage = await HydratedStorage.build(
+    storageDirectory: await getTemporaryDirectory(),
+  );
+
+  HydratedBlocOverrides.runZoned(
+    () => runApp(const App()),
+    storage: storage,
+  );
 }
 
 class App extends StatelessWidget {
@@ -29,7 +37,7 @@ class App extends StatelessWidget {
       ],
       child: MultiBlocProvider(
         providers: [
-          BlocProvider<ThemeCubit>(create: (context) => ThemeCubit()),
+          BlocProvider<ThemeBloc>(create: (context) => ThemeBloc()),
           BlocProvider<SortCubit>(create: (context) => SortCubit()),
           BlocProvider<OpenLibraryBloc>(
             create: (context) => OpenLibraryBloc(
@@ -55,10 +63,10 @@ class _OpenreadsAppState extends State<OpenreadsApp>
     with WidgetsBindingObserver {
   late ThemeMode themeMode;
 
-  _decideThemeMode(AsyncSnapshot<AppThemeMode> snapshot) {
-    if (snapshot.hasData && snapshot.data == AppThemeMode.light) {
+  _decideThemeMode(ThemeState themeState) {
+    if (themeState is ThemeLightState) {
       themeMode = ThemeMode.light;
-    } else if (snapshot.hasData && snapshot.data == AppThemeMode.dark) {
+    } else if (themeState is ThemeDarkState) {
       themeMode = ThemeMode.dark;
     } else {
       themeMode = ThemeMode.system;
@@ -67,10 +75,9 @@ class _OpenreadsAppState extends State<OpenreadsApp>
 
   @override
   Widget build(BuildContext context) {
-    return StreamBuilder<AppThemeMode>(
-      stream: BlocProvider.of<ThemeCubit>(context).appThemeMode,
-      builder: (context, AsyncSnapshot<AppThemeMode> snapshot) {
-        _decideThemeMode(snapshot);
+    return BlocBuilder<ThemeBloc, ThemeState>(
+      builder: (_, themeState) {
+        _decideThemeMode(themeState);
 
         return MaterialApp(
           title: 'Openreads Flutter',

@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:openreads/core/constants.dart/enums.dart';
-import 'package:openreads/logic/cubit/theme_cubit.dart';
+import 'package:openreads/logic/bloc/theme_bloc.dart';
 import 'package:settings_ui/settings_ui.dart';
 import 'package:url_launcher/url_launcher.dart';
 
@@ -23,40 +21,15 @@ class SettingsScreen extends StatelessWidget {
             title: const Text('Appearance'),
             tiles: <SettingsTile>[
               SettingsTile(
-                leading: StreamBuilder<AppThemeMode>(
-                  stream: BlocProvider.of<ThemeCubit>(context).appThemeMode,
-                  builder: (context, AsyncSnapshot<AppThemeMode> snapshot) {
-                    if (snapshot.hasData) {
-                      switch (snapshot.data) {
-                        case AppThemeMode.auto:
-                          return const Icon(Icons.autorenew);
-                        case AppThemeMode.light:
-                          return const Icon(Icons.sunny);
-                        case AppThemeMode.dark:
-                          return const FaIcon(FontAwesomeIcons.moon);
-                        default:
-                          return const SizedBox();
-                      }
-                    } else {
-                      return const SizedBox();
-                    }
-                  },
-                ),
                 title: const Text('App theme mode'),
-                description: StreamBuilder<AppThemeMode>(
-                  stream: BlocProvider.of<ThemeCubit>(context).appThemeMode,
-                  builder: (context, AsyncSnapshot<AppThemeMode> snapshot) {
-                    if (snapshot.hasData) {
-                      switch (snapshot.data) {
-                        case AppThemeMode.auto:
-                          return const Text('Auto mode');
-                        case AppThemeMode.light:
-                          return const Text('Light mode');
-                        case AppThemeMode.dark:
-                          return const Text('Dark mode');
-                        default:
-                          return const SizedBox();
-                      }
+                description: BlocBuilder<ThemeBloc, ThemeState>(
+                  builder: (_, themeState) {
+                    if (themeState is ThemeAutoState) {
+                      return const Text('Follow system mode');
+                    } else if (themeState is ThemeLightState) {
+                      return const Text('Light mode');
+                    } else if (themeState is ThemeDarkState) {
+                      return const Text('Dark mode');
                     } else {
                       return const SizedBox();
                     }
@@ -70,6 +43,8 @@ class SettingsScreen extends StatelessWidget {
                           shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(5.0),
                           ),
+                          backgroundColor:
+                              Theme.of(context).scaffoldBackgroundColor,
                           child: Padding(
                             padding: const EdgeInsets.symmetric(
                               horizontal: 10,
@@ -83,7 +58,10 @@ class SettingsScreen extends StatelessWidget {
                                   padding: EdgeInsets.only(left: 10),
                                   child: Text(
                                     'Select theme mode',
-                                    style: TextStyle(fontSize: 20),
+                                    style: TextStyle(
+                                      fontSize: 20,
+                                      fontWeight: FontWeight.bold,
+                                    ),
                                   ),
                                 ),
                                 const SizedBox(height: 10),
@@ -93,11 +71,9 @@ class SettingsScreen extends StatelessWidget {
                                       child: SimpleDialogOption(
                                         padding: EdgeInsets.zero,
                                         onPressed: () {
-                                          // BlocProvider.of<ThemeCubit>(context)
-                                          //     .updateAppThemeAuto();
-                                          context
-                                              .read<ThemeCubit>()
-                                              .updateAppThemeAuto();
+                                          BlocProvider.of<ThemeBloc>(context)
+                                              .add(const ChangeThemeEvent(
+                                                  ThemeMode.system));
                                           Navigator.of(context).pop();
                                         },
                                         child: const Padding(
@@ -106,7 +82,7 @@ class SettingsScreen extends StatelessWidget {
                                             vertical: 15,
                                           ),
                                           child: Text(
-                                            'Auto mode',
+                                            'Follow system mode',
                                             style: TextStyle(fontSize: 16),
                                           ),
                                         ),
@@ -121,11 +97,9 @@ class SettingsScreen extends StatelessWidget {
                                       child: SimpleDialogOption(
                                         padding: EdgeInsets.zero,
                                         onPressed: () {
-                                          // BlocProvider.of<ThemeCubit>(context)
-                                          //     .updateAppThemeLight();
-                                          context
-                                              .read<ThemeCubit>()
-                                              .updateAppThemeLight();
+                                          BlocProvider.of<ThemeBloc>(context)
+                                              .add(const ChangeThemeEvent(
+                                                  ThemeMode.light));
                                           Navigator.of(context).pop();
                                         },
                                         child: const Padding(
@@ -149,11 +123,9 @@ class SettingsScreen extends StatelessWidget {
                                       child: SimpleDialogOption(
                                         padding: EdgeInsets.zero,
                                         onPressed: () {
-                                          // BlocProvider.of<ThemeCubit>(context)
-                                          //     .updateAppThemeDark();
-                                          context
-                                              .read<ThemeCubit>()
-                                              .updateAppThemeDark();
+                                          BlocProvider.of<ThemeBloc>(context)
+                                              .add(const ChangeThemeEvent(
+                                                  ThemeMode.dark));
                                           Navigator.of(context).pop();
                                         },
                                         child: const Padding(
@@ -173,7 +145,6 @@ class SettingsScreen extends StatelessWidget {
                               ],
                             ),
                           ),
-                          // title: const Text('Select theme mode'),
                         );
                       });
                 },
