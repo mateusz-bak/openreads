@@ -1,9 +1,8 @@
 import 'package:dropdown_button2/custom_dropdown_button2.dart';
 import 'package:flutter/material.dart';
 import 'package:openreads/core/constants.dart/enums.dart';
-import 'package:openreads/core/themes/app_theme.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:openreads/logic/cubit/sort_cubit.dart';
+import 'package:openreads/logic/bloc/sort_bloc/sort_bloc.dart';
 
 class SortBottomSheet extends StatefulWidget {
   const SortBottomSheet({
@@ -23,36 +22,186 @@ List<String> sortOptions = [
   'Finish date',
 ];
 
-String _getDropdownValue(SortType sortType) {
-  switch (sortType) {
-    case SortType.byAuthor:
-      return sortOptions[1];
-    case SortType.byRating:
-      return sortOptions[2];
-    case SortType.byPages:
-      return sortOptions[3];
-    case SortType.byStartDate:
-      return sortOptions[4];
-    case SortType.byFinishDate:
-      return sortOptions[5];
-    default:
-      return sortOptions[0];
+String _getDropdownValue(SortState state) {
+  if (state is AuthorAscSortState || state is AuthorDescSortState) {
+    return sortOptions[1];
+  } else if (state is RatingAscSortState || state is RatingDescSortState) {
+    return sortOptions[2];
+  } else if (state is PagesAscSortState || state is PagesDescSortState) {
+    return sortOptions[3];
+  } else if (state is StartDateAscSortState ||
+      state is StartDateDescSortState) {
+    return sortOptions[4];
+  } else if (state is FinishDateAscSortState ||
+      state is FinishDateDescSortState) {
+    return sortOptions[5];
+  } else {
+    return sortOptions[0];
   }
 }
 
-void _updateSort(BuildContext context, String? value) {
+Widget _getOrderButton(BuildContext context, SortState state) {
+  if (state is TitleDescSortState ||
+      state is AuthorDescSortState ||
+      state is RatingDescSortState ||
+      state is PagesDescSortState ||
+      state is StartDateDescSortState ||
+      state is FinishDateDescSortState) {
+    return IconButton(
+      icon: const Icon(Icons.arrow_downward),
+      onPressed: () {
+        if (state is TitleDescSortState) {
+          BlocProvider.of<SortBloc>(context).add(
+            const ChangeSortEvent(SortType.byTitle, true),
+          );
+        } else if (state is AuthorDescSortState) {
+          BlocProvider.of<SortBloc>(context).add(
+            const ChangeSortEvent(SortType.byAuthor, true),
+          );
+        } else if (state is RatingDescSortState) {
+          BlocProvider.of<SortBloc>(context).add(
+            const ChangeSortEvent(SortType.byRating, true),
+          );
+        } else if (state is PagesDescSortState) {
+          BlocProvider.of<SortBloc>(context).add(
+            const ChangeSortEvent(SortType.byPages, true),
+          );
+        } else if (state is StartDateDescSortState) {
+          BlocProvider.of<SortBloc>(context).add(
+            const ChangeSortEvent(SortType.byStartDate, true),
+          );
+        } else if (state is FinishDateDescSortState) {
+          BlocProvider.of<SortBloc>(context).add(
+            const ChangeSortEvent(SortType.byFinishDate, true),
+          );
+        }
+      },
+    );
+  } else {
+    return IconButton(
+      icon: const Icon(Icons.arrow_upward),
+      onPressed: () {
+        if (state is TitleAscSortState) {
+          BlocProvider.of<SortBloc>(context).add(
+            const ChangeSortEvent(SortType.byTitle, false),
+          );
+        } else if (state is AuthorAscSortState) {
+          BlocProvider.of<SortBloc>(context).add(
+            const ChangeSortEvent(SortType.byAuthor, false),
+          );
+        } else if (state is RatingAscSortState) {
+          BlocProvider.of<SortBloc>(context).add(
+            const ChangeSortEvent(SortType.byRating, false),
+          );
+        } else if (state is PagesAscSortState) {
+          BlocProvider.of<SortBloc>(context).add(
+            const ChangeSortEvent(SortType.byPages, false),
+          );
+        } else if (state is StartDateAscSortState) {
+          BlocProvider.of<SortBloc>(context).add(
+            const ChangeSortEvent(SortType.byStartDate, false),
+          );
+        } else if (state is FinishDateAscSortState) {
+          BlocProvider.of<SortBloc>(context).add(
+            const ChangeSortEvent(SortType.byFinishDate, false),
+          );
+        }
+      },
+    );
+  }
+}
+
+void _updateSort(BuildContext context, String? value, SortState state) {
   if (value == sortOptions[0]) {
-    context.read<SortCubit>().updateSortMode(sortType: SortType.byTitle);
+    if (state is TitleDescSortState ||
+        state is AuthorDescSortState ||
+        state is RatingDescSortState ||
+        state is PagesDescSortState ||
+        state is StartDateDescSortState ||
+        state is FinishDateDescSortState) {
+      BlocProvider.of<SortBloc>(context).add(
+        const ChangeSortEvent(SortType.byTitle, false),
+      );
+    } else {
+      BlocProvider.of<SortBloc>(context).add(
+        const ChangeSortEvent(SortType.byTitle, true),
+      );
+    }
   } else if (value == sortOptions[1]) {
-    context.read<SortCubit>().updateSortMode(sortType: SortType.byAuthor);
+    if (state is TitleDescSortState ||
+        state is AuthorDescSortState ||
+        state is RatingDescSortState ||
+        state is PagesDescSortState ||
+        state is StartDateDescSortState ||
+        state is FinishDateDescSortState) {
+      BlocProvider.of<SortBloc>(context).add(
+        const ChangeSortEvent(SortType.byAuthor, false),
+      );
+    } else {
+      BlocProvider.of<SortBloc>(context).add(
+        const ChangeSortEvent(SortType.byAuthor, true),
+      );
+    }
   } else if (value == sortOptions[2]) {
-    context.read<SortCubit>().updateSortMode(sortType: SortType.byRating);
+    if (state is TitleDescSortState ||
+        state is AuthorDescSortState ||
+        state is RatingDescSortState ||
+        state is PagesDescSortState ||
+        state is StartDateDescSortState ||
+        state is FinishDateDescSortState) {
+      BlocProvider.of<SortBloc>(context).add(
+        const ChangeSortEvent(SortType.byRating, false),
+      );
+    } else {
+      BlocProvider.of<SortBloc>(context).add(
+        const ChangeSortEvent(SortType.byRating, true),
+      );
+    }
   } else if (value == sortOptions[3]) {
-    context.read<SortCubit>().updateSortMode(sortType: SortType.byPages);
+    if (state is TitleDescSortState ||
+        state is AuthorDescSortState ||
+        state is RatingDescSortState ||
+        state is PagesDescSortState ||
+        state is StartDateDescSortState ||
+        state is FinishDateDescSortState) {
+      BlocProvider.of<SortBloc>(context).add(
+        const ChangeSortEvent(SortType.byPages, false),
+      );
+    } else {
+      BlocProvider.of<SortBloc>(context).add(
+        const ChangeSortEvent(SortType.byPages, true),
+      );
+    }
   } else if (value == sortOptions[4]) {
-    context.read<SortCubit>().updateSortMode(sortType: SortType.byStartDate);
+    if (state is TitleDescSortState ||
+        state is AuthorDescSortState ||
+        state is RatingDescSortState ||
+        state is PagesDescSortState ||
+        state is StartDateDescSortState ||
+        state is FinishDateDescSortState) {
+      BlocProvider.of<SortBloc>(context).add(
+        const ChangeSortEvent(SortType.byStartDate, false),
+      );
+    } else {
+      BlocProvider.of<SortBloc>(context).add(
+        const ChangeSortEvent(SortType.byStartDate, true),
+      );
+    }
   } else if (value == sortOptions[5]) {
-    context.read<SortCubit>().updateSortMode(sortType: SortType.byFinishDate);
+    if (state is TitleDescSortState ||
+        state is AuthorDescSortState ||
+        state is RatingDescSortState ||
+        state is PagesDescSortState ||
+        state is StartDateDescSortState ||
+        state is FinishDateDescSortState) {
+      BlocProvider.of<SortBloc>(context).add(
+        const ChangeSortEvent(SortType.byFinishDate, false),
+      );
+    } else {
+      BlocProvider.of<SortBloc>(context).add(
+        const ChangeSortEvent(SortType.byFinishDate, true),
+      );
+    }
   }
 }
 
@@ -86,15 +235,15 @@ class _SortBottomSheetState extends State<SortBottomSheet> {
                 style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
               ),
               const SizedBox(height: 10),
-              BlocBuilder<SortCubit, SortState>(
-                builder: (context, sortState) => Row(
+              BlocBuilder<SortBloc, SortState>(
+                builder: (context, state) => Row(
                   children: [
                     Expanded(
                       child: CustomDropdownButton2(
                         hint: 'Select Item',
                         buttonHeight: 50,
                         dropdownItems: sortOptions,
-                        value: _getDropdownValue(sortState.sortType),
+                        value: _getDropdownValue(state),
                         buttonDecoration: BoxDecoration(
                           border: Border.all(
                             color: Theme.of(context).dividerColor,
@@ -102,7 +251,11 @@ class _SortBottomSheetState extends State<SortBottomSheet> {
                           color: Theme.of(context).backgroundColor,
                           borderRadius: BorderRadius.circular(5),
                         ),
-                        onChanged: (value) => _updateSort(context, value),
+                        onChanged: (value) => _updateSort(
+                          context,
+                          value,
+                          state,
+                        ),
                       ),
                     ),
                     const SizedBox(width: 15),
@@ -114,19 +267,7 @@ class _SortBottomSheetState extends State<SortBottomSheet> {
                           color: Theme.of(context).dividerColor,
                         ),
                       ),
-                      child: (sortState.isAsc)
-                          ? IconButton(
-                              onPressed: () => context
-                                  .read<SortCubit>()
-                                  .updateSortOrder(false),
-                              icon: const Icon(Icons.arrow_downward),
-                            )
-                          : IconButton(
-                              onPressed: () => context
-                                  .read<SortCubit>()
-                                  .updateSortOrder(true),
-                              icon: const Icon(Icons.arrow_upward),
-                            ),
+                      child: _getOrderButton(context, state),
                     )
                   ],
                 ),

@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:openreads/core/constants.dart/enums.dart';
 import 'package:openreads/core/themes/app_theme.dart';
+import 'package:openreads/logic/bloc/sort_bloc/sort_bloc.dart';
 import 'package:openreads/logic/cubit/book_cubit.dart';
-import 'package:openreads/logic/cubit/sort_cubit.dart';
 import 'package:openreads/model/book.dart';
 import 'package:openreads/ui/add_book_screen/widgets/widgets.dart';
 import 'package:openreads/ui/books_screen/widgets/widgets.dart';
@@ -21,28 +20,33 @@ class BooksScreen extends StatefulWidget {
 class _BooksScreenState extends State<BooksScreen>
     with AutomaticKeepAliveClientMixin {
   List<Book> _sortList({
-    required SortState sortState,
+    required SortState state,
     required List<Book> list,
   }) {
-    switch (sortState.sortType) {
-      case SortType.byAuthor:
-        list = _sortByAuthor(list: list, isAsc: sortState.isAsc);
-        break;
-      case SortType.byRating:
-        list = _sortByRating(list: list, isAsc: sortState.isAsc);
-        break;
-      case SortType.byPages:
-        list = _sortByPages(list: list, isAsc: sortState.isAsc);
-        break;
-      case SortType.byStartDate:
-        list = _sortByStartDate(list: list, isAsc: sortState.isAsc);
-        break;
-      case SortType.byFinishDate:
-        list = _sortByFinishDate(list: list, isAsc: sortState.isAsc);
-        break;
-      default:
-        list = _sortByTitle(list: list, isAsc: sortState.isAsc);
-        break;
+    if (state is AuthorAscSortState) {
+      list = _sortByAuthor(list: list, isAsc: true);
+    } else if (state is AuthorDescSortState) {
+      list = _sortByAuthor(list: list, isAsc: false);
+    } else if (state is RatingAscSortState) {
+      list = _sortByRating(list: list, isAsc: true);
+    } else if (state is RatingDescSortState) {
+      list = _sortByRating(list: list, isAsc: false);
+    } else if (state is PagesAscSortState) {
+      list = _sortByPages(list: list, isAsc: true);
+    } else if (state is PagesDescSortState) {
+      list = _sortByPages(list: list, isAsc: false);
+    } else if (state is StartDateAscSortState) {
+      list = _sortByStartDate(list: list, isAsc: true);
+    } else if (state is StartDateDescSortState) {
+      list = _sortByStartDate(list: list, isAsc: false);
+    } else if (state is FinishDateAscSortState) {
+      list = _sortByFinishDate(list: list, isAsc: true);
+    } else if (state is FinishDateDescSortState) {
+      list = _sortByFinishDate(list: list, isAsc: false);
+    } else if (state is TitleDescSortState) {
+      list = _sortByTitle(list: list, isAsc: false);
+    } else {
+      list = _sortByTitle(list: list, isAsc: true);
     }
 
     return list;
@@ -52,7 +56,7 @@ class _BooksScreenState extends State<BooksScreen>
     required List<Book> list,
     required bool isAsc,
   }) {
-    !isAsc
+    isAsc
         ? list.sort((a, b) {
             return a.title
                 .toString()
@@ -73,7 +77,7 @@ class _BooksScreenState extends State<BooksScreen>
     required List<Book> list,
     required bool isAsc,
   }) {
-    !isAsc
+    isAsc
         ? list.sort((a, b) {
             return a.author
                 .toString()
@@ -101,7 +105,7 @@ class _BooksScreenState extends State<BooksScreen>
       (book.rating != null) ? booksRated.add(book) : booksNotRated.add(book);
     }
 
-    !isAsc
+    isAsc
         ? booksRated.sort((a, b) {
             return a.rating!.compareTo(b.rating!);
           })
@@ -125,7 +129,7 @@ class _BooksScreenState extends State<BooksScreen>
           : booksWithoutPages.add(book);
     }
 
-    !isAsc
+    isAsc
         ? booksWithPages.sort((a, b) {
             return a.pages!.compareTo(b.pages!);
           })
@@ -149,7 +153,7 @@ class _BooksScreenState extends State<BooksScreen>
           : booksWithoutStartDate.add(book);
     }
 
-    !isAsc
+    isAsc
         ? booksWithStartDate.sort((a, b) {
             return (DateTime.parse(a.startDate!).millisecondsSinceEpoch)
                 .compareTo(DateTime.parse(b.startDate!).millisecondsSinceEpoch);
@@ -175,7 +179,7 @@ class _BooksScreenState extends State<BooksScreen>
           : booksWithoutFinishDate.add(book);
     }
 
-    !isAsc
+    isAsc
         ? booksWithFinishDate.sort((a, b) {
             return (DateTime.parse(a.finishDate!).millisecondsSinceEpoch)
                 .compareTo(
@@ -319,11 +323,11 @@ class _BooksScreenState extends State<BooksScreen>
                           if (snapshot.data == null || snapshot.data!.isEmpty) {
                             return const Center(child: Text('No books'));
                           }
-                          return BlocBuilder<SortCubit, SortState>(
+                          return BlocBuilder<SortBloc, SortState>(
                             builder: (context, sortState) {
                               return BooksList(
                                 books: _sortList(
-                                  sortState: sortState,
+                                  state: sortState,
                                   list: snapshot.data!,
                                 ),
                               );
