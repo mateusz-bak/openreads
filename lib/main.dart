@@ -3,9 +3,9 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_displaymode/flutter_displaymode.dart';
 import 'package:hydrated_bloc/hydrated_bloc.dart';
 import 'package:openreads/core/themes/app_theme.dart';
-import 'package:openreads/logic/bloc/open_library_bloc.dart';
+import 'package:openreads/logic/bloc/open_lib_bloc/open_lib_bloc.dart';
 import 'package:openreads/logic/cubit/sort_cubit.dart';
-import 'package:openreads/logic/bloc/theme_bloc.dart';
+import 'package:openreads/logic/bloc/theme_bloc/theme_bloc.dart';
 import 'package:openreads/resources/connectivity_service.dart';
 import 'package:openreads/resources/open_library_service.dart';
 import 'package:openreads/ui/books_screen/books_screen.dart';
@@ -39,8 +39,8 @@ class App extends StatelessWidget {
         providers: [
           BlocProvider<ThemeBloc>(create: (context) => ThemeBloc()),
           BlocProvider<SortCubit>(create: (context) => SortCubit()),
-          BlocProvider<OpenLibraryBloc>(
-            create: (context) => OpenLibraryBloc(
+          BlocProvider<OpenLibBloc>(
+            create: (context) => OpenLibBloc(
               RepositoryProvider.of<OpenLibraryService>(context),
               RepositoryProvider.of<ConnectivityService>(context),
             ),

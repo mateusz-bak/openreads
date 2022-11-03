@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:loading_animation_widget/loading_animation_widget.dart';
-import 'package:openreads/logic/bloc/open_library_bloc.dart';
+import 'package:openreads/logic/bloc/open_lib_bloc/open_lib_bloc.dart';
 import 'package:openreads/model/ol_search_result.dart';
 import 'package:openreads/ui/add_book_screen/widgets/widgets.dart';
 import 'package:openreads/ui/search_ol_editions_screen/search_ol_editions_screen.dart';
@@ -34,7 +34,7 @@ class _SearchOLScreenState extends State<SearchOLScreen>
       offset = 0;
     }
 
-    BlocProvider.of<OpenLibraryBloc>(context).add(LoadApiEvent(
+    BlocProvider.of<OpenLibBloc>(context).add(LoadApiEvent(
       _searchController.text,
       offset,
     ));
@@ -44,7 +44,7 @@ class _SearchOLScreenState extends State<SearchOLScreen>
   void initState() {
     super.initState();
     _searchController = TextEditingController(text: 'Harry Potter');
-    BlocProvider.of<OpenLibraryBloc>(context).add(ReadyEvent());
+    BlocProvider.of<OpenLibBloc>(context).add(ReadyEvent());
   }
 
   @override
@@ -101,9 +101,8 @@ class _SearchOLScreenState extends State<SearchOLScreen>
               ],
             ),
           ),
-          BlocBuilder<OpenLibraryBloc, OpenLibraryState>(
-              builder: (context, state) {
-            if (state is OpenLibraryLoadingState) {
+          BlocBuilder<OpenLibBloc, OpenLibState>(builder: (context, state) {
+            if (state is OpenLibLoadingState) {
               return Expanded(
                 child: Center(
                   child: LoadingAnimationWidget.staggeredDotsWave(
@@ -112,7 +111,7 @@ class _SearchOLScreenState extends State<SearchOLScreen>
                   ),
                 ),
               );
-            } else if (state is OpenLibraryLoadedState) {
+            } else if (state is OpenLibLoadedState) {
               if (state.docs != null) {
                 final filteredResults = List<Doc>.empty(growable: true);
 

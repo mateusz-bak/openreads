@@ -5,17 +5,17 @@ import 'package:openreads/resources/connectivity_service.dart';
 import 'package:openreads/resources/open_library_service.dart';
 import 'package:openreads/model/ol_search_result.dart';
 
-part 'open_library_event.dart';
-part 'open_library_state.dart';
+part 'open_lib_event.dart';
+part 'open_lib_state.dart';
 
-class OpenLibraryBloc extends Bloc<OpenLibraryEvent, OpenLibraryState> {
+class OpenLibBloc extends Bloc<OpenLibEvent, OpenLibState> {
   final OpenLibraryService _openLibraryService;
   final ConnectivityService _connectivityService;
 
-  OpenLibraryBloc(
+  OpenLibBloc(
     this._openLibraryService,
     this._connectivityService,
-  ) : super(OpenLibraryLoadingState()) {
+  ) : super(OpenLibLoadingState()) {
     _connectivityService.connectivityStream.stream.listen((event) {
       if (event == ConnectivityResult.none) {
         add(NoInternetEvent());
@@ -25,14 +25,14 @@ class OpenLibraryBloc extends Bloc<OpenLibraryEvent, OpenLibraryState> {
     });
 
     on<LoadApiEvent>((event, emit) async {
-      emit(OpenLibraryLoadingState());
+      emit(OpenLibLoadingState());
 
       final result = await _openLibraryService.getResults(
         event.query,
         event.offset,
       );
 
-      emit(OpenLibraryLoadedState(
+      emit(OpenLibLoadedState(
         result.docs,
         result.numFound,
         result.numFoundExact,
@@ -40,11 +40,11 @@ class OpenLibraryBloc extends Bloc<OpenLibraryEvent, OpenLibraryState> {
     });
 
     on<ReadyEvent>((event, emit) {
-      emit(OpenLibraryReadyState());
+      emit(OpenLibReadyState());
     });
 
     on<NoInternetEvent>((event, emit) {
-      emit(OpenLibraryNoInternetState());
+      emit(OpenLibNoInternetState());
     });
   }
 }

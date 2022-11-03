@@ -6,11 +6,11 @@ import 'package:openreads/resources/connectivity_service.dart';
 import 'package:openreads/resources/open_library_service.dart';
 import 'package:rxdart/rxdart.dart';
 
-part 'open_library_editions_event.dart';
-part 'open_library_editions_state.dart';
+part 'open_lib_editions_event.dart';
+part 'open_lib_editions_state.dart';
 
-class OpenLibraryEditionsBloc
-    extends Bloc<OpenLibraryEditionsEvent, OpenLibraryEditionsState> {
+class OpenLibEditionsBloc
+    extends Bloc<OpenLibEditionsEvent, OpenLibEditionsState> {
   final OpenLibraryService _openLibraryService;
   final ConnectivityService _connectivityService;
 
@@ -18,10 +18,10 @@ class OpenLibraryEditionsBloc
       BehaviorSubject<List<OLEditionResult>>();
   Stream<List<OLEditionResult>> get editionsList => _editionsListFetcher;
 
-  OpenLibraryEditionsBloc(
+  OpenLibEditionsBloc(
     this._openLibraryService,
     this._connectivityService,
-  ) : super(OpenLibraryEditionsLoadingState()) {
+  ) : super(OpenLibEditionsLoadingState()) {
     _connectivityService.connectivityStream.stream.listen((event) {
       if (event == ConnectivityResult.none) {
         add(NoInternetEditionsEvent());
@@ -45,7 +45,7 @@ class OpenLibraryEditionsBloc
         _editionsListFetcher.sink.add(list);
       }
 
-      emit(const OpenLibraryEditionsLoadedState());
+      emit(const OpenLibEditionsLoadedState());
     });
 
     on<ReadyEditionsEvent>((event, emit) {
@@ -54,11 +54,11 @@ class OpenLibraryEditionsBloc
         list.clear();
         _editionsListFetcher.sink.add(list);
       }
-      emit(OpenLibraryEditionsReadyState());
+      emit(OpenLibEditionsReadyState());
     });
 
     on<NoInternetEditionsEvent>((event, emit) {
-      emit(OpenLibraryEditionsNoInternetState());
+      emit(OpenLibEditionsNoInternetState());
     });
   }
 }

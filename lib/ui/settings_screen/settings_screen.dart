@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:openreads/logic/bloc/theme_bloc.dart';
+import 'package:openreads/logic/bloc/theme_bloc/theme_bloc.dart';
 import 'package:settings_ui/settings_ui.dart';
 import 'package:url_launcher/url_launcher.dart';
 

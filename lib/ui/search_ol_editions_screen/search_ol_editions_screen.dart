@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
-import 'package:openreads/logic/bloc/open_library_editions_bloc.dart';
+import 'package:openreads/logic/bloc/open_lib_editions_bloc/open_lib_editions_bloc.dart';
 import 'package:openreads/model/book.dart';
 import 'package:openreads/model/ol_edition_result.dart';
 import 'package:openreads/resources/connectivity_service.dart';
@@ -45,8 +45,7 @@ class _SearchOLEditionsScreenState extends State<SearchOLEditionsScreen> {
     for (var _ in widget.editions) {
       if (!mounted) return;
 
-      BlocProvider.of<OpenLibraryEditionsBloc>(context)
-          .add(LoadApiEditionsEvent(
+      BlocProvider.of<OpenLibEditionsBloc>(context).add(LoadApiEditionsEvent(
         widget.editions[i],
       ));
 
@@ -125,7 +124,7 @@ class _SearchOLEditionsScreenState extends State<SearchOLEditionsScreen> {
     double statusBarHeight,
   ) {
     return StreamBuilder<List<OLEditionResult>>(
-      stream: BlocProvider.of<OpenLibraryEditionsBloc>(context).editionsList,
+      stream: BlocProvider.of<OpenLibEditionsBloc>(context).editionsList,
       builder: (context, AsyncSnapshot<List<OLEditionResult>> snapshot) {
         if (snapshot.hasData) {
           if (snapshot.data == null || snapshot.data!.isEmpty) {
@@ -187,13 +186,12 @@ class _SearchOLEditionsScreenState extends State<SearchOLEditionsScreen> {
     final statusBarHeight = MediaQuery.of(context).padding.top;
 
     return BlocProvider(
-      create: (context) => OpenLibraryEditionsBloc(
+      create: (context) => OpenLibEditionsBloc(
         RepositoryProvider.of<OpenLibraryService>(context),
         RepositoryProvider.of<ConnectivityService>(context),
       ),
       child: Builder(builder: (context) {
-        BlocProvider.of<OpenLibraryEditionsBloc>(context)
-            .add(ReadyEditionsEvent());
+        BlocProvider.of<OpenLibEditionsBloc>(context).add(ReadyEditionsEvent());
         _getEditions(context);
 
         return Scaffold(
@@ -205,9 +203,9 @@ class _SearchOLEditionsScreenState extends State<SearchOLEditionsScreen> {
           body: Column(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              BlocBuilder<OpenLibraryEditionsBloc, OpenLibraryEditionsState>(
+              BlocBuilder<OpenLibEditionsBloc, OpenLibEditionsState>(
                   builder: (context, state) {
-                if (state is OpenLibraryEditionsLoadedState) {
+                if (state is OpenLibEditionsLoadedState) {
                   return _buildStreamBuilder(context, statusBarHeight);
                 }
                 return const SizedBox();
