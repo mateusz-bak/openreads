@@ -6,3 +6,9 @@ enum SortType {
   byStartDate,
   byFinishDate,
 }
+
+enum AppThemeMode {
+  auto,
+  light,
+  dark,
+}

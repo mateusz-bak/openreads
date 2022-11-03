@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_displaymode/flutter_displaymode.dart';
+import 'package:openreads/core/constants.dart/enums.dart';
 import 'package:openreads/core/themes/app_theme.dart';
 import 'package:openreads/logic/bloc/open_library_bloc.dart';
 import 'package:openreads/logic/cubit/sort_cubit.dart';
@@ -18,8 +19,6 @@ void main() async {
 
 class App extends StatelessWidget {
   const App({super.key});
-
-  final appVersion = '2.0.0-alpha1';
 
   @override
   Widget build(BuildContext context) {
@@ -39,19 +38,14 @@ class App extends StatelessWidget {
             ),
           ),
         ],
-        child: OpenreadsApp(appVersion: appVersion),
+        child: const OpenreadsApp(),
       ),
     );
   }
 }
 
 class OpenreadsApp extends StatefulWidget {
-  const OpenreadsApp({
-    Key? key,
-    required this.appVersion,
-  }) : super(key: key);
-
-  final String appVersion;
+  const OpenreadsApp({Key? key}) : super(key: key);
 
   @override
   State<OpenreadsApp> createState() => _OpenreadsAppState();
@@ -59,31 +53,33 @@ class OpenreadsApp extends StatefulWidget {
 
 class _OpenreadsAppState extends State<OpenreadsApp>
     with WidgetsBindingObserver {
-  @override
-  void initState() {
-    WidgetsBinding.instance.addObserver(this);
-    super.initState();
-  }
+  late ThemeMode themeMode;
 
-  @override
-  void dispose() {
-    WidgetsBinding.instance.removeObserver(this);
-    super.dispose();
-  }
-
-  @override
-  void didChangePlatformBrightness() {
-    context.read<ThemeCubit>().updateAppTheme();
-    super.didChangePlatformBrightness();
+  _decideThemeMode(AsyncSnapshot<AppThemeMode> snapshot) {
+    if (snapshot.hasData && snapshot.data == AppThemeMode.light) {
+      themeMode = ThemeMode.light;
+    } else if (snapshot.hasData && snapshot.data == AppThemeMode.dark) {
+      themeMode = ThemeMode.dark;
+    } else {
+      themeMode = ThemeMode.system;
+    }
   }
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Openreads Flutter',
-      theme: AppTheme.lightTheme,
-      darkTheme: AppTheme.darkTheme,
-      home: BooksScreen(appVersion: widget.appVersion),
+    return StreamBuilder<AppThemeMode>(
+      stream: BlocProvider.of<ThemeCubit>(context).appThemeMode,
+      builder: (context, AsyncSnapshot<AppThemeMode> snapshot) {
+        _decideThemeMode(snapshot);
+
+        return MaterialApp(
+          title: 'Openreads Flutter',
+          theme: AppTheme.lightTheme,
+          darkTheme: AppTheme.darkTheme,
+          themeMode: themeMode,
+          home: const BooksScreen(),
+        );
+      },
     );
   }
 }

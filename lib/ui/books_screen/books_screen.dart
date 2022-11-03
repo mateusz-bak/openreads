@@ -8,15 +8,11 @@ import 'package:openreads/model/book.dart';
 import 'package:openreads/ui/add_book_screen/widgets/widgets.dart';
 import 'package:openreads/ui/books_screen/widgets/widgets.dart';
 import 'package:openreads/ui/search_ol_screen/search_ol_screen.dart.dart';
+import 'package:openreads/ui/settings_screen/settings_screen.dart';
 import 'package:openreads/ui/statistics_screen/statistics_screen.dart';
 
 class BooksScreen extends StatefulWidget {
-  const BooksScreen({
-    Key? key,
-    required this.appVersion,
-  }) : super(key: key);
-
-  final String appVersion;
+  const BooksScreen({Key? key}) : super(key: key);
 
   @override
   State<BooksScreen> createState() => _BooksScreenState();
@@ -209,18 +205,8 @@ class _BooksScreenState extends State<BooksScreen>
       appBar: AppBar(
         title: Row(
           crossAxisAlignment: CrossAxisAlignment.end,
-          children: [
-            const Text(
-              'Openreads',
-            ),
-            const SizedBox(width: 15),
-            Padding(
-              padding: const EdgeInsets.only(bottom: 3),
-              child: Text(
-                widget.appVersion,
-                style: const TextStyle(fontSize: 14),
-              ),
-            ),
+          children: const [
+            Text('Openreads'),
           ],
         ),
         backgroundColor: Theme.of(context).scaffoldBackgroundColor,
@@ -253,7 +239,20 @@ class _BooksScreenState extends State<BooksScreen>
               );
             },
             icon: const Icon(Icons.bar_chart_rounded),
-          )
+          ),
+          IconButton(
+            onPressed: () {
+              FocusManager.instance.primaryFocus?.unfocus();
+
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => const SettingsScreen(),
+                ),
+              );
+            },
+            icon: const Icon(Icons.settings_applications),
+          ),
         ],
       ),
       floatingActionButton: Padding(

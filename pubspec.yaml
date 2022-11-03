@@ -35,6 +35,9 @@ dependencies:
   loading_animation_widget: ^1.2.0+3
   infinite_scroll_pagination: ^3.2.0
   flutter_staggered_grid_view: ^0.6.2
+  settings_ui: ^2.0.2
+  url_launcher: ^6.1.6
+  font_awesome_flutter: ^10.2.1
 
 dev_dependencies:
   flutter_test:
