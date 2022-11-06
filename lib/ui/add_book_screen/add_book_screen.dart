@@ -90,7 +90,7 @@ class _AddBookState extends State<AddBook> {
       _rating = widget.book!.rating!;
     }
 
-    if (widget.book?.status != null) {
+    if (widget.book?.status != null && !widget.fromOpenLibrary) {
       _changeBookStatus(widget.book!.status!);
     }
 
@@ -149,7 +149,8 @@ class _AddBookState extends State<AddBook> {
     bookCubit.addBook(Book(
       title: _titleController.text,
       author: _authorController.text,
-      status: _status,
+      status: _status!,
+      favourite: false,
       rating: (_rating == 0) ? null : _rating,
       startDate: _startDate?.toIso8601String(),
       finishDate: _finishDate?.toIso8601String(),
@@ -193,7 +194,8 @@ class _AddBookState extends State<AddBook> {
       id: widget.book?.id,
       title: _titleController.text,
       author: _authorController.text,
-      status: _status,
+      status: _status!,
+      favourite: false,
       rating: (_rating == 0) ? null : _rating,
       startDate: _startDate?.toIso8601String(),
       finishDate: _finishDate?.toIso8601String(),

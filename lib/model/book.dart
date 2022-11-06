@@ -4,7 +4,8 @@ class Book {
   int? id;
   String title;
   String author;
-  int? status;
+  int status;
+  bool favourite;
   int? rating;
   String? startDate;
   String? finishDate;
@@ -21,7 +22,8 @@ class Book {
     this.id,
     required this.title,
     required this.author,
-    this.status,
+    required this.status,
+    required this.favourite,
     this.rating,
     this.startDate,
     this.finishDate,
@@ -42,6 +44,7 @@ class Book {
       author: json['author'],
       status: json['status'],
       rating: json['rating'],
+      favourite: (json['favourite'] == 1) ? true : false,
       startDate: json['start_date'],
       finishDate: json['finish_date'],
       pages: json['pages'],
@@ -62,6 +65,7 @@ class Book {
       'author': author,
       'status': status,
       'rating': rating,
+      'favourite': favourite ? 1 : 0,
       'start_date': startDate,
       'finish_date': finishDate,
       'pages': pages,
