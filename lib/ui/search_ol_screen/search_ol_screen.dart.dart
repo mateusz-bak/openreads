@@ -43,7 +43,7 @@ class _SearchOLScreenState extends State<SearchOLScreen>
   @override
   void initState() {
     super.initState();
-    _searchController = TextEditingController(text: 'Harry Potter');
+    _searchController = TextEditingController();
     BlocProvider.of<OpenLibBloc>(context).add(ReadyEvent());
   }
 

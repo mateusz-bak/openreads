@@ -1,7 +1,6 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:loading_animation_widget/loading_animation_widget.dart';
-import 'package:openreads/core/themes/app_theme.dart';
 
 class BookCardEdition extends StatelessWidget {
   BookCardEdition({
@@ -38,7 +37,7 @@ class BookCardEdition extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
-                Center(
+                Expanded(
                   child: ClipRRect(
                     borderRadius: BorderRadius.circular(2),
                     child: CachedNetworkImage(
