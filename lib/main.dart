@@ -16,14 +16,11 @@ void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await FlutterDisplayMode.setHighRefreshRate();
 
-  final storage = await HydratedStorage.build(
+  HydratedBloc.storage = await HydratedStorage.build(
     storageDirectory: await getTemporaryDirectory(),
   );
 
-  HydratedBlocOverrides.runZoned(
-    () => runApp(const App()),
-    storage: storage,
-  );
+  runApp(const App());
 }
 
 class App extends StatelessWidget {

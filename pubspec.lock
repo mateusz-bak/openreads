@@ -288,7 +288,7 @@ packages:
       name: hydrated_bloc
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "8.1.0"
+    version: "9.0.0"
   image:
     dependency: "direct main"
     description:
