@@ -14,6 +14,7 @@ class CoverView extends StatefulWidget {
     this.heroTag,
     this.onPressed,
     this.blurHash,
+    this.constrainHeight = true,
   }) : super(key: key);
 
   final CroppedFile? croppedPhotoPreview;
@@ -21,6 +22,7 @@ class CoverView extends StatefulWidget {
   final Function()? onPressed;
   final String? heroTag;
   final String? blurHash;
+  final bool constrainHeight;
 
   @override
   State<CoverView> createState() => _CoverViewState();
@@ -35,7 +37,7 @@ class _CoverViewState extends State<CoverView> {
         children: [
           SizedBox(
             width: MediaQuery.of(context).size.width,
-            height: MediaQuery.of(context).size.height / 3,
+            height: MediaQuery.of(context).size.height / 2.5,
             child: (widget.blurHash == null)
                 ? const SizedBox()
                 : Stack(
@@ -51,7 +53,9 @@ class _CoverViewState extends State<CoverView> {
             padding: const EdgeInsets.all(10),
             child: Center(
               child: Container(
-                height: (MediaQuery.of(context).size.height / 3) - 20,
+                height: widget.constrainHeight
+                    ? ((MediaQuery.of(context).size.height / 2.5) - 20)
+                    : null,
                 decoration: BoxDecoration(
                   color: Colors.grey.shade400,
                   borderRadius: BorderRadius.circular(5),

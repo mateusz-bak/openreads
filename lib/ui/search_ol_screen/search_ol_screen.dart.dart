@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:loading_animation_widget/loading_animation_widget.dart';
 import 'package:openreads/logic/bloc/open_lib_bloc/open_lib_bloc.dart';
+import 'package:openreads/model/book.dart';
 import 'package:openreads/model/ol_search_result.dart';
 import 'package:openreads/ui/add_book_screen/widgets/widgets.dart';
 import 'package:openreads/ui/search_ol_editions_screen/search_ol_editions_screen.dart';
@@ -16,8 +17,9 @@ class SearchOLScreen extends StatefulWidget {
 
 class _SearchOLScreenState extends State<SearchOLScreen>
     with AutomaticKeepAliveClientMixin {
-  late TextEditingController _searchController;
+  final _searchController = TextEditingController();
   int offset = 0;
+  late double statusBarHeight;
 
   void _startOpenLibrarySearch({bool? nextPage, bool? previousPage}) {
     if (_searchController.text.isEmpty) return;
@@ -40,10 +42,42 @@ class _SearchOLScreenState extends State<SearchOLScreen>
     ));
   }
 
+  void _saveNoEdition({
+    required double statusBarHeight,
+    required List<String> editions,
+    required String title,
+    required String author,
+    int? firstPublishYear,
+    int? pagesMedian,
+    List<String>? isbn,
+    String? olid,
+  }) {
+    final book = Book(
+      title: title,
+      author: author,
+      status: 0,
+      favourite: false,
+      pages: pagesMedian,
+      isbn: (isbn != null && isbn.isNotEmpty) ? isbn[0] : null,
+      olid: (olid != null) ? olid.replaceAll('/works/', '') : null,
+      publicationYear: firstPublishYear,
+    );
+
+    showModalBottomSheet(
+      context: context,
+      isScrollControlled: true,
+      builder: (context) => AddBook(
+        topPadding: statusBarHeight,
+        previousThemeData: Theme.of(context),
+        fromOpenLibrary: true,
+        book: book,
+      ),
+    );
+  }
+
   @override
   void initState() {
     super.initState();
-    _searchController = TextEditingController();
     BlocProvider.of<OpenLibBloc>(context).add(ReadyEvent());
   }
 
@@ -59,16 +93,21 @@ class _SearchOLScreenState extends State<SearchOLScreen>
   @override
   Widget build(BuildContext context) {
     super.build(context);
+    statusBarHeight = MediaQuery.of(context).padding.top;
+
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Search in Open Library'),
+        title: const Text(
+          'Search in Open Library',
+          style: TextStyle(fontSize: 18),
+        ),
         backgroundColor: Theme.of(context).scaffoldBackgroundColor,
         scrolledUnderElevation: 0,
       ),
       body: Column(
         children: [
           Padding(
-            padding: const EdgeInsets.all(10.0),
+            padding: const EdgeInsets.fromLTRB(10, 10, 10, 5),
             child: Row(
               children: [
                 Expanded(
@@ -95,7 +134,10 @@ class _SearchOLScreenState extends State<SearchOLScreen>
                         borderRadius: BorderRadius.circular(5.0),
                       ),
                     ),
-                    child: const Text("Search"),
+                    child: const Text(
+                      "Search",
+                      style: TextStyle(fontSize: 12),
+                    ),
                   ),
                 ),
               ],
@@ -127,62 +169,16 @@ class _SearchOLScreenState extends State<SearchOLScreen>
                   child: Column(
                     children: [
                       Padding(
-                        padding: const EdgeInsets.fromLTRB(10, 0, 10, 10),
+                        padding: const EdgeInsets.fromLTRB(18, 0, 10, 20),
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-                                Text('${offset + 20}/${state.numFound}'),
-                              ],
-                            ),
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.end,
-                              children: [
-                                (offset != 0)
-                                    ? SizedBox(
-                                        child: ElevatedButton(
-                                          onPressed: () {
-                                            FocusManager.instance.primaryFocus
-                                                ?.unfocus();
-                                            _startOpenLibrarySearch(
-                                                previousPage: true);
-                                          },
-                                          style: ElevatedButton.styleFrom(
-                                            elevation: 0,
-                                            backgroundColor:
-                                                Theme.of(context).primaryColor,
-                                            foregroundColor: Colors.white,
-                                            shape: RoundedRectangleBorder(
-                                              borderRadius:
-                                                  BorderRadius.circular(5.0),
-                                            ),
-                                          ),
-                                          child: const Text("Previous page"),
-                                        ),
-                                      )
-                                    : const SizedBox(),
-                                const SizedBox(width: 10),
-                                SizedBox(
-                                  child: ElevatedButton(
-                                    onPressed: () {
-                                      FocusManager.instance.primaryFocus
-                                          ?.unfocus();
-                                      _startOpenLibrarySearch(nextPage: true);
-                                    },
-                                    style: ElevatedButton.styleFrom(
-                                      elevation: 0,
-                                      backgroundColor:
-                                          Theme.of(context).primaryColor,
-                                      foregroundColor: Colors.white,
-                                      shape: RoundedRectangleBorder(
-                                        borderRadius:
-                                            BorderRadius.circular(5.0),
-                                      ),
-                                    ),
-                                    child: const Text("Next page"),
-                                  ),
+                                Text(
+                                  '${state.numFound} results',
+                                  style: const TextStyle(fontSize: 12),
                                 ),
                               ],
                             ),
@@ -195,13 +191,26 @@ class _SearchOLScreenState extends State<SearchOLScreen>
                             itemCount: filteredResults.length,
                             itemBuilder: (context, index) {
                               final doc = filteredResults[index];
-                              return BookCardExtra(
+                              return BookCardOL(
                                 title: doc.title!,
                                 author: doc.authorName![0],
                                 openLibraryKey: doc.coverEditionKey,
                                 doc: doc,
-                                onPressed: () {
-                                  if (doc.seed == null) return;
+                                editions: doc.seed,
+                                pagesMedian: doc.numberOfPagesMedian,
+                                firstPublishYear: doc.firstPublishYear,
+                                onAddBookPressed: () => _saveNoEdition(
+                                  statusBarHeight: statusBarHeight,
+                                  editions: doc.seed!,
+                                  title: doc.title!,
+                                  author: doc.authorName![0],
+                                  pagesMedian: doc.numberOfPagesMedian,
+                                  isbn: doc.isbn,
+                                  olid: doc.key,
+                                  firstPublishYear: doc.firstPublishYear,
+                                ),
+                                onChooseEditionPressed: () {
+                                  FocusManager.instance.primaryFocus?.unfocus();
 
                                   Navigator.push(
                                     context,

@@ -1,3 +1,5 @@
+import 'package:cached_network_image/cached_network_image.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
 import 'package:loading_animation_widget/loading_animation_widget.dart';
@@ -5,6 +7,7 @@ import 'package:openreads/model/book.dart';
 import 'package:openreads/model/ol_edition_result.dart';
 import 'package:openreads/resources/open_library_service.dart';
 import 'package:openreads/ui/add_book_screen/add_book_screen.dart';
+import 'package:openreads/ui/add_book_screen/widgets/widgets.dart';
 import 'package:openreads/ui/search_ol_editions_screen/widgets/widgets.dart';
 
 class SearchOLEditionsScreen extends StatefulWidget {
@@ -32,10 +35,13 @@ class SearchOLEditionsScreen extends StatefulWidget {
 }
 
 class _SearchOLEditionsScreenState extends State<SearchOLEditionsScreen> {
-  final sizeOfPage = 6;
+  final sizeOfPage = 3;
   int skippedEditions = 0;
+  Uint8List? editionCoverPreview;
+  static const String coverBaseUrl = 'https://covers.openlibrary.org/';
 
   late int filteredResultsLength;
+  late double statusBarHeight;
 
   final _pagingController = PagingController<int, OLEditionResult>(
     firstPageKey: 0,
@@ -116,35 +122,6 @@ class _SearchOLEditionsScreenState extends State<SearchOLEditionsScreen> {
     );
   }
 
-  void _saveNoEdition({
-    required double statusBarHeight,
-  }) {
-    final book = Book(
-      title: widget.title,
-      author: widget.author,
-      status: 0,
-      favourite: false,
-      pages: widget.pagesMedian,
-      isbn: (widget.isbn != null && widget.isbn!.isNotEmpty)
-          ? widget.isbn![0]
-          : null,
-      olid:
-          (widget.olid != null) ? widget.olid!.replaceAll('/works/', '') : null,
-      publicationYear: widget.firstPublishYear,
-    );
-
-    showModalBottomSheet(
-      context: context,
-      isScrollControlled: true,
-      builder: (context) => AddBook(
-        topPadding: statusBarHeight,
-        previousThemeData: Theme.of(context),
-        fromOpenLibrary: true,
-        book: book,
-      ),
-    );
-  }
-
   @override
   void initState() {
     filteredResultsLength = widget.editions.length;
@@ -166,11 +143,14 @@ class _SearchOLEditionsScreenState extends State<SearchOLEditionsScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final statusBarHeight = MediaQuery.of(context).padding.top;
+    statusBarHeight = MediaQuery.of(context).padding.top;
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Choose edition'),
+        title: const Text(
+          'Choose edition',
+          style: TextStyle(fontSize: 18),
+        ),
         backgroundColor: Theme.of(context).scaffoldBackgroundColor,
         scrolledUnderElevation: 0,
       ),
@@ -187,6 +167,8 @@ class _SearchOLEditionsScreenState extends State<SearchOLEditionsScreen> {
                       child: PagedGridView(
                         pagingController: _pagingController,
                         showNewPageProgressIndicatorAsGridChild: false,
+                        showNewPageErrorIndicatorAsGridChild: false,
+                        showNoMoreItemsIndicatorAsGridChild: false,
                         builderDelegate:
                             PagedChildBuilderDelegate<OLEditionResult>(
                           firstPageProgressIndicatorBuilder: (_) => Center(
@@ -205,7 +187,7 @@ class _SearchOLEditionsScreenState extends State<SearchOLEditionsScreen> {
                             ),
                           ),
                           itemBuilder: (context, item, index) =>
-                              BookCardEdition(
+                              BookCardOLEdition(
                             title: item.title!,
                             cover: item.covers![0],
                             onPressed: () => _saveEdition(
@@ -217,8 +199,8 @@ class _SearchOLEditionsScreenState extends State<SearchOLEditionsScreen> {
                         ),
                         gridDelegate:
                             const SliverGridDelegateWithFixedCrossAxisCount(
-                          childAspectRatio: 5.2 / 8.0,
-                          crossAxisCount: 2,
+                          childAspectRatio: 5 / 8.0,
+                          crossAxisCount: 3,
                           crossAxisSpacing: 10,
                           mainAxisSpacing: 10,
                           mainAxisExtent: 225,
@@ -228,11 +210,6 @@ class _SearchOLEditionsScreenState extends State<SearchOLEditionsScreen> {
                   ),
                 ),
               ],
-            ),
-          ),
-          NoEditionsButton(
-            onPressed: () => _saveNoEdition(
-              statusBarHeight: statusBarHeight,
             ),
           ),
         ],

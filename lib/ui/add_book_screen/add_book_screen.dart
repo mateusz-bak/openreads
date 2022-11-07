@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:image_cropper/image_cropper.dart';
@@ -9,7 +10,6 @@ import 'package:openreads/ui/add_book_screen/widgets/widgets.dart';
 import 'package:openreads/core/themes/app_theme.dart';
 import 'package:blurhash_dart/blurhash_dart.dart' as blurhash_dart;
 import 'package:image/image.dart' as img;
-import 'package:http/http.dart' as http;
 
 class AddBook extends StatefulWidget {
   const AddBook({
@@ -91,7 +91,7 @@ class _AddBookState extends State<AddBook> {
     }
 
     if (widget.book?.status != null && !widget.fromOpenLibrary) {
-      _changeBookStatus(widget.book!.status!);
+      _changeBookStatus(widget.book!.status);
     }
 
     blurHashString = widget.book?.blurHash;
@@ -361,33 +361,21 @@ class _AddBookState extends State<AddBook> {
     });
   }
 
-  _downloadCover() async {
-    final response = await http.get(Uri.parse(coverUrl));
-    Uint8List bodyBytes = response.bodyBytes;
-
-    setState(() {
-      coverForEdit = bodyBytes;
-    });
-
-    _generateBlurHash();
-  }
-
   Widget _buildCover() {
     if (widget.fromOpenLibrary) {
-      if (coverForEdit == null) {
-        return Padding(
-          padding: const EdgeInsets.symmetric(vertical: 50),
-          child: LoadingAnimationWidget.inkDrop(
-            color: Theme.of(context).primaryColor,
-            size: 38,
+      return SizedBox(
+        height: ((MediaQuery.of(context).size.height / 2.5) - 20),
+        child: CachedNetworkImage(
+          imageUrl: coverUrl,
+          progressIndicatorBuilder: (context, url, progress) => Padding(
+            padding: const EdgeInsets.symmetric(vertical: 50),
+            child: LoadingAnimationWidget.inkDrop(
+              color: Theme.of(context).primaryColor,
+              size: 42,
+            ),
           ),
-        );
-      } else {
-        return CoverView(
-          photoBytes: coverForEdit,
-          onPressed: _loadCoverFromStorage,
-        );
-      }
+        ),
+      );
     }
 
     if (coverForEdit != null) {
@@ -439,10 +427,6 @@ class _AddBookState extends State<AddBook> {
     if (widget.book != null) {
       _prefillBookDetails();
     }
-
-    if (widget.fromOpenLibrary) {
-      _downloadCover();
-    }
   }
 
   @override
@@ -476,6 +460,7 @@ class _AddBookState extends State<AddBook> {
           appBar: AppBar(
             title: Text(
               widget.editingExistingBook ? 'Edit book' : 'Add new book',
+              style: const TextStyle(fontSize: 18),
             ),
             backgroundColor: Theme.of(context).scaffoldBackgroundColor,
             surfaceTintColor: Theme.of(context).scaffoldBackgroundColor,
