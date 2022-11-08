@@ -6,7 +6,7 @@ import 'package:openreads/ui/add_book_screen/widgets/widgets.dart';
 import 'package:openreads/ui/book_screen/widgets/widgets.dart';
 
 class BookScreen extends StatelessWidget {
-  const BookScreen({
+  BookScreen({
     Key? key,
     required this.id,
     required this.heroTag,
@@ -14,6 +14,32 @@ class BookScreen extends StatelessWidget {
 
   final int id;
   final String heroTag;
+  Book? book;
+
+  Future<bool?> _onLikeTap(isLiked) async {
+    if (book == null) return isLiked;
+
+    bookCubit.updateBook(Book(
+      id: book!.id,
+      title: book!.title,
+      author: book!.author,
+      status: book!.status,
+      favourite: !isLiked,
+      rating: book!.rating,
+      startDate: book!.startDate,
+      finishDate: book!.finishDate,
+      pages: book!.pages,
+      publicationYear: book!.publicationYear,
+      isbn: book!.isbn,
+      olid: book!.olid,
+      // tags: _tags,
+      myReview: book!.myReview,
+      cover: book!.cover,
+      blurHash: book!.blurHash,
+    ));
+
+    return !isLiked;
+  }
 
   IconData? _decideStatusIcon(int? status) {
     if (status == 0) {
@@ -50,20 +76,16 @@ class BookScreen extends StatelessWidget {
     return formatter.format(DateTime.parse(date));
   }
 
-  String? _generateReadingTime({
-    required String? startDate,
-    required String? finishDate,
+  String _generateReadingTime({
+    required String startDate,
+    required String finishDate,
   }) {
-    if (startDate != null && finishDate != null) {
-      final diff = DateTime.parse(finishDate)
-          .difference(DateTime.parse(startDate))
-          .inDays
-          .toString();
+    final diff = DateTime.parse(finishDate)
+        .difference(DateTime.parse(startDate))
+        .inDays
+        .toString();
 
-      return '$diff days';
-    } else {
-      return null;
-    }
+    return '$diff days';
   }
 
   @override
@@ -121,6 +143,7 @@ class BookScreen extends StatelessWidget {
               if (snapshot.data == null) {
                 return const Center(child: Text('Error getting the book'));
               }
+              book = snapshot.data!;
               return Column(
                 children: [
                   (snapshot.data!.cover == null)
@@ -151,42 +174,68 @@ class BookScreen extends StatelessWidget {
                           rating: snapshot.data!.rating,
                           startDate: _generateDate(snapshot.data!.startDate),
                           finishDate: _generateDate(snapshot.data!.finishDate),
+                          onLikeTap: _onLikeTap,
+                          isLiked: snapshot.data!.favourite,
                         ),
-                        const SizedBox(height: 10),
-                        BookDetail(
-                          title: 'Reading time',
-                          text: _generateReadingTime(
-                                finishDate: snapshot.data!.finishDate,
-                                startDate: snapshot.data!.startDate,
-                              ) ??
-                              "",
+                        SizedBox(
+                          height: (snapshot.data!.finishDate != null &&
+                                  snapshot.data!.startDate != null)
+                              ? 10
+                              : 0,
                         ),
-                        const SizedBox(height: 10),
-                        BookDetail(
-                          title: 'Pages',
-                          text: (snapshot.data!.pages ?? "").toString(),
+                        (snapshot.data!.finishDate != null &&
+                                snapshot.data!.startDate != null)
+                            ? BookDetail(
+                                title: 'Reading time',
+                                text: _generateReadingTime(
+                                  finishDate: snapshot.data!.finishDate!,
+                                  startDate: snapshot.data!.startDate!,
+                                ),
+                              )
+                            : const SizedBox(),
+                        SizedBox(
+                          height: (snapshot.data!.pages != null) ? 10 : 0,
                         ),
-                        const SizedBox(height: 10),
-                        BookDetail(
-                          title: 'ISBN',
-                          text: (snapshot.data!.isbn ?? "").toString(),
+                        (snapshot.data!.pages != null)
+                            ? BookDetail(
+                                title: 'Pages',
+                                text: (snapshot.data!.pages ?? "").toString(),
+                              )
+                            : const SizedBox(),
+                        SizedBox(
+                          height: (snapshot.data!.isbn != null) ? 10 : 0,
                         ),
-                        const SizedBox(height: 10),
-                        BookDetail(
-                          title: 'Open Library ID',
-                          text: (snapshot.data!.olid ?? "").toString(),
+                        (snapshot.data!.isbn != null)
+                            ? BookDetail(
+                                title: 'ISBN',
+                                text: (snapshot.data!.isbn ?? "").toString(),
+                              )
+                            : const SizedBox(),
+                        SizedBox(
+                          height: (snapshot.data!.olid != null) ? 10 : 0,
                         ),
+                        (snapshot.data!.olid != null)
+                            ? BookDetail(
+                                title: 'Open Library ID',
+                                text: (snapshot.data!.olid ?? "").toString(),
+                              )
+                            : const SizedBox(),
                         // const SizedBox(height: 10),
                         //TODO: add tags
                         // const BookDetail(
                         //   title: 'Tags',
                         //   text: '',
                         // ),
-                        const SizedBox(height: 10),
-                        BookDetail(
-                          title: 'My review',
-                          text: (snapshot.data!.myReview ?? "").toString(),
+                        SizedBox(
+                          height: (snapshot.data!.myReview != null) ? 10 : 0,
                         ),
+                        (snapshot.data!.myReview != null)
+                            ? BookDetail(
+                                title: 'My review',
+                                text:
+                                    (snapshot.data!.myReview ?? "").toString(),
+                              )
+                            : const SizedBox(),
                       ],
                     ),
                   ),

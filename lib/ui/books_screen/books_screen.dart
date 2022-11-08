@@ -210,7 +210,10 @@ class _BooksScreenState extends State<BooksScreen>
         title: Row(
           crossAxisAlignment: CrossAxisAlignment.end,
           children: const [
-            Text('Openreads'),
+            Text(
+              'Openreads',
+              style: TextStyle(fontSize: 18),
+            ),
           ],
         ),
         backgroundColor: Theme.of(context).scaffoldBackgroundColor,

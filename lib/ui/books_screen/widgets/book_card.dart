@@ -137,7 +137,8 @@ class BookCard extends StatelessWidget {
                           initialRating:
                               (book.rating == null) ? 0 : (book.rating! / 10),
                           allowHalfRating: true,
-                          unratedColor: Colors.transparent,
+                          unratedColor:
+                              Theme.of(context).scaffoldBackgroundColor,
                           glow: false,
                           glowRadius: 1,
                           itemSize: 24,

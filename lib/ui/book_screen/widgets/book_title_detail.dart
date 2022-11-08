@@ -28,7 +28,7 @@ class BookTitleDetail extends StatelessWidget {
           Text(
             title,
             style: TextStyle(
-              fontSize: 20,
+              fontSize: 18,
               fontWeight: FontWeight.bold,
               color: Theme.of(context).mainTextColor,
             ),
@@ -36,12 +36,11 @@ class BookTitleDetail extends StatelessWidget {
           Text(
             author,
             style: TextStyle(
-              fontSize: 18,
+              fontSize: 16,
               fontWeight: FontWeight.normal,
               color: Theme.of(context).secondaryTextColor,
             ),
           ),
-          const SizedBox(height: 5),
           Text(
             publicationYear,
             style: TextStyle(
