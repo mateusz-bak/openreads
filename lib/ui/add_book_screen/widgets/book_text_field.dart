@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:openreads/core/themes/app_theme.dart';
 
 class BookTextField extends StatefulWidget {
   const BookTextField({

@@ -38,14 +38,13 @@ class _SearchOLEditionsScreenState extends State<SearchOLEditionsScreen> {
   final sizeOfPage = 3;
   int skippedEditions = 0;
   Uint8List? editionCoverPreview;
-  static const String coverBaseUrl = 'https://covers.openlibrary.org/';
 
   late int filteredResultsLength;
   late double statusBarHeight;
 
   final _pagingController = PagingController<int, OLEditionResult>(
     firstPageKey: 0,
-    invisibleItemsThreshold: 6,
+    invisibleItemsThreshold: 12,
   );
 
   Future<void> _fetchPage(int pageKey) async {
@@ -54,7 +53,7 @@ class _SearchOLEditionsScreenState extends State<SearchOLEditionsScreen> {
 
       if (!mounted) return;
 
-      if (pageKey == widget.editions.length) {
+      if (pageKey >= widget.editions.length) {
         _pagingController.appendLastPage(newResults);
       } else {
         final nextPageKey = pageKey + 6;
@@ -69,19 +68,23 @@ class _SearchOLEditionsScreenState extends State<SearchOLEditionsScreen> {
   Future<List<OLEditionResult>> _fetchResults({required int offset}) async {
     final results = List<OLEditionResult>.empty(growable: true);
 
-    for (var i = 0; i < sizeOfPage; i++) {
+    for (var i = 0; i < sizeOfPage && i < widget.editions.length; i++) {
       bool getEdition = true;
 
       while (getEdition) {
-        final newResult = await OpenLibraryService().getEdition(
-          widget.editions[offset + i + skippedEditions],
-        );
+        if (offset + i + skippedEditions < widget.editions.length) {
+          final newResult = await OpenLibraryService().getEdition(
+            widget.editions[offset + i + skippedEditions],
+          );
 
-        if (newResult.covers != null && newResult.covers!.isNotEmpty) {
-          results.add(newResult);
-          getEdition = false;
+          if (newResult.covers != null && newResult.covers!.isNotEmpty) {
+            results.add(newResult);
+            getEdition = false;
+          } else {
+            skippedEditions += 1;
+          }
         } else {
-          skippedEditions += 1;
+          getEdition = false;
         }
       }
     }

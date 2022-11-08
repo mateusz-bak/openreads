@@ -21,7 +21,7 @@ class BookCardOL extends StatelessWidget {
   final String title;
   final String author;
   final String? openLibraryKey;
-  final Doc doc;
+  final OLSearchResultDoc doc;
   final Function() onChooseEditionPressed;
   final Function() onAddBookPressed;
   final List<String>? editions;
@@ -229,7 +229,7 @@ class BookCardOL extends StatelessWidget {
                                 style: TextButton.styleFrom(
                                   elevation: 0,
                                   backgroundColor: Colors.transparent,
-                                  foregroundColor: Colors.white,
+                                  // foregroundColor: Colors.white,
                                   shape: RoundedRectangleBorder(
                                     borderRadius: BorderRadius.circular(5.0),
                                     side: BorderSide(

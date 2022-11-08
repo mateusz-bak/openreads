@@ -8,7 +8,7 @@ class OLSearchResult {
     this.numFound,
     this.start,
     this.numFoundExact,
-    this.docs,
+    required this.docs,
     this.openLibrarySearchResultNumFound,
     this.q,
     this.offset,
@@ -17,7 +17,7 @@ class OLSearchResult {
   final int? numFound;
   final int? start;
   final bool? numFoundExact;
-  final List<Doc>? docs;
+  final List<OLSearchResultDoc> docs;
   final int? openLibrarySearchResultNumFound;
   final String? q;
   final dynamic offset;
@@ -26,17 +26,16 @@ class OLSearchResult {
         numFound: json["numFound"],
         start: json["start"],
         numFoundExact: json["numFoundExact"],
-        docs: json["docs"] == null
-            ? null
-            : List<Doc>.from(json["docs"].map((x) => Doc.fromJson(x))),
+        docs: List<OLSearchResultDoc>.from(
+            json["docs"].map((x) => OLSearchResultDoc.fromJson(x))),
         openLibrarySearchResultNumFound: json["num_found"],
         q: json["q"],
         offset: json["offset"],
       );
 }
 
-class Doc {
-  Doc({
+class OLSearchResultDoc {
+  OLSearchResultDoc({
     this.key,
     this.type,
     this.seed,
@@ -194,7 +193,8 @@ class Doc {
   final List<String>? timeKey;
   final String? subtitle;
 
-  factory Doc.fromJson(Map<String, dynamic> json) => Doc(
+  factory OLSearchResultDoc.fromJson(Map<String, dynamic> json) =>
+      OLSearchResultDoc(
         key: json["key"],
         type: json["type"] == null ? null : typeValues.map[json["type"]],
         seed: json["seed"] == null

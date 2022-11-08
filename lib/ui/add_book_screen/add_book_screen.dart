@@ -365,13 +365,19 @@ class _AddBookState extends State<AddBook> {
     if (widget.fromOpenLibrary) {
       return SizedBox(
         height: ((MediaQuery.of(context).size.height / 2.5) - 20),
-        child: CachedNetworkImage(
-          imageUrl: coverUrl,
-          progressIndicatorBuilder: (context, url, progress) => Padding(
-            padding: const EdgeInsets.symmetric(vertical: 50),
-            child: LoadingAnimationWidget.inkDrop(
-              color: Theme.of(context).primaryColor,
-              size: 42,
+        child: ClipRRect(
+          borderRadius: BorderRadius.circular(5),
+          child: CachedNetworkImage(
+            imageUrl: coverUrl,
+            progressIndicatorBuilder: (context, url, progress) => Padding(
+              padding: const EdgeInsets.symmetric(vertical: 50),
+              child: Padding(
+                padding: const EdgeInsets.all(10),
+                child: LoadingAnimationWidget.inkDrop(
+                  color: Theme.of(context).primaryColor,
+                  size: 42,
+                ),
+              ),
             ),
           ),
         ),

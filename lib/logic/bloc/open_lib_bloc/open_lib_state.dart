@@ -15,7 +15,7 @@ class OpenLibLoadingState extends OpenLibState {
 }
 
 class OpenLibLoadedState extends OpenLibState {
-  final List<Doc>? docs;
+  final List<OLSearchResultDoc>? docs;
   final int? numFound;
   final bool? numFoundExact;
 

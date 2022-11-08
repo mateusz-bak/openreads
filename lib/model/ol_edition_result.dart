@@ -23,7 +23,6 @@ class OLEditionResult {
     this.publishDate,
     this.works,
     this.type,
-    this.firstSentence,
     this.latestRevision,
     this.revision,
     this.created,
@@ -48,7 +47,6 @@ class OLEditionResult {
   final String? publishDate;
   final List<Type>? works;
   final Type? type;
-  final Created? firstSentence;
   final int? latestRevision;
   final int? revision;
   final Created? created;
@@ -98,9 +96,6 @@ class OLEditionResult {
             ? null
             : List<Type>.from(json["works"].map((x) => Type.fromJson(x))),
         type: json["type"] == null ? null : Type.fromJson(json["type"]),
-        firstSentence: json["first_sentence"] == null
-            ? null
-            : Created.fromJson(json["first_sentence"]),
         latestRevision: json["latest_revision"],
         revision: json["revision"],
         created:
