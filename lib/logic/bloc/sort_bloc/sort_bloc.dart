@@ -6,34 +6,31 @@ part 'sort_state.dart';
 part 'sort_event.dart';
 
 class SortBloc extends HydratedBloc<SortEvent, SortState> {
-  SortBloc() : super(TitleAscSortState()) {
+  SortBloc() : super(const TitleSortState(true, false)) {
     on<ChangeSortEvent>((event, emit) {
       switch (event.sortType) {
         case SortType.byTitle:
-          event.isAsc ? emit(TitleAscSortState()) : emit(TitleDescSortState());
+          emit(TitleSortState(event.isAsc, event.onlyFavourite));
           break;
+
         case SortType.byAuthor:
-          event.isAsc
-              ? emit(AuthorAscSortState())
-              : emit(AuthorDescSortState());
+          emit(AuthorSortState(event.isAsc, event.onlyFavourite));
           break;
+
         case SortType.byRating:
-          event.isAsc
-              ? emit(RatingAscSortState())
-              : emit(RatingDescSortState());
+          emit(RatingSortState(event.isAsc, event.onlyFavourite));
           break;
+
         case SortType.byPages:
-          event.isAsc ? emit(PagesAscSortState()) : emit(PagesDescSortState());
+          emit(PagesSortState(event.isAsc, event.onlyFavourite));
           break;
+
         case SortType.byStartDate:
-          event.isAsc
-              ? emit(StartDateAscSortState())
-              : emit(StartDateDescSortState());
+          emit(StartDateSortState(event.isAsc, event.onlyFavourite));
           break;
+
         case SortType.byFinishDate:
-          event.isAsc
-              ? emit(FinishDateAscSortState())
-              : emit(FinishDateDescSortState());
+          emit(FinishDateSortState(event.isAsc, event.onlyFavourite));
           break;
       }
     });
@@ -41,86 +38,71 @@ class SortBloc extends HydratedBloc<SortEvent, SortState> {
 
   @override
   SortState? fromJson(Map<String, dynamic> json) {
-    final sortType = json['SortType'] as int;
-    final order = json['SortOrder'] as bool;
+    final sortType = json['sort_type'] as int;
+    final order = json['sort_order'] as bool;
+    final favourite = json['only_favourite'] as bool;
 
     switch (sortType) {
+      case 0:
+        return TitleSortState(order, favourite);
       case 1:
-        return order ? AuthorAscSortState() : AuthorDescSortState();
+        return AuthorSortState(order, favourite);
       case 2:
-        return order ? RatingAscSortState() : RatingDescSortState();
+        return RatingSortState(order, favourite);
       case 3:
-        return order ? PagesAscSortState() : PagesDescSortState();
+        return PagesSortState(order, favourite);
       case 4:
-        return order ? StartDateAscSortState() : StartDateDescSortState();
+        return StartDateSortState(order, favourite);
       case 5:
-        return order ? FinishDateAscSortState() : FinishDateDescSortState();
+        return FinishDateSortState(order, favourite);
       default:
-        return order ? TitleAscSortState() : TitleDescSortState();
+        return TitleSortState(order, favourite);
     }
   }
 
   @override
   Map<String, dynamic>? toJson(SortState state) {
-    if (state is AuthorAscSortState) {
+    if (state is TitleSortState) {
       return {
-        'SortType': 1,
-        'SortOrder': true,
+        'sort_type': 0,
+        'sort_order': state.isAsc,
+        'only_favourite': state.onlyFavourite,
       };
-    } else if (state is AuthorDescSortState) {
+    } else if (state is AuthorSortState) {
       return {
-        'SortType': 1,
-        'SortOrder': false,
+        'sort_type': 1,
+        'sort_order': state.isAsc,
+        'only_favourite': state.onlyFavourite,
       };
-    } else if (state is RatingAscSortState) {
+    } else if (state is RatingSortState) {
       return {
-        'SortType': 2,
-        'SortOrder': true,
+        'sort_type': 2,
+        'sort_order': state.isAsc,
+        'only_favourite': state.onlyFavourite,
       };
-    } else if (state is RatingDescSortState) {
+    } else if (state is PagesSortState) {
       return {
-        'SortType': 2,
-        'SortOrder': false,
+        'sort_type': 3,
+        'sort_order': state.isAsc,
+        'only_favourite': state.onlyFavourite,
       };
-    } else if (state is PagesAscSortState) {
+    } else if (state is StartDateSortState) {
       return {
-        'SortType': 3,
-        'SortOrder': true,
+        'sort_type': 4,
+        'sort_order': state.isAsc,
+        'only_favourite': state.onlyFavourite,
       };
-    } else if (state is PagesDescSortState) {
+    } else if (state is FinishDateSortState) {
       return {
-        'SortType': 3,
-        'SortOrder': false,
-      };
-    } else if (state is StartDateAscSortState) {
-      return {
-        'SortType': 4,
-        'SortOrder': true,
-      };
-    } else if (state is StartDateDescSortState) {
-      return {
-        'SortType': 4,
-        'SortOrder': false,
-      };
-    } else if (state is FinishDateAscSortState) {
-      return {
-        'SortType': 5,
-        'SortOrder': true,
-      };
-    } else if (state is FinishDateDescSortState) {
-      return {
-        'SortType': 5,
-        'SortOrder': false,
-      };
-    } else if (state is TitleDescSortState) {
-      return {
-        'SortType': 0,
-        'SortOrder': false,
+        'sort_type': 5,
+        'sort_order': state.isAsc,
+        'only_favourite': state.onlyFavourite,
       };
     } else {
       return {
-        'SortType': 0,
-        'SortOrder': true,
+        'sort_type': 0,
+        'sort_order': true,
+        'only_favourite': false,
       };
     }
   }

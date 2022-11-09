@@ -23,33 +23,53 @@ class _BooksScreenState extends State<BooksScreen>
     required SortState state,
     required List<Book> list,
   }) {
-    if (state is AuthorAscSortState) {
-      list = _sortByAuthor(list: list, isAsc: true);
-    } else if (state is AuthorDescSortState) {
-      list = _sortByAuthor(list: list, isAsc: false);
-    } else if (state is RatingAscSortState) {
-      list = _sortByRating(list: list, isAsc: true);
-    } else if (state is RatingDescSortState) {
-      list = _sortByRating(list: list, isAsc: false);
-    } else if (state is PagesAscSortState) {
-      list = _sortByPages(list: list, isAsc: true);
-    } else if (state is PagesDescSortState) {
-      list = _sortByPages(list: list, isAsc: false);
-    } else if (state is StartDateAscSortState) {
-      list = _sortByStartDate(list: list, isAsc: true);
-    } else if (state is StartDateDescSortState) {
-      list = _sortByStartDate(list: list, isAsc: false);
-    } else if (state is FinishDateAscSortState) {
-      list = _sortByFinishDate(list: list, isAsc: true);
-    } else if (state is FinishDateDescSortState) {
-      list = _sortByFinishDate(list: list, isAsc: false);
-    } else if (state is TitleDescSortState) {
-      list = _sortByTitle(list: list, isAsc: false);
+    if (state is TitleSortState) {
+      if (state.onlyFavourite) {
+        list = _filterOutFav(list: list);
+      }
+      list = _sortByTitle(list: list, isAsc: state.isAsc);
+    } else if (state is AuthorSortState) {
+      if (state.onlyFavourite) {
+        list = _filterOutFav(list: list);
+      }
+      list = _sortByAuthor(list: list, isAsc: state.isAsc);
+    } else if (state is RatingSortState) {
+      if (state.onlyFavourite) {
+        list = _filterOutFav(list: list);
+      }
+      list = _sortByRating(list: list, isAsc: state.isAsc);
+    } else if (state is PagesSortState) {
+      if (state.onlyFavourite) {
+        list = _filterOutFav(list: list);
+      }
+      list = _sortByPages(list: list, isAsc: state.isAsc);
+    } else if (state is StartDateSortState) {
+      if (state.onlyFavourite) {
+        list = _filterOutFav(list: list);
+      }
+      list = _sortByStartDate(list: list, isAsc: state.isAsc);
+    } else if (state is FinishDateSortState) {
+      if (state.onlyFavourite) {
+        list = _filterOutFav(list: list);
+      }
+      list = _sortByFinishDate(list: list, isAsc: state.isAsc);
     } else {
       list = _sortByTitle(list: list, isAsc: true);
     }
 
     return list;
+  }
+
+  List<Book> _filterOutFav({required List<Book> list}) {
+    final filteredOut = List<Book>.empty(growable: true);
+
+    for (var book in list) {
+      if (book.favourite) {
+        filteredOut.add(book);
+      }
+    }
+
+    return filteredOut;
   }
 
   List<Book> _sortByTitle({

@@ -42,7 +42,7 @@ class BookRatingBar extends StatelessWidget {
             itemPadding: const EdgeInsets.all(5),
             wrapAlignment: WrapAlignment.center,
             itemBuilder: (_, __) => Icon(
-              Icons.star,
+              Icons.star_rounded,
               color: Theme.of(context).ratingColor,
             ),
             onRatingUpdate: (rating) => onRatingUpdate(rating),

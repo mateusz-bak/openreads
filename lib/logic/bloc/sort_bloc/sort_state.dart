@@ -4,62 +4,56 @@ abstract class SortState extends Equatable {
   const SortState();
 }
 
-class TitleAscSortState extends SortState {
+class TitleSortState extends SortState {
+  final bool isAsc;
+  final bool onlyFavourite;
+
+  const TitleSortState(this.isAsc, this.onlyFavourite);
   @override
-  List<Object> get props => [];
+  List<Object?> get props => [isAsc, onlyFavourite];
 }
 
-class TitleDescSortState extends SortState {
+class AuthorSortState extends SortState {
+  final bool isAsc;
+  final bool onlyFavourite;
+
+  const AuthorSortState(this.isAsc, this.onlyFavourite);
   @override
-  List<Object> get props => [];
+  List<Object?> get props => [isAsc, onlyFavourite];
 }
 
-class AuthorAscSortState extends SortState {
+class RatingSortState extends SortState {
+  final bool isAsc;
+  final bool onlyFavourite;
+
+  const RatingSortState(this.isAsc, this.onlyFavourite);
   @override
-  List<Object> get props => [];
+  List<Object?> get props => [isAsc, onlyFavourite];
 }
 
-class AuthorDescSortState extends SortState {
+class PagesSortState extends SortState {
+  final bool isAsc;
+  final bool onlyFavourite;
+
+  const PagesSortState(this.isAsc, this.onlyFavourite);
   @override
-  List<Object> get props => [];
+  List<Object?> get props => [isAsc, onlyFavourite];
 }
 
-class RatingAscSortState extends SortState {
+class StartDateSortState extends SortState {
+  final bool isAsc;
+  final bool onlyFavourite;
+
+  const StartDateSortState(this.isAsc, this.onlyFavourite);
   @override
-  List<Object> get props => [];
+  List<Object?> get props => [isAsc, onlyFavourite];
 }
 
-class RatingDescSortState extends SortState {
-  @override
-  List<Object> get props => [];
-}
+class FinishDateSortState extends SortState {
+  final bool isAsc;
+  final bool onlyFavourite;
 
-class PagesAscSortState extends SortState {
+  const FinishDateSortState(this.isAsc, this.onlyFavourite);
   @override
-  List<Object> get props => [];
-}
-
-class PagesDescSortState extends SortState {
-  @override
-  List<Object> get props => [];
-}
-
-class StartDateAscSortState extends SortState {
-  @override
-  List<Object> get props => [];
-}
-
-class StartDateDescSortState extends SortState {
-  @override
-  List<Object> get props => [];
-}
-
-class FinishDateAscSortState extends SortState {
-  @override
-  List<Object> get props => [];
-}
-
-class FinishDateDescSortState extends SortState {
-  @override
-  List<Object> get props => [];
+  List<Object?> get props => [isAsc, onlyFavourite];
 }

@@ -23,17 +23,15 @@ List<String> sortOptions = [
 ];
 
 String _getDropdownValue(SortState state) {
-  if (state is AuthorAscSortState || state is AuthorDescSortState) {
+  if (state is AuthorSortState) {
     return sortOptions[1];
-  } else if (state is RatingAscSortState || state is RatingDescSortState) {
+  } else if (state is RatingSortState) {
     return sortOptions[2];
-  } else if (state is PagesAscSortState || state is PagesDescSortState) {
+  } else if (state is PagesSortState) {
     return sortOptions[3];
-  } else if (state is StartDateAscSortState ||
-      state is StartDateDescSortState) {
+  } else if (state is StartDateSortState) {
     return sortOptions[4];
-  } else if (state is FinishDateAscSortState ||
-      state is FinishDateDescSortState) {
+  } else if (state is FinishDateSortState) {
     return sortOptions[5];
   } else {
     return sortOptions[0];
@@ -41,167 +39,218 @@ String _getDropdownValue(SortState state) {
 }
 
 Widget _getOrderButton(BuildContext context, SortState state) {
-  if (state is TitleDescSortState ||
-      state is AuthorDescSortState ||
-      state is RatingDescSortState ||
-      state is PagesDescSortState ||
-      state is StartDateDescSortState ||
-      state is FinishDateDescSortState) {
+  if (state is TitleSortState) {
     return IconButton(
-      icon: const Icon(Icons.arrow_downward),
-      onPressed: () {
-        if (state is TitleDescSortState) {
-          BlocProvider.of<SortBloc>(context).add(
-            const ChangeSortEvent(SortType.byTitle, true),
-          );
-        } else if (state is AuthorDescSortState) {
-          BlocProvider.of<SortBloc>(context).add(
-            const ChangeSortEvent(SortType.byAuthor, true),
-          );
-        } else if (state is RatingDescSortState) {
-          BlocProvider.of<SortBloc>(context).add(
-            const ChangeSortEvent(SortType.byRating, true),
-          );
-        } else if (state is PagesDescSortState) {
-          BlocProvider.of<SortBloc>(context).add(
-            const ChangeSortEvent(SortType.byPages, true),
-          );
-        } else if (state is StartDateDescSortState) {
-          BlocProvider.of<SortBloc>(context).add(
-            const ChangeSortEvent(SortType.byStartDate, true),
-          );
-        } else if (state is FinishDateDescSortState) {
-          BlocProvider.of<SortBloc>(context).add(
-            const ChangeSortEvent(SortType.byFinishDate, true),
-          );
-        }
-      },
+      icon: (state.isAsc)
+          ? const Icon(Icons.arrow_upward)
+          : const Icon(Icons.arrow_downward),
+      onPressed: () => BlocProvider.of<SortBloc>(context).add(
+        ChangeSortEvent(
+          SortType.byTitle,
+          !state.isAsc,
+          state.onlyFavourite,
+        ),
+      ),
+    );
+  } else if (state is AuthorSortState) {
+    return IconButton(
+      icon: (state.isAsc)
+          ? const Icon(Icons.arrow_upward)
+          : const Icon(Icons.arrow_downward),
+      onPressed: () => BlocProvider.of<SortBloc>(context).add(
+        ChangeSortEvent(
+          SortType.byAuthor,
+          !state.isAsc,
+          state.onlyFavourite,
+        ),
+      ),
+    );
+  } else if (state is RatingSortState) {
+    return IconButton(
+      icon: (state.isAsc)
+          ? const Icon(Icons.arrow_upward)
+          : const Icon(Icons.arrow_downward),
+      onPressed: () => BlocProvider.of<SortBloc>(context).add(
+        ChangeSortEvent(
+          SortType.byRating,
+          !state.isAsc,
+          state.onlyFavourite,
+        ),
+      ),
+    );
+  } else if (state is PagesSortState) {
+    return IconButton(
+      icon: (state.isAsc)
+          ? const Icon(Icons.arrow_upward)
+          : const Icon(Icons.arrow_downward),
+      onPressed: () => BlocProvider.of<SortBloc>(context).add(
+        ChangeSortEvent(
+          SortType.byPages,
+          !state.isAsc,
+          state.onlyFavourite,
+        ),
+      ),
+    );
+  } else if (state is StartDateSortState) {
+    return IconButton(
+      icon: (state.isAsc)
+          ? const Icon(Icons.arrow_upward)
+          : const Icon(Icons.arrow_downward),
+      onPressed: () => BlocProvider.of<SortBloc>(context).add(
+        ChangeSortEvent(
+          SortType.byStartDate,
+          !state.isAsc,
+          state.onlyFavourite,
+        ),
+      ),
+    );
+  } else if (state is FinishDateSortState) {
+    return IconButton(
+      icon: (state.isAsc)
+          ? const Icon(Icons.arrow_upward)
+          : const Icon(Icons.arrow_downward),
+      onPressed: () => BlocProvider.of<SortBloc>(context).add(
+        ChangeSortEvent(
+          SortType.byFinishDate,
+          !state.isAsc,
+          state.onlyFavourite,
+        ),
+      ),
     );
   } else {
-    return IconButton(
-      icon: const Icon(Icons.arrow_upward),
-      onPressed: () {
-        if (state is TitleAscSortState) {
-          BlocProvider.of<SortBloc>(context).add(
-            const ChangeSortEvent(SortType.byTitle, false),
-          );
-        } else if (state is AuthorAscSortState) {
-          BlocProvider.of<SortBloc>(context).add(
-            const ChangeSortEvent(SortType.byAuthor, false),
-          );
-        } else if (state is RatingAscSortState) {
-          BlocProvider.of<SortBloc>(context).add(
-            const ChangeSortEvent(SortType.byRating, false),
-          );
-        } else if (state is PagesAscSortState) {
-          BlocProvider.of<SortBloc>(context).add(
-            const ChangeSortEvent(SortType.byPages, false),
-          );
-        } else if (state is StartDateAscSortState) {
-          BlocProvider.of<SortBloc>(context).add(
-            const ChangeSortEvent(SortType.byStartDate, false),
-          );
-        } else if (state is FinishDateAscSortState) {
-          BlocProvider.of<SortBloc>(context).add(
-            const ChangeSortEvent(SortType.byFinishDate, false),
-          );
-        }
-      },
+    return const SizedBox();
+  }
+}
+
+Widget _getFavouriteSwitch(BuildContext context, SortState state) {
+  if (state is TitleSortState) {
+    return Switch(
+      value: state.onlyFavourite,
+      activeColor: Theme.of(context).primaryColor,
+      onChanged: (value) => BlocProvider.of<SortBloc>(context).add(
+        ChangeSortEvent(
+          SortType.byTitle,
+          state.isAsc,
+          value,
+        ),
+      ),
     );
+  } else if (state is AuthorSortState) {
+    return Switch(
+      value: state.onlyFavourite,
+      activeColor: Theme.of(context).primaryColor,
+      onChanged: (value) => BlocProvider.of<SortBloc>(context).add(
+        ChangeSortEvent(
+          SortType.byAuthor,
+          state.isAsc,
+          value,
+        ),
+      ),
+    );
+  } else if (state is RatingSortState) {
+    return Switch(
+      value: state.onlyFavourite,
+      activeColor: Theme.of(context).primaryColor,
+      onChanged: (value) => BlocProvider.of<SortBloc>(context).add(
+        ChangeSortEvent(
+          SortType.byRating,
+          state.isAsc,
+          value,
+        ),
+      ),
+    );
+  } else if (state is PagesSortState) {
+    return Switch(
+      value: state.onlyFavourite,
+      activeColor: Theme.of(context).primaryColor,
+      onChanged: (value) => BlocProvider.of<SortBloc>(context).add(
+        ChangeSortEvent(
+          SortType.byPages,
+          state.isAsc,
+          value,
+        ),
+      ),
+    );
+  } else if (state is StartDateSortState) {
+    return Switch(
+      value: state.onlyFavourite,
+      activeColor: Theme.of(context).primaryColor,
+      onChanged: (value) => BlocProvider.of<SortBloc>(context).add(
+        ChangeSortEvent(
+          SortType.byStartDate,
+          state.isAsc,
+          value,
+        ),
+      ),
+    );
+  } else if (state is FinishDateSortState) {
+    return Switch(
+      value: state.onlyFavourite,
+      activeColor: Theme.of(context).primaryColor,
+      onChanged: (value) => BlocProvider.of<SortBloc>(context).add(
+        ChangeSortEvent(
+          SortType.byFinishDate,
+          state.isAsc,
+          value,
+        ),
+      ),
+    );
+  } else {
+    return const SizedBox();
   }
 }
 
 void _updateSort(BuildContext context, String? value, SortState state) {
+  bool? isAsc;
+  bool? onlyFavourite;
+
+  if (state is TitleSortState) {
+    isAsc = state.isAsc;
+    onlyFavourite = state.onlyFavourite;
+  } else if (state is AuthorSortState) {
+    isAsc = state.isAsc;
+    onlyFavourite = state.onlyFavourite;
+  } else if (state is RatingSortState) {
+    isAsc = state.isAsc;
+    onlyFavourite = state.onlyFavourite;
+  } else if (state is PagesSortState) {
+    isAsc = state.isAsc;
+    onlyFavourite = state.onlyFavourite;
+  } else if (state is StartDateSortState) {
+    isAsc = state.isAsc;
+    onlyFavourite = state.onlyFavourite;
+  } else if (state is FinishDateSortState) {
+    isAsc = state.isAsc;
+    onlyFavourite = state.onlyFavourite;
+  }
+
+  if (isAsc == null) return;
+  if (onlyFavourite == null) return;
+
   if (value == sortOptions[0]) {
-    if (state is TitleDescSortState ||
-        state is AuthorDescSortState ||
-        state is RatingDescSortState ||
-        state is PagesDescSortState ||
-        state is StartDateDescSortState ||
-        state is FinishDateDescSortState) {
-      BlocProvider.of<SortBloc>(context).add(
-        const ChangeSortEvent(SortType.byTitle, false),
-      );
-    } else {
-      BlocProvider.of<SortBloc>(context).add(
-        const ChangeSortEvent(SortType.byTitle, true),
-      );
-    }
+    BlocProvider.of<SortBloc>(context).add(
+      ChangeSortEvent(SortType.byTitle, isAsc, onlyFavourite),
+    );
   } else if (value == sortOptions[1]) {
-    if (state is TitleDescSortState ||
-        state is AuthorDescSortState ||
-        state is RatingDescSortState ||
-        state is PagesDescSortState ||
-        state is StartDateDescSortState ||
-        state is FinishDateDescSortState) {
-      BlocProvider.of<SortBloc>(context).add(
-        const ChangeSortEvent(SortType.byAuthor, false),
-      );
-    } else {
-      BlocProvider.of<SortBloc>(context).add(
-        const ChangeSortEvent(SortType.byAuthor, true),
-      );
-    }
+    BlocProvider.of<SortBloc>(context).add(
+      ChangeSortEvent(SortType.byAuthor, isAsc, onlyFavourite),
+    );
   } else if (value == sortOptions[2]) {
-    if (state is TitleDescSortState ||
-        state is AuthorDescSortState ||
-        state is RatingDescSortState ||
-        state is PagesDescSortState ||
-        state is StartDateDescSortState ||
-        state is FinishDateDescSortState) {
-      BlocProvider.of<SortBloc>(context).add(
-        const ChangeSortEvent(SortType.byRating, false),
-      );
-    } else {
-      BlocProvider.of<SortBloc>(context).add(
-        const ChangeSortEvent(SortType.byRating, true),
-      );
-    }
+    BlocProvider.of<SortBloc>(context).add(
+      ChangeSortEvent(SortType.byRating, isAsc, onlyFavourite),
+    );
   } else if (value == sortOptions[3]) {
-    if (state is TitleDescSortState ||
-        state is AuthorDescSortState ||
-        state is RatingDescSortState ||
-        state is PagesDescSortState ||
-        state is StartDateDescSortState ||
-        state is FinishDateDescSortState) {
-      BlocProvider.of<SortBloc>(context).add(
-        const ChangeSortEvent(SortType.byPages, false),
-      );
-    } else {
-      BlocProvider.of<SortBloc>(context).add(
-        const ChangeSortEvent(SortType.byPages, true),
-      );
-    }
+    BlocProvider.of<SortBloc>(context).add(
+      ChangeSortEvent(SortType.byPages, isAsc, onlyFavourite),
+    );
   } else if (value == sortOptions[4]) {
-    if (state is TitleDescSortState ||
-        state is AuthorDescSortState ||
-        state is RatingDescSortState ||
-        state is PagesDescSortState ||
-        state is StartDateDescSortState ||
-        state is FinishDateDescSortState) {
-      BlocProvider.of<SortBloc>(context).add(
-        const ChangeSortEvent(SortType.byStartDate, false),
-      );
-    } else {
-      BlocProvider.of<SortBloc>(context).add(
-        const ChangeSortEvent(SortType.byStartDate, true),
-      );
-    }
+    BlocProvider.of<SortBloc>(context).add(
+      ChangeSortEvent(SortType.byStartDate, isAsc, onlyFavourite),
+    );
   } else if (value == sortOptions[5]) {
-    if (state is TitleDescSortState ||
-        state is AuthorDescSortState ||
-        state is RatingDescSortState ||
-        state is PagesDescSortState ||
-        state is StartDateDescSortState ||
-        state is FinishDateDescSortState) {
-      BlocProvider.of<SortBloc>(context).add(
-        const ChangeSortEvent(SortType.byFinishDate, false),
-      );
-    } else {
-      BlocProvider.of<SortBloc>(context).add(
-        const ChangeSortEvent(SortType.byFinishDate, true),
-      );
-    }
+    BlocProvider.of<SortBloc>(context).add(
+      ChangeSortEvent(SortType.byFinishDate, isAsc, onlyFavourite),
+    );
   }
 }
 
@@ -231,7 +280,7 @@ class _SortBottomSheetState extends State<SortBottomSheet> {
             children: [
               const SizedBox(height: 5),
               const Text(
-                'Sort finished books',
+                'Sort books',
                 style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
               ),
               const SizedBox(height: 10),
@@ -269,6 +318,39 @@ class _SortBottomSheetState extends State<SortBottomSheet> {
                       ),
                       child: _getOrderButton(context, state),
                     )
+                  ],
+                ),
+              ),
+              const SizedBox(height: 20),
+              const Text(
+                'Filter books',
+                style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+              ),
+              const SizedBox(height: 10),
+              BlocBuilder<SortBloc, SortState>(
+                builder: (context, state) => Row(
+                  children: [
+                    Expanded(
+                      child: Container(
+                        decoration: BoxDecoration(
+                          color: Theme.of(context).backgroundColor,
+                          borderRadius: BorderRadius.circular(5),
+                          border: Border.all(
+                            color: Theme.of(context).dividerColor,
+                          ),
+                        ),
+                        child: Row(
+                          children: [
+                            _getFavouriteSwitch(context, state),
+                            const SizedBox(width: 10),
+                            const Text(
+                              'Only favourite',
+                              style: TextStyle(fontSize: 16),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
                   ],
                 ),
               ),

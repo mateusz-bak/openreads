@@ -23,12 +23,11 @@ class BookCard extends StatelessWidget {
   Widget _buildSortAttribute() {
     return BlocBuilder<SortBloc, SortState>(
       builder: (context, state) {
-        if (state is PagesAscSortState || state is PagesDescSortState) {
+        if (state is PagesSortState) {
           return (book.pages != null)
               ? Text('${book.pages} pages')
               : const SizedBox();
-        } else if (state is StartDateAscSortState ||
-            state is StartDateDescSortState) {
+        } else if (state is StartDateSortState) {
           return (book.startDate != null)
               ? Column(
                   crossAxisAlignment: CrossAxisAlignment.end,
@@ -42,8 +41,7 @@ class BookCard extends StatelessWidget {
                   ],
                 )
               : const SizedBox();
-        } else if (state is FinishDateAscSortState ||
-            state is FinishDateDescSortState) {
+        } else if (state is FinishDateSortState) {
           return (book.finishDate != null)
               ? Column(
                   crossAxisAlignment: CrossAxisAlignment.end,
@@ -144,8 +142,8 @@ class BookCard extends StatelessWidget {
                           itemSize: 24,
                           ignoreGestures: true,
                           itemBuilder: (context, _) => Icon(
-                            Icons.star,
-                            color: Theme.of(context).primaryColor,
+                            Icons.star_rounded,
+                            color: Theme.of(context).ratingColor,
                           ),
                           onRatingUpdate: (_) {},
                         ),

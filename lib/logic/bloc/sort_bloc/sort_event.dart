@@ -5,11 +5,12 @@ abstract class SortEvent extends Equatable {
 }
 
 class ChangeSortEvent extends SortEvent {
-  const ChangeSortEvent(this.sortType, this.isAsc);
+  const ChangeSortEvent(this.sortType, this.isAsc, this.onlyFavourite);
 
   final SortType sortType;
   final bool isAsc;
+  final bool onlyFavourite;
 
   @override
-  List<Object?> get props => [sortType, isAsc];
+  List<Object?> get props => [sortType, isAsc, onlyFavourite];
 }
