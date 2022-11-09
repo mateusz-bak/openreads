@@ -41,14 +41,16 @@ class BookTitleDetail extends StatelessWidget {
               color: Theme.of(context).secondaryTextColor,
             ),
           ),
-          Text(
-            publicationYear,
-            style: TextStyle(
-              fontSize: 14,
-              fontWeight: FontWeight.bold,
-              color: Theme.of(context).secondaryTextColor,
-            ),
-          ),
+          (publicationYear != '')
+              ? Text(
+                  publicationYear,
+                  style: TextStyle(
+                    fontSize: 14,
+                    fontWeight: FontWeight.bold,
+                    color: Theme.of(context).secondaryTextColor,
+                  ),
+                )
+              : const SizedBox(),
         ],
       ),
     );

@@ -43,7 +43,7 @@ class BookRatingBar extends StatelessWidget {
             wrapAlignment: WrapAlignment.center,
             itemBuilder: (_, __) => Icon(
               Icons.star,
-              color: Theme.of(context).primaryColor,
+              color: Theme.of(context).ratingColor,
             ),
             onRatingUpdate: (rating) => onRatingUpdate(rating),
           ),

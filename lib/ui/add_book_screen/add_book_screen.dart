@@ -1,4 +1,3 @@
-import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:image_cropper/image_cropper.dart';
@@ -10,6 +9,7 @@ import 'package:openreads/ui/add_book_screen/widgets/widgets.dart';
 import 'package:openreads/core/themes/app_theme.dart';
 import 'package:blurhash_dart/blurhash_dart.dart' as blurhash_dart;
 import 'package:image/image.dart' as img;
+import 'package:http/http.dart' as http;
 
 class AddBook extends StatefulWidget {
   const AddBook({
@@ -17,6 +17,7 @@ class AddBook extends StatefulWidget {
     required this.topPadding,
     required this.previousThemeData,
     this.fromOpenLibrary = false,
+    this.fromOpenLibraryEdition = false,
     this.editingExistingBook = false,
     this.book,
     this.cover,
@@ -26,6 +27,7 @@ class AddBook extends StatefulWidget {
   final ThemeData previousThemeData;
   final Book? book;
   final bool fromOpenLibrary;
+  final bool fromOpenLibraryEdition;
   final bool editingExistingBook;
   final int? cover;
 
@@ -61,6 +63,7 @@ class _AddBookState extends State<AddBook> {
   XFile? photoXFile;
 
   Uint8List? coverForEdit;
+  Uint8List? coverFromOL;
 
   String? blurHashString;
 
@@ -139,7 +142,7 @@ class _AddBookState extends State<AddBook> {
     late Uint8List? cover;
 
     if (widget.fromOpenLibrary) {
-      cover = coverForEdit;
+      cover = coverFromOL;
     } else if (croppedPhoto != null) {
       cover = await croppedPhoto!.readAsBytes();
     } else {
@@ -174,6 +177,7 @@ class _AddBookState extends State<AddBook> {
 
     if (widget.fromOpenLibrary) {
       Navigator.pop(context);
+      if (!widget.fromOpenLibraryEdition) return;
       Navigator.pop(context);
     }
   }
@@ -338,7 +342,9 @@ class _AddBookState extends State<AddBook> {
   void _generateBlurHash() async {
     late Uint8List data;
 
-    if (croppedPhotoPreview == null && coverForEdit == null) return;
+    if (croppedPhotoPreview == null &&
+        coverForEdit == null &&
+        coverFromOL == null) return;
 
     if (croppedPhotoPreview != null) {
       data = await croppedPhotoPreview!.readAsBytes();
@@ -346,6 +352,10 @@ class _AddBookState extends State<AddBook> {
 
     if (coverForEdit != null) {
       data = coverForEdit!;
+    }
+
+    if (coverFromOL != null) {
+      data = coverFromOL!;
     }
 
     final image = img.decodeImage(data.toList());
@@ -361,27 +371,33 @@ class _AddBookState extends State<AddBook> {
     });
   }
 
+  void _downloadCover() {
+    http.get(Uri.parse(coverUrl)).then((response) {
+      if (mounted) {
+        setState(() {
+          coverFromOL = response.bodyBytes;
+        });
+        _generateBlurHash();
+      }
+    });
+  }
+
   Widget _buildCover() {
     if (widget.fromOpenLibrary) {
-      return SizedBox(
-        height: ((MediaQuery.of(context).size.height / 2.5) - 20),
-        child: ClipRRect(
-          borderRadius: BorderRadius.circular(5),
-          child: CachedNetworkImage(
-            imageUrl: coverUrl,
-            progressIndicatorBuilder: (context, url, progress) => Padding(
-              padding: const EdgeInsets.symmetric(vertical: 50),
-              child: Padding(
-                padding: const EdgeInsets.all(10),
-                child: LoadingAnimationWidget.inkDrop(
-                  color: Theme.of(context).primaryColor,
-                  size: 42,
-                ),
-              ),
-            ),
+      if (coverFromOL == null) {
+        return Padding(
+          padding: const EdgeInsets.symmetric(vertical: 50),
+          child: LoadingAnimationWidget.inkDrop(
+            color: Theme.of(context).primaryColor,
+            size: 42,
           ),
-        ),
-      );
+        );
+      } else {
+        return CoverView(
+          photoBytes: coverFromOL,
+          onPressed: _loadCoverFromStorage,
+        );
+      }
     }
 
     if (coverForEdit != null) {
@@ -433,6 +449,10 @@ class _AddBookState extends State<AddBook> {
     if (widget.book != null) {
       _prefillBookDetails();
     }
+
+    if (widget.fromOpenLibrary) {
+      _downloadCover();
+    }
   }
 
   @override
@@ -472,8 +492,9 @@ class _AddBookState extends State<AddBook> {
             surfaceTintColor: Theme.of(context).scaffoldBackgroundColor,
             actions: [
               TextButton(
-                onPressed:
-                    (widget.editingExistingBook) ? _updateBook : _saveBook,
+                onPressed: (widget.book != null && !widget.fromOpenLibrary)
+                    ? _updateBook
+                    : _saveBook,
                 child: Text(
                   'Save',
                   style: TextStyle(
@@ -495,13 +516,14 @@ class _AddBookState extends State<AddBook> {
                     controller: _titleController,
                     hint: 'Enter a title',
                     icon: Icons.book,
-                    keyboardType: TextInputType.text,
+                    keyboardType: TextInputType.name,
                     autofocus:
                         (widget.fromOpenLibrary || widget.editingExistingBook)
                             ? false
                             : true,
                     maxLines: 5,
                     maxLength: 255,
+                    textCapitalization: TextCapitalization.words,
                   ),
                   const SizedBox(height: 20),
                   BookTextField(
@@ -511,6 +533,7 @@ class _AddBookState extends State<AddBook> {
                     keyboardType: TextInputType.name,
                     maxLines: 5,
                     maxLength: 255,
+                    textCapitalization: TextCapitalization.words,
                   ),
                   const SizedBox(height: 20),
                   BookStatusRow(
@@ -597,6 +620,7 @@ class _AddBookState extends State<AddBook> {
                     icon: Icons.pin,
                     keyboardType: TextInputType.text,
                     maxLength: 20,
+                    textCapitalization: TextCapitalization.characters,
                   ),
                   const SizedBox(height: 20),
                   Container(
@@ -642,6 +666,7 @@ class _AddBookState extends State<AddBook> {
                     maxLength: 5000,
                     hideCounter: false,
                     maxLines: 15,
+                    textCapitalization: TextCapitalization.sentences,
                   ),
                   const SizedBox(height: 30),
                   Row(
@@ -677,7 +702,9 @@ class _AddBookState extends State<AddBook> {
                           height: 51,
                           child: ElevatedButton(
                             onPressed:
-                                (widget.book == null) ? _saveBook : _updateBook,
+                                (widget.book != null && !widget.fromOpenLibrary)
+                                    ? _updateBook
+                                    : _saveBook,
                             style: ElevatedButton.styleFrom(
                               elevation: 0,
                               backgroundColor: Theme.of(context).primaryColor,
@@ -697,7 +724,7 @@ class _AddBookState extends State<AddBook> {
                       ),
                     ],
                   ),
-                  const SizedBox(height: 25.0),
+                  const SizedBox(height: 50.0),
                 ],
               ),
             ),

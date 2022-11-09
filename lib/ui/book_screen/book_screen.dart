@@ -69,6 +69,79 @@ class BookScreen extends StatelessWidget {
     }
   }
 
+  String? _decideChangeStatusText(int? status) {
+    if (status == 1) {
+      return 'Finish';
+    } else if (status == 2) {
+      return 'Start';
+    } else if (status == 3) {
+      return 'Start';
+    } else {
+      return null;
+    }
+  }
+
+  void _changeStatusAction(int status) {
+    if (status == 1) {
+      bookCubit.updateBook(Book(
+        id: book!.id,
+        title: book!.title,
+        author: book!.author,
+        status: 0,
+        favourite: book!.favourite,
+        rating: book!.rating,
+        startDate: book!.startDate,
+        finishDate: DateTime.now().toIso8601String(),
+        pages: book!.pages,
+        publicationYear: book!.publicationYear,
+        isbn: book!.isbn,
+        olid: book!.olid,
+        // tags: _tags,
+        myReview: book!.myReview,
+        cover: book!.cover,
+        blurHash: book!.blurHash,
+      ));
+    } else if (status == 2) {
+      bookCubit.updateBook(Book(
+        id: book!.id,
+        title: book!.title,
+        author: book!.author,
+        status: 1,
+        favourite: book!.favourite,
+        rating: book!.rating,
+        startDate: DateTime.now().toIso8601String(),
+        finishDate: book!.finishDate,
+        pages: book!.pages,
+        publicationYear: book!.publicationYear,
+        isbn: book!.isbn,
+        olid: book!.olid,
+        // tags: _tags,
+        myReview: book!.myReview,
+        cover: book!.cover,
+        blurHash: book!.blurHash,
+      ));
+    } else if (status == 3) {
+      bookCubit.updateBook(Book(
+        id: book!.id,
+        title: book!.title,
+        author: book!.author,
+        status: 1,
+        favourite: book!.favourite,
+        rating: book!.rating,
+        startDate: book!.startDate,
+        finishDate: book!.finishDate,
+        pages: book!.pages,
+        publicationYear: book!.publicationYear,
+        isbn: book!.isbn,
+        olid: book!.olid,
+        // tags: _tags,
+        myReview: book!.myReview,
+        cover: book!.cover,
+        blurHash: book!.blurHash,
+      ));
+    }
+  }
+
   String? _generateDate(String? date) {
     if (date == null) return null;
 
@@ -176,6 +249,15 @@ class BookScreen extends StatelessWidget {
                           finishDate: _generateDate(snapshot.data!.finishDate),
                           onLikeTap: _onLikeTap,
                           isLiked: snapshot.data!.favourite,
+                          showChangeStatus: (snapshot.data!.status == 1 ||
+                              snapshot.data!.status == 2 ||
+                              snapshot.data!.status == 3),
+                          changeStatusText:
+                              _decideChangeStatusText(snapshot.data!.status),
+                          changeStatusAction: () {
+                            _changeStatusAction(snapshot.data!.status);
+                          },
+                          showRatingAndLike: snapshot.data!.status == 0,
                         ),
                         SizedBox(
                           height: (snapshot.data!.finishDate != null &&
@@ -236,6 +318,7 @@ class BookScreen extends StatelessWidget {
                                     (snapshot.data!.myReview ?? "").toString(),
                               )
                             : const SizedBox(),
+                        const SizedBox(height: 50.0),
                       ],
                     ),
                   ),

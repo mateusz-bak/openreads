@@ -13,6 +13,9 @@ class BookTextField extends StatefulWidget {
     this.autofocus = false,
     this.maxLines = 1,
     this.hideCounter = true,
+    this.textInputAction,
+    this.textCapitalization = TextCapitalization.none,
+    this.onSubmitted,
   }) : super(key: key);
 
   final TextEditingController controller;
@@ -24,6 +27,9 @@ class BookTextField extends StatefulWidget {
   final int maxLines;
   final bool hideCounter;
   final int maxLength;
+  final TextInputAction? textInputAction;
+  final TextCapitalization textCapitalization;
+  final Function(String)? onSubmitted;
 
   @override
   State<BookTextField> createState() => _BookTextFieldState();
@@ -50,11 +56,13 @@ class _BookTextFieldState extends State<BookTextField> {
           autofocus: widget.autofocus,
           keyboardType: widget.keyboardType,
           inputFormatters: widget.inputFormatters,
+          textCapitalization: widget.textCapitalization,
           controller: widget.controller,
           focusNode: focusNode,
           minLines: 1,
           maxLines: widget.maxLines,
           maxLength: widget.maxLength,
+          textInputAction: widget.textInputAction,
           style: const TextStyle(fontSize: 14),
           onChanged: (text) {
             setState(() {
@@ -65,6 +73,7 @@ class _BookTextFieldState extends State<BookTextField> {
               }
             });
           },
+          onSubmitted: widget.onSubmitted ?? (_) {},
           decoration: InputDecoration(
             labelText: widget.hint,
             icon: (widget.icon != null) ? Icon(widget.icon) : null,

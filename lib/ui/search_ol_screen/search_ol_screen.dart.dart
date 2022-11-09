@@ -99,6 +99,15 @@ class _SearchOLScreenState extends State<SearchOLScreen>
     }
   }
 
+  void _startNewSearch() {
+    FocusManager.instance.primaryFocus?.unfocus();
+    setState(() {
+      searchActivated = true;
+    });
+    _searchTerm = _searchController.text;
+    _pagingController.refresh();
+  }
+
   @override
   void initState() {
     super.initState();
@@ -144,20 +153,16 @@ class _SearchOLScreenState extends State<SearchOLScreen>
                     keyboardType: TextInputType.name,
                     maxLength: 99,
                     autofocus: true,
+                    textInputAction: TextInputAction.search,
+                    textCapitalization: TextCapitalization.words,
+                    onSubmitted: (_) => _startNewSearch(),
                   ),
                 ),
                 const SizedBox(width: 10),
                 SizedBox(
                   height: 51,
                   child: ElevatedButton(
-                    onPressed: () {
-                      FocusManager.instance.primaryFocus?.unfocus();
-                      setState(() {
-                        searchActivated = true;
-                      });
-                      _searchTerm = _searchController.text;
-                      _pagingController.refresh();
-                    },
+                    onPressed: _startNewSearch,
                     style: ElevatedButton.styleFrom(
                       elevation: 0,
                       backgroundColor: Theme.of(context).primaryColor,
@@ -175,25 +180,20 @@ class _SearchOLScreenState extends State<SearchOLScreen>
               ],
             ),
           ),
-          Padding(
-            padding: const EdgeInsets.fromLTRB(18, 0, 10, 20),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      (numberOfResults != null)
-                          ? '$numberOfResults results'
-                          : '',
-                      style: const TextStyle(fontSize: 12),
-                    ),
-                  ],
-                ),
-              ],
-            ),
-          ),
+          (numberOfResults != null && numberOfResults! != 0)
+              ? Padding(
+                  padding: const EdgeInsets.fromLTRB(18, 0, 10, 20),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Text(
+                        '$numberOfResults results',
+                        style: const TextStyle(fontSize: 12),
+                      ),
+                    ],
+                  ),
+                )
+              : const SizedBox(),
           Expanded(
             child: (!searchActivated)
                 ? const SizedBox()

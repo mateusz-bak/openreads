@@ -121,6 +121,7 @@ class _SearchOLEditionsScreenState extends State<SearchOLEditionsScreen> {
         fromOpenLibrary: true,
         cover: cover,
         book: book,
+        fromOpenLibraryEdition: true,
       ),
     );
   }
