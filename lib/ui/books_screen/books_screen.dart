@@ -323,7 +323,14 @@ class _BooksScreenState extends State<BooksScreen>
                   scanBarcode: () async {
                     Navigator.pop(context);
                     await Future.delayed(const Duration(milliseconds: 100));
+
                     if (!mounted) return;
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => const SearchOLScreen(scan: true),
+                      ),
+                    );
                   },
                 );
               },

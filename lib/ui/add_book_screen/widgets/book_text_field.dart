@@ -40,6 +40,21 @@ class _BookTextFieldState extends State<BookTextField> {
   bool showClearButton = false;
 
   @override
+  void initState() {
+    super.initState();
+
+    widget.controller.addListener(() {
+      setState(() {
+        if (widget.controller.text.isNotEmpty) {
+          showClearButton = true;
+        } else {
+          showClearButton = false;
+        }
+      });
+    });
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Container(
       padding: const EdgeInsets.symmetric(
@@ -64,15 +79,6 @@ class _BookTextFieldState extends State<BookTextField> {
           maxLength: widget.maxLength,
           textInputAction: widget.textInputAction,
           style: const TextStyle(fontSize: 14),
-          onChanged: (text) {
-            setState(() {
-              if (text.isNotEmpty) {
-                showClearButton = true;
-              } else {
-                showClearButton = false;
-              }
-            });
-          },
           onSubmitted: widget.onSubmitted ?? (_) {},
           decoration: InputDecoration(
             labelText: widget.hint,

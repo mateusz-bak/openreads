@@ -40,6 +40,7 @@ dependencies:
   font_awesome_flutter: ^10.2.1
   hydrated_bloc: ^9.0.0
   like_button: ^2.0.5
+  barcode_scan2: ^4.2.1
 
 dev_dependencies:
   flutter_test:

@@ -1,3 +1,4 @@
+import 'package:barcode_scan2/barcode_scan2.dart';
 import 'package:flutter/material.dart';
 import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
 import 'package:loading_animation_widget/loading_animation_widget.dart';
@@ -9,7 +10,9 @@ import 'package:openreads/ui/search_ol_editions_screen/search_ol_editions_screen
 import 'package:openreads/ui/search_ol_screen/widgets/widgets.dart';
 
 class SearchOLScreen extends StatefulWidget {
-  const SearchOLScreen({super.key});
+  const SearchOLScreen({super.key, this.scan = false});
+
+  final bool scan;
 
   @override
   State<SearchOLScreen> createState() => _SearchOLScreenState();
@@ -23,6 +26,7 @@ class _SearchOLScreenState extends State<SearchOLScreen>
   final _pageSize = 10;
   String? _searchTerm;
   int? numberOfResults;
+  ScanResult? scanResult;
 
   bool searchActivated = false;
 
@@ -108,9 +112,34 @@ class _SearchOLScreenState extends State<SearchOLScreen>
     _pagingController.refresh();
   }
 
+  void _startScanner() async {
+    var result = await BarcodeScanner.scan(
+      options: const ScanOptions(
+        strings: {
+          'cancel': 'Cancel',
+          'flash_on': 'Flash on',
+          'flash_off': 'Flash off',
+        },
+      ),
+    );
+
+    if (result.type == ResultType.Barcode) {
+      setState(() {
+        searchActivated = true;
+        _searchController.text = result.rawContent;
+      });
+
+      _searchTerm = result.rawContent;
+      _pagingController.refresh();
+    }
+  }
+
   @override
   void initState() {
     super.initState();
+    if (widget.scan) {
+      _startScanner();
+    }
 
     _pagingController.addPageRequestListener((pageKey) {
       _fetchPage(pageKey);
