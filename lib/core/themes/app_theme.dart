@@ -23,6 +23,10 @@ class AppTheme {
   static Color darkOutlineColor = const Color.fromARGB(255, 58, 58, 58);
   static Color darkLikeColor = const Color.fromARGB(255, 150, 23, 57);
   static Color darkRatingColor = const Color.fromARGB(255, 207, 161, 62);
+  static Color finishedColor = const Color(0xff3D8361);
+  static Color inProgressColor = const Color(0xff375681);
+  static Color forLaterColor = const Color(0xffFABC3C);
+  static Color unfinishedColor = const Color(0xffB73E3E);
 
   const AppTheme._();
 
@@ -89,4 +93,9 @@ extension ThemeExtras on ThemeData {
   Color get ratingColor => brightness == Brightness.light
       ? AppTheme.lightRatingColor
       : AppTheme.darkRatingColor;
+
+  Color get finishedColor => AppTheme.finishedColor;
+  Color get inProgressColor => AppTheme.inProgressColor;
+  Color get forLaterColor => AppTheme.forLaterColor;
+  Color get unfinishedColor => AppTheme.unfinishedColor;
 }

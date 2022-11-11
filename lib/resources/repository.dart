@@ -6,7 +6,9 @@ class Repository {
 
   Future getAllBooks() => dbController.getAllBooks();
 
-  Future getBooks(int bookStatus) => dbController.getBooks(status: bookStatus);
+  Future getBooks(int status) => dbController.getBooks(status: status);
+
+  Future<int> countBooks(int status) => dbController.countBooks(status: status);
 
   Future insertBook(Book book) => dbController.createBook(book);
 

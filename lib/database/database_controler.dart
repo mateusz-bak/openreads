@@ -1,5 +1,6 @@
 import 'package:openreads/database/database_provider.dart';
 import 'package:openreads/model/book.dart';
+import 'package:sqflite/sqflite.dart';
 
 class DatabaseController {
   final dbClient = DatabaseProvider.dbProvider;
@@ -20,8 +21,10 @@ class DatabaseController {
         : [];
   }
 
-  Future<List<Book>> getBooks(
-      {List<String>? columns, required int status}) async {
+  Future<List<Book>> getBooks({
+    List<String>? columns,
+    required int status,
+  }) async {
     final db = await dbClient.db;
 
     var result = await db.query(
@@ -34,6 +37,19 @@ class DatabaseController {
     return result.isNotEmpty
         ? result.map((item) => Book.fromJSON(item)).toList()
         : [];
+  }
+
+  Future<int> countBooks({
+    List<String>? columns,
+    required int status,
+  }) async {
+    final db = await dbClient.db;
+
+    final count = Sqflite.firstIntValue(await db.rawQuery(
+      'SELECT COUNT(*) FROM booksTable WHERE status = $status',
+    ));
+
+    return count ?? 0;
   }
 
   Future<int> updateBook(Book book) async {

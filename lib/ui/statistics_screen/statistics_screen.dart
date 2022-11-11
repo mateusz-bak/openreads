@@ -28,6 +28,7 @@ class _StatisticsScreenState extends State<StatisticsScreen> {
               padding: const EdgeInsets.all(10.0),
               child: Column(
                 children: [
+                  _buildAllBooksPieChart(context),
                   _buildFinishedBooksByMonth(context),
                   _buildFinishedPagesByMonth(context),
                   _buildNumberOfFinishedBooks(context),
@@ -299,6 +300,31 @@ class _StatisticsScreenState extends State<StatisticsScreen> {
         } else {
           return const Center(
             child: SizedBox(),
+          );
+        }
+      },
+    );
+  }
+
+  StreamBuilder<List<int>> _buildAllBooksPieChart(BuildContext context) {
+    return StreamBuilder<List<int>>(
+      stream: BlocProvider.of<StatsCubit>(context).allBooksByStatus,
+      builder: (context, AsyncSnapshot<List<int>> snapshot) {
+        if (snapshot.hasData) {
+          if (snapshot.data == null) {
+            return const Center(child: Text('No books'));
+          }
+
+          return BooksByStatus(
+            title: 'All books by status',
+            list: snapshot.data!,
+          );
+        } else if (snapshot.hasError) {
+          return Text(snapshot.error.toString());
+        } else {
+          return const BooksByStatus(
+            title: 'All books by status',
+            list: null,
           );
         }
       },

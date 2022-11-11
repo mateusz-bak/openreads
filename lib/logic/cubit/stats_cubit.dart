@@ -7,6 +7,8 @@ import 'package:rxdart/rxdart.dart';
 class StatsCubit extends Cubit {
   final Repository repository = Repository();
 
+  final BehaviorSubject<List<int>> _allBooksByStatusFetcher =
+      BehaviorSubject<List<int>>();
   final BehaviorSubject<List<int>> _finishedBooksByMonthFetcher =
       BehaviorSubject<List<int>>();
   final BehaviorSubject<List<int>> _finishedPagesByMonthFetcher =
@@ -28,6 +30,7 @@ class StatsCubit extends Cubit {
   final BehaviorSubject<double?> _avgReadingTimeFetcher =
       BehaviorSubject<double?>();
 
+  Stream<List<int>> get allBooksByStatus => _allBooksByStatusFetcher.stream;
   Stream<List<int>> get finishedBooksByMonth =>
       _finishedBooksByMonthFetcher.stream;
   Stream<List<int>> get finishedPagesByMonth =>
@@ -43,6 +46,7 @@ class StatsCubit extends Cubit {
   Stream<double?> get avgReadingTime => _avgReadingTimeFetcher.stream;
 
   StatsCubit() : super(null) {
+    getAllBooksByStatus();
     getFinishedBooksByMonth();
     getFinishedPagesByMonth();
     getNumberOfFinishedBooks();
@@ -54,6 +58,20 @@ class StatsCubit extends Cubit {
     getShortestBook();
     getFastestReadBook();
     getSlowestReadBook();
+  }
+
+  getAllBooksByStatus() async {
+    final finishedBooks = await repository.countBooks(0);
+    final inprogressBooks = await repository.countBooks(1);
+    final forLaterBooks = await repository.countBooks(2);
+    final unfinishedBooks = await repository.countBooks(3);
+
+    _allBooksByStatusFetcher.sink.add([
+      finishedBooks,
+      inprogressBooks,
+      forLaterBooks,
+      unfinishedBooks,
+    ]);
   }
 
   getFinishedBooksByMonth() async {
