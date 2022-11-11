@@ -7,9 +7,11 @@ import 'package:openreads/logic/bloc/open_lib_bloc/open_lib_bloc.dart';
 import 'package:openreads/logic/bloc/outlines_bloc/outlines_bloc.dart';
 import 'package:openreads/logic/bloc/sort_bloc/sort_bloc.dart';
 import 'package:openreads/logic/bloc/theme_bloc/theme_bloc.dart';
+import 'package:openreads/logic/bloc/welcome_bloc/welcome_bloc.dart';
 import 'package:openreads/resources/connectivity_service.dart';
 import 'package:openreads/resources/open_library_service.dart';
 import 'package:openreads/ui/books_screen/books_screen.dart';
+import 'package:openreads/ui/welcome_screen/welcome_screen.dart';
 import 'package:path_provider/path_provider.dart';
 
 void main() async {
@@ -38,6 +40,7 @@ class App extends StatelessWidget {
           BlocProvider<ThemeBloc>(create: (context) => ThemeBloc()),
           BlocProvider<OutlinesBloc>(create: (context) => OutlinesBloc()),
           BlocProvider<SortBloc>(create: (context) => SortBloc()),
+          BlocProvider<WelcomeBloc>(create: (context) => WelcomeBloc()),
           BlocProvider<OpenLibBloc>(
             create: (context) => OpenLibBloc(
               RepositoryProvider.of<OpenLibraryService>(context),
@@ -62,6 +65,10 @@ class _OpenreadsAppState extends State<OpenreadsApp>
     with WidgetsBindingObserver {
   late ThemeMode themeMode;
   late bool outlinesMode;
+  late bool welcomeMode;
+  late Image welcomeImage1;
+  late Image welcomeImage2;
+  late Image welcomeImage3;
 
   _decideThemeMode(ThemeState themeState) {
     if (themeState is ThemeLightState) {
@@ -81,6 +88,30 @@ class _OpenreadsAppState extends State<OpenreadsApp>
     }
   }
 
+  _decideWelcomeMode(WelcomeState welcomeState) {
+    if (welcomeState is ShowWelcomeState) {
+      welcomeMode = true;
+    } else {
+      welcomeMode = false;
+    }
+  }
+
+  @override
+  void didChangeDependencies() {
+    precacheImage(welcomeImage1.image, context);
+    precacheImage(welcomeImage2.image, context);
+    precacheImage(welcomeImage3.image, context);
+    super.didChangeDependencies();
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    welcomeImage1 = Image.asset('assets/images/welcome_1.jpg');
+    welcomeImage2 = Image.asset('assets/images/welcome_2.jpg');
+    welcomeImage3 = Image.asset('assets/images/welcome_3.jpg');
+  }
+
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<ThemeBloc, ThemeState>(
@@ -91,20 +122,28 @@ class _OpenreadsAppState extends State<OpenreadsApp>
           builder: (_, outlinesState) {
             _decideOutlinesMode(outlinesState);
 
-            return MaterialApp(
-              title: 'Openreads Flutter',
-              theme: outlinesMode
-                  ? AppTheme.lightTheme
-                  : AppTheme.lightTheme.copyWith(
-                      dividerColor: Colors.transparent,
-                    ),
-              darkTheme: outlinesMode
-                  ? AppTheme.darkTheme
-                  : AppTheme.darkTheme.copyWith(
-                      dividerColor: Colors.transparent,
-                    ),
-              themeMode: themeMode,
-              home: const BooksScreen(),
+            return BlocBuilder<WelcomeBloc, WelcomeState>(
+              builder: (_, welcomeState) {
+                _decideWelcomeMode(welcomeState);
+
+                return MaterialApp(
+                  title: 'Openreads Flutter',
+                  theme: outlinesMode
+                      ? AppTheme.lightTheme
+                      : AppTheme.lightTheme.copyWith(
+                          dividerColor: Colors.transparent,
+                        ),
+                  darkTheme: outlinesMode
+                      ? AppTheme.darkTheme
+                      : AppTheme.darkTheme.copyWith(
+                          dividerColor: Colors.transparent,
+                        ),
+                  themeMode: themeMode,
+                  home: welcomeMode
+                      ? WelcomeScreen(themeData: Theme.of(context))
+                      : const BooksScreen(),
+                );
+              },
             );
           },
         );

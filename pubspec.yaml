@@ -41,6 +41,7 @@ dependencies:
   hydrated_bloc: ^9.0.0
   like_button: ^2.0.5
   barcode_scan2: ^4.2.1
+  intro_slider: ^4.2.0
 
 dev_dependencies:
   flutter_test:
@@ -49,3 +50,5 @@ dev_dependencies:
 
 flutter:
   uses-material-design: true
+  assets:
+  - assets/images/
