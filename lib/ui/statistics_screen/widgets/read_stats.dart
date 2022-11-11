@@ -7,11 +7,13 @@ class ReadStats extends StatelessWidget {
     required this.title,
     required this.value,
     this.secondValue,
+    this.iconData,
   }) : super(key: key);
 
   final String title;
   final String value;
   final String? secondValue;
+  final IconData? iconData;
 
   @override
   Widget build(BuildContext context) {
@@ -39,14 +41,33 @@ class ReadStats extends StatelessWidget {
               ),
             ),
             const SizedBox(height: 5),
-            Text(
-              value,
-              style: TextStyle(
-                fontSize: 16,
-                fontWeight: FontWeight.normal,
-                color: Theme.of(context).secondaryTextColor,
-              ),
-            ),
+            (iconData == null)
+                ? Text(
+                    value,
+                    style: TextStyle(
+                      fontSize: 16,
+                      fontWeight: FontWeight.normal,
+                      color: Theme.of(context).secondaryTextColor,
+                    ),
+                  )
+                : Row(
+                    children: [
+                      Text(
+                        value,
+                        style: TextStyle(
+                          fontSize: 16,
+                          fontWeight: FontWeight.normal,
+                          color: Theme.of(context).secondaryTextColor,
+                        ),
+                      ),
+                      const SizedBox(width: 5),
+                      Icon(
+                        iconData,
+                        size: 16,
+                        color: Theme.of(context).ratingColor,
+                      ),
+                    ],
+                  ),
             (secondValue == null)
                 ? const SizedBox()
                 : Text(

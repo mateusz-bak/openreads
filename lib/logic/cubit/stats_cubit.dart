@@ -1,7 +1,6 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:openreads/model/book.dart';
 import 'package:openreads/model/book_read_stat.dart';
-import 'package:openreads/model/book_stat.dart';
 import 'package:openreads/model/book_yearly_stat.dart';
 import 'package:openreads/resources/repository.dart';
 import 'package:rxdart/rxdart.dart';
@@ -20,16 +19,16 @@ class StatsCubit extends Cubit {
       BehaviorSubject<List<BookYearlyStat>>();
   final BehaviorSubject<List<BookYearlyStat>> _avgPagesFetcher =
       BehaviorSubject<List<BookYearlyStat>>();
-  final BehaviorSubject<BookStat?> _longestFetcher =
-      BehaviorSubject<BookStat?>();
-  final BehaviorSubject<BookStat?> _shortestFetcher =
-      BehaviorSubject<BookStat?>();
-  final BehaviorSubject<BookStat?> _fastestFetcher =
-      BehaviorSubject<BookStat?>();
-  final BehaviorSubject<BookStat?> _slowestFetcher =
-      BehaviorSubject<BookStat?>();
-  final BehaviorSubject<double?> _avgReadingTimeFetcher =
-      BehaviorSubject<double?>();
+  final BehaviorSubject<List<BookYearlyStat>?> _avgReadingTimeFetcher =
+      BehaviorSubject<List<BookYearlyStat>?>();
+  final BehaviorSubject<List<BookYearlyStat>?> _longestFetcher =
+      BehaviorSubject<List<BookYearlyStat>?>();
+  final BehaviorSubject<List<BookYearlyStat>?> _shortestFetcher =
+      BehaviorSubject<List<BookYearlyStat>?>();
+  final BehaviorSubject<List<BookYearlyStat>?> _fastestFetcher =
+      BehaviorSubject<List<BookYearlyStat>?>();
+  final BehaviorSubject<List<BookYearlyStat>?> _slowestFetcher =
+      BehaviorSubject<List<BookYearlyStat>?>();
 
   Stream<List<int>> get years => _yearsFetcher.stream;
   Stream<List<int>> get allBooksByStatus => _allBooksByStatusFetcher.stream;
@@ -39,18 +38,18 @@ class StatsCubit extends Cubit {
       _finishedPagesByMonthFetcher.stream;
   Stream<List<BookYearlyStat>> get avgRating => _avgRatingFetcher.stream;
   Stream<List<BookYearlyStat>> get avgPages => _avgPagesFetcher.stream;
-  Stream<BookStat?> get longest => _longestFetcher.stream;
-  Stream<BookStat?> get shortest => _shortestFetcher.stream;
-  Stream<BookStat?> get fastest => _fastestFetcher.stream;
-  Stream<BookStat?> get slowest => _slowestFetcher.stream;
-  Stream<double?> get avgReadingTime => _avgReadingTimeFetcher.stream;
+  Stream<List<BookYearlyStat>?> get avgReadingTime =>
+      _avgReadingTimeFetcher.stream;
+  Stream<List<BookYearlyStat>?> get longest => _longestFetcher.stream;
+  Stream<List<BookYearlyStat>?> get shortest => _shortestFetcher.stream;
+  Stream<List<BookYearlyStat>?> get fastest => _fastestFetcher.stream;
+  Stream<List<BookYearlyStat>?> get slowest => _slowestFetcher.stream;
 
   StatsCubit() : super(null) {
     getYears();
     getAllBooksByStatus();
     getFinishedBooksByMonth();
     getFinishedPagesByMonth();
-
     getAverageRating();
     getAveragePages();
     getAverageReadingTime();
@@ -262,7 +261,7 @@ class StatsCubit extends Cubit {
     if (countedBooks == 0) {
       return '0';
     } else {
-      return (sumRating / countedBooks).toStringAsFixed(2);
+      return (sumRating / countedBooks).toStringAsFixed(1);
     }
   }
 
@@ -320,14 +319,107 @@ class StatsCubit extends Cubit {
     }
   }
 
+  getAverageReadingTime() async {
+    List<Book> books = await repository.getBooks(0);
+    List<BookYearlyStat> bookYearlyStats = List<BookYearlyStat>.empty(
+      growable: true,
+    );
+
+    bookYearlyStats.add(
+      BookYearlyStat(value: _getAverageReadingTimeInYear(books)),
+    );
+
+    final booksWithYears = _getBooksWithFinishDate(books);
+    final years = _calculateYears(booksWithYears);
+
+    for (var year in years) {
+      final booksInyear = List<Book>.empty(growable: true);
+      for (Book book in books) {
+        if (book.finishDate != null && book.rating != null) {
+          final finishYear = DateTime.parse(book.finishDate!).year;
+
+          if (finishYear == year) {
+            booksInyear.add(book);
+          }
+        }
+      }
+
+      bookYearlyStats.add(
+        BookYearlyStat(
+          year: year,
+          value: _getAverageReadingTimeInYear(booksInyear),
+        ),
+      );
+    }
+
+    _avgPagesFetcher.sink.add(bookYearlyStats);
+
+    _avgReadingTimeFetcher.sink.add(bookYearlyStats);
+  }
+
+  String _getAverageReadingTimeInYear(List<Book> books) {
+    int readTimeInDays = 0;
+    int countedBooks = 0;
+
+    for (Book book in books) {
+      if (book.startDate != null && book.finishDate != null) {
+        final startDate = DateTime.parse(book.startDate!);
+        final finishDate = DateTime.parse(book.finishDate!);
+        final timeDifference = finishDate.difference(startDate).inDays;
+
+        readTimeInDays += timeDifference;
+        countedBooks += 1;
+      }
+    }
+
+    if (readTimeInDays == 0 || countedBooks == 0) {
+      return '';
+    } else {
+      return (readTimeInDays / countedBooks).toStringAsFixed(0);
+    }
+  }
+
   getLongestBook() async {
     List<Book> books = await repository.getBooks(0);
+    List<BookYearlyStat> bookYearlyStats = List<BookYearlyStat>.empty(
+      growable: true,
+    );
 
+    final longestBook = _getLongestBookInYear(books, null);
+
+    if (longestBook == null) return;
+    bookYearlyStats.add(longestBook);
+
+    final booksWithYears = _getBooksWithFinishDate(books);
+    final years = _calculateYears(booksWithYears);
+
+    for (var year in years) {
+      final booksInyear = List<Book>.empty(growable: true);
+      for (Book book in books) {
+        if (book.finishDate != null && book.rating != null) {
+          final finishYear = DateTime.parse(book.finishDate!).year;
+
+          if (finishYear == year) {
+            booksInyear.add(book);
+          }
+        }
+      }
+      final longestBookInAYear = _getLongestBookInYear(booksInyear, year);
+
+      if (longestBookInAYear != null) {
+        bookYearlyStats.add(longestBookInAYear);
+      }
+    }
+
+    _longestFetcher.sink.add(bookYearlyStats);
+  }
+
+  BookYearlyStat? _getLongestBookInYear(List<Book> books, int? year) {
     int longestBookPages = 0;
     String? longestBook;
 
     for (Book book in books) {
-      if (book.pages != null) {
+      if (book.pages != null && book.pages! > 0) {
         if (book.pages! > longestBookPages) {
           longestBookPages = book.pages!;
           longestBook = '${book.title} - ${book.author}';
@@ -336,20 +428,49 @@ class StatsCubit extends Cubit {
     }
 
     if (longestBookPages == 0) {
-      _longestFetcher.sink.add(null);
+      return null;
     } else {
-      _longestFetcher.sink.add(
-        BookStat(
-          title: longestBook!,
-          value: longestBookPages.toString(),
-        ),
-      );
+      return BookYearlyStat(
+          title: longestBook, value: longestBookPages.toString(), year: year);
     }
   }
 
   getShortestBook() async {
     List<Book> books = await repository.getBooks(0);
+    List<BookYearlyStat> bookYearlyStats = List<BookYearlyStat>.empty(
+      growable: true,
+    );
 
+    final shortestBook = _getShortestBookInYear(books, null);
+
+    if (shortestBook == null) return;
+    bookYearlyStats.add(shortestBook);
+
+    final booksWithYears = _getBooksWithFinishDate(books);
+    final years = _calculateYears(booksWithYears);
+
+    for (var year in years) {
+      final booksInyear = List<Book>.empty(growable: true);
+      for (Book book in books) {
+        if (book.finishDate != null && book.rating != null) {
+          final finishYear = DateTime.parse(book.finishDate!).year;
+
+          if (finishYear == year) {
+            booksInyear.add(book);
+          }
+        }
+      }
+      final shortestBookInAYear = _getShortestBookInYear(booksInyear, year);
+
+      if (shortestBookInAYear != null) {
+        bookYearlyStats.add(shortestBookInAYear);
+      }
+    }
+
+    _shortestFetcher.sink.add(bookYearlyStats);
+  }
+
+  BookYearlyStat? _getShortestBookInYear(List<Book> books, int? year) {
     int shortestBookPages = 99999999;
     String? shortestBook;
 
@@ -363,20 +484,49 @@ class StatsCubit extends Cubit {
     }
 
     if (shortestBookPages == 99999999) {
-      _shortestFetcher.sink.add(null);
+      return null;
     } else {
-      _shortestFetcher.sink.add(
-        BookStat(
-          title: shortestBook!,
-          value: shortestBookPages.toString(),
-        ),
-      );
+      return BookYearlyStat(
+          title: shortestBook, value: shortestBookPages.toString(), year: year);
     }
   }
 
   getFastestReadBook() async {
     List<Book> books = await repository.getBooks(0);
+    List<BookYearlyStat> bookYearlyStats = List<BookYearlyStat>.empty(
+      growable: true,
+    );
 
+    final fastestBook = _getFastestReadBookInYear(books, null);
+
+    if (fastestBook == null) return;
+    bookYearlyStats.add(fastestBook);
+
+    final booksWithYears = _getBooksWithFinishDate(books);
+    final years = _calculateYears(booksWithYears);
+
+    for (var year in years) {
+      final booksInyear = List<Book>.empty(growable: true);
+      for (Book book in books) {
+        if (book.finishDate != null && book.rating != null) {
+          final finishYear = DateTime.parse(book.finishDate!).year;
+
+          if (finishYear == year) {
+            booksInyear.add(book);
+          }
+        }
+      }
+      final fastestBookInAYear = _getFastestReadBookInYear(booksInyear, year);
+
+      if (fastestBookInAYear != null) {
+        bookYearlyStats.add(fastestBookInAYear);
+      }
+    }
+
+    _fastestFetcher.sink.add(bookYearlyStats);
+  }
+
+  BookYearlyStat? _getFastestReadBookInYear(List<Book> books, int? year) {
     int? fastestReadTimeInMs;
     int? fastestReadTimeInDays;
     String? fastestReadBook;
@@ -403,20 +553,52 @@ class StatsCubit extends Cubit {
     }
 
     if (fastestReadTimeInMs == null) {
-      _fastestFetcher.sink.add(null);
+      return null;
     } else {
-      _fastestFetcher.sink.add(
-        BookStat(
-          title: fastestReadBook!,
-          value: fastestReadTimeInDays.toString(),
-        ),
+      return BookYearlyStat(
+        title: fastestReadBook,
+        value: fastestReadTimeInDays.toString(),
+        year: year,
       );
     }
   }
 
   getSlowestReadBook() async {
     List<Book> books = await repository.getBooks(0);
+    List<BookYearlyStat> bookYearlyStats = List<BookYearlyStat>.empty(
+      growable: true,
+    );
 
+    final slowestBook = _getSlowestReadBookInYear(books, null);
+
+    if (slowestBook == null) return;
+    bookYearlyStats.add(slowestBook);
+
+    final booksWithYears = _getBooksWithFinishDate(books);
+    final years = _calculateYears(booksWithYears);
+
+    for (var year in years) {
+      final booksInyear = List<Book>.empty(growable: true);
+      for (Book book in books) {
+        if (book.finishDate != null && book.rating != null) {
+          final finishYear = DateTime.parse(book.finishDate!).year;
+
+          if (finishYear == year) {
+            booksInyear.add(book);
+          }
+        }
+      }
+      final slowestBookInAYear = _getSlowestReadBookInYear(booksInyear, year);
+
+      if (slowestBookInAYear != null) {
+        bookYearlyStats.add(slowestBookInAYear);
+      }
+    }
+
+    _slowestFetcher.sink.add(bookYearlyStats);
+  }
+
+  BookYearlyStat? _getSlowestReadBookInYear(List<Book> books, int? year) {
     int? slowestReadTimeInMs;
     int? slowestReadTimeInDays;
     String? slowestReadBook;
@@ -443,38 +625,13 @@ class StatsCubit extends Cubit {
     }
 
     if (slowestReadTimeInMs == null) {
-      _slowestFetcher.sink.add(null);
+      return null;
     } else {
-      _slowestFetcher.sink.add(
-        BookStat(
-          title: slowestReadBook!,
-          value: slowestReadTimeInDays.toString(),
-        ),
+      return BookYearlyStat(
+        title: slowestReadBook,
+        value: slowestReadTimeInDays.toString(),
+        year: year,
       );
-    }
-  }
-
-  getAverageReadingTime() async {
-    List<Book> books = await repository.getBooks(0);
-
-    int readTimeInDays = 0;
-    int countedBooks = 0;
-
-    for (Book book in books) {
-      if (book.startDate != null && book.finishDate != null) {
-        final startDate = DateTime.parse(book.startDate!);
-        final finishDate = DateTime.parse(book.finishDate!);
-        final timeDifference = finishDate.difference(startDate).inDays;
-
-        readTimeInDays += timeDifference;
-        countedBooks += 1;
-      }
-    }
-
-    if (readTimeInDays == 0 || countedBooks == 0) {
-      _avgReadingTimeFetcher.sink.add(null);
-    } else {
-      _avgReadingTimeFetcher.sink.add(readTimeInDays / countedBooks);
     }
   }
 }

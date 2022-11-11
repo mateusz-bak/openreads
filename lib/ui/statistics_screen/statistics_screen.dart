@@ -3,7 +3,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:openreads/core/themes/app_theme.dart';
 import 'package:openreads/logic/cubit/stats_cubit.dart';
 import 'package:openreads/model/book_read_stat.dart';
-import 'package:openreads/model/book_stat.dart';
 import 'package:openreads/model/book_yearly_stat.dart';
 import 'package:openreads/ui/statistics_screen/widgets/widgets.dart';
 
@@ -83,11 +82,11 @@ class _StatisticsScreenState extends State<StatisticsScreen> {
               _buildNumberOfFinishedPages(context, null),
               _buildAverageRating(context, null),
               _buildAveragePages(context, null),
-              _buildAverageReadingTime(context),
-              _buildLongestBook(context),
-              _buildShortestBook(context),
-              _buildFastestRead(context),
-              _buildSlowestRead(context),
+              _buildAverageReadingTime(context, null),
+              _buildLongestBook(context, null),
+              _buildShortestBook(context, null),
+              _buildFastestRead(context, null),
+              _buildSlowestRead(context, null),
             ],
           ),
         ),
@@ -107,11 +106,11 @@ class _StatisticsScreenState extends State<StatisticsScreen> {
                 _buildNumberOfFinishedPages(context, year),
                 _buildAverageRating(context, year),
                 _buildAveragePages(context, year),
-                _buildAverageReadingTime(context),
-                _buildLongestBook(context),
-                _buildShortestBook(context),
-                _buildFastestRead(context),
-                _buildSlowestRead(context),
+                _buildAverageReadingTime(context, year),
+                _buildLongestBook(context, year),
+                _buildShortestBook(context, year),
+                _buildFastestRead(context, year),
+                _buildSlowestRead(context, year),
               ],
             ),
           ),
@@ -163,19 +162,29 @@ class _StatisticsScreenState extends State<StatisticsScreen> {
     );
   }
 
-  StreamBuilder<BookStat?> _buildSlowestRead(BuildContext context) {
-    return StreamBuilder<BookStat?>(
+  StreamBuilder<List<BookYearlyStat>?> _buildSlowestRead(
+    BuildContext context,
+    int? year,
+  ) {
+    return StreamBuilder<List<BookYearlyStat>?>(
       stream: BlocProvider.of<StatsCubit>(context).slowest,
-      builder: (context, AsyncSnapshot<BookStat?> snapshot) {
+      builder: (context, AsyncSnapshot<List<BookYearlyStat>?> snapshot) {
         if (snapshot.hasData) {
           if (snapshot.data == null) {
             return const Center(child: Text('No finished books'));
           }
-          return ReadStats(
-            title: 'Slowest read book',
-            value: snapshot.data!.title,
-            secondValue: '${snapshot.data!.value} days',
-          );
+
+          for (var bookYearlyStat in snapshot.data!) {
+            if (bookYearlyStat.year == year) {
+              return ReadStats(
+                title: 'Slowest read book',
+                value: bookYearlyStat.title.toString(),
+                secondValue: '${bookYearlyStat.value} days',
+              );
+            }
+          }
+
+          return const SizedBox();
         } else if (snapshot.hasError) {
           return Text(snapshot.error.toString());
         } else {
@@ -187,19 +196,29 @@ class _StatisticsScreenState extends State<StatisticsScreen> {
     );
   }
 
-  StreamBuilder<BookStat?> _buildFastestRead(BuildContext context) {
-    return StreamBuilder<BookStat?>(
+  StreamBuilder<List<BookYearlyStat>?> _buildFastestRead(
+    BuildContext context,
+    int? year,
+  ) {
+    return StreamBuilder<List<BookYearlyStat>?>(
       stream: BlocProvider.of<StatsCubit>(context).fastest,
-      builder: (context, AsyncSnapshot<BookStat?> snapshot) {
+      builder: (context, AsyncSnapshot<List<BookYearlyStat>?> snapshot) {
         if (snapshot.hasData) {
           if (snapshot.data == null) {
             return const Center(child: Text('No finished books'));
           }
-          return ReadStats(
-            title: 'Fastest read book',
-            value: snapshot.data!.title,
-            secondValue: '${snapshot.data!.value} days',
-          );
+
+          for (var bookYearlyStat in snapshot.data!) {
+            if (bookYearlyStat.year == year) {
+              return ReadStats(
+                title: 'Fastest read book',
+                value: bookYearlyStat.title.toString(),
+                secondValue: '${bookYearlyStat.value} days',
+              );
+            }
+          }
+
+          return const SizedBox();
         } else if (snapshot.hasError) {
           return Text(snapshot.error.toString());
         } else {
@@ -211,19 +230,29 @@ class _StatisticsScreenState extends State<StatisticsScreen> {
     );
   }
 
-  StreamBuilder<BookStat?> _buildShortestBook(BuildContext context) {
-    return StreamBuilder<BookStat?>(
+  StreamBuilder<List<BookYearlyStat>?> _buildShortestBook(
+    BuildContext context,
+    int? year,
+  ) {
+    return StreamBuilder<List<BookYearlyStat>?>(
       stream: BlocProvider.of<StatsCubit>(context).shortest,
-      builder: (context, AsyncSnapshot<BookStat?> snapshot) {
+      builder: (context, AsyncSnapshot<List<BookYearlyStat>?> snapshot) {
         if (snapshot.hasData) {
           if (snapshot.data == null) {
             return const Center(child: Text('No finished books'));
           }
-          return ReadStats(
-            title: 'Shortest book',
-            value: snapshot.data!.title,
-            secondValue: '${snapshot.data!.value} pages',
-          );
+
+          for (var bookYearlyStat in snapshot.data!) {
+            if (bookYearlyStat.year == year) {
+              return ReadStats(
+                title: 'Shortest book',
+                value: bookYearlyStat.title.toString(),
+                secondValue: '${bookYearlyStat.value} pages',
+              );
+            }
+          }
+
+          return const SizedBox();
         } else if (snapshot.hasError) {
           return Text(snapshot.error.toString());
         } else {
@@ -235,19 +264,29 @@ class _StatisticsScreenState extends State<StatisticsScreen> {
     );
   }
 
-  StreamBuilder<BookStat?> _buildLongestBook(BuildContext context) {
-    return StreamBuilder<BookStat?>(
+  StreamBuilder<List<BookYearlyStat>?> _buildLongestBook(
+    BuildContext context,
+    int? year,
+  ) {
+    return StreamBuilder<List<BookYearlyStat>?>(
       stream: BlocProvider.of<StatsCubit>(context).longest,
-      builder: (context, AsyncSnapshot<BookStat?> snapshot) {
+      builder: (context, AsyncSnapshot<List<BookYearlyStat>?> snapshot) {
         if (snapshot.hasData) {
           if (snapshot.data == null) {
             return const Center(child: Text('No finished books'));
           }
-          return ReadStats(
-            title: 'Longest book',
-            value: snapshot.data!.title,
-            secondValue: '${snapshot.data!.value} pages',
-          );
+
+          for (var bookYearlyStat in snapshot.data!) {
+            if (bookYearlyStat.year == year) {
+              return ReadStats(
+                title: 'Longest book',
+                value: bookYearlyStat.title.toString(),
+                secondValue: '${bookYearlyStat.value} pages',
+              );
+            }
+          }
+
+          return const SizedBox();
         } else if (snapshot.hasError) {
           return Text(snapshot.error.toString());
         } else {
@@ -259,18 +298,28 @@ class _StatisticsScreenState extends State<StatisticsScreen> {
     );
   }
 
-  StreamBuilder<double?> _buildAverageReadingTime(BuildContext context) {
-    return StreamBuilder<double?>(
+  StreamBuilder<List<BookYearlyStat>?> _buildAverageReadingTime(
+    BuildContext context,
+    int? year,
+  ) {
+    return StreamBuilder<List<BookYearlyStat>?>(
       stream: BlocProvider.of<StatsCubit>(context).avgReadingTime,
-      builder: (context, AsyncSnapshot<double?> snapshot) {
+      builder: (context, AsyncSnapshot<List<BookYearlyStat>?> snapshot) {
         if (snapshot.hasData) {
           if (snapshot.data == null) {
             return const Center(child: Text('No finished books'));
           }
-          return ReadStats(
-            title: 'Average reading time',
-            value: '${snapshot.data!.toStringAsFixed(0)} days',
-          );
+
+          for (var bookYearlyStat in snapshot.data!) {
+            if (bookYearlyStat.year == year) {
+              return ReadStats(
+                title: 'Average reading time',
+                value: '${bookYearlyStat.value} days',
+              );
+            }
+          }
+
+          return const SizedBox();
         } else if (snapshot.hasError) {
           return Text(snapshot.error.toString());
         } else {
@@ -298,7 +347,7 @@ class _StatisticsScreenState extends State<StatisticsScreen> {
             if (bookYearlyStat.year == year) {
               return ReadStats(
                 title: 'Average number of pages',
-                value: bookYearlyStat.value,
+                value: '${bookYearlyStat.value} pages',
               );
             }
           }
@@ -330,8 +379,9 @@ class _StatisticsScreenState extends State<StatisticsScreen> {
           for (var bookYearlyStat in snapshot.data!) {
             if (bookYearlyStat.year == year) {
               return ReadStats(
-                title: 'Average book rating',
+                title: 'Average rating',
                 value: bookYearlyStat.value,
+                iconData: Icons.star,
               );
             }
           }
