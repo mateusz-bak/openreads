@@ -382,7 +382,7 @@ class _BooksScreenState extends State<BooksScreen>
                           }
                           return BooksList(
                             books: snapshot.data!,
-                            listNumber: 0,
+                            listNumber: 1,
                           );
                         } else if (snapshot.hasError) {
                           return Text(snapshot.error.toString());
@@ -402,7 +402,7 @@ class _BooksScreenState extends State<BooksScreen>
                           }
                           return BooksList(
                             books: snapshot.data!,
-                            listNumber: 0,
+                            listNumber: 2,
                           );
                         } else if (snapshot.hasError) {
                           return Text(snapshot.error.toString());
@@ -419,9 +419,9 @@ class _BooksScreenState extends State<BooksScreen>
               Container(
                 color: Theme.of(context).backgroundColor,
                 child: TabBar(
-                  labelColor: Theme.of(context).primaryColor,
+                  labelColor: Theme.of(context).mainTextColor,
                   indicatorColor: Theme.of(context).primaryColor,
-                  unselectedLabelColor: Theme.of(context).mainTextColor,
+                  unselectedLabelColor: Theme.of(context).primaryColor,
                   indicator: BoxDecoration(
                     borderRadius: BorderRadius.circular(5),
                     border: Border.all(
