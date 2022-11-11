@@ -360,6 +360,7 @@ class _BooksScreenState extends State<BooksScreen>
                                   state: sortState,
                                   list: snapshot.data!,
                                 ),
+                                listNumber: 0,
                               );
                             },
                           );
@@ -381,6 +382,7 @@ class _BooksScreenState extends State<BooksScreen>
                           }
                           return BooksList(
                             books: snapshot.data!,
+                            listNumber: 0,
                           );
                         } else if (snapshot.hasError) {
                           return Text(snapshot.error.toString());
@@ -400,6 +402,7 @@ class _BooksScreenState extends State<BooksScreen>
                           }
                           return BooksList(
                             books: snapshot.data!,
+                            listNumber: 0,
                           );
                         } else if (snapshot.hasError) {
                           return Text(snapshot.error.toString());

@@ -7,9 +7,11 @@ class BooksList extends StatefulWidget {
   const BooksList({
     Key? key,
     required this.books,
+    required this.listNumber,
   }) : super(key: key);
 
   final List<Book> books;
+  final int listNumber;
 
   @override
   State<BooksList> createState() => _BooksListState();
@@ -23,9 +25,11 @@ class _BooksListState extends State<BooksList>
     return ListView.builder(
       itemCount: widget.books.length,
       itemBuilder: (context, index) {
+        final heroTag = 'tag_${widget.listNumber}_$index';
+
         return BookCard(
           book: widget.books[index],
-          heroTag: "tag_$index",
+          heroTag: heroTag,
           addBottomPadding: (widget.books.length == index + 1),
           onPressed: () {
             if (widget.books[index].id == null) return;
@@ -35,7 +39,7 @@ class _BooksListState extends State<BooksList>
               MaterialPageRoute(
                 builder: (context) => BookScreen(
                   id: widget.books[index].id!,
-                  heroTag: "tag_$index",
+                  heroTag: heroTag,
                 ),
               ),
             );
