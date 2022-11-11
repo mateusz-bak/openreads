@@ -19,6 +19,7 @@ class ReadStatsByMonth extends StatelessWidget {
             showTitles: true,
             reservedSize: 32,
             getTitlesWidget: getTitles,
+            interval: 2,
           ),
         ),
         leftTitles: AxisTitles(
@@ -76,18 +77,20 @@ class ReadStatsByMonth extends StatelessWidget {
         break;
     }
 
-    return Builder(builder: (context) {
-      return SideTitleWidget(
-        axisSide: meta.axisSide,
-        space: 8,
-        child: Text(text,
-            style: TextStyle(
-              color: Theme.of(context).mainTextColor,
-              fontWeight: FontWeight.bold,
-              fontSize: 14,
-            )),
-      );
-    });
+    return (value % meta.appliedInterval == 0)
+        ? Builder(builder: (context) {
+            return SideTitleWidget(
+              axisSide: meta.axisSide,
+              space: 8,
+              child: Text(text,
+                  style: TextStyle(
+                    color: Theme.of(context).mainTextColor,
+                    fontWeight: FontWeight.bold,
+                    fontSize: 12,
+                  )),
+            );
+          })
+        : const SizedBox();
   }
 
   FlBorderData get borderData => FlBorderData(
