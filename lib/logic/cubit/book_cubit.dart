@@ -28,9 +28,15 @@ class BookCubit extends Cubit {
     getFinishedBooks();
     getInProgressBooks();
     getToReadBooks();
+    getAllBooks();
   }
 
   getAllBooks() async {
+    List<Book> books = await repository.getAllBooks();
+    _booksFetcher.sink.add(books);
+  }
+
+  getAllBooksByStatus() async {
     getFinishedBooks();
     getInProgressBooks();
     getToReadBooks();
@@ -53,18 +59,18 @@ class BookCubit extends Cubit {
 
   addBook(Book book) async {
     await repository.insertBook(book);
-    getAllBooks();
+    getAllBooksByStatus();
   }
 
   updateBook(Book book) async {
     repository.updateBook(book);
     getBook(book.id!);
-    getAllBooks();
+    getAllBooksByStatus();
   }
 
   deleteBook(int id) async {
     repository.deleteBook(id);
-    getAllBooks();
+    getAllBooksByStatus();
   }
 
   getBook(int id) async {

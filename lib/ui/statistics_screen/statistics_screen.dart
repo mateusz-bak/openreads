@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:openreads/core/themes/app_theme.dart';
+import 'package:openreads/logic/cubit/book_cubit.dart';
 import 'package:openreads/logic/cubit/stats_cubit.dart';
+import 'package:openreads/model/book.dart';
 import 'package:openreads/model/book_read_stat.dart';
 import 'package:openreads/model/book_yearly_stat.dart';
 import 'package:openreads/ui/statistics_screen/widgets/widgets.dart';
@@ -25,28 +27,50 @@ class _StatisticsScreenState extends State<StatisticsScreen> {
             surfaceTintColor: Theme.of(context).scaffoldBackgroundColor,
             title: const Text('Statistics'),
           ),
-          body: StreamBuilder<List<int>>(
-            stream: BlocProvider.of<StatsCubit>(context).years,
-            builder: (context, AsyncSnapshot<List<int>> snapshot) {
+          body: StreamBuilder<List<Book>>(
+            stream: bookCubit.allBooks,
+            builder: (context, AsyncSnapshot<List<Book>> snapshot) {
               if (snapshot.hasData) {
-                if (snapshot.data == null) {
-                  return const Center(child: Text('No books with finish date'));
+                if (snapshot.data == null || snapshot.data!.isEmpty) {
+                  return const Center(
+                    child: Text('Add books and come here again'),
+                  );
                 }
-                return _buildDefaultTabController(
-                  context: context,
-                  years: snapshot.data!,
-                );
+                return _buildStatistics(context);
               } else if (snapshot.hasError) {
                 return Text(snapshot.error.toString());
               } else {
                 return const Center(
-                  child: SizedBox(),
+                  child: Text('Add books and come here again'),
                 );
               }
             },
           ),
         );
       }),
+    );
+  }
+
+  Widget _buildStatistics(BuildContext context) {
+    return StreamBuilder<List<int>>(
+      stream: BlocProvider.of<StatsCubit>(context).years,
+      builder: (context, AsyncSnapshot<List<int>> snapshot) {
+        if (snapshot.hasData) {
+          if (snapshot.data == null) {
+            return const Center(child: Text('No books with finish date'));
+          }
+          return _buildDefaultTabController(
+            context: context,
+            years: snapshot.data!,
+          );
+        } else if (snapshot.hasError) {
+          return Text(snapshot.error.toString());
+        } else {
+          return const Center(
+            child: SizedBox(),
+          );
+        }
+      },
     );
   }
 
@@ -129,27 +153,30 @@ class _StatisticsScreenState extends State<StatisticsScreen> {
       length: years.length + 1,
       child: Column(
         children: [
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 0),
-            child: Container(
-              decoration: BoxDecoration(
-                color: Theme.of(context).backgroundColor,
-                borderRadius: BorderRadius.circular(5),
-              ),
-              child: TabBar(
-                isScrollable: true,
-                padding: const EdgeInsets.symmetric(horizontal: 10),
-                labelColor: Theme.of(context).mainTextColor,
-                indicatorColor: Theme.of(context).primaryColor,
-                unselectedLabelColor: Theme.of(context).primaryColor,
-                indicator: BoxDecoration(
-                  borderRadius: BorderRadius.circular(5),
-                  border: Border.all(
-                    color: Theme.of(context).dividerColor,
+          Container(
+            decoration: BoxDecoration(
+              color: Theme.of(context).backgroundColor,
+              borderRadius: BorderRadius.circular(5),
+            ),
+            child: Row(
+              children: [
+                Expanded(
+                  child: TabBar(
+                    isScrollable: true,
+                    padding: const EdgeInsets.symmetric(horizontal: 13),
+                    labelColor: Theme.of(context).mainTextColor,
+                    indicatorColor: Theme.of(context).primaryColor,
+                    unselectedLabelColor: Theme.of(context).primaryColor,
+                    indicator: BoxDecoration(
+                      borderRadius: BorderRadius.circular(5),
+                      border: Border.all(
+                        color: Theme.of(context).dividerColor,
+                      ),
+                    ),
+                    tabs: _buildYearsTabBars(years),
                   ),
                 ),
-                tabs: _buildYearsTabBars(years),
-              ),
+              ],
             ),
           ),
           Expanded(
@@ -247,7 +274,9 @@ class _StatisticsScreenState extends State<StatisticsScreen> {
               return ReadStats(
                 title: 'Shortest book',
                 value: bookYearlyStat.title.toString(),
-                secondValue: '${bookYearlyStat.value} pages',
+                secondValue: (bookYearlyStat.value != '')
+                    ? '${bookYearlyStat.value} pages'
+                    : '',
               );
             }
           }
@@ -314,7 +343,9 @@ class _StatisticsScreenState extends State<StatisticsScreen> {
             if (bookYearlyStat.year == year) {
               return ReadStats(
                 title: 'Average reading time',
-                value: '${bookYearlyStat.value} days',
+                value: (bookYearlyStat.value != '')
+                    ? '${bookYearlyStat.value} days'
+                    : '0',
               );
             }
           }
@@ -347,7 +378,9 @@ class _StatisticsScreenState extends State<StatisticsScreen> {
             if (bookYearlyStat.year == year) {
               return ReadStats(
                 title: 'Average number of pages',
-                value: '${bookYearlyStat.value} pages',
+                value: (bookYearlyStat.value != '')
+                    ? '${bookYearlyStat.value} pages'
+                    : '0',
               );
             }
           }
@@ -533,8 +566,8 @@ class _StatisticsScreenState extends State<StatisticsScreen> {
       stream: BlocProvider.of<StatsCubit>(context).allBooksByStatus,
       builder: (context, AsyncSnapshot<List<int>> snapshot) {
         if (snapshot.hasData) {
-          if (snapshot.data == null) {
-            return const Center(child: Text('No books'));
+          if (snapshot.data == null || snapshot.data!.isEmpty) {
+            return const SizedBox();
           }
 
           return BooksByStatus(
