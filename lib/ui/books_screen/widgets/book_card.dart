@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:intl/intl.dart';
+import 'package:openreads/core/constants.dart/enums.dart';
 import 'package:openreads/logic/bloc/sort_bloc/sort_bloc.dart';
 import 'package:openreads/model/book.dart';
 import 'package:openreads/core/themes/app_theme.dart';
@@ -23,41 +24,43 @@ class BookCard extends StatelessWidget {
   Widget _buildSortAttribute() {
     return BlocBuilder<SortBloc, SortState>(
       builder: (context, state) {
-        if (state is PagesSortState) {
-          return (book.pages != null)
-              ? Text('${book.pages} pages')
-              : const SizedBox();
-        } else if (state is StartDateSortState) {
-          return (book.startDate != null)
-              ? Column(
-                  crossAxisAlignment: CrossAxisAlignment.end,
-                  children: [
-                    const Text('Started on', style: TextStyle(fontSize: 12)),
-                    Text(
-                      '${_generateDate(book.startDate)}',
-                      style: const TextStyle(
-                          fontSize: 13, fontWeight: FontWeight.bold),
-                    ),
-                  ],
-                )
-              : const SizedBox();
-        } else if (state is FinishDateSortState) {
-          return (book.finishDate != null)
-              ? Column(
-                  crossAxisAlignment: CrossAxisAlignment.end,
-                  children: [
-                    const Text('Finished on', style: TextStyle(fontSize: 12)),
-                    Text(
-                      '${_generateDate(book.finishDate)}',
-                      style: const TextStyle(
-                          fontSize: 13, fontWeight: FontWeight.bold),
-                    ),
-                  ],
-                )
-              : const SizedBox();
-        } else {
-          return const SizedBox();
+        if (state is SetSortState) {
+          if (state.sortType == SortType.byPages) {
+            return (book.pages != null)
+                ? Text('${book.pages} pages')
+                : const SizedBox();
+          } else if (state.sortType == SortType.byStartDate) {
+            return (book.startDate != null)
+                ? Column(
+                    crossAxisAlignment: CrossAxisAlignment.end,
+                    children: [
+                      const Text('Started on', style: TextStyle(fontSize: 12)),
+                      Text(
+                        '${_generateDate(book.startDate)}',
+                        style: const TextStyle(
+                            fontSize: 13, fontWeight: FontWeight.bold),
+                      ),
+                    ],
+                  )
+                : const SizedBox();
+          } else if (state.sortType == SortType.byFinishDate) {
+            return (book.finishDate != null)
+                ? Column(
+                    crossAxisAlignment: CrossAxisAlignment.end,
+                    children: [
+                      const Text('Finished on', style: TextStyle(fontSize: 12)),
+                      Text(
+                        '${_generateDate(book.finishDate)}',
+                        style: const TextStyle(
+                            fontSize: 13, fontWeight: FontWeight.bold),
+                      ),
+                    ],
+                  )
+                : const SizedBox();
+          }
         }
+
+        return const SizedBox();
       },
     );
   }

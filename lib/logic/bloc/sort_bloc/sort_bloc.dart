@@ -6,95 +6,88 @@ part 'sort_state.dart';
 part 'sort_event.dart';
 
 class SortBloc extends HydratedBloc<SortEvent, SortState> {
-  SortBloc() : super(const TitleSortState(true, false)) {
+  SortBloc()
+      : super(const SetSortState(
+          sortType: SortType.byTitle,
+          isAsc: true,
+          onlyFavourite: false,
+        )) {
     on<ChangeSortEvent>((event, emit) {
-      switch (event.sortType) {
-        case SortType.byTitle:
-          emit(TitleSortState(event.isAsc, event.onlyFavourite));
-          break;
-
-        case SortType.byAuthor:
-          emit(AuthorSortState(event.isAsc, event.onlyFavourite));
-          break;
-
-        case SortType.byRating:
-          emit(RatingSortState(event.isAsc, event.onlyFavourite));
-          break;
-
-        case SortType.byPages:
-          emit(PagesSortState(event.isAsc, event.onlyFavourite));
-          break;
-
-        case SortType.byStartDate:
-          emit(StartDateSortState(event.isAsc, event.onlyFavourite));
-          break;
-
-        case SortType.byFinishDate:
-          emit(FinishDateSortState(event.isAsc, event.onlyFavourite));
-          break;
-      }
+      emit(SetSortState(
+        sortType: event.sortType,
+        isAsc: event.isAsc,
+        onlyFavourite: event.onlyFavourite,
+      ));
     });
   }
 
   @override
   SortState? fromJson(Map<String, dynamic> json) {
-    final sortType = json['sort_type'] as int;
-    final order = json['sort_order'] as bool;
-    final favourite = json['only_favourite'] as bool;
+    final sortTypeInt = json['sort_type'] as int;
+    final isAsc = json['sort_order'] as bool;
+    final onlyFavourite = json['only_favourite'] as bool;
 
-    switch (sortType) {
+    late SortType sortType;
+
+    switch (sortTypeInt) {
       case 0:
-        return TitleSortState(order, favourite);
+        sortType = SortType.byTitle;
+        break;
       case 1:
-        return AuthorSortState(order, favourite);
+        sortType = SortType.byAuthor;
+        break;
       case 2:
-        return RatingSortState(order, favourite);
+        sortType = SortType.byRating;
+        break;
       case 3:
-        return PagesSortState(order, favourite);
+        sortType = SortType.byPages;
+        break;
       case 4:
-        return StartDateSortState(order, favourite);
+        sortType = SortType.byStartDate;
+        break;
       case 5:
-        return FinishDateSortState(order, favourite);
+        sortType = SortType.byFinishDate;
+        break;
       default:
-        return TitleSortState(order, favourite);
+        sortType = SortType.byTitle;
     }
+
+    return SetSortState(
+      sortType: sortType,
+      isAsc: isAsc,
+      onlyFavourite: onlyFavourite,
+    );
   }
 
   @override
   Map<String, dynamic>? toJson(SortState state) {
-    if (state is TitleSortState) {
+    if (state is SetSortState) {
+      late int sortTypeInt;
+      switch (state.sortType) {
+        case SortType.byTitle:
+          sortTypeInt = 0;
+          break;
+        case SortType.byAuthor:
+          sortTypeInt = 1;
+          break;
+        case SortType.byRating:
+          sortTypeInt = 2;
+          break;
+        case SortType.byPages:
+          sortTypeInt = 3;
+          break;
+        case SortType.byStartDate:
+          sortTypeInt = 4;
+          break;
+        case SortType.byFinishDate:
+          sortTypeInt = 5;
+          break;
+        default:
+          sortTypeInt = 0;
+      }
+
       return {
-        'sort_type': 0,
-        'sort_order': state.isAsc,
-        'only_favourite': state.onlyFavourite,
-      };
-    } else if (state is AuthorSortState) {
-      return {
-        'sort_type': 1,
-        'sort_order': state.isAsc,
-        'only_favourite': state.onlyFavourite,
-      };
-    } else if (state is RatingSortState) {
-      return {
-        'sort_type': 2,
-        'sort_order': state.isAsc,
-        'only_favourite': state.onlyFavourite,
-      };
-    } else if (state is PagesSortState) {
-      return {
-        'sort_type': 3,
-        'sort_order': state.isAsc,
-        'only_favourite': state.onlyFavourite,
-      };
-    } else if (state is StartDateSortState) {
-      return {
-        'sort_type': 4,
-        'sort_order': state.isAsc,
-        'only_favourite': state.onlyFavourite,
-      };
-    } else if (state is FinishDateSortState) {
-      return {
-        'sort_type': 5,
+        'sort_type': sortTypeInt,
         'sort_order': state.isAsc,
         'only_favourite': state.onlyFavourite,
       };

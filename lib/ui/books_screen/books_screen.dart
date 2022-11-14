@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:openreads/core/constants.dart/enums.dart';
 import 'package:openreads/core/themes/app_theme.dart';
 import 'package:openreads/logic/bloc/sort_bloc/sort_bloc.dart';
 import 'package:openreads/logic/cubit/book_cubit.dart';
@@ -20,41 +21,31 @@ class BooksScreen extends StatefulWidget {
 class _BooksScreenState extends State<BooksScreen>
     with AutomaticKeepAliveClientMixin {
   List<Book> _sortList({
-    required SortState state,
+    required SetSortState state,
     required List<Book> list,
   }) {
-    if (state is TitleSortState) {
-      if (state.onlyFavourite) {
-        list = _filterOutFav(list: list);
-      }
-      list = _sortByTitle(list: list, isAsc: state.isAsc);
-    } else if (state is AuthorSortState) {
-      if (state.onlyFavourite) {
-        list = _filterOutFav(list: list);
-      }
-      list = _sortByAuthor(list: list, isAsc: state.isAsc);
-    } else if (state is RatingSortState) {
-      if (state.onlyFavourite) {
-        list = _filterOutFav(list: list);
-      }
-      list = _sortByRating(list: list, isAsc: state.isAsc);
-    } else if (state is PagesSortState) {
-      if (state.onlyFavourite) {
-        list = _filterOutFav(list: list);
-      }
-      list = _sortByPages(list: list, isAsc: state.isAsc);
-    } else if (state is StartDateSortState) {
-      if (state.onlyFavourite) {
-        list = _filterOutFav(list: list);
-      }
-      list = _sortByStartDate(list: list, isAsc: state.isAsc);
-    } else if (state is FinishDateSortState) {
-      if (state.onlyFavourite) {
-        list = _filterOutFav(list: list);
-      }
-      list = _sortByFinishDate(list: list, isAsc: state.isAsc);
-    } else {
-      list = _sortByTitle(list: list, isAsc: true);
+    if (state.onlyFavourite) {
+      list = _filterOutFav(list: list);
+    }
+
+    switch (state.sortType) {
+      case SortType.byAuthor:
+        list = _sortByAuthor(list: list, isAsc: state.isAsc);
+        break;
+      case SortType.byRating:
+        list = _sortByRating(list: list, isAsc: state.isAsc);
+        break;
+      case SortType.byPages:
+        list = _sortByPages(list: list, isAsc: state.isAsc);
+        break;
+      case SortType.byStartDate:
+        list = _sortByStartDate(list: list, isAsc: state.isAsc);
+        break;
+      case SortType.byFinishDate:
+        list = _sortByFinishDate(list: list, isAsc: state.isAsc);
+        break;
+      default:
+        list = _sortByTitle(list: list, isAsc: state.isAsc);
     }
 
     return list;
@@ -366,14 +357,18 @@ class _BooksScreenState extends State<BooksScreen>
                             );
                           }
                           return BlocBuilder<SortBloc, SortState>(
-                            builder: (context, sortState) {
-                              return BooksList(
-                                books: _sortList(
-                                  state: sortState,
-                                  list: snapshot.data!,
-                                ),
-                                listNumber: 0,
-                              );
+                            builder: (context, state) {
+                              if (state is SetSortState) {
+                                return BooksList(
+                                  books: _sortList(
+                                    state: state,
+                                    list: snapshot.data!,
+                                  ),
+                                  listNumber: 0,
+                                );
+                              } else {
+                                return const SizedBox();
+                              }
                             },
                           );
                         } else if (snapshot.hasError) {
