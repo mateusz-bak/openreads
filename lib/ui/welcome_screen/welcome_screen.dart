@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:intro_slider/intro_slider.dart';
 import 'package:openreads/core/themes/app_theme.dart';
@@ -23,13 +24,23 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
   @override
   void initState() {
     super.initState();
+    SystemChrome.setSystemUIOverlayStyle(
+        const SystemUiOverlayStyle(statusBarColor: Colors.transparent));
 
     listContentConfig.add(
       ContentConfig(
         title: 'Welcome to Openreads',
         maxLineTitle: 3,
-        styleTitle: const TextStyle(fontSize: 32),
+        styleTitle: const TextStyle(
+          fontSize: 32,
+          color: Colors.white,
+        ),
         textAlignTitle: TextAlign.start,
+        styleDescription: const TextStyle(
+          letterSpacing: 2,
+          fontSize: 22,
+          color: Colors.white,
+        ),
         description:
             "Openreads will help you keep track of your books.\n\n\nIt is also a great tool for organizing your personal library in an easy and transparent way.",
         textAlignDescription: TextAlign.start,
@@ -39,12 +50,19 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
     );
     listContentConfig.add(
       ContentConfig(
-        styleTitle: const TextStyle(fontSize: 26),
+        styleTitle: const TextStyle(
+          fontSize: 26,
+        ),
         textAlignTitle: TextAlign.start,
         textAlignDescription: TextAlign.start,
+        styleDescription: const TextStyle(
+          letterSpacing: 2,
+          fontSize: 22,
+          color: Colors.white,
+        ),
         description:
-            "Progress with your readings thanks to awesome and detailed statistics.\n\n\nChallenge yourself to be a better reader",
-        backgroundImage: 'assets/images/welcome_4.jpg',
+            "Progress with your readings thanks to awesome and detailed statistics.\n\n\nChallenge yourself to be a better reader.",
+        backgroundImage: 'assets/images/welcome_2.jpg',
         backgroundColor: widget.themeData.scaffoldBackgroundColor,
       ),
     );
@@ -52,6 +70,11 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
       ContentConfig(
         textAlignTitle: TextAlign.start,
         textAlignDescription: TextAlign.start,
+        styleDescription: const TextStyle(
+          letterSpacing: 2,
+          fontSize: 22,
+          color: Colors.white,
+        ),
         description:
             "Openreads is completely open source!\n\n\nIt means that you can inspect the app's code on your own and contribute to it's development.\n\n\nAs a bonus you get zero ads and absolutely no tracking!",
         backgroundImage: 'assets/images/welcome_3.jpg',
@@ -77,6 +100,7 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
       isShowPrevBtn: false,
       listContentConfig: listContentConfig,
       onDonePress: onDonePress,
+      renderDoneBtn: const Text('START'),
       skipButtonStyle: ButtonStyle(
         shape: MaterialStateProperty.all<OutlinedBorder>(
             RoundedRectangleBorder(borderRadius: BorderRadius.circular(5))),

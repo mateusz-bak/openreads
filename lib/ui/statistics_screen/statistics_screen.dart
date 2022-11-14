@@ -33,7 +33,14 @@ class _StatisticsScreenState extends State<StatisticsScreen> {
               if (snapshot.hasData) {
                 if (snapshot.data == null || snapshot.data!.isEmpty) {
                   return const Center(
-                    child: Text('Add books and come here again'),
+                    child: Padding(
+                      padding: EdgeInsets.all(50),
+                      child: Text(
+                        'Add some books and come here again',
+                        textAlign: TextAlign.center,
+                        style: TextStyle(fontSize: 16, letterSpacing: 1.5),
+                      ),
+                    ),
                   );
                 }
                 return _buildStatistics(context);
@@ -41,7 +48,14 @@ class _StatisticsScreenState extends State<StatisticsScreen> {
                 return Text(snapshot.error.toString());
               } else {
                 return const Center(
-                  child: Text('Add books and come here again'),
+                  child: Padding(
+                    padding: EdgeInsets.all(50),
+                    child: Text(
+                      'Add some books and come here again',
+                      textAlign: TextAlign.center,
+                      style: TextStyle(fontSize: 16, letterSpacing: 1.5),
+                    ),
+                  ),
                 );
               }
             },

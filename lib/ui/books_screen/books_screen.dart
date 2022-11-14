@@ -351,7 +351,19 @@ class _BooksScreenState extends State<BooksScreen>
                       builder: (context, AsyncSnapshot<List<Book>> snapshot) {
                         if (snapshot.hasData) {
                           if (snapshot.data == null || snapshot.data!.isEmpty) {
-                            return const Center(child: Text('No books'));
+                            return const Center(
+                              child: Padding(
+                                padding: EdgeInsets.all(50),
+                                child: Text(
+                                  'Your read books list is currently empty. Click the "+" button below to add a new one.',
+                                  textAlign: TextAlign.center,
+                                  style: TextStyle(
+                                    letterSpacing: 1.5,
+                                    fontSize: 16,
+                                  ),
+                                ),
+                              ),
+                            );
                           }
                           return BlocBuilder<SortBloc, SortState>(
                             builder: (context, sortState) {
@@ -378,7 +390,19 @@ class _BooksScreenState extends State<BooksScreen>
                       builder: (context, AsyncSnapshot<List<Book>> snapshot) {
                         if (snapshot.hasData) {
                           if (snapshot.data == null || snapshot.data!.isEmpty) {
-                            return const Center(child: Text('No books'));
+                            return const Center(
+                              child: Padding(
+                                padding: EdgeInsets.all(50),
+                                child: Text(
+                                  'Your in progress books list is currently empty. Click the "+" button below to add a new one.',
+                                  textAlign: TextAlign.center,
+                                  style: TextStyle(
+                                    letterSpacing: 1.5,
+                                    fontSize: 16,
+                                  ),
+                                ),
+                              ),
+                            );
                           }
                           return BooksList(
                             books: snapshot.data!,
@@ -398,7 +422,19 @@ class _BooksScreenState extends State<BooksScreen>
                       builder: (context, AsyncSnapshot<List<Book>> snapshot) {
                         if (snapshot.hasData) {
                           if (snapshot.data == null || snapshot.data!.isEmpty) {
-                            return const Center(child: Text('No books'));
+                            return const Center(
+                              child: Padding(
+                                padding: EdgeInsets.all(50),
+                                child: Text(
+                                  'Your for later books list is currently empty. Click the "+" button below to add a new one.',
+                                  textAlign: TextAlign.center,
+                                  style: TextStyle(
+                                    letterSpacing: 1.5,
+                                    fontSize: 16,
+                                  ),
+                                ),
+                              ),
+                            );
                           }
                           return BooksList(
                             books: snapshot.data!,
