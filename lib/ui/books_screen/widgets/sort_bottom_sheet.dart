@@ -51,6 +51,7 @@ Widget _getOrderButton(BuildContext context, SetSortState state) {
         isAsc: !state.isAsc,
         onlyFavourite: state.onlyFavourite,
         years: state.years,
+        displayTags: state.displayTags,
       ),
     ),
   );
@@ -79,6 +80,7 @@ void _updateSort(BuildContext context, String? value, SetSortState state) {
       isAsc: state.isAsc,
       onlyFavourite: state.onlyFavourite,
       years: state.years,
+      displayTags: state.displayTags,
     ),
   );
 }
@@ -97,6 +99,26 @@ class _SortBottomSheetState extends State<SortBottomSheet> {
           isAsc: state.isAsc,
           onlyFavourite: value,
           years: state.years,
+          displayTags: state.displayTags,
+        ),
+      ),
+    );
+  }
+
+  Widget _getTagsSwitch(
+    BuildContext context,
+    SetSortState state,
+  ) {
+    return Switch(
+      value: state.displayTags,
+      activeColor: Theme.of(context).primaryColor,
+      onChanged: (value) => BlocProvider.of<SortBloc>(context).add(
+        ChangeSortEvent(
+          sortType: state.sortType,
+          isAsc: state.isAsc,
+          onlyFavourite: state.onlyFavourite,
+          years: state.years,
+          displayTags: value,
         ),
       ),
     );
@@ -152,6 +174,7 @@ class _SortBottomSheetState extends State<SortBottomSheet> {
         onlyFavourite: state.onlyFavourite,
         years:
             (selectedYearsList.isEmpty) ? null : selectedYearsList.toString(),
+        displayTags: state.displayTags,
       ),
     );
   }
@@ -223,7 +246,7 @@ class _SortBottomSheetState extends State<SortBottomSheet> {
             children: [
               const SizedBox(height: 5),
               const Text(
-                'Sort books',
+                'Sort by',
                 style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
               ),
               const SizedBox(height: 10),
@@ -270,11 +293,6 @@ class _SortBottomSheetState extends State<SortBottomSheet> {
                   }
                 },
               ),
-              const SizedBox(height: 20),
-              const Text(
-                'Filter books',
-                style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
-              ),
               const SizedBox(height: 10),
               BlocBuilder<SortBloc, SortState>(
                 builder: (context, state) {
@@ -290,6 +308,7 @@ class _SortBottomSheetState extends State<SortBottomSheet> {
                                   isAsc: state.isAsc,
                                   onlyFavourite: !state.onlyFavourite,
                                   years: state.years,
+                                  displayTags: state.displayTags,
                                 ),
                               );
                             },
@@ -337,7 +356,7 @@ class _SortBottomSheetState extends State<SortBottomSheet> {
                             children: [
                               const SizedBox(height: 10),
                               const Text(
-                                'Finish years',
+                                'Filter by finish year',
                                 style: TextStyle(fontSize: 16),
                               ),
                               const SizedBox(height: 5),
@@ -388,6 +407,53 @@ class _SortBottomSheetState extends State<SortBottomSheet> {
                     return const Center(
                       child: CircularProgressIndicator(),
                     );
+                  }
+                },
+              ),
+              const SizedBox(height: 10),
+              BlocBuilder<SortBloc, SortState>(
+                builder: (context, state) {
+                  if (state is SetSortState) {
+                    return Row(
+                      children: [
+                        Expanded(
+                          child: InkWell(
+                            onTap: () {
+                              BlocProvider.of<SortBloc>(context).add(
+                                ChangeSortEvent(
+                                  sortType: state.sortType,
+                                  isAsc: state.isAsc,
+                                  onlyFavourite: state.onlyFavourite,
+                                  years: state.years,
+                                  displayTags: !state.displayTags,
+                                ),
+                              );
+                            },
+                            child: Container(
+                              decoration: BoxDecoration(
+                                color: Theme.of(context).backgroundColor,
+                                borderRadius: BorderRadius.circular(5),
+                                border: Border.all(
+                                  color: Theme.of(context).dividerColor,
+                                ),
+                              ),
+                              child: Row(
+                                children: [
+                                  _getTagsSwitch(context, state),
+                                  const SizedBox(width: 10),
+                                  const Text(
+                                    'Display tags',
+                                    style: TextStyle(fontSize: 16),
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ),
+                        ),
+                      ],
+                    );
+                  } else {
+                    return const SizedBox();
                   }
                 },
               ),

@@ -10,12 +10,14 @@ class ChangeSortEvent extends SortEvent {
     required this.isAsc,
     required this.onlyFavourite,
     required this.years,
+    required this.displayTags,
   });
 
   final SortType sortType;
   final bool isAsc;
   final bool onlyFavourite;
   final String? years;
+  final bool displayTags;
 
   @override
   List<Object?> get props => [
@@ -23,5 +25,6 @@ class ChangeSortEvent extends SortEvent {
         isAsc,
         onlyFavourite,
         years,
+        displayTags,
       ];
 }

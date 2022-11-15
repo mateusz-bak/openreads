@@ -65,6 +65,79 @@ class BookCard extends StatelessWidget {
     );
   }
 
+  Widget _buildTags() {
+    return BlocBuilder<SortBloc, SortState>(
+      builder: (context, state) {
+        if (state is SetSortState) {
+          if (state.displayTags) {
+            return (book.tags == null)
+                ? const SizedBox()
+                : Row(
+                    children: [
+                      Expanded(
+                        child: Wrap(
+                          children: _generateTagChips(
+                            context: context,
+                          ),
+                        ),
+                      ),
+                    ],
+                  );
+          }
+        }
+
+        return const SizedBox();
+      },
+    );
+  }
+
+  Widget _buildTagChip({
+    required String tag,
+    required bool selected,
+    required BuildContext context,
+  }) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 5),
+      child: FilterChip(
+        backgroundColor: Theme.of(context).scaffoldBackgroundColor,
+        padding: const EdgeInsets.all(5),
+        side: BorderSide(
+          color: Theme.of(context).dividerColor,
+          width: 1,
+        ),
+        label: Text(
+          tag,
+          style: TextStyle(
+            color: selected ? Colors.white : Theme.of(context).mainTextColor,
+            fontSize: 12,
+          ),
+        ),
+        checkmarkColor: Colors.white,
+        selected: selected,
+        selectedColor: Theme.of(context).primaryColor,
+        onSelected: (_) {},
+      ),
+    );
+  }
+
+  List<Widget> _generateTagChips({required BuildContext context}) {
+    final chips = List<Widget>.empty(growable: true);
+
+    if (book.tags == null) {
+      return [];
+    }
+
+    for (var tag in book.tags!.split('|')) {
+      chips.add(_buildTagChip(
+        tag: tag,
+        selected: false,
+        context: context,
+      ));
+    }
+
+    return chips;
+  }
+
   String? _generateDate(String? date) {
     if (date == null) return null;
 
@@ -153,6 +226,7 @@ class BookCard extends StatelessWidget {
                         _buildSortAttribute(),
                       ],
                     ),
+                    _buildTags(),
                   ],
                 ),
               ),

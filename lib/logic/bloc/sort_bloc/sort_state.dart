@@ -9,12 +9,14 @@ class SetSortState extends SortState {
   final bool isAsc;
   final bool onlyFavourite;
   final String? years; // Not a list because of equality issues
+  final bool displayTags;
 
   const SetSortState({
     required this.sortType,
     required this.isAsc,
     required this.onlyFavourite,
     required this.years,
+    required this.displayTags,
   });
 
   @override
@@ -23,5 +25,6 @@ class SetSortState extends SortState {
         onlyFavourite,
         sortType,
         years,
+        displayTags,
       ];
 }
