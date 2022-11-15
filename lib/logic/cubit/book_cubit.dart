@@ -18,6 +18,8 @@ class BookCubit extends Cubit {
       BehaviorSubject<List<Book>>();
   final BehaviorSubject<List<int>> _finishedYearsFetcher =
       BehaviorSubject<List<int>>();
+  final BehaviorSubject<List<String>> _tagsFetcher =
+      BehaviorSubject<List<String>>();
   final BehaviorSubject<Book> _bookFetcher = BehaviorSubject<Book>();
 
   Stream<List<Book>> get allBooks => _booksFetcher.stream;
@@ -25,6 +27,7 @@ class BookCubit extends Cubit {
   Stream<List<Book>> get inProgressBooks => _inProgressBooksFetcher.stream;
   Stream<List<Book>> get toReadBooks => _toReadBooksFetcher.stream;
   Stream<List<int>> get finishedYears => _finishedYearsFetcher.stream;
+  Stream<List<String>> get tags => _tagsFetcher.stream;
 
   Stream<Book> get book => _bookFetcher.stream;
 
@@ -51,6 +54,7 @@ class BookCubit extends Cubit {
 
     _finishedBooksFetcher.sink.add(books);
     _finishedYearsFetcher.sink.add(_getFinishedYears(books));
+    _tagsFetcher.sink.add(_getTags(books));
   }
 
   getInProgressBooks() async {
@@ -96,5 +100,23 @@ class BookCubit extends Cubit {
     years.sort((a, b) => b.compareTo(a));
 
     return years;
+  }
+
+  List<String> _getTags(List<Book> books) {
+    final tags = List<String>.empty(growable: true);
+
+    for (var book in books) {
+      if (book.tags != null) {
+        for (var tag in book.tags!.split('|')) {
+          if (!tags.contains(tag)) {
+            tags.add(tag);
+          }
+        }
+      }
+    }
+
+    tags.sort((a, b) => a.compareTo(b));
+
+    return tags;
   }
 }

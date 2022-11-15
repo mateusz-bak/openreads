@@ -10,6 +10,7 @@ class ChangeSortEvent extends SortEvent {
     required this.isAsc,
     required this.onlyFavourite,
     required this.years,
+    required this.tags,
     required this.displayTags,
   });
 
@@ -17,6 +18,7 @@ class ChangeSortEvent extends SortEvent {
   final bool isAsc;
   final bool onlyFavourite;
   final String? years;
+  final String? tags;
   final bool displayTags;
 
   @override
@@ -25,6 +27,7 @@ class ChangeSortEvent extends SortEvent {
         isAsc,
         onlyFavourite,
         years,
+        tags,
         displayTags,
       ];
 }

@@ -51,6 +51,7 @@ Widget _getOrderButton(BuildContext context, SetSortState state) {
         isAsc: !state.isAsc,
         onlyFavourite: state.onlyFavourite,
         years: state.years,
+        tags: state.tags,
         displayTags: state.displayTags,
       ),
     ),
@@ -80,6 +81,7 @@ void _updateSort(BuildContext context, String? value, SetSortState state) {
       isAsc: state.isAsc,
       onlyFavourite: state.onlyFavourite,
       years: state.years,
+      tags: state.tags,
       displayTags: state.displayTags,
     ),
   );
@@ -99,6 +101,7 @@ class _SortBottomSheetState extends State<SortBottomSheet> {
           isAsc: state.isAsc,
           onlyFavourite: value,
           years: state.years,
+          tags: state.tags,
           displayTags: state.displayTags,
         ),
       ),
@@ -118,33 +121,11 @@ class _SortBottomSheetState extends State<SortBottomSheet> {
           isAsc: state.isAsc,
           onlyFavourite: state.onlyFavourite,
           years: state.years,
+          tags: state.tags,
           displayTags: value,
         ),
       ),
     );
-  }
-
-  List<String> _convertStringToList(String? string) {
-    late List<String> stringList;
-
-    if (string == null) {
-      stringList = List<String>.empty(growable: true);
-    } else {
-      string = string.replaceFirst('[', '').replaceFirst(']', '');
-
-      if (string.isNotEmpty && string[0] == ',') {
-        string = string.replaceFirst(',', '');
-      }
-
-      string = string.replaceAll(' ', '');
-      stringList = string.split(',');
-
-      if (stringList.isNotEmpty && stringList[0] == ',') {
-        stringList.removeAt(0);
-      }
-    }
-
-    return stringList;
   }
 
   _onYearChipPressed({
@@ -172,21 +153,58 @@ class _SortBottomSheetState extends State<SortBottomSheet> {
         sortType: state.sortType,
         isAsc: state.isAsc,
         onlyFavourite: state.onlyFavourite,
-        years:
-            (selectedYearsList.isEmpty) ? null : selectedYearsList.toString(),
+        years: (selectedYearsList.isEmpty) ? null : selectedYearsList.join('|'),
+        tags: state.tags,
         displayTags: state.displayTags,
       ),
     );
   }
 
-  List<Widget> _buildChips(
+  _onTagChipPressed({
+    required bool selected,
+    required List<String> selectedTagsList,
+    required String dbTag,
+    required SetSortState state,
+  }) {
+    if (selectedTagsList.isNotEmpty && selectedTagsList[0] == '') {
+      selectedTagsList.removeAt(0);
+    }
+
+    if (selected) {
+      selectedTagsList.add(dbTag);
+    } else {
+      bool deleteYear = true;
+      while (deleteYear) {
+        deleteYear = selectedTagsList.remove(dbTag);
+      }
+    }
+
+    BlocProvider.of<SortBloc>(context).add(
+      ChangeSortEvent(
+        sortType: state.sortType,
+        isAsc: state.isAsc,
+        onlyFavourite: state.onlyFavourite,
+        years: state.years,
+        tags: (selectedTagsList.isEmpty) ? null : selectedTagsList.join('|'),
+        displayTags: state.displayTags,
+      ),
+    );
+  }
+
+  List<Widget> _buildYearChips(
     SetSortState state,
     List<int> dbYears,
     String? selectedYears,
   ) {
     final chips = List<Widget>.empty(growable: true);
 
-    final selectedYearsList = _convertStringToList(selectedYears);
+    late List<String> selectedYearsList;
+
+    if (selectedYears != null) {
+      selectedYearsList = selectedYears.split('|');
+    } else {
+      selectedYearsList = List<String>.empty(growable: true);
+    }
 
     for (var selectedYear in selectedYearsList) {
       if (!dbYears.contains(int.parse(selectedYear))) {
@@ -212,6 +230,52 @@ class _SortBottomSheetState extends State<SortBottomSheet> {
             dbYears: dbYears,
             selected: selected,
             selectedYearsList: selectedYearsList,
+            state: state,
+          );
+        },
+      ));
+    }
+    return chips;
+  }
+
+  List<Widget> _buildTagChips(
+    SetSortState state,
+    List<String> dbTags,
+    String? selectedTags,
+  ) {
+    final chips = List<Widget>.empty(growable: true);
+
+    late List<String> selectedTagsList;
+
+    if (selectedTags != null) {
+      selectedTagsList = selectedTags.split('|');
+    } else {
+      selectedTagsList = List<String>.empty(growable: true);
+    }
+
+    for (var selectedTag in selectedTagsList) {
+      if (!dbTags.contains(selectedTag)) {
+        dbTags.add(selectedTag);
+      }
+    }
+
+    for (var dbTag in dbTags) {
+      late bool selected;
+
+      if (selectedTagsList.contains(dbTag.toString())) {
+        selected = true;
+      } else {
+        selected = false;
+      }
+
+      chips.add(TagFilterChip(
+        tag: dbTag,
+        selected: selected,
+        onTagChipPressed: (bool selected) {
+          _onTagChipPressed(
+            dbTag: dbTag,
+            selected: selected,
+            selectedTagsList: selectedTagsList,
             state: state,
           );
         },
@@ -308,6 +372,7 @@ class _SortBottomSheetState extends State<SortBottomSheet> {
                                   isAsc: state.isAsc,
                                   onlyFavourite: !state.onlyFavourite,
                                   years: state.years,
+                                  tags: state.tags,
                                   displayTags: state.displayTags,
                                 ),
                               );
@@ -380,10 +445,80 @@ class _SortBottomSheetState extends State<SortBottomSheet> {
                                             horizontal: 2.5,
                                           ),
                                           child: Row(
-                                            children: _buildChips(
+                                            children: _buildYearChips(
                                               state,
                                               snapshot.data!,
                                               state.years,
+                                            ),
+                                          ),
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ],
+                          );
+                        } else {
+                          return const SizedBox();
+                        }
+                      },
+                    );
+                  } else if (snapshot.hasData && snapshot.data!.isEmpty) {
+                    return const SizedBox();
+                  } else if (snapshot.hasError) {
+                    return Text(snapshot.error.toString());
+                  } else {
+                    return const Center(
+                      child: CircularProgressIndicator(),
+                    );
+                  }
+                },
+              ),
+              StreamBuilder<List<String>>(
+                stream: bookCubit.tags,
+                builder: (context, AsyncSnapshot<List<String>> snapshot) {
+                  if (snapshot.hasData) {
+                    return BlocBuilder<SortBloc, SortState>(
+                      builder: (context, state) {
+                        if (state is SetSortState) {
+                          if (snapshot.data!.isEmpty && state.tags == null) {
+                            return const SizedBox();
+                          }
+
+                          return Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              const SizedBox(height: 10),
+                              const Text(
+                                'Filter by tags',
+                                style: TextStyle(fontSize: 16),
+                              ),
+                              const SizedBox(height: 5),
+                              Row(
+                                children: [
+                                  Expanded(
+                                    child: Container(
+                                      decoration: BoxDecoration(
+                                        color:
+                                            Theme.of(context).backgroundColor,
+                                        borderRadius: BorderRadius.circular(5),
+                                        border: Border.all(
+                                          color: Theme.of(context).dividerColor,
+                                        ),
+                                      ),
+                                      child: SingleChildScrollView(
+                                        scrollDirection: Axis.horizontal,
+                                        child: Padding(
+                                          padding: const EdgeInsets.symmetric(
+                                            vertical: 5,
+                                            horizontal: 2.5,
+                                          ),
+                                          child: Row(
+                                            children: _buildTagChips(
+                                              state,
+                                              snapshot.data!,
+                                              state.tags,
                                             ),
                                           ),
                                         ),
@@ -425,6 +560,7 @@ class _SortBottomSheetState extends State<SortBottomSheet> {
                                   isAsc: state.isAsc,
                                   onlyFavourite: state.onlyFavourite,
                                   years: state.years,
+                                  tags: state.tags,
                                   displayTags: !state.displayTags,
                                 ),
                               );

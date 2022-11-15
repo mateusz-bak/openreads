@@ -32,6 +32,10 @@ class _BooksScreenState extends State<BooksScreen>
       list = _filterOutYears(list: list, years: state.years!);
     }
 
+    if (state.tags != null) {
+      list = _filterOutTags(list: list, tags: state.tags!);
+    }
+
     switch (state.sortType) {
       case SortType.byAuthor:
         list = _sortByAuthor(list: list, isAsc: state.isAsc);
@@ -71,10 +75,8 @@ class _BooksScreenState extends State<BooksScreen>
     required List<Book> list,
     required String years,
   }) {
-    years =
-        years.replaceFirst('[', '').replaceFirst(']', '').replaceAll(' ', '');
+    final yearsList = years.split(('|'));
 
-    final yearsList = years.split(',');
     final filteredOut = List<Book>.empty(growable: true);
 
     for (var book in list) {
@@ -82,6 +84,29 @@ class _BooksScreenState extends State<BooksScreen>
         final year = DateTime.parse(book.finishDate!).year.toString();
         if (yearsList.contains(year)) {
           filteredOut.add(book);
+        }
+      }
+    }
+
+    return filteredOut;
+  }
+
+  List<Book> _filterOutTags({
+    required List<Book> list,
+    required String tags,
+  }) {
+    final tagsList = tags.split(('|'));
+
+    final filteredOut = List<Book>.empty(growable: true);
+
+    for (var book in list) {
+      if (book.tags != null) {
+        final bookTags = book.tags!.split(('|'));
+
+        for (var bookTag in bookTags) {
+          if (tagsList.contains(bookTag) && !filteredOut.contains(book)) {
+            filteredOut.add(book);
+          }
         }
       }
     }

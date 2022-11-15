@@ -8,7 +8,8 @@ class SetSortState extends SortState {
   final SortType sortType;
   final bool isAsc;
   final bool onlyFavourite;
-  final String? years; // Not a list because of equality issues
+  final String? years;
+  final String? tags;
   final bool displayTags;
 
   const SetSortState({
@@ -16,6 +17,7 @@ class SetSortState extends SortState {
     required this.isAsc,
     required this.onlyFavourite,
     required this.years,
+    required this.tags,
     required this.displayTags,
   });
 
@@ -25,6 +27,7 @@ class SetSortState extends SortState {
         onlyFavourite,
         sortType,
         years,
+        tags,
         displayTags,
       ];
 }
