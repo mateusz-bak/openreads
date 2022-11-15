@@ -11,12 +11,14 @@ class SortBloc extends HydratedBloc<SortEvent, SortState> {
           sortType: SortType.byTitle,
           isAsc: true,
           onlyFavourite: false,
+          years: null,
         )) {
     on<ChangeSortEvent>((event, emit) {
       emit(SetSortState(
         sortType: event.sortType,
         isAsc: event.isAsc,
         onlyFavourite: event.onlyFavourite,
+        years: event.years,
       ));
     });
   }
@@ -26,6 +28,7 @@ class SortBloc extends HydratedBloc<SortEvent, SortState> {
     final sortTypeInt = json['sort_type'] as int;
     final isAsc = json['sort_order'] as bool;
     final onlyFavourite = json['only_favourite'] as bool;
+    final years = json['years'] as String?;
 
     late SortType sortType;
 
@@ -56,6 +59,7 @@ class SortBloc extends HydratedBloc<SortEvent, SortState> {
       sortType: sortType,
       isAsc: isAsc,
       onlyFavourite: onlyFavourite,
+      years: years,
     );
   }
 
@@ -90,12 +94,14 @@ class SortBloc extends HydratedBloc<SortEvent, SortState> {
         'sort_type': sortTypeInt,
         'sort_order': state.isAsc,
         'only_favourite': state.onlyFavourite,
+        'years': state.years,
       };
     } else {
       return {
         'sort_type': 0,
         'sort_order': true,
         'only_favourite': false,
+        'years': null,
       };
     }
   }

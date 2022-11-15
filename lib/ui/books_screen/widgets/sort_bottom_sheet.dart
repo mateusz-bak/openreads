@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:openreads/core/constants.dart/enums.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:openreads/logic/bloc/sort_bloc/sort_bloc.dart';
+import 'package:openreads/logic/cubit/book_cubit.dart';
 
 class SortBottomSheet extends StatefulWidget {
   const SortBottomSheet({
@@ -48,6 +49,7 @@ Widget _getOrderButton(BuildContext context, SetSortState state) {
         sortType: state.sortType,
         isAsc: !state.isAsc,
         onlyFavourite: state.onlyFavourite,
+        years: state.years,
       ),
     ),
   );
@@ -75,6 +77,7 @@ void _updateSort(BuildContext context, String? value, SetSortState state) {
       sortType: sortType,
       isAsc: state.isAsc,
       onlyFavourite: state.onlyFavourite,
+      years: state.years,
     ),
   );
 }
@@ -92,9 +95,90 @@ class _SortBottomSheetState extends State<SortBottomSheet> {
           sortType: state.sortType,
           isAsc: state.isAsc,
           onlyFavourite: value,
+          years: state.years,
         ),
       ),
     );
+  }
+
+  List<Widget> _buildChips(
+    SetSortState state,
+    List<int>? dbYears,
+    String? selectedYears,
+  ) {
+    if (dbYears == null || dbYears.isEmpty) return [];
+
+    final chips = List<Widget>.empty(growable: true);
+    late List<String> selectedYearsList;
+
+    if (selectedYears == null) {
+      selectedYearsList = List<String>.empty(growable: true);
+    } else {
+      selectedYears = selectedYears.replaceFirst('[', '').replaceFirst(']', '');
+
+      if (selectedYears.isNotEmpty && selectedYears[0] == ',') {
+        selectedYears = selectedYears.replaceFirst(',', '');
+      }
+
+      selectedYears = selectedYears.replaceAll(' ', '');
+      selectedYearsList = selectedYears.split(',');
+
+      if (selectedYearsList.isNotEmpty && selectedYearsList[0] == ',') {
+        selectedYearsList.removeAt(0);
+      }
+    }
+
+    for (var dbYear in dbYears) {
+      late bool selected;
+
+      if (selectedYearsList.contains(dbYear.toString())) {
+        selected = true;
+      } else {
+        selected = false;
+      }
+
+      chips.add(Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 5),
+        child: FilterChip(
+          backgroundColor: Theme.of(context).scaffoldBackgroundColor,
+          side: BorderSide(
+            color: Theme.of(context).dividerColor,
+            width: 1,
+          ),
+          label: Text(
+            dbYear.toString(),
+          ),
+          selected: selected,
+          selectedColor: Theme.of(context).primaryColor,
+          onSelected: (bool selected) {
+            if (selectedYearsList.isNotEmpty && selectedYearsList[0] == '') {
+              selectedYearsList.removeAt(0);
+            }
+
+            if (selected) {
+              selectedYearsList.add(dbYear.toString());
+            } else {
+              bool deleteYear = true;
+              while (deleteYear) {
+                deleteYear = selectedYearsList.remove(dbYear.toString());
+              }
+            }
+
+            BlocProvider.of<SortBloc>(context).add(
+              ChangeSortEvent(
+                sortType: state.sortType,
+                isAsc: state.isAsc,
+                onlyFavourite: state.onlyFavourite,
+                years: (selectedYearsList.isEmpty)
+                    ? null
+                    : selectedYearsList.toString(),
+              ),
+            );
+          },
+        ),
+      ));
+    }
+    return chips;
   }
 
   @override
@@ -188,6 +272,7 @@ class _SortBottomSheetState extends State<SortBottomSheet> {
                                   sortType: state.sortType,
                                   isAsc: state.isAsc,
                                   onlyFavourite: !state.onlyFavourite,
+                                  years: state.years,
                                 ),
                               );
                             },
@@ -216,6 +301,64 @@ class _SortBottomSheetState extends State<SortBottomSheet> {
                     );
                   } else {
                     return const SizedBox();
+                  }
+                },
+              ),
+              const SizedBox(height: 10),
+              const Text(
+                'Finish years',
+                style: TextStyle(fontSize: 16),
+              ),
+              const SizedBox(height: 5),
+              StreamBuilder<List<int>>(
+                stream: bookCubit.finishedYears,
+                builder: (context, AsyncSnapshot<List<int>> snapshot) {
+                  if (snapshot.hasData) {
+                    return BlocBuilder<SortBloc, SortState>(
+                      builder: (context, state) {
+                        if (state is SetSortState) {
+                          return Row(
+                            children: [
+                              Expanded(
+                                child: Container(
+                                  decoration: BoxDecoration(
+                                    color: Theme.of(context).backgroundColor,
+                                    borderRadius: BorderRadius.circular(5),
+                                    border: Border.all(
+                                      color: Theme.of(context).dividerColor,
+                                    ),
+                                  ),
+                                  child: SingleChildScrollView(
+                                    scrollDirection: Axis.horizontal,
+                                    child: Padding(
+                                      padding: const EdgeInsets.symmetric(
+                                        vertical: 5,
+                                        horizontal: 2.5,
+                                      ),
+                                      child: Row(
+                                        children: _buildChips(
+                                          state,
+                                          snapshot.data,
+                                          state.years,
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                              ),
+                            ],
+                          );
+                        } else {
+                          return const SizedBox();
+                        }
+                      },
+                    );
+                  } else if (snapshot.hasError) {
+                    return Text(snapshot.error.toString());
+                  } else {
+                    return const Center(
+                      child: CircularProgressIndicator(),
+                    );
                   }
                 },
               ),

@@ -28,6 +28,10 @@ class _BooksScreenState extends State<BooksScreen>
       list = _filterOutFav(list: list);
     }
 
+    if (state.years != null) {
+      list = _filterOutYears(list: list, years: state.years!);
+    }
+
     switch (state.sortType) {
       case SortType.byAuthor:
         list = _sortByAuthor(list: list, isAsc: state.isAsc);
@@ -63,23 +67,41 @@ class _BooksScreenState extends State<BooksScreen>
     return filteredOut;
   }
 
+  List<Book> _filterOutYears({
+    required List<Book> list,
+    required String years,
+  }) {
+    years =
+        years.replaceFirst('[', '').replaceFirst(']', '').replaceAll(' ', '');
+
+    final yearsList = years.split(',');
+    final filteredOut = List<Book>.empty(growable: true);
+
+    for (var book in list) {
+      if (book.finishDate != null) {
+        final year = DateTime.parse(book.finishDate!).year.toString();
+        if (yearsList.contains(year)) {
+          filteredOut.add(book);
+        }
+      }
+    }
+
+    return filteredOut;
+  }
+
   List<Book> _sortByTitle({
     required List<Book> list,
     required bool isAsc,
   }) {
     isAsc
-        ? list.sort((a, b) {
-            return a.title
-                .toString()
-                .toLowerCase()
-                .compareTo(b.title.toString().toLowerCase());
-          })
-        : list.sort((b, a) {
-            return a.author
-                .toString()
-                .toLowerCase()
-                .compareTo(b.title.toString().toLowerCase());
-          });
+        ? list.sort((a, b) => a.title
+            .toString()
+            .toLowerCase()
+            .compareTo(b.title.toString().toLowerCase()))
+        : list.sort((b, a) => a.author
+            .toString()
+            .toLowerCase()
+            .compareTo(b.title.toString().toLowerCase()));
 
     return list;
   }
@@ -89,18 +111,14 @@ class _BooksScreenState extends State<BooksScreen>
     required bool isAsc,
   }) {
     isAsc
-        ? list.sort((a, b) {
-            return a.author
-                .toString()
-                .toLowerCase()
-                .compareTo(b.author.toString().toLowerCase());
-          })
-        : list.sort((b, a) {
-            return a.author
-                .toString()
-                .toLowerCase()
-                .compareTo(b.author.toString().toLowerCase());
-          });
+        ? list.sort((a, b) => a.author
+            .toString()
+            .toLowerCase()
+            .compareTo(b.author.toString().toLowerCase()))
+        : list.sort((b, a) => a.author
+            .toString()
+            .toLowerCase()
+            .compareTo(b.author.toString().toLowerCase()));
 
     return list;
   }
@@ -117,12 +135,8 @@ class _BooksScreenState extends State<BooksScreen>
     }
 
     isAsc
-        ? booksRated.sort((a, b) {
-            return a.rating!.compareTo(b.rating!);
-          })
-        : booksRated.sort((b, a) {
-            return a.rating!.compareTo(b.rating!);
-          });
+        ? booksRated.sort((a, b) => a.rating!.compareTo(b.rating!))
+        : booksRated.sort((b, a) => a.rating!.compareTo(b.rating!));
 
     return booksRated + booksNotRated;
   }
@@ -141,12 +155,8 @@ class _BooksScreenState extends State<BooksScreen>
     }
 
     isAsc
-        ? booksWithPages.sort((a, b) {
-            return a.pages!.compareTo(b.pages!);
-          })
-        : booksWithPages.sort((b, a) {
-            return a.pages!.compareTo(b.pages!);
-          });
+        ? booksWithPages.sort((a, b) => a.pages!.compareTo(b.pages!))
+        : booksWithPages.sort((b, a) => a.pages!.compareTo(b.pages!));
 
     return booksWithPages + booksWithoutPages;
   }
@@ -165,14 +175,12 @@ class _BooksScreenState extends State<BooksScreen>
     }
 
     isAsc
-        ? booksWithStartDate.sort((a, b) {
-            return (DateTime.parse(a.startDate!).millisecondsSinceEpoch)
-                .compareTo(DateTime.parse(b.startDate!).millisecondsSinceEpoch);
-          })
-        : booksWithStartDate.sort((b, a) {
-            return (DateTime.parse(a.startDate!).millisecondsSinceEpoch)
-                .compareTo(DateTime.parse(b.startDate!).millisecondsSinceEpoch);
-          });
+        ? booksWithStartDate.sort((a, b) =>
+            (DateTime.parse(a.startDate!).millisecondsSinceEpoch)
+                .compareTo(DateTime.parse(b.startDate!).millisecondsSinceEpoch))
+        : booksWithStartDate.sort((b, a) => (DateTime.parse(a.startDate!)
+                .millisecondsSinceEpoch)
+            .compareTo(DateTime.parse(b.startDate!).millisecondsSinceEpoch));
 
     return booksWithStartDate + booksWithoutStartDate;
   }
@@ -191,16 +199,12 @@ class _BooksScreenState extends State<BooksScreen>
     }
 
     isAsc
-        ? booksWithFinishDate.sort((a, b) {
-            return (DateTime.parse(a.finishDate!).millisecondsSinceEpoch)
-                .compareTo(
-                    DateTime.parse(b.finishDate!).millisecondsSinceEpoch);
-          })
-        : booksWithFinishDate.sort((b, a) {
-            return (DateTime.parse(a.finishDate!).millisecondsSinceEpoch)
-                .compareTo(
-                    DateTime.parse(b.finishDate!).millisecondsSinceEpoch);
-          });
+        ? booksWithFinishDate.sort((a, b) => (DateTime.parse(a.finishDate!)
+                .millisecondsSinceEpoch)
+            .compareTo(DateTime.parse(b.finishDate!).millisecondsSinceEpoch))
+        : booksWithFinishDate.sort((b, a) => (DateTime.parse(a.finishDate!)
+                .millisecondsSinceEpoch)
+            .compareTo(DateTime.parse(b.finishDate!).millisecondsSinceEpoch));
 
     return booksWithFinishDate + booksWithoutFinishDate;
   }
