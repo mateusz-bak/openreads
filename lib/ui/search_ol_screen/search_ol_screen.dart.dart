@@ -261,7 +261,10 @@ class _SearchOLScreenState extends State<SearchOLScreen>
                             statusBarHeight: statusBarHeight,
                             editions: item.seed!,
                             title: item.title!,
-                            author: item.authorName![0],
+                            author: (item.authorName != null &&
+                                    item.authorName!.isNotEmpty)
+                                ? item.authorName![0]
+                                : '',
                             pagesMedian: item.numberOfPagesMedian,
                             isbn: item.isbn,
                             olid: item.key,
