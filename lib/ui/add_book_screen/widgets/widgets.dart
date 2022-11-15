@@ -7,3 +7,5 @@ export 'cover_placeholder.dart';
 export 'book_status_row.dart';
 export 'date_row.dart';
 export 'book_rating_bar.dart';
+export 'add_tags_container.dart';
+export 'tags_text_field.dart';

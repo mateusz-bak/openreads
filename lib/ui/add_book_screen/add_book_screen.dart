@@ -36,13 +36,14 @@ class AddBook extends StatefulWidget {
 }
 
 class _AddBookState extends State<AddBook> {
-  late TextEditingController _titleController,
-      _authorController,
-      _pagesController,
-      _pubYearController,
-      _isbnController,
-      _olidController,
-      _myReviewController;
+  final _titleCtrl = TextEditingController();
+  final _authorCtrl = TextEditingController();
+  final _pagesCtrl = TextEditingController();
+  final _pubYearCtrl = TextEditingController();
+  final _isbnCtrl = TextEditingController();
+  final _olidCtrl = TextEditingController();
+  final _tagsCtrl = TextEditingController();
+  final _myReviewCtrl = TextEditingController();
 
   final _flex = [1, 1, 1, 1];
   final _animDuration = const Duration(milliseconds: 250);
@@ -67,17 +68,20 @@ class _AddBookState extends State<AddBook> {
 
   String? blurHashString;
 
+  List<String>? tags;
+  List<String>? selectedTags;
+
   static const String coverBaseUrl = 'https://covers.openlibrary.org/';
   late final String coverUrl = '${coverBaseUrl}b/id/${widget.cover}-L.jpg';
 
   void _prefillBookDetails() {
-    _titleController.text = widget.book?.title ?? '';
-    _authorController.text = widget.book?.author ?? '';
-    _pubYearController.text = (widget.book?.publicationYear ?? '').toString();
-    _pagesController.text = (widget.book?.pages ?? '').toString();
-    _isbnController.text = widget.book?.isbn ?? '';
-    _olidController.text = widget.book?.olid ?? '';
-    _myReviewController.text = widget.book?.myReview ?? '';
+    _titleCtrl.text = widget.book?.title ?? '';
+    _authorCtrl.text = widget.book?.author ?? '';
+    _pubYearCtrl.text = (widget.book?.publicationYear ?? '').toString();
+    _pagesCtrl.text = (widget.book?.pages ?? '').toString();
+    _isbnCtrl.text = widget.book?.isbn ?? '';
+    _olidCtrl.text = widget.book?.olid ?? '';
+    _myReviewCtrl.text = widget.book?.myReview ?? '';
 
     if (widget.book != null && widget.book!.startDate != null) {
       _startDate = DateTime.parse(widget.book!.startDate!);
@@ -98,6 +102,11 @@ class _AddBookState extends State<AddBook> {
     }
 
     blurHashString = widget.book?.blurHash;
+
+    if (widget.book?.tags != null) {
+      tags = widget.book!.tags!.split('|');
+      selectedTags = widget.book!.tags!.split('|');
+    }
   }
 
   void _showSnackbar(String message) {
@@ -111,12 +120,12 @@ class _AddBookState extends State<AddBook> {
   bool _validate() {
     ScaffoldMessenger.of(context).removeCurrentSnackBar();
 
-    if (_titleController.text.isEmpty) {
+    if (_titleCtrl.text.isEmpty) {
       _showSnackbar('Title cannot be empty');
       return false;
     }
 
-    if (_authorController.text.isEmpty) {
+    if (_authorCtrl.text.isEmpty) {
       _showSnackbar('Author cannot be empty');
       return false;
     }
@@ -150,24 +159,20 @@ class _AddBookState extends State<AddBook> {
     }
 
     bookCubit.addBook(Book(
-      title: _titleController.text,
-      author: _authorController.text,
+      title: _titleCtrl.text,
+      author: _authorCtrl.text,
       status: _status!,
       favourite: false,
       rating: (_rating == 0) ? null : _rating,
       startDate: _startDate?.toIso8601String(),
       finishDate: _finishDate?.toIso8601String(),
-      pages: _pagesController.text.isEmpty
-          ? null
-          : int.parse(_pagesController.text),
-      publicationYear: _pubYearController.text.isEmpty
-          ? null
-          : int.parse(_pubYearController.text),
-      isbn: _isbnController.text.isEmpty ? null : _isbnController.text,
-      olid: _olidController.text.isEmpty ? null : _olidController.text,
-      // tags: _tags,
-      myReview:
-          _myReviewController.text.isEmpty ? null : _myReviewController.text,
+      pages: _pagesCtrl.text.isEmpty ? null : int.parse(_pagesCtrl.text),
+      publicationYear:
+          _pubYearCtrl.text.isEmpty ? null : int.parse(_pubYearCtrl.text),
+      isbn: _isbnCtrl.text.isEmpty ? null : _isbnCtrl.text,
+      olid: _olidCtrl.text.isEmpty ? null : _olidCtrl.text,
+      tags: selectedTags?.join('|'),
+      myReview: _myReviewCtrl.text.isEmpty ? null : _myReviewCtrl.text,
       cover: cover,
       blurHash: blurHashString,
     ));
@@ -193,27 +198,22 @@ class _AddBookState extends State<AddBook> {
       cover = coverForEdit;
     }
 
-    //TODO: finish all parameters
     bookCubit.updateBook(Book(
       id: widget.book?.id,
-      title: _titleController.text,
-      author: _authorController.text,
+      title: _titleCtrl.text,
+      author: _authorCtrl.text,
       status: _status!,
       favourite: false,
       rating: (_rating == 0) ? null : _rating,
       startDate: _startDate?.toIso8601String(),
       finishDate: _finishDate?.toIso8601String(),
-      pages: _pagesController.text.isEmpty
-          ? null
-          : int.parse(_pagesController.text),
-      publicationYear: _pubYearController.text.isEmpty
-          ? null
-          : int.parse(_pubYearController.text),
-      isbn: _isbnController.text.isEmpty ? null : _isbnController.text,
-      olid: _olidController.text.isEmpty ? null : _olidController.text,
-      // tags: _tags,
-      myReview:
-          _myReviewController.text.isEmpty ? null : _myReviewController.text,
+      pages: _pagesCtrl.text.isEmpty ? null : int.parse(_pagesCtrl.text),
+      publicationYear:
+          _pubYearCtrl.text.isEmpty ? null : int.parse(_pubYearCtrl.text),
+      isbn: _isbnCtrl.text.isEmpty ? null : _isbnCtrl.text,
+      olid: _olidCtrl.text.isEmpty ? null : _olidCtrl.text,
+      tags: selectedTags?.join('|'),
+      myReview: _myReviewCtrl.text.isEmpty ? null : _myReviewCtrl.text,
       cover: cover,
       blurHash: blurHashString,
     ));
@@ -420,6 +420,47 @@ class _AddBookState extends State<AddBook> {
     }
   }
 
+  void _addNewTag() {
+    late String newTag;
+
+    if (_tagsCtrl.text.substring(_tagsCtrl.text.length - 1) == ' ') {
+      newTag = _tagsCtrl.text.substring(0, _tagsCtrl.text.length - 1);
+    } else {
+      newTag = _tagsCtrl.text;
+    }
+
+    // Pipe chars are reserved for storing tags list in DB
+    newTag = newTag.replaceAll('|', '');
+
+    if (tags == null) {
+      setState(() => tags = [newTag]);
+    } else {
+      setState(() => tags!.add(newTag));
+    }
+
+    _selectTag(newTag);
+
+    _tagsCtrl.clear();
+  }
+
+  void _selectTag(tag) {
+    if (selectedTags == null) {
+      setState(() => selectedTags = [tag]);
+    } else {
+      setState(() => selectedTags!.add(tag));
+    }
+  }
+
+  void _unselectTag(tag) {
+    if (selectedTags == null) return;
+
+    bool removeTag = true;
+
+    while (removeTag) {
+      setState(() => removeTag = selectedTags!.remove(tag));
+    }
+  }
+
   @override
   void initState() {
     super.initState();
@@ -438,14 +479,6 @@ class _AddBookState extends State<AddBook> {
       widget.previousThemeData.backgroundColor,
     ];
 
-    _titleController = TextEditingController();
-    _authorController = TextEditingController();
-    _pagesController = TextEditingController();
-    _pubYearController = TextEditingController();
-    _isbnController = TextEditingController();
-    _olidController = TextEditingController();
-    _myReviewController = TextEditingController();
-
     if (widget.book != null) {
       _prefillBookDetails();
     }
@@ -457,13 +490,13 @@ class _AddBookState extends State<AddBook> {
 
   @override
   void dispose() {
-    _titleController.dispose();
-    _authorController.dispose();
-    _pagesController.dispose();
-    _pubYearController.dispose();
-    _isbnController.dispose();
-    _olidController.dispose();
-    _myReviewController.dispose();
+    _titleCtrl.dispose();
+    _authorCtrl.dispose();
+    _pagesCtrl.dispose();
+    _pubYearCtrl.dispose();
+    _isbnCtrl.dispose();
+    _olidCtrl.dispose();
+    _myReviewCtrl.dispose();
 
     super.dispose();
   }
@@ -513,7 +546,7 @@ class _AddBookState extends State<AddBook> {
                   _buildCover(),
                   const SizedBox(height: 20),
                   BookTextField(
-                    controller: _titleController,
+                    controller: _titleCtrl,
                     hint: 'Enter a title',
                     icon: Icons.book,
                     keyboardType: TextInputType.name,
@@ -527,7 +560,7 @@ class _AddBookState extends State<AddBook> {
                   ),
                   const SizedBox(height: 20),
                   BookTextField(
-                    controller: _authorController,
+                    controller: _authorCtrl,
                     hint: 'Enter an author',
                     icon: Icons.person,
                     keyboardType: TextInputType.name,
@@ -577,7 +610,7 @@ class _AddBookState extends State<AddBook> {
                     children: [
                       Expanded(
                         child: BookTextField(
-                          controller: _pagesController,
+                          controller: _pagesCtrl,
                           hint: 'Number of pages',
                           icon: Icons.numbers,
                           keyboardType: TextInputType.number,
@@ -590,7 +623,7 @@ class _AddBookState extends State<AddBook> {
                       const SizedBox(width: 20),
                       Expanded(
                         child: BookTextField(
-                          controller: _pubYearController,
+                          controller: _pubYearCtrl,
                           hint: 'Publication year',
                           icon: Icons.calendar_month,
                           keyboardType: TextInputType.number,
@@ -604,7 +637,7 @@ class _AddBookState extends State<AddBook> {
                   ),
                   const SizedBox(height: 20),
                   BookTextField(
-                    controller: _isbnController,
+                    controller: _isbnCtrl,
                     hint: 'ISBN',
                     icon: Icons.pin,
                     keyboardType: TextInputType.number,
@@ -615,7 +648,7 @@ class _AddBookState extends State<AddBook> {
                   ),
                   const SizedBox(height: 20),
                   BookTextField(
-                    controller: _olidController,
+                    controller: _olidCtrl,
                     hint: 'Open Library ID',
                     icon: Icons.pin,
                     keyboardType: TextInputType.text,
@@ -623,43 +656,22 @@ class _AddBookState extends State<AddBook> {
                     textCapitalization: TextCapitalization.characters,
                   ),
                   const SizedBox(height: 20),
-                  Container(
-                    height: _defaultHeight,
-                    padding: const EdgeInsets.symmetric(
-                      horizontal: 8,
-                      vertical: 10,
-                    ),
-                    decoration: BoxDecoration(
-                      color: Theme.of(context).backgroundColor,
-                      borderRadius: BorderRadius.circular(5),
-                      border: Border.all(color: Theme.of(context).dividerColor),
-                    ),
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Row(
-                          children: [
-                            Icon(
-                              Icons.sell,
-                              color: Theme.of(context).secondaryTextColor,
-                            ),
-                            const SizedBox(width: 10),
-                            Text(
-                              'Tags',
-                              style: TextStyle(
-                                fontSize: 14,
-                                color: Theme.of(context).secondaryTextColor,
-                              ),
-                            ),
-                          ],
-                        ),
-                      ],
-                    ),
+                  TagsField(
+                    controller: _tagsCtrl,
+                    hint: 'Tags',
+                    icon: Icons.sell,
+                    keyboardType: TextInputType.text,
+                    maxLength: 20,
+                    tags: tags,
+                    selectedTags: selectedTags,
+                    onSubmitted: (_) => _addNewTag(),
+                    onEditingComplete: () {},
+                    selectTag: (tag) => _selectTag(tag),
+                    unselectTag: (tag) => _unselectTag(tag),
                   ),
                   const SizedBox(height: 20),
                   BookTextField(
-                    controller: _myReviewController,
+                    controller: _myReviewCtrl,
                     hint: 'My review',
                     icon: Icons.message,
                     keyboardType: TextInputType.multiline,

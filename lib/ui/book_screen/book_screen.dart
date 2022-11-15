@@ -32,7 +32,7 @@ class BookScreen extends StatelessWidget {
       publicationYear: book!.publicationYear,
       isbn: book!.isbn,
       olid: book!.olid,
-      // tags: _tags,
+      tags: book!.tags,
       myReview: book!.myReview,
       cover: book!.cover,
       blurHash: book!.blurHash,
@@ -96,7 +96,7 @@ class BookScreen extends StatelessWidget {
         publicationYear: book!.publicationYear,
         isbn: book!.isbn,
         olid: book!.olid,
-        // tags: _tags,
+        tags: book!.tags,
         myReview: book!.myReview,
         cover: book!.cover,
         blurHash: book!.blurHash,
@@ -115,7 +115,7 @@ class BookScreen extends StatelessWidget {
         publicationYear: book!.publicationYear,
         isbn: book!.isbn,
         olid: book!.olid,
-        // tags: _tags,
+        tags: book!.tags,
         myReview: book!.myReview,
         cover: book!.cover,
         blurHash: book!.blurHash,
@@ -134,7 +134,7 @@ class BookScreen extends StatelessWidget {
         publicationYear: book!.publicationYear,
         isbn: book!.isbn,
         olid: book!.olid,
-        // tags: _tags,
+        tags: book!.tags,
         myReview: book!.myReview,
         cover: book!.cover,
         blurHash: book!.blurHash,
@@ -217,6 +217,7 @@ class BookScreen extends StatelessWidget {
                 return const Center(child: Text('Error getting the book'));
               }
               book = snapshot.data!;
+
               return Column(
                 children: [
                   (snapshot.data!.cover == null)
@@ -239,6 +240,7 @@ class BookScreen extends StatelessWidget {
                           author: snapshot.data!.author.toString(),
                           publicationYear:
                               (snapshot.data!.publicationYear ?? "").toString(),
+                          tags: snapshot.data!.tags?.split('|'),
                         ),
                         const SizedBox(height: 10),
                         BookStatusDetail(
@@ -302,12 +304,6 @@ class BookScreen extends StatelessWidget {
                                 text: (snapshot.data!.olid ?? "").toString(),
                               )
                             : const SizedBox(),
-                        // const SizedBox(height: 10),
-                        //TODO: add tags
-                        // const BookDetail(
-                        //   title: 'Tags',
-                        //   text: '',
-                        // ),
                         SizedBox(
                           height: (snapshot.data!.myReview != null) ? 10 : 0,
                         ),
