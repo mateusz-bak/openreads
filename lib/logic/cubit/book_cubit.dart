@@ -86,6 +86,7 @@ class BookCubit extends Cubit {
 
   List<int> _getFinishedYears(List<Book> books) {
     final years = List<int>.empty(growable: true);
+
     for (var book in books) {
       if (book.finishDate != null) {
         years.add(DateTime.parse(book.finishDate!).year);

@@ -378,9 +378,7 @@ class _BooksScreenState extends State<BooksScreen>
                         } else if (snapshot.hasError) {
                           return Text(snapshot.error.toString());
                         } else {
-                          return const Center(
-                            child: CircularProgressIndicator(),
-                          );
+                          return const SizedBox();
                         }
                       },
                     ),
@@ -410,9 +408,7 @@ class _BooksScreenState extends State<BooksScreen>
                         } else if (snapshot.hasError) {
                           return Text(snapshot.error.toString());
                         } else {
-                          return const Center(
-                            child: CircularProgressIndicator(),
-                          );
+                          return const SizedBox();
                         }
                       },
                     ),
@@ -442,9 +438,7 @@ class _BooksScreenState extends State<BooksScreen>
                         } else if (snapshot.hasError) {
                           return Text(snapshot.error.toString());
                         } else {
-                          return const Center(
-                            child: CircularProgressIndicator(),
-                          );
+                          return const SizedBox();
                         }
                       },
                     ),
