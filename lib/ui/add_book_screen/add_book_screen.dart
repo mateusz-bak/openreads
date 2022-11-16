@@ -531,7 +531,7 @@ class _AddBookState extends State<AddBook> {
                 child: Text(
                   'Save',
                   style: TextStyle(
-                    fontSize: 18,
+                    fontSize: 16,
                     color: Theme.of(context).mainTextColor,
                   ),
                 ),
@@ -686,7 +686,7 @@ class _AddBookState extends State<AddBook> {
                       Expanded(
                         flex: 10,
                         child: SizedBox(
-                          height: 51,
+                          // height: 51,
                           child: ElevatedButton(
                             onPressed: () => Navigator.pop(context),
                             style: ElevatedButton.styleFrom(
@@ -707,11 +707,11 @@ class _AddBookState extends State<AddBook> {
                           ),
                         ),
                       ),
-                      const SizedBox(width: 20),
+                      const SizedBox(width: 10),
                       Expanded(
                         flex: 19,
                         child: SizedBox(
-                          height: 51,
+                          // height: 51,
                           child: ElevatedButton(
                             onPressed:
                                 (widget.book != null && !widget.fromOpenLibrary)
@@ -728,7 +728,9 @@ class _AddBookState extends State<AddBook> {
                             child: const Center(
                               child: Text(
                                 "Save",
-                                style: TextStyle(color: Colors.white),
+                                style: TextStyle(
+                                  color: Colors.white,
+                                ),
                               ),
                             ),
                           ),

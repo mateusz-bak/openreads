@@ -80,9 +80,7 @@ class _StatisticsScreenState extends State<StatisticsScreen> {
         } else if (snapshot.hasError) {
           return Text(snapshot.error.toString());
         } else {
-          return const Center(
-            child: SizedBox(),
-          );
+          return const SizedBox();
         }
       },
     );
@@ -112,6 +110,7 @@ class _StatisticsScreenState extends State<StatisticsScreen> {
         child: Padding(
           padding: const EdgeInsets.all(10.0),
           child: Column(
+            mainAxisAlignment: MainAxisAlignment.start,
             children: [
               _buildAllBooksPieChart(context),
               _buildFinishedBooksByMonth(context, null),
@@ -133,25 +132,32 @@ class _StatisticsScreenState extends State<StatisticsScreen> {
 
     for (var year in years) {
       tabs.add(Tab(
-        child: SingleChildScrollView(
-          child: Padding(
-            padding: const EdgeInsets.all(10.0),
-            child: Column(
-              children: [
-                _buildFinishedBooksByMonth(context, year),
-                _buildFinishedPagesByMonth(context, year),
-                _buildNumberOfFinishedBooks(context, year),
-                _buildNumberOfFinishedPages(context, year),
-                _buildAverageRating(context, year),
-                _buildAveragePages(context, year),
-                _buildAverageReadingTime(context, year),
-                _buildLongestBook(context, year),
-                _buildShortestBook(context, year),
-                _buildFastestRead(context, year),
-                _buildSlowestRead(context, year),
-              ],
+        child: Column(
+          children: [
+            Expanded(
+              child: SingleChildScrollView(
+                child: Padding(
+                  padding: const EdgeInsets.all(10.0),
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    children: [
+                      _buildFinishedBooksByMonth(context, year),
+                      _buildFinishedPagesByMonth(context, year),
+                      _buildNumberOfFinishedBooks(context, year),
+                      _buildNumberOfFinishedPages(context, year),
+                      _buildAverageRating(context, year),
+                      _buildAveragePages(context, year),
+                      _buildAverageReadingTime(context, year),
+                      _buildLongestBook(context, year),
+                      _buildShortestBook(context, year),
+                      _buildFastestRead(context, year),
+                      _buildSlowestRead(context, year),
+                    ],
+                  ),
+                ),
+              ),
             ),
-          ),
+          ],
         ),
       ));
     }
@@ -229,9 +235,7 @@ class _StatisticsScreenState extends State<StatisticsScreen> {
         } else if (snapshot.hasError) {
           return Text(snapshot.error.toString());
         } else {
-          return const Center(
-            child: SizedBox(),
-          );
+          return const SizedBox();
         }
       },
     );
@@ -263,9 +267,7 @@ class _StatisticsScreenState extends State<StatisticsScreen> {
         } else if (snapshot.hasError) {
           return Text(snapshot.error.toString());
         } else {
-          return const Center(
-            child: SizedBox(),
-          );
+          return const SizedBox();
         }
       },
     );
@@ -299,9 +301,7 @@ class _StatisticsScreenState extends State<StatisticsScreen> {
         } else if (snapshot.hasError) {
           return Text(snapshot.error.toString());
         } else {
-          return const Center(
-            child: SizedBox(),
-          );
+          return const SizedBox();
         }
       },
     );
@@ -333,9 +333,7 @@ class _StatisticsScreenState extends State<StatisticsScreen> {
         } else if (snapshot.hasError) {
           return Text(snapshot.error.toString());
         } else {
-          return const Center(
-            child: SizedBox(),
-          );
+          return const SizedBox();
         }
       },
     );
@@ -368,9 +366,7 @@ class _StatisticsScreenState extends State<StatisticsScreen> {
         } else if (snapshot.hasError) {
           return Text(snapshot.error.toString());
         } else {
-          return const Center(
-            child: SizedBox(),
-          );
+          return const SizedBox();
         }
       },
     );
@@ -403,9 +399,7 @@ class _StatisticsScreenState extends State<StatisticsScreen> {
         } else if (snapshot.hasError) {
           return Text(snapshot.error.toString());
         } else {
-          return const Center(
-            child: SizedBox(),
-          );
+          return const SizedBox();
         }
       },
     );
@@ -437,9 +431,7 @@ class _StatisticsScreenState extends State<StatisticsScreen> {
         } else if (snapshot.hasError) {
           return Text(snapshot.error.toString());
         } else {
-          return const Center(
-            child: SizedBox(),
-          );
+          return const SizedBox();
         }
       },
     );
@@ -470,9 +462,7 @@ class _StatisticsScreenState extends State<StatisticsScreen> {
         } else if (snapshot.hasError) {
           return Text(snapshot.error.toString());
         } else {
-          return const Center(
-            child: SizedBox(),
-          );
+          return const SizedBox();
         }
       },
     );
@@ -503,9 +493,7 @@ class _StatisticsScreenState extends State<StatisticsScreen> {
         } else if (snapshot.hasError) {
           return Text(snapshot.error.toString());
         } else {
-          return const Center(
-            child: SizedBox(),
-          );
+          return const SizedBox();
         }
       },
     );
@@ -535,9 +523,7 @@ class _StatisticsScreenState extends State<StatisticsScreen> {
         } else if (snapshot.hasError) {
           return Text(snapshot.error.toString());
         } else {
-          return const Center(
-            child: SizedBox(),
-          );
+          return const SizedBox();
         }
       },
     );
@@ -567,9 +553,7 @@ class _StatisticsScreenState extends State<StatisticsScreen> {
         } else if (snapshot.hasError) {
           return Text(snapshot.error.toString());
         } else {
-          return const Center(
-            child: SizedBox(),
-          );
+          return const SizedBox();
         }
       },
     );

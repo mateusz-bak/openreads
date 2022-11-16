@@ -70,17 +70,20 @@ class BookCubit extends Cubit {
   addBook(Book book) async {
     await repository.insertBook(book);
     getAllBooksByStatus();
+    getAllBooks();
   }
 
   updateBook(Book book) async {
     repository.updateBook(book);
     getBook(book.id!);
     getAllBooksByStatus();
+    getAllBooks();
   }
 
   deleteBook(int id) async {
     repository.deleteBook(id);
     getAllBooksByStatus();
+    getAllBooks();
   }
 
   getBook(int id) async {

@@ -61,10 +61,10 @@ class _CoverViewState extends State<CoverView> {
                   borderRadius: BorderRadius.circular(5),
                 ),
                 child: Container(
-                  padding: const EdgeInsets.all(2),
+                  padding: const EdgeInsets.all(1),
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(5),
-                    color: Theme.of(context).onPrimary,
+                    color: Theme.of(context).dividerColor,
                   ),
                   child: ClipRRect(
                     borderRadius: BorderRadius.circular(5),
