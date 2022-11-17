@@ -1,6 +1,7 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:loading_animation_widget/loading_animation_widget.dart';
+import 'package:openreads/core/themes/app_theme.dart';
 
 class BookCardOLEdition extends StatelessWidget {
   BookCardOLEdition({
@@ -23,14 +24,15 @@ class BookCardOLEdition extends StatelessWidget {
       padding: const EdgeInsets.fromLTRB(0, 0, 0, 0),
       child: InkWell(
         customBorder: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(5),
+          borderRadius: Theme.of(context).extension<CustomBorder>()?.radius ??
+              BorderRadius.circular(5),
         ),
         onTap: onPressed,
         child: Container(
             padding: const EdgeInsets.all(10),
             decoration: BoxDecoration(
               color: Theme.of(context).backgroundColor,
-              borderRadius: BorderRadius.circular(5),
+              borderRadius: Theme.of(context).extension<CustomBorder>()?.radius,
               border: Border.all(color: Theme.of(context).dividerColor),
             ),
             child: Column(

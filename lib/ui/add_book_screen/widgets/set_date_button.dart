@@ -27,12 +27,15 @@ class SetDateButton extends StatelessWidget {
         children: [
           InkWell(
             customBorder: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(5),
+              borderRadius:
+                  Theme.of(context).extension<CustomBorder>()?.radius ??
+                      BorderRadius.circular(5),
             ),
             onTap: onPressed,
             child: Ink(
               decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(5),
+                borderRadius:
+                    Theme.of(context).extension<CustomBorder>()?.radius,
                 color: Theme.of(context).backgroundColor,
                 border: Border.all(color: Theme.of(context).dividerColor),
               ),

@@ -35,7 +35,8 @@ class BooksByStatusState extends State<BooksByStatus> {
     return Card(
       elevation: 0,
       shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(5),
+        borderRadius: Theme.of(context).extension<CustomBorder>()?.radius ??
+            BorderRadius.circular(5),
         side: BorderSide(
           color: Theme.of(context).dividerColor,
           width: 1,

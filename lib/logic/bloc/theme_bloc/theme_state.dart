@@ -4,17 +4,17 @@ abstract class ThemeState extends Equatable {
   const ThemeState();
 }
 
-class ThemeAutoState extends ThemeState {
-  @override
-  List<Object> get props => [];
-}
+class SetThemeState extends ThemeState {
+  final ThemeMode themeMode;
+  final bool showOutlines;
+  final double cornerRadius;
 
-class ThemeLightState extends ThemeState {
-  @override
-  List<Object> get props => [];
-}
+  const SetThemeState({
+    required this.themeMode,
+    required this.showOutlines,
+    required this.cornerRadius,
+  });
 
-class ThemeDarkState extends ThemeState {
   @override
-  List<Object> get props => [];
+  List<Object> get props => [themeMode, showOutlines, cornerRadius];
 }

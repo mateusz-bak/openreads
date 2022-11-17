@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:openreads/core/themes/app_theme.dart';
 
-class AddBookMethodButton extends StatelessWidget {
-  const AddBookMethodButton({
+class ContactButton extends StatelessWidget {
+  const ContactButton({
     Key? key,
     required this.text,
     required this.icon,

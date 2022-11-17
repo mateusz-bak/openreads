@@ -470,31 +470,34 @@ class _BooksScreenState extends State<BooksScreen>
                   ],
                 ),
               ),
-              Container(
-                color: Theme.of(context).backgroundColor,
-                child: TabBar(
-                  labelColor: Theme.of(context).mainTextColor,
-                  indicatorColor: Theme.of(context).primaryColor,
-                  unselectedLabelColor: Theme.of(context).primaryColor,
-                  indicator: BoxDecoration(
-                    borderRadius: BorderRadius.circular(5),
-                    border: Border.all(
-                      color: Theme.of(context).dividerColor,
+              Builder(builder: (context) {
+                return Container(
+                  color: Theme.of(context).backgroundColor,
+                  child: TabBar(
+                    labelColor: Theme.of(context).mainTextColor,
+                    indicatorColor: Theme.of(context).primaryColor,
+                    unselectedLabelColor: Theme.of(context).primaryColor,
+                    indicator: BoxDecoration(
+                      borderRadius:
+                          Theme.of(context).extension<CustomBorder>()?.radius,
+                      border: Border.all(
+                        color: Theme.of(context).dividerColor,
+                      ),
                     ),
+                    tabs: const [
+                      Tab(
+                        child: Text('Finished'),
+                      ),
+                      Tab(
+                        child: Text('In progress'),
+                      ),
+                      Tab(
+                        child: Text('For later'),
+                      ),
+                    ],
                   ),
-                  tabs: const [
-                    Tab(
-                      child: Text('Finished'),
-                    ),
-                    Tab(
-                      child: Text('In progress'),
-                    ),
-                    Tab(
-                      child: Text('For later'),
-                    ),
-                  ],
-                ),
-              ),
+                );
+              }),
             ],
           )),
     );

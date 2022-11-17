@@ -2,6 +2,7 @@ import 'package:dropdown_button2/custom_dropdown_button2.dart';
 import 'package:flutter/material.dart';
 import 'package:openreads/core/constants.dart/enums.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:openreads/core/themes/app_theme.dart';
 import 'package:openreads/logic/bloc/sort_bloc/sort_bloc.dart';
 import 'package:openreads/logic/cubit/book_cubit.dart';
 import 'package:openreads/ui/books_screen/widgets/widgets.dart';
@@ -330,7 +331,9 @@ class _SortBottomSheetState extends State<SortBottomSheet> {
                                 color: Theme.of(context).dividerColor,
                               ),
                               color: Theme.of(context).backgroundColor,
-                              borderRadius: BorderRadius.circular(5),
+                              borderRadius: Theme.of(context)
+                                  .extension<CustomBorder>()
+                                  ?.radius,
                             ),
                             onChanged: (value) => _updateSort(
                               context,
@@ -343,7 +346,9 @@ class _SortBottomSheetState extends State<SortBottomSheet> {
                         Container(
                           decoration: BoxDecoration(
                             color: Theme.of(context).backgroundColor,
-                            borderRadius: BorderRadius.circular(5),
+                            borderRadius: Theme.of(context)
+                                .extension<CustomBorder>()
+                                ?.radius,
                             border: Border.all(
                               color: Theme.of(context).dividerColor,
                             ),
@@ -380,7 +385,9 @@ class _SortBottomSheetState extends State<SortBottomSheet> {
                             child: Container(
                               decoration: BoxDecoration(
                                 color: Theme.of(context).backgroundColor,
-                                borderRadius: BorderRadius.circular(5),
+                                borderRadius: Theme.of(context)
+                                    .extension<CustomBorder>()
+                                    ?.radius,
                                 border: Border.all(
                                   color: Theme.of(context).dividerColor,
                                 ),
@@ -432,7 +439,9 @@ class _SortBottomSheetState extends State<SortBottomSheet> {
                                       decoration: BoxDecoration(
                                         color:
                                             Theme.of(context).backgroundColor,
-                                        borderRadius: BorderRadius.circular(5),
+                                        borderRadius: Theme.of(context)
+                                            .extension<CustomBorder>()
+                                            ?.radius,
                                         border: Border.all(
                                           color: Theme.of(context).dividerColor,
                                         ),
@@ -502,7 +511,9 @@ class _SortBottomSheetState extends State<SortBottomSheet> {
                                       decoration: BoxDecoration(
                                         color:
                                             Theme.of(context).backgroundColor,
-                                        borderRadius: BorderRadius.circular(5),
+                                        borderRadius: Theme.of(context)
+                                            .extension<CustomBorder>()
+                                            ?.radius,
                                         border: Border.all(
                                           color: Theme.of(context).dividerColor,
                                         ),
@@ -568,7 +579,9 @@ class _SortBottomSheetState extends State<SortBottomSheet> {
                             child: Container(
                               decoration: BoxDecoration(
                                 color: Theme.of(context).backgroundColor,
-                                borderRadius: BorderRadius.circular(5),
+                                borderRadius: Theme.of(context)
+                                    .extension<CustomBorder>()
+                                    ?.radius,
                                 border: Border.all(
                                   color: Theme.of(context).dividerColor,
                                 ),

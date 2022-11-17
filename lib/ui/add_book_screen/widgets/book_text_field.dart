@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:openreads/core/themes/app_theme.dart';
 
 class BookTextField extends StatefulWidget {
   const BookTextField({
@@ -63,7 +64,7 @@ class _BookTextFieldState extends State<BookTextField> {
       ),
       decoration: BoxDecoration(
         color: Theme.of(context).backgroundColor,
-        borderRadius: BorderRadius.circular(5),
+        borderRadius: Theme.of(context).extension<CustomBorder>()?.radius,
         border: Border.all(color: Theme.of(context).dividerColor),
       ),
       child: Scrollbar(

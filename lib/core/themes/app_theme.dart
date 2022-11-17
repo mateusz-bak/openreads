@@ -99,3 +99,29 @@ extension ThemeExtras on ThemeData {
   Color get forLaterColor => AppTheme.forLaterColor;
   Color get unfinishedColor => AppTheme.unfinishedColor;
 }
+
+@immutable
+class CustomBorder extends ThemeExtension<CustomBorder> {
+  const CustomBorder({
+    required this.radius,
+  });
+
+  final BorderRadius? radius;
+
+  @override
+  CustomBorder copyWith({BorderRadius? radius}) {
+    return CustomBorder(
+      radius: radius ?? this.radius,
+    );
+  }
+
+  @override
+  CustomBorder lerp(ThemeExtension<CustomBorder>? other, double t) {
+    if (other is! CustomBorder) {
+      return this;
+    }
+    return CustomBorder(
+      radius: BorderRadius.lerp(radius, other.radius, t),
+    );
+  }
+}

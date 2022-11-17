@@ -58,16 +58,19 @@ class _CoverViewState extends State<CoverView> {
                     : null,
                 decoration: BoxDecoration(
                   color: Colors.grey.shade400,
-                  borderRadius: BorderRadius.circular(5),
+                  borderRadius:
+                      Theme.of(context).extension<CustomBorder>()?.radius,
                 ),
                 child: Container(
                   padding: const EdgeInsets.all(1),
                   decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(5),
+                    borderRadius:
+                        Theme.of(context).extension<CustomBorder>()?.radius,
                     color: Theme.of(context).dividerColor,
                   ),
                   child: ClipRRect(
-                    borderRadius: BorderRadius.circular(5),
+                    borderRadius:
+                        Theme.of(context).extension<CustomBorder>()?.radius,
                     child: (widget.croppedPhotoPreview != null)
                         ? Image.file(
                             File(widget.croppedPhotoPreview!.path),

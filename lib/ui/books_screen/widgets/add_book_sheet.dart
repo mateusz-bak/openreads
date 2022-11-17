@@ -38,33 +38,35 @@ class _AddBookSheetState extends State<AddBookSheet> {
             borderRadius: BorderRadius.circular(15),
             color: Theme.of(context).scaffoldBackgroundColor,
           ),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-            children: [
-              Expanded(
-                child: AddBookMethodButton(
-                  text: 'Add book\nmanually',
-                  icon: Icons.edit,
-                  onPressed: widget.addManually,
+          child: IntrinsicHeight(
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: [
+                Expanded(
+                  child: AddBookMethodButton(
+                    text: 'Add book\nmanually',
+                    icon: Icons.edit,
+                    onPressed: widget.addManually,
+                  ),
                 ),
-              ),
-              const SizedBox(width: 20),
-              Expanded(
-                child: AddBookMethodButton(
-                  text: 'Search in\nOpen Library',
-                  icon: Icons.search,
-                  onPressed: widget.searchInOpenLibrary,
+                const SizedBox(width: 20),
+                Expanded(
+                  child: AddBookMethodButton(
+                    text: 'Search in\nOpen Library',
+                    icon: Icons.search,
+                    onPressed: widget.searchInOpenLibrary,
+                  ),
                 ),
-              ),
-              const SizedBox(width: 20),
-              Expanded(
-                child: AddBookMethodButton(
-                  text: 'Scan a\nbarcode',
-                  icon: Icons.document_scanner_outlined,
-                  onPressed: widget.scanBarcode,
+                const SizedBox(width: 20),
+                Expanded(
+                  child: AddBookMethodButton(
+                    text: 'Scan a\nbarcode',
+                    icon: Icons.document_scanner_outlined,
+                    onPressed: widget.scanBarcode,
+                  ),
                 ),
-              ),
-            ],
+              ],
+            ),
           ),
         ),
       ],

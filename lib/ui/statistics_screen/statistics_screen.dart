@@ -176,7 +176,7 @@ class _StatisticsScreenState extends State<StatisticsScreen> {
           Container(
             decoration: BoxDecoration(
               color: Theme.of(context).backgroundColor,
-              borderRadius: BorderRadius.circular(5),
+              borderRadius: Theme.of(context).extension<CustomBorder>()?.radius,
             ),
             child: Row(
               children: [
@@ -188,7 +188,8 @@ class _StatisticsScreenState extends State<StatisticsScreen> {
                     indicatorColor: Theme.of(context).primaryColor,
                     unselectedLabelColor: Theme.of(context).primaryColor,
                     indicator: BoxDecoration(
-                      borderRadius: BorderRadius.circular(5),
+                      borderRadius:
+                          Theme.of(context).extension<CustomBorder>()?.radius,
                       border: Border.all(
                         color: Theme.of(context).dividerColor,
                       ),

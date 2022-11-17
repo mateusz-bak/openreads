@@ -15,13 +15,14 @@ class CoverPlaceholder extends StatelessWidget {
   Widget build(BuildContext context) {
     return InkWell(
       customBorder: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(5),
+        borderRadius: Theme.of(context).extension<CustomBorder>()?.radius ??
+            BorderRadius.circular(5),
       ),
       onTap: onPressed,
       child: Ink(
         height: defaultHeight,
         decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(5),
+          borderRadius: Theme.of(context).extension<CustomBorder>()?.radius,
           color: Theme.of(context).backgroundColor,
           border: Border.all(color: Theme.of(context).dividerColor),
         ),

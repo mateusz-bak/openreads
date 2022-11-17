@@ -88,7 +88,7 @@ class BookStatusDetail extends StatelessWidget {
       onTap: changeStatusAction,
       child: Container(
         decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(5),
+          borderRadius: Theme.of(context).extension<CustomBorder>()?.radius,
           border: Border.all(color: Theme.of(context).dividerColor),
         ),
         child: Padding(
@@ -124,7 +124,7 @@ class BookStatusDetail extends StatelessWidget {
       padding: const EdgeInsets.all(10),
       decoration: BoxDecoration(
         color: Theme.of(context).backgroundColor,
-        borderRadius: BorderRadius.circular(5),
+        borderRadius: Theme.of(context).extension<CustomBorder>()?.radius,
         border: Border.all(color: Theme.of(context).dividerColor),
       ),
       child: Column(
@@ -137,7 +137,8 @@ class BookStatusDetail extends StatelessWidget {
                 child: Container(
                   decoration: BoxDecoration(
                     color: Theme.of(context).primaryColor,
-                    borderRadius: BorderRadius.circular(5),
+                    borderRadius:
+                        Theme.of(context).extension<CustomBorder>()?.radius,
                   ),
                   child: Padding(
                     padding: const EdgeInsets.symmetric(

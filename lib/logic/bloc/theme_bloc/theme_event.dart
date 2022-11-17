@@ -5,10 +5,20 @@ abstract class ThemeEvent extends Equatable {
 }
 
 class ChangeThemeEvent extends ThemeEvent {
-  const ChangeThemeEvent(this.themeMode);
-
   final ThemeMode themeMode;
+  final bool showOutlines;
+  final double cornerRadius;
+
+  const ChangeThemeEvent({
+    required this.themeMode,
+    required this.showOutlines,
+    required this.cornerRadius,
+  });
 
   @override
-  List<Object?> get props => [themeMode];
+  List<Object?> get props => [
+        themeMode,
+        showOutlines,
+        cornerRadius,
+      ];
 }

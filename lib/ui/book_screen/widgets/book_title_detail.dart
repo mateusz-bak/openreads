@@ -65,7 +65,7 @@ class BookTitleDetail extends StatelessWidget {
       padding: const EdgeInsets.all(5),
       decoration: BoxDecoration(
         color: Theme.of(context).backgroundColor,
-        borderRadius: BorderRadius.circular(5),
+        borderRadius: Theme.of(context).extension<CustomBorder>()?.radius,
         border: Border.all(color: Theme.of(context).dividerColor),
       ),
       child: Column(

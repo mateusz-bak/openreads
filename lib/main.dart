@@ -4,7 +4,6 @@ import 'package:flutter_displaymode/flutter_displaymode.dart';
 import 'package:hydrated_bloc/hydrated_bloc.dart';
 import 'package:openreads/core/themes/app_theme.dart';
 import 'package:openreads/logic/bloc/open_lib_bloc/open_lib_bloc.dart';
-import 'package:openreads/logic/bloc/outlines_bloc/outlines_bloc.dart';
 import 'package:openreads/logic/bloc/sort_bloc/sort_bloc.dart';
 import 'package:openreads/logic/bloc/theme_bloc/theme_bloc.dart';
 import 'package:openreads/logic/bloc/welcome_bloc/welcome_bloc.dart';
@@ -38,7 +37,6 @@ class App extends StatelessWidget {
       child: MultiBlocProvider(
         providers: [
           BlocProvider<ThemeBloc>(create: (context) => ThemeBloc()),
-          BlocProvider<OutlinesBloc>(create: (context) => OutlinesBloc()),
           BlocProvider<SortBloc>(create: (context) => SortBloc()),
           BlocProvider<WelcomeBloc>(create: (context) => WelcomeBloc()),
           BlocProvider<OpenLibBloc>(
@@ -63,30 +61,10 @@ class OpenreadsApp extends StatefulWidget {
 
 class _OpenreadsAppState extends State<OpenreadsApp>
     with WidgetsBindingObserver {
-  late ThemeMode themeMode;
-  late bool outlinesMode;
   late bool welcomeMode;
   late Image welcomeImage1;
   late Image welcomeImage2;
   late Image welcomeImage3;
-
-  _decideThemeMode(ThemeState themeState) {
-    if (themeState is ThemeLightState) {
-      themeMode = ThemeMode.light;
-    } else if (themeState is ThemeDarkState) {
-      themeMode = ThemeMode.dark;
-    } else {
-      themeMode = ThemeMode.system;
-    }
-  }
-
-  _decideOutlinesMode(OutlinesState outlinesState) {
-    if (outlinesState is ShowOutlinesState) {
-      outlinesMode = true;
-    } else {
-      outlinesMode = false;
-    }
-  }
 
   _decideWelcomeMode(WelcomeState welcomeState) {
     if (welcomeState is ShowWelcomeState) {
@@ -116,37 +94,63 @@ class _OpenreadsAppState extends State<OpenreadsApp>
   Widget build(BuildContext context) {
     return BlocBuilder<ThemeBloc, ThemeState>(
       builder: (_, themeState) {
-        _decideThemeMode(themeState);
+        if (themeState is SetThemeState) {
+          return BlocBuilder<WelcomeBloc, WelcomeState>(
+            builder: (_, welcomeState) {
+              _decideWelcomeMode(welcomeState);
 
-        return BlocBuilder<OutlinesBloc, OutlinesState>(
-          builder: (_, outlinesState) {
-            _decideOutlinesMode(outlinesState);
-
-            return BlocBuilder<WelcomeBloc, WelcomeState>(
-              builder: (_, welcomeState) {
-                _decideWelcomeMode(welcomeState);
-
-                return MaterialApp(
-                  title: 'Openreads Flutter',
-                  theme: outlinesMode
-                      ? AppTheme.lightTheme
-                      : AppTheme.lightTheme.copyWith(
-                          dividerColor: Colors.transparent,
-                        ),
-                  darkTheme: outlinesMode
-                      ? AppTheme.darkTheme
-                      : AppTheme.darkTheme.copyWith(
-                          dividerColor: Colors.transparent,
-                        ),
-                  themeMode: themeMode,
-                  home: welcomeMode
-                      ? WelcomeScreen(themeData: Theme.of(context))
-                      : const BooksScreen(),
-                );
-              },
-            );
-          },
-        );
+              return MaterialApp(
+                title: 'Openreads Flutter',
+                theme: themeState.showOutlines
+                    ? AppTheme.lightTheme.copyWith(
+                        extensions: <ThemeExtension<dynamic>>[
+                          CustomBorder(
+                            radius: BorderRadius.circular(
+                              themeState.cornerRadius,
+                            ),
+                          ),
+                        ],
+                      )
+                    : AppTheme.lightTheme.copyWith(
+                        dividerColor: Colors.transparent,
+                        extensions: <ThemeExtension<dynamic>>[
+                          CustomBorder(
+                            radius: BorderRadius.circular(
+                              themeState.cornerRadius,
+                            ),
+                          ),
+                        ],
+                      ),
+                darkTheme: themeState.showOutlines
+                    ? AppTheme.darkTheme.copyWith(
+                        extensions: <ThemeExtension<dynamic>>[
+                          CustomBorder(
+                            radius: BorderRadius.circular(
+                              themeState.cornerRadius,
+                            ),
+                          ),
+                        ],
+                      )
+                    : AppTheme.darkTheme.copyWith(
+                        dividerColor: Colors.transparent,
+                        extensions: <ThemeExtension<dynamic>>[
+                          CustomBorder(
+                            radius: BorderRadius.circular(
+                              themeState.cornerRadius,
+                            ),
+                          ),
+                        ],
+                      ),
+                themeMode: themeState.themeMode,
+                home: welcomeMode
+                    ? WelcomeScreen(themeData: Theme.of(context))
+                    : const BooksScreen(),
+              );
+            },
+          );
+        } else {
+          return const SizedBox();
+        }
       },
     );
   }

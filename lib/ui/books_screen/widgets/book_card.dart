@@ -155,7 +155,7 @@ class BookCard extends StatelessWidget {
           padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 15),
           decoration: BoxDecoration(
             color: Theme.of(context).backgroundColor,
-            borderRadius: BorderRadius.circular(5),
+            borderRadius: Theme.of(context).extension<CustomBorder>()?.radius,
             border: Border.all(color: Theme.of(context).dividerColor),
           ),
           child: Row(

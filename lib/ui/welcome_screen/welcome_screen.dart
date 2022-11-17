@@ -102,22 +102,28 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
       onDonePress: onDonePress,
       renderDoneBtn: const Text('START'),
       skipButtonStyle: ButtonStyle(
-        shape: MaterialStateProperty.all<OutlinedBorder>(
-            RoundedRectangleBorder(borderRadius: BorderRadius.circular(5))),
+        shape: MaterialStateProperty.all<OutlinedBorder>(RoundedRectangleBorder(
+          borderRadius: Theme.of(context).extension<CustomBorder>()?.radius ??
+              BorderRadius.circular(5),
+        )),
         backgroundColor: MaterialStateProperty.all<Color>(
             Theme.of(context).secondaryTextColor),
         foregroundColor: MaterialStateProperty.all<Color>(Colors.black),
       ),
       nextButtonStyle: ButtonStyle(
-        shape: MaterialStateProperty.all<OutlinedBorder>(
-            RoundedRectangleBorder(borderRadius: BorderRadius.circular(5))),
+        shape: MaterialStateProperty.all<OutlinedBorder>(RoundedRectangleBorder(
+          borderRadius: Theme.of(context).extension<CustomBorder>()?.radius ??
+              BorderRadius.circular(5),
+        )),
         backgroundColor:
             MaterialStateProperty.all<Color>(Theme.of(context).primaryColor),
         foregroundColor: MaterialStateProperty.all<Color>(Colors.white),
       ),
       doneButtonStyle: ButtonStyle(
-        shape: MaterialStateProperty.all<OutlinedBorder>(
-            RoundedRectangleBorder(borderRadius: BorderRadius.circular(5))),
+        shape: MaterialStateProperty.all<OutlinedBorder>(RoundedRectangleBorder(
+          borderRadius: Theme.of(context).extension<CustomBorder>()?.radius ??
+              BorderRadius.circular(5),
+        )),
         backgroundColor:
             MaterialStateProperty.all<Color>(Theme.of(context).primaryColor),
         foregroundColor: MaterialStateProperty.all<Color>(Colors.white),
