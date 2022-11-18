@@ -223,47 +223,58 @@ class BookCardOL extends StatelessWidget {
                       ],
                     ),
                     Row(
-                      mainAxisAlignment: MainAxisAlignment.end,
                       children: [
-                        (editions != null && editions!.isNotEmpty)
-                            ? ElevatedButton(
-                                onPressed: onChooseEditionPressed,
-                                style: TextButton.styleFrom(
-                                  elevation: 0,
-                                  backgroundColor: Colors.transparent,
-                                  // foregroundColor: Colors.white,
-                                  shape: RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(5.0),
-                                    side: BorderSide(
-                                      color: Theme.of(context).dividerColor,
-                                      width: 1,
+                        Expanded(
+                          child: Wrap(
+                            alignment: WrapAlignment.end,
+                            children: [
+                              (editions != null && editions!.isNotEmpty)
+                                  ? ElevatedButton(
+                                      onPressed: onChooseEditionPressed,
+                                      style: TextButton.styleFrom(
+                                        elevation: 0,
+                                        backgroundColor: Colors.transparent,
+                                        shape: RoundedRectangleBorder(
+                                          borderRadius:
+                                              BorderRadius.circular(5.0),
+                                          side: BorderSide(
+                                            color:
+                                                Theme.of(context).dividerColor,
+                                            width: 1,
+                                          ),
+                                        ),
+                                      ),
+                                      child: const Text(
+                                        "Choose edition",
+                                        style: TextStyle(fontSize: 12),
+                                      ),
+                                    )
+                                  : const SizedBox(),
+                              Padding(
+                                padding: EdgeInsets.only(
+                                  left:
+                                      (editions != null && editions!.isNotEmpty)
+                                          ? 10
+                                          : 0,
+                                ),
+                                child: ElevatedButton(
+                                  onPressed: onAddBookPressed,
+                                  style: ElevatedButton.styleFrom(
+                                    elevation: 0,
+                                    backgroundColor:
+                                        Theme.of(context).primaryColor,
+                                    foregroundColor: Colors.white,
+                                    shape: RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(5.0),
                                     ),
                                   ),
+                                  child: const Text(
+                                    "Add book",
+                                    style: TextStyle(fontSize: 12),
+                                  ),
                                 ),
-                                child: const Text(
-                                  "Choose edition",
-                                  style: TextStyle(fontSize: 12),
-                                ),
-                              )
-                            : const SizedBox(),
-                        SizedBox(
-                          width: (editions != null && editions!.isNotEmpty)
-                              ? 10
-                              : 0,
-                        ),
-                        ElevatedButton(
-                          onPressed: onAddBookPressed,
-                          style: ElevatedButton.styleFrom(
-                            elevation: 0,
-                            backgroundColor: Theme.of(context).primaryColor,
-                            foregroundColor: Colors.white,
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(5.0),
-                            ),
-                          ),
-                          child: const Text(
-                            "Add book",
-                            style: TextStyle(fontSize: 12),
+                              ),
+                            ],
                           ),
                         ),
                       ],
