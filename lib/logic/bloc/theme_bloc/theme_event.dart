@@ -8,11 +8,13 @@ class ChangeThemeEvent extends ThemeEvent {
   final ThemeMode themeMode;
   final bool showOutlines;
   final double cornerRadius;
+  final Color primaryColor;
 
   const ChangeThemeEvent({
     required this.themeMode,
     required this.showOutlines,
     required this.cornerRadius,
+    required this.primaryColor,
   });
 
   @override
@@ -20,5 +22,6 @@ class ChangeThemeEvent extends ThemeEvent {
         themeMode,
         showOutlines,
         cornerRadius,
+        primaryColor,
       ];
 }

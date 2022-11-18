@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:openreads/core/themes/app_theme.dart';
 import 'package:openreads/logic/bloc/theme_bloc/theme_bloc.dart';
 import 'package:openreads/ui/settings_screen/widgets/widgets.dart';
 import 'package:settings_ui/settings_ui.dart';
@@ -21,6 +22,7 @@ class SettingsScreen extends StatelessWidget {
       themeMode: ThemeMode.system,
       showOutlines: state.showOutlines,
       cornerRadius: state.cornerRadius,
+      primaryColor: state.primaryColor,
     ));
 
     Navigator.of(context).pop();
@@ -31,6 +33,7 @@ class SettingsScreen extends StatelessWidget {
       themeMode: ThemeMode.light,
       showOutlines: state.showOutlines,
       cornerRadius: state.cornerRadius,
+      primaryColor: state.primaryColor,
     ));
 
     Navigator.of(context).pop();
@@ -41,6 +44,7 @@ class SettingsScreen extends StatelessWidget {
       themeMode: ThemeMode.dark,
       showOutlines: state.showOutlines,
       cornerRadius: state.cornerRadius,
+      primaryColor: state.primaryColor,
     ));
 
     Navigator.of(context).pop();
@@ -51,6 +55,7 @@ class SettingsScreen extends StatelessWidget {
       themeMode: state.themeMode,
       showOutlines: true,
       cornerRadius: state.cornerRadius,
+      primaryColor: state.primaryColor,
     ));
 
     Navigator.of(context).pop();
@@ -61,6 +66,7 @@ class SettingsScreen extends StatelessWidget {
       themeMode: state.themeMode,
       showOutlines: false,
       cornerRadius: state.cornerRadius,
+      primaryColor: state.primaryColor,
     ));
 
     Navigator.of(context).pop();
@@ -72,9 +78,105 @@ class SettingsScreen extends StatelessWidget {
       themeMode: state.themeMode,
       showOutlines: state.showOutlines,
       cornerRadius: radius,
+      primaryColor: state.primaryColor,
     ));
 
     Navigator.of(context).pop();
+  }
+
+  _setAccentColor(BuildContext context, SetThemeState state, int color) {
+    BlocProvider.of<ThemeBloc>(context).add(ChangeThemeEvent(
+      themeMode: state.themeMode,
+      showOutlines: state.showOutlines,
+      cornerRadius: state.cornerRadius,
+      primaryColor: Color(color),
+    ));
+
+    Navigator.of(context).pop();
+  }
+
+  _showAccentColorDialog(BuildContext context) {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return Dialog(
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(5.0),
+          ),
+          backgroundColor: Theme.of(context).scaffoldBackgroundColor,
+          child: Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 20),
+            child: BlocBuilder<ThemeBloc, ThemeState>(
+              builder: (context, state) {
+                if (state is SetThemeState) {
+                  return Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      const Padding(
+                        padding: EdgeInsets.only(left: 10),
+                        child: Text(
+                          'Select accent color',
+                          style: TextStyle(
+                            fontSize: 20,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                      ),
+                      const SizedBox(height: 15),
+                      _buildAccentButton(context, state, 0xff4E6C50, 'Green'),
+                      _buildAccentButton(context, state, 0xff2146C7, 'Blue'),
+                      _buildAccentButton(context, state, 0xffB73E3E, 'Red'),
+                      _buildAccentButton(context, state, 0xffFFDE00, 'Yellow'),
+                      _buildAccentButton(context, state, 0xffE14D2A, 'Orange'),
+                      _buildAccentButton(context, state, 0xff9F73AB, 'Purple'),
+                      _buildAccentButton(context, state, 0xffFF577F, 'Pink'),
+                      _buildAccentButton(context, state, 0xff3FA796, 'Teal'),
+                    ],
+                  );
+                } else {
+                  return const SizedBox();
+                }
+              },
+            ),
+          ),
+        );
+      },
+    );
+  }
+
+  Row _buildAccentButton(
+    BuildContext context,
+    SetThemeState state,
+    int colorValue,
+    String colorName,
+  ) {
+    return Row(
+      crossAxisAlignment: CrossAxisAlignment.center,
+      children: [
+        Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 10),
+          child: Container(
+            width: 50,
+            height: 25,
+            decoration: BoxDecoration(
+              borderRadius: Theme.of(context).extension<CustomBorder>()?.radius,
+              color: Color(colorValue),
+            ),
+          ),
+        ),
+        Expanded(
+          child: SettingsDialogButton(
+            text: colorName,
+            onPressed: () => _setAccentColor(
+              context,
+              state,
+              colorValue,
+            ),
+          ),
+        ),
+      ],
+    );
   }
 
   _showThemeModeDialog(BuildContext context) {
@@ -332,6 +434,112 @@ class SettingsScreen extends StatelessWidget {
     );
   }
 
+  SettingsTile _buildAccentSetting() {
+    return SettingsTile(
+      title: const Text(
+        'Accent color',
+        style: TextStyle(fontSize: 16),
+      ),
+      leading: const Icon(Icons.color_lens),
+      description: BlocBuilder<ThemeBloc, ThemeState>(
+        builder: (_, themeState) {
+          if (themeState is SetThemeState) {
+            switch (themeState.primaryColor.value) {
+              case 0xffB73E3E:
+                return const Text('Red');
+              case 0xff2146C7:
+                return const Text('Blue');
+              default:
+                return const Text('Green');
+            }
+          } else {
+            return const SizedBox();
+          }
+        },
+      ),
+      onPressed: (context) => _showAccentColorDialog(context),
+    );
+  }
+
+  SettingsTile _buildCornersSetting() {
+    return SettingsTile(
+      title: const Text(
+        'Rounded corners',
+        style: TextStyle(fontSize: 16),
+      ),
+      leading: const Icon(Icons.rounded_corner_rounded),
+      description: BlocBuilder<ThemeBloc, ThemeState>(
+        builder: (_, themeState) {
+          if (themeState is SetThemeState) {
+            if (themeState.cornerRadius == 5) {
+              return const Text('Small radius');
+            } else if (themeState.cornerRadius == 10) {
+              return const Text('Medium radius');
+            } else if (themeState.cornerRadius == 20) {
+              return const Text('Big radius');
+            } else {
+              return const Text('No radius');
+            }
+          } else {
+            return const SizedBox();
+          }
+        },
+      ),
+      onPressed: (context) => _showCornerRadiusDialog(context),
+    );
+  }
+
+  SettingsTile _buildOutlinesSetting() {
+    return SettingsTile(
+      title: const Text(
+        'Display outlines in the UI',
+        style: TextStyle(fontSize: 16),
+      ),
+      leading: const Icon(Icons.check_box_outline_blank_rounded),
+      description: BlocBuilder<ThemeBloc, ThemeState>(
+        builder: (_, themeState) {
+          if (themeState is SetThemeState) {
+            if (themeState.showOutlines) {
+              return const Text('Show outlines');
+            } else {
+              return const Text('Hide outlines');
+            }
+          } else {
+            return const SizedBox();
+          }
+        },
+      ),
+      onPressed: (context) => _showOutlinesDialog(context),
+    );
+  }
+
+  SettingsTile _buildThemeModeSetting() {
+    return SettingsTile(
+      title: const Text(
+        'App theme mode',
+        style: TextStyle(fontSize: 16),
+      ),
+      leading: const Icon(Icons.sunny),
+      description: BlocBuilder<ThemeBloc, ThemeState>(
+        builder: (_, themeState) {
+          if (themeState is SetThemeState) {
+            switch (themeState.themeMode) {
+              case ThemeMode.light:
+                return const Text('Light mode');
+              case ThemeMode.dark:
+                return const Text('Dark mode');
+              default:
+                return const Text('Follow system');
+            }
+          } else {
+            return const SizedBox();
+          }
+        },
+      ),
+      onPressed: (context) => _showThemeModeDialog(context),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -411,101 +619,10 @@ class SettingsScreen extends StatelessWidget {
               ),
             ),
             tiles: <SettingsTile>[
-              //TODO accent setting
-              SettingsTile(
-                title: const Text(
-                  'Accent color',
-                  style: TextStyle(fontSize: 16),
-                ),
-                leading: const Icon(Icons.color_lens),
-                description: BlocBuilder<ThemeBloc, ThemeState>(
-                  builder: (_, themeState) {
-                    if (themeState is SetThemeState) {
-                      switch (themeState.themeMode) {
-                        case ThemeMode.light:
-                          return const Text('Light mode');
-                        case ThemeMode.dark:
-                          return const Text('Dark mode');
-                        default:
-                          return const Text('Follow system');
-                      }
-                    } else {
-                      return const SizedBox();
-                    }
-                  },
-                ),
-                onPressed: (context) => _showThemeModeDialog(context),
-              ),
-              SettingsTile(
-                title: const Text(
-                  'App theme mode',
-                  style: TextStyle(fontSize: 16),
-                ),
-                leading: const Icon(Icons.sunny),
-                description: BlocBuilder<ThemeBloc, ThemeState>(
-                  builder: (_, themeState) {
-                    if (themeState is SetThemeState) {
-                      switch (themeState.themeMode) {
-                        case ThemeMode.light:
-                          return const Text('Light mode');
-                        case ThemeMode.dark:
-                          return const Text('Dark mode');
-                        default:
-                          return const Text('Follow system');
-                      }
-                    } else {
-                      return const SizedBox();
-                    }
-                  },
-                ),
-                onPressed: (context) => _showThemeModeDialog(context),
-              ),
-              SettingsTile(
-                title: const Text(
-                  'Display outlines in the UI',
-                  style: TextStyle(fontSize: 16),
-                ),
-                leading: const Icon(Icons.check_box_outline_blank_rounded),
-                description: BlocBuilder<ThemeBloc, ThemeState>(
-                  builder: (_, themeState) {
-                    if (themeState is SetThemeState) {
-                      if (themeState.showOutlines) {
-                        return const Text('Show outlines');
-                      } else {
-                        return const Text('Hide outlines');
-                      }
-                    } else {
-                      return const SizedBox();
-                    }
-                  },
-                ),
-                onPressed: (context) => _showOutlinesDialog(context),
-              ),
-              SettingsTile(
-                title: const Text(
-                  'Rounded corners',
-                  style: TextStyle(fontSize: 16),
-                ),
-                leading: const Icon(Icons.rounded_corner_rounded),
-                description: BlocBuilder<ThemeBloc, ThemeState>(
-                  builder: (_, themeState) {
-                    if (themeState is SetThemeState) {
-                      if (themeState.cornerRadius == 5) {
-                        return const Text('Small radius');
-                      } else if (themeState.cornerRadius == 10) {
-                        return const Text('Medium radius');
-                      } else if (themeState.cornerRadius == 20) {
-                        return const Text('Big radius');
-                      } else {
-                        return const Text('No radius');
-                      }
-                    } else {
-                      return const SizedBox();
-                    }
-                  },
-                ),
-                onPressed: (context) => _showCornerRadiusDialog(context),
-              ),
+              _buildAccentSetting(),
+              _buildThemeModeSetting(),
+              _buildOutlinesSetting(),
+              _buildCornersSetting(),
             ],
           ),
           SettingsSection(

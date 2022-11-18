@@ -103,6 +103,7 @@ class _OpenreadsAppState extends State<OpenreadsApp>
                 title: 'Openreads Flutter',
                 theme: themeState.showOutlines
                     ? AppTheme.lightTheme.copyWith(
+                        primaryColor: themeState.primaryColor,
                         extensions: <ThemeExtension<dynamic>>[
                           CustomBorder(
                             radius: BorderRadius.circular(
@@ -112,6 +113,7 @@ class _OpenreadsAppState extends State<OpenreadsApp>
                         ],
                       )
                     : AppTheme.lightTheme.copyWith(
+                        primaryColor: themeState.primaryColor,
                         dividerColor: Colors.transparent,
                         extensions: <ThemeExtension<dynamic>>[
                           CustomBorder(
@@ -123,6 +125,7 @@ class _OpenreadsAppState extends State<OpenreadsApp>
                       ),
                 darkTheme: themeState.showOutlines
                     ? AppTheme.darkTheme.copyWith(
+                        primaryColor: themeState.primaryColor,
                         extensions: <ThemeExtension<dynamic>>[
                           CustomBorder(
                             radius: BorderRadius.circular(
@@ -132,6 +135,7 @@ class _OpenreadsAppState extends State<OpenreadsApp>
                         ],
                       )
                     : AppTheme.darkTheme.copyWith(
+                        primaryColor: themeState.primaryColor,
                         dividerColor: Colors.transparent,
                         extensions: <ThemeExtension<dynamic>>[
                           CustomBorder(

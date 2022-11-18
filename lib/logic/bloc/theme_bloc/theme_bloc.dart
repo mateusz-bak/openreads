@@ -11,12 +11,14 @@ class ThemeBloc extends HydratedBloc<ThemeEvent, ThemeState> {
           themeMode: ThemeMode.system,
           showOutlines: true,
           cornerRadius: 5,
+          primaryColor: Color(0xff3FA796),
         )) {
     on<ChangeThemeEvent>((event, emit) {
       emit(SetThemeState(
         themeMode: event.themeMode,
         showOutlines: event.showOutlines,
         cornerRadius: event.cornerRadius,
+        primaryColor: event.primaryColor,
       ));
     });
   }
@@ -26,6 +28,7 @@ class ThemeBloc extends HydratedBloc<ThemeEvent, ThemeState> {
     final themeState = json['theme_state'] as int;
     final showOutlines = json['show_outlines'] as bool;
     final cornerRadius = json['corner_radius'] as double;
+    final primaryColor = json['primary_color'] as int;
 
     switch (themeState) {
       case 1:
@@ -33,18 +36,21 @@ class ThemeBloc extends HydratedBloc<ThemeEvent, ThemeState> {
           themeMode: ThemeMode.light,
           showOutlines: showOutlines,
           cornerRadius: cornerRadius,
+          primaryColor: Color(primaryColor),
         );
       case 2:
         return SetThemeState(
           themeMode: ThemeMode.dark,
           showOutlines: showOutlines,
           cornerRadius: cornerRadius,
+          primaryColor: Color(primaryColor),
         );
       default:
         return SetThemeState(
           themeMode: ThemeMode.system,
           showOutlines: showOutlines,
           cornerRadius: cornerRadius,
+          primaryColor: Color(primaryColor),
         );
     }
   }
@@ -58,18 +64,21 @@ class ThemeBloc extends HydratedBloc<ThemeEvent, ThemeState> {
             'theme_state': 1,
             'show_outlines': state.showOutlines,
             'corner_radius': state.cornerRadius,
+            'primary_color': state.primaryColor.value,
           };
         case ThemeMode.dark:
           return {
             'theme_state': 2,
             'show_outlines': state.showOutlines,
             'corner_radius': state.cornerRadius,
+            'primary_color': state.primaryColor.value,
           };
         case ThemeMode.system:
           return {
             'theme_state': 0,
             'show_outlines': state.showOutlines,
             'corner_radius': state.cornerRadius,
+            'primary_color': state.primaryColor.value,
           };
       }
     } else {
