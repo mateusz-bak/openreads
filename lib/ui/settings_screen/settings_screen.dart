@@ -84,12 +84,12 @@ class SettingsScreen extends StatelessWidget {
     Navigator.of(context).pop();
   }
 
-  _setAccentColor(BuildContext context, SetThemeState state, int color) {
+  _setAccentColor(BuildContext context, SetThemeState state, Color color) {
     BlocProvider.of<ThemeBloc>(context).add(ChangeThemeEvent(
       themeMode: state.themeMode,
       showOutlines: state.showOutlines,
       cornerRadius: state.cornerRadius,
-      primaryColor: Color(color),
+      primaryColor: color,
     ));
 
     Navigator.of(context).pop();
@@ -109,6 +109,7 @@ class SettingsScreen extends StatelessWidget {
             child: BlocBuilder<ThemeBloc, ThemeState>(
               builder: (context, state) {
                 if (state is SetThemeState) {
+                  final theme = Theme.of(context);
                   return Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     mainAxisSize: MainAxisSize.min,
@@ -124,14 +125,22 @@ class SettingsScreen extends StatelessWidget {
                         ),
                       ),
                       const SizedBox(height: 15),
-                      _buildAccentButton(context, state, 0xff4E6C50, 'Green'),
-                      _buildAccentButton(context, state, 0xff2146C7, 'Blue'),
-                      _buildAccentButton(context, state, 0xffB73E3E, 'Red'),
-                      _buildAccentButton(context, state, 0xffFFDE00, 'Yellow'),
-                      _buildAccentButton(context, state, 0xffE14D2A, 'Orange'),
-                      _buildAccentButton(context, state, 0xff9F73AB, 'Purple'),
-                      _buildAccentButton(context, state, 0xffFF577F, 'Pink'),
-                      _buildAccentButton(context, state, 0xff3FA796, 'Teal'),
+                      _buildAccentButton(
+                          context, state, theme.primaryGreen, 'Green'),
+                      _buildAccentButton(
+                          context, state, theme.primaryBlue, 'Blue'),
+                      _buildAccentButton(
+                          context, state, theme.primaryRed, 'Red'),
+                      _buildAccentButton(
+                          context, state, theme.primaryYellow, 'Yellow'),
+                      _buildAccentButton(
+                          context, state, theme.primaryOrange, 'Orange'),
+                      _buildAccentButton(
+                          context, state, theme.primaryPurple, 'Purple'),
+                      _buildAccentButton(
+                          context, state, theme.primaryPink, 'Pink'),
+                      _buildAccentButton(
+                          context, state, theme.primaryTeal, 'Teal'),
                     ],
                   );
                 } else {
@@ -148,7 +157,7 @@ class SettingsScreen extends StatelessWidget {
   Row _buildAccentButton(
     BuildContext context,
     SetThemeState state,
-    int colorValue,
+    Color color,
     String colorName,
   ) {
     return Row(
@@ -161,7 +170,7 @@ class SettingsScreen extends StatelessWidget {
             height: 25,
             decoration: BoxDecoration(
               borderRadius: Theme.of(context).extension<CustomBorder>()?.radius,
-              color: Color(colorValue),
+              color: color,
             ),
           ),
         ),
@@ -171,7 +180,7 @@ class SettingsScreen extends StatelessWidget {
             onPressed: () => _setAccentColor(
               context,
               state,
-              colorValue,
+              color,
             ),
           ),
         ),

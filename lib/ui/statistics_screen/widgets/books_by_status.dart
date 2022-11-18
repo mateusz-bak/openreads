@@ -20,17 +20,9 @@ class BooksByStatus extends StatefulWidget {
 class BooksByStatusState extends State<BooksByStatus> {
   int touchedIndex = -1;
 
-  late Color finishedColor;
-  late Color inProgressColor;
-  late Color forLaterColor;
-  late Color unfinishedColor;
-
   @override
   Widget build(BuildContext context) {
-    finishedColor = Theme.of(context).finishedColor;
-    inProgressColor = Theme.of(context).inProgressColor;
-    forLaterColor = Theme.of(context).forLaterColor;
-    unfinishedColor = Theme.of(context).unfinishedColor;
+    final theme = Theme.of(context);
 
     return Card(
       elevation: 0,
@@ -92,7 +84,7 @@ class BooksByStatusState extends State<BooksByStatus> {
                                 ),
                                 sectionsSpace: 2,
                                 centerSpaceRadius: 40,
-                                sections: showingSections(),
+                                sections: showingSections(theme),
                               ),
                             ),
                           ),
@@ -101,21 +93,21 @@ class BooksByStatusState extends State<BooksByStatus> {
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               PieChartIndicator(
-                                color: finishedColor,
+                                color: theme.primaryGreen,
                                 text: 'Finished',
                               ),
                               const SizedBox(
                                 height: 5,
                               ),
                               PieChartIndicator(
-                                color: inProgressColor,
+                                color: theme.primaryYellow,
                                 text: 'In progress',
                               ),
                               const SizedBox(
                                 height: 5,
                               ),
                               PieChartIndicator(
-                                color: forLaterColor,
+                                color: theme.primaryBlue,
                                 text: 'For later',
                               ),
                               SizedBox(
@@ -123,7 +115,7 @@ class BooksByStatusState extends State<BooksByStatus> {
                               ),
                               (widget.list![3] != 0)
                                   ? PieChartIndicator(
-                                      color: unfinishedColor,
+                                      color: theme.primaryRed,
                                       text: 'Unfinished',
                                     )
                                   : const SizedBox(),
@@ -139,7 +131,7 @@ class BooksByStatusState extends State<BooksByStatus> {
     );
   }
 
-  List<PieChartSectionData> showingSections() {
+  List<PieChartSectionData> showingSections(ThemeData theme) {
     final sum = widget.list!.reduce((a, b) => a + b);
     return List.generate(4, (i) {
       final isTouched = i == touchedIndex;
@@ -148,7 +140,7 @@ class BooksByStatusState extends State<BooksByStatus> {
       switch (i) {
         case 0:
           return PieChartSectionData(
-            color: finishedColor,
+            color: theme.primaryGreen,
             value: widget.list![0].toDouble(),
             title: '${((widget.list![0] / sum) * 100).toStringAsFixed(0)}%',
             radius: radius,
@@ -160,7 +152,7 @@ class BooksByStatusState extends State<BooksByStatus> {
           );
         case 1:
           return PieChartSectionData(
-            color: inProgressColor,
+            color: theme.primaryYellow,
             value: widget.list![1].toDouble(),
             title: '${((widget.list![1] / sum) * 100).toStringAsFixed(0)}%',
             radius: radius,
@@ -172,7 +164,7 @@ class BooksByStatusState extends State<BooksByStatus> {
           );
         case 2:
           return PieChartSectionData(
-            color: forLaterColor,
+            color: theme.primaryBlue,
             value: widget.list![2].toDouble(),
             title: '${((widget.list![2] / sum) * 100).toStringAsFixed(0)}%',
             radius: radius,
@@ -184,7 +176,7 @@ class BooksByStatusState extends State<BooksByStatus> {
           );
         case 3:
           return PieChartSectionData(
-            color: unfinishedColor,
+            color: theme.primaryRed,
             value: widget.list![3].toDouble(),
             title: '${((widget.list![3] / sum) * 100).toStringAsFixed(0)}%',
             radius: radius,

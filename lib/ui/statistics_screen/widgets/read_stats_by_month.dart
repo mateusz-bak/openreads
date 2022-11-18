@@ -7,10 +7,12 @@ class ReadStatsByMonth extends StatelessWidget {
     Key? key,
     required this.list,
     required this.title,
+    required this.theme,
   }) : super(key: key);
 
   final List<int> list;
   final String title;
+  final ThemeData theme;
 
   FlTitlesData get titlesData => FlTitlesData(
         show: true,
@@ -108,7 +110,7 @@ class ReadStatsByMonth extends StatelessWidget {
             BarChartRodData(
               toY: list[i].toDouble(),
               width: 15,
-              gradient: _barsGradient,
+              color: theme.primaryColor,
             )
           ],
           showingTooltipIndicators: (list[i] > 0) ? [0] : [1],
@@ -118,15 +120,6 @@ class ReadStatsByMonth extends StatelessWidget {
 
     return barList;
   }
-
-  LinearGradient get _barsGradient => const LinearGradient(
-        colors: [
-          Color.fromARGB(255, 4, 44, 14),
-          Color.fromARGB(255, 88, 199, 145),
-        ],
-        begin: Alignment.bottomCenter,
-        end: Alignment.topCenter,
-      );
 
   double calculateMaxY() {
     int maxBooksInMonth = 0;

@@ -23,10 +23,15 @@ class AppTheme {
   static Color darkOutlineColor = const Color.fromARGB(255, 58, 58, 58);
   static Color darkLikeColor = const Color.fromARGB(255, 150, 23, 57);
   static Color darkRatingColor = const Color.fromARGB(255, 207, 161, 62);
-  static Color finishedColor = const Color(0xff3D8361);
-  static Color inProgressColor = const Color(0xff375681);
-  static Color forLaterColor = const Color(0xffFABC3C);
-  static Color unfinishedColor = const Color(0xffB73E3E);
+
+  static Color primaryGreen = const Color(0xff285430);
+  static Color primaryBlue = const Color(0xff2146C7);
+  static Color primaryRed = const Color(0xffB73E3E);
+  static Color primaryYellow = const Color(0xffFFDE00);
+  static Color primaryOrange = const Color(0xffE14D2A);
+  static Color primaryPurple = const Color(0xff9F73AB);
+  static Color primaryPink = const Color(0xffFF577F);
+  static Color primaryTeal = const Color(0xff3FA796);
 
   const AppTheme._();
 
@@ -94,10 +99,14 @@ extension ThemeExtras on ThemeData {
       ? AppTheme.lightRatingColor
       : AppTheme.darkRatingColor;
 
-  Color get finishedColor => AppTheme.finishedColor;
-  Color get inProgressColor => AppTheme.inProgressColor;
-  Color get forLaterColor => AppTheme.forLaterColor;
-  Color get unfinishedColor => AppTheme.unfinishedColor;
+  Color get primaryGreen => AppTheme.primaryGreen;
+  Color get primaryBlue => AppTheme.primaryBlue;
+  Color get primaryRed => AppTheme.primaryRed;
+  Color get primaryYellow => AppTheme.primaryYellow;
+  Color get primaryOrange => AppTheme.primaryOrange;
+  Color get primaryPurple => AppTheme.primaryPurple;
+  Color get primaryPink => AppTheme.primaryPink;
+  Color get primaryTeal => AppTheme.primaryTeal;
 }
 
 @immutable

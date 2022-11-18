@@ -521,6 +521,7 @@ class _StatisticsScreenState extends State<StatisticsScreen> {
               return ReadStatsByMonth(
                 title: 'Finished pages by month',
                 list: bookReadStat.values,
+                theme: Theme.of(context),
               );
             }
           }
@@ -551,6 +552,7 @@ class _StatisticsScreenState extends State<StatisticsScreen> {
               return ReadStatsByMonth(
                 title: 'Finished books by month',
                 list: bookReadStat.values,
+                theme: Theme.of(context),
               );
             }
           }
