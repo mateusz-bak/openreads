@@ -112,6 +112,8 @@ class _StatisticsScreenState extends State<StatisticsScreen> {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.start,
             children: [
+              _buildBooksChallenge(context, null),
+              _buildPagesChallenge(context, null),
               _buildAllBooksPieChart(context),
               _buildFinishedBooksByMonth(context, null),
               _buildFinishedPagesByMonth(context, null),
@@ -141,6 +143,8 @@ class _StatisticsScreenState extends State<StatisticsScreen> {
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.start,
                     children: [
+                      _buildBooksChallenge(context, year),
+                      _buildPagesChallenge(context, year),
                       _buildFinishedBooksByMonth(context, year),
                       _buildFinishedPagesByMonth(context, year),
                       _buildNumberOfFinishedBooks(context, year),
@@ -580,6 +584,68 @@ class _StatisticsScreenState extends State<StatisticsScreen> {
             title: 'All books by status',
             list: null,
           );
+        }
+      },
+    );
+  }
+
+  StreamBuilder<List<BookReadStat>> _buildPagesChallenge(
+    BuildContext context,
+    int? year,
+  ) {
+    return StreamBuilder<List<BookReadStat>>(
+      stream: BlocProvider.of<StatsCubit>(context).finishedPagesByMonth,
+      builder: (context, AsyncSnapshot<List<BookReadStat>> snapshot) {
+        if (snapshot.hasData) {
+          if (snapshot.data == null || snapshot.data!.isEmpty) {
+            return const Center(child: Text('No finished books'));
+          }
+
+          for (var bookReadStat in snapshot.data!) {
+            if (bookReadStat.year == year) {
+              return ReadingChallenge(
+                title: 'Finished pages challenge',
+                value: bookReadStat.values.reduce((a, b) => a + b),
+                target: 999,
+              );
+            }
+          }
+          return const SizedBox();
+        } else if (snapshot.hasError) {
+          return Text(snapshot.error.toString());
+        } else {
+          return const SizedBox();
+        }
+      },
+    );
+  }
+
+  StreamBuilder<List<BookReadStat>> _buildBooksChallenge(
+    BuildContext context,
+    int? year,
+  ) {
+    return StreamBuilder<List<BookReadStat>>(
+      stream: BlocProvider.of<StatsCubit>(context).finishedBooksByMonth,
+      builder: (context, AsyncSnapshot<List<BookReadStat>> snapshot) {
+        if (snapshot.hasData) {
+          if (snapshot.data == null || snapshot.data!.isEmpty) {
+            return const Center(child: Text('No finished books'));
+          }
+
+          for (var bookReadStat in snapshot.data!) {
+            if (bookReadStat.year == year) {
+              return ReadingChallenge(
+                title: 'Finished books challenge',
+                value: bookReadStat.values.reduce((a, b) => a + b),
+                target: 9,
+              );
+            }
+          }
+          return const SizedBox();
+        } else if (snapshot.hasError) {
+          return Text(snapshot.error.toString());
+        } else {
+          return const SizedBox();
         }
       },
     );
