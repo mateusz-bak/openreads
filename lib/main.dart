@@ -104,6 +104,10 @@ class _OpenreadsAppState extends State<OpenreadsApp>
                 theme: themeState.showOutlines
                     ? AppTheme.lightTheme.copyWith(
                         primaryColor: themeState.primaryColor,
+                        colorScheme: const ColorScheme.light().copyWith(
+                          primary: themeState.primaryColor,
+                          secondary: themeState.primaryColor,
+                        ),
                         extensions: <ThemeExtension<dynamic>>[
                           CustomBorder(
                             radius: BorderRadius.circular(
@@ -114,6 +118,10 @@ class _OpenreadsAppState extends State<OpenreadsApp>
                       )
                     : AppTheme.lightTheme.copyWith(
                         primaryColor: themeState.primaryColor,
+                        colorScheme: const ColorScheme.light().copyWith(
+                          primary: themeState.primaryColor,
+                          secondary: themeState.primaryColor,
+                        ),
                         dividerColor: Colors.transparent,
                         extensions: <ThemeExtension<dynamic>>[
                           CustomBorder(
@@ -126,6 +134,10 @@ class _OpenreadsAppState extends State<OpenreadsApp>
                 darkTheme: themeState.showOutlines
                     ? AppTheme.darkTheme.copyWith(
                         primaryColor: themeState.primaryColor,
+                        colorScheme: const ColorScheme.dark().copyWith(
+                          primary: themeState.primaryColor,
+                          secondary: themeState.primaryColor,
+                        ),
                         extensions: <ThemeExtension<dynamic>>[
                           CustomBorder(
                             radius: BorderRadius.circular(
@@ -136,6 +148,10 @@ class _OpenreadsAppState extends State<OpenreadsApp>
                       )
                     : AppTheme.darkTheme.copyWith(
                         primaryColor: themeState.primaryColor,
+                        colorScheme: const ColorScheme.dark().copyWith(
+                          primary: themeState.primaryColor,
+                          secondary: themeState.primaryColor,
+                        ),
                         dividerColor: Colors.transparent,
                         extensions: <ThemeExtension<dynamic>>[
                           CustomBorder(

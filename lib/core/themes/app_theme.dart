@@ -27,7 +27,7 @@ class AppTheme {
   static Color primaryGreen = const Color(0xff285430);
   static Color primaryBlue = const Color(0xff2146C7);
   static Color primaryRed = const Color(0xffB73E3E);
-  static Color primaryYellow = const Color(0xffFFDE00);
+  static Color primaryYellow = const Color.fromARGB(255, 204, 177, 2);
   static Color primaryOrange = const Color(0xffE14D2A);
   static Color primaryPurple = const Color(0xff9F73AB);
   static Color primaryPink = const Color(0xffFF577F);

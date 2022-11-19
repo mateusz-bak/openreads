@@ -244,9 +244,12 @@ class BookCardOL extends StatelessWidget {
                                           ),
                                         ),
                                       ),
-                                      child: const Text(
+                                      child: Text(
                                         "Choose edition",
-                                        style: TextStyle(fontSize: 12),
+                                        style: TextStyle(
+                                          fontSize: 12,
+                                          color: Theme.of(context).primaryColor,
+                                        ),
                                       ),
                                     )
                                   : const SizedBox(),

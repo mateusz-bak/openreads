@@ -51,7 +51,7 @@ class SetDateButton extends StatelessWidget {
                     children: [
                       Icon(
                         icon,
-                        color: Theme.of(context).secondaryTextColor,
+                        color: Theme.of(context).primaryColor,
                       ),
                       const SizedBox(width: 15),
                       FittedBox(
@@ -60,7 +60,7 @@ class SetDateButton extends StatelessWidget {
                           maxLines: 1,
                           style: TextStyle(
                             fontSize: 14,
-                            color: Theme.of(context).secondaryTextColor,
+                            color: Theme.of(context).mainTextColor,
                           ),
                         ),
                       ),
@@ -80,7 +80,7 @@ class SetDateButton extends StatelessWidget {
                         icon: Icon(
                           Icons.close,
                           size: 20,
-                          color: Theme.of(context).secondaryTextColor,
+                          color: Theme.of(context).mainTextColor,
                         ),
                         onPressed: onClearPressed,
                       )

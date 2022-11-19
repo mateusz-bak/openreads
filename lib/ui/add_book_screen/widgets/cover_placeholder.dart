@@ -38,7 +38,7 @@ class CoverPlaceholder extends StatelessWidget {
                 Icon(
                   Icons.image,
                   size: 24,
-                  color: Theme.of(context).secondaryTextColor,
+                  color: Theme.of(context).primaryColor,
                 ),
                 const SizedBox(width: 15),
                 Text(

@@ -65,7 +65,9 @@ class _BookTextFieldState extends State<BookTextField> {
       decoration: BoxDecoration(
         color: Theme.of(context).backgroundColor,
         borderRadius: Theme.of(context).extension<CustomBorder>()?.radius,
-        border: Border.all(color: Theme.of(context).dividerColor),
+        border: Border.all(
+          color: Theme.of(context).dividerColor,
+        ),
       ),
       child: Scrollbar(
         child: TextField(
@@ -82,8 +84,18 @@ class _BookTextFieldState extends State<BookTextField> {
           style: const TextStyle(fontSize: 14),
           onSubmitted: widget.onSubmitted ?? (_) {},
           decoration: InputDecoration(
+            focusColor: Theme.of(context).primaryColor,
+            labelStyle: TextStyle(color: Theme.of(context).secondaryTextColor),
+            floatingLabelStyle: TextStyle(
+              color: Theme.of(context).primaryColor,
+            ),
             labelText: widget.hint,
-            icon: (widget.icon != null) ? Icon(widget.icon) : null,
+            icon: (widget.icon != null)
+                ? Icon(
+                    widget.icon,
+                    color: Theme.of(context).primaryColor,
+                  )
+                : null,
             border: InputBorder.none,
             counterText: widget.hideCounter ? "" : null,
             suffixIcon: showClearButton

@@ -141,7 +141,12 @@ class _TagsFieldState extends State<TagsField> {
               onEditingComplete: widget.onEditingComplete,
               decoration: InputDecoration(
                 labelText: widget.hint,
-                icon: (widget.icon != null) ? Icon(widget.icon) : null,
+                icon: (widget.icon != null)
+                    ? Icon(
+                        widget.icon,
+                        color: Theme.of(context).primaryColor,
+                      )
+                    : null,
                 border: InputBorder.none,
                 counterText: widget.hideCounter ? "" : null,
                 suffixIcon: showClearButton

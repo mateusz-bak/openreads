@@ -35,7 +35,11 @@ class AddBookMethodButton extends StatelessWidget {
           ),
           child: Column(
             children: [
-              Icon(icon, size: 28),
+              Icon(
+                icon,
+                size: 28,
+                color: Theme.of(context).primaryColor,
+              ),
               const SizedBox(height: 10),
               Text(
                 text,
