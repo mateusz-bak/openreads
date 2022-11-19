@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:openreads/core/themes/app_theme.dart';
 import 'package:openreads/logic/cubit/book_cubit.dart';
 import 'package:openreads/model/book.dart';
 import 'package:openreads/ui/add_book_screen/widgets/widgets.dart';
@@ -39,6 +40,105 @@ class BookScreen extends StatelessWidget {
     ));
 
     return !isLiked;
+  }
+
+  Future<void> _showDeleteDialog(BuildContext context, bool deleted) async {
+    if (book == null) return;
+
+    await showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return AlertDialog(
+            shape: RoundedRectangleBorder(
+              borderRadius:
+                  Theme.of(context).extension<CustomBorder>()?.radius ??
+                      BorderRadius.circular(5.0),
+            ),
+            backgroundColor: Theme.of(context).scaffoldBackgroundColor,
+            title: Text(
+              deleted ? 'Delete this book?' : 'Restore this book?',
+              style: const TextStyle(fontSize: 18),
+            ),
+            actions: [
+              ElevatedButton(
+                onPressed: () {
+                  Navigator.of(context).pop();
+                },
+                style: TextButton.styleFrom(
+                  elevation: 0,
+                  backgroundColor: Colors.transparent,
+                  shape: RoundedRectangleBorder(
+                    borderRadius:
+                        Theme.of(context).extension<CustomBorder>()?.radius ??
+                            BorderRadius.circular(5.0),
+                    side: BorderSide(
+                      color: Theme.of(context).dividerColor,
+                      width: 1,
+                    ),
+                  ),
+                ),
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 10),
+                  child: Text(
+                    "No",
+                    style: TextStyle(
+                      fontSize: 12,
+                      color: Theme.of(context).primaryColor,
+                    ),
+                  ),
+                ),
+              ),
+              ElevatedButton(
+                onPressed: () {
+                  _changeDeleteStatus(deleted);
+                  Navigator.of(context).pop();
+                  Navigator.of(context).pop();
+                },
+                style: ElevatedButton.styleFrom(
+                  elevation: 0,
+                  backgroundColor: Theme.of(context).primaryColor,
+                  foregroundColor: Colors.white,
+                  shape: RoundedRectangleBorder(
+                    borderRadius:
+                        Theme.of(context).extension<CustomBorder>()?.radius ??
+                            BorderRadius.circular(5.0),
+                  ),
+                ),
+                child: const Padding(
+                  padding: EdgeInsets.symmetric(horizontal: 10),
+                  child: Text(
+                    "Yes",
+                    style: TextStyle(fontSize: 12),
+                  ),
+                ),
+              ),
+            ],
+          );
+        });
+  }
+
+  Future<void> _changeDeleteStatus(bool deleted) async {
+    await bookCubit.updateBook(Book(
+      id: book!.id,
+      title: book!.title,
+      author: book!.author,
+      status: book!.status,
+      favourite: book!.favourite,
+      deleted: deleted,
+      rating: book!.rating,
+      startDate: book!.startDate,
+      finishDate: book!.finishDate,
+      pages: book!.pages,
+      publicationYear: book!.publicationYear,
+      isbn: book!.isbn,
+      olid: book!.olid,
+      tags: book!.tags,
+      myReview: book!.myReview,
+      cover: book!.cover,
+      blurHash: book!.blurHash,
+    ));
+
+    bookCubit.getDeletedBooks();
   }
 
   IconData? _decideStatusIcon(int? status) {
@@ -179,33 +279,56 @@ class BookScreen extends StatelessWidget {
                 if (snapshot.hasData) {
                   if (snapshot.data == null) {
                     return const Center(child: Text('Error getting the book'));
+                  } else {
+                    return IconButton(
+                      onPressed: () {
+                        showModalBottomSheet(
+                            context: context,
+                            isScrollControlled: true,
+                            builder: (context) {
+                              return AddBook(
+                                topPadding: statusBarHeight,
+                                book: snapshot.data,
+                                previousThemeData: Theme.of(context),
+                                editingExistingBook: true,
+                              );
+                            });
+                      },
+                      icon: const Icon(Icons.edit),
+                    );
                   }
+                } else if (snapshot.hasError) {
+                  return const Center(child: Text('Error getting the book'));
+                } else {
+                  return const SizedBox();
                 }
-                return IconButton(
-                  onPressed: () {
-                    showModalBottomSheet(
-                        context: context,
-                        isScrollControlled: true,
-                        builder: (context) {
-                          return AddBook(
-                            topPadding: statusBarHeight,
-                            book: snapshot.data,
-                            previousThemeData: Theme.of(context),
-                            editingExistingBook: true,
-                          );
-                        });
-                  },
-                  icon: const Icon(Icons.edit),
-                );
               }),
-          IconButton(
-            onPressed: () async {
-              final navigator = Navigator.of(context);
-              await bookCubit.deleteBook(id);
-              navigator.pop();
-            },
-            icon: const Icon(Icons.delete),
-          ),
+          StreamBuilder<Book>(
+              stream: bookCubit.book,
+              builder: (context, AsyncSnapshot<Book> snapshot) {
+                if (snapshot.hasData) {
+                  if (snapshot.data == null) {
+                    return const Center(child: Text('Error getting the book'));
+                  } else {
+                    return IconButton(
+                      onPressed: (snapshot.data!.deleted == false)
+                          ? () async {
+                              await _showDeleteDialog(context, true);
+                            }
+                          : () async {
+                              await _showDeleteDialog(context, false);
+                            },
+                      icon: (snapshot.data!.deleted == false)
+                          ? const Icon(Icons.delete)
+                          : const Icon(Icons.restore_from_trash_rounded),
+                    );
+                  }
+                } else if (snapshot.hasError) {
+                  return const Center(child: Text('Error getting the book'));
+                } else {
+                  return const SizedBox();
+                }
+              }),
         ],
       ),
       body: SingleChildScrollView(

@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:openreads/core/themes/app_theme.dart';
 import 'package:openreads/logic/bloc/theme_bloc/theme_bloc.dart';
 import 'package:openreads/ui/settings_screen/widgets/widgets.dart';
+import 'package:openreads/ui/trash_screen/trash_screen.dart';
 import 'package:settings_ui/settings_ui.dart';
 import 'package:url_launcher/url_launcher.dart';
 
@@ -447,6 +448,24 @@ class SettingsScreen extends StatelessWidget {
     );
   }
 
+  SettingsTile _buildTrashSetting() {
+    return SettingsTile(
+      title: const Text(
+        'Deleted books',
+        style: TextStyle(fontSize: 16),
+      ),
+      leading: const Icon(Icons.delete_outline_rounded),
+      onPressed: (context) {
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) => const TrashScreen(),
+          ),
+        );
+      },
+    );
+  }
+
   SettingsTile _buildAccentSetting() {
     return SettingsTile(
       title: const Text(
@@ -599,17 +618,11 @@ class SettingsScreen extends StatelessWidget {
               ),
             ),
             tiles: <SettingsTile>[
-              //TODO trash setting
-              _buildURLSetting(
-                title: 'Trash',
-                description: 'Deleted books',
-                url: communityUrl,
-                iconData: Icons.delete_outline_rounded,
-              ),
+              _buildTrashSetting(),
               //TODO backup setting
               _buildURLSetting(
                 title: 'Backup',
-                description: 'Create or restore',
+                // description: 'Create or restore',
                 url: communityUrl,
                 iconData: Icons.settings_backup_restore,
               ),

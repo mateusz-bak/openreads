@@ -14,7 +14,11 @@ class DatabaseController {
   Future<List<Book>> getAllBooks({List<String>? columns}) async {
     final db = await dbClient.db;
 
-    var result = await db.query("booksTable", columns: columns);
+    var result = await db.query(
+      "booksTable",
+      columns: columns,
+      where: 'deleted = 0',
+    );
 
     return result.isNotEmpty
         ? result.map((item) => Book.fromJSON(item)).toList()
@@ -30,7 +34,7 @@ class DatabaseController {
     var result = await db.query(
       "booksTable",
       columns: columns,
-      where: 'status = ?',
+      where: 'status = ? AND deleted = 0',
       whereArgs: [status],
     );
 
@@ -46,7 +50,7 @@ class DatabaseController {
     final db = await dbClient.db;
 
     final count = Sqflite.firstIntValue(await db.rawQuery(
-      'SELECT COUNT(*) FROM booksTable WHERE status = $status',
+      'SELECT COUNT(*) FROM booksTable WHERE status = $status AND deleted = 0',
     ));
 
     return count ?? 0;
@@ -78,5 +82,18 @@ class DatabaseController {
     return result.isNotEmpty
         ? result.map((item) => Book.fromJSON(item)).toList()[0]
         : null;
+  }
+
+  Future<List<Book>> getDeletedBooks() async {
+    final db = await dbClient.db;
+
+    var result = await db.query(
+      "booksTable",
+      where: 'deleted = 1',
+    );
+
+    return result.isNotEmpty
+        ? result.map((item) => Book.fromJSON(item)).toList()
+        : [];
   }
 }

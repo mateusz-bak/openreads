@@ -27,6 +27,7 @@ class DatabaseProvider {
             "status INTEGER, "
             "rating INTEGER, "
             "favourite INTEGER, "
+            "deleted INTEGER, "
             "start_date TEXT, "
             "finish_date TEXT, "
             "pages INTEGER, "
