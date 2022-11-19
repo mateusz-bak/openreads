@@ -4,6 +4,7 @@ import 'package:openreads/core/themes/app_theme.dart';
 import 'package:openreads/logic/bloc/theme_bloc/theme_bloc.dart';
 import 'package:openreads/ui/settings_screen/widgets/widgets.dart';
 import 'package:openreads/ui/trash_screen/trash_screen.dart';
+import 'package:openreads/ui/unfinished_screen/unfinished_screen.dart';
 import 'package:settings_ui/settings_ui.dart';
 import 'package:url_launcher/url_launcher.dart';
 
@@ -466,6 +467,24 @@ class SettingsScreen extends StatelessWidget {
     );
   }
 
+  SettingsTile _buildUnfinishedSetting() {
+    return SettingsTile(
+      title: const Text(
+        'Unfinished books',
+        style: TextStyle(fontSize: 16),
+      ),
+      leading: const Icon(Icons.not_interested),
+      onPressed: (context) {
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) => const UnfinishedScreen(),
+          ),
+        );
+      },
+    );
+  }
+
   SettingsTile _buildAccentSetting() {
     return SettingsTile(
       title: const Text(
@@ -619,19 +638,13 @@ class SettingsScreen extends StatelessWidget {
             ),
             tiles: <SettingsTile>[
               _buildTrashSetting(),
+              _buildUnfinishedSetting(),
               //TODO backup setting
               _buildURLSetting(
                 title: 'Backup',
                 // description: 'Create or restore',
                 url: communityUrl,
                 iconData: Icons.settings_backup_restore,
-              ),
-              //TODO unfinished setting
-              _buildURLSetting(
-                title: 'Unfinished list',
-                description: 'Do not show on main screen',
-                url: communityUrl,
-                iconData: Icons.not_interested,
               ),
             ],
           ),
