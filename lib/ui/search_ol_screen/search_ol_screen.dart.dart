@@ -2,6 +2,7 @@ import 'package:barcode_scan2/barcode_scan2.dart';
 import 'package:flutter/material.dart';
 import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
 import 'package:loading_animation_widget/loading_animation_widget.dart';
+import 'package:openreads/core/themes/app_theme.dart';
 import 'package:openreads/model/book.dart';
 import 'package:openreads/model/ol_search_result.dart';
 import 'package:openreads/resources/open_library_service.dart';
@@ -197,7 +198,10 @@ class _SearchOLScreenState extends State<SearchOLScreen>
                       backgroundColor: Theme.of(context).primaryColor,
                       foregroundColor: Colors.white,
                       shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(5.0),
+                        borderRadius: Theme.of(context)
+                                .extension<CustomBorder>()
+                                ?.radius ??
+                            BorderRadius.circular(5.0),
                       ),
                     ),
                     child: const Text(

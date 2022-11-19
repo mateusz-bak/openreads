@@ -101,7 +101,8 @@ class SettingsScreen extends StatelessWidget {
       builder: (BuildContext context) {
         return Dialog(
           shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(5.0),
+            borderRadius: Theme.of(context).extension<CustomBorder>()?.radius ??
+                BorderRadius.circular(5.0),
           ),
           backgroundColor: Theme.of(context).scaffoldBackgroundColor,
           child: Padding(
@@ -194,7 +195,8 @@ class SettingsScreen extends StatelessWidget {
       builder: (BuildContext context) {
         return Dialog(
           shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(5.0),
+            borderRadius: Theme.of(context).extension<CustomBorder>()?.radius ??
+                BorderRadius.circular(5.0),
           ),
           backgroundColor: Theme.of(context).scaffoldBackgroundColor,
           child: Padding(
@@ -248,7 +250,8 @@ class SettingsScreen extends StatelessWidget {
       builder: (BuildContext context) {
         return Dialog(
           shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(5.0),
+            borderRadius: Theme.of(context).extension<CustomBorder>()?.radius ??
+                BorderRadius.circular(5.0),
           ),
           backgroundColor: Theme.of(context).scaffoldBackgroundColor,
           child: Padding(
@@ -297,7 +300,8 @@ class SettingsScreen extends StatelessWidget {
       builder: (BuildContext context) {
         return Dialog(
           shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(5.0),
+            borderRadius: Theme.of(context).extension<CustomBorder>()?.radius ??
+                BorderRadius.circular(5.0),
           ),
           backgroundColor: Theme.of(context).scaffoldBackgroundColor,
           child: Padding(

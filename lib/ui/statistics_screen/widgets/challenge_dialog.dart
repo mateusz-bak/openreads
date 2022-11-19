@@ -133,7 +133,8 @@ class _ChallengeDialogState extends State<ChallengeDialog>
   Widget build(BuildContext context) {
     return Dialog(
       shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(5.0),
+        borderRadius: Theme.of(context).extension<CustomBorder>()?.radius ??
+            BorderRadius.circular(5.0),
       ),
       backgroundColor: Theme.of(context).scaffoldBackgroundColor,
       child: Padding(
@@ -342,7 +343,9 @@ class _ChallengeDialogState extends State<ChallengeDialog>
                 backgroundColor: Theme.of(context).primaryColor,
                 foregroundColor: Colors.white,
                 shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(5.0),
+                  borderRadius:
+                      Theme.of(context).extension<CustomBorder>()?.radius ??
+                          BorderRadius.circular(5.0),
                 ),
               ),
               child: const Center(

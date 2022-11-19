@@ -235,7 +235,9 @@ class BookCardOL extends StatelessWidget {
                                         elevation: 0,
                                         backgroundColor: Colors.transparent,
                                         shape: RoundedRectangleBorder(
-                                          borderRadius:
+                                          borderRadius: Theme.of(context)
+                                                  .extension<CustomBorder>()
+                                                  ?.radius ??
                                               BorderRadius.circular(5.0),
                                           side: BorderSide(
                                             color:
@@ -268,7 +270,10 @@ class BookCardOL extends StatelessWidget {
                                         Theme.of(context).primaryColor,
                                     foregroundColor: Colors.white,
                                     shape: RoundedRectangleBorder(
-                                      borderRadius: BorderRadius.circular(5.0),
+                                      borderRadius: Theme.of(context)
+                                              .extension<CustomBorder>()
+                                              ?.radius ??
+                                          BorderRadius.circular(5.0),
                                     ),
                                   ),
                                   child: const Text(

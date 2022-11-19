@@ -693,7 +693,10 @@ class _AddBookState extends State<AddBook> {
                                 Theme.of(context).secondaryTextColor,
                             foregroundColor: Colors.white,
                             shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(5.0),
+                              borderRadius: Theme.of(context)
+                                      .extension<CustomBorder>()
+                                      ?.radius ??
+                                  BorderRadius.circular(5.0),
                             ),
                           ),
                           child: const Center(
@@ -717,7 +720,10 @@ class _AddBookState extends State<AddBook> {
                             backgroundColor: Theme.of(context).primaryColor,
                             foregroundColor: Colors.white,
                             shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(5.0),
+                              borderRadius: Theme.of(context)
+                                      .extension<CustomBorder>()
+                                      ?.radius ??
+                                  BorderRadius.circular(5.0),
                             ),
                           ),
                           child: const Center(
