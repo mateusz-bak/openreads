@@ -685,24 +685,21 @@ class _AddBookState extends State<AddBook> {
                     children: [
                       Expanded(
                         flex: 10,
-                        child: SizedBox(
-                          // height: 51,
-                          child: ElevatedButton(
-                            onPressed: () => Navigator.pop(context),
-                            style: ElevatedButton.styleFrom(
-                              elevation: 0,
-                              backgroundColor:
-                                  Theme.of(context).secondaryTextColor,
-                              foregroundColor: Colors.white,
-                              shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(5.0),
-                              ),
+                        child: ElevatedButton(
+                          onPressed: () => Navigator.pop(context),
+                          style: ElevatedButton.styleFrom(
+                            elevation: 0,
+                            backgroundColor:
+                                Theme.of(context).secondaryTextColor,
+                            foregroundColor: Colors.white,
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(5.0),
                             ),
-                            child: const Center(
-                              child: Text(
-                                "Cancel",
-                                style: TextStyle(color: Colors.black),
-                              ),
+                          ),
+                          child: const Center(
+                            child: Text(
+                              "Cancel",
+                              style: TextStyle(color: Colors.black),
                             ),
                           ),
                         ),
@@ -710,27 +707,24 @@ class _AddBookState extends State<AddBook> {
                       const SizedBox(width: 10),
                       Expanded(
                         flex: 19,
-                        child: SizedBox(
-                          // height: 51,
-                          child: ElevatedButton(
-                            onPressed:
-                                (widget.book != null && !widget.fromOpenLibrary)
-                                    ? _updateBook
-                                    : _saveBook,
-                            style: ElevatedButton.styleFrom(
-                              elevation: 0,
-                              backgroundColor: Theme.of(context).primaryColor,
-                              foregroundColor: Colors.white,
-                              shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(5.0),
-                              ),
+                        child: ElevatedButton(
+                          onPressed:
+                              (widget.book != null && !widget.fromOpenLibrary)
+                                  ? _updateBook
+                                  : _saveBook,
+                          style: ElevatedButton.styleFrom(
+                            elevation: 0,
+                            backgroundColor: Theme.of(context).primaryColor,
+                            foregroundColor: Colors.white,
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(5.0),
                             ),
-                            child: const Center(
-                              child: Text(
-                                "Save",
-                                style: TextStyle(
-                                  color: Colors.white,
-                                ),
+                          ),
+                          child: const Center(
+                            child: Text(
+                              "Save",
+                              style: TextStyle(
+                                color: Colors.white,
                               ),
                             ),
                           ),

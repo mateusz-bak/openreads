@@ -1,0 +1,362 @@
+import 'package:flutter/material.dart';
+import 'package:openreads/core/themes/app_theme.dart';
+
+class ChallengeDialog extends StatefulWidget {
+  const ChallengeDialog({
+    Key? key,
+    required this.setChallenge,
+    this.booksTarget,
+    this.pagesTarget,
+  }) : super(key: key);
+
+  final Function(int, int) setChallenge;
+  final int? booksTarget;
+  final int? pagesTarget;
+
+  @override
+  State<ChallengeDialog> createState() => _ChallengeDialogState();
+}
+
+class _ChallengeDialogState extends State<ChallengeDialog>
+    with TickerProviderStateMixin {
+  static const double minBooks = 0;
+  static const double maxBooks = 50;
+
+  static const double minPages = 0;
+  static const double maxPages = 15000;
+
+  double _booksSliderValue = 0;
+  double _pagesSliderValue = 0;
+  bool _showPagesChallenge = false;
+
+  int? _booksTarget;
+  int? _pagesTarget;
+
+  final _booksController = TextEditingController();
+  final _pagesController = TextEditingController();
+
+  late AnimationController _animController;
+  late Animation<double> _animation;
+
+  @override
+  void initState() {
+    super.initState();
+
+    _animController = AnimationController(
+      duration: const Duration(milliseconds: 250),
+      vsync: this,
+    );
+
+    _animation = CurvedAnimation(
+      parent: _animController,
+      curve: Curves.easeIn,
+    );
+
+    _booksController.addListener(() {
+      try {
+        final newValue = double.parse(_booksController.text);
+
+        setState(() {
+          if (newValue > maxBooks) {
+            _booksSliderValue = maxBooks;
+          } else if (newValue < minBooks) {
+            _booksSliderValue = minBooks;
+          } else {
+            _booksSliderValue = newValue;
+          }
+
+          _booksTarget = newValue.toInt();
+        });
+      } catch (error) {
+        return;
+      }
+    });
+
+    void prefillBooksTarget() {
+      _booksTarget = widget.booksTarget;
+      _booksController.text = widget.booksTarget.toString();
+
+      if (widget.booksTarget! > maxBooks.toInt()) {
+        _booksSliderValue = maxBooks;
+      } else if (widget.booksTarget! < minBooks.toInt()) {
+        _booksSliderValue = minBooks;
+      } else {
+        _booksSliderValue = widget.booksTarget!.toDouble();
+      }
+    }
+
+    void prefillPagesTarget() {
+      _showPagesChallenge = true;
+      _animController.forward();
+      _pagesTarget = widget.pagesTarget;
+      _pagesController.text = widget.pagesTarget.toString();
+
+      if (widget.pagesTarget! > maxPages.toInt()) {
+        _pagesSliderValue = maxPages;
+      } else if (widget.pagesTarget! < minPages.toInt()) {
+        _pagesSliderValue = minPages;
+      } else {
+        _pagesSliderValue = widget.pagesTarget!.toDouble();
+      }
+    }
+
+    _pagesController.addListener(() {
+      try {
+        final newValue = double.parse(_pagesController.text);
+
+        setState(() {
+          if (newValue > maxPages) {
+            _pagesSliderValue = maxPages;
+          } else if (newValue < minPages) {
+            _pagesSliderValue = minPages;
+          } else {
+            _pagesSliderValue = newValue;
+          }
+
+          _pagesTarget = newValue.toInt();
+        });
+      } catch (error) {
+        return;
+      }
+    });
+
+    if (widget.booksTarget != null) {
+      prefillBooksTarget();
+    }
+
+    if (widget.pagesTarget != null) {
+      prefillPagesTarget();
+    }
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Dialog(
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(5.0),
+      ),
+      backgroundColor: Theme.of(context).scaffoldBackgroundColor,
+      child: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 20),
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [
+            const Text(
+              'Set your yearly books goal:',
+              textAlign: TextAlign.center,
+              style: TextStyle(
+                fontSize: 16,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+            Slider(
+              value: _booksSliderValue,
+              min: minBooks,
+              max: maxBooks,
+              divisions: 50,
+              label: _booksSliderValue.round().toString(),
+              activeColor: Theme.of(context).primaryColor,
+              inactiveColor: Theme.of(context).secondaryTextColor,
+              onChanged: (double value) {
+                setState(() {
+                  _booksSliderValue = value;
+                  _booksController.text = _booksSliderValue.round().toString();
+                });
+              },
+            ),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 20),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text(
+                    minBooks.toStringAsFixed(0),
+                    style: TextStyle(
+                      fontSize: 16,
+                      color: Theme.of(context).secondaryTextColor,
+                    ),
+                  ),
+                  Container(
+                    width: 100,
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: 8,
+                      vertical: 0,
+                    ),
+                    decoration: BoxDecoration(
+                      color: Theme.of(context).backgroundColor,
+                      borderRadius:
+                          Theme.of(context).extension<CustomBorder>()?.radius,
+                      border: Border.all(color: Theme.of(context).dividerColor),
+                    ),
+                    child: TextField(
+                      textAlign: TextAlign.center,
+                      keyboardType: TextInputType.number,
+                      controller: _booksController,
+                      style: const TextStyle(fontSize: 14),
+                      decoration: const InputDecoration(
+                        border: InputBorder.none,
+                      ),
+                    ),
+                  ),
+                  Text(
+                    maxBooks.toStringAsFixed(0),
+                    style: TextStyle(
+                      fontSize: 16,
+                      color: Theme.of(context).secondaryTextColor,
+                    ),
+                  ),
+                ],
+              ),
+            ),
+            const SizedBox(height: 30),
+            Container(
+              decoration: BoxDecoration(
+                color: Theme.of(context).backgroundColor,
+                borderRadius:
+                    Theme.of(context).extension<CustomBorder>()?.radius,
+                border: Border.all(
+                  color: Theme.of(context).dividerColor,
+                ),
+              ),
+              child: Row(
+                children: [
+                  Switch(
+                    value: _showPagesChallenge,
+                    activeColor: Theme.of(context).primaryColor,
+                    onChanged: (value) {
+                      setState(() {
+                        _showPagesChallenge = value;
+                      });
+
+                      if (value) {
+                        _animController.forward();
+                      } else {
+                        _animController.animateBack(0,
+                            duration: const Duration(
+                              milliseconds: 250,
+                            ));
+                      }
+                    },
+                  ),
+                  const SizedBox(width: 10),
+                  const Text(
+                    'Add pages challenge',
+                    style: TextStyle(fontSize: 16),
+                  ),
+                ],
+              ),
+            ),
+            const SizedBox(height: 30),
+            SizeTransition(
+              sizeFactor: _animation,
+              child: Column(
+                children: [
+                  const Text(
+                    'Set your yearly pages goal:',
+                    textAlign: TextAlign.center,
+                    style: TextStyle(
+                      fontSize: 16,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                  Slider(
+                    value: _pagesSliderValue,
+                    min: minPages,
+                    max: maxPages,
+                    divisions: 150,
+                    label: _pagesSliderValue.round().toString(),
+                    activeColor: Theme.of(context).primaryColor,
+                    inactiveColor: Theme.of(context).secondaryTextColor,
+                    onChanged: (double value) {
+                      setState(() {
+                        _pagesSliderValue = value;
+                        _pagesController.text =
+                            _pagesSliderValue.round().toString();
+                      });
+                    },
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 20),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Text(
+                          minPages.toStringAsFixed(0),
+                          style: TextStyle(
+                            fontSize: 16,
+                            color: Theme.of(context).secondaryTextColor,
+                          ),
+                        ),
+                        Container(
+                          width: 100,
+                          padding: const EdgeInsets.symmetric(
+                            horizontal: 8,
+                            vertical: 0,
+                          ),
+                          decoration: BoxDecoration(
+                            color: Theme.of(context).backgroundColor,
+                            borderRadius: Theme.of(context)
+                                .extension<CustomBorder>()
+                                ?.radius,
+                            border: Border.all(
+                                color: Theme.of(context).dividerColor),
+                          ),
+                          child: TextField(
+                            textAlign: TextAlign.center,
+                            keyboardType: TextInputType.number,
+                            controller: _pagesController,
+                            style: const TextStyle(fontSize: 14),
+                            decoration: const InputDecoration(
+                              border: InputBorder.none,
+                            ),
+                          ),
+                        ),
+                        Text(
+                          maxPages.toStringAsFixed(0),
+                          style: TextStyle(
+                            fontSize: 16,
+                            color: Theme.of(context).secondaryTextColor,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ],
+              ),
+            ),
+            const SizedBox(height: 10),
+            ElevatedButton(
+              onPressed: () {
+                widget.setChallenge(
+                  _booksTarget ?? 0,
+                  _showPagesChallenge ? _pagesTarget ?? 0 : 0,
+                );
+
+                if (mounted) {
+                  Navigator.of(context).pop();
+                }
+              },
+              style: ElevatedButton.styleFrom(
+                elevation: 0,
+                backgroundColor: Theme.of(context).primaryColor,
+                foregroundColor: Colors.white,
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(5.0),
+                ),
+              ),
+              child: const Center(
+                child: Text(
+                  "Save",
+                  style: TextStyle(
+                    color: Colors.white,
+                  ),
+                ),
+              ),
+            )
+          ],
+        ),
+      ),
+    );
+  }
+}

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:openreads/core/themes/app_theme.dart';
+import 'package:openreads/logic/bloc/challenge_bloc/challenge_bloc.dart';
 import 'package:openreads/logic/cubit/book_cubit.dart';
 import 'package:openreads/logic/cubit/stats_cubit.dart';
 import 'package:openreads/model/book.dart';
@@ -16,6 +17,15 @@ class StatisticsScreen extends StatefulWidget {
 }
 
 class _StatisticsScreenState extends State<StatisticsScreen> {
+  void _setChallenge(int books, int pages) {
+    BlocProvider.of<ChallengeBloc>(context).add(
+      ChangeChallengeEvent(
+        books: (books == 0) ? null : books,
+        pages: (pages == 0) ? null : pages,
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return BlocProvider<StatsCubit>(
@@ -591,30 +601,39 @@ class _StatisticsScreenState extends State<StatisticsScreen> {
     );
   }
 
-  StreamBuilder<List<BookReadStat>> _buildPagesChallenge(
+  BlocBuilder<dynamic, dynamic> _buildPagesChallenge(
     BuildContext context,
     int? year,
   ) {
-    return StreamBuilder<List<BookReadStat>>(
-      stream: BlocProvider.of<StatsCubit>(context).finishedPagesByMonth,
-      builder: (context, AsyncSnapshot<List<BookReadStat>> snapshot) {
-        if (snapshot.hasData) {
-          if (snapshot.data == null || snapshot.data!.isEmpty) {
-            return const Center(child: Text('No finished books'));
-          }
+    return BlocBuilder<ChallengeBloc, ChallengeState>(
+      builder: (context, state) {
+        if (state is SetChallengeState && state.pages != null) {
+          return StreamBuilder<List<BookReadStat>>(
+            stream: BlocProvider.of<StatsCubit>(context).finishedPagesByMonth,
+            builder: (context, AsyncSnapshot<List<BookReadStat>> snapshot) {
+              if (snapshot.hasData) {
+                if (snapshot.data == null || snapshot.data!.isEmpty) {
+                  return const Center(child: Text('No finished books'));
+                }
 
-          for (var bookReadStat in snapshot.data!) {
-            if (bookReadStat.year == year) {
-              return ReadingChallenge(
-                title: 'Finished pages challenge',
-                value: bookReadStat.values.reduce((a, b) => a + b),
-                target: 999,
-              );
-            }
-          }
-          return const SizedBox();
-        } else if (snapshot.hasError) {
-          return Text(snapshot.error.toString());
+                for (var bookReadStat in snapshot.data!) {
+                  if (bookReadStat.year == year) {
+                    return ReadingChallenge(
+                      title: 'Finished pages challenge',
+                      value: bookReadStat.values.reduce((a, b) => a + b),
+                      target: state.pages!,
+                      setChallenge: _setChallenge,
+                    );
+                  }
+                }
+                return const SizedBox();
+              } else if (snapshot.hasError) {
+                return Text(snapshot.error.toString());
+              } else {
+                return const SizedBox();
+              }
+            },
+          );
         } else {
           return const SizedBox();
         }
@@ -622,32 +641,43 @@ class _StatisticsScreenState extends State<StatisticsScreen> {
     );
   }
 
-  StreamBuilder<List<BookReadStat>> _buildBooksChallenge(
+  BlocBuilder<dynamic, dynamic> _buildBooksChallenge(
     BuildContext context,
     int? year,
   ) {
-    return StreamBuilder<List<BookReadStat>>(
-      stream: BlocProvider.of<StatsCubit>(context).finishedBooksByMonth,
-      builder: (context, AsyncSnapshot<List<BookReadStat>> snapshot) {
-        if (snapshot.hasData) {
-          if (snapshot.data == null || snapshot.data!.isEmpty) {
-            return const Center(child: Text('No finished books'));
-          }
+    return BlocBuilder<ChallengeBloc, ChallengeState>(
+      builder: (context, state) {
+        if (state is SetChallengeState && state.books != null) {
+          return StreamBuilder<List<BookReadStat>>(
+            stream: BlocProvider.of<StatsCubit>(context).finishedBooksByMonth,
+            builder: (context, AsyncSnapshot<List<BookReadStat>> snapshot) {
+              if (snapshot.hasData) {
+                if (snapshot.data == null || snapshot.data!.isEmpty) {
+                  return const Center(child: Text('No finished books'));
+                }
 
-          for (var bookReadStat in snapshot.data!) {
-            if (bookReadStat.year == year) {
-              return ReadingChallenge(
-                title: 'Finished books challenge',
-                value: bookReadStat.values.reduce((a, b) => a + b),
-                target: 9,
-              );
-            }
-          }
-          return const SizedBox();
-        } else if (snapshot.hasError) {
-          return Text(snapshot.error.toString());
+                for (var bookReadStat in snapshot.data!) {
+                  if (bookReadStat.year == year) {
+                    return ReadingChallenge(
+                      title: 'Finished books challenge',
+                      value: bookReadStat.values.reduce((a, b) => a + b),
+                      target: state.books!,
+                      setChallenge: _setChallenge,
+                      booksTarget: state.books,
+                      pagesTarget: state.pages,
+                    );
+                  }
+                }
+                return const SizedBox();
+              } else if (snapshot.hasError) {
+                return Text(snapshot.error.toString());
+              } else {
+                return const SizedBox();
+              }
+            },
+          );
         } else {
-          return const SizedBox();
+          return SetChallengeBox(setChallenge: _setChallenge);
         }
       },
     );
