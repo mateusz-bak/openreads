@@ -47,6 +47,7 @@ class BookCubit extends Cubit {
   getAllBooks() async {
     List<Book> books = await repository.getAllBooks();
     _booksFetcher.sink.add(books);
+    _tagsFetcher.sink.add(_getTags(books));
   }
 
   getAllBooksByStatus() async {
@@ -61,7 +62,6 @@ class BookCubit extends Cubit {
 
     _finishedBooksFetcher.sink.add(books);
     _finishedYearsFetcher.sink.add(_getFinishedYears(books));
-    _tagsFetcher.sink.add(_getTags(books));
   }
 
   getInProgressBooks() async {
