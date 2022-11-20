@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_email_sender/flutter_email_sender.dart';
 import 'package:openreads/core/themes/app_theme.dart';
 import 'package:openreads/logic/bloc/theme_bloc/theme_bloc.dart';
 import 'package:openreads/ui/settings_screen/widgets/widgets.dart';
@@ -18,6 +19,45 @@ class SettingsScreen extends StatelessWidget {
   static const rateUrl = 'market://details?id=software.mdev.bookstracker';
   final releaseUrl = '$repoUrl/releases/tag/$version';
   final licenceUrl = '$repoUrl/blob/master/LICENSE';
+  final githubIssuesUrl = '$repoUrl/issues';
+
+  _sendEmailToDev(BuildContext context, [bool mounted = true]) async {
+    final Email email = Email(
+      subject: 'Openreads feedback',
+      body: 'Version 2.0.0-rc3\n',
+      recipients: ['mateusz.bak.dev@gmail.com'],
+      isHTML: false,
+    );
+
+    try {
+      await FlutterEmailSender.send(email);
+    } catch (error) {
+      if (!mounted) return;
+
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text('$error'),
+        ),
+      );
+    }
+  }
+
+  _openGithubIssue(BuildContext context, [bool mounted = true]) async {
+    try {
+      await launchUrl(
+        Uri.parse(githubIssuesUrl),
+        mode: LaunchMode.externalApplication,
+      );
+    } catch (error) {
+      if (!mounted) return;
+
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text('$error'),
+        ),
+      );
+    }
+  }
 
   _setThemeModeAuto(BuildContext context, SetThemeState state) {
     BlocProvider.of<ThemeBloc>(context).add(ChangeThemeEvent(
@@ -426,7 +466,7 @@ class SettingsScreen extends StatelessWidget {
                           child: ContactButton(
                             text: 'Send the developer an email',
                             icon: Icons.mail_outline_rounded,
-                            onPressed: () {},
+                            onPressed: () => _sendEmailToDev(context),
                           ),
                         ),
                         const SizedBox(width: 20),
@@ -434,7 +474,7 @@ class SettingsScreen extends StatelessWidget {
                           child: ContactButton(
                             text: 'Raise an issue on Github',
                             icon: Icons.bug_report_rounded,
-                            onPressed: () {},
+                            onPressed: () => _openGithubIssue(context),
                           ),
                         ),
                       ],
@@ -611,13 +651,13 @@ class SettingsScreen extends StatelessWidget {
                 url: communityUrl,
                 iconData: Icons.rocket,
               ),
+              // TODO: Show only on GPlay variant
               _buildURLSetting(
                 title: 'Rate the application',
                 description: 'You like Openreads? Click here to rate it',
                 url: rateUrl,
                 iconData: Icons.star_border_rounded,
               ),
-              //TODO feedback setting
               _buildFeedbackSetting(),
               _buildURLSetting(
                 title: 'Help with translation',
