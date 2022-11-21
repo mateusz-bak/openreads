@@ -9,6 +9,7 @@ class ReadingChallenge extends StatelessWidget {
     required this.target,
     required this.title,
     required this.setChallenge,
+    required this.year,
     this.booksTarget,
     this.pagesTarget,
   }) : super(key: key);
@@ -16,9 +17,10 @@ class ReadingChallenge extends StatelessWidget {
   final int value;
   final int target;
   final String title;
-  final Function(int, int) setChallenge;
+  final Function(int, int, int) setChallenge;
   final int? booksTarget;
   final int? pagesTarget;
+  final int year;
 
   @override
   Widget build(BuildContext context) {
@@ -41,6 +43,7 @@ class ReadingChallenge extends StatelessWidget {
                 setChallenge: setChallenge,
                 booksTarget: booksTarget,
                 pagesTarget: pagesTarget,
+                year: year,
               );
             }),
         borderRadius: Theme.of(context).extension<CustomBorder>()?.radius ??
@@ -70,19 +73,24 @@ class ReadingChallenge extends StatelessWidget {
                       ),
                       child: Row(
                         children: [
-                          Expanded(
-                            flex: ((value / target) * 100).toInt(),
-                            child: Container(
-                              height: 15,
-                              decoration: BoxDecoration(
-                                color: Theme.of(context).primaryColor,
-                                borderRadius: Theme.of(context)
-                                    .extension<CustomBorder>()
-                                    ?.radius,
-                              ),
-                            ),
-                          ),
-                          ((100 - ((value / target) * 100)).toInt() > 0)
+                          (target != 0)
+                              ? Expanded(
+                                  flex: ((value / target) * 100).toInt(),
+                                  child: Container(
+                                    height: 15,
+                                    decoration: BoxDecoration(
+                                      color: Theme.of(context).primaryColor,
+                                      borderRadius: Theme.of(context)
+                                          .extension<CustomBorder>()
+                                          ?.radius,
+                                    ),
+                                  ),
+                                )
+                              : const SizedBox(
+                                  height: 15,
+                                ),
+                          (target != 0 &&
+                                  (100 - ((value / target) * 100)).toInt() > 0)
                               ? Spacer(
                                   flex:
                                       (100 - ((value / target) * 100)).toInt(),
@@ -106,7 +114,9 @@ class ReadingChallenge extends StatelessWidget {
                     ),
                   ),
                   Text(
-                    '${((value / target * 100) <= 100) ? (value / target * 100).toStringAsFixed(2) : 100}%',
+                    (target == 0)
+                        ? ''
+                        : '${((value / target * 100) <= 100) ? (value / target * 100).toStringAsFixed(2) : 100}%',
                     style: TextStyle(
                       fontSize: 16,
                       color: Theme.of(context).secondaryTextColor,

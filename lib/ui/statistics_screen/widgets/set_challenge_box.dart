@@ -6,9 +6,15 @@ class SetChallengeBox extends StatelessWidget {
   const SetChallengeBox({
     Key? key,
     required this.setChallenge,
+    required this.year,
+    this.booksTarget,
+    this.pagesTarget,
   }) : super(key: key);
 
-  final Function(int, int) setChallenge;
+  final Function(int, int, int) setChallenge;
+  final int year;
+  final int? booksTarget;
+  final int? pagesTarget;
 
   @override
   Widget build(BuildContext context) {
@@ -26,7 +32,12 @@ class SetChallengeBox extends StatelessWidget {
         onTap: () => showDialog(
             context: context,
             builder: (BuildContext context) {
-              return ChallengeDialog(setChallenge: setChallenge);
+              return ChallengeDialog(
+                setChallenge: setChallenge,
+                year: year,
+                booksTarget: booksTarget,
+                pagesTarget: pagesTarget,
+              );
             }),
         child: Padding(
           padding: const EdgeInsets.symmetric(

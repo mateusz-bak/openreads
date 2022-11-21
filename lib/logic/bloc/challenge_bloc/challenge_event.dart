@@ -5,14 +5,23 @@ abstract class ChallengeEvent extends Equatable {
 }
 
 class ChangeChallengeEvent extends ChallengeEvent {
+  final int year;
   final int? books;
   final int? pages;
 
   const ChangeChallengeEvent({
+    required this.year,
     required this.books,
     required this.pages,
   });
 
   @override
-  List<Object?> get props => [books, pages];
+  List<Object?> get props => [year, books, pages];
+}
+
+class RemoveChallengeEvent extends ChallengeEvent {
+  const RemoveChallengeEvent();
+
+  @override
+  List<Object?> get props => [];
 }

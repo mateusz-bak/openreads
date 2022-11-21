@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:openreads/core/themes/app_theme.dart';
@@ -7,6 +9,7 @@ import 'package:openreads/logic/cubit/stats_cubit.dart';
 import 'package:openreads/model/book.dart';
 import 'package:openreads/model/book_read_stat.dart';
 import 'package:openreads/model/book_yearly_stat.dart';
+import 'package:openreads/model/yearly_challenge.dart';
 import 'package:openreads/ui/statistics_screen/widgets/widgets.dart';
 
 class StatisticsScreen extends StatefulWidget {
@@ -17,11 +20,12 @@ class StatisticsScreen extends StatefulWidget {
 }
 
 class _StatisticsScreenState extends State<StatisticsScreen> {
-  void _setChallenge(int books, int pages) {
+  void _setChallenge(int books, int pages, int year) {
     BlocProvider.of<ChallengeBloc>(context).add(
       ChangeChallengeEvent(
         books: (books == 0) ? null : books,
         pages: (pages == 0) ? null : pages,
+        year: year,
       ),
     );
   }
@@ -607,7 +611,7 @@ class _StatisticsScreenState extends State<StatisticsScreen> {
   ) {
     return BlocBuilder<ChallengeBloc, ChallengeState>(
       builder: (context, state) {
-        if (state is SetChallengeState && state.pages != null) {
+        if (state is SetChallengeState && state.yearlyChallenges != null) {
           return StreamBuilder<List<BookReadStat>>(
             stream: BlocProvider.of<StatsCubit>(context).finishedPagesByMonth,
             builder: (context, AsyncSnapshot<List<BookReadStat>> snapshot) {
@@ -616,17 +620,48 @@ class _StatisticsScreenState extends State<StatisticsScreen> {
                   return const Center(child: Text('No finished books'));
                 }
 
-                for (var bookReadStat in snapshot.data!) {
-                  if (bookReadStat.year == year) {
-                    return ReadingChallenge(
-                      title: 'Finished pages challenge',
-                      value: bookReadStat.values.reduce((a, b) => a + b),
-                      target: state.pages!,
-                      setChallenge: _setChallenge,
-                    );
-                  }
+                final yearlyChallenges = List<YearlyChallenge>.empty(
+                  growable: true,
+                );
+
+                final jsons = state.yearlyChallenges!.split('|');
+                for (var json in jsons) {
+                  final decodedJson = jsonDecode(json);
+                  final yearlyChallenge = YearlyChallenge.fromJSON(decodedJson);
+                  yearlyChallenges.add(yearlyChallenge);
                 }
-                return const SizedBox();
+
+                final selectedTarget = yearlyChallenges.where((element) {
+                  return (year == null)
+                      ? element.year == DateTime.now().year
+                      : element.year == year;
+                });
+
+                final selectedValue = snapshot.data!.where((element) {
+                  return (year == null)
+                      ? element.year == DateTime.now().year
+                      : element.year == year;
+                });
+
+                final value = selectedValue.isNotEmpty
+                    ? selectedValue.first.values.reduce((a, b) => a + b)
+                    : 0;
+
+                if (selectedTarget.isEmpty) {
+                  return const SizedBox();
+                } else if (selectedTarget.first.pages == null) {
+                  return const SizedBox();
+                } else {
+                  return ReadingChallenge(
+                    title: 'Finished pages challenge',
+                    value: value,
+                    target: selectedTarget.first.pages ?? 0,
+                    setChallenge: _setChallenge,
+                    booksTarget: selectedTarget.first.books,
+                    pagesTarget: selectedTarget.first.pages,
+                    year: year ?? DateTime.now().year,
+                  );
+                }
               } else if (snapshot.hasError) {
                 return Text(snapshot.error.toString());
               } else {
@@ -635,7 +670,12 @@ class _StatisticsScreenState extends State<StatisticsScreen> {
             },
           );
         } else {
-          return const SizedBox();
+          return (year == null)
+              ? SetChallengeBox(
+                  setChallenge: _setChallenge,
+                  year: year ?? DateTime.now().year,
+                )
+              : const SizedBox();
         }
       },
     );
@@ -647,7 +687,7 @@ class _StatisticsScreenState extends State<StatisticsScreen> {
   ) {
     return BlocBuilder<ChallengeBloc, ChallengeState>(
       builder: (context, state) {
-        if (state is SetChallengeState && state.books != null) {
+        if (state is SetChallengeState && state.yearlyChallenges != null) {
           return StreamBuilder<List<BookReadStat>>(
             stream: BlocProvider.of<StatsCubit>(context).finishedBooksByMonth,
             builder: (context, AsyncSnapshot<List<BookReadStat>> snapshot) {
@@ -656,19 +696,54 @@ class _StatisticsScreenState extends State<StatisticsScreen> {
                   return const Center(child: Text('No finished books'));
                 }
 
-                for (var bookReadStat in snapshot.data!) {
-                  if (bookReadStat.year == year) {
-                    return ReadingChallenge(
-                      title: 'Finished books challenge',
-                      value: bookReadStat.values.reduce((a, b) => a + b),
-                      target: state.books!,
-                      setChallenge: _setChallenge,
-                      booksTarget: state.books,
-                      pagesTarget: state.pages,
-                    );
-                  }
+                final yearlyChallenges = List<YearlyChallenge>.empty(
+                  growable: true,
+                );
+
+                final jsons = state.yearlyChallenges!.split('|');
+                for (var json in jsons) {
+                  final decodedJson = jsonDecode(json);
+                  final yearlyChallenge = YearlyChallenge.fromJSON(decodedJson);
+                  yearlyChallenges.add(yearlyChallenge);
                 }
-                return const SizedBox();
+
+                final selectedTarget = yearlyChallenges.where((element) {
+                  return (year == null)
+                      ? element.year == DateTime.now().year
+                      : element.year == year;
+                });
+
+                final selectedValue = snapshot.data!.where((element) {
+                  return (year == null)
+                      ? element.year == DateTime.now().year
+                      : element.year == year;
+                });
+
+                final value = selectedValue.isNotEmpty
+                    ? selectedValue.first.values.reduce((a, b) => a + b)
+                    : 0;
+
+                if (selectedTarget.isEmpty ||
+                    selectedTarget.first.books == null) {
+                  return (year == null)
+                      ? SetChallengeBox(
+                          setChallenge: _setChallenge,
+                          year: year ?? DateTime.now().year,
+                          booksTarget: selectedTarget.first.books,
+                          pagesTarget: selectedTarget.first.pages,
+                        )
+                      : const SizedBox();
+                } else {
+                  return ReadingChallenge(
+                    title: 'Finished books challenge',
+                    value: value,
+                    target: selectedTarget.first.books ?? 0,
+                    setChallenge: _setChallenge,
+                    booksTarget: selectedTarget.first.books,
+                    pagesTarget: selectedTarget.first.pages,
+                    year: year ?? DateTime.now().year,
+                  );
+                }
               } else if (snapshot.hasError) {
                 return Text(snapshot.error.toString());
               } else {
@@ -677,7 +752,12 @@ class _StatisticsScreenState extends State<StatisticsScreen> {
             },
           );
         } else {
-          return SetChallengeBox(setChallenge: _setChallenge);
+          return (year == null)
+              ? SetChallengeBox(
+                  setChallenge: _setChallenge,
+                  year: year ?? DateTime.now().year,
+                )
+              : const SizedBox();
         }
       },
     );

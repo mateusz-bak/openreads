@@ -1,49 +1,78 @@
+import 'dart:convert';
+
 import 'package:equatable/equatable.dart';
 import 'package:hydrated_bloc/hydrated_bloc.dart';
+import 'package:openreads/model/yearly_challenge.dart';
 
 part 'challenge_state.dart';
 part 'challenge_event.dart';
 
 class ChallengeBloc extends HydratedBloc<ChallengeEvent, ChallengeState> {
-  ChallengeBloc() : super(UnsetChallengeState()) {
+  String? _yearlyChallenges;
+
+  ChallengeBloc() : super(const SetChallengeState()) {
+    on<RemoveChallengeEvent>((event, emit) {
+      _yearlyChallenges = null;
+      emit(SetChallengeState(yearlyChallenges: _yearlyChallenges));
+    });
     on<ChangeChallengeEvent>((event, emit) {
-      if (event.books == null && event.pages == null) {
-        emit(UnsetChallengeState());
+      if (_yearlyChallenges == null) {
+        final newJson = json
+            .encode(YearlyChallenge(
+              year: event.year,
+              books: event.books,
+              pages: event.pages,
+            ).toJSON())
+            .toString();
+
+        _yearlyChallenges = [
+          newJson,
+        ].join('|');
       } else {
-        emit(SetChallengeState(
-          books: event.books,
-          pages: event.pages,
-        ));
+        final splittedReadingChallenges = _yearlyChallenges!.split('|');
+
+        splittedReadingChallenges.removeWhere((element) {
+          final decodedReadingChallenge = YearlyChallenge.fromJSON(
+            jsonDecode(element),
+          );
+
+          return decodedReadingChallenge.year == event.year;
+        });
+
+        splittedReadingChallenges.add(json
+            .encode(YearlyChallenge(
+              year: event.year,
+              books: event.books,
+              pages: event.pages,
+            ).toJSON())
+            .toString());
+
+        _yearlyChallenges = splittedReadingChallenges.join('|');
       }
+
+      emit(SetChallengeState(yearlyChallenges: _yearlyChallenges));
     });
   }
 
   @override
   ChallengeState? fromJson(Map<String, dynamic> json) {
-    final books = json['books'] as int?;
-    final pages = json['pages'] as int?;
+    final yearlyChallenges = json['reading_challenges'] as String?;
 
-    if (books == null && pages == null) {
-      return UnsetChallengeState();
-    } else {
-      return SetChallengeState(
-        books: books,
-        pages: pages,
-      );
-    }
+    _yearlyChallenges = yearlyChallenges;
+    return SetChallengeState(
+      yearlyChallenges: _yearlyChallenges,
+    );
   }
 
   @override
   Map<String, dynamic>? toJson(ChallengeState state) {
     if (state is SetChallengeState) {
       return {
-        'books': state.books,
-        'pages': state.pages,
+        'reading_challenges': state.yearlyChallenges,
       };
     } else {
       return {
-        'books': null,
-        'pages': null,
+        'reading_challenges': null,
       };
     }
   }

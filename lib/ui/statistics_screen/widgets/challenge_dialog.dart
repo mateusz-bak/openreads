@@ -5,13 +5,15 @@ class ChallengeDialog extends StatefulWidget {
   const ChallengeDialog({
     Key? key,
     required this.setChallenge,
+    required this.year,
     this.booksTarget,
     this.pagesTarget,
   }) : super(key: key);
 
-  final Function(int, int) setChallenge;
+  final Function(int, int, int) setChallenge;
   final int? booksTarget;
   final int? pagesTarget;
+  final int year;
 
   @override
   State<ChallengeDialog> createState() => _ChallengeDialogState();
@@ -143,10 +145,10 @@ class _ChallengeDialogState extends State<ChallengeDialog>
           mainAxisSize: MainAxisSize.min,
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
-            const Text(
-              'Set your yearly books goal:',
+            Text(
+              'Set books goal for ${widget.year}:',
               textAlign: TextAlign.center,
-              style: TextStyle(
+              style: const TextStyle(
                 fontSize: 16,
                 fontWeight: FontWeight.bold,
               ),
@@ -169,15 +171,8 @@ class _ChallengeDialogState extends State<ChallengeDialog>
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 20),
               child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  Text(
-                    minBooks.toStringAsFixed(0),
-                    style: TextStyle(
-                      fontSize: 16,
-                      color: Theme.of(context).secondaryTextColor,
-                    ),
-                  ),
                   Container(
                     width: 100,
                     padding: const EdgeInsets.symmetric(
@@ -198,13 +193,6 @@ class _ChallengeDialogState extends State<ChallengeDialog>
                       decoration: const InputDecoration(
                         border: InputBorder.none,
                       ),
-                    ),
-                  ),
-                  Text(
-                    maxBooks.toStringAsFixed(0),
-                    style: TextStyle(
-                      fontSize: 16,
-                      color: Theme.of(context).secondaryTextColor,
                     ),
                   ),
                 ],
@@ -280,15 +268,8 @@ class _ChallengeDialogState extends State<ChallengeDialog>
                   Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 20),
                     child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        Text(
-                          minPages.toStringAsFixed(0),
-                          style: TextStyle(
-                            fontSize: 16,
-                            color: Theme.of(context).secondaryTextColor,
-                          ),
-                        ),
                         Container(
                           width: 100,
                           padding: const EdgeInsets.symmetric(
@@ -313,13 +294,6 @@ class _ChallengeDialogState extends State<ChallengeDialog>
                             ),
                           ),
                         ),
-                        Text(
-                          maxPages.toStringAsFixed(0),
-                          style: TextStyle(
-                            fontSize: 16,
-                            color: Theme.of(context).secondaryTextColor,
-                          ),
-                        ),
                       ],
                     ),
                   ),
@@ -329,10 +303,8 @@ class _ChallengeDialogState extends State<ChallengeDialog>
             const SizedBox(height: 10),
             ElevatedButton(
               onPressed: () {
-                widget.setChallenge(
-                  _booksTarget ?? 0,
-                  _showPagesChallenge ? _pagesTarget ?? 0 : 0,
-                );
+                widget.setChallenge(_booksTarget ?? 0,
+                    _showPagesChallenge ? _pagesTarget ?? 0 : 0, widget.year);
 
                 if (mounted) {
                   Navigator.of(context).pop();

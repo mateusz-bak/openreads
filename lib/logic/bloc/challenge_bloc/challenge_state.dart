@@ -5,19 +5,12 @@ abstract class ChallengeState extends Equatable {
 }
 
 class SetChallengeState extends ChallengeState {
-  final int? books;
-  final int? pages;
+  final String? yearlyChallenges;
 
   const SetChallengeState({
-    required this.books,
-    required this.pages,
+    this.yearlyChallenges,
   });
 
   @override
-  List<Object?> get props => [books, pages];
-}
-
-class UnsetChallengeState extends ChallengeState {
-  @override
-  List<Object?> get props => [];
+  List<Object?> get props => [yearlyChallenges];
 }
