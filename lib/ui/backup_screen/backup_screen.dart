@@ -1,11 +1,13 @@
 import 'dart:convert';
 import 'dart:io';
 
+import 'package:archive/archive_io.dart';
 import 'package:filesystem_picker/filesystem_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:openreads/core/themes/app_theme.dart';
 import 'package:openreads/logic/cubit/book_cubit.dart';
 import 'package:openreads/model/book.dart';
+import 'package:path_provider/path_provider.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:settings_ui/settings_ui.dart';
 
@@ -79,20 +81,46 @@ class _BackupScreenState extends State<BackupScreen> {
     }
   }
 
-  _writeFile(List<String> data) async {
+  _writeFile(List<String> list) async {
+    final data = list.join('|||||');
     final backupPath = await _openFolderPicker();
+    final tmpPath = (await getApplicationSupportDirectory()).absolute;
 
     final date = DateTime.now();
     final backupDate =
         '${date.year}-${date.month}-${date.day}_${date.hour}-${date.minute}-${date.second}';
     final filePath = '$backupPath/Openreads_4_2.0.0_$backupDate.backup';
-    final file = File(filePath);
 
-    if (file.existsSync()) {
-      File(filePath).writeAsStringSync(data.join('|||||'));
-    } else {
-      File(filePath).createSync(recursive: true);
-      File(filePath).writeAsStringSync(data.join('|||||'));
+    try {
+      File('${tmpPath.path}/books.tmp').writeAsStringSync(data);
+      if (File('${tmpPath.path}/books.tmp').existsSync()) {
+        final booksBytes = File('${tmpPath.path}/books.tmp').readAsBytesSync();
+
+        final archivedBooks = ArchiveFile(
+          'books.tmp',
+          booksBytes.length,
+          booksBytes,
+        );
+
+        final archive = Archive();
+        archive.addFile(archivedBooks);
+        final encodedArchive = ZipEncoder().encode(archive);
+
+        if (encodedArchive == null) return;
+
+        File(filePath).writeAsBytesSync(encodedArchive);
+
+        if (File('${tmpPath.path}/books.tmp').existsSync()) {
+          File('${tmpPath.path}/books.tmp').deleteSync();
+        }
+      }
+    } catch (e) {
+      setState(() => _creatingLocal = false);
+      if (!mounted) return;
+
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text(e.toString())),
+      );
     }
   }
 
@@ -153,13 +181,22 @@ class _BackupScreenState extends State<BackupScreen> {
   }
 
   _restoreLocalBackup() async {
+    final tmpPath = (await getApplicationSupportDirectory()).absolute;
+
+    if (File('${tmpPath.path}/books.tmp').existsSync()) {
+      File('${tmpPath.path}/books.tmp').deleteSync();
+    }
+
     try {
-      final backupPath = await _openFilePicker();
+      final archivePath = await _openFilePicker();
+      if (archivePath == null) return;
 
-      if (backupPath == null) return;
+      final archiveBytes = File(archivePath).readAsBytesSync();
+      final archive = ZipDecoder().decodeBytes(archiveBytes);
 
-      final backupData = File(backupPath).readAsStringSync();
+      extractArchiveToDisk(archive, tmpPath.path);
 
+      final backupData = File('${tmpPath.path}/books.tmp').readAsStringSync();
       final books = backupData.split('|||||');
 
       await bookCubit.removeAllBooks();

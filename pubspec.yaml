@@ -45,6 +45,7 @@ dependencies:
   flutter_email_sender: ^5.2.0
   permission_handler: ^10.2.0
   filesystem_picker: ^3.1.0
+  archive: ^3.3.5
 
 dev_dependencies:
   flutter_test:
