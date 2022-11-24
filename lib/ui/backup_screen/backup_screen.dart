@@ -4,7 +4,9 @@ import 'dart:io';
 import 'package:archive/archive_io.dart';
 import 'package:filesystem_picker/filesystem_picker.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:openreads/core/themes/app_theme.dart';
+import 'package:openreads/logic/bloc/challenge_bloc/challenge_bloc.dart';
 import 'package:openreads/logic/cubit/book_cubit.dart';
 import 'package:openreads/model/book.dart';
 import 'package:path_provider/path_provider.dart';
@@ -63,14 +65,16 @@ class _BackupScreenState extends State<BackupScreen> {
     await bookCubit.getAllBooks(tags: true);
 
     final books = await bookCubit.allBooks.first;
-    final backup = List<String>.empty(growable: true);
+    final backedBooks = List<String>.empty(growable: true);
 
     for (var book in books) {
-      backup.add(jsonEncode(book.toJSON()));
+      backedBooks.add(jsonEncode(book.toJSON()));
     }
 
+    final challengeTargets = await _getChallengeTargets();
+
     try {
-      await _writeFile(backup);
+      await _writeBackupFile(backedBooks, challengeTargets);
     } catch (e) {
       setState(() => _creatingLocal = false);
       if (!mounted) return;
@@ -81,7 +85,19 @@ class _BackupScreenState extends State<BackupScreen> {
     }
   }
 
-  _writeFile(List<String> list) async {
+  Future<String?> _getChallengeTargets() async {
+    if (!mounted) return null;
+
+    final state = BlocProvider.of<ChallengeBloc>(context).state;
+
+    if (state is SetChallengeState) {
+      return state.yearlyChallenges;
+    }
+
+    return null;
+  }
+
+  _writeBackupFile(List<String> list, String? challengeTargets) async {
     final data = list.join('|||||');
     final backupPath = await _openFolderPicker();
     final tmpPath = (await getApplicationSupportDirectory()).absolute;
@@ -93,26 +109,43 @@ class _BackupScreenState extends State<BackupScreen> {
 
     try {
       File('${tmpPath.path}/books.tmp').writeAsStringSync(data);
-      if (File('${tmpPath.path}/books.tmp').existsSync()) {
-        final booksBytes = File('${tmpPath.path}/books.tmp').readAsBytesSync();
 
-        final archivedBooks = ArchiveFile(
-          'books.tmp',
-          booksBytes.length,
-          booksBytes,
+      final booksBytes = File('${tmpPath.path}/books.tmp').readAsBytesSync();
+      final archivedBooks = ArchiveFile(
+        'books.tmp',
+        booksBytes.length,
+        booksBytes,
+      );
+
+      final archive = Archive();
+      archive.addFile(archivedBooks);
+
+      if (challengeTargets != null) {
+        File('${tmpPath.path}/challenges.tmp')
+            .writeAsStringSync(challengeTargets);
+        final challengeTargetsBytes =
+            File('${tmpPath.path}/challenges.tmp').readAsBytesSync();
+        final archivedChallengeTargets = ArchiveFile(
+          'challenges.tmp',
+          challengeTargetsBytes.length,
+          challengeTargetsBytes,
         );
 
-        final archive = Archive();
-        archive.addFile(archivedBooks);
-        final encodedArchive = ZipEncoder().encode(archive);
+        archive.addFile(archivedChallengeTargets);
+      }
 
-        if (encodedArchive == null) return;
+      final encodedArchive = ZipEncoder().encode(archive);
 
-        File(filePath).writeAsBytesSync(encodedArchive);
+      if (encodedArchive == null) return;
 
-        if (File('${tmpPath.path}/books.tmp').existsSync()) {
-          File('${tmpPath.path}/books.tmp').deleteSync();
-        }
+      File(filePath).writeAsBytesSync(encodedArchive);
+
+      if (File('${tmpPath.path}/books.tmp').existsSync()) {
+        File('${tmpPath.path}/books.tmp').deleteSync();
+      }
+
+      if (File('${tmpPath.path}/challenges.tmp').existsSync()) {
+        File('${tmpPath.path}/challenges.tmp').deleteSync();
       }
     } catch (e) {
       setState(() => _creatingLocal = false);
@@ -187,6 +220,10 @@ class _BackupScreenState extends State<BackupScreen> {
       File('${tmpPath.path}/books.tmp').deleteSync();
     }
 
+    if (File('${tmpPath.path}/challenges.tmp').existsSync()) {
+      File('${tmpPath.path}/challenges.tmp').deleteSync();
+    }
+
     try {
       final archivePath = await _openFilePicker();
       if (archivePath == null) return;
@@ -196,20 +233,41 @@ class _BackupScreenState extends State<BackupScreen> {
 
       extractArchiveToDisk(archive, tmpPath.path);
 
-      final backupData = File('${tmpPath.path}/books.tmp').readAsStringSync();
-      final books = backupData.split('|||||');
+      final booksData = File('${tmpPath.path}/books.tmp').readAsStringSync();
+      final books = booksData.split('|||||');
 
       await bookCubit.removeAllBooks();
 
       for (var book in books) {
         bookCubit.addBook(Book.fromJSON(jsonDecode(book)));
       }
+
+      await _restoreChallengeTargets(tmpPath);
     } catch (e) {
       setState(() => _restoringLocal = false);
       if (!mounted) return;
 
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(content: Text(e.toString())),
+      );
+    }
+  }
+
+  _restoreChallengeTargets(Directory tmpPath) async {
+    if (!mounted) return;
+
+    if (File('${tmpPath.path}/challenges.tmp').existsSync()) {
+      final challengesData =
+          File('${tmpPath.path}/challenges.tmp').readAsStringSync();
+
+      BlocProvider.of<ChallengeBloc>(context).add(
+        const RemoveAllChallengesEvent(),
+      );
+
+      BlocProvider.of<ChallengeBloc>(context).add(
+        RestoreChallengesEvent(
+          challenges: challengesData,
+        ),
       );
     }
   }

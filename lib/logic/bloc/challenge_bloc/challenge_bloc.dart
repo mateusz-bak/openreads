@@ -11,8 +11,12 @@ class ChallengeBloc extends HydratedBloc<ChallengeEvent, ChallengeState> {
   String? _yearlyChallenges;
 
   ChallengeBloc() : super(const SetChallengeState()) {
-    on<RemoveChallengeEvent>((event, emit) {
+    on<RemoveAllChallengesEvent>((event, emit) {
       _yearlyChallenges = null;
+      emit(SetChallengeState(yearlyChallenges: _yearlyChallenges));
+    });
+    on<RestoreChallengesEvent>((event, emit) {
+      _yearlyChallenges = event.challenges;
       emit(SetChallengeState(yearlyChallenges: _yearlyChallenges));
     });
     on<ChangeChallengeEvent>((event, emit) {

@@ -19,8 +19,19 @@ class ChangeChallengeEvent extends ChallengeEvent {
   List<Object?> get props => [year, books, pages];
 }
 
-class RemoveChallengeEvent extends ChallengeEvent {
-  const RemoveChallengeEvent();
+class RestoreChallengesEvent extends ChallengeEvent {
+  final String? challenges;
+
+  const RestoreChallengesEvent({
+    required this.challenges,
+  });
+
+  @override
+  List<Object?> get props => [challenges];
+}
+
+class RemoveAllChallengesEvent extends ChallengeEvent {
+  const RemoveAllChallengesEvent();
 
   @override
   List<Object?> get props => [];
