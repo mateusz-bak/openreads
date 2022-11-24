@@ -96,4 +96,9 @@ class DatabaseController {
         ? result.map((item) => Book.fromJSON(item)).toList()
         : [];
   }
+
+  Future<int> removeAllBooks() async {
+    final db = await dbClient.db;
+    return await db.delete("booksTable");
+  }
 }

@@ -56,7 +56,7 @@ class Book {
       olid: json['olid'],
       tags: json['tags'],
       myReview: json['my_review'],
-      cover: json['cover'],
+      cover: Uint8List.fromList(json['cover'].cast<int>().toList()),
       blurHash: json['blur_hash'],
     );
   }

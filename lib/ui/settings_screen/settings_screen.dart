@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_email_sender/flutter_email_sender.dart';
 import 'package:openreads/core/themes/app_theme.dart';
 import 'package:openreads/logic/bloc/theme_bloc/theme_bloc.dart';
+import 'package:openreads/ui/backup_screen/backup_screen.dart';
 import 'package:openreads/ui/settings_screen/widgets/widgets.dart';
 import 'package:openreads/ui/trash_screen/trash_screen.dart';
 import 'package:openreads/ui/unfinished_screen/unfinished_screen.dart';
@@ -525,6 +526,24 @@ class SettingsScreen extends StatelessWidget {
     );
   }
 
+  SettingsTile _buildBackupSetting() {
+    return SettingsTile(
+      title: const Text(
+        'Backup and restore',
+        style: TextStyle(fontSize: 16),
+      ),
+      leading: const Icon(Icons.settings_backup_restore_rounded),
+      onPressed: (context) {
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) => const BackupScreen(),
+          ),
+        );
+      },
+    );
+  }
+
   SettingsTile _buildAccentSetting() {
     return SettingsTile(
       title: const Text(
@@ -679,13 +698,7 @@ class SettingsScreen extends StatelessWidget {
             tiles: <SettingsTile>[
               _buildTrashSetting(),
               _buildUnfinishedSetting(),
-              //TODO backup setting
-              _buildURLSetting(
-                title: 'Backup',
-                // description: 'Create or restore',
-                url: communityUrl,
-                iconData: Icons.settings_backup_restore,
-              ),
+              _buildBackupSetting(),
             ],
           ),
           SettingsSection(

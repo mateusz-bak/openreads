@@ -27,9 +27,9 @@ class ChallengeBloc extends HydratedBloc<ChallengeEvent, ChallengeState> {
 
         _yearlyChallenges = [
           newJson,
-        ].join('|');
+        ].join('|||||');
       } else {
-        final splittedReadingChallenges = _yearlyChallenges!.split('|');
+        final splittedReadingChallenges = _yearlyChallenges!.split('|||||');
 
         splittedReadingChallenges.removeWhere((element) {
           final decodedReadingChallenge = YearlyChallenge.fromJSON(
@@ -47,7 +47,7 @@ class ChallengeBloc extends HydratedBloc<ChallengeEvent, ChallengeState> {
             ).toJSON())
             .toString());
 
-        _yearlyChallenges = splittedReadingChallenges.join('|');
+        _yearlyChallenges = splittedReadingChallenges.join('|||||');
       }
 
       emit(SetChallengeState(yearlyChallenges: _yearlyChallenges));

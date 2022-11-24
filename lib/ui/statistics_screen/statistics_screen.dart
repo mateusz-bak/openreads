@@ -624,7 +624,7 @@ class _StatisticsScreenState extends State<StatisticsScreen> {
                   growable: true,
                 );
 
-                final jsons = state.yearlyChallenges!.split('|');
+                final jsons = state.yearlyChallenges!.split('|||||');
                 for (var json in jsons) {
                   final decodedJson = jsonDecode(json);
                   final yearlyChallenge = YearlyChallenge.fromJSON(decodedJson);
@@ -700,7 +700,7 @@ class _StatisticsScreenState extends State<StatisticsScreen> {
                   growable: true,
                 );
 
-                final jsons = state.yearlyChallenges!.split('|');
+                final jsons = state.yearlyChallenges!.split('|||||');
                 for (var json in jsons) {
                   final decodedJson = jsonDecode(json);
                   final yearlyChallenge = YearlyChallenge.fromJSON(decodedJson);

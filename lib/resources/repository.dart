@@ -21,4 +21,6 @@ class Repository {
   Future getBook(int index) => dbController.getBook(index);
 
   Future<List<Book>> getDeletedBooks() => dbController.getDeletedBooks();
+
+  Future<int> removeAllBooks() => dbController.removeAllBooks();
 }

@@ -104,8 +104,8 @@ class _AddBookState extends State<AddBook> {
     blurHashString = widget.book?.blurHash;
 
     if (widget.book?.tags != null) {
-      tags = widget.book!.tags!.split('|');
-      selectedTags = widget.book!.tags!.split('|');
+      tags = widget.book!.tags!.split('|||||');
+      selectedTags = widget.book!.tags!.split('|||||');
     }
   }
 
@@ -171,7 +171,7 @@ class _AddBookState extends State<AddBook> {
           _pubYearCtrl.text.isEmpty ? null : int.parse(_pubYearCtrl.text),
       isbn: _isbnCtrl.text.isEmpty ? null : _isbnCtrl.text,
       olid: _olidCtrl.text.isEmpty ? null : _olidCtrl.text,
-      tags: selectedTags?.join('|'),
+      tags: selectedTags?.join('|||||'),
       myReview: _myReviewCtrl.text.isEmpty ? null : _myReviewCtrl.text,
       cover: cover,
       blurHash: blurHashString,
@@ -212,7 +212,7 @@ class _AddBookState extends State<AddBook> {
           _pubYearCtrl.text.isEmpty ? null : int.parse(_pubYearCtrl.text),
       isbn: _isbnCtrl.text.isEmpty ? null : _isbnCtrl.text,
       olid: _olidCtrl.text.isEmpty ? null : _olidCtrl.text,
-      tags: selectedTags?.join('|'),
+      tags: selectedTags?.join('|||||'),
       myReview: _myReviewCtrl.text.isEmpty ? null : _myReviewCtrl.text,
       cover: cover,
       blurHash: blurHashString,

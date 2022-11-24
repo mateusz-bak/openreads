@@ -363,7 +363,7 @@ class BookScreen extends StatelessWidget {
                           author: snapshot.data!.author.toString(),
                           publicationYear:
                               (snapshot.data!.publicationYear ?? "").toString(),
-                          tags: snapshot.data!.tags?.split('|'),
+                          tags: snapshot.data!.tags?.split('|||||'),
                         ),
                         const SizedBox(height: 10),
                         BookStatusDetail(

@@ -154,7 +154,9 @@ class _SortBottomSheetState extends State<SortBottomSheet> {
         sortType: state.sortType,
         isAsc: state.isAsc,
         onlyFavourite: state.onlyFavourite,
-        years: (selectedYearsList.isEmpty) ? null : selectedYearsList.join('|'),
+        years: (selectedYearsList.isEmpty)
+            ? null
+            : selectedYearsList.join('|||||'),
         tags: state.tags,
         displayTags: state.displayTags,
       ),
@@ -186,7 +188,8 @@ class _SortBottomSheetState extends State<SortBottomSheet> {
         isAsc: state.isAsc,
         onlyFavourite: state.onlyFavourite,
         years: state.years,
-        tags: (selectedTagsList.isEmpty) ? null : selectedTagsList.join('|'),
+        tags:
+            (selectedTagsList.isEmpty) ? null : selectedTagsList.join('|||||'),
         displayTags: state.displayTags,
       ),
     );
@@ -202,7 +205,7 @@ class _SortBottomSheetState extends State<SortBottomSheet> {
     late List<String> selectedYearsList;
 
     if (selectedYears != null) {
-      selectedYearsList = selectedYears.split('|');
+      selectedYearsList = selectedYears.split('|||||');
     } else {
       selectedYearsList = List<String>.empty(growable: true);
     }
@@ -249,7 +252,7 @@ class _SortBottomSheetState extends State<SortBottomSheet> {
     late List<String> selectedTagsList;
 
     if (selectedTags != null) {
-      selectedTagsList = selectedTags.split('|');
+      selectedTagsList = selectedTags.split('|||||');
     } else {
       selectedTagsList = List<String>.empty(growable: true);
     }

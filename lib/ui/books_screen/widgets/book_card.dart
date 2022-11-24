@@ -127,7 +127,7 @@ class BookCard extends StatelessWidget {
       return [];
     }
 
-    for (var tag in book.tags!.split('|')) {
+    for (var tag in book.tags!.split('|||||')) {
       chips.add(_buildTagChip(
         tag: tag,
         selected: false,

@@ -44,10 +44,15 @@ class BookCubit extends Cubit {
     getAllBooks();
   }
 
-  getAllBooks() async {
+  getAllBooks({bool tags = false}) async {
     List<Book> books = await repository.getAllBooks();
     _booksFetcher.sink.add(books);
+    if (tags) return;
     _tagsFetcher.sink.add(_getTags(books));
+  }
+
+  removeAllBooks() async {
+    await repository.removeAllBooks();
   }
 
   getAllBooksByStatus() async {
@@ -127,7 +132,7 @@ class BookCubit extends Cubit {
 
     for (var book in books) {
       if (book.tags != null) {
-        for (var tag in book.tags!.split('|')) {
+        for (var tag in book.tags!.split('|||||')) {
           if (!tags.contains(tag)) {
             tags.add(tag);
           }

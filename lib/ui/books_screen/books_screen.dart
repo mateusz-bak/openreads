@@ -75,7 +75,7 @@ class _BooksScreenState extends State<BooksScreen>
     required List<Book> list,
     required String years,
   }) {
-    final yearsList = years.split(('|'));
+    final yearsList = years.split(('|||||'));
 
     final filteredOut = List<Book>.empty(growable: true);
 
@@ -95,13 +95,13 @@ class _BooksScreenState extends State<BooksScreen>
     required List<Book> list,
     required String tags,
   }) {
-    final tagsList = tags.split(('|'));
+    final tagsList = tags.split(('|||||'));
 
     final filteredOut = List<Book>.empty(growable: true);
 
     for (var book in list) {
       if (book.tags != null) {
-        final bookTags = book.tags!.split(('|'));
+        final bookTags = book.tags!.split(('|||||'));
 
         for (var bookTag in bookTags) {
           if (tagsList.contains(bookTag) && !filteredOut.contains(book)) {

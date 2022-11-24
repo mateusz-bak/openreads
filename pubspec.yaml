@@ -43,6 +43,8 @@ dependencies:
   barcode_scan2: ^4.2.1
   intro_slider: ^4.2.0
   flutter_email_sender: ^5.2.0
+  permission_handler: ^10.2.0
+  filesystem_picker: ^3.1.0
 
 dev_dependencies:
   flutter_test:
