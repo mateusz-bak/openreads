@@ -75,6 +75,11 @@ class _BackupScreenState extends State<BackupScreen> {
 
     try {
       await _writeBackupFile(backedBooks, challengeTargets);
+
+      if (!mounted) return;
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text('Backup succesfull')),
+      );
     } catch (e) {
       setState(() => _creatingLocal = false);
       if (!mounted) return;
@@ -243,6 +248,11 @@ class _BackupScreenState extends State<BackupScreen> {
       }
 
       await _restoreChallengeTargets(tmpPath);
+
+      if (!mounted) return;
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text('Restoration succesfull')),
+      );
     } catch (e) {
       setState(() => _restoringLocal = false);
       if (!mounted) return;
@@ -268,6 +278,10 @@ class _BackupScreenState extends State<BackupScreen> {
         RestoreChallengesEvent(
           challenges: challengesData,
         ),
+      );
+    } else {
+      BlocProvider.of<ChallengeBloc>(context).add(
+        const RemoveAllChallengesEvent(),
       );
     }
   }
