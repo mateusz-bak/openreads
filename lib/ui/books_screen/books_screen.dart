@@ -33,7 +33,11 @@ class _BooksScreenState extends State<BooksScreen>
     }
 
     if (state.tags != null) {
-      list = _filterOutTags(list: list, tags: state.tags!);
+      list = _filterOutTags(
+        list: list,
+        tags: state.tags!,
+        filterTagsAsAnd: state.filterTagsAsAnd,
+      );
     }
 
     switch (state.sortType) {
@@ -94,7 +98,19 @@ class _BooksScreenState extends State<BooksScreen>
   List<Book> _filterOutTags({
     required List<Book> list,
     required String tags,
+    required bool filterTagsAsAnd,
   }) {
+    if (filterTagsAsAnd) {
+      return _filterOutTagsModeAnd(list, tags);
+    } else {
+      return _filterOutTagsModeOr(list, tags);
+    }
+  }
+
+  List<Book> _filterOutTagsModeOr(
+    List<Book> list,
+    String tags,
+  ) {
     final tagsList = tags.split(('|||||'));
 
     final filteredOut = List<Book>.empty(growable: true);
@@ -103,10 +119,45 @@ class _BooksScreenState extends State<BooksScreen>
       if (book.tags != null) {
         final bookTags = book.tags!.split(('|||||'));
 
+        bool addThisBookToList = false;
+
         for (var bookTag in bookTags) {
-          if (tagsList.contains(bookTag) && !filteredOut.contains(book)) {
-            filteredOut.add(book);
+          if (tagsList.contains(bookTag)) {
+            addThisBookToList = true;
           }
+        }
+
+        if (addThisBookToList) {
+          filteredOut.add(book);
+        }
+      }
+    }
+
+    return filteredOut;
+  }
+
+  List<Book> _filterOutTagsModeAnd(
+    List<Book> list,
+    String tags,
+  ) {
+    final tagsList = tags.split(('|||||'));
+
+    final filteredOut = List<Book>.empty(growable: true);
+
+    for (var book in list) {
+      if (book.tags != null) {
+        final bookTags = book.tags!.split(('|||||'));
+
+        bool addThisBookToList = true;
+
+        for (var tagFromList in tagsList) {
+          if (!bookTags.contains(tagFromList)) {
+            addThisBookToList = false;
+          }
+        }
+
+        if (addThisBookToList) {
+          filteredOut.add(book);
         }
       }
     }

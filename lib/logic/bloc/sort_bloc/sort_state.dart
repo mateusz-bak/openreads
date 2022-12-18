@@ -11,6 +11,7 @@ class SetSortState extends SortState {
   final String? years;
   final String? tags;
   final bool displayTags;
+  final bool filterTagsAsAnd;
 
   const SetSortState({
     required this.sortType,
@@ -19,6 +20,7 @@ class SetSortState extends SortState {
     required this.years,
     required this.tags,
     required this.displayTags,
+    required this.filterTagsAsAnd,
   });
 
   @override
@@ -29,5 +31,6 @@ class SetSortState extends SortState {
         years,
         tags,
         displayTags,
+        filterTagsAsAnd,
       ];
 }

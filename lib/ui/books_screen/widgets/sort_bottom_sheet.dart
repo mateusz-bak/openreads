@@ -54,6 +54,7 @@ Widget _getOrderButton(BuildContext context, SetSortState state) {
         years: state.years,
         tags: state.tags,
         displayTags: state.displayTags,
+        filterTagsAsAnd: state.filterTagsAsAnd,
       ),
     ),
   );
@@ -84,6 +85,7 @@ void _updateSort(BuildContext context, String? value, SetSortState state) {
       years: state.years,
       tags: state.tags,
       displayTags: state.displayTags,
+      filterTagsAsAnd: state.filterTagsAsAnd,
     ),
   );
 }
@@ -104,6 +106,7 @@ class _SortBottomSheetState extends State<SortBottomSheet> {
           years: state.years,
           tags: state.tags,
           displayTags: state.displayTags,
+          filterTagsAsAnd: state.filterTagsAsAnd,
         ),
       ),
     );
@@ -124,6 +127,28 @@ class _SortBottomSheetState extends State<SortBottomSheet> {
           years: state.years,
           tags: state.tags,
           displayTags: value,
+          filterTagsAsAnd: state.filterTagsAsAnd,
+        ),
+      ),
+    );
+  }
+
+  Widget _getTagsAsAndSwitch(
+    BuildContext context,
+    SetSortState state,
+  ) {
+    return Switch(
+      value: state.filterTagsAsAnd,
+      activeColor: Theme.of(context).primaryColor,
+      onChanged: (value) => BlocProvider.of<SortBloc>(context).add(
+        ChangeSortEvent(
+          sortType: state.sortType,
+          isAsc: state.isAsc,
+          onlyFavourite: state.onlyFavourite,
+          years: state.years,
+          tags: state.tags,
+          displayTags: state.displayTags,
+          filterTagsAsAnd: value,
         ),
       ),
     );
@@ -159,6 +184,7 @@ class _SortBottomSheetState extends State<SortBottomSheet> {
             : selectedYearsList.join('|||||'),
         tags: state.tags,
         displayTags: state.displayTags,
+        filterTagsAsAnd: state.filterTagsAsAnd,
       ),
     );
   }
@@ -191,6 +217,7 @@ class _SortBottomSheetState extends State<SortBottomSheet> {
         tags:
             (selectedTagsList.isEmpty) ? null : selectedTagsList.join('|||||'),
         displayTags: state.displayTags,
+        filterTagsAsAnd: state.filterTagsAsAnd,
       ),
     );
   }
@@ -382,6 +409,7 @@ class _SortBottomSheetState extends State<SortBottomSheet> {
                                   years: state.years,
                                   tags: state.tags,
                                   displayTags: state.displayTags,
+                                  filterTagsAsAnd: state.filterTagsAsAnd,
                                 ),
                               );
                             },
@@ -575,7 +603,59 @@ class _SortBottomSheetState extends State<SortBottomSheet> {
                                   onlyFavourite: state.onlyFavourite,
                                   years: state.years,
                                   tags: state.tags,
+                                  displayTags: state.displayTags,
+                                  filterTagsAsAnd: !state.filterTagsAsAnd,
+                                ),
+                              );
+                            },
+                            child: Container(
+                              decoration: BoxDecoration(
+                                color: Theme.of(context).backgroundColor,
+                                borderRadius: Theme.of(context)
+                                    .extension<CustomBorder>()
+                                    ?.radius,
+                                border: Border.all(
+                                  color: Theme.of(context).dividerColor,
+                                ),
+                              ),
+                              child: Row(
+                                children: [
+                                  _getTagsAsAndSwitch(context, state),
+                                  const SizedBox(width: 10),
+                                  const Text(
+                                    'Only books with all selected tags',
+                                    style: TextStyle(fontSize: 16),
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ),
+                        ),
+                      ],
+                    );
+                  } else {
+                    return const SizedBox();
+                  }
+                },
+              ),
+              const SizedBox(height: 10),
+              BlocBuilder<SortBloc, SortState>(
+                builder: (context, state) {
+                  if (state is SetSortState) {
+                    return Row(
+                      children: [
+                        Expanded(
+                          child: InkWell(
+                            onTap: () {
+                              BlocProvider.of<SortBloc>(context).add(
+                                ChangeSortEvent(
+                                  sortType: state.sortType,
+                                  isAsc: state.isAsc,
+                                  onlyFavourite: state.onlyFavourite,
+                                  years: state.years,
+                                  tags: state.tags,
                                   displayTags: !state.displayTags,
+                                  filterTagsAsAnd: state.filterTagsAsAnd,
                                 ),
                               );
                             },

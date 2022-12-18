@@ -14,6 +14,7 @@ class SortBloc extends HydratedBloc<SortEvent, SortState> {
           years: null,
           tags: null,
           displayTags: false,
+          filterTagsAsAnd: false,
         )) {
     on<ChangeSortEvent>((event, emit) {
       emit(SetSortState(
@@ -23,6 +24,7 @@ class SortBloc extends HydratedBloc<SortEvent, SortState> {
         years: event.years,
         tags: event.tags,
         displayTags: event.displayTags,
+        filterTagsAsAnd: event.filterTagsAsAnd,
       ));
     });
   }
@@ -35,6 +37,7 @@ class SortBloc extends HydratedBloc<SortEvent, SortState> {
     final years = json['years'] as String?;
     final tags = json['tags'] as String?;
     final displayTags = json['display_tags'] as bool;
+    final filterTagsAsAnd = json['filter_tags_as_and'] as bool;
 
     late SortType sortType;
 
@@ -68,6 +71,7 @@ class SortBloc extends HydratedBloc<SortEvent, SortState> {
       years: years,
       tags: tags,
       displayTags: displayTags,
+      filterTagsAsAnd: filterTagsAsAnd,
     );
   }
 
@@ -105,6 +109,7 @@ class SortBloc extends HydratedBloc<SortEvent, SortState> {
         'years': state.years,
         'tags': state.tags,
         'display_tags': state.displayTags,
+        'filter_tags_as_and': state.filterTagsAsAnd,
       };
     } else {
       return {
@@ -114,6 +119,7 @@ class SortBloc extends HydratedBloc<SortEvent, SortState> {
         'years': null,
         'tags': null,
         'display_tags': false,
+        'filter_tags_as_and': false,
       };
     }
   }
