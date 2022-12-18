@@ -12,6 +12,7 @@ import 'package:openreads/model/book.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:settings_ui/settings_ui.dart';
+import 'package:share_plus/share_plus.dart';
 
 class BackupScreen extends StatefulWidget {
   const BackupScreen({super.key});
@@ -41,6 +42,34 @@ class _BackupScreenState extends State<BackupScreen> {
     }
 
     setState(() => _creatingLocal = false);
+  }
+
+  _startCloudBackup(context) async {
+    setState(() => _creatingCloud = true);
+
+    await bookCubit.getAllBooks(tags: true);
+
+    final books = await bookCubit.allBooks.first;
+    final backedBooks = List<String>.empty(growable: true);
+
+    for (var book in books) {
+      backedBooks.add(jsonEncode(book.toJSON()));
+    }
+
+    final challengeTargets = await _getChallengeTargets();
+
+    final tmpBackupPath = await _writeTempBackupFile(
+      backedBooks,
+      challengeTargets,
+    );
+
+    if (tmpBackupPath == null) return;
+
+    Share.shareXFiles([
+      XFile(tmpBackupPath),
+    ]);
+
+    setState(() => _creatingCloud = false);
   }
 
   _openSystemSettings() {
@@ -74,7 +103,22 @@ class _BackupScreenState extends State<BackupScreen> {
     final challengeTargets = await _getChallengeTargets();
 
     try {
-      await _writeBackupFile(backedBooks, challengeTargets);
+      final tmpBackupPath = await _writeTempBackupFile(
+        backedBooks,
+        challengeTargets,
+      );
+
+      if (tmpBackupPath == null) return;
+
+      final backupPath = await _openFolderPicker();
+      final date = DateTime.now();
+      final backupDate =
+          '${date.year}_${date.month}_${date.day}-${date.hour}_${date.minute}_${date.second}';
+      const appVersion = '2_0_0';
+
+      final filePath = '$backupPath/Openreads-$appVersion-$backupDate.backup';
+
+      File(filePath).writeAsBytesSync(File(tmpBackupPath).readAsBytesSync());
 
       if (!mounted) return;
       ScaffoldMessenger.of(context).showSnackBar(
@@ -102,22 +146,28 @@ class _BackupScreenState extends State<BackupScreen> {
     return null;
   }
 
-  _writeBackupFile(List<String> list, String? challengeTargets) async {
+  Future<String?> _writeTempBackupFile(
+      List<String> list, String? challengeTargets) async {
     final data = list.join('|||||');
-    final backupPath = await _openFolderPicker();
-    final tmpPath = (await getApplicationSupportDirectory()).absolute;
+
+    final tmpDir = await getApplicationSupportDirectory();
 
     final date = DateTime.now();
     final backupDate =
-        '${date.year}-${date.month}-${date.day}_${date.hour}-${date.minute}-${date.second}';
-    final filePath = '$backupPath/Openreads_4_2.0.0_$backupDate.backup';
+        '${date.year}_${date.month}_${date.day}-${date.hour}_${date.minute}_${date.second}';
+
+    const appVersion = '2_0_0';
+
+    final tmpFilePath =
+        '${tmpDir.path}/Openreads-$appVersion-$backupDate.backup';
 
     try {
-      File('${tmpPath.path}/books.tmp').writeAsStringSync(data);
+      File('${tmpDir.path}/books.tmp').writeAsStringSync(data);
 
-      final booksBytes = File('${tmpPath.path}/books.tmp').readAsBytesSync();
+      final booksBytes = File('${tmpDir.path}/books.tmp').readAsBytesSync();
+
       final archivedBooks = ArchiveFile(
-        'books.tmp',
+        'books.backup',
         booksBytes.length,
         booksBytes,
       );
@@ -126,12 +176,14 @@ class _BackupScreenState extends State<BackupScreen> {
       archive.addFile(archivedBooks);
 
       if (challengeTargets != null) {
-        File('${tmpPath.path}/challenges.tmp')
+        File('${tmpDir.path}/challenges.tmp')
             .writeAsStringSync(challengeTargets);
+
         final challengeTargetsBytes =
-            File('${tmpPath.path}/challenges.tmp').readAsBytesSync();
+            File('${tmpDir.path}/challenges.tmp').readAsBytesSync();
+
         final archivedChallengeTargets = ArchiveFile(
-          'challenges.tmp',
+          'challenges.backup',
           challengeTargetsBytes.length,
           challengeTargetsBytes,
         );
@@ -141,24 +193,20 @@ class _BackupScreenState extends State<BackupScreen> {
 
       final encodedArchive = ZipEncoder().encode(archive);
 
-      if (encodedArchive == null) return;
+      if (encodedArchive == null) return null;
 
-      File(filePath).writeAsBytesSync(encodedArchive);
+      File(tmpFilePath).writeAsBytesSync(encodedArchive);
 
-      if (File('${tmpPath.path}/books.tmp').existsSync()) {
-        File('${tmpPath.path}/books.tmp').deleteSync();
-      }
-
-      if (File('${tmpPath.path}/challenges.tmp').existsSync()) {
-        File('${tmpPath.path}/challenges.tmp').deleteSync();
-      }
+      return tmpFilePath;
     } catch (e) {
       setState(() => _creatingLocal = false);
-      if (!mounted) return;
+      if (!mounted) return null;
 
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(content: Text(e.toString())),
       );
+
+      return null;
     }
   }
 
@@ -346,15 +394,21 @@ class _BackupScreenState extends State<BackupScreen> {
                 description: const Text('Backup books to your device'),
                 onPressed: _startLocalBackup,
               ),
-              // SettingsTile(
-              //   title: const Text(
-              //     'Create cloud backup',
-              //     style: TextStyle(fontSize: 16),
-              //   ),
-              //   leading: const Icon(Icons.backup),
-              //   description: const Text('Backup books to the cloud'),
-              //   onPressed: (context) {},
-              // ),
+              SettingsTile(
+                title: const Text(
+                  'Create cloud backup',
+                  style: TextStyle(fontSize: 16),
+                ),
+                leading: (_creatingCloud)
+                    ? const SizedBox(
+                        width: 24,
+                        height: 24,
+                        child: CircularProgressIndicator(),
+                      )
+                    : const Icon(Icons.backup),
+                description: const Text('Backup books to the cloud'),
+                onPressed: _startCloudBackup,
+              ),
               SettingsTile(
                 title: const Text(
                   'Restore backup',
