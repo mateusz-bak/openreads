@@ -523,18 +523,14 @@ class _BooksScreenState extends State<BooksScreen>
               ),
               Builder(builder: (context) {
                 return Container(
-                  color: Theme.of(context).backgroundColor,
+                  color: Theme.of(context).scaffoldBackgroundColor,
                   child: TabBar(
-                    labelColor: Theme.of(context).mainTextColor,
+                    labelColor: Theme.of(context).primaryColor,
                     indicatorColor: Theme.of(context).primaryColor,
-                    unselectedLabelColor: Theme.of(context).primaryColor,
-                    indicator: BoxDecoration(
-                      borderRadius:
-                          Theme.of(context).extension<CustomBorder>()?.radius,
-                      border: Border.all(
-                        color: Theme.of(context).dividerColor,
-                      ),
-                    ),
+                    unselectedLabelColor: Theme.of(context).mainTextColor,
+                    indicator: CustomTabIndicator(themeData: Theme.of(context)),
+                    indicatorPadding:
+                        const EdgeInsets.symmetric(horizontal: 30),
                     tabs: const [
                       Tab(
                         child: Text('Finished'),
