@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'dart:io';
 
 import 'package:archive/archive_io.dart';
+import 'package:device_info_plus/device_info_plus.dart';
 import 'package:filesystem_picker/filesystem_picker.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -40,15 +41,7 @@ class _BackupScreenState extends State<BackupScreen> {
   _startLocalBackup(context) async {
     setState(() => _creatingLocal = true);
 
-    if (await Permission.manageExternalStorage.isPermanentlyDenied) {
-      _openSystemSettings();
-    } else if (await Permission.manageExternalStorage.status.isDenied) {
-      if (await Permission.manageExternalStorage.request().isGranted) {
-        await _createLocalBackup();
-      } else {
-        _openSystemSettings();
-      }
-    } else if (await Permission.manageExternalStorage.status.isGranted) {
+    if (await _handlePermission()) {
       await _createLocalBackup();
     }
 
@@ -261,18 +254,55 @@ class _BackupScreenState extends State<BackupScreen> {
     );
   }
 
+  Future<bool> _handlePermission() async {
+    DeviceInfoPlugin deviceInfo = DeviceInfoPlugin();
+    AndroidDeviceInfo androidInfo = await deviceInfo.androidInfo;
+
+    if (androidInfo.version.sdkInt <= 31) {
+      return await _requestStoragePermission();
+    } else {
+      return await _requestManageExternalStoragePermission();
+    }
+  }
+
+  Future<bool> _requestManageExternalStoragePermission() async {
+    if (await Permission.manageExternalStorage.isPermanentlyDenied) {
+      _openSystemSettings();
+      return false;
+    } else if (await Permission.manageExternalStorage.status.isDenied) {
+      if (await Permission.manageExternalStorage.request().isGranted) {
+        return true;
+      } else {
+        _openSystemSettings();
+        return false;
+      }
+    } else if (await Permission.manageExternalStorage.status.isGranted) {
+      return true;
+    }
+    return false;
+  }
+
+  Future<bool> _requestStoragePermission() async {
+    if (await Permission.storage.isPermanentlyDenied) {
+      _openSystemSettings();
+      return false;
+    } else if (await Permission.storage.status.isDenied) {
+      if (await Permission.storage.request().isGranted) {
+        return true;
+      } else {
+        _openSystemSettings();
+        return false;
+      }
+    } else if (await Permission.storage.status.isGranted) {
+      return true;
+    }
+    return false;
+  }
+
   _startLocalRestore(context) async {
     setState(() => _restoringLocal = true);
 
-    if (await Permission.manageExternalStorage.isPermanentlyDenied) {
-      _openSystemSettings();
-    } else if (await Permission.manageExternalStorage.status.isDenied) {
-      if (await Permission.manageExternalStorage.request().isGranted) {
-        await _restoreLocalBackup();
-      } else {
-        _openSystemSettings();
-      }
-    } else if (await Permission.manageExternalStorage.status.isGranted) {
+    if (await _handlePermission()) {
       await _restoreLocalBackup();
     }
 
