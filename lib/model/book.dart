@@ -1,4 +1,7 @@
+import 'dart:convert';
+
 import 'package:flutter/foundation.dart';
+import 'package:openreads/model/book_from_backup_v3.dart';
 
 class Book {
   int? id;
@@ -56,8 +59,54 @@ class Book {
       olid: json['olid'],
       tags: json['tags'],
       myReview: json['my_review'],
-      cover: Uint8List.fromList(json['cover'].cast<int>().toList()),
+      cover: json['cover'] != null
+          ? Uint8List.fromList(json['cover'].cast<int>().toList())
+          : null,
       blurHash: json['blur_hash'],
+    );
+  }
+
+  factory Book.fromBookFromBackupV3(
+      BookFromBackupV3 oldBook, String? blurHash) {
+    return Book(
+      title: oldBook.bookTitle ?? '',
+      author: oldBook.bookAuthor ?? '',
+      status: oldBook.bookStatus == 'not_finished'
+          ? 3
+          : oldBook.bookStatus == 'to_read'
+              ? 2
+              : oldBook.bookStatus == 'in_progress'
+                  ? 1
+                  : 0,
+      rating: oldBook.bookRating != null
+          ? (oldBook.bookRating! * 10).toInt()
+          : null,
+      favourite: oldBook.bookIsFav == 1,
+      deleted: oldBook.bookIsDeleted == 1,
+      startDate: oldBook.bookStartDate != null &&
+              oldBook.bookStartDate != 'none' &&
+              oldBook.bookStartDate != 'null'
+          ? DateTime.fromMillisecondsSinceEpoch(
+                  int.parse(oldBook.bookStartDate!))
+              .toIso8601String()
+          : null,
+      finishDate: oldBook.bookFinishDate != null &&
+              oldBook.bookFinishDate != 'none' &&
+              oldBook.bookFinishDate != 'null'
+          ? DateTime.fromMillisecondsSinceEpoch(
+                  int.parse(oldBook.bookFinishDate!))
+              .toIso8601String()
+          : null,
+      pages: oldBook.bookNumberOfPages,
+      publicationYear: oldBook.bookPublishYear,
+      isbn: oldBook.bookISBN13 ?? oldBook.bookISBN10,
+      olid: oldBook.bookOLID,
+      tags: oldBook.bookTags != null && oldBook.bookTags != 'null'
+          ? jsonDecode(oldBook.bookTags!).join('|||||')
+          : null,
+      myReview: oldBook.bookNotes,
+      cover: oldBook.bookCoverImg,
+      blurHash: blurHash,
     );
   }
 

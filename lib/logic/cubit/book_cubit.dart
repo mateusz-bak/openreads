@@ -89,10 +89,13 @@ class BookCubit extends Cubit {
     _unfinishedBooksFetcher.sink.add(books);
   }
 
-  addBook(Book book) async {
+  addBook(Book book, {bool refreshBooks = true}) async {
     await repository.insertBook(book);
-    getAllBooksByStatus();
-    getAllBooks();
+
+    if (refreshBooks) {
+      getAllBooksByStatus();
+      getAllBooks();
+    }
   }
 
   updateBook(Book book) async {
