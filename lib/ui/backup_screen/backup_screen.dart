@@ -410,15 +410,17 @@ class _BackupScreenState extends State<BackupScreen> {
     final booksDB = await openDatabase(path.join(tmpPath.path, 'years.sql'));
     final result = await booksDB.query("Year");
 
-    final List<YearFromBackupV3> years = result.isNotEmpty
+    final List<YearFromBackupV3>? years = result.isNotEmpty
         ? result.map((item) => YearFromBackupV3.fromJson(item)).toList()
-        : [];
+        : null;
 
     BlocProvider.of<ChallengeBloc>(context).add(
       const RemoveAllChallengesEvent(),
     );
 
     String newChallenges = '';
+
+    if (years == null) return;
 
     for (var year in years) {
       if (newChallenges.isEmpty) {
@@ -449,7 +451,6 @@ class _BackupScreenState extends State<BackupScreen> {
         splittedNewChallenges.add(newJson);
 
         newChallenges = splittedNewChallenges.join('|||||');
-        ;
       }
     }
 
