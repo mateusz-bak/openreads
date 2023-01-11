@@ -17,6 +17,10 @@ class BookScreen extends StatelessWidget {
   final String heroTag;
   Book? book;
 
+  final moreButtonOptions = [
+    'Edit',
+  ];
+
   Future<bool?> _onLikeTap(isLiked) async {
     if (book == null) return isLiked;
 
@@ -42,10 +46,10 @@ class BookScreen extends StatelessWidget {
     return !isLiked;
   }
 
-  Future<void> _showDeleteDialog(BuildContext context, bool deleted) async {
+  _showDeleteDialog(BuildContext context, bool deleted) {
     if (book == null) return;
 
-    await showDialog(
+    showDialog(
         context: context,
         builder: (BuildContext context) {
           return AlertDialog(
@@ -277,54 +281,46 @@ class BookScreen extends StatelessWidget {
               stream: bookCubit.book,
               builder: (context, AsyncSnapshot<Book> snapshot) {
                 if (snapshot.hasData) {
-                  if (snapshot.data == null) {
-                    return const Center(child: Text('Error getting the book'));
-                  } else {
-                    return IconButton(
-                      onPressed: () {
-                        showModalBottomSheet(
-                            context: context,
-                            isScrollControlled: true,
-                            builder: (context) {
-                              return AddBook(
-                                topPadding: statusBarHeight,
-                                book: snapshot.data,
-                                previousThemeData: Theme.of(context),
-                                editingExistingBook: true,
-                              );
-                            });
-                      },
-                      icon: const Icon(Icons.edit),
-                    );
-                  }
-                } else if (snapshot.hasError) {
-                  return const Center(child: Text('Error getting the book'));
-                } else {
-                  return const SizedBox();
-                }
-              }),
-          StreamBuilder<Book>(
-              stream: bookCubit.book,
-              builder: (context, AsyncSnapshot<Book> snapshot) {
-                if (snapshot.hasData) {
-                  if (snapshot.data == null) {
-                    return const Center(child: Text('Error getting the book'));
-                  } else {
-                    return IconButton(
-                      onPressed: (snapshot.data!.deleted == false)
-                          ? () async {
-                              await _showDeleteDialog(context, true);
+                  moreButtonOptions.add(
+                    snapshot.data?.deleted == true ? 'Restore' : 'Delete',
+                  );
+
+                  return PopupMenuButton<String>(
+                    onSelected: (_) {},
+                    itemBuilder: (_) {
+                      return moreButtonOptions.map((String choice) {
+                        return PopupMenuItem<String>(
+                          value: choice,
+                          child: Text(choice),
+                          onTap: () async {
+                            await Future.delayed(const Duration(
+                              milliseconds: 0,
+                            ));
+
+                            if (choice == moreButtonOptions[0]) {
+                              showModalBottomSheet(
+                                  context: context,
+                                  isScrollControlled: true,
+                                  builder: (context) {
+                                    return AddBook(
+                                      topPadding: statusBarHeight,
+                                      book: snapshot.data,
+                                      previousThemeData: Theme.of(context),
+                                      editingExistingBook: true,
+                                    );
+                                  });
+                            } else if (choice == moreButtonOptions[1]) {
+                              if (snapshot.data!.deleted == false) {
+                                _showDeleteDialog(context, true);
+                              } else {
+                                _showDeleteDialog(context, false);
+                              }
                             }
-                          : () async {
-                              await _showDeleteDialog(context, false);
-                            },
-                      icon: (snapshot.data!.deleted == false)
-                          ? const Icon(Icons.delete)
-                          : const Icon(Icons.restore_from_trash_rounded),
-                    );
-                  }
-                } else if (snapshot.hasError) {
-                  return const Center(child: Text('Error getting the book'));
+                          },
+                        );
+                      }).toList();
+                    },
+                  );
                 } else {
                   return const SizedBox();
                 }

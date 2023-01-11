@@ -20,6 +20,12 @@ class BooksScreen extends StatefulWidget {
 
 class _BooksScreenState extends State<BooksScreen>
     with AutomaticKeepAliveClientMixin {
+  final moreButtonOptions = [
+    'Sort / filter',
+    'Statistics',
+    'Settings',
+  ];
+
   List<Book> _sortList({
     required SetSortState state,
     required List<Book> list,
@@ -285,6 +291,41 @@ class _BooksScreenState extends State<BooksScreen>
     return booksWithFinishDate + booksWithoutFinishDate;
   }
 
+  openSortFilterSheet() {
+    FocusManager.instance.primaryFocus?.unfocus();
+
+    showModalBottomSheet(
+      context: context,
+      isScrollControlled: true,
+      backgroundColor: Colors.transparent,
+      builder: (context) {
+        return const SortBottomSheet();
+      },
+    );
+  }
+
+  goToStatisticsScreen() {
+    FocusManager.instance.primaryFocus?.unfocus();
+
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) => const StatisticsScreen(),
+      ),
+    );
+  }
+
+  goToSettingsScreen() {
+    FocusManager.instance.primaryFocus?.unfocus();
+
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) => const SettingsScreen(),
+      ),
+    );
+  }
+
   @override
   bool get wantKeepAlive => true;
 
@@ -310,46 +351,29 @@ class _BooksScreenState extends State<BooksScreen>
         backgroundColor: Theme.of(context).scaffoldBackgroundColor,
         surfaceTintColor: Theme.of(context).scaffoldBackgroundColor,
         actions: [
-          IconButton(
-            onPressed: () {
-              FocusManager.instance.primaryFocus?.unfocus();
+          PopupMenuButton<String>(
+            onSelected: (_) {},
+            itemBuilder: (_) {
+              return moreButtonOptions.map((String choice) {
+                return PopupMenuItem<String>(
+                  value: choice,
+                  child: Text(choice),
+                  onTap: () async {
+                    await Future.delayed(const Duration(milliseconds: 0));
 
-              showModalBottomSheet(
-                context: context,
-                isScrollControlled: true,
-                backgroundColor: Colors.transparent,
-                builder: (context) {
-                  return const SortBottomSheet();
-                },
-              );
-            },
-            icon: const Icon(Icons.sort),
-          ),
-          IconButton(
-            onPressed: () {
-              FocusManager.instance.primaryFocus?.unfocus();
+                    if (!mounted) return;
 
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (context) => const StatisticsScreen(),
-                ),
-              );
+                    if (choice == moreButtonOptions[0]) {
+                      openSortFilterSheet();
+                    } else if (choice == moreButtonOptions[1]) {
+                      goToStatisticsScreen();
+                    } else if (choice == moreButtonOptions[2]) {
+                      goToSettingsScreen();
+                    }
+                  },
+                );
+              }).toList();
             },
-            icon: const Icon(Icons.bar_chart_rounded),
-          ),
-          IconButton(
-            onPressed: () {
-              FocusManager.instance.primaryFocus?.unfocus();
-
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (context) => const SettingsScreen(),
-                ),
-              );
-            },
-            icon: const Icon(Icons.settings_applications),
           ),
         ],
       ),
