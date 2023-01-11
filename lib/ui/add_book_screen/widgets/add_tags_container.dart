@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:openreads/core/themes/app_theme.dart';
 
 class AddTagsContainer extends StatelessWidget {
@@ -30,7 +31,7 @@ class AddTagsContainer extends StatelessWidget {
           Row(
             children: [
               Icon(
-                Icons.sell,
+                FontAwesomeIcons.tags,
                 color: Theme.of(context).secondaryTextColor,
               ),
               const SizedBox(width: 10),

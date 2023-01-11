@@ -441,7 +441,7 @@ class _StatisticsScreenState extends State<StatisticsScreen> {
               return ReadStats(
                 title: 'Average rating',
                 value: bookYearlyStat.value,
-                iconData: Icons.star,
+                iconData: Icons.star_rounded,
               );
             }
           }

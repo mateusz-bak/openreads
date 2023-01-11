@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:openreads/ui/add_book_screen/widgets/widgets.dart';
 
 class DateRow extends StatelessWidget {
@@ -48,7 +49,7 @@ class DateRow extends StatelessWidget {
                       : (MediaQuery.of(context).size.width - 40) / 2,
               child: SetDateButton(
                 defaultHeight: defaultHeight,
-                icon: Icons.timer_outlined,
+                icon: FontAwesomeIcons.play,
                 text: (startDate == null)
                     ? 'Start Date'
                     : '${startDate?.day}/${startDate?.month}/${startDate?.year}',
@@ -70,7 +71,7 @@ class DateRow extends StatelessWidget {
                   : 0,
               child: SetDateButton(
                 defaultHeight: defaultHeight,
-                icon: Icons.timer_off_outlined,
+                icon: FontAwesomeIcons.flagCheckered,
                 text: (finishDate == null)
                     ? 'Finish Date'
                     : '${finishDate?.day}/${finishDate?.month}/${finishDate?.year}',

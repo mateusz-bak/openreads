@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:openreads/ui/books_screen/widgets/widgets.dart';
 
 class AddBookSheet extends StatefulWidget {
@@ -45,7 +46,7 @@ class _AddBookSheetState extends State<AddBookSheet> {
                 Expanded(
                   child: AddBookMethodButton(
                     text: 'Add book\nmanually',
-                    icon: Icons.edit,
+                    icon: FontAwesomeIcons.solidKeyboard,
                     onPressed: widget.addManually,
                   ),
                 ),
@@ -53,7 +54,7 @@ class _AddBookSheetState extends State<AddBookSheet> {
                 Expanded(
                   child: AddBookMethodButton(
                     text: 'Search in\nOpen Library',
-                    icon: Icons.search,
+                    icon: FontAwesomeIcons.magnifyingGlass,
                     onPressed: widget.searchInOpenLibrary,
                   ),
                 ),
@@ -61,7 +62,7 @@ class _AddBookSheetState extends State<AddBookSheet> {
                 Expanded(
                   child: AddBookMethodButton(
                     text: 'Scan a\nbarcode',
-                    icon: Icons.document_scanner_outlined,
+                    icon: FontAwesomeIcons.barcode,
                     onPressed: widget.scanBarcode,
                   ),
                 ),

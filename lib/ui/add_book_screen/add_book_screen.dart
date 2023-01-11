@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:image_cropper/image_cropper.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:loading_animation_widget/loading_animation_widget.dart';
@@ -612,7 +613,7 @@ class _AddBookState extends State<AddBook> {
                         child: BookTextField(
                           controller: _pagesCtrl,
                           hint: 'Number of pages',
-                          icon: Icons.numbers,
+                          icon: FontAwesomeIcons.solidFileLines,
                           keyboardType: TextInputType.number,
                           inputFormatters: <TextInputFormatter>[
                             FilteringTextInputFormatter.digitsOnly
@@ -625,7 +626,7 @@ class _AddBookState extends State<AddBook> {
                         child: BookTextField(
                           controller: _pubYearCtrl,
                           hint: 'Publication year',
-                          icon: Icons.calendar_month,
+                          icon: FontAwesomeIcons.solidCalendar,
                           keyboardType: TextInputType.number,
                           inputFormatters: <TextInputFormatter>[
                             FilteringTextInputFormatter.digitsOnly
@@ -639,7 +640,7 @@ class _AddBookState extends State<AddBook> {
                   BookTextField(
                     controller: _isbnCtrl,
                     hint: 'ISBN',
-                    icon: Icons.pin,
+                    icon: FontAwesomeIcons.i,
                     keyboardType: TextInputType.number,
                     inputFormatters: <TextInputFormatter>[
                       FilteringTextInputFormatter.digitsOnly
@@ -650,7 +651,7 @@ class _AddBookState extends State<AddBook> {
                   BookTextField(
                     controller: _olidCtrl,
                     hint: 'Open Library ID',
-                    icon: Icons.pin,
+                    icon: FontAwesomeIcons.o,
                     keyboardType: TextInputType.text,
                     maxLength: 20,
                     textCapitalization: TextCapitalization.characters,
@@ -659,7 +660,7 @@ class _AddBookState extends State<AddBook> {
                   TagsField(
                     controller: _tagsCtrl,
                     hint: 'Tags',
-                    icon: Icons.sell,
+                    icon: FontAwesomeIcons.tags,
                     keyboardType: TextInputType.text,
                     maxLength: 20,
                     tags: tags,
@@ -673,7 +674,7 @@ class _AddBookState extends State<AddBook> {
                   BookTextField(
                     controller: _myReviewCtrl,
                     hint: 'My review',
-                    icon: Icons.message,
+                    icon: FontAwesomeIcons.solidKeyboard,
                     keyboardType: TextInputType.multiline,
                     maxLength: 5000,
                     hideCounter: false,

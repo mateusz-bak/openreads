@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_email_sender/flutter_email_sender.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:openreads/core/themes/app_theme.dart';
 import 'package:openreads/logic/bloc/theme_bloc/theme_bloc.dart';
 import 'package:openreads/ui/backup_screen/backup_screen.dart';
@@ -466,7 +467,7 @@ class SettingsScreen extends StatelessWidget {
                         Expanded(
                           child: ContactButton(
                             text: 'Send the developer an email',
-                            icon: Icons.mail_outline_rounded,
+                            icon: FontAwesomeIcons.solidEnvelope,
                             onPressed: () => _sendEmailToDev(context),
                           ),
                         ),
@@ -474,7 +475,7 @@ class SettingsScreen extends StatelessWidget {
                         Expanded(
                           child: ContactButton(
                             text: 'Raise an issue on Github',
-                            icon: Icons.bug_report_rounded,
+                            icon: FontAwesomeIcons.github,
                             onPressed: () => _openGithubIssue(context),
                           ),
                         ),
@@ -496,7 +497,7 @@ class SettingsScreen extends StatelessWidget {
         'Deleted books',
         style: TextStyle(fontSize: 16),
       ),
-      leading: const Icon(Icons.delete_outline_rounded),
+      leading: const Icon(FontAwesomeIcons.trash),
       onPressed: (context) {
         Navigator.push(
           context,
@@ -668,14 +669,14 @@ class SettingsScreen extends StatelessWidget {
                 title: 'Join the community',
                 description: 'To be up to date with the Openreads project',
                 url: communityUrl,
-                iconData: Icons.rocket,
+                iconData: FontAwesomeIcons.peopleGroup,
               ),
               // TODO: Show only on GPlay variant
               _buildURLSetting(
                 title: 'Rate the application',
                 description: 'You like Openreads? Click here to rate it',
                 url: rateUrl,
-                iconData: Icons.star_border_rounded,
+                iconData: Icons.star_rounded,
               ),
               _buildFeedbackSetting(),
               _buildURLSetting(
@@ -731,13 +732,13 @@ class SettingsScreen extends StatelessWidget {
                 title: 'Version',
                 description: version,
                 url: releaseUrl,
-                iconData: Icons.info,
+                iconData: FontAwesomeIcons.rocket,
               ),
               _buildURLSetting(
                 title: 'Source code',
                 description: 'See on Github',
                 url: repoUrl,
-                iconData: Icons.code_rounded,
+                iconData: FontAwesomeIcons.code,
               ),
               _buildURLSetting(
                 title: 'Changelog',

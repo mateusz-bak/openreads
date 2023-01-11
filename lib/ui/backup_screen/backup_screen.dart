@@ -7,6 +7,7 @@ import 'package:filesystem_picker/filesystem_picker.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:openreads/core/themes/app_theme.dart';
 import 'package:openreads/logic/bloc/challenge_bloc/challenge_bloc.dart';
 import 'package:openreads/logic/cubit/book_cubit.dart';
@@ -564,7 +565,7 @@ class _BackupScreenState extends State<BackupScreen> {
                         height: 24,
                         child: CircularProgressIndicator(),
                       )
-                    : const Icon(Icons.copy),
+                    : const Icon(FontAwesomeIcons.solidFloppyDisk),
                 description: const Text('Backup books to your device'),
                 onPressed: _startLocalBackup,
               ),
@@ -579,7 +580,7 @@ class _BackupScreenState extends State<BackupScreen> {
                         height: 24,
                         child: CircularProgressIndicator(),
                       )
-                    : const Icon(Icons.backup),
+                    : const Icon(FontAwesomeIcons.cloudArrowUp),
                 description: const Text('Backup books to the cloud'),
                 onPressed: _startCloudBackup,
               ),
@@ -594,7 +595,7 @@ class _BackupScreenState extends State<BackupScreen> {
                         height: 24,
                         child: CircularProgressIndicator(),
                       )
-                    : const Icon(Icons.restore_outlined),
+                    : const Icon(FontAwesomeIcons.arrowUpFromBracket),
                 description: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
