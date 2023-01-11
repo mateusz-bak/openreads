@@ -6,6 +6,7 @@ import 'package:openreads/model/book_from_backup_v3.dart';
 class Book {
   int? id;
   String title;
+  String? subtitle;
   String author;
   int status;
   bool favourite;
@@ -27,6 +28,7 @@ class Book {
     required this.title,
     required this.author,
     required this.status,
+    this.subtitle,
     this.favourite = false,
     this.deleted = false,
     this.rating,
@@ -46,6 +48,7 @@ class Book {
     return Book(
       id: json['id'],
       title: json['title'],
+      subtitle: json['subtitle'],
       author: json['author'],
       status: json['status'],
       rating: json['rating'],
@@ -114,6 +117,7 @@ class Book {
     return {
       'id': id,
       'title': title,
+      'subtitle': subtitle,
       'author': author,
       'status': status,
       'rating': rating,

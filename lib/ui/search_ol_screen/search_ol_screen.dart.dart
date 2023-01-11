@@ -39,6 +39,7 @@ class _SearchOLScreenState extends State<SearchOLScreen>
     required double statusBarHeight,
     required List<String> editions,
     required String title,
+    String? subtitle,
     required String author,
     int? firstPublishYear,
     int? pagesMedian,
@@ -48,6 +49,7 @@ class _SearchOLScreenState extends State<SearchOLScreen>
   }) {
     final book = Book(
       title: title,
+      subtitle: subtitle,
       author: author,
       status: 0,
       favourite: false,
@@ -252,6 +254,7 @@ class _SearchOLScreenState extends State<SearchOLScreen>
                         ),
                         itemBuilder: (context, item, index) => BookCardOL(
                           title: item.title!,
+                          subtitle: item.subtitle,
                           author: (item.authorName != null &&
                                   item.authorName!.isNotEmpty)
                               ? item.authorName![0]
@@ -265,6 +268,7 @@ class _SearchOLScreenState extends State<SearchOLScreen>
                             statusBarHeight: statusBarHeight,
                             editions: item.seed!,
                             title: item.title!,
+                            subtitle: item.subtitle,
                             author: (item.authorName != null &&
                                     item.authorName!.isNotEmpty)
                                 ? item.authorName![0]
@@ -284,6 +288,7 @@ class _SearchOLScreenState extends State<SearchOLScreen>
                                 builder: (context) => SearchOLEditionsScreen(
                                   editions: item.seed!,
                                   title: item.title!,
+                                  subtitle: item.subtitle,
                                   author: (item.authorName != null &&
                                           item.authorName!.isNotEmpty)
                                       ? item.authorName![0]

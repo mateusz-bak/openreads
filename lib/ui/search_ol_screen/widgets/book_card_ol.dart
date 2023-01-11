@@ -8,6 +8,7 @@ class BookCardOL extends StatelessWidget {
   BookCardOL({
     Key? key,
     required this.title,
+    required this.subtitle,
     required this.author,
     required this.openLibraryKey,
     required this.onChooseEditionPressed,
@@ -19,6 +20,7 @@ class BookCardOL extends StatelessWidget {
   }) : super(key: key);
 
   final String title;
+  final String? subtitle;
   final String author;
   final String? openLibraryKey;
   final OLSearchResultDoc doc;
@@ -91,20 +93,32 @@ class BookCardOL extends StatelessWidget {
                           softWrap: true,
                           overflow: TextOverflow.clip,
                           style: TextStyle(
-                            fontSize: 16,
-                            letterSpacing: 2,
+                            fontSize: 15,
+                            letterSpacing: 1.8,
                             fontWeight: FontWeight.w500,
                             color: Theme.of(context).mainTextColor,
                           ),
                         ),
+                        subtitle != null
+                            ? Text(
+                                subtitle!,
+                                softWrap: true,
+                                overflow: TextOverflow.clip,
+                                style: TextStyle(
+                                  fontSize: 13,
+                                  color: Theme.of(context).secondaryTextColor,
+                                ),
+                              )
+                            : const SizedBox(),
+                        const SizedBox(height: 5),
                         Text(
                           author,
                           softWrap: true,
                           overflow: TextOverflow.clip,
                           style: TextStyle(
-                            fontSize: 15,
+                            fontSize: 14,
                             letterSpacing: 1,
-                            color: Theme.of(context).secondaryTextColor,
+                            color: Theme.of(context).mainTextColor,
                           ),
                         ),
                         SizedBox(

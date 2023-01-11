@@ -38,6 +38,7 @@ class AddBook extends StatefulWidget {
 
 class _AddBookState extends State<AddBook> {
   final _titleCtrl = TextEditingController();
+  final _subtitleCtrl = TextEditingController();
   final _authorCtrl = TextEditingController();
   final _pagesCtrl = TextEditingController();
   final _pubYearCtrl = TextEditingController();
@@ -77,6 +78,7 @@ class _AddBookState extends State<AddBook> {
 
   void _prefillBookDetails() {
     _titleCtrl.text = widget.book?.title ?? '';
+    _subtitleCtrl.text = widget.book?.subtitle ?? '';
     _authorCtrl.text = widget.book?.author ?? '';
     _pubYearCtrl.text = (widget.book?.publicationYear ?? '').toString();
     _pagesCtrl.text = (widget.book?.pages ?? '').toString();
@@ -161,6 +163,7 @@ class _AddBookState extends State<AddBook> {
 
     bookCubit.addBook(Book(
       title: _titleCtrl.text,
+      subtitle: _subtitleCtrl.text,
       author: _authorCtrl.text,
       status: _status!,
       favourite: false,
@@ -202,6 +205,7 @@ class _AddBookState extends State<AddBook> {
     bookCubit.updateBook(Book(
       id: widget.book?.id,
       title: _titleCtrl.text,
+      subtitle: _subtitleCtrl.text,
       author: _authorCtrl.text,
       status: _status!,
       favourite: false,
@@ -492,6 +496,7 @@ class _AddBookState extends State<AddBook> {
   @override
   void dispose() {
     _titleCtrl.dispose();
+    _subtitleCtrl.dispose();
     _authorCtrl.dispose();
     _pagesCtrl.dispose();
     _pubYearCtrl.dispose();
@@ -555,6 +560,16 @@ class _AddBookState extends State<AddBook> {
                         (widget.fromOpenLibrary || widget.editingExistingBook)
                             ? false
                             : true,
+                    maxLines: 5,
+                    maxLength: 255,
+                    textCapitalization: TextCapitalization.words,
+                  ),
+                  const SizedBox(height: 20),
+                  BookTextField(
+                    controller: _subtitleCtrl,
+                    hint: 'Enter a subtitle',
+                    icon: Icons.book,
+                    keyboardType: TextInputType.name,
                     maxLines: 5,
                     maxLength: 255,
                     textCapitalization: TextCapitalization.words,

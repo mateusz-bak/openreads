@@ -5,12 +5,14 @@ class BookTitleDetail extends StatelessWidget {
   const BookTitleDetail({
     Key? key,
     required this.title,
+    required this.subtitle,
     required this.author,
     required this.publicationYear,
     this.tags,
   }) : super(key: key);
 
   final String title;
+  final String? subtitle;
   final String author;
   final String publicationYear;
   final List<String>? tags;
@@ -82,6 +84,19 @@ class BookTitleDetail extends StatelessWidget {
               ),
             ),
           ),
+          subtitle != null
+              ? Padding(
+                  padding: const EdgeInsets.fromLTRB(5, 0, 5, 5),
+                  child: Text(
+                    subtitle!,
+                    style: TextStyle(
+                      fontSize: 14,
+                      fontWeight: FontWeight.bold,
+                      color: Theme.of(context).secondaryTextColor,
+                    ),
+                  ),
+                )
+              : const SizedBox(),
           Padding(
             padding: const EdgeInsets.fromLTRB(5, 0, 5, 0),
             child: Text(

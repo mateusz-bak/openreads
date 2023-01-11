@@ -23,6 +23,7 @@ class DatabaseProvider {
         await db.execute("CREATE TABLE booksTable ("
             "id INTEGER PRIMARY KEY AUTOINCREMENT, "
             "title TEXT, "
+            "subtitle TEXT, "
             "author TEXT, "
             "status INTEGER, "
             "rating INTEGER, "

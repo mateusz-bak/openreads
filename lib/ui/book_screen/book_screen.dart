@@ -125,6 +125,7 @@ class BookScreen extends StatelessWidget {
     await bookCubit.updateBook(Book(
       id: book!.id,
       title: book!.title,
+      subtitle: book!.subtitle,
       author: book!.author,
       status: book!.status,
       favourite: book!.favourite,
@@ -356,6 +357,7 @@ class BookScreen extends StatelessWidget {
                       children: [
                         BookTitleDetail(
                           title: snapshot.data!.title.toString(),
+                          subtitle: snapshot.data!.subtitle,
                           author: snapshot.data!.author.toString(),
                           publicationYear:
                               (snapshot.data!.publicationYear ?? "").toString(),

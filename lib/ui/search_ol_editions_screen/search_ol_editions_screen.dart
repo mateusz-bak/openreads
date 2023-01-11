@@ -1,4 +1,3 @@
-import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
@@ -15,6 +14,7 @@ class SearchOLEditionsScreen extends StatefulWidget {
     super.key,
     required this.editions,
     required this.title,
+    this.subtitle,
     required this.author,
     required this.pagesMedian,
     required this.isbn,
@@ -24,6 +24,7 @@ class SearchOLEditionsScreen extends StatefulWidget {
 
   final List<String> editions;
   final String title;
+  final String? subtitle;
   final String author;
   final int? pagesMedian;
   final List<String>? isbn;
@@ -99,6 +100,7 @@ class _SearchOLEditionsScreenState extends State<SearchOLEditionsScreen> {
   }) {
     final book = Book(
       title: result.title!,
+      subtitle: widget.subtitle,
       author: widget.author,
       pages: result.numberOfPages,
       status: 0,
