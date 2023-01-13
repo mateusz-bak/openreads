@@ -168,8 +168,9 @@ class _AddBookState extends State<AddBook> {
       status: _status!,
       favourite: false,
       rating: (_rating == 0) ? null : _rating,
-      startDate: _startDate?.toIso8601String(),
-      finishDate: _finishDate?.toIso8601String(),
+      startDate:
+          (_status == 0 || _status == 1) ? _startDate?.toIso8601String() : null,
+      finishDate: _status == 0 ? _finishDate?.toIso8601String() : null,
       pages: _pagesCtrl.text.isEmpty ? null : int.parse(_pagesCtrl.text),
       publicationYear:
           _pubYearCtrl.text.isEmpty ? null : int.parse(_pubYearCtrl.text),
@@ -212,8 +213,9 @@ class _AddBookState extends State<AddBook> {
       status: _status!,
       favourite: false,
       rating: (_rating == 0) ? null : _rating,
-      startDate: _startDate?.toIso8601String(),
-      finishDate: _finishDate?.toIso8601String(),
+      startDate:
+          (_status == 0 || _status == 1) ? _startDate?.toIso8601String() : null,
+      finishDate: _status == 0 ? _finishDate?.toIso8601String() : null,
       pages: _pagesCtrl.text.isEmpty ? null : int.parse(_pagesCtrl.text),
       publicationYear:
           _pubYearCtrl.text.isEmpty ? null : int.parse(_pubYearCtrl.text),
