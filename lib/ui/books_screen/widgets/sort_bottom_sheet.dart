@@ -587,7 +587,6 @@ class _SortBottomSheetState extends State<SortBottomSheet> {
                   }
                 },
               ),
-              const SizedBox(height: 10),
               BlocBuilder<SortBloc, SortState>(
                 builder: (context, state) {
                   if (state is SetSortState) {
@@ -608,27 +607,7 @@ class _SortBottomSheetState extends State<SortBottomSheet> {
                                 ),
                               );
                             },
-                            child: Container(
-                              decoration: BoxDecoration(
-                                color: Theme.of(context).backgroundColor,
-                                borderRadius: Theme.of(context)
-                                    .extension<CustomBorder>()
-                                    ?.radius,
-                                border: Border.all(
-                                  color: Theme.of(context).dividerColor,
-                                ),
-                              ),
-                              child: Row(
-                                children: [
-                                  _getTagsAsAndSwitch(context, state),
-                                  const SizedBox(width: 10),
-                                  const Text(
-                                    'Only books with all selected tags',
-                                    style: TextStyle(fontSize: 16),
-                                  ),
-                                ],
-                              ),
-                            ),
+                            child: _buildOnlyBooksWithAllTags(context, state),
                           ),
                         ),
                       ],
@@ -694,6 +673,44 @@ class _SortBottomSheetState extends State<SortBottomSheet> {
           ),
         ),
       ],
+    );
+  }
+
+  Widget _buildOnlyBooksWithAllTags(BuildContext context, SetSortState state) {
+    return StreamBuilder<List<String>>(
+      stream: bookCubit.tags,
+      builder: (context, AsyncSnapshot<List<String>> snapshot) {
+        if (snapshot.hasData && snapshot.data!.isNotEmpty) {
+          return Container(
+            padding: const EdgeInsets.only(top: 10),
+            decoration: BoxDecoration(
+              color: Theme.of(context).backgroundColor,
+              borderRadius: Theme.of(context).extension<CustomBorder>()?.radius,
+              border: Border.all(
+                color: Theme.of(context).dividerColor,
+              ),
+            ),
+            child: Row(
+              children: [
+                _getTagsAsAndSwitch(context, state),
+                const SizedBox(width: 10),
+                const Text(
+                  'Only books with all selected tags',
+                  style: TextStyle(fontSize: 16),
+                ),
+              ],
+            ),
+          );
+        } else if (snapshot.hasData && snapshot.data!.isEmpty) {
+          return const SizedBox();
+        } else if (snapshot.hasError) {
+          return Text(snapshot.error.toString());
+        } else {
+          return const Center(
+            child: CircularProgressIndicator(),
+          );
+        }
+      },
     );
   }
 }
