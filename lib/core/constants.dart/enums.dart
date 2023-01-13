@@ -6,3 +6,8 @@ enum SortType {
   byStartDate,
   byFinishDate,
 }
+
+enum RatingType {
+  bar,
+  number,
+}

@@ -5,6 +5,7 @@ import 'package:hydrated_bloc/hydrated_bloc.dart';
 import 'package:openreads/core/themes/app_theme.dart';
 import 'package:openreads/logic/bloc/challenge_bloc/challenge_bloc.dart';
 import 'package:openreads/logic/bloc/open_lib_bloc/open_lib_bloc.dart';
+import 'package:openreads/logic/bloc/rating_type_bloc/rating_type_bloc.dart';
 import 'package:openreads/logic/bloc/sort_bloc/sort_bloc.dart';
 import 'package:openreads/logic/bloc/theme_bloc/theme_bloc.dart';
 import 'package:openreads/logic/bloc/welcome_bloc/welcome_bloc.dart';
@@ -41,6 +42,7 @@ class App extends StatelessWidget {
           BlocProvider<SortBloc>(create: (context) => SortBloc()),
           BlocProvider<WelcomeBloc>(create: (context) => WelcomeBloc()),
           BlocProvider<ChallengeBloc>(create: (context) => ChallengeBloc()),
+          BlocProvider<RatingTypeBloc>(create: (context) => RatingTypeBloc()),
           BlocProvider<OpenLibBloc>(
             create: (context) => OpenLibBloc(
               RepositoryProvider.of<OpenLibraryService>(context),

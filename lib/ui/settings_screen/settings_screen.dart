@@ -2,7 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_email_sender/flutter_email_sender.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:openreads/core/constants.dart/enums.dart';
 import 'package:openreads/core/themes/app_theme.dart';
+import 'package:openreads/logic/bloc/rating_type_bloc/rating_type_bloc.dart';
 import 'package:openreads/logic/bloc/theme_bloc/theme_bloc.dart';
 import 'package:openreads/ui/backup_screen/backup_screen.dart';
 import 'package:openreads/ui/settings_screen/widgets/widgets.dart';
@@ -164,7 +166,7 @@ class SettingsScreen extends StatelessWidget {
                         child: Text(
                           'Select accent color',
                           style: TextStyle(
-                            fontSize: 20,
+                            fontSize: 18,
                             fontWeight: FontWeight.bold,
                           ),
                         ),
@@ -233,6 +235,59 @@ class SettingsScreen extends StatelessWidget {
     );
   }
 
+  _showRatingBarDialog(BuildContext context) {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return Dialog(
+          shape: RoundedRectangleBorder(
+            borderRadius: Theme.of(context).extension<CustomBorder>()?.radius ??
+                BorderRadius.circular(5.0),
+          ),
+          backgroundColor: Theme.of(context).scaffoldBackgroundColor,
+          child: Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 20),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                const Padding(
+                  padding: EdgeInsets.only(left: 10),
+                  child: Text(
+                    'Select rating display type',
+                    style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                  ),
+                ),
+                const SizedBox(height: 15),
+                SettingsDialogButton(
+                  text: 'Rating as a bar',
+                  onPressed: () {
+                    BlocProvider.of<RatingTypeBloc>(context).add(
+                      const RatingTypeChange(ratingType: RatingType.bar),
+                    );
+
+                    Navigator.of(context).pop();
+                  },
+                ),
+                const SizedBox(height: 5),
+                SettingsDialogButton(
+                  text: 'Rating as a number',
+                  onPressed: () {
+                    BlocProvider.of<RatingTypeBloc>(context).add(
+                      const RatingTypeChange(ratingType: RatingType.number),
+                    );
+
+                    Navigator.of(context).pop();
+                  },
+                ),
+              ],
+            ),
+          ),
+        );
+      },
+    );
+  }
+
   _showThemeModeDialog(BuildContext context) {
     showDialog(
       context: context,
@@ -257,7 +312,7 @@ class SettingsScreen extends StatelessWidget {
                         child: Text(
                           'Select theme mode',
                           style: TextStyle(
-                              fontSize: 20, fontWeight: FontWeight.bold),
+                              fontSize: 18, fontWeight: FontWeight.bold),
                         ),
                       ),
                       const SizedBox(height: 15),
@@ -312,7 +367,7 @@ class SettingsScreen extends StatelessWidget {
                         child: Text(
                           'Select level of corner radius',
                           style: TextStyle(
-                              fontSize: 20, fontWeight: FontWeight.bold),
+                              fontSize: 18, fontWeight: FontWeight.bold),
                         ),
                       ),
                       const SizedBox(height: 15),
@@ -362,7 +417,7 @@ class SettingsScreen extends StatelessWidget {
                         child: Text(
                           'Display outlines in the UI',
                           style: TextStyle(
-                              fontSize: 20, fontWeight: FontWeight.bold),
+                              fontSize: 18, fontWeight: FontWeight.bold),
                         ),
                       ),
                       const SizedBox(height: 15),
@@ -651,6 +706,28 @@ class SettingsScreen extends StatelessWidget {
     );
   }
 
+  SettingsTile _buildRatingTypeSetting() {
+    return SettingsTile(
+      title: const Text(
+        'Rating bar display type',
+        style: TextStyle(fontSize: 16),
+      ),
+      leading: const Icon(Icons.star_rounded),
+      description: BlocBuilder<RatingTypeBloc, RatingTypeState>(
+        builder: (_, state) {
+          if (state is RatingTypeNumber) {
+            return const Text('As a number');
+          } else if (state is RatingTypeBar) {
+            return const Text('As a bar');
+          } else {
+            return const SizedBox();
+          }
+        },
+      ),
+      onPressed: (context) => _showRatingBarDialog(context),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -714,6 +791,7 @@ class SettingsScreen extends StatelessWidget {
             tiles: <SettingsTile>[
               _buildAccentSetting(),
               _buildThemeModeSetting(),
+              _buildRatingTypeSetting(),
               _buildOutlinesSetting(),
               _buildCornersSetting(),
             ],

@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:like_button/like_button.dart';
 import 'package:openreads/core/themes/app_theme.dart';
+import 'package:openreads/logic/bloc/rating_type_bloc/rating_type_bloc.dart';
 
 class BookStatusDetail extends StatelessWidget {
   const BookStatusDetail({
@@ -200,21 +202,7 @@ class BookStatusDetail extends StatelessWidget {
                         Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            RatingBar.builder(
-                              initialRating:
-                                  (rating != null) ? rating! / 10 : 0,
-                              allowHalfRating: true,
-                              unratedColor:
-                                  Theme.of(context).scaffoldBackgroundColor,
-                              glow: false,
-                              itemSize: 40,
-                              ignoreGestures: true,
-                              itemBuilder: (context, _) => Icon(
-                                Icons.star_rounded,
-                                color: Theme.of(context).ratingColor,
-                              ),
-                              onRatingUpdate: (_) {},
-                            ),
+                            _buildRating(context),
                           ],
                         ),
                         Padding(
@@ -243,6 +231,47 @@ class BookStatusDetail extends StatelessWidget {
               : const SizedBox(),
         ],
       ),
+    );
+  }
+
+  Widget _buildRating(BuildContext context) {
+    return BlocBuilder<RatingTypeBloc, RatingTypeState>(
+      builder: (context, state) {
+        if (state is RatingTypeBar) {
+          return RatingBar.builder(
+            initialRating: (rating != null) ? rating! / 10 : 0,
+            allowHalfRating: true,
+            unratedColor: Theme.of(context).scaffoldBackgroundColor,
+            glow: false,
+            itemSize: 40,
+            ignoreGestures: true,
+            itemBuilder: (context, _) => Icon(
+              Icons.star_rounded,
+              color: Theme.of(context).ratingColor,
+            ),
+            onRatingUpdate: (_) {},
+          );
+        } else {
+          return Row(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              Text(
+                (rating == null) ? '0' : '${(rating! / 10)}',
+                style: const TextStyle(
+                  fontSize: 16,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+              const SizedBox(width: 5),
+              Icon(
+                Icons.star_rounded,
+                color: Theme.of(context).ratingColor,
+                size: 32,
+              ),
+            ],
+          );
+        }
+      },
     );
   }
 }

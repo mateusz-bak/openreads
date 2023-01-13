@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:intl/intl.dart';
 import 'package:openreads/core/constants.dart/enums.dart';
+import 'package:openreads/logic/bloc/rating_type_bloc/rating_type_bloc.dart';
 import 'package:openreads/logic/bloc/sort_bloc/sort_bloc.dart';
 import 'package:openreads/model/book.dart';
 import 'package:openreads/core/themes/app_theme.dart';
@@ -207,22 +208,7 @@ class BookCard extends StatelessWidget {
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
-                        RatingBar.builder(
-                          initialRating:
-                              (book.rating == null) ? 0 : (book.rating! / 10),
-                          allowHalfRating: true,
-                          unratedColor:
-                              Theme.of(context).scaffoldBackgroundColor,
-                          glow: false,
-                          glowRadius: 1,
-                          itemSize: 24,
-                          ignoreGestures: true,
-                          itemBuilder: (context, _) => Icon(
-                            Icons.star_rounded,
-                            color: Theme.of(context).ratingColor,
-                          ),
-                          onRatingUpdate: (_) {},
-                        ),
+                        _buildRating(context),
                         _buildSortAttribute(),
                       ],
                     ),
@@ -234,6 +220,41 @@ class BookCard extends StatelessWidget {
           ),
         ),
       ),
+    );
+  }
+
+  Widget _buildRating(BuildContext context) {
+    return BlocBuilder<RatingTypeBloc, RatingTypeState>(
+      builder: (context, state) {
+        if (state is RatingTypeBar) {
+          return RatingBar.builder(
+            initialRating: (book.rating == null) ? 0 : (book.rating! / 10),
+            allowHalfRating: true,
+            unratedColor: Theme.of(context).scaffoldBackgroundColor,
+            glow: false,
+            glowRadius: 1,
+            itemSize: 24,
+            ignoreGestures: true,
+            itemBuilder: (context, _) => Icon(
+              Icons.star_rounded,
+              color: Theme.of(context).ratingColor,
+            ),
+            onRatingUpdate: (_) {},
+          );
+        } else {
+          return Row(
+            children: [
+              Text((book.rating == null) ? '0' : '${(book.rating! / 10)}'),
+              const SizedBox(width: 5),
+              Icon(
+                Icons.star_rounded,
+                color: Theme.of(context).ratingColor,
+                size: 20,
+              ),
+            ],
+          );
+        }
+      },
     );
   }
 }
