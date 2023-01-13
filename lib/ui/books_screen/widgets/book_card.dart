@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:intl/intl.dart';
 import 'package:openreads/core/constants.dart/enums.dart';
 import 'package:openreads/logic/bloc/rating_type_bloc/rating_type_bloc.dart';
@@ -74,6 +75,7 @@ class BookCard extends StatelessWidget {
             return (book.tags == null)
                 ? const SizedBox()
                 : Row(
+                    mainAxisAlignment: MainAxisAlignment.start,
                     children: [
                       Expanded(
                         child: Wrap(
@@ -98,7 +100,7 @@ class BookCard extends StatelessWidget {
     required BuildContext context,
   }) {
     return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 5),
+      padding: const EdgeInsets.only(right: 10),
       child: FilterChip(
         backgroundColor: Theme.of(context).scaffoldBackgroundColor,
         padding: const EdgeInsets.all(5),
@@ -208,9 +210,23 @@ class BookCard extends StatelessWidget {
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
-                        book.status == 0
-                            ? _buildRating(context)
-                            : const SizedBox(),
+                        Row(
+                          children: [
+                            book.favourite
+                                ? Padding(
+                                    padding: const EdgeInsets.only(right: 10),
+                                    child: FaIcon(
+                                      FontAwesomeIcons.solidHeart,
+                                      size: 18,
+                                      color: Theme.of(context).likeColor,
+                                    ),
+                                  )
+                                : const SizedBox(),
+                            book.status == 0
+                                ? _buildRating(context)
+                                : const SizedBox(),
+                          ],
+                        ),
                         _buildSortAttribute(),
                       ],
                     ),
