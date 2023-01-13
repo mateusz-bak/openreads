@@ -23,7 +23,7 @@ class BookDetail extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
-          Text(
+          SelectableText(
             title,
             style: TextStyle(
               fontSize: 14,
@@ -31,7 +31,7 @@ class BookDetail extends StatelessWidget {
               color: Theme.of(context).mainTextColor,
             ),
           ),
-          Text(
+          SelectableText(
             text,
             style: TextStyle(
               fontSize: 14,

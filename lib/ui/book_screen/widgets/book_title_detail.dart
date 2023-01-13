@@ -75,7 +75,7 @@ class BookTitleDetail extends StatelessWidget {
         children: [
           Padding(
             padding: const EdgeInsets.fromLTRB(5, 5, 5, 0),
-            child: Text(
+            child: SelectableText(
               title,
               style: TextStyle(
                 fontSize: 18,
@@ -87,7 +87,7 @@ class BookTitleDetail extends StatelessWidget {
           subtitle != null
               ? Padding(
                   padding: const EdgeInsets.fromLTRB(5, 0, 5, 5),
-                  child: Text(
+                  child: SelectableText(
                     subtitle!,
                     style: TextStyle(
                       fontSize: 14,
@@ -99,7 +99,7 @@ class BookTitleDetail extends StatelessWidget {
               : const SizedBox(),
           Padding(
             padding: const EdgeInsets.fromLTRB(5, 0, 5, 0),
-            child: Text(
+            child: SelectableText(
               author,
               style: TextStyle(
                 fontSize: 16,
@@ -111,7 +111,7 @@ class BookTitleDetail extends StatelessWidget {
           (publicationYear != '')
               ? Padding(
                   padding: const EdgeInsets.fromLTRB(5, 0, 5, 0),
-                  child: Text(
+                  child: SelectableText(
                     publicationYear,
                     style: TextStyle(
                       fontSize: 14,
