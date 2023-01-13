@@ -167,7 +167,7 @@ class _AddBookState extends State<AddBook> {
       author: _authorCtrl.text,
       status: _status!,
       favourite: false,
-      rating: (_rating == 0) ? null : _rating,
+      rating: (_status == 0 && _rating != 0) ? _rating : null,
       startDate:
           (_status == 0 || _status == 1) ? _startDate?.toIso8601String() : null,
       finishDate: _status == 0 ? _finishDate?.toIso8601String() : null,
@@ -212,7 +212,7 @@ class _AddBookState extends State<AddBook> {
       author: _authorCtrl.text,
       status: _status!,
       favourite: false,
-      rating: (_rating == 0) ? null : _rating,
+      rating: (_status == 0 && _rating != 0) ? _rating : null,
       startDate:
           (_status == 0 || _status == 1) ? _startDate?.toIso8601String() : null,
       finishDate: _status == 0 ? _finishDate?.toIso8601String() : null,
