@@ -615,8 +615,18 @@ class SettingsScreen extends StatelessWidget {
                 return const Text('Red');
               case 0xff2146C7:
                 return const Text('Blue');
-              default:
+              case 0xff285430:
                 return const Text('Green');
+              case 0xffE14D2A:
+                return const Text('Orange');
+              case 0xff9F73AB:
+                return const Text('Purple');
+              case 0xffFF577F:
+                return const Text('Pink');
+              case 0xff3FA796:
+                return const Text('Teal');
+              default:
+                return const Text('Yellow');
             }
           } else {
             return const SizedBox();
