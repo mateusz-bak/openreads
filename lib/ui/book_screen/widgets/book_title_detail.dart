@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:openreads/core/themes/app_theme.dart';
+
+import '../../../logic/bloc/theme_bloc/theme_bloc.dart';
 
 class BookTitleDetail extends StatelessWidget {
   const BookTitleDetail({
@@ -33,6 +36,7 @@ class BookTitleDetail extends StatelessWidget {
           tag,
           style: TextStyle(
             color: selected ? Colors.white : Theme.of(context).mainTextColor,
+            fontFamily: context.read<ThemeBloc>().fontFamily,
           ),
         ),
         checkmarkColor: Colors.white,
@@ -81,6 +85,7 @@ class BookTitleDetail extends StatelessWidget {
                 fontSize: 18,
                 fontWeight: FontWeight.bold,
                 color: Theme.of(context).mainTextColor,
+                fontFamily: context.read<ThemeBloc>().fontFamily,
               ),
             ),
           ),
@@ -93,6 +98,7 @@ class BookTitleDetail extends StatelessWidget {
                       fontSize: 14,
                       fontWeight: FontWeight.bold,
                       color: Theme.of(context).secondaryTextColor,
+                      fontFamily: context.read<ThemeBloc>().fontFamily,
                     ),
                   ),
                 )
@@ -105,6 +111,7 @@ class BookTitleDetail extends StatelessWidget {
                 fontSize: 16,
                 fontWeight: FontWeight.normal,
                 color: Theme.of(context).secondaryTextColor,
+                fontFamily: context.read<ThemeBloc>().fontFamily,
               ),
             ),
           ),
@@ -117,6 +124,7 @@ class BookTitleDetail extends StatelessWidget {
                       fontSize: 14,
                       fontWeight: FontWeight.bold,
                       color: Theme.of(context).secondaryTextColor,
+                      fontFamily: context.read<ThemeBloc>().fontFamily,
                     ),
                   ),
                 )

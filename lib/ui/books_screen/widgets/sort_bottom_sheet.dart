@@ -1,9 +1,10 @@
-import 'package:dropdown_button2/custom_dropdown_button2.dart';
+import 'package:dropdown_button2/dropdown_button2.dart';
 import 'package:flutter/material.dart';
 import 'package:openreads/core/constants.dart/enums.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:openreads/core/themes/app_theme.dart';
 import 'package:openreads/logic/bloc/sort_bloc/sort_bloc.dart';
+import 'package:openreads/logic/bloc/theme_bloc/theme_bloc.dart';
 import 'package:openreads/logic/cubit/book_cubit.dart';
 import 'package:openreads/ui/books_screen/widgets/widgets.dart';
 
@@ -340,9 +341,13 @@ class _SortBottomSheetState extends State<SortBottomSheet> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               const SizedBox(height: 5),
-              const Text(
+              Text(
                 'Sort by',
-                style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+                style: TextStyle(
+                  fontSize: 16,
+                  fontWeight: FontWeight.bold,
+                  fontFamily: context.read<ThemeBloc>().fontFamily,
+                ),
               ),
               const SizedBox(height: 10),
               BlocBuilder<SortBloc, SortState>(
@@ -351,24 +356,39 @@ class _SortBottomSheetState extends State<SortBottomSheet> {
                     return Row(
                       children: [
                         Expanded(
-                          child: CustomDropdownButton2(
-                            hint: 'Select Item',
-                            buttonHeight: 50,
-                            dropdownItems: sortOptions,
-                            value: _getDropdownValue(state),
-                            buttonDecoration: BoxDecoration(
-                              border: Border.all(
-                                color: Theme.of(context).dividerColor,
+                          child: DropdownButtonHideUnderline(
+                            child: DropdownButton2(
+                              isExpanded: true,
+                              buttonHeight: 50,
+                              items: sortOptions
+                                  .map((item) => DropdownMenuItem<String>(
+                                        value: item,
+                                        child: Text(
+                                          item,
+                                          style: TextStyle(
+                                            fontFamily: context
+                                                .read<ThemeBloc>()
+                                                .fontFamily,
+                                          ),
+                                          overflow: TextOverflow.ellipsis,
+                                        ),
+                                      ))
+                                  .toList(),
+                              value: _getDropdownValue(state),
+                              buttonDecoration: BoxDecoration(
+                                border: Border.all(
+                                  color: Theme.of(context).dividerColor,
+                                ),
+                                color: Theme.of(context).backgroundColor,
+                                borderRadius: Theme.of(context)
+                                    .extension<CustomBorder>()
+                                    ?.radius,
                               ),
-                              color: Theme.of(context).backgroundColor,
-                              borderRadius: Theme.of(context)
-                                  .extension<CustomBorder>()
-                                  ?.radius,
-                            ),
-                            onChanged: (value) => _updateSort(
-                              context,
-                              value,
-                              state,
+                              onChanged: (value) => _updateSort(
+                                context,
+                                value,
+                                state,
+                              ),
                             ),
                           ),
                         ),
@@ -427,9 +447,13 @@ class _SortBottomSheetState extends State<SortBottomSheet> {
                                 children: [
                                   _getFavouriteSwitch(context, state),
                                   const SizedBox(width: 10),
-                                  const Text(
+                                  Text(
                                     'Only favourite',
-                                    style: TextStyle(fontSize: 16),
+                                    style: TextStyle(
+                                      fontSize: 16,
+                                      fontFamily:
+                                          context.read<ThemeBloc>().fontFamily,
+                                    ),
                                   ),
                                 ],
                               ),
@@ -458,9 +482,13 @@ class _SortBottomSheetState extends State<SortBottomSheet> {
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               const SizedBox(height: 10),
-                              const Text(
+                              Text(
                                 'Filter by finish year',
-                                style: TextStyle(fontSize: 16),
+                                style: TextStyle(
+                                  fontSize: 16,
+                                  fontFamily:
+                                      context.read<ThemeBloc>().fontFamily,
+                                ),
                               ),
                               const SizedBox(height: 5),
                               Row(
@@ -507,7 +535,12 @@ class _SortBottomSheetState extends State<SortBottomSheet> {
                   } else if (snapshot.hasData && snapshot.data!.isEmpty) {
                     return const SizedBox();
                   } else if (snapshot.hasError) {
-                    return Text(snapshot.error.toString());
+                    return Text(
+                      snapshot.error.toString(),
+                      style: TextStyle(
+                        fontFamily: context.read<ThemeBloc>().fontFamily,
+                      ),
+                    );
                   } else {
                     return const Center(
                       child: CircularProgressIndicator(),
@@ -530,9 +563,13 @@ class _SortBottomSheetState extends State<SortBottomSheet> {
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               const SizedBox(height: 10),
-                              const Text(
+                              Text(
                                 'Filter by tags',
-                                style: TextStyle(fontSize: 16),
+                                style: TextStyle(
+                                  fontSize: 16,
+                                  fontFamily:
+                                      context.read<ThemeBloc>().fontFamily,
+                                ),
                               ),
                               const SizedBox(height: 5),
                               Row(
@@ -579,7 +616,12 @@ class _SortBottomSheetState extends State<SortBottomSheet> {
                   } else if (snapshot.hasData && snapshot.data!.isEmpty) {
                     return const SizedBox();
                   } else if (snapshot.hasError) {
-                    return Text(snapshot.error.toString());
+                    return Text(
+                      snapshot.error.toString(),
+                      style: TextStyle(
+                        fontFamily: context.read<ThemeBloc>().fontFamily,
+                      ),
+                    );
                   } else {
                     return const Center(
                       child: CircularProgressIndicator(),
@@ -652,9 +694,13 @@ class _SortBottomSheetState extends State<SortBottomSheet> {
                                 children: [
                                   _getTagsSwitch(context, state),
                                   const SizedBox(width: 10),
-                                  const Text(
+                                  Text(
                                     'Display tags',
-                                    style: TextStyle(fontSize: 16),
+                                    style: TextStyle(
+                                      fontSize: 16,
+                                      fontFamily:
+                                          context.read<ThemeBloc>().fontFamily,
+                                    ),
                                   ),
                                 ],
                               ),
@@ -694,9 +740,12 @@ class _SortBottomSheetState extends State<SortBottomSheet> {
               children: [
                 _getTagsAsAndSwitch(context, state),
                 const SizedBox(width: 10),
-                const Text(
+                Text(
                   'Only books with all selected tags',
-                  style: TextStyle(fontSize: 16),
+                  style: TextStyle(
+                    fontSize: 16,
+                    fontFamily: context.read<ThemeBloc>().fontFamily,
+                  ),
                 ),
               ],
             ),
@@ -704,7 +753,12 @@ class _SortBottomSheetState extends State<SortBottomSheet> {
         } else if (snapshot.hasData && snapshot.data!.isEmpty) {
           return const SizedBox();
         } else if (snapshot.hasError) {
-          return Text(snapshot.error.toString());
+          return Text(
+            snapshot.error.toString(),
+            style: TextStyle(
+              fontFamily: context.read<ThemeBloc>().fontFamily,
+            ),
+          );
         } else {
           return const Center(
             child: CircularProgressIndicator(),

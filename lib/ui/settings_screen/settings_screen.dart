@@ -40,7 +40,12 @@ class SettingsScreen extends StatelessWidget {
 
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
-          content: Text('$error'),
+          content: Text(
+            '$error',
+            style: TextStyle(
+              fontFamily: context.read<ThemeBloc>().fontFamily,
+            ),
+          ),
         ),
       );
     }
@@ -57,7 +62,12 @@ class SettingsScreen extends StatelessWidget {
 
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
-          content: Text('$error'),
+          content: Text(
+            '$error',
+            style: TextStyle(
+              fontFamily: context.read<ThemeBloc>().fontFamily,
+            ),
+          ),
         ),
       );
     }
@@ -69,6 +79,7 @@ class SettingsScreen extends StatelessWidget {
       showOutlines: state.showOutlines,
       cornerRadius: state.cornerRadius,
       primaryColor: state.primaryColor,
+      fontFamily: state.fontFamily,
     ));
 
     Navigator.of(context).pop();
@@ -80,6 +91,7 @@ class SettingsScreen extends StatelessWidget {
       showOutlines: state.showOutlines,
       cornerRadius: state.cornerRadius,
       primaryColor: state.primaryColor,
+      fontFamily: state.fontFamily,
     ));
 
     Navigator.of(context).pop();
@@ -91,6 +103,65 @@ class SettingsScreen extends StatelessWidget {
       showOutlines: state.showOutlines,
       cornerRadius: state.cornerRadius,
       primaryColor: state.primaryColor,
+      fontFamily: state.fontFamily,
+    ));
+
+    Navigator.of(context).pop();
+  }
+
+  _setFont(
+    BuildContext context,
+    SetThemeState state,
+    Font font,
+  ) {
+    String? fontFamily;
+
+    switch (font) {
+      case Font.montserrat:
+        fontFamily = 'Montserrat';
+        break;
+      case Font.lato:
+        fontFamily = 'Lato';
+        break;
+      case Font.sofiaSans:
+        fontFamily = 'SofiaSans';
+        break;
+      case Font.poppins:
+        fontFamily = 'Poppins';
+        break;
+      case Font.raleway:
+        fontFamily = 'Raleway';
+        break;
+      case Font.nunito:
+        fontFamily = 'Nunito';
+        break;
+      case Font.playfairDisplay:
+        fontFamily = 'PlayfairDisplay';
+        break;
+      case Font.kanit:
+        fontFamily = 'Kanit';
+        break;
+      case Font.lora:
+        fontFamily = 'Lora';
+        break;
+      case Font.quicksand:
+        fontFamily = 'Quicksand';
+        break;
+      case Font.barlow:
+        fontFamily = 'Barlow';
+        break;
+
+      default:
+        fontFamily = null;
+        break;
+    }
+
+    BlocProvider.of<ThemeBloc>(context).add(ChangeThemeEvent(
+      themeMode: state.themeMode,
+      showOutlines: state.showOutlines,
+      cornerRadius: state.cornerRadius,
+      primaryColor: state.primaryColor,
+      fontFamily: fontFamily,
     ));
 
     Navigator.of(context).pop();
@@ -102,6 +173,7 @@ class SettingsScreen extends StatelessWidget {
       showOutlines: true,
       cornerRadius: state.cornerRadius,
       primaryColor: state.primaryColor,
+      fontFamily: state.fontFamily,
     ));
 
     Navigator.of(context).pop();
@@ -113,6 +185,7 @@ class SettingsScreen extends StatelessWidget {
       showOutlines: false,
       cornerRadius: state.cornerRadius,
       primaryColor: state.primaryColor,
+      fontFamily: state.fontFamily,
     ));
 
     Navigator.of(context).pop();
@@ -125,6 +198,7 @@ class SettingsScreen extends StatelessWidget {
       showOutlines: state.showOutlines,
       cornerRadius: radius,
       primaryColor: state.primaryColor,
+      fontFamily: state.fontFamily,
     ));
 
     Navigator.of(context).pop();
@@ -136,6 +210,7 @@ class SettingsScreen extends StatelessWidget {
       showOutlines: state.showOutlines,
       cornerRadius: state.cornerRadius,
       primaryColor: color,
+      fontFamily: state.fontFamily,
     ));
 
     Navigator.of(context).pop();
@@ -161,13 +236,14 @@ class SettingsScreen extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     mainAxisSize: MainAxisSize.min,
                     children: [
-                      const Padding(
-                        padding: EdgeInsets.only(left: 10),
+                      Padding(
+                        padding: const EdgeInsets.only(left: 10),
                         child: Text(
                           'Select accent color',
                           style: TextStyle(
                             fontSize: 18,
                             fontWeight: FontWeight.bold,
+                            fontFamily: context.read<ThemeBloc>().fontFamily,
                           ),
                         ),
                       ),
@@ -251,11 +327,15 @@ class SettingsScreen extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               mainAxisSize: MainAxisSize.min,
               children: [
-                const Padding(
-                  padding: EdgeInsets.only(left: 10),
+                Padding(
+                  padding: const EdgeInsets.only(left: 10),
                   child: Text(
                     'Select rating display type',
-                    style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                    style: TextStyle(
+                      fontSize: 18,
+                      fontWeight: FontWeight.bold,
+                      fontFamily: context.read<ThemeBloc>().fontFamily,
+                    ),
                   ),
                 ),
                 const SizedBox(height: 15),
@@ -307,12 +387,15 @@ class SettingsScreen extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     mainAxisSize: MainAxisSize.min,
                     children: [
-                      const Padding(
-                        padding: EdgeInsets.only(left: 10),
+                      Padding(
+                        padding: const EdgeInsets.only(left: 10),
                         child: Text(
                           'Select theme mode',
                           style: TextStyle(
-                              fontSize: 18, fontWeight: FontWeight.bold),
+                            fontSize: 18,
+                            fontWeight: FontWeight.bold,
+                            fontFamily: context.read<ThemeBloc>().fontFamily,
+                          ),
                         ),
                       ),
                       const SizedBox(height: 15),
@@ -329,6 +412,169 @@ class SettingsScreen extends StatelessWidget {
                       SettingsDialogButton(
                         text: 'Dark mode',
                         onPressed: () => _setThemeModeDark(context, state),
+                      ),
+                    ],
+                  );
+                } else {
+                  return const SizedBox();
+                }
+              },
+            ),
+          ),
+        );
+      },
+    );
+  }
+
+  _showFontDialog(BuildContext context) {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return Dialog(
+          shape: RoundedRectangleBorder(
+            borderRadius: Theme.of(context).extension<CustomBorder>()?.radius ??
+                BorderRadius.circular(5.0),
+          ),
+          backgroundColor: Theme.of(context).scaffoldBackgroundColor,
+          child: Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 20),
+            child: BlocBuilder<ThemeBloc, ThemeState>(
+              builder: (context, state) {
+                if (state is SetThemeState) {
+                  return Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Padding(
+                        padding: const EdgeInsets.only(left: 10),
+                        child: Text(
+                          'Select font',
+                          style: TextStyle(
+                            fontSize: 18,
+                            fontWeight: FontWeight.bold,
+                            fontFamily: context.read<ThemeBloc>().fontFamily,
+                          ),
+                        ),
+                      ),
+                      const SizedBox(height: 15),
+                      Expanded(
+                        child: Scrollbar(
+                          thumbVisibility: true,
+                          child: SingleChildScrollView(
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              mainAxisSize: MainAxisSize.min,
+                              children: [
+                                SettingsDialogButton(
+                                  text: 'System default',
+                                  onPressed: () => _setFont(
+                                    context,
+                                    state,
+                                    Font.system,
+                                  ),
+                                ),
+                                const SizedBox(height: 5),
+                                SettingsDialogButton(
+                                  text: 'Barlow',
+                                  onPressed: () => _setFont(
+                                    context,
+                                    state,
+                                    Font.barlow,
+                                  ),
+                                ),
+                                const SizedBox(height: 5),
+                                SettingsDialogButton(
+                                  text: 'Kanit',
+                                  onPressed: () => _setFont(
+                                    context,
+                                    state,
+                                    Font.kanit,
+                                  ),
+                                ),
+                                const SizedBox(height: 5),
+                                SettingsDialogButton(
+                                  text: 'Lato',
+                                  onPressed: () => _setFont(
+                                    context,
+                                    state,
+                                    Font.lato,
+                                  ),
+                                ),
+                                const SizedBox(height: 5),
+                                SettingsDialogButton(
+                                  text: 'Lora',
+                                  onPressed: () => _setFont(
+                                    context,
+                                    state,
+                                    Font.lora,
+                                  ),
+                                ),
+                                const SizedBox(height: 5),
+                                SettingsDialogButton(
+                                  text: 'Montserrat',
+                                  onPressed: () => _setFont(
+                                    context,
+                                    state,
+                                    Font.montserrat,
+                                  ),
+                                ),
+                                const SizedBox(height: 5),
+                                SettingsDialogButton(
+                                  text: 'Nunito',
+                                  onPressed: () => _setFont(
+                                    context,
+                                    state,
+                                    Font.nunito,
+                                  ),
+                                ),
+                                const SizedBox(height: 5),
+                                SettingsDialogButton(
+                                  text: 'PlayfairDisplay',
+                                  onPressed: () => _setFont(
+                                    context,
+                                    state,
+                                    Font.playfairDisplay,
+                                  ),
+                                ),
+                                const SizedBox(height: 5),
+                                SettingsDialogButton(
+                                  text: 'Poppins',
+                                  onPressed: () => _setFont(
+                                    context,
+                                    state,
+                                    Font.poppins,
+                                  ),
+                                ),
+                                const SizedBox(height: 5),
+                                SettingsDialogButton(
+                                  text: 'Raleway',
+                                  onPressed: () => _setFont(
+                                    context,
+                                    state,
+                                    Font.raleway,
+                                  ),
+                                ),
+                                const SizedBox(height: 5),
+                                SettingsDialogButton(
+                                  text: 'Sofia Sans',
+                                  onPressed: () => _setFont(
+                                    context,
+                                    state,
+                                    Font.sofiaSans,
+                                  ),
+                                ),
+                                const SizedBox(height: 5),
+                                SettingsDialogButton(
+                                  text: 'Quicksand',
+                                  onPressed: () => _setFont(
+                                    context,
+                                    state,
+                                    Font.quicksand,
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                        ),
                       ),
                     ],
                   );
@@ -362,12 +608,15 @@ class SettingsScreen extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     mainAxisSize: MainAxisSize.min,
                     children: [
-                      const Padding(
-                        padding: EdgeInsets.only(left: 10),
+                      Padding(
+                        padding: const EdgeInsets.only(left: 10),
                         child: Text(
                           'Select level of corner radius',
                           style: TextStyle(
-                              fontSize: 18, fontWeight: FontWeight.bold),
+                            fontSize: 18,
+                            fontWeight: FontWeight.bold,
+                            fontFamily: context.read<ThemeBloc>().fontFamily,
+                          ),
                         ),
                       ),
                       const SizedBox(height: 15),
@@ -412,12 +661,15 @@ class SettingsScreen extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     mainAxisSize: MainAxisSize.min,
                     children: [
-                      const Padding(
-                        padding: EdgeInsets.only(left: 10),
+                      Padding(
+                        padding: const EdgeInsets.only(left: 10),
                         child: Text(
                           'Display outlines in the UI',
                           style: TextStyle(
-                              fontSize: 18, fontWeight: FontWeight.bold),
+                            fontSize: 18,
+                            fontWeight: FontWeight.bold,
+                            fontFamily: context.read<ThemeBloc>().fontFamily,
+                          ),
                         ),
                       ),
                       const SizedBox(height: 15),
@@ -460,16 +712,25 @@ class SettingsScreen extends StatelessWidget {
     String? description,
     required String url,
     IconData? iconData,
+    required BuildContext context,
   }) {
     return SettingsTile.navigation(
       title: Text(
         title,
-        style: const TextStyle(
+        style: TextStyle(
           fontSize: 16,
+          fontFamily: context.read<ThemeBloc>().fontFamily,
         ),
       ),
       leading: (iconData == null) ? null : Icon(iconData),
-      description: (description != null) ? Text(description) : null,
+      description: (description != null)
+          ? Text(
+              description,
+              style: TextStyle(
+                fontFamily: context.read<ThemeBloc>().fontFamily,
+              ),
+            )
+          : null,
       onPressed: (_) {
         launchUrl(
           Uri.parse(url),
@@ -479,15 +740,21 @@ class SettingsScreen extends StatelessWidget {
     );
   }
 
-  SettingsTile _buildFeedbackSetting() {
+  SettingsTile _buildFeedbackSetting(BuildContext context) {
     return SettingsTile(
-      title: const Text(
+      title: Text(
         'Send feedback',
         style: TextStyle(
           fontSize: 16,
+          fontFamily: context.read<ThemeBloc>().fontFamily,
         ),
       ),
-      description: const Text('Report bugs or new ideas'),
+      description: Text(
+        'Report bugs or new ideas',
+        style: TextStyle(
+          fontFamily: context.read<ThemeBloc>().fontFamily,
+        ),
+      ),
       leading: const Icon(Icons.record_voice_over_rounded),
       onPressed: (context) {
         FocusManager.instance.primaryFocus?.unfocus();
@@ -546,11 +813,14 @@ class SettingsScreen extends StatelessWidget {
     );
   }
 
-  SettingsTile _buildTrashSetting() {
+  SettingsTile _buildTrashSetting(BuildContext context) {
     return SettingsTile(
-      title: const Text(
+      title: Text(
         'Deleted books',
-        style: TextStyle(fontSize: 16),
+        style: TextStyle(
+          fontSize: 16,
+          fontFamily: context.read<ThemeBloc>().fontFamily,
+        ),
       ),
       leading: const Icon(FontAwesomeIcons.trash),
       onPressed: (context) {
@@ -564,11 +834,14 @@ class SettingsScreen extends StatelessWidget {
     );
   }
 
-  SettingsTile _buildUnfinishedSetting() {
+  SettingsTile _buildUnfinishedSetting(BuildContext context) {
     return SettingsTile(
-      title: const Text(
+      title: Text(
         'Unfinished books',
-        style: TextStyle(fontSize: 16),
+        style: TextStyle(
+          fontSize: 16,
+          fontFamily: context.read<ThemeBloc>().fontFamily,
+        ),
       ),
       leading: const Icon(Icons.not_interested),
       onPressed: (context) {
@@ -582,11 +855,14 @@ class SettingsScreen extends StatelessWidget {
     );
   }
 
-  SettingsTile _buildBackupSetting() {
+  SettingsTile _buildBackupSetting(BuildContext context) {
     return SettingsTile(
-      title: const Text(
+      title: Text(
         'Backup and restore',
-        style: TextStyle(fontSize: 16),
+        style: TextStyle(
+          fontSize: 16,
+          fontFamily: context.read<ThemeBloc>().fontFamily,
+        ),
       ),
       leading: const Icon(Icons.settings_backup_restore_rounded),
       onPressed: (context) {
@@ -600,11 +876,14 @@ class SettingsScreen extends StatelessWidget {
     );
   }
 
-  SettingsTile _buildAccentSetting() {
+  SettingsTile _buildAccentSetting(BuildContext context) {
     return SettingsTile(
-      title: const Text(
+      title: Text(
         'Accent color',
-        style: TextStyle(fontSize: 16),
+        style: TextStyle(
+          fontSize: 16,
+          fontFamily: context.read<ThemeBloc>().fontFamily,
+        ),
       ),
       leading: const Icon(Icons.color_lens),
       description: BlocBuilder<ThemeBloc, ThemeState>(
@@ -612,21 +891,61 @@ class SettingsScreen extends StatelessWidget {
           if (themeState is SetThemeState) {
             switch (themeState.primaryColor.value) {
               case 0xffB73E3E:
-                return const Text('Red');
+                return Text(
+                  'Red',
+                  style: TextStyle(
+                    fontFamily: context.read<ThemeBloc>().fontFamily,
+                  ),
+                );
               case 0xff2146C7:
-                return const Text('Blue');
+                return Text(
+                  'Blue',
+                  style: TextStyle(
+                    fontFamily: context.read<ThemeBloc>().fontFamily,
+                  ),
+                );
               case 0xff285430:
-                return const Text('Green');
+                return Text(
+                  'Green',
+                  style: TextStyle(
+                    fontFamily: context.read<ThemeBloc>().fontFamily,
+                  ),
+                );
               case 0xffE14D2A:
-                return const Text('Orange');
+                return Text(
+                  'Orange',
+                  style: TextStyle(
+                    fontFamily: context.read<ThemeBloc>().fontFamily,
+                  ),
+                );
               case 0xff9F73AB:
-                return const Text('Purple');
+                return Text(
+                  'Purple',
+                  style: TextStyle(
+                    fontFamily: context.read<ThemeBloc>().fontFamily,
+                  ),
+                );
               case 0xffFF577F:
-                return const Text('Pink');
+                return Text(
+                  'Pink',
+                  style: TextStyle(
+                    fontFamily: context.read<ThemeBloc>().fontFamily,
+                  ),
+                );
               case 0xff3FA796:
-                return const Text('Teal');
+                return Text(
+                  'Teal',
+                  style: TextStyle(
+                    fontFamily: context.read<ThemeBloc>().fontFamily,
+                  ),
+                );
               default:
-                return const Text('Yellow');
+                return Text(
+                  'Yellow',
+                  style: TextStyle(
+                    fontFamily: context.read<ThemeBloc>().fontFamily,
+                  ),
+                );
             }
           } else {
             return const SizedBox();
@@ -637,24 +956,47 @@ class SettingsScreen extends StatelessWidget {
     );
   }
 
-  SettingsTile _buildCornersSetting() {
+  SettingsTile _buildCornersSetting(BuildContext context) {
     return SettingsTile(
-      title: const Text(
+      title: Text(
         'Rounded corners',
-        style: TextStyle(fontSize: 16),
+        style: TextStyle(
+          fontSize: 16,
+          fontFamily: context.read<ThemeBloc>().fontFamily,
+        ),
       ),
       leading: const Icon(Icons.rounded_corner_rounded),
       description: BlocBuilder<ThemeBloc, ThemeState>(
         builder: (_, themeState) {
           if (themeState is SetThemeState) {
             if (themeState.cornerRadius == 5) {
-              return const Text('Small radius');
+              return Text(
+                'Small radius',
+                style: TextStyle(
+                  fontFamily: context.read<ThemeBloc>().fontFamily,
+                ),
+              );
             } else if (themeState.cornerRadius == 10) {
-              return const Text('Medium radius');
+              return Text(
+                'Medium radius',
+                style: TextStyle(
+                  fontFamily: context.read<ThemeBloc>().fontFamily,
+                ),
+              );
             } else if (themeState.cornerRadius == 20) {
-              return const Text('Big radius');
+              return Text(
+                'Big radius',
+                style: TextStyle(
+                  fontFamily: context.read<ThemeBloc>().fontFamily,
+                ),
+              );
             } else {
-              return const Text('No radius');
+              return Text(
+                'No radius',
+                style: TextStyle(
+                  fontFamily: context.read<ThemeBloc>().fontFamily,
+                ),
+              );
             }
           } else {
             return const SizedBox();
@@ -665,20 +1007,33 @@ class SettingsScreen extends StatelessWidget {
     );
   }
 
-  SettingsTile _buildOutlinesSetting() {
+  SettingsTile _buildOutlinesSetting(BuildContext context) {
     return SettingsTile(
-      title: const Text(
+      title: Text(
         'Display outlines in the UI',
-        style: TextStyle(fontSize: 16),
+        style: TextStyle(
+          fontSize: 16,
+          fontFamily: context.read<ThemeBloc>().fontFamily,
+        ),
       ),
       leading: const Icon(Icons.check_box_outline_blank_rounded),
       description: BlocBuilder<ThemeBloc, ThemeState>(
         builder: (_, themeState) {
           if (themeState is SetThemeState) {
             if (themeState.showOutlines) {
-              return const Text('Show outlines');
+              return Text(
+                'Show outlines',
+                style: TextStyle(
+                  fontFamily: context.read<ThemeBloc>().fontFamily,
+                ),
+              );
             } else {
-              return const Text('Hide outlines');
+              return Text(
+                'Hide outlines',
+                style: TextStyle(
+                  fontFamily: context.read<ThemeBloc>().fontFamily,
+                ),
+              );
             }
           } else {
             return const SizedBox();
@@ -689,11 +1044,14 @@ class SettingsScreen extends StatelessWidget {
     );
   }
 
-  SettingsTile _buildThemeModeSetting() {
+  SettingsTile _buildThemeModeSetting(BuildContext context) {
     return SettingsTile(
-      title: const Text(
+      title: Text(
         'App theme mode',
-        style: TextStyle(fontSize: 16),
+        style: TextStyle(
+          fontSize: 16,
+          fontFamily: context.read<ThemeBloc>().fontFamily,
+        ),
       ),
       leading: const Icon(Icons.sunny),
       description: BlocBuilder<ThemeBloc, ThemeState>(
@@ -701,11 +1059,26 @@ class SettingsScreen extends StatelessWidget {
           if (themeState is SetThemeState) {
             switch (themeState.themeMode) {
               case ThemeMode.light:
-                return const Text('Light mode');
+                return Text(
+                  'Light mode',
+                  style: TextStyle(
+                    fontFamily: context.read<ThemeBloc>().fontFamily,
+                  ),
+                );
               case ThemeMode.dark:
-                return const Text('Dark mode');
+                return Text(
+                  'Dark mode',
+                  style: TextStyle(
+                    fontFamily: context.read<ThemeBloc>().fontFamily,
+                  ),
+                );
               default:
-                return const Text('Follow system');
+                return Text(
+                  'Follow system',
+                  style: TextStyle(
+                    fontFamily: context.read<ThemeBloc>().fontFamily,
+                  ),
+                );
             }
           } else {
             return const SizedBox();
@@ -716,19 +1089,69 @@ class SettingsScreen extends StatelessWidget {
     );
   }
 
-  SettingsTile _buildRatingTypeSetting() {
+  SettingsTile _buildFontSetting(BuildContext context) {
     return SettingsTile(
-      title: const Text(
+      title: Text(
+        'Font',
+        style: TextStyle(
+          fontSize: 16,
+          fontFamily: context.read<ThemeBloc>().fontFamily,
+        ),
+      ),
+      leading: const Icon(Icons.font_download),
+      description: BlocBuilder<ThemeBloc, ThemeState>(
+        builder: (_, state) {
+          if (state is SetThemeState) {
+            if (state.fontFamily != null) {
+              return Text(
+                state.fontFamily!,
+                style: TextStyle(
+                  fontFamily: context.read<ThemeBloc>().fontFamily,
+                ),
+              );
+            } else {
+              return Text(
+                'System default',
+                style: TextStyle(
+                  fontFamily: context.read<ThemeBloc>().fontFamily,
+                ),
+              );
+            }
+          } else {
+            return const SizedBox();
+          }
+        },
+      ),
+      onPressed: (context) => _showFontDialog(context),
+    );
+  }
+
+  SettingsTile _buildRatingTypeSetting(BuildContext context) {
+    return SettingsTile(
+      title: Text(
         'Rating bar display type',
-        style: TextStyle(fontSize: 16),
+        style: TextStyle(
+          fontSize: 16,
+          fontFamily: context.read<ThemeBloc>().fontFamily,
+        ),
       ),
       leading: const Icon(Icons.star_rounded),
       description: BlocBuilder<RatingTypeBloc, RatingTypeState>(
         builder: (_, state) {
           if (state is RatingTypeNumber) {
-            return const Text('As a number');
+            return Text(
+              'As a number',
+              style: TextStyle(
+                fontFamily: context.read<ThemeBloc>().fontFamily,
+              ),
+            );
           } else if (state is RatingTypeBar) {
-            return const Text('As a bar');
+            return Text(
+              'As a bar',
+              style: TextStyle(
+                fontFamily: context.read<ThemeBloc>().fontFamily,
+              ),
+            );
           } else {
             return const SizedBox();
           }
@@ -745,9 +1168,12 @@ class SettingsScreen extends StatelessWidget {
       appBar: AppBar(
         backgroundColor: Theme.of(context).scaffoldBackgroundColor,
         surfaceTintColor: Theme.of(context).scaffoldBackgroundColor,
-        title: const Text(
+        title: Text(
           'Settings',
-          style: TextStyle(fontSize: 18),
+          style: TextStyle(
+            fontSize: 18,
+            fontFamily: context.read<ThemeBloc>().fontFamily,
+          ),
         ),
       ),
       body: SettingsList(
@@ -760,6 +1186,7 @@ class SettingsScreen extends StatelessWidget {
                 description: 'To be up to date with the Openreads project',
                 url: communityUrl,
                 iconData: FontAwesomeIcons.peopleGroup,
+                context: context,
               ),
               // TODO: Show only on GPlay variant
               _buildURLSetting(
@@ -767,13 +1194,15 @@ class SettingsScreen extends StatelessWidget {
                 description: 'You like Openreads? Click here to rate it',
                 url: rateUrl,
                 iconData: Icons.star_rounded,
+                context: context,
               ),
-              _buildFeedbackSetting(),
+              _buildFeedbackSetting(context),
               _buildURLSetting(
                 title: 'Help with translation',
                 description: 'We can use your language skills',
                 url: translationUrl,
                 iconData: Icons.translate_rounded,
+                context: context,
               ),
             ],
           ),
@@ -784,12 +1213,13 @@ class SettingsScreen extends StatelessWidget {
                 fontSize: 16,
                 fontWeight: FontWeight.bold,
                 color: Theme.of(context).primaryColor,
+                fontFamily: context.read<ThemeBloc>().fontFamily,
               ),
             ),
             tiles: <SettingsTile>[
-              _buildTrashSetting(),
-              _buildUnfinishedSetting(),
-              _buildBackupSetting(),
+              _buildTrashSetting(context),
+              _buildUnfinishedSetting(context),
+              _buildBackupSetting(context),
             ],
           ),
           SettingsSection(
@@ -799,14 +1229,16 @@ class SettingsScreen extends StatelessWidget {
                 fontSize: 16,
                 fontWeight: FontWeight.bold,
                 color: Theme.of(context).primaryColor,
+                fontFamily: context.read<ThemeBloc>().fontFamily,
               ),
             ),
             tiles: <SettingsTile>[
-              _buildAccentSetting(),
-              _buildThemeModeSetting(),
-              _buildRatingTypeSetting(),
-              _buildOutlinesSetting(),
-              _buildCornersSetting(),
+              _buildAccentSetting(context),
+              _buildThemeModeSetting(context),
+              _buildFontSetting(context),
+              _buildRatingTypeSetting(context),
+              _buildOutlinesSetting(context),
+              _buildCornersSetting(context),
             ],
           ),
           SettingsSection(
@@ -816,6 +1248,7 @@ class SettingsScreen extends StatelessWidget {
                 fontSize: 16,
                 fontWeight: FontWeight.bold,
                 color: Theme.of(context).primaryColor,
+                fontFamily: context.read<ThemeBloc>().fontFamily,
               ),
             ),
             tiles: <SettingsTile>[
@@ -824,24 +1257,28 @@ class SettingsScreen extends StatelessWidget {
                 description: version,
                 url: releaseUrl,
                 iconData: FontAwesomeIcons.rocket,
+                context: context,
               ),
               _buildURLSetting(
                 title: 'Source code',
                 description: 'See on Github',
                 url: repoUrl,
                 iconData: FontAwesomeIcons.code,
+                context: context,
               ),
               _buildURLSetting(
                 title: 'Changelog',
                 description: 'Check what\'s new in Openreads',
                 url: releaseUrl,
                 iconData: Icons.auto_awesome_rounded,
+                context: context,
               ),
               _buildURLSetting(
                 title: 'Licence',
                 description: 'GNU General Public License v2.0',
                 url: licenceUrl,
                 iconData: Icons.copyright_rounded,
+                context: context,
               ),
             ],
           ),

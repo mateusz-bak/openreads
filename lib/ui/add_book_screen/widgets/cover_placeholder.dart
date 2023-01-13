@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:openreads/core/themes/app_theme.dart';
+import 'package:openreads/logic/bloc/theme_bloc/theme_bloc.dart';
 
 class CoverPlaceholder extends StatelessWidget {
   const CoverPlaceholder({
@@ -45,6 +47,7 @@ class CoverPlaceholder extends StatelessWidget {
                   'Click to add a cover',
                   style: TextStyle(
                     color: Theme.of(context).secondaryTextColor,
+                    fontFamily: context.read<ThemeBloc>().fontFamily,
                   ),
                 ),
               ],

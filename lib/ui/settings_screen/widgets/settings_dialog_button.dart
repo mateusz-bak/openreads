@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:openreads/logic/bloc/theme_bloc/theme_bloc.dart';
 
 class SettingsDialogButton extends StatelessWidget {
   const SettingsDialogButton({
@@ -25,7 +27,10 @@ class SettingsDialogButton extends StatelessWidget {
               ),
               child: Text(
                 text,
-                style: const TextStyle(fontSize: 16),
+                style: TextStyle(
+                  fontSize: 16,
+                  fontFamily: context.read<ThemeBloc>().fontFamily,
+                ),
               ),
             ),
           ),

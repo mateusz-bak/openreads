@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:openreads/core/themes/app_theme.dart';
+import 'package:openreads/logic/bloc/theme_bloc/theme_bloc.dart';
 import 'package:openreads/ui/statistics_screen/widgets/widgets.dart';
 
 class SetChallengeBox extends StatelessWidget {
@@ -45,12 +47,13 @@ class SetChallengeBox extends StatelessWidget {
             horizontal: 10,
           ),
           child: Row(
-            children: const [
+            children: [
               Text(
                 'Click here to set a yearly challenge',
                 style: TextStyle(
                   fontSize: 16,
                   fontWeight: FontWeight.bold,
+                  fontFamily: context.read<ThemeBloc>().fontFamily,
                 ),
               ),
             ],

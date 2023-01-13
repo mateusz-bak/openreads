@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:openreads/core/themes/app_theme.dart';
+import 'package:openreads/logic/bloc/theme_bloc/theme_bloc.dart';
 
 class ContactButton extends StatelessWidget {
   const ContactButton({
@@ -44,7 +46,10 @@ class ContactButton extends StatelessWidget {
               Text(
                 text,
                 textAlign: TextAlign.center,
-                style: const TextStyle(fontWeight: FontWeight.bold),
+                style: TextStyle(
+                  fontWeight: FontWeight.bold,
+                  fontFamily: context.read<ThemeBloc>().fontFamily,
+                ),
               ),
             ],
           ),

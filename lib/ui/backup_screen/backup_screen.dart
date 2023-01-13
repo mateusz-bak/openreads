@@ -10,6 +10,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:openreads/core/themes/app_theme.dart';
 import 'package:openreads/logic/bloc/challenge_bloc/challenge_bloc.dart';
+import 'package:openreads/logic/bloc/theme_bloc/theme_bloc.dart';
 import 'package:openreads/logic/cubit/book_cubit.dart';
 import 'package:openreads/model/book.dart';
 import 'package:openreads/model/book_from_backup_v3.dart';
@@ -83,7 +84,12 @@ class _BackupScreenState extends State<BackupScreen> {
 
     ScaffoldMessenger.of(context).showSnackBar(
       SnackBar(
-        content: const Text('You need to grant storage permission'),
+        content: Text(
+          'You need to grant storage permission',
+          style: TextStyle(
+            fontFamily: context.read<ThemeBloc>().fontFamily,
+          ),
+        ),
         action: SnackBarAction(
           label: 'Open settings',
           onPressed: () {
@@ -129,14 +135,28 @@ class _BackupScreenState extends State<BackupScreen> {
 
       if (!mounted) return;
       ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text('Backup succesfull')),
+        SnackBar(
+          content: Text(
+            'Backup succesfull',
+            style: TextStyle(
+              fontFamily: context.read<ThemeBloc>().fontFamily,
+            ),
+          ),
+        ),
       );
     } catch (e) {
       setState(() => _creatingLocal = false);
       if (!mounted) return;
 
       ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text(e.toString())),
+        SnackBar(
+          content: Text(
+            e.toString(),
+            style: TextStyle(
+              fontFamily: context.read<ThemeBloc>().fontFamily,
+            ),
+          ),
+        ),
       );
     }
   }
@@ -210,7 +230,14 @@ class _BackupScreenState extends State<BackupScreen> {
       if (!mounted) return null;
 
       ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text(e.toString())),
+        SnackBar(
+          content: Text(
+            e.toString(),
+            style: TextStyle(
+              fontFamily: context.read<ThemeBloc>().fontFamily,
+            ),
+          ),
+        ),
       );
 
       return null;
@@ -332,7 +359,14 @@ class _BackupScreenState extends State<BackupScreen> {
       } else {
         if (!mounted) return;
         ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(content: Text('This is not a valid Openreads backup')),
+          SnackBar(
+            content: Text(
+              'This is not a valid Openreads backup',
+              style: TextStyle(
+                fontFamily: context.read<ThemeBloc>().fontFamily,
+              ),
+            ),
+          ),
         );
 
         return;
@@ -340,7 +374,14 @@ class _BackupScreenState extends State<BackupScreen> {
 
       if (!mounted) return;
       ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text('Restoration succesfull')),
+        SnackBar(
+          content: Text(
+            'Restoration succesfull',
+            style: TextStyle(
+              fontFamily: context.read<ThemeBloc>().fontFamily,
+            ),
+          ),
+        ),
       );
 
       Navigator.of(context).pop();
@@ -350,7 +391,14 @@ class _BackupScreenState extends State<BackupScreen> {
       if (!mounted) return;
 
       ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text(e.toString())),
+        SnackBar(
+          content: Text(
+            e.toString(),
+            style: TextStyle(
+              fontFamily: context.read<ThemeBloc>().fontFamily,
+            ),
+          ),
+        ),
       );
     }
   }
@@ -547,9 +595,12 @@ class _BackupScreenState extends State<BackupScreen> {
       appBar: AppBar(
         backgroundColor: Theme.of(context).scaffoldBackgroundColor,
         surfaceTintColor: Theme.of(context).scaffoldBackgroundColor,
-        title: const Text(
+        title: Text(
           'Backup',
-          style: TextStyle(fontSize: 18),
+          style: TextStyle(
+            fontSize: 18,
+            fontFamily: context.read<ThemeBloc>().fontFamily,
+          ),
         ),
       ),
       body: SettingsList(
@@ -558,9 +609,12 @@ class _BackupScreenState extends State<BackupScreen> {
           SettingsSection(
             tiles: <SettingsTile>[
               SettingsTile(
-                title: const Text(
+                title: Text(
                   'Create local backup',
-                  style: TextStyle(fontSize: 16),
+                  style: TextStyle(
+                    fontSize: 16,
+                    fontFamily: context.read<ThemeBloc>().fontFamily,
+                  ),
                 ),
                 leading: (_creatingLocal)
                     ? const SizedBox(
@@ -569,13 +623,21 @@ class _BackupScreenState extends State<BackupScreen> {
                         child: CircularProgressIndicator(),
                       )
                     : const Icon(FontAwesomeIcons.solidFloppyDisk),
-                description: const Text('Backup books to your device'),
+                description: Text(
+                  'Backup books to your device',
+                  style: TextStyle(
+                    fontFamily: context.read<ThemeBloc>().fontFamily,
+                  ),
+                ),
                 onPressed: _startLocalBackup,
               ),
               SettingsTile(
-                title: const Text(
+                title: Text(
                   'Create cloud backup',
-                  style: TextStyle(fontSize: 16),
+                  style: TextStyle(
+                    fontSize: 16,
+                    fontFamily: context.read<ThemeBloc>().fontFamily,
+                  ),
                 ),
                 leading: (_creatingCloud)
                     ? const SizedBox(
@@ -584,13 +646,21 @@ class _BackupScreenState extends State<BackupScreen> {
                         child: CircularProgressIndicator(),
                       )
                     : const Icon(FontAwesomeIcons.cloudArrowUp),
-                description: const Text('Backup books to the cloud'),
+                description: Text(
+                  'Backup books to the cloud',
+                  style: TextStyle(
+                    fontFamily: context.read<ThemeBloc>().fontFamily,
+                  ),
+                ),
                 onPressed: _startCloudBackup,
               ),
               SettingsTile(
-                title: const Text(
+                title: Text(
                   'Restore backup',
-                  style: TextStyle(fontSize: 16),
+                  style: TextStyle(
+                    fontSize: 16,
+                    fontFamily: context.read<ThemeBloc>().fontFamily,
+                  ),
                 ),
                 leading: (_restoringLocal)
                     ? const SizedBox(
@@ -605,11 +675,17 @@ class _BackupScreenState extends State<BackupScreen> {
                     restoredCounterText.isNotEmpty
                         ? Text(
                             restoredCounterText,
-                            style: const TextStyle(fontWeight: FontWeight.bold),
+                            style: TextStyle(
+                              fontWeight: FontWeight.bold,
+                              fontFamily: context.read<ThemeBloc>().fontFamily,
+                            ),
                           )
                         : const SizedBox(),
-                    const Text(
+                    Text(
                       'Restore books from your device.\nWorks for backups not older than from v1.14.2',
+                      style: TextStyle(
+                        fontFamily: context.read<ThemeBloc>().fontFamily,
+                      ),
                     ),
                   ],
                 ),

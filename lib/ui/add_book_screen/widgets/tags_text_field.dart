@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:openreads/core/themes/app_theme.dart';
+import 'package:openreads/logic/bloc/theme_bloc/theme_bloc.dart';
 
 class TagsField extends StatefulWidget {
   const TagsField({
@@ -63,6 +65,7 @@ class _TagsFieldState extends State<TagsField> {
           tag,
           style: TextStyle(
             color: selected ? Colors.white : Theme.of(context).mainTextColor,
+            fontFamily: context.read<ThemeBloc>().fontFamily,
           ),
         ),
         checkmarkColor: Colors.white,
@@ -136,7 +139,10 @@ class _TagsFieldState extends State<TagsField> {
               maxLines: widget.maxLines,
               maxLength: widget.maxLength,
               textInputAction: widget.textInputAction,
-              style: const TextStyle(fontSize: 14),
+              style: TextStyle(
+                fontSize: 14,
+                fontFamily: context.read<ThemeBloc>().fontFamily,
+              ),
               onSubmitted: widget.onSubmitted,
               onEditingComplete: widget.onEditingComplete,
               decoration: InputDecoration(

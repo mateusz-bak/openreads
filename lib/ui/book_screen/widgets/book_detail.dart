@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:openreads/core/themes/app_theme.dart';
+import 'package:openreads/logic/bloc/theme_bloc/theme_bloc.dart';
 
 class BookDetail extends StatelessWidget {
   const BookDetail({
@@ -29,6 +31,7 @@ class BookDetail extends StatelessWidget {
               fontSize: 14,
               fontWeight: FontWeight.bold,
               color: Theme.of(context).mainTextColor,
+              fontFamily: context.read<ThemeBloc>().fontFamily,
             ),
           ),
           SelectableText(
@@ -37,6 +40,7 @@ class BookDetail extends StatelessWidget {
               fontSize: 14,
               fontWeight: FontWeight.normal,
               color: Theme.of(context).secondaryTextColor,
+              fontFamily: context.read<ThemeBloc>().fontFamily,
             ),
           ),
         ],

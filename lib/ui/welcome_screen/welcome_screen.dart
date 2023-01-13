@@ -3,6 +3,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:intro_slider/intro_slider.dart';
 import 'package:openreads/core/themes/app_theme.dart';
+import 'package:openreads/logic/bloc/theme_bloc/theme_bloc.dart';
 import 'package:openreads/logic/bloc/welcome_bloc/welcome_bloc.dart';
 import 'package:openreads/ui/books_screen/books_screen.dart';
 
@@ -31,15 +32,17 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
       ContentConfig(
         title: 'Welcome to Openreads',
         maxLineTitle: 3,
-        styleTitle: const TextStyle(
+        styleTitle: TextStyle(
           fontSize: 32,
           color: Colors.white,
+          fontFamily: context.read<ThemeBloc>().fontFamily,
         ),
         textAlignTitle: TextAlign.start,
-        styleDescription: const TextStyle(
+        styleDescription: TextStyle(
           letterSpacing: 2,
           fontSize: 22,
           color: Colors.white,
+          fontFamily: context.read<ThemeBloc>().fontFamily,
         ),
         description:
             "Openreads will help you keep track of your books.\n\n\nIt is also a great tool for organizing your personal library in an easy and transparent way.",
@@ -50,15 +53,17 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
     );
     listContentConfig.add(
       ContentConfig(
-        styleTitle: const TextStyle(
+        styleTitle: TextStyle(
           fontSize: 26,
+          fontFamily: context.read<ThemeBloc>().fontFamily,
         ),
         textAlignTitle: TextAlign.start,
         textAlignDescription: TextAlign.start,
-        styleDescription: const TextStyle(
+        styleDescription: TextStyle(
           letterSpacing: 2,
           fontSize: 22,
           color: Colors.white,
+          fontFamily: context.read<ThemeBloc>().fontFamily,
         ),
         description:
             "Progress with your readings thanks to awesome and detailed statistics.\n\n\nChallenge yourself to be a better reader.",
@@ -70,10 +75,11 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
       ContentConfig(
         textAlignTitle: TextAlign.start,
         textAlignDescription: TextAlign.start,
-        styleDescription: const TextStyle(
+        styleDescription: TextStyle(
           letterSpacing: 2,
           fontSize: 22,
           color: Colors.white,
+          fontFamily: context.read<ThemeBloc>().fontFamily,
         ),
         description:
             "Openreads is completely open source!\n\n\nIt means that you can inspect the app's code on your own and contribute to it's development.\n\n\nAs a bonus you get zero ads and absolutely no tracking!",

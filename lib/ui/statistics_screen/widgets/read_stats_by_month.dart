@@ -1,6 +1,8 @@
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:openreads/core/themes/app_theme.dart';
+import 'package:openreads/logic/bloc/theme_bloc/theme_bloc.dart';
 
 class ReadStatsByMonth extends StatelessWidget {
   const ReadStatsByMonth({
@@ -84,12 +86,15 @@ class ReadStatsByMonth extends StatelessWidget {
             return SideTitleWidget(
               axisSide: meta.axisSide,
               space: 8,
-              child: Text(text,
-                  style: TextStyle(
-                    color: Theme.of(context).mainTextColor,
-                    fontWeight: FontWeight.bold,
-                    fontSize: 12,
-                  )),
+              child: Text(
+                text,
+                style: TextStyle(
+                  color: Theme.of(context).mainTextColor,
+                  fontWeight: FontWeight.bold,
+                  fontSize: 12,
+                  fontFamily: context.read<ThemeBloc>().fontFamily,
+                ),
+              ),
             );
           })
         : const SizedBox();
@@ -153,9 +158,10 @@ class ReadStatsByMonth extends StatelessWidget {
           children: [
             Text(
               title,
-              style: const TextStyle(
+              style: TextStyle(
                 fontSize: 16,
                 fontWeight: FontWeight.bold,
+                fontFamily: context.read<ThemeBloc>().fontFamily,
               ),
             ),
             const SizedBox(height: 10),
@@ -182,6 +188,7 @@ class ReadStatsByMonth extends StatelessWidget {
                           TextStyle(
                             color: Theme.of(context).mainTextColor,
                             fontWeight: FontWeight.bold,
+                            fontFamily: context.read<ThemeBloc>().fontFamily,
                           ),
                         );
                       },

@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:openreads/core/themes/app_theme.dart';
+import 'package:openreads/logic/bloc/theme_bloc/theme_bloc.dart';
 import 'package:openreads/ui/statistics_screen/widgets/widgets.dart';
 
 class ReadingChallenge extends StatelessWidget {
@@ -55,9 +57,10 @@ class ReadingChallenge extends StatelessWidget {
             children: [
               Text(
                 title,
-                style: const TextStyle(
+                style: TextStyle(
                   fontSize: 16,
                   fontWeight: FontWeight.bold,
+                  fontFamily: context.read<ThemeBloc>().fontFamily,
                 ),
               ),
               const SizedBox(height: 10),
@@ -111,6 +114,7 @@ class ReadingChallenge extends StatelessWidget {
                     style: TextStyle(
                       fontSize: 16,
                       color: Theme.of(context).secondaryTextColor,
+                      fontFamily: context.read<ThemeBloc>().fontFamily,
                     ),
                   ),
                   Text(
@@ -120,6 +124,7 @@ class ReadingChallenge extends StatelessWidget {
                     style: TextStyle(
                       fontSize: 16,
                       color: Theme.of(context).secondaryTextColor,
+                      fontFamily: context.read<ThemeBloc>().fontFamily,
                     ),
                   ),
                 ],

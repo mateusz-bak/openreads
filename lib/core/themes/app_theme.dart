@@ -44,6 +44,7 @@ class AppTheme {
     useMaterial3: true,
     primarySwatch: Colours.swatch(lightPrimaryColor),
     dividerColor: lightOutlineColor,
+    fontFamily: 'Roboto',
   );
 
   static final darkTheme = ThemeData(
@@ -55,6 +56,7 @@ class AppTheme {
     useMaterial3: true,
     primarySwatch: Colours.swatch(darkPrimaryColor),
     dividerColor: darkOutlineColor,
+    fontFamily: 'Roboto',
   );
 
   static Brightness get currentSystemBrightness =>

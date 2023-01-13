@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:openreads/core/themes/app_theme.dart';
 import 'package:openreads/logic/bloc/challenge_bloc/challenge_bloc.dart';
+import 'package:openreads/logic/bloc/theme_bloc/theme_bloc.dart';
 import 'package:openreads/logic/cubit/book_cubit.dart';
 import 'package:openreads/logic/cubit/stats_cubit.dart';
 import 'package:openreads/model/book.dart';
@@ -39,9 +40,12 @@ class _StatisticsScreenState extends State<StatisticsScreen> {
           appBar: AppBar(
             backgroundColor: Theme.of(context).scaffoldBackgroundColor,
             surfaceTintColor: Theme.of(context).scaffoldBackgroundColor,
-            title: const Text(
+            title: Text(
               'Statistics',
-              style: TextStyle(fontSize: 18),
+              style: TextStyle(
+                fontSize: 18,
+                fontFamily: context.read<ThemeBloc>().fontFamily,
+              ),
             ),
           ),
           body: StreamBuilder<List<Book>>(
@@ -49,28 +53,41 @@ class _StatisticsScreenState extends State<StatisticsScreen> {
             builder: (context, AsyncSnapshot<List<Book>> snapshot) {
               if (snapshot.hasData) {
                 if (snapshot.data == null || snapshot.data!.isEmpty) {
-                  return const Center(
+                  return Center(
                     child: Padding(
-                      padding: EdgeInsets.all(50),
+                      padding: const EdgeInsets.all(50),
                       child: Text(
                         'Add some books and come here again',
                         textAlign: TextAlign.center,
-                        style: TextStyle(fontSize: 16, letterSpacing: 1.5),
+                        style: TextStyle(
+                          fontSize: 16,
+                          letterSpacing: 1.5,
+                          fontFamily: context.read<ThemeBloc>().fontFamily,
+                        ),
                       ),
                     ),
                   );
                 }
                 return _buildStatistics(context);
               } else if (snapshot.hasError) {
-                return Text(snapshot.error.toString());
+                return Text(
+                  snapshot.error.toString(),
+                  style: TextStyle(
+                    fontFamily: context.read<ThemeBloc>().fontFamily,
+                  ),
+                );
               } else {
-                return const Center(
+                return Center(
                   child: Padding(
-                    padding: EdgeInsets.all(50),
+                    padding: const EdgeInsets.all(50),
                     child: Text(
                       'Add some books and come here again',
                       textAlign: TextAlign.center,
-                      style: TextStyle(fontSize: 16, letterSpacing: 1.5),
+                      style: TextStyle(
+                        fontSize: 16,
+                        letterSpacing: 1.5,
+                        fontFamily: context.read<ThemeBloc>().fontFamily,
+                      ),
                     ),
                   ),
                 );
@@ -88,14 +105,26 @@ class _StatisticsScreenState extends State<StatisticsScreen> {
       builder: (context, AsyncSnapshot<List<int>> snapshot) {
         if (snapshot.hasData) {
           if (snapshot.data == null) {
-            return const Center(child: Text('No books with finish date'));
+            return Center(
+              child: Text(
+                'No books with finish date',
+                style: TextStyle(
+                  fontFamily: context.read<ThemeBloc>().fontFamily,
+                ),
+              ),
+            );
           }
           return _buildDefaultTabController(
             context: context,
             years: snapshot.data!,
           );
         } else if (snapshot.hasError) {
-          return Text(snapshot.error.toString());
+          return Text(
+            snapshot.error.toString(),
+            style: TextStyle(
+              fontFamily: context.read<ThemeBloc>().fontFamily,
+            ),
+          );
         } else {
           return const SizedBox();
         }
@@ -106,13 +135,23 @@ class _StatisticsScreenState extends State<StatisticsScreen> {
   List<Widget> _buildYearsTabBars(List<int> years) {
     final tabs = List<Widget>.empty(growable: true);
 
-    tabs.add(const Tab(
-      child: Text('All'),
+    tabs.add(Tab(
+      child: Text(
+        'All',
+        style: TextStyle(
+          fontFamily: context.read<ThemeBloc>().fontFamily,
+        ),
+      ),
     ));
 
     for (var year in years) {
       tabs.add(Tab(
-        child: Text('$year'),
+        child: Text(
+          '$year',
+          style: TextStyle(
+            fontFamily: context.read<ThemeBloc>().fontFamily,
+          ),
+        ),
       ));
     }
 
@@ -240,7 +279,14 @@ class _StatisticsScreenState extends State<StatisticsScreen> {
       builder: (context, AsyncSnapshot<List<BookYearlyStat>?> snapshot) {
         if (snapshot.hasData) {
           if (snapshot.data == null) {
-            return const Center(child: Text('No finished books'));
+            return Center(
+              child: Text(
+                'No finished books',
+                style: TextStyle(
+                  fontFamily: context.read<ThemeBloc>().fontFamily,
+                ),
+              ),
+            );
           }
 
           for (var bookYearlyStat in snapshot.data!) {
@@ -255,7 +301,12 @@ class _StatisticsScreenState extends State<StatisticsScreen> {
 
           return const SizedBox();
         } else if (snapshot.hasError) {
-          return Text(snapshot.error.toString());
+          return Text(
+            snapshot.error.toString(),
+            style: TextStyle(
+              fontFamily: context.read<ThemeBloc>().fontFamily,
+            ),
+          );
         } else {
           return const SizedBox();
         }
@@ -272,7 +323,14 @@ class _StatisticsScreenState extends State<StatisticsScreen> {
       builder: (context, AsyncSnapshot<List<BookYearlyStat>?> snapshot) {
         if (snapshot.hasData) {
           if (snapshot.data == null) {
-            return const Center(child: Text('No finished books'));
+            return Center(
+              child: Text(
+                'No finished books',
+                style: TextStyle(
+                  fontFamily: context.read<ThemeBloc>().fontFamily,
+                ),
+              ),
+            );
           }
 
           for (var bookYearlyStat in snapshot.data!) {
@@ -287,7 +345,12 @@ class _StatisticsScreenState extends State<StatisticsScreen> {
 
           return const SizedBox();
         } else if (snapshot.hasError) {
-          return Text(snapshot.error.toString());
+          return Text(
+            snapshot.error.toString(),
+            style: TextStyle(
+              fontFamily: context.read<ThemeBloc>().fontFamily,
+            ),
+          );
         } else {
           return const SizedBox();
         }
@@ -304,7 +367,14 @@ class _StatisticsScreenState extends State<StatisticsScreen> {
       builder: (context, AsyncSnapshot<List<BookYearlyStat>?> snapshot) {
         if (snapshot.hasData) {
           if (snapshot.data == null) {
-            return const Center(child: Text('No finished books'));
+            return Center(
+              child: Text(
+                'No finished books',
+                style: TextStyle(
+                  fontFamily: context.read<ThemeBloc>().fontFamily,
+                ),
+              ),
+            );
           }
 
           for (var bookYearlyStat in snapshot.data!) {
@@ -321,7 +391,12 @@ class _StatisticsScreenState extends State<StatisticsScreen> {
 
           return const SizedBox();
         } else if (snapshot.hasError) {
-          return Text(snapshot.error.toString());
+          return Text(
+            snapshot.error.toString(),
+            style: TextStyle(
+              fontFamily: context.read<ThemeBloc>().fontFamily,
+            ),
+          );
         } else {
           return const SizedBox();
         }
@@ -338,7 +413,14 @@ class _StatisticsScreenState extends State<StatisticsScreen> {
       builder: (context, AsyncSnapshot<List<BookYearlyStat>?> snapshot) {
         if (snapshot.hasData) {
           if (snapshot.data == null) {
-            return const Center(child: Text('No finished books'));
+            return Center(
+              child: Text(
+                'No finished books',
+                style: TextStyle(
+                  fontFamily: context.read<ThemeBloc>().fontFamily,
+                ),
+              ),
+            );
           }
 
           for (var bookYearlyStat in snapshot.data!) {
@@ -353,7 +435,12 @@ class _StatisticsScreenState extends State<StatisticsScreen> {
 
           return const SizedBox();
         } else if (snapshot.hasError) {
-          return Text(snapshot.error.toString());
+          return Text(
+            snapshot.error.toString(),
+            style: TextStyle(
+              fontFamily: context.read<ThemeBloc>().fontFamily,
+            ),
+          );
         } else {
           return const SizedBox();
         }
@@ -370,7 +457,14 @@ class _StatisticsScreenState extends State<StatisticsScreen> {
       builder: (context, AsyncSnapshot<List<BookYearlyStat>?> snapshot) {
         if (snapshot.hasData) {
           if (snapshot.data == null) {
-            return const Center(child: Text('No finished books'));
+            return Center(
+              child: Text(
+                'No finished books',
+                style: TextStyle(
+                  fontFamily: context.read<ThemeBloc>().fontFamily,
+                ),
+              ),
+            );
           }
 
           for (var bookYearlyStat in snapshot.data!) {
@@ -386,7 +480,12 @@ class _StatisticsScreenState extends State<StatisticsScreen> {
 
           return const SizedBox();
         } else if (snapshot.hasError) {
-          return Text(snapshot.error.toString());
+          return Text(
+            snapshot.error.toString(),
+            style: TextStyle(
+              fontFamily: context.read<ThemeBloc>().fontFamily,
+            ),
+          );
         } else {
           return const SizedBox();
         }
@@ -403,7 +502,14 @@ class _StatisticsScreenState extends State<StatisticsScreen> {
       builder: (context, AsyncSnapshot<List<BookYearlyStat>> snapshot) {
         if (snapshot.hasData) {
           if (snapshot.data == null) {
-            return const Center(child: Text('No finished books'));
+            return Center(
+              child: Text(
+                'No finished books',
+                style: TextStyle(
+                  fontFamily: context.read<ThemeBloc>().fontFamily,
+                ),
+              ),
+            );
           }
 
           for (var bookYearlyStat in snapshot.data!) {
@@ -419,7 +525,12 @@ class _StatisticsScreenState extends State<StatisticsScreen> {
 
           return const SizedBox();
         } else if (snapshot.hasError) {
-          return Text(snapshot.error.toString());
+          return Text(
+            snapshot.error.toString(),
+            style: TextStyle(
+              fontFamily: context.read<ThemeBloc>().fontFamily,
+            ),
+          );
         } else {
           return const SizedBox();
         }
@@ -436,7 +547,14 @@ class _StatisticsScreenState extends State<StatisticsScreen> {
       builder: (context, AsyncSnapshot<List<BookYearlyStat>> snapshot) {
         if (snapshot.hasData) {
           if (snapshot.data == null) {
-            return const Center(child: Text('No finished books'));
+            return Center(
+              child: Text(
+                'No finished books',
+                style: TextStyle(
+                  fontFamily: context.read<ThemeBloc>().fontFamily,
+                ),
+              ),
+            );
           }
 
           for (var bookYearlyStat in snapshot.data!) {
@@ -451,7 +569,12 @@ class _StatisticsScreenState extends State<StatisticsScreen> {
 
           return const SizedBox();
         } else if (snapshot.hasError) {
-          return Text(snapshot.error.toString());
+          return Text(
+            snapshot.error.toString(),
+            style: TextStyle(
+              fontFamily: context.read<ThemeBloc>().fontFamily,
+            ),
+          );
         } else {
           return const SizedBox();
         }
@@ -468,7 +591,14 @@ class _StatisticsScreenState extends State<StatisticsScreen> {
       builder: (context, AsyncSnapshot<List<BookReadStat>> snapshot) {
         if (snapshot.hasData) {
           if (snapshot.data == null) {
-            return const Center(child: Text('No finished books'));
+            return Center(
+              child: Text(
+                'No finished books',
+                style: TextStyle(
+                  fontFamily: context.read<ThemeBloc>().fontFamily,
+                ),
+              ),
+            );
           }
 
           for (var bookReadStat in snapshot.data!) {
@@ -482,7 +612,12 @@ class _StatisticsScreenState extends State<StatisticsScreen> {
 
           return const SizedBox();
         } else if (snapshot.hasError) {
-          return Text(snapshot.error.toString());
+          return Text(
+            snapshot.error.toString(),
+            style: TextStyle(
+              fontFamily: context.read<ThemeBloc>().fontFamily,
+            ),
+          );
         } else {
           return const SizedBox();
         }
@@ -499,7 +634,14 @@ class _StatisticsScreenState extends State<StatisticsScreen> {
       builder: (context, AsyncSnapshot<List<BookReadStat>> snapshot) {
         if (snapshot.hasData) {
           if (snapshot.data == null) {
-            return const Center(child: Text('No finished books'));
+            return Center(
+              child: Text(
+                'No finished books',
+                style: TextStyle(
+                  fontFamily: context.read<ThemeBloc>().fontFamily,
+                ),
+              ),
+            );
           }
 
           for (var bookReadStat in snapshot.data!) {
@@ -513,7 +655,12 @@ class _StatisticsScreenState extends State<StatisticsScreen> {
 
           return const SizedBox();
         } else if (snapshot.hasError) {
-          return Text(snapshot.error.toString());
+          return Text(
+            snapshot.error.toString(),
+            style: TextStyle(
+              fontFamily: context.read<ThemeBloc>().fontFamily,
+            ),
+          );
         } else {
           return const SizedBox();
         }
@@ -530,7 +677,14 @@ class _StatisticsScreenState extends State<StatisticsScreen> {
       builder: (context, AsyncSnapshot<List<BookReadStat>> snapshot) {
         if (snapshot.hasData) {
           if (snapshot.data == null || snapshot.data!.isEmpty) {
-            return const Center(child: Text('No finished books'));
+            return Center(
+              child: Text(
+                'No finished books',
+                style: TextStyle(
+                  fontFamily: context.read<ThemeBloc>().fontFamily,
+                ),
+              ),
+            );
           }
 
           for (var bookReadStat in snapshot.data!) {
@@ -544,7 +698,12 @@ class _StatisticsScreenState extends State<StatisticsScreen> {
           }
           return const SizedBox();
         } else if (snapshot.hasError) {
-          return Text(snapshot.error.toString());
+          return Text(
+            snapshot.error.toString(),
+            style: TextStyle(
+              fontFamily: context.read<ThemeBloc>().fontFamily,
+            ),
+          );
         } else {
           return const SizedBox();
         }
@@ -561,7 +720,14 @@ class _StatisticsScreenState extends State<StatisticsScreen> {
       builder: (context, AsyncSnapshot<List<BookReadStat>> snapshot) {
         if (snapshot.hasData) {
           if (snapshot.data == null || snapshot.data!.isEmpty) {
-            return const Center(child: Text('No finished books'));
+            return Center(
+              child: Text(
+                'No finished books',
+                style: TextStyle(
+                  fontFamily: context.read<ThemeBloc>().fontFamily,
+                ),
+              ),
+            );
           }
 
           for (var bookReadStat in snapshot.data!) {
@@ -575,7 +741,12 @@ class _StatisticsScreenState extends State<StatisticsScreen> {
           }
           return const SizedBox();
         } else if (snapshot.hasError) {
-          return Text(snapshot.error.toString());
+          return Text(
+            snapshot.error.toString(),
+            style: TextStyle(
+              fontFamily: context.read<ThemeBloc>().fontFamily,
+            ),
+          );
         } else {
           return const SizedBox();
         }
@@ -597,7 +768,12 @@ class _StatisticsScreenState extends State<StatisticsScreen> {
             list: snapshot.data!,
           );
         } else if (snapshot.hasError) {
-          return Text(snapshot.error.toString());
+          return Text(
+            snapshot.error.toString(),
+            style: TextStyle(
+              fontFamily: context.read<ThemeBloc>().fontFamily,
+            ),
+          );
         } else {
           return const BooksByStatus(
             title: 'All books by status',
@@ -620,7 +796,14 @@ class _StatisticsScreenState extends State<StatisticsScreen> {
             builder: (context, AsyncSnapshot<List<BookReadStat>> snapshot) {
               if (snapshot.hasData) {
                 if (snapshot.data == null || snapshot.data!.isEmpty) {
-                  return const Center(child: Text('No finished books'));
+                  return Center(
+                    child: Text(
+                      'No finished books',
+                      style: TextStyle(
+                        fontFamily: context.read<ThemeBloc>().fontFamily,
+                      ),
+                    ),
+                  );
                 }
 
                 final yearlyChallenges = List<YearlyChallenge>.empty(
@@ -666,7 +849,12 @@ class _StatisticsScreenState extends State<StatisticsScreen> {
                   );
                 }
               } else if (snapshot.hasError) {
-                return Text(snapshot.error.toString());
+                return Text(
+                  snapshot.error.toString(),
+                  style: TextStyle(
+                    fontFamily: context.read<ThemeBloc>().fontFamily,
+                  ),
+                );
               } else {
                 return const SizedBox();
               }
@@ -696,7 +884,14 @@ class _StatisticsScreenState extends State<StatisticsScreen> {
             builder: (context, AsyncSnapshot<List<BookReadStat>> snapshot) {
               if (snapshot.hasData) {
                 if (snapshot.data == null || snapshot.data!.isEmpty) {
-                  return const Center(child: Text('No finished books'));
+                  return Center(
+                    child: Text(
+                      'No finished books',
+                      style: TextStyle(
+                        fontFamily: context.read<ThemeBloc>().fontFamily,
+                      ),
+                    ),
+                  );
                 }
 
                 final yearlyChallenges = List<YearlyChallenge>.empty(
@@ -748,7 +943,12 @@ class _StatisticsScreenState extends State<StatisticsScreen> {
                   );
                 }
               } else if (snapshot.hasError) {
-                return Text(snapshot.error.toString());
+                return Text(
+                  snapshot.error.toString(),
+                  style: TextStyle(
+                    fontFamily: context.read<ThemeBloc>().fontFamily,
+                  ),
+                );
               } else {
                 return const SizedBox();
               }

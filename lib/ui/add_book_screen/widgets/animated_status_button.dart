@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:openreads/core/themes/app_theme.dart';
+import 'package:openreads/logic/bloc/theme_bloc/theme_bloc.dart';
 
 class AnimatedStatusButton extends StatelessWidget {
   const AnimatedStatusButton({
@@ -58,6 +60,7 @@ class AnimatedStatusButton extends StatelessWidget {
                       style: TextStyle(
                         fontSize: 13,
                         color: color,
+                        fontFamily: context.read<ThemeBloc>().fontFamily,
                       ),
                     ),
                   ),

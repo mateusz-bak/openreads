@@ -5,6 +5,7 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:like_button/like_button.dart';
 import 'package:openreads/core/themes/app_theme.dart';
 import 'package:openreads/logic/bloc/rating_type_bloc/rating_type_bloc.dart';
+import 'package:openreads/logic/bloc/theme_bloc/theme_bloc.dart';
 
 class BookStatusDetail extends StatelessWidget {
   const BookStatusDetail({
@@ -42,6 +43,7 @@ class BookStatusDetail extends StatelessWidget {
           fontSize: 14,
           fontWeight: FontWeight.normal,
           color: Theme.of(context).secondaryTextColor,
+          fontFamily: context.read<ThemeBloc>().fontFamily,
         ),
       );
     }
@@ -53,6 +55,7 @@ class BookStatusDetail extends StatelessWidget {
           fontSize: 14,
           fontWeight: FontWeight.normal,
           color: Theme.of(context).secondaryTextColor,
+          fontFamily: context.read<ThemeBloc>().fontFamily,
         ),
       );
     }
@@ -64,6 +67,7 @@ class BookStatusDetail extends StatelessWidget {
           fontSize: 14,
           fontWeight: FontWeight.normal,
           color: Theme.of(context).secondaryTextColor,
+          fontFamily: context.read<ThemeBloc>().fontFamily,
         ),
       );
     }
@@ -107,9 +111,10 @@ class BookStatusDetail extends StatelessWidget {
                 Text(
                   changeStatusText!,
                   maxLines: 1,
-                  style: const TextStyle(
+                  style: TextStyle(
                     fontSize: 12,
                     fontWeight: FontWeight.bold,
+                    fontFamily: context.read<ThemeBloc>().fontFamily,
                   ),
                 ),
               ],
@@ -161,10 +166,11 @@ class BookStatusDetail extends StatelessWidget {
                           Text(
                             statusText,
                             maxLines: 1,
-                            style: const TextStyle(
+                            style: TextStyle(
                               fontSize: 12,
                               fontWeight: FontWeight.bold,
                               color: Colors.white,
+                              fontFamily: context.read<ThemeBloc>().fontFamily,
                             ),
                           ),
                         ],
@@ -186,12 +192,13 @@ class BookStatusDetail extends StatelessWidget {
               ? Column(
                   children: [
                     Row(
-                      children: const [
+                      children: [
                         Text(
                           'Your rating',
                           style: TextStyle(
                             fontSize: 14,
                             fontWeight: FontWeight.bold,
+                            fontFamily: context.read<ThemeBloc>().fontFamily,
                           ),
                         ),
                       ],
@@ -257,9 +264,10 @@ class BookStatusDetail extends StatelessWidget {
             children: [
               Text(
                 (rating == null) ? '0' : '${(rating! / 10)}',
-                style: const TextStyle(
+                style: TextStyle(
                   fontSize: 16,
                   fontWeight: FontWeight.bold,
+                  fontFamily: context.read<ThemeBloc>().fontFamily,
                 ),
               ),
               const SizedBox(width: 5),

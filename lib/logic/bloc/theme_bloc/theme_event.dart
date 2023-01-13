@@ -9,12 +9,14 @@ class ChangeThemeEvent extends ThemeEvent {
   final bool showOutlines;
   final double cornerRadius;
   final Color primaryColor;
+  final String? fontFamily;
 
   const ChangeThemeEvent({
     required this.themeMode,
     required this.showOutlines,
     required this.cornerRadius,
     required this.primaryColor,
+    required this.fontFamily,
   });
 
   @override
@@ -23,5 +25,6 @@ class ChangeThemeEvent extends ThemeEvent {
         showOutlines,
         cornerRadius,
         primaryColor,
+        fontFamily,
       ];
 }

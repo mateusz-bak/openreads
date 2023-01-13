@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:openreads/core/themes/app_theme.dart';
+import 'package:openreads/logic/bloc/theme_bloc/theme_bloc.dart';
 
 class BookTextField extends StatefulWidget {
   const BookTextField({
@@ -81,7 +83,10 @@ class _BookTextFieldState extends State<BookTextField> {
           maxLines: widget.maxLines,
           maxLength: widget.maxLength,
           textInputAction: widget.textInputAction,
-          style: const TextStyle(fontSize: 14),
+          style: TextStyle(
+            fontSize: 14,
+            fontFamily: context.read<ThemeBloc>().fontFamily,
+          ),
           onSubmitted: widget.onSubmitted ?? (_) {},
           decoration: InputDecoration(
             focusColor: Theme.of(context).primaryColor,

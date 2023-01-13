@@ -1,6 +1,8 @@
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:openreads/core/themes/app_theme.dart';
+import 'package:openreads/logic/bloc/theme_bloc/theme_bloc.dart';
 import 'package:openreads/ui/statistics_screen/widgets/widgets.dart';
 
 class BooksByStatus extends StatefulWidget {
@@ -42,9 +44,10 @@ class BooksByStatusState extends State<BooksByStatus> {
           children: [
             Text(
               widget.title,
-              style: const TextStyle(
+              style: TextStyle(
                 fontSize: 16,
                 fontWeight: FontWeight.bold,
+                fontFamily: context.read<ThemeBloc>().fontFamily,
               ),
             ),
             const SizedBox(height: 30),
@@ -148,6 +151,7 @@ class BooksByStatusState extends State<BooksByStatus> {
               fontSize: fontSize,
               fontWeight: FontWeight.bold,
               color: const Color(0xffffffff),
+              fontFamily: context.read<ThemeBloc>().fontFamily,
             ),
           );
         case 1:
@@ -160,6 +164,7 @@ class BooksByStatusState extends State<BooksByStatus> {
               fontSize: fontSize,
               fontWeight: FontWeight.bold,
               color: const Color(0xffffffff),
+              fontFamily: context.read<ThemeBloc>().fontFamily,
             ),
           );
         case 2:
@@ -172,6 +177,7 @@ class BooksByStatusState extends State<BooksByStatus> {
               fontSize: fontSize,
               fontWeight: FontWeight.bold,
               color: const Color(0xffffffff),
+              fontFamily: context.read<ThemeBloc>().fontFamily,
             ),
           );
         case 3:
@@ -184,6 +190,7 @@ class BooksByStatusState extends State<BooksByStatus> {
               fontSize: fontSize,
               fontWeight: FontWeight.bold,
               color: const Color(0xffffffff),
+              fontFamily: context.read<ThemeBloc>().fontFamily,
             ),
           );
         default:

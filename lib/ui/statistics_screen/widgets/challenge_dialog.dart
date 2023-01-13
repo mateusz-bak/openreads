@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:openreads/core/themes/app_theme.dart';
+import 'package:openreads/logic/bloc/theme_bloc/theme_bloc.dart';
 
 class ChallengeDialog extends StatefulWidget {
   const ChallengeDialog({
@@ -148,9 +150,10 @@ class _ChallengeDialogState extends State<ChallengeDialog>
             Text(
               'Set books goal for ${widget.year}:',
               textAlign: TextAlign.center,
-              style: const TextStyle(
+              style: TextStyle(
                 fontSize: 16,
                 fontWeight: FontWeight.bold,
+                fontFamily: context.read<ThemeBloc>().fontFamily,
               ),
             ),
             Slider(
@@ -189,7 +192,10 @@ class _ChallengeDialogState extends State<ChallengeDialog>
                       textAlign: TextAlign.center,
                       keyboardType: TextInputType.number,
                       controller: _booksController,
-                      style: const TextStyle(fontSize: 14),
+                      style: TextStyle(
+                        fontSize: 14,
+                        fontFamily: context.read<ThemeBloc>().fontFamily,
+                      ),
                       decoration: const InputDecoration(
                         border: InputBorder.none,
                       ),
@@ -229,9 +235,12 @@ class _ChallengeDialogState extends State<ChallengeDialog>
                     },
                   ),
                   const SizedBox(width: 10),
-                  const Text(
+                  Text(
                     'Add pages challenge',
-                    style: TextStyle(fontSize: 16),
+                    style: TextStyle(
+                      fontSize: 16,
+                      fontFamily: context.read<ThemeBloc>().fontFamily,
+                    ),
                   ),
                 ],
               ),
@@ -241,12 +250,13 @@ class _ChallengeDialogState extends State<ChallengeDialog>
               sizeFactor: _animation,
               child: Column(
                 children: [
-                  const Text(
+                  Text(
                     'Set your yearly pages goal:',
                     textAlign: TextAlign.center,
                     style: TextStyle(
                       fontSize: 16,
                       fontWeight: FontWeight.bold,
+                      fontFamily: context.read<ThemeBloc>().fontFamily,
                     ),
                   ),
                   Slider(
@@ -288,7 +298,10 @@ class _ChallengeDialogState extends State<ChallengeDialog>
                             textAlign: TextAlign.center,
                             keyboardType: TextInputType.number,
                             controller: _pagesController,
-                            style: const TextStyle(fontSize: 14),
+                            style: TextStyle(
+                              fontSize: 14,
+                              fontFamily: context.read<ThemeBloc>().fontFamily,
+                            ),
                             decoration: const InputDecoration(
                               border: InputBorder.none,
                             ),
@@ -320,11 +333,12 @@ class _ChallengeDialogState extends State<ChallengeDialog>
                           BorderRadius.circular(5.0),
                 ),
               ),
-              child: const Center(
+              child: Center(
                 child: Text(
                   "Save",
                   style: TextStyle(
                     color: Colors.white,
+                    fontFamily: context.read<ThemeBloc>().fontFamily,
                   ),
                 ),
               ),

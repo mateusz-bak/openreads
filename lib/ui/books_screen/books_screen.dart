@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:openreads/core/constants.dart/enums.dart';
 import 'package:openreads/core/themes/app_theme.dart';
 import 'package:openreads/logic/bloc/sort_bloc/sort_bloc.dart';
+import 'package:openreads/logic/bloc/theme_bloc/theme_bloc.dart';
 import 'package:openreads/logic/cubit/book_cubit.dart';
 import 'package:openreads/model/book.dart';
 import 'package:openreads/ui/add_book_screen/widgets/widgets.dart';
@@ -339,9 +340,12 @@ class _BooksScreenState extends State<BooksScreen>
       extendBodyBehindAppBar: true,
       backgroundColor: Theme.of(context).scaffoldBackgroundColor,
       appBar: AppBar(
-        title: const Text(
+        title: Text(
           'Openreads',
-          style: TextStyle(fontSize: 18),
+          style: TextStyle(
+            fontSize: 18,
+            fontFamily: context.read<ThemeBloc>().fontFamily,
+          ),
         ),
         backgroundColor: Theme.of(context).scaffoldBackgroundColor,
         surfaceTintColor: Theme.of(context).scaffoldBackgroundColor,
@@ -352,7 +356,12 @@ class _BooksScreenState extends State<BooksScreen>
               return moreButtonOptions.map((String choice) {
                 return PopupMenuItem<String>(
                   value: choice,
-                  child: Text(choice),
+                  child: Text(
+                    choice,
+                    style: TextStyle(
+                      fontFamily: context.read<ThemeBloc>().fontFamily,
+                    ),
+                  ),
                   onTap: () async {
                     await Future.delayed(const Duration(milliseconds: 0));
 
@@ -441,15 +450,17 @@ class _BooksScreenState extends State<BooksScreen>
                       builder: (context, AsyncSnapshot<List<Book>> snapshot) {
                         if (snapshot.hasData) {
                           if (snapshot.data == null || snapshot.data!.isEmpty) {
-                            return const Center(
+                            return Center(
                               child: Padding(
-                                padding: EdgeInsets.all(50),
+                                padding: const EdgeInsets.all(50),
                                 child: Text(
                                   'Your read books list is currently empty. Click the "+" button below to add a new one.',
                                   textAlign: TextAlign.center,
                                   style: TextStyle(
                                     letterSpacing: 1.5,
                                     fontSize: 16,
+                                    fontFamily:
+                                        context.read<ThemeBloc>().fontFamily,
                                   ),
                                 ),
                               ),
@@ -471,7 +482,12 @@ class _BooksScreenState extends State<BooksScreen>
                             },
                           );
                         } else if (snapshot.hasError) {
-                          return Text(snapshot.error.toString());
+                          return Text(
+                            snapshot.error.toString(),
+                            style: TextStyle(
+                              fontFamily: context.read<ThemeBloc>().fontFamily,
+                            ),
+                          );
                         } else {
                           return const SizedBox();
                         }
@@ -482,15 +498,17 @@ class _BooksScreenState extends State<BooksScreen>
                       builder: (context, AsyncSnapshot<List<Book>> snapshot) {
                         if (snapshot.hasData) {
                           if (snapshot.data == null || snapshot.data!.isEmpty) {
-                            return const Center(
+                            return Center(
                               child: Padding(
-                                padding: EdgeInsets.all(50),
+                                padding: const EdgeInsets.all(50),
                                 child: Text(
                                   'Your in progress books list is currently empty. Click the "+" button below to add a new one.',
                                   textAlign: TextAlign.center,
                                   style: TextStyle(
                                     letterSpacing: 1.5,
                                     fontSize: 16,
+                                    fontFamily:
+                                        context.read<ThemeBloc>().fontFamily,
                                   ),
                                 ),
                               ),
@@ -501,7 +519,12 @@ class _BooksScreenState extends State<BooksScreen>
                             listNumber: 1,
                           );
                         } else if (snapshot.hasError) {
-                          return Text(snapshot.error.toString());
+                          return Text(
+                            snapshot.error.toString(),
+                            style: TextStyle(
+                              fontFamily: context.read<ThemeBloc>().fontFamily,
+                            ),
+                          );
                         } else {
                           return const SizedBox();
                         }
@@ -512,15 +535,17 @@ class _BooksScreenState extends State<BooksScreen>
                       builder: (context, AsyncSnapshot<List<Book>> snapshot) {
                         if (snapshot.hasData) {
                           if (snapshot.data == null || snapshot.data!.isEmpty) {
-                            return const Center(
+                            return Center(
                               child: Padding(
-                                padding: EdgeInsets.all(50),
+                                padding: const EdgeInsets.all(50),
                                 child: Text(
                                   'Your for later books list is currently empty. Click the "+" button below to add a new one.',
                                   textAlign: TextAlign.center,
                                   style: TextStyle(
                                     letterSpacing: 1.5,
                                     fontSize: 16,
+                                    fontFamily:
+                                        context.read<ThemeBloc>().fontFamily,
                                   ),
                                 ),
                               ),
@@ -531,7 +556,12 @@ class _BooksScreenState extends State<BooksScreen>
                             listNumber: 2,
                           );
                         } else if (snapshot.hasError) {
-                          return Text(snapshot.error.toString());
+                          return Text(
+                            snapshot.error.toString(),
+                            style: TextStyle(
+                              fontFamily: context.read<ThemeBloc>().fontFamily,
+                            ),
+                          );
                         } else {
                           return const SizedBox();
                         }
@@ -550,15 +580,30 @@ class _BooksScreenState extends State<BooksScreen>
                     indicator: CustomTabIndicator(themeData: Theme.of(context)),
                     indicatorPadding:
                         const EdgeInsets.symmetric(horizontal: 30),
-                    tabs: const [
+                    tabs: [
                       Tab(
-                        child: Text('Finished'),
+                        child: Text(
+                          'Finished',
+                          style: TextStyle(
+                            fontFamily: context.read<ThemeBloc>().fontFamily,
+                          ),
+                        ),
                       ),
                       Tab(
-                        child: Text('In progress'),
+                        child: Text(
+                          'In progress',
+                          style: TextStyle(
+                            fontFamily: context.read<ThemeBloc>().fontFamily,
+                          ),
+                        ),
                       ),
                       Tab(
-                        child: Text('For later'),
+                        child: Text(
+                          'For later',
+                          style: TextStyle(
+                            fontFamily: context.read<ThemeBloc>().fontFamily,
+                          ),
+                        ),
                       ),
                     ],
                   ),

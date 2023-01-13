@@ -1,8 +1,10 @@
 import 'package:barcode_scan2/barcode_scan2.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
 import 'package:loading_animation_widget/loading_animation_widget.dart';
 import 'package:openreads/core/themes/app_theme.dart';
+import 'package:openreads/logic/bloc/theme_bloc/theme_bloc.dart';
 import 'package:openreads/model/book.dart';
 import 'package:openreads/model/ol_search_result.dart';
 import 'package:openreads/resources/open_library_service.dart';
@@ -166,9 +168,12 @@ class _SearchOLScreenState extends State<SearchOLScreen>
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text(
+        title: Text(
           'Search in Open Library',
-          style: TextStyle(fontSize: 18),
+          style: TextStyle(
+            fontSize: 18,
+            fontFamily: context.read<ThemeBloc>().fontFamily,
+          ),
         ),
         backgroundColor: Theme.of(context).scaffoldBackgroundColor,
         scrolledUnderElevation: 0,
@@ -206,9 +211,12 @@ class _SearchOLScreenState extends State<SearchOLScreen>
                             BorderRadius.circular(5.0),
                       ),
                     ),
-                    child: const Text(
+                    child: Text(
                       "Search",
-                      style: TextStyle(fontSize: 12),
+                      style: TextStyle(
+                        fontSize: 12,
+                        fontFamily: context.read<ThemeBloc>().fontFamily,
+                      ),
                     ),
                   ),
                 ),
@@ -223,7 +231,10 @@ class _SearchOLScreenState extends State<SearchOLScreen>
                     children: [
                       Text(
                         '$numberOfResults results',
-                        style: const TextStyle(fontSize: 12),
+                        style: TextStyle(
+                          fontSize: 12,
+                          fontFamily: context.read<ThemeBloc>().fontFamily,
+                        ),
                       ),
                     ],
                   ),

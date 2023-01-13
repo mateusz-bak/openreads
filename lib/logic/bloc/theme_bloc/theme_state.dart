@@ -9,19 +9,22 @@ class SetThemeState extends ThemeState {
   final bool showOutlines;
   final double cornerRadius;
   final Color primaryColor;
+  final String? fontFamily;
 
   const SetThemeState({
     required this.themeMode,
     required this.showOutlines,
     required this.cornerRadius,
     required this.primaryColor,
+    required this.fontFamily,
   });
 
   @override
-  List<Object> get props => [
+  List<Object?> get props => [
         themeMode,
         showOutlines,
         cornerRadius,
         primaryColor,
+        fontFamily,
       ];
 }

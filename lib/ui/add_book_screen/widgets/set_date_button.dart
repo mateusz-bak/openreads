@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:openreads/core/themes/app_theme.dart';
+import 'package:openreads/logic/bloc/theme_bloc/theme_bloc.dart';
 
 class SetDateButton extends StatelessWidget {
   const SetDateButton({
@@ -61,6 +63,7 @@ class SetDateButton extends StatelessWidget {
                           style: TextStyle(
                             fontSize: 14,
                             color: Theme.of(context).mainTextColor,
+                            fontFamily: context.read<ThemeBloc>().fontFamily,
                           ),
                         ),
                       ),

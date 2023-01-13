@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:intl/intl.dart';
 import 'package:openreads/core/themes/app_theme.dart';
+import 'package:openreads/logic/bloc/theme_bloc/theme_bloc.dart';
 import 'package:openreads/logic/cubit/book_cubit.dart';
 import 'package:openreads/model/book.dart';
 import 'package:openreads/ui/add_book_screen/widgets/widgets.dart';
@@ -61,7 +63,10 @@ class BookScreen extends StatelessWidget {
             backgroundColor: Theme.of(context).scaffoldBackgroundColor,
             title: Text(
               deleted ? 'Delete this book?' : 'Restore this book?',
-              style: const TextStyle(fontSize: 18),
+              style: TextStyle(
+                fontSize: 18,
+                fontFamily: context.read<ThemeBloc>().fontFamily,
+              ),
             ),
             actions: [
               ElevatedButton(
@@ -88,6 +93,7 @@ class BookScreen extends StatelessWidget {
                     style: TextStyle(
                       fontSize: 12,
                       color: Theme.of(context).primaryColor,
+                      fontFamily: context.read<ThemeBloc>().fontFamily,
                     ),
                   ),
                 ),
@@ -108,11 +114,14 @@ class BookScreen extends StatelessWidget {
                             BorderRadius.circular(5.0),
                   ),
                 ),
-                child: const Padding(
-                  padding: EdgeInsets.symmetric(horizontal: 10),
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 10),
                   child: Text(
                     "Yes",
-                    style: TextStyle(fontSize: 12),
+                    style: TextStyle(
+                      fontSize: 12,
+                      fontFamily: context.read<ThemeBloc>().fontFamily,
+                    ),
                   ),
                 ),
               ),
@@ -201,9 +210,12 @@ class BookScreen extends StatelessWidget {
                       BorderRadius.circular(5.0),
             ),
             backgroundColor: Theme.of(context).scaffoldBackgroundColor,
-            title: const Text(
+            title: Text(
               'Rate this book',
-              style: TextStyle(fontSize: 18),
+              style: TextStyle(
+                fontSize: 18,
+                fontFamily: context.read<ThemeBloc>().fontFamily,
+              ),
             ),
             children: [
               BookRatingBar(
@@ -224,7 +236,12 @@ class BookScreen extends StatelessWidget {
                       rating = null;
                       Navigator.of(context).pop();
                     },
-                    child: const Text('Skip'),
+                    child: Text(
+                      'Skip',
+                      style: TextStyle(
+                        fontFamily: context.read<ThemeBloc>().fontFamily,
+                      ),
+                    ),
                   ),
                   ElevatedButton(
                     style: ElevatedButton.styleFrom(
@@ -234,7 +251,12 @@ class BookScreen extends StatelessWidget {
                     onPressed: () {
                       Navigator.of(context).pop();
                     },
-                    child: const Text('Save'),
+                    child: Text(
+                      'Save',
+                      style: TextStyle(
+                        fontFamily: context.read<ThemeBloc>().fontFamily,
+                      ),
+                    ),
                   )
                 ],
               )
@@ -347,7 +369,12 @@ class BookScreen extends StatelessWidget {
                       return moreButtonOptions.map((String choice) {
                         return PopupMenuItem<String>(
                           value: choice,
-                          child: Text(choice),
+                          child: Text(
+                            choice,
+                            style: TextStyle(
+                              fontFamily: context.read<ThemeBloc>().fontFamily,
+                            ),
+                          ),
                           onTap: () async {
                             await Future.delayed(const Duration(
                               milliseconds: 0,
@@ -389,7 +416,14 @@ class BookScreen extends StatelessWidget {
           builder: (context, AsyncSnapshot<Book> snapshot) {
             if (snapshot.hasData) {
               if (snapshot.data == null) {
-                return const Center(child: Text('Error getting the book'));
+                return Center(
+                  child: Text(
+                    'Error getting the book',
+                    style: TextStyle(
+                      fontFamily: context.read<ThemeBloc>().fontFamily,
+                    ),
+                  ),
+                );
               }
               book = snapshot.data!;
 
@@ -500,7 +534,12 @@ class BookScreen extends StatelessWidget {
                 ],
               );
             } else if (snapshot.hasError) {
-              return Text(snapshot.error.toString());
+              return Text(
+                snapshot.error.toString(),
+                style: TextStyle(
+                  fontFamily: context.read<ThemeBloc>().fontFamily,
+                ),
+              );
             } else {
               return const Center(
                 child: CircularProgressIndicator(),

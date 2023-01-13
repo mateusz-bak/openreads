@@ -1,7 +1,9 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:loading_animation_widget/loading_animation_widget.dart';
 import 'package:openreads/core/themes/app_theme.dart';
+import 'package:openreads/logic/bloc/theme_bloc/theme_bloc.dart';
 import 'package:openreads/model/ol_search_result.dart';
 
 class BookCardOL extends StatelessWidget {
@@ -76,7 +78,14 @@ class BookCardOL extends StatelessWidget {
                               .extension<CustomBorder>()
                               ?.radius,
                         ),
-                        child: const Center(child: Text('No cover')),
+                        child: Center(
+                          child: Text(
+                            'No cover',
+                            style: TextStyle(
+                              fontFamily: context.read<ThemeBloc>().fontFamily,
+                            ),
+                          ),
+                        ),
                       ),
               ),
               const SizedBox(width: 20),
@@ -97,6 +106,7 @@ class BookCardOL extends StatelessWidget {
                             letterSpacing: 1.8,
                             fontWeight: FontWeight.w500,
                             color: Theme.of(context).mainTextColor,
+                            fontFamily: context.read<ThemeBloc>().fontFamily,
                           ),
                         ),
                         subtitle != null
@@ -107,6 +117,8 @@ class BookCardOL extends StatelessWidget {
                                 style: TextStyle(
                                   fontSize: 13,
                                   color: Theme.of(context).secondaryTextColor,
+                                  fontFamily:
+                                      context.read<ThemeBloc>().fontFamily,
                                 ),
                               )
                             : const SizedBox(),
@@ -119,6 +131,7 @@ class BookCardOL extends StatelessWidget {
                             fontSize: 14,
                             letterSpacing: 1,
                             color: Theme.of(context).mainTextColor,
+                            fontFamily: context.read<ThemeBloc>().fontFamily,
                           ),
                         ),
                         SizedBox(
@@ -145,6 +158,9 @@ class BookCardOL extends StatelessWidget {
                                           fontWeight: FontWeight.bold,
                                           color:
                                               Theme.of(context).mainTextColor,
+                                          fontFamily: context
+                                              .read<ThemeBloc>()
+                                              .fontFamily,
                                         ),
                                       ),
                                       Text(
@@ -156,6 +172,9 @@ class BookCardOL extends StatelessWidget {
                                           letterSpacing: 1,
                                           color: Theme.of(context)
                                               .secondaryTextColor,
+                                          fontFamily: context
+                                              .read<ThemeBloc>()
+                                              .fontFamily,
                                         ),
                                       )
                                     ],
@@ -177,6 +196,9 @@ class BookCardOL extends StatelessWidget {
                                           fontWeight: FontWeight.bold,
                                           color:
                                               Theme.of(context).mainTextColor,
+                                          fontFamily: context
+                                              .read<ThemeBloc>()
+                                              .fontFamily,
                                         ),
                                       ),
                                       Text(
@@ -188,6 +210,9 @@ class BookCardOL extends StatelessWidget {
                                           letterSpacing: 1,
                                           color: Theme.of(context)
                                               .secondaryTextColor,
+                                          fontFamily: context
+                                              .read<ThemeBloc>()
+                                              .fontFamily,
                                         ),
                                       )
                                     ],
@@ -209,6 +234,9 @@ class BookCardOL extends StatelessWidget {
                                           fontWeight: FontWeight.bold,
                                           color:
                                               Theme.of(context).mainTextColor,
+                                          fontFamily: context
+                                              .read<ThemeBloc>()
+                                              .fontFamily,
                                         ),
                                       ),
                                       Text(
@@ -220,6 +248,9 @@ class BookCardOL extends StatelessWidget {
                                           letterSpacing: 1,
                                           color: Theme.of(context)
                                               .secondaryTextColor,
+                                          fontFamily: context
+                                              .read<ThemeBloc>()
+                                              .fontFamily,
                                         ),
                                       )
                                     ],
@@ -265,6 +296,9 @@ class BookCardOL extends StatelessWidget {
                                         style: TextStyle(
                                           fontSize: 12,
                                           color: Theme.of(context).primaryColor,
+                                          fontFamily: context
+                                              .read<ThemeBloc>()
+                                              .fontFamily,
                                         ),
                                       ),
                                     )
@@ -290,9 +324,13 @@ class BookCardOL extends StatelessWidget {
                                           BorderRadius.circular(5.0),
                                     ),
                                   ),
-                                  child: const Text(
+                                  child: Text(
                                     "Add book",
-                                    style: TextStyle(fontSize: 12),
+                                    style: TextStyle(
+                                      fontSize: 12,
+                                      fontFamily:
+                                          context.read<ThemeBloc>().fontFamily,
+                                    ),
                                   ),
                                 ),
                               ),

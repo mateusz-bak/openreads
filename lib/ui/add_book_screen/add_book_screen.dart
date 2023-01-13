@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:image_cropper/image_cropper.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:loading_animation_widget/loading_animation_widget.dart';
+import 'package:openreads/logic/bloc/theme_bloc/theme_bloc.dart';
 import 'package:openreads/logic/cubit/book_cubit.dart';
 import 'package:openreads/model/book.dart';
 import 'package:openreads/ui/add_book_screen/widgets/widgets.dart';
@@ -115,7 +117,12 @@ class _AddBookState extends State<AddBook> {
   void _showSnackbar(String message) {
     ScaffoldMessenger.of(context).showSnackBar(
       SnackBar(
-        content: Text(message),
+        content: Text(
+          message,
+          style: TextStyle(
+            fontFamily: context.read<ThemeBloc>().fontFamily,
+          ),
+        ),
       ),
     );
   }
@@ -529,7 +536,10 @@ class _AddBookState extends State<AddBook> {
           appBar: AppBar(
             title: Text(
               widget.editingExistingBook ? 'Edit book' : 'Add new book',
-              style: const TextStyle(fontSize: 18),
+              style: TextStyle(
+                fontSize: 18,
+                fontFamily: context.read<ThemeBloc>().fontFamily,
+              ),
             ),
             backgroundColor: Theme.of(context).scaffoldBackgroundColor,
             surfaceTintColor: Theme.of(context).scaffoldBackgroundColor,
@@ -543,6 +553,7 @@ class _AddBookState extends State<AddBook> {
                   style: TextStyle(
                     fontSize: 16,
                     color: Theme.of(context).mainTextColor,
+                    fontFamily: context.read<ThemeBloc>().fontFamily,
                   ),
                 ),
               )
@@ -719,10 +730,14 @@ class _AddBookState extends State<AddBook> {
                                   BorderRadius.circular(5.0),
                             ),
                           ),
-                          child: const Center(
+                          child: Center(
                             child: Text(
                               "Cancel",
-                              style: TextStyle(color: Colors.black),
+                              style: TextStyle(
+                                color: Colors.black,
+                                fontFamily:
+                                    context.read<ThemeBloc>().fontFamily,
+                              ),
                             ),
                           ),
                         ),
@@ -746,11 +761,13 @@ class _AddBookState extends State<AddBook> {
                                   BorderRadius.circular(5.0),
                             ),
                           ),
-                          child: const Center(
+                          child: Center(
                             child: Text(
                               "Save",
                               style: TextStyle(
                                 color: Colors.white,
+                                fontFamily:
+                                    context.read<ThemeBloc>().fontFamily,
                               ),
                             ),
                           ),

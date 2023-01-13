@@ -6,19 +6,25 @@ part 'theme_state.dart';
 part 'theme_event.dart';
 
 class ThemeBloc extends HydratedBloc<ThemeEvent, ThemeState> {
+  String? fontFamily;
+
   ThemeBloc()
       : super(const SetThemeState(
           themeMode: ThemeMode.system,
           showOutlines: true,
           cornerRadius: 5,
           primaryColor: Color(0xff3FA796),
+          fontFamily: 'Nunito',
         )) {
     on<ChangeThemeEvent>((event, emit) {
+      fontFamily = event.fontFamily;
+
       emit(SetThemeState(
         themeMode: event.themeMode,
         showOutlines: event.showOutlines,
         cornerRadius: event.cornerRadius,
         primaryColor: event.primaryColor,
+        fontFamily: fontFamily,
       ));
     });
   }
@@ -29,6 +35,7 @@ class ThemeBloc extends HydratedBloc<ThemeEvent, ThemeState> {
     final showOutlines = json['show_outlines'] as bool;
     final cornerRadius = json['corner_radius'] as double;
     final primaryColor = json['primary_color'] as int;
+    final fontFamily = json['font_family'] as String;
 
     switch (themeState) {
       case 1:
@@ -37,6 +44,7 @@ class ThemeBloc extends HydratedBloc<ThemeEvent, ThemeState> {
           showOutlines: showOutlines,
           cornerRadius: cornerRadius,
           primaryColor: Color(primaryColor),
+          fontFamily: fontFamily,
         );
       case 2:
         return SetThemeState(
@@ -44,6 +52,7 @@ class ThemeBloc extends HydratedBloc<ThemeEvent, ThemeState> {
           showOutlines: showOutlines,
           cornerRadius: cornerRadius,
           primaryColor: Color(primaryColor),
+          fontFamily: fontFamily,
         );
       default:
         return SetThemeState(
@@ -51,6 +60,7 @@ class ThemeBloc extends HydratedBloc<ThemeEvent, ThemeState> {
           showOutlines: showOutlines,
           cornerRadius: cornerRadius,
           primaryColor: Color(primaryColor),
+          fontFamily: fontFamily,
         );
     }
   }
@@ -65,6 +75,7 @@ class ThemeBloc extends HydratedBloc<ThemeEvent, ThemeState> {
             'show_outlines': state.showOutlines,
             'corner_radius': state.cornerRadius,
             'primary_color': state.primaryColor.value,
+            'font_family': state.fontFamily,
           };
         case ThemeMode.dark:
           return {
@@ -72,6 +83,7 @@ class ThemeBloc extends HydratedBloc<ThemeEvent, ThemeState> {
             'show_outlines': state.showOutlines,
             'corner_radius': state.cornerRadius,
             'primary_color': state.primaryColor.value,
+            'font_family': state.fontFamily,
           };
         case ThemeMode.system:
           return {
@@ -79,6 +91,7 @@ class ThemeBloc extends HydratedBloc<ThemeEvent, ThemeState> {
             'show_outlines': state.showOutlines,
             'corner_radius': state.cornerRadius,
             'primary_color': state.primaryColor.value,
+            'font_family': state.fontFamily,
           };
       }
     } else {
@@ -86,6 +99,7 @@ class ThemeBloc extends HydratedBloc<ThemeEvent, ThemeState> {
         'theme_state': 0,
         'show_outlines': true,
         'corner_radius': 5,
+        'font_family': null,
       };
     }
   }

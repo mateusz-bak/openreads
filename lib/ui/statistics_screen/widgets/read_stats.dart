@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:openreads/core/themes/app_theme.dart';
+import 'package:openreads/logic/bloc/theme_bloc/theme_bloc.dart';
 
 class ReadStats extends StatelessWidget {
   const ReadStats({
@@ -39,6 +41,7 @@ class ReadStats extends StatelessWidget {
                 fontSize: 16,
                 fontWeight: FontWeight.bold,
                 color: Theme.of(context).mainTextColor,
+                fontFamily: context.read<ThemeBloc>().fontFamily,
               ),
             ),
             const SizedBox(height: 5),
@@ -49,6 +52,7 @@ class ReadStats extends StatelessWidget {
                       fontSize: 16,
                       fontWeight: FontWeight.normal,
                       color: Theme.of(context).secondaryTextColor,
+                      fontFamily: context.read<ThemeBloc>().fontFamily,
                     ),
                   )
                 : Row(
@@ -59,6 +63,7 @@ class ReadStats extends StatelessWidget {
                           fontSize: 16,
                           fontWeight: FontWeight.normal,
                           color: Theme.of(context).secondaryTextColor,
+                          fontFamily: context.read<ThemeBloc>().fontFamily,
                         ),
                       ),
                       const SizedBox(width: 5),
@@ -77,6 +82,7 @@ class ReadStats extends StatelessWidget {
                       fontSize: 16,
                       fontWeight: FontWeight.normal,
                       color: Theme.of(context).secondaryTextColor,
+                      fontFamily: context.read<ThemeBloc>().fontFamily,
                     ),
                   ),
           ],

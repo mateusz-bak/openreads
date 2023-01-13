@@ -6,6 +6,7 @@ import 'package:intl/intl.dart';
 import 'package:openreads/core/constants.dart/enums.dart';
 import 'package:openreads/logic/bloc/rating_type_bloc/rating_type_bloc.dart';
 import 'package:openreads/logic/bloc/sort_bloc/sort_bloc.dart';
+import 'package:openreads/logic/bloc/theme_bloc/theme_bloc.dart';
 import 'package:openreads/model/book.dart';
 import 'package:openreads/core/themes/app_theme.dart';
 
@@ -29,18 +30,32 @@ class BookCard extends StatelessWidget {
         if (state is SetSortState) {
           if (state.sortType == SortType.byPages) {
             return (book.pages != null)
-                ? Text('${book.pages} pages')
+                ? Text(
+                    '${book.pages} pages',
+                    style: TextStyle(
+                      fontFamily: context.read<ThemeBloc>().fontFamily,
+                    ),
+                  )
                 : const SizedBox();
           } else if (state.sortType == SortType.byStartDate) {
             return (book.startDate != null)
                 ? Column(
                     crossAxisAlignment: CrossAxisAlignment.end,
                     children: [
-                      const Text('Started on', style: TextStyle(fontSize: 12)),
+                      Text(
+                        'Started on',
+                        style: TextStyle(
+                          fontSize: 12,
+                          fontFamily: context.read<ThemeBloc>().fontFamily,
+                        ),
+                      ),
                       Text(
                         '${_generateDate(book.startDate)}',
-                        style: const TextStyle(
-                            fontSize: 13, fontWeight: FontWeight.bold),
+                        style: TextStyle(
+                          fontSize: 13,
+                          fontWeight: FontWeight.bold,
+                          fontFamily: context.read<ThemeBloc>().fontFamily,
+                        ),
                       ),
                     ],
                   )
@@ -50,11 +65,20 @@ class BookCard extends StatelessWidget {
                 ? Column(
                     crossAxisAlignment: CrossAxisAlignment.end,
                     children: [
-                      const Text('Finished on', style: TextStyle(fontSize: 12)),
+                      Text(
+                        'Finished on',
+                        style: TextStyle(
+                          fontSize: 12,
+                          fontFamily: context.read<ThemeBloc>().fontFamily,
+                        ),
+                      ),
                       Text(
                         '${_generateDate(book.finishDate)}',
-                        style: const TextStyle(
-                            fontSize: 13, fontWeight: FontWeight.bold),
+                        style: TextStyle(
+                          fontSize: 13,
+                          fontWeight: FontWeight.bold,
+                          fontFamily: context.read<ThemeBloc>().fontFamily,
+                        ),
                       ),
                     ],
                   )
@@ -113,6 +137,7 @@ class BookCard extends StatelessWidget {
           style: TextStyle(
             color: selected ? Colors.white : Theme.of(context).mainTextColor,
             fontSize: 12,
+            fontFamily: context.read<ThemeBloc>().fontFamily,
           ),
         ),
         checkmarkColor: Colors.white,
@@ -193,6 +218,7 @@ class BookCard extends StatelessWidget {
                         letterSpacing: 2,
                         fontWeight: FontWeight.w500,
                         color: Theme.of(context).mainTextColor,
+                        fontFamily: context.read<ThemeBloc>().fontFamily,
                       ),
                     ),
                     Text(
@@ -203,6 +229,7 @@ class BookCard extends StatelessWidget {
                         fontSize: 15,
                         letterSpacing: 1,
                         color: Theme.of(context).secondaryTextColor,
+                        fontFamily: context.read<ThemeBloc>().fontFamily,
                       ),
                     ),
                     const SizedBox(height: 5),
@@ -262,7 +289,12 @@ class BookCard extends StatelessWidget {
         } else {
           return Row(
             children: [
-              Text((book.rating == null) ? '0' : '${(book.rating! / 10)}'),
+              Text(
+                (book.rating == null) ? '0' : '${(book.rating! / 10)}',
+                style: TextStyle(
+                  fontFamily: context.read<ThemeBloc>().fontFamily,
+                ),
+              ),
               const SizedBox(width: 5),
               Icon(
                 Icons.star_rounded,
