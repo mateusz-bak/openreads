@@ -186,15 +186,70 @@ class BookScreen extends StatelessWidget {
     }
   }
 
-  void _changeStatusAction(int status) {
+  void _changeStatusAction(BuildContext context, int status) async {
     if (status == 1) {
+      int? rating;
+
+      await showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return SimpleDialog(
+            contentPadding: const EdgeInsets.all(20),
+            shape: RoundedRectangleBorder(
+              borderRadius:
+                  Theme.of(context).extension<CustomBorder>()?.radius ??
+                      BorderRadius.circular(5.0),
+            ),
+            backgroundColor: Theme.of(context).scaffoldBackgroundColor,
+            title: const Text(
+              'Rate this book',
+              style: TextStyle(fontSize: 18),
+            ),
+            children: [
+              BookRatingBar(
+                animDuration: const Duration(milliseconds: 250),
+                status: 0,
+                defaultHeight: 60.0,
+                rating: 0.0,
+                onRatingUpdate: (double newRating) {
+                  rating = (newRating * 10).toInt();
+                },
+              ),
+              const SizedBox(height: 10),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  TextButton(
+                    onPressed: () {
+                      rating = null;
+                      Navigator.of(context).pop();
+                    },
+                    child: const Text('Skip'),
+                  ),
+                  ElevatedButton(
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: Theme.of(context).primaryColor,
+                      foregroundColor: Theme.of(context).mainTextColor,
+                    ),
+                    onPressed: () {
+                      Navigator.of(context).pop();
+                    },
+                    child: const Text('Save'),
+                  )
+                ],
+              )
+            ],
+          );
+        },
+      );
+
       bookCubit.updateBook(Book(
         id: book!.id,
         title: book!.title,
         author: book!.author,
         status: 0,
         favourite: book!.favourite,
-        rating: book!.rating,
+        rating: rating,
         startDate: book!.startDate,
         finishDate: DateTime.now().toIso8601String(),
         pages: book!.pages,
@@ -378,7 +433,10 @@ class BookScreen extends StatelessWidget {
                           changeStatusText:
                               _decideChangeStatusText(snapshot.data!.status),
                           changeStatusAction: () {
-                            _changeStatusAction(snapshot.data!.status);
+                            _changeStatusAction(
+                              context,
+                              snapshot.data!.status,
+                            );
                           },
                           showRatingAndLike: snapshot.data!.status == 0,
                         ),
