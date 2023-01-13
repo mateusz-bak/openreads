@@ -105,66 +105,38 @@ class _OpenreadsAppState extends State<OpenreadsApp>
 
               return MaterialApp(
                 title: 'Openreads Flutter',
-                theme: themeState.showOutlines
-                    ? AppTheme.lightTheme.copyWith(
-                        primaryColor: themeState.primaryColor,
-                        colorScheme: const ColorScheme.light().copyWith(
-                          primary: themeState.primaryColor,
-                          secondary: themeState.primaryColor,
-                        ),
-                        extensions: <ThemeExtension<dynamic>>[
-                          CustomBorder(
-                            radius: BorderRadius.circular(
-                              themeState.cornerRadius,
-                            ),
-                          ),
-                        ],
-                      )
-                    : AppTheme.lightTheme.copyWith(
-                        primaryColor: themeState.primaryColor,
-                        colorScheme: const ColorScheme.light().copyWith(
-                          primary: themeState.primaryColor,
-                          secondary: themeState.primaryColor,
-                        ),
-                        dividerColor: Colors.transparent,
-                        extensions: <ThemeExtension<dynamic>>[
-                          CustomBorder(
-                            radius: BorderRadius.circular(
-                              themeState.cornerRadius,
-                            ),
-                          ),
-                        ],
+                theme: AppTheme.lightTheme.copyWith(
+                  primaryColor: themeState.primaryColor,
+                  colorScheme: const ColorScheme.light().copyWith(
+                    primary: themeState.primaryColor,
+                    secondary: themeState.primaryColor,
+                  ),
+                  dividerColor:
+                      themeState.showOutlines ? null : Colors.transparent,
+                  extensions: <ThemeExtension<dynamic>>[
+                    CustomBorder(
+                      radius: BorderRadius.circular(
+                        themeState.cornerRadius,
                       ),
-                darkTheme: themeState.showOutlines
-                    ? AppTheme.darkTheme.copyWith(
-                        primaryColor: themeState.primaryColor,
-                        colorScheme: const ColorScheme.dark().copyWith(
-                          primary: themeState.primaryColor,
-                          secondary: themeState.primaryColor,
-                        ),
-                        extensions: <ThemeExtension<dynamic>>[
-                          CustomBorder(
-                            radius: BorderRadius.circular(
-                              themeState.cornerRadius,
-                            ),
-                          ),
-                        ],
-                      )
-                    : AppTheme.darkTheme.copyWith(
-                        primaryColor: themeState.primaryColor,
-                        colorScheme: const ColorScheme.dark().copyWith(
-                          primary: themeState.primaryColor,
-                          secondary: themeState.primaryColor,
-                        ),
-                        dividerColor: Colors.transparent,
-                        extensions: <ThemeExtension<dynamic>>[
-                          CustomBorder(
-                            radius: BorderRadius.circular(
-                              themeState.cornerRadius,
-                            ),
-                          ),
-                        ],
+                    ),
+                  ],
+                ),
+                darkTheme: AppTheme.darkTheme.copyWith(
+                  primaryColor: themeState.primaryColor,
+                  colorScheme: const ColorScheme.dark().copyWith(
+                    primary: themeState.primaryColor,
+                    secondary: themeState.primaryColor,
+                  ),
+                  dividerColor:
+                      themeState.showOutlines ? null : Colors.transparent,
+                  extensions: <ThemeExtension<dynamic>>[
+                    CustomBorder(
+                      radius: BorderRadius.circular(
+                        themeState.cornerRadius,
                       ),
+                    ),
+                  ],
+                ),
                 themeMode: themeState.themeMode,
                 home: welcomeMode
                     ? WelcomeScreen(themeData: Theme.of(context))
