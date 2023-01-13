@@ -43,6 +43,15 @@ class _ChallengeDialogState extends State<ChallengeDialog>
   late Animation<double> _animation;
 
   @override
+  void dispose() {
+    _booksController.dispose();
+    _pagesController.dispose();
+    _animController.dispose();
+
+    super.dispose();
+  }
+
+  @override
   void initState() {
     super.initState();
 

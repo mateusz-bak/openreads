@@ -528,7 +528,7 @@ class _BackupScreenState extends State<BackupScreen> {
     if (cover == null) return null;
 
     return blurhash_dart.BlurHash.encode(
-      img.decodeImage(cover!)!,
+      img.decodeImage(cover)!,
       numCompX: 4,
       numCompY: 3,
     ).hash;

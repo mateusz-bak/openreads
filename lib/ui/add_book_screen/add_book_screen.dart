@@ -513,6 +513,7 @@ class _AddBookState extends State<AddBook> {
     _pubYearCtrl.dispose();
     _isbnCtrl.dispose();
     _olidCtrl.dispose();
+    _tagsCtrl.dispose();
     _myReviewCtrl.dispose();
 
     super.dispose();
