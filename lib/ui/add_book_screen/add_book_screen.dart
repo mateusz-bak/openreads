@@ -175,7 +175,9 @@ class _AddBookState extends State<AddBook> {
           _pubYearCtrl.text.isEmpty ? null : int.parse(_pubYearCtrl.text),
       isbn: _isbnCtrl.text.isEmpty ? null : _isbnCtrl.text,
       olid: _olidCtrl.text.isEmpty ? null : _olidCtrl.text,
-      tags: selectedTags?.join('|||||'),
+      tags: (selectedTags == null || selectedTags!.isEmpty)
+          ? null
+          : selectedTags?.join('|||||'),
       myReview: _myReviewCtrl.text.isEmpty ? null : _myReviewCtrl.text,
       cover: cover,
       blurHash: blurHashString,
@@ -217,7 +219,9 @@ class _AddBookState extends State<AddBook> {
           _pubYearCtrl.text.isEmpty ? null : int.parse(_pubYearCtrl.text),
       isbn: _isbnCtrl.text.isEmpty ? null : _isbnCtrl.text,
       olid: _olidCtrl.text.isEmpty ? null : _olidCtrl.text,
-      tags: selectedTags?.join('|||||'),
+      tags: (selectedTags == null || selectedTags!.isEmpty)
+          ? null
+          : selectedTags?.join('|||||'),
       myReview: _myReviewCtrl.text.isEmpty ? null : _myReviewCtrl.text,
       cover: cover,
       blurHash: blurHashString,
@@ -459,11 +463,9 @@ class _AddBookState extends State<AddBook> {
   void _unselectTag(tag) {
     if (selectedTags == null) return;
 
-    bool removeTag = true;
-
-    while (removeTag) {
-      setState(() => removeTag = selectedTags!.remove(tag));
-    }
+    setState(() {
+      selectedTags!.removeWhere((element) => element == tag);
+    });
   }
 
   @override
