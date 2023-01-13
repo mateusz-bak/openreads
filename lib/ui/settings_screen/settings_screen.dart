@@ -735,7 +735,10 @@ class SettingsScreen extends StatelessWidget {
       appBar: AppBar(
         backgroundColor: Theme.of(context).scaffoldBackgroundColor,
         surfaceTintColor: Theme.of(context).scaffoldBackgroundColor,
-        title: const Text('Settings'),
+        title: const Text(
+          'Settings',
+          style: TextStyle(fontSize: 18),
+        ),
       ),
       body: SettingsList(
         contentPadding: const EdgeInsets.only(top: 10),

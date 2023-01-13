@@ -12,7 +12,10 @@ class TrashScreen extends StatelessWidget {
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Deleted Books'),
+        title: const Text(
+          'Deleted Books',
+          style: TextStyle(fontSize: 18),
+        ),
       ),
       body: StreamBuilder<List<Book>>(
         stream: bookCubit.deletedBooks,

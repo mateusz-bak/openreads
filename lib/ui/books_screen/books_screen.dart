@@ -339,14 +339,9 @@ class _BooksScreenState extends State<BooksScreen>
       extendBodyBehindAppBar: true,
       backgroundColor: Theme.of(context).scaffoldBackgroundColor,
       appBar: AppBar(
-        title: Row(
-          crossAxisAlignment: CrossAxisAlignment.end,
-          children: const [
-            Text(
-              'Openreads',
-              style: TextStyle(fontSize: 18),
-            ),
-          ],
+        title: const Text(
+          'Openreads',
+          style: TextStyle(fontSize: 18),
         ),
         backgroundColor: Theme.of(context).scaffoldBackgroundColor,
         surfaceTintColor: Theme.of(context).scaffoldBackgroundColor,

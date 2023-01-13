@@ -547,7 +547,10 @@ class _BackupScreenState extends State<BackupScreen> {
       appBar: AppBar(
         backgroundColor: Theme.of(context).scaffoldBackgroundColor,
         surfaceTintColor: Theme.of(context).scaffoldBackgroundColor,
-        title: const Text('Backup'),
+        title: const Text(
+          'Backup',
+          style: TextStyle(fontSize: 18),
+        ),
       ),
       body: SettingsList(
         contentPadding: const EdgeInsets.only(top: 10),

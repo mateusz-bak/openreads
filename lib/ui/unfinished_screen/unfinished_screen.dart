@@ -12,7 +12,10 @@ class UnfinishedScreen extends StatelessWidget {
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Unfinished Books'),
+        title: const Text(
+          'Unfinished Books',
+          style: TextStyle(fontSize: 18),
+        ),
       ),
       body: StreamBuilder<List<Book>>(
         stream: bookCubit.unfinishedBooks,

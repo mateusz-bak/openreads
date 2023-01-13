@@ -39,7 +39,10 @@ class _StatisticsScreenState extends State<StatisticsScreen> {
           appBar: AppBar(
             backgroundColor: Theme.of(context).scaffoldBackgroundColor,
             surfaceTintColor: Theme.of(context).scaffoldBackgroundColor,
-            title: const Text('Statistics'),
+            title: const Text(
+              'Statistics',
+              style: TextStyle(fontSize: 18),
+            ),
           ),
           body: StreamBuilder<List<Book>>(
             stream: bookCubit.allBooks,
