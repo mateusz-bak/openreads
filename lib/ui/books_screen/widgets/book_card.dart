@@ -208,7 +208,9 @@ class BookCard extends StatelessWidget {
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
-                        _buildRating(context),
+                        book.status == 0
+                            ? _buildRating(context)
+                            : const SizedBox(),
                         _buildSortAttribute(),
                       ],
                     ),
