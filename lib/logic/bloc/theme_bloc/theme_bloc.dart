@@ -6,7 +6,7 @@ part 'theme_state.dart';
 part 'theme_event.dart';
 
 class ThemeBloc extends HydratedBloc<ThemeEvent, ThemeState> {
-  String? fontFamily;
+  String fontFamily = 'Nunito';
 
   ThemeBloc()
       : super(const SetThemeState(
@@ -15,6 +15,7 @@ class ThemeBloc extends HydratedBloc<ThemeEvent, ThemeState> {
           cornerRadius: 5,
           primaryColor: Color(0xff3FA796),
           fontFamily: 'Nunito',
+          readTabFirst: true,
         )) {
     on<ChangeThemeEvent>((event, emit) {
       fontFamily = event.fontFamily;
@@ -25,42 +26,47 @@ class ThemeBloc extends HydratedBloc<ThemeEvent, ThemeState> {
         cornerRadius: event.cornerRadius,
         primaryColor: event.primaryColor,
         fontFamily: fontFamily,
+        readTabFirst: event.readTabFirst,
       ));
     });
   }
 
   @override
   ThemeState? fromJson(Map<String, dynamic> json) {
-    final themeState = json['theme_state'] as int;
-    final showOutlines = json['show_outlines'] as bool;
-    final cornerRadius = json['corner_radius'] as double;
-    final primaryColor = json['primary_color'] as int;
-    final fontFamily = json['font_family'] as String;
+    final themeState = json['theme_state'] as int?;
+    final showOutlines = json['show_outlines'] as bool?;
+    final cornerRadius = json['corner_radius'] as double?;
+    final primaryColor = json['primary_color'] as int?;
+    final fontFamily = json['font_family'] as String?;
+    final readTabFirst = json['read_tab_first'] as bool?;
 
     switch (themeState) {
       case 1:
         return SetThemeState(
           themeMode: ThemeMode.light,
-          showOutlines: showOutlines,
-          cornerRadius: cornerRadius,
-          primaryColor: Color(primaryColor),
-          fontFamily: fontFamily,
+          showOutlines: showOutlines ?? true,
+          cornerRadius: cornerRadius ?? 5,
+          primaryColor: Color(primaryColor ?? 0xff2146C7),
+          fontFamily: fontFamily ?? 'Nunito',
+          readTabFirst: readTabFirst ?? true,
         );
       case 2:
         return SetThemeState(
           themeMode: ThemeMode.dark,
-          showOutlines: showOutlines,
-          cornerRadius: cornerRadius,
-          primaryColor: Color(primaryColor),
-          fontFamily: fontFamily,
+          showOutlines: showOutlines ?? true,
+          cornerRadius: cornerRadius ?? 5,
+          primaryColor: Color(primaryColor ?? 0xff2146C7),
+          fontFamily: fontFamily ?? 'Nunito',
+          readTabFirst: readTabFirst ?? true,
         );
       default:
         return SetThemeState(
           themeMode: ThemeMode.system,
-          showOutlines: showOutlines,
-          cornerRadius: cornerRadius,
-          primaryColor: Color(primaryColor),
-          fontFamily: fontFamily,
+          showOutlines: showOutlines ?? true,
+          cornerRadius: cornerRadius ?? 5,
+          primaryColor: Color(primaryColor ?? 0xff2146C7),
+          fontFamily: fontFamily ?? 'Nunito',
+          readTabFirst: readTabFirst ?? true,
         );
     }
   }
@@ -76,6 +82,7 @@ class ThemeBloc extends HydratedBloc<ThemeEvent, ThemeState> {
             'corner_radius': state.cornerRadius,
             'primary_color': state.primaryColor.value,
             'font_family': state.fontFamily,
+            'read_tab_first': state.readTabFirst,
           };
         case ThemeMode.dark:
           return {
@@ -84,6 +91,7 @@ class ThemeBloc extends HydratedBloc<ThemeEvent, ThemeState> {
             'corner_radius': state.cornerRadius,
             'primary_color': state.primaryColor.value,
             'font_family': state.fontFamily,
+            'read_tab_first': state.readTabFirst,
           };
         case ThemeMode.system:
           return {
@@ -92,6 +100,7 @@ class ThemeBloc extends HydratedBloc<ThemeEvent, ThemeState> {
             'corner_radius': state.cornerRadius,
             'primary_color': state.primaryColor.value,
             'font_family': state.fontFamily,
+            'read_tab_first': state.readTabFirst,
           };
       }
     } else {
@@ -99,7 +108,9 @@ class ThemeBloc extends HydratedBloc<ThemeEvent, ThemeState> {
         'theme_state': 0,
         'show_outlines': true,
         'corner_radius': 5,
+        'primary_color': null,
         'font_family': null,
+        'read_tab_first': null,
       };
     }
   }

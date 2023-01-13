@@ -80,6 +80,7 @@ class SettingsScreen extends StatelessWidget {
       cornerRadius: state.cornerRadius,
       primaryColor: state.primaryColor,
       fontFamily: state.fontFamily,
+      readTabFirst: state.readTabFirst,
     ));
 
     Navigator.of(context).pop();
@@ -92,6 +93,7 @@ class SettingsScreen extends StatelessWidget {
       cornerRadius: state.cornerRadius,
       primaryColor: state.primaryColor,
       fontFamily: state.fontFamily,
+      readTabFirst: state.readTabFirst,
     ));
 
     Navigator.of(context).pop();
@@ -104,6 +106,7 @@ class SettingsScreen extends StatelessWidget {
       cornerRadius: state.cornerRadius,
       primaryColor: state.primaryColor,
       fontFamily: state.fontFamily,
+      readTabFirst: state.readTabFirst,
     ));
 
     Navigator.of(context).pop();
@@ -114,7 +117,7 @@ class SettingsScreen extends StatelessWidget {
     SetThemeState state,
     Font font,
   ) {
-    String? fontFamily;
+    late String fontFamily;
 
     switch (font) {
       case Font.montserrat:
@@ -152,7 +155,7 @@ class SettingsScreen extends StatelessWidget {
         break;
 
       default:
-        fontFamily = null;
+        fontFamily = 'Nunito';
         break;
     }
 
@@ -162,6 +165,7 @@ class SettingsScreen extends StatelessWidget {
       cornerRadius: state.cornerRadius,
       primaryColor: state.primaryColor,
       fontFamily: fontFamily,
+      readTabFirst: state.readTabFirst,
     ));
 
     Navigator.of(context).pop();
@@ -174,6 +178,7 @@ class SettingsScreen extends StatelessWidget {
       cornerRadius: state.cornerRadius,
       primaryColor: state.primaryColor,
       fontFamily: state.fontFamily,
+      readTabFirst: state.readTabFirst,
     ));
 
     Navigator.of(context).pop();
@@ -186,6 +191,7 @@ class SettingsScreen extends StatelessWidget {
       cornerRadius: state.cornerRadius,
       primaryColor: state.primaryColor,
       fontFamily: state.fontFamily,
+      readTabFirst: state.readTabFirst,
     ));
 
     Navigator.of(context).pop();
@@ -199,6 +205,7 @@ class SettingsScreen extends StatelessWidget {
       cornerRadius: radius,
       primaryColor: state.primaryColor,
       fontFamily: state.fontFamily,
+      readTabFirst: state.readTabFirst,
     ));
 
     Navigator.of(context).pop();
@@ -211,6 +218,7 @@ class SettingsScreen extends StatelessWidget {
       cornerRadius: state.cornerRadius,
       primaryColor: color,
       fontFamily: state.fontFamily,
+      readTabFirst: state.readTabFirst,
     ));
 
     Navigator.of(context).pop();
@@ -707,6 +715,83 @@ class SettingsScreen extends StatelessWidget {
     );
   }
 
+  _showTabsOrderDialog(BuildContext context) {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return Dialog(
+          shape: RoundedRectangleBorder(
+            borderRadius: Theme.of(context).extension<CustomBorder>()?.radius ??
+                BorderRadius.circular(5.0),
+          ),
+          backgroundColor: Theme.of(context).scaffoldBackgroundColor,
+          child: Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 20),
+            child: BlocBuilder<ThemeBloc, ThemeState>(
+              builder: (context, state) {
+                if (state is SetThemeState) {
+                  return Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      Padding(
+                        padding: const EdgeInsets.only(left: 10),
+                        child: Text(
+                          'Select book tabs order',
+                          style: TextStyle(
+                            fontSize: 18,
+                            fontWeight: FontWeight.bold,
+                            fontFamily: context.read<ThemeBloc>().fontFamily,
+                          ),
+                        ),
+                      ),
+                      const SizedBox(height: 15),
+                      SettingsDialogButton(
+                        text: 'Read books first',
+                        onPressed: () {
+                          BlocProvider.of<ThemeBloc>(context)
+                              .add(ChangeThemeEvent(
+                            themeMode: state.themeMode,
+                            showOutlines: state.showOutlines,
+                            cornerRadius: state.cornerRadius,
+                            primaryColor: state.primaryColor,
+                            fontFamily: state.fontFamily,
+                            readTabFirst: true,
+                          ));
+
+                          Navigator.of(context).pop();
+                        },
+                      ),
+                      const SizedBox(height: 5),
+                      SettingsDialogButton(
+                        text: 'In progress books first',
+                        onPressed: () {
+                          BlocProvider.of<ThemeBloc>(context)
+                              .add(ChangeThemeEvent(
+                            themeMode: state.themeMode,
+                            showOutlines: state.showOutlines,
+                            cornerRadius: state.cornerRadius,
+                            primaryColor: state.primaryColor,
+                            fontFamily: state.fontFamily,
+                            readTabFirst: false,
+                          ));
+
+                          Navigator.of(context).pop();
+                        },
+                      ),
+                    ],
+                  );
+                } else {
+                  return const SizedBox();
+                }
+              },
+            ),
+          ),
+        );
+      },
+    );
+  }
+
   SettingsTile _buildURLSetting({
     required String title,
     String? description,
@@ -822,7 +907,10 @@ class SettingsScreen extends StatelessWidget {
           fontFamily: context.read<ThemeBloc>().fontFamily,
         ),
       ),
-      leading: const Icon(FontAwesomeIcons.trash),
+      leading: const Icon(
+        FontAwesomeIcons.trash,
+        size: 20,
+      ),
       onPressed: (context) {
         Navigator.push(
           context,
@@ -1098,7 +1186,10 @@ class SettingsScreen extends StatelessWidget {
           fontFamily: context.read<ThemeBloc>().fontFamily,
         ),
       ),
-      leading: const Icon(Icons.font_download),
+      leading: const Icon(
+        Icons.font_download,
+        size: 22,
+      ),
       description: BlocBuilder<ThemeBloc, ThemeState>(
         builder: (_, state) {
           if (state is SetThemeState) {
@@ -1129,7 +1220,7 @@ class SettingsScreen extends StatelessWidget {
   SettingsTile _buildRatingTypeSetting(BuildContext context) {
     return SettingsTile(
       title: Text(
-        'Rating bar display type',
+        'Rating display type',
         style: TextStyle(
           fontSize: 16,
           fontFamily: context.read<ThemeBloc>().fontFamily,
@@ -1158,6 +1249,46 @@ class SettingsScreen extends StatelessWidget {
         },
       ),
       onPressed: (context) => _showRatingBarDialog(context),
+    );
+  }
+
+  SettingsTile _buildTabOrderSetting(BuildContext context) {
+    return SettingsTile(
+      title: Text(
+        'Book tabs order',
+        style: TextStyle(
+          fontSize: 16,
+          fontFamily: context.read<ThemeBloc>().fontFamily,
+        ),
+      ),
+      leading: const FaIcon(
+        FontAwesomeIcons.tableColumns,
+        size: 22,
+      ),
+      description: BlocBuilder<ThemeBloc, ThemeState>(
+        builder: (_, state) {
+          if (state is SetThemeState) {
+            if (state.readTabFirst) {
+              return Text(
+                'Read tab first',
+                style: TextStyle(
+                  fontFamily: context.read<ThemeBloc>().fontFamily,
+                ),
+              );
+            } else {
+              return Text(
+                'In progress tab first',
+                style: TextStyle(
+                  fontFamily: context.read<ThemeBloc>().fontFamily,
+                ),
+              );
+            }
+          } else {
+            return const SizedBox();
+          }
+        },
+      ),
+      onPressed: (context) => _showTabsOrderDialog(context),
     );
   }
 
@@ -1237,6 +1368,7 @@ class SettingsScreen extends StatelessWidget {
               _buildThemeModeSetting(context),
               _buildFontSetting(context),
               _buildRatingTypeSetting(context),
+              _buildTabOrderSetting(context),
               _buildOutlinesSetting(context),
               _buildCornersSetting(context),
             ],

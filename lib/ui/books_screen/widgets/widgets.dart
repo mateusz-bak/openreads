@@ -1,4 +1,5 @@
 export 'book_card.dart';
+export 'book_tab.dart';
 export 'books_list.dart';
 export 'sort_bottom_sheet.dart';
 export 'add_book_sheet.dart';

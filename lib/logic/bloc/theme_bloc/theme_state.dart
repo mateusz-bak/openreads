@@ -9,7 +9,8 @@ class SetThemeState extends ThemeState {
   final bool showOutlines;
   final double cornerRadius;
   final Color primaryColor;
-  final String? fontFamily;
+  final String fontFamily;
+  final bool readTabFirst;
 
   const SetThemeState({
     required this.themeMode,
@@ -17,6 +18,7 @@ class SetThemeState extends ThemeState {
     required this.cornerRadius,
     required this.primaryColor,
     required this.fontFamily,
+    required this.readTabFirst,
   });
 
   @override
@@ -26,5 +28,6 @@ class SetThemeState extends ThemeState {
         cornerRadius,
         primaryColor,
         fontFamily,
+        readTabFirst,
       ];
 }

@@ -438,179 +438,189 @@ class _BooksScreenState extends State<BooksScreen>
           child: const Icon(Icons.add),
         ),
       ),
-      body: DefaultTabController(
-          length: 3,
-          child: Column(
-            children: [
-              Expanded(
-                child: TabBarView(
-                  children: [
-                    StreamBuilder<List<Book>>(
-                      stream: bookCubit.finishedBooks,
-                      builder: (context, AsyncSnapshot<List<Book>> snapshot) {
-                        if (snapshot.hasData) {
-                          if (snapshot.data == null || snapshot.data!.isEmpty) {
-                            return Center(
-                              child: Padding(
-                                padding: const EdgeInsets.all(50),
-                                child: Text(
-                                  'Your read books list is currently empty. Click the "+" button below to add a new one.',
-                                  textAlign: TextAlign.center,
-                                  style: TextStyle(
-                                    letterSpacing: 1.5,
-                                    fontSize: 16,
-                                    fontFamily:
-                                        context.read<ThemeBloc>().fontFamily,
-                                  ),
-                                ),
-                              ),
-                            );
-                          }
-                          return BlocBuilder<SortBloc, SortState>(
-                            builder: (context, state) {
-                              if (state is SetSortState) {
-                                return BooksList(
-                                  books: _sortList(
-                                    state: state,
-                                    list: snapshot.data!,
-                                  ),
-                                  listNumber: 0,
-                                );
-                              } else {
-                                return const SizedBox();
-                              }
-                            },
-                          );
-                        } else if (snapshot.hasError) {
-                          return Text(
-                            snapshot.error.toString(),
-                            style: TextStyle(
-                              fontFamily: context.read<ThemeBloc>().fontFamily,
-                            ),
-                          );
-                        } else {
-                          return const SizedBox();
-                        }
-                      },
+      body: BlocBuilder<ThemeBloc, ThemeState>(
+        builder: (context, state) {
+          if (state is SetThemeState) {
+            return DefaultTabController(
+              length: 3,
+              child: Column(
+                children: [
+                  Expanded(
+                    child: TabBarView(
+                      children: state.readTabFirst
+                          ? List.of([
+                              _buildReadBooksTab(),
+                              _buildInProgressBooksTab(),
+                              _buildToReadBooksTab(),
+                            ])
+                          : List.of([
+                              _buildInProgressBooksTab(),
+                              _buildReadBooksTab(),
+                              _buildToReadBooksTab(),
+                            ]),
                     ),
-                    StreamBuilder<List<Book>>(
-                      stream: bookCubit.inProgressBooks,
-                      builder: (context, AsyncSnapshot<List<Book>> snapshot) {
-                        if (snapshot.hasData) {
-                          if (snapshot.data == null || snapshot.data!.isEmpty) {
-                            return Center(
-                              child: Padding(
-                                padding: const EdgeInsets.all(50),
-                                child: Text(
-                                  'Your in progress books list is currently empty. Click the "+" button below to add a new one.',
-                                  textAlign: TextAlign.center,
-                                  style: TextStyle(
-                                    letterSpacing: 1.5,
-                                    fontSize: 16,
-                                    fontFamily:
-                                        context.read<ThemeBloc>().fontFamily,
-                                  ),
-                                ),
-                              ),
-                            );
-                          }
-                          return BooksList(
-                            books: snapshot.data!,
-                            listNumber: 1,
-                          );
-                        } else if (snapshot.hasError) {
-                          return Text(
-                            snapshot.error.toString(),
-                            style: TextStyle(
-                              fontFamily: context.read<ThemeBloc>().fontFamily,
-                            ),
-                          );
-                        } else {
-                          return const SizedBox();
-                        }
-                      },
-                    ),
-                    StreamBuilder<List<Book>>(
-                      stream: bookCubit.toReadBooks,
-                      builder: (context, AsyncSnapshot<List<Book>> snapshot) {
-                        if (snapshot.hasData) {
-                          if (snapshot.data == null || snapshot.data!.isEmpty) {
-                            return Center(
-                              child: Padding(
-                                padding: const EdgeInsets.all(50),
-                                child: Text(
-                                  'Your for later books list is currently empty. Click the "+" button below to add a new one.',
-                                  textAlign: TextAlign.center,
-                                  style: TextStyle(
-                                    letterSpacing: 1.5,
-                                    fontSize: 16,
-                                    fontFamily:
-                                        context.read<ThemeBloc>().fontFamily,
-                                  ),
-                                ),
-                              ),
-                            );
-                          }
-                          return BooksList(
-                            books: snapshot.data!,
-                            listNumber: 2,
-                          );
-                        } else if (snapshot.hasError) {
-                          return Text(
-                            snapshot.error.toString(),
-                            style: TextStyle(
-                              fontFamily: context.read<ThemeBloc>().fontFamily,
-                            ),
-                          );
-                        } else {
-                          return const SizedBox();
-                        }
-                      },
-                    ),
-                  ],
+                  ),
+                  Builder(builder: (context) {
+                    return Container(
+                      color: Theme.of(context).scaffoldBackgroundColor,
+                      child: TabBar(
+                        labelColor: Theme.of(context).primaryColor,
+                        indicatorColor: Theme.of(context).primaryColor,
+                        unselectedLabelColor: Theme.of(context).mainTextColor,
+                        indicator:
+                            CustomTabIndicator(themeData: Theme.of(context)),
+                        indicatorPadding:
+                            const EdgeInsets.symmetric(horizontal: 30),
+                        tabs: state.readTabFirst
+                            ? List.of([
+                                const BookTab(text: 'Finished'),
+                                const BookTab(text: 'In progress'),
+                                const BookTab(text: 'For later'),
+                              ])
+                            : List.of([
+                                const BookTab(text: 'In progress'),
+                                const BookTab(text: 'Finished'),
+                                const BookTab(text: 'For later'),
+                              ]),
+                      ),
+                    );
+                  }),
+                ],
+              ),
+            );
+          } else {
+            return const SizedBox();
+          }
+        },
+      ),
+    );
+  }
+
+  StreamBuilder<List<Book>> _buildToReadBooksTab() {
+    return StreamBuilder<List<Book>>(
+      stream: bookCubit.toReadBooks,
+      builder: (context, AsyncSnapshot<List<Book>> snapshot) {
+        if (snapshot.hasData) {
+          if (snapshot.data == null || snapshot.data!.isEmpty) {
+            return Center(
+              child: Padding(
+                padding: const EdgeInsets.all(50),
+                child: Text(
+                  'Your for later books list is currently empty. Click the "+" button below to add a new one.',
+                  textAlign: TextAlign.center,
+                  style: TextStyle(
+                    letterSpacing: 1.5,
+                    fontSize: 16,
+                    fontFamily: context.read<ThemeBloc>().fontFamily,
+                  ),
                 ),
               ),
-              Builder(builder: (context) {
-                return Container(
-                  color: Theme.of(context).scaffoldBackgroundColor,
-                  child: TabBar(
-                    labelColor: Theme.of(context).primaryColor,
-                    indicatorColor: Theme.of(context).primaryColor,
-                    unselectedLabelColor: Theme.of(context).mainTextColor,
-                    indicator: CustomTabIndicator(themeData: Theme.of(context)),
-                    indicatorPadding:
-                        const EdgeInsets.symmetric(horizontal: 30),
-                    tabs: [
-                      Tab(
-                        child: Text(
-                          'Finished',
-                          style: TextStyle(
-                            fontFamily: context.read<ThemeBloc>().fontFamily,
-                          ),
-                        ),
-                      ),
-                      Tab(
-                        child: Text(
-                          'In progress',
-                          style: TextStyle(
-                            fontFamily: context.read<ThemeBloc>().fontFamily,
-                          ),
-                        ),
-                      ),
-                      Tab(
-                        child: Text(
-                          'For later',
-                          style: TextStyle(
-                            fontFamily: context.read<ThemeBloc>().fontFamily,
-                          ),
-                        ),
-                      ),
-                    ],
+            );
+          }
+          return BooksList(
+            books: snapshot.data!,
+            listNumber: 2,
+          );
+        } else if (snapshot.hasError) {
+          return Text(
+            snapshot.error.toString(),
+            style: TextStyle(
+              fontFamily: context.read<ThemeBloc>().fontFamily,
+            ),
+          );
+        } else {
+          return const SizedBox();
+        }
+      },
+    );
+  }
+
+  StreamBuilder<List<Book>> _buildInProgressBooksTab() {
+    return StreamBuilder<List<Book>>(
+      stream: bookCubit.inProgressBooks,
+      builder: (context, AsyncSnapshot<List<Book>> snapshot) {
+        if (snapshot.hasData) {
+          if (snapshot.data == null || snapshot.data!.isEmpty) {
+            return Center(
+              child: Padding(
+                padding: const EdgeInsets.all(50),
+                child: Text(
+                  'Your in progress books list is currently empty. Click the "+" button below to add a new one.',
+                  textAlign: TextAlign.center,
+                  style: TextStyle(
+                    letterSpacing: 1.5,
+                    fontSize: 16,
+                    fontFamily: context.read<ThemeBloc>().fontFamily,
                   ),
+                ),
+              ),
+            );
+          }
+          return BooksList(
+            books: snapshot.data!,
+            listNumber: 1,
+          );
+        } else if (snapshot.hasError) {
+          return Text(
+            snapshot.error.toString(),
+            style: TextStyle(
+              fontFamily: context.read<ThemeBloc>().fontFamily,
+            ),
+          );
+        } else {
+          return const SizedBox();
+        }
+      },
+    );
+  }
+
+  StreamBuilder<List<Book>> _buildReadBooksTab() {
+    return StreamBuilder<List<Book>>(
+      stream: bookCubit.finishedBooks,
+      builder: (context, AsyncSnapshot<List<Book>> snapshot) {
+        if (snapshot.hasData) {
+          if (snapshot.data == null || snapshot.data!.isEmpty) {
+            return Center(
+              child: Padding(
+                padding: const EdgeInsets.all(50),
+                child: Text(
+                  'Your read books list is currently empty. Click the "+" button below to add a new one.',
+                  textAlign: TextAlign.center,
+                  style: TextStyle(
+                    letterSpacing: 1.5,
+                    fontSize: 16,
+                    fontFamily: context.read<ThemeBloc>().fontFamily,
+                  ),
+                ),
+              ),
+            );
+          }
+          return BlocBuilder<SortBloc, SortState>(
+            builder: (context, state) {
+              if (state is SetSortState) {
+                return BooksList(
+                  books: _sortList(
+                    state: state,
+                    list: snapshot.data!,
+                  ),
+                  listNumber: 0,
                 );
-              }),
-            ],
-          )),
+              } else {
+                return const SizedBox();
+              }
+            },
+          );
+        } else if (snapshot.hasError) {
+          return Text(
+            snapshot.error.toString(),
+            style: TextStyle(
+              fontFamily: context.read<ThemeBloc>().fontFamily,
+            ),
+          );
+        } else {
+          return const SizedBox();
+        }
+      },
     );
   }
 }
