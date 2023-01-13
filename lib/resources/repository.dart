@@ -10,6 +10,10 @@ class Repository {
         status: status,
       );
 
+  Future<List<Book>> searchBooks(String query) => dbController.searchBooks(
+        query: query,
+      );
+
   Future<int> countBooks(int status) => dbController.countBooks(status: status);
 
   Future insertBook(Book book) => dbController.createBook(book);

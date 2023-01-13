@@ -9,6 +9,7 @@ import 'package:openreads/model/book.dart';
 import 'package:openreads/ui/add_book_screen/widgets/widgets.dart';
 import 'package:openreads/ui/books_screen/widgets/widgets.dart';
 import 'package:openreads/ui/search_ol_screen/search_ol_screen.dart.dart';
+import 'package:openreads/ui/search_page/search_page.dart';
 import 'package:openreads/ui/settings_screen/settings_screen.dart';
 import 'package:openreads/ui/statistics_screen/statistics_screen.dart';
 
@@ -350,6 +351,12 @@ class _BooksScreenState extends State<BooksScreen>
         backgroundColor: Theme.of(context).scaffoldBackgroundColor,
         surfaceTintColor: Theme.of(context).scaffoldBackgroundColor,
         actions: [
+          IconButton(
+            onPressed: () => Navigator.of(context).push(
+              MaterialPageRoute(builder: (_) => const SearchPage()),
+            ),
+            icon: const Icon(Icons.search),
+          ),
           PopupMenuButton<String>(
             onSelected: (_) {},
             itemBuilder: (_) {
@@ -449,14 +456,14 @@ class _BooksScreenState extends State<BooksScreen>
                     child: TabBarView(
                       children: state.readTabFirst
                           ? List.of([
-                              _buildReadBooksTab(),
-                              _buildInProgressBooksTab(),
-                              _buildToReadBooksTab(),
+                              _buildReadBooksTabView(),
+                              _buildInProgressBooksTabView(),
+                              _buildToReadBooksTabView(),
                             ])
                           : List.of([
-                              _buildInProgressBooksTab(),
-                              _buildReadBooksTab(),
-                              _buildToReadBooksTab(),
+                              _buildInProgressBooksTabView(),
+                              _buildReadBooksTabView(),
+                              _buildToReadBooksTabView(),
                             ]),
                     ),
                   ),
@@ -496,7 +503,7 @@ class _BooksScreenState extends State<BooksScreen>
     );
   }
 
-  StreamBuilder<List<Book>> _buildToReadBooksTab() {
+  StreamBuilder<List<Book>> _buildToReadBooksTabView() {
     return StreamBuilder<List<Book>>(
       stream: bookCubit.toReadBooks,
       builder: (context, AsyncSnapshot<List<Book>> snapshot) {
@@ -535,7 +542,7 @@ class _BooksScreenState extends State<BooksScreen>
     );
   }
 
-  StreamBuilder<List<Book>> _buildInProgressBooksTab() {
+  StreamBuilder<List<Book>> _buildInProgressBooksTabView() {
     return StreamBuilder<List<Book>>(
       stream: bookCubit.inProgressBooks,
       builder: (context, AsyncSnapshot<List<Book>> snapshot) {
@@ -574,7 +581,7 @@ class _BooksScreenState extends State<BooksScreen>
     );
   }
 
-  StreamBuilder<List<Book>> _buildReadBooksTab() {
+  StreamBuilder<List<Book>> _buildReadBooksTabView() {
     return StreamBuilder<List<Book>>(
       stream: bookCubit.finishedBooks,
       builder: (context, AsyncSnapshot<List<Book>> snapshot) {

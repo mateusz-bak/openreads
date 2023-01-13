@@ -43,6 +43,28 @@ class DatabaseController {
         : [];
   }
 
+  Future<List<Book>> searchBooks({
+    List<String>? columns,
+    required String query,
+  }) async {
+    final db = await dbClient.db;
+
+    var result = await db.query(
+      "booksTable",
+      columns: columns,
+      where: "title LIKE ? OR subtitle LIKE ? OR author LIKE ?",
+      whereArgs: [
+        '%$query%',
+        '%$query%',
+        '%$query%',
+      ],
+    );
+
+    return result.isNotEmpty
+        ? result.map((item) => Book.fromJSON(item)).toList()
+        : [];
+  }
+
   Future<int> countBooks({
     List<String>? columns,
     required int status,
