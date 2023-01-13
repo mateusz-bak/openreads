@@ -56,36 +56,26 @@ class _CoverViewState extends State<CoverView> {
                 height: widget.constrainHeight
                     ? ((MediaQuery.of(context).size.height / 2.5) - 20)
                     : null,
-                decoration: BoxDecoration(
-                  color: Colors.grey.shade400,
+                decoration: const BoxDecoration(
+                  color: Colors.transparent,
+                ),
+                child: ClipRRect(
                   borderRadius:
                       Theme.of(context).extension<CustomBorder>()?.radius,
-                ),
-                child: Container(
-                  padding: const EdgeInsets.all(1),
-                  decoration: BoxDecoration(
-                    borderRadius:
-                        Theme.of(context).extension<CustomBorder>()?.radius,
-                    color: Theme.of(context).dividerColor,
-                  ),
-                  child: ClipRRect(
-                    borderRadius:
-                        Theme.of(context).extension<CustomBorder>()?.radius,
-                    child: (widget.croppedPhotoPreview != null)
-                        ? Image.file(
-                            File(widget.croppedPhotoPreview!.path),
-                            fit: BoxFit.fill,
-                          )
-                        : (widget.photoBytes != null)
-                            ? Hero(
-                                tag: widget.heroTag ?? "",
-                                child: Image.memory(
-                                  widget.photoBytes!,
-                                  fit: BoxFit.fill,
-                                ),
-                              )
-                            : const SizedBox(),
-                  ),
+                  child: (widget.croppedPhotoPreview != null)
+                      ? Image.file(
+                          File(widget.croppedPhotoPreview!.path),
+                          fit: BoxFit.fill,
+                        )
+                      : (widget.photoBytes != null)
+                          ? Hero(
+                              tag: widget.heroTag ?? "",
+                              child: Image.memory(
+                                widget.photoBytes!,
+                                fit: BoxFit.fill,
+                              ),
+                            )
+                          : const SizedBox(),
                 ),
               ),
             ),
