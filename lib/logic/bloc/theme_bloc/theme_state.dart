@@ -9,7 +9,7 @@ class SetThemeState extends ThemeState {
   final bool showOutlines;
   final double cornerRadius;
   final Color primaryColor;
-  final String fontFamily;
+  final String? fontFamily;
   final bool readTabFirst;
 
   const SetThemeState({

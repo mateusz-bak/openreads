@@ -6,7 +6,7 @@ part 'theme_state.dart';
 part 'theme_event.dart';
 
 class ThemeBloc extends HydratedBloc<ThemeEvent, ThemeState> {
-  String fontFamily = 'Nunito';
+  String? fontFamily = 'Nunito';
 
   ThemeBloc()
       : super(const SetThemeState(

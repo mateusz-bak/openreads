@@ -117,9 +117,12 @@ class SettingsScreen extends StatelessWidget {
     SetThemeState state,
     Font font,
   ) {
-    late String fontFamily;
+    String? fontFamily;
 
     switch (font) {
+      case Font.system:
+        fontFamily = null;
+        break;
       case Font.montserrat:
         fontFamily = 'Montserrat';
         break;
@@ -153,7 +156,6 @@ class SettingsScreen extends StatelessWidget {
       case Font.barlow:
         fontFamily = 'Barlow';
         break;
-
       default:
         fontFamily = 'Nunito';
         break;
