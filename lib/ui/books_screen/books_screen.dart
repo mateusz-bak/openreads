@@ -342,7 +342,7 @@ class _BooksScreenState extends State<BooksScreen>
       backgroundColor: Theme.of(context).scaffoldBackgroundColor,
       appBar: AppBar(
         title: Text(
-          'Openreads',
+          'Openreads 2',
           style: TextStyle(
             fontSize: 18,
             fontFamily: context.read<ThemeBloc>().fontFamily,
