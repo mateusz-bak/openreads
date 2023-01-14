@@ -232,6 +232,14 @@ class _SortBottomSheetState extends State<SortBottomSheet> {
 
     late List<String> selectedYearsList;
 
+    final uniqueDbYears = List<int>.empty(growable: true);
+
+    for (var dbYear in dbYears) {
+      if (!uniqueDbYears.contains(dbYear)) {
+        uniqueDbYears.add(dbYear);
+      }
+    }
+
     if (selectedYears != null) {
       selectedYearsList = selectedYears.split('|||||');
     } else {
@@ -239,12 +247,12 @@ class _SortBottomSheetState extends State<SortBottomSheet> {
     }
 
     for (var selectedYear in selectedYearsList) {
-      if (!dbYears.contains(int.parse(selectedYear))) {
-        dbYears.add(int.parse(selectedYear));
+      if (!uniqueDbYears.contains(int.parse(selectedYear))) {
+        uniqueDbYears.add(int.parse(selectedYear));
       }
     }
 
-    for (var dbYear in dbYears) {
+    for (var dbYear in uniqueDbYears) {
       late bool selected;
 
       if (selectedYearsList.contains(dbYear.toString())) {
@@ -259,7 +267,7 @@ class _SortBottomSheetState extends State<SortBottomSheet> {
         onYearChipPressed: (bool selected) {
           _onYearChipPressed(
             dbYear: dbYear,
-            dbYears: dbYears,
+            dbYears: uniqueDbYears,
             selected: selected,
             selectedYearsList: selectedYearsList,
             state: state,
