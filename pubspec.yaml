@@ -17,16 +17,16 @@ dependencies:
   path_provider: ^2.0.11
   rxdart: ^0.27.5
   path: ^1.8.2
-  flutter_displaymode: ^0.4.0
+  flutter_displaymode: ^0.5.0
   image_picker: ^0.8.6
   image_cropper: ^3.0.0
   flutter_bloc: ^8.1.1
   colours: ^0.0.2
   flutter_blurhash: ^0.7.0
   blurhash_dart: ^1.1.0
-  image: ^3.2.2
+  image: ^3.3.0
   fl_chart: ^0.55.2
-  intl: ^0.17.0
+  intl: ^0.18.0
   dropdown_button2: ^1.8.9
   equatable: ^2.0.5
   connectivity_plus: ^3.0.2
