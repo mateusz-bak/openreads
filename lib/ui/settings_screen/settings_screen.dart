@@ -16,7 +16,7 @@ import 'package:url_launcher/url_launcher.dart';
 class SettingsScreen extends StatelessWidget {
   const SettingsScreen({super.key});
 
-  static const version = '2.0.0-beta3';
+  static const version = '2.0.0-rc1';
   static const repoUrl = 'https://github.com/mateusz-bak/openreads-android';
   static const translationUrl = 'https://crwd.in/openreads-android';
   static const communityUrl = 'https://matrix.to/#/#openreads:matrix.org';
@@ -28,7 +28,7 @@ class SettingsScreen extends StatelessWidget {
   _sendEmailToDev(BuildContext context, [bool mounted = true]) async {
     final Email email = Email(
       subject: 'Openreads feedback',
-      body: 'Version 2.0.0-beta3\n',
+      body: 'Version $version\n',
       recipients: ['mateusz.bak.dev@gmail.com'],
       isHTML: false,
     );
