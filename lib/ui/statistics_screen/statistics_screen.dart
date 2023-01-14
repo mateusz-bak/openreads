@@ -927,8 +927,6 @@ class _StatisticsScreenState extends State<StatisticsScreen> {
                       ? SetChallengeBox(
                           setChallenge: _setChallenge,
                           year: year ?? DateTime.now().year,
-                          booksTarget: selectedTarget.first.books,
-                          pagesTarget: selectedTarget.first.pages,
                         )
                       : const SizedBox();
                 } else {
