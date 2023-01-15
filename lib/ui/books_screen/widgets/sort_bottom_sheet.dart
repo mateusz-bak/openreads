@@ -326,7 +326,6 @@ class _SortBottomSheetState extends State<SortBottomSheet> {
 
   @override
   Widget build(BuildContext context) {
-    bookCubit.getFinishedBooks();
     return Column(
       mainAxisAlignment: MainAxisAlignment.end,
       mainAxisSize: MainAxisSize.min,
@@ -735,27 +734,30 @@ class _SortBottomSheetState extends State<SortBottomSheet> {
       stream: bookCubit.tags,
       builder: (context, AsyncSnapshot<List<String>> snapshot) {
         if (snapshot.hasData && snapshot.data!.isNotEmpty) {
-          return Container(
+          return Padding(
             padding: const EdgeInsets.only(top: 10),
-            decoration: BoxDecoration(
-              color: Theme.of(context).backgroundColor,
-              borderRadius: Theme.of(context).extension<CustomBorder>()?.radius,
-              border: Border.all(
-                color: Theme.of(context).dividerColor,
-              ),
-            ),
-            child: Row(
-              children: [
-                _getTagsAsAndSwitch(context, state),
-                const SizedBox(width: 10),
-                Text(
-                  'Only books with all selected tags',
-                  style: TextStyle(
-                    fontSize: 16,
-                    fontFamily: context.read<ThemeBloc>().fontFamily,
-                  ),
+            child: Container(
+              decoration: BoxDecoration(
+                color: Theme.of(context).backgroundColor,
+                borderRadius:
+                    Theme.of(context).extension<CustomBorder>()?.radius,
+                border: Border.all(
+                  color: Theme.of(context).dividerColor,
                 ),
-              ],
+              ),
+              child: Row(
+                children: [
+                  _getTagsAsAndSwitch(context, state),
+                  const SizedBox(width: 10),
+                  Text(
+                    'Only books with all selected tags',
+                    style: TextStyle(
+                      fontSize: 16,
+                      fontFamily: context.read<ThemeBloc>().fontFamily,
+                    ),
+                  ),
+                ],
+              ),
             ),
           );
         } else if (snapshot.hasData && snapshot.data!.isEmpty) {
