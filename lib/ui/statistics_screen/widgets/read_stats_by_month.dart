@@ -189,6 +189,7 @@ class ReadStatsByMonth extends StatelessWidget {
                             color: Theme.of(context).mainTextColor,
                             fontWeight: FontWeight.bold,
                             fontFamily: context.read<ThemeBloc>().fontFamily,
+                            fontSize: 11,
                           ),
                         );
                       },
