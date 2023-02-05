@@ -64,6 +64,7 @@ class _SearchOLScreenState extends State<SearchOLScreen>
     showModalBottomSheet(
       context: context,
       isScrollControlled: true,
+      enableDrag: false,
       builder: (context) => AddBook(
         topPadding: statusBarHeight,
         previousThemeData: Theme.of(context),

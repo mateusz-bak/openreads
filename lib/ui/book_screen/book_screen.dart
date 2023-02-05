@@ -386,6 +386,7 @@ class BookScreen extends StatelessWidget {
                               showModalBottomSheet(
                                   context: context,
                                   isScrollControlled: true,
+                                  enableDrag: false,
                                   builder: (context) {
                                     return AddBook(
                                       topPadding: statusBarHeight,

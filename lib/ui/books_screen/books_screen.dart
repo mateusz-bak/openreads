@@ -406,6 +406,7 @@ class _BooksScreenState extends State<BooksScreen>
                     showModalBottomSheet(
                         context: context,
                         isScrollControlled: true,
+                        enableDrag: false,
                         builder: (context) {
                           return AddBook(
                             topPadding: statusBarHeight,
