@@ -156,6 +156,9 @@ class SettingsScreen extends StatelessWidget {
       case Font.barlow:
         fontFamily = 'Barlow';
         break;
+      case Font.jost:
+        fontFamily = 'Jost';
+        break;
       default:
         fontFamily = 'Nunito';
         break;
@@ -484,6 +487,24 @@ class SettingsScreen extends StatelessWidget {
                                 ),
                                 const SizedBox(height: 5),
                                 SettingsDialogButton(
+                                  text: 'Nunito',
+                                  onPressed: () => _setFont(
+                                    context,
+                                    state,
+                                    Font.nunito,
+                                  ),
+                                ),
+                                const SizedBox(height: 5),
+                                SettingsDialogButton(
+                                  text: 'Jost',
+                                  onPressed: () => _setFont(
+                                    context,
+                                    state,
+                                    Font.jost,
+                                  ),
+                                ),
+                                const SizedBox(height: 5),
+                                SettingsDialogButton(
                                   text: 'Barlow',
                                   onPressed: () => _setFont(
                                     context,
@@ -529,16 +550,7 @@ class SettingsScreen extends StatelessWidget {
                                 ),
                                 const SizedBox(height: 5),
                                 SettingsDialogButton(
-                                  text: 'Nunito',
-                                  onPressed: () => _setFont(
-                                    context,
-                                    state,
-                                    Font.nunito,
-                                  ),
-                                ),
-                                const SizedBox(height: 5),
-                                SettingsDialogButton(
-                                  text: 'PlayfairDisplay',
+                                  text: 'Playfair Display',
                                   onPressed: () => _setFont(
                                     context,
                                     state,

@@ -25,4 +25,5 @@ enum Font {
   lora,
   quicksand,
   barlow,
+  jost,
 }

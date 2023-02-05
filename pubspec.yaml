@@ -123,3 +123,8 @@ flutter:
         - asset: assets/fonts/Barlow-Regular.ttf
         - asset: assets/fonts/Barlow-Bold.ttf
           weight: 700
+    - family: Jost
+      fonts:
+        - asset: assets/fonts/Jost-Regular.ttf
+        - asset: assets/fonts/Jost-Bold.ttf
+          weight: 700
