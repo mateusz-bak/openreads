@@ -40,17 +40,6 @@ class Statistics extends StatelessWidget {
                 Expanded(
                   child: TabBar(
                     isScrollable: true,
-                    padding: const EdgeInsets.symmetric(horizontal: 13),
-                    labelColor: Theme.of(context).mainTextColor,
-                    indicatorColor: Theme.of(context).primaryColor,
-                    unselectedLabelColor: Theme.of(context).primaryColor,
-                    indicator: BoxDecoration(
-                      borderRadius:
-                          Theme.of(context).extension<CustomBorder>()?.radius,
-                      border: Border.all(
-                        color: Theme.of(context).dividerColor,
-                      ),
-                    ),
                     tabs: _buildYearsTabBars(context, state.years),
                   ),
                 ),

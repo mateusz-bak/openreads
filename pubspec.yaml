@@ -25,7 +25,7 @@ dependencies:
   flutter_blurhash: ^0.7.0
   blurhash_dart: ^1.1.0
   image: ^3.3.0
-  fl_chart: ^0.55.2
+  fl_chart: ^0.60.0
   intl: ^0.18.0
   dropdown_button2: ^1.8.9
   equatable: ^2.0.5

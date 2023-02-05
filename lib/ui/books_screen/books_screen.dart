@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:openreads/core/constants.dart/enums.dart';
-import 'package:openreads/core/themes/app_theme.dart';
 import 'package:openreads/logic/bloc/sort_bloc/sort_bloc.dart';
 import 'package:openreads/logic/bloc/theme_bloc/theme_bloc.dart';
 import 'package:openreads/logic/cubit/book_cubit.dart';
@@ -471,13 +470,6 @@ class _BooksScreenState extends State<BooksScreen>
                     return Container(
                       color: Theme.of(context).scaffoldBackgroundColor,
                       child: TabBar(
-                        labelColor: Theme.of(context).primaryColor,
-                        indicatorColor: Theme.of(context).primaryColor,
-                        unselectedLabelColor: Theme.of(context).mainTextColor,
-                        indicator:
-                            CustomTabIndicator(themeData: Theme.of(context)),
-                        indicatorPadding:
-                            const EdgeInsets.symmetric(horizontal: 30),
                         tabs: state.readTabFirst
                             ? List.of([
                                 const BookTab(text: 'Finished'),
