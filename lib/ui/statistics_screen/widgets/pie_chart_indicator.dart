@@ -9,10 +9,12 @@ class PieChartIndicator extends StatelessWidget {
     required this.color,
     this.size = 16,
     required this.text,
+    required this.number,
   });
   final Color color;
   final double size;
   final String text;
+  final int number;
 
   @override
   Widget build(BuildContext context) {
@@ -30,10 +32,9 @@ class PieChartIndicator extends StatelessWidget {
           width: 4,
         ),
         Text(
-          text,
+          '$text ($number)',
           style: TextStyle(
             color: Theme.of(context).mainTextColor,
-            fontWeight: FontWeight.bold,
             fontSize: 12,
             fontFamily: context.read<ThemeBloc>().fontFamily,
           ),

@@ -98,6 +98,7 @@ class BooksByStatusState extends State<BooksByStatus> {
                               PieChartIndicator(
                                 color: theme.primaryGreen,
                                 text: 'Finished',
+                                number: widget.list![0],
                               ),
                               const SizedBox(
                                 height: 5,
@@ -105,6 +106,7 @@ class BooksByStatusState extends State<BooksByStatus> {
                               PieChartIndicator(
                                 color: theme.primaryYellow,
                                 text: 'In progress',
+                                number: widget.list![1],
                               ),
                               const SizedBox(
                                 height: 5,
@@ -112,6 +114,7 @@ class BooksByStatusState extends State<BooksByStatus> {
                               PieChartIndicator(
                                 color: theme.primaryBlue,
                                 text: 'For later',
+                                number: widget.list![2],
                               ),
                               SizedBox(
                                 height: (widget.list![3] != 0) ? 5 : 0,
@@ -120,6 +123,7 @@ class BooksByStatusState extends State<BooksByStatus> {
                                   ? PieChartIndicator(
                                       color: theme.primaryRed,
                                       text: 'Unfinished',
+                                      number: widget.list![3],
                                     )
                                   : const SizedBox(),
                             ],
