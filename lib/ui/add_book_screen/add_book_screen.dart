@@ -578,7 +578,7 @@ class _AddBookState extends State<AddBook> {
                             : true,
                     maxLines: 5,
                     maxLength: 255,
-                    textCapitalization: TextCapitalization.words,
+                    textCapitalization: TextCapitalization.sentences,
                   ),
                   const SizedBox(height: 20),
                   BookTextField(
@@ -588,7 +588,7 @@ class _AddBookState extends State<AddBook> {
                     keyboardType: TextInputType.name,
                     maxLines: 5,
                     maxLength: 255,
-                    textCapitalization: TextCapitalization.words,
+                    textCapitalization: TextCapitalization.sentences,
                   ),
                   const SizedBox(height: 20),
                   BookTextField(
