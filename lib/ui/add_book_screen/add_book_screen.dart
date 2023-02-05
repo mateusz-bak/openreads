@@ -145,10 +145,12 @@ class _AddBookState extends State<AddBook> {
       return false;
     }
 
-    if (_startDate != null && _finishDate != null) {
-      if (_finishDate!.isBefore(_startDate!)) {
-        _showSnackbar('Start date cannot be before finish date');
-        return false;
+    if (_status == 0) {
+      if (_startDate != null && _finishDate != null) {
+        if (_finishDate!.isBefore(_startDate!)) {
+          _showSnackbar('Start date cannot be before finish date');
+          return false;
+        }
       }
     }
 
