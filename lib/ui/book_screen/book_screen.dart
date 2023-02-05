@@ -359,9 +359,11 @@ class BookScreen extends StatelessWidget {
               stream: bookCubit.book,
               builder: (context, AsyncSnapshot<Book> snapshot) {
                 if (snapshot.hasData) {
-                  moreButtonOptions.add(
-                    snapshot.data?.deleted == true ? 'Restore' : 'Delete',
-                  );
+                  if (moreButtonOptions.length == 1) {
+                    moreButtonOptions.add(
+                      snapshot.data?.deleted == true ? 'Restore' : 'Delete',
+                    );
+                  }
 
                   return PopupMenuButton<String>(
                     onSelected: (_) {},
