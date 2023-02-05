@@ -215,8 +215,7 @@ class BookCard extends StatelessWidget {
                       overflow: TextOverflow.clip,
                       style: TextStyle(
                         fontSize: 16,
-                        letterSpacing: 2,
-                        fontWeight: FontWeight.w500,
+                        fontWeight: FontWeight.bold,
                         color: Theme.of(context).mainTextColor,
                         fontFamily: context.read<ThemeBloc>().fontFamily,
                       ),
@@ -227,7 +226,6 @@ class BookCard extends StatelessWidget {
                       overflow: TextOverflow.clip,
                       style: TextStyle(
                         fontSize: 15,
-                        letterSpacing: 1,
                         color: Theme.of(context).secondaryTextColor,
                         fontFamily: context.read<ThemeBloc>().fontFamily,
                       ),
