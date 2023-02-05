@@ -196,6 +196,9 @@ class BookScreen extends StatelessWidget {
   }
 
   void _changeStatusAction(BuildContext context, int status) async {
+    final dateNow = DateTime.now();
+    final date = DateTime(dateNow.year, dateNow.month, dateNow.day);
+
     if (status == 1) {
       int? rating;
 
@@ -273,7 +276,7 @@ class BookScreen extends StatelessWidget {
         favourite: book!.favourite,
         rating: rating,
         startDate: book!.startDate,
-        finishDate: DateTime.now().toIso8601String(),
+        finishDate: date.toIso8601String(),
         pages: book!.pages,
         publicationYear: book!.publicationYear,
         isbn: book!.isbn,
@@ -291,7 +294,7 @@ class BookScreen extends StatelessWidget {
         status: 1,
         favourite: book!.favourite,
         rating: book!.rating,
-        startDate: DateTime.now().toIso8601String(),
+        startDate: date.toIso8601String(),
         finishDate: book!.finishDate,
         pages: book!.pages,
         publicationYear: book!.publicationYear,
@@ -310,7 +313,7 @@ class BookScreen extends StatelessWidget {
         status: 1,
         favourite: book!.favourite,
         rating: book!.rating,
-        startDate: book!.startDate,
+        startDate: date.toIso8601String(),
         finishDate: book!.finishDate,
         pages: book!.pages,
         publicationYear: book!.publicationYear,
