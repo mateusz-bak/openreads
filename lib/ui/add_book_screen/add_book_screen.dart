@@ -62,18 +62,14 @@ class _AddBookState extends State<AddBook> {
   DateTime? _startDate;
   DateTime? _finishDate;
 
-  CroppedFile? croppedPhoto;
-  CroppedFile? croppedPhotoPreview;
-
-  XFile? photoXFile;
-
-  Uint8List? coverForEdit;
-  Uint8List? coverFromOL;
+  Uint8List? cover;
 
   String? blurHashString;
 
   List<String>? tags;
   List<String>? selectedTags;
+
+  bool _isCoverDownloading = false;
 
   static const String coverBaseUrl = 'https://covers.openlibrary.org/';
   late final String coverUrl = '${coverBaseUrl}b/id/${widget.cover}-L.jpg';
@@ -96,7 +92,7 @@ class _AddBookState extends State<AddBook> {
       _finishDate = DateTime.parse(widget.book!.finishDate!);
     }
 
-    coverForEdit = widget.book?.cover;
+    cover = widget.book?.cover;
 
     if (widget.book?.rating != null) {
       _rating = widget.book!.rating!;
@@ -160,16 +156,6 @@ class _AddBookState extends State<AddBook> {
   void _saveBook() async {
     if (!_validate()) return;
 
-    late Uint8List? cover;
-
-    if (widget.fromOpenLibrary) {
-      cover = coverFromOL;
-    } else if (croppedPhoto != null) {
-      cover = await croppedPhoto!.readAsBytes();
-    } else {
-      cover = null;
-    }
-
     bookCubit.addBook(Book(
       title: _titleCtrl.text,
       subtitle: _subtitleCtrl.text,
@@ -206,14 +192,6 @@ class _AddBookState extends State<AddBook> {
   void _updateBook() async {
     if (!_validate()) return;
 
-    late Uint8List? cover;
-
-    if (croppedPhoto != null) {
-      cover = await croppedPhoto!.readAsBytes();
-    } else {
-      cover = coverForEdit;
-    }
-
     bookCubit.updateBook(Book(
       id: widget.book?.id,
       title: _titleCtrl.text,
@@ -244,16 +222,16 @@ class _AddBookState extends State<AddBook> {
 
   void _loadCoverFromStorage() async {
     FocusManager.instance.primaryFocus?.unfocus();
-    photoXFile = await ImagePicker().pickImage(
+    final photoXFile = await ImagePicker().pickImage(
       source: ImageSource.gallery,
     );
 
     if (photoXFile == null) return;
 
-    croppedPhoto = await ImageCropper().cropImage(
+    final croppedPhoto = await ImageCropper().cropImage(
       maxWidth: 1024,
       maxHeight: 1024,
-      sourcePath: photoXFile!.path,
+      sourcePath: photoXFile.path,
       compressQuality: 90,
       uiSettings: [
         AndroidUiSettings(
@@ -273,10 +251,10 @@ class _AddBookState extends State<AddBook> {
     );
 
     if (croppedPhoto == null) return;
+    final croppedPhotoBytes = await croppedPhoto.readAsBytes();
 
     setState(() {
-      coverForEdit = null;
-      croppedPhotoPreview = croppedPhoto;
+      cover = croppedPhotoBytes;
     });
 
     _generateBlurHash();
@@ -360,31 +338,14 @@ class _AddBookState extends State<AddBook> {
   }
 
   void _generateBlurHash() async {
-    late Uint8List data;
-
-    if (croppedPhotoPreview == null &&
-        coverForEdit == null &&
-        coverFromOL == null) return;
-
-    if (croppedPhotoPreview != null) {
-      data = await croppedPhotoPreview!.readAsBytes();
-    }
-
-    if (coverForEdit != null) {
-      data = coverForEdit!;
-    }
-
-    if (coverFromOL != null) {
-      data = coverFromOL!;
-    }
-
-    final image = img.decodeImage(data.toList());
-
+    if (cover == null) return;
+    final image = img.decodeImage(cover!);
+    if (image == null) return;
     if (!mounted) return;
 
     setState(() {
       blurHashString = blurhash_dart.BlurHash.encode(
-        image!,
+        image,
         numCompX: 4,
         numCompY: 3,
       ).hash;
@@ -392,10 +353,15 @@ class _AddBookState extends State<AddBook> {
   }
 
   void _downloadCover() {
+    setState(() {
+      _isCoverDownloading = true;
+    });
+
     http.get(Uri.parse(coverUrl)).then((response) {
       if (mounted) {
         setState(() {
-          coverFromOL = response.bodyBytes;
+          cover = response.bodyBytes;
+          _isCoverDownloading = false;
         });
         _generateBlurHash();
       }
@@ -403,32 +369,18 @@ class _AddBookState extends State<AddBook> {
   }
 
   Widget _buildCover() {
-    if (widget.fromOpenLibrary) {
-      if (coverFromOL == null) {
-        return Padding(
-          padding: const EdgeInsets.symmetric(vertical: 50),
-          child: LoadingAnimationWidget.inkDrop(
-            color: Theme.of(context).primaryColor,
-            size: 42,
-          ),
-        );
-      } else {
-        return CoverView(
-          photoBytes: coverFromOL,
-          onPressed: _loadCoverFromStorage,
-        );
-      }
-    }
-
-    if (coverForEdit != null) {
-      return CoverView(
-        photoBytes: coverForEdit,
-        onPressed: _loadCoverFromStorage,
+    if (_isCoverDownloading) {
+      return Padding(
+        padding: const EdgeInsets.symmetric(vertical: 50),
+        child: LoadingAnimationWidget.threeArchedCircle(
+          color: Theme.of(context).primaryColor,
+          size: 36,
+        ),
       );
     } else {
-      if (croppedPhotoPreview != null) {
+      if (cover != null) {
         return CoverView(
-          croppedPhotoPreview: croppedPhotoPreview,
+          photoBytes: cover,
           onPressed: _loadCoverFromStorage,
         );
       } else {
@@ -501,7 +453,7 @@ class _AddBookState extends State<AddBook> {
       _prefillBookDetails();
     }
 
-    if (widget.fromOpenLibrary) {
+    if (widget.fromOpenLibrary || widget.fromOpenLibraryEdition) {
       _downloadCover();
     }
   }
