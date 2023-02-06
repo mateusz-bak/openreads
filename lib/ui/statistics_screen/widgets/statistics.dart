@@ -240,7 +240,7 @@ class Statistics extends StatelessWidget {
       builder: (context, challengeState) {
         if (challengeState is SetChallengeState &&
             challengeState.yearlyChallenges != null) {
-          if (state.finishedBooksByMonth.isEmpty) {
+          if (state.finishedPagesByMonth.isEmpty) {
             return Center(
               child: Text(
                 'No finished books',
@@ -268,7 +268,7 @@ class Statistics extends StatelessWidget {
                 : element.year == year;
           });
 
-          final selectedValue = state.finishedBooksByMonth.where((element) {
+          final selectedValue = state.finishedPagesByMonth.where((element) {
             return (year == null)
                 ? element.year == DateTime.now().year
                 : element.year == year;
