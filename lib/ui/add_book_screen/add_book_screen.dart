@@ -158,7 +158,7 @@ class _AddBookState extends State<AddBook> {
 
     bookCubit.addBook(Book(
       title: _titleCtrl.text,
-      subtitle: _subtitleCtrl.text,
+      subtitle: _subtitleCtrl.text.isNotEmpty ? _subtitleCtrl.text : null,
       author: _authorCtrl.text,
       status: _status!,
       favourite: false,
@@ -195,7 +195,7 @@ class _AddBookState extends State<AddBook> {
     bookCubit.updateBook(Book(
       id: widget.book?.id,
       title: _titleCtrl.text,
-      subtitle: _subtitleCtrl.text,
+      subtitle: _subtitleCtrl.text.isNotEmpty ? _subtitleCtrl.text : null,
       author: _authorCtrl.text,
       status: _status!,
       favourite: false,
