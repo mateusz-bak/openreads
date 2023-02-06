@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:flutter_blurhash/flutter_blurhash.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:image_cropper/image_cropper.dart';
 import 'package:openreads/core/themes/app_theme.dart';
 
@@ -14,6 +15,7 @@ class CoverView extends StatefulWidget {
     this.heroTag,
     this.onPressed,
     this.blurHash,
+    this.deleteCover,
     this.constrainHeight = true,
   }) : super(key: key);
 
@@ -23,6 +25,7 @@ class CoverView extends StatefulWidget {
   final String? heroTag;
   final String? blurHash;
   final bool constrainHeight;
+  final Function()? deleteCover;
 
   @override
   State<CoverView> createState() => _CoverViewState();
@@ -59,23 +62,42 @@ class _CoverViewState extends State<CoverView> {
                 decoration: const BoxDecoration(
                   color: Colors.transparent,
                 ),
-                child: ClipRRect(
-                  borderRadius:
-                      Theme.of(context).extension<CustomBorder>()?.radius,
-                  child: (widget.croppedPhotoPreview != null)
-                      ? Image.file(
-                          File(widget.croppedPhotoPreview!.path),
-                          fit: BoxFit.fill,
-                        )
-                      : (widget.photoBytes != null)
-                          ? Hero(
-                              tag: widget.heroTag ?? "",
-                              child: Image.memory(
-                                widget.photoBytes!,
-                                fit: BoxFit.fill,
-                              ),
+                child: Stack(
+                  children: [
+                    ClipRRect(
+                      borderRadius:
+                          Theme.of(context).extension<CustomBorder>()?.radius,
+                      child: (widget.croppedPhotoPreview != null)
+                          ? Image.file(
+                              File(widget.croppedPhotoPreview!.path),
+                              fit: BoxFit.fill,
                             )
-                          : const SizedBox(),
+                          : (widget.photoBytes != null)
+                              ? Hero(
+                                  tag: widget.heroTag ?? "",
+                                  child: Image.memory(
+                                    widget.photoBytes!,
+                                    fit: BoxFit.fill,
+                                  ),
+                                )
+                              : const SizedBox(),
+                    ),
+                    widget.deleteCover != null
+                        ? Positioned(
+                            right: 1,
+                            bottom: 1,
+                            child: IconButton(
+                              style: IconButton.styleFrom(
+                                foregroundColor: Colors.white,
+                                backgroundColor: Colors.red.shade400,
+                              ),
+                              icon: const Icon(FontAwesomeIcons.trash),
+                              onPressed: widget.deleteCover,
+                              iconSize: 16,
+                            ),
+                          )
+                        : const SizedBox(),
+                  ],
                 ),
               ),
             ),

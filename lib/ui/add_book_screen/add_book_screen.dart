@@ -382,6 +382,7 @@ class _AddBookState extends State<AddBook> {
         return CoverView(
           photoBytes: cover,
           onPressed: _loadCoverFromStorage,
+          deleteCover: _deleteCover,
         );
       } else {
         return CoverPlaceholder(
@@ -390,6 +391,12 @@ class _AddBookState extends State<AddBook> {
         );
       }
     }
+  }
+
+  _deleteCover() {
+    setState(() {
+      cover = null;
+    });
   }
 
   void _addNewTag() {
