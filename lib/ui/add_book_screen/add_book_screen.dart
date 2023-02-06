@@ -262,6 +262,16 @@ class _AddBookState extends State<AddBook> {
 
   void _changeBookStatus(int position) {
     _status = position;
+
+    final dateNow = DateTime.now();
+    final date = DateTime(dateNow.year, dateNow.month, dateNow.day);
+
+    if (position == 0) {
+      _finishDate ??= date;
+    } else if (position == 1) {
+      _startDate ??= date;
+    }
+
     _animateBookStatus(position);
   }
 
