@@ -25,7 +25,7 @@ class _BooksListState extends State<BooksList>
     return ListView.builder(
       itemCount: widget.books.length,
       itemBuilder: (context, index) {
-        final heroTag = 'tag_${widget.listNumber}_$index';
+        final heroTag = 'tag_${widget.listNumber}_${widget.books[index].id}';
 
         return BookCard(
           book: widget.books[index],
