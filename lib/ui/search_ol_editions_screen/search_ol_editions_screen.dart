@@ -98,7 +98,7 @@ class _SearchOLEditionsScreenState extends State<SearchOLEditionsScreen> {
   void _saveEdition({
     required double statusBarHeight,
     required OLEditionResult result,
-    required int cover,
+    required int? cover,
   }) {
     final book = Book(
       title: result.title!,

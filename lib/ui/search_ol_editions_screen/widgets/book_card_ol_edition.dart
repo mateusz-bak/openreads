@@ -12,7 +12,7 @@ class BookCardOLEdition extends StatelessWidget {
   }) : super(key: key);
 
   final String title;
-  final int cover;
+  final int? cover;
   final Function() onPressed;
 
   static const String coverBaseUrl = 'https://covers.openlibrary.org/';
@@ -39,27 +39,35 @@ class BookCardOLEdition extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
-                Expanded(
-                  child: ClipRRect(
-                    borderRadius: BorderRadius.circular(2),
-                    child: CachedNetworkImage(
-                      imageUrl: coverUrl,
-                      fadeInDuration: const Duration(milliseconds: 100),
-                      fadeOutDuration: const Duration(milliseconds: 100),
-                      placeholder: (context, url) => Center(
-                        child: Container(
-                          padding: const EdgeInsets.all(5),
-                          child: LoadingAnimationWidget.threeArchedCircle(
-                            color: Theme.of(context).primaryColor,
-                            size: 24,
+                cover != null
+                    ? Expanded(
+                        child: ClipRRect(
+                          borderRadius: BorderRadius.circular(2),
+                          child: CachedNetworkImage(
+                            imageUrl: coverUrl,
+                            fadeInDuration: const Duration(milliseconds: 100),
+                            fadeOutDuration: const Duration(milliseconds: 100),
+                            placeholder: (context, url) => Center(
+                              child: Container(
+                                padding: const EdgeInsets.all(5),
+                                child: LoadingAnimationWidget.threeArchedCircle(
+                                  color: Theme.of(context).primaryColor,
+                                  size: 24,
+                                ),
+                              ),
+                            ),
+                            errorWidget: (context, url, error) =>
+                                const Icon(Icons.error),
+                          ),
+                        ),
+                      )
+                    : const Expanded(
+                        child: Center(
+                          child: FittedBox(
+                            child: Text('No cover'),
                           ),
                         ),
                       ),
-                      errorWidget: (context, url, error) =>
-                          const Icon(Icons.error),
-                    ),
-                  ),
-                ),
               ],
             )),
       ),

@@ -471,7 +471,9 @@ class _AddBookState extends State<AddBook> {
     }
 
     if (widget.fromOpenLibrary || widget.fromOpenLibraryEdition) {
-      _downloadCover();
+      if (widget.cover != null) {
+        _downloadCover();
+      }
     }
   }
 

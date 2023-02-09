@@ -32,7 +32,7 @@ class OLEditionResult {
   final List<String>? publishers;
   final int? numberOfPages;
   final List<String>? isbn10;
-  final List<int>? covers;
+  final List<int?>? covers;
   final String? key;
   final List<Type>? authors;
   final String? ocaid;
@@ -63,7 +63,7 @@ class OLEditionResult {
             : List<String>.from(json["isbn_10"].map((x) => x)),
         covers: json["covers"] == null
             ? null
-            : List<int>.from(json["covers"].map((x) => x)),
+            : List<int?>.from(json["covers"].map((x) => x)),
         key: json["key"],
         authors: json["authors"] == null
             ? null
