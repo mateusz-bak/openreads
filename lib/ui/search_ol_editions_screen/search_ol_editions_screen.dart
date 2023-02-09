@@ -59,7 +59,7 @@ class _SearchOLEditionsScreenState extends State<SearchOLEditionsScreen> {
       if (pageKey >= widget.editions.length) {
         _pagingController.appendLastPage(newResults);
       } else {
-        final nextPageKey = pageKey + 6;
+        final nextPageKey = pageKey + 3;
         _pagingController.appendPage(newResults, nextPageKey);
       }
     } catch (error) {
