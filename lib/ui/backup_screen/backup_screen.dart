@@ -175,7 +175,7 @@ class _BackupScreenState extends State<BackupScreen> {
 
   Future<String?> _writeTempBackupFile(
       List<String> list, String? challengeTargets) async {
-    final data = list.join('|||||');
+    final data = list.join('@@@@@');
 
     final tmpDir = await getApplicationSupportDirectory();
 
@@ -408,14 +408,39 @@ class _BackupScreenState extends State<BackupScreen> {
     final archive = ZipDecoder().decodeBytes(archiveBytes);
     extractArchiveToDisk(archive, tmpPath.path);
 
-    final booksData = File('${tmpPath.path}/books.backup').readAsStringSync();
-    final books = booksData.split('|||||');
+    var booksData = File('${tmpPath.path}/books.backup').readAsStringSync();
+
+    // First backups of v2 used ||||| as separation between books,
+    // That caused problems because this is as well a separator for tags
+    // Now @@@@@ is a separator for books but some backups may need below line
+    booksData = booksData.replaceAll('}|||||{', '}@@@@@{');
+
+    final books = booksData.split('@@@@@');
 
     await bookCubit.removeAllBooks();
 
     for (var book in books) {
-      bookCubit.addBook(Book.fromJSON(jsonDecode(book)));
+      try {
+        bookCubit.addBook(
+          Book.fromJSON(jsonDecode(book)),
+          refreshBooks: false,
+        );
+      } catch (e) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text(
+              e.toString(),
+              style: TextStyle(
+                fontFamily: context.read<ThemeBloc>().fontFamily,
+              ),
+            ),
+          ),
+        );
+      }
     }
+
+    bookCubit.getAllBooksByStatus();
+    bookCubit.getAllBooks();
 
     await _restoreChallengeTargetsV4(tmpPath);
   }
