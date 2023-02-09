@@ -507,7 +507,7 @@ class StatsBloc extends Bloc<StatsEvent, StatsState> {
     List<int> finishedPagesByMonth = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
 
     for (Book book in books) {
-      if (book.finishDate != null) {
+      if (book.finishDate != null && book.pages != null) {
         final finishMonth = DateTime.parse(book.finishDate!).month;
 
         finishedPagesByMonth[finishMonth - 1] += book.pages!;
