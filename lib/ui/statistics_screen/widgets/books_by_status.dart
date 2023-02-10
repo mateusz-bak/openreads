@@ -4,6 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:openreads/core/themes/app_theme.dart';
 import 'package:openreads/logic/bloc/theme_bloc/theme_bloc.dart';
 import 'package:openreads/ui/statistics_screen/widgets/widgets.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class BooksByStatus extends StatefulWidget {
   const BooksByStatus({
@@ -97,7 +98,8 @@ class BooksByStatusState extends State<BooksByStatus> {
                             children: [
                               PieChartIndicator(
                                 color: theme.primaryGreen,
-                                text: 'Finished',
+                                text: AppLocalizations.of(context)!
+                                    .books_finished,
                                 number: widget.list![0],
                               ),
                               const SizedBox(
@@ -105,7 +107,8 @@ class BooksByStatusState extends State<BooksByStatus> {
                               ),
                               PieChartIndicator(
                                 color: theme.primaryYellow,
-                                text: 'In progress',
+                                text: AppLocalizations.of(context)!
+                                    .books_in_progress,
                                 number: widget.list![1],
                               ),
                               const SizedBox(
@@ -113,7 +116,8 @@ class BooksByStatusState extends State<BooksByStatus> {
                               ),
                               PieChartIndicator(
                                 color: theme.primaryBlue,
-                                text: 'For later',
+                                text: AppLocalizations.of(context)!
+                                    .books_for_later,
                                 number: widget.list![2],
                               ),
                               SizedBox(
@@ -122,7 +126,8 @@ class BooksByStatusState extends State<BooksByStatus> {
                               (widget.list![3] != 0)
                                   ? PieChartIndicator(
                                       color: theme.primaryRed,
-                                      text: 'Unfinished',
+                                      text: AppLocalizations.of(context)!
+                                          .books_unfinished,
                                       number: widget.list![3],
                                     )
                                   : const SizedBox(),

@@ -8,6 +8,7 @@ import 'package:openreads/logic/cubit/book_cubit.dart';
 import 'package:openreads/model/book.dart';
 
 import 'package:openreads/ui/statistics_screen/widgets/statistics.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class StatisticsScreen extends StatefulWidget {
   const StatisticsScreen({super.key});
@@ -40,7 +41,7 @@ class _StatisticsScreenState extends State<StatisticsScreen> {
                   backgroundColor: Theme.of(context).scaffoldBackgroundColor,
                   surfaceTintColor: Theme.of(context).scaffoldBackgroundColor,
                   title: Text(
-                    'Statistics',
+                    AppLocalizations.of(context)!.statistics,
                     style: TextStyle(
                       fontSize: 18,
                       fontFamily: context.read<ThemeBloc>().fontFamily,

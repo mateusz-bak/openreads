@@ -11,6 +11,7 @@ import 'package:openreads/ui/search_ol_screen/search_ol_screen.dart.dart';
 import 'package:openreads/ui/search_page/search_page.dart';
 import 'package:openreads/ui/settings_screen/settings_screen.dart';
 import 'package:openreads/ui/statistics_screen/statistics_screen.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class BooksScreen extends StatefulWidget {
   const BooksScreen({Key? key}) : super(key: key);
@@ -21,11 +22,7 @@ class BooksScreen extends StatefulWidget {
 
 class _BooksScreenState extends State<BooksScreen>
     with AutomaticKeepAliveClientMixin {
-  final moreButtonOptions = [
-    'Sort / filter',
-    'Statistics',
-    'Settings',
-  ];
+  late List<String> moreButtonOptions;
 
   List<Book> _sortReadList({
     required SetSortState state,
@@ -391,6 +388,12 @@ class _BooksScreenState extends State<BooksScreen>
   Widget build(BuildContext context) {
     super.build(context);
 
+    moreButtonOptions = [
+      AppLocalizations.of(context)!.sort_filter,
+      AppLocalizations.of(context)!.statistics,
+      AppLocalizations.of(context)!.settings,
+    ];
+
     final statusBarHeight = MediaQuery.of(context).padding.top;
 
     return Scaffold(
@@ -530,14 +533,32 @@ class _BooksScreenState extends State<BooksScreen>
                       child: TabBar(
                         tabs: state.readTabFirst
                             ? List.of([
-                                const BookTab(text: 'Finished'),
-                                const BookTab(text: 'In progress'),
-                                const BookTab(text: 'For later'),
+                                BookTab(
+                                  text: AppLocalizations.of(context)!
+                                      .books_finished,
+                                ),
+                                BookTab(
+                                  text: AppLocalizations.of(context)!
+                                      .books_in_progress,
+                                ),
+                                BookTab(
+                                  text: AppLocalizations.of(context)!
+                                      .books_for_later,
+                                ),
                               ])
                             : List.of([
-                                const BookTab(text: 'In progress'),
-                                const BookTab(text: 'Finished'),
-                                const BookTab(text: 'For later'),
+                                BookTab(
+                                  text: AppLocalizations.of(context)!
+                                      .books_in_progress,
+                                ),
+                                BookTab(
+                                  text: AppLocalizations.of(context)!
+                                      .books_finished,
+                                ),
+                                BookTab(
+                                  text: AppLocalizations.of(context)!
+                                      .books_for_later,
+                                ),
                               ]),
                       ),
                     );
@@ -563,7 +584,7 @@ class _BooksScreenState extends State<BooksScreen>
               child: Padding(
                 padding: const EdgeInsets.all(50),
                 child: Text(
-                  'Your for later books list is currently empty. Click the "+" button below to add a new one.',
+                  '${AppLocalizations.of(context)!.this_list_is_empty_1}\n${AppLocalizations.of(context)!.this_list_is_empty_2}',
                   textAlign: TextAlign.center,
                   style: TextStyle(
                     letterSpacing: 1.5,
@@ -614,7 +635,7 @@ class _BooksScreenState extends State<BooksScreen>
               child: Padding(
                 padding: const EdgeInsets.all(50),
                 child: Text(
-                  'Your in progress books list is currently empty. Click the "+" button below to add a new one.',
+                  '${AppLocalizations.of(context)!.this_list_is_empty_1}\n${AppLocalizations.of(context)!.this_list_is_empty_2}',
                   textAlign: TextAlign.center,
                   style: TextStyle(
                     letterSpacing: 1.5,
@@ -665,7 +686,7 @@ class _BooksScreenState extends State<BooksScreen>
               child: Padding(
                 padding: const EdgeInsets.all(50),
                 child: Text(
-                  'Your read books list is currently empty. Click the "+" button below to add a new one.',
+                  '${AppLocalizations.of(context)!.this_list_is_empty_1}\n${AppLocalizations.of(context)!.this_list_is_empty_2}',
                   textAlign: TextAlign.center,
                   style: TextStyle(
                     letterSpacing: 1.5,

@@ -11,6 +11,7 @@ import 'package:openreads/resources/open_library_service.dart';
 import 'package:openreads/ui/add_book_screen/widgets/widgets.dart';
 import 'package:openreads/ui/search_ol_editions_screen/search_ol_editions_screen.dart';
 import 'package:openreads/ui/search_ol_screen/widgets/widgets.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class SearchOLScreen extends StatefulWidget {
   const SearchOLScreen({super.key, this.scan = false});
@@ -120,11 +121,11 @@ class _SearchOLScreenState extends State<SearchOLScreen>
 
   void _startScanner() async {
     var result = await BarcodeScanner.scan(
-      options: const ScanOptions(
+      options: ScanOptions(
         strings: {
-          'cancel': 'Cancel',
-          'flash_on': 'Flash on',
-          'flash_off': 'Flash off',
+          'cancel': AppLocalizations.of(context)!.cancel,
+          'flash_on': AppLocalizations.of(context)!.flash_on,
+          'flash_off': AppLocalizations.of(context)!.flash_off,
         },
       ),
     );
@@ -170,7 +171,7 @@ class _SearchOLScreenState extends State<SearchOLScreen>
     return Scaffold(
       appBar: AppBar(
         title: Text(
-          'Search in Open Library',
+          AppLocalizations.of(context)!.search_in_open_library,
           style: TextStyle(
             fontSize: 18,
             fontFamily: context.read<ThemeBloc>().fontFamily,

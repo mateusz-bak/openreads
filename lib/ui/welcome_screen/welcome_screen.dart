@@ -6,6 +6,7 @@ import 'package:openreads/core/themes/app_theme.dart';
 import 'package:openreads/logic/bloc/theme_bloc/theme_bloc.dart';
 import 'package:openreads/logic/bloc/welcome_bloc/welcome_bloc.dart';
 import 'package:openreads/ui/books_screen/books_screen.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class WelcomeScreen extends StatefulWidget {
   const WelcomeScreen({
@@ -30,7 +31,7 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
 
     listContentConfig.add(
       ContentConfig(
-        title: 'Welcome to Openreads',
+        title: AppLocalizations.of(context)!.welcome_1,
         maxLineTitle: 3,
         styleTitle: TextStyle(
           fontSize: 32,
@@ -45,7 +46,7 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
           fontFamily: context.read<ThemeBloc>().fontFamily,
         ),
         description:
-            "Openreads will help you keep track of your books.\n\n\nIt is also a great tool for organizing your personal library in an easy and transparent way.",
+            '${AppLocalizations.of(context)!.welcome_1_description_1}\n\n\n${AppLocalizations.of(context)!.welcome_1_description_2}',
         textAlignDescription: TextAlign.start,
         backgroundImage: 'assets/images/welcome_1.jpg',
         backgroundColor: widget.themeData.scaffoldBackgroundColor,
@@ -66,7 +67,7 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
           fontFamily: context.read<ThemeBloc>().fontFamily,
         ),
         description:
-            "Progress with your readings thanks to awesome and detailed statistics.\n\n\nChallenge yourself to be a better reader.",
+            '${AppLocalizations.of(context)!.welcome_2_description_1}\n\n\n${AppLocalizations.of(context)!.welcome_2_description_2}',
         backgroundImage: 'assets/images/welcome_2.jpg',
         backgroundColor: widget.themeData.scaffoldBackgroundColor,
       ),
@@ -82,7 +83,7 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
           fontFamily: context.read<ThemeBloc>().fontFamily,
         ),
         description:
-            "Openreads is completely open source!\n\n\nIt means that you can inspect the app's code on your own and contribute to it's development.\n\n\nAs a bonus you get zero ads and absolutely no tracking!",
+            '${AppLocalizations.of(context)!.welcome_3_description_1}\n\n\n${AppLocalizations.of(context)!.welcome_3_description_2}\n\n\n${AppLocalizations.of(context)!.welcome_3_description_3}',
         backgroundImage: 'assets/images/welcome_3.jpg',
         backgroundColor: widget.themeData.scaffoldBackgroundColor,
       ),
@@ -106,7 +107,7 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
       isShowPrevBtn: false,
       listContentConfig: listContentConfig,
       onDonePress: onDonePress,
-      renderDoneBtn: const Text('START'),
+      renderDoneBtn: Text(AppLocalizations.of(context)!.start_button),
       skipButtonStyle: ButtonStyle(
         shape: MaterialStateProperty.all<OutlinedBorder>(RoundedRectangleBorder(
           borderRadius: Theme.of(context).extension<CustomBorder>()?.radius ??

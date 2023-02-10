@@ -4,6 +4,7 @@ import 'package:openreads/logic/bloc/theme_bloc/theme_bloc.dart';
 import 'package:openreads/logic/cubit/book_cubit.dart';
 import 'package:openreads/model/book.dart';
 import 'package:openreads/ui/books_screen/widgets/widgets.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class UnfinishedScreen extends StatelessWidget {
   const UnfinishedScreen({super.key});
@@ -15,7 +16,7 @@ class UnfinishedScreen extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: Text(
-          'Unfinished Books',
+          AppLocalizations.of(context)!.unfinished_books,
           style: TextStyle(
             fontSize: 18,
             fontFamily: context.read<ThemeBloc>().fontFamily,
@@ -31,7 +32,7 @@ class UnfinishedScreen extends StatelessWidget {
                 child: Padding(
                   padding: const EdgeInsets.all(50),
                   child: Text(
-                    'You don\'t have any unfinished books',
+                    AppLocalizations.of(context)!.no_unfinished_books,
                     textAlign: TextAlign.center,
                     style: TextStyle(
                       letterSpacing: 1.5,

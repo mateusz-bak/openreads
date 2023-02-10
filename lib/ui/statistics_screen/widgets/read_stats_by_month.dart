@@ -3,9 +3,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:openreads/core/themes/app_theme.dart';
 import 'package:openreads/logic/bloc/theme_bloc/theme_bloc.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class ReadStatsByMonth extends StatelessWidget {
-  const ReadStatsByMonth({
+  ReadStatsByMonth({
     Key? key,
     required this.list,
     required this.title,
@@ -15,6 +16,8 @@ class ReadStatsByMonth extends StatelessWidget {
   final List<int> list;
   final String title;
   final ThemeData theme;
+
+  late final List<String> listOfMonthsShort;
 
   FlTitlesData get titlesData => FlTitlesData(
         show: true,
@@ -39,42 +42,43 @@ class ReadStatsByMonth extends StatelessWidget {
 
   Widget getTitles(double value, TitleMeta meta) {
     String text;
+
     switch (value.toInt()) {
       case 0:
-        text = 'Jan';
+        text = listOfMonthsShort[value.toInt()];
         break;
       case 1:
-        text = 'Feb';
+        text = listOfMonthsShort[value.toInt()];
         break;
       case 2:
-        text = 'Mar';
+        text = listOfMonthsShort[value.toInt()];
         break;
       case 3:
-        text = 'Apr';
+        text = listOfMonthsShort[value.toInt()];
         break;
       case 4:
-        text = 'May';
+        text = listOfMonthsShort[value.toInt()];
         break;
       case 5:
-        text = 'Jun';
+        text = listOfMonthsShort[value.toInt()];
         break;
       case 6:
-        text = 'Jul';
+        text = listOfMonthsShort[value.toInt()];
         break;
       case 7:
-        text = 'Aug';
+        text = listOfMonthsShort[value.toInt()];
         break;
       case 8:
-        text = 'Sep';
+        text = listOfMonthsShort[value.toInt()];
         break;
       case 9:
-        text = 'Oct';
+        text = listOfMonthsShort[value.toInt()];
         break;
       case 10:
-        text = 'Nov';
+        text = listOfMonthsShort[value.toInt()];
         break;
       case 11:
-        text = 'Dec';
+        text = listOfMonthsShort[value.toInt()];
         break;
       default:
         text = '';
@@ -140,6 +144,21 @@ class ReadStatsByMonth extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    listOfMonthsShort = [
+      AppLocalizations.of(context)!.january_short,
+      AppLocalizations.of(context)!.february_short,
+      AppLocalizations.of(context)!.march_short,
+      AppLocalizations.of(context)!.april_short,
+      AppLocalizations.of(context)!.may_short,
+      AppLocalizations.of(context)!.june_short,
+      AppLocalizations.of(context)!.july_short,
+      AppLocalizations.of(context)!.august_short,
+      AppLocalizations.of(context)!.september_short,
+      AppLocalizations.of(context)!.october_short,
+      AppLocalizations.of(context)!.november_short,
+      AppLocalizations.of(context)!.december_short,
+    ];
+
     return Card(
       elevation: 0,
       shape: RoundedRectangleBorder(

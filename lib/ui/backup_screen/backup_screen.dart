@@ -24,6 +24,7 @@ import 'package:share_plus/share_plus.dart';
 import 'package:sqflite/sqflite.dart';
 import 'package:blurhash_dart/blurhash_dart.dart' as blurhash_dart;
 import 'package:image/image.dart' as img;
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class BackupScreen extends StatefulWidget {
   const BackupScreen({super.key});
@@ -85,13 +86,13 @@ class _BackupScreenState extends State<BackupScreen> {
     ScaffoldMessenger.of(context).showSnackBar(
       SnackBar(
         content: Text(
-          'You need to grant storage permission',
+          AppLocalizations.of(context)!.need_storage_permission,
           style: TextStyle(
             fontFamily: context.read<ThemeBloc>().fontFamily,
           ),
         ),
         action: SnackBarAction(
-          label: 'Open settings',
+          label: AppLocalizations.of(context)!.open_settings,
           onPressed: () {
             if (mounted) {
               openAppSettings();
@@ -137,7 +138,7 @@ class _BackupScreenState extends State<BackupScreen> {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
           content: Text(
-            'Backup succesfull',
+            AppLocalizations.of(context)!.backup_successfull,
             style: TextStyle(
               fontFamily: context.read<ThemeBloc>().fontFamily,
             ),
@@ -247,8 +248,8 @@ class _BackupScreenState extends State<BackupScreen> {
   Future<String?> _openFolderPicker() async {
     return await FilesystemPicker.open(
       context: context,
-      title: 'Choose backup folder',
-      pickText: 'Save file to this folder',
+      title: AppLocalizations.of(context)!.choose_backup_folder,
+      pickText: AppLocalizations.of(context)!.save_file_to_this_folder,
       fsType: FilesystemType.folder,
       rootDirectory: Directory('/storage/emulated/0/'),
       contextActions: [
@@ -361,7 +362,7 @@ class _BackupScreenState extends State<BackupScreen> {
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
             content: Text(
-              'This is not a valid Openreads backup',
+              AppLocalizations.of(context)!.backup_not_valid,
               style: TextStyle(
                 fontFamily: context.read<ThemeBloc>().fontFamily,
               ),
@@ -376,7 +377,7 @@ class _BackupScreenState extends State<BackupScreen> {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
           content: Text(
-            'Restoration succesfull',
+            AppLocalizations.of(context)!.restore_successfull,
             style: TextStyle(
               fontFamily: context.read<ThemeBloc>().fontFamily,
             ),
@@ -545,7 +546,8 @@ class _BackupScreenState extends State<BackupScreen> {
     if (!mounted) return;
 
     setState(() {
-      restoredCounterText = 'Restored $booksBackupDone/$booksBackupLenght\n';
+      restoredCounterText =
+          '${AppLocalizations.of(context)!.restored} $booksBackupDone/$booksBackupLenght\n';
     });
   }
 
@@ -585,8 +587,8 @@ class _BackupScreenState extends State<BackupScreen> {
   Future<String?> _openFilePicker() async {
     return await FilesystemPicker.open(
       context: context,
-      title: 'Choose backup file',
-      pickText: 'Use this file',
+      title: AppLocalizations.of(context)!.choose_backup_file,
+      pickText: AppLocalizations.of(context)!.use_this_file,
       fsType: FilesystemType.file,
       rootDirectory: Directory('/storage/emulated/0/'),
       fileTileSelectMode: FileTileSelectMode.wholeTile,
@@ -621,7 +623,7 @@ class _BackupScreenState extends State<BackupScreen> {
         backgroundColor: Theme.of(context).scaffoldBackgroundColor,
         surfaceTintColor: Theme.of(context).scaffoldBackgroundColor,
         title: Text(
-          'Backup',
+          AppLocalizations.of(context)!.backup,
           style: TextStyle(
             fontSize: 18,
             fontFamily: context.read<ThemeBloc>().fontFamily,
@@ -635,7 +637,7 @@ class _BackupScreenState extends State<BackupScreen> {
             tiles: <SettingsTile>[
               SettingsTile(
                 title: Text(
-                  'Create local backup',
+                  AppLocalizations.of(context)!.create_local_backup,
                   style: TextStyle(
                     fontSize: 16,
                     fontFamily: context.read<ThemeBloc>().fontFamily,
@@ -649,7 +651,7 @@ class _BackupScreenState extends State<BackupScreen> {
                       )
                     : const Icon(FontAwesomeIcons.solidFloppyDisk),
                 description: Text(
-                  'Backup books to your device',
+                  AppLocalizations.of(context)!.create_local_backup_description,
                   style: TextStyle(
                     fontFamily: context.read<ThemeBloc>().fontFamily,
                   ),
@@ -658,7 +660,7 @@ class _BackupScreenState extends State<BackupScreen> {
               ),
               SettingsTile(
                 title: Text(
-                  'Create cloud backup',
+                  AppLocalizations.of(context)!.create_cloud_backup,
                   style: TextStyle(
                     fontSize: 16,
                     fontFamily: context.read<ThemeBloc>().fontFamily,
@@ -672,7 +674,7 @@ class _BackupScreenState extends State<BackupScreen> {
                       )
                     : const Icon(FontAwesomeIcons.cloudArrowUp),
                 description: Text(
-                  'Backup books to the cloud',
+                  AppLocalizations.of(context)!.create_cloud_backup_description,
                   style: TextStyle(
                     fontFamily: context.read<ThemeBloc>().fontFamily,
                   ),
@@ -681,7 +683,7 @@ class _BackupScreenState extends State<BackupScreen> {
               ),
               SettingsTile(
                 title: Text(
-                  'Restore backup',
+                  AppLocalizations.of(context)!.restore_backup,
                   style: TextStyle(
                     fontSize: 16,
                     fontFamily: context.read<ThemeBloc>().fontFamily,
@@ -707,7 +709,7 @@ class _BackupScreenState extends State<BackupScreen> {
                           )
                         : const SizedBox(),
                     Text(
-                      'Restore books from your device.\nWorks for backups not older than from v1.14.2',
+                      '${AppLocalizations.of(context)!.restore_backup_description_1}\n${AppLocalizations.of(context)!.restore_backup_description_2}',
                       style: TextStyle(
                         fontFamily: context.read<ThemeBloc>().fontFamily,
                       ),

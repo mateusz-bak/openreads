@@ -7,6 +7,7 @@ import 'package:openreads/logic/bloc/sort_bloc/sort_bloc.dart';
 import 'package:openreads/logic/bloc/theme_bloc/theme_bloc.dart';
 import 'package:openreads/logic/cubit/book_cubit.dart';
 import 'package:openreads/ui/books_screen/widgets/widgets.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class SortBottomSheet extends StatefulWidget {
   const SortBottomSheet({
@@ -17,14 +18,7 @@ class SortBottomSheet extends StatefulWidget {
   State<SortBottomSheet> createState() => _SortBottomSheetState();
 }
 
-List<String> sortOptions = [
-  'Title',
-  'Author',
-  'Rating',
-  'Pages',
-  'Start date',
-  'Finish date',
-];
+late List<String> sortOptions;
 
 String _getDropdownValue(SetSortState state) {
   if (state.sortType == SortType.byAuthor) {
@@ -326,6 +320,15 @@ class _SortBottomSheetState extends State<SortBottomSheet> {
 
   @override
   Widget build(BuildContext context) {
+    sortOptions = [
+      AppLocalizations.of(context)!.title,
+      AppLocalizations.of(context)!.author,
+      AppLocalizations.of(context)!.rating,
+      AppLocalizations.of(context)!.pages_uppercase,
+      AppLocalizations.of(context)!.start_date,
+      AppLocalizations.of(context)!.finish_date,
+    ];
+
     return Column(
       mainAxisAlignment: MainAxisAlignment.end,
       mainAxisSize: MainAxisSize.min,
@@ -349,7 +352,7 @@ class _SortBottomSheetState extends State<SortBottomSheet> {
             children: [
               const SizedBox(height: 5),
               Text(
-                'Sort by',
+                AppLocalizations.of(context)!.sort_by,
                 style: TextStyle(
                   fontSize: 16,
                   fontWeight: FontWeight.bold,
@@ -455,7 +458,8 @@ class _SortBottomSheetState extends State<SortBottomSheet> {
                                   _getFavouriteSwitch(context, state),
                                   const SizedBox(width: 10),
                                   Text(
-                                    'Only favourite',
+                                    AppLocalizations.of(context)!
+                                        .only_favourite,
                                     style: TextStyle(
                                       fontSize: 16,
                                       fontFamily:
@@ -490,7 +494,8 @@ class _SortBottomSheetState extends State<SortBottomSheet> {
                             children: [
                               const SizedBox(height: 10),
                               Text(
-                                'Filter by finish year',
+                                AppLocalizations.of(context)!
+                                    .filter_by_finish_year,
                                 style: TextStyle(
                                   fontSize: 16,
                                   fontFamily:
@@ -571,7 +576,7 @@ class _SortBottomSheetState extends State<SortBottomSheet> {
                             children: [
                               const SizedBox(height: 10),
                               Text(
-                                'Filter by tags',
+                                AppLocalizations.of(context)!.filter_by_tags,
                                 style: TextStyle(
                                   fontSize: 16,
                                   fontFamily:
@@ -702,7 +707,7 @@ class _SortBottomSheetState extends State<SortBottomSheet> {
                                   _getTagsSwitch(context, state),
                                   const SizedBox(width: 10),
                                   Text(
-                                    'Display tags',
+                                    AppLocalizations.of(context)!.display_tags,
                                     style: TextStyle(
                                       fontSize: 16,
                                       fontFamily:
@@ -750,7 +755,7 @@ class _SortBottomSheetState extends State<SortBottomSheet> {
                   _getTagsAsAndSwitch(context, state),
                   const SizedBox(width: 10),
                   Text(
-                    'Only books with all selected tags',
+                    AppLocalizations.of(context)!.only_books_with_all_tags,
                     style: TextStyle(
                       fontSize: 16,
                       fontFamily: context.read<ThemeBloc>().fontFamily,

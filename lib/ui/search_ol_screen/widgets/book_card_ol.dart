@@ -5,6 +5,7 @@ import 'package:loading_animation_widget/loading_animation_widget.dart';
 import 'package:openreads/core/themes/app_theme.dart';
 import 'package:openreads/logic/bloc/theme_bloc/theme_bloc.dart';
 import 'package:openreads/model/ol_search_result.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class BookCardOL extends StatelessWidget {
   BookCardOL({
@@ -80,7 +81,7 @@ class BookCardOL extends StatelessWidget {
                         ),
                         child: Center(
                           child: Text(
-                            'No cover',
+                            AppLocalizations.of(context)!.no_cover,
                             style: TextStyle(
                               fontFamily: context.read<ThemeBloc>().fontFamily,
                             ),
@@ -164,7 +165,8 @@ class BookCardOL extends StatelessWidget {
                                         ),
                                       ),
                                       Text(
-                                        'editions',
+                                        AppLocalizations.of(context)!
+                                            .editions_lowercase,
                                         softWrap: true,
                                         overflow: TextOverflow.clip,
                                         style: TextStyle(
@@ -202,7 +204,8 @@ class BookCardOL extends StatelessWidget {
                                         ),
                                       ),
                                       Text(
-                                        'pages',
+                                        AppLocalizations.of(context)!
+                                            .pages_lowercase,
                                         softWrap: true,
                                         overflow: TextOverflow.clip,
                                         style: TextStyle(
@@ -240,7 +243,8 @@ class BookCardOL extends StatelessWidget {
                                         ),
                                       ),
                                       Text(
-                                        'published',
+                                        AppLocalizations.of(context)!
+                                            .published_lowercase,
                                         softWrap: true,
                                         overflow: TextOverflow.clip,
                                         style: TextStyle(

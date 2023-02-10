@@ -6,6 +6,7 @@ import 'package:like_button/like_button.dart';
 import 'package:openreads/core/themes/app_theme.dart';
 import 'package:openreads/logic/bloc/rating_type_bloc/rating_type_bloc.dart';
 import 'package:openreads/logic/bloc/theme_bloc/theme_bloc.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class BookStatusDetail extends StatelessWidget {
   const BookStatusDetail({
@@ -50,7 +51,7 @@ class BookStatusDetail extends StatelessWidget {
 
     if (startDate == null && finishDate != null) {
       return Text(
-        'Finished on $finishDate',
+        '${AppLocalizations.of(context)!.finished_on_date} $finishDate',
         style: TextStyle(
           fontSize: 14,
           fontWeight: FontWeight.normal,
@@ -62,7 +63,7 @@ class BookStatusDetail extends StatelessWidget {
 
     if (startDate != null && finishDate == null) {
       return Text(
-        'Started on $startDate',
+        '${AppLocalizations.of(context)!.started_on_date} $startDate',
         style: TextStyle(
           fontSize: 14,
           fontWeight: FontWeight.normal,
@@ -194,7 +195,7 @@ class BookStatusDetail extends StatelessWidget {
                     Row(
                       children: [
                         Text(
-                          'Your rating',
+                          AppLocalizations.of(context)!.your_rating,
                           style: TextStyle(
                             fontSize: 14,
                             fontWeight: FontWeight.bold,

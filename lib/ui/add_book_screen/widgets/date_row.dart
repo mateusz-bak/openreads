@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:openreads/ui/add_book_screen/widgets/widgets.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class DateRow extends StatelessWidget {
   const DateRow({
@@ -51,7 +52,7 @@ class DateRow extends StatelessWidget {
                 defaultHeight: defaultHeight,
                 icon: FontAwesomeIcons.play,
                 text: (startDate == null)
-                    ? 'Start Date'
+                    ? AppLocalizations.of(context)!.start_date
                     : '${startDate?.day}/${startDate?.month}/${startDate?.year}',
                 onPressed: showStartDatePicker,
                 onClearPressed: clearStartDate,
@@ -73,7 +74,7 @@ class DateRow extends StatelessWidget {
                 defaultHeight: defaultHeight,
                 icon: FontAwesomeIcons.flagCheckered,
                 text: (finishDate == null)
-                    ? 'Finish Date'
+                    ? AppLocalizations.of(context)!.finish_date
                     : '${finishDate?.day}/${finishDate?.month}/${finishDate?.year}',
                 onPressed: showFinishDatePicker,
                 onClearPressed: clearFinishDate,

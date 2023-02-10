@@ -4,6 +4,7 @@ import 'package:openreads/logic/bloc/theme_bloc/theme_bloc.dart';
 import 'package:openreads/logic/cubit/book_cubit.dart';
 import 'package:openreads/model/book.dart';
 import 'package:openreads/ui/books_screen/widgets/widgets.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class TrashScreen extends StatelessWidget {
   const TrashScreen({super.key});
@@ -15,7 +16,7 @@ class TrashScreen extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: Text(
-          'Deleted Books',
+          AppLocalizations.of(context)!.deleted_books,
           style: TextStyle(
             fontSize: 18,
             fontFamily: context.read<ThemeBloc>().fontFamily,
@@ -31,7 +32,7 @@ class TrashScreen extends StatelessWidget {
                 child: Padding(
                   padding: const EdgeInsets.all(50),
                   child: Text(
-                    'You don\'t have any deleted books',
+                    AppLocalizations.of(context)!.no_deleted_books,
                     textAlign: TextAlign.center,
                     style: TextStyle(
                       letterSpacing: 1.5,

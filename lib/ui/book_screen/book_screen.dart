@@ -7,6 +7,7 @@ import 'package:openreads/logic/cubit/book_cubit.dart';
 import 'package:openreads/model/book.dart';
 import 'package:openreads/ui/add_book_screen/widgets/widgets.dart';
 import 'package:openreads/ui/book_screen/widgets/widgets.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class BookScreen extends StatelessWidget {
   BookScreen({
@@ -18,10 +19,6 @@ class BookScreen extends StatelessWidget {
   final int id;
   final String heroTag;
   Book? book;
-
-  final moreButtonOptions = [
-    'Edit',
-  ];
 
   Future<bool?> _onLikeTap(isLiked) async {
     if (book == null) return isLiked;
@@ -62,7 +59,9 @@ class BookScreen extends StatelessWidget {
             ),
             backgroundColor: Theme.of(context).scaffoldBackgroundColor,
             title: Text(
-              deleted ? 'Delete this book?' : 'Restore this book?',
+              deleted
+                  ? AppLocalizations.of(context)!.delete_book_question
+                  : AppLocalizations.of(context)!.restore_book_question,
               style: TextStyle(
                 fontSize: 18,
                 fontFamily: context.read<ThemeBloc>().fontFamily,
@@ -169,27 +168,27 @@ class BookScreen extends StatelessWidget {
     }
   }
 
-  String _decideStatusText(int? status) {
+  String _decideStatusText(int? status, BuildContext context) {
     if (status == 0) {
-      return 'Done';
+      return AppLocalizations.of(context)!.book_status_finished;
     } else if (status == 1) {
-      return 'Reading';
+      return AppLocalizations.of(context)!.book_status_in_progress;
     } else if (status == 2) {
-      return 'For later';
+      return AppLocalizations.of(context)!.book_status_for_later;
     } else if (status == 3) {
-      return 'Unfinished';
+      return AppLocalizations.of(context)!.book_status_unfinished;
     } else {
       return '';
     }
   }
 
-  String? _decideChangeStatusText(int? status) {
+  String? _decideChangeStatusText(int? status, BuildContext context) {
     if (status == 1) {
-      return 'Finish';
+      return AppLocalizations.of(context)!.finish_reading;
     } else if (status == 2) {
-      return 'Start';
+      return AppLocalizations.of(context)!.start_reading;
     } else if (status == 3) {
-      return 'Start';
+      return AppLocalizations.of(context)!.start_reading;
     } else {
       return null;
     }
@@ -214,7 +213,7 @@ class BookScreen extends StatelessWidget {
             ),
             backgroundColor: Theme.of(context).scaffoldBackgroundColor,
             title: Text(
-              'Rate this book',
+              AppLocalizations.of(context)!.rate_book,
               style: TextStyle(
                 fontSize: 18,
                 fontFamily: context.read<ThemeBloc>().fontFamily,
@@ -240,7 +239,7 @@ class BookScreen extends StatelessWidget {
                       Navigator.of(context).pop();
                     },
                     child: Text(
-                      'Skip',
+                      AppLocalizations.of(context)!.skip,
                       style: TextStyle(
                         fontFamily: context.read<ThemeBloc>().fontFamily,
                       ),
@@ -255,7 +254,7 @@ class BookScreen extends StatelessWidget {
                       Navigator.of(context).pop();
                     },
                     child: Text(
-                      'Save',
+                      AppLocalizations.of(context)!.save,
                       style: TextStyle(
                         fontFamily: context.read<ThemeBloc>().fontFamily,
                       ),
@@ -337,18 +336,22 @@ class BookScreen extends StatelessWidget {
   String _generateReadingTime({
     required String startDate,
     required String finishDate,
+    required BuildContext context,
   }) {
     final diff = DateTime.parse(finishDate)
         .difference(DateTime.parse(startDate))
         .inDays
         .toString();
 
-    return '$diff days';
+    return '$diff ${AppLocalizations.of(context)!.days}';
   }
 
   @override
   Widget build(BuildContext context) {
     final statusBarHeight = MediaQuery.of(context).padding.top;
+    final moreButtonOptions = [
+      AppLocalizations.of(context)!.edit_book,
+    ];
 
     bookCubit.getBook(id);
 
@@ -364,7 +367,9 @@ class BookScreen extends StatelessWidget {
                 if (snapshot.hasData) {
                   if (moreButtonOptions.length == 1) {
                     moreButtonOptions.add(
-                      snapshot.data?.deleted == true ? 'Restore' : 'Delete',
+                      snapshot.data?.deleted == true
+                          ? AppLocalizations.of(context)!.restore_book
+                          : AppLocalizations.of(context)!.delete_book,
                     );
                   }
 
@@ -424,7 +429,7 @@ class BookScreen extends StatelessWidget {
               if (snapshot.data == null) {
                 return Center(
                   child: Text(
-                    'Error getting the book',
+                    AppLocalizations.of(context)!.error_getting_book,
                     style: TextStyle(
                       fontFamily: context.read<ThemeBloc>().fontFamily,
                     ),
@@ -461,7 +466,10 @@ class BookScreen extends StatelessWidget {
                         const SizedBox(height: 10),
                         BookStatusDetail(
                           statusIcon: _decideStatusIcon(snapshot.data!.status),
-                          statusText: _decideStatusText(snapshot.data!.status),
+                          statusText: _decideStatusText(
+                            snapshot.data!.status,
+                            context,
+                          ),
                           rating: snapshot.data!.rating,
                           startDate: _generateDate(snapshot.data!.startDate),
                           finishDate: _generateDate(snapshot.data!.finishDate),
@@ -470,8 +478,10 @@ class BookScreen extends StatelessWidget {
                           showChangeStatus: (snapshot.data!.status == 1 ||
                               snapshot.data!.status == 2 ||
                               snapshot.data!.status == 3),
-                          changeStatusText:
-                              _decideChangeStatusText(snapshot.data!.status),
+                          changeStatusText: _decideChangeStatusText(
+                            snapshot.data!.status,
+                            context,
+                          ),
                           changeStatusAction: () {
                             _changeStatusAction(
                               context,
@@ -489,10 +499,12 @@ class BookScreen extends StatelessWidget {
                         (snapshot.data!.finishDate != null &&
                                 snapshot.data!.startDate != null)
                             ? BookDetail(
-                                title: 'Reading time',
+                                title:
+                                    AppLocalizations.of(context)!.reading_time,
                                 text: _generateReadingTime(
                                   finishDate: snapshot.data!.finishDate!,
                                   startDate: snapshot.data!.startDate!,
+                                  context: context,
                                 ),
                               )
                             : const SizedBox(),
@@ -501,7 +513,8 @@ class BookScreen extends StatelessWidget {
                         ),
                         (snapshot.data!.pages != null)
                             ? BookDetail(
-                                title: 'Pages',
+                                title: AppLocalizations.of(context)!
+                                    .pages_uppercase,
                                 text: (snapshot.data!.pages ?? "").toString(),
                               )
                             : const SizedBox(),
@@ -510,7 +523,7 @@ class BookScreen extends StatelessWidget {
                         ),
                         (snapshot.data!.isbn != null)
                             ? BookDetail(
-                                title: 'ISBN',
+                                title: AppLocalizations.of(context)!.isbn,
                                 text: (snapshot.data!.isbn ?? "").toString(),
                               )
                             : const SizedBox(),
@@ -519,7 +532,8 @@ class BookScreen extends StatelessWidget {
                         ),
                         (snapshot.data!.olid != null)
                             ? BookDetail(
-                                title: 'Open Library ID',
+                                title: AppLocalizations.of(context)!
+                                    .open_library_ID,
                                 text: (snapshot.data!.olid ?? "").toString(),
                               )
                             : const SizedBox(),
@@ -528,7 +542,7 @@ class BookScreen extends StatelessWidget {
                         ),
                         (snapshot.data!.myReview != null)
                             ? BookDetail(
-                                title: 'My review',
+                                title: AppLocalizations.of(context)!.my_review,
                                 text:
                                     (snapshot.data!.myReview ?? "").toString(),
                               )

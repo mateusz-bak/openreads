@@ -2,6 +2,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:loading_animation_widget/loading_animation_widget.dart';
 import 'package:openreads/core/themes/app_theme.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class BookCardOLEdition extends StatelessWidget {
   BookCardOLEdition({
@@ -61,10 +62,10 @@ class BookCardOLEdition extends StatelessWidget {
                           ),
                         ),
                       )
-                    : const Expanded(
+                    : Expanded(
                         child: Center(
                           child: FittedBox(
-                            child: Text('No cover'),
+                            child: Text(AppLocalizations.of(context)!.no_cover),
                           ),
                         ),
                       ),

@@ -26,7 +26,7 @@ dependencies:
   blurhash_dart: ^1.1.0
   image: ^3.3.0
   fl_chart: ^0.60.0
-  intl: ^0.18.0
+  intl: ^0.17.0
   dropdown_button2: ^1.8.9
   equatable: ^2.0.5
   connectivity_plus: ^3.0.2
@@ -48,6 +48,8 @@ dependencies:
   archive: ^3.3.5
   share_plus: ^6.3.0
   device_info_plus: ^8.0.0
+  flutter_localizations:
+    sdk: flutter
 
 dev_dependencies:
   flutter_test:
@@ -65,6 +67,7 @@ flutter_icons:
 
 flutter:
   uses-material-design: true
+  generate: true
   assets:
   - assets/images/
   fonts:

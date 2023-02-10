@@ -9,6 +9,7 @@ import 'package:openreads/logic/bloc/theme_bloc/theme_bloc.dart';
 
 import 'package:openreads/model/yearly_challenge.dart';
 import 'package:openreads/ui/statistics_screen/widgets/widgets.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class Statistics extends StatelessWidget {
   final StatsLoaded state;
@@ -61,7 +62,7 @@ class Statistics extends StatelessWidget {
 
     tabs.add(Tab(
       child: Text(
-        'All',
+        AppLocalizations.of(context)!.all_years,
         style: TextStyle(
           fontFamily: context.read<ThemeBloc>().fontFamily,
         ),
@@ -166,7 +167,7 @@ class Statistics extends StatelessWidget {
           if (state.finishedBooksByMonth.isEmpty) {
             return Center(
               child: Text(
-                'No finished books',
+                AppLocalizations.of(context)!.no_finished_books,
                 style: TextStyle(
                   fontFamily: context.read<ThemeBloc>().fontFamily,
                 ),
@@ -210,7 +211,7 @@ class Statistics extends StatelessWidget {
                 : const SizedBox();
           } else {
             return ReadingChallenge(
-              title: 'Finished books challenge',
+              title: AppLocalizations.of(context)!.books_challenge,
               value: value,
               target: selectedTarget.first.books ?? 0,
               setChallenge: setChallenge,
@@ -243,7 +244,7 @@ class Statistics extends StatelessWidget {
           if (state.finishedPagesByMonth.isEmpty) {
             return Center(
               child: Text(
-                'No finished books',
+                AppLocalizations.of(context)!.no_finished_books,
                 style: TextStyle(
                   fontFamily: context.read<ThemeBloc>().fontFamily,
                 ),
@@ -284,7 +285,7 @@ class Statistics extends StatelessWidget {
             return const SizedBox();
           } else {
             return ReadingChallenge(
-              title: 'Finished pages challenge',
+              title: AppLocalizations.of(context)!.pages_challenge,
               value: value,
               target: selectedTarget.first.pages ?? 0,
               setChallenge: setChallenge,
@@ -307,7 +308,7 @@ class Statistics extends StatelessWidget {
 
   Widget _buildAllBooksPieChart(BuildContext context) {
     return BooksByStatus(
-      title: 'All books by status',
+      title: AppLocalizations.of(context)!.all_books_by_status,
       list: [
         state.finishedBooks.length,
         state.inProgressBooks.length,
@@ -325,7 +326,7 @@ class Statistics extends StatelessWidget {
     for (var bookReadStat in state.finishedBooksByMonth) {
       if (bookReadStat.year == year) {
         return ReadStatsByMonth(
-          title: 'Finished books by month',
+          title: AppLocalizations.of(context)!.finished_books_by_month,
           list: bookReadStat.values,
           theme: Theme.of(context),
         );
@@ -343,7 +344,7 @@ class Statistics extends StatelessWidget {
     for (var bookReadStat in state.finishedPagesByMonth) {
       if (bookReadStat.year == year) {
         return ReadStatsByMonth(
-          title: 'Finished pages by month',
+          title: AppLocalizations.of(context)!.finished_pages_by_month,
           list: bookReadStat.values,
           theme: Theme.of(context),
         );
@@ -361,7 +362,7 @@ class Statistics extends StatelessWidget {
     for (var bookReadStat in state.finishedBooksByMonth) {
       if (bookReadStat.year == year) {
         return ReadStats(
-          title: 'Finished books',
+          title: AppLocalizations.of(context)!.finished_books,
           value: bookReadStat.values.reduce((a, b) => a + b).toString(),
         );
       }
@@ -378,7 +379,7 @@ class Statistics extends StatelessWidget {
     for (var bookReadStat in state.finishedPagesByMonth) {
       if (bookReadStat.year == year) {
         return ReadStats(
-          title: 'Finished pages',
+          title: AppLocalizations.of(context)!.finished_pages,
           value: bookReadStat.values.reduce((a, b) => a + b).toString(),
         );
       }
@@ -395,7 +396,7 @@ class Statistics extends StatelessWidget {
     for (var bookYearlyStat in state.averageRating) {
       if (bookYearlyStat.year == year) {
         return ReadStats(
-          title: 'Average rating',
+          title: AppLocalizations.of(context)!.average_rating,
           value: bookYearlyStat.value,
           iconData: Icons.star_rounded,
         );
@@ -413,9 +414,9 @@ class Statistics extends StatelessWidget {
     for (var bookYearlyStat in state.averagePages) {
       if (bookYearlyStat.year == year) {
         return ReadStats(
-          title: 'Average number of pages',
+          title: AppLocalizations.of(context)!.average_pages,
           value: (bookYearlyStat.value != '')
-              ? '${bookYearlyStat.value} pages'
+              ? '${bookYearlyStat.value} ${AppLocalizations.of(context)!.pages_lowercase}'
               : '0',
         );
       }
@@ -432,9 +433,9 @@ class Statistics extends StatelessWidget {
     for (var bookYearlyStat in state.averageReadingTime) {
       if (bookYearlyStat.year == year) {
         return ReadStats(
-          title: 'Average reading time',
+          title: AppLocalizations.of(context)!.average_reading_time,
           value: (bookYearlyStat.value != '')
-              ? '${bookYearlyStat.value} days'
+              ? '${bookYearlyStat.value} ${AppLocalizations.of(context)!.days}'
               : '0',
         );
       }
@@ -451,9 +452,10 @@ class Statistics extends StatelessWidget {
     for (var bookYearlyStat in state.longestBook) {
       if (bookYearlyStat.year == year) {
         return ReadStats(
-          title: 'Longest book',
+          title: AppLocalizations.of(context)!.longest_book,
           value: bookYearlyStat.title.toString(),
-          secondValue: '${bookYearlyStat.value} pages',
+          secondValue:
+              '${bookYearlyStat.value} ${AppLocalizations.of(context)!.pages_lowercase}',
         );
       }
     }
@@ -469,10 +471,10 @@ class Statistics extends StatelessWidget {
     for (var bookYearlyStat in state.shortestBook) {
       if (bookYearlyStat.year == year) {
         return ReadStats(
-          title: 'Shortest book',
+          title: AppLocalizations.of(context)!.shortest_book,
           value: bookYearlyStat.title.toString(),
           secondValue: (bookYearlyStat.value != '')
-              ? '${bookYearlyStat.value} pages'
+              ? '${bookYearlyStat.value} ${AppLocalizations.of(context)!.pages_lowercase}'
               : '',
         );
       }
@@ -489,9 +491,10 @@ class Statistics extends StatelessWidget {
     for (var bookYearlyStat in state.fastestBook) {
       if (bookYearlyStat.year == year) {
         return ReadStats(
-          title: 'Fastest read book',
+          title: AppLocalizations.of(context)!.fastest_book,
           value: bookYearlyStat.title.toString(),
-          secondValue: '${bookYearlyStat.value} days',
+          secondValue:
+              '${bookYearlyStat.value} ${AppLocalizations.of(context)!.days}',
         );
       }
     }
@@ -507,9 +510,10 @@ class Statistics extends StatelessWidget {
     for (var bookYearlyStat in state.slowestBook) {
       if (bookYearlyStat.year == year) {
         return ReadStats(
-          title: 'Slowest read book',
+          title: AppLocalizations.of(context)!.slowest_book,
           value: bookYearlyStat.title.toString(),
-          secondValue: '${bookYearlyStat.value} days',
+          secondValue:
+              '${bookYearlyStat.value} ${AppLocalizations.of(context)!.days}',
         );
       }
     }

@@ -10,6 +10,7 @@ import 'package:openreads/resources/open_library_service.dart';
 import 'package:openreads/ui/add_book_screen/add_book_screen.dart';
 import 'package:openreads/ui/add_book_screen/widgets/widgets.dart';
 import 'package:openreads/ui/search_ol_editions_screen/widgets/widgets.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class SearchOLEditionsScreen extends StatefulWidget {
   const SearchOLEditionsScreen({
@@ -157,7 +158,7 @@ class _SearchOLEditionsScreenState extends State<SearchOLEditionsScreen> {
     return Scaffold(
       appBar: AppBar(
         title: Text(
-          'Choose edition',
+          AppLocalizations.of(context)!.choose_edition,
           style: TextStyle(
             fontSize: 18,
             fontFamily: context.read<ThemeBloc>().fontFamily,

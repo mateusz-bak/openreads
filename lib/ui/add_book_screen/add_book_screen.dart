@@ -13,6 +13,7 @@ import 'package:openreads/core/themes/app_theme.dart';
 import 'package:blurhash_dart/blurhash_dart.dart' as blurhash_dart;
 import 'package:image/image.dart' as img;
 import 'package:http/http.dart' as http;
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class AddBook extends StatefulWidget {
   const AddBook({
@@ -127,24 +128,24 @@ class _AddBookState extends State<AddBook> {
     ScaffoldMessenger.of(context).removeCurrentSnackBar();
 
     if (_titleCtrl.text.isEmpty) {
-      _showSnackbar('Title cannot be empty');
+      _showSnackbar(AppLocalizations.of(context)!.title_cannot_be_empty);
       return false;
     }
 
     if (_authorCtrl.text.isEmpty) {
-      _showSnackbar('Author cannot be empty');
+      _showSnackbar(AppLocalizations.of(context)!.author_cannot_be_empty);
       return false;
     }
 
     if (_status == null) {
-      _showSnackbar('Set book status');
+      _showSnackbar(AppLocalizations.of(context)!.set_book_status);
       return false;
     }
 
     if (_status == 0) {
       if (_startDate != null && _finishDate != null) {
         if (_finishDate!.isBefore(_startDate!)) {
-          _showSnackbar('Start date cannot be before finish date');
+          _showSnackbar(AppLocalizations.of(context)!.finish_date_before_start);
           return false;
         }
       }
@@ -235,7 +236,7 @@ class _AddBookState extends State<AddBook> {
       compressQuality: 90,
       uiSettings: [
         AndroidUiSettings(
-          toolbarTitle: 'Edit cover',
+          toolbarTitle: AppLocalizations.of(context)!.edit_cover,
           toolbarColor: Colors.black,
           statusBarColor: Colors.black,
           toolbarWidgetColor: Colors.white,
@@ -303,7 +304,7 @@ class _AddBookState extends State<AddBook> {
       initialDate: DateTime.now(),
       firstDate: DateTime(1970),
       lastDate: DateTime.now(),
-      helpText: 'Select reading start date',
+      helpText: AppLocalizations.of(context)!.select_start_date,
     );
 
     if (startDate != null) {
@@ -321,7 +322,7 @@ class _AddBookState extends State<AddBook> {
       initialDate: DateTime.now(),
       firstDate: DateTime(1970),
       lastDate: DateTime.now(),
-      helpText: 'Select reading finish date',
+      helpText: AppLocalizations.of(context)!.select_finish_date,
     );
 
     if (finishDate != null) {
@@ -419,7 +420,8 @@ class _AddBookState extends State<AddBook> {
     }
 
     // Pipe chars are reserved for storing tags list in DB
-    newTag = newTag.replaceAll('|', '');
+    newTag =
+        newTag.replaceAll('|', ''); //TODO: add same for @ in all needed places
 
     if (tags == null) {
       setState(() => tags = [newTag]);
@@ -509,7 +511,9 @@ class _AddBookState extends State<AddBook> {
         child: Scaffold(
           appBar: AppBar(
             title: Text(
-              widget.editingExistingBook ? 'Edit book' : 'Add new book',
+              widget.editingExistingBook
+                  ? AppLocalizations.of(context)!.edit_book
+                  : AppLocalizations.of(context)!.add_book,
               style: TextStyle(
                 fontSize: 18,
                 fontFamily: context.read<ThemeBloc>().fontFamily,
@@ -523,7 +527,7 @@ class _AddBookState extends State<AddBook> {
                     ? _updateBook
                     : _saveBook,
                 child: Text(
-                  'Save',
+                  AppLocalizations.of(context)!.save,
                   style: TextStyle(
                     fontSize: 16,
                     color: Theme.of(context).mainTextColor,
@@ -542,7 +546,7 @@ class _AddBookState extends State<AddBook> {
                   const SizedBox(height: 20),
                   BookTextField(
                     controller: _titleCtrl,
-                    hint: 'Enter a title',
+                    hint: AppLocalizations.of(context)!.enter_title,
                     icon: Icons.book,
                     keyboardType: TextInputType.name,
                     autofocus:
@@ -556,7 +560,7 @@ class _AddBookState extends State<AddBook> {
                   const SizedBox(height: 20),
                   BookTextField(
                     controller: _subtitleCtrl,
-                    hint: 'Enter a subtitle',
+                    hint: AppLocalizations.of(context)!.enter_subtitle,
                     icon: Icons.book,
                     keyboardType: TextInputType.name,
                     maxLines: 5,
@@ -566,7 +570,7 @@ class _AddBookState extends State<AddBook> {
                   const SizedBox(height: 20),
                   BookTextField(
                     controller: _authorCtrl,
-                    hint: 'Enter an author',
+                    hint: AppLocalizations.of(context)!.enter_author,
                     icon: Icons.person,
                     keyboardType: TextInputType.name,
                     maxLines: 5,
@@ -616,7 +620,7 @@ class _AddBookState extends State<AddBook> {
                       Expanded(
                         child: BookTextField(
                           controller: _pagesCtrl,
-                          hint: 'Number of pages',
+                          hint: AppLocalizations.of(context)!.enter_pages,
                           icon: FontAwesomeIcons.solidFileLines,
                           keyboardType: TextInputType.number,
                           inputFormatters: <TextInputFormatter>[
@@ -629,7 +633,8 @@ class _AddBookState extends State<AddBook> {
                       Expanded(
                         child: BookTextField(
                           controller: _pubYearCtrl,
-                          hint: 'Publication year',
+                          hint: AppLocalizations.of(context)!
+                              .enter_publication_year,
                           icon: FontAwesomeIcons.solidCalendar,
                           keyboardType: TextInputType.number,
                           inputFormatters: <TextInputFormatter>[
@@ -643,7 +648,7 @@ class _AddBookState extends State<AddBook> {
                   const SizedBox(height: 20),
                   BookTextField(
                     controller: _isbnCtrl,
-                    hint: 'ISBN',
+                    hint: AppLocalizations.of(context)!.isbn,
                     icon: FontAwesomeIcons.i,
                     keyboardType: TextInputType.number,
                     inputFormatters: <TextInputFormatter>[
@@ -654,7 +659,7 @@ class _AddBookState extends State<AddBook> {
                   const SizedBox(height: 20),
                   BookTextField(
                     controller: _olidCtrl,
-                    hint: 'Open Library ID',
+                    hint: AppLocalizations.of(context)!.open_library_ID,
                     icon: FontAwesomeIcons.o,
                     keyboardType: TextInputType.text,
                     maxLength: 20,
@@ -663,7 +668,7 @@ class _AddBookState extends State<AddBook> {
                   const SizedBox(height: 20),
                   TagsField(
                     controller: _tagsCtrl,
-                    hint: 'Tags',
+                    hint: AppLocalizations.of(context)!.enter_tags,
                     icon: FontAwesomeIcons.tags,
                     keyboardType: TextInputType.text,
                     maxLength: 20,
@@ -677,7 +682,7 @@ class _AddBookState extends State<AddBook> {
                   const SizedBox(height: 20),
                   BookTextField(
                     controller: _myReviewCtrl,
-                    hint: 'My review',
+                    hint: AppLocalizations.of(context)!.my_review,
                     icon: FontAwesomeIcons.solidKeyboard,
                     keyboardType: TextInputType.multiline,
                     maxLength: 5000,
