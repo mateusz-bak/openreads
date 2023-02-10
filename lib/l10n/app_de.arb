@@ -161,7 +161,6 @@
   "changelog": "Changelog",
   "changelog_description": "Check what's new in Openreads",
   "licence": "Licence",
-  "licence_description": "GNU General Public Licence v2.0",
   "need_storage_permission": "You need to grant storage permission",
   "open_settings": "Open settings",
   "backup_successfull": "Backup succesfull",
