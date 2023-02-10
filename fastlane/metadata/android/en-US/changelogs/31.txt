@@ -1,0 +1,2 @@
+- Added Arabic and Greek translation.
+- Improved German, Slovak and Turkish translations.
