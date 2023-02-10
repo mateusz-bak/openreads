@@ -17,7 +17,7 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 class SettingsScreen extends StatelessWidget {
   const SettingsScreen({super.key});
 
-  static const version = '2.0.0-rc1';
+  static const version = '2.0.0-rc2';
   static const licence = 'GNU General Public Licence v2.0';
   static const repoUrl = 'https://github.com/mateusz-bak/openreads-android';
   static const translationUrl = 'https://crwd.in/openreads-android';
