@@ -23,12 +23,7 @@ class WelcomeScreen extends StatefulWidget {
 class _WelcomeScreenState extends State<WelcomeScreen> {
   List<ContentConfig> listContentConfig = [];
 
-  @override
-  void initState() {
-    super.initState();
-    SystemChrome.setSystemUIOverlayStyle(
-        const SystemUiOverlayStyle(statusBarColor: Colors.transparent));
-
+  _prepareWelcomePages() {
     listContentConfig.add(
       ContentConfig(
         title: AppLocalizations.of(context)!.welcome_1,
@@ -52,6 +47,7 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
         backgroundColor: widget.themeData.scaffoldBackgroundColor,
       ),
     );
+
     listContentConfig.add(
       ContentConfig(
         styleTitle: TextStyle(
@@ -72,6 +68,7 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
         backgroundColor: widget.themeData.scaffoldBackgroundColor,
       ),
     );
+
     listContentConfig.add(
       ContentConfig(
         textAlignTitle: TextAlign.start,
@@ -90,6 +87,13 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
     );
   }
 
+  @override
+  void initState() {
+    super.initState();
+    SystemChrome.setSystemUIOverlayStyle(
+        const SystemUiOverlayStyle(statusBarColor: Colors.transparent));
+  }
+
   void onDonePress() {
     BlocProvider.of<WelcomeBloc>(context).add(const ChangeWelcomeEvent(false));
 
@@ -101,13 +105,20 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
 
   @override
   Widget build(BuildContext context) {
+    _prepareWelcomePages();
+
     return IntroSlider(
       key: UniqueKey(),
       isShowSkipBtn: false,
       isShowPrevBtn: false,
       listContentConfig: listContentConfig,
       onDonePress: onDonePress,
-      renderDoneBtn: Text(AppLocalizations.of(context)!.start_button),
+      renderDoneBtn: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 10),
+        child: FittedBox(
+          child: Text(AppLocalizations.of(context)!.start_button),
+        ),
+      ),
       skipButtonStyle: ButtonStyle(
         shape: MaterialStateProperty.all<OutlinedBorder>(RoundedRectangleBorder(
           borderRadius: Theme.of(context).extension<CustomBorder>()?.radius ??

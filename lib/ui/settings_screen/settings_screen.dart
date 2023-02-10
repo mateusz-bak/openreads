@@ -18,6 +18,7 @@ class SettingsScreen extends StatelessWidget {
   const SettingsScreen({super.key});
 
   static const version = '2.0.0-rc1';
+  static const licence = 'GNU General Public Licence v2.0';
   static const repoUrl = 'https://github.com/mateusz-bak/openreads-android';
   static const translationUrl = 'https://crwd.in/openreads-android';
   static const communityUrl = 'https://matrix.to/#/#openreads:matrix.org';
@@ -1464,7 +1465,7 @@ class SettingsScreen extends StatelessWidget {
               ),
               _buildURLSetting(
                 title: AppLocalizations.of(context)!.licence,
-                description: AppLocalizations.of(context)!.licence_description,
+                description: licence,
                 url: licenceUrl,
                 iconData: Icons.copyright_rounded,
                 context: context,
