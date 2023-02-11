@@ -4,12 +4,12 @@ import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:intl/intl.dart';
 import 'package:openreads/core/constants.dart/enums.dart';
+import 'package:openreads/l10n.dart';
 import 'package:openreads/logic/bloc/rating_type_bloc/rating_type_bloc.dart';
 import 'package:openreads/logic/bloc/sort_bloc/sort_bloc.dart';
 import 'package:openreads/logic/bloc/theme_bloc/theme_bloc.dart';
 import 'package:openreads/model/book.dart';
 import 'package:openreads/core/themes/app_theme.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class BookCard extends StatelessWidget {
   const BookCard({
@@ -32,7 +32,7 @@ class BookCard extends StatelessWidget {
           if (state.sortType == SortType.byPages) {
             return (book.pages != null)
                 ? Text(
-                    '${book.pages} ${AppLocalizations.of(context)!.pages_lowercase}',
+                    '${book.pages} ${l10n.pages_lowercase}',
                     style: TextStyle(
                       fontFamily: context.read<ThemeBloc>().fontFamily,
                     ),
@@ -44,7 +44,7 @@ class BookCard extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.end,
                     children: [
                       Text(
-                        AppLocalizations.of(context)!.started_on_date,
+                        l10n.started_on_date,
                         style: TextStyle(
                           fontSize: 12,
                           fontFamily: context.read<ThemeBloc>().fontFamily,
@@ -67,7 +67,7 @@ class BookCard extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.end,
                     children: [
                       Text(
-                        AppLocalizations.of(context)!.finished_on_date,
+                        l10n.finished_on_date,
                         style: TextStyle(
                           fontSize: 12,
                           fontFamily: context.read<ThemeBloc>().fontFamily,

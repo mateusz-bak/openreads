@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:openreads/core/themes/app_theme.dart';
+import 'package:openreads/l10n.dart';
 import 'package:openreads/logic/bloc/theme_bloc/theme_bloc.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class ChallengeDialog extends StatefulWidget {
   const ChallengeDialog({
@@ -158,7 +158,7 @@ class _ChallengeDialogState extends State<ChallengeDialog>
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
             Text(
-              '${AppLocalizations.of(context)!.set_books_goal_for_year} ${widget.year}:',
+              '${l10n.set_books_goal_for_year} ${widget.year}:',
               textAlign: TextAlign.center,
               style: TextStyle(
                 fontSize: 16,
@@ -246,7 +246,7 @@ class _ChallengeDialogState extends State<ChallengeDialog>
                   ),
                   const SizedBox(width: 10),
                   Text(
-                    AppLocalizations.of(context)!.add_pages_goal,
+                    l10n.add_pages_goal,
                     style: TextStyle(
                       fontSize: 16,
                       fontFamily: context.read<ThemeBloc>().fontFamily,
@@ -261,7 +261,7 @@ class _ChallengeDialogState extends State<ChallengeDialog>
               child: Column(
                 children: [
                   Text(
-                    AppLocalizations.of(context)!.set_pages_goal,
+                    l10n.set_pages_goal,
                     textAlign: TextAlign.center,
                     style: TextStyle(
                       fontSize: 16,

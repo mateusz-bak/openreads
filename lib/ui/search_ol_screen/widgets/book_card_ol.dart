@@ -3,9 +3,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:loading_animation_widget/loading_animation_widget.dart';
 import 'package:openreads/core/themes/app_theme.dart';
+import 'package:openreads/l10n.dart';
 import 'package:openreads/logic/bloc/theme_bloc/theme_bloc.dart';
 import 'package:openreads/model/ol_search_result.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class BookCardOL extends StatelessWidget {
   BookCardOL({
@@ -81,7 +81,7 @@ class BookCardOL extends StatelessWidget {
                         ),
                         child: Center(
                           child: Text(
-                            AppLocalizations.of(context)!.no_cover,
+                            l10n.no_cover,
                             style: TextStyle(
                               fontFamily: context.read<ThemeBloc>().fontFamily,
                             ),
@@ -163,8 +163,7 @@ class BookCardOL extends StatelessWidget {
                                         ),
                                       ),
                                       Text(
-                                        AppLocalizations.of(context)!
-                                            .editions_lowercase,
+                                        l10n.editions_lowercase,
                                         softWrap: true,
                                         overflow: TextOverflow.clip,
                                         style: TextStyle(
@@ -202,8 +201,7 @@ class BookCardOL extends StatelessWidget {
                                         ),
                                       ),
                                       Text(
-                                        AppLocalizations.of(context)!
-                                            .pages_lowercase,
+                                        l10n.pages_lowercase,
                                         softWrap: true,
                                         overflow: TextOverflow.clip,
                                         style: TextStyle(
@@ -241,8 +239,7 @@ class BookCardOL extends StatelessWidget {
                                         ),
                                       ),
                                       Text(
-                                        AppLocalizations.of(context)!
-                                            .published_lowercase,
+                                        l10n.published_lowercase,
                                         softWrap: true,
                                         overflow: TextOverflow.clip,
                                         style: TextStyle(

@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
 import 'package:loading_animation_widget/loading_animation_widget.dart';
+import 'package:openreads/l10n.dart';
 import 'package:openreads/logic/bloc/theme_bloc/theme_bloc.dart';
 import 'package:openreads/model/book.dart';
 import 'package:openreads/model/ol_edition_result.dart';
@@ -10,7 +11,6 @@ import 'package:openreads/resources/open_library_service.dart';
 import 'package:openreads/ui/add_book_screen/add_book_screen.dart';
 import 'package:openreads/ui/add_book_screen/widgets/widgets.dart';
 import 'package:openreads/ui/search_ol_editions_screen/widgets/widgets.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class SearchOLEditionsScreen extends StatefulWidget {
   const SearchOLEditionsScreen({
@@ -158,7 +158,7 @@ class _SearchOLEditionsScreenState extends State<SearchOLEditionsScreen> {
     return Scaffold(
       appBar: AppBar(
         title: Text(
-          AppLocalizations.of(context)!.choose_edition,
+          l10n.choose_edition,
           style: TextStyle(
             fontSize: 18,
             fontFamily: context.read<ThemeBloc>().fontFamily,

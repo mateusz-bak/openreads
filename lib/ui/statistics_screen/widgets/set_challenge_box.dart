@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:openreads/core/themes/app_theme.dart';
+import 'package:openreads/l10n.dart';
 import 'package:openreads/logic/bloc/theme_bloc/theme_bloc.dart';
 import 'package:openreads/ui/statistics_screen/widgets/widgets.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class SetChallengeBox extends StatelessWidget {
   const SetChallengeBox({
@@ -50,7 +50,7 @@ class SetChallengeBox extends StatelessWidget {
           child: Row(
             children: [
               Text(
-                AppLocalizations.of(context)!.click_here_to_set_challenge,
+                l10n.click_here_to_set_challenge,
                 style: TextStyle(
                   fontSize: 16,
                   fontWeight: FontWeight.bold,

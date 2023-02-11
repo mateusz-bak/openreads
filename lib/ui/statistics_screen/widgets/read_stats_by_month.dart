@@ -2,8 +2,8 @@ import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:openreads/core/themes/app_theme.dart';
+import 'package:openreads/l10n.dart';
 import 'package:openreads/logic/bloc/theme_bloc/theme_bloc.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class ReadStatsByMonth extends StatelessWidget {
   ReadStatsByMonth({
@@ -17,7 +17,20 @@ class ReadStatsByMonth extends StatelessWidget {
   final String title;
   final ThemeData theme;
 
-  late final List<String> listOfMonthsShort;
+  final List<String> listOfMonthsShort = [
+    l10n.january_short,
+    l10n.february_short,
+    l10n.march_short,
+    l10n.april_short,
+    l10n.may_short,
+    l10n.june_short,
+    l10n.july_short,
+    l10n.august_short,
+    l10n.september_short,
+    l10n.october_short,
+    l10n.november_short,
+    l10n.december_short,
+  ];
 
   FlTitlesData get titlesData => FlTitlesData(
         show: true,
@@ -144,21 +157,6 @@ class ReadStatsByMonth extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    listOfMonthsShort = [
-      AppLocalizations.of(context)!.january_short,
-      AppLocalizations.of(context)!.february_short,
-      AppLocalizations.of(context)!.march_short,
-      AppLocalizations.of(context)!.april_short,
-      AppLocalizations.of(context)!.may_short,
-      AppLocalizations.of(context)!.june_short,
-      AppLocalizations.of(context)!.july_short,
-      AppLocalizations.of(context)!.august_short,
-      AppLocalizations.of(context)!.september_short,
-      AppLocalizations.of(context)!.october_short,
-      AppLocalizations.of(context)!.november_short,
-      AppLocalizations.of(context)!.december_short,
-    ];
-
     return Card(
       elevation: 0,
       shape: RoundedRectangleBorder(
