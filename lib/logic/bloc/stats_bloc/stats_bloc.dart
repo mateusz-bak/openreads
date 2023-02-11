@@ -1,5 +1,6 @@
 import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:openreads/l10n.dart';
 import 'package:openreads/model/book.dart';
 import 'package:openreads/model/book_read_stat.dart';
 import 'package:openreads/model/book_yearly_stat.dart';
@@ -14,7 +15,7 @@ class StatsBloc extends Bloc<StatsEvent, StatsState> {
       final finishedBooks = _filterFinishedBooks(allBooks, 0);
 
       if (finishedBooks.isEmpty) {
-        emit(const StatsError('Add some books and come here again'));
+        emit(StatsError(l10n.add_books_and_come_back));
         return;
       }
 

@@ -198,6 +198,7 @@
   "restore_backup_description_2": "Works for backups not older than from v1.14.2",
 
   "error_getting_book": "Error while getting the book",
+  "add_books_and_come_back": "Add some books and come here again",
 
   "welcome_1": "Welcome to Openreads",
   "welcome_1_description_1": "Openreads will help you keep track of your books.",
