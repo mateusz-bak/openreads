@@ -683,7 +683,7 @@ class SettingsScreen extends StatelessWidget {
                       ),
                       const SizedBox(height: 5),
                       SettingsDialogButton(
-                        text: AppLocalizations.of(context)!.show_outlines,
+                        text: AppLocalizations.of(context)!.hide_outlines,
                         onPressed: () => _hideOutlines(context, state),
                       ),
                     ],
