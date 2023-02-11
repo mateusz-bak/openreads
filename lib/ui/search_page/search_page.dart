@@ -2,13 +2,13 @@ import 'dart:developer';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:openreads/l10n.dart';
 import 'package:openreads/logic/bloc/theme_bloc/theme_bloc.dart';
 import 'package:openreads/logic/cubit/book_cubit.dart';
 import 'package:openreads/model/book.dart';
 import 'package:openreads/ui/add_book_screen/widgets/book_text_field.dart';
 import 'package:openreads/ui/book_screen/book_screen.dart';
 import 'package:openreads/ui/books_screen/widgets/widgets.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class SearchPage extends StatefulWidget {
   const SearchPage({super.key});
@@ -34,7 +34,7 @@ class _SearchPageState extends State<SearchPage> {
     return Scaffold(
       appBar: AppBar(
         title: Text(
-          AppLocalizations.of(context)!.search_in_books,
+          l10n.search_in_books,
           style: TextStyle(
             fontSize: 18,
             fontFamily: context.read<ThemeBloc>().fontFamily,

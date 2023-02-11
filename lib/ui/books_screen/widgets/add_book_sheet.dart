@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:openreads/l10n.dart';
 import 'package:openreads/ui/books_screen/widgets/widgets.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class AddBookSheet extends StatefulWidget {
   const AddBookSheet({
@@ -46,7 +46,7 @@ class _AddBookSheetState extends State<AddBookSheet> {
               children: [
                 Expanded(
                   child: AddBookMethodButton(
-                    text: AppLocalizations.of(context)!.add_manually,
+                    text: l10n.add_manually,
                     icon: FontAwesomeIcons.solidKeyboard,
                     onPressed: widget.addManually,
                   ),
@@ -54,7 +54,7 @@ class _AddBookSheetState extends State<AddBookSheet> {
                 const SizedBox(width: 20),
                 Expanded(
                   child: AddBookMethodButton(
-                    text: AppLocalizations.of(context)!.add_search,
+                    text: l10n.add_search,
                     icon: FontAwesomeIcons.magnifyingGlass,
                     onPressed: widget.searchInOpenLibrary,
                   ),
@@ -62,7 +62,7 @@ class _AddBookSheetState extends State<AddBookSheet> {
                 const SizedBox(width: 20),
                 Expanded(
                   child: AddBookMethodButton(
-                    text: AppLocalizations.of(context)!.add_scan,
+                    text: l10n.add_scan,
                     icon: FontAwesomeIcons.barcode,
                     onPressed: widget.scanBarcode,
                   ),

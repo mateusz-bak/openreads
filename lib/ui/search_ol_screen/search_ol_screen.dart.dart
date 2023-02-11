@@ -4,6 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
 import 'package:loading_animation_widget/loading_animation_widget.dart';
 import 'package:openreads/core/themes/app_theme.dart';
+import 'package:openreads/l10n.dart';
 import 'package:openreads/logic/bloc/theme_bloc/theme_bloc.dart';
 import 'package:openreads/model/book.dart';
 import 'package:openreads/model/ol_search_result.dart';
@@ -11,7 +12,6 @@ import 'package:openreads/resources/open_library_service.dart';
 import 'package:openreads/ui/add_book_screen/widgets/widgets.dart';
 import 'package:openreads/ui/search_ol_editions_screen/search_ol_editions_screen.dart';
 import 'package:openreads/ui/search_ol_screen/widgets/widgets.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class SearchOLScreen extends StatefulWidget {
   const SearchOLScreen({super.key, this.scan = false});
@@ -123,9 +123,9 @@ class _SearchOLScreenState extends State<SearchOLScreen>
     var result = await BarcodeScanner.scan(
       options: ScanOptions(
         strings: {
-          'cancel': AppLocalizations.of(context)!.cancel,
-          'flash_on': AppLocalizations.of(context)!.flash_on,
-          'flash_off': AppLocalizations.of(context)!.flash_off,
+          'cancel': l10n.cancel,
+          'flash_on': l10n.flash_on,
+          'flash_off': l10n.flash_off,
         },
       ),
     );
@@ -171,7 +171,7 @@ class _SearchOLScreenState extends State<SearchOLScreen>
     return Scaffold(
       appBar: AppBar(
         title: Text(
-          AppLocalizations.of(context)!.search_in_open_library,
+          l10n.search_in_open_library,
           style: TextStyle(
             fontSize: 18,
             fontFamily: context.read<ThemeBloc>().fontFamily,

@@ -3,10 +3,10 @@ import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:intro_slider/intro_slider.dart';
 import 'package:openreads/core/themes/app_theme.dart';
+import 'package:openreads/l10n.dart';
 import 'package:openreads/logic/bloc/theme_bloc/theme_bloc.dart';
 import 'package:openreads/logic/bloc/welcome_bloc/welcome_bloc.dart';
 import 'package:openreads/ui/books_screen/books_screen.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class WelcomeScreen extends StatefulWidget {
   const WelcomeScreen({
@@ -23,10 +23,15 @@ class WelcomeScreen extends StatefulWidget {
 class _WelcomeScreenState extends State<WelcomeScreen> {
   List<ContentConfig> listContentConfig = [];
 
+  bool preparationTriggered = false;
+
   _prepareWelcomePages() {
+    if (preparationTriggered) return;
+    preparationTriggered = true;
+
     listContentConfig.add(
       ContentConfig(
-        title: AppLocalizations.of(context)!.welcome_1,
+        title: l10n.welcome_1,
         maxLineTitle: 3,
         styleTitle: TextStyle(
           fontSize: 32,
@@ -41,7 +46,7 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
           fontFamily: context.read<ThemeBloc>().fontFamily,
         ),
         description:
-            '${AppLocalizations.of(context)!.welcome_1_description_1}\n\n\n${AppLocalizations.of(context)!.welcome_1_description_2}',
+            '${l10n.welcome_1_description_1}\n\n\n${l10n.welcome_1_description_2}',
         textAlignDescription: TextAlign.start,
         backgroundImage: 'assets/images/welcome_1.jpg',
         backgroundColor: widget.themeData.scaffoldBackgroundColor,
@@ -63,7 +68,7 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
           fontFamily: context.read<ThemeBloc>().fontFamily,
         ),
         description:
-            '${AppLocalizations.of(context)!.welcome_2_description_1}\n\n\n${AppLocalizations.of(context)!.welcome_2_description_2}',
+            '${l10n.welcome_2_description_1}\n\n\n${l10n.welcome_2_description_2}',
         backgroundImage: 'assets/images/welcome_2.jpg',
         backgroundColor: widget.themeData.scaffoldBackgroundColor,
       ),
@@ -80,7 +85,7 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
           fontFamily: context.read<ThemeBloc>().fontFamily,
         ),
         description:
-            '${AppLocalizations.of(context)!.welcome_3_description_1}\n\n\n${AppLocalizations.of(context)!.welcome_3_description_2}\n\n\n${AppLocalizations.of(context)!.welcome_3_description_3}',
+            '${l10n.welcome_3_description_1}\n\n\n${l10n.welcome_3_description_2}\n\n\n${l10n.welcome_3_description_3}',
         backgroundImage: 'assets/images/welcome_3.jpg',
         backgroundColor: widget.themeData.scaffoldBackgroundColor,
       ),
@@ -105,6 +110,8 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
 
   @override
   Widget build(BuildContext context) {
+    AppTranslations.init(context);
+
     _prepareWelcomePages();
 
     return IntroSlider(
@@ -116,7 +123,7 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
       renderDoneBtn: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 10),
         child: FittedBox(
-          child: Text(AppLocalizations.of(context)!.start_button),
+          child: Text(l10n.start_button),
         ),
       ),
       skipButtonStyle: ButtonStyle(

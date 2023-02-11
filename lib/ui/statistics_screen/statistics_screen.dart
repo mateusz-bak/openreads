@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:loading_animation_widget/loading_animation_widget.dart';
+import 'package:openreads/l10n.dart';
 import 'package:openreads/logic/bloc/challenge_bloc/challenge_bloc.dart';
 import 'package:openreads/logic/bloc/stats_bloc/stats_bloc.dart';
 import 'package:openreads/logic/bloc/theme_bloc/theme_bloc.dart';
@@ -8,7 +9,6 @@ import 'package:openreads/logic/cubit/book_cubit.dart';
 import 'package:openreads/model/book.dart';
 
 import 'package:openreads/ui/statistics_screen/widgets/statistics.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class StatisticsScreen extends StatefulWidget {
   const StatisticsScreen({super.key});
@@ -41,7 +41,7 @@ class _StatisticsScreenState extends State<StatisticsScreen> {
                   backgroundColor: Theme.of(context).scaffoldBackgroundColor,
                   surfaceTintColor: Theme.of(context).scaffoldBackgroundColor,
                   title: Text(
-                    AppLocalizations.of(context)!.statistics,
+                    l10n.statistics,
                     style: TextStyle(
                       fontSize: 18,
                       fontFamily: context.read<ThemeBloc>().fontFamily,

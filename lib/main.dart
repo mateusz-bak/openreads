@@ -4,6 +4,7 @@ import 'package:flutter_displaymode/flutter_displaymode.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:hydrated_bloc/hydrated_bloc.dart';
 import 'package:openreads/core/themes/app_theme.dart';
+import 'package:openreads/l10n.dart';
 import 'package:openreads/logic/bloc/challenge_bloc/challenge_bloc.dart';
 import 'package:openreads/logic/bloc/open_lib_bloc/open_lib_bloc.dart';
 import 'package:openreads/logic/bloc/rating_type_bloc/rating_type_bloc.dart';
@@ -52,14 +53,36 @@ class App extends StatelessWidget {
             ),
           ),
         ],
-        child: const OpenreadsApp(),
+        child: BlocBuilder<ThemeBloc, ThemeState>(
+          builder: (_, themeState) {
+            if (themeState is SetThemeState) {
+              return BlocBuilder<WelcomeBloc, WelcomeState>(
+                builder: (_, welcomeState) {
+                  return OpenreadsApp(
+                    themeState: themeState,
+                    welcomeState: welcomeState,
+                  );
+                },
+              );
+            } else {
+              return const SizedBox();
+            }
+          },
+        ),
       ),
     );
   }
 }
 
 class OpenreadsApp extends StatefulWidget {
-  const OpenreadsApp({Key? key}) : super(key: key);
+  const OpenreadsApp({
+    Key? key,
+    required this.themeState,
+    required this.welcomeState,
+  }) : super(key: key);
+
+  final SetThemeState themeState;
+  final WelcomeState welcomeState;
 
   @override
   State<OpenreadsApp> createState() => _OpenreadsAppState();
@@ -71,18 +94,6 @@ class _OpenreadsAppState extends State<OpenreadsApp>
   late Image welcomeImage1;
   late Image welcomeImage2;
   late Image welcomeImage3;
-
-  final _localizationsDelegates = [
-    AppLocalizations.delegate,
-    GlobalMaterialLocalizations.delegate,
-    GlobalWidgetsLocalizations.delegate,
-    GlobalCupertinoLocalizations.delegate,
-  ];
-
-  final _supportedLocales = [
-    const Locale('en'),
-    const Locale('pl'),
-  ];
 
   _decideWelcomeMode(WelcomeState welcomeState) {
     if (welcomeState is ShowWelcomeState) {
@@ -106,64 +117,52 @@ class _OpenreadsAppState extends State<OpenreadsApp>
     welcomeImage1 = Image.asset('assets/images/welcome_1.jpg');
     welcomeImage2 = Image.asset('assets/images/welcome_2.jpg');
     welcomeImage3 = Image.asset('assets/images/welcome_3.jpg');
+
+    _decideWelcomeMode(widget.welcomeState);
   }
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<ThemeBloc, ThemeState>(
-      builder: (_, themeState) {
-        if (themeState is SetThemeState) {
-          return BlocBuilder<WelcomeBloc, WelcomeState>(
-            builder: (_, welcomeState) {
-              _decideWelcomeMode(welcomeState);
-
-              return MaterialApp(
-                title: 'Openreads Flutter',
-                theme: AppTheme.lightTheme.copyWith(
-                  primaryColor: themeState.primaryColor,
-                  colorScheme: const ColorScheme.light().copyWith(
-                    primary: themeState.primaryColor,
-                    secondary: themeState.primaryColor,
-                  ),
-                  dividerColor:
-                      themeState.showOutlines ? null : Colors.transparent,
-                  extensions: <ThemeExtension<dynamic>>[
-                    CustomBorder(
-                      radius: BorderRadius.circular(
-                        themeState.cornerRadius,
-                      ),
-                    ),
-                  ],
-                ),
-                darkTheme: AppTheme.darkTheme.copyWith(
-                  primaryColor: themeState.primaryColor,
-                  colorScheme: const ColorScheme.dark().copyWith(
-                    primary: themeState.primaryColor,
-                    secondary: themeState.primaryColor,
-                  ),
-                  dividerColor:
-                      themeState.showOutlines ? null : Colors.transparent,
-                  extensions: <ThemeExtension<dynamic>>[
-                    CustomBorder(
-                      radius: BorderRadius.circular(
-                        themeState.cornerRadius,
-                      ),
-                    ),
-                  ],
-                ),
-                themeMode: themeState.themeMode,
-                home: welcomeMode
-                    ? WelcomeScreen(themeData: Theme.of(context))
-                    : const BooksScreen(),
-                localizationsDelegates: AppLocalizations.localizationsDelegates,
-                supportedLocales: AppLocalizations.supportedLocales,
-              );
-            },
-          );
-        } else {
-          return const SizedBox();
-        }
-      },
+    return MaterialApp(
+      title: 'Openreads Flutter',
+      theme: AppTheme.lightTheme.copyWith(
+        primaryColor: widget.themeState.primaryColor,
+        colorScheme: const ColorScheme.light().copyWith(
+          primary: widget.themeState.primaryColor,
+          secondary: widget.themeState.primaryColor,
+        ),
+        dividerColor:
+            widget.themeState.showOutlines ? null : Colors.transparent,
+        extensions: <ThemeExtension<dynamic>>[
+          CustomBorder(
+            radius: BorderRadius.circular(
+              widget.themeState.cornerRadius,
+            ),
+          ),
+        ],
+      ),
+      darkTheme: AppTheme.darkTheme.copyWith(
+        primaryColor: widget.themeState.primaryColor,
+        colorScheme: const ColorScheme.dark().copyWith(
+          primary: widget.themeState.primaryColor,
+          secondary: widget.themeState.primaryColor,
+        ),
+        dividerColor:
+            widget.themeState.showOutlines ? null : Colors.transparent,
+        extensions: <ThemeExtension<dynamic>>[
+          CustomBorder(
+            radius: BorderRadius.circular(
+              widget.themeState.cornerRadius,
+            ),
+          ),
+        ],
+      ),
+      themeMode: widget.themeState.themeMode,
+      home: welcomeMode
+          ? WelcomeScreen(themeData: Theme.of(context))
+          : const BooksScreen(),
+      localizationsDelegates: AppLocalizations.localizationsDelegates,
+      supportedLocales: AppLocalizations.supportedLocales,
     );
   }
 }

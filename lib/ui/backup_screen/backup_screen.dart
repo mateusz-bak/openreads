@@ -9,6 +9,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:openreads/core/themes/app_theme.dart';
+import 'package:openreads/l10n.dart';
 import 'package:openreads/logic/bloc/challenge_bloc/challenge_bloc.dart';
 import 'package:openreads/logic/bloc/theme_bloc/theme_bloc.dart';
 import 'package:openreads/logic/cubit/book_cubit.dart';
@@ -24,7 +25,6 @@ import 'package:share_plus/share_plus.dart';
 import 'package:sqflite/sqflite.dart';
 import 'package:blurhash_dart/blurhash_dart.dart' as blurhash_dart;
 import 'package:image/image.dart' as img;
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class BackupScreen extends StatefulWidget {
   const BackupScreen({super.key});
@@ -86,13 +86,13 @@ class _BackupScreenState extends State<BackupScreen> {
     ScaffoldMessenger.of(context).showSnackBar(
       SnackBar(
         content: Text(
-          AppLocalizations.of(context)!.need_storage_permission,
+          l10n.need_storage_permission,
           style: TextStyle(
             fontFamily: context.read<ThemeBloc>().fontFamily,
           ),
         ),
         action: SnackBarAction(
-          label: AppLocalizations.of(context)!.open_settings,
+          label: l10n.open_settings,
           onPressed: () {
             if (mounted) {
               openAppSettings();
@@ -138,7 +138,7 @@ class _BackupScreenState extends State<BackupScreen> {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
           content: Text(
-            AppLocalizations.of(context)!.backup_successfull,
+            l10n.backup_successfull,
             style: TextStyle(
               fontFamily: context.read<ThemeBloc>().fontFamily,
             ),
@@ -248,8 +248,8 @@ class _BackupScreenState extends State<BackupScreen> {
   Future<String?> _openFolderPicker() async {
     return await FilesystemPicker.open(
       context: context,
-      title: AppLocalizations.of(context)!.choose_backup_folder,
-      pickText: AppLocalizations.of(context)!.save_file_to_this_folder,
+      title: l10n.choose_backup_folder,
+      pickText: l10n.save_file_to_this_folder,
       fsType: FilesystemType.folder,
       rootDirectory: Directory('/storage/emulated/0/'),
       contextActions: [
@@ -362,7 +362,7 @@ class _BackupScreenState extends State<BackupScreen> {
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
             content: Text(
-              AppLocalizations.of(context)!.backup_not_valid,
+              l10n.backup_not_valid,
               style: TextStyle(
                 fontFamily: context.read<ThemeBloc>().fontFamily,
               ),
@@ -377,7 +377,7 @@ class _BackupScreenState extends State<BackupScreen> {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
           content: Text(
-            AppLocalizations.of(context)!.restore_successfull,
+            l10n.restore_successfull,
             style: TextStyle(
               fontFamily: context.read<ThemeBloc>().fontFamily,
             ),
@@ -547,7 +547,7 @@ class _BackupScreenState extends State<BackupScreen> {
 
     setState(() {
       restoredCounterText =
-          '${AppLocalizations.of(context)!.restored} $booksBackupDone/$booksBackupLenght\n';
+          '${l10n.restored} $booksBackupDone/$booksBackupLenght\n';
     });
   }
 
@@ -587,8 +587,8 @@ class _BackupScreenState extends State<BackupScreen> {
   Future<String?> _openFilePicker() async {
     return await FilesystemPicker.open(
       context: context,
-      title: AppLocalizations.of(context)!.choose_backup_file,
-      pickText: AppLocalizations.of(context)!.use_this_file,
+      title: l10n.choose_backup_file,
+      pickText: l10n.use_this_file,
       fsType: FilesystemType.file,
       rootDirectory: Directory('/storage/emulated/0/'),
       fileTileSelectMode: FileTileSelectMode.wholeTile,
@@ -623,7 +623,7 @@ class _BackupScreenState extends State<BackupScreen> {
         backgroundColor: Theme.of(context).scaffoldBackgroundColor,
         surfaceTintColor: Theme.of(context).scaffoldBackgroundColor,
         title: Text(
-          AppLocalizations.of(context)!.backup,
+          l10n.backup,
           style: TextStyle(
             fontSize: 18,
             fontFamily: context.read<ThemeBloc>().fontFamily,
@@ -637,7 +637,7 @@ class _BackupScreenState extends State<BackupScreen> {
             tiles: <SettingsTile>[
               SettingsTile(
                 title: Text(
-                  AppLocalizations.of(context)!.create_local_backup,
+                  l10n.create_local_backup,
                   style: TextStyle(
                     fontSize: 16,
                     fontFamily: context.read<ThemeBloc>().fontFamily,
@@ -651,7 +651,7 @@ class _BackupScreenState extends State<BackupScreen> {
                       )
                     : const Icon(FontAwesomeIcons.solidFloppyDisk),
                 description: Text(
-                  AppLocalizations.of(context)!.create_local_backup_description,
+                  l10n.create_local_backup_description,
                   style: TextStyle(
                     fontFamily: context.read<ThemeBloc>().fontFamily,
                   ),
@@ -660,7 +660,7 @@ class _BackupScreenState extends State<BackupScreen> {
               ),
               SettingsTile(
                 title: Text(
-                  AppLocalizations.of(context)!.create_cloud_backup,
+                  l10n.create_cloud_backup,
                   style: TextStyle(
                     fontSize: 16,
                     fontFamily: context.read<ThemeBloc>().fontFamily,
@@ -674,7 +674,7 @@ class _BackupScreenState extends State<BackupScreen> {
                       )
                     : const Icon(FontAwesomeIcons.cloudArrowUp),
                 description: Text(
-                  AppLocalizations.of(context)!.create_cloud_backup_description,
+                  l10n.create_cloud_backup_description,
                   style: TextStyle(
                     fontFamily: context.read<ThemeBloc>().fontFamily,
                   ),
@@ -683,7 +683,7 @@ class _BackupScreenState extends State<BackupScreen> {
               ),
               SettingsTile(
                 title: Text(
-                  AppLocalizations.of(context)!.restore_backup,
+                  l10n.restore_backup,
                   style: TextStyle(
                     fontSize: 16,
                     fontFamily: context.read<ThemeBloc>().fontFamily,
@@ -709,7 +709,7 @@ class _BackupScreenState extends State<BackupScreen> {
                           )
                         : const SizedBox(),
                     Text(
-                      '${AppLocalizations.of(context)!.restore_backup_description_1}\n${AppLocalizations.of(context)!.restore_backup_description_2}',
+                      '${l10n.restore_backup_description_1}\n${l10n.restore_backup_description_2}',
                       style: TextStyle(
                         fontFamily: context.read<ThemeBloc>().fontFamily,
                       ),

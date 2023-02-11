@@ -3,11 +3,11 @@ import 'package:flutter/material.dart';
 import 'package:openreads/core/constants.dart/enums.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:openreads/core/themes/app_theme.dart';
+import 'package:openreads/l10n.dart';
 import 'package:openreads/logic/bloc/sort_bloc/sort_bloc.dart';
 import 'package:openreads/logic/bloc/theme_bloc/theme_bloc.dart';
 import 'package:openreads/logic/cubit/book_cubit.dart';
 import 'package:openreads/ui/books_screen/widgets/widgets.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class SortBottomSheet extends StatefulWidget {
   const SortBottomSheet({
@@ -18,7 +18,14 @@ class SortBottomSheet extends StatefulWidget {
   State<SortBottomSheet> createState() => _SortBottomSheetState();
 }
 
-late List<String> sortOptions;
+final List<String> sortOptions = [
+  l10n.title,
+  l10n.author,
+  l10n.rating,
+  l10n.pages_uppercase,
+  l10n.start_date,
+  l10n.finish_date,
+];
 
 String _getDropdownValue(SetSortState state) {
   if (state.sortType == SortType.byAuthor) {
@@ -320,15 +327,6 @@ class _SortBottomSheetState extends State<SortBottomSheet> {
 
   @override
   Widget build(BuildContext context) {
-    sortOptions = [
-      AppLocalizations.of(context)!.title,
-      AppLocalizations.of(context)!.author,
-      AppLocalizations.of(context)!.rating,
-      AppLocalizations.of(context)!.pages_uppercase,
-      AppLocalizations.of(context)!.start_date,
-      AppLocalizations.of(context)!.finish_date,
-    ];
-
     return Column(
       mainAxisAlignment: MainAxisAlignment.end,
       mainAxisSize: MainAxisSize.min,
@@ -352,7 +350,7 @@ class _SortBottomSheetState extends State<SortBottomSheet> {
             children: [
               const SizedBox(height: 5),
               Text(
-                AppLocalizations.of(context)!.sort_by,
+                l10n.sort_by,
                 style: TextStyle(
                   fontSize: 16,
                   fontWeight: FontWeight.bold,
@@ -458,8 +456,7 @@ class _SortBottomSheetState extends State<SortBottomSheet> {
                                   _getFavouriteSwitch(context, state),
                                   const SizedBox(width: 10),
                                   Text(
-                                    AppLocalizations.of(context)!
-                                        .only_favourite,
+                                    l10n.only_favourite,
                                     style: TextStyle(
                                       fontSize: 16,
                                       fontFamily:
@@ -494,8 +491,7 @@ class _SortBottomSheetState extends State<SortBottomSheet> {
                             children: [
                               const SizedBox(height: 10),
                               Text(
-                                AppLocalizations.of(context)!
-                                    .filter_by_finish_year,
+                                l10n.filter_by_finish_year,
                                 style: TextStyle(
                                   fontSize: 16,
                                   fontFamily:
@@ -576,7 +572,7 @@ class _SortBottomSheetState extends State<SortBottomSheet> {
                             children: [
                               const SizedBox(height: 10),
                               Text(
-                                AppLocalizations.of(context)!.filter_by_tags,
+                                l10n.filter_by_tags,
                                 style: TextStyle(
                                   fontSize: 16,
                                   fontFamily:
@@ -707,7 +703,7 @@ class _SortBottomSheetState extends State<SortBottomSheet> {
                                   _getTagsSwitch(context, state),
                                   const SizedBox(width: 10),
                                   Text(
-                                    AppLocalizations.of(context)!.display_tags,
+                                    l10n.display_tags,
                                     style: TextStyle(
                                       fontSize: 16,
                                       fontFamily:
@@ -755,7 +751,7 @@ class _SortBottomSheetState extends State<SortBottomSheet> {
                   _getTagsAsAndSwitch(context, state),
                   const SizedBox(width: 10),
                   Text(
-                    AppLocalizations.of(context)!.only_books_with_all_tags,
+                    l10n.only_books_with_all_tags,
                     style: TextStyle(
                       fontSize: 16,
                       fontFamily: context.read<ThemeBloc>().fontFamily,

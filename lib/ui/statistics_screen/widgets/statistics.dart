@@ -3,13 +3,13 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:openreads/core/themes/app_theme.dart';
+import 'package:openreads/l10n.dart';
 import 'package:openreads/logic/bloc/challenge_bloc/challenge_bloc.dart';
 import 'package:openreads/logic/bloc/stats_bloc/stats_bloc.dart';
 import 'package:openreads/logic/bloc/theme_bloc/theme_bloc.dart';
 
 import 'package:openreads/model/yearly_challenge.dart';
 import 'package:openreads/ui/statistics_screen/widgets/widgets.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class Statistics extends StatelessWidget {
   final StatsLoaded state;
@@ -62,7 +62,7 @@ class Statistics extends StatelessWidget {
 
     tabs.add(Tab(
       child: Text(
-        AppLocalizations.of(context)!.all_years,
+        l10n.all_years,
         style: TextStyle(
           fontFamily: context.read<ThemeBloc>().fontFamily,
         ),
@@ -167,7 +167,7 @@ class Statistics extends StatelessWidget {
           if (state.finishedBooksByMonth.isEmpty) {
             return Center(
               child: Text(
-                AppLocalizations.of(context)!.no_finished_books,
+                l10n.no_finished_books,
                 style: TextStyle(
                   fontFamily: context.read<ThemeBloc>().fontFamily,
                 ),
@@ -211,7 +211,7 @@ class Statistics extends StatelessWidget {
                 : const SizedBox();
           } else {
             return ReadingChallenge(
-              title: AppLocalizations.of(context)!.books_challenge,
+              title: l10n.books_challenge,
               value: value,
               target: selectedTarget.first.books ?? 0,
               setChallenge: setChallenge,
@@ -244,7 +244,7 @@ class Statistics extends StatelessWidget {
           if (state.finishedPagesByMonth.isEmpty) {
             return Center(
               child: Text(
-                AppLocalizations.of(context)!.no_finished_books,
+                l10n.no_finished_books,
                 style: TextStyle(
                   fontFamily: context.read<ThemeBloc>().fontFamily,
                 ),
@@ -285,7 +285,7 @@ class Statistics extends StatelessWidget {
             return const SizedBox();
           } else {
             return ReadingChallenge(
-              title: AppLocalizations.of(context)!.pages_challenge,
+              title: l10n.pages_challenge,
               value: value,
               target: selectedTarget.first.pages ?? 0,
               setChallenge: setChallenge,
@@ -308,7 +308,7 @@ class Statistics extends StatelessWidget {
 
   Widget _buildAllBooksPieChart(BuildContext context) {
     return BooksByStatus(
-      title: AppLocalizations.of(context)!.all_books_by_status,
+      title: l10n.all_books_by_status,
       list: [
         state.finishedBooks.length,
         state.inProgressBooks.length,
@@ -326,7 +326,7 @@ class Statistics extends StatelessWidget {
     for (var bookReadStat in state.finishedBooksByMonth) {
       if (bookReadStat.year == year) {
         return ReadStatsByMonth(
-          title: AppLocalizations.of(context)!.finished_books_by_month,
+          title: l10n.finished_books_by_month,
           list: bookReadStat.values,
           theme: Theme.of(context),
         );
@@ -344,7 +344,7 @@ class Statistics extends StatelessWidget {
     for (var bookReadStat in state.finishedPagesByMonth) {
       if (bookReadStat.year == year) {
         return ReadStatsByMonth(
-          title: AppLocalizations.of(context)!.finished_pages_by_month,
+          title: l10n.finished_pages_by_month,
           list: bookReadStat.values,
           theme: Theme.of(context),
         );
@@ -362,7 +362,7 @@ class Statistics extends StatelessWidget {
     for (var bookReadStat in state.finishedBooksByMonth) {
       if (bookReadStat.year == year) {
         return ReadStats(
-          title: AppLocalizations.of(context)!.finished_books,
+          title: l10n.finished_books,
           value: bookReadStat.values.reduce((a, b) => a + b).toString(),
         );
       }
@@ -379,7 +379,7 @@ class Statistics extends StatelessWidget {
     for (var bookReadStat in state.finishedPagesByMonth) {
       if (bookReadStat.year == year) {
         return ReadStats(
-          title: AppLocalizations.of(context)!.finished_pages,
+          title: l10n.finished_pages,
           value: bookReadStat.values.reduce((a, b) => a + b).toString(),
         );
       }
@@ -396,7 +396,7 @@ class Statistics extends StatelessWidget {
     for (var bookYearlyStat in state.averageRating) {
       if (bookYearlyStat.year == year) {
         return ReadStats(
-          title: AppLocalizations.of(context)!.average_rating,
+          title: l10n.average_rating,
           value: bookYearlyStat.value,
           iconData: Icons.star_rounded,
         );
@@ -414,9 +414,9 @@ class Statistics extends StatelessWidget {
     for (var bookYearlyStat in state.averagePages) {
       if (bookYearlyStat.year == year) {
         return ReadStats(
-          title: AppLocalizations.of(context)!.average_pages,
+          title: l10n.average_pages,
           value: (bookYearlyStat.value != '')
-              ? '${bookYearlyStat.value} ${AppLocalizations.of(context)!.pages_lowercase}'
+              ? '${bookYearlyStat.value} ${l10n.pages_lowercase}'
               : '0',
         );
       }
@@ -433,9 +433,9 @@ class Statistics extends StatelessWidget {
     for (var bookYearlyStat in state.averageReadingTime) {
       if (bookYearlyStat.year == year) {
         return ReadStats(
-          title: AppLocalizations.of(context)!.average_reading_time,
+          title: l10n.average_reading_time,
           value: (bookYearlyStat.value != '')
-              ? '${bookYearlyStat.value} ${AppLocalizations.of(context)!.days}'
+              ? '${bookYearlyStat.value} ${l10n.days}'
               : '0',
         );
       }
@@ -452,10 +452,9 @@ class Statistics extends StatelessWidget {
     for (var bookYearlyStat in state.longestBook) {
       if (bookYearlyStat.year == year) {
         return ReadStats(
-          title: AppLocalizations.of(context)!.longest_book,
+          title: l10n.longest_book,
           value: bookYearlyStat.title.toString(),
-          secondValue:
-              '${bookYearlyStat.value} ${AppLocalizations.of(context)!.pages_lowercase}',
+          secondValue: '${bookYearlyStat.value} ${l10n.pages_lowercase}',
         );
       }
     }
@@ -471,10 +470,10 @@ class Statistics extends StatelessWidget {
     for (var bookYearlyStat in state.shortestBook) {
       if (bookYearlyStat.year == year) {
         return ReadStats(
-          title: AppLocalizations.of(context)!.shortest_book,
+          title: l10n.shortest_book,
           value: bookYearlyStat.title.toString(),
           secondValue: (bookYearlyStat.value != '')
-              ? '${bookYearlyStat.value} ${AppLocalizations.of(context)!.pages_lowercase}'
+              ? '${bookYearlyStat.value} ${l10n.pages_lowercase}'
               : '',
         );
       }
@@ -491,10 +490,9 @@ class Statistics extends StatelessWidget {
     for (var bookYearlyStat in state.fastestBook) {
       if (bookYearlyStat.year == year) {
         return ReadStats(
-          title: AppLocalizations.of(context)!.fastest_book,
+          title: l10n.fastest_book,
           value: bookYearlyStat.title.toString(),
-          secondValue:
-              '${bookYearlyStat.value} ${AppLocalizations.of(context)!.days}',
+          secondValue: '${bookYearlyStat.value} ${l10n.days}',
         );
       }
     }
@@ -510,10 +508,9 @@ class Statistics extends StatelessWidget {
     for (var bookYearlyStat in state.slowestBook) {
       if (bookYearlyStat.year == year) {
         return ReadStats(
-          title: AppLocalizations.of(context)!.slowest_book,
+          title: l10n.slowest_book,
           value: bookYearlyStat.title.toString(),
-          secondValue:
-              '${bookYearlyStat.value} ${AppLocalizations.of(context)!.days}',
+          secondValue: '${bookYearlyStat.value} ${l10n.days}',
         );
       }
     }

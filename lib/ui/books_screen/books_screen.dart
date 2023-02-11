@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:openreads/core/constants.dart/enums.dart';
+import 'package:openreads/l10n.dart';
 import 'package:openreads/logic/bloc/sort_bloc/sort_bloc.dart';
 import 'package:openreads/logic/bloc/theme_bloc/theme_bloc.dart';
 import 'package:openreads/logic/cubit/book_cubit.dart';
@@ -11,7 +12,6 @@ import 'package:openreads/ui/search_ol_screen/search_ol_screen.dart.dart';
 import 'package:openreads/ui/search_page/search_page.dart';
 import 'package:openreads/ui/settings_screen/settings_screen.dart';
 import 'package:openreads/ui/statistics_screen/statistics_screen.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class BooksScreen extends StatefulWidget {
   const BooksScreen({Key? key}) : super(key: key);
@@ -388,10 +388,11 @@ class _BooksScreenState extends State<BooksScreen>
   Widget build(BuildContext context) {
     super.build(context);
 
+    AppTranslations.init(context);
     moreButtonOptions = [
-      AppLocalizations.of(context)!.sort_filter,
-      AppLocalizations.of(context)!.statistics,
-      AppLocalizations.of(context)!.settings,
+      l10n.sort_filter,
+      l10n.statistics,
+      l10n.settings,
     ];
 
     final statusBarHeight = MediaQuery.of(context).padding.top;
@@ -534,30 +535,24 @@ class _BooksScreenState extends State<BooksScreen>
                         tabs: state.readTabFirst
                             ? List.of([
                                 BookTab(
-                                  text: AppLocalizations.of(context)!
-                                      .books_finished,
+                                  text: l10n.books_finished,
                                 ),
                                 BookTab(
-                                  text: AppLocalizations.of(context)!
-                                      .books_in_progress,
+                                  text: l10n.books_in_progress,
                                 ),
                                 BookTab(
-                                  text: AppLocalizations.of(context)!
-                                      .books_for_later,
+                                  text: l10n.books_for_later,
                                 ),
                               ])
                             : List.of([
                                 BookTab(
-                                  text: AppLocalizations.of(context)!
-                                      .books_in_progress,
+                                  text: l10n.books_in_progress,
                                 ),
                                 BookTab(
-                                  text: AppLocalizations.of(context)!
-                                      .books_finished,
+                                  text: l10n.books_finished,
                                 ),
                                 BookTab(
-                                  text: AppLocalizations.of(context)!
-                                      .books_for_later,
+                                  text: l10n.books_for_later,
                                 ),
                               ]),
                       ),
@@ -584,7 +579,7 @@ class _BooksScreenState extends State<BooksScreen>
               child: Padding(
                 padding: const EdgeInsets.all(50),
                 child: Text(
-                  '${AppLocalizations.of(context)!.this_list_is_empty_1}\n${AppLocalizations.of(context)!.this_list_is_empty_2}',
+                  '${l10n.this_list_is_empty_1}\n${l10n.this_list_is_empty_2}',
                   textAlign: TextAlign.center,
                   style: TextStyle(
                     letterSpacing: 1.5,
@@ -635,7 +630,7 @@ class _BooksScreenState extends State<BooksScreen>
               child: Padding(
                 padding: const EdgeInsets.all(50),
                 child: Text(
-                  '${AppLocalizations.of(context)!.this_list_is_empty_1}\n${AppLocalizations.of(context)!.this_list_is_empty_2}',
+                  '${l10n.this_list_is_empty_1}\n${l10n.this_list_is_empty_2}',
                   textAlign: TextAlign.center,
                   style: TextStyle(
                     letterSpacing: 1.5,
@@ -686,7 +681,7 @@ class _BooksScreenState extends State<BooksScreen>
               child: Padding(
                 padding: const EdgeInsets.all(50),
                 child: Text(
-                  '${AppLocalizations.of(context)!.this_list_is_empty_1}\n${AppLocalizations.of(context)!.this_list_is_empty_2}',
+                  '${l10n.this_list_is_empty_1}\n${l10n.this_list_is_empty_2}',
                   textAlign: TextAlign.center,
                   style: TextStyle(
                     letterSpacing: 1.5,

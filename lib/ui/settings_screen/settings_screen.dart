@@ -4,6 +4,7 @@ import 'package:flutter_email_sender/flutter_email_sender.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:openreads/core/constants.dart/enums.dart';
 import 'package:openreads/core/themes/app_theme.dart';
+import 'package:openreads/l10n.dart';
 import 'package:openreads/logic/bloc/rating_type_bloc/rating_type_bloc.dart';
 import 'package:openreads/logic/bloc/theme_bloc/theme_bloc.dart';
 import 'package:openreads/ui/backup_screen/backup_screen.dart';
@@ -12,7 +13,6 @@ import 'package:openreads/ui/trash_screen/trash_screen.dart';
 import 'package:openreads/ui/unfinished_screen/unfinished_screen.dart';
 import 'package:settings_ui/settings_ui.dart';
 import 'package:url_launcher/url_launcher.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class SettingsScreen extends StatelessWidget {
   const SettingsScreen({super.key});
@@ -254,7 +254,7 @@ class SettingsScreen extends StatelessWidget {
                       Padding(
                         padding: const EdgeInsets.only(left: 10),
                         child: Text(
-                          AppLocalizations.of(context)!.select_accent_color,
+                          l10n.select_accent_color,
                           style: TextStyle(
                             fontSize: 18,
                             fontWeight: FontWeight.bold,
@@ -267,49 +267,49 @@ class SettingsScreen extends StatelessWidget {
                         context,
                         state,
                         theme.primaryGreen,
-                        AppLocalizations.of(context)!.green_color,
+                        l10n.green_color,
                       ),
                       _buildAccentButton(
                         context,
                         state,
                         theme.primaryBlue,
-                        AppLocalizations.of(context)!.blue_color,
+                        l10n.blue_color,
                       ),
                       _buildAccentButton(
                         context,
                         state,
                         theme.primaryRed,
-                        AppLocalizations.of(context)!.red_color,
+                        l10n.red_color,
                       ),
                       _buildAccentButton(
                         context,
                         state,
                         theme.primaryYellow,
-                        AppLocalizations.of(context)!.yellow_color,
+                        l10n.yellow_color,
                       ),
                       _buildAccentButton(
                         context,
                         state,
                         theme.primaryOrange,
-                        AppLocalizations.of(context)!.orange_color,
+                        l10n.orange_color,
                       ),
                       _buildAccentButton(
                         context,
                         state,
                         theme.primaryPurple,
-                        AppLocalizations.of(context)!.purple_color,
+                        l10n.purple_color,
                       ),
                       _buildAccentButton(
                         context,
                         state,
                         theme.primaryPink,
-                        AppLocalizations.of(context)!.pink_color,
+                        l10n.pink_color,
                       ),
                       _buildAccentButton(
                         context,
                         state,
                         theme.primaryTeal,
-                        AppLocalizations.of(context)!.teal_color,
+                        l10n.teal_color,
                       ),
                     ],
                   );
@@ -377,7 +377,7 @@ class SettingsScreen extends StatelessWidget {
                 Padding(
                   padding: const EdgeInsets.only(left: 10),
                   child: Text(
-                    AppLocalizations.of(context)!.seletct_rating_type,
+                    l10n.seletct_rating_type,
                     style: TextStyle(
                       fontSize: 18,
                       fontWeight: FontWeight.bold,
@@ -387,7 +387,7 @@ class SettingsScreen extends StatelessWidget {
                 ),
                 const SizedBox(height: 15),
                 SettingsDialogButton(
-                  text: AppLocalizations.of(context)!.rating_as_bar,
+                  text: l10n.rating_as_bar,
                   onPressed: () {
                     BlocProvider.of<RatingTypeBloc>(context).add(
                       const RatingTypeChange(ratingType: RatingType.bar),
@@ -398,7 +398,7 @@ class SettingsScreen extends StatelessWidget {
                 ),
                 const SizedBox(height: 5),
                 SettingsDialogButton(
-                  text: AppLocalizations.of(context)!.rating_as_number,
+                  text: l10n.rating_as_number,
                   onPressed: () {
                     BlocProvider.of<RatingTypeBloc>(context).add(
                       const RatingTypeChange(ratingType: RatingType.number),
@@ -437,7 +437,7 @@ class SettingsScreen extends StatelessWidget {
                       Padding(
                         padding: const EdgeInsets.only(left: 10),
                         child: Text(
-                          AppLocalizations.of(context)!.select_theme_mode,
+                          l10n.select_theme_mode,
                           style: TextStyle(
                             fontSize: 18,
                             fontWeight: FontWeight.bold,
@@ -447,17 +447,17 @@ class SettingsScreen extends StatelessWidget {
                       ),
                       const SizedBox(height: 15),
                       SettingsDialogButton(
-                        text: AppLocalizations.of(context)!.theme_mode_system,
+                        text: l10n.theme_mode_system,
                         onPressed: () => _setThemeModeAuto(context, state),
                       ),
                       const SizedBox(height: 5),
                       SettingsDialogButton(
-                        text: AppLocalizations.of(context)!.theme_mode_light,
+                        text: l10n.theme_mode_light,
                         onPressed: () => _setThemeModeLight(context, state),
                       ),
                       const SizedBox(height: 5),
                       SettingsDialogButton(
-                        text: AppLocalizations.of(context)!.theme_mode_dark,
+                        text: l10n.theme_mode_dark,
                         onPressed: () => _setThemeModeDark(context, state),
                       ),
                     ],
@@ -494,7 +494,7 @@ class SettingsScreen extends StatelessWidget {
                       Padding(
                         padding: const EdgeInsets.only(left: 10),
                         child: Text(
-                          AppLocalizations.of(context)!.select_font,
+                          l10n.select_font,
                           style: TextStyle(
                             fontSize: 18,
                             fontWeight: FontWeight.bold,
@@ -512,8 +512,7 @@ class SettingsScreen extends StatelessWidget {
                               mainAxisSize: MainAxisSize.min,
                               children: [
                                 SettingsDialogButton(
-                                  text: AppLocalizations.of(context)!
-                                      .font_default,
+                                  text: l10n.font_default,
                                   onPressed: () => _setFont(
                                     context,
                                     state,
@@ -668,7 +667,7 @@ class SettingsScreen extends StatelessWidget {
                       Padding(
                         padding: const EdgeInsets.only(left: 10),
                         child: Text(
-                          AppLocalizations.of(context)!.display_outlines,
+                          l10n.display_outlines,
                           style: TextStyle(
                             fontSize: 18,
                             fontWeight: FontWeight.bold,
@@ -678,12 +677,12 @@ class SettingsScreen extends StatelessWidget {
                       ),
                       const SizedBox(height: 15),
                       SettingsDialogButton(
-                        text: AppLocalizations.of(context)!.show_outlines,
+                        text: l10n.show_outlines,
                         onPressed: () => _showOutlines(context, state),
                       ),
                       const SizedBox(height: 5),
                       SettingsDialogButton(
-                        text: AppLocalizations.of(context)!.hide_outlines,
+                        text: l10n.hide_outlines,
                         onPressed: () => _hideOutlines(context, state),
                       ),
                     ],
@@ -721,7 +720,7 @@ class SettingsScreen extends StatelessWidget {
                       Padding(
                         padding: const EdgeInsets.only(left: 10),
                         child: Text(
-                          AppLocalizations.of(context)!.select_corner_radius,
+                          l10n.select_corner_radius,
                           style: TextStyle(
                             fontSize: 18,
                             fontWeight: FontWeight.bold,
@@ -731,25 +730,23 @@ class SettingsScreen extends StatelessWidget {
                       ),
                       const SizedBox(height: 15),
                       SettingsDialogButton(
-                        text: AppLocalizations.of(context)!.no_rounded_corners,
+                        text: l10n.no_rounded_corners,
                         onPressed: () => _changeCornerRadius(context, state, 0),
                       ),
                       const SizedBox(height: 5),
                       SettingsDialogButton(
-                        text:
-                            AppLocalizations.of(context)!.small_rounded_corners,
+                        text: l10n.small_rounded_corners,
                         onPressed: () => _changeCornerRadius(context, state, 5),
                       ),
                       const SizedBox(height: 5),
                       SettingsDialogButton(
-                        text: AppLocalizations.of(context)!
-                            .medium_rounded_corners,
+                        text: l10n.medium_rounded_corners,
                         onPressed: () =>
                             _changeCornerRadius(context, state, 10),
                       ),
                       const SizedBox(height: 5),
                       SettingsDialogButton(
-                        text: AppLocalizations.of(context)!.big_rounded_corners,
+                        text: l10n.big_rounded_corners,
                         onPressed: () =>
                             _changeCornerRadius(context, state, 20),
                       ),
@@ -788,7 +785,7 @@ class SettingsScreen extends StatelessWidget {
                       Padding(
                         padding: const EdgeInsets.only(left: 10),
                         child: Text(
-                          AppLocalizations.of(context)!.select_tabs_order,
+                          l10n.select_tabs_order,
                           style: TextStyle(
                             fontSize: 18,
                             fontWeight: FontWeight.bold,
@@ -798,8 +795,7 @@ class SettingsScreen extends StatelessWidget {
                       ),
                       const SizedBox(height: 15),
                       SettingsDialogButton(
-                        text:
-                            AppLocalizations.of(context)!.tabs_order_read_first,
+                        text: l10n.tabs_order_read_first,
                         onPressed: () {
                           BlocProvider.of<ThemeBloc>(context)
                               .add(ChangeThemeEvent(
@@ -816,8 +812,7 @@ class SettingsScreen extends StatelessWidget {
                       ),
                       const SizedBox(height: 5),
                       SettingsDialogButton(
-                        text: AppLocalizations.of(context)!
-                            .tabs_order_in_progress_first,
+                        text: l10n.tabs_order_in_progress_first,
                         onPressed: () {
                           BlocProvider.of<ThemeBloc>(context)
                               .add(ChangeThemeEvent(
@@ -881,14 +876,14 @@ class SettingsScreen extends StatelessWidget {
   SettingsTile _buildFeedbackSetting(BuildContext context) {
     return SettingsTile(
       title: Text(
-        AppLocalizations.of(context)!.send_feedback,
+        l10n.send_feedback,
         style: TextStyle(
           fontSize: 16,
           fontFamily: context.read<ThemeBloc>().fontFamily,
         ),
       ),
       description: Text(
-        AppLocalizations.of(context)!.report_bugs_or_ideas,
+        l10n.report_bugs_or_ideas,
         style: TextStyle(
           fontFamily: context.read<ThemeBloc>().fontFamily,
         ),
@@ -926,7 +921,7 @@ class SettingsScreen extends StatelessWidget {
                       children: [
                         Expanded(
                           child: ContactButton(
-                            text: AppLocalizations.of(context)!.send_dev_email,
+                            text: l10n.send_dev_email,
                             icon: FontAwesomeIcons.solidEnvelope,
                             onPressed: () => _sendEmailToDev(context),
                           ),
@@ -934,8 +929,7 @@ class SettingsScreen extends StatelessWidget {
                         const SizedBox(width: 20),
                         Expanded(
                           child: ContactButton(
-                            text: AppLocalizations.of(context)!
-                                .raise_github_issue,
+                            text: l10n.raise_github_issue,
                             icon: FontAwesomeIcons.github,
                             onPressed: () => _openGithubIssue(context),
                           ),
@@ -955,7 +949,7 @@ class SettingsScreen extends StatelessWidget {
   SettingsTile _buildTrashSetting(BuildContext context) {
     return SettingsTile(
       title: Text(
-        AppLocalizations.of(context)!.deleted_books,
+        l10n.deleted_books,
         style: TextStyle(
           fontSize: 16,
           fontFamily: context.read<ThemeBloc>().fontFamily,
@@ -979,7 +973,7 @@ class SettingsScreen extends StatelessWidget {
   SettingsTile _buildUnfinishedSetting(BuildContext context) {
     return SettingsTile(
       title: Text(
-        AppLocalizations.of(context)!.unfinished_books,
+        l10n.unfinished_books,
         style: TextStyle(
           fontSize: 16,
           fontFamily: context.read<ThemeBloc>().fontFamily,
@@ -1000,7 +994,7 @@ class SettingsScreen extends StatelessWidget {
   SettingsTile _buildBackupSetting(BuildContext context) {
     return SettingsTile(
       title: Text(
-        AppLocalizations.of(context)!.backup_and_restore,
+        l10n.backup_and_restore,
         style: TextStyle(
           fontSize: 16,
           fontFamily: context.read<ThemeBloc>().fontFamily,
@@ -1021,7 +1015,7 @@ class SettingsScreen extends StatelessWidget {
   SettingsTile _buildAccentSetting(BuildContext context) {
     return SettingsTile(
       title: Text(
-        AppLocalizations.of(context)!.accent_color,
+        l10n.accent_color,
         style: TextStyle(
           fontSize: 16,
           fontFamily: context.read<ThemeBloc>().fontFamily,
@@ -1034,56 +1028,56 @@ class SettingsScreen extends StatelessWidget {
             switch (themeState.primaryColor.value) {
               case 0xffB73E3E:
                 return Text(
-                  AppLocalizations.of(context)!.red_color,
+                  l10n.red_color,
                   style: TextStyle(
                     fontFamily: context.read<ThemeBloc>().fontFamily,
                   ),
                 );
               case 0xff2146C7:
                 return Text(
-                  AppLocalizations.of(context)!.blue_color,
+                  l10n.blue_color,
                   style: TextStyle(
                     fontFamily: context.read<ThemeBloc>().fontFamily,
                   ),
                 );
               case 0xff285430:
                 return Text(
-                  AppLocalizations.of(context)!.green_color,
+                  l10n.green_color,
                   style: TextStyle(
                     fontFamily: context.read<ThemeBloc>().fontFamily,
                   ),
                 );
               case 0xffE14D2A:
                 return Text(
-                  AppLocalizations.of(context)!.orange_color,
+                  l10n.orange_color,
                   style: TextStyle(
                     fontFamily: context.read<ThemeBloc>().fontFamily,
                   ),
                 );
               case 0xff9F73AB:
                 return Text(
-                  AppLocalizations.of(context)!.purple_color,
+                  l10n.purple_color,
                   style: TextStyle(
                     fontFamily: context.read<ThemeBloc>().fontFamily,
                   ),
                 );
               case 0xffFF577F:
                 return Text(
-                  AppLocalizations.of(context)!.pink_color,
+                  l10n.pink_color,
                   style: TextStyle(
                     fontFamily: context.read<ThemeBloc>().fontFamily,
                   ),
                 );
               case 0xff3FA796:
                 return Text(
-                  AppLocalizations.of(context)!.teal_color,
+                  l10n.teal_color,
                   style: TextStyle(
                     fontFamily: context.read<ThemeBloc>().fontFamily,
                   ),
                 );
               default:
                 return Text(
-                  AppLocalizations.of(context)!.yellow_color,
+                  l10n.yellow_color,
                   style: TextStyle(
                     fontFamily: context.read<ThemeBloc>().fontFamily,
                   ),
@@ -1101,7 +1095,7 @@ class SettingsScreen extends StatelessWidget {
   SettingsTile _buildCornersSetting(BuildContext context) {
     return SettingsTile(
       title: Text(
-        AppLocalizations.of(context)!.rounded_corners,
+        l10n.rounded_corners,
         style: TextStyle(
           fontSize: 16,
           fontFamily: context.read<ThemeBloc>().fontFamily,
@@ -1113,28 +1107,28 @@ class SettingsScreen extends StatelessWidget {
           if (themeState is SetThemeState) {
             if (themeState.cornerRadius == 5) {
               return Text(
-                AppLocalizations.of(context)!.small_rounded_corners,
+                l10n.small_rounded_corners,
                 style: TextStyle(
                   fontFamily: context.read<ThemeBloc>().fontFamily,
                 ),
               );
             } else if (themeState.cornerRadius == 10) {
               return Text(
-                AppLocalizations.of(context)!.medium_rounded_corners,
+                l10n.medium_rounded_corners,
                 style: TextStyle(
                   fontFamily: context.read<ThemeBloc>().fontFamily,
                 ),
               );
             } else if (themeState.cornerRadius == 20) {
               return Text(
-                AppLocalizations.of(context)!.big_rounded_corners,
+                l10n.big_rounded_corners,
                 style: TextStyle(
                   fontFamily: context.read<ThemeBloc>().fontFamily,
                 ),
               );
             } else {
               return Text(
-                AppLocalizations.of(context)!.no_rounded_corners,
+                l10n.no_rounded_corners,
                 style: TextStyle(
                   fontFamily: context.read<ThemeBloc>().fontFamily,
                 ),
@@ -1152,7 +1146,7 @@ class SettingsScreen extends StatelessWidget {
   SettingsTile _buildOutlinesSetting(BuildContext context) {
     return SettingsTile(
       title: Text(
-        AppLocalizations.of(context)!.display_outlines,
+        l10n.display_outlines,
         style: TextStyle(
           fontSize: 16,
           fontFamily: context.read<ThemeBloc>().fontFamily,
@@ -1164,14 +1158,14 @@ class SettingsScreen extends StatelessWidget {
           if (themeState is SetThemeState) {
             if (themeState.showOutlines) {
               return Text(
-                AppLocalizations.of(context)!.show_outlines,
+                l10n.show_outlines,
                 style: TextStyle(
                   fontFamily: context.read<ThemeBloc>().fontFamily,
                 ),
               );
             } else {
               return Text(
-                AppLocalizations.of(context)!.hide_outlines,
+                l10n.hide_outlines,
                 style: TextStyle(
                   fontFamily: context.read<ThemeBloc>().fontFamily,
                 ),
@@ -1189,7 +1183,7 @@ class SettingsScreen extends StatelessWidget {
   SettingsTile _buildThemeModeSetting(BuildContext context) {
     return SettingsTile(
       title: Text(
-        AppLocalizations.of(context)!.theme_mode,
+        l10n.theme_mode,
         style: TextStyle(
           fontSize: 16,
           fontFamily: context.read<ThemeBloc>().fontFamily,
@@ -1202,21 +1196,21 @@ class SettingsScreen extends StatelessWidget {
             switch (themeState.themeMode) {
               case ThemeMode.light:
                 return Text(
-                  AppLocalizations.of(context)!.theme_mode_light,
+                  l10n.theme_mode_light,
                   style: TextStyle(
                     fontFamily: context.read<ThemeBloc>().fontFamily,
                   ),
                 );
               case ThemeMode.dark:
                 return Text(
-                  AppLocalizations.of(context)!.theme_mode_dark,
+                  l10n.theme_mode_dark,
                   style: TextStyle(
                     fontFamily: context.read<ThemeBloc>().fontFamily,
                   ),
                 );
               default:
                 return Text(
-                  AppLocalizations.of(context)!.theme_mode_system,
+                  l10n.theme_mode_system,
                   style: TextStyle(
                     fontFamily: context.read<ThemeBloc>().fontFamily,
                   ),
@@ -1234,7 +1228,7 @@ class SettingsScreen extends StatelessWidget {
   SettingsTile _buildFontSetting(BuildContext context) {
     return SettingsTile(
       title: Text(
-        AppLocalizations.of(context)!.font,
+        l10n.font,
         style: TextStyle(
           fontSize: 16,
           fontFamily: context.read<ThemeBloc>().fontFamily,
@@ -1256,7 +1250,7 @@ class SettingsScreen extends StatelessWidget {
               );
             } else {
               return Text(
-                AppLocalizations.of(context)!.font_default,
+                l10n.font_default,
                 style: TextStyle(
                   fontFamily: context.read<ThemeBloc>().fontFamily,
                 ),
@@ -1274,7 +1268,7 @@ class SettingsScreen extends StatelessWidget {
   SettingsTile _buildRatingTypeSetting(BuildContext context) {
     return SettingsTile(
       title: Text(
-        AppLocalizations.of(context)!.rating_type,
+        l10n.rating_type,
         style: TextStyle(
           fontSize: 16,
           fontFamily: context.read<ThemeBloc>().fontFamily,
@@ -1285,14 +1279,14 @@ class SettingsScreen extends StatelessWidget {
         builder: (_, state) {
           if (state is RatingTypeNumber) {
             return Text(
-              AppLocalizations.of(context)!.rating_as_number,
+              l10n.rating_as_number,
               style: TextStyle(
                 fontFamily: context.read<ThemeBloc>().fontFamily,
               ),
             );
           } else if (state is RatingTypeBar) {
             return Text(
-              AppLocalizations.of(context)!.rating_as_bar,
+              l10n.rating_as_bar,
               style: TextStyle(
                 fontFamily: context.read<ThemeBloc>().fontFamily,
               ),
@@ -1309,7 +1303,7 @@ class SettingsScreen extends StatelessWidget {
   SettingsTile _buildTabOrderSetting(BuildContext context) {
     return SettingsTile(
       title: Text(
-        AppLocalizations.of(context)!.tabs_order,
+        l10n.tabs_order,
         style: TextStyle(
           fontSize: 16,
           fontFamily: context.read<ThemeBloc>().fontFamily,
@@ -1324,14 +1318,14 @@ class SettingsScreen extends StatelessWidget {
           if (state is SetThemeState) {
             if (state.readTabFirst) {
               return Text(
-                AppLocalizations.of(context)!.tabs_order_read_first,
+                l10n.tabs_order_read_first,
                 style: TextStyle(
                   fontFamily: context.read<ThemeBloc>().fontFamily,
                 ),
               );
             } else {
               return Text(
-                AppLocalizations.of(context)!.tabs_order_in_progress_first,
+                l10n.tabs_order_in_progress_first,
                 style: TextStyle(
                   fontFamily: context.read<ThemeBloc>().fontFamily,
                 ),
@@ -1354,7 +1348,7 @@ class SettingsScreen extends StatelessWidget {
         backgroundColor: Theme.of(context).scaffoldBackgroundColor,
         surfaceTintColor: Theme.of(context).scaffoldBackgroundColor,
         title: Text(
-          AppLocalizations.of(context)!.settings,
+          l10n.settings,
           style: TextStyle(
             fontSize: 18,
             fontFamily: context.read<ThemeBloc>().fontFamily,
@@ -1367,26 +1361,24 @@ class SettingsScreen extends StatelessWidget {
           SettingsSection(
             tiles: <SettingsTile>[
               _buildURLSetting(
-                title: AppLocalizations.of(context)!.join_community,
-                description:
-                    AppLocalizations.of(context)!.join_community_description,
+                title: l10n.join_community,
+                description: l10n.join_community_description,
                 url: communityUrl,
                 iconData: FontAwesomeIcons.peopleGroup,
                 context: context,
               ),
               // TODO: Show only on GPlay variant
               _buildURLSetting(
-                title: AppLocalizations.of(context)!.rate_app,
-                description: AppLocalizations.of(context)!.rate_app_description,
+                title: l10n.rate_app,
+                description: l10n.rate_app_description,
                 url: rateUrl,
                 iconData: Icons.star_rounded,
                 context: context,
               ),
               _buildFeedbackSetting(context),
               _buildURLSetting(
-                title: AppLocalizations.of(context)!.translate_app,
-                description:
-                    AppLocalizations.of(context)!.translate_app_description,
+                title: l10n.translate_app,
+                description: l10n.translate_app_description,
                 url: translationUrl,
                 iconData: Icons.translate_rounded,
                 context: context,
@@ -1395,7 +1387,7 @@ class SettingsScreen extends StatelessWidget {
           ),
           SettingsSection(
             title: Text(
-              AppLocalizations.of(context)!.app,
+              l10n.app,
               style: TextStyle(
                 fontSize: 16,
                 fontWeight: FontWeight.bold,
@@ -1411,7 +1403,7 @@ class SettingsScreen extends StatelessWidget {
           ),
           SettingsSection(
             title: Text(
-              AppLocalizations.of(context)!.apperance,
+              l10n.apperance,
               style: TextStyle(
                 fontSize: 16,
                 fontWeight: FontWeight.bold,
@@ -1431,7 +1423,7 @@ class SettingsScreen extends StatelessWidget {
           ),
           SettingsSection(
             title: Text(
-              AppLocalizations.of(context)!.about,
+              l10n.about,
               style: TextStyle(
                 fontSize: 16,
                 fontWeight: FontWeight.bold,
@@ -1441,30 +1433,28 @@ class SettingsScreen extends StatelessWidget {
             ),
             tiles: <SettingsTile>[
               _buildURLSetting(
-                title: AppLocalizations.of(context)!.version,
+                title: l10n.version,
                 description: version,
                 url: releaseUrl,
                 iconData: FontAwesomeIcons.rocket,
                 context: context,
               ),
               _buildURLSetting(
-                title: AppLocalizations.of(context)!.source_code,
-                description:
-                    AppLocalizations.of(context)!.source_code_description,
+                title: l10n.source_code,
+                description: l10n.source_code_description,
                 url: repoUrl,
                 iconData: FontAwesomeIcons.code,
                 context: context,
               ),
               _buildURLSetting(
-                title: AppLocalizations.of(context)!.changelog,
-                description:
-                    AppLocalizations.of(context)!.changelog_description,
+                title: l10n.changelog,
+                description: l10n.changelog_description,
                 url: releaseUrl,
                 iconData: Icons.auto_awesome_rounded,
                 context: context,
               ),
               _buildURLSetting(
-                title: AppLocalizations.of(context)!.licence,
+                title: l10n.licence,
                 description: licence,
                 url: licenceUrl,
                 iconData: Icons.copyright_rounded,
