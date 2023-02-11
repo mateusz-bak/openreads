@@ -180,13 +180,13 @@
   "restore_backup_description_1": "Restore books from your device.",
   "restore_backup_description_2": "Works for backups not older than from v1.14.2",
   "error_getting_book": "Error while getting the book",
-  "welcome_1": "Welcome to Openreads",
-  "welcome_1_description_1": "Openreads will help you keep track of your books.",
+  "welcome_1": "Willkommen bei Openreads",
+  "welcome_1_description_1": "Openreads hilft dir, den Überblick über deine Bücher zu behalten.",
   "welcome_1_description_2": "It is also a great tool for organizing your personal library in an easy and transparent way.",
   "welcome_2_description_1": "Progress with your readings thanks to awesome and detailed statistics.",
   "welcome_2_description_2": "Challenge yourself to be a better reader.",
-  "welcome_3_description_1": "Openreads is completely open source!",
+  "welcome_3_description_1": "Openreads ist komplett Open Source!",
   "welcome_3_description_2": "It means that you can inspect the app's code on your own and contribute to it's development.",
-  "welcome_3_description_3": "As a bonus you get zero ads and absolutely no tracking!",
+  "welcome_3_description_3": "Als Bonus ist keine Werbung und keinerlei Tracking enthalten!",
   "start_button": "START"
 }
