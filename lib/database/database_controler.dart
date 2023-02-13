@@ -17,7 +17,6 @@ class DatabaseController {
     var result = await db.query(
       "booksTable",
       columns: columns,
-      where: 'deleted = 0',
     );
 
     return result.isNotEmpty
