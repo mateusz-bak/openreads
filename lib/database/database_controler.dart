@@ -51,11 +51,13 @@ class DatabaseController {
     var result = await db.query(
       "booksTable",
       columns: columns,
-      where: "title LIKE ? OR subtitle LIKE ? OR author LIKE ?",
+      where:
+          "(title LIKE ? OR subtitle LIKE ? OR author LIKE ?) AND deleted LIKE ?",
       whereArgs: [
         '%$query%',
         '%$query%',
         '%$query%',
+        '0',
       ],
     );
 
