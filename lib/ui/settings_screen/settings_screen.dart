@@ -77,6 +77,7 @@ class SettingsScreen extends StatelessWidget {
       primaryColor: state.primaryColor,
       fontFamily: state.fontFamily,
       readTabFirst: state.readTabFirst,
+      useMaterialYou: state.useMaterialYou,
     ));
 
     Navigator.of(context).pop();
@@ -90,6 +91,7 @@ class SettingsScreen extends StatelessWidget {
       primaryColor: state.primaryColor,
       fontFamily: state.fontFamily,
       readTabFirst: state.readTabFirst,
+      useMaterialYou: state.useMaterialYou,
     ));
 
     Navigator.of(context).pop();
@@ -103,6 +105,7 @@ class SettingsScreen extends StatelessWidget {
       primaryColor: state.primaryColor,
       fontFamily: state.fontFamily,
       readTabFirst: state.readTabFirst,
+      useMaterialYou: state.useMaterialYou,
     ));
 
     Navigator.of(context).pop();
@@ -167,6 +170,7 @@ class SettingsScreen extends StatelessWidget {
       primaryColor: state.primaryColor,
       fontFamily: fontFamily,
       readTabFirst: state.readTabFirst,
+      useMaterialYou: state.useMaterialYou,
     ));
 
     Navigator.of(context).pop();
@@ -180,6 +184,7 @@ class SettingsScreen extends StatelessWidget {
       primaryColor: state.primaryColor,
       fontFamily: state.fontFamily,
       readTabFirst: state.readTabFirst,
+      useMaterialYou: state.useMaterialYou,
     ));
 
     Navigator.of(context).pop();
@@ -193,6 +198,7 @@ class SettingsScreen extends StatelessWidget {
       primaryColor: state.primaryColor,
       fontFamily: state.fontFamily,
       readTabFirst: state.readTabFirst,
+      useMaterialYou: state.useMaterialYou,
     ));
 
     Navigator.of(context).pop();
@@ -207,6 +213,7 @@ class SettingsScreen extends StatelessWidget {
       primaryColor: state.primaryColor,
       fontFamily: state.fontFamily,
       readTabFirst: state.readTabFirst,
+      useMaterialYou: state.useMaterialYou,
     ));
 
     Navigator.of(context).pop();
@@ -220,6 +227,21 @@ class SettingsScreen extends StatelessWidget {
       primaryColor: color,
       fontFamily: state.fontFamily,
       readTabFirst: state.readTabFirst,
+      useMaterialYou: false,
+    ));
+
+    Navigator.of(context).pop();
+  }
+
+  _setMaterialYou(BuildContext context, SetThemeState state) {
+    BlocProvider.of<ThemeBloc>(context).add(ChangeThemeEvent(
+      themeMode: state.themeMode,
+      showOutlines: state.showOutlines,
+      cornerRadius: state.cornerRadius,
+      primaryColor: state.primaryColor,
+      fontFamily: state.fontFamily,
+      readTabFirst: state.readTabFirst,
+      useMaterialYou: true,
     ));
 
     Navigator.of(context).pop();
@@ -239,7 +261,6 @@ class SettingsScreen extends StatelessWidget {
             child: BlocBuilder<ThemeBloc, ThemeState>(
               builder: (context, state) {
                 if (state is SetThemeState) {
-                  final theme = Theme.of(context);
                   return Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     mainAxisSize: MainAxisSize.min,
@@ -255,6 +276,32 @@ class SettingsScreen extends StatelessWidget {
                         ),
                       ),
                       const SizedBox(height: 15),
+                      GestureDetector(
+                        onTap: () => _setMaterialYou(
+                          context,
+                          state,
+                        ),
+                        child: Container(
+                          padding: const EdgeInsets.all(10),
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(cornerRadius),
+                            color: Theme.of(context).colorScheme.surfaceVariant,
+                            border: Border.all(color: dividerColor),
+                          ),
+                          child: Row(
+                            children: [
+                              Text(
+                                l10n.material_you,
+                                style: const TextStyle(
+                                  fontSize: 16,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ),
+                      const SizedBox(height: 5),
                       _buildAccentButton(
                         context,
                         state,
@@ -316,37 +363,47 @@ class SettingsScreen extends StatelessWidget {
     );
   }
 
-  Row _buildAccentButton(
+  Widget _buildAccentButton(
     BuildContext context,
     SetThemeState state,
     Color color,
     String colorName,
   ) {
-    return Row(
-      crossAxisAlignment: CrossAxisAlignment.center,
-      children: [
-        Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 10),
-          child: Container(
-            width: 50,
-            height: 25,
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(cornerRadius),
-              color: color,
-            ),
-          ),
+    return Padding(
+      padding: const EdgeInsets.symmetric(vertical: 5),
+      child: Container(
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(cornerRadius),
+          color: Theme.of(context).colorScheme.surfaceVariant,
+          border: Border.all(color: dividerColor),
         ),
-        Expanded(
-          child: SettingsDialogButton(
-            text: colorName,
-            onPressed: () => _setAccentColor(
-              context,
-              state,
-              color,
+        child: Row(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 10),
+              child: Container(
+                width: 50,
+                height: 25,
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(cornerRadius),
+                  color: color,
+                ),
+              ),
             ),
-          ),
+            Expanded(
+              child: SettingsDialogButton(
+                text: colorName,
+                onPressed: () => _setAccentColor(
+                  context,
+                  state,
+                  color,
+                ),
+              ),
+            ),
+          ],
         ),
-      ],
+      ),
     );
   }
 
@@ -777,15 +834,17 @@ class SettingsScreen extends StatelessWidget {
                       SettingsDialogButton(
                         text: l10n.tabs_order_read_first,
                         onPressed: () {
-                          BlocProvider.of<ThemeBloc>(context)
-                              .add(ChangeThemeEvent(
-                            themeMode: state.themeMode,
-                            showOutlines: state.showOutlines,
-                            cornerRadius: state.cornerRadius,
-                            primaryColor: state.primaryColor,
-                            fontFamily: state.fontFamily,
-                            readTabFirst: true,
-                          ));
+                          BlocProvider.of<ThemeBloc>(context).add(
+                            ChangeThemeEvent(
+                              themeMode: state.themeMode,
+                              showOutlines: state.showOutlines,
+                              cornerRadius: state.cornerRadius,
+                              primaryColor: state.primaryColor,
+                              fontFamily: state.fontFamily,
+                              readTabFirst: true,
+                              useMaterialYou: state.useMaterialYou,
+                            ),
+                          );
 
                           Navigator.of(context).pop();
                         },
@@ -794,15 +853,17 @@ class SettingsScreen extends StatelessWidget {
                       SettingsDialogButton(
                         text: l10n.tabs_order_in_progress_first,
                         onPressed: () {
-                          BlocProvider.of<ThemeBloc>(context)
-                              .add(ChangeThemeEvent(
-                            themeMode: state.themeMode,
-                            showOutlines: state.showOutlines,
-                            cornerRadius: state.cornerRadius,
-                            primaryColor: state.primaryColor,
-                            fontFamily: state.fontFamily,
-                            readTabFirst: false,
-                          ));
+                          BlocProvider.of<ThemeBloc>(context).add(
+                            ChangeThemeEvent(
+                              themeMode: state.themeMode,
+                              showOutlines: state.showOutlines,
+                              cornerRadius: state.cornerRadius,
+                              primaryColor: state.primaryColor,
+                              fontFamily: state.fontFamily,
+                              readTabFirst: false,
+                              useMaterialYou: state.useMaterialYou,
+                            ),
+                          );
 
                           Navigator.of(context).pop();
                         },
@@ -997,6 +1058,13 @@ class SettingsScreen extends StatelessWidget {
       description: BlocBuilder<ThemeBloc, ThemeState>(
         builder: (_, themeState) {
           if (themeState is SetThemeState) {
+            if (themeState.useMaterialYou) {
+              return Text(
+                l10n.material_you,
+                style: const TextStyle(),
+              );
+            }
+
             switch (themeState.primaryColor.value) {
               case 0xffB73E3E:
                 return Text(

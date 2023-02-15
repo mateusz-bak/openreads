@@ -1,3 +1,4 @@
+import 'package:dynamic_color/dynamic_color.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_displaymode/flutter_displaymode.dart';
@@ -120,26 +121,35 @@ class _OpenreadsAppState extends State<OpenreadsApp>
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Openreads Flutter',
-      theme: ThemeData(
-        useMaterial3: true,
-        colorSchemeSeed: widget.themeState.primaryColor,
-        brightness: Brightness.light,
-        fontFamily: widget.themeState.fontFamily,
-      ),
-      darkTheme: ThemeData(
-        useMaterial3: true,
-        colorSchemeSeed: widget.themeState.primaryColor,
-        brightness: Brightness.dark,
-        fontFamily: widget.themeState.fontFamily,
-      ),
-      themeMode: widget.themeState.themeMode,
-      home: welcomeMode
-          ? WelcomeScreen(themeData: Theme.of(context))
-          : const BooksScreen(),
-      localizationsDelegates: AppLocalizations.localizationsDelegates,
-      supportedLocales: AppLocalizations.supportedLocales,
-    );
+    return DynamicColorBuilder(
+        builder: (ColorScheme? lightDynamic, ColorScheme? darkDynamic) {
+      return MaterialApp(
+        title: 'Openreads Flutter',
+        theme: ThemeData(
+          useMaterial3: true,
+          colorSchemeSeed: widget.themeState.useMaterialYou
+              ? null
+              : widget.themeState.primaryColor,
+          colorScheme: widget.themeState.useMaterialYou ? lightDynamic : null,
+          brightness: Brightness.light,
+          fontFamily: widget.themeState.fontFamily,
+        ),
+        darkTheme: ThemeData(
+          useMaterial3: true,
+          colorSchemeSeed: widget.themeState.useMaterialYou
+              ? null
+              : widget.themeState.primaryColor,
+          colorScheme: widget.themeState.useMaterialYou ? darkDynamic : null,
+          brightness: Brightness.dark,
+          fontFamily: widget.themeState.fontFamily,
+        ),
+        themeMode: widget.themeState.themeMode,
+        home: welcomeMode
+            ? WelcomeScreen(themeData: Theme.of(context))
+            : const BooksScreen(),
+        localizationsDelegates: AppLocalizations.localizationsDelegates,
+        supportedLocales: AppLocalizations.supportedLocales,
+      );
+    });
   }
 }
