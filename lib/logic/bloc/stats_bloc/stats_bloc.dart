@@ -1,6 +1,6 @@
 import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:openreads/l10n.dart';
+import 'package:openreads/resources/l10n.dart';
 import 'package:openreads/model/book.dart';
 import 'package:openreads/model/book_read_stat.dart';
 import 'package:openreads/model/book_yearly_stat.dart';

@@ -40,7 +40,7 @@
   "open_library_ID": "Open Library ID",
   "enter_tags": "Tags",
   "my_review": "My review",
-  "add_book": "Add new book",
+  "add_new_book": "Add new book",
   "select_start_date": "Select reading start date",
   "select_finish_date": "Select reading finish date",
   "title_cannot_be_empty": "Title cannot be empty",

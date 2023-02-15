@@ -40,7 +40,7 @@
   "open_library_ID": "Open Library ID",
   "enter_tags": "Schlagworte",
   "my_review": "Meine Zusammenfassung",
-  "add_book": "Neues Buch hinzufügen",
+  "add_new_book": "Neues Buch hinzufügen",
   "select_start_date": "Startdatum des Buches auswählen",
   "select_finish_date": "Enddatum des Buches auswählen",
   "title_cannot_be_empty": "Titel darf nicht leer sein",

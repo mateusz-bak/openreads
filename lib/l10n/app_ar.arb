@@ -40,7 +40,7 @@
   "open_library_ID": "Open Library ID",
   "enter_tags": "التصنيفات",
   "my_review": "تعليقي",
-  "add_book": "إضافة كتاب جديد",
+  "add_new_book": "إضافة كتاب جديد",
   "select_start_date": "حدد تاريخ بدء القراءة",
   "select_finish_date": "حدد تاريخ إنهاء القراءة",
   "title_cannot_be_empty": "أضف عنواناً للكتاب",
