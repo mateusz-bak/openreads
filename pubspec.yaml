@@ -50,6 +50,7 @@ dependencies:
   device_info_plus: ^8.0.0
   flutter_localizations:
     sdk: flutter
+  dynamic_color: ^1.6.2
 
 dev_dependencies:
   flutter_test:

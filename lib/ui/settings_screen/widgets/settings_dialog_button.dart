@@ -21,7 +21,7 @@ class SettingsDialogButton extends StatelessWidget {
             child: Padding(
               padding: const EdgeInsets.symmetric(
                 horizontal: 10,
-                vertical: 15,
+                vertical: 10,
               ),
               child: Text(
                 text,

@@ -16,6 +16,7 @@ class ThemeBloc extends HydratedBloc<ThemeEvent, ThemeState> {
           primaryColor: Color(0xff3FA796),
           fontFamily: 'Nunito',
           readTabFirst: true,
+          useMaterialYou: true,
         )) {
     on<ChangeThemeEvent>((event, emit) {
       fontFamily = event.fontFamily;
@@ -27,6 +28,7 @@ class ThemeBloc extends HydratedBloc<ThemeEvent, ThemeState> {
         primaryColor: event.primaryColor,
         fontFamily: fontFamily,
         readTabFirst: event.readTabFirst,
+        useMaterialYou: event.useMaterialYou,
       ));
     });
   }
@@ -39,6 +41,7 @@ class ThemeBloc extends HydratedBloc<ThemeEvent, ThemeState> {
     final primaryColor = json['primary_color'] as int?;
     final fontFamily = json['font_family'] as String?;
     final readTabFirst = json['read_tab_first'] as bool?;
+    final useMaterialYou = json['use_material_you'] as bool?;
 
     switch (themeState) {
       case 1:
@@ -49,6 +52,7 @@ class ThemeBloc extends HydratedBloc<ThemeEvent, ThemeState> {
           primaryColor: Color(primaryColor ?? 0xff2146C7),
           fontFamily: fontFamily ?? 'Nunito',
           readTabFirst: readTabFirst ?? true,
+          useMaterialYou: useMaterialYou ?? true,
         );
       case 2:
         return SetThemeState(
@@ -58,6 +62,7 @@ class ThemeBloc extends HydratedBloc<ThemeEvent, ThemeState> {
           primaryColor: Color(primaryColor ?? 0xff2146C7),
           fontFamily: fontFamily ?? 'Nunito',
           readTabFirst: readTabFirst ?? true,
+          useMaterialYou: useMaterialYou ?? true,
         );
       default:
         return SetThemeState(
@@ -67,6 +72,7 @@ class ThemeBloc extends HydratedBloc<ThemeEvent, ThemeState> {
           primaryColor: Color(primaryColor ?? 0xff2146C7),
           fontFamily: fontFamily ?? 'Nunito',
           readTabFirst: readTabFirst ?? true,
+          useMaterialYou: useMaterialYou ?? true,
         );
     }
   }
@@ -83,6 +89,7 @@ class ThemeBloc extends HydratedBloc<ThemeEvent, ThemeState> {
             'primary_color': state.primaryColor.value,
             'font_family': state.fontFamily,
             'read_tab_first': state.readTabFirst,
+            'use_material_you': state.useMaterialYou,
           };
         case ThemeMode.dark:
           return {
@@ -92,6 +99,7 @@ class ThemeBloc extends HydratedBloc<ThemeEvent, ThemeState> {
             'primary_color': state.primaryColor.value,
             'font_family': state.fontFamily,
             'read_tab_first': state.readTabFirst,
+            'use_material_you': state.useMaterialYou,
           };
         case ThemeMode.system:
           return {
@@ -101,16 +109,18 @@ class ThemeBloc extends HydratedBloc<ThemeEvent, ThemeState> {
             'primary_color': state.primaryColor.value,
             'font_family': state.fontFamily,
             'read_tab_first': state.readTabFirst,
+            'use_material_you': state.useMaterialYou,
           };
       }
     } else {
       return {
         'theme_state': 0,
-        'show_outlines': true,
+        'show_outlines': false,
         'corner_radius': 5,
         'primary_color': null,
         'font_family': null,
         'read_tab_first': null,
+        'use_material_you': null,
       };
     }
   }

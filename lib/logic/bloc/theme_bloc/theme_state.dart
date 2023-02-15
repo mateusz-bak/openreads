@@ -11,6 +11,7 @@ class SetThemeState extends ThemeState {
   final Color primaryColor;
   final String? fontFamily;
   final bool readTabFirst;
+  final bool useMaterialYou;
 
   const SetThemeState({
     required this.themeMode,
@@ -19,6 +20,7 @@ class SetThemeState extends ThemeState {
     required this.primaryColor,
     required this.fontFamily,
     required this.readTabFirst,
+    required this.useMaterialYou,
   });
 
   @override
@@ -29,5 +31,6 @@ class SetThemeState extends ThemeState {
         primaryColor,
         fontFamily,
         readTabFirst,
+        useMaterialYou,
       ];
 }
