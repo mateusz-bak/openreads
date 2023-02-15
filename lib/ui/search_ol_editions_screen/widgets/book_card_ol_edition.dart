@@ -2,7 +2,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:loading_animation_widget/loading_animation_widget.dart';
 import 'package:openreads/core/themes/app_theme.dart';
-import 'package:openreads/l10n.dart';
+import 'package:openreads/resources/l10n.dart';
 
 class BookCardOLEdition extends StatelessWidget {
   BookCardOLEdition({
@@ -25,16 +25,15 @@ class BookCardOLEdition extends StatelessWidget {
       padding: const EdgeInsets.fromLTRB(0, 0, 0, 0),
       child: InkWell(
         customBorder: RoundedRectangleBorder(
-          borderRadius: Theme.of(context).extension<CustomBorder>()?.radius ??
-              BorderRadius.circular(5),
+          borderRadius: BorderRadius.circular(cornerRadius),
         ),
         onTap: onPressed,
         child: Container(
             padding: const EdgeInsets.all(10),
             decoration: BoxDecoration(
-              color: Theme.of(context).backgroundColor,
-              borderRadius: Theme.of(context).extension<CustomBorder>()?.radius,
-              border: Border.all(color: Theme.of(context).dividerColor),
+              color: Theme.of(context).colorScheme.surfaceVariant,
+              borderRadius: BorderRadius.circular(cornerRadius),
+              border: Border.all(color: dividerColor),
             ),
             child: Column(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -52,7 +51,7 @@ class BookCardOLEdition extends StatelessWidget {
                               child: Container(
                                 padding: const EdgeInsets.all(5),
                                 child: LoadingAnimationWidget.threeArchedCircle(
-                                  color: Theme.of(context).primaryColor,
+                                  color: Theme.of(context).colorScheme.primary,
                                   size: 24,
                                 ),
                               ),

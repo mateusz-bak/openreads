@@ -3,7 +3,8 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:openreads/core/themes/app_theme.dart';
-import 'package:openreads/l10n.dart';
+import 'package:openreads/core/themes/app_theme.dart';
+import 'package:openreads/resources/l10n.dart';
 import 'package:openreads/logic/bloc/challenge_bloc/challenge_bloc.dart';
 import 'package:openreads/logic/bloc/stats_bloc/stats_bloc.dart';
 import 'package:openreads/logic/bloc/theme_bloc/theme_bloc.dart';
@@ -33,8 +34,7 @@ class Statistics extends StatelessWidget {
         children: [
           Container(
             decoration: BoxDecoration(
-              color: Theme.of(context).backgroundColor,
-              borderRadius: Theme.of(context).extension<CustomBorder>()?.radius,
+              borderRadius: BorderRadius.circular(cornerRadius),
             ),
             child: Row(
               children: [
@@ -63,9 +63,6 @@ class Statistics extends StatelessWidget {
     tabs.add(Tab(
       child: Text(
         l10n.all_years,
-        style: TextStyle(
-          fontFamily: context.read<ThemeBloc>().fontFamily,
-        ),
       ),
     ));
 
@@ -73,9 +70,6 @@ class Statistics extends StatelessWidget {
       tabs.add(Tab(
         child: Text(
           '$year',
-          style: TextStyle(
-            fontFamily: context.read<ThemeBloc>().fontFamily,
-          ),
         ),
       ));
     }
@@ -93,7 +87,7 @@ class Statistics extends StatelessWidget {
       Tab(
         child: SingleChildScrollView(
           child: Padding(
-            padding: const EdgeInsets.all(10.0),
+            padding: const EdgeInsets.all(5),
             child: Column(
               mainAxisAlignment: MainAxisAlignment.start,
               children: [
@@ -168,9 +162,6 @@ class Statistics extends StatelessWidget {
             return Center(
               child: Text(
                 l10n.no_finished_books,
-                style: TextStyle(
-                  fontFamily: context.read<ThemeBloc>().fontFamily,
-                ),
               ),
             );
           }
@@ -245,9 +236,6 @@ class Statistics extends StatelessWidget {
             return Center(
               child: Text(
                 l10n.no_finished_books,
-                style: TextStyle(
-                  fontFamily: context.read<ThemeBloc>().fontFamily,
-                ),
               ),
             );
           }

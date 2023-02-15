@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:openreads/l10n.dart';
+import 'package:openreads/resources/l10n.dart';
 import 'package:openreads/ui/add_book_screen/widgets/widgets.dart';
 
 class DateRow extends StatelessWidget {

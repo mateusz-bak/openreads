@@ -3,9 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:openreads/core/constants.dart/enums.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:openreads/core/themes/app_theme.dart';
-import 'package:openreads/l10n.dart';
+import 'package:openreads/resources/l10n.dart';
 import 'package:openreads/logic/bloc/sort_bloc/sort_bloc.dart';
-import 'package:openreads/logic/bloc/theme_bloc/theme_bloc.dart';
 import 'package:openreads/logic/cubit/book_cubit.dart';
 import 'package:openreads/ui/books_screen/widgets/widgets.dart';
 
@@ -99,7 +98,6 @@ class _SortBottomSheetState extends State<SortBottomSheet> {
   ) {
     return Switch(
       value: state.onlyFavourite,
-      activeColor: Theme.of(context).primaryColor,
       onChanged: (value) => BlocProvider.of<SortBloc>(context).add(
         ChangeSortEvent(
           sortType: state.sortType,
@@ -120,7 +118,6 @@ class _SortBottomSheetState extends State<SortBottomSheet> {
   ) {
     return Switch(
       value: state.displayTags,
-      activeColor: Theme.of(context).primaryColor,
       onChanged: (value) => BlocProvider.of<SortBloc>(context).add(
         ChangeSortEvent(
           sortType: state.sortType,
@@ -141,7 +138,6 @@ class _SortBottomSheetState extends State<SortBottomSheet> {
   ) {
     return Switch(
       value: state.filterTagsAsAnd,
-      activeColor: Theme.of(context).primaryColor,
       onChanged: (value) => BlocProvider.of<SortBloc>(context).add(
         ChangeSortEvent(
           sortType: state.sortType,
@@ -331,6 +327,7 @@ class _SortBottomSheetState extends State<SortBottomSheet> {
       mainAxisAlignment: MainAxisAlignment.end,
       mainAxisSize: MainAxisSize.min,
       children: [
+        const SizedBox(height: 5),
         Container(
           height: 3,
           width: MediaQuery.of(context).size.width / 4,
@@ -338,12 +335,11 @@ class _SortBottomSheetState extends State<SortBottomSheet> {
               color: Colors.grey.shade300,
               borderRadius: BorderRadius.circular(10)),
         ),
-        const SizedBox(height: 5),
         Container(
           padding: const EdgeInsets.all(10),
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(15),
-            color: Theme.of(context).scaffoldBackgroundColor,
+            color: Theme.of(context).colorScheme.surface,
           ),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -351,10 +347,9 @@ class _SortBottomSheetState extends State<SortBottomSheet> {
               const SizedBox(height: 5),
               Text(
                 l10n.sort_by,
-                style: TextStyle(
+                style: const TextStyle(
                   fontSize: 16,
                   fontWeight: FontWeight.bold,
-                  fontFamily: context.read<ThemeBloc>().fontFamily,
                 ),
               ),
               const SizedBox(height: 10),
@@ -373,11 +368,6 @@ class _SortBottomSheetState extends State<SortBottomSheet> {
                                         value: item,
                                         child: Text(
                                           item,
-                                          style: TextStyle(
-                                            fontFamily: context
-                                                .read<ThemeBloc>()
-                                                .fontFamily,
-                                          ),
                                           overflow: TextOverflow.ellipsis,
                                         ),
                                       ))
@@ -385,12 +375,13 @@ class _SortBottomSheetState extends State<SortBottomSheet> {
                               value: _getDropdownValue(state),
                               buttonDecoration: BoxDecoration(
                                 border: Border.all(
-                                  color: Theme.of(context).dividerColor,
+                                  color: dividerColor,
                                 ),
-                                color: Theme.of(context).backgroundColor,
-                                borderRadius: Theme.of(context)
-                                    .extension<CustomBorder>()
-                                    ?.radius,
+                                color: Theme.of(context)
+                                    .colorScheme
+                                    .surfaceVariant,
+                                borderRadius:
+                                    BorderRadius.circular(cornerRadius),
                               ),
                               onChanged: (value) => _updateSort(
                                 context,
@@ -403,12 +394,10 @@ class _SortBottomSheetState extends State<SortBottomSheet> {
                         const SizedBox(width: 15),
                         Container(
                           decoration: BoxDecoration(
-                            color: Theme.of(context).backgroundColor,
-                            borderRadius: Theme.of(context)
-                                .extension<CustomBorder>()
-                                ?.radius,
+                            color: Theme.of(context).colorScheme.surfaceVariant,
+                            borderRadius: BorderRadius.circular(cornerRadius),
                             border: Border.all(
-                              color: Theme.of(context).dividerColor,
+                              color: dividerColor,
                             ),
                           ),
                           child: _getOrderButton(context, state),
@@ -443,12 +432,13 @@ class _SortBottomSheetState extends State<SortBottomSheet> {
                             },
                             child: Container(
                               decoration: BoxDecoration(
-                                color: Theme.of(context).backgroundColor,
-                                borderRadius: Theme.of(context)
-                                    .extension<CustomBorder>()
-                                    ?.radius,
+                                color: Theme.of(context)
+                                    .colorScheme
+                                    .surfaceVariant,
+                                borderRadius:
+                                    BorderRadius.circular(cornerRadius),
                                 border: Border.all(
-                                  color: Theme.of(context).dividerColor,
+                                  color: dividerColor,
                                 ),
                               ),
                               child: Row(
@@ -457,11 +447,7 @@ class _SortBottomSheetState extends State<SortBottomSheet> {
                                   const SizedBox(width: 10),
                                   Text(
                                     l10n.only_favourite,
-                                    style: TextStyle(
-                                      fontSize: 16,
-                                      fontFamily:
-                                          context.read<ThemeBloc>().fontFamily,
-                                    ),
+                                    style: const TextStyle(fontSize: 16),
                                   ),
                                 ],
                               ),
@@ -492,11 +478,7 @@ class _SortBottomSheetState extends State<SortBottomSheet> {
                               const SizedBox(height: 10),
                               Text(
                                 l10n.filter_by_finish_year,
-                                style: TextStyle(
-                                  fontSize: 16,
-                                  fontFamily:
-                                      context.read<ThemeBloc>().fontFamily,
-                                ),
+                                style: const TextStyle(fontSize: 16),
                               ),
                               const SizedBox(height: 5),
                               Row(
@@ -504,13 +486,13 @@ class _SortBottomSheetState extends State<SortBottomSheet> {
                                   Expanded(
                                     child: Container(
                                       decoration: BoxDecoration(
-                                        color:
-                                            Theme.of(context).backgroundColor,
-                                        borderRadius: Theme.of(context)
-                                            .extension<CustomBorder>()
-                                            ?.radius,
+                                        color: Theme.of(context)
+                                            .colorScheme
+                                            .surfaceVariant,
+                                        borderRadius:
+                                            BorderRadius.circular(cornerRadius),
                                         border: Border.all(
-                                          color: Theme.of(context).dividerColor,
+                                          color: dividerColor,
                                         ),
                                       ),
                                       child: SingleChildScrollView(
@@ -545,9 +527,6 @@ class _SortBottomSheetState extends State<SortBottomSheet> {
                   } else if (snapshot.hasError) {
                     return Text(
                       snapshot.error.toString(),
-                      style: TextStyle(
-                        fontFamily: context.read<ThemeBloc>().fontFamily,
-                      ),
                     );
                   } else {
                     return const Center(
@@ -573,11 +552,7 @@ class _SortBottomSheetState extends State<SortBottomSheet> {
                               const SizedBox(height: 10),
                               Text(
                                 l10n.filter_by_tags,
-                                style: TextStyle(
-                                  fontSize: 16,
-                                  fontFamily:
-                                      context.read<ThemeBloc>().fontFamily,
-                                ),
+                                style: const TextStyle(fontSize: 16),
                               ),
                               const SizedBox(height: 5),
                               Row(
@@ -585,14 +560,13 @@ class _SortBottomSheetState extends State<SortBottomSheet> {
                                   Expanded(
                                     child: Container(
                                       decoration: BoxDecoration(
-                                        color:
-                                            Theme.of(context).backgroundColor,
-                                        borderRadius: Theme.of(context)
-                                            .extension<CustomBorder>()
-                                            ?.radius,
-                                        border: Border.all(
-                                          color: Theme.of(context).dividerColor,
+                                        color: Theme.of(context)
+                                            .colorScheme
+                                            .surfaceVariant,
+                                        borderRadius: BorderRadius.circular(
+                                          cornerRadius,
                                         ),
+                                        border: Border.all(color: dividerColor),
                                       ),
                                       child: SingleChildScrollView(
                                         scrollDirection: Axis.horizontal,
@@ -626,9 +600,6 @@ class _SortBottomSheetState extends State<SortBottomSheet> {
                   } else if (snapshot.hasError) {
                     return Text(
                       snapshot.error.toString(),
-                      style: TextStyle(
-                        fontFamily: context.read<ThemeBloc>().fontFamily,
-                      ),
                     );
                   } else {
                     return const Center(
@@ -690,12 +661,13 @@ class _SortBottomSheetState extends State<SortBottomSheet> {
                             },
                             child: Container(
                               decoration: BoxDecoration(
-                                color: Theme.of(context).backgroundColor,
-                                borderRadius: Theme.of(context)
-                                    .extension<CustomBorder>()
-                                    ?.radius,
+                                color: Theme.of(context)
+                                    .colorScheme
+                                    .surfaceVariant,
+                                borderRadius:
+                                    BorderRadius.circular(cornerRadius),
                                 border: Border.all(
-                                  color: Theme.of(context).dividerColor,
+                                  color: dividerColor,
                                 ),
                               ),
                               child: Row(
@@ -704,11 +676,7 @@ class _SortBottomSheetState extends State<SortBottomSheet> {
                                   const SizedBox(width: 10),
                                   Text(
                                     l10n.display_tags,
-                                    style: TextStyle(
-                                      fontSize: 16,
-                                      fontFamily:
-                                          context.read<ThemeBloc>().fontFamily,
-                                    ),
+                                    style: const TextStyle(fontSize: 16),
                                   ),
                                 ],
                               ),
@@ -739,22 +707,18 @@ class _SortBottomSheetState extends State<SortBottomSheet> {
             padding: const EdgeInsets.only(top: 10),
             child: Container(
               decoration: BoxDecoration(
-                color: Theme.of(context).backgroundColor,
-                borderRadius:
-                    Theme.of(context).extension<CustomBorder>()?.radius,
-                border: Border.all(
-                  color: Theme.of(context).dividerColor,
-                ),
+                color: Theme.of(context).colorScheme.surfaceVariant,
+                borderRadius: BorderRadius.circular(cornerRadius),
+                border: Border.all(color: dividerColor),
               ),
               child: Row(
                 children: [
                   _getTagsAsAndSwitch(context, state),
                   const SizedBox(width: 10),
-                  Text(
-                    l10n.only_books_with_all_tags,
-                    style: TextStyle(
-                      fontSize: 16,
-                      fontFamily: context.read<ThemeBloc>().fontFamily,
+                  Expanded(
+                    child: Text(
+                      l10n.only_books_with_all_tags,
+                      style: const TextStyle(fontSize: 16),
                     ),
                   ),
                 ],
@@ -766,9 +730,6 @@ class _SortBottomSheetState extends State<SortBottomSheet> {
         } else if (snapshot.hasError) {
           return Text(
             snapshot.error.toString(),
-            style: TextStyle(
-              fontFamily: context.read<ThemeBloc>().fontFamily,
-            ),
           );
         } else {
           return const Center(

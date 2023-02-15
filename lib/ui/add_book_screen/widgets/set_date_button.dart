@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:openreads/core/themes/app_theme.dart';
-import 'package:openreads/logic/bloc/theme_bloc/theme_bloc.dart';
 
 class SetDateButton extends StatelessWidget {
   const SetDateButton({
@@ -29,17 +27,14 @@ class SetDateButton extends StatelessWidget {
         children: [
           InkWell(
             customBorder: RoundedRectangleBorder(
-              borderRadius:
-                  Theme.of(context).extension<CustomBorder>()?.radius ??
-                      BorderRadius.circular(5),
+              borderRadius: BorderRadius.circular(cornerRadius),
             ),
             onTap: onPressed,
             child: Ink(
               decoration: BoxDecoration(
-                borderRadius:
-                    Theme.of(context).extension<CustomBorder>()?.radius,
-                color: Theme.of(context).backgroundColor,
-                border: Border.all(color: Theme.of(context).dividerColor),
+                borderRadius: BorderRadius.circular(cornerRadius),
+                color: Theme.of(context).colorScheme.surfaceVariant,
+                border: Border.all(color: dividerColor),
               ),
               child: Padding(
                 padding: const EdgeInsets.symmetric(
@@ -53,18 +48,14 @@ class SetDateButton extends StatelessWidget {
                     children: [
                       Icon(
                         icon,
-                        color: Theme.of(context).primaryColor,
+                        color: Theme.of(context).colorScheme.primary,
                       ),
                       const SizedBox(width: 15),
                       FittedBox(
                         child: Text(
                           text,
                           maxLines: 1,
-                          style: TextStyle(
-                            fontSize: 14,
-                            color: Theme.of(context).mainTextColor,
-                            fontFamily: context.read<ThemeBloc>().fontFamily,
-                          ),
+                          style: const TextStyle(fontSize: 14),
                         ),
                       ),
                     ],
@@ -80,10 +71,9 @@ class SetDateButton extends StatelessWidget {
               children: [
                 (showClearButton)
                     ? IconButton(
-                        icon: Icon(
+                        icon: const Icon(
                           Icons.close,
                           size: 20,
-                          color: Theme.of(context).mainTextColor,
                         ),
                         onPressed: onClearPressed,
                       )

@@ -27,23 +27,22 @@ class BookRatingBar extends StatelessWidget {
         width: double.infinity,
         clipBehavior: Clip.hardEdge,
         decoration: BoxDecoration(
-          color: Theme.of(context).backgroundColor,
-          borderRadius: Theme.of(context).extension<CustomBorder>()?.radius,
-          border: Border.all(color: Theme.of(context).dividerColor),
+          color: Theme.of(context).colorScheme.surfaceVariant,
+          borderRadius: BorderRadius.circular(cornerRadius),
+          border: Border.all(color: dividerColor),
         ),
         child: Center(
           child: RatingBar.builder(
             initialRating: rating,
             allowHalfRating: true,
             glow: false,
-            unratedColor: Theme.of(context).secondaryBackgroundColor,
             glowRadius: 1,
             itemSize: 42,
             itemPadding: const EdgeInsets.all(5),
             wrapAlignment: WrapAlignment.center,
             itemBuilder: (_, __) => Icon(
               Icons.star_rounded,
-              color: Theme.of(context).ratingColor,
+              color: ratingColor,
             ),
             onRatingUpdate: (rating) => onRatingUpdate(rating),
           ),

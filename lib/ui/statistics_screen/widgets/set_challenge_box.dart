@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:openreads/core/themes/app_theme.dart';
-import 'package:openreads/l10n.dart';
-import 'package:openreads/logic/bloc/theme_bloc/theme_bloc.dart';
+import 'package:openreads/resources/l10n.dart';
 import 'package:openreads/ui/statistics_screen/widgets/widgets.dart';
 
 class SetChallengeBox extends StatelessWidget {
@@ -22,16 +20,14 @@ class SetChallengeBox extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Card(
-      elevation: 0,
+      shadowColor: Colors.transparent,
       shape: RoundedRectangleBorder(
-        borderRadius: Theme.of(context).extension<CustomBorder>()?.radius ??
-            BorderRadius.circular(5),
-        side: BorderSide(color: Theme.of(context).dividerColor, width: 1),
+        side: BorderSide(color: dividerColor, width: 1),
+        borderRadius: BorderRadius.circular(cornerRadius),
       ),
-      color: Theme.of(context).backgroundColor,
+      color: Theme.of(context).colorScheme.surfaceVariant,
       child: InkWell(
-        borderRadius: Theme.of(context).extension<CustomBorder>()?.radius ??
-            BorderRadius.circular(5),
+        borderRadius: BorderRadius.circular(cornerRadius),
         onTap: () => showDialog(
             context: context,
             builder: (BuildContext context) {
@@ -52,10 +48,9 @@ class SetChallengeBox extends StatelessWidget {
               Text(
                 l10n.click_here_to_set_challenge,
                 style: TextStyle(
-                  fontSize: 16,
-                  fontWeight: FontWeight.bold,
-                  fontFamily: context.read<ThemeBloc>().fontFamily,
-                ),
+                    fontSize: 16,
+                    fontWeight: FontWeight.bold,
+                    color: Theme.of(context).colorScheme.onSurface),
               ),
             ],
           ),

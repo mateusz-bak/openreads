@@ -8,10 +8,8 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:openreads/core/themes/app_theme.dart';
-import 'package:openreads/l10n.dart';
+import 'package:openreads/resources/l10n.dart';
 import 'package:openreads/logic/bloc/challenge_bloc/challenge_bloc.dart';
-import 'package:openreads/logic/bloc/theme_bloc/theme_bloc.dart';
 import 'package:openreads/logic/cubit/book_cubit.dart';
 import 'package:openreads/model/book.dart';
 import 'package:openreads/model/book_from_backup_v3.dart';
@@ -87,9 +85,6 @@ class _BackupScreenState extends State<BackupScreen> {
       SnackBar(
         content: Text(
           l10n.need_storage_permission,
-          style: TextStyle(
-            fontFamily: context.read<ThemeBloc>().fontFamily,
-          ),
         ),
         action: SnackBarAction(
           label: l10n.open_settings,
@@ -139,9 +134,6 @@ class _BackupScreenState extends State<BackupScreen> {
         SnackBar(
           content: Text(
             l10n.backup_successfull,
-            style: TextStyle(
-              fontFamily: context.read<ThemeBloc>().fontFamily,
-            ),
           ),
         ),
       );
@@ -153,9 +145,6 @@ class _BackupScreenState extends State<BackupScreen> {
         SnackBar(
           content: Text(
             e.toString(),
-            style: TextStyle(
-              fontFamily: context.read<ThemeBloc>().fontFamily,
-            ),
           ),
         ),
       );
@@ -234,9 +223,6 @@ class _BackupScreenState extends State<BackupScreen> {
         SnackBar(
           content: Text(
             e.toString(),
-            style: TextStyle(
-              fontFamily: context.read<ThemeBloc>().fontFamily,
-            ),
           ),
         ),
       );
@@ -256,15 +242,16 @@ class _BackupScreenState extends State<BackupScreen> {
         FilesystemPickerNewFolderContextAction(
           icon: Icon(
             Icons.create_new_folder,
-            color: Theme.of(context).mainTextColor,
+            color: Theme.of(context).colorScheme.primary,
             size: 24,
           ),
         ),
       ],
       theme: FilesystemPickerTheme(
-        backgroundColor: Theme.of(context).scaffoldBackgroundColor,
+        backgroundColor: Theme.of(context).colorScheme.surface,
         pickerAction: FilesystemPickerActionThemeData(
-          backgroundColor: Theme.of(context).backgroundColor,
+          foregroundColor: Theme.of(context).colorScheme.primary,
+          backgroundColor: Theme.of(context).colorScheme.surface,
         ),
         fileList: FilesystemPickerFileListThemeData(
           iconSize: 24,
@@ -273,8 +260,7 @@ class _BackupScreenState extends State<BackupScreen> {
           folderTextStyle: const TextStyle(fontSize: 16),
         ),
         topBar: FilesystemPickerTopBarThemeData(
-          backgroundColor: Theme.of(context).scaffoldBackgroundColor,
-          foregroundColor: Theme.of(context).mainTextColor,
+          backgroundColor: Theme.of(context).colorScheme.surface,
           titleTextStyle: const TextStyle(fontSize: 18),
           elevation: 0,
           shadowColor: Colors.transparent,
@@ -363,9 +349,6 @@ class _BackupScreenState extends State<BackupScreen> {
           SnackBar(
             content: Text(
               l10n.backup_not_valid,
-              style: TextStyle(
-                fontFamily: context.read<ThemeBloc>().fontFamily,
-              ),
             ),
           ),
         );
@@ -378,9 +361,6 @@ class _BackupScreenState extends State<BackupScreen> {
         SnackBar(
           content: Text(
             l10n.restore_successfull,
-            style: TextStyle(
-              fontFamily: context.read<ThemeBloc>().fontFamily,
-            ),
           ),
         ),
       );
@@ -395,9 +375,6 @@ class _BackupScreenState extends State<BackupScreen> {
         SnackBar(
           content: Text(
             e.toString(),
-            style: TextStyle(
-              fontFamily: context.read<ThemeBloc>().fontFamily,
-            ),
           ),
         ),
       );
@@ -431,9 +408,6 @@ class _BackupScreenState extends State<BackupScreen> {
           SnackBar(
             content: Text(
               e.toString(),
-              style: TextStyle(
-                fontFamily: context.read<ThemeBloc>().fontFamily,
-              ),
             ),
           ),
         );
@@ -594,10 +568,7 @@ class _BackupScreenState extends State<BackupScreen> {
       fileTileSelectMode: FileTileSelectMode.wholeTile,
       allowedExtensions: ['.backup', '.zip', '.png'],
       theme: FilesystemPickerTheme(
-        backgroundColor: Theme.of(context).scaffoldBackgroundColor,
-        pickerAction: FilesystemPickerActionThemeData(
-          backgroundColor: Theme.of(context).backgroundColor,
-        ),
+        backgroundColor: Theme.of(context).colorScheme.surface,
         fileList: FilesystemPickerFileListThemeData(
           iconSize: 24,
           upIconSize: 24,
@@ -605,11 +576,9 @@ class _BackupScreenState extends State<BackupScreen> {
           folderTextStyle: const TextStyle(fontSize: 16),
         ),
         topBar: FilesystemPickerTopBarThemeData(
-          backgroundColor: Theme.of(context).scaffoldBackgroundColor,
-          foregroundColor: Theme.of(context).mainTextColor,
           titleTextStyle: const TextStyle(fontSize: 18),
-          elevation: 0,
           shadowColor: Colors.transparent,
+          foregroundColor: Theme.of(context).colorScheme.onSurface,
         ),
       ),
     );
@@ -618,29 +587,28 @@ class _BackupScreenState extends State<BackupScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Theme.of(context).scaffoldBackgroundColor,
       appBar: AppBar(
-        backgroundColor: Theme.of(context).scaffoldBackgroundColor,
-        surfaceTintColor: Theme.of(context).scaffoldBackgroundColor,
         title: Text(
           l10n.backup,
-          style: TextStyle(
-            fontSize: 18,
-            fontFamily: context.read<ThemeBloc>().fontFamily,
-          ),
+          style: const TextStyle(fontSize: 18),
         ),
       ),
       body: SettingsList(
         contentPadding: const EdgeInsets.only(top: 10),
+        lightTheme: SettingsThemeData(
+          settingsListBackground: Theme.of(context).colorScheme.surface,
+        ),
+        darkTheme: SettingsThemeData(
+          settingsListBackground: Theme.of(context).colorScheme.surface,
+        ),
         sections: [
           SettingsSection(
             tiles: <SettingsTile>[
               SettingsTile(
                 title: Text(
                   l10n.create_local_backup,
-                  style: TextStyle(
+                  style: const TextStyle(
                     fontSize: 16,
-                    fontFamily: context.read<ThemeBloc>().fontFamily,
                   ),
                 ),
                 leading: (_creatingLocal)
@@ -652,18 +620,14 @@ class _BackupScreenState extends State<BackupScreen> {
                     : const Icon(FontAwesomeIcons.solidFloppyDisk),
                 description: Text(
                   l10n.create_local_backup_description,
-                  style: TextStyle(
-                    fontFamily: context.read<ThemeBloc>().fontFamily,
-                  ),
                 ),
                 onPressed: _startLocalBackup,
               ),
               SettingsTile(
                 title: Text(
                   l10n.create_cloud_backup,
-                  style: TextStyle(
+                  style: const TextStyle(
                     fontSize: 16,
-                    fontFamily: context.read<ThemeBloc>().fontFamily,
                   ),
                 ),
                 leading: (_creatingCloud)
@@ -675,18 +639,14 @@ class _BackupScreenState extends State<BackupScreen> {
                     : const Icon(FontAwesomeIcons.cloudArrowUp),
                 description: Text(
                   l10n.create_cloud_backup_description,
-                  style: TextStyle(
-                    fontFamily: context.read<ThemeBloc>().fontFamily,
-                  ),
                 ),
                 onPressed: _startCloudBackup,
               ),
               SettingsTile(
                 title: Text(
                   l10n.restore_backup,
-                  style: TextStyle(
+                  style: const TextStyle(
                     fontSize: 16,
-                    fontFamily: context.read<ThemeBloc>().fontFamily,
                   ),
                 ),
                 leading: (_restoringLocal)
@@ -702,17 +662,13 @@ class _BackupScreenState extends State<BackupScreen> {
                     restoredCounterText.isNotEmpty
                         ? Text(
                             restoredCounterText,
-                            style: TextStyle(
+                            style: const TextStyle(
                               fontWeight: FontWeight.bold,
-                              fontFamily: context.read<ThemeBloc>().fontFamily,
                             ),
                           )
                         : const SizedBox(),
                     Text(
                       '${l10n.restore_backup_description_1}\n${l10n.restore_backup_description_2}',
-                      style: TextStyle(
-                        fontFamily: context.read<ThemeBloc>().fontFamily,
-                      ),
                     ),
                   ],
                 ),

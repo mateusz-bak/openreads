@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:openreads/core/themes/app_theme.dart';
-import 'package:openreads/logic/bloc/theme_bloc/theme_bloc.dart';
 
 class ContactButton extends StatelessWidget {
   const ContactButton({
@@ -19,36 +17,33 @@ class ContactButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return Material(
       shape: RoundedRectangleBorder(
-        borderRadius: Theme.of(context).extension<CustomBorder>()?.radius ??
-            BorderRadius.circular(5),
+        borderRadius: BorderRadius.circular(cornerRadius),
       ),
       child: InkWell(
         customBorder: RoundedRectangleBorder(
-          borderRadius: Theme.of(context).extension<CustomBorder>()?.radius ??
-              BorderRadius.circular(5),
+          borderRadius: BorderRadius.circular(cornerRadius),
         ),
         onTap: onPressed,
         child: Container(
           padding: const EdgeInsets.all(10),
           decoration: BoxDecoration(
-            borderRadius: Theme.of(context).extension<CustomBorder>()?.radius,
-            color: Theme.of(context).backgroundColor,
-            border: Border.all(color: Theme.of(context).dividerColor),
+            borderRadius: BorderRadius.circular(cornerRadius),
+            color: Theme.of(context).colorScheme.surfaceVariant,
+            border: Border.all(color: dividerColor),
           ),
           child: Column(
             children: [
               Icon(
                 icon,
                 size: 28,
-                color: Theme.of(context).primaryColor,
+                color: Theme.of(context).colorScheme.primary,
               ),
               const SizedBox(height: 10),
               Text(
                 text,
                 textAlign: TextAlign.center,
-                style: TextStyle(
+                style: const TextStyle(
                   fontWeight: FontWeight.bold,
-                  fontFamily: context.read<ThemeBloc>().fontFamily,
                 ),
               ),
             ],

@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:openreads/core/constants.dart/enums.dart';
-import 'package:openreads/l10n.dart';
+import 'package:openreads/core/themes/app_theme.dart';
+import 'package:openreads/resources/l10n.dart';
 import 'package:openreads/logic/bloc/sort_bloc/sort_bloc.dart';
 import 'package:openreads/logic/bloc/theme_bloc/theme_bloc.dart';
 import 'package:openreads/logic/cubit/book_cubit.dart';
@@ -352,7 +353,7 @@ class _BooksScreenState extends State<BooksScreen>
     showModalBottomSheet(
       context: context,
       isScrollControlled: true,
-      backgroundColor: Colors.transparent,
+      elevation: 0,
       builder: (context) {
         return const SortBottomSheet();
       },
@@ -389,183 +390,191 @@ class _BooksScreenState extends State<BooksScreen>
     super.build(context);
 
     AppTranslations.init(context);
+
     moreButtonOptions = [
       l10n.sort_filter,
       l10n.statistics,
       l10n.settings,
     ];
 
-    final statusBarHeight = MediaQuery.of(context).padding.top;
+    return BlocBuilder<ThemeBloc, ThemeState>(
+      builder: (context, state) {
+        if (state is SetThemeState) {
+          AppTheme.init(state, context);
 
-    return Scaffold(
-      extendBodyBehindAppBar: true,
-      backgroundColor: Theme.of(context).scaffoldBackgroundColor,
-      appBar: AppBar(
-        title: Text(
-          'Openreads 2',
-          style: TextStyle(
-            fontSize: 18,
-            fontFamily: context.read<ThemeBloc>().fontFamily,
-          ),
-        ),
-        backgroundColor: Theme.of(context).scaffoldBackgroundColor,
-        surfaceTintColor: Theme.of(context).scaffoldBackgroundColor,
-        actions: [
-          IconButton(
-            onPressed: () => Navigator.of(context).push(
-              MaterialPageRoute(builder: (_) => const SearchPage()),
-            ),
-            icon: const Icon(Icons.search),
-          ),
-          PopupMenuButton<String>(
-            onSelected: (_) {},
-            itemBuilder: (_) {
-              return moreButtonOptions.map((String choice) {
-                return PopupMenuItem<String>(
-                  value: choice,
-                  child: Text(
-                    choice,
-                    style: TextStyle(
-                      fontFamily: context.read<ThemeBloc>().fontFamily,
-                    ),
+          return Scaffold(
+            extendBodyBehindAppBar: true,
+            appBar: _buildAppBar(context),
+            floatingActionButton: _buildFAB(context),
+            body: _buildScaffoldBody(),
+          );
+        } else {
+          return const SizedBox();
+        }
+      },
+    );
+  }
+
+  BlocBuilder<ThemeBloc, ThemeState> _buildScaffoldBody() {
+    return BlocBuilder<ThemeBloc, ThemeState>(
+      builder: (context, state) {
+        if (state is SetThemeState) {
+          return DefaultTabController(
+            length: 3,
+            child: Column(
+              children: [
+                Expanded(
+                  child: TabBarView(
+                    children: state.readTabFirst
+                        ? List.of([
+                            _buildReadBooksTabView(),
+                            _buildInProgressBooksTabView(),
+                            _buildToReadBooksTabView(),
+                          ])
+                        : List.of([
+                            _buildInProgressBooksTabView(),
+                            _buildReadBooksTabView(),
+                            _buildToReadBooksTabView(),
+                          ]),
                   ),
-                  onTap: () async {
-                    await Future.delayed(const Duration(milliseconds: 0));
-
-                    if (!mounted) return;
-
-                    if (choice == moreButtonOptions[0]) {
-                      openSortFilterSheet();
-                    } else if (choice == moreButtonOptions[1]) {
-                      goToStatisticsScreen();
-                    } else if (choice == moreButtonOptions[2]) {
-                      goToSettingsScreen();
-                    }
-                  },
-                );
-              }).toList();
-            },
-          ),
-        ],
-      ),
-      floatingActionButton: Padding(
-        padding: const EdgeInsets.only(bottom: 50),
-        child: FloatingActionButton(
-          backgroundColor: Theme.of(context).primaryColor,
-          onPressed: () {
-            showModalBottomSheet(
-              context: context,
-              isScrollControlled: true,
-              backgroundColor: Colors.transparent,
-              builder: (context) {
-                return AddBookSheet(
-                  addManually: () async {
-                    Navigator.pop(context);
-                    await Future.delayed(const Duration(milliseconds: 100));
-                    if (!mounted) return;
-
-                    showModalBottomSheet(
-                        context: context,
-                        isScrollControlled: true,
-                        enableDrag: false,
-                        builder: (context) {
-                          return AddBook(
-                            topPadding: statusBarHeight,
-                            previousThemeData: Theme.of(context),
-                          );
-                        });
-                  },
-                  searchInOpenLibrary: () async {
-                    Navigator.pop(context);
-                    await Future.delayed(const Duration(milliseconds: 100));
-                    if (!mounted) return;
-
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => const SearchOLScreen(),
-                      ),
-                    );
-                  },
-                  scanBarcode: () async {
-                    Navigator.pop(context);
-                    await Future.delayed(const Duration(milliseconds: 100));
-
-                    if (!mounted) return;
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => const SearchOLScreen(scan: true),
-                      ),
-                    );
-                  },
-                );
-              },
-            );
-          },
-          child: const Icon(Icons.add),
-        ),
-      ),
-      body: BlocBuilder<ThemeBloc, ThemeState>(
-        builder: (context, state) {
-          if (state is SetThemeState) {
-            return DefaultTabController(
-              length: 3,
-              child: Column(
-                children: [
-                  Expanded(
-                    child: TabBarView(
-                      children: state.readTabFirst
+                ),
+                Builder(builder: (context) {
+                  return Container(
+                    color: Theme.of(context).scaffoldBackgroundColor,
+                    child: TabBar(
+                      tabs: state.readTabFirst
                           ? List.of([
-                              _buildReadBooksTabView(),
-                              _buildInProgressBooksTabView(),
-                              _buildToReadBooksTabView(),
+                              BookTab(
+                                text: l10n.books_finished,
+                              ),
+                              BookTab(
+                                text: l10n.books_in_progress,
+                              ),
+                              BookTab(
+                                text: l10n.books_for_later,
+                              ),
                             ])
                           : List.of([
-                              _buildInProgressBooksTabView(),
-                              _buildReadBooksTabView(),
-                              _buildToReadBooksTabView(),
+                              BookTab(
+                                text: l10n.books_in_progress,
+                              ),
+                              BookTab(
+                                text: l10n.books_finished,
+                              ),
+                              BookTab(
+                                text: l10n.books_for_later,
+                              ),
                             ]),
                     ),
-                  ),
-                  Builder(builder: (context) {
-                    return Container(
-                      color: Theme.of(context).scaffoldBackgroundColor,
-                      child: TabBar(
-                        tabs: state.readTabFirst
-                            ? List.of([
-                                BookTab(
-                                  text: l10n.books_finished,
-                                ),
-                                BookTab(
-                                  text: l10n.books_in_progress,
-                                ),
-                                BookTab(
-                                  text: l10n.books_for_later,
-                                ),
-                              ])
-                            : List.of([
-                                BookTab(
-                                  text: l10n.books_in_progress,
-                                ),
-                                BookTab(
-                                  text: l10n.books_finished,
-                                ),
-                                BookTab(
-                                  text: l10n.books_for_later,
-                                ),
-                              ]),
-                      ),
-                    );
-                  }),
-                ],
-              ),
-            );
-          } else {
-            return const SizedBox();
-          }
+                  );
+                }),
+              ],
+            ),
+          );
+        } else {
+          return const SizedBox();
+        }
+      },
+    );
+  }
+
+  Padding _buildFAB(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.only(bottom: 50),
+      child: FloatingActionButton(
+        onPressed: () {
+          showModalBottomSheet(
+            context: context,
+            isScrollControlled: true,
+            elevation: 0,
+            builder: (context) {
+              return AddBookSheet(
+                addManually: () async {
+                  Navigator.pop(context);
+                  await Future.delayed(const Duration(milliseconds: 100));
+                  if (!mounted) return;
+
+                  Navigator.of(context).push(
+                    MaterialPageRoute(
+                      builder: (_) => const AddBookScreen(),
+                    ),
+                  );
+                },
+                searchInOpenLibrary: () async {
+                  Navigator.pop(context);
+                  await Future.delayed(const Duration(milliseconds: 100));
+                  if (!mounted) return;
+
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => const SearchOLScreen(),
+                    ),
+                  );
+                },
+                scanBarcode: () async {
+                  Navigator.pop(context);
+                  await Future.delayed(const Duration(milliseconds: 100));
+
+                  if (!mounted) return;
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => const SearchOLScreen(scan: true),
+                    ),
+                  );
+                },
+              );
+            },
+          );
         },
+        child: const Icon(Icons.add),
       ),
+    );
+  }
+
+  AppBar _buildAppBar(BuildContext context) {
+    return AppBar(
+      title: const Text(
+        'Openreads 2',
+        style: TextStyle(
+          fontSize: 18,
+        ),
+      ),
+      actions: [
+        IconButton(
+          onPressed: () => Navigator.of(context).push(
+            MaterialPageRoute(builder: (_) => const SearchPage()),
+          ),
+          icon: const Icon(Icons.search),
+        ),
+        PopupMenuButton<String>(
+          onSelected: (_) {},
+          itemBuilder: (_) {
+            return moreButtonOptions.map((String choice) {
+              return PopupMenuItem<String>(
+                value: choice,
+                child: Text(
+                  choice,
+                ),
+                onTap: () async {
+                  await Future.delayed(const Duration(milliseconds: 0));
+
+                  if (!mounted) return;
+
+                  if (choice == moreButtonOptions[0]) {
+                    openSortFilterSheet();
+                  } else if (choice == moreButtonOptions[1]) {
+                    goToStatisticsScreen();
+                  } else if (choice == moreButtonOptions[2]) {
+                    goToSettingsScreen();
+                  }
+                },
+              );
+            }).toList();
+          },
+        ),
+      ],
     );
   }
 
@@ -581,10 +590,9 @@ class _BooksScreenState extends State<BooksScreen>
                 child: Text(
                   '${l10n.this_list_is_empty_1}\n${l10n.this_list_is_empty_2}',
                   textAlign: TextAlign.center,
-                  style: TextStyle(
+                  style: const TextStyle(
                     letterSpacing: 1.5,
                     fontSize: 16,
-                    fontFamily: context.read<ThemeBloc>().fontFamily,
                   ),
                 ),
               ),
@@ -609,9 +617,6 @@ class _BooksScreenState extends State<BooksScreen>
         } else if (snapshot.hasError) {
           return Text(
             snapshot.error.toString(),
-            style: TextStyle(
-              fontFamily: context.read<ThemeBloc>().fontFamily,
-            ),
           );
         } else {
           return const SizedBox();
@@ -632,10 +637,9 @@ class _BooksScreenState extends State<BooksScreen>
                 child: Text(
                   '${l10n.this_list_is_empty_1}\n${l10n.this_list_is_empty_2}',
                   textAlign: TextAlign.center,
-                  style: TextStyle(
+                  style: const TextStyle(
                     letterSpacing: 1.5,
                     fontSize: 16,
-                    fontFamily: context.read<ThemeBloc>().fontFamily,
                   ),
                 ),
               ),
@@ -660,9 +664,6 @@ class _BooksScreenState extends State<BooksScreen>
         } else if (snapshot.hasError) {
           return Text(
             snapshot.error.toString(),
-            style: TextStyle(
-              fontFamily: context.read<ThemeBloc>().fontFamily,
-            ),
           );
         } else {
           return const SizedBox();
@@ -683,10 +684,9 @@ class _BooksScreenState extends State<BooksScreen>
                 child: Text(
                   '${l10n.this_list_is_empty_1}\n${l10n.this_list_is_empty_2}',
                   textAlign: TextAlign.center,
-                  style: TextStyle(
+                  style: const TextStyle(
                     letterSpacing: 1.5,
                     fontSize: 16,
-                    fontFamily: context.read<ThemeBloc>().fontFamily,
                   ),
                 ),
               ),
@@ -711,9 +711,6 @@ class _BooksScreenState extends State<BooksScreen>
         } else if (snapshot.hasError) {
           return Text(
             snapshot.error.toString(),
-            style: TextStyle(
-              fontFamily: context.read<ThemeBloc>().fontFamily,
-            ),
           );
         } else {
           return const SizedBox();

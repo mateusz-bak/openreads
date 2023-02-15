@@ -1,10 +1,8 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
 import 'package:loading_animation_widget/loading_animation_widget.dart';
-import 'package:openreads/l10n.dart';
-import 'package:openreads/logic/bloc/theme_bloc/theme_bloc.dart';
+import 'package:openreads/resources/l10n.dart';
 import 'package:openreads/model/book.dart';
 import 'package:openreads/model/ol_edition_result.dart';
 import 'package:openreads/resources/open_library_service.dart';
@@ -44,7 +42,6 @@ class _SearchOLEditionsScreenState extends State<SearchOLEditionsScreen> {
   Uint8List? editionCoverPreview;
 
   late int filteredResultsLength;
-  late double statusBarHeight;
 
   final _pagingController = PagingController<int, OLEditionResult>(
     firstPageKey: 0,
@@ -97,7 +94,6 @@ class _SearchOLEditionsScreenState extends State<SearchOLEditionsScreen> {
   }
 
   void _saveEdition({
-    required double statusBarHeight,
     required OLEditionResult result,
     required int? cover,
   }) {
@@ -117,17 +113,14 @@ class _SearchOLEditionsScreenState extends State<SearchOLEditionsScreen> {
       publicationYear: widget.firstPublishYear,
     );
 
-    showModalBottomSheet(
-      context: context,
-      isScrollControlled: true,
-      enableDrag: false,
-      builder: (context) => AddBook(
-        topPadding: statusBarHeight,
-        previousThemeData: Theme.of(context),
-        fromOpenLibrary: true,
-        cover: cover,
-        book: book,
-        fromOpenLibraryEdition: true,
+    Navigator.of(context).push(
+      MaterialPageRoute(
+        builder: (_) => AddBookScreen(
+          fromOpenLibrary: true,
+          cover: cover,
+          book: book,
+          fromOpenLibraryEdition: true,
+        ),
       ),
     );
   }
@@ -153,19 +146,12 @@ class _SearchOLEditionsScreenState extends State<SearchOLEditionsScreen> {
 
   @override
   Widget build(BuildContext context) {
-    statusBarHeight = MediaQuery.of(context).padding.top;
-
     return Scaffold(
       appBar: AppBar(
         title: Text(
           l10n.choose_edition,
-          style: TextStyle(
-            fontSize: 18,
-            fontFamily: context.read<ThemeBloc>().fontFamily,
-          ),
+          style: const TextStyle(fontSize: 18),
         ),
-        backgroundColor: Theme.of(context).scaffoldBackgroundColor,
-        scrolledUnderElevation: 0,
       ),
       body: Column(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -186,7 +172,7 @@ class _SearchOLEditionsScreenState extends State<SearchOLEditionsScreen> {
                             PagedChildBuilderDelegate<OLEditionResult>(
                           firstPageProgressIndicatorBuilder: (_) => Center(
                             child: LoadingAnimationWidget.staggeredDotsWave(
-                              color: Theme.of(context).primaryColor,
+                              color: Theme.of(context).colorScheme.primary,
                               size: 50,
                             ),
                           ),
@@ -194,7 +180,7 @@ class _SearchOLEditionsScreenState extends State<SearchOLEditionsScreen> {
                             child: Padding(
                               padding: const EdgeInsets.all(20.0),
                               child: LoadingAnimationWidget.staggeredDotsWave(
-                                color: Theme.of(context).primaryColor,
+                                color: Theme.of(context).colorScheme.primary,
                                 size: 50,
                               ),
                             ),
@@ -204,7 +190,6 @@ class _SearchOLEditionsScreenState extends State<SearchOLEditionsScreen> {
                             title: item.title!,
                             cover: item.covers![0],
                             onPressed: () => _saveEdition(
-                              statusBarHeight: statusBarHeight,
                               result: item,
                               cover: item.covers![0],
                             ),

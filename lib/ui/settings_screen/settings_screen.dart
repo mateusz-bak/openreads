@@ -4,7 +4,7 @@ import 'package:flutter_email_sender/flutter_email_sender.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:openreads/core/constants.dart/enums.dart';
 import 'package:openreads/core/themes/app_theme.dart';
-import 'package:openreads/l10n.dart';
+import 'package:openreads/resources/l10n.dart';
 import 'package:openreads/logic/bloc/rating_type_bloc/rating_type_bloc.dart';
 import 'package:openreads/logic/bloc/theme_bloc/theme_bloc.dart';
 import 'package:openreads/ui/backup_screen/backup_screen.dart';
@@ -44,9 +44,6 @@ class SettingsScreen extends StatelessWidget {
         SnackBar(
           content: Text(
             '$error',
-            style: TextStyle(
-              fontFamily: context.read<ThemeBloc>().fontFamily,
-            ),
           ),
         ),
       );
@@ -66,9 +63,6 @@ class SettingsScreen extends StatelessWidget {
         SnackBar(
           content: Text(
             '$error',
-            style: TextStyle(
-              fontFamily: context.read<ThemeBloc>().fontFamily,
-            ),
           ),
         ),
       );
@@ -237,10 +231,9 @@ class SettingsScreen extends StatelessWidget {
       builder: (BuildContext context) {
         return Dialog(
           shape: RoundedRectangleBorder(
-            borderRadius: Theme.of(context).extension<CustomBorder>()?.radius ??
-                BorderRadius.circular(5.0),
+            borderRadius: BorderRadius.circular(cornerRadius),
           ),
-          backgroundColor: Theme.of(context).scaffoldBackgroundColor,
+          backgroundColor: Theme.of(context).colorScheme.surface,
           child: Padding(
             padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 20),
             child: BlocBuilder<ThemeBloc, ThemeState>(
@@ -255,10 +248,9 @@ class SettingsScreen extends StatelessWidget {
                         padding: const EdgeInsets.only(left: 10),
                         child: Text(
                           l10n.select_accent_color,
-                          style: TextStyle(
+                          style: const TextStyle(
                             fontSize: 18,
                             fontWeight: FontWeight.bold,
-                            fontFamily: context.read<ThemeBloc>().fontFamily,
                           ),
                         ),
                       ),
@@ -266,49 +258,49 @@ class SettingsScreen extends StatelessWidget {
                       _buildAccentButton(
                         context,
                         state,
-                        theme.primaryGreen,
+                        primaryGreen,
                         l10n.green_color,
                       ),
                       _buildAccentButton(
                         context,
                         state,
-                        theme.primaryBlue,
+                        primaryBlue,
                         l10n.blue_color,
                       ),
                       _buildAccentButton(
                         context,
                         state,
-                        theme.primaryRed,
+                        primaryRed,
                         l10n.red_color,
                       ),
                       _buildAccentButton(
                         context,
                         state,
-                        theme.primaryYellow,
+                        primaryYellow,
                         l10n.yellow_color,
                       ),
                       _buildAccentButton(
                         context,
                         state,
-                        theme.primaryOrange,
+                        primaryOrange,
                         l10n.orange_color,
                       ),
                       _buildAccentButton(
                         context,
                         state,
-                        theme.primaryPurple,
+                        primaryPurple,
                         l10n.purple_color,
                       ),
                       _buildAccentButton(
                         context,
                         state,
-                        theme.primaryPink,
+                        primaryPink,
                         l10n.pink_color,
                       ),
                       _buildAccentButton(
                         context,
                         state,
-                        theme.primaryTeal,
+                        primaryTeal,
                         l10n.teal_color,
                       ),
                     ],
@@ -339,7 +331,7 @@ class SettingsScreen extends StatelessWidget {
             width: 50,
             height: 25,
             decoration: BoxDecoration(
-              borderRadius: Theme.of(context).extension<CustomBorder>()?.radius,
+              borderRadius: BorderRadius.circular(cornerRadius),
               color: color,
             ),
           ),
@@ -364,10 +356,9 @@ class SettingsScreen extends StatelessWidget {
       builder: (BuildContext context) {
         return Dialog(
           shape: RoundedRectangleBorder(
-            borderRadius: Theme.of(context).extension<CustomBorder>()?.radius ??
-                BorderRadius.circular(5.0),
+            borderRadius: BorderRadius.circular(cornerRadius),
           ),
-          backgroundColor: Theme.of(context).scaffoldBackgroundColor,
+          backgroundColor: Theme.of(context).colorScheme.surface,
           child: Padding(
             padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 20),
             child: Column(
@@ -378,10 +369,9 @@ class SettingsScreen extends StatelessWidget {
                   padding: const EdgeInsets.only(left: 10),
                   child: Text(
                     l10n.seletct_rating_type,
-                    style: TextStyle(
+                    style: const TextStyle(
                       fontSize: 18,
                       fontWeight: FontWeight.bold,
-                      fontFamily: context.read<ThemeBloc>().fontFamily,
                     ),
                   ),
                 ),
@@ -421,10 +411,9 @@ class SettingsScreen extends StatelessWidget {
       builder: (BuildContext context) {
         return Dialog(
           shape: RoundedRectangleBorder(
-            borderRadius: Theme.of(context).extension<CustomBorder>()?.radius ??
-                BorderRadius.circular(5.0),
+            borderRadius: BorderRadius.circular(cornerRadius),
           ),
-          backgroundColor: Theme.of(context).scaffoldBackgroundColor,
+          backgroundColor: Theme.of(context).colorScheme.surface,
           child: Padding(
             padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 20),
             child: BlocBuilder<ThemeBloc, ThemeState>(
@@ -438,10 +427,9 @@ class SettingsScreen extends StatelessWidget {
                         padding: const EdgeInsets.only(left: 10),
                         child: Text(
                           l10n.select_theme_mode,
-                          style: TextStyle(
+                          style: const TextStyle(
                             fontSize: 18,
                             fontWeight: FontWeight.bold,
-                            fontFamily: context.read<ThemeBloc>().fontFamily,
                           ),
                         ),
                       ),
@@ -479,10 +467,9 @@ class SettingsScreen extends StatelessWidget {
       builder: (BuildContext context) {
         return Dialog(
           shape: RoundedRectangleBorder(
-            borderRadius: Theme.of(context).extension<CustomBorder>()?.radius ??
-                BorderRadius.circular(5.0),
+            borderRadius: BorderRadius.circular(cornerRadius),
           ),
-          backgroundColor: Theme.of(context).scaffoldBackgroundColor,
+          backgroundColor: Theme.of(context).colorScheme.surface,
           child: Padding(
             padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 20),
             child: BlocBuilder<ThemeBloc, ThemeState>(
@@ -495,10 +482,9 @@ class SettingsScreen extends StatelessWidget {
                         padding: const EdgeInsets.only(left: 10),
                         child: Text(
                           l10n.select_font,
-                          style: TextStyle(
+                          style: const TextStyle(
                             fontSize: 18,
                             fontWeight: FontWeight.bold,
-                            fontFamily: context.read<ThemeBloc>().fontFamily,
                           ),
                         ),
                       ),
@@ -651,10 +637,9 @@ class SettingsScreen extends StatelessWidget {
       builder: (BuildContext context) {
         return Dialog(
           shape: RoundedRectangleBorder(
-            borderRadius: Theme.of(context).extension<CustomBorder>()?.radius ??
-                BorderRadius.circular(5.0),
+            borderRadius: BorderRadius.circular(cornerRadius),
           ),
-          backgroundColor: Theme.of(context).scaffoldBackgroundColor,
+          backgroundColor: Theme.of(context).colorScheme.surface,
           child: Padding(
             padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 20),
             child: BlocBuilder<ThemeBloc, ThemeState>(
@@ -668,10 +653,9 @@ class SettingsScreen extends StatelessWidget {
                         padding: const EdgeInsets.only(left: 10),
                         child: Text(
                           l10n.display_outlines,
-                          style: TextStyle(
+                          style: const TextStyle(
                             fontSize: 18,
                             fontWeight: FontWeight.bold,
-                            fontFamily: context.read<ThemeBloc>().fontFamily,
                           ),
                         ),
                       ),
@@ -704,10 +688,9 @@ class SettingsScreen extends StatelessWidget {
       builder: (BuildContext context) {
         return Dialog(
           shape: RoundedRectangleBorder(
-            borderRadius: Theme.of(context).extension<CustomBorder>()?.radius ??
-                BorderRadius.circular(5.0),
+            borderRadius: BorderRadius.circular(cornerRadius),
           ),
-          backgroundColor: Theme.of(context).scaffoldBackgroundColor,
+          backgroundColor: Theme.of(context).colorScheme.surface,
           child: Padding(
             padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 20),
             child: BlocBuilder<ThemeBloc, ThemeState>(
@@ -721,10 +704,9 @@ class SettingsScreen extends StatelessWidget {
                         padding: const EdgeInsets.only(left: 10),
                         child: Text(
                           l10n.select_corner_radius,
-                          style: TextStyle(
+                          style: const TextStyle(
                             fontSize: 18,
                             fontWeight: FontWeight.bold,
-                            fontFamily: context.read<ThemeBloc>().fontFamily,
                           ),
                         ),
                       ),
@@ -769,10 +751,9 @@ class SettingsScreen extends StatelessWidget {
       builder: (BuildContext context) {
         return Dialog(
           shape: RoundedRectangleBorder(
-            borderRadius: Theme.of(context).extension<CustomBorder>()?.radius ??
-                BorderRadius.circular(5.0),
+            borderRadius: BorderRadius.circular(cornerRadius),
           ),
-          backgroundColor: Theme.of(context).scaffoldBackgroundColor,
+          backgroundColor: Theme.of(context).colorScheme.surface,
           child: Padding(
             padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 20),
             child: BlocBuilder<ThemeBloc, ThemeState>(
@@ -786,10 +767,9 @@ class SettingsScreen extends StatelessWidget {
                         padding: const EdgeInsets.only(left: 10),
                         child: Text(
                           l10n.select_tabs_order,
-                          style: TextStyle(
+                          style: const TextStyle(
                             fontSize: 18,
                             fontWeight: FontWeight.bold,
-                            fontFamily: context.read<ThemeBloc>().fontFamily,
                           ),
                         ),
                       ),
@@ -850,18 +830,15 @@ class SettingsScreen extends StatelessWidget {
     return SettingsTile.navigation(
       title: Text(
         title,
-        style: TextStyle(
+        style: const TextStyle(
           fontSize: 16,
-          fontFamily: context.read<ThemeBloc>().fontFamily,
         ),
       ),
       leading: (iconData == null) ? null : Icon(iconData),
       description: (description != null)
           ? Text(
               description,
-              style: TextStyle(
-                fontFamily: context.read<ThemeBloc>().fontFamily,
-              ),
+              style: const TextStyle(),
             )
           : null,
       onPressed: (_) {
@@ -877,16 +854,13 @@ class SettingsScreen extends StatelessWidget {
     return SettingsTile(
       title: Text(
         l10n.send_feedback,
-        style: TextStyle(
+        style: const TextStyle(
           fontSize: 16,
-          fontFamily: context.read<ThemeBloc>().fontFamily,
         ),
       ),
       description: Text(
         l10n.report_bugs_or_ideas,
-        style: TextStyle(
-          fontFamily: context.read<ThemeBloc>().fontFamily,
-        ),
+        style: const TextStyle(),
       ),
       leading: const Icon(Icons.record_voice_over_rounded),
       onPressed: (context) {
@@ -895,12 +869,14 @@ class SettingsScreen extends StatelessWidget {
         showModalBottomSheet(
           context: context,
           isScrollControlled: true,
-          backgroundColor: Colors.transparent,
+          elevation: 0,
+          backgroundColor: Theme.of(context).colorScheme.surface,
           builder: (context) {
             return Column(
               mainAxisAlignment: MainAxisAlignment.end,
               mainAxisSize: MainAxisSize.min,
               children: [
+                const SizedBox(height: 5),
                 Container(
                   height: 3,
                   width: MediaQuery.of(context).size.width / 4,
@@ -908,17 +884,16 @@ class SettingsScreen extends StatelessWidget {
                       color: Colors.grey.shade300,
                       borderRadius: BorderRadius.circular(10)),
                 ),
-                const SizedBox(height: 5),
                 Container(
                   padding: const EdgeInsets.fromLTRB(10, 20, 10, 40),
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(15),
-                    color: Theme.of(context).scaffoldBackgroundColor,
                   ),
                   child: IntrinsicHeight(
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                       children: [
+                        const SizedBox(width: 10),
                         Expanded(
                           child: ContactButton(
                             text: l10n.send_dev_email,
@@ -934,6 +909,7 @@ class SettingsScreen extends StatelessWidget {
                             onPressed: () => _openGithubIssue(context),
                           ),
                         ),
+                        const SizedBox(width: 10),
                       ],
                     ),
                   ),
@@ -950,9 +926,8 @@ class SettingsScreen extends StatelessWidget {
     return SettingsTile(
       title: Text(
         l10n.deleted_books,
-        style: TextStyle(
+        style: const TextStyle(
           fontSize: 16,
-          fontFamily: context.read<ThemeBloc>().fontFamily,
         ),
       ),
       leading: const Icon(
@@ -974,9 +949,8 @@ class SettingsScreen extends StatelessWidget {
     return SettingsTile(
       title: Text(
         l10n.unfinished_books,
-        style: TextStyle(
+        style: const TextStyle(
           fontSize: 16,
-          fontFamily: context.read<ThemeBloc>().fontFamily,
         ),
       ),
       leading: const Icon(Icons.not_interested),
@@ -995,9 +969,8 @@ class SettingsScreen extends StatelessWidget {
     return SettingsTile(
       title: Text(
         l10n.backup_and_restore,
-        style: TextStyle(
+        style: const TextStyle(
           fontSize: 16,
-          fontFamily: context.read<ThemeBloc>().fontFamily,
         ),
       ),
       leading: const Icon(Icons.settings_backup_restore_rounded),
@@ -1016,9 +989,8 @@ class SettingsScreen extends StatelessWidget {
     return SettingsTile(
       title: Text(
         l10n.accent_color,
-        style: TextStyle(
+        style: const TextStyle(
           fontSize: 16,
-          fontFamily: context.read<ThemeBloc>().fontFamily,
         ),
       ),
       leading: const Icon(Icons.color_lens),
@@ -1029,58 +1001,42 @@ class SettingsScreen extends StatelessWidget {
               case 0xffB73E3E:
                 return Text(
                   l10n.red_color,
-                  style: TextStyle(
-                    fontFamily: context.read<ThemeBloc>().fontFamily,
-                  ),
+                  style: const TextStyle(),
                 );
               case 0xff2146C7:
                 return Text(
                   l10n.blue_color,
-                  style: TextStyle(
-                    fontFamily: context.read<ThemeBloc>().fontFamily,
-                  ),
+                  style: const TextStyle(),
                 );
               case 0xff285430:
                 return Text(
                   l10n.green_color,
-                  style: TextStyle(
-                    fontFamily: context.read<ThemeBloc>().fontFamily,
-                  ),
+                  style: const TextStyle(),
                 );
               case 0xffE14D2A:
                 return Text(
                   l10n.orange_color,
-                  style: TextStyle(
-                    fontFamily: context.read<ThemeBloc>().fontFamily,
-                  ),
+                  style: const TextStyle(),
                 );
               case 0xff9F73AB:
                 return Text(
                   l10n.purple_color,
-                  style: TextStyle(
-                    fontFamily: context.read<ThemeBloc>().fontFamily,
-                  ),
+                  style: const TextStyle(),
                 );
               case 0xffFF577F:
                 return Text(
                   l10n.pink_color,
-                  style: TextStyle(
-                    fontFamily: context.read<ThemeBloc>().fontFamily,
-                  ),
+                  style: const TextStyle(),
                 );
               case 0xff3FA796:
                 return Text(
                   l10n.teal_color,
-                  style: TextStyle(
-                    fontFamily: context.read<ThemeBloc>().fontFamily,
-                  ),
+                  style: const TextStyle(),
                 );
               default:
                 return Text(
                   l10n.yellow_color,
-                  style: TextStyle(
-                    fontFamily: context.read<ThemeBloc>().fontFamily,
-                  ),
+                  style: const TextStyle(),
                 );
             }
           } else {
@@ -1096,9 +1052,8 @@ class SettingsScreen extends StatelessWidget {
     return SettingsTile(
       title: Text(
         l10n.rounded_corners,
-        style: TextStyle(
+        style: const TextStyle(
           fontSize: 16,
-          fontFamily: context.read<ThemeBloc>().fontFamily,
         ),
       ),
       leading: const Icon(Icons.rounded_corner_rounded),
@@ -1108,30 +1063,22 @@ class SettingsScreen extends StatelessWidget {
             if (themeState.cornerRadius == 5) {
               return Text(
                 l10n.small_rounded_corners,
-                style: TextStyle(
-                  fontFamily: context.read<ThemeBloc>().fontFamily,
-                ),
+                style: const TextStyle(),
               );
             } else if (themeState.cornerRadius == 10) {
               return Text(
                 l10n.medium_rounded_corners,
-                style: TextStyle(
-                  fontFamily: context.read<ThemeBloc>().fontFamily,
-                ),
+                style: const TextStyle(),
               );
             } else if (themeState.cornerRadius == 20) {
               return Text(
                 l10n.big_rounded_corners,
-                style: TextStyle(
-                  fontFamily: context.read<ThemeBloc>().fontFamily,
-                ),
+                style: const TextStyle(),
               );
             } else {
               return Text(
                 l10n.no_rounded_corners,
-                style: TextStyle(
-                  fontFamily: context.read<ThemeBloc>().fontFamily,
-                ),
+                style: const TextStyle(),
               );
             }
           } else {
@@ -1147,9 +1094,8 @@ class SettingsScreen extends StatelessWidget {
     return SettingsTile(
       title: Text(
         l10n.display_outlines,
-        style: TextStyle(
+        style: const TextStyle(
           fontSize: 16,
-          fontFamily: context.read<ThemeBloc>().fontFamily,
         ),
       ),
       leading: const Icon(Icons.check_box_outline_blank_rounded),
@@ -1159,16 +1105,12 @@ class SettingsScreen extends StatelessWidget {
             if (themeState.showOutlines) {
               return Text(
                 l10n.show_outlines,
-                style: TextStyle(
-                  fontFamily: context.read<ThemeBloc>().fontFamily,
-                ),
+                style: const TextStyle(),
               );
             } else {
               return Text(
                 l10n.hide_outlines,
-                style: TextStyle(
-                  fontFamily: context.read<ThemeBloc>().fontFamily,
-                ),
+                style: const TextStyle(),
               );
             }
           } else {
@@ -1184,9 +1126,8 @@ class SettingsScreen extends StatelessWidget {
     return SettingsTile(
       title: Text(
         l10n.theme_mode,
-        style: TextStyle(
+        style: const TextStyle(
           fontSize: 16,
-          fontFamily: context.read<ThemeBloc>().fontFamily,
         ),
       ),
       leading: const Icon(Icons.sunny),
@@ -1197,23 +1138,17 @@ class SettingsScreen extends StatelessWidget {
               case ThemeMode.light:
                 return Text(
                   l10n.theme_mode_light,
-                  style: TextStyle(
-                    fontFamily: context.read<ThemeBloc>().fontFamily,
-                  ),
+                  style: const TextStyle(),
                 );
               case ThemeMode.dark:
                 return Text(
                   l10n.theme_mode_dark,
-                  style: TextStyle(
-                    fontFamily: context.read<ThemeBloc>().fontFamily,
-                  ),
+                  style: const TextStyle(),
                 );
               default:
                 return Text(
                   l10n.theme_mode_system,
-                  style: TextStyle(
-                    fontFamily: context.read<ThemeBloc>().fontFamily,
-                  ),
+                  style: const TextStyle(),
                 );
             }
           } else {
@@ -1229,9 +1164,8 @@ class SettingsScreen extends StatelessWidget {
     return SettingsTile(
       title: Text(
         l10n.font,
-        style: TextStyle(
+        style: const TextStyle(
           fontSize: 16,
-          fontFamily: context.read<ThemeBloc>().fontFamily,
         ),
       ),
       leading: const Icon(
@@ -1244,16 +1178,12 @@ class SettingsScreen extends StatelessWidget {
             if (state.fontFamily != null) {
               return Text(
                 state.fontFamily!,
-                style: TextStyle(
-                  fontFamily: context.read<ThemeBloc>().fontFamily,
-                ),
+                style: const TextStyle(),
               );
             } else {
               return Text(
                 l10n.font_default,
-                style: TextStyle(
-                  fontFamily: context.read<ThemeBloc>().fontFamily,
-                ),
+                style: const TextStyle(),
               );
             }
           } else {
@@ -1269,9 +1199,8 @@ class SettingsScreen extends StatelessWidget {
     return SettingsTile(
       title: Text(
         l10n.rating_type,
-        style: TextStyle(
+        style: const TextStyle(
           fontSize: 16,
-          fontFamily: context.read<ThemeBloc>().fontFamily,
         ),
       ),
       leading: const Icon(Icons.star_rounded),
@@ -1280,16 +1209,12 @@ class SettingsScreen extends StatelessWidget {
           if (state is RatingTypeNumber) {
             return Text(
               l10n.rating_as_number,
-              style: TextStyle(
-                fontFamily: context.read<ThemeBloc>().fontFamily,
-              ),
+              style: const TextStyle(),
             );
           } else if (state is RatingTypeBar) {
             return Text(
               l10n.rating_as_bar,
-              style: TextStyle(
-                fontFamily: context.read<ThemeBloc>().fontFamily,
-              ),
+              style: const TextStyle(),
             );
           } else {
             return const SizedBox();
@@ -1304,9 +1229,8 @@ class SettingsScreen extends StatelessWidget {
     return SettingsTile(
       title: Text(
         l10n.tabs_order,
-        style: TextStyle(
+        style: const TextStyle(
           fontSize: 16,
-          fontFamily: context.read<ThemeBloc>().fontFamily,
         ),
       ),
       leading: const FaIcon(
@@ -1319,16 +1243,12 @@ class SettingsScreen extends StatelessWidget {
             if (state.readTabFirst) {
               return Text(
                 l10n.tabs_order_read_first,
-                style: TextStyle(
-                  fontFamily: context.read<ThemeBloc>().fontFamily,
-                ),
+                style: const TextStyle(),
               );
             } else {
               return Text(
                 l10n.tabs_order_in_progress_first,
-                style: TextStyle(
-                  fontFamily: context.read<ThemeBloc>().fontFamily,
-                ),
+                style: const TextStyle(),
               );
             }
           } else {
@@ -1343,20 +1263,22 @@ class SettingsScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Theme.of(context).scaffoldBackgroundColor,
       appBar: AppBar(
-        backgroundColor: Theme.of(context).scaffoldBackgroundColor,
-        surfaceTintColor: Theme.of(context).scaffoldBackgroundColor,
         title: Text(
           l10n.settings,
-          style: TextStyle(
+          style: const TextStyle(
             fontSize: 18,
-            fontFamily: context.read<ThemeBloc>().fontFamily,
           ),
         ),
       ),
       body: SettingsList(
         contentPadding: const EdgeInsets.only(top: 10),
+        darkTheme: SettingsThemeData(
+          settingsListBackground: Theme.of(context).colorScheme.surface,
+        ),
+        lightTheme: SettingsThemeData(
+          settingsListBackground: Theme.of(context).colorScheme.surface,
+        ),
         sections: [
           SettingsSection(
             tiles: <SettingsTile>[
@@ -1391,8 +1313,7 @@ class SettingsScreen extends StatelessWidget {
               style: TextStyle(
                 fontSize: 16,
                 fontWeight: FontWeight.bold,
-                color: Theme.of(context).primaryColor,
-                fontFamily: context.read<ThemeBloc>().fontFamily,
+                color: Theme.of(context).colorScheme.primary,
               ),
             ),
             tiles: <SettingsTile>[
@@ -1407,8 +1328,7 @@ class SettingsScreen extends StatelessWidget {
               style: TextStyle(
                 fontSize: 16,
                 fontWeight: FontWeight.bold,
-                color: Theme.of(context).primaryColor,
-                fontFamily: context.read<ThemeBloc>().fontFamily,
+                color: Theme.of(context).colorScheme.primary,
               ),
             ),
             tiles: <SettingsTile>[
@@ -1427,8 +1347,7 @@ class SettingsScreen extends StatelessWidget {
               style: TextStyle(
                 fontSize: 16,
                 fontWeight: FontWeight.bold,
-                color: Theme.of(context).primaryColor,
-                fontFamily: context.read<ThemeBloc>().fontFamily,
+                color: Theme.of(context).colorScheme.primary,
               ),
             ),
             tiles: <SettingsTile>[

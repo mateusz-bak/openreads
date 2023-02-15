@@ -4,9 +4,8 @@ import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:like_button/like_button.dart';
 import 'package:openreads/core/themes/app_theme.dart';
-import 'package:openreads/l10n.dart';
+import 'package:openreads/resources/l10n.dart';
 import 'package:openreads/logic/bloc/rating_type_bloc/rating_type_bloc.dart';
-import 'package:openreads/logic/bloc/theme_bloc/theme_bloc.dart';
 
 class BookStatusDetail extends StatelessWidget {
   const BookStatusDetail({
@@ -40,11 +39,9 @@ class BookStatusDetail extends StatelessWidget {
     if (startDate != null && finishDate != null) {
       return Text(
         '$startDate - $finishDate',
-        style: TextStyle(
+        style: const TextStyle(
           fontSize: 14,
           fontWeight: FontWeight.normal,
-          color: Theme.of(context).secondaryTextColor,
-          fontFamily: context.read<ThemeBloc>().fontFamily,
         ),
       );
     }
@@ -52,11 +49,9 @@ class BookStatusDetail extends StatelessWidget {
     if (startDate == null && finishDate != null) {
       return Text(
         '${l10n.finished_on_date} $finishDate',
-        style: TextStyle(
+        style: const TextStyle(
           fontSize: 14,
           fontWeight: FontWeight.normal,
-          color: Theme.of(context).secondaryTextColor,
-          fontFamily: context.read<ThemeBloc>().fontFamily,
         ),
       );
     }
@@ -64,11 +59,9 @@ class BookStatusDetail extends StatelessWidget {
     if (startDate != null && finishDate == null) {
       return Text(
         '${l10n.started_on_date} $startDate',
-        style: TextStyle(
+        style: const TextStyle(
           fontSize: 14,
           fontWeight: FontWeight.normal,
-          color: Theme.of(context).secondaryTextColor,
-          fontFamily: context.read<ThemeBloc>().fontFamily,
         ),
       );
     }
@@ -81,13 +74,9 @@ class BookStatusDetail extends StatelessWidget {
         ? FaIcon(
             FontAwesomeIcons.solidHeart,
             size: 30,
-            color: Theme.of(context).likeColor,
+            color: likeColor,
           )
-        : FaIcon(
-            FontAwesomeIcons.heart,
-            size: 30,
-            color: Theme.of(context).secondaryTextColor,
-          );
+        : const FaIcon(FontAwesomeIcons.heart, size: 30);
   }
 
   Widget _buildChangeStatusButton(BuildContext context) {
@@ -95,8 +84,9 @@ class BookStatusDetail extends StatelessWidget {
       onTap: changeStatusAction,
       child: Container(
         decoration: BoxDecoration(
-          borderRadius: Theme.of(context).extension<CustomBorder>()?.radius,
-          border: Border.all(color: Theme.of(context).dividerColor),
+          borderRadius: BorderRadius.circular(cornerRadius),
+          border: Border.all(color: dividerColor),
+          color: Theme.of(context).colorScheme.secondary,
         ),
         child: Padding(
           padding: const EdgeInsets.symmetric(
@@ -115,7 +105,7 @@ class BookStatusDetail extends StatelessWidget {
                   style: TextStyle(
                     fontSize: 12,
                     fontWeight: FontWeight.bold,
-                    fontFamily: context.read<ThemeBloc>().fontFamily,
+                    color: Theme.of(context).colorScheme.onSecondary,
                   ),
                 ),
               ],
@@ -128,116 +118,115 @@ class BookStatusDetail extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      padding: const EdgeInsets.all(10),
-      decoration: BoxDecoration(
-        color: Theme.of(context).backgroundColor,
-        borderRadius: Theme.of(context).extension<CustomBorder>()?.radius,
-        border: Border.all(color: Theme.of(context).dividerColor),
+    return Card(
+      shadowColor: Colors.transparent,
+      shape: RoundedRectangleBorder(
+        side: BorderSide(color: dividerColor, width: 1),
+        borderRadius: BorderRadius.circular(cornerRadius),
       ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.stretch,
-        children: [
-          const SizedBox(height: 5),
-          Row(
-            children: [
-              Expanded(
-                child: Container(
-                  decoration: BoxDecoration(
-                    color: Theme.of(context).primaryColor,
-                    borderRadius:
-                        Theme.of(context).extension<CustomBorder>()?.radius,
-                  ),
-                  child: Padding(
-                    padding: const EdgeInsets.symmetric(
-                      vertical: 5,
-                      horizontal: 10,
+      child: Container(
+        padding: const EdgeInsets.all(10),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [
+            const SizedBox(height: 5),
+            Row(
+              children: [
+                Expanded(
+                  child: Container(
+                    decoration: BoxDecoration(
+                      color: Theme.of(context).colorScheme.primary,
+                      borderRadius: BorderRadius.circular(cornerRadius),
                     ),
-                    child: Center(
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        children: [
-                          Icon(
-                            statusIcon,
-                            size: 24,
-                            color: Colors.white,
-                          ),
-                          const SizedBox(width: 15),
-                          Text(
-                            statusText,
-                            maxLines: 1,
-                            style: TextStyle(
-                              fontSize: 12,
-                              fontWeight: FontWeight.bold,
-                              color: Colors.white,
-                              fontFamily: context.read<ThemeBloc>().fontFamily,
+                    child: Padding(
+                      padding: const EdgeInsets.symmetric(
+                        vertical: 5,
+                        horizontal: 10,
+                      ),
+                      child: Center(
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: [
+                            Icon(
+                              statusIcon,
+                              size: 24,
+                              color: Theme.of(context).colorScheme.onPrimary,
                             ),
-                          ),
-                        ],
+                            const SizedBox(width: 15),
+                            Text(
+                              statusText,
+                              maxLines: 1,
+                              style: TextStyle(
+                                fontSize: 12,
+                                fontWeight: FontWeight.bold,
+                                color: Theme.of(context).colorScheme.onPrimary,
+                              ),
+                            ),
+                          ],
+                        ),
                       ),
                     ),
                   ),
                 ),
-              ),
-              SizedBox(width: (showChangeStatus) ? 10 : 0),
-              (showChangeStatus)
-                  ? _buildChangeStatusButton(context)
-                  : const SizedBox(),
-            ],
-          ),
-          const SizedBox(height: 5),
-          _buildStartAndFinishDate(context),
-          SizedBox(height: (showRatingAndLike) ? 10 : 0),
-          (showRatingAndLike)
-              ? Column(
-                  children: [
-                    Row(
-                      children: [
-                        Text(
-                          l10n.your_rating,
-                          style: TextStyle(
-                            fontSize: 14,
-                            fontWeight: FontWeight.bold,
-                            fontFamily: context.read<ThemeBloc>().fontFamily,
-                          ),
-                        ),
-                      ],
-                    ),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            _buildRating(context),
-                          ],
-                        ),
-                        Padding(
-                          padding: const EdgeInsets.only(right: 10, top: 0),
-                          child: LikeButton(
-                            isLiked: isLiked,
-                            onTap: onLikeTap,
-                            size: 30,
-                            circleColor: CircleColor(
-                              start: Theme.of(context).ratingColor,
-                              end: Theme.of(context).likeColor,
+                SizedBox(width: (showChangeStatus) ? 10 : 0),
+                (showChangeStatus)
+                    ? _buildChangeStatusButton(context)
+                    : const SizedBox(),
+              ],
+            ),
+            const SizedBox(height: 5),
+            _buildStartAndFinishDate(context),
+            SizedBox(height: (showRatingAndLike) ? 10 : 0),
+            (showRatingAndLike)
+                ? Column(
+                    children: [
+                      Row(
+                        children: [
+                          Text(
+                            l10n.your_rating,
+                            style: const TextStyle(
+                              fontSize: 14,
+                              fontWeight: FontWeight.bold,
                             ),
-                            bubblesColor: BubblesColor(
-                              dotPrimaryColor: Theme.of(context).ratingColor,
-                              dotSecondaryColor: Theme.of(context).likeColor,
-                            ),
-                            likeBuilder: (bool isLiked) {
-                              _buildLikeButton(context, isLiked);
-                            },
                           ),
-                        ),
-                      ],
-                    ),
-                  ],
-                )
-              : const SizedBox(),
-        ],
+                        ],
+                      ),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              _buildRating(context),
+                            ],
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.only(right: 10, top: 0),
+                            child: LikeButton(
+                              isLiked: isLiked,
+                              onTap: onLikeTap,
+                              size: 30,
+                              circleColor: CircleColor(
+                                start: ratingColor,
+                                end: likeColor,
+                              ),
+                              bubblesColor: BubblesColor(
+                                dotPrimaryColor: ratingColor,
+                                dotSecondaryColor: likeColor,
+                              ),
+                              likeBuilder: (bool isLiked) {
+                                _buildLikeButton(context, isLiked);
+                              },
+                            ),
+                          ),
+                        ],
+                      ),
+                    ],
+                  )
+                : const SizedBox(),
+          ],
+        ),
       ),
     );
   }
@@ -255,7 +244,7 @@ class BookStatusDetail extends StatelessWidget {
             ignoreGestures: true,
             itemBuilder: (context, _) => Icon(
               Icons.star_rounded,
-              color: Theme.of(context).ratingColor,
+              color: ratingColor,
             ),
             onRatingUpdate: (_) {},
           );
@@ -265,16 +254,15 @@ class BookStatusDetail extends StatelessWidget {
             children: [
               Text(
                 (rating == null) ? '0' : '${(rating! / 10)}',
-                style: TextStyle(
+                style: const TextStyle(
                   fontSize: 16,
                   fontWeight: FontWeight.bold,
-                  fontFamily: context.read<ThemeBloc>().fontFamily,
                 ),
               ),
               const SizedBox(width: 5),
               Icon(
                 Icons.star_rounded,
-                color: Theme.of(context).ratingColor,
+                color: ratingColor,
                 size: 32,
               ),
             ],

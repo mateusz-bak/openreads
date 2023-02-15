@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:openreads/core/themes/app_theme.dart';
-import 'package:openreads/logic/bloc/theme_bloc/theme_bloc.dart';
 import 'package:openreads/ui/statistics_screen/widgets/widgets.dart';
 
 class ReadingChallenge extends StatelessWidget {
@@ -27,16 +25,11 @@ class ReadingChallenge extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Card(
-      elevation: 0,
+      shadowColor: Colors.transparent,
       shape: RoundedRectangleBorder(
-        borderRadius: Theme.of(context).extension<CustomBorder>()?.radius ??
-            BorderRadius.circular(5),
-        side: BorderSide(
-          color: Theme.of(context).dividerColor,
-          width: 1,
-        ),
+        side: BorderSide(color: dividerColor, width: 1),
+        borderRadius: BorderRadius.circular(cornerRadius),
       ),
-      color: Theme.of(context).backgroundColor,
       child: InkWell(
         onTap: () => showDialog(
             context: context,
@@ -48,8 +41,7 @@ class ReadingChallenge extends StatelessWidget {
                 year: year,
               );
             }),
-        borderRadius: Theme.of(context).extension<CustomBorder>()?.radius ??
-            BorderRadius.circular(5),
+        borderRadius: BorderRadius.circular(cornerRadius),
         child: Padding(
           padding: const EdgeInsets.all(10.0),
           child: Column(
@@ -57,10 +49,9 @@ class ReadingChallenge extends StatelessWidget {
             children: [
               Text(
                 title,
-                style: TextStyle(
+                style: const TextStyle(
                   fontSize: 16,
                   fontWeight: FontWeight.bold,
-                  fontFamily: context.read<ThemeBloc>().fontFamily,
                 ),
               ),
               const SizedBox(height: 10),
@@ -70,9 +61,8 @@ class ReadingChallenge extends StatelessWidget {
                     child: Container(
                       padding: const EdgeInsets.symmetric(vertical: 3),
                       decoration: BoxDecoration(
-                        color: Theme.of(context).scaffoldBackgroundColor,
-                        borderRadius:
-                            Theme.of(context).extension<CustomBorder>()?.radius,
+                        color: Theme.of(context).colorScheme.surface,
+                        borderRadius: BorderRadius.circular(cornerRadius),
                       ),
                       child: Row(
                         children: [
@@ -82,10 +72,10 @@ class ReadingChallenge extends StatelessWidget {
                                   child: Container(
                                     height: 15,
                                     decoration: BoxDecoration(
-                                      color: Theme.of(context).primaryColor,
-                                      borderRadius: Theme.of(context)
-                                          .extension<CustomBorder>()
-                                          ?.radius,
+                                      color:
+                                          Theme.of(context).colorScheme.primary,
+                                      borderRadius:
+                                          BorderRadius.circular(cornerRadius),
                                     ),
                                   ),
                                 )
@@ -111,20 +101,16 @@ class ReadingChallenge extends StatelessWidget {
                 children: [
                   Text(
                     '$value/$target',
-                    style: TextStyle(
+                    style: const TextStyle(
                       fontSize: 16,
-                      color: Theme.of(context).secondaryTextColor,
-                      fontFamily: context.read<ThemeBloc>().fontFamily,
                     ),
                   ),
                   Text(
                     (target == 0)
                         ? ''
                         : '${((value / target * 100) <= 100) ? (value / target * 100).toStringAsFixed(2) : 100}%',
-                    style: TextStyle(
+                    style: const TextStyle(
                       fontSize: 16,
-                      color: Theme.of(context).secondaryTextColor,
-                      fontFamily: context.read<ThemeBloc>().fontFamily,
                     ),
                   ),
                 ],

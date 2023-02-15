@@ -11,7 +11,7 @@ class ThemeBloc extends HydratedBloc<ThemeEvent, ThemeState> {
   ThemeBloc()
       : super(const SetThemeState(
           themeMode: ThemeMode.system,
-          showOutlines: true,
+          showOutlines: false,
           cornerRadius: 5,
           primaryColor: Color(0xff3FA796),
           fontFamily: 'Nunito',
@@ -44,7 +44,7 @@ class ThemeBloc extends HydratedBloc<ThemeEvent, ThemeState> {
       case 1:
         return SetThemeState(
           themeMode: ThemeMode.light,
-          showOutlines: showOutlines ?? true,
+          showOutlines: showOutlines ?? false,
           cornerRadius: cornerRadius ?? 5,
           primaryColor: Color(primaryColor ?? 0xff2146C7),
           fontFamily: fontFamily ?? 'Nunito',
@@ -53,7 +53,7 @@ class ThemeBloc extends HydratedBloc<ThemeEvent, ThemeState> {
       case 2:
         return SetThemeState(
           themeMode: ThemeMode.dark,
-          showOutlines: showOutlines ?? true,
+          showOutlines: showOutlines ?? false,
           cornerRadius: cornerRadius ?? 5,
           primaryColor: Color(primaryColor ?? 0xff2146C7),
           fontFamily: fontFamily ?? 'Nunito',
@@ -62,7 +62,7 @@ class ThemeBloc extends HydratedBloc<ThemeEvent, ThemeState> {
       default:
         return SetThemeState(
           themeMode: ThemeMode.system,
-          showOutlines: showOutlines ?? true,
+          showOutlines: showOutlines ?? false,
           cornerRadius: cornerRadius ?? 5,
           primaryColor: Color(primaryColor ?? 0xff2146C7),
           fontFamily: fontFamily ?? 'Nunito',

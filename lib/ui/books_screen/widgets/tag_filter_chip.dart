@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:openreads/core/themes/app_theme.dart';
-import 'package:openreads/logic/bloc/theme_bloc/theme_bloc.dart';
 
 class TagFilterChip extends StatelessWidget {
   const TagFilterChip({
@@ -20,21 +18,19 @@ class TagFilterChip extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 5),
       child: FilterChip(
-        backgroundColor: Theme.of(context).scaffoldBackgroundColor,
-        side: BorderSide(
-          color: Theme.of(context).dividerColor,
-          width: 1,
-        ),
+        backgroundColor: Theme.of(context).colorScheme.surface,
+        side: BorderSide(color: dividerColor, width: 1),
         label: Text(
           tag.toString(),
           style: TextStyle(
-            color: selected ? Colors.white : Theme.of(context).mainTextColor,
-            fontFamily: context.read<ThemeBloc>().fontFamily,
+            color: selected
+                ? Theme.of(context).colorScheme.onPrimary
+                : Theme.of(context).colorScheme.onSurface,
           ),
         ),
-        checkmarkColor: Colors.white,
+        checkmarkColor: Theme.of(context).colorScheme.onPrimary,
         selected: selected,
-        selectedColor: Theme.of(context).primaryColor,
+        selectedColor: Theme.of(context).colorScheme.primary,
         onSelected: onTagChipPressed,
       ),
     );

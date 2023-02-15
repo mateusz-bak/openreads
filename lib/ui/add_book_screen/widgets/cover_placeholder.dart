@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:openreads/core/themes/app_theme.dart';
-import 'package:openreads/l10n.dart';
-import 'package:openreads/logic/bloc/theme_bloc/theme_bloc.dart';
+import 'package:openreads/resources/l10n.dart';
 
 class CoverPlaceholder extends StatelessWidget {
   const CoverPlaceholder({
@@ -18,22 +16,18 @@ class CoverPlaceholder extends StatelessWidget {
   Widget build(BuildContext context) {
     return InkWell(
       customBorder: RoundedRectangleBorder(
-        borderRadius: Theme.of(context).extension<CustomBorder>()?.radius ??
-            BorderRadius.circular(5),
+        borderRadius: BorderRadius.circular(cornerRadius),
       ),
       onTap: onPressed,
       child: Ink(
         height: defaultHeight,
         decoration: BoxDecoration(
-          borderRadius: Theme.of(context).extension<CustomBorder>()?.radius,
-          color: Theme.of(context).backgroundColor,
-          border: Border.all(color: Theme.of(context).dividerColor),
+          borderRadius: BorderRadius.circular(cornerRadius),
+          color: Theme.of(context).colorScheme.surfaceVariant,
+          border: Border.all(color: dividerColor),
         ),
         child: Padding(
-          padding: const EdgeInsets.symmetric(
-            horizontal: 0,
-            vertical: 10,
-          ),
+          padding: const EdgeInsets.symmetric(horizontal: 0, vertical: 10),
           child: Center(
             child: Row(
               children: [
@@ -41,16 +35,10 @@ class CoverPlaceholder extends StatelessWidget {
                 Icon(
                   Icons.image,
                   size: 24,
-                  color: Theme.of(context).primaryColor,
+                  color: Theme.of(context).colorScheme.primary,
                 ),
                 const SizedBox(width: 15),
-                Text(
-                  l10n.click_to_add_cover,
-                  style: TextStyle(
-                    color: Theme.of(context).secondaryTextColor,
-                    fontFamily: context.read<ThemeBloc>().fontFamily,
-                  ),
-                ),
+                Text(l10n.click_to_add_cover),
               ],
             ),
           ),

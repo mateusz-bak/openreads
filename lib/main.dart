@@ -1,10 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_displaymode/flutter_displaymode.dart';
-import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:hydrated_bloc/hydrated_bloc.dart';
-import 'package:openreads/core/themes/app_theme.dart';
-import 'package:openreads/l10n.dart';
 import 'package:openreads/logic/bloc/challenge_bloc/challenge_bloc.dart';
 import 'package:openreads/logic/bloc/open_lib_bloc/open_lib_bloc.dart';
 import 'package:openreads/logic/bloc/rating_type_bloc/rating_type_bloc.dart';
@@ -125,37 +122,17 @@ class _OpenreadsAppState extends State<OpenreadsApp>
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Openreads Flutter',
-      theme: AppTheme.lightTheme.copyWith(
-        primaryColor: widget.themeState.primaryColor,
-        colorScheme: const ColorScheme.light().copyWith(
-          primary: widget.themeState.primaryColor,
-          secondary: widget.themeState.primaryColor,
-        ),
-        dividerColor:
-            widget.themeState.showOutlines ? null : Colors.transparent,
-        extensions: <ThemeExtension<dynamic>>[
-          CustomBorder(
-            radius: BorderRadius.circular(
-              widget.themeState.cornerRadius,
-            ),
-          ),
-        ],
+      theme: ThemeData(
+        useMaterial3: true,
+        colorSchemeSeed: widget.themeState.primaryColor,
+        brightness: Brightness.light,
+        fontFamily: widget.themeState.fontFamily,
       ),
-      darkTheme: AppTheme.darkTheme.copyWith(
-        primaryColor: widget.themeState.primaryColor,
-        colorScheme: const ColorScheme.dark().copyWith(
-          primary: widget.themeState.primaryColor,
-          secondary: widget.themeState.primaryColor,
-        ),
-        dividerColor:
-            widget.themeState.showOutlines ? null : Colors.transparent,
-        extensions: <ThemeExtension<dynamic>>[
-          CustomBorder(
-            radius: BorderRadius.circular(
-              widget.themeState.cornerRadius,
-            ),
-          ),
-        ],
+      darkTheme: ThemeData(
+        useMaterial3: true,
+        colorSchemeSeed: widget.themeState.primaryColor,
+        brightness: Brightness.dark,
+        fontFamily: widget.themeState.fontFamily,
       ),
       themeMode: widget.themeState.themeMode,
       home: welcomeMode
