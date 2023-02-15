@@ -12,12 +12,16 @@
   "add_search": "Search in\nOpen Library",
   "add_scan": "Scan a\nbarcode",
 
+  "add_book": "Add book",
+
   "finished_on_date": "Finished",
   "started_on_date": "Started",
   "your_rating": "Your rating",
   "edit_book": "Edit book",
   "delete_book": "Delete book",
   "restore_book": "Restore book",
+  "yes": "Yes",
+  "no": "No",
   "delete_book_question": "Delete this book?",
   "restore_book_question": "Restore this book?",
   "finish_reading": "Finish",
@@ -43,7 +47,7 @@
   "open_library_ID": "Open Library ID",
   "enter_tags": "Tags",
   "my_review": "My review",
-  "add_book": "Add new book",
+  "add_new_book": "Add new book",
   "select_start_date": "Select reading start date",
   "select_finish_date": "Select reading finish date",
 
@@ -80,6 +84,8 @@
 
   "search_in_open_library": "Search in Open Library",
   "search_in_books": "Search in your books",
+  "search": "Search",
+  "results_lowercase": "results",
 
   "click_here_to_set_challenge": "Click here to set the yearly challenge",
   "set_books_goal_for_year": "Set books goal for",

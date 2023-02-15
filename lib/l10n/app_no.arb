@@ -40,7 +40,7 @@
   "open_library_ID": "Open Library ID",
   "enter_tags": "Etiketter",
   "my_review": "Min omtale",
-  "add_book": "Legg til ny bok",
+  "add_new_book": "Legg til ny bok",
   "select_start_date": "Velg startdato for lesing",
   "select_finish_date": "Velg sluttdato for lesing",
   "title_cannot_be_empty": "Tittelfeltet kan ikke stå tomt",

@@ -4,12 +4,11 @@ import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:intl/intl.dart';
 import 'package:openreads/core/constants.dart/enums.dart';
-import 'package:openreads/l10n.dart';
+import 'package:openreads/core/themes/app_theme.dart';
+import 'package:openreads/resources/l10n.dart';
 import 'package:openreads/logic/bloc/rating_type_bloc/rating_type_bloc.dart';
 import 'package:openreads/logic/bloc/sort_bloc/sort_bloc.dart';
-import 'package:openreads/logic/bloc/theme_bloc/theme_bloc.dart';
 import 'package:openreads/model/book.dart';
-import 'package:openreads/core/themes/app_theme.dart';
 
 class BookCard extends StatelessWidget {
   const BookCard({
@@ -31,12 +30,7 @@ class BookCard extends StatelessWidget {
         if (state is SetSortState) {
           if (state.sortType == SortType.byPages) {
             return (book.pages != null)
-                ? Text(
-                    '${book.pages} ${l10n.pages_lowercase}',
-                    style: TextStyle(
-                      fontFamily: context.read<ThemeBloc>().fontFamily,
-                    ),
-                  )
+                ? Text('${book.pages} ${l10n.pages_lowercase}')
                 : const SizedBox();
           } else if (state.sortType == SortType.byStartDate) {
             return (book.startDate != null)
@@ -45,17 +39,13 @@ class BookCard extends StatelessWidget {
                     children: [
                       Text(
                         l10n.started_on_date,
-                        style: TextStyle(
-                          fontSize: 12,
-                          fontFamily: context.read<ThemeBloc>().fontFamily,
-                        ),
+                        style: const TextStyle(fontSize: 12),
                       ),
                       Text(
                         '${_generateDate(book.startDate)}',
-                        style: TextStyle(
+                        style: const TextStyle(
                           fontSize: 13,
                           fontWeight: FontWeight.bold,
-                          fontFamily: context.read<ThemeBloc>().fontFamily,
                         ),
                       ),
                     ],
@@ -68,17 +58,13 @@ class BookCard extends StatelessWidget {
                     children: [
                       Text(
                         l10n.finished_on_date,
-                        style: TextStyle(
-                          fontSize: 12,
-                          fontFamily: context.read<ThemeBloc>().fontFamily,
-                        ),
+                        style: const TextStyle(fontSize: 12),
                       ),
                       Text(
                         '${_generateDate(book.finishDate)}',
-                        style: TextStyle(
+                        style: const TextStyle(
                           fontSize: 13,
                           fontWeight: FontWeight.bold,
-                          fontFamily: context.read<ThemeBloc>().fontFamily,
                         ),
                       ),
                     ],
@@ -121,29 +107,21 @@ class BookCard extends StatelessWidget {
 
   Widget _buildTagChip({
     required String tag,
-    required bool selected,
     required BuildContext context,
   }) {
     return Padding(
       padding: const EdgeInsets.only(right: 10),
       child: FilterChip(
-        backgroundColor: Theme.of(context).scaffoldBackgroundColor,
+        backgroundColor: Theme.of(context).colorScheme.secondary,
         padding: const EdgeInsets.all(5),
-        side: BorderSide(
-          color: Theme.of(context).dividerColor,
-          width: 1,
-        ),
+        side: BorderSide(color: dividerColor, width: 1),
         label: Text(
           tag,
           style: TextStyle(
-            color: selected ? Colors.white : Theme.of(context).mainTextColor,
+            color: Theme.of(context).colorScheme.onSecondary,
             fontSize: 12,
-            fontFamily: context.read<ThemeBloc>().fontFamily,
           ),
         ),
-        checkmarkColor: Colors.white,
-        selected: selected,
-        selectedColor: Theme.of(context).primaryColor,
         onSelected: (_) {},
       ),
     );
@@ -159,7 +137,6 @@ class BookCard extends StatelessWidget {
     for (var tag in book.tags!.split('|||||')) {
       chips.add(_buildTagChip(
         tag: tag,
-        selected: false,
         context: context,
       ));
     }
@@ -177,90 +154,92 @@ class BookCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: EdgeInsets.fromLTRB(10, 0, 10, addBottomPadding ? 90 : 15),
-      child: InkWell(
-        onTap: onPressed,
-        child: Container(
-          padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 15),
-          decoration: BoxDecoration(
-            color: Theme.of(context).backgroundColor,
-            borderRadius: Theme.of(context).extension<CustomBorder>()?.radius,
-            border: Border.all(color: Theme.of(context).dividerColor),
-          ),
-          child: Row(
-            children: [
-              SizedBox(
-                width: (book.cover != null) ? 60 : 0,
-                child: (book.cover != null)
-                    ? ClipRRect(
-                        borderRadius: BorderRadius.circular(2),
-                        child: Hero(
-                          tag: heroTag,
-                          child: Image.memory(
-                            book.cover!,
-                            fit: BoxFit.cover,
+      padding: EdgeInsets.fromLTRB(10, 0, 10, addBottomPadding ? 90 : 5),
+      child: Card(
+        shadowColor: Colors.transparent,
+        shape: RoundedRectangleBorder(
+          side: BorderSide(color: dividerColor, width: 1),
+          borderRadius: BorderRadius.circular(cornerRadius),
+        ),
+        child: ClipRRect(
+          borderRadius: BorderRadius.circular(cornerRadius),
+          child: InkWell(
+            onTap: onPressed,
+            child: Padding(
+              padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 15),
+              child: Row(
+                children: [
+                  SizedBox(
+                    width: (book.cover != null) ? 60 : 0,
+                    child: (book.cover != null)
+                        ? ClipRRect(
+                            borderRadius: BorderRadius.circular(2),
+                            child: Hero(
+                              tag: heroTag,
+                              child: Image.memory(
+                                book.cover!,
+                                fit: BoxFit.cover,
+                              ),
+                            ),
+                          )
+                        : const SizedBox(),
+                  ),
+                  SizedBox(width: (book.cover != null) ? 20 : 0),
+                  Expanded(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Text(
+                          book.title,
+                          softWrap: true,
+                          overflow: TextOverflow.clip,
+                          style: const TextStyle(
+                            fontSize: 15,
+                            fontWeight: FontWeight.bold,
                           ),
                         ),
-                      )
-                    : const SizedBox(),
-              ),
-              SizedBox(width: (book.cover != null) ? 20 : 0),
-              Expanded(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Text(
-                      book.title,
-                      softWrap: true,
-                      overflow: TextOverflow.clip,
-                      style: TextStyle(
-                        fontSize: 16,
-                        fontWeight: FontWeight.bold,
-                        color: Theme.of(context).mainTextColor,
-                        fontFamily: context.read<ThemeBloc>().fontFamily,
-                      ),
-                    ),
-                    Text(
-                      book.author,
-                      softWrap: true,
-                      overflow: TextOverflow.clip,
-                      style: TextStyle(
-                        fontSize: 15,
-                        color: Theme.of(context).secondaryTextColor,
-                        fontFamily: context.read<ThemeBloc>().fontFamily,
-                      ),
-                    ),
-                    const SizedBox(height: 5),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: [
+                        Text(
+                          book.author,
+                          softWrap: true,
+                          overflow: TextOverflow.clip,
+                          style: const TextStyle(
+                            fontSize: 14,
+                          ),
+                        ),
+                        const SizedBox(height: 5),
                         Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          crossAxisAlignment: CrossAxisAlignment.center,
                           children: [
-                            book.favourite
-                                ? Padding(
-                                    padding: const EdgeInsets.only(right: 10),
-                                    child: FaIcon(
-                                      FontAwesomeIcons.solidHeart,
-                                      size: 18,
-                                      color: Theme.of(context).likeColor,
-                                    ),
-                                  )
-                                : const SizedBox(),
-                            book.status == 0
-                                ? _buildRating(context)
-                                : const SizedBox(),
+                            Row(
+                              children: [
+                                book.favourite
+                                    ? Padding(
+                                        padding:
+                                            const EdgeInsets.only(right: 10),
+                                        child: FaIcon(
+                                          FontAwesomeIcons.solidHeart,
+                                          size: 18,
+                                          color: likeColor,
+                                        ),
+                                      )
+                                    : const SizedBox(),
+                                book.status == 0
+                                    ? _buildRating(context)
+                                    : const SizedBox(),
+                              ],
+                            ),
+                            _buildSortAttribute(),
                           ],
                         ),
-                        _buildSortAttribute(),
+                        _buildTags(),
                       ],
                     ),
-                    _buildTags(),
-                  ],
-                ),
+                  ),
+                ],
               ),
-            ],
+            ),
           ),
         ),
       ),
@@ -281,7 +260,8 @@ class BookCard extends StatelessWidget {
             ignoreGestures: true,
             itemBuilder: (context, _) => Icon(
               Icons.star_rounded,
-              color: Theme.of(context).ratingColor,
+              // color: Theme.of(context).ratingColor,
+              color: ratingColor,
             ),
             onRatingUpdate: (_) {},
           );
@@ -290,14 +270,12 @@ class BookCard extends StatelessWidget {
             children: [
               Text(
                 (book.rating == null) ? '0' : '${(book.rating! / 10)}',
-                style: TextStyle(
-                  fontFamily: context.read<ThemeBloc>().fontFamily,
-                ),
               ),
               const SizedBox(width: 5),
               Icon(
                 Icons.star_rounded,
-                color: Theme.of(context).ratingColor,
+                // color: Theme.of(context).ratingColor,
+                color: ratingColor,
                 size: 20,
               ),
             ],

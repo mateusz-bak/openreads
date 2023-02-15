@@ -1,8 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:openreads/core/themes/app_theme.dart';
-
-import '../../../logic/bloc/theme_bloc/theme_bloc.dart';
 
 class BookTitleDetail extends StatelessWidget {
   const BookTitleDetail({
@@ -20,28 +17,24 @@ class BookTitleDetail extends StatelessWidget {
   final String publicationYear;
   final List<String>? tags;
 
-  Widget _buildTagChip(
-      {required String tag,
-      required bool selected,
-      required BuildContext context}) {
+  Widget _buildTagChip({
+    required String tag,
+    required BuildContext context,
+  }) {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 5),
       child: FilterChip(
-        backgroundColor: Theme.of(context).scaffoldBackgroundColor,
+        backgroundColor: Theme.of(context).colorScheme.secondary,
         side: BorderSide(
-          color: Theme.of(context).dividerColor,
+          color: dividerColor,
           width: 1,
         ),
         label: Text(
           tag,
           style: TextStyle(
-            color: selected ? Colors.white : Theme.of(context).mainTextColor,
-            fontFamily: context.read<ThemeBloc>().fontFamily,
+            color: Theme.of(context).colorScheme.onSecondary,
           ),
         ),
-        checkmarkColor: Colors.white,
-        selected: selected,
-        selectedColor: Theme.of(context).primaryColor,
         onSelected: (_) {},
       ),
     );
@@ -57,7 +50,6 @@ class BookTitleDetail extends StatelessWidget {
     for (var tag in tags!) {
       chips.add(_buildTagChip(
         tag: tag,
-        selected: false,
         context: context,
       ));
     }
@@ -67,84 +59,78 @@ class BookTitleDetail extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      padding: const EdgeInsets.all(5),
-      decoration: BoxDecoration(
-        color: Theme.of(context).backgroundColor,
-        borderRadius: Theme.of(context).extension<CustomBorder>()?.radius,
-        border: Border.all(color: Theme.of(context).dividerColor),
+    return Card(
+      shadowColor: Colors.transparent,
+      shape: RoundedRectangleBorder(
+        side: BorderSide(color: dividerColor, width: 1),
+        borderRadius: BorderRadius.circular(cornerRadius),
       ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.stretch,
-        children: [
-          Padding(
-            padding: const EdgeInsets.fromLTRB(5, 5, 5, 0),
-            child: SelectableText(
-              title,
-              style: TextStyle(
-                fontSize: 18,
-                fontWeight: FontWeight.bold,
-                color: Theme.of(context).mainTextColor,
-                fontFamily: context.read<ThemeBloc>().fontFamily,
-              ),
-            ),
-          ),
-          subtitle != null
-              ? Padding(
-                  padding: const EdgeInsets.fromLTRB(5, 0, 5, 5),
-                  child: SelectableText(
-                    subtitle!,
-                    style: TextStyle(
-                      fontSize: 14,
-                      fontWeight: FontWeight.bold,
-                      color: Theme.of(context).secondaryTextColor,
-                      fontFamily: context.read<ThemeBloc>().fontFamily,
-                    ),
-                  ),
-                )
-              : const SizedBox(),
-          Padding(
-            padding: const EdgeInsets.fromLTRB(5, 0, 5, 0),
-            child: SelectableText(
-              author,
-              style: TextStyle(
-                fontSize: 16,
-                fontWeight: FontWeight.normal,
-                color: Theme.of(context).secondaryTextColor,
-                fontFamily: context.read<ThemeBloc>().fontFamily,
-              ),
-            ),
-          ),
-          (publicationYear != '')
-              ? Padding(
-                  padding: const EdgeInsets.fromLTRB(5, 0, 5, 0),
-                  child: SelectableText(
-                    publicationYear,
-                    style: TextStyle(
-                      fontSize: 14,
-                      fontWeight: FontWeight.bold,
-                      color: Theme.of(context).secondaryTextColor,
-                      fontFamily: context.read<ThemeBloc>().fontFamily,
-                    ),
-                  ),
-                )
-              : const SizedBox(),
-          Row(
-            children: [
-              Expanded(
-                child: Padding(
-                  padding: const EdgeInsets.symmetric(
-                    vertical: 5,
-                    horizontal: 0,
-                  ),
-                  child: Wrap(
-                    children: _generateTagChips(context: context),
-                  ),
+      child: Container(
+        padding: const EdgeInsets.all(10),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [
+            Padding(
+              padding: const EdgeInsets.fromLTRB(5, 5, 5, 0),
+              child: SelectableText(
+                title,
+                style: const TextStyle(
+                  fontSize: 18,
+                  fontWeight: FontWeight.bold,
                 ),
               ),
-            ],
-          ),
-        ],
+            ),
+            subtitle != null
+                ? Padding(
+                    padding: const EdgeInsets.fromLTRB(5, 0, 5, 5),
+                    child: SelectableText(
+                      subtitle!,
+                      style: const TextStyle(
+                        fontSize: 14,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                  )
+                : const SizedBox(),
+            Padding(
+              padding: const EdgeInsets.fromLTRB(5, 0, 5, 0),
+              child: SelectableText(
+                author,
+                style: const TextStyle(
+                  fontSize: 16,
+                  fontWeight: FontWeight.normal,
+                ),
+              ),
+            ),
+            (publicationYear != '')
+                ? Padding(
+                    padding: const EdgeInsets.fromLTRB(5, 0, 5, 0),
+                    child: SelectableText(
+                      publicationYear,
+                      style: const TextStyle(
+                        fontSize: 14,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                  )
+                : const SizedBox(),
+            Row(
+              children: [
+                Expanded(
+                  child: Padding(
+                    padding: const EdgeInsets.symmetric(
+                      vertical: 5,
+                      horizontal: 0,
+                    ),
+                    child: Wrap(
+                      children: _generateTagChips(context: context),
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          ],
+        ),
       ),
     );
   }

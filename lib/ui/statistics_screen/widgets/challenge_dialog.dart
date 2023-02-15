@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:openreads/core/themes/app_theme.dart';
-import 'package:openreads/l10n.dart';
-import 'package:openreads/logic/bloc/theme_bloc/theme_bloc.dart';
+import 'package:openreads/resources/l10n.dart';
 
 class ChallengeDialog extends StatefulWidget {
   const ChallengeDialog({
@@ -147,10 +145,9 @@ class _ChallengeDialogState extends State<ChallengeDialog>
   Widget build(BuildContext context) {
     return Dialog(
       shape: RoundedRectangleBorder(
-        borderRadius: Theme.of(context).extension<CustomBorder>()?.radius ??
-            BorderRadius.circular(5.0),
+        borderRadius: BorderRadius.circular(cornerRadius),
       ),
-      backgroundColor: Theme.of(context).scaffoldBackgroundColor,
+      backgroundColor: Theme.of(context).colorScheme.surface,
       child: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 20),
         child: Column(
@@ -160,10 +157,9 @@ class _ChallengeDialogState extends State<ChallengeDialog>
             Text(
               '${l10n.set_books_goal_for_year} ${widget.year}:',
               textAlign: TextAlign.center,
-              style: TextStyle(
+              style: const TextStyle(
                 fontSize: 16,
                 fontWeight: FontWeight.bold,
-                fontFamily: context.read<ThemeBloc>().fontFamily,
               ),
             ),
             Slider(
@@ -172,8 +168,7 @@ class _ChallengeDialogState extends State<ChallengeDialog>
               max: maxBooks,
               divisions: 50,
               label: _booksSliderValue.round().toString(),
-              activeColor: Theme.of(context).primaryColor,
-              inactiveColor: Theme.of(context).secondaryTextColor,
+              activeColor: Theme.of(context).colorScheme.primary,
               onChanged: (double value) {
                 setState(() {
                   _booksSliderValue = value;
@@ -193,19 +188,15 @@ class _ChallengeDialogState extends State<ChallengeDialog>
                       vertical: 0,
                     ),
                     decoration: BoxDecoration(
-                      color: Theme.of(context).backgroundColor,
-                      borderRadius:
-                          Theme.of(context).extension<CustomBorder>()?.radius,
-                      border: Border.all(color: Theme.of(context).dividerColor),
+                      color: Theme.of(context).colorScheme.surface,
+                      borderRadius: BorderRadius.circular(cornerRadius),
+                      border: Border.all(color: dividerColor),
                     ),
                     child: TextField(
                       textAlign: TextAlign.center,
                       keyboardType: TextInputType.number,
                       controller: _booksController,
-                      style: TextStyle(
-                        fontSize: 14,
-                        fontFamily: context.read<ThemeBloc>().fontFamily,
-                      ),
+                      style: const TextStyle(fontSize: 14),
                       decoration: const InputDecoration(
                         border: InputBorder.none,
                       ),
@@ -217,18 +208,15 @@ class _ChallengeDialogState extends State<ChallengeDialog>
             const SizedBox(height: 30),
             Container(
               decoration: BoxDecoration(
-                color: Theme.of(context).backgroundColor,
-                borderRadius:
-                    Theme.of(context).extension<CustomBorder>()?.radius,
-                border: Border.all(
-                  color: Theme.of(context).dividerColor,
-                ),
+                color: Theme.of(context).colorScheme.surface,
+                borderRadius: BorderRadius.circular(cornerRadius),
+                border: Border.all(color: dividerColor),
               ),
               child: Row(
                 children: [
                   Switch(
                     value: _showPagesChallenge,
-                    activeColor: Theme.of(context).primaryColor,
+                    activeColor: Theme.of(context).colorScheme.primary,
                     onChanged: (value) {
                       setState(() {
                         _showPagesChallenge = value;
@@ -247,9 +235,8 @@ class _ChallengeDialogState extends State<ChallengeDialog>
                   const SizedBox(width: 10),
                   Text(
                     l10n.add_pages_goal,
-                    style: TextStyle(
+                    style: const TextStyle(
                       fontSize: 16,
-                      fontFamily: context.read<ThemeBloc>().fontFamily,
                     ),
                   ),
                 ],
@@ -263,10 +250,9 @@ class _ChallengeDialogState extends State<ChallengeDialog>
                   Text(
                     l10n.set_pages_goal,
                     textAlign: TextAlign.center,
-                    style: TextStyle(
+                    style: const TextStyle(
                       fontSize: 16,
                       fontWeight: FontWeight.bold,
-                      fontFamily: context.read<ThemeBloc>().fontFamily,
                     ),
                   ),
                   Slider(
@@ -275,8 +261,7 @@ class _ChallengeDialogState extends State<ChallengeDialog>
                     max: maxPages,
                     divisions: 150,
                     label: _pagesSliderValue.round().toString(),
-                    activeColor: Theme.of(context).primaryColor,
-                    inactiveColor: Theme.of(context).secondaryTextColor,
+                    activeColor: Theme.of(context).colorScheme.primary,
                     onChanged: (double value) {
                       setState(() {
                         _pagesSliderValue = value;
@@ -297,20 +282,16 @@ class _ChallengeDialogState extends State<ChallengeDialog>
                             vertical: 0,
                           ),
                           decoration: BoxDecoration(
-                            color: Theme.of(context).backgroundColor,
-                            borderRadius: Theme.of(context)
-                                .extension<CustomBorder>()
-                                ?.radius,
-                            border: Border.all(
-                                color: Theme.of(context).dividerColor),
+                            color: Theme.of(context).colorScheme.surface,
+                            borderRadius: BorderRadius.circular(cornerRadius),
+                            border: Border.all(color: dividerColor),
                           ),
                           child: TextField(
                             textAlign: TextAlign.center,
                             keyboardType: TextInputType.number,
                             controller: _pagesController,
-                            style: TextStyle(
+                            style: const TextStyle(
                               fontSize: 14,
-                              fontFamily: context.read<ThemeBloc>().fontFamily,
                             ),
                             decoration: const InputDecoration(
                               border: InputBorder.none,
@@ -335,22 +316,14 @@ class _ChallengeDialogState extends State<ChallengeDialog>
               },
               style: ElevatedButton.styleFrom(
                 elevation: 0,
-                backgroundColor: Theme.of(context).primaryColor,
-                foregroundColor: Colors.white,
+                backgroundColor: Theme.of(context).colorScheme.primary,
+                foregroundColor: Theme.of(context).colorScheme.onPrimary,
                 shape: RoundedRectangleBorder(
-                  borderRadius:
-                      Theme.of(context).extension<CustomBorder>()?.radius ??
-                          BorderRadius.circular(5.0),
+                  borderRadius: BorderRadius.circular(cornerRadius),
                 ),
               ),
-              child: Center(
-                child: Text(
-                  "Save",
-                  style: TextStyle(
-                    color: Colors.white,
-                    fontFamily: context.read<ThemeBloc>().fontFamily,
-                  ),
-                ),
+              child: const Center(
+                child: Text("Save"),
               ),
             )
           ],

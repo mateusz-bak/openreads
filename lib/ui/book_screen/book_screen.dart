@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:intl/intl.dart';
 import 'package:openreads/core/themes/app_theme.dart';
-import 'package:openreads/l10n.dart';
-import 'package:openreads/logic/bloc/theme_bloc/theme_bloc.dart';
+import 'package:openreads/resources/l10n.dart';
 import 'package:openreads/logic/cubit/book_cubit.dart';
 import 'package:openreads/model/book.dart';
 import 'package:openreads/ui/add_book_screen/widgets/widgets.dart';
@@ -45,7 +43,7 @@ class BookScreen extends StatelessWidget {
     return !isLiked;
   }
 
-  _showDeleteDialog(BuildContext context, bool deleted) {
+  _showDeleteRestoreDialog(BuildContext context, bool deleted) {
     if (book == null) return;
 
     showDialog(
@@ -53,73 +51,32 @@ class BookScreen extends StatelessWidget {
         builder: (BuildContext context) {
           return AlertDialog(
             shape: RoundedRectangleBorder(
-              borderRadius:
-                  Theme.of(context).extension<CustomBorder>()?.radius ??
-                      BorderRadius.circular(5.0),
+              borderRadius: BorderRadius.circular(cornerRadius),
             ),
-            backgroundColor: Theme.of(context).scaffoldBackgroundColor,
             title: Text(
               deleted ? l10n.delete_book_question : l10n.restore_book_question,
-              style: TextStyle(
-                fontSize: 18,
-                fontFamily: context.read<ThemeBloc>().fontFamily,
-              ),
+              style: const TextStyle(fontSize: 18),
             ),
+            actionsAlignment: MainAxisAlignment.spaceBetween,
             actions: [
-              ElevatedButton(
+              FilledButton.tonal(
                 onPressed: () {
                   Navigator.of(context).pop();
                 },
-                style: TextButton.styleFrom(
-                  elevation: 0,
-                  backgroundColor: Colors.transparent,
-                  shape: RoundedRectangleBorder(
-                    borderRadius:
-                        Theme.of(context).extension<CustomBorder>()?.radius ??
-                            BorderRadius.circular(5.0),
-                    side: BorderSide(
-                      color: Theme.of(context).dividerColor,
-                      width: 1,
-                    ),
-                  ),
-                ),
                 child: Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 10),
-                  child: Text(
-                    "No",
-                    style: TextStyle(
-                      fontSize: 12,
-                      color: Theme.of(context).primaryColor,
-                      fontFamily: context.read<ThemeBloc>().fontFamily,
-                    ),
-                  ),
+                  child: Text(l10n.no),
                 ),
               ),
-              ElevatedButton(
+              FilledButton(
                 onPressed: () {
                   _changeDeleteStatus(deleted);
                   Navigator.of(context).pop();
                   Navigator.of(context).pop();
                 },
-                style: ElevatedButton.styleFrom(
-                  elevation: 0,
-                  backgroundColor: Theme.of(context).primaryColor,
-                  foregroundColor: Colors.white,
-                  shape: RoundedRectangleBorder(
-                    borderRadius:
-                        Theme.of(context).extension<CustomBorder>()?.radius ??
-                            BorderRadius.circular(5.0),
-                  ),
-                ),
                 child: Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 10),
-                  child: Text(
-                    "Yes",
-                    style: TextStyle(
-                      fontSize: 12,
-                      fontFamily: context.read<ThemeBloc>().fontFamily,
-                    ),
-                  ),
+                  child: Text(l10n.yes),
                 ),
               ),
             ],
@@ -205,17 +162,11 @@ class BookScreen extends StatelessWidget {
           return SimpleDialog(
             contentPadding: const EdgeInsets.all(20),
             shape: RoundedRectangleBorder(
-              borderRadius:
-                  Theme.of(context).extension<CustomBorder>()?.radius ??
-                      BorderRadius.circular(5.0),
+              borderRadius: BorderRadius.circular(cornerRadius),
             ),
-            backgroundColor: Theme.of(context).scaffoldBackgroundColor,
             title: Text(
               l10n.rate_book,
-              style: TextStyle(
-                fontSize: 18,
-                fontFamily: context.read<ThemeBloc>().fontFamily,
-              ),
+              style: const TextStyle(fontSize: 18),
             ),
             children: [
               BookRatingBar(
@@ -231,32 +182,18 @@ class BookScreen extends StatelessWidget {
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  TextButton(
+                  FilledButton.tonal(
                     onPressed: () {
                       rating = null;
                       Navigator.of(context).pop();
                     },
-                    child: Text(
-                      l10n.skip,
-                      style: TextStyle(
-                        fontFamily: context.read<ThemeBloc>().fontFamily,
-                      ),
-                    ),
+                    child: Text(l10n.skip),
                   ),
-                  ElevatedButton(
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: Theme.of(context).primaryColor,
-                      foregroundColor: Theme.of(context).mainTextColor,
-                    ),
+                  FilledButton(
                     onPressed: () {
                       Navigator.of(context).pop();
                     },
-                    child: Text(
-                      l10n.save,
-                      style: TextStyle(
-                        fontFamily: context.read<ThemeBloc>().fontFamily,
-                      ),
-                    ),
+                    child: Text(l10n.save),
                   )
                 ],
               )
@@ -346,7 +283,6 @@ class BookScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final statusBarHeight = MediaQuery.of(context).padding.top;
     final moreButtonOptions = [
       l10n.edit_book,
     ];
@@ -354,10 +290,7 @@ class BookScreen extends StatelessWidget {
     bookCubit.getBook(id);
 
     return Scaffold(
-      backgroundColor: Theme.of(context).scaffoldBackgroundColor,
       appBar: AppBar(
-        backgroundColor: Theme.of(context).scaffoldBackgroundColor,
-        surfaceTintColor: Theme.of(context).scaffoldBackgroundColor,
         actions: [
           StreamBuilder<Book>(
               stream: bookCubit.book,
@@ -377,35 +310,26 @@ class BookScreen extends StatelessWidget {
                       return moreButtonOptions.map((String choice) {
                         return PopupMenuItem<String>(
                           value: choice,
-                          child: Text(
-                            choice,
-                            style: TextStyle(
-                              fontFamily: context.read<ThemeBloc>().fontFamily,
-                            ),
-                          ),
+                          child: Text(choice),
                           onTap: () async {
                             await Future.delayed(const Duration(
                               milliseconds: 0,
                             ));
 
                             if (choice == moreButtonOptions[0]) {
-                              showModalBottomSheet(
-                                  context: context,
-                                  isScrollControlled: true,
-                                  enableDrag: false,
-                                  builder: (context) {
-                                    return AddBook(
-                                      topPadding: statusBarHeight,
-                                      book: snapshot.data,
-                                      previousThemeData: Theme.of(context),
-                                      editingExistingBook: true,
-                                    );
-                                  });
+                              Navigator.of(context).push(
+                                MaterialPageRoute(
+                                  builder: (_) => AddBookScreen(
+                                    book: snapshot.data,
+                                    editingExistingBook: true,
+                                  ),
+                                ),
+                              );
                             } else if (choice == moreButtonOptions[1]) {
                               if (snapshot.data!.deleted == false) {
-                                _showDeleteDialog(context, true);
+                                _showDeleteRestoreDialog(context, true);
                               } else {
-                                _showDeleteDialog(context, false);
+                                _showDeleteRestoreDialog(context, false);
                               }
                             }
                           },
@@ -428,9 +352,6 @@ class BookScreen extends StatelessWidget {
                 return Center(
                   child: Text(
                     l10n.error_getting_book,
-                    style: TextStyle(
-                      fontFamily: context.read<ThemeBloc>().fontFamily,
-                    ),
                   ),
                 );
               }
@@ -449,7 +370,7 @@ class BookScreen extends StatelessWidget {
                           ),
                         ),
                   Padding(
-                    padding: const EdgeInsets.all(10.0),
+                    padding: const EdgeInsets.all(5),
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
@@ -461,7 +382,7 @@ class BookScreen extends StatelessWidget {
                               (snapshot.data!.publicationYear ?? "").toString(),
                           tags: snapshot.data!.tags?.split('|||||'),
                         ),
-                        const SizedBox(height: 10),
+                        const SizedBox(height: 5),
                         BookStatusDetail(
                           statusIcon: _decideStatusIcon(snapshot.data!.status),
                           statusText: _decideStatusText(
@@ -491,7 +412,7 @@ class BookScreen extends StatelessWidget {
                         SizedBox(
                           height: (snapshot.data!.finishDate != null &&
                                   snapshot.data!.startDate != null)
-                              ? 10
+                              ? 5
                               : 0,
                         ),
                         (snapshot.data!.finishDate != null &&
@@ -506,7 +427,7 @@ class BookScreen extends StatelessWidget {
                               )
                             : const SizedBox(),
                         SizedBox(
-                          height: (snapshot.data!.pages != null) ? 10 : 0,
+                          height: (snapshot.data!.pages != null) ? 5 : 0,
                         ),
                         (snapshot.data!.pages != null)
                             ? BookDetail(
@@ -515,7 +436,7 @@ class BookScreen extends StatelessWidget {
                               )
                             : const SizedBox(),
                         SizedBox(
-                          height: (snapshot.data!.isbn != null) ? 10 : 0,
+                          height: (snapshot.data!.isbn != null) ? 5 : 0,
                         ),
                         (snapshot.data!.isbn != null)
                             ? BookDetail(
@@ -524,7 +445,7 @@ class BookScreen extends StatelessWidget {
                               )
                             : const SizedBox(),
                         SizedBox(
-                          height: (snapshot.data!.olid != null) ? 10 : 0,
+                          height: (snapshot.data!.olid != null) ? 5 : 0,
                         ),
                         (snapshot.data!.olid != null)
                             ? BookDetail(
@@ -533,7 +454,7 @@ class BookScreen extends StatelessWidget {
                               )
                             : const SizedBox(),
                         SizedBox(
-                          height: (snapshot.data!.myReview != null) ? 10 : 0,
+                          height: (snapshot.data!.myReview != null) ? 5 : 0,
                         ),
                         (snapshot.data!.myReview != null)
                             ? BookDetail(
@@ -551,9 +472,6 @@ class BookScreen extends StatelessWidget {
             } else if (snapshot.hasError) {
               return Text(
                 snapshot.error.toString(),
-                style: TextStyle(
-                  fontFamily: context.read<ThemeBloc>().fontFamily,
-                ),
               );
             } else {
               return const Center(

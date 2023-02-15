@@ -47,8 +47,8 @@ class _CoverViewState extends State<CoverView> {
                     children: [
                       BlurHash(hash: widget.blurHash!),
                       Container(
-                        color: Theme.of(context).onPrimary.withOpacity(0.4),
-                      )
+                          // color: Theme.of(context).onPrimary.withOpacity(0.4),
+                          )
                     ],
                   ),
           ),
@@ -65,8 +65,7 @@ class _CoverViewState extends State<CoverView> {
                 child: Stack(
                   children: [
                     ClipRRect(
-                      borderRadius:
-                          Theme.of(context).extension<CustomBorder>()?.radius,
+                      borderRadius: BorderRadius.circular(cornerRadius),
                       child: (widget.croppedPhotoPreview != null)
                           ? Image.file(
                               File(widget.croppedPhotoPreview!.path),

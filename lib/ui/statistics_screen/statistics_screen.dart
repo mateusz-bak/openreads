@@ -1,10 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:loading_animation_widget/loading_animation_widget.dart';
-import 'package:openreads/l10n.dart';
+import 'package:openreads/resources/l10n.dart';
 import 'package:openreads/logic/bloc/challenge_bloc/challenge_bloc.dart';
 import 'package:openreads/logic/bloc/stats_bloc/stats_bloc.dart';
-import 'package:openreads/logic/bloc/theme_bloc/theme_bloc.dart';
 import 'package:openreads/logic/cubit/book_cubit.dart';
 import 'package:openreads/model/book.dart';
 
@@ -38,14 +37,9 @@ class _StatisticsScreenState extends State<StatisticsScreen> {
               create: (context) => StatsBloc()..add(StatsLoad(snapshot.data!)),
               child: Scaffold(
                 appBar: AppBar(
-                  backgroundColor: Theme.of(context).scaffoldBackgroundColor,
-                  surfaceTintColor: Theme.of(context).scaffoldBackgroundColor,
                   title: Text(
                     l10n.statistics,
-                    style: TextStyle(
-                      fontSize: 18,
-                      fontFamily: context.read<ThemeBloc>().fontFamily,
-                    ),
+                    style: const TextStyle(fontSize: 18),
                   ),
                 ),
                 body: BlocBuilder<StatsBloc, StatsState>(
@@ -62,10 +56,9 @@ class _StatisticsScreenState extends State<StatisticsScreen> {
                           child: Text(
                             state.msg,
                             textAlign: TextAlign.center,
-                            style: TextStyle(
+                            style: const TextStyle(
                               fontSize: 16,
                               letterSpacing: 1.5,
-                              fontFamily: context.read<ThemeBloc>().fontFamily,
                             ),
                           ),
                         ),

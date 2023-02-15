@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:openreads/l10n.dart';
+import 'package:openreads/resources/l10n.dart';
 import 'package:openreads/ui/books_screen/widgets/widgets.dart';
 
 class AddBookSheet extends StatefulWidget {
@@ -26,24 +26,25 @@ class _AddBookSheetState extends State<AddBookSheet> {
       mainAxisAlignment: MainAxisAlignment.end,
       mainAxisSize: MainAxisSize.min,
       children: [
+        const SizedBox(height: 5),
         Container(
           height: 3,
           width: MediaQuery.of(context).size.width / 4,
           decoration: BoxDecoration(
-              color: Colors.grey.shade300,
-              borderRadius: BorderRadius.circular(10)),
+            color: Colors.grey.shade300,
+            borderRadius: BorderRadius.circular(10),
+          ),
         ),
-        const SizedBox(height: 5),
         Container(
           padding: const EdgeInsets.fromLTRB(10, 20, 10, 40),
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(15),
-            color: Theme.of(context).scaffoldBackgroundColor,
           ),
           child: IntrinsicHeight(
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
+                const SizedBox(width: 10),
                 Expanded(
                   child: AddBookMethodButton(
                     text: l10n.add_manually,
@@ -67,6 +68,7 @@ class _AddBookSheetState extends State<AddBookSheet> {
                     onPressed: widget.scanBarcode,
                   ),
                 ),
+                const SizedBox(width: 10),
               ],
             ),
           ),

@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:openreads/l10n.dart';
-import 'package:openreads/logic/bloc/theme_bloc/theme_bloc.dart';
+import 'package:openreads/resources/l10n.dart';
 import 'package:openreads/logic/cubit/book_cubit.dart';
 import 'package:openreads/model/book.dart';
 import 'package:openreads/ui/books_screen/widgets/widgets.dart';
@@ -17,10 +15,7 @@ class UnfinishedScreen extends StatelessWidget {
       appBar: AppBar(
         title: Text(
           l10n.unfinished_books,
-          style: TextStyle(
-            fontSize: 18,
-            fontFamily: context.read<ThemeBloc>().fontFamily,
-          ),
+          style: const TextStyle(fontSize: 18),
         ),
       ),
       body: StreamBuilder<List<Book>>(
@@ -34,10 +29,9 @@ class UnfinishedScreen extends StatelessWidget {
                   child: Text(
                     l10n.no_unfinished_books,
                     textAlign: TextAlign.center,
-                    style: TextStyle(
+                    style: const TextStyle(
                       letterSpacing: 1.5,
                       fontSize: 16,
-                      fontFamily: context.read<ThemeBloc>().fontFamily,
                     ),
                   ),
                 ),
@@ -50,9 +44,6 @@ class UnfinishedScreen extends StatelessWidget {
           } else if (snapshot.hasError) {
             return Text(
               snapshot.error.toString(),
-              style: TextStyle(
-                fontFamily: context.read<ThemeBloc>().fontFamily,
-              ),
             );
           } else {
             return const SizedBox();

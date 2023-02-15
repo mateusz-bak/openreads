@@ -1,7 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:openreads/core/themes/app_theme.dart';
-import 'package:openreads/logic/bloc/theme_bloc/theme_bloc.dart';
 
 class PieChartIndicator extends StatelessWidget {
   const PieChartIndicator({
@@ -28,16 +25,10 @@ class PieChartIndicator extends StatelessWidget {
             color: color,
           ),
         ),
-        const SizedBox(
-          width: 4,
-        ),
+        const SizedBox(width: 4),
         Text(
           '$text ($number)',
-          style: TextStyle(
-            color: Theme.of(context).mainTextColor,
-            fontSize: 12,
-            fontFamily: context.read<ThemeBloc>().fontFamily,
-          ),
+          style: const TextStyle(fontSize: 12),
         )
       ],
     );

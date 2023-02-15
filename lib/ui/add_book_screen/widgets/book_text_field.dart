@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
+
 import 'package:openreads/core/themes/app_theme.dart';
-import 'package:openreads/logic/bloc/theme_bloc/theme_bloc.dart';
 
 class BookTextField extends StatefulWidget {
   const BookTextField({
@@ -60,16 +59,11 @@ class _BookTextFieldState extends State<BookTextField> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: const EdgeInsets.symmetric(
-        horizontal: 8,
-        vertical: 0,
-      ),
+      padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 0),
       decoration: BoxDecoration(
-        color: Theme.of(context).backgroundColor,
-        borderRadius: Theme.of(context).extension<CustomBorder>()?.radius,
-        border: Border.all(
-          color: Theme.of(context).dividerColor,
-        ),
+        color: Theme.of(context).colorScheme.surfaceVariant,
+        borderRadius: BorderRadius.circular(cornerRadius),
+        border: Border.all(color: dividerColor),
       ),
       child: Scrollbar(
         child: TextField(
@@ -83,22 +77,14 @@ class _BookTextFieldState extends State<BookTextField> {
           maxLines: widget.maxLines,
           maxLength: widget.maxLength,
           textInputAction: widget.textInputAction,
-          style: TextStyle(
-            fontSize: 14,
-            fontFamily: context.read<ThemeBloc>().fontFamily,
-          ),
+          style: const TextStyle(fontSize: 14),
           onSubmitted: widget.onSubmitted ?? (_) {},
           decoration: InputDecoration(
-            focusColor: Theme.of(context).primaryColor,
-            labelStyle: TextStyle(color: Theme.of(context).secondaryTextColor),
-            floatingLabelStyle: TextStyle(
-              color: Theme.of(context).primaryColor,
-            ),
             labelText: widget.hint,
             icon: (widget.icon != null)
                 ? Icon(
                     widget.icon,
-                    color: Theme.of(context).primaryColor,
+                    color: Theme.of(context).colorScheme.primary,
                   )
                 : null,
             border: InputBorder.none,

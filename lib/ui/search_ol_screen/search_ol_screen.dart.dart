@@ -1,11 +1,9 @@
 import 'package:barcode_scan2/barcode_scan2.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
 import 'package:loading_animation_widget/loading_animation_widget.dart';
 import 'package:openreads/core/themes/app_theme.dart';
-import 'package:openreads/l10n.dart';
-import 'package:openreads/logic/bloc/theme_bloc/theme_bloc.dart';
+import 'package:openreads/resources/l10n.dart';
 import 'package:openreads/model/book.dart';
 import 'package:openreads/model/ol_search_result.dart';
 import 'package:openreads/resources/open_library_service.dart';
@@ -26,7 +24,6 @@ class _SearchOLScreenState extends State<SearchOLScreen>
     with AutomaticKeepAliveClientMixin {
   final _searchController = TextEditingController();
   int offset = 0;
-  late double statusBarHeight;
   final _pageSize = 10;
   String? _searchTerm;
   int? numberOfResults;
@@ -39,7 +36,6 @@ class _SearchOLScreenState extends State<SearchOLScreen>
   );
 
   void _saveNoEdition({
-    required double statusBarHeight,
     required List<String> editions,
     required String title,
     String? subtitle,
@@ -62,16 +58,13 @@ class _SearchOLScreenState extends State<SearchOLScreen>
       publicationYear: firstPublishYear,
     );
 
-    showModalBottomSheet(
-      context: context,
-      isScrollControlled: true,
-      enableDrag: false,
-      builder: (context) => AddBook(
-        topPadding: statusBarHeight,
-        previousThemeData: Theme.of(context),
-        fromOpenLibrary: true,
-        book: book,
-        cover: cover,
+    Navigator.of(context).push(
+      MaterialPageRoute(
+        builder: (_) => AddBookScreen(
+          fromOpenLibrary: true,
+          book: book,
+          cover: cover,
+        ),
       ),
     );
   }
@@ -166,19 +159,13 @@ class _SearchOLScreenState extends State<SearchOLScreen>
   @override
   Widget build(BuildContext context) {
     super.build(context);
-    statusBarHeight = MediaQuery.of(context).padding.top;
 
     return Scaffold(
       appBar: AppBar(
         title: Text(
           l10n.search_in_open_library,
-          style: TextStyle(
-            fontSize: 18,
-            fontFamily: context.read<ThemeBloc>().fontFamily,
-          ),
+          style: const TextStyle(fontSize: 18),
         ),
-        backgroundColor: Theme.of(context).scaffoldBackgroundColor,
-        scrolledUnderElevation: 0,
       ),
       body: Column(
         children: [
@@ -193,7 +180,7 @@ class _SearchOLScreenState extends State<SearchOLScreen>
                     maxLength: 99,
                     autofocus: true,
                     textInputAction: TextInputAction.search,
-                    textCapitalization: TextCapitalization.words,
+                    textCapitalization: TextCapitalization.sentences,
                     onSubmitted: (_) => _startNewSearch(),
                   ),
                 ),
@@ -204,21 +191,15 @@ class _SearchOLScreenState extends State<SearchOLScreen>
                     onPressed: _startNewSearch,
                     style: ElevatedButton.styleFrom(
                       elevation: 0,
-                      backgroundColor: Theme.of(context).primaryColor,
-                      foregroundColor: Colors.white,
+                      backgroundColor: Theme.of(context).colorScheme.primary,
+                      foregroundColor: Theme.of(context).colorScheme.onPrimary,
                       shape: RoundedRectangleBorder(
-                        borderRadius: Theme.of(context)
-                                .extension<CustomBorder>()
-                                ?.radius ??
-                            BorderRadius.circular(5.0),
+                        borderRadius: BorderRadius.circular(cornerRadius),
                       ),
                     ),
                     child: Text(
-                      "Search",
-                      style: TextStyle(
-                        fontSize: 12,
-                        fontFamily: context.read<ThemeBloc>().fontFamily,
-                      ),
+                      l10n.search,
+                      style: const TextStyle(fontSize: 12),
                     ),
                   ),
                 ),
@@ -232,11 +213,8 @@ class _SearchOLScreenState extends State<SearchOLScreen>
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Text(
-                        '$numberOfResults results',
-                        style: TextStyle(
-                          fontSize: 12,
-                          fontFamily: context.read<ThemeBloc>().fontFamily,
-                        ),
+                        '$numberOfResults ${l10n.results_lowercase}',
+                        style: const TextStyle(fontSize: 12),
                       ),
                     ],
                   ),
@@ -252,16 +230,16 @@ class _SearchOLScreenState extends State<SearchOLScreen>
                           PagedChildBuilderDelegate<OLSearchResultDoc>(
                         firstPageProgressIndicatorBuilder: (_) => Center(
                           child: LoadingAnimationWidget.staggeredDotsWave(
-                            color: Theme.of(context).primaryColor,
-                            size: 50,
+                            color: Theme.of(context).colorScheme.primary,
+                            size: 42,
                           ),
                         ),
                         newPageProgressIndicatorBuilder: (_) => Center(
                           child: Padding(
                             padding: const EdgeInsets.all(20.0),
                             child: LoadingAnimationWidget.staggeredDotsWave(
-                              color: Theme.of(context).primaryColor,
-                              size: 50,
+                              color: Theme.of(context).colorScheme.primary,
+                              size: 42,
                             ),
                           ),
                         ),
@@ -278,7 +256,6 @@ class _SearchOLScreenState extends State<SearchOLScreen>
                           pagesMedian: item.numberOfPagesMedian,
                           firstPublishYear: item.firstPublishYear,
                           onAddBookPressed: () => _saveNoEdition(
-                            statusBarHeight: statusBarHeight,
                             editions: item.seed!,
                             title: item.title!,
                             subtitle: item.subtitle,

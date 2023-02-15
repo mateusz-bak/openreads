@@ -1,9 +1,5 @@
-import 'dart:developer';
-
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:openreads/l10n.dart';
-import 'package:openreads/logic/bloc/theme_bloc/theme_bloc.dart';
+import 'package:openreads/resources/l10n.dart';
 import 'package:openreads/logic/cubit/book_cubit.dart';
 import 'package:openreads/model/book.dart';
 import 'package:openreads/ui/add_book_screen/widgets/book_text_field.dart';
@@ -35,13 +31,8 @@ class _SearchPageState extends State<SearchPage> {
       appBar: AppBar(
         title: Text(
           l10n.search_in_books,
-          style: TextStyle(
-            fontSize: 18,
-            fontFamily: context.read<ThemeBloc>().fontFamily,
-          ),
+          style: const TextStyle(fontSize: 18),
         ),
-        backgroundColor: Theme.of(context).scaffoldBackgroundColor,
-        surfaceTintColor: Theme.of(context).scaffoldBackgroundColor,
       ),
       body: Column(
         children: [
@@ -53,10 +44,7 @@ class _SearchPageState extends State<SearchPage> {
               maxLength: 99,
               autofocus: true,
               textInputAction: TextInputAction.search,
-              textCapitalization: TextCapitalization.words,
-              onSubmitted: (text) {
-                log(text);
-              },
+              textCapitalization: TextCapitalization.sentences,
             ),
           ),
           Expanded(

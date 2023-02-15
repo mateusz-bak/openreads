@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:openreads/core/themes/app_theme.dart';
-import 'package:openreads/logic/bloc/theme_bloc/theme_bloc.dart';
 
 class TagsField extends StatefulWidget {
   const TagsField({
@@ -56,21 +54,17 @@ class _TagsFieldState extends State<TagsField> {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 5),
       child: FilterChip(
-        backgroundColor: Theme.of(context).scaffoldBackgroundColor,
-        side: BorderSide(
-          color: Theme.of(context).dividerColor,
-          width: 1,
-        ),
+        side: BorderSide(color: dividerColor, width: 1),
         label: Text(
           tag,
           style: TextStyle(
-            color: selected ? Colors.white : Theme.of(context).mainTextColor,
-            fontFamily: context.read<ThemeBloc>().fontFamily,
+            color: selected ? Theme.of(context).colorScheme.onSecondary : null,
           ),
         ),
-        checkmarkColor: Colors.white,
+        checkmarkColor:
+            selected ? Theme.of(context).colorScheme.onSecondary : null,
         selected: selected,
-        selectedColor: Theme.of(context).primaryColor,
+        selectedColor: Theme.of(context).colorScheme.secondary,
         onSelected: (newState) {
           if (widget.selectTag == null || widget.unselectTag == null) return;
           newState ? widget.selectTag!(tag) : widget.unselectTag!(tag);
@@ -116,14 +110,11 @@ class _TagsFieldState extends State<TagsField> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: const EdgeInsets.symmetric(
-        horizontal: 8,
-        vertical: 0,
-      ),
+      padding: const EdgeInsets.symmetric(horizontal: 8),
       decoration: BoxDecoration(
-        color: Theme.of(context).backgroundColor,
-        borderRadius: Theme.of(context).extension<CustomBorder>()?.radius,
-        border: Border.all(color: Theme.of(context).dividerColor),
+        color: Theme.of(context).colorScheme.surfaceVariant,
+        borderRadius: BorderRadius.circular(cornerRadius),
+        border: Border.all(color: dividerColor),
       ),
       child: Column(
         children: [
@@ -139,10 +130,7 @@ class _TagsFieldState extends State<TagsField> {
               maxLines: widget.maxLines,
               maxLength: widget.maxLength,
               textInputAction: widget.textInputAction,
-              style: TextStyle(
-                fontSize: 14,
-                fontFamily: context.read<ThemeBloc>().fontFamily,
-              ),
+              style: const TextStyle(fontSize: 14),
               onSubmitted: widget.onSubmitted,
               onEditingComplete: widget.onEditingComplete,
               decoration: InputDecoration(
@@ -150,7 +138,7 @@ class _TagsFieldState extends State<TagsField> {
                 icon: (widget.icon != null)
                     ? Icon(
                         widget.icon,
-                        color: Theme.of(context).primaryColor,
+                        color: Theme.of(context).colorScheme.primary,
                       )
                     : null,
                 border: InputBorder.none,

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:openreads/l10n.dart';
+import 'package:openreads/resources/l10n.dart';
 import 'package:openreads/ui/add_book_screen/widgets/widgets.dart';
 
 class BookStatusRow extends StatelessWidget {
@@ -7,17 +7,14 @@ class BookStatusRow extends StatelessWidget {
     Key? key,
     required this.animDuration,
     required this.defaultHeight,
-    required this.colors,
-    required this.widths,
-    required this.backgroundColors,
+    required this.currentStatus,
     required this.onPressed,
   }) : super(key: key);
 
   final Duration animDuration;
   final double defaultHeight;
-  final List<Color> colors;
-  final List<double> widths;
-  final List backgroundColors;
+  final int? currentStatus;
+
   final Function(int) onPressed;
 
   @override
@@ -26,52 +23,51 @@ class BookStatusRow extends StatelessWidget {
       children: [
         AnimatedStatusButton(
           duration: animDuration,
-          width: widths[0],
           height: defaultHeight,
           icon: Icons.done,
           text: l10n.book_status_finished,
-          color: colors[0],
-          backgroundColor: backgroundColors[0],
+          isSelected: currentStatus == 0,
+          currentStatus: currentStatus,
           onPressed: () {
             onPressed(0);
           },
         ),
         const SizedBox(width: 10),
         AnimatedStatusButton(
-            duration: animDuration,
-            width: widths[1],
-            height: defaultHeight,
-            icon: Icons.autorenew,
-            text: l10n.book_status_in_progress,
-            color: colors[1],
-            backgroundColor: backgroundColors[1],
-            onPressed: () {
-              onPressed(1);
-            }),
+          duration: animDuration,
+          height: defaultHeight,
+          icon: Icons.autorenew,
+          text: l10n.book_status_in_progress,
+          isSelected: currentStatus == 1,
+          currentStatus: currentStatus,
+          onPressed: () {
+            onPressed(1);
+          },
+        ),
         const SizedBox(width: 10),
         AnimatedStatusButton(
-            duration: animDuration,
-            width: widths[2],
-            height: defaultHeight,
-            icon: Icons.timelapse,
-            text: l10n.book_status_for_later,
-            color: colors[2],
-            backgroundColor: backgroundColors[2],
-            onPressed: () {
-              onPressed(2);
-            }),
+          duration: animDuration,
+          height: defaultHeight,
+          icon: Icons.timelapse,
+          text: l10n.book_status_for_later,
+          isSelected: currentStatus == 2,
+          currentStatus: currentStatus,
+          onPressed: () {
+            onPressed(2);
+          },
+        ),
         const SizedBox(width: 10),
         AnimatedStatusButton(
-            duration: animDuration,
-            width: widths[3],
-            height: defaultHeight,
-            icon: Icons.not_interested,
-            text: l10n.book_status_unfinished,
-            color: colors[3],
-            backgroundColor: backgroundColors[3],
-            onPressed: () {
-              onPressed(3);
-            }),
+          duration: animDuration,
+          height: defaultHeight,
+          icon: Icons.not_interested,
+          text: l10n.book_status_unfinished,
+          isSelected: currentStatus == 3,
+          currentStatus: currentStatus,
+          onPressed: () {
+            onPressed(3);
+          },
+        ),
       ],
     );
   }

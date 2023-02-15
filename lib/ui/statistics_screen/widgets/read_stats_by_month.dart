@@ -1,9 +1,7 @@
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:openreads/core/themes/app_theme.dart';
-import 'package:openreads/l10n.dart';
-import 'package:openreads/logic/bloc/theme_bloc/theme_bloc.dart';
+import 'package:openreads/resources/l10n.dart';
 
 class ReadStatsByMonth extends StatelessWidget {
   ReadStatsByMonth({
@@ -105,11 +103,9 @@ class ReadStatsByMonth extends StatelessWidget {
               space: 8,
               child: Text(
                 text,
-                style: TextStyle(
-                  color: Theme.of(context).mainTextColor,
+                style: const TextStyle(
                   fontWeight: FontWeight.bold,
                   fontSize: 12,
-                  fontFamily: context.read<ThemeBloc>().fontFamily,
                 ),
               ),
             );
@@ -131,8 +127,8 @@ class ReadStatsByMonth extends StatelessWidget {
           barRods: [
             BarChartRodData(
               toY: list[i].toDouble(),
-              width: 15,
-              color: theme.primaryColor,
+              width: 14,
+              color: theme.colorScheme.primary,
             )
           ],
           showingTooltipIndicators: (list[i] > 0) ? [0] : [1],
@@ -158,16 +154,11 @@ class ReadStatsByMonth extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Card(
-      elevation: 0,
+      shadowColor: Colors.transparent,
       shape: RoundedRectangleBorder(
-        borderRadius: Theme.of(context).extension<CustomBorder>()?.radius ??
-            BorderRadius.circular(5),
-        side: BorderSide(
-          color: Theme.of(context).dividerColor,
-          width: 1,
-        ),
+        side: BorderSide(color: dividerColor, width: 1),
+        borderRadius: BorderRadius.circular(cornerRadius),
       ),
-      color: Theme.of(context).backgroundColor,
       child: Padding(
         padding: const EdgeInsets.all(10.0),
         child: Column(
@@ -175,10 +166,9 @@ class ReadStatsByMonth extends StatelessWidget {
           children: [
             Text(
               title,
-              style: TextStyle(
+              style: const TextStyle(
                 fontSize: 16,
                 fontWeight: FontWeight.bold,
-                fontFamily: context.read<ThemeBloc>().fontFamily,
               ),
             ),
             const SizedBox(height: 10),
@@ -202,11 +192,9 @@ class ReadStatsByMonth extends StatelessWidget {
                       ) {
                         return BarTooltipItem(
                           rod.toY.round().toString(),
-                          TextStyle(
-                            color: Theme.of(context).mainTextColor,
+                          const TextStyle(
                             fontWeight: FontWeight.bold,
-                            fontFamily: context.read<ThemeBloc>().fontFamily,
-                            fontSize: 11,
+                            fontSize: 10,
                           ),
                         );
                       },

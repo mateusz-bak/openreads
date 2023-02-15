@@ -1,25 +1,20 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:image_cropper/image_cropper.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:loading_animation_widget/loading_animation_widget.dart';
-import 'package:openreads/l10n.dart';
-import 'package:openreads/logic/bloc/theme_bloc/theme_bloc.dart';
+import 'package:openreads/resources/l10n.dart';
 import 'package:openreads/logic/cubit/book_cubit.dart';
 import 'package:openreads/model/book.dart';
 import 'package:openreads/ui/add_book_screen/widgets/widgets.dart';
-import 'package:openreads/core/themes/app_theme.dart';
 import 'package:blurhash_dart/blurhash_dart.dart' as blurhash_dart;
 import 'package:image/image.dart' as img;
 import 'package:http/http.dart' as http;
 
-class AddBook extends StatefulWidget {
-  const AddBook({
+class AddBookScreen extends StatefulWidget {
+  const AddBookScreen({
     Key? key,
-    required this.topPadding,
-    required this.previousThemeData,
     this.fromOpenLibrary = false,
     this.fromOpenLibraryEdition = false,
     this.editingExistingBook = false,
@@ -27,8 +22,6 @@ class AddBook extends StatefulWidget {
     this.cover,
   }) : super(key: key);
 
-  final double topPadding;
-  final ThemeData previousThemeData;
   final Book? book;
   final bool fromOpenLibrary;
   final bool fromOpenLibraryEdition;
@@ -36,10 +29,10 @@ class AddBook extends StatefulWidget {
   final int? cover;
 
   @override
-  State<AddBook> createState() => _AddBookState();
+  State<AddBookScreen> createState() => _AddBookScreenState();
 }
 
-class _AddBookState extends State<AddBook> {
+class _AddBookScreenState extends State<AddBookScreen> {
   final _titleCtrl = TextEditingController();
   final _subtitleCtrl = TextEditingController();
   final _authorCtrl = TextEditingController();
@@ -50,12 +43,8 @@ class _AddBookState extends State<AddBook> {
   final _tagsCtrl = TextEditingController();
   final _myReviewCtrl = TextEditingController();
 
-  final _flex = [1, 1, 1, 1];
   final _animDuration = const Duration(milliseconds: 250);
   final _defaultHeight = 60.0;
-
-  late List<Color> _backgroundColors;
-  late List<Color> _colors;
 
   int? _status;
   int? _rating;
@@ -116,9 +105,6 @@ class _AddBookState extends State<AddBook> {
       SnackBar(
         content: Text(
           message,
-          style: TextStyle(
-            fontFamily: context.read<ThemeBloc>().fontFamily,
-          ),
         ),
       ),
     );
@@ -240,10 +226,9 @@ class _AddBookState extends State<AddBook> {
           toolbarColor: Colors.black,
           statusBarColor: Colors.black,
           toolbarWidgetColor: Colors.white,
-          backgroundColor: Colors.black87,
+          backgroundColor: Theme.of(context).colorScheme.surface,
           cropGridColor: Colors.black87,
-          activeControlsWidgetColor:
-              (mounted) ? Theme.of(context).primaryColor : Colors.teal,
+          activeControlsWidgetColor: Theme.of(context).colorScheme.primary,
           cropFrameColor: Colors.black87,
           lockAspectRatio: false,
           hideBottomControls: false,
@@ -262,7 +247,9 @@ class _AddBookState extends State<AddBook> {
   }
 
   void _changeBookStatus(int position) {
-    _status = position;
+    setState(() {
+      _status = position;
+    });
 
     final dateNow = DateTime.now();
     final date = DateTime(dateNow.year, dateNow.month, dateNow.day);
@@ -272,28 +259,7 @@ class _AddBookState extends State<AddBook> {
     } else if (position == 1) {
       _startDate ??= date;
     }
-
-    _animateBookStatus(position);
-  }
-
-  void _animateBookStatus(int position) {
     FocusManager.instance.primaryFocus?.unfocus();
-
-    _flex.asMap().forEach((index, value) {
-      if (position == index) {
-        setState(() {
-          _flex[index] = 2;
-          _colors[index] = Colors.white;
-          _backgroundColors[index] = widget.previousThemeData.primaryColor;
-        });
-      } else {
-        setState(() {
-          _flex[index] = 1;
-          _colors[index] = widget.previousThemeData.secondaryTextColor;
-          _backgroundColors[index] = widget.previousThemeData.backgroundColor;
-        });
-      }
-    });
   }
 
   void _showStartDatePicker() async {
@@ -384,7 +350,7 @@ class _AddBookState extends State<AddBook> {
       return Padding(
         padding: const EdgeInsets.symmetric(vertical: 50),
         child: LoadingAnimationWidget.threeArchedCircle(
-          color: Theme.of(context).primaryColor,
+          color: Theme.of(context).colorScheme.primary,
           size: 36,
         ),
       );
@@ -454,20 +420,6 @@ class _AddBookState extends State<AddBook> {
   void initState() {
     super.initState();
 
-    _colors = [
-      widget.previousThemeData.secondaryTextColor,
-      widget.previousThemeData.secondaryTextColor,
-      widget.previousThemeData.secondaryTextColor,
-      widget.previousThemeData.secondaryTextColor,
-    ];
-
-    _backgroundColors = [
-      widget.previousThemeData.backgroundColor,
-      widget.previousThemeData.backgroundColor,
-      widget.previousThemeData.backgroundColor,
-      widget.previousThemeData.backgroundColor,
-    ];
-
     if (widget.book != null) {
       _prefillBookDetails();
     }
@@ -496,265 +448,203 @@ class _AddBookState extends State<AddBook> {
 
   @override
   Widget build(BuildContext context) {
-    double width = MediaQuery.of(context).size.width - 50;
-    List<double> widths = [
-      (_flex[0] * width) / (_flex[0] + _flex[1] + _flex[2] + _flex[3]),
-      (_flex[1] * width) / (_flex[0] + _flex[1] + _flex[2] + _flex[3]),
-      (_flex[2] * width) / (_flex[0] + _flex[1] + _flex[2] + _flex[3]),
-      (_flex[3] * width) / (_flex[0] + _flex[1] + _flex[2] + _flex[3])
-    ];
-
-    return Container(
-      color: Theme.of(context).scaffoldBackgroundColor,
-      child: Padding(
-        padding: EdgeInsets.only(top: widget.topPadding),
-        child: Scaffold(
-          appBar: AppBar(
-            title: Text(
-              widget.editingExistingBook ? l10n.edit_book : l10n.add_book,
-              style: TextStyle(
-                fontSize: 18,
-                fontFamily: context.read<ThemeBloc>().fontFamily,
-              ),
+    return Scaffold(
+      appBar: AppBar(
+        title: Text(
+          widget.editingExistingBook ? l10n.edit_book : l10n.add_new_book,
+          style: const TextStyle(fontSize: 18),
+        ),
+        actions: [
+          TextButton(
+            onPressed: (widget.book != null && !widget.fromOpenLibrary)
+                ? _updateBook
+                : _saveBook,
+            child: Text(
+              l10n.save,
+              style: const TextStyle(fontSize: 16),
             ),
-            backgroundColor: Theme.of(context).scaffoldBackgroundColor,
-            surfaceTintColor: Theme.of(context).scaffoldBackgroundColor,
-            actions: [
-              TextButton(
-                onPressed: (widget.book != null && !widget.fromOpenLibrary)
-                    ? _updateBook
-                    : _saveBook,
-                child: Text(
-                  l10n.save,
-                  style: TextStyle(
-                    fontSize: 16,
-                    color: Theme.of(context).mainTextColor,
-                    fontFamily: context.read<ThemeBloc>().fontFamily,
+          )
+        ],
+      ),
+      body: SingleChildScrollView(
+        child: Padding(
+          padding: const EdgeInsets.all(10.0),
+          child: Column(
+            children: <Widget>[
+              _buildCover(),
+              const SizedBox(height: 20),
+              BookTextField(
+                controller: _titleCtrl,
+                hint: l10n.enter_title,
+                icon: Icons.book,
+                keyboardType: TextInputType.name,
+                autofocus:
+                    (widget.fromOpenLibrary || widget.editingExistingBook)
+                        ? false
+                        : true,
+                maxLines: 5,
+                maxLength: 255,
+                textCapitalization: TextCapitalization.sentences,
+              ),
+              const SizedBox(height: 20),
+              BookTextField(
+                controller: _subtitleCtrl,
+                hint: l10n.enter_subtitle,
+                icon: Icons.book,
+                keyboardType: TextInputType.name,
+                maxLines: 5,
+                maxLength: 255,
+                textCapitalization: TextCapitalization.sentences,
+              ),
+              const SizedBox(height: 20),
+              BookTextField(
+                controller: _authorCtrl,
+                hint: l10n.enter_author,
+                icon: Icons.person,
+                keyboardType: TextInputType.name,
+                maxLines: 5,
+                maxLength: 255,
+                textCapitalization: TextCapitalization.words,
+              ),
+              const SizedBox(height: 20),
+              BookStatusRow(
+                animDuration: _animDuration,
+                defaultHeight: _defaultHeight,
+                onPressed: _changeBookStatus,
+                currentStatus: _status,
+              ),
+              const SizedBox(height: 20),
+              BookRatingBar(
+                animDuration: _animDuration,
+                status: _status,
+                defaultHeight: _defaultHeight,
+                rating: (_rating == null) ? 0.0 : _rating! / 10,
+                onRatingUpdate: changeRating,
+              ),
+              AnimatedContainer(
+                duration: _animDuration,
+                height: (_status == 0) ? 20 : 0,
+              ),
+              DateRow(
+                animDuration: _animDuration,
+                status: _status,
+                defaultHeight: _defaultHeight,
+                startDate: _startDate,
+                finishDate: _finishDate,
+                showStartDatePicker: _showStartDatePicker,
+                showFinishDatePicker: _showFinishDatePicker,
+                clearStartDate: _clearStartDate,
+                clearFinishDate: _clearFinishDate,
+                showClearStartDate: (_startDate == null) ? false : true,
+                showClearFinishDate: (_finishDate == null) ? false : true,
+              ),
+              AnimatedContainer(
+                duration: _animDuration,
+                height: (_status == 2 || _status == null) ? 0 : 20,
+              ),
+              Row(
+                children: [
+                  Expanded(
+                    child: BookTextField(
+                      controller: _pagesCtrl,
+                      hint: l10n.enter_pages,
+                      icon: FontAwesomeIcons.solidFileLines,
+                      keyboardType: TextInputType.number,
+                      inputFormatters: <TextInputFormatter>[
+                        FilteringTextInputFormatter.digitsOnly
+                      ],
+                      maxLength: 10,
+                    ),
                   ),
-                ),
-              )
-            ],
-          ),
-          body: SingleChildScrollView(
-            child: Padding(
-              padding: const EdgeInsets.all(10.0),
-              child: Column(
-                children: <Widget>[
-                  _buildCover(),
-                  const SizedBox(height: 20),
-                  BookTextField(
-                    controller: _titleCtrl,
-                    hint: l10n.enter_title,
-                    icon: Icons.book,
-                    keyboardType: TextInputType.name,
-                    autofocus:
-                        (widget.fromOpenLibrary || widget.editingExistingBook)
-                            ? false
-                            : true,
-                    maxLines: 5,
-                    maxLength: 255,
-                    textCapitalization: TextCapitalization.sentences,
+                  const SizedBox(width: 20),
+                  Expanded(
+                    child: BookTextField(
+                      controller: _pubYearCtrl,
+                      hint: l10n.enter_publication_year,
+                      icon: FontAwesomeIcons.solidCalendar,
+                      keyboardType: TextInputType.number,
+                      inputFormatters: <TextInputFormatter>[
+                        FilteringTextInputFormatter.digitsOnly
+                      ],
+                      maxLength: 4,
+                    ),
                   ),
-                  const SizedBox(height: 20),
-                  BookTextField(
-                    controller: _subtitleCtrl,
-                    hint: l10n.enter_subtitle,
-                    icon: Icons.book,
-                    keyboardType: TextInputType.name,
-                    maxLines: 5,
-                    maxLength: 255,
-                    textCapitalization: TextCapitalization.sentences,
-                  ),
-                  const SizedBox(height: 20),
-                  BookTextField(
-                    controller: _authorCtrl,
-                    hint: l10n.enter_author,
-                    icon: Icons.person,
-                    keyboardType: TextInputType.name,
-                    maxLines: 5,
-                    maxLength: 255,
-                    textCapitalization: TextCapitalization.words,
-                  ),
-                  const SizedBox(height: 20),
-                  BookStatusRow(
-                    animDuration: _animDuration,
-                    defaultHeight: _defaultHeight,
-                    colors: _colors,
-                    backgroundColors: _backgroundColors,
-                    widths: widths,
-                    onPressed: _changeBookStatus,
-                  ),
-                  const SizedBox(height: 20),
-                  BookRatingBar(
-                    animDuration: _animDuration,
-                    status: _status,
-                    defaultHeight: _defaultHeight,
-                    rating: (_rating == null) ? 0.0 : _rating! / 10,
-                    onRatingUpdate: changeRating,
-                  ),
-                  AnimatedContainer(
-                    duration: _animDuration,
-                    height: (_status == 0) ? 20 : 0,
-                  ),
-                  DateRow(
-                    animDuration: _animDuration,
-                    status: _status,
-                    defaultHeight: _defaultHeight,
-                    startDate: _startDate,
-                    finishDate: _finishDate,
-                    showStartDatePicker: _showStartDatePicker,
-                    showFinishDatePicker: _showFinishDatePicker,
-                    clearStartDate: _clearStartDate,
-                    clearFinishDate: _clearFinishDate,
-                    showClearStartDate: (_startDate == null) ? false : true,
-                    showClearFinishDate: (_finishDate == null) ? false : true,
-                  ),
-                  AnimatedContainer(
-                    duration: _animDuration,
-                    height: (_status == 2 || _status == null) ? 0 : 20,
-                  ),
-                  Row(
-                    children: [
-                      Expanded(
-                        child: BookTextField(
-                          controller: _pagesCtrl,
-                          hint: l10n.enter_pages,
-                          icon: FontAwesomeIcons.solidFileLines,
-                          keyboardType: TextInputType.number,
-                          inputFormatters: <TextInputFormatter>[
-                            FilteringTextInputFormatter.digitsOnly
-                          ],
-                          maxLength: 10,
-                        ),
-                      ),
-                      const SizedBox(width: 20),
-                      Expanded(
-                        child: BookTextField(
-                          controller: _pubYearCtrl,
-                          hint: l10n.enter_publication_year,
-                          icon: FontAwesomeIcons.solidCalendar,
-                          keyboardType: TextInputType.number,
-                          inputFormatters: <TextInputFormatter>[
-                            FilteringTextInputFormatter.digitsOnly
-                          ],
-                          maxLength: 4,
-                        ),
-                      ),
-                    ],
-                  ),
-                  const SizedBox(height: 20),
-                  BookTextField(
-                    controller: _isbnCtrl,
-                    hint: l10n.isbn,
-                    icon: FontAwesomeIcons.i,
-                    keyboardType: TextInputType.number,
-                    inputFormatters: <TextInputFormatter>[
-                      FilteringTextInputFormatter.digitsOnly
-                    ],
-                    maxLength: 20,
-                  ),
-                  const SizedBox(height: 20),
-                  BookTextField(
-                    controller: _olidCtrl,
-                    hint: l10n.open_library_ID,
-                    icon: FontAwesomeIcons.o,
-                    keyboardType: TextInputType.text,
-                    maxLength: 20,
-                    textCapitalization: TextCapitalization.characters,
-                  ),
-                  const SizedBox(height: 20),
-                  TagsField(
-                    controller: _tagsCtrl,
-                    hint: l10n.enter_tags,
-                    icon: FontAwesomeIcons.tags,
-                    keyboardType: TextInputType.text,
-                    maxLength: 20,
-                    tags: tags,
-                    selectedTags: selectedTags,
-                    onSubmitted: (_) => _addNewTag(),
-                    onEditingComplete: () {},
-                    selectTag: (tag) => _selectTag(tag),
-                    unselectTag: (tag) => _unselectTag(tag),
-                  ),
-                  const SizedBox(height: 20),
-                  BookTextField(
-                    controller: _myReviewCtrl,
-                    hint: l10n.my_review,
-                    icon: FontAwesomeIcons.solidKeyboard,
-                    keyboardType: TextInputType.multiline,
-                    maxLength: 5000,
-                    hideCounter: false,
-                    maxLines: 15,
-                    textCapitalization: TextCapitalization.sentences,
-                  ),
-                  const SizedBox(height: 30),
-                  Row(
-                    children: [
-                      Expanded(
-                        flex: 10,
-                        child: ElevatedButton(
-                          onPressed: () => Navigator.pop(context),
-                          style: ElevatedButton.styleFrom(
-                            elevation: 0,
-                            backgroundColor:
-                                Theme.of(context).secondaryTextColor,
-                            foregroundColor: Colors.white,
-                            shape: RoundedRectangleBorder(
-                              borderRadius: Theme.of(context)
-                                      .extension<CustomBorder>()
-                                      ?.radius ??
-                                  BorderRadius.circular(5.0),
-                            ),
-                          ),
-                          child: Center(
-                            child: Text(
-                              "Cancel",
-                              style: TextStyle(
-                                color: Colors.black,
-                                fontFamily:
-                                    context.read<ThemeBloc>().fontFamily,
-                              ),
-                            ),
-                          ),
-                        ),
-                      ),
-                      const SizedBox(width: 10),
-                      Expanded(
-                        flex: 19,
-                        child: ElevatedButton(
-                          onPressed:
-                              (widget.book != null && !widget.fromOpenLibrary)
-                                  ? _updateBook
-                                  : _saveBook,
-                          style: ElevatedButton.styleFrom(
-                            elevation: 0,
-                            backgroundColor: Theme.of(context).primaryColor,
-                            foregroundColor: Colors.white,
-                            shape: RoundedRectangleBorder(
-                              borderRadius: Theme.of(context)
-                                      .extension<CustomBorder>()
-                                      ?.radius ??
-                                  BorderRadius.circular(5.0),
-                            ),
-                          ),
-                          child: Center(
-                            child: Text(
-                              "Save",
-                              style: TextStyle(
-                                color: Colors.white,
-                                fontFamily:
-                                    context.read<ThemeBloc>().fontFamily,
-                              ),
-                            ),
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
-                  const SizedBox(height: 50.0),
                 ],
               ),
-            ),
+              const SizedBox(height: 20),
+              BookTextField(
+                controller: _isbnCtrl,
+                hint: l10n.isbn,
+                icon: FontAwesomeIcons.i,
+                keyboardType: TextInputType.number,
+                inputFormatters: <TextInputFormatter>[
+                  FilteringTextInputFormatter.digitsOnly
+                ],
+                maxLength: 20,
+              ),
+              const SizedBox(height: 20),
+              BookTextField(
+                controller: _olidCtrl,
+                hint: l10n.open_library_ID,
+                icon: FontAwesomeIcons.o,
+                keyboardType: TextInputType.text,
+                maxLength: 20,
+                textCapitalization: TextCapitalization.characters,
+              ),
+              const SizedBox(height: 20),
+              TagsField(
+                controller: _tagsCtrl,
+                hint: l10n.enter_tags,
+                icon: FontAwesomeIcons.tags,
+                keyboardType: TextInputType.text,
+                maxLength: 20,
+                tags: tags,
+                selectedTags: selectedTags,
+                onSubmitted: (_) => _addNewTag(),
+                onEditingComplete: () {},
+                selectTag: (tag) => _selectTag(tag),
+                unselectTag: (tag) => _unselectTag(tag),
+              ),
+              const SizedBox(height: 20),
+              BookTextField(
+                controller: _myReviewCtrl,
+                hint: l10n.my_review,
+                icon: FontAwesomeIcons.solidKeyboard,
+                keyboardType: TextInputType.multiline,
+                maxLength: 5000,
+                hideCounter: false,
+                maxLines: 15,
+                textCapitalization: TextCapitalization.sentences,
+              ),
+              const SizedBox(height: 30),
+              Row(
+                children: [
+                  Expanded(
+                    flex: 10,
+                    child: FilledButton.tonal(
+                      onPressed: () => Navigator.pop(context),
+                      child: const Center(
+                        child: Text("Cancel"),
+                      ),
+                    ),
+                  ),
+                  const SizedBox(width: 10),
+                  Expanded(
+                    flex: 19,
+                    child: FilledButton(
+                      onPressed:
+                          (widget.book != null && !widget.fromOpenLibrary)
+                              ? _updateBook
+                              : _saveBook,
+                      child: const Center(
+                        child: Text("Save"),
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+              const SizedBox(height: 50.0),
+            ],
           ),
         ),
       ),

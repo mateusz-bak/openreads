@@ -1,9 +1,7 @@
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:openreads/core/themes/app_theme.dart';
-import 'package:openreads/l10n.dart';
-import 'package:openreads/logic/bloc/theme_bloc/theme_bloc.dart';
+import 'package:openreads/resources/l10n.dart';
 import 'package:openreads/ui/statistics_screen/widgets/widgets.dart';
 
 class BooksByStatus extends StatefulWidget {
@@ -28,16 +26,11 @@ class BooksByStatusState extends State<BooksByStatus> {
     final theme = Theme.of(context);
 
     return Card(
-      elevation: 0,
+      shadowColor: Colors.transparent,
       shape: RoundedRectangleBorder(
-        borderRadius: Theme.of(context).extension<CustomBorder>()?.radius ??
-            BorderRadius.circular(5),
-        side: BorderSide(
-          color: Theme.of(context).dividerColor,
-          width: 1,
-        ),
+        side: BorderSide(color: dividerColor, width: 1),
+        borderRadius: BorderRadius.circular(cornerRadius),
       ),
-      color: Theme.of(context).backgroundColor,
       child: Padding(
         padding: const EdgeInsets.fromLTRB(10, 10, 10, 30),
         child: Column(
@@ -45,10 +38,9 @@ class BooksByStatusState extends State<BooksByStatus> {
           children: [
             Text(
               widget.title,
-              style: TextStyle(
+              style: const TextStyle(
                 fontSize: 16,
                 fontWeight: FontWeight.bold,
-                fontFamily: context.read<ThemeBloc>().fontFamily,
               ),
             ),
             const SizedBox(height: 30),
@@ -97,7 +89,7 @@ class BooksByStatusState extends State<BooksByStatus> {
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               PieChartIndicator(
-                                color: theme.primaryGreen,
+                                color: Colors.green.shade400,
                                 text: l10n.books_finished,
                                 number: widget.list![0],
                               ),
@@ -105,7 +97,7 @@ class BooksByStatusState extends State<BooksByStatus> {
                                 height: 5,
                               ),
                               PieChartIndicator(
-                                color: theme.primaryYellow,
+                                color: Colors.yellow.shade400,
                                 text: l10n.books_in_progress,
                                 number: widget.list![1],
                               ),
@@ -113,7 +105,7 @@ class BooksByStatusState extends State<BooksByStatus> {
                                 height: 5,
                               ),
                               PieChartIndicator(
-                                color: theme.primaryBlue,
+                                color: Colors.blue.shade400,
                                 text: l10n.books_for_later,
                                 number: widget.list![2],
                               ),
@@ -122,7 +114,7 @@ class BooksByStatusState extends State<BooksByStatus> {
                               ),
                               (widget.list![3] != 0)
                                   ? PieChartIndicator(
-                                      color: theme.primaryRed,
+                                      color: Colors.red.shade400,
                                       text: l10n.books_unfinished,
                                       number: widget.list![3],
                                     )
@@ -148,54 +140,46 @@ class BooksByStatusState extends State<BooksByStatus> {
       switch (i) {
         case 0:
           return PieChartSectionData(
-            color: theme.primaryGreen,
+            color: Colors.green.shade400,
             value: widget.list![0].toDouble(),
             title: '${((widget.list![0] / sum) * 100).toStringAsFixed(0)}%',
             radius: radius,
             titleStyle: TextStyle(
               fontSize: fontSize,
               fontWeight: FontWeight.bold,
-              color: const Color(0xffffffff),
-              fontFamily: context.read<ThemeBloc>().fontFamily,
             ),
           );
         case 1:
           return PieChartSectionData(
-            color: theme.primaryYellow,
+            color: Colors.yellow.shade400,
             value: widget.list![1].toDouble(),
             title: '${((widget.list![1] / sum) * 100).toStringAsFixed(0)}%',
             radius: radius,
             titleStyle: TextStyle(
               fontSize: fontSize,
               fontWeight: FontWeight.bold,
-              color: const Color(0xffffffff),
-              fontFamily: context.read<ThemeBloc>().fontFamily,
             ),
           );
         case 2:
           return PieChartSectionData(
-            color: theme.primaryBlue,
+            color: Colors.blue.shade400,
             value: widget.list![2].toDouble(),
             title: '${((widget.list![2] / sum) * 100).toStringAsFixed(0)}%',
             radius: radius,
             titleStyle: TextStyle(
               fontSize: fontSize,
               fontWeight: FontWeight.bold,
-              color: const Color(0xffffffff),
-              fontFamily: context.read<ThemeBloc>().fontFamily,
             ),
           );
         case 3:
           return PieChartSectionData(
-            color: theme.primaryRed,
+            color: Colors.red.shade400,
             value: widget.list![3].toDouble(),
             title: '${((widget.list![3] / sum) * 100).toStringAsFixed(0)}%',
             radius: radius,
             titleStyle: TextStyle(
               fontSize: fontSize,
               fontWeight: FontWeight.bold,
-              color: const Color(0xffffffff),
-              fontFamily: context.read<ThemeBloc>().fontFamily,
             ),
           );
         default:
