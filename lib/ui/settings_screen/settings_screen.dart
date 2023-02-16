@@ -4,6 +4,7 @@ import 'package:flutter_email_sender/flutter_email_sender.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:openreads/core/constants.dart/enums.dart';
 import 'package:openreads/core/themes/app_theme.dart';
+import 'package:openreads/model/app_language.dart';
 import 'package:openreads/resources/l10n.dart';
 import 'package:openreads/logic/bloc/rating_type_bloc/rating_type_bloc.dart';
 import 'package:openreads/logic/bloc/theme_bloc/theme_bloc.dart';
@@ -15,7 +16,7 @@ import 'package:settings_ui/settings_ui.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class SettingsScreen extends StatelessWidget {
-  const SettingsScreen({super.key});
+  SettingsScreen({super.key});
 
   static const version = '2.0.0-rc2';
   static const licence = 'GNU General Public Licence v2.0';
@@ -26,6 +27,27 @@ class SettingsScreen extends StatelessWidget {
   final releaseUrl = '$repoUrl/releases/tag/$version';
   final licenceUrl = '$repoUrl/blob/master/LICENSE';
   final githubIssuesUrl = '$repoUrl/issues';
+
+  final languages = [
+    AppLanguage(fullName: l10n.english, twoLetterCode: 'en'),
+    AppLanguage(fullName: l10n.arabic, twoLetterCode: 'ar'),
+    AppLanguage(fullName: l10n.catalan, twoLetterCode: 'ca'),
+    AppLanguage(fullName: l10n.czech, twoLetterCode: 'cs'),
+    AppLanguage(fullName: l10n.danish, twoLetterCode: 'da'),
+    AppLanguage(fullName: l10n.dutch, twoLetterCode: 'nl'),
+    AppLanguage(fullName: l10n.french, twoLetterCode: 'fr'),
+    AppLanguage(fullName: l10n.georgian, twoLetterCode: 'ka'),
+    AppLanguage(fullName: l10n.german, twoLetterCode: 'de'),
+    AppLanguage(fullName: l10n.hindi, twoLetterCode: 'hi'),
+    AppLanguage(fullName: l10n.italian, twoLetterCode: 'it'),
+    AppLanguage(fullName: l10n.norwegian, twoLetterCode: 'no'),
+    AppLanguage(fullName: l10n.portugese, twoLetterCode: 'pt'),
+    AppLanguage(fullName: l10n.russian, twoLetterCode: 'ru'),
+    AppLanguage(fullName: l10n.spanish, twoLetterCode: 'es'),
+    AppLanguage(fullName: l10n.turkish, twoLetterCode: 'tr'),
+    AppLanguage(fullName: l10n.ukrainian, twoLetterCode: 'uk'),
+    AppLanguage(fullName: l10n.polish, twoLetterCode: 'pl'),
+  ];
 
   _sendEmailToDev(BuildContext context, [bool mounted = true]) async {
     final Email email = Email(
@@ -78,6 +100,7 @@ class SettingsScreen extends StatelessWidget {
       fontFamily: state.fontFamily,
       readTabFirst: state.readTabFirst,
       useMaterialYou: state.useMaterialYou,
+      locale: state.locale,
     ));
 
     Navigator.of(context).pop();
@@ -92,6 +115,7 @@ class SettingsScreen extends StatelessWidget {
       fontFamily: state.fontFamily,
       readTabFirst: state.readTabFirst,
       useMaterialYou: state.useMaterialYou,
+      locale: state.locale,
     ));
 
     Navigator.of(context).pop();
@@ -106,6 +130,7 @@ class SettingsScreen extends StatelessWidget {
       fontFamily: state.fontFamily,
       readTabFirst: state.readTabFirst,
       useMaterialYou: state.useMaterialYou,
+      locale: state.locale,
     ));
 
     Navigator.of(context).pop();
@@ -171,6 +196,7 @@ class SettingsScreen extends StatelessWidget {
       fontFamily: fontFamily,
       readTabFirst: state.readTabFirst,
       useMaterialYou: state.useMaterialYou,
+      locale: state.locale,
     ));
 
     Navigator.of(context).pop();
@@ -185,6 +211,7 @@ class SettingsScreen extends StatelessWidget {
       fontFamily: state.fontFamily,
       readTabFirst: state.readTabFirst,
       useMaterialYou: state.useMaterialYou,
+      locale: state.locale,
     ));
 
     Navigator.of(context).pop();
@@ -199,6 +226,7 @@ class SettingsScreen extends StatelessWidget {
       fontFamily: state.fontFamily,
       readTabFirst: state.readTabFirst,
       useMaterialYou: state.useMaterialYou,
+      locale: state.locale,
     ));
 
     Navigator.of(context).pop();
@@ -214,6 +242,7 @@ class SettingsScreen extends StatelessWidget {
       fontFamily: state.fontFamily,
       readTabFirst: state.readTabFirst,
       useMaterialYou: state.useMaterialYou,
+      locale: state.locale,
     ));
 
     Navigator.of(context).pop();
@@ -228,6 +257,7 @@ class SettingsScreen extends StatelessWidget {
       fontFamily: state.fontFamily,
       readTabFirst: state.readTabFirst,
       useMaterialYou: false,
+      locale: state.locale,
     ));
 
     Navigator.of(context).pop();
@@ -242,6 +272,7 @@ class SettingsScreen extends StatelessWidget {
       fontFamily: state.fontFamily,
       readTabFirst: state.readTabFirst,
       useMaterialYou: true,
+      locale: state.locale,
     ));
 
     Navigator.of(context).pop();
@@ -361,6 +392,109 @@ class SettingsScreen extends StatelessWidget {
         );
       },
     );
+  }
+
+  _showLanguageDialog(BuildContext context) {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return Dialog(
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(cornerRadius),
+          ),
+          backgroundColor: Theme.of(context).colorScheme.surface,
+          child: Padding(
+            padding: const EdgeInsets.symmetric(vertical: 20),
+            child: BlocBuilder<ThemeBloc, ThemeState>(
+              builder: (context, state) {
+                if (state is SetThemeState) {
+                  return Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      Padding(
+                        padding: const EdgeInsets.only(left: 10),
+                        child: Text(
+                          l10n.select_language,
+                          style: const TextStyle(
+                            fontSize: 18,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                      ),
+                      const SizedBox(height: 10),
+                      Expanded(
+                        child: Scrollbar(
+                          child: Padding(
+                            padding: const EdgeInsets.symmetric(horizontal: 10),
+                            child: SingleChildScrollView(
+                              child: Column(
+                                children: _buildLanguageButtons(context, state),
+                              ),
+                            ),
+                          ),
+                        ),
+                      ),
+                    ],
+                  );
+                } else {
+                  return const SizedBox();
+                }
+              },
+            ),
+          ),
+        );
+      },
+    );
+  }
+
+  List<Widget> _buildLanguageButtons(
+    BuildContext context,
+    SetThemeState state,
+  ) {
+    final widgets = List<Widget>.empty(growable: true);
+
+    widgets.add(
+      LanguageButton(
+        language: l10n.default_locale,
+        onPressed: () => _setLanguage(
+          context,
+          state,
+          null,
+        ),
+      ),
+    );
+
+    for (var language in languages) {
+      widgets.add(
+        LanguageButton(
+          language: language.fullName,
+          onPressed: () => _setLanguage(
+            context,
+            state,
+            language.twoLetterCode,
+          ),
+        ),
+      );
+    }
+
+    return widgets;
+  }
+
+  _setLanguage(BuildContext context, SetThemeState state, String? locale) {
+    BlocProvider.of<ThemeBloc>(context).add(ChangeThemeEvent(
+      themeMode: state.themeMode,
+      showOutlines: state.showOutlines,
+      cornerRadius: state.cornerRadius,
+      primaryColor: state.primaryColor,
+      fontFamily: state.fontFamily,
+      readTabFirst: state.readTabFirst,
+      useMaterialYou: state.useMaterialYou,
+      locale: locale,
+    ));
+
+    Navigator.of(context).pop();
+    Navigator.of(context).pop();
   }
 
   Widget _buildAccentButton(
@@ -843,6 +977,7 @@ class SettingsScreen extends StatelessWidget {
                               fontFamily: state.fontFamily,
                               readTabFirst: true,
                               useMaterialYou: state.useMaterialYou,
+                              locale: state.locale,
                             ),
                           );
 
@@ -862,6 +997,7 @@ class SettingsScreen extends StatelessWidget {
                               fontFamily: state.fontFamily,
                               readTabFirst: false,
                               useMaterialYou: state.useMaterialYou,
+                              locale: state.locale,
                             ),
                           );
 
@@ -1113,6 +1249,44 @@ class SettingsScreen extends StatelessWidget {
         },
       ),
       onPressed: (context) => _showAccentColorDialog(context),
+    );
+  }
+
+  SettingsTile _buildLanguageSetting(BuildContext context) {
+    return SettingsTile(
+      title: Text(
+        l10n.language,
+        style: const TextStyle(
+          fontSize: 16,
+        ),
+      ),
+      leading: const Icon(FontAwesomeIcons.earthAmericas),
+      description: BlocBuilder<ThemeBloc, ThemeState>(
+        builder: (_, themeState) {
+          if (themeState is SetThemeState) {
+            final locale = themeState.locale;
+
+            if (locale != null) {
+              for (var language in languages) {
+                if (language.twoLetterCode == locale) {
+                  return Text(
+                    language.fullName,
+                    style: const TextStyle(),
+                  );
+                }
+              }
+            }
+
+            return Text(
+              l10n.default_locale,
+              style: const TextStyle(),
+            );
+          } else {
+            return const SizedBox();
+          }
+        },
+      ),
+      onPressed: (context) => _showLanguageDialog(context),
     );
   }
 
@@ -1385,6 +1559,7 @@ class SettingsScreen extends StatelessWidget {
               ),
             ),
             tiles: <SettingsTile>[
+              _buildLanguageSetting(context),
               _buildTrashSetting(context),
               _buildUnfinishedSetting(context),
               _buildBackupSetting(context),

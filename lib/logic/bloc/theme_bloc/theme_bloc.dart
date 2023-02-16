@@ -17,6 +17,7 @@ class ThemeBloc extends HydratedBloc<ThemeEvent, ThemeState> {
           fontFamily: 'Nunito',
           readTabFirst: true,
           useMaterialYou: true,
+          locale: null,
         )) {
     on<ChangeThemeEvent>((event, emit) {
       fontFamily = event.fontFamily;
@@ -29,6 +30,7 @@ class ThemeBloc extends HydratedBloc<ThemeEvent, ThemeState> {
         fontFamily: fontFamily,
         readTabFirst: event.readTabFirst,
         useMaterialYou: event.useMaterialYou,
+        locale: event.locale,
       ));
     });
   }
@@ -42,6 +44,7 @@ class ThemeBloc extends HydratedBloc<ThemeEvent, ThemeState> {
     final fontFamily = json['font_family'] as String?;
     final readTabFirst = json['read_tab_first'] as bool?;
     final useMaterialYou = json['use_material_you'] as bool?;
+    final locale = json['locale'] as String?;
 
     switch (themeState) {
       case 1:
@@ -53,6 +56,7 @@ class ThemeBloc extends HydratedBloc<ThemeEvent, ThemeState> {
           fontFamily: fontFamily ?? 'Nunito',
           readTabFirst: readTabFirst ?? true,
           useMaterialYou: useMaterialYou ?? true,
+          locale: locale,
         );
       case 2:
         return SetThemeState(
@@ -63,6 +67,7 @@ class ThemeBloc extends HydratedBloc<ThemeEvent, ThemeState> {
           fontFamily: fontFamily ?? 'Nunito',
           readTabFirst: readTabFirst ?? true,
           useMaterialYou: useMaterialYou ?? true,
+          locale: locale,
         );
       default:
         return SetThemeState(
@@ -73,6 +78,7 @@ class ThemeBloc extends HydratedBloc<ThemeEvent, ThemeState> {
           fontFamily: fontFamily ?? 'Nunito',
           readTabFirst: readTabFirst ?? true,
           useMaterialYou: useMaterialYou ?? true,
+          locale: locale,
         );
     }
   }
@@ -90,6 +96,7 @@ class ThemeBloc extends HydratedBloc<ThemeEvent, ThemeState> {
             'font_family': state.fontFamily,
             'read_tab_first': state.readTabFirst,
             'use_material_you': state.useMaterialYou,
+            'locale': state.locale,
           };
         case ThemeMode.dark:
           return {
@@ -100,6 +107,7 @@ class ThemeBloc extends HydratedBloc<ThemeEvent, ThemeState> {
             'font_family': state.fontFamily,
             'read_tab_first': state.readTabFirst,
             'use_material_you': state.useMaterialYou,
+            'locale': state.locale,
           };
         case ThemeMode.system:
           return {
@@ -110,6 +118,7 @@ class ThemeBloc extends HydratedBloc<ThemeEvent, ThemeState> {
             'font_family': state.fontFamily,
             'read_tab_first': state.readTabFirst,
             'use_material_you': state.useMaterialYou,
+            'locale': state.locale,
           };
       }
     } else {
@@ -121,6 +130,7 @@ class ThemeBloc extends HydratedBloc<ThemeEvent, ThemeState> {
         'font_family': null,
         'read_tab_first': null,
         'use_material_you': null,
+        'locale': null,
       };
     }
   }

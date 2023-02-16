@@ -149,6 +149,9 @@ class _OpenreadsAppState extends State<OpenreadsApp>
             : const BooksScreen(),
         localizationsDelegates: AppLocalizations.localizationsDelegates,
         supportedLocales: AppLocalizations.supportedLocales,
+        locale: widget.themeState.locale != null
+            ? Locale(widget.themeState.locale!)
+            : null,
       );
     });
   }
