@@ -12,6 +12,7 @@ class SetThemeState extends ThemeState {
   final String? fontFamily;
   final bool readTabFirst;
   final bool useMaterialYou;
+  final String? locale;
 
   const SetThemeState({
     required this.themeMode,
@@ -21,6 +22,7 @@ class SetThemeState extends ThemeState {
     required this.fontFamily,
     required this.readTabFirst,
     required this.useMaterialYou,
+    required this.locale,
   });
 
   @override
@@ -32,5 +34,6 @@ class SetThemeState extends ThemeState {
         fontFamily,
         readTabFirst,
         useMaterialYou,
+        locale,
       ];
 }

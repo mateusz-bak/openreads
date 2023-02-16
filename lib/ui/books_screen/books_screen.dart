@@ -377,7 +377,7 @@ class _BooksScreenState extends State<BooksScreen>
     Navigator.push(
       context,
       MaterialPageRoute(
-        builder: (context) => const SettingsScreen(),
+        builder: (context) => SettingsScreen(),
       ),
     );
   }

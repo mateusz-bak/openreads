@@ -11,7 +11,10 @@ class BookTab extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Tab(
-      child: Text(text),
+      child: Text(
+        text,
+        textAlign: TextAlign.center,
+      ),
     );
   }
 }
