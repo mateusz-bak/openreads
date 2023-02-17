@@ -124,7 +124,7 @@ class _OpenreadsAppState extends State<OpenreadsApp>
     return DynamicColorBuilder(
         builder: (ColorScheme? lightDynamic, ColorScheme? darkDynamic) {
       return MaterialApp(
-        title: 'Openreads Flutter',
+        title: 'Openreads',
         theme: ThemeData(
           useMaterial3: true,
           colorSchemeSeed: widget.themeState.useMaterialYou
