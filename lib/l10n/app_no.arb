@@ -16,10 +16,12 @@
   "your_rating": "Din vurdering",
   "edit_book": "Rediger bok",
   "delete_book": "Fjern bok",
+  "delete_permanently": "Delete book permanently",
   "restore_book": "Gjenopprett bok",
   "yes": "Ja",
   "no": "Nei",
   "delete_book_question": "Fjern denne boken?",
+  "delete_perm_question": "Delete this book permanently?",
   "restore_book_question": "Gjenopprett denne boken?",
   "finish_reading": "Fullfør",
   "start_reading": "Start",
@@ -216,5 +218,9 @@
   "welcome_3_description_1": "Openreads har helt åpen kildekode!",
   "welcome_3_description_2": "Det betyr at du kan inspisere appens kode på egen hånd og bidra til utviklingen.",
   "welcome_3_description_3": "Som en bonus får du null annonser og absolutt ingen sporing!",
-  "start_button": "START"
+  "next_button": "NEXT",
+  "start_button": "START",
+  "migration_v1_to_v2_1": "Your books are being migrated to the new version",
+  "migration_v1_to_v2_2": "Do not leave this screen before all of your books are migrated, because they will be lost!",
+  "migration_v1_to_v2_finished": "Migrating books finished, click START button."
 }
