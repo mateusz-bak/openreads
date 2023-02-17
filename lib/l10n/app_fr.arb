@@ -16,10 +16,12 @@
   "your_rating": "Votre note",
   "edit_book": "Modifier le livre",
   "delete_book": "Supprimer le livre",
+  "delete_permanently": "Delete book permanently",
   "restore_book": "Restaurer le livre",
   "yes": "Yes",
   "no": "No",
   "delete_book_question": "Supprimer ce livre?",
+  "delete_perm_question": "Delete this book permanently?",
   "restore_book_question": "Restaurer ce livre?",
   "finish_reading": "Finir",
   "start_reading": "Commencer",
@@ -216,5 +218,9 @@
   "welcome_3_description_1": "Openreads is completely open source!",
   "welcome_3_description_2": "It means that you can inspect the app's code on your own and contribute to it's development.",
   "welcome_3_description_3": "As a bonus you get zero ads and absolutely no tracking!",
-  "start_button": "START"
+  "next_button": "NEXT",
+  "start_button": "START",
+  "migration_v1_to_v2_1": "Your books are being migrated to the new version",
+  "migration_v1_to_v2_2": "Do not leave this screen before all of your books are migrated, because they will be lost!",
+  "migration_v1_to_v2_finished": "Migrating books finished, click START button."
 }
