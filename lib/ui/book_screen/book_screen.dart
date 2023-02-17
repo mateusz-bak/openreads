@@ -24,6 +24,7 @@ class BookScreen extends StatelessWidget {
     bookCubit.updateBook(Book(
       id: book!.id,
       title: book!.title,
+      subtitle: book!.subtitle,
       author: book!.author,
       status: book!.status,
       favourite: !isLiked,
@@ -43,7 +44,8 @@ class BookScreen extends StatelessWidget {
     return !isLiked;
   }
 
-  _showDeleteRestoreDialog(BuildContext context, bool deleted) {
+  _showDeleteRestoreDialog(
+      BuildContext context, bool deleted, bool? deletePermanently) {
     if (book == null) return;
 
     showDialog(
@@ -54,7 +56,11 @@ class BookScreen extends StatelessWidget {
               borderRadius: BorderRadius.circular(cornerRadius),
             ),
             title: Text(
-              deleted ? l10n.delete_book_question : l10n.restore_book_question,
+              deleted
+                  ? deletePermanently == true
+                      ? l10n.delete_perm_question
+                      : l10n.delete_book_question
+                  : l10n.restore_book_question,
               style: const TextStyle(fontSize: 18),
             ),
             actionsAlignment: MainAxisAlignment.spaceBetween,
@@ -70,7 +76,12 @@ class BookScreen extends StatelessWidget {
               ),
               FilledButton(
                 onPressed: () {
-                  _changeDeleteStatus(deleted);
+                  if (deletePermanently == true) {
+                    _deleteBookPermanently();
+                  } else {
+                    _changeDeleteStatus(deleted);
+                  }
+                  
                   Navigator.of(context).pop();
                   Navigator.of(context).pop();
                 },
@@ -105,6 +116,14 @@ class BookScreen extends StatelessWidget {
       cover: book!.cover,
       blurHash: book!.blurHash,
     ));
+
+    bookCubit.getDeletedBooks();
+  }
+
+  _deleteBookPermanently() async {
+    if (book?.id != null) {
+      await bookCubit.deleteBook(book!.id!);
+    }
 
     bookCubit.getDeletedBooks();
   }
@@ -297,11 +316,12 @@ class BookScreen extends StatelessWidget {
               builder: (context, AsyncSnapshot<Book> snapshot) {
                 if (snapshot.hasData) {
                   if (moreButtonOptions.length == 1) {
-                    moreButtonOptions.add(
-                      snapshot.data?.deleted == true
-                          ? l10n.restore_book
-                          : l10n.delete_book,
-                    );
+                    if (snapshot.data?.deleted == true) {
+                      moreButtonOptions.add(l10n.restore_book);
+                      moreButtonOptions.add(l10n.delete_permanently);
+                    } else {
+                      moreButtonOptions.add(l10n.delete_book);
+                    }
                   }
 
                   return PopupMenuButton<String>(
@@ -327,10 +347,12 @@ class BookScreen extends StatelessWidget {
                               );
                             } else if (choice == moreButtonOptions[1]) {
                               if (snapshot.data!.deleted == false) {
-                                _showDeleteRestoreDialog(context, true);
+                                _showDeleteRestoreDialog(context, true, null);
                               } else {
-                                _showDeleteRestoreDialog(context, false);
+                                _showDeleteRestoreDialog(context, false, null);
                               }
+                            } else if (choice == moreButtonOptions[2]) {
+                              _showDeleteRestoreDialog(context, true, true);
                             }
                           },
                         );

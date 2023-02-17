@@ -536,7 +536,7 @@ class _BooksScreenState extends State<BooksScreen>
   AppBar _buildAppBar(BuildContext context) {
     return AppBar(
       title: const Text(
-        'Openreads 2',
+        'Openreads',
         style: TextStyle(
           fontSize: 18,
         ),
