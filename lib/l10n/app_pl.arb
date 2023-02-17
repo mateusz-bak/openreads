@@ -16,10 +16,12 @@
   "your_rating": "Twoja ocena",
   "edit_book": "Edytuj książkę",
   "delete_book": "Usuń książkę",
+  "delete_permanently": "Delete book permanently",
   "restore_book": "Przywróć książkę",
   "yes": "Tak",
   "no": "Nie",
   "delete_book_question": "Usunąć tę książkę?",
+  "delete_perm_question": "Delete this book permanently?",
   "restore_book_question": "Przywrócić tę książkę?",
   "finish_reading": "Zakończ",
   "start_reading": "Rozpocznij",
@@ -216,5 +218,9 @@
   "welcome_3_description_1": "Openreads jest całkowicie otwartoźródłowy!",
   "welcome_3_description_2": "Oznacza to, że możesz samodzielnie sprawdzić kod aplikacji i przyczynić się do jej rozwoju.",
   "welcome_3_description_3": "Jako bonus otrzymujesz brak reklam i zero śledzenia!",
-  "start_button": "ROZPOCZNIJ"
+  "next_button": "NEXT",
+  "start_button": "ROZPOCZNIJ",
+  "migration_v1_to_v2_1": "Your books are being migrated to the new version",
+  "migration_v1_to_v2_2": "Do not leave this screen before all of your books are migrated, because they will be lost!",
+  "migration_v1_to_v2_finished": "Migrating books finished, click START button."
 }
