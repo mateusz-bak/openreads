@@ -24,6 +24,7 @@ class BookScreen extends StatelessWidget {
     bookCubit.updateBook(Book(
       id: book!.id,
       title: book!.title,
+      subtitle: book!.subtitle,
       author: book!.author,
       status: book!.status,
       favourite: !isLiked,
