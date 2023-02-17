@@ -16,12 +16,12 @@
   "your_rating": "Twoja ocena",
   "edit_book": "Edytuj książkę",
   "delete_book": "Usuń książkę",
-  "delete_permanently": "Delete book permanently",
+  "delete_permanently": "Usuń książkę trwale",
   "restore_book": "Przywróć książkę",
   "yes": "Tak",
   "no": "Nie",
   "delete_book_question": "Usunąć tę książkę?",
-  "delete_perm_question": "Delete this book permanently?",
+  "delete_perm_question": "Czy chcesz bezpowrotnie usunąć wybraną książkę?",
   "restore_book_question": "Przywrócić tę książkę?",
   "finish_reading": "Zakończ",
   "start_reading": "Rozpocznij",
@@ -218,9 +218,9 @@
   "welcome_3_description_1": "Openreads jest całkowicie otwartoźródłowy!",
   "welcome_3_description_2": "Oznacza to, że możesz samodzielnie sprawdzić kod aplikacji i przyczynić się do jej rozwoju.",
   "welcome_3_description_3": "Jako bonus otrzymujesz brak reklam i zero śledzenia!",
-  "next_button": "NEXT",
+  "next_button": "DALEJ",
   "start_button": "ROZPOCZNIJ",
-  "migration_v1_to_v2_1": "Your books are being migrated to the new version",
-  "migration_v1_to_v2_2": "Do not leave this screen before all of your books are migrated, because they will be lost!",
-  "migration_v1_to_v2_finished": "Migrating books finished, click START button."
+  "migration_v1_to_v2_1": "Twoje książki są przenoszone do nowej wersji",
+  "migration_v1_to_v2_2": "Nie opuszczaj tego ekranu zanim wszystkie książki zostaną przeniesione, ponieważ zostaną utracone!",
+  "migration_v1_to_v2_finished": "Przenoszenie książek zakończone, kliknij przycisk START."
 }
