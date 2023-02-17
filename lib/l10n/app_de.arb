@@ -16,10 +16,12 @@
   "your_rating": "Deine Bewertung",
   "edit_book": "Buch bearbeiten",
   "delete_book": "Buch löschen",
+  "delete_permanently": "Delete book permanently",
   "restore_book": "Buch wiederherstellen",
   "yes": "Ja",
   "no": "Nein",
   "delete_book_question": "Dieses Buch löschen?",
+  "delete_perm_question": "Delete this book permanently?",
   "restore_book_question": "Dieses Buch wiederherstellen?",
   "finish_reading": "Gelesen",
   "start_reading": "Starten",
@@ -216,5 +218,9 @@
   "welcome_3_description_1": "Openreads ist komplett Open Source!",
   "welcome_3_description_2": "Das bedeutet, dass du den Code der App selbst überprüfen und zu deren Entwicklung beitragen kannst.",
   "welcome_3_description_3": "Als Bonus ist keine Werbung und keinerlei Tracking enthalten!",
-  "start_button": "STARTEN"
+  "next_button": "NEXT",
+  "start_button": "STARTEN",
+  "migration_v1_to_v2_1": "Your books are being migrated to the new version",
+  "migration_v1_to_v2_2": "Do not leave this screen before all of your books are migrated, because they will be lost!",
+  "migration_v1_to_v2_finished": "Migrating books finished, click START button."
 }
