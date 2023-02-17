@@ -16,10 +16,12 @@
   "your_rating": "Uw beoordeling",
   "edit_book": "Boek bewerken",
   "delete_book": "Boek verwijderen",
+  "delete_permanently": "Delete book permanently",
   "restore_book": "Boek herstellen",
   "yes": "Ja",
   "no": "Nee",
   "delete_book_question": "Wil je dit boek verwijderen?",
+  "delete_perm_question": "Delete this book permanently?",
   "restore_book_question": "Wil je dit boek herstellen?",
   "finish_reading": "Voltooien",
   "start_reading": "Beginnen",
@@ -216,5 +218,9 @@
   "welcome_3_description_1": "Openreads is volledig open-source!",
   "welcome_3_description_2": "Het betekent dat je zelf de code van de app kunt inspecteren en aan de ontwikkeling ervan kunt bijdragen.",
   "welcome_3_description_3": "Als bonus krijg je nul advertenties en helemaal geen tracking!",
-  "start_button": "START"
+  "next_button": "NEXT",
+  "start_button": "START",
+  "migration_v1_to_v2_1": "Your books are being migrated to the new version",
+  "migration_v1_to_v2_2": "Do not leave this screen before all of your books are migrated, because they will be lost!",
+  "migration_v1_to_v2_finished": "Migrating books finished, click START button."
 }

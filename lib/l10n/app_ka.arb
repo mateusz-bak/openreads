@@ -16,10 +16,12 @@
   "your_rating": "თქვენი რეიტინგი",
   "edit_book": "შეასწორეთ წიგნის დეტალები",
   "delete_book": "წიგნის წაშლა",
+  "delete_permanently": "Delete book permanently",
   "restore_book": "წიგნის აღდგენა",
   "yes": "Yes",
   "no": "No",
   "delete_book_question": "წავშალო ეს წიგნი?",
+  "delete_perm_question": "Delete this book permanently?",
   "restore_book_question": "აღვადგინო ეს წიგნი?",
   "finish_reading": "დავასრულე",
   "start_reading": "დავიწყე",
@@ -216,5 +218,9 @@
   "welcome_3_description_1": "Openreads-ის კოდი არის სრულიად საჯარო!",
   "welcome_3_description_2": "ეს იმას ნიშნავს, რომ თავად შეგიძლია შეამოწმო აპლიკაციის კოდი და წვლილი შეიტანო მის განვითარებაში.",
   "welcome_3_description_3": "ასევე, აპლიკაცია არ გიჩვენებს რეკლამებს და არ გითვალთვალებს!",
-  "start_button": "დაწყება"
+  "next_button": "NEXT",
+  "start_button": "დაწყება",
+  "migration_v1_to_v2_1": "Your books are being migrated to the new version",
+  "migration_v1_to_v2_2": "Do not leave this screen before all of your books are migrated, because they will be lost!",
+  "migration_v1_to_v2_finished": "Migrating books finished, click START button."
 }

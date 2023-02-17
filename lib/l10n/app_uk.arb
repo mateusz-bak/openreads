@@ -16,10 +16,12 @@
   "your_rating": "Ваш рейтинг",
   "edit_book": "Редагувати книгу",
   "delete_book": "Видалити книгу",
+  "delete_permanently": "Delete book permanently",
   "restore_book": "Відновити книгу",
   "yes": "Так",
   "no": "Ні",
   "delete_book_question": "Видалити цю книгу?",
+  "delete_perm_question": "Delete this book permanently?",
   "restore_book_question": "Відновити цю книгу?",
   "finish_reading": "Завершити",
   "start_reading": "Почати",
@@ -216,5 +218,9 @@
   "welcome_3_description_1": "Openreads повністю з відкритим вихідним кодом!",
   "welcome_3_description_2": "Це означає, що ви можете перевірити код додатку самостійно та внести свій внесок у його розробку.",
   "welcome_3_description_3": "Як бонус ви не маєте реклами та стеження!",
-  "start_button": "РОЗПОЧАТИ"
+  "next_button": "NEXT",
+  "start_button": "РОЗПОЧАТИ",
+  "migration_v1_to_v2_1": "Your books are being migrated to the new version",
+  "migration_v1_to_v2_2": "Do not leave this screen before all of your books are migrated, because they will be lost!",
+  "migration_v1_to_v2_finished": "Migrating books finished, click START button."
 }
