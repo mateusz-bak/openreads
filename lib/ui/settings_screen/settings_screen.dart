@@ -307,79 +307,90 @@ class SettingsScreen extends StatelessWidget {
                         ),
                       ),
                       const SizedBox(height: 15),
-                      GestureDetector(
-                        onTap: () => _setMaterialYou(
-                          context,
-                          state,
-                        ),
-                        child: Container(
-                          padding: const EdgeInsets.all(10),
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(cornerRadius),
-                            color: Theme.of(context).colorScheme.surfaceVariant,
-                            border: Border.all(color: dividerColor),
-                          ),
-                          child: Row(
+                      Scrollbar(
+                        child: SingleChildScrollView(
+                          child: Column(
                             children: [
-                              Text(
-                                l10n.material_you,
-                                style: const TextStyle(
-                                  fontSize: 16,
-                                  fontWeight: FontWeight.bold,
+                              GestureDetector(
+                                onTap: () => _setMaterialYou(
+                                  context,
+                                  state,
                                 ),
+                                child: Container(
+                                  padding: const EdgeInsets.all(10),
+                                  decoration: BoxDecoration(
+                                    borderRadius:
+                                        BorderRadius.circular(cornerRadius),
+                                    color: Theme.of(context)
+                                        .colorScheme
+                                        .surfaceVariant,
+                                    border: Border.all(color: dividerColor),
+                                  ),
+                                  child: Row(
+                                    children: [
+                                      Text(
+                                        l10n.material_you,
+                                        style: const TextStyle(
+                                          fontSize: 16,
+                                          fontWeight: FontWeight.bold,
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                              ),
+                              const SizedBox(height: 5),
+                              _buildAccentButton(
+                                context,
+                                state,
+                                primaryGreen,
+                                l10n.green_color,
+                              ),
+                              _buildAccentButton(
+                                context,
+                                state,
+                                primaryBlue,
+                                l10n.blue_color,
+                              ),
+                              _buildAccentButton(
+                                context,
+                                state,
+                                primaryRed,
+                                l10n.red_color,
+                              ),
+                              _buildAccentButton(
+                                context,
+                                state,
+                                primaryYellow,
+                                l10n.yellow_color,
+                              ),
+                              _buildAccentButton(
+                                context,
+                                state,
+                                primaryOrange,
+                                l10n.orange_color,
+                              ),
+                              _buildAccentButton(
+                                context,
+                                state,
+                                primaryPurple,
+                                l10n.purple_color,
+                              ),
+                              _buildAccentButton(
+                                context,
+                                state,
+                                primaryPink,
+                                l10n.pink_color,
+                              ),
+                              _buildAccentButton(
+                                context,
+                                state,
+                                primaryTeal,
+                                l10n.teal_color,
                               ),
                             ],
                           ),
                         ),
-                      ),
-                      const SizedBox(height: 5),
-                      _buildAccentButton(
-                        context,
-                        state,
-                        primaryGreen,
-                        l10n.green_color,
-                      ),
-                      _buildAccentButton(
-                        context,
-                        state,
-                        primaryBlue,
-                        l10n.blue_color,
-                      ),
-                      _buildAccentButton(
-                        context,
-                        state,
-                        primaryRed,
-                        l10n.red_color,
-                      ),
-                      _buildAccentButton(
-                        context,
-                        state,
-                        primaryYellow,
-                        l10n.yellow_color,
-                      ),
-                      _buildAccentButton(
-                        context,
-                        state,
-                        primaryOrange,
-                        l10n.orange_color,
-                      ),
-                      _buildAccentButton(
-                        context,
-                        state,
-                        primaryPurple,
-                        l10n.purple_color,
-                      ),
-                      _buildAccentButton(
-                        context,
-                        state,
-                        primaryPink,
-                        l10n.pink_color,
-                      ),
-                      _buildAccentButton(
-                        context,
-                        state,
-                        primaryTeal,
-                        l10n.teal_color,
                       ),
                     ],
                   );
