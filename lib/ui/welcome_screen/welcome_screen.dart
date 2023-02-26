@@ -3,6 +3,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:intro_slider/intro_slider.dart';
 import 'package:openreads/core/themes/app_theme.dart';
+import 'package:openreads/logic/bloc/migration_v1_to_v2_bloc/migration_v1_to_v2_bloc.dart';
 import 'package:openreads/resources/l10n.dart';
 import 'package:openreads/logic/bloc/theme_bloc/theme_bloc.dart';
 import 'package:openreads/logic/bloc/welcome_bloc/welcome_bloc.dart';
@@ -25,8 +26,6 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
   List<ContentConfig> listContentConfig = [];
 
   bool preparationTriggered = false;
-
-  bool _showMigrationNotification = false;
 
   _prepareWelcomePages() {
     if (preparationTriggered) return;
@@ -98,12 +97,17 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
   }
 
   void onDonePress() {
-    BlocProvider.of<WelcomeBloc>(context).add(const ChangeWelcomeEvent(false));
+    if (context.read<MigrationV1ToV2Bloc>().state is MigrationOnging) {
+      return;
+    } else {
+      BlocProvider.of<WelcomeBloc>(context)
+          .add(const ChangeWelcomeEvent(false));
 
-    Navigator.of(context).pushAndRemoveUntil(
-      MaterialPageRoute(builder: (context) => const BooksScreen()),
-      (Route<dynamic> route) => false,
-    );
+      Navigator.of(context).pushAndRemoveUntil(
+        MaterialPageRoute(builder: (context) => const BooksScreen()),
+        (Route<dynamic> route) => false,
+      );
+    }
   }
 
   @override
@@ -126,9 +130,22 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
                   isShowPrevBtn: false,
                   listContentConfig: listContentConfig,
                   onDonePress: onDonePress,
-                  isShowDoneBtn: !_showMigrationNotification,
+                  isShowDoneBtn: true,
                   renderDoneBtn: FittedBox(
-                    child: Text(l10n.start_button),
+                    child:
+                        BlocBuilder<MigrationV1ToV2Bloc, MigrationV1ToV2State>(
+                      builder: (context, state) {
+                        if (state is MigrationOnging) {
+                          return const SizedBox(
+                            width: 14,
+                            height: 14,
+                            child: CircularProgressIndicator(),
+                          );
+                        } else {
+                          return Text(l10n.start_button);
+                        }
+                      },
+                    ),
                   ),
                   renderNextBtn: FittedBox(
                     child: Text(l10n.next_button),
@@ -164,9 +181,30 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
                   ),
                 ),
               ),
-              _showMigrationNotification
-                  ? const MigrationNotification()
-                  : const SizedBox(),
+              BlocBuilder<MigrationV1ToV2Bloc, MigrationV1ToV2State>(
+                builder: (context, migrationState) {
+                  if (migrationState is MigrationNotStarted) {
+                    BlocProvider.of<MigrationV1ToV2Bloc>(context).add(
+                      StartMigration(context: context),
+                    );
+                  } else if (migrationState is MigrationOnging) {
+                    return MigrationNotification(
+                      done: migrationState.done,
+                      total: migrationState.total,
+                    );
+                  } else if (migrationState is MigrationFailed) {
+                    return MigrationNotification(
+                      error: migrationState.error,
+                    );
+                  } else if (migrationState is MigrationSucceded) {
+                    return const MigrationNotification(
+                      success: true,
+                    );
+                  }
+
+                  return const SizedBox();
+                },
+              ),
             ],
           );
         } else {

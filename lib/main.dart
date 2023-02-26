@@ -4,6 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_displaymode/flutter_displaymode.dart';
 import 'package:hydrated_bloc/hydrated_bloc.dart';
 import 'package:openreads/logic/bloc/challenge_bloc/challenge_bloc.dart';
+import 'package:openreads/logic/bloc/migration_v1_to_v2_bloc/migration_v1_to_v2_bloc.dart';
 import 'package:openreads/logic/bloc/open_lib_bloc/open_lib_bloc.dart';
 import 'package:openreads/logic/bloc/rating_type_bloc/rating_type_bloc.dart';
 import 'package:openreads/logic/bloc/sort_bloc/sort_bloc.dart';
@@ -44,6 +45,8 @@ class App extends StatelessWidget {
           BlocProvider<WelcomeBloc>(create: (context) => WelcomeBloc()),
           BlocProvider<ChallengeBloc>(create: (context) => ChallengeBloc()),
           BlocProvider<RatingTypeBloc>(create: (context) => RatingTypeBloc()),
+          BlocProvider<MigrationV1ToV2Bloc>(
+              create: (context) => MigrationV1ToV2Bloc()),
           BlocProvider<OpenLibBloc>(
             create: (context) => OpenLibBloc(
               RepositoryProvider.of<OpenLibraryService>(context),
