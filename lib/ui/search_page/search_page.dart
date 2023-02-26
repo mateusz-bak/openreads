@@ -48,43 +48,40 @@ class _SearchPageState extends State<SearchPage> {
             ),
           ),
           Expanded(
-            child: SingleChildScrollView(
-              child: StreamBuilder<List<Book>>(
-                stream: bookCubit.searchBooks,
-                builder: (context, snapshot) {
-                  if (snapshot.hasData) {
-                    return ListView.builder(
-                      shrinkWrap: true,
-                      itemCount: snapshot.data!.length,
-                      itemBuilder: (context, index) {
-                        final heroTag = 'tag_$index';
+            child: StreamBuilder<List<Book>>(
+              stream: bookCubit.searchBooks,
+              builder: (context, snapshot) {
+                if (snapshot.hasData) {
+                  return ListView.builder(
+                    shrinkWrap: true,
+                    itemCount: snapshot.data!.length,
+                    itemBuilder: (context, index) {
+                      final heroTag = 'tag_$index';
 
-                        return BookCard(
-                          book: snapshot.data![index],
-                          heroTag: heroTag,
-                          addBottomPadding:
-                              (snapshot.data!.length == index + 1),
-                          onPressed: () {
-                            if (snapshot.data![index].id == null) return;
+                      return BookCard(
+                        book: snapshot.data![index],
+                        heroTag: heroTag,
+                        addBottomPadding: (snapshot.data!.length == index + 1),
+                        onPressed: () {
+                          if (snapshot.data![index].id == null) return;
 
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                builder: (context) => BookScreen(
-                                  id: snapshot.data![index].id!,
-                                  heroTag: heroTag,
-                                ),
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => BookScreen(
+                                id: snapshot.data![index].id!,
+                                heroTag: heroTag,
                               ),
-                            );
-                          },
-                        );
-                      },
-                    );
-                  } else {
-                    return const SizedBox();
-                  }
-                },
-              ),
+                            ),
+                          );
+                        },
+                      );
+                    },
+                  );
+                } else {
+                  return const SizedBox();
+                }
+              },
             ),
           )
         ],
