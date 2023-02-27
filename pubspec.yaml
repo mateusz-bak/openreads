@@ -54,6 +54,7 @@ dependencies:
   image_fade: ^0.6.2
   package_info_plus: ^3.0.3
   animated_widgets: ^1.1.0
+  shared_storage: ^0.7.0
 
 dev_dependencies:
   flutter_test:

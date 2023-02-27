@@ -74,6 +74,8 @@ class MigrationV1ToV2Bloc
     String dbDirectoryPath = path.join(docDirectory.parent.path, 'databases');
 
     Directory dbDirectory = Directory(dbDirectoryPath);
+    if (!dbDirectory.existsSync()) return null;
+
     final files = await dbDirectory.list().toList();
 
     final filePathToBeChecked = path.join(dbDirectory.path, dbName);

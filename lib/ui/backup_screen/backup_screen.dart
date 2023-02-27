@@ -15,11 +15,13 @@ import 'package:openreads/model/book.dart';
 import 'package:openreads/model/book_from_backup_v3.dart';
 import 'package:openreads/model/year_from_backup_v3.dart';
 import 'package:openreads/model/yearly_challenge.dart';
+import 'package:package_info_plus/package_info_plus.dart';
 import 'package:path/path.dart' as path;
 import 'package:path_provider/path_provider.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:settings_ui/settings_ui.dart';
 import 'package:share_plus/share_plus.dart';
+import 'package:shared_storage/shared_storage.dart';
 import 'package:sqflite/sqflite.dart';
 import 'package:blurhash_dart/blurhash_dart.dart' as blurhash_dart;
 import 'package:image/image.dart' as img;
@@ -42,8 +44,14 @@ class _BackupScreenState extends State<BackupScreen> {
   _startLocalBackup(context) async {
     setState(() => _creatingLocal = true);
 
-    if (await _handlePermission()) {
+    DeviceInfoPlugin deviceInfo = DeviceInfoPlugin();
+    AndroidDeviceInfo androidInfo = await deviceInfo.androidInfo;
+
+    if (androidInfo.version.sdkInt <= 31) {
+      await _requestStoragePermission();
       await _createLocalBackup();
+    } else {
+      await _createLocalBackupWithScopedStorage();
     }
 
     setState(() => _creatingLocal = false);
@@ -52,23 +60,7 @@ class _BackupScreenState extends State<BackupScreen> {
   _startCloudBackup(context) async {
     setState(() => _creatingCloud = true);
 
-    await bookCubit.getAllBooks(tags: true);
-
-    final books = await bookCubit.allBooks.first;
-    final backedBooks = List<String>.empty(growable: true);
-
-    for (var book in books) {
-      backedBooks.add(jsonEncode(book.toJSON()));
-      await Future.delayed(const Duration(milliseconds: 50));
-    }
-
-    final challengeTargets = await _getChallengeTargets();
-
-    final tmpBackupPath = await _writeTempBackupFile(
-      backedBooks,
-      challengeTargets,
-    );
-
+    final tmpBackupPath = await _prepareTemporaryBackup();
     if (tmpBackupPath == null) return;
 
     Share.shareXFiles([
@@ -99,33 +91,14 @@ class _BackupScreenState extends State<BackupScreen> {
   }
 
   _createLocalBackup() async {
-    await bookCubit.getAllBooks(tags: true);
-
-    final books = await bookCubit.allBooks.first;
-    final backedBooks = List<String>.empty(growable: true);
-
-    for (var book in books) {
-      backedBooks.add(jsonEncode(book.toJSON()));
-      await Future.delayed(const Duration(milliseconds: 50));
-    }
-
-    final challengeTargets = await _getChallengeTargets();
+    final tmpBackupPath = await _prepareTemporaryBackup();
+    if (tmpBackupPath == null) return;
 
     try {
-      final tmpBackupPath = await _writeTempBackupFile(
-        backedBooks,
-        challengeTargets,
-      );
-
-      if (tmpBackupPath == null) return;
-
       final backupPath = await _openFolderPicker();
-      final date = DateTime.now();
-      final backupDate =
-          '${date.year}_${date.month}_${date.day}-${date.hour}_${date.minute}_${date.second}';
-      const appVersion = '2_0_0';
+      final fileName = await _prepareBackupFileName();
 
-      final filePath = '$backupPath/Openreads-4-$appVersion-$backupDate.backup';
+      final filePath = '$backupPath/$fileName';
 
       File(filePath).writeAsBytesSync(File(tmpBackupPath).readAsBytesSync());
 
@@ -169,14 +142,9 @@ class _BackupScreenState extends State<BackupScreen> {
 
     final tmpDir = await getApplicationSupportDirectory();
 
-    final date = DateTime.now();
-    final backupDate =
-        '${date.year}_${date.month}_${date.day}-${date.hour}_${date.minute}_${date.second}';
+    final fileName = await _prepareBackupFileName();
 
-    const appVersion = '2_0_0';
-
-    final tmpFilePath =
-        '${tmpDir.path}/Openreads-4-$appVersion-$backupDate.backup';
+    final tmpFilePath = '${tmpDir.path}/$fileName';
 
     try {
       File('${tmpDir.path}/books.backup').writeAsStringSync(data);
@@ -269,32 +237,148 @@ class _BackupScreenState extends State<BackupScreen> {
     );
   }
 
-  Future<bool> _handlePermission() async {
-    DeviceInfoPlugin deviceInfo = DeviceInfoPlugin();
-    AndroidDeviceInfo androidInfo = await deviceInfo.androidInfo;
+  Future<String?> _prepareTemporaryBackup() async {
+    try {
+      await bookCubit.getAllBooks(tags: true);
 
-    if (androidInfo.version.sdkInt <= 31) {
-      return await _requestStoragePermission();
-    } else {
-      return await _requestManageExternalStoragePermission();
+      final books = await bookCubit.allBooks.first;
+      final backedBooks = List<String>.empty(growable: true);
+
+      for (var book in books) {
+        backedBooks.add(jsonEncode(book.toJSON()));
+        await Future.delayed(const Duration(milliseconds: 50));
+      }
+
+      final challengeTargets = await _getChallengeTargets();
+
+      return await _writeTempBackupFile(
+        backedBooks,
+        challengeTargets,
+      );
+    } catch (e) {
+      setState(() => _creatingLocal = false);
+
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text(
+            e.toString(),
+          ),
+        ),
+      );
+
+      return null;
     }
   }
 
-  Future<bool> _requestManageExternalStoragePermission() async {
-    if (await Permission.manageExternalStorage.isPermanentlyDenied) {
-      _openSystemSettings();
-      return false;
-    } else if (await Permission.manageExternalStorage.status.isDenied) {
-      if (await Permission.manageExternalStorage.request().isGranted) {
-        return true;
-      } else {
-        _openSystemSettings();
-        return false;
-      }
-    } else if (await Permission.manageExternalStorage.status.isGranted) {
-      return true;
+  Future<String> _getAppVersion() async {
+    PackageInfo packageInfo = await PackageInfo.fromPlatform();
+
+    return packageInfo.version;
+  }
+
+  Future<String> _prepareBackupFileName() async {
+    final date = DateTime.now();
+    final backupDate =
+        '${date.year}_${date.month}_${date.day}-${date.hour}_${date.minute}_${date.second}';
+    final appVersion = await _getAppVersion();
+
+    return 'Openreads-4-$appVersion-$backupDate.backup';
+  }
+
+  Future _createLocalBackupWithScopedStorage() async {
+    final tmpBackupPath = await _prepareTemporaryBackup();
+    if (tmpBackupPath == null) return;
+
+    final selectedUriDir = await openDocumentTree();
+
+    if (selectedUriDir == null) {
+      setState(() => _creatingLocal = false);
+      return;
     }
-    return false;
+
+    final fileName = await _prepareBackupFileName();
+
+    try {
+      createFileAsBytes(
+        selectedUriDir,
+        mimeType: 'application/zip',
+        displayName: fileName,
+        bytes: File(tmpBackupPath).readAsBytesSync(),
+      );
+
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text(
+            l10n.backup_successfull,
+          ),
+        ),
+      );
+    } catch (e) {
+      setState(() => _creatingLocal = false);
+      if (!mounted) return;
+
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text(
+            e.toString(),
+          ),
+        ),
+      );
+    }
+  }
+
+  _deleteTmpData(Directory tmpDir) {
+    if (File('${tmpDir.path}/books.backup').existsSync()) {
+      File('${tmpDir.path}/books.backup').deleteSync();
+    }
+
+    if (File('${tmpDir.path}/challenges.backup').existsSync()) {
+      File('${tmpDir.path}/challenges.backup').deleteSync();
+    }
+  }
+
+  Future _restoreLocalBackupWithScopedStorage() async {
+    final tmpDir = (await getApplicationSupportDirectory()).absolute;
+    _deleteTmpData(tmpDir);
+
+    final selectedUris = await openDocument(multiple: false);
+
+    if (selectedUris == null || selectedUris.isEmpty) {
+      setState(() => _restoringLocal = false);
+      return;
+    }
+
+    final selectedUriDir = selectedUris[0];
+    final backupFile = await getDocumentContent(selectedUriDir);
+
+    if (selectedUriDir.path.contains('Openreads-4-')) {
+      await restoreBackupVersion4(archiveFile: backupFile, tmpPath: tmpDir);
+    } else if (selectedUriDir.path.contains('openreads_3_')) {
+      await restoreBackupVersion3(archiveFile: backupFile, tmpPath: tmpDir);
+    } else {
+      if (!mounted) return;
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text(
+            l10n.backup_not_valid,
+          ),
+        ),
+      );
+    }
+
+    setState(() => _restoringLocal = false);
+
+    if (!mounted) return;
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        content: Text(
+          l10n.restore_successfull,
+        ),
+      ),
+    );
+
+    Navigator.of(context).pop();
+    Navigator.of(context).pop();
   }
 
   Future<bool> _requestStoragePermission() async {
@@ -317,32 +401,31 @@ class _BackupScreenState extends State<BackupScreen> {
   _startLocalRestore(context) async {
     setState(() => _restoringLocal = true);
 
-    if (await _handlePermission()) {
+    DeviceInfoPlugin deviceInfo = DeviceInfoPlugin();
+    AndroidDeviceInfo androidInfo = await deviceInfo.androidInfo;
+
+    if (androidInfo.version.sdkInt <= 31) {
+      await _requestStoragePermission();
       await _restoreLocalBackup();
+    } else {
+      await _restoreLocalBackupWithScopedStorage();
     }
 
     setState(() => _restoringLocal = false);
   }
 
   _restoreLocalBackup() async {
-    final tmpPath = (await getApplicationSupportDirectory()).absolute;
-
-    if (File('${tmpPath.path}/books.backup').existsSync()) {
-      File('${tmpPath.path}/books.backup').deleteSync();
-    }
-
-    if (File('${tmpPath.path}/challenges.backup').existsSync()) {
-      File('${tmpPath.path}/challenges.backup').deleteSync();
-    }
+    final tmpDir = (await getApplicationSupportDirectory()).absolute;
+    _deleteTmpData(tmpDir);
 
     try {
       final archivePath = await _openFilePicker();
       if (archivePath == null) return;
 
       if (archivePath.contains('Openreads-4-')) {
-        await restoreBackupVersion4(archivePath, tmpPath);
+        await restoreBackupVersion4(archivePath: archivePath, tmpPath: tmpDir);
       } else if (archivePath.contains('openreads_3_')) {
-        await restoreBackupVersion3(archivePath, tmpPath);
+        await restoreBackupVersion3(archivePath: archivePath, tmpPath: tmpDir);
       } else {
         if (!mounted) return;
         ScaffoldMessenger.of(context).showSnackBar(
@@ -381,8 +464,23 @@ class _BackupScreenState extends State<BackupScreen> {
     }
   }
 
-  restoreBackupVersion4(String archivePath, Directory tmpPath) async {
-    final archiveBytes = File(archivePath).readAsBytesSync();
+  restoreBackupVersion4({
+    String? archivePath,
+    Uint8List? archiveFile,
+    required Directory tmpPath,
+  }) async {
+    late Uint8List archiveBytes;
+
+    if (archivePath != null) {
+      archiveBytes = File(archivePath).readAsBytesSync();
+    } else if (archiveFile != null) {
+      archiveBytes = archiveFile;
+    } else {
+      setState(() => _restoringLocal = false);
+
+      return;
+    }
+
     final archive = ZipDecoder().decodeBytes(archiveBytes);
     extractArchiveToDisk(archive, tmpPath.path);
 
@@ -411,6 +509,8 @@ class _BackupScreenState extends State<BackupScreen> {
             ),
           ),
         );
+
+        setState(() => _restoringLocal = false);
       }
     }
 
@@ -420,8 +520,23 @@ class _BackupScreenState extends State<BackupScreen> {
     await _restoreChallengeTargetsV4(tmpPath);
   }
 
-  restoreBackupVersion3(String archivePath, Directory tmpPath) async {
-    final archiveBytes = File(archivePath).readAsBytesSync();
+  restoreBackupVersion3({
+    String? archivePath,
+    Uint8List? archiveFile,
+    required Directory tmpPath,
+  }) async {
+    late Uint8List archiveBytes;
+
+    if (archivePath != null) {
+      archiveBytes = File(archivePath).readAsBytesSync();
+    } else if (archiveFile != null) {
+      archiveBytes = archiveFile;
+    } else {
+      setState(() => _restoringLocal = false);
+
+      return;
+    }
+
     final archive = ZipDecoder().decodeBytes(archiveBytes);
 
     extractArchiveToDisk(archive, tmpPath.path);
