@@ -23,9 +23,9 @@ dependencies:
   flutter_bloc: ^8.1.1
   colours: ^0.0.2
   flutter_blurhash: ^0.7.0
-  blurhash_dart: ^1.1.0
-  image: ^3.3.0
-  fl_chart: ^0.60.0
+  blurhash_dart: ^1.2.1
+  image: ^4.0.15
+  fl_chart: ^0.61.0
   intl: ^0.17.0
   dropdown_button2: ^1.8.9
   equatable: ^2.0.5
@@ -51,12 +51,13 @@ dependencies:
   flutter_localizations:
     sdk: flutter
   dynamic_color: ^1.6.2
+  image_fade: ^0.6.2
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
   flutter_lints: ^2.0.0
-  flutter_launcher_icons: "^0.11.0"
+  flutter_launcher_icons: "^0.12.0"
 
 flutter_icons:
   android: "launcher_icon"
