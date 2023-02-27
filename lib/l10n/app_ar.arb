@@ -212,6 +212,8 @@
   "restore_backup": "استيراد النسخة الاحتياطية",
   "restore_backup_description_1": "استرجع الكتب من جهازك.",
   "restore_backup_description_2": "لا يعمل على النسخ الإحتياطية الأقدم من v1.14.2",
+  "are_you_sure": "Are you sure?",
+  "restore_backup_alert_content": "This will delete all your current books and challenges!",
   "error_getting_book": "حدث خطأ أثناء الحصول على الكتاب",
   "add_books_and_come_back": "أضف بعض الكتب أولاً ثم عد هنا إلى هنا",
   "welcome_1": "مرحبا بك في Openreads",
