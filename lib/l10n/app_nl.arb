@@ -212,6 +212,8 @@
   "restore_backup": "Back-up herstellen",
   "restore_backup_description_1": "Herstel boeken van uw apparaat.",
   "restore_backup_description_2": "Werkt voor back-ups niet ouder dan van v1.14.2",
+  "are_you_sure": "Are you sure?",
+  "restore_backup_alert_content": "This will delete all your current books and challenges!",
   "error_getting_book": "Fout bij het ophalen van het boek",
   "add_books_and_come_back": "Voeg wat boeken toe en kom hier weer",
   "welcome_1": "Welkom bij Openreads",
