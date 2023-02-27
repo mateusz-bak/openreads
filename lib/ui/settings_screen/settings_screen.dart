@@ -27,6 +27,8 @@ class SettingsScreen extends StatelessWidget {
   final releaseUrl = '$repoUrl/releases/tag/$version';
   final licenceUrl = '$repoUrl/blob/master/LICENSE';
   final githubIssuesUrl = '$repoUrl/issues';
+  final githubSponsorUrl = 'https://github.com/sponsors/mateusz-bak';
+  final buyMeCoffeUrl = 'https://www.buymeacoffee.com/mateuszbak';
 
   final languages = [
     AppLanguage(fullName: l10n.english, twoLetterCode: 'en'),
@@ -76,6 +78,44 @@ class SettingsScreen extends StatelessWidget {
     try {
       await launchUrl(
         Uri.parse(githubIssuesUrl),
+        mode: LaunchMode.externalApplication,
+      );
+    } catch (error) {
+      if (!mounted) return;
+
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text(
+            '$error',
+          ),
+        ),
+      );
+    }
+  }
+
+  _supportGithub(BuildContext context, [bool mounted = true]) async {
+    try {
+      await launchUrl(
+        Uri.parse(githubSponsorUrl),
+        mode: LaunchMode.externalApplication,
+      );
+    } catch (error) {
+      if (!mounted) return;
+
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text(
+            '$error',
+          ),
+        ),
+      );
+    }
+  }
+
+  _supportBuyMeCoffe(BuildContext context, [bool mounted = true]) async {
+    try {
+      await launchUrl(
+        Uri.parse(buyMeCoffeUrl),
         mode: LaunchMode.externalApplication,
       );
     } catch (error) {
@@ -1130,6 +1170,81 @@ class SettingsScreen extends StatelessWidget {
     );
   }
 
+  SettingsTile _buildSupportSetting(BuildContext context) {
+    return SettingsTile(
+      title: Text(
+        l10n.support_the_project,
+        style: TextStyle(
+          fontSize: 17,
+          color: Theme.of(context).colorScheme.primary,
+        ),
+      ),
+      description: Text(
+        l10n.support_the_project_description,
+      ),
+      leading: Icon(
+        FontAwesomeIcons.mugHot,
+        color: Theme.of(context).colorScheme.primary,
+      ),
+      onPressed: (context) {
+        FocusManager.instance.primaryFocus?.unfocus();
+
+        showModalBottomSheet(
+          context: context,
+          isScrollControlled: true,
+          elevation: 0,
+          backgroundColor: Theme.of(context).colorScheme.surface,
+          builder: (context) {
+            return Column(
+              mainAxisAlignment: MainAxisAlignment.end,
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                const SizedBox(height: 5),
+                Container(
+                  height: 3,
+                  width: MediaQuery.of(context).size.width / 4,
+                  decoration: BoxDecoration(
+                      color: Colors.grey.shade300,
+                      borderRadius: BorderRadius.circular(10)),
+                ),
+                Container(
+                  padding: const EdgeInsets.fromLTRB(10, 20, 10, 40),
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(15),
+                  ),
+                  child: IntrinsicHeight(
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      children: [
+                        const SizedBox(width: 10),
+                        Expanded(
+                          child: ContactButton(
+                            text: l10n.support_option_1,
+                            icon: FontAwesomeIcons.github,
+                            onPressed: () => _supportGithub(context),
+                          ),
+                        ),
+                        const SizedBox(width: 20),
+                        Expanded(
+                          child: ContactButton(
+                            text: l10n.support_option_2,
+                            icon: FontAwesomeIcons.mugHot,
+                            onPressed: () => _supportBuyMeCoffe(context),
+                          ),
+                        ),
+                        const SizedBox(width: 10),
+                      ],
+                    ),
+                  ),
+                ),
+              ],
+            );
+          },
+        );
+      },
+    );
+  }
+
   SettingsTile _buildTrashSetting(BuildContext context) {
     return SettingsTile(
       title: Text(
@@ -1535,6 +1650,7 @@ class SettingsScreen extends StatelessWidget {
         sections: [
           SettingsSection(
             tiles: <SettingsTile>[
+              _buildSupportSetting(context),
               _buildURLSetting(
                 title: l10n.join_community,
                 description: l10n.join_community_description,
