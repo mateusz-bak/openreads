@@ -38,6 +38,7 @@ class SettingsScreen extends StatelessWidget {
     AppLanguage(fullName: l10n.english, twoLetterCode: 'en'),
     AppLanguage(fullName: l10n.arabic, twoLetterCode: 'ar'),
     AppLanguage(fullName: l10n.catalan, twoLetterCode: 'ca'),
+    AppLanguage(fullName: l10n.chinese_simplified, twoLetterCode: 'zh'),
     AppLanguage(fullName: l10n.czech, twoLetterCode: 'cs'),
     AppLanguage(fullName: l10n.danish, twoLetterCode: 'da'),
     AppLanguage(fullName: l10n.dutch, twoLetterCode: 'nl'),
