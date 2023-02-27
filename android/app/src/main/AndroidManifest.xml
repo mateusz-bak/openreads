@@ -1,7 +1,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="dev.flutter.openreads">
+    package="software.mdev.bookstracker">
    <application
-        android:label="Openreads 2"
+        android:label="Openreads"
         android:name="${applicationName}"
         android:icon="@mipmap/launcher_icon"
         android:requestLegacyExternalStorage="true">
