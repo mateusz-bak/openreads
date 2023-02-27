@@ -212,6 +212,8 @@
   "restore_backup": "Gjenopprett sikkerhetskopi",
   "restore_backup_description_1": "Gjenopprett bøker fra enheten din.",
   "restore_backup_description_2": "Fungerer for sikkerhetskopier skapt tidligst i versjon 1.14.2",
+  "are_you_sure": "Are you sure?",
+  "restore_backup_alert_content": "This will delete all your current books and challenges!",
   "error_getting_book": "Feil under henting av boken",
   "add_books_and_come_back": "Legg til noen bøker, og kom tilbake hit igjen",
   "welcome_1": "Velkommen til Openreads",
