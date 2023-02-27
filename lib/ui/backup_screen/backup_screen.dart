@@ -672,7 +672,34 @@ class _BackupScreenState extends State<BackupScreen> {
                     ),
                   ],
                 ),
-                onPressed: _startLocalRestore,
+                onPressed: (context) {
+                  showDialog(
+                      context: context,
+                      builder: (context) {
+                        return AlertDialog(
+                          title: Text(
+                            l10n.are_you_sure,
+                          ),
+                          content: Text(
+                            l10n.restore_backup_alert_content,
+                          ),
+                          actionsAlignment: MainAxisAlignment.spaceBetween,
+                          actions: [
+                            FilledButton.tonal(
+                              onPressed: () {
+                                _startLocalRestore(context);
+                                Navigator.of(context).pop();
+                              },
+                              child: Text(l10n.yes),
+                            ),
+                            FilledButton.tonal(
+                              onPressed: () => Navigator.of(context).pop(),
+                              child: Text(l10n.no),
+                            ),
+                          ],
+                        );
+                      });
+                },
               ),
             ],
           ),

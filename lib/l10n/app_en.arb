@@ -230,6 +230,8 @@
   "restore_backup": "Restore backup",
   "restore_backup_description_1": "Restore books from your device.",
   "restore_backup_description_2": "Works for backups not older than from v1.14.2",
+  "are_you_sure": "Are you sure?",
+  "restore_backup_alert_content": "This will delete all your current books and challenges!",
 
   "error_getting_book": "Error while getting the book",
   "add_books_and_come_back": "Add some books and come here again",
