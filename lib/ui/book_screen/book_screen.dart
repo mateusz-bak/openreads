@@ -81,7 +81,7 @@ class BookScreen extends StatelessWidget {
                   } else {
                     _changeDeleteStatus(deleted);
                   }
-                  
+
                   Navigator.of(context).pop();
                   Navigator.of(context).pop();
                 },
@@ -476,13 +476,16 @@ class BookScreen extends StatelessWidget {
                               )
                             : const SizedBox(),
                         SizedBox(
-                          height: (snapshot.data!.myReview != null) ? 5 : 0,
+                          height: (snapshot.data!.myReview != null &&
+                                  snapshot.data!.myReview!.isNotEmpty)
+                              ? 5
+                              : 0,
                         ),
-                        (snapshot.data!.myReview != null)
+                        (snapshot.data!.myReview != null &&
+                                snapshot.data!.myReview!.isNotEmpty)
                             ? BookDetail(
                                 title: l10n.my_review,
-                                text:
-                                    (snapshot.data!.myReview ?? "").toString(),
+                                text: snapshot.data!.myReview!,
                               )
                             : const SizedBox(),
                         const SizedBox(height: 50.0),
