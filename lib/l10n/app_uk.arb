@@ -212,6 +212,8 @@
   "restore_backup": "Відновити резервну копію",
   "restore_backup_description_1": "Відновити книги з вашого пристрою.",
   "restore_backup_description_2": "Працює для резервних копій не старіші за v1.14.2",
+  "are_you_sure": "Are you sure?",
+  "restore_backup_alert_content": "This will delete all your current books and challenges!",
   "error_getting_book": "Помилка при отриманні книги",
   "add_books_and_come_back": "Додайте кілька книг і поверніться сюди",
   "welcome_1": "Ласкаво просимо до Openreads",
