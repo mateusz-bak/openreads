@@ -40,17 +40,19 @@ class SetChallengeBox extends StatelessWidget {
             }),
         child: Padding(
           padding: const EdgeInsets.symmetric(
-            vertical: 25,
+            vertical: 15,
             horizontal: 10,
           ),
           child: Row(
             children: [
-              Text(
-                l10n.click_here_to_set_challenge,
-                style: TextStyle(
-                    fontSize: 16,
-                    fontWeight: FontWeight.bold,
-                    color: Theme.of(context).colorScheme.onSurface),
+              Expanded(
+                child: Text(
+                  l10n.click_here_to_set_challenge,
+                  style: TextStyle(
+                      fontSize: 16,
+                      fontWeight: FontWeight.bold,
+                      color: Theme.of(context).colorScheme.onSurface),
+                ),
               ),
             ],
           ),

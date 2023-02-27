@@ -53,7 +53,7 @@ class AnimatedStatusButton extends StatelessWidget {
             border: Border.all(color: dividerColor),
           ),
           child: Padding(
-            padding: const EdgeInsets.all(4.0),
+            padding: const EdgeInsets.all(2),
             child: Center(
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,

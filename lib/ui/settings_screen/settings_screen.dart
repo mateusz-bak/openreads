@@ -1,3 +1,5 @@
+import 'package:animated_widgets/widgets/rotation_animated.dart';
+import 'package:animated_widgets/widgets/shake_animated_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_email_sender/flutter_email_sender.dart';
@@ -12,19 +14,21 @@ import 'package:openreads/ui/backup_screen/backup_screen.dart';
 import 'package:openreads/ui/settings_screen/widgets/widgets.dart';
 import 'package:openreads/ui/trash_screen/trash_screen.dart';
 import 'package:openreads/ui/unfinished_screen/unfinished_screen.dart';
+import 'package:package_info_plus/package_info_plus.dart';
 import 'package:settings_ui/settings_ui.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class SettingsScreen extends StatelessWidget {
   SettingsScreen({super.key});
 
-  static const version = '2.0.0-rc3';
+  // static const version = '2.0.0-rc3';
+  String? version;
   static const licence = 'GNU General Public Licence v2.0';
   static const repoUrl = 'https://github.com/mateusz-bak/openreads-android';
   static const translationUrl = 'https://crwd.in/openreads-android';
   static const communityUrl = 'https://matrix.to/#/#openreads:matrix.org';
   static const rateUrl = 'market://details?id=software.mdev.bookstracker';
-  final releaseUrl = '$repoUrl/releases/tag/$version';
+  final releasesUrl = '$repoUrl/releases';
   final licenceUrl = '$repoUrl/blob/master/LICENSE';
   final githubIssuesUrl = '$repoUrl/issues';
   final githubSponsorUrl = 'https://github.com/sponsors/mateusz-bak';
@@ -1071,7 +1075,7 @@ class SettingsScreen extends StatelessWidget {
   SettingsTile _buildURLSetting({
     required String title,
     String? description,
-    required String url,
+    String? url,
     IconData? iconData,
     required BuildContext context,
   }) {
@@ -1090,6 +1094,8 @@ class SettingsScreen extends StatelessWidget {
             )
           : null,
       onPressed: (_) {
+        if (url == null) return;
+
         launchUrl(
           Uri.parse(url),
           mode: LaunchMode.externalNonBrowserApplication,
@@ -1182,9 +1188,14 @@ class SettingsScreen extends StatelessWidget {
       description: Text(
         l10n.support_the_project_description,
       ),
-      leading: Icon(
-        FontAwesomeIcons.mugHot,
-        color: Theme.of(context).colorScheme.primary,
+      leading: ShakeAnimatedWidget(
+        duration: const Duration(seconds: 3),
+        shakeAngle: Rotation.deg(z: 20),
+        curve: Curves.bounceInOut,
+        child: Icon(
+          FontAwesomeIcons.mugHot,
+          color: Theme.of(context).colorScheme.primary,
+        ),
       ),
       onPressed: (context) {
         FocusManager.instance.primaryFocus?.unfocus();
@@ -1628,6 +1639,12 @@ class SettingsScreen extends StatelessWidget {
     );
   }
 
+  Future<String> _getAppVersion() async {
+    PackageInfo packageInfo = await PackageInfo.fromPlatform();
+
+    return packageInfo.version;
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -1639,120 +1656,129 @@ class SettingsScreen extends StatelessWidget {
           ),
         ),
       ),
-      body: SettingsList(
-        contentPadding: const EdgeInsets.only(top: 10),
-        darkTheme: SettingsThemeData(
-          settingsListBackground: Theme.of(context).colorScheme.surface,
-        ),
-        lightTheme: SettingsThemeData(
-          settingsListBackground: Theme.of(context).colorScheme.surface,
-        ),
-        sections: [
-          SettingsSection(
-            tiles: <SettingsTile>[
-              _buildSupportSetting(context),
-              _buildURLSetting(
-                title: l10n.join_community,
-                description: l10n.join_community_description,
-                url: communityUrl,
-                iconData: FontAwesomeIcons.peopleGroup,
-                context: context,
-              ),
-              // TODO: Show only on GPlay variant
-              _buildURLSetting(
-                title: l10n.rate_app,
-                description: l10n.rate_app_description,
-                url: rateUrl,
-                iconData: Icons.star_rounded,
-                context: context,
-              ),
-              _buildFeedbackSetting(context),
-              _buildURLSetting(
-                title: l10n.translate_app,
-                description: l10n.translate_app_description,
-                url: translationUrl,
-                iconData: Icons.translate_rounded,
-                context: context,
-              ),
-            ],
-          ),
-          SettingsSection(
-            title: Text(
-              l10n.app,
-              style: TextStyle(
-                fontSize: 16,
-                fontWeight: FontWeight.bold,
-                color: Theme.of(context).colorScheme.primary,
-              ),
-            ),
-            tiles: <SettingsTile>[
-              _buildLanguageSetting(context),
-              _buildTrashSetting(context),
-              _buildUnfinishedSetting(context),
-              _buildBackupSetting(context),
-            ],
-          ),
-          SettingsSection(
-            title: Text(
-              l10n.apperance,
-              style: TextStyle(
-                fontSize: 16,
-                fontWeight: FontWeight.bold,
-                color: Theme.of(context).colorScheme.primary,
-              ),
-            ),
-            tiles: <SettingsTile>[
-              _buildAccentSetting(context),
-              _buildThemeModeSetting(context),
-              _buildFontSetting(context),
-              _buildRatingTypeSetting(context),
-              _buildTabOrderSetting(context),
-              _buildOutlinesSetting(context),
-              _buildCornersSetting(context),
-            ],
-          ),
-          SettingsSection(
-            title: Text(
-              l10n.about,
-              style: TextStyle(
-                fontSize: 16,
-                fontWeight: FontWeight.bold,
-                color: Theme.of(context).colorScheme.primary,
-              ),
-            ),
-            tiles: <SettingsTile>[
-              _buildURLSetting(
-                title: l10n.version,
-                description: version,
-                url: releaseUrl,
-                iconData: FontAwesomeIcons.rocket,
-                context: context,
-              ),
-              _buildURLSetting(
-                title: l10n.source_code,
-                description: l10n.source_code_description,
-                url: repoUrl,
-                iconData: FontAwesomeIcons.code,
-                context: context,
-              ),
-              _buildURLSetting(
-                title: l10n.changelog,
-                description: l10n.changelog_description,
-                url: releaseUrl,
-                iconData: Icons.auto_awesome_rounded,
-                context: context,
-              ),
-              _buildURLSetting(
-                title: l10n.licence,
-                description: licence,
-                url: licenceUrl,
-                iconData: Icons.copyright_rounded,
-                context: context,
-              ),
-            ],
-          ),
-        ],
-      ),
+      body: FutureBuilder<String>(
+          future: _getAppVersion(),
+          builder: (context, snapshot) {
+            if (snapshot.hasData) {
+              version = snapshot.data;
+
+              return SettingsList(
+                contentPadding: const EdgeInsets.only(top: 10),
+                darkTheme: SettingsThemeData(
+                  settingsListBackground: Theme.of(context).colorScheme.surface,
+                ),
+                lightTheme: SettingsThemeData(
+                  settingsListBackground: Theme.of(context).colorScheme.surface,
+                ),
+                sections: [
+                  SettingsSection(
+                    tiles: <SettingsTile>[
+                      _buildSupportSetting(context),
+                      _buildURLSetting(
+                        title: l10n.join_community,
+                        description: l10n.join_community_description,
+                        url: communityUrl,
+                        iconData: FontAwesomeIcons.peopleGroup,
+                        context: context,
+                      ),
+                      // TODO: Show only on GPlay variant
+                      _buildURLSetting(
+                        title: l10n.rate_app,
+                        description: l10n.rate_app_description,
+                        url: rateUrl,
+                        iconData: Icons.star_rounded,
+                        context: context,
+                      ),
+                      _buildFeedbackSetting(context),
+                      _buildURLSetting(
+                        title: l10n.translate_app,
+                        description: l10n.translate_app_description,
+                        url: translationUrl,
+                        iconData: Icons.translate_rounded,
+                        context: context,
+                      ),
+                    ],
+                  ),
+                  SettingsSection(
+                    title: Text(
+                      l10n.app,
+                      style: TextStyle(
+                        fontSize: 16,
+                        fontWeight: FontWeight.bold,
+                        color: Theme.of(context).colorScheme.primary,
+                      ),
+                    ),
+                    tiles: <SettingsTile>[
+                      _buildLanguageSetting(context),
+                      _buildTrashSetting(context),
+                      _buildUnfinishedSetting(context),
+                      _buildBackupSetting(context),
+                    ],
+                  ),
+                  SettingsSection(
+                    title: Text(
+                      l10n.apperance,
+                      style: TextStyle(
+                        fontSize: 16,
+                        fontWeight: FontWeight.bold,
+                        color: Theme.of(context).colorScheme.primary,
+                      ),
+                    ),
+                    tiles: <SettingsTile>[
+                      _buildAccentSetting(context),
+                      _buildThemeModeSetting(context),
+                      _buildFontSetting(context),
+                      _buildRatingTypeSetting(context),
+                      _buildTabOrderSetting(context),
+                      _buildOutlinesSetting(context),
+                      _buildCornersSetting(context),
+                    ],
+                  ),
+                  SettingsSection(
+                    title: Text(
+                      l10n.about,
+                      style: TextStyle(
+                        fontSize: 16,
+                        fontWeight: FontWeight.bold,
+                        color: Theme.of(context).colorScheme.primary,
+                      ),
+                    ),
+                    tiles: <SettingsTile>[
+                      _buildURLSetting(
+                        title: l10n.version,
+                        description: version,
+                        iconData: FontAwesomeIcons.rocket,
+                        context: context,
+                      ),
+                      _buildURLSetting(
+                        title: l10n.changelog,
+                        description: l10n.changelog_description,
+                        url: releasesUrl,
+                        iconData: Icons.auto_awesome_rounded,
+                        context: context,
+                      ),
+                      _buildURLSetting(
+                        title: l10n.source_code,
+                        description: l10n.source_code_description,
+                        url: repoUrl,
+                        iconData: FontAwesomeIcons.code,
+                        context: context,
+                      ),
+                      _buildURLSetting(
+                        title: l10n.licence,
+                        description: licence,
+                        url: licenceUrl,
+                        iconData: Icons.copyright_rounded,
+                        context: context,
+                      ),
+                    ],
+                  ),
+                ],
+              );
+            } else {
+              return const SizedBox();
+            }
+          }),
     );
   }
 }

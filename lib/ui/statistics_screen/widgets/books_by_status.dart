@@ -23,8 +23,6 @@ class BooksByStatusState extends State<BooksByStatus> {
 
   @override
   Widget build(BuildContext context) {
-    final theme = Theme.of(context);
-
     return Card(
       shadowColor: Colors.transparent,
       shape: RoundedRectangleBorder(
@@ -47,79 +45,60 @@ class BooksByStatusState extends State<BooksByStatus> {
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 20),
               child: AspectRatio(
-                aspectRatio: 2.2,
+                aspectRatio: 2,
                 child: (widget.list == null)
                     ? const SizedBox()
                     : Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
-                          AspectRatio(
-                            aspectRatio: 1,
+                          Flexible(
+                            flex: 5,
                             child: PieChart(
                               PieChartData(
-                                pieTouchData: PieTouchData(
-                                  touchCallback: (
-                                    FlTouchEvent event,
-                                    pieTouchResponse,
-                                  ) {
-                                    setState(() {
-                                      if (!event.isInterestedForInteractions ||
-                                          pieTouchResponse == null ||
-                                          pieTouchResponse.touchedSection ==
-                                              null) {
-                                        touchedIndex = -1;
-                                        return;
-                                      }
-                                      touchedIndex = pieTouchResponse
-                                          .touchedSection!.touchedSectionIndex;
-                                    });
-                                  },
-                                ),
-                                borderData: FlBorderData(
-                                  show: false,
-                                ),
-                                sectionsSpace: 2,
-                                centerSpaceRadius: 40,
-                                sections: showingSections(theme),
+                                sectionsSpace: 3,
+                                sections: showingSections(),
                               ),
                             ),
                           ),
-                          Column(
-                            mainAxisAlignment: MainAxisAlignment.end,
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              PieChartIndicator(
-                                color: Colors.green.shade400,
-                                text: l10n.books_finished,
-                                number: widget.list![0],
-                              ),
-                              const SizedBox(
-                                height: 5,
-                              ),
-                              PieChartIndicator(
-                                color: Colors.yellow.shade400,
-                                text: l10n.books_in_progress,
-                                number: widget.list![1],
-                              ),
-                              const SizedBox(
-                                height: 5,
-                              ),
-                              PieChartIndicator(
-                                color: Colors.blue.shade400,
-                                text: l10n.books_for_later,
-                                number: widget.list![2],
-                              ),
-                              SizedBox(
-                                height: (widget.list![3] != 0) ? 5 : 0,
-                              ),
-                              (widget.list![3] != 0)
-                                  ? PieChartIndicator(
-                                      color: Colors.red.shade400,
-                                      text: l10n.books_unfinished,
-                                      number: widget.list![3],
-                                    )
-                                  : const SizedBox(),
-                            ],
+                          Flexible(
+                            flex: 4,
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.end,
+                              crossAxisAlignment: CrossAxisAlignment.end,
+                              children: [
+                                PieChartIndicator(
+                                  color: Colors.green.shade400,
+                                  text: l10n.books_finished,
+                                  number: widget.list![0],
+                                ),
+                                const SizedBox(
+                                  height: 5,
+                                ),
+                                PieChartIndicator(
+                                  color: Colors.yellow.shade400,
+                                  text: l10n.books_in_progress,
+                                  number: widget.list![1],
+                                ),
+                                const SizedBox(
+                                  height: 5,
+                                ),
+                                PieChartIndicator(
+                                  color: Colors.blue.shade400,
+                                  text: l10n.books_for_later,
+                                  number: widget.list![2],
+                                ),
+                                SizedBox(
+                                  height: (widget.list![3] != 0) ? 5 : 0,
+                                ),
+                                (widget.list![3] != 0)
+                                    ? PieChartIndicator(
+                                        color: Colors.red.shade400,
+                                        text: l10n.books_unfinished,
+                                        number: widget.list![3],
+                                      )
+                                    : const SizedBox(),
+                              ],
+                            ),
                           ),
                         ],
                       ),
@@ -131,11 +110,11 @@ class BooksByStatusState extends State<BooksByStatus> {
     );
   }
 
-  List<PieChartSectionData> showingSections(ThemeData theme) {
+  List<PieChartSectionData> showingSections() {
     final sum = widget.list!.reduce((a, b) => a + b);
     return List.generate(4, (i) {
       final isTouched = i == touchedIndex;
-      final fontSize = isTouched ? 25.0 : 16.0;
+      const fontSize = 14.0;
       final radius = isTouched ? 60.0 : 50.0;
       switch (i) {
         case 0:
@@ -144,9 +123,10 @@ class BooksByStatusState extends State<BooksByStatus> {
             value: widget.list![0].toDouble(),
             title: '${((widget.list![0] / sum) * 100).toStringAsFixed(0)}%',
             radius: radius,
-            titleStyle: TextStyle(
+            titleStyle: const TextStyle(
               fontSize: fontSize,
               fontWeight: FontWeight.bold,
+              color: Colors.black,
             ),
           );
         case 1:
@@ -155,9 +135,10 @@ class BooksByStatusState extends State<BooksByStatus> {
             value: widget.list![1].toDouble(),
             title: '${((widget.list![1] / sum) * 100).toStringAsFixed(0)}%',
             radius: radius,
-            titleStyle: TextStyle(
+            titleStyle: const TextStyle(
               fontSize: fontSize,
               fontWeight: FontWeight.bold,
+              color: Colors.black,
             ),
           );
         case 2:
@@ -166,9 +147,10 @@ class BooksByStatusState extends State<BooksByStatus> {
             value: widget.list![2].toDouble(),
             title: '${((widget.list![2] / sum) * 100).toStringAsFixed(0)}%',
             radius: radius,
-            titleStyle: TextStyle(
+            titleStyle: const TextStyle(
               fontSize: fontSize,
               fontWeight: FontWeight.bold,
+              color: Colors.black,
             ),
           );
         case 3:
@@ -177,9 +159,10 @@ class BooksByStatusState extends State<BooksByStatus> {
             value: widget.list![3].toDouble(),
             title: '${((widget.list![3] / sum) * 100).toStringAsFixed(0)}%',
             radius: radius,
-            titleStyle: TextStyle(
+            titleStyle: const TextStyle(
               fontSize: fontSize,
               fontWeight: FontWeight.bold,
+              color: Colors.black,
             ),
           );
         default:

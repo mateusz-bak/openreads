@@ -4,7 +4,7 @@ class PieChartIndicator extends StatelessWidget {
   const PieChartIndicator({
     super.key,
     required this.color,
-    this.size = 16,
+    this.size = 14,
     required this.text,
     required this.number,
   });
@@ -16,20 +16,28 @@ class PieChartIndicator extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Row(
+      mainAxisAlignment: MainAxisAlignment.end,
       children: <Widget>[
-        Container(
-          width: size,
-          height: size,
-          decoration: BoxDecoration(
-            shape: BoxShape.circle,
-            color: color,
-          ),
-        ),
-        const SizedBox(width: 4),
         Text(
           '$text ($number)',
-          style: const TextStyle(fontSize: 12),
-        )
+          style: const TextStyle(fontSize: 11),
+        ),
+        const SizedBox(width: 4),
+        Container(
+          padding: const EdgeInsets.all(1),
+          decoration: BoxDecoration(
+            shape: BoxShape.circle,
+            color: Theme.of(context).colorScheme.onSurfaceVariant,
+          ),
+          child: Container(
+            width: size,
+            height: size,
+            decoration: BoxDecoration(
+              shape: BoxShape.circle,
+              color: color,
+            ),
+          ),
+        ),
       ],
     );
   }

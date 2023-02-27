@@ -3,11 +3,9 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:openreads/core/themes/app_theme.dart';
-import 'package:openreads/core/themes/app_theme.dart';
 import 'package:openreads/resources/l10n.dart';
 import 'package:openreads/logic/bloc/challenge_bloc/challenge_bloc.dart';
 import 'package:openreads/logic/bloc/stats_bloc/stats_bloc.dart';
-import 'package:openreads/logic/bloc/theme_bloc/theme_bloc.dart';
 
 import 'package:openreads/model/yearly_challenge.dart';
 import 'package:openreads/ui/statistics_screen/widgets/widgets.dart';
