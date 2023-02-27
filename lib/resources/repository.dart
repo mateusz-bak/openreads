@@ -4,7 +4,7 @@ import 'package:openreads/model/book.dart';
 class Repository {
   final DatabaseController dbController = DatabaseController();
 
-  Future getAllBooks() => dbController.getAllBooks();
+  Future getAllNotDeletedBooks() => dbController.getAllNotDeletedBooks();
 
   Future<List<Book>> getBooks(int status) => dbController.getBooks(
         status: status,

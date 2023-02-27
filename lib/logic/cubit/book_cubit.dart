@@ -48,7 +48,7 @@ class BookCubit extends Cubit {
   }
 
   getAllBooks({bool tags = false}) async {
-    List<Book> books = await repository.getAllBooks();
+    List<Book> books = await repository.getAllNotDeletedBooks();
     _booksFetcher.sink.add(books);
     if (tags) return;
     _tagsFetcher.sink.add(_getTags(books));

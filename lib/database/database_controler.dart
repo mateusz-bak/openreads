@@ -11,12 +11,13 @@ class DatabaseController {
     return db.insert("booksTable", book.toJSON());
   }
 
-  Future<List<Book>> getAllBooks({List<String>? columns}) async {
+  Future<List<Book>> getAllNotDeletedBooks({List<String>? columns}) async {
     final db = await dbClient.db;
 
     var result = await db.query(
       "booksTable",
       columns: columns,
+      where: 'deleted = 0',
     );
 
     return result.isNotEmpty
