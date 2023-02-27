@@ -15,7 +15,7 @@ class BookStatusRow extends StatelessWidget {
   final double defaultHeight;
   final int? currentStatus;
 
-  final Function(int) onPressed;
+  final Function(int, bool) onPressed;
 
   @override
   Widget build(BuildContext context) {
@@ -29,7 +29,7 @@ class BookStatusRow extends StatelessWidget {
           isSelected: currentStatus == 0,
           currentStatus: currentStatus,
           onPressed: () {
-            onPressed(0);
+            onPressed(0, true);
           },
         ),
         const SizedBox(width: 10),
@@ -41,7 +41,7 @@ class BookStatusRow extends StatelessWidget {
           isSelected: currentStatus == 1,
           currentStatus: currentStatus,
           onPressed: () {
-            onPressed(1);
+            onPressed(1, true);
           },
         ),
         const SizedBox(width: 10),
@@ -53,7 +53,7 @@ class BookStatusRow extends StatelessWidget {
           isSelected: currentStatus == 2,
           currentStatus: currentStatus,
           onPressed: () {
-            onPressed(2);
+            onPressed(2, true);
           },
         ),
         const SizedBox(width: 10),
@@ -65,7 +65,7 @@ class BookStatusRow extends StatelessWidget {
           isSelected: currentStatus == 3,
           currentStatus: currentStatus,
           onPressed: () {
-            onPressed(3);
+            onPressed(3, true);
           },
         ),
       ],

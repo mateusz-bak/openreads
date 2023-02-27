@@ -89,7 +89,7 @@ class _AddBookScreenState extends State<AddBookScreen> {
     }
 
     if (widget.book?.status != null && !widget.fromOpenLibrary) {
-      _changeBookStatus(widget.book!.status);
+      _changeBookStatus(widget.book!.status, false);
     }
 
     blurHashString = widget.book?.blurHash;
@@ -246,7 +246,7 @@ class _AddBookScreenState extends State<AddBookScreen> {
     _generateBlurHash();
   }
 
-  void _changeBookStatus(int position) {
+  void _changeBookStatus(int position, bool updateDates) {
     setState(() {
       _status = position;
     });
@@ -254,11 +254,14 @@ class _AddBookScreenState extends State<AddBookScreen> {
     final dateNow = DateTime.now();
     final date = DateTime(dateNow.year, dateNow.month, dateNow.day);
 
-    if (position == 0) {
-      _finishDate ??= date;
-    } else if (position == 1) {
-      _startDate ??= date;
+    if (updateDates) {
+      if (position == 0) {
+        _finishDate ??= date;
+      } else if (position == 1) {
+        _startDate ??= date;
+      }
     }
+
     FocusManager.instance.primaryFocus?.unfocus();
   }
 
