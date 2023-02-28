@@ -64,6 +64,8 @@ class _SearchPageState extends State<SearchPage> {
                         addBottomPadding: (snapshot.data!.length == index + 1),
                         onPressed: () {
                           if (snapshot.data![index].id == null) return;
+                          bookCubit.clearCurrentBook();
+                          bookCubit.getBook(snapshot.data![index].id!);
 
                           Navigator.push(
                             context,

@@ -26,7 +26,7 @@ class BookCubit extends Cubit {
       BehaviorSubject<List<int>>();
   final BehaviorSubject<List<String>> _tagsFetcher =
       BehaviorSubject<List<String>>();
-  final BehaviorSubject<Book> _bookFetcher = BehaviorSubject<Book>();
+  final BehaviorSubject<Book?> _bookFetcher = BehaviorSubject<Book?>();
 
   Stream<List<Book>> get allBooks => _booksFetcher.stream;
   Stream<List<Book>> get finishedBooks => _finishedBooksFetcher.stream;
@@ -38,7 +38,7 @@ class BookCubit extends Cubit {
   Stream<List<int>> get finishedYears => _finishedYearsFetcher.stream;
   Stream<List<String>> get tags => _tagsFetcher.stream;
 
-  Stream<Book> get book => _bookFetcher.stream;
+  Stream<Book?> get book => _bookFetcher.stream;
 
   BookCubit() : super(null) {
     getFinishedBooks();
@@ -126,6 +126,10 @@ class BookCubit extends Cubit {
   getBook(int id) async {
     Book book = await repository.getBook(id);
     _bookFetcher.sink.add(book);
+  }
+
+  clearCurrentBook() {
+    _bookFetcher.sink.add(null);
   }
 
   List<int> _getFinishedYears(List<Book> books) {

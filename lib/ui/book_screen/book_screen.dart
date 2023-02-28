@@ -306,14 +306,12 @@ class BookScreen extends StatelessWidget {
       l10n.edit_book,
     ];
 
-    bookCubit.getBook(id);
-
     return Scaffold(
       appBar: AppBar(
         actions: [
-          StreamBuilder<Book>(
+          StreamBuilder<Book?>(
               stream: bookCubit.book,
-              builder: (context, AsyncSnapshot<Book> snapshot) {
+              builder: (context, AsyncSnapshot<Book?> snapshot) {
                 if (snapshot.hasData) {
                   if (moreButtonOptions.length == 1) {
                     if (snapshot.data?.deleted == true) {
@@ -366,17 +364,10 @@ class BookScreen extends StatelessWidget {
         ],
       ),
       body: SingleChildScrollView(
-        child: StreamBuilder<Book>(
+        child: StreamBuilder<Book?>(
           stream: bookCubit.book,
-          builder: (context, AsyncSnapshot<Book> snapshot) {
-            if (snapshot.hasData) {
-              if (snapshot.data == null) {
-                return Center(
-                  child: Text(
-                    l10n.error_getting_book,
-                  ),
-                );
-              }
+          builder: (context, AsyncSnapshot<Book?> snapshot) {
+            if (snapshot.hasData && snapshot.data != null) {
               book = snapshot.data!;
 
               return Column(
@@ -499,9 +490,7 @@ class BookScreen extends StatelessWidget {
                 snapshot.error.toString(),
               );
             } else {
-              return const Center(
-                child: CircularProgressIndicator(),
-              );
+              return const SizedBox();
             }
           },
         ),

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:openreads/logic/cubit/book_cubit.dart';
 import 'package:openreads/model/book.dart';
 import 'package:openreads/ui/book_screen/book_screen.dart';
 import 'package:openreads/ui/books_screen/widgets/widgets.dart';
@@ -33,6 +34,8 @@ class _BooksListState extends State<BooksList>
           addBottomPadding: (widget.books.length == index + 1),
           onPressed: () {
             if (widget.books[index].id == null) return;
+            bookCubit.clearCurrentBook();
+            bookCubit.getBook(widget.books[index].id!);
 
             Navigator.push(
               context,
