@@ -47,8 +47,11 @@ class _CoverViewState extends State<CoverView> {
                     children: [
                       BlurHash(hash: widget.blurHash!),
                       Container(
-                          // color: Theme.of(context).onPrimary.withOpacity(0.4),
-                          )
+                        color: Theme.of(context)
+                            .colorScheme
+                            .surface
+                            .withOpacity(0.3),
+                      )
                     ],
                   ),
           ),
