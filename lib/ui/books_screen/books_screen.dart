@@ -5,7 +5,7 @@ import 'package:openreads/core/themes/app_theme.dart';
 import 'package:openreads/resources/l10n.dart';
 import 'package:openreads/logic/bloc/sort_bloc/sort_bloc.dart';
 import 'package:openreads/logic/bloc/theme_bloc/theme_bloc.dart';
-import 'package:openreads/logic/cubit/book_cubit.dart';
+import 'package:openreads/main.dart';
 import 'package:openreads/model/book.dart';
 import 'package:openreads/ui/add_book_screen/widgets/widgets.dart';
 import 'package:openreads/ui/books_screen/widgets/widgets.dart';
@@ -713,7 +713,9 @@ class _BooksScreenState extends State<BooksScreen>
             snapshot.error.toString(),
           );
         } else {
-          return const SizedBox();
+          return const Center(
+            child: CircularProgressIndicator(),
+          );
         }
       },
     );

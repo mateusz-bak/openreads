@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:openreads/core/themes/app_theme.dart';
 import 'package:openreads/resources/l10n.dart';
-import 'package:openreads/logic/cubit/book_cubit.dart';
+import 'package:openreads/main.dart';
 import 'package:openreads/model/book.dart';
 import 'package:openreads/ui/add_book_screen/widgets/widgets.dart';
 import 'package:openreads/ui/book_screen/widgets/widgets.dart';

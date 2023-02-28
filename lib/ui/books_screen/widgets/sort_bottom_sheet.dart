@@ -5,7 +5,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:openreads/core/themes/app_theme.dart';
 import 'package:openreads/resources/l10n.dart';
 import 'package:openreads/logic/bloc/sort_bloc/sort_bloc.dart';
-import 'package:openreads/logic/cubit/book_cubit.dart';
+import 'package:openreads/main.dart';
 import 'package:openreads/ui/books_screen/widgets/widgets.dart';
 
 class SortBottomSheet extends StatefulWidget {

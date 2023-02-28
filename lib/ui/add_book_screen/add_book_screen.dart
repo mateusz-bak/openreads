@@ -5,7 +5,7 @@ import 'package:image_cropper/image_cropper.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:loading_animation_widget/loading_animation_widget.dart';
 import 'package:openreads/resources/l10n.dart';
-import 'package:openreads/logic/cubit/book_cubit.dart';
+import 'package:openreads/main.dart';
 import 'package:openreads/model/book.dart';
 import 'package:openreads/ui/add_book_screen/widgets/widgets.dart';
 import 'package:blurhash_dart/blurhash_dart.dart' as blurhash_dart;

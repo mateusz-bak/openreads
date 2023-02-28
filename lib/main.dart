@@ -10,12 +10,15 @@ import 'package:openreads/logic/bloc/rating_type_bloc/rating_type_bloc.dart';
 import 'package:openreads/logic/bloc/sort_bloc/sort_bloc.dart';
 import 'package:openreads/logic/bloc/theme_bloc/theme_bloc.dart';
 import 'package:openreads/logic/bloc/welcome_bloc/welcome_bloc.dart';
+import 'package:openreads/logic/cubit/book_cubit.dart';
 import 'package:openreads/resources/connectivity_service.dart';
 import 'package:openreads/resources/open_library_service.dart';
 import 'package:openreads/ui/books_screen/books_screen.dart';
 import 'package:openreads/ui/welcome_screen/welcome_screen.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+
+late BookCubit bookCubit;
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -24,6 +27,8 @@ void main() async {
   HydratedBloc.storage = await HydratedStorage.build(
     storageDirectory: await getTemporaryDirectory(),
   );
+
+  bookCubit = BookCubit();
 
   runApp(const App());
 }

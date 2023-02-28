@@ -10,7 +10,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:openreads/resources/l10n.dart';
 import 'package:openreads/logic/bloc/challenge_bloc/challenge_bloc.dart';
-import 'package:openreads/logic/cubit/book_cubit.dart';
+import 'package:openreads/main.dart';
 import 'package:openreads/model/book.dart';
 import 'package:openreads/model/book_from_backup_v3.dart';
 import 'package:openreads/model/year_from_backup_v3.dart';

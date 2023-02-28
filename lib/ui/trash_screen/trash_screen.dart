@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:openreads/resources/l10n.dart';
-import 'package:openreads/logic/cubit/book_cubit.dart';
+import 'package:openreads/main.dart';
 import 'package:openreads/model/book.dart';
 import 'package:openreads/ui/books_screen/widgets/widgets.dart';
 

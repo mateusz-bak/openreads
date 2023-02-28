@@ -3,8 +3,6 @@ import 'package:openreads/model/book.dart';
 import 'package:openreads/resources/repository.dart';
 import 'package:rxdart/rxdart.dart';
 
-final bookCubit = BookCubit();
-
 class BookCubit extends Cubit {
   final Repository repository = Repository();
 
