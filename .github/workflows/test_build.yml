@@ -19,6 +19,7 @@ jobs:
         java-version: '11'
     - uses: subosito/flutter-action@v2
       with:
-        flutter-version: '3.7.3'
+        flutter-version: '3.7.7'
+    - run: rm /home/runner/work/openreads-android/openreads-android/lib/l10n/app_kaa.arb
     - run: flutter pub get
     - run: flutter build apk
