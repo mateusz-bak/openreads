@@ -362,7 +362,19 @@ class _SortBottomSheetState extends State<SortBottomSheet> {
                           child: DropdownButtonHideUnderline(
                             child: DropdownButton2(
                               isExpanded: true,
-                              buttonHeight: 50,
+                              buttonStyleData: ButtonStyleData(
+                                height: 50,
+                                decoration: BoxDecoration(
+                                  border: Border.all(
+                                    color: dividerColor,
+                                  ),
+                                  color: Theme.of(context)
+                                      .colorScheme
+                                      .surfaceVariant,
+                                  borderRadius:
+                                      BorderRadius.circular(cornerRadius),
+                                ),
+                              ),
                               items: sortOptions
                                   .map((item) => DropdownMenuItem<String>(
                                         value: item,
@@ -373,16 +385,6 @@ class _SortBottomSheetState extends State<SortBottomSheet> {
                                       ))
                                   .toList(),
                               value: _getDropdownValue(state),
-                              buttonDecoration: BoxDecoration(
-                                border: Border.all(
-                                  color: dividerColor,
-                                ),
-                                color: Theme.of(context)
-                                    .colorScheme
-                                    .surfaceVariant,
-                                borderRadius:
-                                    BorderRadius.circular(cornerRadius),
-                              ),
                               onChanged: (value) => _updateSort(
                                 context,
                                 value,

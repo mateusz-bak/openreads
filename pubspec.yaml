@@ -27,7 +27,7 @@ dependencies:
   image: ^4.0.15
   fl_chart: ^0.61.0
   intl: ^0.17.0
-  dropdown_button2: ^1.8.9
+  dropdown_button2: ^2.0.0
   equatable: ^2.0.5
   connectivity_plus: ^3.0.2
   http: ^0.13.5
