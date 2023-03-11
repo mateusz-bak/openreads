@@ -9,7 +9,7 @@ on:
       - master
 
 jobs:
-  android_apk_build_ubuntu:
+  android_apk_build:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v3
@@ -20,11 +20,24 @@ jobs:
     - uses: subosito/flutter-action@v2
       with:
         flutter-version: '3.7.7'
+    - name: Configure Keystore for Android
+      run: |
+        echo "$PLAY_STORE_UPLOAD_KEY" | base64 --decode > app/upload-keystore.jks
+        echo "storeFile=upload-keystore.jks" >> key.properties
+        echo "keyAlias=$KEYSTORE_KEY_ALIAS" >> key.properties
+        echo "storePassword=$KEYSTORE_STORE_PASSWORD" >> key.properties
+        echo "keyPassword=$KEYSTORE_KEY_PASSWORD" >> key.properties
+      env:
+        PLAY_STORE_UPLOAD_KEY: ${{ secrets.PLAY_STORE_UPLOAD_KEY }}
+        KEYSTORE_KEY_ALIAS: ${{ secrets.KEYSTORE_KEY_ALIAS }}
+        KEYSTORE_KEY_PASSWORD: ${{ secrets.KEYSTORE_KEY_PASSWORD }}
+        KEYSTORE_STORE_PASSWORD: ${{ secrets.KEYSTORE_STORE_PASSWORD }}
+      working-directory: android
     - run: rm /home/runner/work/openreads-android/openreads-android/lib/l10n/app_kaa.arb
     - run: flutter pub get
-    - run: flutter build apk
+    - run: flutter build -v apk
 
-  android_appbundle_build_ubuntu:
+  android_appbundle_build:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v3
@@ -35,36 +48,20 @@ jobs:
     - uses: subosito/flutter-action@v2
       with:
         flutter-version: '3.7.7'
+    - name: Configure Keystore for Android
+      run: |
+        echo "$PLAY_STORE_UPLOAD_KEY" | base64 --decode > app/upload-keystore.jks
+        echo "storeFile=upload-keystore.jks" >> key.properties
+        echo "keyAlias=$KEYSTORE_KEY_ALIAS" >> key.properties
+        echo "storePassword=$KEYSTORE_STORE_PASSWORD" >> key.properties
+        echo "keyPassword=$KEYSTORE_KEY_PASSWORD" >> key.properties
+      env:
+        PLAY_STORE_UPLOAD_KEY: ${{ secrets.PLAY_STORE_UPLOAD_KEY }}
+        KEYSTORE_KEY_ALIAS: ${{ secrets.KEYSTORE_KEY_ALIAS }}
+        KEYSTORE_KEY_PASSWORD: ${{ secrets.KEYSTORE_KEY_PASSWORD }}
+        KEYSTORE_STORE_PASSWORD: ${{ secrets.KEYSTORE_STORE_PASSWORD }}
+      working-directory: android
     - run: rm /home/runner/work/openreads-android/openreads-android/lib/l10n/app_kaa.arb
     - run: flutter pub get
-    - run: flutter build appbundle
+    - run: flutter build -v appbundle
 
-  android_apk_build_macos:
-    runs-on: macos-latest
-    steps:
-    - uses: actions/checkout@v3
-    - uses: actions/setup-java@v2
-      with:
-        distribution: 'zulu'
-        java-version: '11'
-    - uses: subosito/flutter-action@v2
-      with:
-        flutter-version: '3.7.7'
-    - run: rm /Users/runner/work/openreads-android/openreads-android/lib/l10n/app_kaa.arb 
-    - run: flutter pub get
-    - run: flutter build apk
-
-  android_appbundle_build_macos:
-    runs-on: macos-latest
-    steps:
-    - uses: actions/checkout@v3
-    - uses: actions/setup-java@v2
-      with:
-        distribution: 'zulu'
-        java-version: '11'
-    - uses: subosito/flutter-action@v2
-      with:
-        flutter-version: '3.7.7'
-    - run: rm /Users/runner/work/openreads-android/openreads-android/lib/l10n/app_kaa.arb 
-    - run: flutter pub get
-    - run: flutter build appbundle
