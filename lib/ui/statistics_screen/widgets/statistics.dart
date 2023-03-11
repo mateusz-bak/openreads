@@ -345,6 +345,13 @@ class Statistics extends StatelessWidget {
     StatsLoaded state,
     int? year,
   ) {
+    if (year == null) {
+      return ReadStats(
+        title: l10n.finished_books,
+        value: state.finishedBooksAll.toString(),
+      );
+    }
+
     for (var bookReadStat in state.finishedBooksByMonth) {
       if (bookReadStat.year == year) {
         return ReadStats(
@@ -362,6 +369,13 @@ class Statistics extends StatelessWidget {
     StatsLoaded state,
     int? year,
   ) {
+    if (year == null) {
+      return ReadStats(
+        title: l10n.finished_pages,
+        value: state.finishedPagesAll.toString(),
+      );
+    }
+
     for (var bookReadStat in state.finishedPagesByMonth) {
       if (bookReadStat.year == year) {
         return ReadStats(
