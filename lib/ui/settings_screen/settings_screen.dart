@@ -5,6 +5,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_email_sender/flutter_email_sender.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:openreads/core/constants.dart/enums.dart';
+import 'package:openreads/core/constants.dart/langauge_names.dart';
 import 'package:openreads/core/themes/app_theme.dart';
 import 'package:openreads/model/app_language.dart';
 import 'package:openreads/resources/l10n.dart';
@@ -34,25 +35,26 @@ class SettingsScreen extends StatelessWidget {
   final buyMeCoffeUrl = 'https://www.buymeacoffee.com/mateuszbak';
 
   final languages = [
-    AppLanguage(fullName: l10n.english, twoLetterCode: 'en'),
-    AppLanguage(fullName: l10n.arabic, twoLetterCode: 'ar'),
-    AppLanguage(fullName: l10n.catalan, twoLetterCode: 'ca'),
-    AppLanguage(fullName: l10n.chinese_simplified, twoLetterCode: 'zh'),
-    AppLanguage(fullName: l10n.czech, twoLetterCode: 'cs'),
-    AppLanguage(fullName: l10n.danish, twoLetterCode: 'da'),
-    AppLanguage(fullName: l10n.dutch, twoLetterCode: 'nl'),
-    AppLanguage(fullName: l10n.french, twoLetterCode: 'fr'),
-    AppLanguage(fullName: l10n.georgian, twoLetterCode: 'ka'),
-    AppLanguage(fullName: l10n.german, twoLetterCode: 'de'),
-    AppLanguage(fullName: l10n.hindi, twoLetterCode: 'hi'),
-    AppLanguage(fullName: l10n.italian, twoLetterCode: 'it'),
-    AppLanguage(fullName: l10n.norwegian, twoLetterCode: 'no'),
-    AppLanguage(fullName: l10n.portugese, twoLetterCode: 'pt'),
-    AppLanguage(fullName: l10n.russian, twoLetterCode: 'ru'),
-    AppLanguage(fullName: l10n.spanish, twoLetterCode: 'es'),
-    AppLanguage(fullName: l10n.turkish, twoLetterCode: 'tr'),
-    AppLanguage(fullName: l10n.ukrainian, twoLetterCode: 'uk'),
-    AppLanguage(fullName: l10n.polish, twoLetterCode: 'pl'),
+    AppLanguage(fullName: languageEnglish, twoLetterCode: 'en'),
+    AppLanguage(fullName: languageArabic, twoLetterCode: 'ar'),
+    AppLanguage(fullName: languageCatalan, twoLetterCode: 'ca'),
+    AppLanguage(fullName: languageChinese, twoLetterCode: 'zh'),
+    AppLanguage(fullName: languageCzech, twoLetterCode: 'cs'),
+    AppLanguage(fullName: languageDanish, twoLetterCode: 'da'),
+    AppLanguage(fullName: languageDutch, twoLetterCode: 'nl'),
+    AppLanguage(fullName: languageFrench, twoLetterCode: 'fr'),
+    AppLanguage(fullName: languageGeorgian, twoLetterCode: 'ka'),
+    AppLanguage(fullName: languageGerman, twoLetterCode: 'de'),
+    AppLanguage(fullName: languageHindi, twoLetterCode: 'hi'),
+    AppLanguage(fullName: languageItalian, twoLetterCode: 'it'),
+    AppLanguage(fullName: languageNorwegian, twoLetterCode: 'no'),
+    AppLanguage(fullName: languagePolish, twoLetterCode: 'pl'),
+    AppLanguage(fullName: languagePortuguese, twoLetterCode: 'pt'),
+    AppLanguage(fullName: languageRomanian, twoLetterCode: 'ro'),
+    AppLanguage(fullName: languageRussian, twoLetterCode: 'ru'),
+    AppLanguage(fullName: languageSpanish, twoLetterCode: 'es'),
+    AppLanguage(fullName: languageTurkish, twoLetterCode: 'tr'),
+    AppLanguage(fullName: languageUkrainian, twoLetterCode: 'uk'),
   ];
 
   _sendEmailToDev(BuildContext context, [bool mounted = true]) async {
