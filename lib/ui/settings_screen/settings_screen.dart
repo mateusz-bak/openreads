@@ -1184,6 +1184,8 @@ class SettingsScreen extends StatelessWidget {
         style: TextStyle(
           fontSize: 17,
           color: Theme.of(context).colorScheme.primary,
+          fontWeight: FontWeight.bold,
+          letterSpacing: 0.8,
         ),
       ),
       description: Text(

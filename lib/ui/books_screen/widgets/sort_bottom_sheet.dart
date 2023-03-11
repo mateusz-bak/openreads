@@ -332,11 +332,12 @@ class _SortBottomSheetState extends State<SortBottomSheet> {
           height: 3,
           width: MediaQuery.of(context).size.width / 4,
           decoration: BoxDecoration(
-              color: Colors.grey.shade300,
-              borderRadius: BorderRadius.circular(10)),
+            color: Colors.grey.shade300,
+            borderRadius: BorderRadius.circular(10),
+          ),
         ),
         Container(
-          padding: const EdgeInsets.all(10),
+          padding: const EdgeInsets.fromLTRB(20, 10, 20, 10),
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(15),
             color: Theme.of(context).colorScheme.surface,
