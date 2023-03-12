@@ -211,6 +211,6 @@
   "migration_v1_to_v2_1": "Deine Bücher werden auf die neue Version migriert",
   "migration_v1_to_v2_2": "Bitte verlasse diesen Bildschirm nicht, bevor alle deine Bücher migriert sind, da sie sonst verloren gehen!",
   "migration_v1_to_v2_finished": "Wenn die Migration der Bücher abgeschlossen ist, klicke auf die Schaltfläche START.",
-  "migration_v1_to_v2_retrigger": "Run the v2.0 migration again",
-  "migration_v1_to_v2_retrigger_description": "Click if books are not showing up after update to v2.0"
+  "migration_v1_to_v2_retrigger": "Führe die Migration auf v2.0 erneut durch",
+  "migration_v1_to_v2_retrigger_description": "Klicke, wenn Bücher nach dem Update auf v2.0 nicht angezeigt werden"
 }
