@@ -210,5 +210,7 @@
   "start_button": "START",
   "migration_v1_to_v2_1": "Uw boeken worden gemigreerd naar de nieuwe versie",
   "migration_v1_to_v2_2": "Do not leave this screen before all of your books are migrated, because they will be lost!",
-  "migration_v1_to_v2_finished": "Migreren van boeken voltooid, klik op de START-knop."
+  "migration_v1_to_v2_finished": "Migreren van boeken voltooid, klik op de START-knop.",
+  "migration_v1_to_v2_retrigger": "Run the v2.0 migration again",
+  "migration_v1_to_v2_retrigger_description": "Click if books are not showing up after update to v2.0"
 }
