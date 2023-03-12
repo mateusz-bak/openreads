@@ -210,5 +210,7 @@
   "start_button": "ROZPOCZNIJ",
   "migration_v1_to_v2_1": "Twoje książki są przenoszone do nowej wersji",
   "migration_v1_to_v2_2": "Nie opuszczaj tego ekranu zanim wszystkie książki zostaną przeniesione, ponieważ zostaną utracone!",
-  "migration_v1_to_v2_finished": "Przenoszenie książek zakończone, kliknij przycisk START."
+  "migration_v1_to_v2_finished": "Przenoszenie książek zakończone, kliknij przycisk START.",
+  "migration_v1_to_v2_retrigger": "Run the v2.0 migration again",
+  "migration_v1_to_v2_retrigger_description": "Click if books are not showing up after update to v2.0"
 }
