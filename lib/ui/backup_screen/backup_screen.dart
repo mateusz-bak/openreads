@@ -301,7 +301,7 @@ class _BackupScreenState extends State<BackupScreen> {
     try {
       createFileAsBytes(
         selectedUriDir,
-        mimeType: 'application/zip',
+        mimeType: '',
         displayName: fileName,
         bytes: File(tmpBackupPath).readAsBytesSync(),
       );
