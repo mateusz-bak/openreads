@@ -210,5 +210,7 @@
   "start_button": "START",
   "migration_v1_to_v2_1": "Bøkene dine blir overført til den nye versjonen",
   "migration_v1_to_v2_2": "Ikke forlat siden før alle dine bøker er overført, ellers går de tapt!",
-  "migration_v1_to_v2_finished": "Bøkene er overført, trykk nå på START-knappen."
+  "migration_v1_to_v2_finished": "Bøkene er overført, trykk nå på START-knappen.",
+  "migration_v1_to_v2_retrigger": "Run the v2.0 migration again",
+  "migration_v1_to_v2_retrigger_description": "Click if books are not showing up after update to v2.0"
 }
