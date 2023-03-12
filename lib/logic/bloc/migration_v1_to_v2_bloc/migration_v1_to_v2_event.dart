@@ -6,13 +6,16 @@ abstract class MigrationV1ToV2Event extends Equatable {
 
 class StartMigration extends MigrationV1ToV2Event {
   final BuildContext context;
+  final bool retrigger;
 
   const StartMigration({
     required this.context,
+    this.retrigger = false,
   });
 
   @override
   List<Object?> get props => [
         context,
+        retrigger,
       ];
 }

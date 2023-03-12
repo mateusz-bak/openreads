@@ -8,6 +8,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:openreads/logic/bloc/migration_v1_to_v2_bloc/migration_v1_to_v2_bloc.dart';
 import 'package:openreads/resources/l10n.dart';
 import 'package:openreads/logic/bloc/challenge_bloc/challenge_bloc.dart';
 import 'package:openreads/main.dart';
@@ -15,6 +16,7 @@ import 'package:openreads/model/book.dart';
 import 'package:openreads/model/book_from_backup_v3.dart';
 import 'package:openreads/model/year_from_backup_v3.dart';
 import 'package:openreads/model/yearly_challenge.dart';
+import 'package:openreads/ui/welcome_screen/widgets/widgets.dart';
 import 'package:package_info_plus/package_info_plus.dart';
 import 'package:path/path.dart' as path;
 import 'package:path_provider/path_provider.dart';
@@ -699,6 +701,12 @@ class _BackupScreenState extends State<BackupScreen> {
     );
   }
 
+  _startMigrationV1ToV2() {
+    BlocProvider.of<MigrationV1ToV2Bloc>(context).add(
+      StartMigration(context: context, retrigger: true),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -708,115 +716,193 @@ class _BackupScreenState extends State<BackupScreen> {
           style: const TextStyle(fontSize: 18),
         ),
       ),
-      body: SettingsList(
-        contentPadding: const EdgeInsets.only(top: 10),
-        lightTheme: SettingsThemeData(
-          settingsListBackground: Theme.of(context).colorScheme.surface,
-        ),
-        darkTheme: SettingsThemeData(
-          settingsListBackground: Theme.of(context).colorScheme.surface,
-        ),
-        sections: [
-          SettingsSection(
-            tiles: <SettingsTile>[
-              SettingsTile(
-                title: Text(
-                  l10n.create_local_backup,
-                  style: const TextStyle(
-                    fontSize: 16,
-                  ),
-                ),
-                leading: (_creatingLocal)
-                    ? const SizedBox(
-                        width: 24,
-                        height: 24,
-                        child: CircularProgressIndicator(),
-                      )
-                    : const Icon(FontAwesomeIcons.solidFloppyDisk),
-                description: Text(
-                  l10n.create_local_backup_description,
-                ),
-                onPressed: _startLocalBackup,
+      body: Column(
+        children: [
+          Expanded(
+            child: SettingsList(
+              contentPadding: const EdgeInsets.only(top: 10),
+              lightTheme: SettingsThemeData(
+                settingsListBackground: Theme.of(context).colorScheme.surface,
               ),
-              SettingsTile(
-                title: Text(
-                  l10n.create_cloud_backup,
-                  style: const TextStyle(
-                    fontSize: 16,
-                  ),
-                ),
-                leading: (_creatingCloud)
-                    ? const SizedBox(
-                        width: 24,
-                        height: 24,
-                        child: CircularProgressIndicator(),
-                      )
-                    : const Icon(FontAwesomeIcons.cloudArrowUp),
-                description: Text(
-                  l10n.create_cloud_backup_description,
-                ),
-                onPressed: _startCloudBackup,
+              darkTheme: SettingsThemeData(
+                settingsListBackground: Theme.of(context).colorScheme.surface,
               ),
-              SettingsTile(
-                title: Text(
-                  l10n.restore_backup,
-                  style: const TextStyle(
-                    fontSize: 16,
-                  ),
-                ),
-                leading: (_restoringLocal)
-                    ? const SizedBox(
-                        width: 24,
-                        height: 24,
-                        child: CircularProgressIndicator(),
-                      )
-                    : const Icon(FontAwesomeIcons.arrowUpFromBracket),
-                description: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    restoredCounterText.isNotEmpty
-                        ? Text(
-                            restoredCounterText,
-                            style: const TextStyle(
-                              fontWeight: FontWeight.bold,
-                            ),
-                          )
-                        : const SizedBox(),
-                    Text(
-                      '${l10n.restore_backup_description_1}\n${l10n.restore_backup_description_2}',
+              sections: [
+                SettingsSection(
+                  tiles: <SettingsTile>[
+                    SettingsTile(
+                      title: Text(
+                        l10n.create_local_backup,
+                        style: const TextStyle(
+                          fontSize: 16,
+                        ),
+                      ),
+                      leading: (_creatingLocal)
+                          ? const SizedBox(
+                              width: 24,
+                              height: 24,
+                              child: CircularProgressIndicator(),
+                            )
+                          : const Icon(FontAwesomeIcons.solidFloppyDisk),
+                      description: Text(
+                        l10n.create_local_backup_description,
+                      ),
+                      onPressed: _startLocalBackup,
+                    ),
+                    SettingsTile(
+                      title: Text(
+                        l10n.create_cloud_backup,
+                        style: const TextStyle(
+                          fontSize: 16,
+                        ),
+                      ),
+                      leading: (_creatingCloud)
+                          ? const SizedBox(
+                              width: 24,
+                              height: 24,
+                              child: CircularProgressIndicator(),
+                            )
+                          : const Icon(FontAwesomeIcons.cloudArrowUp),
+                      description: Text(
+                        l10n.create_cloud_backup_description,
+                      ),
+                      onPressed: _startCloudBackup,
+                    ),
+                    SettingsTile(
+                      title: Text(
+                        l10n.restore_backup,
+                        style: const TextStyle(
+                          fontSize: 16,
+                        ),
+                      ),
+                      leading: (_restoringLocal)
+                          ? const SizedBox(
+                              width: 24,
+                              height: 24,
+                              child: CircularProgressIndicator(),
+                            )
+                          : const Icon(FontAwesomeIcons.arrowUpFromBracket),
+                      description: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          restoredCounterText.isNotEmpty
+                              ? Text(
+                                  restoredCounterText,
+                                  style: const TextStyle(
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                                )
+                              : const SizedBox(),
+                          Text(
+                            '${l10n.restore_backup_description_1}\n${l10n.restore_backup_description_2}',
+                          ),
+                        ],
+                      ),
+                      onPressed: (context) {
+                        showDialog(
+                          context: context,
+                          builder: (context) {
+                            return Builder(builder: (context) {
+                              return AlertDialog(
+                                title: Text(
+                                  l10n.are_you_sure,
+                                ),
+                                content: Text(
+                                  l10n.restore_backup_alert_content,
+                                ),
+                                actionsAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                actions: [
+                                  FilledButton.tonal(
+                                    onPressed: () {
+                                      _startLocalRestore(context);
+                                      Navigator.of(context).pop();
+                                    },
+                                    child: Text(l10n.yes),
+                                  ),
+                                  FilledButton.tonal(
+                                    onPressed: () =>
+                                        Navigator.of(context).pop(),
+                                    child: Text(l10n.no),
+                                  ),
+                                ],
+                              );
+                            });
+                          },
+                        );
+                      },
+                    ),
+                    SettingsTile(
+                      title: Text(
+                        l10n.migration_v1_to_v2_retrigger,
+                        style: const TextStyle(
+                          fontSize: 16,
+                        ),
+                      ),
+                      leading: (_creatingLocal)
+                          ? const SizedBox(
+                              width: 24,
+                              height: 24,
+                              child: CircularProgressIndicator(),
+                            )
+                          : const Icon(FontAwesomeIcons.wrench),
+                      description: Text(
+                        l10n.migration_v1_to_v2_retrigger_description,
+                      ),
+                      onPressed: (context) {
+                        showDialog(
+                          context: context,
+                          builder: (context) {
+                            return AlertDialog(
+                              title: Text(
+                                l10n.are_you_sure,
+                              ),
+                              content: Text(
+                                l10n.restore_backup_alert_content,
+                              ),
+                              actionsAlignment: MainAxisAlignment.spaceBetween,
+                              actions: [
+                                FilledButton.tonal(
+                                  onPressed: () {
+                                    _startMigrationV1ToV2();
+                                    Navigator.of(context).pop();
+                                  },
+                                  child: Text(l10n.yes),
+                                ),
+                                FilledButton.tonal(
+                                  onPressed: () => Navigator.of(context).pop(),
+                                  child: Text(l10n.no),
+                                ),
+                              ],
+                            );
+                          },
+                        );
+                      },
                     ),
                   ],
                 ),
-                onPressed: (context) {
-                  showDialog(
-                      context: context,
-                      builder: (context) {
-                        return AlertDialog(
-                          title: Text(
-                            l10n.are_you_sure,
-                          ),
-                          content: Text(
-                            l10n.restore_backup_alert_content,
-                          ),
-                          actionsAlignment: MainAxisAlignment.spaceBetween,
-                          actions: [
-                            FilledButton.tonal(
-                              onPressed: () {
-                                _startLocalRestore(context);
-                                Navigator.of(context).pop();
-                              },
-                              child: Text(l10n.yes),
-                            ),
-                            FilledButton.tonal(
-                              onPressed: () => Navigator.of(context).pop(),
-                              child: Text(l10n.no),
-                            ),
-                          ],
-                        );
-                      });
-                },
-              ),
-            ],
+              ],
+            ),
+          ),
+          BlocBuilder<MigrationV1ToV2Bloc, MigrationV1ToV2State>(
+            builder: (context, migrationState) {
+              if (migrationState is MigrationOnging) {
+                return MigrationNotification(
+                  done: migrationState.done,
+                  total: migrationState.total,
+                );
+              } else if (migrationState is MigrationFailed) {
+                return MigrationNotification(
+                  error: migrationState.error,
+                );
+              } else if (migrationState is MigrationSucceded) {
+                return const MigrationNotification(
+                  success: true,
+                );
+              }
+
+              return const SizedBox();
+            },
           ),
         ],
       ),
