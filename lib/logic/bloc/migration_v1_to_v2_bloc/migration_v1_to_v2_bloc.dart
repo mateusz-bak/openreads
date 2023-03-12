@@ -25,15 +25,20 @@ class MigrationV1ToV2Bloc
   MigrationV1ToV2Bloc() : super(MigrationNotStarted()) {
     on<StartMigration>((event, emit) async {
       emit(MigrationTriggered());
+
       final v1BooksDbPath = await _checkIfV1DatabaseExists('BooksDB.db');
       final v1YearsDbPath = await _checkIfV1DatabaseExists('YearDB.db');
 
-      if (await _checkIfNewDBIsPresent()) {
+      if (!event.retrigger && await _checkIfNewDBIsPresent()) {
         emit(MigrationSkipped());
         return;
       }
 
       if (v1BooksDbPath == null && v1YearsDbPath == null) {
+        if (event.retrigger) {
+          _showSnackbar(event.context, 'Migration error 1');
+        }
+
         emit(MigrationSkipped());
         return;
       }
@@ -42,17 +47,34 @@ class MigrationV1ToV2Bloc
 
       if (v1BooksDbPath != null) {
         await _migrateBooksFromV1ToV2(v1BooksDbPath);
+      } else {
+        if (event.retrigger) {
+          _showSnackbar(event.context, 'Migration error 2');
+        }
       }
 
       if (v1YearsDbPath != null) {
         await _migrateYearsFromV1ToV2(event.context, v1YearsDbPath);
+      } else {
+        if (event.retrigger) {
+          _showSnackbar(event.context, 'Migration error 3');
+        }
       }
 
       emit(MigrationSucceded());
 
       await Future.delayed(const Duration(seconds: 5));
-      emit(MigrationSkipped());
     });
+  }
+
+  _showSnackbar(BuildContext context, String message) {
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        content: Text(
+          message,
+        ),
+      ),
+    );
   }
 
   Future<bool> _checkIfNewDBIsPresent() async {
