@@ -1,0 +1,6 @@
+- Upgraded UI to Material 3 with Material You support.
+- New field: book subtitle.
+- Completely improved Open Library search.
+- User can change app language.
+- In progress books can be shown as the first list.
+- New searching in your books.
