@@ -27,6 +27,8 @@ class StatsBloc extends Bloc<StatsEvent, StatsState> {
       final finishedBooksByMonth = _getFinishedBooksByMonth(finishedBooks);
       final finishedPagesByMonth = _getFinishedPagesByMonth(finishedBooks);
 
+      final finishedPagesAll = _calculateAllReadPages(finishedBooks);
+
       final averageRating = _getAverageRating(finishedBooks);
       final averagePages = _getAveragePages(finishedBooks);
       final averageReadingTime = _getAverageReadingTime(finishedBooks);
@@ -43,6 +45,8 @@ class StatsBloc extends Bloc<StatsEvent, StatsState> {
         unfinishedBooks: unfinishedBooks,
         finishedBooksByMonth: finishedBooksByMonth,
         finishedPagesByMonth: finishedPagesByMonth,
+        finishedBooksAll: finishedBooks.length,
+        finishedPagesAll: finishedPagesAll,
         averageRating: averageRating,
         averagePages: averagePages,
         averageReadingTime: averageReadingTime,
@@ -52,6 +56,18 @@ class StatsBloc extends Bloc<StatsEvent, StatsState> {
         slowestBook: slowestBook,
       ));
     });
+  }
+
+  int _calculateAllReadPages(List<Book> books) {
+    int pages = 0;
+
+    for (var book in books) {
+      if (book.pages != null) {
+        pages = pages + book.pages!;
+      }
+    }
+
+    return pages;
   }
 
   List<BookYearlyStat> _getSlowestReadBook(List<Book> books) {

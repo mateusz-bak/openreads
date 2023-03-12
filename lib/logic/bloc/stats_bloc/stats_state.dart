@@ -17,6 +17,8 @@ class StatsLoaded extends StatsState {
   final List<Book> unfinishedBooks;
   final List<BookReadStat> finishedBooksByMonth;
   final List<BookReadStat> finishedPagesByMonth;
+  final int finishedBooksAll;
+  final int finishedPagesAll;
   final List<BookYearlyStat> averageRating;
   final List<BookYearlyStat> averagePages;
   final List<BookYearlyStat> averageReadingTime;
@@ -33,6 +35,8 @@ class StatsLoaded extends StatsState {
     required this.unfinishedBooks,
     required this.finishedBooksByMonth,
     required this.finishedPagesByMonth,
+    required this.finishedBooksAll,
+    required this.finishedPagesAll,
     required this.averageRating,
     required this.averagePages,
     required this.averageReadingTime,
@@ -51,6 +55,8 @@ class StatsLoaded extends StatsState {
         unfinishedBooks,
         finishedBooksByMonth,
         finishedPagesByMonth,
+        finishedBooksAll,
+        finishedPagesAll,
         averageRating,
         averagePages,
         averageReadingTime,
