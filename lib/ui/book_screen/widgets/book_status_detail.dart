@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:like_button/like_button.dart';
 import 'package:openreads/core/themes/app_theme.dart';
 import 'package:openreads/resources/l10n.dart';
 import 'package:openreads/logic/bloc/rating_type_bloc/rating_type_bloc.dart';
@@ -28,7 +27,7 @@ class BookStatusDetail extends StatelessWidget {
   final String? startDate;
   final String? finishDate;
   final int? rating;
-  final Future<bool?> Function(bool)? onLikeTap;
+  final Function() onLikeTap;
   final bool isLiked;
   final bool showChangeStatus;
   final String? changeStatusText;
@@ -69,14 +68,20 @@ class BookStatusDetail extends StatelessWidget {
     return const SizedBox();
   }
 
-  Widget _buildLikeButton(BuildContext context, bool isLiked) {
-    return (isLiked)
-        ? FaIcon(
-            FontAwesomeIcons.solidHeart,
-            size: 30,
-            color: likeColor,
-          )
-        : const FaIcon(FontAwesomeIcons.heart, size: 30);
+  Widget _buildLikeButton() {
+    return Padding(
+      padding: const EdgeInsets.only(right: 10, top: 0),
+      child: GestureDetector(
+        onTap: onLikeTap,
+        child: (isLiked)
+            ? FaIcon(
+                FontAwesomeIcons.solidHeart,
+                size: 30,
+                color: likeColor,
+              )
+            : const FaIcon(FontAwesomeIcons.solidHeart, size: 30),
+      ),
+    );
   }
 
   Widget _buildChangeStatusButton(BuildContext context) {
@@ -201,25 +206,7 @@ class BookStatusDetail extends StatelessWidget {
                               _buildRating(context),
                             ],
                           ),
-                          Padding(
-                            padding: const EdgeInsets.only(right: 10, top: 0),
-                            child: LikeButton(
-                              isLiked: isLiked,
-                              onTap: onLikeTap,
-                              size: 30,
-                              circleColor: CircleColor(
-                                start: ratingColor,
-                                end: likeColor,
-                              ),
-                              bubblesColor: BubblesColor(
-                                dotPrimaryColor: ratingColor,
-                                dotSecondaryColor: likeColor,
-                              ),
-                              likeBuilder: (bool isLiked) {
-                                _buildLikeButton(context, isLiked);
-                              },
-                            ),
-                          ),
+                          _buildLikeButton(),
                         ],
                       ),
                     ],

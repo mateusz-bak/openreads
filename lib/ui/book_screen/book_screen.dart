@@ -18,8 +18,8 @@ class BookScreen extends StatelessWidget {
   final String heroTag;
   Book? book;
 
-  Future<bool?> _onLikeTap(isLiked) async {
-    if (book == null) return isLiked;
+  _onLikeTap() {
+    if (book == null) return;
 
     bookCubit.updateBook(Book(
       id: book!.id,
@@ -27,7 +27,7 @@ class BookScreen extends StatelessWidget {
       subtitle: book!.subtitle,
       author: book!.author,
       status: book!.status,
-      favourite: !isLiked,
+      favourite: book?.favourite == true ? false : true,
       rating: book!.rating,
       startDate: book!.startDate,
       finishDate: book!.finishDate,
@@ -40,8 +40,6 @@ class BookScreen extends StatelessWidget {
       cover: book!.cover,
       blurHash: book!.blurHash,
     ));
-
-    return !isLiked;
   }
 
   _showDeleteRestoreDialog(
