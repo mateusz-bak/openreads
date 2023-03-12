@@ -16,7 +16,6 @@
 <br/>
 <a href='https://matrix.to/#/#openreads:matrix.org'><img height=75 alt='Join the community on Element' src='https://raw.githubusercontent.com/mateusz-bak/openreads-android/master/doc/github/join_element.png'/></a>
 
-<br/>
 
 ### Openreads is a privacy oriented and open source Android app written in Kotlin for keeping tracks of your books.  
 #### There are four lists provided so you won't get confused:  
@@ -34,20 +33,16 @@ You can use custom tags and filter through them.
 
 ####  You can also view some cool statistics!  
 
-<br/><br/>
-### :construction: Currently feature development is stopped due to refactor work :construction:
-The app codebase is being migrated from Android Native (Kotlin) to Flutter (Dart).
-Main point for this is to enable iOS release with a single codebase.
-If you want to be involved in the process and help out with work, design or feedback you can join [Openreads Community on Matrix.org](https://matrix.to/#/#openreads:matrix.org).
-<br/><br/>
-## Screenshots  
-<p align='center'>  
- <img src='doc/github/screenshot-finished_n_framed.png' width='30%'/>  
- <img src='doc/github/screenshot-display-book_n_framed.png' width='30%'/>    
- <img src='doc/github/screenshot-statistics_n_framed.png' width='30%'/>
+<br/>
+
+<p align='left'>  
+ <img src='doc/gplay/app-mockup/Google Pixel 4 XL Screenshot 0.png' width='24%'/>  
+ <img src='doc/gplay/app-mockup/Google Pixel 4 XL Screenshot 1.png' width='24%'/>    
+ <img src='doc/gplay/app-mockup/Google Pixel 4 XL Screenshot 2.png' width='24%'/>
+ <img src='doc/gplay/app-mockup/Google Pixel 4 XL Screenshot 3.png' width='24%'/>
 </p>  
 
-<br/><br/>
+<br/>
 
 ## Contributing
 
@@ -56,20 +51,24 @@ Do you want to support Openreads development? You are welcome to take below acti
 ### Help translate Openreads:
 Go to [Crowdin project](https://crwd.in/openreads-android) and start translating!
 
-### Have you found a bug in Openreads?
+### Report bugs or new ideas
 Submit an issue here: [Openreads issues](https://github.com/mateusz-bak/openreads-android/issues).
 
-### Do you have an idea that could improve Openreads for everyone?
-Submit a feature request here: [Openreads issues](https://github.com/mateusz-bak/openreads-android/issues).
+### Become a Sponsor:
+[Become a Github Sponsor](https://github.com/sponsors/mateusz-bak)
 
-<br/><br/>
+[Buy a coffe at buymeacoffee.com](https://www.buymeacoffee.com/mateuszbak)
+
+<br/>
+
+## Attributions
+
+### Icons
+[Font Awesome](https://fontawesome.com/ "Font Awesome")
+
+<br/>
+
 ## Build Process
-
-### Dependencies
-
-- Android SDK
-
-### Build
 
 1. Clone or download this repository
 
@@ -78,34 +77,14 @@ Submit a feature request here: [Openreads issues](https://github.com/mateusz-bak
    cd openreads-android
    ```
 
-2. Open the project in Android Studio and run it from there or build an APK directly through Gradle:
+2. Download dependencies
 
    ```sh
-   ./gradlew assembleDebug
+   flutter pub get
    ```
 
-### Deploy to device/emulator
+2. Build and install the app on your device
 
    ```sh
-   ./gradlew installDebug
+   flutter run
    ```
-
-*You can also replace the "Debug" with "Release" to get an optimized release binary.*
-
-<br/><br/>
-## Attributions
-
-### Contributors
-
-#### Testing
-[Wiktor Młynarczyk](https://github.com/jokereey "jokereey")
-
-
-### Used APIs
-[Open Library](https://openlibrary.org/ "Open Library")
-
-
-### Icons and illustrations made by
-[Katerina Limpitsouni](https://undraw.co/illustrations "Katerina Limpitsouni")
-<br/>
-[Iconscout](https://iconscout.com/ "Iconscout")
