@@ -210,5 +210,7 @@
   "start_button": "START",
   "migration_v1_to_v2_1": "Vaše knížky jsou migrovány na novou verzi",
   "migration_v1_to_v2_2": "Neopouštějte tuto obrazovku dříve, než budou všechny vaše knížky přesunuty. Hrozí, že budou ztraceny!",
-  "migration_v1_to_v2_finished": "Migrace knížek dokončena, klepněte na tlačítko START."
+  "migration_v1_to_v2_finished": "Migrace knížek dokončena, klepněte na tlačítko START.",
+  "migration_v1_to_v2_retrigger": "Run the v2.0 migration again",
+  "migration_v1_to_v2_retrigger_description": "Click if books are not showing up after update to v2.0"
 }
