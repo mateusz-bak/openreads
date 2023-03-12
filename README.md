@@ -34,7 +34,7 @@ You can use custom tags and filter through them.
 
 ####  You can also view some cool statistics!  
 
-<br/><br/>
+<br/>
 
 <p align='left'>  
  <img src='doc/gplay/app-mockup/Google Pixel 4 XL Screenshot 0.png' width='24%'/>  
@@ -43,7 +43,7 @@ You can use custom tags and filter through them.
  <img src='doc/gplay/app-mockup/Google Pixel 4 XL Screenshot 3.png' width='24%'/>
 </p>  
 
-<br/><br/>
+<br/>
 
 ## Contributing
 
@@ -60,7 +60,7 @@ Submit an issue here: [Openreads issues](https://github.com/mateusz-bak/openread
 
 [Buy a coffe at buymeacoffee.com](https://www.buymeacoffee.com/mateuszbak)
 
-<br/><br/>
+<br/>
 ## Build Process
 
 ### Dependencies
