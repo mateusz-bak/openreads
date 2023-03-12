@@ -35,16 +35,12 @@ You can use custom tags and filter through them.
 ####  You can also view some cool statistics!  
 
 <br/><br/>
-### :construction: Currently feature development is stopped due to refactor work :construction:
-The app codebase is being migrated from Android Native (Kotlin) to Flutter (Dart).
-Main point for this is to enable iOS release with a single codebase.
-If you want to be involved in the process and help out with work, design or feedback you can join [Openreads Community on Matrix.org](https://matrix.to/#/#openreads:matrix.org).
-<br/><br/>
-## Screenshots  
-<p align='center'>  
- <img src='doc/github/screenshot-finished_n_framed.png' width='30%'/>  
- <img src='doc/github/screenshot-display-book_n_framed.png' width='30%'/>    
- <img src='doc/github/screenshot-statistics_n_framed.png' width='30%'/>
+
+<p align='left'>  
+ <img src='doc/gplay/app-mockup/Google Pixel 4 XL Screenshot 0.png' width='22%'/>  
+ <img src='doc/gplay/app-mockup/Google Pixel 4 XL Screenshot 1.png' width='22%'/>    
+ <img src='doc/gplay/app-mockup/Google Pixel 4 XL Screenshot 2.png' width='22%'/>
+ <img src='doc/gplay/app-mockup/Google Pixel 4 XL Screenshot 3.png' width='22%'/>
 </p>  
 
 <br/><br/>
@@ -56,11 +52,12 @@ Do you want to support Openreads development? You are welcome to take below acti
 ### Help translate Openreads:
 Go to [Crowdin project](https://crwd.in/openreads-android) and start translating!
 
-### Have you found a bug in Openreads?
+### Report bugs or new ideas
 Submit an issue here: [Openreads issues](https://github.com/mateusz-bak/openreads-android/issues).
 
-### Do you have an idea that could improve Openreads for everyone?
-Submit a feature request here: [Openreads issues](https://github.com/mateusz-bak/openreads-android/issues).
+### Become a Sponsor:
+[Become a Github Sponsor](https://github.com/sponsors/mateusz-bak)
+[Buy a coffe at buymeacoffee.com](https://www.buymeacoffee.com/mateuszbak)
 
 <br/><br/>
 ## Build Process
