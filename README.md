@@ -61,13 +61,14 @@ Submit an issue here: [Openreads issues](https://github.com/mateusz-bak/openread
 
 <br/>
 
+## Attributions
+
+### Icons
+[Font Awesome](https://fontawesome.com/ "Font Awesome")
+
+<br/>
+
 ## Build Process
-
-### Dependencies
-
-- Android SDK
-
-### Build
 
 1. Clone or download this repository
 
@@ -76,34 +77,14 @@ Submit an issue here: [Openreads issues](https://github.com/mateusz-bak/openread
    cd openreads-android
    ```
 
-2. Open the project in Android Studio and run it from there or build an APK directly through Gradle:
+2. Download dependencies
 
    ```sh
-   ./gradlew assembleDebug
+   flutter pub get
    ```
 
-### Deploy to device/emulator
+2. Build and install the app on your device
 
    ```sh
-   ./gradlew installDebug
+   flutter run
    ```
-
-*You can also replace the "Debug" with "Release" to get an optimized release binary.*
-
-<br/><br/>
-## Attributions
-
-### Contributors
-
-#### Testing
-[Wiktor Młynarczyk](https://github.com/jokereey "jokereey")
-
-
-### Used APIs
-[Open Library](https://openlibrary.org/ "Open Library")
-
-
-### Icons and illustrations made by
-[Katerina Limpitsouni](https://undraw.co/illustrations "Katerina Limpitsouni")
-<br/>
-[Iconscout](https://iconscout.com/ "Iconscout")
