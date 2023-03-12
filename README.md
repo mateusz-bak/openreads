@@ -57,6 +57,7 @@ Submit an issue here: [Openreads issues](https://github.com/mateusz-bak/openread
 
 ### Become a Sponsor:
 [Become a Github Sponsor](https://github.com/sponsors/mateusz-bak)
+
 [Buy a coffe at buymeacoffee.com](https://www.buymeacoffee.com/mateuszbak)
 
 <br/><br/>
