@@ -210,5 +210,7 @@
   "start_button": "ÎNCEPE",
   "migration_v1_to_v2_1": "Cărțile dvs. se transferă la noua versiune",
   "migration_v1_to_v2_2": "Nu părăsiți acest ecran înainte de a migra toate cărțile, deoarece acestea vor fi pierdute!",
-  "migration_v1_to_v2_finished": "Migrarea cărţilor s-a terminat, apăsaţi butonul START."
+  "migration_v1_to_v2_finished": "Migrarea cărţilor s-a terminat, apăsaţi butonul START.",
+  "migration_v1_to_v2_retrigger": "Run the v2.0 migration again",
+  "migration_v1_to_v2_retrigger_description": "Click if books are not showing up after update to v2.0"
 }
