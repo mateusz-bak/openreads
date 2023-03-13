@@ -212,5 +212,7 @@
   "migration_v1_to_v2_2": "Do not leave this screen before all of your books are migrated, because they will be lost!",
   "migration_v1_to_v2_finished": "Migrating books finished, click START button.",
   "migration_v1_to_v2_retrigger": "Run the v2.0 migration again",
-  "migration_v1_to_v2_retrigger_description": "Click if books are not showing up after update to v2.0"
+  "migration_v1_to_v2_retrigger_description": "Click if books are not showing up after update to v2.0.",
+  "click_here_to_restore_them": "Click here to restore them",
+  "this_msg_will_only_be_displayed_three_times": "This message will only be displayed three times."
 }
