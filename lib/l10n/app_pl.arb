@@ -211,8 +211,8 @@
   "migration_v1_to_v2_1": "Twoje książki są przenoszone do nowej wersji",
   "migration_v1_to_v2_2": "Nie opuszczaj tego ekranu zanim wszystkie książki zostaną przeniesione, ponieważ zostaną utracone!",
   "migration_v1_to_v2_finished": "Przenoszenie książek zakończone, kliknij przycisk START.",
-  "migration_v1_to_v2_retrigger": "Run the v2.0 migration again",
-  "migration_v1_to_v2_retrigger_description": "Click if books are not showing up after update to v2.0.",
-  "click_here_to_restore_them": "Click here to restore them",
-  "this_msg_will_only_be_displayed_three_times": "This message will only be displayed three times."
+  "migration_v1_to_v2_retrigger": "Uruchom ponownie migrację v2.0",
+  "migration_v1_to_v2_retrigger_description": "Kliknij jeśli książki nie pojawiają się po aktualizacji do wersji v2.0.",
+  "click_here_to_restore_them": "Kliknij tutaj, aby je przywrócić",
+  "this_msg_will_only_be_displayed_three_times": "Ta wiadomość będzie wyświetlana tylko trzy razy."
 }
