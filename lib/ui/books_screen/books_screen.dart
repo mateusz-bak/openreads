@@ -8,11 +8,13 @@ import 'package:openreads/logic/bloc/theme_bloc/theme_bloc.dart';
 import 'package:openreads/main.dart';
 import 'package:openreads/model/book.dart';
 import 'package:openreads/ui/add_book_screen/widgets/widgets.dart';
+import 'package:openreads/ui/backup_screen/backup_screen.dart';
 import 'package:openreads/ui/books_screen/widgets/widgets.dart';
 import 'package:openreads/ui/search_ol_screen/search_ol_screen.dart.dart';
 import 'package:openreads/ui/search_page/search_page.dart';
 import 'package:openreads/ui/settings_screen/settings_screen.dart';
 import 'package:openreads/ui/statistics_screen/statistics_screen.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class BooksScreen extends StatefulWidget {
   const BooksScreen({Key? key}) : super(key: key);
@@ -382,6 +384,38 @@ class _BooksScreenState extends State<BooksScreen>
     );
   }
 
+  _showLostBooksInfo() async {
+    await Future.delayed(const Duration(seconds: 2));
+
+    final prefs = await SharedPreferences.getInstance();
+    final counter = prefs.getInt('migration_v1_to_v2_remind_counter');
+
+    if (counter != null && counter > 2) return;
+
+    if (counter == null || counter == 0) {
+      prefs.setInt('migration_v1_to_v2_remind_counter', 1);
+    } else {
+      prefs.setInt('migration_v1_to_v2_remind_counter', counter + 1);
+    }
+
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        content: Text(
+          '${l10n.migration_v1_to_v2_retrigger_description} ${l10n.this_msg_will_only_be_displayed_three_times}',
+        ),
+        dismissDirection: DismissDirection.endToStart,
+        duration: const Duration(seconds: 999),
+        action: SnackBarAction(
+            label: l10n.click_here_to_restore_them,
+            onPressed: () {
+              Navigator.push(context, MaterialPageRoute(builder: (_) {
+                return BackupScreen(autoMigrationV1ToV2: true);
+              }));
+            }),
+      ),
+    );
+  }
+
   @override
   bool get wantKeepAlive => true;
 
@@ -396,6 +430,8 @@ class _BooksScreenState extends State<BooksScreen>
       l10n.statistics,
       l10n.settings,
     ];
+
+    _showLostBooksInfo();
 
     return BlocBuilder<ThemeBloc, ThemeState>(
       builder: (context, state) {

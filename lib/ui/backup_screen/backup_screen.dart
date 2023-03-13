@@ -29,7 +29,12 @@ import 'package:blurhash_dart/blurhash_dart.dart' as blurhash_dart;
 import 'package:image/image.dart' as img;
 
 class BackupScreen extends StatefulWidget {
-  const BackupScreen({super.key});
+  BackupScreen({
+    super.key,
+    this.autoMigrationV1ToV2 = false,
+  });
+
+  bool autoMigrationV1ToV2;
 
   @override
   State<BackupScreen> createState() => _BackupScreenState();
@@ -835,19 +840,26 @@ class _BackupScreenState extends State<BackupScreen> {
                     SettingsTile(
                       title: Text(
                         l10n.migration_v1_to_v2_retrigger,
-                        style: const TextStyle(
+                        style: TextStyle(
                           fontSize: 16,
+                          color: widget.autoMigrationV1ToV2
+                              ? Theme.of(context).colorScheme.primary
+                              : null,
                         ),
                       ),
-                      leading: (_creatingLocal)
-                          ? const SizedBox(
-                              width: 24,
-                              height: 24,
-                              child: CircularProgressIndicator(),
-                            )
-                          : const Icon(FontAwesomeIcons.wrench),
+                      leading: Icon(
+                        FontAwesomeIcons.wrench,
+                        color: widget.autoMigrationV1ToV2
+                            ? Theme.of(context).colorScheme.primary
+                            : null,
+                      ),
                       description: Text(
                         l10n.migration_v1_to_v2_retrigger_description,
+                        style: TextStyle(
+                          color: widget.autoMigrationV1ToV2
+                              ? Theme.of(context).colorScheme.primary
+                              : null,
+                        ),
                       ),
                       onPressed: (context) {
                         showDialog(
