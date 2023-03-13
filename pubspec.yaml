@@ -54,6 +54,7 @@ dependencies:
   package_info_plus: ^3.0.3
   animated_widgets: ^1.1.0
   shared_storage: ^0.7.0
+  shared_preferences: ^2.0.18
 
 dev_dependencies:
   flutter_test:

@@ -1316,7 +1316,7 @@ class SettingsScreen extends StatelessWidget {
         Navigator.push(
           context,
           MaterialPageRoute(
-            builder: (context) => const BackupScreen(),
+            builder: (context) => BackupScreen(),
           ),
         );
       },
