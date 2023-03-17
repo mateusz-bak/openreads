@@ -34,7 +34,7 @@ class MigrationV1ToV2Bloc
         return;
       }
 
-      if (v1BooksDbPath == null && v1YearsDbPath == null) {
+      if (v1BooksDbPath == null) {
         if (event.retrigger) {
           _showSnackbar(event.context, 'Migration error 1');
         }
@@ -45,13 +45,7 @@ class MigrationV1ToV2Bloc
 
       emit(const MigrationOnging());
 
-      if (v1BooksDbPath != null) {
-        await _migrateBooksFromV1ToV2(v1BooksDbPath);
-      } else {
-        if (event.retrigger) {
-          _showSnackbar(event.context, 'Migration error 2');
-        }
-      }
+      await _migrateBooksFromV1ToV2(v1BooksDbPath);
 
       if (v1YearsDbPath != null) {
         await _migrateYearsFromV1ToV2(event.context, v1YearsDbPath);
