@@ -211,8 +211,8 @@
   "migration_v1_to_v2_1": "Vos livres sont en cours de migration vers la nouvelle version",
   "migration_v1_to_v2_2": "Ne quittez pas cet écran avant que tous vos livres soient migrés, sinon ils seront perdus !",
   "migration_v1_to_v2_finished": "Migration des livres terminée, appuyez sur le bouton DEMARRER.",
-  "migration_v1_to_v2_retrigger": "Run the v2.0 migration again",
-  "migration_v1_to_v2_retrigger_description": "Click if books are not showing up after update to v2.0.",
-  "click_here_to_restore_them": "Click here to restore them",
-  "this_msg_will_only_be_displayed_three_times": "This message will only be displayed three times."
+  "migration_v1_to_v2_retrigger": "Exécuter à nouveau la migration vers la v2.0",
+  "migration_v1_to_v2_retrigger_description": "Cliquer si les livres ne s'affichent pas après la mise à jour vers la v2.0.",
+  "click_here_to_restore_them": "Cliquer ici pour les restaurer",
+  "this_msg_will_only_be_displayed_three_times": "Ce message ne s'affichera que trois fois."
 }
