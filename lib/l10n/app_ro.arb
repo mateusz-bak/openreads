@@ -211,8 +211,8 @@
   "migration_v1_to_v2_1": "Cărțile dvs. se transferă la noua versiune",
   "migration_v1_to_v2_2": "Nu părăsiți acest ecran înainte de a migra toate cărțile, deoarece acestea vor fi pierdute!",
   "migration_v1_to_v2_finished": "Migrarea cărţilor s-a terminat, apăsaţi butonul START.",
-  "migration_v1_to_v2_retrigger": "Run the v2.0 migration again",
-  "migration_v1_to_v2_retrigger_description": "Click if books are not showing up after update to v2.0.",
-  "click_here_to_restore_them": "Click here to restore them",
-  "this_msg_will_only_be_displayed_three_times": "This message will only be displayed three times."
+  "migration_v1_to_v2_retrigger": "Rulați migrarea v2.0 din nou",
+  "migration_v1_to_v2_retrigger_description": "Apăsați dacă nu apar cărțile după actualizarea la v2.0.",
+  "click_here_to_restore_them": "Apăsați aici pentru a le restaura",
+  "this_msg_will_only_be_displayed_three_times": "Acest mesaj va fi afișat de trei ori."
 }
