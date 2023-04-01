@@ -8,6 +8,7 @@ class Book {
   String title;
   String? subtitle;
   String author;
+  String? description;
   int status;
   bool favourite;
   bool deleted;
@@ -29,6 +30,7 @@ class Book {
     required this.author,
     required this.status,
     this.subtitle,
+    this.description,
     this.favourite = false,
     this.deleted = false,
     this.rating,
@@ -50,6 +52,7 @@ class Book {
       title: json['title'],
       subtitle: json['subtitle'],
       author: json['author'],
+      description: json['description'],
       status: json['status'],
       rating: json['rating'],
       favourite: (json['favourite'] == 1) ? true : false,
@@ -119,6 +122,7 @@ class Book {
       'title': title,
       'subtitle': subtitle,
       'author': author,
+      'description': description,
       'status': status,
       'rating': rating,
       'favourite': favourite ? 1 : 0,

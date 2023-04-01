@@ -26,6 +26,7 @@ class BookScreen extends StatelessWidget {
       title: book!.title,
       subtitle: book!.subtitle,
       author: book!.author,
+      description: book!.description,
       status: book!.status,
       favourite: book?.favourite == true ? false : true,
       rating: book!.rating,
@@ -445,6 +446,19 @@ class BookScreen extends StatelessWidget {
                                 title: l10n.pages_uppercase,
                                 text: (snapshot.data!.pages ?? "").toString(),
                               )
+                            : const SizedBox(),
+                        SizedBox(
+                          height: (snapshot.data!.description != null &&
+                              snapshot.data!.description!.isNotEmpty)
+                              ? 5
+                              : 0,
+                        ),
+                        (snapshot.data!.description != null &&
+                            snapshot.data!.description!.isNotEmpty)
+                            ? BookDetail(
+                          title: l10n.description,
+                          text: snapshot.data!.description!,
+                        )
                             : const SizedBox(),
                         SizedBox(
                           height: (snapshot.data!.isbn != null) ? 5 : 0,

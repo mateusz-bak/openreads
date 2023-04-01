@@ -18,13 +18,14 @@ class DatabaseProvider {
 
     return await openDatabase(
       path,
-      version: 1,
+      version: 2,
       onCreate: (Database db, int version) async {
         await db.execute("CREATE TABLE booksTable ("
             "id INTEGER PRIMARY KEY AUTOINCREMENT, "
             "title TEXT, "
             "subtitle TEXT, "
             "author TEXT, "
+            "description TEXT, "
             "status INTEGER, "
             "rating INTEGER, "
             "favourite INTEGER, "
@@ -41,8 +42,12 @@ class DatabaseProvider {
             "blur_hash TEXT "
             ")");
       },
-      onUpgrade: (Database db, int oldVersion, int newVersion) {
-        if (newVersion > oldVersion) {}
+      onUpgrade: (Database db, int oldVersion, int newVersion) async {
+        if (newVersion > oldVersion) {
+          if (oldVersion == 1) {
+            await db.execute("ALTER TABLE booksTable ADD description TEXT");
+          }
+        }
       },
     );
   }

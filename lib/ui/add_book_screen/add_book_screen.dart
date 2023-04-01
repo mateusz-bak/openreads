@@ -38,6 +38,7 @@ class _AddBookScreenState extends State<AddBookScreen> {
   final _authorCtrl = TextEditingController();
   final _pagesCtrl = TextEditingController();
   final _pubYearCtrl = TextEditingController();
+  final _descriptionCtrl = TextEditingController();
   final _isbnCtrl = TextEditingController();
   final _olidCtrl = TextEditingController();
   final _tagsCtrl = TextEditingController();
@@ -70,6 +71,7 @@ class _AddBookScreenState extends State<AddBookScreen> {
     _authorCtrl.text = widget.book?.author ?? '';
     _pubYearCtrl.text = (widget.book?.publicationYear ?? '').toString();
     _pagesCtrl.text = (widget.book?.pages ?? '').toString();
+    _descriptionCtrl.text = widget.book?.description ?? '';
     _isbnCtrl.text = widget.book?.isbn ?? '';
     _olidCtrl.text = widget.book?.olid ?? '';
     _myReviewCtrl.text = widget.book?.myReview ?? '';
@@ -156,6 +158,7 @@ class _AddBookScreenState extends State<AddBookScreen> {
       pages: _pagesCtrl.text.isEmpty ? null : int.parse(_pagesCtrl.text),
       publicationYear:
           _pubYearCtrl.text.isEmpty ? null : int.parse(_pubYearCtrl.text),
+      description: _descriptionCtrl.text.isEmpty ? null : _descriptionCtrl.text,
       isbn: _isbnCtrl.text.isEmpty ? null : _isbnCtrl.text,
       olid: _olidCtrl.text.isEmpty ? null : _olidCtrl.text,
       tags: (selectedTags == null || selectedTags!.isEmpty)
@@ -193,6 +196,7 @@ class _AddBookScreenState extends State<AddBookScreen> {
       pages: _pagesCtrl.text.isEmpty ? null : int.parse(_pagesCtrl.text),
       publicationYear:
           _pubYearCtrl.text.isEmpty ? null : int.parse(_pubYearCtrl.text),
+      description: _descriptionCtrl.text.isEmpty ? null : _descriptionCtrl.text,
       isbn: _isbnCtrl.text.isEmpty ? null : _isbnCtrl.text,
       olid: _olidCtrl.text.isEmpty ? null : _olidCtrl.text,
       tags: (selectedTags == null || selectedTags!.isEmpty)
@@ -441,6 +445,7 @@ class _AddBookScreenState extends State<AddBookScreen> {
     _authorCtrl.dispose();
     _pagesCtrl.dispose();
     _pubYearCtrl.dispose();
+    _descriptionCtrl.dispose();
     _isbnCtrl.dispose();
     _olidCtrl.dispose();
     _tagsCtrl.dispose();
@@ -573,6 +578,17 @@ class _AddBookScreenState extends State<AddBookScreen> {
                     ),
                   ),
                 ],
+              ),
+              const SizedBox(height: 20),
+              BookTextField(
+                controller: _descriptionCtrl,
+                hint: l10n.enter_description,
+                icon: FontAwesomeIcons.solidKeyboard,
+                keyboardType: TextInputType.multiline,
+                maxLength: 5000,
+                hideCounter: false,
+                maxLines: 15,
+                textCapitalization: TextCapitalization.sentences,
               ),
               const SizedBox(height: 20),
               BookTextField(
