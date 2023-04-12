@@ -45,6 +45,7 @@
   "enter_author": "Enter the author",
   "enter_pages": "Number of pages",
   "enter_publication_year": "Publication year",
+  "enter_description": "Enter the description",
   "isbn": "ISBN",
   "open_library_ID": "Open Library ID",
   "enter_tags": "Tags",
@@ -61,6 +62,7 @@
   "title": "Title",
   "author": "Author",
   "rating": "Rating",
+  "description": "Description",
 
   "sort_by": "Sort by",
   "only_favourite": "Only favourite",
