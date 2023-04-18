@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:openreads/core/themes/app_theme.dart';
+import 'package:flutter_typeahead/flutter_typeahead.dart';
 
 class TagsField extends StatefulWidget {
   const TagsField({
@@ -28,7 +29,7 @@ class TagsField extends StatefulWidget {
   final TextEditingController? controller;
   final String? hint;
   final IconData? icon;
-  final TextInputType? keyboardType;
+  final TextInputType keyboardType;
   final List<TextInputFormatter>? inputFormatters;
   final bool autofocus;
   final int maxLines;
@@ -121,76 +122,70 @@ class _TagsFieldState extends State<TagsField> {
       child: Column(
         children: [
           Scrollbar(
-              child: RawAutocomplete<String>(
-                focusNode: focusNode,
-                textEditingController: widget.controller,
-                optionsBuilder: (TextEditingValue textEditingValue) {
+              child: TypeAheadField(
+                itemBuilder: (context, suggestion) {
+                  return ListTile(
+                    title: Text(suggestion),
+                  );
+                },
+                suggestionsCallback: (pattern) {
                   if (widget.allTags == null) {
-                    return const Iterable<String>.empty();
+                    return List<String>.empty();
                   }
                   return  widget.allTags!.where((String option) {
-                    return option.toLowerCase().contains(textEditingValue.text.toLowerCase());
+                    return option.toLowerCase().contains(pattern.toLowerCase());
                   }).toList();
                 },
-                optionsViewBuilder: (BuildContext context, void Function(String) onSelected,
-                    Iterable<String> options) {
-                  return  Material(
-                      child: ListView(
-                        children: options
-                            .map((String option) =>
-                            InkWell(
-                                onTap: () => onSelected(option),
-                                child: ListTile(
-                                  title: Text(option),
-                                )
-                            )).toList(),
-                      )
-                  );
+                onSuggestionSelected: (suggestion) {
+                  widget.controller?.text = suggestion;
+                  if (widget.onSubmitted != null) {
+                    widget.onSubmitted!(suggestion);
+                  }
                 },
-                fieldViewBuilder: (BuildContext context, TextEditingController textEditingController,
-                    FocusNode focusNode,
-                    VoidCallback onFieldSubmitted) {
-                  return TextField(
-                    autofocus: widget.autofocus,
-                    keyboardType: widget.keyboardType,
-                    inputFormatters: widget.inputFormatters,
-                    textCapitalization: widget.textCapitalization,
-                    controller: textEditingController,
-                    focusNode: focusNode,
-                    minLines: 1,
-                    maxLines: widget.maxLines,
-                    maxLength: widget.maxLength,
-                    textInputAction: widget.textInputAction,
-                    style: const TextStyle(fontSize: 14),
-                    onSubmitted: widget.onSubmitted,
-                    onEditingComplete: widget.onEditingComplete,
-                    decoration: InputDecoration(
-                      labelText: widget.hint,
-                      icon: (widget.icon != null)
-                          ? Icon(
-                        widget.icon,
-                        color: Theme.of(context).colorScheme.primary,
-                      )
-                          : null,
-                      border: InputBorder.none,
-                      counterText: widget.hideCounter ? "" : null,
-                      suffixIcon: showClearButton
-                          ? IconButton(
-                        onPressed: () {
-                          if (widget.controller == null) return;
+                suggestionsBoxDecoration: SuggestionsBoxDecoration(
+                  borderRadius: BorderRadius.circular(4.0),
+                  elevation: 8.0,
+                ),
+                textFieldConfiguration: TextFieldConfiguration(
+                  autofocus: widget.autofocus,
+                  keyboardType: widget.keyboardType,
+                  inputFormatters: widget.inputFormatters,
+                  textCapitalization: widget.textCapitalization,
+                  controller: widget.controller,
+                  focusNode: focusNode,
+                  minLines: 1,
+                  maxLines: widget.maxLines,
+                  maxLength: widget.maxLength,
+                  textInputAction: widget.textInputAction,
+                  style: const TextStyle(fontSize: 14),
+                  onSubmitted: widget.onSubmitted,
+                  onEditingComplete: widget.onEditingComplete,
+                  decoration: InputDecoration(
+                    labelText: widget.hint,
+                    icon: (widget.icon != null)
+                        ? Icon(
+                      widget.icon,
+                      color: Theme.of(context).colorScheme.primary,
+                    )
+                        : null,
+                    border: InputBorder.none,
+                    counterText: widget.hideCounter ? "" : null,
+                    suffixIcon: showClearButton
+                        ? IconButton(
+                      onPressed: () {
+                        if (widget.controller == null) return;
 
-                          widget.controller!.clear();
-                          setState(() {
-                            showClearButton = false;
-                          });
-                          focusNode.requestFocus();
-                        },
-                        icon: const Icon(Icons.clear),
-                      )
-                          : null,
-                    ),
-                  );
-                },
+                        widget.controller!.clear();
+                        setState(() {
+                          showClearButton = false;
+                        });
+                        focusNode.requestFocus();
+                      },
+                      icon: const Icon(Icons.clear),
+                    )
+                        : null,
+                  ),
+                ),
               )
           ),
           Row(
