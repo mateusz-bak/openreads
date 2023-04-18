@@ -25,7 +25,7 @@ void main() async {
   await FlutterDisplayMode.setHighRefreshRate();
 
   HydratedBloc.storage = await HydratedStorage.build(
-    storageDirectory: await getTemporaryDirectory(),
+    storageDirectory: await getApplicationDocumentsDirectory(),
   );
 
   bookCubit = BookCubit();
