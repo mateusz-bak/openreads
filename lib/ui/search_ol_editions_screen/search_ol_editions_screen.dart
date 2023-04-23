@@ -17,20 +17,24 @@ class SearchOLEditionsScreen extends StatefulWidget {
     required this.title,
     this.subtitle,
     required this.author,
+    this.description,
     required this.pagesMedian,
     required this.isbn,
     required this.olid,
     required this.firstPublishYear,
+    this.work,
   });
 
   final List<String> editions;
   final String title;
   final String? subtitle;
   final String author;
+  final String? description;
   final int? pagesMedian;
   final List<String>? isbn;
   final String? olid;
   final int? firstPublishYear;
+  final String? work;
 
   @override
   State<SearchOLEditionsScreen> createState() => _SearchOLEditionsScreenState();
@@ -96,11 +100,13 @@ class _SearchOLEditionsScreenState extends State<SearchOLEditionsScreen> {
   void _saveEdition({
     required OLEditionResult result,
     required int? cover,
+    String? work,
   }) {
     final book = Book(
       title: result.title!,
       subtitle: widget.subtitle,
       author: widget.author,
+      description: widget.description,
       pages: result.numberOfPages,
       status: 0,
       favourite: false,
@@ -120,6 +126,7 @@ class _SearchOLEditionsScreenState extends State<SearchOLEditionsScreen> {
           cover: cover,
           book: book,
           fromOpenLibraryEdition: true,
+          work: work,
         ),
       ),
     );
@@ -192,6 +199,7 @@ class _SearchOLEditionsScreenState extends State<SearchOLEditionsScreen> {
                             onPressed: () => _saveEdition(
                               result: item,
                               cover: item.covers![0],
+                              work: item.works![0].key,
                             ),
                           ),
                         ),

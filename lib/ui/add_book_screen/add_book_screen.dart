@@ -5,6 +5,7 @@ import 'package:image_cropper/image_cropper.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:loading_animation_widget/loading_animation_widget.dart';
 import 'package:openreads/resources/l10n.dart';
+import 'package:openreads/resources/open_library_service.dart';
 import 'package:openreads/main.dart';
 import 'package:openreads/model/book.dart';
 import 'package:openreads/ui/add_book_screen/widgets/widgets.dart';
@@ -20,6 +21,7 @@ class AddBookScreen extends StatefulWidget {
     this.editingExistingBook = false,
     this.book,
     this.cover,
+    this.work,
   }) : super(key: key);
 
   final Book? book;
@@ -27,6 +29,7 @@ class AddBookScreen extends StatefulWidget {
   final bool fromOpenLibraryEdition;
   final bool editingExistingBook;
   final int? cover;
+  final String? work;
 
   @override
   State<AddBookScreen> createState() => _AddBookScreenState();
@@ -352,6 +355,17 @@ class _AddBookScreenState extends State<AddBookScreen> {
     });
   }
 
+  void _downloadWork() async {
+    if (widget.work != null) {
+      final OLWork = await OpenLibraryService().getWork(widget.work!);
+      setState(() {
+        if (OLWork.description != null) {
+          _descriptionCtrl.text = OLWork.description ?? '';
+        }
+      });
+    }
+  }
+
   Widget _buildCover() {
     if (_isCoverDownloading) {
       return Padding(
@@ -434,6 +448,9 @@ class _AddBookScreenState extends State<AddBookScreen> {
     if (widget.fromOpenLibrary || widget.fromOpenLibraryEdition) {
       if (widget.cover != null) {
         _downloadCover();
+      }
+      if (widget.fromOpenLibrary) {
+        _downloadWork();
       }
     }
   }

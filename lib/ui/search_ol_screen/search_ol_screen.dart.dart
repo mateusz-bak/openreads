@@ -40,6 +40,7 @@ class _SearchOLScreenState extends State<SearchOLScreen>
     required String title,
     String? subtitle,
     required String author,
+    String? description,
     int? firstPublishYear,
     int? pagesMedian,
     int? cover,
@@ -50,6 +51,7 @@ class _SearchOLScreenState extends State<SearchOLScreen>
       title: title,
       subtitle: subtitle,
       author: author,
+      description: description,
       status: 0,
       favourite: false,
       pages: pagesMedian,
@@ -287,6 +289,7 @@ class _SearchOLScreenState extends State<SearchOLScreen>
                                   isbn: item.isbn,
                                   olid: item.key,
                                   firstPublishYear: item.firstPublishYear,
+                                  work: "test",
                                 ),
                               ),
                             );
