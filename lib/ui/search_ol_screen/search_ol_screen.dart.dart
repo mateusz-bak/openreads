@@ -66,6 +66,7 @@ class _SearchOLScreenState extends State<SearchOLScreen>
           fromOpenLibrary: true,
           book: book,
           cover: cover,
+          work: olid,
         ),
       ),
     );
@@ -289,7 +290,6 @@ class _SearchOLScreenState extends State<SearchOLScreen>
                                   isbn: item.isbn,
                                   olid: item.key,
                                   firstPublishYear: item.firstPublishYear,
-                                  work: "test",
                                 ),
                               ),
                             );

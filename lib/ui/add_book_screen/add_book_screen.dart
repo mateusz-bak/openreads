@@ -357,10 +357,10 @@ class _AddBookScreenState extends State<AddBookScreen> {
 
   void _downloadWork() async {
     if (widget.work != null) {
-      final OLWork = await OpenLibraryService().getWork(widget.work!);
+      final openLibraryWork = await OpenLibraryService().getWork(widget.work!);
       setState(() {
-        if (OLWork.description != null) {
-          _descriptionCtrl.text = OLWork.description ?? '';
+        if (openLibraryWork.description != null) {
+          _descriptionCtrl.text = openLibraryWork.description ?? '';
         }
       });
     }
