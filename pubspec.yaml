@@ -17,21 +17,26 @@ dependencies:
   path_provider: ^2.0.11
   rxdart: ^0.27.5
   path: ^1.8.2
-  flutter_displaymode: ^0.5.0
+  flutter_displaymode: ^0.6.0
   image_picker: ^0.8.6
-  image_cropper: ^3.0.0
+  image_cropper: ^5.0.0
   flutter_bloc: ^8.1.1
   colours: ^0.0.2
   flutter_blurhash: ^0.7.0
   blurhash_dart: ^1.2.1
   image: ^4.0.15
-  fl_chart: ^0.61.0
-  intl: ^0.17.0
+  fl_chart: ^0.63.0
+  intl: ^0.18.0
   dropdown_button2: ^2.0.0
   equatable: ^2.0.5
-  connectivity_plus: ^3.0.2
-  http: ^0.13.5
-  cached_network_image: ^3.2.2
+  connectivity_plus: ^4.0.1
+  http: ^1.0.0
+  # cached_network_image: ^3.2.2
+  cached_network_image:
+    git:
+      url: https://github.com/lucasmiranda5/flutter_cached_network_image.git
+      ref: dart3
+      path: cached_network_image
   loading_animation_widget: ^1.2.0+3
   infinite_scroll_pagination: ^3.2.0
   flutter_staggered_grid_view: ^0.6.2
@@ -41,26 +46,26 @@ dependencies:
   hydrated_bloc: ^9.0.0
   barcode_scan2: ^4.2.1
   intro_slider: ^4.2.0
-  flutter_email_sender: ^5.2.0
+  flutter_email_sender: ^6.0.0
   permission_handler: ^10.2.0
   filesystem_picker: ^3.1.0
   archive: ^3.3.5
-  share_plus: ^6.3.0
-  device_info_plus: ^8.0.0
+  share_plus: ^7.0.2
+  device_info_plus: ^9.0.2
   flutter_localizations:
     sdk: flutter
   dynamic_color: ^1.6.2
   image_fade: ^0.6.2
-  package_info_plus: ^3.0.3
+  package_info_plus: ^4.0.2
   animated_widgets: ^1.1.0
-  shared_storage: ^0.7.0
+  shared_storage: ^0.8.0
   shared_preferences: ^2.0.18
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
   flutter_lints: ^2.0.0
-  flutter_launcher_icons: "^0.12.0"
+  flutter_launcher_icons: "^0.13.1"
 
 flutter_icons:
   android: "launcher_icon"
