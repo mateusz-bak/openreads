@@ -41,7 +41,7 @@
   "enter_author": "输入作者",
   "enter_pages": "页数",
   "enter_publication_year": "出版日期",
-  "enter_description": "Enter the description",
+  "enter_description": "输入描述",
   "isbn": "ISBN",
   "open_library_ID": "Open Library ID",
   "enter_tags": "标签",
@@ -56,7 +56,7 @@
   "title": "标题",
   "author": "作者",
   "rating": "评分",
-  "description": "Description",
+  "description": "描述",
   "sort_by": "排序方式",
   "only_favourite": "仅喜欢的",
   "filter_by_finish_year": "按完成年份筛选",
@@ -213,8 +213,8 @@
   "migration_v1_to_v2_1": "您的书籍正在迁移到新版本",
   "migration_v1_to_v2_2": "在您所有的书籍迁移之前不要离开此屏幕，否则它们将丢失！",
   "migration_v1_to_v2_finished": "书籍迁移已完成，点击开始按钮。",
-  "migration_v1_to_v2_retrigger": "Run the v2.0 migration again",
-  "migration_v1_to_v2_retrigger_description": "Click if books are not showing up after update to v2.0.",
-  "click_here_to_restore_them": "Click here to restore them",
-  "this_msg_will_only_be_displayed_three_times": "This message will only be displayed three times."
+  "migration_v1_to_v2_retrigger": "重新运行 v2.0 迁移",
+  "migration_v1_to_v2_retrigger_description": "如果书籍在更新到 v2.0 后不会显示，请点击此处。",
+  "click_here_to_restore_them": "单击此处可将其还原。",
+  "this_msg_will_only_be_displayed_three_times": "此消息只会显示三次。"
 }
