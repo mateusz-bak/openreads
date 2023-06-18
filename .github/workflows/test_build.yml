@@ -19,7 +19,7 @@ jobs:
         java-version: '11'
     - uses: subosito/flutter-action@v2
       with:
-        flutter-version: '3.7.7'
+        flutter-version: '3.10.5'
     - name: Configure Keystore for Android
       run: |
         echo "$PLAY_STORE_UPLOAD_KEY" | base64 --decode > app/upload-keystore.jks
@@ -47,7 +47,7 @@ jobs:
         java-version: '11'
     - uses: subosito/flutter-action@v2
       with:
-        flutter-version: '3.7.7'
+        flutter-version: '3.10.5'
     - name: Configure Keystore for Android
       run: |
         echo "$PLAY_STORE_UPLOAD_KEY" | base64 --decode > app/upload-keystore.jks
