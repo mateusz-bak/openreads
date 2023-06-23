@@ -528,7 +528,6 @@ class _BooksScreenState extends State<BooksScreen>
                 addManually: () async {
                   Navigator.pop(context);
                   await Future.delayed(const Duration(milliseconds: 100));
-                  if (!mounted) return;
 
                   Navigator.of(context).push(
                     MaterialPageRoute(
@@ -539,7 +538,6 @@ class _BooksScreenState extends State<BooksScreen>
                 searchInOpenLibrary: () async {
                   Navigator.pop(context);
                   await Future.delayed(const Duration(milliseconds: 100));
-                  if (!mounted) return;
 
                   Navigator.push(
                     context,
@@ -552,7 +550,6 @@ class _BooksScreenState extends State<BooksScreen>
                   Navigator.pop(context);
                   await Future.delayed(const Duration(milliseconds: 100));
 
-                  if (!mounted) return;
                   Navigator.push(
                     context,
                     MaterialPageRoute(
