@@ -194,7 +194,9 @@ class _SearchOLEditionsScreenState extends State<SearchOLEditionsScreen> {
                             onPressed: () => _saveEdition(
                               result: item,
                               cover: item.covers![0],
-                              work: item.works![0].key,
+                              work: item.works != null && item.works!.isNotEmpty
+                                  ? item.works![0].key
+                                  : null,
                             ),
                           ),
                         ),
