@@ -64,6 +64,7 @@ class _SearchOLScreenState extends State<SearchOLScreen>
           fromOpenLibrary: true,
           book: book,
           cover: cover,
+          work: olid,
         ),
       ),
     );

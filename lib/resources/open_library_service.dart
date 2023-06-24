@@ -1,6 +1,7 @@
 import 'package:http/http.dart';
 import 'package:openreads/model/ol_edition_result.dart';
 import 'package:openreads/model/ol_search_result.dart';
+import 'package:openreads/model/ol_work_result.dart';
 
 class OpenLibraryService {
   Future<OLSearchResult> getResults({
@@ -27,5 +28,16 @@ class OpenLibraryService {
       ),
     );
     return openLibraryEditionResultFromJson(response.body);
+  }
+
+  Future<OLWorkResult> getWork(String work) async {
+    const baseUrl = 'http://openlibrary.org';
+
+    final response = await get(
+      Uri.parse(
+        '$baseUrl$work.json',
+      ),
+    );
+    return openLibraryWorkResultFromJson(response.body);
   }
 }
