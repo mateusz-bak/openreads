@@ -142,6 +142,8 @@ class _TagsFieldState extends State<TagsField> {
                     widget.onSubmitted!(suggestion);
                   }
                 },
+                hideOnLoading: true,
+                hideOnEmpty: true,
                 suggestionsBoxDecoration: SuggestionsBoxDecoration(
                   borderRadius: BorderRadius.circular(4.0),
                   elevation: 8.0,
