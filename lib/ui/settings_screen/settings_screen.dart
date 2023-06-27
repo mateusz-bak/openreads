@@ -1,14 +1,14 @@
 import 'package:animated_widgets/widgets/rotation_animated.dart';
 import 'package:animated_widgets/widgets/shake_animated_widget.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_email_sender/flutter_email_sender.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:openreads/core/constants.dart/enums.dart';
-import 'package:openreads/core/constants.dart/langauge_names.dart';
+import 'package:openreads/core/constants.dart/locale.dart';
 import 'package:openreads/core/themes/app_theme.dart';
-import 'package:openreads/model/app_language.dart';
-import 'package:openreads/resources/l10n.dart';
+import 'package:openreads/generated/locale_keys.g.dart';
 import 'package:openreads/logic/bloc/rating_type_bloc/rating_type_bloc.dart';
 import 'package:openreads/logic/bloc/theme_bloc/theme_bloc.dart';
 import 'package:openreads/ui/backup_screen/backup_screen.dart';
@@ -33,29 +33,6 @@ class SettingsScreen extends StatelessWidget {
   final githubIssuesUrl = '$repoUrl/issues';
   final githubSponsorUrl = 'https://github.com/sponsors/mateusz-bak';
   final buyMeCoffeUrl = 'https://www.buymeacoffee.com/mateuszbak';
-
-  final languages = [
-    AppLanguage(fullName: languageEnglish, twoLetterCode: 'en'),
-    AppLanguage(fullName: languageArabic, twoLetterCode: 'ar'),
-    AppLanguage(fullName: languageCatalan, twoLetterCode: 'ca'),
-    AppLanguage(fullName: languageChinese, twoLetterCode: 'zh'),
-    AppLanguage(fullName: languageCzech, twoLetterCode: 'cs'),
-    AppLanguage(fullName: languageDanish, twoLetterCode: 'da'),
-    AppLanguage(fullName: languageDutch, twoLetterCode: 'nl'),
-    AppLanguage(fullName: languageFrench, twoLetterCode: 'fr'),
-    AppLanguage(fullName: languageGeorgian, twoLetterCode: 'ka'),
-    AppLanguage(fullName: languageGerman, twoLetterCode: 'de'),
-    AppLanguage(fullName: languageHindi, twoLetterCode: 'hi'),
-    AppLanguage(fullName: languageItalian, twoLetterCode: 'it'),
-    AppLanguage(fullName: languageNorwegian, twoLetterCode: 'no'),
-    AppLanguage(fullName: languagePolish, twoLetterCode: 'pl'),
-    AppLanguage(fullName: languagePortuguese, twoLetterCode: 'pt'),
-    AppLanguage(fullName: languageRomanian, twoLetterCode: 'ro'),
-    AppLanguage(fullName: languageRussian, twoLetterCode: 'ru'),
-    AppLanguage(fullName: languageSpanish, twoLetterCode: 'es'),
-    AppLanguage(fullName: languageTurkish, twoLetterCode: 'tr'),
-    AppLanguage(fullName: languageUkrainian, twoLetterCode: 'uk'),
-  ];
 
   _sendEmailToDev(BuildContext context, [bool mounted = true]) async {
     final Email email = Email(
@@ -146,7 +123,6 @@ class SettingsScreen extends StatelessWidget {
       fontFamily: state.fontFamily,
       readTabFirst: state.readTabFirst,
       useMaterialYou: state.useMaterialYou,
-      locale: state.locale,
     ));
 
     Navigator.of(context).pop();
@@ -161,7 +137,6 @@ class SettingsScreen extends StatelessWidget {
       fontFamily: state.fontFamily,
       readTabFirst: state.readTabFirst,
       useMaterialYou: state.useMaterialYou,
-      locale: state.locale,
     ));
 
     Navigator.of(context).pop();
@@ -176,7 +151,6 @@ class SettingsScreen extends StatelessWidget {
       fontFamily: state.fontFamily,
       readTabFirst: state.readTabFirst,
       useMaterialYou: state.useMaterialYou,
-      locale: state.locale,
     ));
 
     Navigator.of(context).pop();
@@ -242,7 +216,6 @@ class SettingsScreen extends StatelessWidget {
       fontFamily: fontFamily,
       readTabFirst: state.readTabFirst,
       useMaterialYou: state.useMaterialYou,
-      locale: state.locale,
     ));
 
     Navigator.of(context).pop();
@@ -257,7 +230,6 @@ class SettingsScreen extends StatelessWidget {
       fontFamily: state.fontFamily,
       readTabFirst: state.readTabFirst,
       useMaterialYou: state.useMaterialYou,
-      locale: state.locale,
     ));
 
     Navigator.of(context).pop();
@@ -272,7 +244,6 @@ class SettingsScreen extends StatelessWidget {
       fontFamily: state.fontFamily,
       readTabFirst: state.readTabFirst,
       useMaterialYou: state.useMaterialYou,
-      locale: state.locale,
     ));
 
     Navigator.of(context).pop();
@@ -288,7 +259,6 @@ class SettingsScreen extends StatelessWidget {
       fontFamily: state.fontFamily,
       readTabFirst: state.readTabFirst,
       useMaterialYou: state.useMaterialYou,
-      locale: state.locale,
     ));
 
     Navigator.of(context).pop();
@@ -303,7 +273,6 @@ class SettingsScreen extends StatelessWidget {
       fontFamily: state.fontFamily,
       readTabFirst: state.readTabFirst,
       useMaterialYou: false,
-      locale: state.locale,
     ));
 
     Navigator.of(context).pop();
@@ -318,7 +287,6 @@ class SettingsScreen extends StatelessWidget {
       fontFamily: state.fontFamily,
       readTabFirst: state.readTabFirst,
       useMaterialYou: true,
-      locale: state.locale,
     ));
 
     Navigator.of(context).pop();
@@ -345,7 +313,7 @@ class SettingsScreen extends StatelessWidget {
                       Padding(
                         padding: const EdgeInsets.only(left: 10),
                         child: Text(
-                          l10n.select_accent_color,
+                          LocaleKeys.select_accent_color.tr(),
                           style: const TextStyle(
                             fontSize: 18,
                             fontWeight: FontWeight.bold,
@@ -375,7 +343,7 @@ class SettingsScreen extends StatelessWidget {
                                   child: Row(
                                     children: [
                                       Text(
-                                        l10n.material_you,
+                                        LocaleKeys.material_you.tr(),
                                         style: const TextStyle(
                                           fontSize: 16,
                                           fontWeight: FontWeight.bold,
@@ -390,49 +358,49 @@ class SettingsScreen extends StatelessWidget {
                                 context,
                                 state,
                                 primaryGreen,
-                                l10n.green_color,
+                                LocaleKeys.green_color.tr(),
                               ),
                               _buildAccentButton(
                                 context,
                                 state,
                                 primaryBlue,
-                                l10n.blue_color,
+                                LocaleKeys.blue_color.tr(),
                               ),
                               _buildAccentButton(
                                 context,
                                 state,
                                 primaryRed,
-                                l10n.red_color,
+                                LocaleKeys.red_color.tr(),
                               ),
                               _buildAccentButton(
                                 context,
                                 state,
                                 primaryYellow,
-                                l10n.yellow_color,
+                                LocaleKeys.yellow_color.tr(),
                               ),
                               _buildAccentButton(
                                 context,
                                 state,
                                 primaryOrange,
-                                l10n.orange_color,
+                                LocaleKeys.orange_color.tr(),
                               ),
                               _buildAccentButton(
                                 context,
                                 state,
                                 primaryPurple,
-                                l10n.purple_color,
+                                LocaleKeys.purple_color.tr(),
                               ),
                               _buildAccentButton(
                                 context,
                                 state,
                                 primaryPink,
-                                l10n.pink_color,
+                                LocaleKeys.pink_color.tr(),
                               ),
                               _buildAccentButton(
                                 context,
                                 state,
                                 primaryTeal,
-                                l10n.teal_color,
+                                LocaleKeys.teal_color.tr(),
                               ),
                             ],
                           ),
@@ -472,7 +440,7 @@ class SettingsScreen extends StatelessWidget {
                       Padding(
                         padding: const EdgeInsets.only(left: 10),
                         child: Text(
-                          l10n.select_language,
+                          LocaleKeys.select_language.tr(),
                           style: const TextStyle(
                             fontSize: 18,
                             fontWeight: FontWeight.bold,
@@ -513,7 +481,7 @@ class SettingsScreen extends StatelessWidget {
 
     widgets.add(
       LanguageButton(
-        language: l10n.default_locale,
+        language: LocaleKeys.default_locale.tr(),
         onPressed: () => _setLanguage(
           context,
           state,
@@ -522,14 +490,14 @@ class SettingsScreen extends StatelessWidget {
       ),
     );
 
-    for (var language in languages) {
+    for (var language in supportedLocales) {
       widgets.add(
         LanguageButton(
           language: language.fullName,
           onPressed: () => _setLanguage(
             context,
             state,
-            language.twoLetterCode,
+            language.locale,
           ),
         ),
       );
@@ -538,7 +506,17 @@ class SettingsScreen extends StatelessWidget {
     return widgets;
   }
 
-  _setLanguage(BuildContext context, SetThemeState state, String? locale) {
+  _setLanguage(BuildContext context, SetThemeState state, Locale? locale) {
+    if (locale == null) {
+      if (context.supportedLocales.contains(context.deviceLocale)) {
+        context.resetLocale();
+      } else {
+        context.setLocale(context.fallbackLocale!);
+      }
+    } else {
+      context.setLocale(locale);
+    }
+
     BlocProvider.of<ThemeBloc>(context).add(ChangeThemeEvent(
       themeMode: state.themeMode,
       showOutlines: state.showOutlines,
@@ -547,10 +525,8 @@ class SettingsScreen extends StatelessWidget {
       fontFamily: state.fontFamily,
       readTabFirst: state.readTabFirst,
       useMaterialYou: state.useMaterialYou,
-      locale: locale,
     ));
 
-    Navigator.of(context).pop();
     Navigator.of(context).pop();
   }
 
@@ -616,7 +592,7 @@ class SettingsScreen extends StatelessWidget {
                 Padding(
                   padding: const EdgeInsets.only(left: 10),
                   child: Text(
-                    l10n.seletct_rating_type,
+                    LocaleKeys.seletct_rating_type.tr(),
                     style: const TextStyle(
                       fontSize: 18,
                       fontWeight: FontWeight.bold,
@@ -625,7 +601,7 @@ class SettingsScreen extends StatelessWidget {
                 ),
                 const SizedBox(height: 15),
                 SettingsDialogButton(
-                  text: l10n.rating_as_bar,
+                  text: LocaleKeys.rating_as_bar.tr(),
                   onPressed: () {
                     BlocProvider.of<RatingTypeBloc>(context).add(
                       const RatingTypeChange(ratingType: RatingType.bar),
@@ -636,7 +612,7 @@ class SettingsScreen extends StatelessWidget {
                 ),
                 const SizedBox(height: 5),
                 SettingsDialogButton(
-                  text: l10n.rating_as_number,
+                  text: LocaleKeys.rating_as_number.tr(),
                   onPressed: () {
                     BlocProvider.of<RatingTypeBloc>(context).add(
                       const RatingTypeChange(ratingType: RatingType.number),
@@ -674,7 +650,7 @@ class SettingsScreen extends StatelessWidget {
                       Padding(
                         padding: const EdgeInsets.only(left: 10),
                         child: Text(
-                          l10n.select_theme_mode,
+                          LocaleKeys.select_theme_mode.tr(),
                           style: const TextStyle(
                             fontSize: 18,
                             fontWeight: FontWeight.bold,
@@ -683,17 +659,17 @@ class SettingsScreen extends StatelessWidget {
                       ),
                       const SizedBox(height: 15),
                       SettingsDialogButton(
-                        text: l10n.theme_mode_system,
+                        text: LocaleKeys.theme_mode_system.tr(),
                         onPressed: () => _setThemeModeAuto(context, state),
                       ),
                       const SizedBox(height: 5),
                       SettingsDialogButton(
-                        text: l10n.theme_mode_light,
+                        text: LocaleKeys.theme_mode_light.tr(),
                         onPressed: () => _setThemeModeLight(context, state),
                       ),
                       const SizedBox(height: 5),
                       SettingsDialogButton(
-                        text: l10n.theme_mode_dark,
+                        text: LocaleKeys.theme_mode_dark.tr(),
                         onPressed: () => _setThemeModeDark(context, state),
                       ),
                     ],
@@ -729,7 +705,7 @@ class SettingsScreen extends StatelessWidget {
                       Padding(
                         padding: const EdgeInsets.only(left: 10),
                         child: Text(
-                          l10n.select_font,
+                          LocaleKeys.select_font.tr(),
                           style: const TextStyle(
                             fontSize: 18,
                             fontWeight: FontWeight.bold,
@@ -746,7 +722,7 @@ class SettingsScreen extends StatelessWidget {
                               mainAxisSize: MainAxisSize.min,
                               children: [
                                 SettingsDialogButton(
-                                  text: l10n.font_default,
+                                  text: LocaleKeys.font_default.tr(),
                                   onPressed: () => _setFont(
                                     context,
                                     state,
@@ -900,7 +876,7 @@ class SettingsScreen extends StatelessWidget {
                       Padding(
                         padding: const EdgeInsets.only(left: 10),
                         child: Text(
-                          l10n.display_outlines,
+                          LocaleKeys.display_outlines.tr(),
                           style: const TextStyle(
                             fontSize: 18,
                             fontWeight: FontWeight.bold,
@@ -909,12 +885,12 @@ class SettingsScreen extends StatelessWidget {
                       ),
                       const SizedBox(height: 15),
                       SettingsDialogButton(
-                        text: l10n.show_outlines,
+                        text: LocaleKeys.show_outlines.tr(),
                         onPressed: () => _showOutlines(context, state),
                       ),
                       const SizedBox(height: 5),
                       SettingsDialogButton(
-                        text: l10n.hide_outlines,
+                        text: LocaleKeys.hide_outlines.tr(),
                         onPressed: () => _hideOutlines(context, state),
                       ),
                     ],
@@ -951,7 +927,7 @@ class SettingsScreen extends StatelessWidget {
                       Padding(
                         padding: const EdgeInsets.only(left: 10),
                         child: Text(
-                          l10n.select_corner_radius,
+                          LocaleKeys.select_corner_radius.tr(),
                           style: const TextStyle(
                             fontSize: 18,
                             fontWeight: FontWeight.bold,
@@ -960,23 +936,23 @@ class SettingsScreen extends StatelessWidget {
                       ),
                       const SizedBox(height: 15),
                       SettingsDialogButton(
-                        text: l10n.no_rounded_corners,
+                        text: LocaleKeys.no_rounded_corners.tr(),
                         onPressed: () => _changeCornerRadius(context, state, 0),
                       ),
                       const SizedBox(height: 5),
                       SettingsDialogButton(
-                        text: l10n.small_rounded_corners,
+                        text: LocaleKeys.small_rounded_corners.tr(),
                         onPressed: () => _changeCornerRadius(context, state, 5),
                       ),
                       const SizedBox(height: 5),
                       SettingsDialogButton(
-                        text: l10n.medium_rounded_corners,
+                        text: LocaleKeys.medium_rounded_corners.tr(),
                         onPressed: () =>
                             _changeCornerRadius(context, state, 10),
                       ),
                       const SizedBox(height: 5),
                       SettingsDialogButton(
-                        text: l10n.big_rounded_corners,
+                        text: LocaleKeys.big_rounded_corners.tr(),
                         onPressed: () =>
                             _changeCornerRadius(context, state, 20),
                       ),
@@ -1014,7 +990,7 @@ class SettingsScreen extends StatelessWidget {
                       Padding(
                         padding: const EdgeInsets.only(left: 10),
                         child: Text(
-                          l10n.select_tabs_order,
+                          LocaleKeys.select_tabs_order.tr(),
                           style: const TextStyle(
                             fontSize: 18,
                             fontWeight: FontWeight.bold,
@@ -1023,7 +999,7 @@ class SettingsScreen extends StatelessWidget {
                       ),
                       const SizedBox(height: 15),
                       SettingsDialogButton(
-                        text: l10n.tabs_order_read_first,
+                        text: LocaleKeys.tabs_order_read_first.tr(),
                         onPressed: () {
                           BlocProvider.of<ThemeBloc>(context).add(
                             ChangeThemeEvent(
@@ -1034,7 +1010,6 @@ class SettingsScreen extends StatelessWidget {
                               fontFamily: state.fontFamily,
                               readTabFirst: true,
                               useMaterialYou: state.useMaterialYou,
-                              locale: state.locale,
                             ),
                           );
 
@@ -1043,7 +1018,7 @@ class SettingsScreen extends StatelessWidget {
                       ),
                       const SizedBox(height: 5),
                       SettingsDialogButton(
-                        text: l10n.tabs_order_in_progress_first,
+                        text: LocaleKeys.tabs_order_in_progress_first.tr(),
                         onPressed: () {
                           BlocProvider.of<ThemeBloc>(context).add(
                             ChangeThemeEvent(
@@ -1054,7 +1029,6 @@ class SettingsScreen extends StatelessWidget {
                               fontFamily: state.fontFamily,
                               readTabFirst: false,
                               useMaterialYou: state.useMaterialYou,
-                              locale: state.locale,
                             ),
                           );
 
@@ -1109,13 +1083,13 @@ class SettingsScreen extends StatelessWidget {
   SettingsTile _buildFeedbackSetting(BuildContext context) {
     return SettingsTile(
       title: Text(
-        l10n.send_feedback,
+        LocaleKeys.send_feedback.tr(),
         style: const TextStyle(
           fontSize: 16,
         ),
       ),
       description: Text(
-        l10n.report_bugs_or_ideas,
+        LocaleKeys.report_bugs_or_ideas.tr(),
         style: const TextStyle(),
       ),
       leading: const Icon(Icons.record_voice_over_rounded),
@@ -1152,7 +1126,7 @@ class SettingsScreen extends StatelessWidget {
                         const SizedBox(width: 10),
                         Expanded(
                           child: ContactButton(
-                            text: l10n.send_dev_email,
+                            text: LocaleKeys.send_dev_email.tr(),
                             icon: FontAwesomeIcons.solidEnvelope,
                             onPressed: () => _sendEmailToDev(context),
                           ),
@@ -1160,7 +1134,7 @@ class SettingsScreen extends StatelessWidget {
                         const SizedBox(width: 20),
                         Expanded(
                           child: ContactButton(
-                            text: l10n.raise_github_issue,
+                            text: LocaleKeys.raise_github_issue.tr(),
                             icon: FontAwesomeIcons.github,
                             onPressed: () => _openGithubIssue(context),
                           ),
@@ -1181,7 +1155,7 @@ class SettingsScreen extends StatelessWidget {
   SettingsTile _buildSupportSetting(BuildContext context) {
     return SettingsTile(
       title: Text(
-        l10n.support_the_project,
+        LocaleKeys.support_the_project.tr(),
         style: TextStyle(
           fontSize: 17,
           color: Theme.of(context).colorScheme.primary,
@@ -1190,7 +1164,7 @@ class SettingsScreen extends StatelessWidget {
         ),
       ),
       description: Text(
-        l10n.support_the_project_description,
+        LocaleKeys.support_the_project_description.tr(),
       ),
       leading: ShakeAnimatedWidget(
         duration: const Duration(seconds: 3),
@@ -1234,7 +1208,7 @@ class SettingsScreen extends StatelessWidget {
                         const SizedBox(width: 10),
                         Expanded(
                           child: ContactButton(
-                            text: l10n.support_option_1,
+                            text: LocaleKeys.support_option_1.tr(),
                             icon: FontAwesomeIcons.github,
                             onPressed: () => _supportGithub(context),
                           ),
@@ -1242,7 +1216,7 @@ class SettingsScreen extends StatelessWidget {
                         const SizedBox(width: 20),
                         Expanded(
                           child: ContactButton(
-                            text: l10n.support_option_2,
+                            text: LocaleKeys.support_option_2.tr(),
                             icon: FontAwesomeIcons.mugHot,
                             onPressed: () => _supportBuyMeCoffe(context),
                           ),
@@ -1263,7 +1237,7 @@ class SettingsScreen extends StatelessWidget {
   SettingsTile _buildTrashSetting(BuildContext context) {
     return SettingsTile(
       title: Text(
-        l10n.deleted_books,
+        LocaleKeys.deleted_books.tr(),
         style: const TextStyle(
           fontSize: 16,
         ),
@@ -1286,7 +1260,7 @@ class SettingsScreen extends StatelessWidget {
   SettingsTile _buildUnfinishedSetting(BuildContext context) {
     return SettingsTile(
       title: Text(
-        l10n.unfinished_books,
+        LocaleKeys.unfinished_books.tr(),
         style: const TextStyle(
           fontSize: 16,
         ),
@@ -1306,7 +1280,7 @@ class SettingsScreen extends StatelessWidget {
   SettingsTile _buildBackupSetting(BuildContext context) {
     return SettingsTile(
       title: Text(
-        l10n.backup_and_restore,
+        LocaleKeys.backup_and_restore.tr(),
         style: const TextStyle(
           fontSize: 16,
         ),
@@ -1326,7 +1300,7 @@ class SettingsScreen extends StatelessWidget {
   SettingsTile _buildAccentSetting(BuildContext context) {
     return SettingsTile(
       title: Text(
-        l10n.accent_color,
+        LocaleKeys.accent_color.tr(),
         style: const TextStyle(
           fontSize: 16,
         ),
@@ -1337,7 +1311,7 @@ class SettingsScreen extends StatelessWidget {
           if (themeState is SetThemeState) {
             if (themeState.useMaterialYou) {
               return Text(
-                l10n.material_you,
+                LocaleKeys.material_you.tr(),
                 style: const TextStyle(),
               );
             }
@@ -1345,42 +1319,42 @@ class SettingsScreen extends StatelessWidget {
             switch (themeState.primaryColor.value) {
               case 0xffB73E3E:
                 return Text(
-                  l10n.red_color,
+                  LocaleKeys.red_color.tr(),
                   style: const TextStyle(),
                 );
               case 0xff2146C7:
                 return Text(
-                  l10n.blue_color,
+                  LocaleKeys.blue_color.tr(),
                   style: const TextStyle(),
                 );
               case 0xff285430:
                 return Text(
-                  l10n.green_color,
+                  LocaleKeys.green_color.tr(),
                   style: const TextStyle(),
                 );
               case 0xffE14D2A:
                 return Text(
-                  l10n.orange_color,
+                  LocaleKeys.orange_color.tr(),
                   style: const TextStyle(),
                 );
               case 0xff9F73AB:
                 return Text(
-                  l10n.purple_color,
+                  LocaleKeys.purple_color.tr(),
                   style: const TextStyle(),
                 );
               case 0xffFF577F:
                 return Text(
-                  l10n.pink_color,
+                  LocaleKeys.pink_color.tr(),
                   style: const TextStyle(),
                 );
               case 0xff3FA796:
                 return Text(
-                  l10n.teal_color,
+                  LocaleKeys.teal_color.tr(),
                   style: const TextStyle(),
                 );
               default:
                 return Text(
-                  l10n.yellow_color,
+                  LocaleKeys.yellow_color.tr(),
                   style: const TextStyle(),
                 );
             }
@@ -1396,7 +1370,7 @@ class SettingsScreen extends StatelessWidget {
   SettingsTile _buildLanguageSetting(BuildContext context) {
     return SettingsTile(
       title: Text(
-        l10n.language,
+        LocaleKeys.language.tr(),
         style: const TextStyle(
           fontSize: 16,
         ),
@@ -1405,21 +1379,19 @@ class SettingsScreen extends StatelessWidget {
       description: BlocBuilder<ThemeBloc, ThemeState>(
         builder: (_, themeState) {
           if (themeState is SetThemeState) {
-            final locale = themeState.locale;
+            final locale = context.locale;
 
-            if (locale != null) {
-              for (var language in languages) {
-                if (language.twoLetterCode == locale) {
-                  return Text(
-                    language.fullName,
-                    style: const TextStyle(),
-                  );
-                }
+            for (var language in supportedLocales) {
+              if (language.locale == locale) {
+                return Text(
+                  language.fullName,
+                  style: const TextStyle(),
+                );
               }
             }
 
             return Text(
-              l10n.default_locale,
+              LocaleKeys.default_locale.tr(),
               style: const TextStyle(),
             );
           } else {
@@ -1434,7 +1406,7 @@ class SettingsScreen extends StatelessWidget {
   SettingsTile _buildCornersSetting(BuildContext context) {
     return SettingsTile(
       title: Text(
-        l10n.rounded_corners,
+        LocaleKeys.rounded_corners.tr(),
         style: const TextStyle(
           fontSize: 16,
         ),
@@ -1445,22 +1417,22 @@ class SettingsScreen extends StatelessWidget {
           if (themeState is SetThemeState) {
             if (themeState.cornerRadius == 5) {
               return Text(
-                l10n.small_rounded_corners,
+                LocaleKeys.small_rounded_corners.tr(),
                 style: const TextStyle(),
               );
             } else if (themeState.cornerRadius == 10) {
               return Text(
-                l10n.medium_rounded_corners,
+                LocaleKeys.medium_rounded_corners.tr(),
                 style: const TextStyle(),
               );
             } else if (themeState.cornerRadius == 20) {
               return Text(
-                l10n.big_rounded_corners,
+                LocaleKeys.big_rounded_corners.tr(),
                 style: const TextStyle(),
               );
             } else {
               return Text(
-                l10n.no_rounded_corners,
+                LocaleKeys.no_rounded_corners.tr(),
                 style: const TextStyle(),
               );
             }
@@ -1476,7 +1448,7 @@ class SettingsScreen extends StatelessWidget {
   SettingsTile _buildOutlinesSetting(BuildContext context) {
     return SettingsTile(
       title: Text(
-        l10n.display_outlines,
+        LocaleKeys.display_outlines.tr(),
         style: const TextStyle(
           fontSize: 16,
         ),
@@ -1487,12 +1459,12 @@ class SettingsScreen extends StatelessWidget {
           if (themeState is SetThemeState) {
             if (themeState.showOutlines) {
               return Text(
-                l10n.show_outlines,
+                LocaleKeys.show_outlines.tr(),
                 style: const TextStyle(),
               );
             } else {
               return Text(
-                l10n.hide_outlines,
+                LocaleKeys.hide_outlines.tr(),
                 style: const TextStyle(),
               );
             }
@@ -1508,7 +1480,7 @@ class SettingsScreen extends StatelessWidget {
   SettingsTile _buildThemeModeSetting(BuildContext context) {
     return SettingsTile(
       title: Text(
-        l10n.theme_mode,
+        LocaleKeys.theme_mode.tr(),
         style: const TextStyle(
           fontSize: 16,
         ),
@@ -1520,17 +1492,17 @@ class SettingsScreen extends StatelessWidget {
             switch (themeState.themeMode) {
               case ThemeMode.light:
                 return Text(
-                  l10n.theme_mode_light,
+                  LocaleKeys.theme_mode_light.tr(),
                   style: const TextStyle(),
                 );
               case ThemeMode.dark:
                 return Text(
-                  l10n.theme_mode_dark,
+                  LocaleKeys.theme_mode_dark.tr(),
                   style: const TextStyle(),
                 );
               default:
                 return Text(
-                  l10n.theme_mode_system,
+                  LocaleKeys.theme_mode_system.tr(),
                   style: const TextStyle(),
                 );
             }
@@ -1546,7 +1518,7 @@ class SettingsScreen extends StatelessWidget {
   SettingsTile _buildFontSetting(BuildContext context) {
     return SettingsTile(
       title: Text(
-        l10n.font,
+        LocaleKeys.font.tr(),
         style: const TextStyle(
           fontSize: 16,
         ),
@@ -1565,7 +1537,7 @@ class SettingsScreen extends StatelessWidget {
               );
             } else {
               return Text(
-                l10n.font_default,
+                LocaleKeys.font_default.tr(),
                 style: const TextStyle(),
               );
             }
@@ -1581,7 +1553,7 @@ class SettingsScreen extends StatelessWidget {
   SettingsTile _buildRatingTypeSetting(BuildContext context) {
     return SettingsTile(
       title: Text(
-        l10n.rating_type,
+        LocaleKeys.rating_type.tr(),
         style: const TextStyle(
           fontSize: 16,
         ),
@@ -1591,12 +1563,12 @@ class SettingsScreen extends StatelessWidget {
         builder: (_, state) {
           if (state is RatingTypeNumber) {
             return Text(
-              l10n.rating_as_number,
+              LocaleKeys.rating_as_number.tr(),
               style: const TextStyle(),
             );
           } else if (state is RatingTypeBar) {
             return Text(
-              l10n.rating_as_bar,
+              LocaleKeys.rating_as_bar.tr(),
               style: const TextStyle(),
             );
           } else {
@@ -1611,7 +1583,7 @@ class SettingsScreen extends StatelessWidget {
   SettingsTile _buildTabOrderSetting(BuildContext context) {
     return SettingsTile(
       title: Text(
-        l10n.tabs_order,
+        LocaleKeys.tabs_order.tr(),
         style: const TextStyle(
           fontSize: 16,
         ),
@@ -1625,12 +1597,12 @@ class SettingsScreen extends StatelessWidget {
           if (state is SetThemeState) {
             if (state.readTabFirst) {
               return Text(
-                l10n.tabs_order_read_first,
+                LocaleKeys.tabs_order_read_first.tr(),
                 style: const TextStyle(),
               );
             } else {
               return Text(
-                l10n.tabs_order_in_progress_first,
+                LocaleKeys.tabs_order_in_progress_first.tr(),
                 style: const TextStyle(),
               );
             }
@@ -1654,7 +1626,7 @@ class SettingsScreen extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: Text(
-          l10n.settings,
+          LocaleKeys.settings.tr(),
           style: const TextStyle(
             fontSize: 18,
           ),
@@ -1679,24 +1651,24 @@ class SettingsScreen extends StatelessWidget {
                     tiles: <SettingsTile>[
                       _buildSupportSetting(context),
                       _buildURLSetting(
-                        title: l10n.join_community,
-                        description: l10n.join_community_description,
+                        title: LocaleKeys.join_community.tr(),
+                        description: LocaleKeys.join_community_description.tr(),
                         url: communityUrl,
                         iconData: FontAwesomeIcons.peopleGroup,
                         context: context,
                       ),
                       // TODO: Show only on GPlay variant
                       _buildURLSetting(
-                        title: l10n.rate_app,
-                        description: l10n.rate_app_description,
+                        title: LocaleKeys.rate_app.tr(),
+                        description: LocaleKeys.rate_app_description.tr(),
                         url: rateUrl,
                         iconData: Icons.star_rounded,
                         context: context,
                       ),
                       _buildFeedbackSetting(context),
                       _buildURLSetting(
-                        title: l10n.translate_app,
-                        description: l10n.translate_app_description,
+                        title: LocaleKeys.translate_app.tr(),
+                        description: LocaleKeys.translate_app_description.tr(),
                         url: translationUrl,
                         iconData: Icons.translate_rounded,
                         context: context,
@@ -1705,7 +1677,7 @@ class SettingsScreen extends StatelessWidget {
                   ),
                   SettingsSection(
                     title: Text(
-                      l10n.app,
+                      LocaleKeys.app.tr(),
                       style: TextStyle(
                         fontSize: 16,
                         fontWeight: FontWeight.bold,
@@ -1721,7 +1693,7 @@ class SettingsScreen extends StatelessWidget {
                   ),
                   SettingsSection(
                     title: Text(
-                      l10n.apperance,
+                      LocaleKeys.apperance.tr(),
                       style: TextStyle(
                         fontSize: 16,
                         fontWeight: FontWeight.bold,
@@ -1740,7 +1712,7 @@ class SettingsScreen extends StatelessWidget {
                   ),
                   SettingsSection(
                     title: Text(
-                      l10n.about,
+                      LocaleKeys.about.tr(),
                       style: TextStyle(
                         fontSize: 16,
                         fontWeight: FontWeight.bold,
@@ -1749,27 +1721,27 @@ class SettingsScreen extends StatelessWidget {
                     ),
                     tiles: <SettingsTile>[
                       _buildURLSetting(
-                        title: l10n.version,
+                        title: LocaleKeys.version.tr(),
                         description: version,
                         iconData: FontAwesomeIcons.rocket,
                         context: context,
                       ),
                       _buildURLSetting(
-                        title: l10n.changelog,
-                        description: l10n.changelog_description,
+                        title: LocaleKeys.changelog.tr(),
+                        description: LocaleKeys.changelog_description.tr(),
                         url: releasesUrl,
                         iconData: Icons.auto_awesome_rounded,
                         context: context,
                       ),
                       _buildURLSetting(
-                        title: l10n.source_code,
-                        description: l10n.source_code_description,
+                        title: LocaleKeys.source_code.tr(),
+                        description: LocaleKeys.source_code_description.tr(),
                         url: repoUrl,
                         iconData: FontAwesomeIcons.code,
                         context: context,
                       ),
                       _buildURLSetting(
-                        title: l10n.licence,
+                        title: LocaleKeys.licence.tr(),
                         description: licence,
                         url: licenceUrl,
                         iconData: Icons.copyright_rounded,

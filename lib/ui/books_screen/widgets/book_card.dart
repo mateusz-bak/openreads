@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
@@ -5,7 +6,7 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:intl/intl.dart';
 import 'package:openreads/core/constants.dart/enums.dart';
 import 'package:openreads/core/themes/app_theme.dart';
-import 'package:openreads/resources/l10n.dart';
+import 'package:openreads/generated/locale_keys.g.dart';
 import 'package:openreads/logic/bloc/rating_type_bloc/rating_type_bloc.dart';
 import 'package:openreads/logic/bloc/sort_bloc/sort_bloc.dart';
 import 'package:openreads/model/book.dart';
@@ -30,7 +31,7 @@ class BookCard extends StatelessWidget {
         if (state is SetSortState) {
           if (state.sortType == SortType.byPages) {
             return (book.pages != null)
-                ? Text('${book.pages} ${l10n.pages_lowercase}')
+                ? Text('${book.pages} ${LocaleKeys.pages_lowercase.tr()}')
                 : const SizedBox();
           } else if (state.sortType == SortType.byStartDate) {
             return (book.startDate != null)
@@ -38,7 +39,7 @@ class BookCard extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.end,
                     children: [
                       Text(
-                        l10n.started_on_date,
+                        LocaleKeys.started_on_date.tr(),
                         style: const TextStyle(fontSize: 12),
                       ),
                       Text(
@@ -57,7 +58,7 @@ class BookCard extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.end,
                     children: [
                       Text(
-                        l10n.finished_on_date,
+                        LocaleKeys.finished_on_date.tr(),
                         style: const TextStyle(fontSize: 12),
                       ),
                       Text(

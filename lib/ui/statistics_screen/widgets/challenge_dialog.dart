@@ -1,6 +1,7 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:openreads/core/themes/app_theme.dart';
-import 'package:openreads/resources/l10n.dart';
+import 'package:openreads/generated/locale_keys.g.dart';
 
 class ChallengeDialog extends StatefulWidget {
   const ChallengeDialog({
@@ -155,7 +156,7 @@ class _ChallengeDialogState extends State<ChallengeDialog>
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
             Text(
-              '${l10n.set_books_goal_for_year} ${widget.year}:',
+              '${LocaleKeys.set_books_goal_for_year.tr()} ${widget.year}:',
               textAlign: TextAlign.center,
               style: const TextStyle(
                 fontSize: 16,
@@ -234,7 +235,7 @@ class _ChallengeDialogState extends State<ChallengeDialog>
                   ),
                   const SizedBox(width: 10),
                   Text(
-                    l10n.add_pages_goal,
+                    LocaleKeys.add_pages_goal.tr(),
                     style: const TextStyle(
                       fontSize: 16,
                     ),
@@ -248,7 +249,7 @@ class _ChallengeDialogState extends State<ChallengeDialog>
               child: Column(
                 children: [
                   Text(
-                    l10n.set_pages_goal,
+                    LocaleKeys.set_pages_goal.tr(),
                     textAlign: TextAlign.center,
                     style: const TextStyle(
                       fontSize: 16,

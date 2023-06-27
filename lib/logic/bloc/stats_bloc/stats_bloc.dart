@@ -1,6 +1,7 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:openreads/resources/l10n.dart';
+import 'package:openreads/generated/locale_keys.g.dart';
 import 'package:openreads/model/book.dart';
 import 'package:openreads/model/book_read_stat.dart';
 import 'package:openreads/model/book_yearly_stat.dart';
@@ -15,7 +16,7 @@ class StatsBloc extends Bloc<StatsEvent, StatsState> {
       final finishedBooks = _filterFinishedBooks(allBooks, 0);
 
       if (finishedBooks.isEmpty) {
-        emit(StatsError(l10n.add_books_and_come_back));
+        emit(StatsError(LocaleKeys.add_books_and_come_back.tr()));
         return;
       }
 

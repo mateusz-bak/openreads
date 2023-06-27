@@ -1,6 +1,7 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:openreads/core/themes/app_theme.dart';
-import 'package:openreads/resources/l10n.dart';
+import 'package:openreads/generated/locale_keys.g.dart';
 import 'package:openreads/ui/statistics_screen/widgets/widgets.dart';
 
 class SetChallengeBox extends StatelessWidget {
@@ -47,7 +48,7 @@ class SetChallengeBox extends StatelessWidget {
             children: [
               Expanded(
                 child: Text(
-                  l10n.click_here_to_set_challenge,
+                  LocaleKeys.click_here_to_set_challenge.tr(),
                   style: TextStyle(
                       fontSize: 16,
                       fontWeight: FontWeight.bold,

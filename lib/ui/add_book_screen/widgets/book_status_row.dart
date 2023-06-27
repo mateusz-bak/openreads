@@ -1,5 +1,6 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
-import 'package:openreads/resources/l10n.dart';
+import 'package:openreads/generated/locale_keys.g.dart';
 import 'package:openreads/ui/add_book_screen/widgets/widgets.dart';
 
 class BookStatusRow extends StatelessWidget {
@@ -25,7 +26,7 @@ class BookStatusRow extends StatelessWidget {
           duration: animDuration,
           height: defaultHeight,
           icon: Icons.done,
-          text: l10n.book_status_finished,
+          text: LocaleKeys.book_status_finished.tr(),
           isSelected: currentStatus == 0,
           currentStatus: currentStatus,
           onPressed: () {
@@ -37,7 +38,7 @@ class BookStatusRow extends StatelessWidget {
           duration: animDuration,
           height: defaultHeight,
           icon: Icons.autorenew,
-          text: l10n.book_status_in_progress,
+          text: LocaleKeys.book_status_in_progress.tr(),
           isSelected: currentStatus == 1,
           currentStatus: currentStatus,
           onPressed: () {
@@ -49,7 +50,7 @@ class BookStatusRow extends StatelessWidget {
           duration: animDuration,
           height: defaultHeight,
           icon: Icons.timelapse,
-          text: l10n.book_status_for_later,
+          text: LocaleKeys.book_status_for_later.tr(),
           isSelected: currentStatus == 2,
           currentStatus: currentStatus,
           onPressed: () {
@@ -61,7 +62,7 @@ class BookStatusRow extends StatelessWidget {
           duration: animDuration,
           height: defaultHeight,
           icon: Icons.not_interested,
-          text: l10n.book_status_unfinished,
+          text: LocaleKeys.book_status_unfinished.tr(),
           isSelected: currentStatus == 3,
           currentStatus: currentStatus,
           onPressed: () {

@@ -1,9 +1,10 @@
 import 'package:barcode_scan2/barcode_scan2.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
 import 'package:loading_animation_widget/loading_animation_widget.dart';
 import 'package:openreads/core/themes/app_theme.dart';
-import 'package:openreads/resources/l10n.dart';
+import 'package:openreads/generated/locale_keys.g.dart';
 import 'package:openreads/model/book.dart';
 import 'package:openreads/model/ol_search_result.dart';
 import 'package:openreads/resources/open_library_service.dart';
@@ -117,9 +118,9 @@ class _SearchOLScreenState extends State<SearchOLScreen>
     var result = await BarcodeScanner.scan(
       options: ScanOptions(
         strings: {
-          'cancel': l10n.cancel,
-          'flash_on': l10n.flash_on,
-          'flash_off': l10n.flash_off,
+          'cancel': LocaleKeys.cancel.tr(),
+          'flash_on': LocaleKeys.flash_on.tr(),
+          'flash_off': LocaleKeys.flash_off.tr(),
         },
       ),
     );
@@ -164,7 +165,7 @@ class _SearchOLScreenState extends State<SearchOLScreen>
     return Scaffold(
       appBar: AppBar(
         title: Text(
-          l10n.search_in_open_library,
+          LocaleKeys.search_in_open_library.tr(),
           style: const TextStyle(fontSize: 18),
         ),
       ),
@@ -199,7 +200,7 @@ class _SearchOLScreenState extends State<SearchOLScreen>
                       ),
                     ),
                     child: Text(
-                      l10n.search,
+                      LocaleKeys.search.tr(),
                       style: const TextStyle(fontSize: 12),
                     ),
                   ),
@@ -214,7 +215,7 @@ class _SearchOLScreenState extends State<SearchOLScreen>
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Text(
-                        '$numberOfResults ${l10n.results_lowercase}',
+                        '$numberOfResults ${LocaleKeys.results_lowercase.tr()}',
                         style: const TextStyle(fontSize: 12),
                       ),
                     ],

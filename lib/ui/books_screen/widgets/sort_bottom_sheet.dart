@@ -1,9 +1,10 @@
 import 'package:dropdown_button2/dropdown_button2.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:openreads/core/constants.dart/enums.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:openreads/core/themes/app_theme.dart';
-import 'package:openreads/resources/l10n.dart';
+import 'package:openreads/generated/locale_keys.g.dart';
 import 'package:openreads/logic/bloc/sort_bloc/sort_bloc.dart';
 import 'package:openreads/main.dart';
 import 'package:openreads/ui/books_screen/widgets/widgets.dart';
@@ -18,12 +19,12 @@ class SortBottomSheet extends StatefulWidget {
 }
 
 final List<String> sortOptions = [
-  l10n.title,
-  l10n.author,
-  l10n.rating,
-  l10n.pages_uppercase,
-  l10n.start_date,
-  l10n.finish_date,
+  LocaleKeys.title.tr(),
+  LocaleKeys.author.tr(),
+  LocaleKeys.rating.tr(),
+  LocaleKeys.pages_uppercase.tr(),
+  LocaleKeys.start_date.tr(),
+  LocaleKeys.finish_date.tr(),
 ];
 
 String _getDropdownValue(SetSortState state) {
@@ -347,7 +348,7 @@ class _SortBottomSheetState extends State<SortBottomSheet> {
             children: [
               const SizedBox(height: 5),
               Text(
-                l10n.sort_by,
+                LocaleKeys.sort_by.tr(),
                 style: const TextStyle(
                   fontSize: 16,
                   fontWeight: FontWeight.bold,
@@ -449,7 +450,7 @@ class _SortBottomSheetState extends State<SortBottomSheet> {
                                   _getFavouriteSwitch(context, state),
                                   const SizedBox(width: 10),
                                   Text(
-                                    l10n.only_favourite,
+                                    LocaleKeys.only_favourite.tr(),
                                     style: const TextStyle(fontSize: 16),
                                   ),
                                 ],
@@ -480,7 +481,7 @@ class _SortBottomSheetState extends State<SortBottomSheet> {
                             children: [
                               const SizedBox(height: 10),
                               Text(
-                                l10n.filter_by_finish_year,
+                                LocaleKeys.filter_by_finish_year.tr(),
                                 style: const TextStyle(fontSize: 16),
                               ),
                               const SizedBox(height: 5),
@@ -554,7 +555,7 @@ class _SortBottomSheetState extends State<SortBottomSheet> {
                             children: [
                               const SizedBox(height: 10),
                               Text(
-                                l10n.filter_by_tags,
+                                LocaleKeys.filter_by_tags.tr(),
                                 style: const TextStyle(fontSize: 16),
                               ),
                               const SizedBox(height: 5),
@@ -678,7 +679,7 @@ class _SortBottomSheetState extends State<SortBottomSheet> {
                                   _getTagsSwitch(context, state),
                                   const SizedBox(width: 10),
                                   Text(
-                                    l10n.display_tags,
+                                    LocaleKeys.display_tags.tr(),
                                     style: const TextStyle(fontSize: 16),
                                   ),
                                 ],
@@ -720,7 +721,7 @@ class _SortBottomSheetState extends State<SortBottomSheet> {
                   const SizedBox(width: 10),
                   Expanded(
                     child: Text(
-                      l10n.only_books_with_all_tags,
+                      LocaleKeys.only_books_with_all_tags.tr(),
                       style: const TextStyle(fontSize: 16),
                     ),
                   ),

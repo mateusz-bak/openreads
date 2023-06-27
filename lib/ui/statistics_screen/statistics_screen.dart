@@ -1,7 +1,8 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:loading_animation_widget/loading_animation_widget.dart';
-import 'package:openreads/resources/l10n.dart';
+import 'package:openreads/generated/locale_keys.g.dart';
 import 'package:openreads/logic/bloc/challenge_bloc/challenge_bloc.dart';
 import 'package:openreads/logic/bloc/stats_bloc/stats_bloc.dart';
 import 'package:openreads/main.dart';
@@ -38,7 +39,7 @@ class _StatisticsScreenState extends State<StatisticsScreen> {
               child: Scaffold(
                 appBar: AppBar(
                   title: Text(
-                    l10n.statistics,
+                    LocaleKeys.statistics.tr(),
                     style: const TextStyle(fontSize: 18),
                   ),
                 ),

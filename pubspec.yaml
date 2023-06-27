@@ -26,7 +26,6 @@ dependencies:
   blurhash_dart: ^1.2.1
   image: ^4.0.15
   fl_chart: ^0.63.0
-  intl: ^0.18.0
   dropdown_button2: ^2.0.0
   equatable: ^2.0.5
   connectivity_plus: ^4.0.1
@@ -52,14 +51,13 @@ dependencies:
   archive: ^3.3.5
   share_plus: ^7.0.2
   device_info_plus: ^9.0.2
-  flutter_localizations:
-    sdk: flutter
   dynamic_color: ^1.6.2
   image_fade: ^0.6.2
   package_info_plus: ^4.0.2
   animated_widgets: ^1.1.0
   shared_storage: ^0.8.0
   shared_preferences: ^2.0.18
+  easy_localization: ^3.0.2
 
 dev_dependencies:
   flutter_test:
@@ -80,6 +78,7 @@ flutter:
   generate: true
   assets:
   - assets/images/
+  - assets/translations/
   fonts:
     - family: Montserrat
       fonts:

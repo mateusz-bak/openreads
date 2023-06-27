@@ -1,7 +1,8 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:openreads/core/themes/app_theme.dart';
-import 'package:openreads/resources/l10n.dart';
+import 'package:openreads/generated/locale_keys.g.dart';
 import 'package:openreads/main.dart';
 import 'package:openreads/model/book.dart';
 import 'package:openreads/ui/add_book_screen/widgets/widgets.dart';
@@ -57,9 +58,9 @@ class BookScreen extends StatelessWidget {
             title: Text(
               deleted
                   ? deletePermanently == true
-                      ? l10n.delete_perm_question
-                      : l10n.delete_book_question
-                  : l10n.restore_book_question,
+                      ? LocaleKeys.delete_perm_question.tr()
+                      : LocaleKeys.delete_book_question.tr()
+                  : LocaleKeys.restore_book_question.tr(),
               style: const TextStyle(fontSize: 18),
             ),
             actionsAlignment: MainAxisAlignment.spaceBetween,
@@ -70,7 +71,7 @@ class BookScreen extends StatelessWidget {
                 },
                 child: Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 10),
-                  child: Text(l10n.no),
+                  child: Text(LocaleKeys.no.tr()),
                 ),
               ),
               FilledButton(
@@ -86,7 +87,7 @@ class BookScreen extends StatelessWidget {
                 },
                 child: Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 10),
-                  child: Text(l10n.yes),
+                  child: Text(LocaleKeys.yes.tr()),
                 ),
               ),
             ],
@@ -143,13 +144,13 @@ class BookScreen extends StatelessWidget {
 
   String _decideStatusText(int? status, BuildContext context) {
     if (status == 0) {
-      return l10n.book_status_finished;
+      return LocaleKeys.book_status_finished.tr();
     } else if (status == 1) {
-      return l10n.book_status_in_progress;
+      return LocaleKeys.book_status_in_progress.tr();
     } else if (status == 2) {
-      return l10n.book_status_for_later;
+      return LocaleKeys.book_status_for_later.tr();
     } else if (status == 3) {
-      return l10n.book_status_unfinished;
+      return LocaleKeys.book_status_unfinished.tr();
     } else {
       return '';
     }
@@ -157,11 +158,11 @@ class BookScreen extends StatelessWidget {
 
   String? _decideChangeStatusText(int? status, BuildContext context) {
     if (status == 1) {
-      return l10n.finish_reading;
+      return LocaleKeys.finish_reading.tr();
     } else if (status == 2) {
-      return l10n.start_reading;
+      return LocaleKeys.start_reading.tr();
     } else if (status == 3) {
-      return l10n.start_reading;
+      return LocaleKeys.start_reading.tr();
     } else {
       return null;
     }
@@ -183,7 +184,7 @@ class BookScreen extends StatelessWidget {
               borderRadius: BorderRadius.circular(cornerRadius),
             ),
             title: Text(
-              l10n.rate_book,
+              LocaleKeys.rate_book.tr(),
               style: const TextStyle(fontSize: 18),
             ),
             children: [
@@ -205,13 +206,13 @@ class BookScreen extends StatelessWidget {
                       rating = null;
                       Navigator.of(context).pop();
                     },
-                    child: Text(l10n.skip),
+                    child: Text(LocaleKeys.skip.tr()),
                   ),
                   FilledButton(
                     onPressed: () {
                       Navigator.of(context).pop();
                     },
-                    child: Text(l10n.save),
+                    child: Text(LocaleKeys.save.tr()),
                   )
                 ],
               )
@@ -296,13 +297,13 @@ class BookScreen extends StatelessWidget {
         .inDays
         .toString();
 
-    return '$diff ${l10n.days}';
+    return '$diff ${LocaleKeys.days.tr()}';
   }
 
   @override
   Widget build(BuildContext context) {
     final moreButtonOptions = [
-      l10n.edit_book,
+      LocaleKeys.edit_book.tr(),
     ];
 
     return Scaffold(
@@ -314,10 +315,10 @@ class BookScreen extends StatelessWidget {
                 if (snapshot.hasData) {
                   if (moreButtonOptions.length == 1) {
                     if (snapshot.data?.deleted == true) {
-                      moreButtonOptions.add(l10n.restore_book);
-                      moreButtonOptions.add(l10n.delete_permanently);
+                      moreButtonOptions.add(LocaleKeys.restore_book.tr());
+                      moreButtonOptions.add(LocaleKeys.delete_permanently.tr());
                     } else {
-                      moreButtonOptions.add(l10n.delete_book);
+                      moreButtonOptions.add(LocaleKeys.delete_book.tr());
                     }
                   }
 
@@ -430,7 +431,7 @@ class BookScreen extends StatelessWidget {
                         (snapshot.data!.finishDate != null &&
                                 snapshot.data!.startDate != null)
                             ? BookDetail(
-                                title: l10n.reading_time,
+                                title: LocaleKeys.reading_time.tr(),
                                 text: _generateReadingTime(
                                   finishDate: snapshot.data!.finishDate!,
                                   startDate: snapshot.data!.startDate!,
@@ -443,29 +444,29 @@ class BookScreen extends StatelessWidget {
                         ),
                         (snapshot.data!.pages != null)
                             ? BookDetail(
-                                title: l10n.pages_uppercase,
+                                title: LocaleKeys.pages_uppercase.tr(),
                                 text: (snapshot.data!.pages ?? "").toString(),
                               )
                             : const SizedBox(),
                         SizedBox(
                           height: (snapshot.data!.description != null &&
-                              snapshot.data!.description!.isNotEmpty)
+                                  snapshot.data!.description!.isNotEmpty)
                               ? 5
                               : 0,
                         ),
                         (snapshot.data!.description != null &&
-                            snapshot.data!.description!.isNotEmpty)
+                                snapshot.data!.description!.isNotEmpty)
                             ? BookDetail(
-                          title: l10n.description,
-                          text: snapshot.data!.description!,
-                        )
+                                title: LocaleKeys.description.tr(),
+                                text: snapshot.data!.description!,
+                              )
                             : const SizedBox(),
                         SizedBox(
                           height: (snapshot.data!.isbn != null) ? 5 : 0,
                         ),
                         (snapshot.data!.isbn != null)
                             ? BookDetail(
-                                title: l10n.isbn,
+                                title: LocaleKeys.isbn.tr(),
                                 text: (snapshot.data!.isbn ?? "").toString(),
                               )
                             : const SizedBox(),
@@ -474,7 +475,7 @@ class BookScreen extends StatelessWidget {
                         ),
                         (snapshot.data!.olid != null)
                             ? BookDetail(
-                                title: l10n.open_library_ID,
+                                title: LocaleKeys.open_library_ID.tr(),
                                 text: (snapshot.data!.olid ?? "").toString(),
                               )
                             : const SizedBox(),
@@ -487,7 +488,7 @@ class BookScreen extends StatelessWidget {
                         (snapshot.data!.myReview != null &&
                                 snapshot.data!.myReview!.isNotEmpty)
                             ? BookDetail(
-                                title: l10n.my_review,
+                                title: LocaleKeys.my_review.tr(),
                                 text: snapshot.data!.myReview!,
                               )
                             : const SizedBox(),

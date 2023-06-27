@@ -1,8 +1,9 @@
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:loading_animation_widget/loading_animation_widget.dart';
 import 'package:openreads/core/themes/app_theme.dart';
-import 'package:openreads/resources/l10n.dart';
+import 'package:openreads/generated/locale_keys.g.dart';
 
 class BookCardOLEdition extends StatelessWidget {
   BookCardOLEdition({
@@ -64,7 +65,7 @@ class BookCardOLEdition extends StatelessWidget {
                     : Expanded(
                         child: Center(
                           child: FittedBox(
-                            child: Text(l10n.no_cover),
+                            child: Text(LocaleKeys.no_cover.tr()),
                           ),
                         ),
                       ),

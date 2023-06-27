@@ -1,10 +1,11 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:image_cropper/image_cropper.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:loading_animation_widget/loading_animation_widget.dart';
-import 'package:openreads/resources/l10n.dart';
+import 'package:openreads/generated/locale_keys.g.dart';
 import 'package:openreads/resources/open_library_service.dart';
 import 'package:openreads/main.dart';
 import 'package:openreads/model/book.dart';
@@ -119,24 +120,24 @@ class _AddBookScreenState extends State<AddBookScreen> {
     ScaffoldMessenger.of(context).removeCurrentSnackBar();
 
     if (_titleCtrl.text.isEmpty) {
-      _showSnackbar(l10n.title_cannot_be_empty);
+      _showSnackbar(LocaleKeys.title_cannot_be_empty.tr());
       return false;
     }
 
     if (_authorCtrl.text.isEmpty) {
-      _showSnackbar(l10n.author_cannot_be_empty);
+      _showSnackbar(LocaleKeys.author_cannot_be_empty.tr());
       return false;
     }
 
     if (_status == null) {
-      _showSnackbar(l10n.set_book_status);
+      _showSnackbar(LocaleKeys.set_book_status.tr());
       return false;
     }
 
     if (_status == 0) {
       if (_startDate != null && _finishDate != null) {
         if (_finishDate!.isBefore(_startDate!)) {
-          _showSnackbar(l10n.finish_date_before_start);
+          _showSnackbar(LocaleKeys.finish_date_before_start.tr());
           return false;
         }
       }
@@ -229,7 +230,7 @@ class _AddBookScreenState extends State<AddBookScreen> {
       compressQuality: 90,
       uiSettings: [
         AndroidUiSettings(
-          toolbarTitle: l10n.edit_cover,
+          toolbarTitle: LocaleKeys.edit_cover.tr(),
           toolbarColor: Colors.black,
           statusBarColor: Colors.black,
           toolbarWidgetColor: Colors.white,
@@ -280,7 +281,7 @@ class _AddBookScreenState extends State<AddBookScreen> {
       initialDate: DateTime.now(),
       firstDate: DateTime(1970),
       lastDate: DateTime.now(),
-      helpText: l10n.select_start_date,
+      helpText: LocaleKeys.select_start_date.tr(),
     );
 
     if (startDate != null) {
@@ -298,7 +299,7 @@ class _AddBookScreenState extends State<AddBookScreen> {
       initialDate: DateTime.now(),
       firstDate: DateTime(1970),
       lastDate: DateTime.now(),
-      helpText: l10n.select_finish_date,
+      helpText: LocaleKeys.select_finish_date.tr(),
     );
 
     if (finishDate != null) {
@@ -476,7 +477,9 @@ class _AddBookScreenState extends State<AddBookScreen> {
     return Scaffold(
       appBar: AppBar(
         title: Text(
-          widget.editingExistingBook ? l10n.edit_book : l10n.add_new_book,
+          widget.editingExistingBook
+              ? LocaleKeys.edit_book.tr()
+              : LocaleKeys.add_new_book.tr(),
           style: const TextStyle(fontSize: 18),
         ),
         actions: [
@@ -485,7 +488,7 @@ class _AddBookScreenState extends State<AddBookScreen> {
                 ? _updateBook
                 : _saveBook,
             child: Text(
-              l10n.save,
+              LocaleKeys.save.tr(),
               style: const TextStyle(fontSize: 16),
             ),
           )
@@ -500,7 +503,7 @@ class _AddBookScreenState extends State<AddBookScreen> {
               const SizedBox(height: 20),
               BookTextField(
                 controller: _titleCtrl,
-                hint: l10n.enter_title,
+                hint: LocaleKeys.enter_title.tr(),
                 icon: Icons.book,
                 keyboardType: TextInputType.name,
                 autofocus:
@@ -514,7 +517,7 @@ class _AddBookScreenState extends State<AddBookScreen> {
               const SizedBox(height: 20),
               BookTextField(
                 controller: _subtitleCtrl,
-                hint: l10n.enter_subtitle,
+                hint: LocaleKeys.enter_subtitle.tr(),
                 icon: Icons.book,
                 keyboardType: TextInputType.name,
                 maxLines: 5,
@@ -524,7 +527,7 @@ class _AddBookScreenState extends State<AddBookScreen> {
               const SizedBox(height: 20),
               BookTextField(
                 controller: _authorCtrl,
-                hint: l10n.enter_author,
+                hint: LocaleKeys.enter_author.tr(),
                 icon: Icons.person,
                 keyboardType: TextInputType.name,
                 maxLines: 5,
@@ -572,7 +575,7 @@ class _AddBookScreenState extends State<AddBookScreen> {
                   Expanded(
                     child: BookTextField(
                       controller: _pagesCtrl,
-                      hint: l10n.enter_pages,
+                      hint: LocaleKeys.enter_pages.tr(),
                       icon: FontAwesomeIcons.solidFileLines,
                       keyboardType: TextInputType.number,
                       inputFormatters: <TextInputFormatter>[
@@ -585,7 +588,7 @@ class _AddBookScreenState extends State<AddBookScreen> {
                   Expanded(
                     child: BookTextField(
                       controller: _pubYearCtrl,
-                      hint: l10n.enter_publication_year,
+                      hint: LocaleKeys.enter_publication_year.tr(),
                       icon: FontAwesomeIcons.solidCalendar,
                       keyboardType: TextInputType.number,
                       inputFormatters: <TextInputFormatter>[
@@ -599,7 +602,7 @@ class _AddBookScreenState extends State<AddBookScreen> {
               const SizedBox(height: 20),
               BookTextField(
                 controller: _descriptionCtrl,
-                hint: l10n.enter_description,
+                hint: LocaleKeys.enter_description.tr(),
                 icon: FontAwesomeIcons.solidKeyboard,
                 keyboardType: TextInputType.multiline,
                 maxLength: 5000,
@@ -610,7 +613,7 @@ class _AddBookScreenState extends State<AddBookScreen> {
               const SizedBox(height: 20),
               BookTextField(
                 controller: _isbnCtrl,
-                hint: l10n.isbn,
+                hint: LocaleKeys.isbn.tr(),
                 icon: FontAwesomeIcons.i,
                 keyboardType: TextInputType.number,
                 inputFormatters: <TextInputFormatter>[
@@ -621,7 +624,7 @@ class _AddBookScreenState extends State<AddBookScreen> {
               const SizedBox(height: 20),
               BookTextField(
                 controller: _olidCtrl,
-                hint: l10n.open_library_ID,
+                hint: LocaleKeys.open_library_ID.tr(),
                 icon: FontAwesomeIcons.o,
                 keyboardType: TextInputType.text,
                 maxLength: 20,
@@ -630,7 +633,7 @@ class _AddBookScreenState extends State<AddBookScreen> {
               const SizedBox(height: 20),
               TagsField(
                 controller: _tagsCtrl,
-                hint: l10n.enter_tags,
+                hint: LocaleKeys.enter_tags.tr(),
                 icon: FontAwesomeIcons.tags,
                 keyboardType: TextInputType.text,
                 maxLength: 20,
@@ -644,7 +647,7 @@ class _AddBookScreenState extends State<AddBookScreen> {
               const SizedBox(height: 20),
               BookTextField(
                 controller: _myReviewCtrl,
-                hint: l10n.my_review,
+                hint: LocaleKeys.my_review.tr(),
                 icon: FontAwesomeIcons.solidKeyboard,
                 keyboardType: TextInputType.multiline,
                 maxLength: 5000,

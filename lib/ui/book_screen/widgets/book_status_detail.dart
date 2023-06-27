@@ -1,9 +1,10 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:openreads/core/themes/app_theme.dart';
-import 'package:openreads/resources/l10n.dart';
+import 'package:openreads/generated/locale_keys.g.dart';
 import 'package:openreads/logic/bloc/rating_type_bloc/rating_type_bloc.dart';
 
 class BookStatusDetail extends StatelessWidget {
@@ -47,7 +48,7 @@ class BookStatusDetail extends StatelessWidget {
 
     if (startDate == null && finishDate != null) {
       return Text(
-        '${l10n.finished_on_date} $finishDate',
+        '${LocaleKeys.finished_on_date.tr()} $finishDate',
         style: const TextStyle(
           fontSize: 14,
           fontWeight: FontWeight.normal,
@@ -57,7 +58,7 @@ class BookStatusDetail extends StatelessWidget {
 
     if (startDate != null && finishDate == null) {
       return Text(
-        '${l10n.started_on_date} $startDate',
+        '${LocaleKeys.started_on_date.tr()} $startDate',
         style: const TextStyle(
           fontSize: 14,
           fontWeight: FontWeight.normal,
@@ -189,7 +190,7 @@ class BookStatusDetail extends StatelessWidget {
                       Row(
                         children: [
                           Text(
-                            l10n.your_rating,
+                            LocaleKeys.your_rating.tr(),
                             style: const TextStyle(
                               fontSize: 14,
                               fontWeight: FontWeight.bold,
