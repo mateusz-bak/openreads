@@ -1,8 +1,9 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:openreads/core/constants.dart/enums.dart';
 import 'package:openreads/core/themes/app_theme.dart';
-import 'package:openreads/resources/l10n.dart';
+import 'package:openreads/generated/locale_keys.g.dart';
 import 'package:openreads/logic/bloc/sort_bloc/sort_bloc.dart';
 import 'package:openreads/logic/bloc/theme_bloc/theme_bloc.dart';
 import 'package:openreads/main.dart';
@@ -401,12 +402,12 @@ class _BooksScreenState extends State<BooksScreen>
     ScaffoldMessenger.of(context).showSnackBar(
       SnackBar(
         content: Text(
-          '${l10n.migration_v1_to_v2_retrigger_description} ${l10n.this_msg_will_only_be_displayed_three_times}',
+          '${LocaleKeys.migration_v1_to_v2_retrigger_description.tr()} ${LocaleKeys.this_msg_will_only_be_displayed_three_times.tr()}',
         ),
         dismissDirection: DismissDirection.endToStart,
         duration: const Duration(seconds: 999),
         action: SnackBarAction(
-            label: l10n.click_here_to_restore_them,
+            label: LocaleKeys.click_here_to_restore_them.tr(),
             onPressed: () {
               Navigator.push(context, MaterialPageRoute(builder: (_) {
                 return BackupScreen(autoMigrationV1ToV2: true);
@@ -423,12 +424,10 @@ class _BooksScreenState extends State<BooksScreen>
   Widget build(BuildContext context) {
     super.build(context);
 
-    AppTranslations.init(context);
-
     moreButtonOptions = [
-      l10n.sort_filter,
-      l10n.statistics,
-      l10n.settings,
+      LocaleKeys.sort_filter.tr(),
+      LocaleKeys.statistics.tr(),
+      LocaleKeys.settings.tr(),
     ];
 
     _showLostBooksInfo();
@@ -481,24 +480,24 @@ class _BooksScreenState extends State<BooksScreen>
                       tabs: state.readTabFirst
                           ? List.of([
                               BookTab(
-                                text: l10n.books_finished,
+                                text: LocaleKeys.books_finished.tr(),
                               ),
                               BookTab(
-                                text: l10n.books_in_progress,
+                                text: LocaleKeys.books_in_progress.tr(),
                               ),
                               BookTab(
-                                text: l10n.books_for_later,
+                                text: LocaleKeys.books_for_later.tr(),
                               ),
                             ])
                           : List.of([
                               BookTab(
-                                text: l10n.books_in_progress,
+                                text: LocaleKeys.books_in_progress.tr(),
                               ),
                               BookTab(
-                                text: l10n.books_finished,
+                                text: LocaleKeys.books_finished.tr(),
                               ),
                               BookTab(
-                                text: l10n.books_for_later,
+                                text: LocaleKeys.books_for_later.tr(),
                               ),
                             ]),
                     ),
@@ -621,7 +620,7 @@ class _BooksScreenState extends State<BooksScreen>
               child: Padding(
                 padding: const EdgeInsets.all(50),
                 child: Text(
-                  '${l10n.this_list_is_empty_1}\n${l10n.this_list_is_empty_2}',
+                  '${LocaleKeys.this_list_is_empty_1.tr()}\n${LocaleKeys.this_list_is_empty_2.tr()}',
                   textAlign: TextAlign.center,
                   style: const TextStyle(
                     letterSpacing: 1.5,
@@ -668,7 +667,7 @@ class _BooksScreenState extends State<BooksScreen>
               child: Padding(
                 padding: const EdgeInsets.all(50),
                 child: Text(
-                  '${l10n.this_list_is_empty_1}\n${l10n.this_list_is_empty_2}',
+                  '${LocaleKeys.this_list_is_empty_1.tr()}\n${LocaleKeys.this_list_is_empty_2.tr()}',
                   textAlign: TextAlign.center,
                   style: const TextStyle(
                     letterSpacing: 1.5,
@@ -715,7 +714,7 @@ class _BooksScreenState extends State<BooksScreen>
               child: Padding(
                 padding: const EdgeInsets.all(50),
                 child: Text(
-                  '${l10n.this_list_is_empty_1}\n${l10n.this_list_is_empty_2}',
+                  '${LocaleKeys.this_list_is_empty_1.tr()}\n${LocaleKeys.this_list_is_empty_2.tr()}',
                   textAlign: TextAlign.center,
                   style: const TextStyle(
                     letterSpacing: 1.5,

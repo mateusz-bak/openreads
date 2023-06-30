@@ -1,8 +1,9 @@
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:loading_animation_widget/loading_animation_widget.dart';
 import 'package:openreads/core/themes/app_theme.dart';
-import 'package:openreads/resources/l10n.dart';
+import 'package:openreads/generated/locale_keys.g.dart';
 import 'package:openreads/model/ol_search_result.dart';
 
 class BookCardOL extends StatelessWidget {
@@ -76,7 +77,7 @@ class BookCardOL extends StatelessWidget {
                           borderRadius: BorderRadius.circular(cornerRadius),
                         ),
                         child: Center(
-                          child: Text(l10n.no_cover),
+                          child: Text(LocaleKeys.no_cover.tr()),
                         ),
                       ),
               ),
@@ -138,7 +139,7 @@ class BookCardOL extends StatelessWidget {
                                         ),
                                       ),
                                       Text(
-                                        l10n.editions_lowercase,
+                                        LocaleKeys.editions_lowercase.tr(),
                                         softWrap: true,
                                         overflow: TextOverflow.clip,
                                         style: const TextStyle(
@@ -166,7 +167,7 @@ class BookCardOL extends StatelessWidget {
                                         ),
                                       ),
                                       Text(
-                                        l10n.pages_lowercase,
+                                        LocaleKeys.pages_lowercase.tr(),
                                         softWrap: true,
                                         overflow: TextOverflow.clip,
                                         style: const TextStyle(
@@ -194,7 +195,7 @@ class BookCardOL extends StatelessWidget {
                                         ),
                                       ),
                                       Text(
-                                        l10n.published_lowercase,
+                                        LocaleKeys.published_lowercase.tr(),
                                         softWrap: true,
                                         overflow: TextOverflow.clip,
                                         style: const TextStyle(
@@ -243,7 +244,7 @@ class BookCardOL extends StatelessWidget {
                                         ),
                                       ),
                                       child: Text(
-                                        l10n.choose_edition,
+                                        LocaleKeys.choose_edition.tr(),
                                         style: const TextStyle(fontSize: 12),
                                       ),
                                     )
@@ -269,7 +270,7 @@ class BookCardOL extends StatelessWidget {
                                     ),
                                   ),
                                   child: Text(
-                                    l10n.add_book,
+                                    LocaleKeys.add_book.tr(),
                                     style: const TextStyle(fontSize: 12),
                                   ),
                                 ),

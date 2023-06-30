@@ -1,7 +1,8 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 import 'package:openreads/core/themes/app_theme.dart';
-import 'package:openreads/resources/l10n.dart';
+import 'package:openreads/generated/locale_keys.g.dart';
 import 'package:openreads/ui/statistics_screen/widgets/widgets.dart';
 
 class BooksByStatus extends StatefulWidget {
@@ -68,7 +69,7 @@ class BooksByStatusState extends State<BooksByStatus> {
                               children: [
                                 PieChartIndicator(
                                   color: Colors.green.shade400,
-                                  text: l10n.books_finished,
+                                  text: LocaleKeys.books_finished.tr(),
                                   number: widget.list![0],
                                 ),
                                 const SizedBox(
@@ -76,7 +77,7 @@ class BooksByStatusState extends State<BooksByStatus> {
                                 ),
                                 PieChartIndicator(
                                   color: Colors.yellow.shade400,
-                                  text: l10n.books_in_progress,
+                                  text: LocaleKeys.books_in_progress.tr(),
                                   number: widget.list![1],
                                 ),
                                 const SizedBox(
@@ -84,7 +85,7 @@ class BooksByStatusState extends State<BooksByStatus> {
                                 ),
                                 PieChartIndicator(
                                   color: Colors.blue.shade400,
-                                  text: l10n.books_for_later,
+                                  text: LocaleKeys.books_for_later.tr(),
                                   number: widget.list![2],
                                 ),
                                 SizedBox(
@@ -93,7 +94,7 @@ class BooksByStatusState extends State<BooksByStatus> {
                                 (widget.list![3] != 0)
                                     ? PieChartIndicator(
                                         color: Colors.red.shade400,
-                                        text: l10n.books_unfinished,
+                                        text: LocaleKeys.books_unfinished.tr(),
                                         number: widget.list![3],
                                       )
                                     : const SizedBox(),

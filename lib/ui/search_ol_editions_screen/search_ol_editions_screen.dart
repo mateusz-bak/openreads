@@ -1,8 +1,9 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
 import 'package:loading_animation_widget/loading_animation_widget.dart';
-import 'package:openreads/resources/l10n.dart';
+import 'package:openreads/generated/locale_keys.g.dart';
 import 'package:openreads/model/book.dart';
 import 'package:openreads/model/ol_edition_result.dart';
 import 'package:openreads/resources/open_library_service.dart';
@@ -151,7 +152,7 @@ class _SearchOLEditionsScreenState extends State<SearchOLEditionsScreen> {
     return Scaffold(
       appBar: AppBar(
         title: Text(
-          l10n.choose_edition,
+          LocaleKeys.choose_edition.tr(),
           style: const TextStyle(fontSize: 18),
         ),
       ),

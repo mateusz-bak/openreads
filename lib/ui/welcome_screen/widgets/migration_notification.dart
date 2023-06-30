@@ -1,6 +1,7 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:openreads/core/themes/app_theme.dart';
-import 'package:openreads/resources/l10n.dart';
+import 'package:openreads/generated/locale_keys.g.dart';
 
 class MigrationNotification extends StatelessWidget {
   const MigrationNotification({
@@ -30,15 +31,15 @@ class MigrationNotification extends StatelessWidget {
         children: [
           Text(
             success == true
-                ? l10n.migration_v1_to_v2_finished
-                : l10n.migration_v1_to_v2_1,
+                ? LocaleKeys.migration_v1_to_v2_finished.tr()
+                : LocaleKeys.migration_v1_to_v2_1.tr(),
             style: Theme.of(context).textTheme.headlineMedium,
           ),
           SizedBox(height: success == true ? 0 : 10),
           success == true
               ? const SizedBox()
               : Text(
-                  l10n.migration_v1_to_v2_2,
+                  LocaleKeys.migration_v1_to_v2_2.tr(),
                   style: Theme.of(context).textTheme.bodyMedium,
                 ),
           SizedBox(height: success == true ? 0 : 10),
@@ -62,9 +63,9 @@ class MigrationNotification extends StatelessWidget {
               ? const SizedBox()
               : Text(
                   (total != null && done != null)
-                      ? '$done / $total ${l10n.restored}'
+                      ? '$done / $total ${LocaleKeys.restored.tr()}'
                       : total != null
-                          ? '0 / $total ${l10n.restored}'
+                          ? '0 / $total ${LocaleKeys.restored.tr()}'
                           : '',
                   style: Theme.of(context).textTheme.bodyLarge,
                 ),

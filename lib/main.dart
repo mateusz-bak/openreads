@@ -1,8 +1,10 @@
 import 'package:dynamic_color/dynamic_color.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_displaymode/flutter_displaymode.dart';
 import 'package:hydrated_bloc/hydrated_bloc.dart';
+import 'package:openreads/core/constants.dart/locale.dart';
 import 'package:openreads/logic/bloc/challenge_bloc/challenge_bloc.dart';
 import 'package:openreads/logic/bloc/migration_v1_to_v2_bloc/migration_v1_to_v2_bloc.dart';
 import 'package:openreads/logic/bloc/open_lib_bloc/open_lib_bloc.dart';
@@ -16,12 +18,12 @@ import 'package:openreads/resources/open_library_service.dart';
 import 'package:openreads/ui/books_screen/books_screen.dart';
 import 'package:openreads/ui/welcome_screen/welcome_screen.dart';
 import 'package:path_provider/path_provider.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 late BookCubit bookCubit;
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  await EasyLocalization.ensureInitialized();
   await FlutterDisplayMode.setHighRefreshRate();
 
   HydratedBloc.storage = await HydratedStorage.build(
@@ -30,7 +32,17 @@ void main() async {
 
   bookCubit = BookCubit();
 
-  runApp(const App());
+  final localeCodes = supportedLocales.map((e) => e.locale).toList();
+
+  runApp(
+    EasyLocalization(
+      supportedLocales: localeCodes,
+      path: 'assets/translations',
+      fallbackLocale: const Locale('en', 'US'),
+      useFallbackTranslations: true,
+      child: const App(),
+    ),
+  );
 }
 
 class App extends StatelessWidget {
@@ -155,11 +167,9 @@ class _OpenreadsAppState extends State<OpenreadsApp>
         home: welcomeMode
             ? WelcomeScreen(themeData: Theme.of(context))
             : const BooksScreen(),
-        localizationsDelegates: AppLocalizations.localizationsDelegates,
-        supportedLocales: AppLocalizations.supportedLocales,
-        locale: widget.themeState.locale != null
-            ? Locale(widget.themeState.locale!)
-            : null,
+        localizationsDelegates: context.localizationDelegates,
+        supportedLocales: context.supportedLocales,
+        locale: context.locale,
       );
     });
   }

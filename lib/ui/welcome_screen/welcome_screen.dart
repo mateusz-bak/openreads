@@ -1,10 +1,11 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:intro_slider/intro_slider.dart';
 import 'package:openreads/core/themes/app_theme.dart';
 import 'package:openreads/logic/bloc/migration_v1_to_v2_bloc/migration_v1_to_v2_bloc.dart';
-import 'package:openreads/resources/l10n.dart';
+import 'package:openreads/generated/locale_keys.g.dart';
 import 'package:openreads/logic/bloc/theme_bloc/theme_bloc.dart';
 import 'package:openreads/logic/bloc/welcome_bloc/welcome_bloc.dart';
 import 'package:openreads/ui/books_screen/books_screen.dart';
@@ -33,7 +34,7 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
 
     listContentConfig.add(
       ContentConfig(
-        title: l10n.welcome_1,
+        title: LocaleKeys.welcome_1.tr(),
         maxLineTitle: 3,
         styleTitle: const TextStyle(
           fontSize: 32,
@@ -46,7 +47,7 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
           color: Colors.white,
         ),
         description:
-            '${l10n.welcome_1_description_1}\n\n\n${l10n.welcome_1_description_2}',
+            '${LocaleKeys.welcome_1_description_1.tr()}\n\n\n${LocaleKeys.welcome_1_description_2.tr()}',
         textAlignDescription: TextAlign.start,
         backgroundImage: 'assets/images/welcome_1.jpg',
         backgroundColor: widget.themeData.colorScheme.surface,
@@ -66,7 +67,7 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
           color: Colors.white,
         ),
         description:
-            '${l10n.welcome_2_description_1}\n\n\n${l10n.welcome_2_description_2}',
+            '${LocaleKeys.welcome_2_description_1.tr()}\n\n\n${LocaleKeys.welcome_2_description_2.tr()}',
         backgroundImage: 'assets/images/welcome_2.jpg',
         backgroundColor: widget.themeData.colorScheme.surface,
       ),
@@ -82,7 +83,7 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
           color: Colors.white,
         ),
         description:
-            '${l10n.welcome_3_description_1}\n\n\n${l10n.welcome_3_description_2}\n\n\n${l10n.welcome_3_description_3}',
+            '${LocaleKeys.welcome_3_description_1.tr()}\n\n\n${LocaleKeys.welcome_3_description_2.tr()}\n\n\n${LocaleKeys.welcome_3_description_3.tr()}',
         backgroundImage: 'assets/images/welcome_3.jpg',
         backgroundColor: widget.themeData.colorScheme.surface,
       ),
@@ -112,8 +113,6 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
 
   @override
   Widget build(BuildContext context) {
-    AppTranslations.init(context);
-
     _prepareWelcomePages();
 
     return BlocBuilder<ThemeBloc, ThemeState>(
@@ -142,13 +141,13 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
                             child: CircularProgressIndicator(),
                           );
                         } else {
-                          return Text(l10n.start_button);
+                          return Text(LocaleKeys.start_button.tr());
                         }
                       },
                     ),
                   ),
                   renderNextBtn: FittedBox(
-                    child: Text(l10n.next_button),
+                    child: Text(LocaleKeys.next_button.tr()),
                   ),
                   nextButtonStyle: ButtonStyle(
                     shape: MaterialStateProperty.all<OutlinedBorder>(

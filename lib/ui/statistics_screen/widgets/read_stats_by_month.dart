@@ -1,7 +1,8 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 import 'package:openreads/core/themes/app_theme.dart';
-import 'package:openreads/resources/l10n.dart';
+import 'package:openreads/generated/locale_keys.g.dart';
 
 class ReadStatsByMonth extends StatelessWidget {
   ReadStatsByMonth({
@@ -16,18 +17,18 @@ class ReadStatsByMonth extends StatelessWidget {
   final ThemeData theme;
 
   final List<String> listOfMonthsShort = [
-    l10n.january_short,
-    l10n.february_short,
-    l10n.march_short,
-    l10n.april_short,
-    l10n.may_short,
-    l10n.june_short,
-    l10n.july_short,
-    l10n.august_short,
-    l10n.september_short,
-    l10n.october_short,
-    l10n.november_short,
-    l10n.december_short,
+    LocaleKeys.january_short.tr(),
+    LocaleKeys.february_short.tr(),
+    LocaleKeys.march_short.tr(),
+    LocaleKeys.april_short.tr(),
+    LocaleKeys.may_short.tr(),
+    LocaleKeys.june_short.tr(),
+    LocaleKeys.july_short.tr(),
+    LocaleKeys.august_short.tr(),
+    LocaleKeys.september_short.tr(),
+    LocaleKeys.october_short.tr(),
+    LocaleKeys.november_short.tr(),
+    LocaleKeys.december_short.tr(),
   ];
 
   FlTitlesData get titlesData => FlTitlesData(
@@ -40,13 +41,13 @@ class ReadStatsByMonth extends StatelessWidget {
             interval: 2,
           ),
         ),
-        leftTitles: AxisTitles(
+        leftTitles: const AxisTitles(
           sideTitles: SideTitles(showTitles: false),
         ),
-        topTitles: AxisTitles(
+        topTitles: const AxisTitles(
           sideTitles: SideTitles(showTitles: false),
         ),
-        rightTitles: AxisTitles(
+        rightTitles: const AxisTitles(
           sideTitles: SideTitles(showTitles: false),
         ),
       );
@@ -203,7 +204,7 @@ class ReadStatsByMonth extends StatelessWidget {
                   titlesData: titlesData,
                   borderData: borderData,
                   barGroups: barGroups(),
-                  gridData: FlGridData(show: false),
+                  gridData: const FlGridData(show: false),
                   alignment: BarChartAlignment.spaceAround,
                   maxY: calculateMaxY(),
                 ),

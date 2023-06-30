@@ -1,10 +1,11 @@
+import 'dart:ui';
+
 class AppLanguage {
   String fullName;
+  Locale locale;
 
-  String twoLetterCode;
-
-  AppLanguage({
-    required this.fullName,
-    required this.twoLetterCode,
-  });
+  AppLanguage(
+    this.fullName,
+    this.locale,
+  );
 }

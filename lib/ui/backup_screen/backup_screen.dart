@@ -3,13 +3,14 @@ import 'dart:io';
 
 import 'package:archive/archive_io.dart';
 import 'package:device_info_plus/device_info_plus.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:filesystem_picker/filesystem_picker.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:openreads/logic/bloc/migration_v1_to_v2_bloc/migration_v1_to_v2_bloc.dart';
-import 'package:openreads/resources/l10n.dart';
+import 'package:openreads/generated/locale_keys.g.dart';
 import 'package:openreads/logic/bloc/challenge_bloc/challenge_bloc.dart';
 import 'package:openreads/main.dart';
 import 'package:openreads/model/book.dart';
@@ -83,10 +84,10 @@ class _BackupScreenState extends State<BackupScreen> {
     ScaffoldMessenger.of(context).showSnackBar(
       SnackBar(
         content: Text(
-          l10n.need_storage_permission,
+          LocaleKeys.need_storage_permission.tr(),
         ),
         action: SnackBarAction(
-          label: l10n.open_settings,
+          label: LocaleKeys.open_settings.tr(),
           onPressed: () {
             if (mounted) {
               openAppSettings();
@@ -113,7 +114,7 @@ class _BackupScreenState extends State<BackupScreen> {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
           content: Text(
-            l10n.backup_successfull,
+            LocaleKeys.backup_successfull.tr(),
           ),
         ),
       );
@@ -209,8 +210,8 @@ class _BackupScreenState extends State<BackupScreen> {
   Future<String?> _openFolderPicker() async {
     return await FilesystemPicker.open(
       context: context,
-      title: l10n.choose_backup_folder,
-      pickText: l10n.save_file_to_this_folder,
+      title: LocaleKeys.choose_backup_folder.tr(),
+      pickText: LocaleKeys.save_file_to_this_folder.tr(),
       fsType: FilesystemType.folder,
       rootDirectory: Directory('/storage/emulated/0/'),
       contextActions: [
@@ -316,7 +317,7 @@ class _BackupScreenState extends State<BackupScreen> {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
           content: Text(
-            l10n.backup_successfull,
+            LocaleKeys.backup_successfull.tr(),
           ),
         ),
       );
@@ -367,7 +368,7 @@ class _BackupScreenState extends State<BackupScreen> {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
           content: Text(
-            l10n.backup_not_valid,
+            LocaleKeys.backup_not_valid.tr(),
           ),
         ),
       );
@@ -379,7 +380,7 @@ class _BackupScreenState extends State<BackupScreen> {
     ScaffoldMessenger.of(context).showSnackBar(
       SnackBar(
         content: Text(
-          l10n.restore_successfull,
+          LocaleKeys.restore_successfull.tr(),
         ),
       ),
     );
@@ -438,7 +439,7 @@ class _BackupScreenState extends State<BackupScreen> {
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
             content: Text(
-              l10n.backup_not_valid,
+              LocaleKeys.backup_not_valid.tr(),
             ),
           ),
         );
@@ -450,7 +451,7 @@ class _BackupScreenState extends State<BackupScreen> {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
           content: Text(
-            l10n.restore_successfull,
+            LocaleKeys.restore_successfull.tr(),
           ),
         ),
       );
@@ -643,7 +644,7 @@ class _BackupScreenState extends State<BackupScreen> {
 
     setState(() {
       restoredCounterText =
-          '${l10n.restored} $booksBackupDone/$booksBackupLenght\n';
+          '${LocaleKeys.restored.tr()} $booksBackupDone/$booksBackupLenght\n';
     });
   }
 
@@ -683,8 +684,8 @@ class _BackupScreenState extends State<BackupScreen> {
   Future<String?> _openFilePicker() async {
     return await FilesystemPicker.open(
       context: context,
-      title: l10n.choose_backup_file,
-      pickText: l10n.use_this_file,
+      title: LocaleKeys.choose_backup_file.tr(),
+      pickText: LocaleKeys.use_this_file.tr(),
       fsType: FilesystemType.file,
       rootDirectory: Directory('/storage/emulated/0/'),
       fileTileSelectMode: FileTileSelectMode.wholeTile,
@@ -717,7 +718,7 @@ class _BackupScreenState extends State<BackupScreen> {
     return Scaffold(
       appBar: AppBar(
         title: Text(
-          l10n.backup,
+          LocaleKeys.backup.tr(),
           style: const TextStyle(fontSize: 18),
         ),
       ),
@@ -737,7 +738,7 @@ class _BackupScreenState extends State<BackupScreen> {
                   tiles: <SettingsTile>[
                     SettingsTile(
                       title: Text(
-                        l10n.create_local_backup,
+                        LocaleKeys.create_local_backup.tr(),
                         style: const TextStyle(
                           fontSize: 16,
                         ),
@@ -750,13 +751,13 @@ class _BackupScreenState extends State<BackupScreen> {
                             )
                           : const Icon(FontAwesomeIcons.solidFloppyDisk),
                       description: Text(
-                        l10n.create_local_backup_description,
+                        LocaleKeys.create_local_backup_description.tr(),
                       ),
                       onPressed: _startLocalBackup,
                     ),
                     SettingsTile(
                       title: Text(
-                        l10n.create_cloud_backup,
+                        LocaleKeys.create_cloud_backup.tr(),
                         style: const TextStyle(
                           fontSize: 16,
                         ),
@@ -769,13 +770,13 @@ class _BackupScreenState extends State<BackupScreen> {
                             )
                           : const Icon(FontAwesomeIcons.cloudArrowUp),
                       description: Text(
-                        l10n.create_cloud_backup_description,
+                        LocaleKeys.create_cloud_backup_description.tr(),
                       ),
                       onPressed: _startCloudBackup,
                     ),
                     SettingsTile(
                       title: Text(
-                        l10n.restore_backup,
+                        LocaleKeys.restore_backup.tr(),
                         style: const TextStyle(
                           fontSize: 16,
                         ),
@@ -799,7 +800,7 @@ class _BackupScreenState extends State<BackupScreen> {
                                 )
                               : const SizedBox(),
                           Text(
-                            '${l10n.restore_backup_description_1}\n${l10n.restore_backup_description_2}',
+                            '${LocaleKeys.restore_backup_description_1.tr()}\n${LocaleKeys.restore_backup_description_2.tr()}',
                           ),
                         ],
                       ),
@@ -810,10 +811,10 @@ class _BackupScreenState extends State<BackupScreen> {
                             return Builder(builder: (context) {
                               return AlertDialog(
                                 title: Text(
-                                  l10n.are_you_sure,
+                                  LocaleKeys.are_you_sure.tr(),
                                 ),
                                 content: Text(
-                                  l10n.restore_backup_alert_content,
+                                  LocaleKeys.restore_backup_alert_content.tr(),
                                 ),
                                 actionsAlignment:
                                     MainAxisAlignment.spaceBetween,
@@ -823,12 +824,12 @@ class _BackupScreenState extends State<BackupScreen> {
                                       _startLocalRestore(context);
                                       Navigator.of(context).pop();
                                     },
-                                    child: Text(l10n.yes),
+                                    child: Text(LocaleKeys.yes.tr()),
                                   ),
                                   FilledButton.tonal(
                                     onPressed: () =>
                                         Navigator.of(context).pop(),
-                                    child: Text(l10n.no),
+                                    child: Text(LocaleKeys.no.tr()),
                                   ),
                                 ],
                               );
@@ -839,7 +840,7 @@ class _BackupScreenState extends State<BackupScreen> {
                     ),
                     SettingsTile(
                       title: Text(
-                        l10n.migration_v1_to_v2_retrigger,
+                        LocaleKeys.migration_v1_to_v2_retrigger.tr(),
                         style: TextStyle(
                           fontSize: 16,
                           color: widget.autoMigrationV1ToV2
@@ -854,7 +855,8 @@ class _BackupScreenState extends State<BackupScreen> {
                             : null,
                       ),
                       description: Text(
-                        l10n.migration_v1_to_v2_retrigger_description,
+                        LocaleKeys.migration_v1_to_v2_retrigger_description
+                            .tr(),
                         style: TextStyle(
                           color: widget.autoMigrationV1ToV2
                               ? Theme.of(context).colorScheme.primary
@@ -867,10 +869,10 @@ class _BackupScreenState extends State<BackupScreen> {
                           builder: (context) {
                             return AlertDialog(
                               title: Text(
-                                l10n.are_you_sure,
+                                LocaleKeys.are_you_sure.tr(),
                               ),
                               content: Text(
-                                l10n.restore_backup_alert_content,
+                                LocaleKeys.restore_backup_alert_content.tr(),
                               ),
                               actionsAlignment: MainAxisAlignment.spaceBetween,
                               actions: [
@@ -879,11 +881,11 @@ class _BackupScreenState extends State<BackupScreen> {
                                     _startMigrationV1ToV2();
                                     Navigator.of(context).pop();
                                   },
-                                  child: Text(l10n.yes),
+                                  child: Text(LocaleKeys.yes.tr()),
                                 ),
                                 FilledButton.tonal(
                                   onPressed: () => Navigator.of(context).pop(),
-                                  child: Text(l10n.no),
+                                  child: Text(LocaleKeys.no.tr()),
                                 ),
                               ],
                             );

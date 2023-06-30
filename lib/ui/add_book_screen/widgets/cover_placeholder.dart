@@ -1,6 +1,7 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:openreads/core/themes/app_theme.dart';
-import 'package:openreads/resources/l10n.dart';
+import 'package:openreads/generated/locale_keys.g.dart';
 
 class CoverPlaceholder extends StatelessWidget {
   const CoverPlaceholder({
@@ -38,7 +39,7 @@ class CoverPlaceholder extends StatelessWidget {
                   color: Theme.of(context).colorScheme.primary,
                 ),
                 const SizedBox(width: 15),
-                Text(l10n.click_to_add_cover),
+                Text(LocaleKeys.click_to_add_cover.tr()),
               ],
             ),
           ),
