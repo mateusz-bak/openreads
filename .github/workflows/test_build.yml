@@ -33,7 +33,6 @@ jobs:
         KEYSTORE_KEY_PASSWORD: ${{ secrets.KEYSTORE_KEY_PASSWORD }}
         KEYSTORE_STORE_PASSWORD: ${{ secrets.KEYSTORE_STORE_PASSWORD }}
       working-directory: android
-    - run: rm /home/runner/work/openreads-android/openreads-android/lib/l10n/app_kaa.arb
     - run: flutter pub get
     - run: flutter build -v apk
 
@@ -61,7 +60,6 @@ jobs:
         KEYSTORE_KEY_PASSWORD: ${{ secrets.KEYSTORE_KEY_PASSWORD }}
         KEYSTORE_STORE_PASSWORD: ${{ secrets.KEYSTORE_STORE_PASSWORD }}
       working-directory: android
-    - run: rm /home/runner/work/openreads-android/openreads-android/lib/l10n/app_kaa.arb
     - run: flutter pub get
     - run: flutter build -v appbundle
 
