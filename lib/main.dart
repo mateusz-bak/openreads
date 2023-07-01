@@ -145,6 +145,13 @@ class _OpenreadsAppState extends State<OpenreadsApp>
         builder: (ColorScheme? lightDynamic, ColorScheme? darkDynamic) {
       return MaterialApp(
         title: 'Openreads',
+        builder: (context, child) => MediaQuery(
+          // Temporary fix for https://github.com/AbdulRahmanAlHamali/flutter_typeahead/issues/463
+          data: MediaQuery.of(context).copyWith(
+            accessibleNavigation: false,
+          ),
+          child: child!,
+        ),
         theme: ThemeData(
           useMaterial3: true,
           colorSchemeSeed: widget.themeState.useMaterialYou
