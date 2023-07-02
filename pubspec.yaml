@@ -58,6 +58,7 @@ dependencies:
   shared_storage: ^0.8.0
   shared_preferences: ^2.0.18
   easy_localization: ^3.0.2
+  flutter_typeahead: ^4.6.1
 
 dev_dependencies:
   flutter_test:

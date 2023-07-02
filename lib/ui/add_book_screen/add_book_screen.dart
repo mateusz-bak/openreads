@@ -631,18 +631,24 @@ class _AddBookScreenState extends State<AddBookScreen> {
                 textCapitalization: TextCapitalization.characters,
               ),
               const SizedBox(height: 20),
-              TagsField(
-                controller: _tagsCtrl,
-                hint: LocaleKeys.enter_tags.tr(),
-                icon: FontAwesomeIcons.tags,
-                keyboardType: TextInputType.text,
-                maxLength: 20,
-                tags: tags,
-                selectedTags: selectedTags,
-                onSubmitted: (_) => _addNewTag(),
-                onEditingComplete: () {},
-                selectTag: (tag) => _selectTag(tag),
-                unselectTag: (tag) => _unselectTag(tag),
+              StreamBuilder<List<String>>(
+                stream: bookCubit.tags,
+                  builder:  (context, AsyncSnapshot<List<String>?> snapshot) {
+                    return TagsField(
+                      controller: _tagsCtrl,
+                      hint: LocaleKeys.enter_tags.tr(),
+                      icon: FontAwesomeIcons.tags,
+                      keyboardType: TextInputType.text,
+                      maxLength: 20,
+                      tags: tags,
+                      selectedTags: selectedTags,
+                      onSubmitted: (_) => _addNewTag(),
+                      onEditingComplete: () {},
+                      selectTag: (tag) => _selectTag(tag),
+                      unselectTag: (tag) => _unselectTag(tag),
+                      allTags: snapshot.data,
+                    );
+                  }
               ),
               const SizedBox(height: 20),
               BookTextField(
