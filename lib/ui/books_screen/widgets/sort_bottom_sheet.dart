@@ -282,6 +282,7 @@ class _SortBottomSheetState extends State<SortBottomSheet> {
     String? selectedTags,
   ) {
     final chips = List<Widget>.empty(growable: true);
+    final inactiveChips = List<Widget>.empty(growable: true);
 
     late List<String> selectedTagsList;
 
@@ -298,17 +299,10 @@ class _SortBottomSheetState extends State<SortBottomSheet> {
     }
 
     for (var dbTag in dbTags) {
-      late bool selected;
-
-      if (selectedTagsList.contains(dbTag.toString())) {
-        selected = true;
-      } else {
-        selected = false;
-      }
-
-      chips.add(TagFilterChip(
+      bool isSelected = selectedTagsList.contains(dbTag.toString());
+      TagFilterChip chip = TagFilterChip(
         tag: dbTag,
-        selected: selected,
+        selected: isSelected,
         onTagChipPressed: (bool selected) {
           _onTagChipPressed(
             dbTag: dbTag,
@@ -317,8 +311,15 @@ class _SortBottomSheetState extends State<SortBottomSheet> {
             state: state,
           );
         },
-      ));
+      );
+      
+      if (isSelected) {
+        chips.add(chip);
+      } else {
+        inactiveChips.add(chip);
+      }
     }
+    chips.addAll(inactiveChips);
     return chips;
   }
 
