@@ -55,6 +55,8 @@ class DatabaseProvider {
               _updateBookDatabaseV2toV3(batch);
               break;
           }
+
+          await batch.commit();
         }
       },
     );
