@@ -1,10 +1,10 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
-import 'package:intl/intl.dart';
 import 'package:openreads/core/themes/app_theme.dart';
 import 'package:openreads/generated/locale_keys.g.dart';
 import 'package:openreads/main.dart';
 import 'package:openreads/model/book.dart';
+import 'package:openreads/ui/add_book_screen/add_book_screen.dart';
 import 'package:openreads/ui/add_book_screen/widgets/widgets.dart';
 import 'package:openreads/ui/book_screen/widgets/widgets.dart';
 
@@ -41,6 +41,7 @@ class BookScreen extends StatelessWidget {
       myReview: book!.myReview,
       cover: book!.cover,
       blurHash: book!.blurHash,
+      bookType: book!.bookType,
     ));
   }
 
@@ -115,6 +116,7 @@ class BookScreen extends StatelessWidget {
       myReview: book!.myReview,
       cover: book!.cover,
       blurHash: book!.blurHash,
+      bookType: book!.bookType,
     ));
 
     bookCubit.getDeletedBooks();
@@ -238,6 +240,7 @@ class BookScreen extends StatelessWidget {
         myReview: book!.myReview,
         cover: book!.cover,
         blurHash: book!.blurHash,
+        bookType: book!.bookType,
       ));
     } else if (status == 2) {
       bookCubit.updateBook(Book(
@@ -257,6 +260,7 @@ class BookScreen extends StatelessWidget {
         myReview: book!.myReview,
         cover: book!.cover,
         blurHash: book!.blurHash,
+        bookType: book!.bookType,
       ));
     } else if (status == 3) {
       bookCubit.updateBook(Book(
@@ -276,6 +280,7 @@ class BookScreen extends StatelessWidget {
         myReview: book!.myReview,
         cover: book!.cover,
         blurHash: book!.blurHash,
+        bookType: book!.bookType,
       ));
     }
   }
@@ -394,6 +399,7 @@ class BookScreen extends StatelessWidget {
                           publicationYear:
                               (snapshot.data!.publicationYear ?? "").toString(),
                           tags: snapshot.data!.tags?.split('|||||'),
+                          bookType: snapshot.data!.bookType,
                         ),
                         const SizedBox(height: 5),
                         BookStatusDetail(

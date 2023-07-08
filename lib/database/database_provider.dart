@@ -18,7 +18,7 @@ class DatabaseProvider {
 
     return await openDatabase(
       path,
-      version: 2,
+      version: 3,
       onCreate: (Database db, int version) async {
         await db.execute("CREATE TABLE booksTable ("
             "id INTEGER PRIMARY KEY AUTOINCREMENT, "
@@ -26,6 +26,7 @@ class DatabaseProvider {
             "subtitle TEXT, "
             "author TEXT, "
             "description TEXT, "
+            "book_type TEXT, "
             "status INTEGER, "
             "rating INTEGER, "
             "favourite INTEGER, "
@@ -44,11 +45,29 @@ class DatabaseProvider {
       },
       onUpgrade: (Database db, int oldVersion, int newVersion) async {
         if (newVersion > oldVersion) {
-          if (oldVersion == 1) {
-            await db.execute("ALTER TABLE booksTable ADD description TEXT");
+          var batch = db.batch();
+
+          switch (oldVersion) {
+            case 1:
+              _updateBookDatabaseV1toV3(batch);
+              break;
+            case 2:
+              _updateBookDatabaseV2toV3(batch);
+              break;
           }
+
+          await batch.commit();
         }
       },
     );
+  }
+
+  void _updateBookDatabaseV1toV3(Batch batch) {
+    batch.execute("ALTER TABLE booksTable ADD description TEXT");
+    batch.execute("ALTER TABLE booksTable ADD book_type TEXT DEFAULT paper");
+  }
+
+  void _updateBookDatabaseV2toV3(Batch batch) {
+    batch.execute("ALTER TABLE booksTable ADD book_type TEXT");
   }
 }

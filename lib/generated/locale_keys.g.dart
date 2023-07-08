@@ -1,6 +1,6 @@
 // DO NOT EDIT. This is code generated via package:easy_localization/generate.dart
 
-abstract class  LocaleKeys {
+abstract class LocaleKeys {
   static const books_finished = 'books_finished';
   static const books_in_progress = 'books_in_progress';
   static const books_for_later = 'books_for_later';
@@ -9,6 +9,12 @@ abstract class  LocaleKeys {
   static const book_status_in_progress = 'book_status_in_progress';
   static const book_status_for_later = 'book_status_for_later';
   static const book_status_unfinished = 'book_status_unfinished';
+  static const book_type_paper = 'book_type_paper';
+  static const book_type_ebook = 'book_type_ebook';
+  static const book_type_audiobook = 'book_type_audiobook';
+  static const book_type_paper_plural = 'book_type_paper_plural';
+  static const book_type_ebook_plural = 'book_type_ebook_plural';
+  static const book_type_audiobook_plural = 'book_type_audiobook_plural';
   static const add_manually = 'add_manually';
   static const add_search = 'add_search';
   static const add_scan = 'add_scan';
@@ -177,7 +183,8 @@ abstract class  LocaleKeys {
   static const changelog_description = 'changelog_description';
   static const licence = 'licence';
   static const support_the_project = 'support_the_project';
-  static const support_the_project_description = 'support_the_project_description';
+  static const support_the_project_description =
+      'support_the_project_description';
   static const support_option_1 = 'support_option_1';
   static const support_option_2 = 'support_option_2';
   static const need_storage_permission = 'need_storage_permission';
@@ -192,9 +199,11 @@ abstract class  LocaleKeys {
   static const use_this_file = 'use_this_file';
   static const backup = 'backup';
   static const create_local_backup = 'create_local_backup';
-  static const create_local_backup_description = 'create_local_backup_description';
+  static const create_local_backup_description =
+      'create_local_backup_description';
   static const create_cloud_backup = 'create_cloud_backup';
-  static const create_cloud_backup_description = 'create_cloud_backup_description';
+  static const create_cloud_backup_description =
+      'create_cloud_backup_description';
   static const restore_backup = 'restore_backup';
   static const restore_backup_description_1 = 'restore_backup_description_1';
   static const restore_backup_description_2 = 'restore_backup_description_2';
@@ -216,8 +225,9 @@ abstract class  LocaleKeys {
   static const migration_v1_to_v2_2 = 'migration_v1_to_v2_2';
   static const migration_v1_to_v2_finished = 'migration_v1_to_v2_finished';
   static const migration_v1_to_v2_retrigger = 'migration_v1_to_v2_retrigger';
-  static const migration_v1_to_v2_retrigger_description = 'migration_v1_to_v2_retrigger_description';
+  static const migration_v1_to_v2_retrigger_description =
+      'migration_v1_to_v2_retrigger_description';
   static const click_here_to_restore_them = 'click_here_to_restore_them';
-  static const this_msg_will_only_be_displayed_three_times = 'this_msg_will_only_be_displayed_three_times';
-
+  static const this_msg_will_only_be_displayed_three_times =
+      'this_msg_will_only_be_displayed_three_times';
 }

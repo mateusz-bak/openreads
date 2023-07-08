@@ -5,6 +5,7 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:image_cropper/image_cropper.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:loading_animation_widget/loading_animation_widget.dart';
+import 'package:openreads/core/constants.dart/enums.dart';
 import 'package:openreads/generated/locale_keys.g.dart';
 import 'package:openreads/resources/open_library_service.dart';
 import 'package:openreads/main.dart';
@@ -53,6 +54,7 @@ class _AddBookScreenState extends State<AddBookScreen> {
 
   int? _status;
   int? _rating;
+  BookType _bookType = BookType.paper;
 
   DateTime? _startDate;
   DateTime? _finishDate;
@@ -69,6 +71,12 @@ class _AddBookScreenState extends State<AddBookScreen> {
   static const String coverBaseUrl = 'https://covers.openlibrary.org/';
   late final String coverUrl = '${coverBaseUrl}b/id/${widget.cover}-L.jpg';
 
+  List<String> bookTypes = [
+    LocaleKeys.book_type_paper.tr(),
+    LocaleKeys.book_type_ebook.tr(),
+    LocaleKeys.book_type_audiobook.tr(),
+  ];
+
   void _prefillBookDetails() {
     _titleCtrl.text = widget.book?.title ?? '';
     _subtitleCtrl.text = widget.book?.subtitle ?? '';
@@ -79,6 +87,7 @@ class _AddBookScreenState extends State<AddBookScreen> {
     _isbnCtrl.text = widget.book?.isbn ?? '';
     _olidCtrl.text = widget.book?.olid ?? '';
     _myReviewCtrl.text = widget.book?.myReview ?? '';
+    _bookType = widget.book?.bookType ?? BookType.paper;
 
     if (widget.book != null && widget.book!.startDate != null) {
       _startDate = DateTime.parse(widget.book!.startDate!);
@@ -149,29 +158,34 @@ class _AddBookScreenState extends State<AddBookScreen> {
   void _saveBook() async {
     if (!_validate()) return;
 
-    bookCubit.addBook(Book(
-      title: _titleCtrl.text,
-      subtitle: _subtitleCtrl.text.isNotEmpty ? _subtitleCtrl.text : null,
-      author: _authorCtrl.text,
-      status: _status!,
-      favourite: false,
-      rating: (_status == 0 && _rating != 0) ? _rating : null,
-      startDate:
-          (_status == 0 || _status == 1) ? _startDate?.toIso8601String() : null,
-      finishDate: _status == 0 ? _finishDate?.toIso8601String() : null,
-      pages: _pagesCtrl.text.isEmpty ? null : int.parse(_pagesCtrl.text),
-      publicationYear:
-          _pubYearCtrl.text.isEmpty ? null : int.parse(_pubYearCtrl.text),
-      description: _descriptionCtrl.text.isEmpty ? null : _descriptionCtrl.text,
-      isbn: _isbnCtrl.text.isEmpty ? null : _isbnCtrl.text,
-      olid: _olidCtrl.text.isEmpty ? null : _olidCtrl.text,
-      tags: (selectedTags == null || selectedTags!.isEmpty)
-          ? null
-          : selectedTags?.join('|||||'),
-      myReview: _myReviewCtrl.text.isEmpty ? null : _myReviewCtrl.text,
-      cover: cover,
-      blurHash: blurHashString,
-    ));
+    bookCubit.addBook(
+      Book(
+        title: _titleCtrl.text,
+        subtitle: _subtitleCtrl.text.isNotEmpty ? _subtitleCtrl.text : null,
+        author: _authorCtrl.text,
+        status: _status!,
+        favourite: false,
+        rating: (_status == 0 && _rating != 0) ? _rating : null,
+        startDate: (_status == 0 || _status == 1)
+            ? _startDate?.toIso8601String()
+            : null,
+        finishDate: _status == 0 ? _finishDate?.toIso8601String() : null,
+        pages: _pagesCtrl.text.isEmpty ? null : int.parse(_pagesCtrl.text),
+        publicationYear:
+            _pubYearCtrl.text.isEmpty ? null : int.parse(_pubYearCtrl.text),
+        description:
+            _descriptionCtrl.text.isEmpty ? null : _descriptionCtrl.text,
+        isbn: _isbnCtrl.text.isEmpty ? null : _isbnCtrl.text,
+        olid: _olidCtrl.text.isEmpty ? null : _olidCtrl.text,
+        tags: (selectedTags == null || selectedTags!.isEmpty)
+            ? null
+            : selectedTags?.join('|||||'),
+        myReview: _myReviewCtrl.text.isEmpty ? null : _myReviewCtrl.text,
+        cover: cover,
+        blurHash: blurHashString,
+        bookType: _bookType,
+      ),
+    );
 
     if (!mounted) return;
     Navigator.pop(context);
@@ -186,30 +200,35 @@ class _AddBookScreenState extends State<AddBookScreen> {
   void _updateBook() async {
     if (!_validate()) return;
 
-    bookCubit.updateBook(Book(
-      id: widget.book?.id,
-      title: _titleCtrl.text,
-      subtitle: _subtitleCtrl.text.isNotEmpty ? _subtitleCtrl.text : null,
-      author: _authorCtrl.text,
-      status: _status!,
-      favourite: false,
-      rating: (_status == 0 && _rating != 0) ? _rating : null,
-      startDate:
-          (_status == 0 || _status == 1) ? _startDate?.toIso8601String() : null,
-      finishDate: _status == 0 ? _finishDate?.toIso8601String() : null,
-      pages: _pagesCtrl.text.isEmpty ? null : int.parse(_pagesCtrl.text),
-      publicationYear:
-          _pubYearCtrl.text.isEmpty ? null : int.parse(_pubYearCtrl.text),
-      description: _descriptionCtrl.text.isEmpty ? null : _descriptionCtrl.text,
-      isbn: _isbnCtrl.text.isEmpty ? null : _isbnCtrl.text,
-      olid: _olidCtrl.text.isEmpty ? null : _olidCtrl.text,
-      tags: (selectedTags == null || selectedTags!.isEmpty)
-          ? null
-          : selectedTags?.join('|||||'),
-      myReview: _myReviewCtrl.text.isEmpty ? null : _myReviewCtrl.text,
-      cover: cover,
-      blurHash: blurHashString,
-    ));
+    bookCubit.updateBook(
+      Book(
+        id: widget.book?.id,
+        title: _titleCtrl.text,
+        subtitle: _subtitleCtrl.text.isNotEmpty ? _subtitleCtrl.text : null,
+        author: _authorCtrl.text,
+        status: _status!,
+        favourite: false,
+        rating: (_status == 0 && _rating != 0) ? _rating : null,
+        startDate: (_status == 0 || _status == 1)
+            ? _startDate?.toIso8601String()
+            : null,
+        finishDate: _status == 0 ? _finishDate?.toIso8601String() : null,
+        pages: _pagesCtrl.text.isEmpty ? null : int.parse(_pagesCtrl.text),
+        publicationYear:
+            _pubYearCtrl.text.isEmpty ? null : int.parse(_pubYearCtrl.text),
+        description:
+            _descriptionCtrl.text.isEmpty ? null : _descriptionCtrl.text,
+        isbn: _isbnCtrl.text.isEmpty ? null : _isbnCtrl.text,
+        olid: _olidCtrl.text.isEmpty ? null : _olidCtrl.text,
+        tags: (selectedTags == null || selectedTags!.isEmpty)
+            ? null
+            : selectedTags?.join('|||||'),
+        myReview: _myReviewCtrl.text.isEmpty ? null : _myReviewCtrl.text,
+        cover: cover,
+        blurHash: blurHashString,
+        bookType: _bookType,
+      ),
+    );
 
     if (!mounted) return;
     Navigator.pop(context);
@@ -268,6 +287,30 @@ class _AddBookScreenState extends State<AddBookScreen> {
       } else if (position == 1) {
         _startDate ??= date;
       }
+    }
+
+    FocusManager.instance.primaryFocus?.unfocus();
+  }
+
+  void _changeBookType(String? bookType) {
+    if (bookType == null) return;
+
+    if (bookType == bookTypes[0]) {
+      setState(() {
+        _bookType = BookType.paper;
+      });
+    } else if (bookType == bookTypes[1]) {
+      setState(() {
+        _bookType = BookType.ebook;
+      });
+    } else if (bookType == bookTypes[2]) {
+      setState(() {
+        _bookType = BookType.audiobook;
+      });
+    } else {
+      setState(() {
+        _bookType = BookType.paper;
+      });
     }
 
     FocusManager.instance.primaryFocus?.unfocus();
@@ -533,6 +576,12 @@ class _AddBookScreenState extends State<AddBookScreen> {
                 maxLines: 5,
                 maxLength: 255,
                 textCapitalization: TextCapitalization.words,
+              ),
+              const SizedBox(height: 20),
+              BookTypeDropdown(
+                bookType: _bookType,
+                bookTypes: bookTypes,
+                changeBookType: _changeBookType,
               ),
               const SizedBox(height: 20),
               BookStatusRow(

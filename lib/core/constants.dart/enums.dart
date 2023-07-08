@@ -27,3 +27,9 @@ enum Font {
   barlow,
   jost,
 }
+
+enum BookType {
+  paper,
+  ebook,
+  audiobook,
+}

@@ -3,11 +3,13 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
 import 'package:loading_animation_widget/loading_animation_widget.dart';
+import 'package:openreads/core/constants.dart/enums.dart';
 import 'package:openreads/core/themes/app_theme.dart';
 import 'package:openreads/generated/locale_keys.g.dart';
 import 'package:openreads/model/book.dart';
 import 'package:openreads/model/ol_search_result.dart';
 import 'package:openreads/resources/open_library_service.dart';
+import 'package:openreads/ui/add_book_screen/add_book_screen.dart';
 import 'package:openreads/ui/add_book_screen/widgets/widgets.dart';
 import 'package:openreads/ui/search_ol_editions_screen/search_ol_editions_screen.dart';
 import 'package:openreads/ui/search_ol_screen/widgets/widgets.dart';
@@ -57,6 +59,7 @@ class _SearchOLScreenState extends State<SearchOLScreen>
       isbn: (isbn != null && isbn.isNotEmpty) ? isbn[0] : null,
       olid: (olid != null) ? olid.replaceAll('/works/', '') : null,
       publicationYear: firstPublishYear,
+      bookType: BookType.paper,
     );
 
     Navigator.of(context).push(

@@ -1,6 +1,7 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:openreads/core/constants.dart/enums.dart';
 import 'package:openreads/generated/locale_keys.g.dart';
 import 'package:openreads/model/book.dart';
 import 'package:openreads/model/book_read_stat.dart';
@@ -25,8 +26,23 @@ class StatsBloc extends Bloc<StatsEvent, StatsState> {
       final forLaterBooks = _filterFinishedBooks(allBooks, 2);
       final unfinishedBooks = _filterFinishedBooks(allBooks, 3);
 
-      final finishedBooksByMonth = _getFinishedBooksByMonth(finishedBooks);
-      final finishedPagesByMonth = _getFinishedPagesByMonth(finishedBooks);
+      final finishedBooksByMonthAllTypes =
+          _getFinishedBooksByMonth(finishedBooks, null);
+      final finishedBooksByMonthPaperBooks =
+          _getFinishedBooksByMonth(finishedBooks, BookType.paper);
+      final finishedBooksByMonthEbooks =
+          _getFinishedBooksByMonth(finishedBooks, BookType.ebook);
+      final finishedBooksByMonthAudiobooks =
+          _getFinishedBooksByMonth(finishedBooks, BookType.audiobook);
+
+      final finishedPagesByMonthAllTypes =
+          _getFinishedPagesByMonth(finishedBooks, null);
+      final finishedPagesByMonthPaperBooks =
+          _getFinishedPagesByMonth(finishedBooks, BookType.paper);
+      final finishedPagesByMonthEbooks =
+          _getFinishedPagesByMonth(finishedBooks, BookType.ebook);
+      final finishedPagesByMonthAudiobooks =
+          _getFinishedPagesByMonth(finishedBooks, BookType.audiobook);
 
       final finishedPagesAll = _calculateAllReadPages(finishedBooks);
 
@@ -44,8 +60,14 @@ class StatsBloc extends Bloc<StatsEvent, StatsState> {
         inProgressBooks: inProgressBooks,
         forLaterBooks: forLaterBooks,
         unfinishedBooks: unfinishedBooks,
-        finishedBooksByMonth: finishedBooksByMonth,
-        finishedPagesByMonth: finishedPagesByMonth,
+        finishedBooksByMonthAllTypes: finishedBooksByMonthAllTypes,
+        finishedBooksByMonthPaperBooks: finishedBooksByMonthPaperBooks,
+        finishedBooksByMonthEbooks: finishedBooksByMonthEbooks,
+        finishedBooksByMonthAudiobooks: finishedBooksByMonthAudiobooks,
+        finishedPagesByMonthAllTypes: finishedPagesByMonthAllTypes,
+        finishedPagesByMonthPaperBooks: finishedPagesByMonthPaperBooks,
+        finishedPagesByMonthEbooks: finishedPagesByMonthEbooks,
+        finishedPagesByMonthAudiobooks: finishedPagesByMonthAudiobooks,
         finishedBooksAll: finishedBooks.length,
         finishedPagesAll: finishedPagesAll,
         averageRating: averageRating,
@@ -489,11 +511,12 @@ class StatsBloc extends Bloc<StatsEvent, StatsState> {
     }
   }
 
-  List<BookReadStat> _getFinishedPagesByMonth(List<Book> books) {
+  List<BookReadStat> _getFinishedPagesByMonth(
+      List<Book> books, BookType? bookType) {
     List<BookReadStat> bookReadStats = List<BookReadStat>.empty(growable: true);
 
     bookReadStats.add(
-      BookReadStat(values: _getPagesByMonth(books)),
+      BookReadStat(values: _getPagesByMonth(books, bookType)),
     );
 
     final booksWithYears = _getBooksWithFinishDate(books);
@@ -514,17 +537,21 @@ class StatsBloc extends Bloc<StatsEvent, StatsState> {
       bookReadStats.add(
         BookReadStat(
           year: year,
-          values: _getPagesByMonth(booksInYear),
+          values: _getPagesByMonth(booksInYear, bookType),
         ),
       );
     }
     return bookReadStats;
   }
 
-  List<int> _getPagesByMonth(List<Book> books) {
+  List<int> _getPagesByMonth(List<Book> books, BookType? bookType) {
     List<int> finishedPagesByMonth = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
 
     for (Book book in books) {
+      if (bookType != null && book.bookType != bookType) {
+        continue;
+      }
+
       if (book.finishDate != null && book.pages != null) {
         final finishMonth = DateTime.parse(book.finishDate!).month;
 
@@ -534,11 +561,14 @@ class StatsBloc extends Bloc<StatsEvent, StatsState> {
     return finishedPagesByMonth;
   }
 
-  List<BookReadStat> _getFinishedBooksByMonth(List<Book> books) {
+  List<BookReadStat> _getFinishedBooksByMonth(
+    List<Book> books,
+    BookType? bookType,
+  ) {
     List<BookReadStat> bookReadStats = List<BookReadStat>.empty(growable: true);
 
     bookReadStats.add(
-      BookReadStat(values: _getBooksByMonth(books)),
+      BookReadStat(values: _getBooksByMonth(books, bookType)),
     );
 
     final booksWithYears = _getBooksWithFinishDate(books);
@@ -559,7 +589,7 @@ class StatsBloc extends Bloc<StatsEvent, StatsState> {
       bookReadStats.add(
         BookReadStat(
           year: year,
-          values: _getBooksByMonth(booksInyear),
+          values: _getBooksByMonth(booksInyear, bookType),
         ),
       );
     }
@@ -567,10 +597,14 @@ class StatsBloc extends Bloc<StatsEvent, StatsState> {
     return bookReadStats;
   }
 
-  List<int> _getBooksByMonth(List<Book> books) {
+  List<int> _getBooksByMonth(List<Book> books, BookType? bookType) {
     List<int> finishedBooksByMonth = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
 
     for (Book book in books) {
+      if (bookType != null && book.bookType != bookType) {
+        continue;
+      }
+
       if (book.finishDate != null) {
         final finishMonth = DateTime.parse(book.finishDate!).month;
 
