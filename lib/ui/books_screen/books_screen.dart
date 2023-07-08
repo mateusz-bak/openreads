@@ -4,6 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:openreads/core/constants.dart/enums.dart';
 import 'package:openreads/core/themes/app_theme.dart';
 import 'package:openreads/generated/locale_keys.g.dart';
+import 'package:openreads/logic/bloc/display_bloc/display_bloc.dart';
 import 'package:openreads/logic/bloc/sort_bloc/sort_bloc.dart';
 import 'package:openreads/logic/bloc/theme_bloc/theme_bloc.dart';
 import 'package:openreads/main.dart';
@@ -438,7 +439,6 @@ class _BooksScreenState extends State<BooksScreen>
           AppTheme.init(state, context);
 
           return Scaffold(
-            extendBodyBehindAppBar: true,
             appBar: _buildAppBar(context),
             floatingActionButton: _buildFAB(context),
             body: _buildScaffoldBody(),
@@ -569,9 +569,7 @@ class _BooksScreenState extends State<BooksScreen>
     return AppBar(
       title: const Text(
         'Openreads',
-        style: TextStyle(
-          fontSize: 18,
-        ),
+        style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
       ),
       actions: [
         IconButton(
@@ -579,6 +577,30 @@ class _BooksScreenState extends State<BooksScreen>
             MaterialPageRoute(builder: (_) => const SearchPage()),
           ),
           icon: const Icon(Icons.search),
+        ),
+        IconButton(
+          onPressed: () {
+            final state = context.read<DisplayBloc>().state;
+
+            if (state is GridDisplayState) {
+              BlocProvider.of<DisplayBloc>(context).add(
+                const ChangeDisplayEvent(displayAsGrid: false),
+              );
+            } else {
+              BlocProvider.of<DisplayBloc>(context).add(
+                const ChangeDisplayEvent(displayAsGrid: true),
+              );
+            }
+          },
+          icon: BlocBuilder<DisplayBloc, DisplayState>(
+            builder: (context, state) {
+              if (state is GridDisplayState) {
+                return const Icon(Icons.list);
+              } else {
+                return const Icon(Icons.apps);
+              }
+            },
+          ),
         ),
         PopupMenuButton<String>(
           onSelected: (_) {},
@@ -634,12 +656,26 @@ class _BooksScreenState extends State<BooksScreen>
           return BlocBuilder<SortBloc, SortState>(
             builder: (context, state) {
               if (state is SetSortState) {
-                return BooksList(
-                  books: _sortForLaterList(
-                    state: state,
-                    list: snapshot.data!,
-                  ),
-                  listNumber: 1,
+                return BlocBuilder<DisplayBloc, DisplayState>(
+                  builder: (context, displayState) {
+                    if (displayState is GridDisplayState) {
+                      return BooksGrid(
+                        books: _sortForLaterList(
+                          state: state,
+                          list: snapshot.data!,
+                        ),
+                        listNumber: 2,
+                      );
+                    } else {
+                      return BooksList(
+                        books: _sortForLaterList(
+                          state: state,
+                          list: snapshot.data!,
+                        ),
+                        listNumber: 2,
+                      );
+                    }
+                  },
                 );
               } else {
                 return const SizedBox();
@@ -681,12 +717,26 @@ class _BooksScreenState extends State<BooksScreen>
           return BlocBuilder<SortBloc, SortState>(
             builder: (context, state) {
               if (state is SetSortState) {
-                return BooksList(
-                  books: _sortInProgressList(
-                    state: state,
-                    list: snapshot.data!,
-                  ),
-                  listNumber: 1,
+                return BlocBuilder<DisplayBloc, DisplayState>(
+                  builder: (context, displayState) {
+                    if (displayState is GridDisplayState) {
+                      return BooksGrid(
+                        books: _sortInProgressList(
+                          state: state,
+                          list: snapshot.data!,
+                        ),
+                        listNumber: 1,
+                      );
+                    } else {
+                      return BooksList(
+                        books: _sortInProgressList(
+                          state: state,
+                          list: snapshot.data!,
+                        ),
+                        listNumber: 1,
+                      );
+                    }
+                  },
                 );
               } else {
                 return const SizedBox();
@@ -728,12 +778,26 @@ class _BooksScreenState extends State<BooksScreen>
           return BlocBuilder<SortBloc, SortState>(
             builder: (context, state) {
               if (state is SetSortState) {
-                return BooksList(
-                  books: _sortReadList(
-                    state: state,
-                    list: snapshot.data!,
-                  ),
-                  listNumber: 0,
+                return BlocBuilder<DisplayBloc, DisplayState>(
+                  builder: (context, displayState) {
+                    if (displayState is GridDisplayState) {
+                      return BooksGrid(
+                        books: _sortReadList(
+                          state: state,
+                          list: snapshot.data!,
+                        ),
+                        listNumber: 0,
+                      );
+                    } else {
+                      return BooksList(
+                        books: _sortReadList(
+                          state: state,
+                          list: snapshot.data!,
+                        ),
+                        listNumber: 0,
+                      );
+                    }
+                  },
                 );
               } else {
                 return const SizedBox();

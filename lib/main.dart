@@ -6,6 +6,7 @@ import 'package:flutter_displaymode/flutter_displaymode.dart';
 import 'package:hydrated_bloc/hydrated_bloc.dart';
 import 'package:openreads/core/constants.dart/locale.dart';
 import 'package:openreads/logic/bloc/challenge_bloc/challenge_bloc.dart';
+import 'package:openreads/logic/bloc/display_bloc/display_bloc.dart';
 import 'package:openreads/logic/bloc/migration_v1_to_v2_bloc/migration_v1_to_v2_bloc.dart';
 import 'package:openreads/logic/bloc/open_lib_bloc/open_lib_bloc.dart';
 import 'package:openreads/logic/bloc/rating_type_bloc/rating_type_bloc.dart';
@@ -58,6 +59,7 @@ class App extends StatelessWidget {
       child: MultiBlocProvider(
         providers: [
           BlocProvider<ThemeBloc>(create: (context) => ThemeBloc()),
+          BlocProvider<DisplayBloc>(create: (context) => DisplayBloc()),
           BlocProvider<SortBloc>(create: (context) => SortBloc()),
           BlocProvider<WelcomeBloc>(create: (context) => WelcomeBloc()),
           BlocProvider<ChallengeBloc>(create: (context) => ChallengeBloc()),
