@@ -15,8 +15,14 @@ class StatsLoaded extends StatsState {
   final List<Book> inProgressBooks;
   final List<Book> forLaterBooks;
   final List<Book> unfinishedBooks;
-  final List<BookReadStat> finishedBooksByMonth;
-  final List<BookReadStat> finishedPagesByMonth;
+  final List<BookReadStat> finishedBooksByMonthAllTypes;
+  final List<BookReadStat> finishedBooksByMonthPaperBooks;
+  final List<BookReadStat> finishedBooksByMonthEbooks;
+  final List<BookReadStat> finishedBooksByMonthAudiobooks;
+  final List<BookReadStat> finishedPagesByMonthAllTypes;
+  final List<BookReadStat> finishedPagesByMonthPaperBooks;
+  final List<BookReadStat> finishedPagesByMonthEbooks;
+  final List<BookReadStat> finishedPagesByMonthAudiobooks;
   final int finishedBooksAll;
   final int finishedPagesAll;
   final List<BookYearlyStat> averageRating;
@@ -33,8 +39,14 @@ class StatsLoaded extends StatsState {
     required this.inProgressBooks,
     required this.forLaterBooks,
     required this.unfinishedBooks,
-    required this.finishedBooksByMonth,
-    required this.finishedPagesByMonth,
+    required this.finishedBooksByMonthAllTypes,
+    required this.finishedBooksByMonthPaperBooks,
+    required this.finishedBooksByMonthEbooks,
+    required this.finishedBooksByMonthAudiobooks,
+    required this.finishedPagesByMonthAllTypes,
+    required this.finishedPagesByMonthPaperBooks,
+    required this.finishedPagesByMonthEbooks,
+    required this.finishedPagesByMonthAudiobooks,
     required this.finishedBooksAll,
     required this.finishedPagesAll,
     required this.averageRating,
@@ -53,8 +65,14 @@ class StatsLoaded extends StatsState {
         inProgressBooks,
         forLaterBooks,
         unfinishedBooks,
-        finishedBooksByMonth,
-        finishedPagesByMonth,
+        finishedBooksByMonthAllTypes,
+        finishedBooksByMonthPaperBooks,
+        finishedBooksByMonthEbooks,
+        finishedBooksByMonthAudiobooks,
+        finishedPagesByMonthAllTypes,
+        finishedPagesByMonthPaperBooks,
+        finishedPagesByMonthEbooks,
+        finishedPagesByMonthAudiobooks,
         finishedBooksAll,
         finishedPagesAll,
         averageRating,

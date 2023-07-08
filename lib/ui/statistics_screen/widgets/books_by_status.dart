@@ -67,7 +67,7 @@ class BooksByStatusState extends State<BooksByStatus> {
                               mainAxisAlignment: MainAxisAlignment.end,
                               crossAxisAlignment: CrossAxisAlignment.end,
                               children: [
-                                PieChartIndicator(
+                                ChartLegendElement(
                                   color: Colors.green.shade400,
                                   text: LocaleKeys.books_finished.tr(),
                                   number: widget.list![0],
@@ -75,7 +75,7 @@ class BooksByStatusState extends State<BooksByStatus> {
                                 const SizedBox(
                                   height: 5,
                                 ),
-                                PieChartIndicator(
+                                ChartLegendElement(
                                   color: Colors.yellow.shade400,
                                   text: LocaleKeys.books_in_progress.tr(),
                                   number: widget.list![1],
@@ -83,7 +83,7 @@ class BooksByStatusState extends State<BooksByStatus> {
                                 const SizedBox(
                                   height: 5,
                                 ),
-                                PieChartIndicator(
+                                ChartLegendElement(
                                   color: Colors.blue.shade400,
                                   text: LocaleKeys.books_for_later.tr(),
                                   number: widget.list![2],
@@ -92,7 +92,7 @@ class BooksByStatusState extends State<BooksByStatus> {
                                   height: (widget.list![3] != 0) ? 5 : 0,
                                 ),
                                 (widget.list![3] != 0)
-                                    ? PieChartIndicator(
+                                    ? ChartLegendElement(
                                         color: Colors.red.shade400,
                                         text: LocaleKeys.books_unfinished.tr(),
                                         number: widget.list![3],

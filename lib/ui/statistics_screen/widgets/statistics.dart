@@ -157,7 +157,7 @@ class Statistics extends StatelessWidget {
       builder: (context, challengeState) {
         if (challengeState is SetChallengeState &&
             challengeState.yearlyChallenges != null) {
-          if (state.finishedBooksByMonth.isEmpty) {
+          if (state.finishedBooksByMonthAllTypes.isEmpty) {
             return Center(
               child: Text(
                 LocaleKeys.no_finished_books.tr(),
@@ -182,7 +182,8 @@ class Statistics extends StatelessWidget {
                 : element.year == year;
           });
 
-          final selectedValue = state.finishedBooksByMonth.where((element) {
+          final selectedValue =
+              state.finishedBooksByMonthAllTypes.where((element) {
             return (year == null)
                 ? element.year == DateTime.now().year
                 : element.year == year;
@@ -231,7 +232,7 @@ class Statistics extends StatelessWidget {
       builder: (context, challengeState) {
         if (challengeState is SetChallengeState &&
             challengeState.yearlyChallenges != null) {
-          if (state.finishedPagesByMonth.isEmpty) {
+          if (state.finishedPagesByMonthAllTypes.isEmpty) {
             return Center(
               child: Text(
                 LocaleKeys.no_finished_books.tr(),
@@ -256,7 +257,8 @@ class Statistics extends StatelessWidget {
                 : element.year == year;
           });
 
-          final selectedValue = state.finishedPagesByMonth.where((element) {
+          final selectedValue =
+              state.finishedPagesByMonthAllTypes.where((element) {
             return (year == null)
                 ? element.year == DateTime.now().year
                 : element.year == year;
@@ -310,17 +312,39 @@ class Statistics extends StatelessWidget {
     StatsLoaded state,
     int? year,
   ) {
-    for (var bookReadStat in state.finishedBooksByMonth) {
+    final emptyList = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
+
+    List<int> finishedBooksByMonthPaperBooks = emptyList;
+    List<int> finishedBooksByMonthEbooks = emptyList;
+    List<int> finishedBooksByMonthAudiobooks = emptyList;
+
+    for (var bookReadStat in state.finishedBooksByMonthPaperBooks) {
       if (bookReadStat.year == year) {
-        return ReadStatsByMonth(
-          title: LocaleKeys.finished_books_by_month.tr(),
-          list: bookReadStat.values,
-          theme: Theme.of(context),
-        );
+        finishedBooksByMonthPaperBooks = bookReadStat.values;
+      }
+    }
+    for (var bookReadStat in state.finishedBooksByMonthEbooks) {
+      if (bookReadStat.year == year) {
+        finishedBooksByMonthEbooks = bookReadStat.values;
+      }
+    }
+    for (var bookReadStat in state.finishedBooksByMonthAudiobooks) {
+      if (bookReadStat.year == year) {
+        finishedBooksByMonthAudiobooks = bookReadStat.values;
       }
     }
 
-    return const SizedBox();
+    if (state.finishedBooksByMonthAllTypes.isEmpty) {
+      return const SizedBox();
+    }
+
+    return ReadStatsByMonth(
+      title: LocaleKeys.finished_books_by_month.tr(),
+      listPaperBooks: finishedBooksByMonthPaperBooks,
+      listEbooks: finishedBooksByMonthEbooks,
+      listAudiobooks: finishedBooksByMonthAudiobooks,
+      theme: Theme.of(context),
+    );
   }
 
   Widget _buildFinishedPagesByMonth(
@@ -328,17 +352,39 @@ class Statistics extends StatelessWidget {
     StatsLoaded state,
     int? year,
   ) {
-    for (var bookReadStat in state.finishedPagesByMonth) {
+    final emptyList = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
+
+    List<int> finishedPagesByMonthPaperBooks = emptyList;
+    List<int> finishedPagesByMonthEbooks = emptyList;
+    List<int> finishedPagesByMonthAudiobooks = emptyList;
+
+    for (var bookReadStat in state.finishedPagesByMonthPaperBooks) {
       if (bookReadStat.year == year) {
-        return ReadStatsByMonth(
-          title: LocaleKeys.finished_pages_by_month.tr(),
-          list: bookReadStat.values,
-          theme: Theme.of(context),
-        );
+        finishedPagesByMonthPaperBooks = bookReadStat.values;
+      }
+    }
+    for (var bookReadStat in state.finishedPagesByMonthEbooks) {
+      if (bookReadStat.year == year) {
+        finishedPagesByMonthEbooks = bookReadStat.values;
+      }
+    }
+    for (var bookReadStat in state.finishedPagesByMonthAudiobooks) {
+      if (bookReadStat.year == year) {
+        finishedPagesByMonthAudiobooks = bookReadStat.values;
       }
     }
 
-    return const SizedBox();
+    if (state.finishedPagesByMonthAllTypes.isEmpty) {
+      return const SizedBox();
+    }
+
+    return ReadStatsByMonth(
+      title: LocaleKeys.finished_pages_by_month.tr(),
+      listPaperBooks: finishedPagesByMonthPaperBooks,
+      listEbooks: finishedPagesByMonthEbooks,
+      listAudiobooks: finishedPagesByMonthAudiobooks,
+      theme: Theme.of(context),
+    );
   }
 
   Widget _buildNumberOfFinishedBooks(
@@ -353,7 +399,7 @@ class Statistics extends StatelessWidget {
       );
     }
 
-    for (var bookReadStat in state.finishedBooksByMonth) {
+    for (var bookReadStat in state.finishedBooksByMonthAllTypes) {
       if (bookReadStat.year == year) {
         return ReadStats(
           title: LocaleKeys.finished_books.tr(),
@@ -377,7 +423,7 @@ class Statistics extends StatelessWidget {
       );
     }
 
-    for (var bookReadStat in state.finishedPagesByMonth) {
+    for (var bookReadStat in state.finishedPagesByMonthAllTypes) {
       if (bookReadStat.year == year) {
         return ReadStats(
           title: LocaleKeys.finished_pages.tr(),

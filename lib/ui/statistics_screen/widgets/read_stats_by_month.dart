@@ -3,16 +3,22 @@ import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 import 'package:openreads/core/themes/app_theme.dart';
 import 'package:openreads/generated/locale_keys.g.dart';
+import 'package:openreads/ui/statistics_screen/widgets/widgets.dart';
+import 'package:collection/collection.dart';
 
 class ReadStatsByMonth extends StatelessWidget {
   ReadStatsByMonth({
     Key? key,
-    required this.list,
+    required this.listPaperBooks,
+    required this.listEbooks,
+    required this.listAudiobooks,
     required this.title,
     required this.theme,
   }) : super(key: key);
 
-  final List<int> list;
+  final List<int> listPaperBooks;
+  final List<int> listEbooks;
+  final List<int> listAudiobooks;
   final String title;
   final ThemeData theme;
 
@@ -118,7 +124,7 @@ class ReadStatsByMonth extends StatelessWidget {
         show: false,
       );
 
-  List<BarChartGroupData> barGroups() {
+  List<BarChartGroupData> barGroups(BuildContext context) {
     final List<BarChartGroupData> barList = List.empty(growable: true);
 
     for (var i = 0; i < 12; i++) {
@@ -127,12 +133,41 @@ class ReadStatsByMonth extends StatelessWidget {
           x: i,
           barRods: [
             BarChartRodData(
-              toY: list[i].toDouble(),
-              width: 14,
+              toY: (listPaperBooks[i] + listEbooks[i] + listAudiobooks[i])
+                  .toDouble(),
+              width: MediaQuery.of(context).size.width / 20,
               color: theme.colorScheme.primary,
+              borderRadius: BorderRadius.circular(3),
+              rodStackItems: [
+                listPaperBooks[i] != 0
+                    ? BarChartRodStackItem(
+                        0,
+                        listPaperBooks[i].toDouble(),
+                        theme.colorScheme.primary,
+                      )
+                    : BarChartRodStackItem(0, 0, Colors.transparent),
+                listEbooks[i] != 0
+                    ? BarChartRodStackItem(
+                        listPaperBooks[i].toDouble(),
+                        (listEbooks[i] + listPaperBooks[i]).toDouble(),
+                        theme.colorScheme.primaryContainer,
+                      )
+                    : BarChartRodStackItem(0, 0, Colors.transparent),
+                listAudiobooks[i] != 0
+                    ? BarChartRodStackItem(
+                        (listPaperBooks[i] + listEbooks[i]).toDouble(),
+                        (listPaperBooks[i] + listEbooks[i] + listAudiobooks[i])
+                            .toDouble(),
+                        theme.colorScheme.onSurfaceVariant,
+                      )
+                    : BarChartRodStackItem(0, 0, Colors.transparent),
+              ],
             )
           ],
-          showingTooltipIndicators: (list[i] > 0) ? [0] : [1],
+          showingTooltipIndicators:
+              ((listPaperBooks[i] + listEbooks[i] + listAudiobooks[i]) > 0)
+                  ? [0]
+                  : [1],
         ),
       );
     }
@@ -143,9 +178,11 @@ class ReadStatsByMonth extends StatelessWidget {
   double calculateMaxY() {
     int maxBooksInMonth = 0;
 
-    for (int month in list) {
-      if (month > maxBooksInMonth) {
-        maxBooksInMonth = month;
+    for (var i = 0; i < 12; i++) {
+      if ((listPaperBooks[i] + listEbooks[i] + listAudiobooks[i]) >
+          maxBooksInMonth) {
+        maxBooksInMonth =
+            (listPaperBooks[i] + listEbooks[i] + listAudiobooks[i]);
       }
     }
 
@@ -203,7 +240,7 @@ class ReadStatsByMonth extends StatelessWidget {
                   ),
                   titlesData: titlesData,
                   borderData: borderData,
-                  barGroups: barGroups(),
+                  barGroups: barGroups(context),
                   gridData: const FlGridData(show: false),
                   alignment: BarChartAlignment.spaceAround,
                   maxY: calculateMaxY(),
@@ -211,6 +248,27 @@ class ReadStatsByMonth extends StatelessWidget {
                 swapAnimationDuration: const Duration(milliseconds: 150),
                 swapAnimationCurve: Curves.linear,
               ),
+            ),
+            const SizedBox(height: 5),
+            ChartLegendElement(
+              color: theme.colorScheme.onSurfaceVariant,
+              text: LocaleKeys.book_type_audiobook_plural.tr(),
+              number: listAudiobooks.sum,
+              reversed: true,
+            ),
+            const SizedBox(height: 5),
+            ChartLegendElement(
+              color: theme.colorScheme.primaryContainer,
+              text: LocaleKeys.book_type_ebook_plural.tr(),
+              number: listEbooks.sum,
+              reversed: true,
+            ),
+            const SizedBox(height: 5),
+            ChartLegendElement(
+              color: theme.colorScheme.primary,
+              text: LocaleKeys.book_type_paper_plural.tr(),
+              number: listPaperBooks.sum,
+              reversed: true,
             ),
           ],
         ),
