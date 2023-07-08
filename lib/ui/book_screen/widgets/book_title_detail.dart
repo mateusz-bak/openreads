@@ -1,5 +1,9 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:openreads/core/constants.dart/enums.dart';
 import 'package:openreads/core/themes/app_theme.dart';
+import 'package:openreads/generated/locale_keys.g.dart';
 
 class BookTitleDetail extends StatelessWidget {
   const BookTitleDetail({
@@ -8,6 +12,7 @@ class BookTitleDetail extends StatelessWidget {
     required this.subtitle,
     required this.author,
     required this.publicationYear,
+    required this.bookType,
     this.tags,
   }) : super(key: key);
 
@@ -15,6 +20,7 @@ class BookTitleDetail extends StatelessWidget {
   final String? subtitle;
   final String author;
   final String publicationYear;
+  final BookType bookType;
   final List<String>? tags;
 
   Widget _buildTagChip({
@@ -86,7 +92,7 @@ class BookTitleDetail extends StatelessWidget {
                     child: SelectableText(
                       subtitle!,
                       style: const TextStyle(
-                        fontSize: 14,
+                        fontSize: 16,
                         fontWeight: FontWeight.bold,
                       ),
                     ),
@@ -114,6 +120,35 @@ class BookTitleDetail extends StatelessWidget {
                     ),
                   )
                 : const SizedBox(),
+            const SizedBox(height: 5),
+            Padding(
+              padding: const EdgeInsets.fromLTRB(5, 5, 5, 5),
+              child: Row(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  FaIcon(
+                    bookType == BookType.audiobook
+                        ? FontAwesomeIcons.headphones
+                        : bookType == BookType.ebook
+                            ? FontAwesomeIcons.tablet
+                            : FontAwesomeIcons.bookOpen,
+                    size: 16,
+                  ),
+                  const SizedBox(width: 10),
+                  SelectableText(
+                    bookType == BookType.audiobook
+                        ? LocaleKeys.book_type_audiobook.tr()
+                        : bookType == BookType.ebook
+                            ? LocaleKeys.book_type_ebook.tr()
+                            : LocaleKeys.book_type_paper.tr(),
+                    style: const TextStyle(
+                      fontSize: 16,
+                      fontWeight: FontWeight.normal,
+                    ),
+                  ),
+                ],
+              ),
+            ),
             Row(
               children: [
                 Expanded(

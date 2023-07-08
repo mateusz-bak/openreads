@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:flutter/foundation.dart';
+import 'package:openreads/core/constants.dart/enums.dart';
 import 'package:openreads/model/book_from_backup_v3.dart';
 
 class Book {
@@ -23,6 +24,7 @@ class Book {
   String? myReview;
   final Uint8List? cover;
   final String? blurHash;
+  BookType bookType;
 
   Book({
     this.id,
@@ -44,6 +46,7 @@ class Book {
     this.myReview,
     this.cover,
     this.blurHash,
+    required this.bookType,
   });
 
   factory Book.fromJSON(Map<String, dynamic> json) {
@@ -69,6 +72,11 @@ class Book {
           ? Uint8List.fromList(json['cover'].cast<int>().toList())
           : null,
       blurHash: json['blur_hash'],
+      bookType: json['book_type'] == 'audiobook'
+          ? BookType.audiobook
+          : json['book_type'] == 'ebook'
+              ? BookType.ebook
+              : BookType.paper,
     );
   }
 
@@ -113,6 +121,7 @@ class Book {
       myReview: oldBook.bookNotes,
       cover: oldBook.bookCoverImg,
       blurHash: blurHash,
+      bookType: BookType.paper,
     );
   }
 
@@ -137,6 +146,11 @@ class Book {
       'my_review': myReview,
       'cover': cover,
       'blur_hash': blurHash,
+      'book_type': bookType == BookType.audiobook
+          ? 'audiobook'
+          : bookType == BookType.ebook
+              ? 'ebook'
+              : 'paper',
     };
   }
 }

@@ -3,12 +3,12 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
 import 'package:loading_animation_widget/loading_animation_widget.dart';
+import 'package:openreads/core/constants.dart/enums.dart';
 import 'package:openreads/generated/locale_keys.g.dart';
 import 'package:openreads/model/book.dart';
 import 'package:openreads/model/ol_edition_result.dart';
 import 'package:openreads/resources/open_library_service.dart';
 import 'package:openreads/ui/add_book_screen/add_book_screen.dart';
-import 'package:openreads/ui/add_book_screen/widgets/widgets.dart';
 import 'package:openreads/ui/search_ol_editions_screen/widgets/widgets.dart';
 
 class SearchOLEditionsScreen extends StatefulWidget {
@@ -113,6 +113,7 @@ class _SearchOLEditionsScreenState extends State<SearchOLEditionsScreen> {
               : null,
       olid: (result.key != null) ? result.key!.replaceAll('/books/', '') : null,
       publicationYear: widget.firstPublishYear,
+      bookType: BookType.paper,
     );
 
     Navigator.of(context).push(

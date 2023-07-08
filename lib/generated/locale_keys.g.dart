@@ -9,6 +9,9 @@ abstract class  LocaleKeys {
   static const book_status_in_progress = 'book_status_in_progress';
   static const book_status_for_later = 'book_status_for_later';
   static const book_status_unfinished = 'book_status_unfinished';
+  static const book_type_paper = 'book_type_paper';
+  static const book_type_ebook = 'book_type_ebook';
+  static const book_type_audiobook = 'book_type_audiobook';
   static const add_manually = 'add_manually';
   static const add_search = 'add_search';
   static const add_scan = 'add_scan';

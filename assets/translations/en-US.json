@@ -8,6 +8,10 @@
   "book_status_for_later": "For later",
   "book_status_unfinished": "Unfinished",
 
+  "book_type_paper": "Paper book",
+  "book_type_ebook": "E-book",
+  "book_type_audiobook": "Audiobook",
+
   "add_manually": "Add book\nmanually",
   "add_search": "Search in\nOpen Library",
   "add_scan": "Scan a\nbarcode",
