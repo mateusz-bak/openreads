@@ -17,6 +17,7 @@ class ThemeBloc extends HydratedBloc<ThemeEvent, ThemeState> {
           fontFamily: 'Nunito',
           readTabFirst: true,
           useMaterialYou: true,
+          amoledDark: false,
         )) {
     on<ChangeThemeEvent>((event, emit) {
       fontFamily = event.fontFamily;
@@ -31,6 +32,7 @@ class ThemeBloc extends HydratedBloc<ThemeEvent, ThemeState> {
         fontFamily: fontFamily,
         readTabFirst: event.readTabFirst,
         useMaterialYou: event.useMaterialYou,
+        amoledDark: event.amoledDark,
       ));
     });
   }
@@ -44,6 +46,7 @@ class ThemeBloc extends HydratedBloc<ThemeEvent, ThemeState> {
     final fontFamily = json['font_family'] as String?;
     final readTabFirst = json['read_tab_first'] as bool?;
     final useMaterialYou = json['use_material_you'] as bool?;
+    final amoledDark = json['amoled_dark'] as bool?;
 
     switch (themeState) {
       case 1:
@@ -55,6 +58,7 @@ class ThemeBloc extends HydratedBloc<ThemeEvent, ThemeState> {
           fontFamily: fontFamily ?? 'Nunito',
           readTabFirst: readTabFirst ?? true,
           useMaterialYou: useMaterialYou ?? true,
+          amoledDark: amoledDark ?? false,
         );
       case 2:
         return SetThemeState(
@@ -65,6 +69,7 @@ class ThemeBloc extends HydratedBloc<ThemeEvent, ThemeState> {
           fontFamily: fontFamily ?? 'Nunito',
           readTabFirst: readTabFirst ?? true,
           useMaterialYou: useMaterialYou ?? true,
+          amoledDark: amoledDark ?? false,
         );
       default:
         return SetThemeState(
@@ -75,6 +80,7 @@ class ThemeBloc extends HydratedBloc<ThemeEvent, ThemeState> {
           fontFamily: fontFamily ?? 'Nunito',
           readTabFirst: readTabFirst ?? true,
           useMaterialYou: useMaterialYou ?? true,
+          amoledDark: amoledDark ?? false,
         );
     }
   }
@@ -92,6 +98,7 @@ class ThemeBloc extends HydratedBloc<ThemeEvent, ThemeState> {
             'font_family': state.fontFamily,
             'read_tab_first': state.readTabFirst,
             'use_material_you': state.useMaterialYou,
+            'amoled_dark': state.amoledDark,
           };
         case ThemeMode.dark:
           return {
@@ -102,6 +109,7 @@ class ThemeBloc extends HydratedBloc<ThemeEvent, ThemeState> {
             'font_family': state.fontFamily,
             'read_tab_first': state.readTabFirst,
             'use_material_you': state.useMaterialYou,
+            'amoled_dark': state.amoledDark,
           };
         case ThemeMode.system:
           return {
@@ -112,6 +120,7 @@ class ThemeBloc extends HydratedBloc<ThemeEvent, ThemeState> {
             'font_family': state.fontFamily,
             'read_tab_first': state.readTabFirst,
             'use_material_you': state.useMaterialYou,
+            'amoled_dark': state.amoledDark,
           };
       }
     } else {
@@ -124,6 +133,7 @@ class ThemeBloc extends HydratedBloc<ThemeEvent, ThemeState> {
         'read_tab_first': null,
         'use_material_you': null,
         'locale': null,
+        'amoled_dark': false,
       };
     }
   }

@@ -12,6 +12,7 @@ class ChangeThemeEvent extends ThemeEvent {
   final String? fontFamily;
   final bool readTabFirst;
   final bool useMaterialYou;
+  final bool amoledDark;
 
   const ChangeThemeEvent({
     required this.themeMode,
@@ -21,6 +22,7 @@ class ChangeThemeEvent extends ThemeEvent {
     required this.fontFamily,
     required this.readTabFirst,
     required this.useMaterialYou,
+    required this.amoledDark,
   });
 
   @override
@@ -32,5 +34,6 @@ class ChangeThemeEvent extends ThemeEvent {
         fontFamily,
         readTabFirst,
         useMaterialYou,
+        amoledDark,
       ];
 }
