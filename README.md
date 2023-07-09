@@ -48,14 +48,16 @@ You can use custom tags and filter through them.
 
 Do you want to support Openreads development? You are welcome to take below actions:
 
-### Help translate Openreads:
-Go to [Crowdin project](https://crwd.in/openreads-android) and start translating!
+### Help [translate Openreads](https://hosted.weblate.org/engage/openreads/):
+<a href="https://hosted.weblate.org/engage/openreads/">
+<img src="https://hosted.weblate.org/widgets/openreads/-/horizontal-auto.svg" alt="Translation status" />
+</a>
 
 ### Report bugs or new ideas
 Submit an issue here: [Openreads issues](https://github.com/mateusz-bak/openreads-android/issues).
 
 ### Become a Sponsor:
-[Become a Github Sponsor](https://github.com/sponsors/mateusz-bak)
+[Become a GitHub Sponsor](https://github.com/sponsors/mateusz-bak)
 
 [Buy a coffe at buymeacoffee.com](https://www.buymeacoffee.com/mateuszbak)
 
