@@ -186,7 +186,7 @@
     "support_option_2": "Buy a coffee at buymeacoffee.com",
     "need_storage_permission": "You need to grant storage permission",
     "open_settings": "Open settings",
-    "backup_successfull": "Backup made",
+    "backup_successfull": "Backup successful",
     "choose_backup_folder": "Choose backup folder",
     "save_file_to_this_folder": "Save file to this folder",
     "restored": "restored",
@@ -207,7 +207,7 @@
     "error_getting_book": "Error while getting the book",
     "add_books_and_come_back": "Add some books and come here again",
     "welcome_1": "Welcome to Openreads",
-    "welcome_1_description_1": "Openreads helps keep track of your book reading.",
+    "welcome_1_description_1": "Openreads will help you keep track of your books.",
     "welcome_1_description_2": "It is also a great tool for organizing your personal library in an easy and transparent way.",
     "welcome_2_description_1": "Progress with your readings thanks to awesome and detailed statistics.",
     "welcome_2_description_2": "Challenge yourself to be a better reader.",
@@ -225,5 +225,5 @@
     "this_msg_will_only_be_displayed_three_times": "This message will only be displayed three times.",
     "dark_mode_style": "Dark mode style",
     "dark_mode_natural": "Natural dark mode",
-    "dark_mode_amoled": "Black mode"
+    "dark_mode_amoled": "AMOLED dark mode"
 }
