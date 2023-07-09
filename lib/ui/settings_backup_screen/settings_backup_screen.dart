@@ -12,6 +12,7 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:openreads/logic/bloc/migration_v1_to_v2_bloc/migration_v1_to_v2_bloc.dart';
 import 'package:openreads/generated/locale_keys.g.dart';
 import 'package:openreads/logic/bloc/challenge_bloc/challenge_bloc.dart';
+import 'package:openreads/logic/bloc/theme_bloc/theme_bloc.dart';
 import 'package:openreads/main.dart';
 import 'package:openreads/model/book.dart';
 import 'package:openreads/model/book_from_backup_v3.dart';
@@ -29,8 +30,8 @@ import 'package:sqflite/sqflite.dart';
 import 'package:blurhash_dart/blurhash_dart.dart' as blurhash_dart;
 import 'package:image/image.dart' as img;
 
-class BackupScreen extends StatefulWidget {
-  BackupScreen({
+class SettingsBackupScreen extends StatefulWidget {
+  SettingsBackupScreen({
     super.key,
     this.autoMigrationV1ToV2 = false,
   });
@@ -38,10 +39,10 @@ class BackupScreen extends StatefulWidget {
   bool autoMigrationV1ToV2;
 
   @override
-  State<BackupScreen> createState() => _BackupScreenState();
+  State<SettingsBackupScreen> createState() => _SettingsBackupScreenState();
 }
 
-class _BackupScreenState extends State<BackupScreen> {
+class _SettingsBackupScreenState extends State<SettingsBackupScreen> {
   bool _creatingLocal = false;
   bool _creatingCloud = false;
   bool _restoringLocal = false;
@@ -725,177 +726,197 @@ class _BackupScreenState extends State<BackupScreen> {
       body: Column(
         children: [
           Expanded(
-            child: SettingsList(
-              contentPadding: const EdgeInsets.only(top: 10),
-              lightTheme: SettingsThemeData(
-                settingsListBackground: Theme.of(context).colorScheme.surface,
-              ),
-              darkTheme: SettingsThemeData(
-                settingsListBackground: Theme.of(context).colorScheme.surface,
-              ),
-              sections: [
-                SettingsSection(
-                  tiles: <SettingsTile>[
-                    SettingsTile(
-                      title: Text(
-                        LocaleKeys.create_local_backup.tr(),
-                        style: const TextStyle(
-                          fontSize: 16,
-                        ),
-                      ),
-                      leading: (_creatingLocal)
-                          ? const SizedBox(
-                              width: 24,
-                              height: 24,
-                              child: CircularProgressIndicator(),
-                            )
-                          : const Icon(FontAwesomeIcons.solidFloppyDisk),
-                      description: Text(
-                        LocaleKeys.create_local_backup_description.tr(),
-                      ),
-                      onPressed: _startLocalBackup,
-                    ),
-                    SettingsTile(
-                      title: Text(
-                        LocaleKeys.create_cloud_backup.tr(),
-                        style: const TextStyle(
-                          fontSize: 16,
-                        ),
-                      ),
-                      leading: (_creatingCloud)
-                          ? const SizedBox(
-                              width: 24,
-                              height: 24,
-                              child: CircularProgressIndicator(),
-                            )
-                          : const Icon(FontAwesomeIcons.cloudArrowUp),
-                      description: Text(
-                        LocaleKeys.create_cloud_backup_description.tr(),
-                      ),
-                      onPressed: _startCloudBackup,
-                    ),
-                    SettingsTile(
-                      title: Text(
-                        LocaleKeys.restore_backup.tr(),
-                        style: const TextStyle(
-                          fontSize: 16,
-                        ),
-                      ),
-                      leading: (_restoringLocal)
-                          ? const SizedBox(
-                              width: 24,
-                              height: 24,
-                              child: CircularProgressIndicator(),
-                            )
-                          : const Icon(FontAwesomeIcons.arrowUpFromBracket),
-                      description: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          restoredCounterText.isNotEmpty
-                              ? Text(
-                                  restoredCounterText,
-                                  style: const TextStyle(
-                                    fontWeight: FontWeight.bold,
-                                  ),
-                                )
-                              : const SizedBox(),
-                          Text(
-                            '${LocaleKeys.restore_backup_description_1.tr()}\n${LocaleKeys.restore_backup_description_2.tr()}',
+            child: BlocBuilder<ThemeBloc, ThemeState>(
+              builder: (context, state) {
+                late final bool amoledDark;
+
+                if (state is SetThemeState) {
+                  amoledDark = state.amoledDark;
+                } else {
+                  amoledDark = false;
+                }
+
+                return SettingsList(
+                  contentPadding: const EdgeInsets.only(top: 10),
+                  darkTheme: SettingsThemeData(
+                    settingsListBackground: amoledDark
+                        ? Colors.black
+                        : Theme.of(context).colorScheme.surface,
+                  ),
+                  lightTheme: SettingsThemeData(
+                    settingsListBackground: amoledDark
+                        ? Colors.black
+                        : Theme.of(context).colorScheme.surface,
+                  ),
+                  sections: [
+                    SettingsSection(
+                      tiles: <SettingsTile>[
+                        SettingsTile(
+                          title: Text(
+                            LocaleKeys.create_local_backup.tr(),
+                            style: const TextStyle(
+                              fontSize: 16,
+                            ),
                           ),
-                        ],
-                      ),
-                      onPressed: (context) {
-                        showDialog(
-                          context: context,
-                          builder: (context) {
-                            return Builder(builder: (context) {
-                              return AlertDialog(
-                                title: Text(
-                                  LocaleKeys.are_you_sure.tr(),
-                                ),
-                                content: Text(
-                                  LocaleKeys.restore_backup_alert_content.tr(),
-                                ),
-                                actionsAlignment:
-                                    MainAxisAlignment.spaceBetween,
-                                actions: [
-                                  FilledButton.tonal(
-                                    onPressed: () {
-                                      _startLocalRestore(context);
-                                      Navigator.of(context).pop();
-                                    },
-                                    child: Text(LocaleKeys.yes.tr()),
-                                  ),
-                                  FilledButton.tonal(
-                                    onPressed: () =>
-                                        Navigator.of(context).pop(),
-                                    child: Text(LocaleKeys.no.tr()),
-                                  ),
-                                ],
-                              );
-                            });
-                          },
-                        );
-                      },
-                    ),
-                    SettingsTile(
-                      title: Text(
-                        LocaleKeys.migration_v1_to_v2_retrigger.tr(),
-                        style: TextStyle(
-                          fontSize: 16,
-                          color: widget.autoMigrationV1ToV2
-                              ? Theme.of(context).colorScheme.primary
-                              : null,
+                          leading: (_creatingLocal)
+                              ? const SizedBox(
+                                  width: 24,
+                                  height: 24,
+                                  child: CircularProgressIndicator(),
+                                )
+                              : const Icon(FontAwesomeIcons.solidFloppyDisk),
+                          description: Text(
+                            LocaleKeys.create_local_backup_description.tr(),
+                          ),
+                          onPressed: _startLocalBackup,
                         ),
-                      ),
-                      leading: Icon(
-                        FontAwesomeIcons.wrench,
-                        color: widget.autoMigrationV1ToV2
-                            ? Theme.of(context).colorScheme.primary
-                            : null,
-                      ),
-                      description: Text(
-                        LocaleKeys.migration_v1_to_v2_retrigger_description
-                            .tr(),
-                        style: TextStyle(
-                          color: widget.autoMigrationV1ToV2
-                              ? Theme.of(context).colorScheme.primary
-                              : null,
+                        SettingsTile(
+                          title: Text(
+                            LocaleKeys.create_cloud_backup.tr(),
+                            style: const TextStyle(
+                              fontSize: 16,
+                            ),
+                          ),
+                          leading: (_creatingCloud)
+                              ? const SizedBox(
+                                  width: 24,
+                                  height: 24,
+                                  child: CircularProgressIndicator(),
+                                )
+                              : const Icon(FontAwesomeIcons.cloudArrowUp),
+                          description: Text(
+                            LocaleKeys.create_cloud_backup_description.tr(),
+                          ),
+                          onPressed: _startCloudBackup,
                         ),
-                      ),
-                      onPressed: (context) {
-                        showDialog(
-                          context: context,
-                          builder: (context) {
-                            return AlertDialog(
-                              title: Text(
-                                LocaleKeys.are_you_sure.tr(),
+                        SettingsTile(
+                          title: Text(
+                            LocaleKeys.restore_backup.tr(),
+                            style: const TextStyle(
+                              fontSize: 16,
+                            ),
+                          ),
+                          leading: (_restoringLocal)
+                              ? const SizedBox(
+                                  width: 24,
+                                  height: 24,
+                                  child: CircularProgressIndicator(),
+                                )
+                              : const Icon(FontAwesomeIcons.arrowUpFromBracket),
+                          description: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              restoredCounterText.isNotEmpty
+                                  ? Text(
+                                      restoredCounterText,
+                                      style: const TextStyle(
+                                        fontWeight: FontWeight.bold,
+                                      ),
+                                    )
+                                  : const SizedBox(),
+                              Text(
+                                '${LocaleKeys.restore_backup_description_1.tr()}\n${LocaleKeys.restore_backup_description_2.tr()}',
                               ),
-                              content: Text(
-                                LocaleKeys.restore_backup_alert_content.tr(),
-                              ),
-                              actionsAlignment: MainAxisAlignment.spaceBetween,
-                              actions: [
-                                FilledButton.tonal(
-                                  onPressed: () {
-                                    _startMigrationV1ToV2();
-                                    Navigator.of(context).pop();
-                                  },
-                                  child: Text(LocaleKeys.yes.tr()),
-                                ),
-                                FilledButton.tonal(
-                                  onPressed: () => Navigator.of(context).pop(),
-                                  child: Text(LocaleKeys.no.tr()),
-                                ),
-                              ],
+                            ],
+                          ),
+                          onPressed: (context) {
+                            showDialog(
+                              context: context,
+                              builder: (context) {
+                                return Builder(builder: (context) {
+                                  return AlertDialog(
+                                    title: Text(
+                                      LocaleKeys.are_you_sure.tr(),
+                                    ),
+                                    content: Text(
+                                      LocaleKeys.restore_backup_alert_content
+                                          .tr(),
+                                    ),
+                                    actionsAlignment:
+                                        MainAxisAlignment.spaceBetween,
+                                    actions: [
+                                      FilledButton.tonal(
+                                        onPressed: () {
+                                          _startLocalRestore(context);
+                                          Navigator.of(context).pop();
+                                        },
+                                        child: Text(LocaleKeys.yes.tr()),
+                                      ),
+                                      FilledButton.tonal(
+                                        onPressed: () =>
+                                            Navigator.of(context).pop(),
+                                        child: Text(LocaleKeys.no.tr()),
+                                      ),
+                                    ],
+                                  );
+                                });
+                              },
                             );
                           },
-                        );
-                      },
+                        ),
+                        SettingsTile(
+                          title: Text(
+                            LocaleKeys.migration_v1_to_v2_retrigger.tr(),
+                            style: TextStyle(
+                              fontSize: 16,
+                              color: widget.autoMigrationV1ToV2
+                                  ? Theme.of(context).colorScheme.primary
+                                  : null,
+                            ),
+                          ),
+                          leading: Icon(
+                            FontAwesomeIcons.wrench,
+                            color: widget.autoMigrationV1ToV2
+                                ? Theme.of(context).colorScheme.primary
+                                : null,
+                          ),
+                          description: Text(
+                            LocaleKeys.migration_v1_to_v2_retrigger_description
+                                .tr(),
+                            style: TextStyle(
+                              color: widget.autoMigrationV1ToV2
+                                  ? Theme.of(context).colorScheme.primary
+                                  : null,
+                            ),
+                          ),
+                          onPressed: (context) {
+                            showDialog(
+                              context: context,
+                              builder: (context) {
+                                return AlertDialog(
+                                  title: Text(
+                                    LocaleKeys.are_you_sure.tr(),
+                                  ),
+                                  content: Text(
+                                    LocaleKeys.restore_backup_alert_content
+                                        .tr(),
+                                  ),
+                                  actionsAlignment:
+                                      MainAxisAlignment.spaceBetween,
+                                  actions: [
+                                    FilledButton.tonal(
+                                      onPressed: () {
+                                        _startMigrationV1ToV2();
+                                        Navigator.of(context).pop();
+                                      },
+                                      child: Text(LocaleKeys.yes.tr()),
+                                    ),
+                                    FilledButton.tonal(
+                                      onPressed: () =>
+                                          Navigator.of(context).pop(),
+                                      child: Text(LocaleKeys.no.tr()),
+                                    ),
+                                  ],
+                                );
+                              },
+                            );
+                          },
+                        ),
+                      ],
                     ),
                   ],
-                ),
-              ],
+                );
+              },
             ),
           ),
           BlocBuilder<MigrationV1ToV2Bloc, MigrationV1ToV2State>(

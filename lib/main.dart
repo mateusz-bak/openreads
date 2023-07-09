@@ -145,6 +145,12 @@ class _OpenreadsAppState extends State<OpenreadsApp>
   Widget build(BuildContext context) {
     return DynamicColorBuilder(
         builder: (ColorScheme? lightDynamic, ColorScheme? darkDynamic) {
+      if (widget.themeState.amoledDark) {
+        darkDynamic = darkDynamic?.copyWith(
+          background: Colors.black,
+        );
+      }
+
       return MaterialApp(
         title: 'Openreads',
         builder: (context, child) => MediaQuery(
@@ -171,6 +177,11 @@ class _OpenreadsAppState extends State<OpenreadsApp>
           colorScheme: widget.themeState.useMaterialYou ? darkDynamic : null,
           brightness: Brightness.dark,
           fontFamily: widget.themeState.fontFamily,
+          scaffoldBackgroundColor:
+              widget.themeState.amoledDark ? Colors.black : null,
+          appBarTheme: widget.themeState.amoledDark
+              ? const AppBarTheme(backgroundColor: Colors.black)
+              : null,
         ),
         themeMode: widget.themeState.themeMode,
         home: welcomeMode
