@@ -9,7 +9,7 @@ import 'package:openreads/core/constants.dart/locale.dart';
 import 'package:openreads/core/themes/app_theme.dart';
 import 'package:openreads/generated/locale_keys.g.dart';
 import 'package:openreads/logic/bloc/theme_bloc/theme_bloc.dart';
-import 'package:openreads/ui/backup_screen/backup_screen.dart';
+import 'package:openreads/ui/settings_backup_screen/settings_backup_screen.dart';
 import 'package:openreads/ui/settings_apperance_screen/settings_apperance_screen.dart';
 import 'package:openreads/ui/settings_screen/widgets/widgets.dart';
 import 'package:openreads/ui/trash_screen/trash_screen.dart';
@@ -467,7 +467,7 @@ class SettingsScreen extends StatelessWidget {
         Navigator.push(
           context,
           MaterialPageRoute(
-            builder: (context) => BackupScreen(),
+            builder: (context) => SettingsBackupScreen(),
           ),
         );
       },

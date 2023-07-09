@@ -30,8 +30,8 @@ import 'package:sqflite/sqflite.dart';
 import 'package:blurhash_dart/blurhash_dart.dart' as blurhash_dart;
 import 'package:image/image.dart' as img;
 
-class BackupScreen extends StatefulWidget {
-  BackupScreen({
+class SettingsBackupScreen extends StatefulWidget {
+  SettingsBackupScreen({
     super.key,
     this.autoMigrationV1ToV2 = false,
   });
@@ -39,10 +39,10 @@ class BackupScreen extends StatefulWidget {
   bool autoMigrationV1ToV2;
 
   @override
-  State<BackupScreen> createState() => _BackupScreenState();
+  State<SettingsBackupScreen> createState() => _SettingsBackupScreenState();
 }
 
-class _BackupScreenState extends State<BackupScreen> {
+class _SettingsBackupScreenState extends State<SettingsBackupScreen> {
   bool _creatingLocal = false;
   bool _creatingCloud = false;
   bool _restoringLocal = false;
