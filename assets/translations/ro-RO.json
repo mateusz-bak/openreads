@@ -185,7 +185,7 @@
     "save_file_to_this_folder": "Salvează fișierul în acest dosar",
     "restored": "restaurat",
     "backup_not_valid": "Aceasta nu este o copie de rezervă validă pentru Openreads",
-    "restore_successfull": "Restaurare reușită",
+    "restore_successfull": "",
     "choose_backup_file": "Alegeți fișierul de backup",
     "use_this_file": "Folosește acest fișier",
     "backup": "Copie de rezervă",
