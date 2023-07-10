@@ -7,7 +7,7 @@
 
 [![GitHub tag (latest by date)](https://img.shields.io/github/v/tag/mateusz-bak/openreads-android?label=latest%20version)](https://github.com/mateusz-bak/openreads-android/releases/latest)
 [![Pull request](https://github.com/mateusz-bak/openreads-android/actions/workflows/test_build.yml/badge.svg?branch=master&event=push)](https://github.com/mateusz-bak/openreads-android/actions/workflows/test_build.yml)
-[![Crowdin](https://badges.crowdin.net/openreads-android/localized.svg)](https://crowdin.com/project/openreads-android)
+[![Weblate](https://hosted.weblate.org/widgets/openreads/-/svg-badge.svg)](https://hosted.weblate.org/engage/openreads/)
 <br/>
 
 <a href='https://f-droid.org/en/packages/software.mdev.bookstracker'><img height=75 alt='Get it on F-Droid' src='https://fdroid.gitlab.io/artwork/badge/get-it-on.png'/></a>
