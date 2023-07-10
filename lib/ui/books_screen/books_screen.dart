@@ -386,38 +386,6 @@ class _BooksScreenState extends State<BooksScreen>
     );
   }
 
-  _showLostBooksInfo() async {
-    await Future.delayed(const Duration(seconds: 2));
-
-    final prefs = await SharedPreferences.getInstance();
-    final counter = prefs.getInt('migration_v1_to_v2_remind_counter');
-
-    if (counter != null && counter > 2) return;
-
-    if (counter == null || counter == 0) {
-      prefs.setInt('migration_v1_to_v2_remind_counter', 1);
-    } else {
-      prefs.setInt('migration_v1_to_v2_remind_counter', counter + 1);
-    }
-
-    ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(
-        content: Text(
-          '${LocaleKeys.migration_v1_to_v2_retrigger_description.tr()} ${LocaleKeys.this_msg_will_only_be_displayed_three_times.tr()}',
-        ),
-        dismissDirection: DismissDirection.endToStart,
-        duration: const Duration(seconds: 999),
-        action: SnackBarAction(
-            label: LocaleKeys.click_here_to_restore_them.tr(),
-            onPressed: () {
-              Navigator.push(context, MaterialPageRoute(builder: (_) {
-                return SettingsBackupScreen(autoMigrationV1ToV2: true);
-              }));
-            }),
-      ),
-    );
-  }
-
   @override
   bool get wantKeepAlive => true;
 
@@ -430,8 +398,6 @@ class _BooksScreenState extends State<BooksScreen>
       LocaleKeys.statistics.tr(),
       LocaleKeys.settings.tr(),
     ];
-
-    _showLostBooksInfo();
 
     return BlocBuilder<ThemeBloc, ThemeState>(
       builder: (context, state) {

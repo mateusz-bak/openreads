@@ -205,7 +205,5 @@
     "migration_v1_to_v2_2": "在您所有的书籍迁移之前不要离开此屏幕，否则它们将丢失！",
     "migration_v1_to_v2_finished": "书籍迁移已完成，点击开始按钮。",
     "migration_v1_to_v2_retrigger": "重新运行 v2.0 迁移",
-    "migration_v1_to_v2_retrigger_description": "如果书籍在更新到 v2.0 后不会显示，请点击此处。",
-    "click_here_to_restore_them": "单击此处可将其还原",
-    "this_msg_will_only_be_displayed_three_times": "此消息只会显示三次。"
+    "migration_v1_to_v2_retrigger_description": "如果书籍在更新到 v2.0 后不会显示，请点击此处。"
 }

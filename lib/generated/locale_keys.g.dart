@@ -222,9 +222,6 @@ abstract class LocaleKeys {
   static const migration_v1_to_v2_retrigger = 'migration_v1_to_v2_retrigger';
   static const migration_v1_to_v2_retrigger_description =
       'migration_v1_to_v2_retrigger_description';
-  static const click_here_to_restore_them = 'click_here_to_restore_them';
-  static const this_msg_will_only_be_displayed_three_times =
-      'this_msg_will_only_be_displayed_three_times';
   static const dark_mode_style = 'dark_mode_style';
   static const dark_mode_natural = 'dark_mode_natural';
   static const dark_mode_amoled = 'dark_mode_amoled';

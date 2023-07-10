@@ -205,7 +205,5 @@
     "migration_v1_to_v2_2": "¡No deje esta pantalla antes de que todos sus libros se migren, porque se perderán!",
     "migration_v1_to_v2_finished": "Migración de libros terminada, haz clic en el botón INICIAR.",
     "migration_v1_to_v2_retrigger": "Ejecutar la migración de la versión v2.0 de nuevo",
-    "migration_v1_to_v2_retrigger_description": "Haz clic si los libros no se muestran después de actualizar a la versión v2.0.",
-    "click_here_to_restore_them": "Haz clic aquí para restaurarlos",
-    "this_msg_will_only_be_displayed_three_times": "Este mensaje se mostrará sólo tres veces."
+    "migration_v1_to_v2_retrigger_description": "Haz clic si los libros no se muestran después de actualizar a la versión v2.0."
 }

@@ -205,7 +205,5 @@
     "migration_v1_to_v2_2": "Ikke forlat siden før alle dine bøker er overført, ellers går de tapt!",
     "migration_v1_to_v2_finished": "Bøkene er overført, trykk nå på START-knappen.",
     "migration_v1_to_v2_retrigger": "Kjør overføringen til v2.0 på nytt",
-    "migration_v1_to_v2_retrigger_description": "Trykk her om bøker ikke vises etter oppdateringen til v2.0.",
-    "click_here_to_restore_them": "Trykk her for å gjenopprette dem",
-    "this_msg_will_only_be_displayed_three_times": "Denne beskjeden vises bare tre ganger."
+    "migration_v1_to_v2_retrigger_description": "Trykk her om bøker ikke vises etter oppdateringen til v2.0."
 }
