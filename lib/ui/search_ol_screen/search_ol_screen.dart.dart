@@ -168,7 +168,7 @@ class _SearchOLScreenState extends State<SearchOLScreen>
     return Scaffold(
       appBar: AppBar(
         title: Text(
-          LocaleKeys.search_in_open_library.tr(),
+          LocaleKeys.add_search.tr(),
           style: const TextStyle(fontSize: 18),
         ),
       ),

@@ -83,7 +83,6 @@ abstract class LocaleKeys {
   static const cancel = 'cancel';
   static const flash_on = 'flash_on';
   static const flash_off = 'flash_off';
-  static const search_in_open_library = 'search_in_open_library';
   static const search_in_books = 'search_in_books';
   static const search = 'search';
   static const results_lowercase = 'results_lowercase';
