@@ -106,7 +106,6 @@
     "select_font": "Seleccioneu la font",
     "font_default": "Font per defecte del sistema",
     "rounded_corners": "Cantonades arrodonides",
-    "select_corner_radius": "",
     "no_rounded_corners": "Cantonades no arrodonides",
     "deleted_books": "Llibres suprimits",
     "backup_and_restore": "Còpies de seguretat i recuperació",
@@ -136,7 +135,6 @@
     "create_cloud_backup": "Crea una còpia de seguretat al núvol",
     "create_cloud_backup_description": "Feu una còpia de seguretat dels llibres al núvol",
     "restore_backup": "Restaura una còpia de seguretat",
-    "restore_backup_description_1": "",
     "restore_backup_description_2": "Funciona amb còpies de seguretat més noves que les de la v1.14.2",
     "are_you_sure": "N'esteu segur?",
     "restore_backup_alert_content": "Això esborrarà tots els vostres llibres i reptes!",
@@ -153,8 +151,6 @@
     "migration_v1_to_v2_1": "Els llibres s'estan traslladant a la nova versió",
     "migration_v1_to_v2_2": "No abandoneu aquesta pantalla abans que tots els llibres es traslladin, perquè els perdreu!",
     "migration_v1_to_v2_finished": "S'ha finalitzat el trasllat de llibres, premeu START.",
-    "migration_v1_to_v2_retrigger": "",
-    "migration_v1_to_v2_retrigger_description": "",
     "click_here_to_restore_them": "Feu clic aquí per restaurar-los",
     "this_msg_will_only_be_displayed_three_times": "Aquest missatge només es mostrarà tres vegades."
 }
