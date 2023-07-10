@@ -35,6 +35,18 @@ class ThemeBloc extends HydratedBloc<ThemeEvent, ThemeState> {
         amoledDark: event.amoledDark,
       ));
     });
+    on<ChangeAccentEvent>((event, emit) {
+      if (state is SetThemeState) {
+        final themeState = state as SetThemeState;
+
+        emit(const ChangingThemeState());
+
+        emit(themeState.copyWith(
+          primaryColor: event.primaryColor,
+          useMaterialYou: event.useMaterialYou,
+        ));
+      }
+    });
   }
 
   @override

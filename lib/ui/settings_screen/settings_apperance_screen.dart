@@ -1,4 +1,5 @@
 import 'package:easy_localization/easy_localization.dart';
+import 'package:flex_color_picker/flex_color_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -7,6 +8,7 @@ import 'package:openreads/core/themes/app_theme.dart';
 import 'package:openreads/generated/locale_keys.g.dart';
 import 'package:openreads/logic/bloc/rating_type_bloc/rating_type_bloc.dart';
 import 'package:openreads/logic/bloc/theme_bloc/theme_bloc.dart';
+import 'package:openreads/ui/settings_screen/settings_accent_screen.dart';
 import 'package:openreads/ui/settings_screen/widgets/widgets.dart';
 import 'package:settings_ui/settings_ui.dart';
 
@@ -657,163 +659,6 @@ class SettingsApperanceScreen extends StatelessWidget {
     Navigator.of(context).pop();
   }
 
-  _setAccentColor(BuildContext context, SetThemeState state, Color color) {
-    BlocProvider.of<ThemeBloc>(context).add(ChangeThemeEvent(
-      themeMode: state.themeMode,
-      showOutlines: state.showOutlines,
-      cornerRadius: state.cornerRadius,
-      primaryColor: color,
-      fontFamily: state.fontFamily,
-      readTabFirst: state.readTabFirst,
-      useMaterialYou: false,
-      amoledDark: state.amoledDark,
-    ));
-
-    Navigator.of(context).pop();
-  }
-
-  _setMaterialYou(BuildContext context, SetThemeState state) {
-    BlocProvider.of<ThemeBloc>(context).add(ChangeThemeEvent(
-      themeMode: state.themeMode,
-      showOutlines: state.showOutlines,
-      cornerRadius: state.cornerRadius,
-      primaryColor: state.primaryColor,
-      fontFamily: state.fontFamily,
-      readTabFirst: state.readTabFirst,
-      useMaterialYou: true,
-      amoledDark: state.amoledDark,
-    ));
-
-    Navigator.of(context).pop();
-  }
-
-  _showAccentColorDialog(BuildContext context) {
-    showDialog(
-      context: context,
-      builder: (BuildContext context) {
-        return Dialog(
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(cornerRadius),
-          ),
-          backgroundColor: Theme.of(context).colorScheme.surface,
-          child: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 20),
-            child: BlocBuilder<ThemeBloc, ThemeState>(
-              builder: (context, state) {
-                if (state is SetThemeState) {
-                  return Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      Padding(
-                        padding: const EdgeInsets.only(left: 10),
-                        child: Text(
-                          LocaleKeys.select_accent_color.tr(),
-                          style: const TextStyle(
-                            fontSize: 18,
-                            fontWeight: FontWeight.bold,
-                          ),
-                        ),
-                      ),
-                      const SizedBox(height: 15),
-                      Scrollbar(
-                        child: SingleChildScrollView(
-                          child: Column(
-                            children: [
-                              GestureDetector(
-                                onTap: () => _setMaterialYou(
-                                  context,
-                                  state,
-                                ),
-                                child: Container(
-                                  padding: const EdgeInsets.all(10),
-                                  decoration: BoxDecoration(
-                                    borderRadius:
-                                        BorderRadius.circular(cornerRadius),
-                                    color: Theme.of(context)
-                                        .colorScheme
-                                        .surfaceVariant,
-                                    border: Border.all(color: dividerColor),
-                                  ),
-                                  child: Row(
-                                    children: [
-                                      Text(
-                                        LocaleKeys.material_you.tr(),
-                                        style: const TextStyle(
-                                          fontSize: 16,
-                                          fontWeight: FontWeight.bold,
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                ),
-                              ),
-                              const SizedBox(height: 5),
-                              _buildAccentButton(
-                                context,
-                                state,
-                                primaryGreen,
-                                LocaleKeys.green_color.tr(),
-                              ),
-                              _buildAccentButton(
-                                context,
-                                state,
-                                primaryBlue,
-                                LocaleKeys.blue_color.tr(),
-                              ),
-                              _buildAccentButton(
-                                context,
-                                state,
-                                primaryRed,
-                                LocaleKeys.red_color.tr(),
-                              ),
-                              _buildAccentButton(
-                                context,
-                                state,
-                                primaryYellow,
-                                LocaleKeys.yellow_color.tr(),
-                              ),
-                              _buildAccentButton(
-                                context,
-                                state,
-                                primaryOrange,
-                                LocaleKeys.orange_color.tr(),
-                              ),
-                              _buildAccentButton(
-                                context,
-                                state,
-                                primaryPurple,
-                                LocaleKeys.purple_color.tr(),
-                              ),
-                              _buildAccentButton(
-                                context,
-                                state,
-                                primaryPink,
-                                LocaleKeys.pink_color.tr(),
-                              ),
-                              _buildAccentButton(
-                                context,
-                                state,
-                                primaryTeal,
-                                LocaleKeys.teal_color.tr(),
-                              ),
-                            ],
-                          ),
-                        ),
-                      ),
-                    ],
-                  );
-                } else {
-                  return const SizedBox();
-                }
-              },
-            ),
-          ),
-        );
-      },
-    );
-  }
-
   _showRatingBarDialog(BuildContext context) {
     showDialog(
       context: context,
@@ -896,9 +741,7 @@ class SettingsApperanceScreen extends StatelessWidget {
                   : Theme.of(context).colorScheme.surface,
             ),
             lightTheme: SettingsThemeData(
-              settingsListBackground: amoledDark
-                  ? Colors.black
-                  : Theme.of(context).colorScheme.surface,
+              settingsListBackground: Theme.of(context).colorScheme.surface,
             ),
             sections: [
               SettingsSection(
@@ -916,50 +759,6 @@ class SettingsApperanceScreen extends StatelessWidget {
             ],
           );
         },
-      ),
-    );
-  }
-
-  Widget _buildAccentButton(
-    BuildContext context,
-    SetThemeState state,
-    Color color,
-    String colorName,
-  ) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 5),
-      child: Container(
-        decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(cornerRadius),
-          color: Theme.of(context).colorScheme.surfaceVariant,
-          border: Border.all(color: dividerColor),
-        ),
-        child: Row(
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 10),
-              child: Container(
-                width: 50,
-                height: 25,
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(cornerRadius),
-                  color: color,
-                ),
-              ),
-            ),
-            Expanded(
-              child: SettingsDialogButton(
-                text: colorName,
-                onPressed: () => _setAccentColor(
-                  context,
-                  state,
-                  color,
-                ),
-              ),
-            ),
-          ],
-        ),
       ),
     );
   }
@@ -1151,56 +950,24 @@ class SettingsApperanceScreen extends StatelessWidget {
                 LocaleKeys.material_you.tr(),
                 style: const TextStyle(),
               );
-            }
-
-            switch (themeState.primaryColor.value) {
-              case 0xffB73E3E:
-                return Text(
-                  LocaleKeys.red_color.tr(),
-                  style: const TextStyle(),
-                );
-              case 0xff2146C7:
-                return Text(
-                  LocaleKeys.blue_color.tr(),
-                  style: const TextStyle(),
-                );
-              case 0xff285430:
-                return Text(
-                  LocaleKeys.green_color.tr(),
-                  style: const TextStyle(),
-                );
-              case 0xffE14D2A:
-                return Text(
-                  LocaleKeys.orange_color.tr(),
-                  style: const TextStyle(),
-                );
-              case 0xff9F73AB:
-                return Text(
-                  LocaleKeys.purple_color.tr(),
-                  style: const TextStyle(),
-                );
-              case 0xffFF577F:
-                return Text(
-                  LocaleKeys.pink_color.tr(),
-                  style: const TextStyle(),
-                );
-              case 0xff3FA796:
-                return Text(
-                  LocaleKeys.teal_color.tr(),
-                  style: const TextStyle(),
-                );
-              default:
-                return Text(
-                  LocaleKeys.yellow_color.tr(),
-                  style: const TextStyle(),
-                );
+            } else {
+              return Text(
+                '0xFF${themeState.primaryColor.hex}',
+                style: const TextStyle(),
+              );
             }
           } else {
             return const SizedBox();
           }
         },
       ),
-      onPressed: (context) => _showAccentColorDialog(context),
+      onPressed: (context) {
+        Navigator.of(context).push(
+          MaterialPageRoute(
+            builder: (_) => const SettingsAccentScreen(),
+          ),
+        );
+      },
     );
   }
 
