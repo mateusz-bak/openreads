@@ -56,7 +56,7 @@ class BooksByStatusState extends State<BooksByStatus> {
                             flex: 5,
                             child: PieChart(
                               PieChartData(
-                                sectionsSpace: 3,
+                                sectionsSpace: 1,
                                 sections: showingSections(),
                               ),
                             ),
