@@ -32,6 +32,28 @@ class SetThemeState extends ThemeState {
     required this.amoledDark,
   });
 
+  SetThemeState copyWith({
+    ThemeMode? themeMode,
+    bool? showOutlines,
+    double? cornerRadius,
+    Color? primaryColor,
+    String? fontFamily,
+    bool? readTabFirst,
+    bool? useMaterialYou,
+    bool? amoledDark,
+  }) {
+    return SetThemeState(
+      themeMode: themeMode ?? this.themeMode,
+      showOutlines: showOutlines ?? this.showOutlines,
+      cornerRadius: cornerRadius ?? this.cornerRadius,
+      primaryColor: primaryColor ?? this.primaryColor,
+      fontFamily: fontFamily ?? this.fontFamily,
+      readTabFirst: readTabFirst ?? this.readTabFirst,
+      useMaterialYou: useMaterialYou ?? this.useMaterialYou,
+      amoledDark: amoledDark ?? this.amoledDark,
+    );
+  }
+
   @override
   List<Object?> get props => [
         themeMode,

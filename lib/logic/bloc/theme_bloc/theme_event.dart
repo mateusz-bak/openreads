@@ -37,3 +37,19 @@ class ChangeThemeEvent extends ThemeEvent {
         amoledDark,
       ];
 }
+
+class ChangeAccentEvent extends ThemeEvent {
+  final Color? primaryColor;
+  final bool useMaterialYou;
+
+  const ChangeAccentEvent({
+    required this.primaryColor,
+    required this.useMaterialYou,
+  });
+
+  @override
+  List<Object?> get props => [
+        primaryColor,
+        useMaterialYou,
+      ];
+}

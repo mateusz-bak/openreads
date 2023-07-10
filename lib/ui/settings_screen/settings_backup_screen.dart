@@ -744,9 +744,8 @@ class _SettingsBackupScreenState extends State<SettingsBackupScreen> {
                         : Theme.of(context).colorScheme.surface,
                   ),
                   lightTheme: SettingsThemeData(
-                    settingsListBackground: amoledDark
-                        ? Colors.black
-                        : Theme.of(context).colorScheme.surface,
+                    settingsListBackground:
+                        Theme.of(context).colorScheme.surface,
                   ),
                   sections: [
                     SettingsSection(

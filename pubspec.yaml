@@ -59,6 +59,7 @@ dependencies:
   shared_preferences: ^2.0.18
   easy_localization: ^3.0.2
   flutter_typeahead: ^4.6.1
+  flex_color_picker: ^3.2.2
 
 dev_dependencies:
   flutter_test:
