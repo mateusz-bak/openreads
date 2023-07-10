@@ -10,7 +10,7 @@ import 'package:openreads/logic/bloc/theme_bloc/theme_bloc.dart';
 import 'package:openreads/main.dart';
 import 'package:openreads/model/book.dart';
 import 'package:openreads/ui/add_book_screen/add_book_screen.dart';
-import 'package:openreads/ui/settings_backup_screen/settings_backup_screen.dart';
+import 'package:openreads/ui/settings_screen/settings_backup_screen.dart';
 import 'package:openreads/ui/books_screen/widgets/widgets.dart';
 import 'package:openreads/ui/search_ol_screen/search_ol_screen.dart.dart';
 import 'package:openreads/ui/search_page/search_page.dart';
