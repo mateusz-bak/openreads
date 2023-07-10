@@ -205,7 +205,5 @@
     "migration_v1_to_v2_2": "لا تترك هذه الصفحة قبل أن يتم نقل جميع الكتب، وإلا سوف تفقد!",
     "migration_v1_to_v2_finished": "تم الانتهاء من عملية النقل، اضغط على زر البداية.",
     "migration_v1_to_v2_retrigger": "شغّل عملية النقل للنسخة 2.0 مرة أخرى",
-    "migration_v1_to_v2_retrigger_description": "انقر هنا إذا كانت كتبك لم تظهر بعد التحديث إلى النسخة 2.0.",
-    "click_here_to_restore_them": "انقر هنا لاستعادتهم",
-    "this_msg_will_only_be_displayed_three_times": "سيتم عرض هذه الرسالة ثلاث مرات فقط."
+    "migration_v1_to_v2_retrigger_description": "انقر هنا إذا كانت كتبك لم تظهر بعد التحديث إلى النسخة 2.0."
 }

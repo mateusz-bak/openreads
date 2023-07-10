@@ -205,7 +205,5 @@
     "migration_v1_to_v2_2": "Non lasciare questa schermata prima che tutti i tuoi libri siano migrati, altrimenti saranno persi!",
     "migration_v1_to_v2_finished": "Migrazione libri completata, clicca il pulsante INIZIA.",
     "migration_v1_to_v2_retrigger": "Esegui nuovamente la migrazione alla v2.0",
-    "migration_v1_to_v2_retrigger_description": "Clicca se i libri non vengono visualizzati dopo l'aggiornamento alla v2.0.",
-    "click_here_to_restore_them": "Clicca qui per ripristinarli",
-    "this_msg_will_only_be_displayed_three_times": "Questo messaggio sarà visualizzato solo tre volte."
+    "migration_v1_to_v2_retrigger_description": "Clicca se i libri non vengono visualizzati dopo l'aggiornamento alla v2.0."
 }

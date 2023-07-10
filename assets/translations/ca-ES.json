@@ -149,7 +149,5 @@
     "start_button": "COMENÇA",
     "migration_v1_to_v2_1": "Els llibres s'estan traslladant a la nova versió",
     "migration_v1_to_v2_2": "No abandoneu aquesta pantalla abans que tots els llibres es traslladin, perquè els perdreu!",
-    "migration_v1_to_v2_finished": "S'ha finalitzat el trasllat de llibres, premeu START.",
-    "click_here_to_restore_them": "Feu clic aquí per restaurar-los",
-    "this_msg_will_only_be_displayed_three_times": "Aquest missatge només es mostrarà tres vegades."
+    "migration_v1_to_v2_finished": "S'ha finalitzat el trasllat de llibres, premeu START."
 }

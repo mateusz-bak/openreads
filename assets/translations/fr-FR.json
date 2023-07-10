@@ -205,7 +205,5 @@
     "migration_v1_to_v2_2": "Ne quittez pas cet écran avant que tous vos livres soient migrés, sinon ils seront perdus !",
     "migration_v1_to_v2_finished": "Migration des livres terminée, appuyez sur le bouton DEMARRER.",
     "migration_v1_to_v2_retrigger": "Exécuter à nouveau la migration vers la v2.0",
-    "migration_v1_to_v2_retrigger_description": "Cliquer si les livres ne s'affichent pas après la mise à jour vers la v2.0.",
-    "click_here_to_restore_them": "Cliquer ici pour les restaurer",
-    "this_msg_will_only_be_displayed_three_times": "Ce message ne s'affichera que trois fois."
+    "migration_v1_to_v2_retrigger_description": "Cliquer si les livres ne s'affichent pas après la mise à jour vers la v2.0."
 }

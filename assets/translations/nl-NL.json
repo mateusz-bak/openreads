@@ -202,7 +202,5 @@
     "migration_v1_to_v2_1": "Uw boeken worden gemigreerd naar de nieuwe versie",
     "migration_v1_to_v2_finished": "Migreren van boeken voltooid, klik op de START-knop.",
     "migration_v1_to_v2_retrigger": "Voer de v2.0 migratie opnieuw uit",
-    "migration_v1_to_v2_retrigger_description": "Klik als er geen boeken verschijnen na de update naar v2.0.",
-    "click_here_to_restore_them": "Klik hier om ze te herstellen",
-    "this_msg_will_only_be_displayed_three_times": "Dit bericht wordt slechts drie keer getoond."
+    "migration_v1_to_v2_retrigger_description": "Klik als er geen boeken verschijnen na de update naar v2.0."
 }

@@ -205,7 +205,5 @@
     "migration_v1_to_v2_2": "Älä poistu tältä näytöltä ennen kuin kaikki kirjasi on siirretty, koska ne menetetään!",
     "migration_v1_to_v2_finished": "Kirjojen siirto on valmis, paina ALOITA-painiketta.",
     "migration_v1_to_v2_retrigger": "Suorita v2.0-siirto uudelleen",
-    "migration_v1_to_v2_retrigger_description": "Paina tästä jos kirjat eivät näy päivityksen v2.0 jälkeen.",
-    "click_here_to_restore_them": "Paina tästä palauttaaksesi ne",
-    "this_msg_will_only_be_displayed_three_times": "Tämä viesti näytetään vain kolme kertaa."
+    "migration_v1_to_v2_retrigger_description": "Paina tästä jos kirjat eivät näy päivityksen v2.0 jälkeen."
 }
