@@ -10,13 +10,11 @@ import 'package:openreads/logic/bloc/theme_bloc/theme_bloc.dart';
 import 'package:openreads/main.dart';
 import 'package:openreads/model/book.dart';
 import 'package:openreads/ui/add_book_screen/add_book_screen.dart';
-import 'package:openreads/ui/settings_screen/settings_backup_screen.dart';
 import 'package:openreads/ui/books_screen/widgets/widgets.dart';
 import 'package:openreads/ui/search_ol_screen/search_ol_screen.dart.dart';
 import 'package:openreads/ui/search_page/search_page.dart';
 import 'package:openreads/ui/settings_screen/settings_screen.dart';
 import 'package:openreads/ui/statistics_screen/statistics_screen.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 class BooksScreen extends StatefulWidget {
   const BooksScreen({Key? key}) : super(key: key);
@@ -47,6 +45,10 @@ class _BooksScreenState extends State<BooksScreen>
         tags: state.tags!,
         filterTagsAsAnd: state.filterTagsAsAnd,
       );
+    }
+
+    if (state.bookType != null) {
+      list = _filterOutBookTypes(list, state.bookType!);
     }
 
     switch (state.sortType) {
@@ -84,6 +86,10 @@ class _BooksScreenState extends State<BooksScreen>
       );
     }
 
+    if (state.bookType != null) {
+      list = _filterOutBookTypes(list, state.bookType!);
+    }
+
     switch (state.sortType) {
       case SortType.byAuthor:
         list = _sortByAuthor(list: list, isAsc: state.isAsc);
@@ -112,6 +118,10 @@ class _BooksScreenState extends State<BooksScreen>
         tags: state.tags!,
         filterTagsAsAnd: state.filterTagsAsAnd,
       );
+    }
+
+    if (state.bookType != null) {
+      list = _filterOutBookTypes(list, state.bookType!);
     }
 
     switch (state.sortType) {
@@ -196,6 +206,21 @@ class _BooksScreenState extends State<BooksScreen>
         if (addThisBookToList) {
           filteredOut.add(book);
         }
+      }
+    }
+
+    return filteredOut;
+  }
+
+  List<Book> _filterOutBookTypes(
+    List<Book> list,
+    BookType bookType,
+  ) {
+    final filteredOut = List<Book>.empty(growable: true);
+
+    for (var book in list) {
+      if (book.bookType == bookType) {
+        filteredOut.add(book);
       }
     }
 

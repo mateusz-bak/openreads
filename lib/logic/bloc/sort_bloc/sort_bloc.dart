@@ -15,6 +15,7 @@ class SortBloc extends HydratedBloc<SortEvent, SortState> {
           tags: null,
           displayTags: false,
           filterTagsAsAnd: false,
+          bookType: null,
         )) {
     on<ChangeSortEvent>((event, emit) {
       emit(SetSortState(
@@ -25,6 +26,7 @@ class SortBloc extends HydratedBloc<SortEvent, SortState> {
         tags: event.tags,
         displayTags: event.displayTags,
         filterTagsAsAnd: event.filterTagsAsAnd,
+        bookType: event.bookType,
       ));
     });
   }
@@ -38,6 +40,7 @@ class SortBloc extends HydratedBloc<SortEvent, SortState> {
     final tags = json['tags'] as String?;
     final displayTags = json['display_tags'] as bool;
     final filterTagsAsAnd = json['filter_tags_as_and'] as bool;
+    final bookType = json['filter_book_type'] as String?;
 
     late SortType sortType;
 
@@ -72,6 +75,13 @@ class SortBloc extends HydratedBloc<SortEvent, SortState> {
       tags: tags,
       displayTags: displayTags,
       filterTagsAsAnd: filterTagsAsAnd,
+      bookType: bookType == 'audiobook'
+          ? BookType.audiobook
+          : bookType == 'ebook'
+              ? BookType.ebook
+              : bookType == 'paper'
+                  ? BookType.paper
+                  : null,
     );
   }
 
@@ -110,6 +120,13 @@ class SortBloc extends HydratedBloc<SortEvent, SortState> {
         'tags': state.tags,
         'display_tags': state.displayTags,
         'filter_tags_as_and': state.filterTagsAsAnd,
+        'filter_book_type': state.bookType == BookType.audiobook
+            ? 'audiobook'
+            : state.bookType == BookType.ebook
+                ? 'ebook'
+                : state.bookType == BookType.paper
+                    ? 'paper'
+                    : null,
       };
     } else {
       return {
@@ -120,6 +137,7 @@ class SortBloc extends HydratedBloc<SortEvent, SortState> {
         'tags': null,
         'display_tags': false,
         'filter_tags_as_and': false,
+        'filter_book_type': null,
       };
     }
   }
