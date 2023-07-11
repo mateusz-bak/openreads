@@ -205,5 +205,13 @@
     "migration_v1_to_v2_2": "Ikke forlat siden før alle dine bøker er overført, ellers går de tapt!",
     "migration_v1_to_v2_finished": "Bøkene er overført, trykk nå på START-knappen.",
     "migration_v1_to_v2_retrigger": "Kjør overføringen til v2.0 på nytt",
-    "migration_v1_to_v2_retrigger_description": "Trykk her om bøker ikke vises etter oppdateringen til v2.0."
+    "migration_v1_to_v2_retrigger_description": "Trykk her om bøker ikke vises etter oppdateringen til v2.0.",
+    "book_type_paper": "Papirbok",
+    "book_type_ebook": "E-bok",
+    "book_type_audiobook": "Lydbok",
+    "book_type_paper_plural": "Papirbøker",
+    "book_type_ebook_plural": "E-bøker",
+    "book_type_audiobook_plural": "Lydbøker",
+    "dark_mode_style": "Mørk drakt",
+    "dark_mode_natural": "Naturlig drakt"
 }
