@@ -27,7 +27,7 @@ class _AddBookSheetState extends State<AddBookSheet> {
       mainAxisAlignment: MainAxisAlignment.end,
       mainAxisSize: MainAxisSize.min,
       children: [
-        const SizedBox(height: 5),
+        const SizedBox(height: 10),
         Container(
           height: 3,
           width: MediaQuery.of(context).size.width / 4,

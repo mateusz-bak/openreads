@@ -13,6 +13,7 @@ class ChangeSortEvent extends SortEvent {
     required this.tags,
     required this.displayTags,
     required this.filterTagsAsAnd,
+    required this.bookType,
   });
 
   final SortType sortType;
@@ -22,6 +23,7 @@ class ChangeSortEvent extends SortEvent {
   final String? tags;
   final bool displayTags;
   final bool filterTagsAsAnd;
+  final BookType? bookType;
 
   @override
   List<Object?> get props => [
@@ -32,5 +34,6 @@ class ChangeSortEvent extends SortEvent {
         tags,
         displayTags,
         filterTagsAsAnd,
+        bookType,
       ];
 }

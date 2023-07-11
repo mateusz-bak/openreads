@@ -15,6 +15,7 @@ abstract class LocaleKeys {
   static const book_type_paper_plural = 'book_type_paper_plural';
   static const book_type_ebook_plural = 'book_type_ebook_plural';
   static const book_type_audiobook_plural = 'book_type_audiobook_plural';
+  static const book_type_all = 'book_type_all';
   static const add_manually = 'add_manually';
   static const add_search = 'add_search';
   static const add_scan = 'add_scan';
@@ -68,6 +69,7 @@ abstract class LocaleKeys {
   static const sort_by = 'sort_by';
   static const only_favourite = 'only_favourite';
   static const filter_by_finish_year = 'filter_by_finish_year';
+  static const filter_by_book_type = 'filter_by_book_type';
   static const filter_by_tags = 'filter_by_tags';
   static const display_tags = 'display_tags';
   static const only_books_with_all_tags = 'only_books_with_all_tags';

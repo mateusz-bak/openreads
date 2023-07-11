@@ -27,7 +27,14 @@ final List<String> sortOptions = [
   LocaleKeys.finish_date.tr(),
 ];
 
-String _getDropdownValue(SetSortState state) {
+final List<String> bookTypeOptions = [
+  LocaleKeys.book_type_all.tr(),
+  LocaleKeys.book_type_paper_plural.tr(),
+  LocaleKeys.book_type_ebook_plural.tr(),
+  LocaleKeys.book_type_audiobook_plural.tr(),
+];
+
+String _getSortDropdownValue(SetSortState state) {
   if (state.sortType == SortType.byAuthor) {
     return sortOptions[1];
   } else if (state.sortType == SortType.byRating) {
@@ -43,20 +50,37 @@ String _getDropdownValue(SetSortState state) {
   }
 }
 
+String _getBookTypeDropdownValue(SetSortState state) {
+  if (state.bookType == BookType.paper) {
+    return bookTypeOptions[1];
+  } else if (state.bookType == BookType.ebook) {
+    return bookTypeOptions[2];
+  } else if (state.bookType == BookType.audiobook) {
+    return bookTypeOptions[3];
+  } else {
+    return bookTypeOptions[0];
+  }
+}
+
 Widget _getOrderButton(BuildContext context, SetSortState state) {
-  return IconButton(
-    icon: (state.isAsc)
-        ? const Icon(Icons.arrow_upward)
-        : const Icon(Icons.arrow_downward),
-    onPressed: () => BlocProvider.of<SortBloc>(context).add(
-      ChangeSortEvent(
-        sortType: state.sortType,
-        isAsc: !state.isAsc,
-        onlyFavourite: state.onlyFavourite,
-        years: state.years,
-        tags: state.tags,
-        displayTags: state.displayTags,
-        filterTagsAsAnd: state.filterTagsAsAnd,
+  return SizedBox(
+    height: 40,
+    width: 40,
+    child: IconButton(
+      icon: (state.isAsc)
+          ? const Icon(Icons.arrow_upward)
+          : const Icon(Icons.arrow_downward),
+      onPressed: () => BlocProvider.of<SortBloc>(context).add(
+        ChangeSortEvent(
+          sortType: state.sortType,
+          isAsc: !state.isAsc,
+          onlyFavourite: state.onlyFavourite,
+          years: state.years,
+          tags: state.tags,
+          displayTags: state.displayTags,
+          filterTagsAsAnd: state.filterTagsAsAnd,
+          bookType: state.bookType,
+        ),
       ),
     ),
   );
@@ -88,6 +112,34 @@ void _updateSort(BuildContext context, String? value, SetSortState state) {
       tags: state.tags,
       displayTags: state.displayTags,
       filterTagsAsAnd: state.filterTagsAsAnd,
+      bookType: state.bookType,
+    ),
+  );
+}
+
+void _updateBookType(BuildContext context, String? value, SetSortState state) {
+  BookType? bookType;
+
+  if (value == bookTypeOptions[1]) {
+    bookType = BookType.paper;
+  } else if (value == bookTypeOptions[2]) {
+    bookType = BookType.ebook;
+  } else if (value == bookTypeOptions[3]) {
+    bookType = BookType.audiobook;
+  } else {
+    bookType = null;
+  }
+
+  BlocProvider.of<SortBloc>(context).add(
+    ChangeSortEvent(
+      sortType: state.sortType,
+      isAsc: state.isAsc,
+      onlyFavourite: state.onlyFavourite,
+      years: state.years,
+      tags: state.tags,
+      displayTags: state.displayTags,
+      filterTagsAsAnd: state.filterTagsAsAnd,
+      bookType: bookType,
     ),
   );
 }
@@ -97,17 +149,21 @@ class _SortBottomSheetState extends State<SortBottomSheet> {
     BuildContext context,
     SetSortState state,
   ) {
-    return Switch(
-      value: state.onlyFavourite,
-      onChanged: (value) => BlocProvider.of<SortBloc>(context).add(
-        ChangeSortEvent(
-          sortType: state.sortType,
-          isAsc: state.isAsc,
-          onlyFavourite: value,
-          years: state.years,
-          tags: state.tags,
-          displayTags: state.displayTags,
-          filterTagsAsAnd: state.filterTagsAsAnd,
+    return SizedBox(
+      height: 40,
+      child: Switch(
+        value: state.onlyFavourite,
+        onChanged: (value) => BlocProvider.of<SortBloc>(context).add(
+          ChangeSortEvent(
+            sortType: state.sortType,
+            isAsc: state.isAsc,
+            onlyFavourite: value,
+            years: state.years,
+            tags: state.tags,
+            displayTags: state.displayTags,
+            filterTagsAsAnd: state.filterTagsAsAnd,
+            bookType: state.bookType,
+          ),
         ),
       ),
     );
@@ -128,6 +184,7 @@ class _SortBottomSheetState extends State<SortBottomSheet> {
           tags: state.tags,
           displayTags: value,
           filterTagsAsAnd: state.filterTagsAsAnd,
+          bookType: state.bookType,
         ),
       ),
     );
@@ -148,6 +205,7 @@ class _SortBottomSheetState extends State<SortBottomSheet> {
           tags: state.tags,
           displayTags: state.displayTags,
           filterTagsAsAnd: value,
+          bookType: state.bookType,
         ),
       ),
     );
@@ -184,6 +242,7 @@ class _SortBottomSheetState extends State<SortBottomSheet> {
         tags: state.tags,
         displayTags: state.displayTags,
         filterTagsAsAnd: state.filterTagsAsAnd,
+        bookType: state.bookType,
       ),
     );
   }
@@ -217,6 +276,7 @@ class _SortBottomSheetState extends State<SortBottomSheet> {
             (selectedTagsList.isEmpty) ? null : selectedTagsList.join('|||||'),
         displayTags: state.displayTags,
         filterTagsAsAnd: state.filterTagsAsAnd,
+        bookType: state.bookType,
       ),
     );
   }
@@ -313,7 +373,7 @@ class _SortBottomSheetState extends State<SortBottomSheet> {
           );
         },
       );
-      
+
       if (isSelected) {
         chips.add(chip);
       } else {
@@ -348,15 +408,12 @@ class _SortBottomSheetState extends State<SortBottomSheet> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              const SizedBox(height: 5),
+              const SizedBox(height: 8),
               Text(
                 LocaleKeys.sort_by.tr(),
-                style: const TextStyle(
-                  fontSize: 16,
-                  fontWeight: FontWeight.bold,
-                ),
+                style: const TextStyle(fontSize: 16),
               ),
-              const SizedBox(height: 10),
+              const SizedBox(height: 4),
               BlocBuilder<SortBloc, SortState>(
                 builder: (context, state) {
                   if (state is SetSortState) {
@@ -367,7 +424,7 @@ class _SortBottomSheetState extends State<SortBottomSheet> {
                             child: DropdownButton2(
                               isExpanded: true,
                               buttonStyleData: ButtonStyleData(
-                                height: 50,
+                                height: 42,
                                 decoration: BoxDecoration(
                                   border: Border.all(
                                     color: dividerColor,
@@ -388,7 +445,7 @@ class _SortBottomSheetState extends State<SortBottomSheet> {
                                         ),
                                       ))
                                   .toList(),
-                              value: _getDropdownValue(state),
+                              value: _getSortDropdownValue(state),
                               onChanged: (value) => _updateSort(
                                 context,
                                 value,
@@ -397,7 +454,7 @@ class _SortBottomSheetState extends State<SortBottomSheet> {
                             ),
                           ),
                         ),
-                        const SizedBox(width: 15),
+                        const SizedBox(width: 8),
                         Container(
                           decoration: BoxDecoration(
                             color: Theme.of(context).colorScheme.surfaceVariant,
@@ -415,7 +472,7 @@ class _SortBottomSheetState extends State<SortBottomSheet> {
                   }
                 },
               ),
-              const SizedBox(height: 10),
+              const SizedBox(height: 8),
               BlocBuilder<SortBloc, SortState>(
                 builder: (context, state) {
                   if (state is SetSortState) {
@@ -433,6 +490,7 @@ class _SortBottomSheetState extends State<SortBottomSheet> {
                                   tags: state.tags,
                                   displayTags: state.displayTags,
                                   filterTagsAsAnd: state.filterTagsAsAnd,
+                                  bookType: state.bookType,
                                 ),
                               );
                             },
@@ -450,7 +508,7 @@ class _SortBottomSheetState extends State<SortBottomSheet> {
                               child: Row(
                                 children: [
                                   _getFavouriteSwitch(context, state),
-                                  const SizedBox(width: 10),
+                                  const SizedBox(width: 8),
                                   Text(
                                     LocaleKeys.only_favourite.tr(),
                                     style: const TextStyle(fontSize: 16),
@@ -467,6 +525,13 @@ class _SortBottomSheetState extends State<SortBottomSheet> {
                   }
                 },
               ),
+              const SizedBox(height: 8),
+              Text(
+                LocaleKeys.filter_by_book_type.tr(),
+                style: const TextStyle(fontSize: 16),
+              ),
+              const SizedBox(height: 4),
+              _buildBookTypeFilter(),
               StreamBuilder<List<int>>(
                 stream: bookCubit.finishedYears,
                 builder: (context, AsyncSnapshot<List<int>> snapshot) {
@@ -481,12 +546,12 @@ class _SortBottomSheetState extends State<SortBottomSheet> {
                           return Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              const SizedBox(height: 10),
+                              const SizedBox(height: 8),
                               Text(
                                 LocaleKeys.filter_by_finish_year.tr(),
                                 style: const TextStyle(fontSize: 16),
                               ),
-                              const SizedBox(height: 5),
+                              const SizedBox(height: 4),
                               Row(
                                 children: [
                                   Expanded(
@@ -555,12 +620,12 @@ class _SortBottomSheetState extends State<SortBottomSheet> {
                           return Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              const SizedBox(height: 10),
+                              const SizedBox(height: 8),
                               Text(
                                 LocaleKeys.filter_by_tags.tr(),
                                 style: const TextStyle(fontSize: 16),
                               ),
-                              const SizedBox(height: 5),
+                              const SizedBox(height: 4),
                               Row(
                                 children: [
                                   Expanded(
@@ -631,6 +696,7 @@ class _SortBottomSheetState extends State<SortBottomSheet> {
                                   tags: state.tags,
                                   displayTags: state.displayTags,
                                   filterTagsAsAnd: !state.filterTagsAsAnd,
+                                  bookType: state.bookType,
                                 ),
                               );
                             },
@@ -644,7 +710,7 @@ class _SortBottomSheetState extends State<SortBottomSheet> {
                   }
                 },
               ),
-              const SizedBox(height: 10),
+              const SizedBox(height: 8),
               BlocBuilder<SortBloc, SortState>(
                 builder: (context, state) {
                   if (state is SetSortState) {
@@ -662,6 +728,7 @@ class _SortBottomSheetState extends State<SortBottomSheet> {
                                   tags: state.tags,
                                   displayTags: !state.displayTags,
                                   filterTagsAsAnd: state.filterTagsAsAnd,
+                                  bookType: state.bookType,
                                 ),
                               );
                             },
@@ -701,6 +768,49 @@ class _SortBottomSheetState extends State<SortBottomSheet> {
           ),
         ),
       ],
+    );
+  }
+
+  Widget _buildBookTypeFilter() {
+    return BlocBuilder<SortBloc, SortState>(
+      builder: (context, state) {
+        if (state is SetSortState) {
+          return DropdownButtonHideUnderline(
+            child: DropdownButton2(
+              isExpanded: true,
+              buttonStyleData: ButtonStyleData(
+                height: 42,
+                decoration: BoxDecoration(
+                  border: Border.all(
+                    color: dividerColor,
+                  ),
+                  color: Theme.of(context).colorScheme.surfaceVariant,
+                  borderRadius: BorderRadius.circular(cornerRadius),
+                ),
+              ),
+              items: bookTypeOptions
+                  .map(
+                    (item) => DropdownMenuItem<String>(
+                      value: item,
+                      child: Text(
+                        item,
+                        overflow: TextOverflow.ellipsis,
+                      ),
+                    ),
+                  )
+                  .toList(),
+              value: _getBookTypeDropdownValue(state),
+              onChanged: (value) => _updateBookType(
+                context,
+                value,
+                state,
+              ),
+            ),
+          );
+        } else {
+          return const SizedBox();
+        }
+      },
     );
   }
 
