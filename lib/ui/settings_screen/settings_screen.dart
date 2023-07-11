@@ -365,7 +365,7 @@ class SettingsScreen extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.end,
               mainAxisSize: MainAxisSize.min,
               children: [
-                const SizedBox(height: 5),
+                const SizedBox(height: 10),
                 Container(
                   height: 3,
                   width: MediaQuery.of(context).size.width / 4,
@@ -374,7 +374,7 @@ class SettingsScreen extends StatelessWidget {
                       borderRadius: BorderRadius.circular(10)),
                 ),
                 Container(
-                  padding: const EdgeInsets.fromLTRB(10, 20, 10, 40),
+                  padding: const EdgeInsets.fromLTRB(10, 32, 10, 40),
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(15),
                   ),
