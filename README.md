@@ -7,7 +7,7 @@
 
 [![GitHub tag (latest by date)](https://img.shields.io/github/v/tag/mateusz-bak/openreads-android?label=latest%20version)](https://github.com/mateusz-bak/openreads-android/releases/latest)
 [![Pull request](https://github.com/mateusz-bak/openreads-android/actions/workflows/test_build.yml/badge.svg?branch=master&event=push)](https://github.com/mateusz-bak/openreads-android/actions/workflows/test_build.yml)
-[![Crowdin](https://badges.crowdin.net/openreads-android/localized.svg)](https://crowdin.com/project/openreads-android)
+[![Weblate](https://hosted.weblate.org/widgets/openreads/-/svg-badge.svg)](https://hosted.weblate.org/engage/openreads/)
 <br/>
 
 <a href='https://f-droid.org/en/packages/software.mdev.bookstracker'><img height=75 alt='Get it on F-Droid' src='https://fdroid.gitlab.io/artwork/badge/get-it-on.png'/></a>
@@ -48,14 +48,16 @@ You can use custom tags and filter through them.
 
 Do you want to support Openreads development? You are welcome to take below actions:
 
-### Help translate Openreads:
-Go to [Crowdin project](https://crwd.in/openreads-android) and start translating!
+### Help [translate Openreads](https://hosted.weblate.org/engage/openreads/):
+<a href="https://hosted.weblate.org/engage/openreads/">
+<img src="https://hosted.weblate.org/widgets/openreads/-/horizontal-auto.svg" alt="Translation status" />
+</a>
 
 ### Report bugs or new ideas
 Submit an issue here: [Openreads issues](https://github.com/mateusz-bak/openreads-android/issues).
 
 ### Become a Sponsor:
-[Become a Github Sponsor](https://github.com/sponsors/mateusz-bak)
+[Become a GitHub Sponsor](https://github.com/sponsors/mateusz-bak)
 
 [Buy a coffe at buymeacoffee.com](https://www.buymeacoffee.com/mateuszbak)
 
