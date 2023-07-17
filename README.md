@@ -5,19 +5,19 @@
  <img src='doc/github/github-banner.png' width='100%'/>
 </p>
 
-[![GitHub tag (latest by date)](https://img.shields.io/github/v/tag/mateusz-bak/openreads-android?label=latest%20version)](https://github.com/mateusz-bak/openreads-android/releases/latest)
-[![Pull request](https://github.com/mateusz-bak/openreads-android/actions/workflows/test_build.yml/badge.svg?branch=master&event=push)](https://github.com/mateusz-bak/openreads-android/actions/workflows/test_build.yml)
-[![Weblate](https://hosted.weblate.org/widgets/openreads/-/svg-badge.svg)](https://hosted.weblate.org/engage/openreads/)
+[![Flutter](https://img.shields.io/badge/-Flutter-02569B?logo=flutter&logoColor=white&style=flat-square)]([https://hosted.weblate.org/engage/openreads/](https://flutter.dev/))
+[![GitHub tag (latest by date)](https://img.shields.io/github/v/tag/mateusz-bak/openreads-android?label=latest%20version&style=flat-square)](https://github.com/mateusz-bak/openreads-android/releases/latest)
+![GitHub Workflow Status (with event)](https://img.shields.io/github/actions/workflow/status/mateusz-bak/openreads-android/test_build.yml?style=flat-square)
+![Weblate project translated](https://img.shields.io/weblate/progress/openreads?style=flat-square)
 <br/>
 
-<a href='https://f-droid.org/en/packages/software.mdev.bookstracker'><img height=75 alt='Get it on F-Droid' src='https://fdroid.gitlab.io/artwork/badge/get-it-on.png'/></a>
-<a href='https://play.google.com/store/apps/details?id=software.mdev.bookstracker'><img height=75 alt='Get it on Google Play' src='https://play.google.com/intl/en_us/badges/images/generic/en_badge_web_generic.png'/></a>
-<a href='https://github.com/mateusz-bak/openreads-android/releases/latest'><img height=75 alt='Get it on Github' src='https://raw.githubusercontent.com/mateusz-bak/openreads-android/master/doc/github/get-it-on-github.png'/></a>
-<br/>
-<a href='https://matrix.to/#/#openreads:matrix.org'><img height=75 alt='Join the community on Element' src='https://raw.githubusercontent.com/mateusz-bak/openreads-android/master/doc/github/join_element.png'/></a>
+<a href='https://f-droid.org/en/packages/software.mdev.bookstracker'><img height=70 alt='Get it on F-Droid' src='https://fdroid.gitlab.io/artwork/badge/get-it-on.png'/></a>
+<a href='https://play.google.com/store/apps/details?id=software.mdev.bookstracker'><img height=70 alt='Get it on Google Play' src='https://play.google.com/intl/en_us/badges/images/generic/en_badge_web_generic.png'/></a>
+<a href='https://github.com/mateusz-bak/openreads-android/releases/latest'><img height=70 alt='Get it on Github' src='https://raw.githubusercontent.com/mateusz-bak/openreads-android/master/doc/github/get-it-on-github.png'/></a>
+<a href='https://matrix.to/#/#openreads:matrix.org'><img height=70 alt='Join the community on Matrix.org' src='https://raw.githubusercontent.com/mateusz-bak/openreads-android/master/doc/github/join_element.png'/></a>
 
 
-### Openreads is a privacy oriented and open source Android app written in Kotlin for keeping tracks of your books.  
+### Openreads is a privacy oriented and open source Android app written in Flutter for keeping tracks of your books.  
 #### There are four lists provided so you won't get confused:  
 - books you finished,  
 - books you are currently reading,  
@@ -48,18 +48,24 @@ You can use custom tags and filter through them.
 
 Do you want to support Openreads development? You are welcome to take below actions:
 
-### Help [translate Openreads](https://hosted.weblate.org/engage/openreads/):
+### Become a Sponsor
+
+Fund the project, or simply say thank you.
+
+<a href="https://www.buymeacoffee.com/mateuszbak"><img src="https://cdn.buymeacoffee.com/buttons/v2/default-yellow.png" height="60"></a>
+
+<a href='https://github.com/sponsors/mateusz-bak'><img height=60 alt='Become a GitHub Sponsor' src='https://raw.githubusercontent.com/mateusz-bak/openreads-android/mateusz-bak-patch-1/doc/github/button_become-a-github-sponsor.png'/></a>
+
+### Translate Openreads
+
+Go to [Weblate](https://hosted.weblate.org/engage/openreads/) and help with the translations.
+
 <a href="https://hosted.weblate.org/engage/openreads/">
-<img src="https://hosted.weblate.org/widgets/openreads/-/horizontal-auto.svg" alt="Translation status" />
+<img src="https://hosted.weblate.org/widgets/openreads/-/multi-auto.svg" alt="Translation status" />
 </a>
 
 ### Report bugs or new ideas
 Submit an issue here: [Openreads issues](https://github.com/mateusz-bak/openreads-android/issues).
-
-### Become a Sponsor:
-[Become a GitHub Sponsor](https://github.com/sponsors/mateusz-bak)
-
-[Buy a coffe at buymeacoffee.com](https://www.buymeacoffee.com/mateuszbak)
 
 <br/>
 
