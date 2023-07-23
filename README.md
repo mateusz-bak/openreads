@@ -9,13 +9,12 @@
 [![GitHub tag (latest by date)](https://img.shields.io/github/v/tag/mateusz-bak/openreads-android?label=latest%20version&style=flat-square)](https://github.com/mateusz-bak/openreads-android/releases/latest)
 ![GitHub Workflow Status (with event)](https://img.shields.io/github/actions/workflow/status/mateusz-bak/openreads-android/test_build.yml?style=flat-square)
 ![Weblate project translated](https://img.shields.io/weblate/progress/openreads?style=flat-square)
+![Join the community](https://img.shields.io/matrix/openreads%3Amatrix.org?style=flat-square&logo=matrix&label=join%20community)
 <br/>
 
 <a href='https://f-droid.org/en/packages/software.mdev.bookstracker'><img height=70 alt='Get it on F-Droid' src='https://fdroid.gitlab.io/artwork/badge/get-it-on.png'/></a>
 <a href='https://play.google.com/store/apps/details?id=software.mdev.bookstracker'><img height=70 alt='Get it on Google Play' src='https://play.google.com/intl/en_us/badges/images/generic/en_badge_web_generic.png'/></a>
 <a href='https://github.com/mateusz-bak/openreads-android/releases/latest'><img height=70 alt='Get it on Github' src='https://raw.githubusercontent.com/mateusz-bak/openreads-android/master/doc/github/get-it-on-github.png'/></a>
-<a href='https://matrix.to/#/#openreads:matrix.org'><img height=70 alt='Join the community on Matrix.org' src='https://raw.githubusercontent.com/mateusz-bak/openreads-android/master/doc/github/join_element.png'/></a>
-
 
 ### Openreads is a privacy oriented and open source Android app written in Flutter for keeping tracks of your books.  
 #### There are four lists provided so you won't get confused:  
