@@ -9,7 +9,7 @@
     "book_status_unfinished": "Ikke fullført",
     "add_manually": "Legg til bok manuelt",
     "add_search": "Søk i Open Library",
-    "add_scan": "Skann strekkode",
+    "add_scan": "Skann en strekkode",
     "add_book": "Legg til bok",
     "finished_on_date": "Fullført",
     "started_on_date": "Påbegynt",
@@ -213,5 +213,12 @@
     "book_type_ebook_plural": "E-bøker",
     "book_type_audiobook_plural": "Lydbøker",
     "dark_mode_style": "Mørk drakt",
-    "dark_mode_natural": "Naturlig drakt"
+    "dark_mode_natural": "Naturlig drakt",
+    "standard_color": "Standard",
+    "book_type_all": "Alle format",
+    "filter_by_book_type": "Filtrer etter format",
+    "use_material_you": "Bruk Material You",
+    "select_color": "Velg farge",
+    "custom_color": "Tilpasset",
+    "dark_mode_amoled": "AMOLED mørkt tema"
 }
