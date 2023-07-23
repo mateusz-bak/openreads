@@ -24,7 +24,7 @@ final supportedLocales = [
   AppLanguage('Norsk', const Locale('no', 'NO')),
   AppLanguage('ଓଡ଼ିଆ', const Locale('or', 'IN')),
   AppLanguage('polski', const Locale('pl', 'PL')),
-  // AppLanguage('português', const Locale('pt', 'PT')),
+  AppLanguage('português', const Locale('pt', 'PT')),
   AppLanguage('português brasileiro', const Locale('pt', 'BR')),
   AppLanguage('limba română', const Locale('ro', 'RO')),
   AppLanguage('русский язык', const Locale('ru', 'RU')),
