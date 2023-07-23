@@ -24,7 +24,7 @@ class SettingsScreen extends StatelessWidget {
   String? version;
   static const licence = 'GNU General Public Licence v2.0';
   static const repoUrl = 'https://github.com/mateusz-bak/openreads-android';
-  static const translationUrl = 'https://crwd.in/openreads-android';
+  static const translationUrl = 'https://hosted.weblate.org/engage/openreads/';
   static const communityUrl = 'https://matrix.to/#/#openreads:matrix.org';
   static const rateUrl = 'market://details?id=software.mdev.bookstracker';
   final releasesUrl = '$repoUrl/releases';

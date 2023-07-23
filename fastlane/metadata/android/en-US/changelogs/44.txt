@@ -1,0 +1,6 @@
+- New description field (taken from Open Library).
+- Suggestion when adding tags.
+- Added book types: paper, e-book, audiobook.
+- Books can be displayed as a grid.
+- AMOLED theme and custom colors.
+- Improved translations.
