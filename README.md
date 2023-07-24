@@ -53,7 +53,7 @@ Fund the project, or simply say thank you.
 
 <a href="https://www.buymeacoffee.com/mateuszbak"><img src="https://cdn.buymeacoffee.com/buttons/v2/default-yellow.png" height="60"></a>
 
-<a href='https://github.com/sponsors/mateusz-bak'><img height=60 alt='Become a GitHub Sponsor' src='https://raw.githubusercontent.com/mateusz-bak/openreads-android/mateusz-bak-patch-1/doc/github/button_become-a-github-sponsor.png'/></a>
+<a href='https://github.com/sponsors/mateusz-bak'><img height=60 alt='Become a GitHub Sponsor' src='https://raw.githubusercontent.com/mateusz-bak/openreads-android/master/doc/github/button_become-a-github-sponsor.png'/></a>
 
 ### Translate Openreads
 
