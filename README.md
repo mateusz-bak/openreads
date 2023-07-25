@@ -1,3 +1,9 @@
+<!--
+  Title: Openreads
+  Description: A mobile books tracker written in Flutter. Free, private and open source.
+  Author: mateusz-bak
+  -->
+
 # Openreads
 
 
