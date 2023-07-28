@@ -14,9 +14,9 @@
 [![Flutter](https://img.shields.io/badge/-Flutter-02569B?logo=flutter&logoColor=white&style=flat-square)](https://flutter.dev/)
 [![GitHub tag (latest by date)](https://img.shields.io/github/v/tag/mateusz-bak/openreads-android?label=latest%20version&style=flat-square)](https://github.com/mateusz-bak/openreads-android/releases/latest)
 [![GitHub Workflow Status (with event)](https://img.shields.io/github/actions/workflow/status/mateusz-bak/openreads-android/test_build.yml?style=flat-square)](https://github.com/mateusz-bak/openreads-android/actions/workflows/test_build.yml)
-[![Weblate project translated](https://img.shields.io/weblate/progress/openreads?style=flat-square&logo=weblate&cacheSeconds=3600)](https://hosted.weblate.org/engage/openreads/)
+[![Weblate project translated](https://img.shields.io/badge/weblate-translations_needed-orange?style=flat-square&logo=weblate)](https://hosted.weblate.org/engage/openreads/)
 [![Join the community](https://img.shields.io/badge/matrix.org-join_community-teal?style=flat-square&logo=matrix)](https://matrix.to/#/#openreads:matrix.org)
-<a rel="me" href='https://fosstodon.org/@openreads'><img alt="Mastodon Follow" src="https://img.shields.io/mastodon/follow/110707338082983645?domain=https%3A%2F%2Ffosstodon.org&style=flat-square&logo=mastodon"></a>
+<a rel="me" href='https://fosstodon.org/@openreads'><img alt="Mastodon Follow" src="https://img.shields.io/mastodon/follow/110707338082983645?domain=https%3A%2F%2Ffosstodon.org&style=flat-square&logo=mastodon&color=royalblue"></a>
 <br/>
 
 <a href='https://f-droid.org/en/packages/software.mdev.bookstracker'><img height=70 alt='Get it on F-Droid' src='https://fdroid.gitlab.io/artwork/badge/get-it-on.png'/></a>
