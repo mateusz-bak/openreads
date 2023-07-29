@@ -459,17 +459,29 @@ class _BooksScreenState extends State<BooksScreen>
 
   AppBar _buildMultiSelectAppBar(BuildContext context) {
     return AppBar(
-      title: Text(
-        'Selected ${selectedBookIds!.length}',
-        style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
-      ),
-      actions: const [],
+        title: Row(
+          children: [
+            IconButton(
+              icon: const Icon(Icons.close),
+              onPressed: (){
+                setState(() {
+                  multiSelect = false;
+                  selectedBookIds = {};
+                });
+              },
+            ),
+            Text(
+              'Selected ${selectedBookIds!.length}',
+              style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+            ),
+          ],
+        )
     );
   }
 
     Widget _buildMultiSelectFAB(SetThemeState state) {
     return Padding(
-        padding: const EdgeInsets.only(bottom: 30),
+        padding: const EdgeInsets.only(bottom: 50),
         child: SpeedDial(
           spacing: 3,
           dialRoot: (ctx, open, toggleChildren) {
