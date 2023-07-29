@@ -445,13 +445,23 @@ class _BooksScreenState extends State<BooksScreen>
         if (state is SetThemeState) {
           AppTheme.init(state, context);
 
-          return Scaffold(
-            appBar: multiSelect
-                ? _buildMultiSelectAppBar(context)
-                : _buildAppBar(context),
-            floatingActionButton:
-                multiSelect ? _buildMultiSelectFAB(state) : _buildFAB(context),
-            body: _buildScaffoldBody(),
+          return WillPopScope(
+            child: Scaffold(
+              appBar: multiSelect
+                  ? _buildMultiSelectAppBar(context)
+                  : _buildAppBar(context),
+              floatingActionButton: multiSelect
+                  ? _buildMultiSelectFAB(state)
+                  : _buildFAB(context),
+              body: _buildScaffoldBody(),
+            ),
+            onWillPop: () {
+              if (multiSelect) {
+                _resetMultiselectMode();
+                return Future.value(false);
+              }
+              return Future.value(true);
+            },
           );
         } else {
           return const SizedBox();
@@ -467,10 +477,7 @@ class _BooksScreenState extends State<BooksScreen>
         IconButton(
           icon: const Icon(Icons.close),
           onPressed: () {
-            setState(() {
-              multiSelect = false;
-              selectedBookIds = {};
-            });
+            _resetMultiselectMode();
           },
         ),
         Text(
@@ -479,6 +486,13 @@ class _BooksScreenState extends State<BooksScreen>
         ),
       ],
     ));
+  }
+
+  void _resetMultiselectMode() {
+    setState(() {
+      multiSelect = false;
+      selectedBookIds = {};
+    });
   }
 
   Widget _buildMultiSelectFAB(SetThemeState state) {
