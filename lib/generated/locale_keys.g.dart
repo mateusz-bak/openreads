@@ -227,4 +227,8 @@ abstract class LocaleKeys {
   static const dark_mode_style = 'dark_mode_style';
   static const dark_mode_natural = 'dark_mode_natural';
   static const dark_mode_amoled = 'dark_mode_amoled';
+  static const selected = 'selected';
+  static const change_book_type = 'change_book_type';
+  static const update_successful_message = 'update_successful_message';
+  static const multi_select = 'multi_select';
 }

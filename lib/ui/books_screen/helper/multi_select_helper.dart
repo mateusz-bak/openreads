@@ -1,4 +1,3 @@
-
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -7,7 +6,6 @@ import '../../../core/constants.dart/enums.dart';
 import '../../../generated/locale_keys.g.dart';
 import '../../../main.dart';
 import '../../add_book_screen/widgets/book_type_dropdown.dart';
-
 
 List<String> bookTypes = [
   LocaleKeys.book_type_paper.tr(),
@@ -21,13 +19,13 @@ showEditBookTypeBottomSheet(BuildContext context, Set<int> selectedBookIds) {
       builder: (context) {
         return Padding(
           padding:
-          const EdgeInsets.only(left: 20, right: 20, top: 20, bottom: 40),
+              const EdgeInsets.only(left: 20, right: 20, top: 20, bottom: 40),
           child: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
-              const Text(
-                "Change book format",
-                style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+              Text(
+                LocaleKeys.change_book_type.tr(),
+                style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
               ),
               const SizedBox(height: 20),
               BookTypeDropdown(
@@ -37,8 +35,8 @@ showEditBookTypeBottomSheet(BuildContext context, Set<int> selectedBookIds) {
                   if (bookType == null) return;
                   _updateBooks(bookType, selectedBookIds);
                   Navigator.pop(context);
-                  ScaffoldMessenger.of(context)
-                      .showSnackBar(SnackBar(content: Text("update ${selectedBookIds.length}")));
+                  ScaffoldMessenger.of(context).showSnackBar(
+                      SnackBar(content: Text(LocaleKeys.update_successful_message.tr())));
                 },
               ),
             ],

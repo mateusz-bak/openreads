@@ -437,7 +437,7 @@ class _BooksScreenState extends State<BooksScreen>
       LocaleKeys.sort_filter.tr(),
       LocaleKeys.statistics.tr(),
       LocaleKeys.settings.tr(),
-      "Multi select",
+      LocaleKeys.multi_select.tr(),
     ];
 
     return BlocBuilder<ThemeBloc, ThemeState>(
@@ -446,8 +446,11 @@ class _BooksScreenState extends State<BooksScreen>
           AppTheme.init(state, context);
 
           return Scaffold(
-            appBar: multiSelect ?_buildMultiSelectAppBar(context) : _buildAppBar(context) ,
-            floatingActionButton: multiSelect ? _buildMultiSelectFAB(state) : _buildFAB(context),
+            appBar: multiSelect
+                ? _buildMultiSelectAppBar(context)
+                : _buildAppBar(context),
+            floatingActionButton:
+                multiSelect ? _buildMultiSelectFAB(state) : _buildFAB(context),
             body: _buildScaffoldBody(),
           );
         } else {
@@ -460,26 +463,25 @@ class _BooksScreenState extends State<BooksScreen>
   AppBar _buildMultiSelectAppBar(BuildContext context) {
     return AppBar(
         title: Row(
-          children: [
-            IconButton(
-              icon: const Icon(Icons.close),
-              onPressed: (){
-                setState(() {
-                  multiSelect = false;
-                  selectedBookIds = {};
-                });
-              },
-            ),
-            Text(
-              'Selected ${selectedBookIds!.length}',
-              style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
-            ),
-          ],
-        )
-    );
+      children: [
+        IconButton(
+          icon: const Icon(Icons.close),
+          onPressed: () {
+            setState(() {
+              multiSelect = false;
+              selectedBookIds = {};
+            });
+          },
+        ),
+        Text(
+          '${LocaleKeys.selected.tr()} ${selectedBookIds.length}',
+          style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+        ),
+      ],
+    ));
   }
 
-    Widget _buildMultiSelectFAB(SetThemeState state) {
+  Widget _buildMultiSelectFAB(SetThemeState state) {
     return Padding(
         padding: const EdgeInsets.only(bottom: 50),
         child: SpeedDial(
@@ -495,7 +497,7 @@ class _BooksScreenState extends State<BooksScreen>
                 child: const Icon(Icons.menu_book_outlined),
                 backgroundColor:
                     Theme.of(context).colorScheme.secondaryContainer,
-                label: "Change book format",
+                label: LocaleKeys.change_book_type.tr(),
                 onTap: () {
                   showEditBookTypeBottomSheet(context, selectedBookIds);
                 }),

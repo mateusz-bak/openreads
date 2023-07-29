@@ -9,7 +9,7 @@ class BooksGrid extends StatefulWidget {
     Key? key,
     required this.books,
     required this.listNumber,
-    this.multiSelectMode =false,
+    this.multiSelectMode = false,
     this.selectedBookIds,
     this.onBookSelected,
   }) : super(key: key);
@@ -40,10 +40,15 @@ class _BooksGridState extends State<BooksGrid>
       itemCount: widget.books.length,
       itemBuilder: (context, index) {
         final heroTag = 'tag_${widget.listNumber}_${widget.books[index].id}';
-        Color color = widget.multiSelectMode && widget.selectedBookIds!.contains(widget.books[index].id) ? Theme.of(context).colorScheme.primaryContainer : Colors.transparent;
+        Color color = widget.multiSelectMode &&
+                widget.selectedBookIds!.contains(widget.books[index].id)
+            ? Theme.of(context).colorScheme.primaryContainer
+            : Colors.transparent;
 
         return Container(
-            decoration: widget.multiSelectMode ? BoxDecoration(border: Border.all(color: color,width: 4)) : null,
+            decoration: widget.multiSelectMode
+                ? BoxDecoration(border: Border.all(color: color, width: 4))
+                : null,
             child: BookGridCard(
               book: widget.books[index],
               heroTag: heroTag,
@@ -51,7 +56,7 @@ class _BooksGridState extends State<BooksGrid>
               onPressed: () {
                 if (widget.books[index].id == null) return;
 
-                if (widget.multiSelectMode &&  widget.onBookSelected != null) {
+                if (widget.multiSelectMode && widget.onBookSelected != null) {
                   widget.onBookSelected!(widget.books[index].id!);
                   return;
                 }
@@ -68,8 +73,7 @@ class _BooksGridState extends State<BooksGrid>
                   ),
                 );
               },
-            )
-        );
+            ));
       },
     );
   }
