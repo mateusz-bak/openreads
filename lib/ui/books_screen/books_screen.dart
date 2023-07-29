@@ -495,8 +495,8 @@ class _BooksScreenState extends State<BooksScreen>
     });
   }
 
-  Widget _buildMultiSelectFAB(SetThemeState state) {
-    return Padding(
+  Padding? _buildMultiSelectFAB(SetThemeState state) {
+    return selectedBookIds.isNotEmpty ? Padding(
         padding: const EdgeInsets.only(bottom: 50),
         child: SpeedDial(
           spacing: 3,
@@ -516,7 +516,7 @@ class _BooksScreenState extends State<BooksScreen>
                   showEditBookTypeBottomSheet(context, selectedBookIds);
                 }),
           ],
-        ));
+        )): null;
   }
 
   BlocBuilder<ThemeBloc, ThemeState> _buildScaffoldBody() {
