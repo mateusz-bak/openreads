@@ -722,6 +722,9 @@ class _BooksScreenState extends State<BooksScreen>
                           list: snapshot.data!,
                         ),
                         listNumber: 2,
+                        multiSelectMode: multiSelect,
+                        selectedBookIds: selectedBookIds,
+                        onBookSelected: _onItemSelected,
                       );
                     } else {
                       return BooksList(
@@ -786,6 +789,9 @@ class _BooksScreenState extends State<BooksScreen>
                           list: snapshot.data!,
                         ),
                         listNumber: 1,
+                        multiSelectMode: multiSelect,
+                        selectedBookIds: selectedBookIds,
+                        onBookSelected: _onItemSelected,
                       );
                     } else {
                       return BooksList(
@@ -850,6 +856,9 @@ class _BooksScreenState extends State<BooksScreen>
                           list: snapshot.data!,
                         ),
                         listNumber: 0,
+                        multiSelectMode: multiSelect,
+                        selectedBookIds: selectedBookIds,
+                        onBookSelected: _onItemSelected,
                       );
                     } else {
                       return BooksList(
