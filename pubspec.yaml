@@ -60,6 +60,7 @@ dependencies:
   easy_localization: ^3.0.2
   flutter_typeahead: ^4.6.1
   flex_color_picker: ^3.2.2
+  flutter_speed_dial: ^7.0.0
 
 dev_dependencies:
   flutter_test:

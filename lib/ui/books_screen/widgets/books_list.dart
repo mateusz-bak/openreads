@@ -9,10 +9,17 @@ class BooksList extends StatefulWidget {
     Key? key,
     required this.books,
     required this.listNumber,
+    this.multiSelectMode =false,
+    this.selectedBookIds,
+    this.onBookSelected,
   }) : super(key: key);
 
   final List<Book> books;
   final int listNumber;
+  final bool multiSelectMode;
+  final Set<int>? selectedBookIds;
+  final Function(int id)? onBookSelected;
+
 
   @override
   State<BooksList> createState() => _BooksListState();
@@ -27,13 +34,18 @@ class _BooksListState extends State<BooksList>
       itemCount: widget.books.length,
       itemBuilder: (context, index) {
         final heroTag = 'tag_${widget.listNumber}_${widget.books[index].id}';
-
+        Color? color = widget.multiSelectMode && widget.selectedBookIds!.contains(widget.books[index].id) ? Theme.of(context).colorScheme.secondaryContainer : null;
         return BookCard(
           book: widget.books[index],
           heroTag: heroTag,
+          cardColor: color,
           addBottomPadding: (widget.books.length == index + 1),
           onPressed: () {
             if (widget.books[index].id == null) return;
+            if (widget.multiSelectMode &&  widget.onBookSelected != null) {
+              widget.onBookSelected!(widget.books[index].id!);
+              return;
+            }
             bookCubit.clearCurrentBook();
             bookCubit.getBook(widget.books[index].id!);
 

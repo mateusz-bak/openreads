@@ -1,6 +1,7 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_speed_dial/flutter_speed_dial.dart';
 import 'package:openreads/core/constants.dart/enums.dart';
 import 'package:openreads/core/themes/app_theme.dart';
 import 'package:openreads/generated/locale_keys.g.dart';
@@ -16,6 +17,8 @@ import 'package:openreads/ui/search_page/search_page.dart';
 import 'package:openreads/ui/settings_screen/settings_screen.dart';
 import 'package:openreads/ui/statistics_screen/statistics_screen.dart';
 
+import 'helper/multi_select_helper.dart';
+
 class BooksScreen extends StatefulWidget {
   const BooksScreen({Key? key}) : super(key: key);
 
@@ -26,6 +29,18 @@ class BooksScreen extends StatefulWidget {
 class _BooksScreenState extends State<BooksScreen>
     with AutomaticKeepAliveClientMixin {
   late List<String> moreButtonOptions;
+  bool multiSelect = false;
+  Set<int> selectedBookIds = {};
+
+  _onItemSelected(int id) {
+    setState(() {
+      if (selectedBookIds.contains(id)) {
+        selectedBookIds.remove(id);
+      } else {
+        selectedBookIds.add(id);
+      }
+    });
+  }
 
   List<Book> _sortReadList({
     required SetSortState state,
@@ -422,6 +437,7 @@ class _BooksScreenState extends State<BooksScreen>
       LocaleKeys.sort_filter.tr(),
       LocaleKeys.statistics.tr(),
       LocaleKeys.settings.tr(),
+      "Multi select",
     ];
 
     return BlocBuilder<ThemeBloc, ThemeState>(
@@ -430,8 +446,8 @@ class _BooksScreenState extends State<BooksScreen>
           AppTheme.init(state, context);
 
           return Scaffold(
-            appBar: _buildAppBar(context),
-            floatingActionButton: _buildFAB(context),
+            appBar: multiSelect ?_buildMultiSelectAppBar(context) : _buildAppBar(context) ,
+            floatingActionButton: multiSelect ? _buildMultiSelectFAB(state) : _buildFAB(context),
             body: _buildScaffoldBody(),
           );
         } else {
@@ -439,6 +455,40 @@ class _BooksScreenState extends State<BooksScreen>
         }
       },
     );
+  }
+
+  AppBar _buildMultiSelectAppBar(BuildContext context) {
+    return AppBar(
+      title: Text(
+        'Selected ${selectedBookIds!.length}',
+        style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+      ),
+      actions: const [],
+    );
+  }
+
+    Widget _buildMultiSelectFAB(SetThemeState state) {
+    return Padding(
+        padding: const EdgeInsets.only(bottom: 30),
+        child: SpeedDial(
+          spacing: 3,
+          dialRoot: (ctx, open, toggleChildren) {
+            return FloatingActionButton(
+                onPressed: toggleChildren, child: const Icon(Icons.create));
+          },
+          childPadding: const EdgeInsets.all(5),
+          spaceBetweenChildren: 4,
+          children: [
+            SpeedDialChild(
+                child: const Icon(Icons.menu_book_outlined),
+                backgroundColor:
+                    Theme.of(context).colorScheme.secondaryContainer,
+                label: "Change book format",
+                onTap: () {
+                  showEditBookTypeBottomSheet(context, selectedBookIds);
+                }),
+          ],
+        ));
   }
 
   BlocBuilder<ThemeBloc, ThemeState> _buildScaffoldBody() {
@@ -613,6 +663,10 @@ class _BooksScreenState extends State<BooksScreen>
                     goToStatisticsScreen();
                   } else if (choice == moreButtonOptions[2]) {
                     goToSettingsScreen();
+                  } else if (choice == moreButtonOptions[3]) {
+                    setState(() {
+                      multiSelect = !multiSelect;
+                    });
                   }
                 },
               );
@@ -664,6 +718,9 @@ class _BooksScreenState extends State<BooksScreen>
                           list: snapshot.data!,
                         ),
                         listNumber: 2,
+                        multiSelectMode: multiSelect,
+                        selectedBookIds: selectedBookIds,
+                        onBookSelected: _onItemSelected,
                       );
                     }
                   },
@@ -725,6 +782,9 @@ class _BooksScreenState extends State<BooksScreen>
                           list: snapshot.data!,
                         ),
                         listNumber: 1,
+                        multiSelectMode: multiSelect,
+                        selectedBookIds: selectedBookIds,
+                        onBookSelected: _onItemSelected,
                       );
                     }
                   },
@@ -786,6 +846,9 @@ class _BooksScreenState extends State<BooksScreen>
                           list: snapshot.data!,
                         ),
                         listNumber: 0,
+                        multiSelectMode: multiSelect,
+                        selectedBookIds: selectedBookIds,
+                        onBookSelected: _onItemSelected,
                       );
                     }
                   },
