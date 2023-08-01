@@ -18,6 +18,7 @@ final supportedLocales = [
   // AppLanguage('magyar', const Locale('hu', 'HU')),
   // AppLanguage('Bahasa Indonesia', const Locale('id', 'ID')),
   AppLanguage('italiano', const Locale('it', 'IT')),
+  AppLanguage('日本語', const Locale('ja', 'JP')),
   AppLanguage('ქართული', const Locale('ka', 'GE')),
   // AppLanguage('lietuvių kalba', const Locale('lt', 'LT')),
   AppLanguage('Nederlands', const Locale('nl', 'NL')),
