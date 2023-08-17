@@ -216,5 +216,9 @@
     "book_type_audiobook": "Hörbuch",
     "book_type_paper_plural": "Papierbücher",
     "book_type_ebook_plural": "E-Books",
-    "book_type_audiobook_plural": "Hörbücher"
+    "book_type_audiobook_plural": "Hörbücher",
+    "custom_color": "Benutzerdefiniert",
+    "dark_mode_natural": "Natürliches dunkles Design",
+    "dark_mode_amoled": "AMOLED dunkles Design",
+    "dark_mode_style": "Stil des dunklen Designs"
 }

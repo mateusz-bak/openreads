@@ -218,5 +218,7 @@
     "use_material_you": "Utiliza Material You",
     "dark_mode_style": "Estilo en modo oscuro",
     "dark_mode_natural": "Modo oscuro natural",
-    "dark_mode_amoled": "Modo oscuro AMOLED"
+    "dark_mode_amoled": "Modo oscuro AMOLED",
+    "book_type_all": "Todos los tipos de libros",
+    "filter_by_book_type": "Filtrar por el tipo de libro"
 }
