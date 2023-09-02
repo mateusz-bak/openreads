@@ -32,7 +32,7 @@ if (keystorePropertiesFile.exists()) {
 }
 android {
     namespace "software.mdev.bookstracker"
-    compileSdkVersion 33
+    compileSdkVersion 34
     ndkVersion flutter.ndkVersion
 
     compileOptions {
