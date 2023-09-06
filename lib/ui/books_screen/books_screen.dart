@@ -262,14 +262,11 @@ class _BooksScreenState extends State<BooksScreen>
     required bool isAsc,
   }) {
     isAsc
-        ? list.sort((a, b) => removeDiacritics(a.title
-            .toString()
-            .toLowerCase())
+        ? list.sort((a, b) => removeDiacritics(a.title.toString().toLowerCase())
             .compareTo(removeDiacritics(b.title.toString().toLowerCase())))
-        : list.sort((b, a) => removeDiacritics(a.author
-            .toString()
-            .toLowerCase())
-            .compareTo(removeDiacritics(b.title.toString().toLowerCase())));
+        : list.sort((b, a) =>
+            removeDiacritics(a.author.toString().toLowerCase())
+                .compareTo(removeDiacritics(b.title.toString().toLowerCase())));
 
     return list;
   }
@@ -279,14 +276,27 @@ class _BooksScreenState extends State<BooksScreen>
     required bool isAsc,
   }) {
     isAsc
-        ? list.sort((a, b) => removeDiacritics(a.author
-            .toString()
-            .toLowerCase())
-            .compareTo(removeDiacritics(b.author.toString().toLowerCase())))
-        : list.sort((b, a) => removeDiacritics(a.author
-            .toString()
-            .toLowerCase())
-            .compareTo(removeDiacritics(b.author.toString().toLowerCase())));
+        ? list.sort((a, b) {
+            int authorComparison =
+                removeDiacritics(a.author.toString().toLowerCase()).compareTo(
+                    removeDiacritics(b.author.toString().toLowerCase()));
+            if (authorComparison == 0) {
+              // secondary sorting, by title
+              isAsc
+                  ? list.sort((a, b) => removeDiacritics(
+                          a.title.toString().toLowerCase())
+                      .compareTo(
+                          removeDiacritics(b.title.toString().toLowerCase())))
+                  : list.sort((b, a) => removeDiacritics(
+                          a.author.toString().toLowerCase())
+                      .compareTo(
+                          removeDiacritics(b.title.toString().toLowerCase())));
+            }
+            return authorComparison;
+          })
+        : list.sort((b, a) =>
+            removeDiacritics(a.author.toString().toLowerCase()).compareTo(
+                removeDiacritics(b.author.toString().toLowerCase())));
 
     return list;
   }
