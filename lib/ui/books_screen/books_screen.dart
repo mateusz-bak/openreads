@@ -262,14 +262,14 @@ class _BooksScreenState extends State<BooksScreen>
     required bool isAsc,
   }) {
     isAsc
-        ? list.sort((a, b) => a.title
+        ? list.sort((a, b) => removeDiacritics(a.title
             .toString()
-            .toLowerCase()
-            .compareTo(b.title.toString().toLowerCase()))
-        : list.sort((b, a) => a.author
+            .toLowerCase())
+            .compareTo(removeDiacritics(b.title.toString().toLowerCase())))
+        : list.sort((b, a) => removeDiacritics(a.author
             .toString()
-            .toLowerCase()
-            .compareTo(b.title.toString().toLowerCase()));
+            .toLowerCase())
+            .compareTo(removeDiacritics(b.title.toString().toLowerCase())));
 
     return list;
   }
@@ -279,14 +279,14 @@ class _BooksScreenState extends State<BooksScreen>
     required bool isAsc,
   }) {
     isAsc
-        ? list.sort((a, b) => a.author
+        ? list.sort((a, b) => removeDiacritics(a.author
             .toString()
-            .toLowerCase()
-            .compareTo(b.author.toString().toLowerCase()))
-        : list.sort((b, a) => a.author
+            .toLowerCase())
+            .compareTo(removeDiacritics(b.author.toString().toLowerCase())))
+        : list.sort((b, a) => removeDiacritics(a.author
             .toString()
-            .toLowerCase()
-            .compareTo(b.author.toString().toLowerCase()));
+            .toLowerCase())
+            .compareTo(removeDiacritics(b.author.toString().toLowerCase())));
 
     return list;
   }
