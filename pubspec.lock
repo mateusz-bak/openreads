@@ -220,6 +220,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "7.0.0"
+  diacritic:
+    dependency: "direct main"
+    description:
+      name: diacritic
+      sha256: a84e03ec2779375fb86430dbe9d8fba62c68376f2499097a5f6e75556babe706
+      url: "https://pub.dev"
+    source: hosted
+    version: "0.1.4"
   dropdown_button2:
     dependency: "direct main"
     description:

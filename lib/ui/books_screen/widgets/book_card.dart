@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:intl/intl.dart';
 import 'package:openreads/core/constants.dart/enums.dart';
 import 'package:openreads/core/themes/app_theme.dart';
 import 'package:openreads/generated/locale_keys.g.dart';
