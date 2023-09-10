@@ -464,36 +464,39 @@ class _BooksScreenState extends State<BooksScreen>
                           ]),
                   ),
                 ),
-                Builder(builder: (context) {
-                  return Container(
-                    color: Theme.of(context).scaffoldBackgroundColor,
-                    child: TabBar(
-                      tabs: state.readTabFirst
-                          ? List.of([
-                              BookTab(
-                                text: LocaleKeys.books_finished.tr(),
-                              ),
-                              BookTab(
-                                text: LocaleKeys.books_in_progress.tr(),
-                              ),
-                              BookTab(
-                                text: LocaleKeys.books_for_later.tr(),
-                              ),
-                            ])
-                          : List.of([
-                              BookTab(
-                                text: LocaleKeys.books_in_progress.tr(),
-                              ),
-                              BookTab(
-                                text: LocaleKeys.books_finished.tr(),
-                              ),
-                              BookTab(
-                                text: LocaleKeys.books_for_later.tr(),
-                              ),
-                            ]),
-                    ),
-                  );
-                }),
+                SafeArea(
+                  child: Builder(builder: (context) {
+                    return Container(
+                      color: Theme.of(context).scaffoldBackgroundColor,
+                      child: TabBar(
+                        dividerColor: Colors.transparent,
+                        tabs: state.readTabFirst
+                            ? List.of([
+                                BookTab(
+                                  text: LocaleKeys.books_finished.tr(),
+                                ),
+                                BookTab(
+                                  text: LocaleKeys.books_in_progress.tr(),
+                                ),
+                                BookTab(
+                                  text: LocaleKeys.books_for_later.tr(),
+                                ),
+                              ])
+                            : List.of([
+                                BookTab(
+                                  text: LocaleKeys.books_in_progress.tr(),
+                                ),
+                                BookTab(
+                                  text: LocaleKeys.books_finished.tr(),
+                                ),
+                                BookTab(
+                                  text: LocaleKeys.books_for_later.tr(),
+                                ),
+                              ]),
+                      ),
+                    );
+                  }),
+                ),
               ],
             ),
           );

@@ -1,6 +1,7 @@
 import 'package:dynamic_color/dynamic_color.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_displaymode/flutter_displaymode.dart';
 import 'package:hydrated_bloc/hydrated_bloc.dart';
@@ -150,46 +151,74 @@ class _OpenreadsAppState extends State<OpenreadsApp>
           background: Colors.black,
         );
       }
-
-      return MaterialApp(
-        title: 'Openreads',
-        builder: (context, child) => MediaQuery(
-          // Temporary fix for https://github.com/AbdulRahmanAlHamali/flutter_typeahead/issues/463
-          data: MediaQuery.of(context).copyWith(
-            accessibleNavigation: false,
+      SystemChrome.setEnabledSystemUIMode(SystemUiMode.edgeToEdge);
+      final themeMode = widget.themeState.themeMode;
+      return AnnotatedRegion<SystemUiOverlayStyle>(
+        value: SystemUiOverlayStyle(
+          statusBarColor: Colors.transparent,
+          systemNavigationBarColor: Colors.transparent,
+          statusBarBrightness: themeMode == ThemeMode.system
+              ? MediaQuery.platformBrightnessOf(context) == Brightness.dark
+                  ? Brightness.light
+                  : Brightness.dark
+              : themeMode == ThemeMode.dark
+                  ? Brightness.light
+                  : Brightness.dark,
+          statusBarIconBrightness: themeMode == ThemeMode.system
+              ? MediaQuery.platformBrightnessOf(context) == Brightness.dark
+                  ? Brightness.light
+                  : Brightness.dark
+              : themeMode == ThemeMode.dark
+                  ? Brightness.light
+                  : Brightness.dark,
+          systemNavigationBarIconBrightness: themeMode == ThemeMode.system
+              ? MediaQuery.platformBrightnessOf(context) == Brightness.dark
+                  ? Brightness.light
+                  : Brightness.dark
+              : themeMode == ThemeMode.dark
+                  ? Brightness.light
+                  : Brightness.dark,
+        ),
+        child: MaterialApp(
+          title: 'Openreads',
+          builder: (context, child) => MediaQuery(
+            // Temporary fix for https://github.com/AbdulRahmanAlHamali/flutter_typeahead/issues/463
+            data: MediaQuery.of(context).copyWith(
+              accessibleNavigation: false,
+            ),
+            child: child!,
           ),
-          child: child!,
+          theme: ThemeData(
+            useMaterial3: true,
+            colorSchemeSeed: widget.themeState.useMaterialYou
+                ? null
+                : widget.themeState.primaryColor,
+            colorScheme: widget.themeState.useMaterialYou ? lightDynamic : null,
+            brightness: Brightness.light,
+            fontFamily: widget.themeState.fontFamily,
+          ),
+          darkTheme: ThemeData(
+            useMaterial3: true,
+            colorSchemeSeed: widget.themeState.useMaterialYou
+                ? null
+                : widget.themeState.primaryColor,
+            colorScheme: widget.themeState.useMaterialYou ? darkDynamic : null,
+            brightness: Brightness.dark,
+            fontFamily: widget.themeState.fontFamily,
+            scaffoldBackgroundColor:
+                widget.themeState.amoledDark ? Colors.black : null,
+            appBarTheme: widget.themeState.amoledDark
+                ? const AppBarTheme(backgroundColor: Colors.black)
+                : null,
+          ),
+          themeMode: themeMode,
+          home: welcomeMode
+              ? WelcomeScreen(themeData: Theme.of(context))
+              : const BooksScreen(),
+          localizationsDelegates: context.localizationDelegates,
+          supportedLocales: context.supportedLocales,
+          locale: context.locale,
         ),
-        theme: ThemeData(
-          useMaterial3: true,
-          colorSchemeSeed: widget.themeState.useMaterialYou
-              ? null
-              : widget.themeState.primaryColor,
-          colorScheme: widget.themeState.useMaterialYou ? lightDynamic : null,
-          brightness: Brightness.light,
-          fontFamily: widget.themeState.fontFamily,
-        ),
-        darkTheme: ThemeData(
-          useMaterial3: true,
-          colorSchemeSeed: widget.themeState.useMaterialYou
-              ? null
-              : widget.themeState.primaryColor,
-          colorScheme: widget.themeState.useMaterialYou ? darkDynamic : null,
-          brightness: Brightness.dark,
-          fontFamily: widget.themeState.fontFamily,
-          scaffoldBackgroundColor:
-              widget.themeState.amoledDark ? Colors.black : null,
-          appBarTheme: widget.themeState.amoledDark
-              ? const AppBarTheme(backgroundColor: Colors.black)
-              : null,
-        ),
-        themeMode: widget.themeState.themeMode,
-        home: welcomeMode
-            ? WelcomeScreen(themeData: Theme.of(context))
-            : const BooksScreen(),
-        localizationsDelegates: context.localizationDelegates,
-        supportedLocales: context.supportedLocales,
-        locale: context.locale,
       );
     });
   }
