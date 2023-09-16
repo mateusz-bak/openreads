@@ -1,7 +1,9 @@
 import 'dart:convert';
+import 'dart:io';
 
 import 'package:flutter/foundation.dart';
 import 'package:openreads/core/constants.dart/enums.dart';
+import 'package:openreads/main.dart';
 import 'package:openreads/model/book_from_backup_v3.dart';
 
 class Book {
@@ -80,6 +82,76 @@ class Book {
     );
   }
 
+  Book copyWith({
+    String? title,
+    String? author,
+    int? status,
+    String? subtitle,
+    String? description,
+    bool? favourite,
+    bool? deleted,
+    int? rating,
+    String? startDate,
+    String? finishDate,
+    int? pages,
+    int? publicationYear,
+    String? isbn,
+    String? olid,
+    String? tags,
+    String? myReview,
+    Uint8List? cover,
+    String? blurHash,
+    BookType? bookType,
+  }) {
+    return Book(
+      id: id,
+      title: title ?? this.title,
+      subtitle: subtitle ?? this.subtitle,
+      author: author ?? this.author,
+      status: status ?? this.status,
+      description: description ?? this.description,
+      favourite: favourite ?? this.favourite,
+      deleted: deleted ?? this.deleted,
+      rating: rating ?? this.rating,
+      startDate: startDate ?? this.startDate,
+      finishDate: finishDate ?? this.finishDate,
+      pages: pages ?? this.pages,
+      publicationYear: publicationYear ?? this.publicationYear,
+      isbn: isbn ?? this.isbn,
+      olid: olid ?? this.olid,
+      tags: tags ?? this.tags,
+      myReview: myReview ?? this.myReview,
+      cover: cover ?? this.cover,
+      blurHash: blurHash ?? this.blurHash,
+      bookType: bookType ?? this.bookType,
+    );
+  }
+
+  Book copyWithNullCover() {
+    return Book(
+      id: id,
+      title: title,
+      subtitle: subtitle,
+      author: author,
+      status: status,
+      description: description,
+      favourite: favourite,
+      deleted: deleted,
+      rating: rating,
+      startDate: startDate,
+      finishDate: finishDate,
+      pages: pages,
+      publicationYear: publicationYear,
+      isbn: isbn,
+      olid: olid,
+      tags: tags,
+      myReview: myReview,
+      cover: null,
+      blurHash: blurHash,
+      bookType: bookType,
+    );
+  }
+
   factory Book.fromBookFromBackupV3(
       BookFromBackupV3 oldBook, String? blurHash) {
     return Book(
@@ -152,5 +224,15 @@ class Book {
               ? 'ebook'
               : 'paper',
     };
+  }
+
+  File? getCoverFile() {
+    final fileExists = File('${directory.path}/$id.jpg').existsSync();
+
+    if (fileExists) {
+      return File('${directory.path}/$id.jpg');
+    } else {
+      return null;
+    }
   }
 }

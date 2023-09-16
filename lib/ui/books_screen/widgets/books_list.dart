@@ -56,11 +56,12 @@ class _BooksListState extends State<BooksList>
                 builder: (context) => BookScreen(
                   id: widget.books[index].id!,
                   heroTag: heroTag,
+                  book: widget.books[index],
                 ),
               ),
             );
           },
-          onLongPressed: (){
+          onLongPressed: () {
             if (widget.books[index].id == null) return;
             if (widget.onBookSelected != null) {
               widget.onBookSelected!(widget.books[index].id!);

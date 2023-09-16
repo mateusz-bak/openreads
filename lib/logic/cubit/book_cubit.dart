@@ -1,7 +1,11 @@
+import 'dart:io';
+
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:openreads/model/book.dart';
 import 'package:openreads/resources/repository.dart';
+import 'package:path_provider/path_provider.dart';
 import 'package:rxdart/rxdart.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../core/constants.dart/enums.dart';
 
@@ -41,6 +45,14 @@ class BookCubit extends Cubit {
   Stream<Book?> get book => _bookFetcher.stream;
 
   BookCubit() : super(null) {
+    _initLoad();
+  }
+
+  Future<void> _initLoad() async {
+    if (!await _checkIfCoverMigrationDone()) {
+      await _migrateCoversFromDatabaseToStorage();
+    }
+
     getFinishedBooks();
     getInProgressBooks();
     getToReadBooks();
@@ -168,5 +180,33 @@ class BookCubit extends Cubit {
     tags.sort((a, b) => a.compareTo(b));
 
     return tags;
+  }
+
+  Future<bool> _checkIfCoverMigrationDone() async {
+    final SharedPreferences prefs = await SharedPreferences.getInstance();
+    final bool? check = prefs.getBool('is_cover_migration_done');
+
+    return check == true ? true : false;
+  }
+
+  Future<void> _migrateCoversFromDatabaseToStorage() async {
+    List<Book> allBooks = await repository.getAllBooks();
+
+    for (var book in allBooks) {
+      if (book.cover != null) {
+        final directory = await getApplicationDocumentsDirectory();
+        final file = File('${directory.path}/${book.id}.jpg');
+
+        await file.writeAsBytes(book.cover!);
+        await repository.updateBook(book.copyWithNullCover());
+      }
+    }
+
+    await _saveCoverMigrationStatus();
+  }
+
+  Future<void> _saveCoverMigrationStatus() async {
+    final SharedPreferences prefs = await SharedPreferences.getInstance();
+    prefs.setBool('is_cover_migration_done', true);
   }
 }

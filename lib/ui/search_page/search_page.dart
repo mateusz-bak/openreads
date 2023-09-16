@@ -74,6 +74,7 @@ class _SearchPageState extends State<SearchPage> {
                               builder: (context) => BookScreen(
                                 id: snapshot.data![index].id!,
                                 heroTag: heroTag,
+                                book: snapshot.data![index],
                               ),
                             ),
                           );

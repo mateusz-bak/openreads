@@ -1,37 +1,47 @@
 import 'dart:io';
 
-import 'package:flutter_blurhash/flutter_blurhash.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:image_cropper/image_cropper.dart';
 import 'package:openreads/core/themes/app_theme.dart';
+import 'package:openreads/model/book.dart';
+import 'package:blurhash/blurhash.dart';
 
 class CoverView extends StatefulWidget {
   const CoverView({
     Key? key,
     this.croppedPhotoPreview,
-    this.photoBytes,
     this.heroTag,
     this.onPressed,
-    this.blurHash,
+    this.book,
     this.deleteCover,
     this.constrainHeight = true,
   }) : super(key: key);
 
   final CroppedFile? croppedPhotoPreview;
-  final Uint8List? photoBytes;
   final Function()? onPressed;
   final String? heroTag;
-  final String? blurHash;
   final bool constrainHeight;
   final Function()? deleteCover;
+  final Book? book;
 
   @override
   State<CoverView> createState() => _CoverViewState();
 }
 
 class _CoverViewState extends State<CoverView> {
+  File? coverFile;
+  Future<Uint8List?> _decodeBlurHash() async {
+    return BlurHash.decode(widget.book!.blurHash!, 32, 32);
+  }
+
+  @override
+  void initState() {
+    coverFile = widget.book!.getCoverFile();
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return InkWell(
@@ -41,19 +51,43 @@ class _CoverViewState extends State<CoverView> {
           SizedBox(
             width: MediaQuery.of(context).size.width,
             height: MediaQuery.of(context).size.height / 2.5,
-            child: (widget.blurHash == null)
-                ? const SizedBox()
-                : Stack(
+            child: (widget.book?.blurHash != null)
+                ? Stack(
                     children: [
-                      BlurHash(hash: widget.blurHash!),
-                      Container(
-                        color: Theme.of(context)
-                            .colorScheme
-                            .surface
-                            .withOpacity(0.3),
-                      )
+                      FutureBuilder<Uint8List?>(
+                          future: _decodeBlurHash(),
+                          builder: (context, snapshot) {
+                            if (snapshot.hasData) {
+                              return Image.memory(
+                                snapshot.data!,
+                                fit: BoxFit.cover,
+                                width: MediaQuery.of(context).size.width,
+                                height:
+                                    MediaQuery.of(context).size.height / 2.5,
+                                frameBuilder: (
+                                  BuildContext context,
+                                  Widget child,
+                                  int? frame,
+                                  bool wasSynchronouslyLoaded,
+                                ) {
+                                  if (wasSynchronouslyLoaded) {
+                                    return child;
+                                  }
+                                  return AnimatedOpacity(
+                                    opacity: frame == null ? 0 : 0.7,
+                                    duration: const Duration(milliseconds: 400),
+                                    curve: Curves.easeIn,
+                                    child: child,
+                                  );
+                                },
+                              );
+                            } else {
+                              return const SizedBox();
+                            }
+                          }),
                     ],
-                  ),
+                  )
+                : const SizedBox(),
           ),
           Padding(
             padding: const EdgeInsets.all(10),
@@ -74,12 +108,12 @@ class _CoverViewState extends State<CoverView> {
                               File(widget.croppedPhotoPreview!.path),
                               fit: BoxFit.fill,
                             )
-                          : (widget.photoBytes != null)
+                          : widget.book != null && coverFile != null
                               ? Hero(
                                   tag: widget.heroTag ?? "",
-                                  child: Image.memory(
-                                    widget.photoBytes!,
-                                    fit: BoxFit.fill,
+                                  child: Image.file(
+                                    coverFile!,
+                                    fit: BoxFit.fitWidth,
                                   ),
                                 )
                               : const SizedBox(),

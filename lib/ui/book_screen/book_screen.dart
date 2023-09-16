@@ -13,6 +13,7 @@ class BookScreen extends StatelessWidget {
     Key? key,
     required this.id,
     required this.heroTag,
+    required this.book,
   }) : super(key: key);
 
   final int id;
@@ -369,149 +370,129 @@ class BookScreen extends StatelessWidget {
         ],
       ),
       body: SingleChildScrollView(
-        child: StreamBuilder<Book?>(
-          stream: bookCubit.book,
-          builder: (context, AsyncSnapshot<Book?> snapshot) {
-            if (snapshot.hasData && snapshot.data != null) {
-              book = snapshot.data!;
-
-              return Column(
-                children: [
-                  (snapshot.data!.cover == null)
-                      ? const SizedBox()
-                      : Center(
-                          child: CoverView(
-                            onPressed: null,
-                            heroTag: heroTag,
-                            photoBytes: snapshot.data!.cover,
-                            blurHash: snapshot.data!.blurHash,
-                          ),
-                        ),
-                  Padding(
-                    padding: const EdgeInsets.all(5),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        BookTitleDetail(
-                          title: snapshot.data!.title.toString(),
-                          subtitle: snapshot.data!.subtitle,
-                          author: snapshot.data!.author.toString(),
-                          publicationYear:
-                              (snapshot.data!.publicationYear ?? "").toString(),
-                          tags: snapshot.data!.tags?.split('|||||'),
-                          bookType: snapshot.data!.bookType,
-                        ),
-                        const SizedBox(height: 5),
-                        BookStatusDetail(
-                          statusIcon: _decideStatusIcon(snapshot.data!.status),
-                          statusText: _decideStatusText(
-                            snapshot.data!.status,
-                            context,
-                          ),
-                          rating: snapshot.data!.rating,
-                          startDate: _generateDate(snapshot.data!.startDate),
-                          finishDate: _generateDate(snapshot.data!.finishDate),
-                          onLikeTap: _onLikeTap,
-                          isLiked: snapshot.data!.favourite,
-                          showChangeStatus: (snapshot.data!.status == 1 ||
-                              snapshot.data!.status == 2 ||
-                              snapshot.data!.status == 3),
-                          changeStatusText: _decideChangeStatusText(
-                            snapshot.data!.status,
-                            context,
-                          ),
-                          changeStatusAction: () {
-                            _changeStatusAction(
-                              context,
-                              snapshot.data!.status,
-                            );
-                          },
-                          showRatingAndLike: snapshot.data!.status == 0,
-                        ),
-                        SizedBox(
-                          height: (snapshot.data!.finishDate != null &&
-                                  snapshot.data!.startDate != null)
-                              ? 5
-                              : 0,
-                        ),
-                        (snapshot.data!.finishDate != null &&
-                                snapshot.data!.startDate != null)
-                            ? BookDetail(
-                                title: LocaleKeys.reading_time.tr(),
-                                text: _generateReadingTime(
-                                  finishDate: snapshot.data!.finishDate!,
-                                  startDate: snapshot.data!.startDate!,
-                                  context: context,
-                                ),
-                              )
-                            : const SizedBox(),
-                        SizedBox(
-                          height: (snapshot.data!.pages != null) ? 5 : 0,
-                        ),
-                        (snapshot.data!.pages != null)
-                            ? BookDetail(
-                                title: LocaleKeys.pages_uppercase.tr(),
-                                text: (snapshot.data!.pages ?? "").toString(),
-                              )
-                            : const SizedBox(),
-                        SizedBox(
-                          height: (snapshot.data!.description != null &&
-                                  snapshot.data!.description!.isNotEmpty)
-                              ? 5
-                              : 0,
-                        ),
-                        (snapshot.data!.description != null &&
-                                snapshot.data!.description!.isNotEmpty)
-                            ? BookDetail(
-                                title: LocaleKeys.description.tr(),
-                                text: snapshot.data!.description!,
-                              )
-                            : const SizedBox(),
-                        SizedBox(
-                          height: (snapshot.data!.isbn != null) ? 5 : 0,
-                        ),
-                        (snapshot.data!.isbn != null)
-                            ? BookDetail(
-                                title: LocaleKeys.isbn.tr(),
-                                text: (snapshot.data!.isbn ?? "").toString(),
-                              )
-                            : const SizedBox(),
-                        SizedBox(
-                          height: (snapshot.data!.olid != null) ? 5 : 0,
-                        ),
-                        (snapshot.data!.olid != null)
-                            ? BookDetail(
-                                title: LocaleKeys.open_library_ID.tr(),
-                                text: (snapshot.data!.olid ?? "").toString(),
-                              )
-                            : const SizedBox(),
-                        SizedBox(
-                          height: (snapshot.data!.myReview != null &&
-                                  snapshot.data!.myReview!.isNotEmpty)
-                              ? 5
-                              : 0,
-                        ),
-                        (snapshot.data!.myReview != null &&
-                                snapshot.data!.myReview!.isNotEmpty)
-                            ? BookDetail(
-                                title: LocaleKeys.my_review.tr(),
-                                text: snapshot.data!.myReview!,
-                              )
-                            : const SizedBox(),
-                        const SizedBox(height: 50.0),
-                      ],
+        child: Column(
+          children: [
+            (book != null)
+                ? Center(
+                    child: CoverView(
+                      onPressed: null,
+                      heroTag: heroTag,
+                      book: book!,
                     ),
+                  )
+                : const SizedBox(),
+            Padding(
+              padding: const EdgeInsets.all(5),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  BookTitleDetail(
+                    title: book!.title.toString(),
+                    subtitle: book!.subtitle,
+                    author: book!.author.toString(),
+                    publicationYear: (book!.publicationYear ?? "").toString(),
+                    tags: book!.tags?.split('|||||'),
+                    bookType: book!.bookType,
                   ),
+                  const SizedBox(height: 5),
+                  BookStatusDetail(
+                    statusIcon: _decideStatusIcon(book!.status),
+                    statusText: _decideStatusText(
+                      book!.status,
+                      context,
+                    ),
+                    rating: book!.rating,
+                    startDate: _generateDate(book!.startDate),
+                    finishDate: _generateDate(book!.finishDate),
+                    onLikeTap: _onLikeTap,
+                    isLiked: book!.favourite,
+                    showChangeStatus: (book!.status == 1 ||
+                        book!.status == 2 ||
+                        book!.status == 3),
+                    changeStatusText: _decideChangeStatusText(
+                      book!.status,
+                      context,
+                    ),
+                    changeStatusAction: () {
+                      _changeStatusAction(
+                        context,
+                        book!.status,
+                      );
+                    },
+                    showRatingAndLike: book!.status == 0,
+                  ),
+                  SizedBox(
+                    height:
+                        (book!.finishDate != null && book!.startDate != null)
+                            ? 5
+                            : 0,
+                  ),
+                  (book!.finishDate != null && book!.startDate != null)
+                      ? BookDetail(
+                          title: LocaleKeys.reading_time.tr(),
+                          text: _generateReadingTime(
+                            finishDate: book!.finishDate!,
+                            startDate: book!.startDate!,
+                            context: context,
+                          ),
+                        )
+                      : const SizedBox(),
+                  SizedBox(
+                    height: (book!.pages != null) ? 5 : 0,
+                  ),
+                  (book!.pages != null)
+                      ? BookDetail(
+                          title: LocaleKeys.pages_uppercase.tr(),
+                          text: (book!.pages ?? "").toString(),
+                        )
+                      : const SizedBox(),
+                  SizedBox(
+                    height: (book!.description != null &&
+                            book!.description!.isNotEmpty)
+                        ? 5
+                        : 0,
+                  ),
+                  (book!.description != null && book!.description!.isNotEmpty)
+                      ? BookDetail(
+                          title: LocaleKeys.description.tr(),
+                          text: book!.description!,
+                        )
+                      : const SizedBox(),
+                  SizedBox(
+                    height: (book!.isbn != null) ? 5 : 0,
+                  ),
+                  (book!.isbn != null)
+                      ? BookDetail(
+                          title: LocaleKeys.isbn.tr(),
+                          text: (book!.isbn ?? "").toString(),
+                        )
+                      : const SizedBox(),
+                  SizedBox(
+                    height: (book!.olid != null) ? 5 : 0,
+                  ),
+                  (book!.olid != null)
+                      ? BookDetail(
+                          title: LocaleKeys.open_library_ID.tr(),
+                          text: (book!.olid ?? "").toString(),
+                        )
+                      : const SizedBox(),
+                  SizedBox(
+                    height:
+                        (book!.myReview != null && book!.myReview!.isNotEmpty)
+                            ? 5
+                            : 0,
+                  ),
+                  (book!.myReview != null && book!.myReview!.isNotEmpty)
+                      ? BookDetail(
+                          title: LocaleKeys.my_review.tr(),
+                          text: book!.myReview!,
+                        )
+                      : const SizedBox(),
+                  const SizedBox(height: 50.0),
                 ],
-              );
-            } else if (snapshot.hasError) {
-              return Text(
-                snapshot.error.toString(),
-              );
-            } else {
-              return const SizedBox();
-            }
-          },
+              ),
+            ),
+          ],
         ),
       ),
     );
