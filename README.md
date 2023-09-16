@@ -99,6 +99,8 @@ Submit an issue here: [Openreads issues](https://github.com/mateusz-bak/openread
 
 2. Build and install the app on your device
 
+WARNING: If you already have the openreads app installed on your device this step will uninstall it before installing the debug version, this deletes all app data, to keep your books please make a backup first.
+
    ```sh
    flutter run
    ```
