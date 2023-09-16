@@ -9,14 +9,12 @@ class BooksList extends StatefulWidget {
     Key? key,
     required this.books,
     required this.listNumber,
-    this.multiSelectMode = false,
     this.selectedBookIds,
     this.onBookSelected,
   }) : super(key: key);
 
   final List<Book> books;
   final int listNumber;
-  final bool multiSelectMode;
   final Set<int>? selectedBookIds;
   final Function(int id)? onBookSelected;
 
@@ -29,11 +27,12 @@ class _BooksListState extends State<BooksList>
   @override
   Widget build(BuildContext context) {
     super.build(context);
+    var multiSelectMode = widget.selectedBookIds?.isNotEmpty ?? false;
     return ListView.builder(
       itemCount: widget.books.length,
       itemBuilder: (context, index) {
         final heroTag = 'tag_${widget.listNumber}_${widget.books[index].id}';
-        Color? color = widget.multiSelectMode &&
+        Color? color = multiSelectMode &&
                 widget.selectedBookIds!.contains(widget.books[index].id)
             ? Theme.of(context).colorScheme.secondaryContainer
             : null;
@@ -44,7 +43,7 @@ class _BooksListState extends State<BooksList>
           addBottomPadding: (widget.books.length == index + 1),
           onPressed: () {
             if (widget.books[index].id == null) return;
-            if (widget.multiSelectMode && widget.onBookSelected != null) {
+            if (multiSelectMode && widget.onBookSelected != null) {
               widget.onBookSelected!(widget.books[index].id!);
               return;
             }
@@ -60,6 +59,13 @@ class _BooksListState extends State<BooksList>
                 ),
               ),
             );
+          },
+          onLongPressed: (){
+            if (widget.books[index].id == null) return;
+            if (widget.onBookSelected != null) {
+              widget.onBookSelected!(widget.books[index].id!);
+              return;
+            }
           },
         );
       },

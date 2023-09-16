@@ -18,6 +18,7 @@ class BookCard extends StatelessWidget {
     required this.onPressed,
     required this.heroTag,
     required this.addBottomPadding,
+    this.onLongPressed,
     this.cardColor,
   }) : super(key: key);
 
@@ -25,6 +26,7 @@ class BookCard extends StatelessWidget {
   final String heroTag;
   final bool addBottomPadding;
   final Function() onPressed;
+  final Function()? onLongPressed;
   final Color? cardColor;
 
   Widget _buildSortAttribute() {
@@ -169,6 +171,7 @@ class BookCard extends StatelessWidget {
           borderRadius: BorderRadius.circular(cornerRadius),
           child: InkWell(
             onTap: onPressed,
+            onLongPress: onLongPressed,
             child: Padding(
               padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 15),
               child: Row(

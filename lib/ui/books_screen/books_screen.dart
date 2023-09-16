@@ -29,7 +29,6 @@ class BooksScreen extends StatefulWidget {
 class _BooksScreenState extends State<BooksScreen>
     with AutomaticKeepAliveClientMixin {
   late List<String> moreButtonOptions;
-  bool multiSelect = false;
   Set<int> selectedBookIds = {};
 
   _onItemSelected(int id) {
@@ -437,7 +436,6 @@ class _BooksScreenState extends State<BooksScreen>
       LocaleKeys.sort_filter.tr(),
       LocaleKeys.statistics.tr(),
       LocaleKeys.settings.tr(),
-      LocaleKeys.multi_select.tr(),
     ];
 
     return BlocBuilder<ThemeBloc, ThemeState>(
@@ -447,16 +445,16 @@ class _BooksScreenState extends State<BooksScreen>
 
           return WillPopScope(
             child: Scaffold(
-              appBar: multiSelect
+              appBar: selectedBookIds.isNotEmpty
                   ? _buildMultiSelectAppBar(context)
                   : _buildAppBar(context),
-              floatingActionButton: multiSelect
+              floatingActionButton: selectedBookIds.isNotEmpty
                   ? _buildMultiSelectFAB(state)
                   : _buildFAB(context),
               body: _buildScaffoldBody(),
             ),
             onWillPop: () {
-              if (multiSelect) {
+              if (selectedBookIds.isNotEmpty) {
                 _resetMultiselectMode();
                 return Future.value(false);
               }
@@ -490,7 +488,6 @@ class _BooksScreenState extends State<BooksScreen>
 
   void _resetMultiselectMode() {
     setState(() {
-      multiSelect = false;
       selectedBookIds = {};
     });
   }
@@ -691,10 +688,6 @@ class _BooksScreenState extends State<BooksScreen>
                     goToStatisticsScreen();
                   } else if (choice == moreButtonOptions[2]) {
                     goToSettingsScreen();
-                  } else if (choice == moreButtonOptions[3]) {
-                    setState(() {
-                      multiSelect = !multiSelect;
-                    });
                   }
                 },
               );
@@ -738,7 +731,6 @@ class _BooksScreenState extends State<BooksScreen>
                           list: snapshot.data!,
                         ),
                         listNumber: 2,
-                        multiSelectMode: multiSelect,
                         selectedBookIds: selectedBookIds,
                         onBookSelected: _onItemSelected,
                       );
@@ -749,7 +741,6 @@ class _BooksScreenState extends State<BooksScreen>
                           list: snapshot.data!,
                         ),
                         listNumber: 2,
-                        multiSelectMode: multiSelect,
                         selectedBookIds: selectedBookIds,
                         onBookSelected: _onItemSelected,
                       );
@@ -805,7 +796,6 @@ class _BooksScreenState extends State<BooksScreen>
                           list: snapshot.data!,
                         ),
                         listNumber: 1,
-                        multiSelectMode: multiSelect,
                         selectedBookIds: selectedBookIds,
                         onBookSelected: _onItemSelected,
                       );
@@ -816,7 +806,6 @@ class _BooksScreenState extends State<BooksScreen>
                           list: snapshot.data!,
                         ),
                         listNumber: 1,
-                        multiSelectMode: multiSelect,
                         selectedBookIds: selectedBookIds,
                         onBookSelected: _onItemSelected,
                       );
@@ -872,7 +861,6 @@ class _BooksScreenState extends State<BooksScreen>
                           list: snapshot.data!,
                         ),
                         listNumber: 0,
-                        multiSelectMode: multiSelect,
                         selectedBookIds: selectedBookIds,
                         onBookSelected: _onItemSelected,
                       );
@@ -883,7 +871,6 @@ class _BooksScreenState extends State<BooksScreen>
                           list: snapshot.data!,
                         ),
                         listNumber: 0,
-                        multiSelectMode: multiSelect,
                         selectedBookIds: selectedBookIds,
                         onBookSelected: _onItemSelected,
                       );

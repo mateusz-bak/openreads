@@ -9,17 +9,20 @@ class BookGridCard extends StatelessWidget {
     required this.onPressed,
     required this.heroTag,
     required this.addBottomPadding,
+    this.onLongPressed,
   }) : super(key: key);
 
   final Book book;
   final String heroTag;
   final bool addBottomPadding;
   final Function() onPressed;
+  final Function()? onLongPressed;
 
   @override
   Widget build(BuildContext context) {
     return InkWell(
       onTap: onPressed,
+      onLongPress: onLongPressed,
       child: book.cover != null
           ? ClipRRect(
               borderRadius: BorderRadius.circular(3),

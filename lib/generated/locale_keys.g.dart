@@ -230,5 +230,4 @@ abstract class LocaleKeys {
   static const selected = 'selected';
   static const change_book_type = 'change_book_type';
   static const update_successful_message = 'update_successful_message';
-  static const multi_select = 'multi_select';
 }

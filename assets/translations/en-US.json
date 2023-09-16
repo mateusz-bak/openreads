@@ -223,6 +223,5 @@
     "dark_mode_amoled": "AMOLED dark mode",
     "selected": "Selected",
     "change_book_type": "Change book type",
-    "update_successful_message": "Updated successfully!",
-    "multi_select": "Multi select"
+    "update_successful_message": "Updated successfully!"
 }
