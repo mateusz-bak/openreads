@@ -180,6 +180,7 @@ class BookCard extends StatelessWidget {
                 children: [
                   SizedBox(
                     width: (coverFile != null) ? 70 : 0,
+                    height: 70 * 1.5,
                     child: (coverFile != null)
                         ? ClipRRect(
                             borderRadius: BorderRadius.circular(4),
@@ -187,7 +188,25 @@ class BookCard extends StatelessWidget {
                               tag: heroTag,
                               child: Image.file(
                                 coverFile,
-                                fit: BoxFit.fitWidth,
+                                width: 70,
+                                height: 70 * 1.5,
+                                fit: BoxFit.cover,
+                                frameBuilder: (
+                                  BuildContext context,
+                                  Widget child,
+                                  int? frame,
+                                  bool wasSynchronouslyLoaded,
+                                ) {
+                                  if (wasSynchronouslyLoaded) {
+                                    return child;
+                                  }
+                                  return AnimatedOpacity(
+                                    opacity: frame == null ? 0 : 1,
+                                    duration: const Duration(milliseconds: 250),
+                                    curve: Curves.easeOut,
+                                    child: child,
+                                  );
+                                },
                               ),
                             ),
                           )
