@@ -3,6 +3,8 @@ import 'package:openreads/model/book.dart';
 import 'package:openreads/resources/repository.dart';
 import 'package:rxdart/rxdart.dart';
 
+import '../../core/constants.dart/enums.dart';
+
 class BookCubit extends Cubit {
   final Repository repository = Repository();
 
@@ -112,6 +114,11 @@ class BookCubit extends Cubit {
     repository.updateBook(book);
     getBook(book.id!);
     getAllBooksByStatus();
+    getAllBooks();
+  }
+
+  updateBookType(Set<int> ids, BookType bookType) async {
+    repository.updateBookType(ids, bookType);
     getAllBooks();
   }
 

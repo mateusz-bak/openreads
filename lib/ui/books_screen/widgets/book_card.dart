@@ -17,12 +17,16 @@ class BookCard extends StatelessWidget {
     required this.onPressed,
     required this.heroTag,
     required this.addBottomPadding,
+    this.onLongPressed,
+    this.cardColor,
   }) : super(key: key);
 
   final Book book;
   final String heroTag;
   final bool addBottomPadding;
   final Function() onPressed;
+  final Function()? onLongPressed;
+  final Color? cardColor;
 
   Widget _buildSortAttribute() {
     return BlocBuilder<SortBloc, SortState>(
@@ -156,6 +160,7 @@ class BookCard extends StatelessWidget {
     return Padding(
       padding: EdgeInsets.fromLTRB(10, 0, 10, addBottomPadding ? 90 : 5),
       child: Card(
+        color: cardColor,
         shadowColor: Colors.transparent,
         shape: RoundedRectangleBorder(
           side: BorderSide(color: dividerColor, width: 1),
@@ -165,6 +170,7 @@ class BookCard extends StatelessWidget {
           borderRadius: BorderRadius.circular(cornerRadius),
           child: InkWell(
             onTap: onPressed,
+            onLongPress: onLongPressed,
             child: Padding(
               padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 15),
               child: Row(
