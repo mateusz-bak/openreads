@@ -46,7 +46,7 @@ dependencies:
   barcode_scan2: ^4.2.1
   intro_slider: ^4.2.0
   flutter_email_sender: ^6.0.0
-  permission_handler: ^10.2.0
+  permission_handler: ^11.0.0
   filesystem_picker: ^3.1.0
   archive: ^3.3.5
   share_plus: ^7.0.2
