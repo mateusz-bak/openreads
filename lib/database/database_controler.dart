@@ -1,4 +1,3 @@
-import 'dart:io';
 
 import 'package:openreads/database/database_provider.dart';
 import 'package:openreads/model/book.dart';
