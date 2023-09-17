@@ -120,7 +120,6 @@ class _SearchOLEditionsScreenState extends State<SearchOLEditionsScreen> {
       MaterialPageRoute(
         builder: (_) => AddBookScreen(
           fromOpenLibrary: true,
-          cover: cover,
           book: book,
           fromOpenLibraryEdition: true,
           work: work,
@@ -192,10 +191,10 @@ class _SearchOLEditionsScreenState extends State<SearchOLEditionsScreen> {
                           itemBuilder: (context, item, index) =>
                               BookCardOLEdition(
                             title: item.title!,
-                            cover: item.covers![0],
+                            cover: item.covers![0], // TODO
                             onPressed: () => _saveEdition(
                               result: item,
-                              cover: item.covers![0],
+                              cover: item.covers![0], // TODO
                               work: item.works != null && item.works!.isNotEmpty
                                   ? item.works![0].key
                                   : null,

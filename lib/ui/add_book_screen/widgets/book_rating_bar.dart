@@ -20,31 +20,35 @@ class BookRatingBar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return AnimatedContainer(
-      duration: animDuration,
-      height: (status == 0) ? defaultHeight : 0,
-      child: Container(
-        width: double.infinity,
-        clipBehavior: Clip.hardEdge,
-        decoration: BoxDecoration(
-          color: Theme.of(context).colorScheme.surfaceVariant,
-          borderRadius: BorderRadius.circular(cornerRadius),
-          border: Border.all(color: dividerColor),
-        ),
-        child: Center(
-          child: RatingBar.builder(
-            initialRating: rating,
-            allowHalfRating: true,
-            glow: false,
-            glowRadius: 1,
-            itemSize: 42,
-            itemPadding: const EdgeInsets.all(5),
-            wrapAlignment: WrapAlignment.center,
-            itemBuilder: (_, __) => Icon(
-              Icons.star_rounded,
-              color: ratingColor,
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 10),
+      child: AnimatedContainer(
+        duration: animDuration,
+        height: (status == 0) ? defaultHeight : 0,
+        child: Container(
+          width: double.infinity,
+          clipBehavior: Clip.hardEdge,
+          decoration: BoxDecoration(
+            color:
+                Theme.of(context).colorScheme.surfaceVariant.withOpacity(0.5),
+            borderRadius: BorderRadius.circular(cornerRadius),
+            border: Border.all(color: dividerColor),
+          ),
+          child: Center(
+            child: RatingBar.builder(
+              initialRating: rating,
+              allowHalfRating: true,
+              glow: false,
+              glowRadius: 1,
+              itemSize: 42,
+              itemPadding: const EdgeInsets.all(5),
+              wrapAlignment: WrapAlignment.center,
+              itemBuilder: (_, __) => Icon(
+                Icons.star_rounded,
+                color: ratingColor,
+              ),
+              onRatingUpdate: (rating) => onRatingUpdate(rating),
             ),
-            onRatingUpdate: (rating) => onRatingUpdate(rating),
           ),
         ),
       ),

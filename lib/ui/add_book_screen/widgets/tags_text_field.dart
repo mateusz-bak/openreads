@@ -65,7 +65,7 @@ class _TagsFieldState extends State<TagsField> {
           ),
         ),
         checkmarkColor:
-        selected ? Theme.of(context).colorScheme.onSecondary : null,
+            selected ? Theme.of(context).colorScheme.onSecondary : null,
         selected: selected,
         selectedColor: Theme.of(context).colorScheme.secondary,
         onSelected: (newState) {
@@ -112,100 +112,103 @@ class _TagsFieldState extends State<TagsField> {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 8),
-      decoration: BoxDecoration(
-        color: Theme.of(context).colorScheme.surfaceVariant,
-        borderRadius: BorderRadius.circular(cornerRadius),
-        border: Border.all(color: dividerColor),
-      ),
-      child: Column(
-        children: [
-          Scrollbar(
-              child: TypeAheadField(
-                itemBuilder: (context, suggestion) {
-                  return ListTile(
-                    title: Text(suggestion),
-                  );
-                },
-                suggestionsCallback: (pattern) {
-                  if (widget.allTags == null) {
-                    return List<String>.empty();
-                  }
-                  return  widget.allTags!.where((String option) {
-                    return option.toLowerCase().contains(pattern.toLowerCase());
-                  }).toList();
-                },
-                onSuggestionSelected: (suggestion) {
-                  widget.controller?.text = suggestion;
-                  if (widget.onSubmitted != null) {
-                    widget.onSubmitted!(suggestion);
-                  }
-                },
-                hideOnLoading: true,
-                hideOnEmpty: true,
-                suggestionsBoxDecoration: SuggestionsBoxDecoration(
-                  borderRadius: BorderRadius.circular(4.0),
-                  elevation: 8.0,
-                ),
-                textFieldConfiguration: TextFieldConfiguration(
-                  autofocus: widget.autofocus,
-                  keyboardType: widget.keyboardType,
-                  inputFormatters: widget.inputFormatters,
-                  textCapitalization: widget.textCapitalization,
-                  controller: widget.controller,
-                  focusNode: focusNode,
-                  minLines: 1,
-                  maxLines: widget.maxLines,
-                  maxLength: widget.maxLength,
-                  textInputAction: widget.textInputAction,
-                  style: const TextStyle(fontSize: 14),
-                  onSubmitted: widget.onSubmitted,
-                  onEditingComplete: widget.onEditingComplete,
-                  decoration: InputDecoration(
-                    labelText: widget.hint,
-                    icon: (widget.icon != null)
-                        ? Icon(
-                      widget.icon,
-                      color: Theme.of(context).colorScheme.primary,
-                    )
-                        : null,
-                    border: InputBorder.none,
-                    counterText: widget.hideCounter ? "" : null,
-                    suffixIcon: showClearButton
-                        ? IconButton(
-                      onPressed: () {
-                        if (widget.controller == null) return;
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 10),
+      child: Container(
+        padding: const EdgeInsets.symmetric(horizontal: 8),
+        decoration: BoxDecoration(
+          color: Theme.of(context).colorScheme.surfaceVariant.withOpacity(0.5),
+          borderRadius: BorderRadius.circular(cornerRadius),
+          border: Border.all(color: dividerColor),
+        ),
+        child: Column(
+          children: [
+            Scrollbar(
+                child: TypeAheadField(
+              itemBuilder: (context, suggestion) {
+                return ListTile(
+                  title: Text(suggestion),
+                );
+              },
+              suggestionsCallback: (pattern) {
+                if (widget.allTags == null) {
+                  return List<String>.empty();
+                }
+                return widget.allTags!.where((String option) {
+                  return option.toLowerCase().contains(pattern.toLowerCase());
+                }).toList();
+              },
+              onSuggestionSelected: (suggestion) {
+                widget.controller?.text = suggestion;
+                if (widget.onSubmitted != null) {
+                  widget.onSubmitted!(suggestion);
+                }
+              },
+              hideOnLoading: true,
+              hideOnEmpty: true,
+              suggestionsBoxDecoration: SuggestionsBoxDecoration(
+                borderRadius: BorderRadius.circular(4.0),
+                elevation: 8.0,
+              ),
+              textFieldConfiguration: TextFieldConfiguration(
+                autofocus: widget.autofocus,
+                keyboardType: widget.keyboardType,
+                inputFormatters: widget.inputFormatters,
+                textCapitalization: widget.textCapitalization,
+                controller: widget.controller,
+                focusNode: focusNode,
+                minLines: 1,
+                maxLines: widget.maxLines,
+                maxLength: widget.maxLength,
+                textInputAction: widget.textInputAction,
+                style: const TextStyle(fontSize: 14),
+                onSubmitted: widget.onSubmitted,
+                onEditingComplete: widget.onEditingComplete,
+                decoration: InputDecoration(
+                  labelText: widget.hint,
+                  labelStyle: const TextStyle(fontSize: 14),
+                  icon: (widget.icon != null)
+                      ? Icon(
+                          widget.icon,
+                          color: Theme.of(context).colorScheme.primary,
+                        )
+                      : null,
+                  border: InputBorder.none,
+                  counterText: widget.hideCounter ? "" : null,
+                  suffixIcon: showClearButton
+                      ? IconButton(
+                          onPressed: () {
+                            if (widget.controller == null) return;
 
-                        widget.controller!.clear();
-                        setState(() {
-                          showClearButton = false;
-                        });
-                        focusNode.requestFocus();
-                      },
-                      icon: const Icon(Icons.clear),
-                    )
-                        : null,
-                  ),
-                ),
-              )
-          ),
-          Row(
-            children: [
-              Expanded(
-                child: Padding(
-                  padding: const EdgeInsets.symmetric(
-                    vertical: 5,
-                    horizontal: 2.5,
-                  ),
-                  child: Wrap(
-                    children: _generateTagChips(),
-                  ),
+                            widget.controller!.clear();
+                            setState(() {
+                              showClearButton = false;
+                            });
+                            focusNode.requestFocus();
+                          },
+                          icon: const Icon(Icons.clear),
+                        )
+                      : null,
                 ),
               ),
-            ],
-          )
-        ],
+            )),
+            Row(
+              children: [
+                Expanded(
+                  child: Padding(
+                    padding: const EdgeInsets.symmetric(
+                      vertical: 5,
+                      horizontal: 2.5,
+                    ),
+                    child: Wrap(
+                      children: _generateTagChips(),
+                    ),
+                  ),
+                ),
+              ],
+            )
+          ],
+        ),
       ),
     );
   }

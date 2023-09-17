@@ -31,70 +31,72 @@ class BookTypeDropdown extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      decoration: BoxDecoration(
-        border: Border.all(
-          color: dividerColor,
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 10),
+      child: Container(
+        decoration: BoxDecoration(
+          border: Border.all(
+            color: dividerColor,
+          ),
+          color: Theme.of(context).colorScheme.surfaceVariant.withOpacity(0.5),
+          borderRadius: BorderRadius.only(
+            topLeft: Radius.circular(cornerRadius),
+            bottomLeft: Radius.circular(cornerRadius),
+            topRight: Radius.circular(cornerRadius),
+            bottomRight: Radius.circular(cornerRadius),
+          ),
         ),
-        color: Theme.of(context).colorScheme.surfaceVariant,
-        borderRadius: BorderRadius.only(
-          topLeft: Radius.circular(cornerRadius),
-          bottomLeft: Radius.circular(cornerRadius),
-          topRight: Radius.circular(cornerRadius),
-          bottomRight: Radius.circular(cornerRadius),
-        ),
-      ),
-      child: Row(
-        children: [
-          Container(
-            height: 60,
-            padding: EdgeInsets.fromLTRB(
-              10,
-              0,
-              bookType == BookType.audiobook
-                  ? 2
-                  : bookType == BookType.ebook
-                      ? 4
-                      : 0,
-              0,
-            ),
-            child: Center(
-              child: FaIcon(
+        child: Row(
+          children: [
+            Container(
+              height: 60,
+              padding: EdgeInsets.fromLTRB(
+                10,
+                0,
                 bookType == BookType.audiobook
-                    ? FontAwesomeIcons.headphones
+                    ? 2
                     : bookType == BookType.ebook
-                        ? FontAwesomeIcons.tablet
-                        : FontAwesomeIcons.bookOpen,
-                size: 20,
-                color: Theme.of(context).colorScheme.primary,
+                        ? 4
+                        : 0,
+                0,
               ),
-            ),
-          ),
-          Expanded(
-            child: DropdownButtonHideUnderline(
-              child: DropdownButton2(
-                isExpanded: true,
-                buttonStyleData: const ButtonStyleData(
-                  height: 60,
-                  decoration: BoxDecoration(
-                    color: Colors.transparent,
-                  ),
+              child: Center(
+                child: FaIcon(
+                  bookType == BookType.audiobook
+                      ? FontAwesomeIcons.headphones
+                      : bookType == BookType.ebook
+                          ? FontAwesomeIcons.tablet
+                          : FontAwesomeIcons.bookOpen,
+                  size: 20,
+                  color: Theme.of(context).colorScheme.primary,
                 ),
-                items: bookTypes
-                    .map((item) => DropdownMenuItem<String>(
-                          value: item,
-                          child: Text(
-                            item,
-                            overflow: TextOverflow.ellipsis,
-                          ),
-                        ))
-                    .toList(),
-                value: _getBookTypeDropdownValue(),
-                onChanged: (value) => changeBookType(value),
               ),
             ),
-          ),
-        ],
+            Expanded(
+              child: DropdownButtonHideUnderline(
+                child: DropdownButton2(
+                  isExpanded: true,
+                  buttonStyleData: const ButtonStyleData(
+                    height: 60,
+                    decoration: BoxDecoration(
+                      color: Colors.transparent,
+                    ),
+                  ),
+                  items: bookTypes
+                      .map((item) => DropdownMenuItem<String>(
+                            value: item,
+                            child: Text(item,
+                                overflow: TextOverflow.ellipsis,
+                                style: const TextStyle(fontSize: 14)),
+                          ))
+                      .toList(),
+                  value: _getBookTypeDropdownValue(),
+                  onChanged: (value) => changeBookType(value),
+                ),
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }

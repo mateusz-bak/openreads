@@ -40,7 +40,6 @@ class BookScreen extends StatelessWidget {
       olid: book!.olid,
       tags: book!.tags,
       myReview: book!.myReview,
-      cover: book!.cover,
       blurHash: book!.blurHash,
       bookType: book!.bookType,
     ));
@@ -115,7 +114,6 @@ class BookScreen extends StatelessWidget {
       olid: book!.olid,
       tags: book!.tags,
       myReview: book!.myReview,
-      cover: book!.cover,
       blurHash: book!.blurHash,
       bookType: book!.bookType,
     ));
@@ -239,7 +237,6 @@ class BookScreen extends StatelessWidget {
         olid: book!.olid,
         tags: book!.tags,
         myReview: book!.myReview,
-        cover: book!.cover,
         blurHash: book!.blurHash,
         bookType: book!.bookType,
       ));
@@ -259,7 +256,6 @@ class BookScreen extends StatelessWidget {
         olid: book!.olid,
         tags: book!.tags,
         myReview: book!.myReview,
-        cover: book!.cover,
         blurHash: book!.blurHash,
         bookType: book!.bookType,
       ));
@@ -279,7 +275,6 @@ class BookScreen extends StatelessWidget {
         olid: book!.olid,
         tags: book!.tags,
         myReview: book!.myReview,
-        cover: book!.cover,
         blurHash: book!.blurHash,
         bookType: book!.bookType,
       ));

@@ -67,7 +67,7 @@ class _SearchOLScreenState extends State<SearchOLScreen>
         builder: (_) => AddBookScreen(
           fromOpenLibrary: true,
           book: book,
-          cover: cover,
+          cover: cover, // TODO
           work: olid,
         ),
       ),
@@ -272,7 +272,6 @@ class _SearchOLScreenState extends State<SearchOLScreen>
                             isbn: item.isbn,
                             olid: item.key,
                             firstPublishYear: item.firstPublishYear,
-                            cover: item.coverI,
                           ),
                           onChooseEditionPressed: () {
                             FocusManager.instance.primaryFocus?.unfocus();

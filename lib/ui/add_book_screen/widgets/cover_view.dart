@@ -16,15 +16,19 @@ class CoverView extends StatefulWidget {
     this.onPressed,
     this.book,
     this.deleteCover,
+    this.coverFile,
+    this.blurHashString,
     this.constrainHeight = true,
   }) : super(key: key);
 
   final CroppedFile? croppedPhotoPreview;
   final Function()? onPressed;
   final String? heroTag;
+  final String? blurHashString;
   final bool constrainHeight;
   final Function()? deleteCover;
   final Book? book;
+  final File? coverFile;
 
   @override
   State<CoverView> createState() => _CoverViewState();
@@ -33,12 +37,23 @@ class CoverView extends StatefulWidget {
 class _CoverViewState extends State<CoverView> {
   File? coverFile;
   Future<Uint8List?> _decodeBlurHash() async {
-    return BlurHash.decode(widget.book!.blurHash!, 32, 32);
+    if (widget.blurHashString != null) {
+      return BlurHash.decode(widget.blurHashString!, 32, 32);
+    } else if (widget.book != null) {
+      return BlurHash.decode(widget.book!.blurHash!, 32, 32);
+    } else {
+      return null;
+    }
   }
 
   @override
   void initState() {
-    coverFile = widget.book!.getCoverFile();
+    if (widget.coverFile != null) {
+      coverFile = widget.coverFile;
+    } else if (widget.book != null) {
+      coverFile = widget.book!.getCoverFile();
+    }
+
     super.initState();
   }
 
@@ -51,43 +66,40 @@ class _CoverViewState extends State<CoverView> {
           SizedBox(
             width: MediaQuery.of(context).size.width,
             height: MediaQuery.of(context).size.height / 2.5,
-            child: (widget.book?.blurHash != null)
-                ? Stack(
-                    children: [
-                      FutureBuilder<Uint8List?>(
-                          future: _decodeBlurHash(),
-                          builder: (context, snapshot) {
-                            if (snapshot.hasData) {
-                              return Image.memory(
-                                snapshot.data!,
-                                fit: BoxFit.cover,
-                                width: MediaQuery.of(context).size.width,
-                                height:
-                                    MediaQuery.of(context).size.height / 2.5,
-                                frameBuilder: (
-                                  BuildContext context,
-                                  Widget child,
-                                  int? frame,
-                                  bool wasSynchronouslyLoaded,
-                                ) {
-                                  if (wasSynchronouslyLoaded) {
-                                    return child;
-                                  }
-                                  return AnimatedOpacity(
-                                    opacity: frame == null ? 0 : 0.7,
-                                    duration: const Duration(milliseconds: 400),
-                                    curve: Curves.easeIn,
-                                    child: child,
-                                  );
-                                },
-                              );
-                            } else {
-                              return const SizedBox();
+            child: Stack(
+              children: [
+                FutureBuilder<Uint8List?>(
+                    future: _decodeBlurHash(),
+                    builder: (context, snapshot) {
+                      if (snapshot.hasData) {
+                        return Image.memory(
+                          snapshot.data!,
+                          fit: BoxFit.cover,
+                          width: MediaQuery.of(context).size.width,
+                          height: MediaQuery.of(context).size.height / 2.5,
+                          frameBuilder: (
+                            BuildContext context,
+                            Widget child,
+                            int? frame,
+                            bool wasSynchronouslyLoaded,
+                          ) {
+                            if (wasSynchronouslyLoaded) {
+                              return child;
                             }
-                          }),
-                    ],
-                  )
-                : const SizedBox(),
+                            return AnimatedOpacity(
+                              opacity: frame == null ? 0 : 0.7,
+                              duration: const Duration(milliseconds: 400),
+                              curve: Curves.easeIn,
+                              child: child,
+                            );
+                          },
+                        );
+                      } else {
+                        return const SizedBox();
+                      }
+                    }),
+              ],
+            ),
           ),
           Padding(
             padding: const EdgeInsets.all(10),
@@ -108,7 +120,7 @@ class _CoverViewState extends State<CoverView> {
                               File(widget.croppedPhotoPreview!.path),
                               fit: BoxFit.fill,
                             )
-                          : widget.book != null && coverFile != null
+                          : coverFile != null
                               ? Hero(
                                   tag: widget.heroTag ?? "",
                                   child: Image.file(

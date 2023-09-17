@@ -20,56 +20,59 @@ class BookStatusRow extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Row(
-      children: [
-        AnimatedStatusButton(
-          duration: animDuration,
-          height: defaultHeight,
-          icon: Icons.done,
-          text: LocaleKeys.book_status_finished.tr(),
-          isSelected: currentStatus == 0,
-          currentStatus: currentStatus,
-          onPressed: () {
-            onPressed(0, true);
-          },
-        ),
-        const SizedBox(width: 10),
-        AnimatedStatusButton(
-          duration: animDuration,
-          height: defaultHeight,
-          icon: Icons.autorenew,
-          text: LocaleKeys.book_status_in_progress.tr(),
-          isSelected: currentStatus == 1,
-          currentStatus: currentStatus,
-          onPressed: () {
-            onPressed(1, true);
-          },
-        ),
-        const SizedBox(width: 10),
-        AnimatedStatusButton(
-          duration: animDuration,
-          height: defaultHeight,
-          icon: Icons.timelapse,
-          text: LocaleKeys.book_status_for_later.tr(),
-          isSelected: currentStatus == 2,
-          currentStatus: currentStatus,
-          onPressed: () {
-            onPressed(2, true);
-          },
-        ),
-        const SizedBox(width: 10),
-        AnimatedStatusButton(
-          duration: animDuration,
-          height: defaultHeight,
-          icon: Icons.not_interested,
-          text: LocaleKeys.book_status_unfinished.tr(),
-          isSelected: currentStatus == 3,
-          currentStatus: currentStatus,
-          onPressed: () {
-            onPressed(3, true);
-          },
-        ),
-      ],
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 10),
+      child: Row(
+        children: [
+          AnimatedStatusButton(
+            duration: animDuration,
+            height: defaultHeight,
+            icon: Icons.done,
+            text: LocaleKeys.book_status_finished.tr(),
+            isSelected: currentStatus == 0,
+            currentStatus: currentStatus,
+            onPressed: () {
+              onPressed(0, true);
+            },
+          ),
+          const SizedBox(width: 10),
+          AnimatedStatusButton(
+            duration: animDuration,
+            height: defaultHeight,
+            icon: Icons.autorenew,
+            text: LocaleKeys.book_status_in_progress.tr(),
+            isSelected: currentStatus == 1,
+            currentStatus: currentStatus,
+            onPressed: () {
+              onPressed(1, true);
+            },
+          ),
+          const SizedBox(width: 10),
+          AnimatedStatusButton(
+            duration: animDuration,
+            height: defaultHeight,
+            icon: Icons.timelapse,
+            text: LocaleKeys.book_status_for_later.tr(),
+            isSelected: currentStatus == 2,
+            currentStatus: currentStatus,
+            onPressed: () {
+              onPressed(2, true);
+            },
+          ),
+          const SizedBox(width: 10),
+          AnimatedStatusButton(
+            duration: animDuration,
+            height: defaultHeight,
+            icon: Icons.not_interested,
+            text: LocaleKeys.book_status_unfinished.tr(),
+            isSelected: currentStatus == 3,
+            currentStatus: currentStatus,
+            onPressed: () {
+              onPressed(3, true);
+            },
+          ),
+        ],
+      ),
     );
   }
 }

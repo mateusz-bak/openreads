@@ -113,8 +113,10 @@ class BookCubit extends Cubit {
     }
   }
 
-  addBook(Book book, {bool refreshBooks = true}) async {
-    await repository.insertBook(book);
+  addBook(Book book, {bool refreshBooks = true, File? coverFile}) async {
+    final bookID = await repository.insertBook(book);
+
+    await _saveCoverToStorage(bookID, coverFile);
 
     if (refreshBooks) {
       getAllBooksByStatus();
@@ -122,8 +124,18 @@ class BookCubit extends Cubit {
     }
   }
 
-  updateBook(Book book) async {
+  Future _saveCoverToStorage(int? bookID, File? coverFile) async {
+    if (bookID == null || coverFile == null) return;
+
+    final directory = await getApplicationDocumentsDirectory();
+    final file = File('${directory.path}/$bookID.jpg');
+    await file.writeAsBytes(coverFile.readAsBytesSync());
+  }
+
+  updateBook(Book book, {File? coverFile}) async {
     repository.updateBook(book);
+    await _saveCoverToStorage(book.id!, coverFile);
+
     getBook(book.id!);
     getAllBooksByStatus();
     getAllBooks();

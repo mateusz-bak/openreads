@@ -20,7 +20,7 @@ class Repository {
 
   Future<int> countBooks(int status) => dbController.countBooks(status: status);
 
-  Future insertBook(Book book) => dbController.createBook(book);
+  Future<int> insertBook(Book book) => dbController.createBook(book);
 
   Future updateBook(Book book) => dbController.updateBook(book);
 
