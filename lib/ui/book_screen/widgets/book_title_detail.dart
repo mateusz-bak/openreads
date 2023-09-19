@@ -81,30 +81,31 @@ class BookTitleDetail extends StatelessWidget {
               child: SelectableText(
                 title,
                 style: const TextStyle(
-                  fontSize: 18,
+                  fontSize: 20,
                   fontWeight: FontWeight.bold,
                 ),
               ),
             ),
             subtitle != null
                 ? Padding(
-                    padding: const EdgeInsets.fromLTRB(5, 0, 5, 5),
+                    padding: const EdgeInsets.fromLTRB(5, 0, 5, 0),
                     child: SelectableText(
                       subtitle!,
                       style: const TextStyle(
-                        fontSize: 16,
-                        fontWeight: FontWeight.bold,
+                        fontSize: 18,
                       ),
                     ),
                   )
                 : const SizedBox(),
+            const Divider(height: 5),
+            const SizedBox(height: 10),
             Padding(
               padding: const EdgeInsets.fromLTRB(5, 0, 5, 0),
               child: SelectableText(
                 author,
                 style: const TextStyle(
                   fontSize: 16,
-                  fontWeight: FontWeight.normal,
+                  fontWeight: FontWeight.w500,
                 ),
               ),
             ),
@@ -113,9 +114,12 @@ class BookTitleDetail extends StatelessWidget {
                     padding: const EdgeInsets.fromLTRB(5, 0, 5, 0),
                     child: SelectableText(
                       publicationYear,
-                      style: const TextStyle(
-                        fontSize: 14,
-                        fontWeight: FontWeight.bold,
+                      style: TextStyle(
+                        fontSize: 15,
+                        color: Theme.of(context)
+                            .colorScheme
+                            .onSurface
+                            .withOpacity(0.7),
                       ),
                     ),
                   )
@@ -133,6 +137,8 @@ class BookTitleDetail extends StatelessWidget {
                             ? FontAwesomeIcons.tablet
                             : FontAwesomeIcons.bookOpen,
                     size: 16,
+                    color:
+                        Theme.of(context).colorScheme.primary.withOpacity(0.7),
                   ),
                   const SizedBox(width: 10),
                   SelectableText(
@@ -141,9 +147,13 @@ class BookTitleDetail extends StatelessWidget {
                         : bookType == BookType.ebook
                             ? LocaleKeys.book_type_ebook.tr()
                             : LocaleKeys.book_type_paper.tr(),
-                    style: const TextStyle(
+                    style: TextStyle(
                       fontSize: 16,
                       fontWeight: FontWeight.normal,
+                      color: Theme.of(context)
+                          .colorScheme
+                          .onSurface
+                          .withOpacity(0.7),
                     ),
                   ),
                 ],

@@ -237,8 +237,7 @@ class BookCard extends StatelessWidget {
                                     child: FaIcon(
                                       FontAwesomeIcons.solidHeart,
                                       size: 18,
-                                      color:
-                                          Theme.of(context).colorScheme.primary,
+                                      color: likeColor,
                                     ),
                                   )
                                 : const SizedBox(),
@@ -256,19 +255,21 @@ class BookCard extends StatelessWidget {
                                 .withOpacity(0.8),
                           ),
                         ),
-                        Text(
-                          book.publicationYear.toString(),
-                          softWrap: true,
-                          overflow: TextOverflow.clip,
-                          style: TextStyle(
-                            fontSize: 12,
-                            color: Theme.of(context)
-                                .colorScheme
-                                .onSurface
-                                .withOpacity(0.6),
-                            letterSpacing: 0.05,
-                          ),
-                        ),
+                        book.publicationYear != null
+                            ? Text(
+                                book.publicationYear.toString(),
+                                softWrap: true,
+                                overflow: TextOverflow.clip,
+                                style: TextStyle(
+                                  fontSize: 12,
+                                  color: Theme.of(context)
+                                      .colorScheme
+                                      .onSurface
+                                      .withOpacity(0.6),
+                                  letterSpacing: 0.05,
+                                ),
+                              )
+                            : const SizedBox(),
                         const SizedBox(height: 5),
                         Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,

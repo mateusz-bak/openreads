@@ -228,7 +228,7 @@ class BookStatusDetail extends StatelessWidget {
             allowHalfRating: true,
             unratedColor: Theme.of(context).scaffoldBackgroundColor,
             glow: false,
-            itemSize: 40,
+            itemSize: 45,
             ignoreGestures: true,
             itemBuilder: (context, _) => Icon(
               Icons.star_rounded,
