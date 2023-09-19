@@ -21,9 +21,10 @@ class BookScreen extends StatelessWidget {
   final String heroTag;
 
   _onLikeTap(BuildContext context, Book book) {
-    context.read<CurrentBookCubit>().setBook(
-          book.copyWith(favourite: book.favourite == true ? false : true),
-        );
+    book = book.copyWith(favourite: book.favourite == true ? false : true);
+
+    bookCubit.updateBook(book);
+    context.read<CurrentBookCubit>().setBook(book);
   }
 
   _showDeleteRestoreDialog(
