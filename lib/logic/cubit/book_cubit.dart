@@ -1,6 +1,9 @@
 import 'dart:io';
 
+import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:openreads/logic/cubit/current_book_cubit.dart';
+import 'package:openreads/main.dart';
 import 'package:openreads/model/book.dart';
 import 'package:openreads/resources/repository.dart';
 import 'package:path_provider/path_provider.dart';
@@ -127,14 +130,19 @@ class BookCubit extends Cubit {
   Future _saveCoverToStorage(int? bookID, File? coverFile) async {
     if (bookID == null || coverFile == null) return;
 
-    final directory = await getApplicationDocumentsDirectory();
-    final file = File('${directory.path}/$bookID.jpg');
+    final file = File('${appDocumentsDirectory.path}/$bookID.jpg');
     await file.writeAsBytes(coverFile.readAsBytesSync());
   }
 
-  updateBook(Book book, {File? coverFile}) async {
+  updateBook(Book book, {File? coverFile, BuildContext? context}) async {
     repository.updateBook(book);
     await _saveCoverToStorage(book.id!, coverFile);
+
+    if (context != null) {
+      // This looks bad but we need to wait for cover to be saved to storage
+      // before updating current book
+      context.read<CurrentBookCubit>().setBook(book.copyWith());
+    }
 
     getBook(book.id!);
     getAllBooksByStatus();
@@ -156,10 +164,6 @@ class BookCubit extends Cubit {
   getBook(int id) async {
     Book book = await repository.getBook(id);
     _bookFetcher.sink.add(book);
-  }
-
-  clearCurrentBook() {
-    _bookFetcher.sink.add(null);
   }
 
   List<int> _getFinishedYears(List<Book> books) {

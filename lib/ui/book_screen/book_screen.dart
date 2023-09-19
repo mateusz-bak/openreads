@@ -1,54 +1,37 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:openreads/core/themes/app_theme.dart';
 import 'package:openreads/generated/locale_keys.g.dart';
+import 'package:openreads/logic/cubit/current_book_cubit.dart';
+import 'package:openreads/logic/cubit/edit_book_cubit.dart';
 import 'package:openreads/main.dart';
 import 'package:openreads/model/book.dart';
 import 'package:openreads/ui/add_book_screen/add_book_screen.dart';
-import 'package:openreads/ui/add_book_screen/widgets/widgets.dart';
 import 'package:openreads/ui/book_screen/widgets/widgets.dart';
 
 class BookScreen extends StatelessWidget {
-  BookScreen({
+  const BookScreen({
     Key? key,
     required this.id,
     required this.heroTag,
-    required this.book,
   }) : super(key: key);
 
   final int id;
   final String heroTag;
-  Book? book;
 
-  _onLikeTap() {
-    if (book == null) return;
-
-    bookCubit.updateBook(Book(
-      id: book!.id,
-      title: book!.title,
-      subtitle: book!.subtitle,
-      author: book!.author,
-      description: book!.description,
-      status: book!.status,
-      favourite: book?.favourite == true ? false : true,
-      rating: book!.rating,
-      startDate: book!.startDate,
-      finishDate: book!.finishDate,
-      pages: book!.pages,
-      publicationYear: book!.publicationYear,
-      isbn: book!.isbn,
-      olid: book!.olid,
-      tags: book!.tags,
-      myReview: book!.myReview,
-      blurHash: book!.blurHash,
-      bookType: book!.bookType,
-    ));
+  _onLikeTap(BuildContext context, Book book) {
+    context.read<CurrentBookCubit>().setBook(
+          book.copyWith(favourite: book.favourite == true ? false : true),
+        );
   }
 
   _showDeleteRestoreDialog(
-      BuildContext context, bool deleted, bool? deletePermanently) {
-    if (book == null) return;
-
+    BuildContext context,
+    bool deleted,
+    bool? deletePermanently,
+    Book book,
+  ) {
     showDialog(
         context: context,
         builder: (BuildContext context) {
@@ -78,9 +61,9 @@ class BookScreen extends StatelessWidget {
               FilledButton(
                 onPressed: () {
                   if (deletePermanently == true) {
-                    _deleteBookPermanently();
+                    _deleteBookPermanently(book);
                   } else {
-                    _changeDeleteStatus(deleted);
+                    _changeDeleteStatus(deleted, book);
                   }
 
                   Navigator.of(context).pop();
@@ -96,34 +79,17 @@ class BookScreen extends StatelessWidget {
         });
   }
 
-  Future<void> _changeDeleteStatus(bool deleted) async {
-    await bookCubit.updateBook(Book(
-      id: book!.id,
-      title: book!.title,
-      subtitle: book!.subtitle,
-      author: book!.author,
-      status: book!.status,
-      favourite: book!.favourite,
+  Future<void> _changeDeleteStatus(bool deleted, Book book) async {
+    await bookCubit.updateBook(book.copyWith(
       deleted: deleted,
-      rating: book!.rating,
-      startDate: book!.startDate,
-      finishDate: book!.finishDate,
-      pages: book!.pages,
-      publicationYear: book!.publicationYear,
-      isbn: book!.isbn,
-      olid: book!.olid,
-      tags: book!.tags,
-      myReview: book!.myReview,
-      blurHash: book!.blurHash,
-      bookType: book!.bookType,
     ));
 
     bookCubit.getDeletedBooks();
   }
 
-  _deleteBookPermanently() async {
-    if (book?.id != null) {
-      await bookCubit.deleteBook(book!.id!);
+  _deleteBookPermanently(Book book) async {
+    if (book.id != null) {
+      await bookCubit.deleteBook(book.id!);
     }
 
     bookCubit.getDeletedBooks();
@@ -169,7 +135,7 @@ class BookScreen extends StatelessWidget {
     }
   }
 
-  void _changeStatusAction(BuildContext context, int status) async {
+  void _changeStatusAction(BuildContext context, int status, Book book) async {
     final dateNow = DateTime.now();
     final date = DateTime(dateNow.year, dateNow.month, dateNow.day);
 
@@ -189,15 +155,15 @@ class BookScreen extends StatelessWidget {
               style: const TextStyle(fontSize: 18),
             ),
             children: [
-              BookRatingBar(
-                animDuration: const Duration(milliseconds: 250),
-                status: 0,
-                defaultHeight: 60.0,
-                rating: 0.0,
-                onRatingUpdate: (double newRating) {
-                  rating = (newRating * 10).toInt();
-                },
-              ),
+              // BookRatingBar(
+              //   animDuration: const Duration(milliseconds: 250),
+              //   status: 0,
+              //   defaultHeight: 60.0,
+              //   rating: 0.0,
+              //   onRatingUpdate: (double newRating) {
+              //     rating = (newRating * 10).toInt();
+              //   },
+              // ),
               const SizedBox(height: 10),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -222,81 +188,37 @@ class BookScreen extends StatelessWidget {
         },
       );
 
-      bookCubit.updateBook(Book(
-        id: book!.id,
-        title: book!.title,
-        author: book!.author,
+      bookCubit.updateBook(book.copyWith(
         status: 0,
-        favourite: book!.favourite,
         rating: rating,
-        startDate: book!.startDate,
-        finishDate: date.toIso8601String(),
-        pages: book!.pages,
-        publicationYear: book!.publicationYear,
-        isbn: book!.isbn,
-        olid: book!.olid,
-        tags: book!.tags,
-        myReview: book!.myReview,
-        blurHash: book!.blurHash,
-        bookType: book!.bookType,
+        finishDate: date,
       ));
     } else if (status == 2) {
-      bookCubit.updateBook(Book(
-        id: book!.id,
-        title: book!.title,
-        author: book!.author,
+      bookCubit.updateBook(book.copyWith(
         status: 1,
-        favourite: book!.favourite,
-        rating: book!.rating,
-        startDate: date.toIso8601String(),
-        finishDate: book!.finishDate,
-        pages: book!.pages,
-        publicationYear: book!.publicationYear,
-        isbn: book!.isbn,
-        olid: book!.olid,
-        tags: book!.tags,
-        myReview: book!.myReview,
-        blurHash: book!.blurHash,
-        bookType: book!.bookType,
+        startDate: date,
       ));
     } else if (status == 3) {
-      bookCubit.updateBook(Book(
-        id: book!.id,
-        title: book!.title,
-        author: book!.author,
+      bookCubit.updateBook(book.copyWith(
         status: 1,
-        favourite: book!.favourite,
-        rating: book!.rating,
-        startDate: date.toIso8601String(),
-        finishDate: book!.finishDate,
-        pages: book!.pages,
-        publicationYear: book!.publicationYear,
-        isbn: book!.isbn,
-        olid: book!.olid,
-        tags: book!.tags,
-        myReview: book!.myReview,
-        blurHash: book!.blurHash,
-        bookType: book!.bookType,
+        startDate: date,
       ));
     }
   }
 
-  String? _generateDate(String? date) {
+  String? _generateDate(DateTime? date) {
     if (date == null) return null;
 
     final DateFormat formatter = DateFormat('dd/MM/yyyy');
-    return formatter.format(DateTime.parse(date));
+    return formatter.format(date);
   }
 
   String _generateReadingTime({
-    required String startDate,
-    required String finishDate,
+    required DateTime startDate,
+    required DateTime finishDate,
     required BuildContext context,
   }) {
-    final diff = DateTime.parse(finishDate)
-        .difference(DateTime.parse(startDate))
-        .inDays
-        .toString();
+    final diff = finishDate.difference(startDate).inDays.toString();
 
     return '$diff ${LocaleKeys.days.tr()}';
   }
@@ -310,185 +232,192 @@ class BookScreen extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         actions: [
-          StreamBuilder<Book?>(
-              stream: bookCubit.book,
-              builder: (context, AsyncSnapshot<Book?> snapshot) {
-                if (snapshot.hasData) {
-                  if (moreButtonOptions.length == 1) {
-                    if (snapshot.data?.deleted == true) {
-                      moreButtonOptions.add(LocaleKeys.restore_book.tr());
-                      moreButtonOptions.add(LocaleKeys.delete_permanently.tr());
-                    } else {
-                      moreButtonOptions.add(LocaleKeys.delete_book.tr());
-                    }
-                  }
-
-                  return PopupMenuButton<String>(
-                    onSelected: (_) {},
-                    itemBuilder: (_) {
-                      return moreButtonOptions.map((String choice) {
-                        return PopupMenuItem<String>(
-                          value: choice,
-                          child: Text(choice),
-                          onTap: () async {
-                            await Future.delayed(const Duration(
-                              milliseconds: 0,
-                            ));
-
-                            if (choice == moreButtonOptions[0]) {
-                              Navigator.of(context).push(
-                                MaterialPageRoute(
-                                  builder: (_) => AddBookScreen(
-                                    book: snapshot.data,
-                                    editingExistingBook: true,
-                                  ),
-                                ),
-                              );
-                            } else if (choice == moreButtonOptions[1]) {
-                              if (snapshot.data!.deleted == false) {
-                                _showDeleteRestoreDialog(context, true, null);
-                              } else {
-                                _showDeleteRestoreDialog(context, false, null);
-                              }
-                            } else if (choice == moreButtonOptions[2]) {
-                              _showDeleteRestoreDialog(context, true, true);
-                            }
-                          },
-                        );
-                      }).toList();
-                    },
-                  );
+          BlocBuilder<CurrentBookCubit, Book>(
+            builder: (context, state) {
+              if (moreButtonOptions.length == 1) {
+                if (state.deleted == true) {
+                  moreButtonOptions.add(LocaleKeys.restore_book.tr());
+                  moreButtonOptions.add(LocaleKeys.delete_permanently.tr());
                 } else {
-                  return const SizedBox();
+                  moreButtonOptions.add(LocaleKeys.delete_book.tr());
                 }
-              }),
+              }
+
+              return PopupMenuButton<String>(
+                onSelected: (_) {},
+                itemBuilder: (_) {
+                  return moreButtonOptions.map((String choice) {
+                    return PopupMenuItem<String>(
+                      value: choice,
+                      child: Text(choice),
+                      onTap: () async {
+                        context.read<EditBookCubit>().setBook(state);
+
+                        await Future.delayed(const Duration(
+                          milliseconds: 0,
+                        ));
+                        if (!context.mounted) return;
+
+                        if (choice == moreButtonOptions[0]) {
+                          Navigator.of(context).push(
+                            MaterialPageRoute(
+                              builder: (_) => const AddBookScreen(
+                                editingExistingBook: true,
+                              ),
+                            ),
+                          );
+                        } else if (choice == moreButtonOptions[1]) {
+                          if (state.deleted == false) {
+                            _showDeleteRestoreDialog(
+                                context, true, null, state);
+                          } else {
+                            _showDeleteRestoreDialog(
+                                context, false, null, state);
+                          }
+                        } else if (choice == moreButtonOptions[2]) {
+                          _showDeleteRestoreDialog(context, true, true, state);
+                        }
+                      },
+                    );
+                  }).toList();
+                },
+              );
+            },
+          ),
         ],
       ),
-      body: SingleChildScrollView(
-        child: Column(
-          children: [
-            (book != null)
-                ? Center(
-                    child: CoverView(
-                      onPressed: null,
-                      heroTag: heroTag,
-                      book: book!,
-                    ),
-                  )
-                : const SizedBox(),
-            Padding(
-              padding: const EdgeInsets.all(5),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  BookTitleDetail(
-                    title: book!.title.toString(),
-                    subtitle: book!.subtitle,
-                    author: book!.author.toString(),
-                    publicationYear: (book!.publicationYear ?? "").toString(),
-                    tags: book!.tags?.split('|||||'),
-                    bookType: book!.bookType,
-                  ),
-                  const SizedBox(height: 5),
-                  BookStatusDetail(
-                    statusIcon: _decideStatusIcon(book!.status),
-                    statusText: _decideStatusText(
-                      book!.status,
-                      context,
-                    ),
-                    rating: book!.rating,
-                    startDate: _generateDate(book!.startDate),
-                    finishDate: _generateDate(book!.finishDate),
-                    onLikeTap: _onLikeTap,
-                    isLiked: book!.favourite,
-                    showChangeStatus: (book!.status == 1 ||
-                        book!.status == 2 ||
-                        book!.status == 3),
-                    changeStatusText: _decideChangeStatusText(
-                      book!.status,
-                      context,
-                    ),
-                    changeStatusAction: () {
-                      _changeStatusAction(
-                        context,
-                        book!.status,
-                      );
-                    },
-                    showRatingAndLike: book!.status == 0,
-                  ),
-                  SizedBox(
-                    height:
-                        (book!.finishDate != null && book!.startDate != null)
+      body: BlocBuilder<CurrentBookCubit, Book>(
+        builder: (context, state) {
+          return SingleChildScrollView(
+            child: Column(
+              children: [
+                (state.hasCover == true)
+                    ? Center(
+                        child: CoverView(
+                          onPressed: null,
+                          heroTag: heroTag,
+                          book: state,
+                        ),
+                      )
+                    : const SizedBox(),
+                Padding(
+                  padding: const EdgeInsets.all(5),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      BookTitleDetail(
+                        title: state.title.toString(),
+                        subtitle: state.subtitle,
+                        author: state.author.toString(),
+                        publicationYear:
+                            (state.publicationYear ?? "").toString(),
+                        tags: state.tags?.split('|||||'),
+                        bookType: state.bookType,
+                      ),
+                      const SizedBox(height: 5),
+                      BookStatusDetail(
+                        statusIcon: _decideStatusIcon(state.status),
+                        statusText: _decideStatusText(
+                          state.status,
+                          context,
+                        ),
+                        rating: state.rating,
+                        startDate: _generateDate(state.startDate),
+                        finishDate: _generateDate(state.finishDate),
+                        onLikeTap: () => _onLikeTap(context, state),
+                        isLiked: state.favourite,
+                        showChangeStatus: (state.status == 1 ||
+                            state.status == 2 ||
+                            state.status == 3),
+                        changeStatusText: _decideChangeStatusText(
+                          state.status,
+                          context,
+                        ),
+                        changeStatusAction: () {
+                          _changeStatusAction(
+                            context,
+                            state.status,
+                            state,
+                          );
+                        },
+                        showRatingAndLike: state.status == 0,
+                      ),
+                      SizedBox(
+                        height: (state.finishDate != null &&
+                                state.startDate != null)
                             ? 5
                             : 0,
-                  ),
-                  (book!.finishDate != null && book!.startDate != null)
-                      ? BookDetail(
-                          title: LocaleKeys.reading_time.tr(),
-                          text: _generateReadingTime(
-                            finishDate: book!.finishDate!,
-                            startDate: book!.startDate!,
-                            context: context,
-                          ),
-                        )
-                      : const SizedBox(),
-                  SizedBox(
-                    height: (book!.pages != null) ? 5 : 0,
-                  ),
-                  (book!.pages != null)
-                      ? BookDetail(
-                          title: LocaleKeys.pages_uppercase.tr(),
-                          text: (book!.pages ?? "").toString(),
-                        )
-                      : const SizedBox(),
-                  SizedBox(
-                    height: (book!.description != null &&
-                            book!.description!.isNotEmpty)
-                        ? 5
-                        : 0,
-                  ),
-                  (book!.description != null && book!.description!.isNotEmpty)
-                      ? BookDetail(
-                          title: LocaleKeys.description.tr(),
-                          text: book!.description!,
-                        )
-                      : const SizedBox(),
-                  SizedBox(
-                    height: (book!.isbn != null) ? 5 : 0,
-                  ),
-                  (book!.isbn != null)
-                      ? BookDetail(
-                          title: LocaleKeys.isbn.tr(),
-                          text: (book!.isbn ?? "").toString(),
-                        )
-                      : const SizedBox(),
-                  SizedBox(
-                    height: (book!.olid != null) ? 5 : 0,
-                  ),
-                  (book!.olid != null)
-                      ? BookDetail(
-                          title: LocaleKeys.open_library_ID.tr(),
-                          text: (book!.olid ?? "").toString(),
-                        )
-                      : const SizedBox(),
-                  SizedBox(
-                    height:
-                        (book!.myReview != null && book!.myReview!.isNotEmpty)
+                      ),
+                      (state.finishDate != null && state.startDate != null)
+                          ? BookDetail(
+                              title: LocaleKeys.reading_time.tr(),
+                              text: _generateReadingTime(
+                                finishDate: state.finishDate!,
+                                startDate: state.startDate!,
+                                context: context,
+                              ),
+                            )
+                          : const SizedBox(),
+                      SizedBox(
+                        height: (state.pages != null) ? 5 : 0,
+                      ),
+                      (state.pages != null)
+                          ? BookDetail(
+                              title: LocaleKeys.pages_uppercase.tr(),
+                              text: (state.pages ?? "").toString(),
+                            )
+                          : const SizedBox(),
+                      SizedBox(
+                        height: (state.description != null &&
+                                state.description!.isNotEmpty)
                             ? 5
                             : 0,
+                      ),
+                      (state.description != null &&
+                              state.description!.isNotEmpty)
+                          ? BookDetail(
+                              title: LocaleKeys.description.tr(),
+                              text: state.description!,
+                            )
+                          : const SizedBox(),
+                      SizedBox(
+                        height: (state.isbn != null) ? 5 : 0,
+                      ),
+                      (state.isbn != null)
+                          ? BookDetail(
+                              title: LocaleKeys.isbn.tr(),
+                              text: (state.isbn ?? "").toString(),
+                            )
+                          : const SizedBox(),
+                      SizedBox(
+                        height: (state.olid != null) ? 5 : 0,
+                      ),
+                      (state.olid != null)
+                          ? BookDetail(
+                              title: LocaleKeys.open_library_ID.tr(),
+                              text: (state.olid ?? "").toString(),
+                            )
+                          : const SizedBox(),
+                      SizedBox(
+                        height: (state.myReview != null &&
+                                state.myReview!.isNotEmpty)
+                            ? 5
+                            : 0,
+                      ),
+                      (state.myReview != null && state.myReview!.isNotEmpty)
+                          ? BookDetail(
+                              title: LocaleKeys.my_review.tr(),
+                              text: state.myReview!,
+                            )
+                          : const SizedBox(),
+                      const SizedBox(height: 50.0),
+                    ],
                   ),
-                  (book!.myReview != null && book!.myReview!.isNotEmpty)
-                      ? BookDetail(
-                          title: LocaleKeys.my_review.tr(),
-                          text: book!.myReview!,
-                        )
-                      : const SizedBox(),
-                  const SizedBox(height: 50.0),
-                ],
-              ),
+                ),
+              ],
             ),
-          ],
-        ),
+          );
+        },
       ),
     );
   }

@@ -148,10 +148,10 @@ class _AddBookScreenState extends State<AddBookScreen> {
 
     if (book.hasCover == false) {
       context.read<EditBookCoverCubit>().deleteCover(book.id);
-      context.read<EditBookCubit>().updateBook(null);
+      context.read<EditBookCubit>().updateBook(null, context);
     } else {
       final cover = context.read<EditBookCoverCubit>().state;
-      context.read<EditBookCubit>().updateBook(cover);
+      context.read<EditBookCubit>().updateBook(cover, context);
     }
 
     if (!mounted) return;

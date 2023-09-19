@@ -1,6 +1,8 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:openreads/generated/locale_keys.g.dart';
+import 'package:openreads/logic/cubit/current_book_cubit.dart';
 import 'package:openreads/main.dart';
 import 'package:openreads/model/book.dart';
 import 'package:openreads/ui/add_book_screen/widgets/book_text_field.dart';
@@ -65,8 +67,10 @@ class _SearchPageState extends State<SearchPage> {
                         addBottomPadding: (snapshot.data!.length == index + 1),
                         onPressed: () {
                           if (snapshot.data![index].id == null) return;
-                          bookCubit.clearCurrentBook();
-                          bookCubit.getBook(snapshot.data![index].id!);
+
+                          context
+                              .read<CurrentBookCubit>()
+                              .setBook(snapshot.data![index]);
 
                           Navigator.push(
                             context,
@@ -74,7 +78,6 @@ class _SearchPageState extends State<SearchPage> {
                               builder: (context) => BookScreen(
                                 id: snapshot.data![index].id!,
                                 heroTag: heroTag,
-                                book: snapshot.data![index],
                               ),
                             ),
                           );

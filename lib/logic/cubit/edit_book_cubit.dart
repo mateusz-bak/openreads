@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:openreads/core/constants.dart/enums.dart';
 import 'package:openreads/main.dart';
@@ -10,10 +11,10 @@ class EditBookCubit extends Cubit<Book> {
 
   setBook(Book book) => emit(book);
 
-  void updateBook(File? coverFile) {
+  void updateBook(File? coverFile, BuildContext context) {
     if (state.id == null) return;
 
-    bookCubit.updateBook(state, coverFile: coverFile);
+    bookCubit.updateBook(state, coverFile: coverFile, context: context);
   }
 
   void addNewBook(File? coverFile) {
