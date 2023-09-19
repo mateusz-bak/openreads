@@ -425,10 +425,7 @@ class _AddBookScreenState extends State<AddBookScreen> {
               defaultHeight: defaultFormHeight,
             ),
             const SizedBox(height: 10),
-            BookRatingBar(
-              animDuration: _animDuration,
-              defaultHeight: defaultFormHeight,
-            ),
+            BookRatingBar(animDuration: _animDuration),
             DateRow(
               animDuration: _animDuration,
               defaultHeight: defaultFormHeight,

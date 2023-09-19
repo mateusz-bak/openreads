@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
+import 'package:openreads/core/constants.dart/constants.dart';
 import 'package:openreads/core/themes/app_theme.dart';
 import 'package:openreads/logic/cubit/edit_book_cubit.dart';
 import 'package:openreads/model/book.dart';
@@ -9,11 +10,9 @@ class BookRatingBar extends StatelessWidget {
   const BookRatingBar({
     Key? key,
     required this.animDuration,
-    required this.defaultHeight,
   }) : super(key: key);
 
   final Duration animDuration;
-  final double defaultHeight;
 
   @override
   Widget build(BuildContext context) {
@@ -25,7 +24,7 @@ class BookRatingBar extends StatelessWidget {
               padding: const EdgeInsets.symmetric(horizontal: 10),
               child: AnimatedContainer(
                 duration: animDuration,
-                height: (state.status == 0) ? defaultHeight : 0,
+                height: (state.status == 0) ? defaultFormHeight : 0,
                 child: Container(
                   width: double.infinity,
                   clipBehavior: Clip.hardEdge,

@@ -155,15 +155,11 @@ class BookScreen extends StatelessWidget {
               style: const TextStyle(fontSize: 18),
             ),
             children: [
-              // BookRatingBar(
-              //   animDuration: const Duration(milliseconds: 250),
-              //   status: 0,
-              //   defaultHeight: 60.0,
-              //   rating: 0.0,
-              //   onRatingUpdate: (double newRating) {
-              //     rating = (newRating * 10).toInt();
-              //   },
-              // ),
+              QuickRating(
+                onRatingUpdate: (double newRating) {
+                  rating = (newRating * 10).toInt();
+                },
+              ),
               const SizedBox(height: 10),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -187,23 +183,31 @@ class BookScreen extends StatelessWidget {
           );
         },
       );
-
-      bookCubit.updateBook(book.copyWith(
+      book = book.copyWith(
         status: 0,
         rating: rating,
         finishDate: date,
-      ));
+      );
+
+      bookCubit.updateBook(book);
     } else if (status == 2) {
-      bookCubit.updateBook(book.copyWith(
+      book = book.copyWith(
         status: 1,
         startDate: date,
-      ));
+      );
+
+      bookCubit.updateBook(book);
     } else if (status == 3) {
-      bookCubit.updateBook(book.copyWith(
+      book = book.copyWith(
         status: 1,
         startDate: date,
-      ));
+      );
+
+      bookCubit.updateBook(book);
     }
+
+    if (!context.mounted) return;
+    context.read<CurrentBookCubit>().setBook(book);
   }
 
   String? _generateDate(DateTime? date) {
