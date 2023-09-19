@@ -17,17 +17,32 @@ showEditBookTypeBottomSheet(BuildContext context, Set<int> selectedBookIds) {
       context: context,
       builder: (context) {
         return Padding(
-          padding:
-              const EdgeInsets.only(left: 20, right: 20, top: 20, bottom: 40),
+          padding: const EdgeInsets.only(bottom: 100),
           child: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
-              Text(
-                LocaleKeys.change_book_type.tr(),
-                style: const TextStyle(
-                  fontSize: 18,
-                  fontWeight: FontWeight.bold,
+              const SizedBox(height: 10),
+              Container(
+                height: 3,
+                width: MediaQuery.of(context).size.width / 4,
+                decoration: BoxDecoration(
+                  color: Colors.grey.shade300,
+                  borderRadius: BorderRadius.circular(10),
                 ),
+              ),
+              const SizedBox(height: 20),
+              Row(
+                children: [
+                  const SizedBox(width: 10),
+                  Text(
+                    LocaleKeys.change_book_type.tr(),
+                    style: const TextStyle(
+                      fontSize: 18,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                  const SizedBox(width: 10),
+                ],
               ),
               const SizedBox(height: 20),
               BookTypeDropdown(
