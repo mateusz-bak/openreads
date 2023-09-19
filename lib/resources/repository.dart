@@ -1,7 +1,7 @@
 import 'package:openreads/database/database_controler.dart';
 import 'package:openreads/model/book.dart';
 
-import '../core/constants.dart/enums.dart';
+import '../core/constants/enums.dart';
 
 class Repository {
   final DatabaseController dbController = DatabaseController();

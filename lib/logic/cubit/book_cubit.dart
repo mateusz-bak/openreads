@@ -10,7 +10,7 @@ import 'package:path_provider/path_provider.dart';
 import 'package:rxdart/rxdart.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-import '../../core/constants.dart/enums.dart';
+import '../../core/constants/enums.dart';
 
 class BookCubit extends Cubit {
   final Repository repository = Repository();

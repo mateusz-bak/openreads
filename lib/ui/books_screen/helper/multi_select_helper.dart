@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 
 import 'package:openreads/main.dart';
 import 'package:openreads/generated/locale_keys.g.dart';
-import 'package:openreads/core/constants.dart/enums.dart';
+import 'package:openreads/core/constants/enums.dart';
 import 'package:openreads/ui/add_book_screen/widgets/book_type_dropdown.dart';
 
 List<String> bookTypes = [

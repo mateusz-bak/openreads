@@ -2,7 +2,7 @@ import 'package:openreads/database/database_provider.dart';
 import 'package:openreads/model/book.dart';
 import 'package:sqflite/sqflite.dart';
 
-import '../core/constants.dart/enums.dart';
+import '../core/constants/enums.dart';
 
 class DatabaseController {
   final dbClient = DatabaseProvider.dbProvider;

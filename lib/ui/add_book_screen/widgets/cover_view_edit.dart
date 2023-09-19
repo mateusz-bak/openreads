@@ -12,7 +12,7 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:openreads/core/helpers/helpers.dart';
 
 import 'package:openreads/ui/add_book_screen/widgets/cover_placeholder.dart';
-import 'package:openreads/core/constants.dart/constants.dart';
+import 'package:openreads/core/constants/constants.dart';
 import 'package:openreads/core/themes/app_theme.dart';
 import 'package:openreads/generated/locale_keys.g.dart';
 import 'package:openreads/logic/cubit/edit_book_cubit.dart';

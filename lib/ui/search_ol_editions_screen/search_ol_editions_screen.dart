@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
 import 'package:loading_animation_widget/loading_animation_widget.dart';
-import 'package:openreads/core/constants.dart/enums.dart';
+import 'package:openreads/core/constants/enums.dart';
 import 'package:openreads/generated/locale_keys.g.dart';
 import 'package:openreads/logic/cubit/edit_book_cubit.dart';
 import 'package:openreads/model/book.dart';

@@ -2,7 +2,7 @@ import 'dart:convert';
 import 'dart:io';
 
 import 'package:flutter/foundation.dart';
-import 'package:openreads/core/constants.dart/enums.dart';
+import 'package:openreads/core/constants/enums.dart';
 import 'package:openreads/main.dart';
 import 'package:openreads/model/book_from_backup_v3.dart';
 

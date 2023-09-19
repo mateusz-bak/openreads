@@ -2,7 +2,7 @@ import 'package:dropdown_button2/dropdown_button2.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:openreads/core/constants.dart/enums.dart';
+import 'package:openreads/core/constants/enums.dart';
 import 'package:openreads/core/themes/app_theme.dart';
 import 'package:openreads/logic/cubit/edit_book_cubit.dart';
 import 'package:openreads/model/book.dart';
