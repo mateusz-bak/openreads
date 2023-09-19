@@ -8,6 +8,7 @@ import 'package:openreads/generated/locale_keys.g.dart';
 import 'package:openreads/logic/bloc/display_bloc/display_bloc.dart';
 import 'package:openreads/logic/bloc/sort_bloc/sort_bloc.dart';
 import 'package:openreads/logic/bloc/theme_bloc/theme_bloc.dart';
+import 'package:openreads/logic/cubit/edit_book_cubit_cubit.dart';
 import 'package:openreads/main.dart';
 import 'package:openreads/model/book.dart';
 import 'package:openreads/ui/add_book_screen/add_book_screen.dart';
@@ -175,7 +176,7 @@ class _BooksScreenState extends State<BooksScreen>
 
     for (var book in list) {
       if (book.finishDate != null) {
-        final year = DateTime.parse(book.finishDate!).year.toString();
+        final year = book.finishDate!.year.toString();
         if (yearsList.contains(year)) {
           filteredOut.add(book);
         }
@@ -357,11 +358,11 @@ class _BooksScreenState extends State<BooksScreen>
 
     isAsc
         ? booksWithStartDate.sort((a, b) =>
-            (DateTime.parse(a.startDate!).millisecondsSinceEpoch)
-                .compareTo(DateTime.parse(b.startDate!).millisecondsSinceEpoch))
-        : booksWithStartDate.sort((b, a) => (DateTime.parse(a.startDate!)
-                .millisecondsSinceEpoch)
-            .compareTo(DateTime.parse(b.startDate!).millisecondsSinceEpoch));
+            (a.startDate!.millisecondsSinceEpoch)
+                .compareTo(b.startDate!.millisecondsSinceEpoch))
+        : booksWithStartDate.sort((b, a) =>
+            (a.startDate!.millisecondsSinceEpoch)
+                .compareTo(b.startDate!.millisecondsSinceEpoch));
 
     return booksWithStartDate + booksWithoutStartDate;
   }
@@ -380,12 +381,12 @@ class _BooksScreenState extends State<BooksScreen>
     }
 
     isAsc
-        ? booksWithFinishDate.sort((a, b) => (DateTime.parse(a.finishDate!)
-                .millisecondsSinceEpoch)
-            .compareTo(DateTime.parse(b.finishDate!).millisecondsSinceEpoch))
-        : booksWithFinishDate.sort((b, a) => (DateTime.parse(a.finishDate!)
-                .millisecondsSinceEpoch)
-            .compareTo(DateTime.parse(b.finishDate!).millisecondsSinceEpoch));
+        ? booksWithFinishDate.sort((a, b) =>
+            (a.finishDate!.millisecondsSinceEpoch)
+                .compareTo(b.finishDate!.millisecondsSinceEpoch))
+        : booksWithFinishDate.sort((b, a) =>
+            (a.finishDate!.millisecondsSinceEpoch)
+                .compareTo(b.finishDate!.millisecondsSinceEpoch));
 
     return booksWithFinishDate + booksWithoutFinishDate;
   }
@@ -493,27 +494,29 @@ class _BooksScreenState extends State<BooksScreen>
   }
 
   Padding? _buildMultiSelectFAB(SetThemeState state) {
-    return selectedBookIds.isNotEmpty ? Padding(
-        padding: const EdgeInsets.only(bottom: 50),
-        child: SpeedDial(
-          spacing: 3,
-          dialRoot: (ctx, open, toggleChildren) {
-            return FloatingActionButton(
-                onPressed: toggleChildren, child: const Icon(Icons.create));
-          },
-          childPadding: const EdgeInsets.all(5),
-          spaceBetweenChildren: 4,
-          children: [
-            SpeedDialChild(
-                child: const Icon(Icons.menu_book_outlined),
-                backgroundColor:
-                    Theme.of(context).colorScheme.secondaryContainer,
-                label: LocaleKeys.change_book_type.tr(),
-                onTap: () {
-                  showEditBookTypeBottomSheet(context, selectedBookIds);
-                }),
-          ],
-        )): null;
+    return selectedBookIds.isNotEmpty
+        ? Padding(
+            padding: const EdgeInsets.only(bottom: 50),
+            child: SpeedDial(
+              spacing: 3,
+              dialRoot: (ctx, open, toggleChildren) {
+                return FloatingActionButton(
+                    onPressed: toggleChildren, child: const Icon(Icons.create));
+              },
+              childPadding: const EdgeInsets.all(5),
+              spaceBetweenChildren: 4,
+              children: [
+                SpeedDialChild(
+                    child: const Icon(Icons.menu_book_outlined),
+                    backgroundColor:
+                        Theme.of(context).colorScheme.secondaryContainer,
+                    label: LocaleKeys.change_book_type.tr(),
+                    onTap: () {
+                      showEditBookTypeBottomSheet(context, selectedBookIds);
+                    }),
+              ],
+            ))
+        : null;
   }
 
   BlocBuilder<ThemeBloc, ThemeState> _buildScaffoldBody() {
@@ -582,6 +585,10 @@ class _BooksScreenState extends State<BooksScreen>
     );
   }
 
+  _setEmptyBookForEditScreen() {
+    context.read<EditBookCubit>().setBook(Book.empty());
+  }
+
   Padding _buildFAB(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.only(bottom: 50),
@@ -594,8 +601,11 @@ class _BooksScreenState extends State<BooksScreen>
             builder: (context) {
               return AddBookSheet(
                 addManually: () async {
+                  _setEmptyBookForEditScreen();
+
                   Navigator.pop(context);
                   await Future.delayed(const Duration(milliseconds: 100));
+                  if (!mounted) return;
 
                   Navigator.of(context).push(
                     MaterialPageRoute(
@@ -604,8 +614,11 @@ class _BooksScreenState extends State<BooksScreen>
                   );
                 },
                 searchInOpenLibrary: () async {
+                  _setEmptyBookForEditScreen();
+
                   Navigator.pop(context);
                   await Future.delayed(const Duration(milliseconds: 100));
+                  if (!mounted) return;
 
                   Navigator.push(
                     context,
@@ -615,8 +628,11 @@ class _BooksScreenState extends State<BooksScreen>
                   );
                 },
                 scanBarcode: () async {
+                  _setEmptyBookForEditScreen();
+
                   Navigator.pop(context);
                   await Future.delayed(const Duration(milliseconds: 100));
+                  if (!mounted) return;
 
                   Navigator.push(
                     context,

@@ -1,12 +1,13 @@
 import 'dart:io';
 
+import 'package:blurhash_dart/blurhash_dart.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:image_cropper/image_cropper.dart';
 import 'package:openreads/core/themes/app_theme.dart';
 import 'package:openreads/model/book.dart';
-import 'package:blurhash/blurhash.dart';
+import 'package:image/image.dart' as img;
 
 class CoverView extends StatefulWidget {
   const CoverView({
@@ -36,29 +37,19 @@ class CoverView extends StatefulWidget {
 
 class _CoverViewState extends State<CoverView> {
   File? coverFile;
-  Future<Uint8List?> _decodeBlurHash() async {
-    if (widget.blurHashString != null) {
-      return BlurHash.decode(widget.blurHashString!, 32, 32);
-    } else if (widget.book != null) {
-      return BlurHash.decode(widget.book!.blurHash!, 32, 32);
-    } else {
-      return null;
-    }
-  }
 
-  @override
-  void initState() {
+  void _loadCoverFile() {
     if (widget.coverFile != null) {
       coverFile = widget.coverFile;
     } else if (widget.book != null) {
       coverFile = widget.book!.getCoverFile();
     }
-
-    super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
+    _loadCoverFile();
+
     return InkWell(
       onTap: widget.onPressed,
       child: Stack(
@@ -68,36 +59,7 @@ class _CoverViewState extends State<CoverView> {
             height: MediaQuery.of(context).size.height / 2.5,
             child: Stack(
               children: [
-                FutureBuilder<Uint8List?>(
-                    future: _decodeBlurHash(),
-                    builder: (context, snapshot) {
-                      if (snapshot.hasData) {
-                        return Image.memory(
-                          snapshot.data!,
-                          fit: BoxFit.cover,
-                          width: MediaQuery.of(context).size.width,
-                          height: MediaQuery.of(context).size.height / 2.5,
-                          frameBuilder: (
-                            BuildContext context,
-                            Widget child,
-                            int? frame,
-                            bool wasSynchronouslyLoaded,
-                          ) {
-                            if (wasSynchronouslyLoaded) {
-                              return child;
-                            }
-                            return AnimatedOpacity(
-                              opacity: frame == null ? 0 : 0.7,
-                              duration: const Duration(milliseconds: 400),
-                              curve: Curves.easeIn,
-                              child: child,
-                            );
-                          },
-                        );
-                      } else {
-                        return const SizedBox();
-                      }
-                    }),
+                _buildBlurHash(),
               ],
             ),
           ),
@@ -152,6 +114,38 @@ class _CoverViewState extends State<CoverView> {
           ),
         ],
       ),
+    );
+  }
+
+  Widget _buildBlurHash() {
+    if (widget.book?.blurHash == null) {
+      return const SizedBox();
+    }
+
+    final image = BlurHash.decode(widget.book!.blurHash!).toImage(35, 20);
+    return Image.memory(
+      Uint8List.fromList(
+        img.encodeJpg(image),
+      ),
+      fit: BoxFit.cover,
+      width: MediaQuery.of(context).size.width,
+      height: MediaQuery.of(context).size.height / 2.5,
+      frameBuilder: (
+        BuildContext context,
+        Widget child,
+        int? frame,
+        bool wasSynchronouslyLoaded,
+      ) {
+        if (wasSynchronouslyLoaded) {
+          return child;
+        }
+        return AnimatedOpacity(
+          opacity: frame == null ? 0 : 0.8,
+          duration: const Duration(milliseconds: 300),
+          curve: Curves.easeIn,
+          child: child,
+        );
+      },
     );
   }
 }

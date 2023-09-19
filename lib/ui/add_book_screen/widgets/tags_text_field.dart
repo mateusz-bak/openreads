@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:openreads/core/themes/app_theme.dart';
 import 'package:flutter_typeahead/flutter_typeahead.dart';
+import 'package:openreads/logic/cubit/edit_book_cubit_cubit.dart';
+import 'package:openreads/model/book.dart';
 
-class TagsField extends StatefulWidget {
+class TagsField extends StatelessWidget {
   const TagsField({
     Key? key,
     this.controller,
@@ -19,9 +22,6 @@ class TagsField extends StatefulWidget {
     this.textCapitalization = TextCapitalization.none,
     this.onSubmitted,
     this.onEditingComplete,
-    this.tags,
-    this.selectedTags,
-    this.selectTag,
     this.unselectTag,
     this.allTags,
   }) : super(key: key);
@@ -39,21 +39,12 @@ class TagsField extends StatefulWidget {
   final TextCapitalization textCapitalization;
   final Function(String)? onSubmitted;
   final Function()? onEditingComplete;
-  final List<String>? tags;
-  final List<String>? selectedTags;
-  final Function(String)? selectTag;
+
   final Function(String)? unselectTag;
   final List<String>? allTags;
 
-  @override
-  State<TagsField> createState() => _TagsFieldState();
-}
-
-class _TagsFieldState extends State<TagsField> {
-  final FocusNode focusNode = FocusNode();
-  bool showClearButton = false;
-
-  Widget _buildTagChip({required String tag, required bool selected}) {
+  Widget _buildTagChip(BuildContext context,
+      {required String tag, required bool selected}) {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 5),
       child: FilterChip(
@@ -68,25 +59,25 @@ class _TagsFieldState extends State<TagsField> {
             selected ? Theme.of(context).colorScheme.onSecondary : null,
         selected: selected,
         selectedColor: Theme.of(context).colorScheme.secondary,
-        onSelected: (newState) {
-          if (widget.selectTag == null || widget.unselectTag == null) return;
-          newState ? widget.selectTag!(tag) : widget.unselectTag!(tag);
+        onSelected: (_) {
+          if (unselectTag == null) return;
+          unselectTag!(tag);
         },
       ),
     );
   }
 
-  List<Widget> _generateTagChips() {
+  List<Widget> _generateTagChips(
+    BuildContext context,
+    List<String> tags,
+  ) {
     final chips = List<Widget>.empty(growable: true);
 
-    if (widget.tags == null) {
-      return [];
-    }
-
-    for (var tag in widget.tags!) {
+    for (var tag in tags) {
       chips.add(_buildTagChip(
+        context,
         tag: tag,
-        selected: (widget.selectedTags?.contains(tag) == true) ? true : false,
+        selected: true,
       ));
     }
 
@@ -94,24 +85,9 @@ class _TagsFieldState extends State<TagsField> {
   }
 
   @override
-  void initState() {
-    super.initState();
-
-    if (widget.controller == null) return;
-
-    widget.controller!.addListener(() {
-      setState(() {
-        if (widget.controller!.text.isNotEmpty) {
-          showClearButton = true;
-        } else {
-          showClearButton = false;
-        }
-      });
-    });
-  }
-
-  @override
   Widget build(BuildContext context) {
+    final FocusNode focusNode = FocusNode();
+
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 10),
       child: Container(
@@ -131,17 +107,17 @@ class _TagsFieldState extends State<TagsField> {
                 );
               },
               suggestionsCallback: (pattern) {
-                if (widget.allTags == null) {
+                if (allTags == null) {
                   return List<String>.empty();
                 }
-                return widget.allTags!.where((String option) {
+                return allTags!.where((String option) {
                   return option.toLowerCase().contains(pattern.toLowerCase());
                 }).toList();
               },
               onSuggestionSelected: (suggestion) {
-                widget.controller?.text = suggestion;
-                if (widget.onSubmitted != null) {
-                  widget.onSubmitted!(suggestion);
+                controller?.text = suggestion;
+                if (onSubmitted != null) {
+                  onSubmitted!(suggestion);
                 }
               },
               hideOnLoading: true,
@@ -151,44 +127,30 @@ class _TagsFieldState extends State<TagsField> {
                 elevation: 8.0,
               ),
               textFieldConfiguration: TextFieldConfiguration(
-                autofocus: widget.autofocus,
-                keyboardType: widget.keyboardType,
-                inputFormatters: widget.inputFormatters,
-                textCapitalization: widget.textCapitalization,
-                controller: widget.controller,
+                autofocus: autofocus,
+                keyboardType: keyboardType,
+                inputFormatters: inputFormatters,
+                textCapitalization: textCapitalization,
+                controller: controller,
                 focusNode: focusNode,
                 minLines: 1,
-                maxLines: widget.maxLines,
-                maxLength: widget.maxLength,
-                textInputAction: widget.textInputAction,
+                maxLines: maxLines,
+                maxLength: maxLength,
+                textInputAction: textInputAction,
                 style: const TextStyle(fontSize: 14),
-                onSubmitted: widget.onSubmitted,
-                onEditingComplete: widget.onEditingComplete,
+                onSubmitted: onSubmitted,
+                onEditingComplete: onEditingComplete,
                 decoration: InputDecoration(
-                  labelText: widget.hint,
+                  labelText: hint,
                   labelStyle: const TextStyle(fontSize: 14),
-                  icon: (widget.icon != null)
+                  icon: (icon != null)
                       ? Icon(
-                          widget.icon,
+                          icon,
                           color: Theme.of(context).colorScheme.primary,
                         )
                       : null,
                   border: InputBorder.none,
-                  counterText: widget.hideCounter ? "" : null,
-                  suffixIcon: showClearButton
-                      ? IconButton(
-                          onPressed: () {
-                            if (widget.controller == null) return;
-
-                            widget.controller!.clear();
-                            setState(() {
-                              showClearButton = false;
-                            });
-                            focusNode.requestFocus();
-                          },
-                          icon: const Icon(Icons.clear),
-                        )
-                      : null,
+                  counterText: hideCounter ? "" : null,
                 ),
               ),
             )),
@@ -200,8 +162,17 @@ class _TagsFieldState extends State<TagsField> {
                       vertical: 5,
                       horizontal: 2.5,
                     ),
-                    child: Wrap(
-                      children: _generateTagChips(),
+                    child: BlocBuilder<EditBookCubit, Book>(
+                      builder: (context, state) {
+                        return state.tags != null
+                            ? Wrap(
+                                children: _generateTagChips(
+                                  context,
+                                  state.tags!.split('|||||'),
+                                ),
+                              )
+                            : const SizedBox();
+                      },
                     ),
                   ),
                 ),

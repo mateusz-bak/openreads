@@ -60,6 +60,7 @@ dependencies:
   flutter_typeahead: ^4.6.1
   flex_color_picker: ^3.2.2
   flutter_speed_dial: ^7.0.0
+  blurhash_dart: ^1.2.1
 
 dev_dependencies:
   flutter_test:

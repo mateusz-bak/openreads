@@ -1,10 +1,12 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
 import 'package:loading_animation_widget/loading_animation_widget.dart';
 import 'package:openreads/core/constants.dart/enums.dart';
 import 'package:openreads/generated/locale_keys.g.dart';
+import 'package:openreads/logic/cubit/edit_book_cubit_cubit.dart';
 import 'package:openreads/model/book.dart';
 import 'package:openreads/model/ol_edition_result.dart';
 import 'package:openreads/resources/open_library_service.dart';
@@ -116,13 +118,15 @@ class _SearchOLEditionsScreenState extends State<SearchOLEditionsScreen> {
       bookType: BookType.paper,
     );
 
+    context.read<EditBookCubit>().setBook(book);
+
     Navigator.of(context).push(
       MaterialPageRoute(
         builder: (_) => AddBookScreen(
           fromOpenLibrary: true,
-          book: book,
           fromOpenLibraryEdition: true,
           work: work,
+          coverOpenLibraryID: cover,
         ),
       ),
     );
@@ -191,10 +195,16 @@ class _SearchOLEditionsScreenState extends State<SearchOLEditionsScreen> {
                           itemBuilder: (context, item, index) =>
                               BookCardOLEdition(
                             title: item.title!,
-                            cover: item.covers![0], // TODO
+                            cover:
+                                item.covers != null && item.covers!.isNotEmpty
+                                    ? item.covers![0]
+                                    : null,
                             onPressed: () => _saveEdition(
                               result: item,
-                              cover: item.covers![0], // TODO
+                              cover:
+                                  item.covers != null && item.covers!.isNotEmpty
+                                      ? item.covers![0]
+                                      : null,
                               work: item.works != null && item.works!.isNotEmpty
                                   ? item.works![0].key
                                   : null,

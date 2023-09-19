@@ -1,10 +1,10 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 
-import '../../../core/constants.dart/enums.dart';
-import '../../../generated/locale_keys.g.dart';
-import '../../../main.dart';
-import '../../add_book_screen/widgets/book_type_dropdown.dart';
+import 'package:openreads/main.dart';
+import 'package:openreads/generated/locale_keys.g.dart';
+import 'package:openreads/core/constants.dart/enums.dart';
+import 'package:openreads/ui/add_book_screen/widgets/book_type_dropdown.dart';
 
 List<String> bookTypes = [
   LocaleKeys.book_type_paper.tr(),
@@ -24,18 +24,24 @@ showEditBookTypeBottomSheet(BuildContext context, Set<int> selectedBookIds) {
             children: [
               Text(
                 LocaleKeys.change_book_type.tr(),
-                style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                style: const TextStyle(
+                  fontSize: 18,
+                  fontWeight: FontWeight.bold,
+                ),
               ),
               const SizedBox(height: 20),
               BookTypeDropdown(
-                bookType: BookType.paper,
+                multiSelect: true,
                 bookTypes: bookTypes,
                 changeBookType: (bookType) {
                   if (bookType == null) return;
                   _updateBooks(bookType, selectedBookIds);
                   Navigator.pop(context);
                   ScaffoldMessenger.of(context).showSnackBar(
-                      SnackBar(content: Text(LocaleKeys.update_successful_message.tr())));
+                    SnackBar(
+                      content: Text(LocaleKeys.update_successful_message.tr()),
+                    ),
+                  );
                 },
               ),
             ],
@@ -55,5 +61,6 @@ void _updateBooks(String bookType, Set<int> selectedIds) async {
   } else {
     selectedBookType = BookType.paper;
   }
+
   bookCubit.updateBookType(selectedIds, selectedBookType);
 }

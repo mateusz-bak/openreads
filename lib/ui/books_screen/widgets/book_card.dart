@@ -148,11 +148,11 @@ class BookCard extends StatelessWidget {
     return chips;
   }
 
-  String? _generateDate(String? date) {
+  String? _generateDate(DateTime? date) {
     if (date == null) return null;
 
     final DateFormat formatter = DateFormat('dd/MM/yyyy');
-    return formatter.format(DateTime.parse(date));
+    return formatter.format(date);
   }
 
   @override

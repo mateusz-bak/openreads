@@ -167,7 +167,7 @@ class BookCubit extends Cubit {
 
     for (var book in books) {
       if (book.finishDate != null) {
-        years.add(DateTime.parse(book.finishDate!).year);
+        years.add(book.finishDate!.year);
       }
     }
 

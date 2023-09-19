@@ -16,17 +16,18 @@ class Book {
   bool favourite;
   bool deleted;
   int? rating;
-  String? startDate;
-  String? finishDate;
+  DateTime? startDate;
+  DateTime? finishDate;
   int? pages;
   int? publicationYear;
   String? isbn;
   String? olid;
   String? tags;
   String? myReview;
-  final Uint8List? cover;
-  final String? blurHash;
+  Uint8List? cover; // Not used since 2.2.0
+  String? blurHash;
   BookType bookType;
+  bool hasCover;
 
   Book({
     this.id,
@@ -48,8 +49,22 @@ class Book {
     this.myReview,
     this.cover,
     this.blurHash,
-    required this.bookType,
+    this.bookType = BookType.paper,
+    this.hasCover = false,
   });
+
+  factory Book.empty() {
+    return Book(
+      id: null,
+      title: '',
+      author: '',
+      status: 0,
+      favourite: false,
+      deleted: false,
+      bookType: BookType.paper,
+      hasCover: false,
+    );
+  }
 
   factory Book.fromJSON(Map<String, dynamic> json) {
     return Book(
@@ -61,9 +76,14 @@ class Book {
       status: json['status'],
       rating: json['rating'],
       favourite: (json['favourite'] == 1) ? true : false,
+      hasCover: (json['has_cover'] == 1) ? true : false,
       deleted: (json['deleted'] == 1) ? true : false,
-      startDate: json['start_date'],
-      finishDate: json['finish_date'],
+      startDate: json['start_date'] != null
+          ? DateTime.parse(json['start_date'])
+          : null,
+      finishDate: json['finish_date'] != null
+          ? DateTime.parse(json['finish_date'])
+          : null,
       pages: json['pages'],
       publicationYear: json['publication_year'],
       isbn: json['isbn'],
@@ -91,8 +111,8 @@ class Book {
     bool? favourite,
     bool? deleted,
     int? rating,
-    String? startDate,
-    String? finishDate,
+    DateTime? startDate,
+    DateTime? finishDate,
     int? pages,
     int? publicationYear,
     String? isbn,
@@ -102,6 +122,7 @@ class Book {
     Uint8List? cover,
     String? blurHash,
     BookType? bookType,
+    bool? hasCover,
   }) {
     return Book(
       id: id,
@@ -124,6 +145,7 @@ class Book {
       cover: cover ?? this.cover,
       blurHash: blurHash ?? this.blurHash,
       bookType: bookType ?? this.bookType,
+      hasCover: hasCover ?? this.hasCover,
     );
   }
 
@@ -149,6 +171,7 @@ class Book {
       cover: null,
       blurHash: blurHash,
       bookType: bookType,
+      hasCover: hasCover,
     );
   }
 
@@ -173,15 +196,13 @@ class Book {
               oldBook.bookStartDate != 'none' &&
               oldBook.bookStartDate != 'null'
           ? DateTime.fromMillisecondsSinceEpoch(
-                  int.parse(oldBook.bookStartDate!))
-              .toIso8601String()
+              int.parse(oldBook.bookStartDate!))
           : null,
       finishDate: oldBook.bookFinishDate != null &&
               oldBook.bookFinishDate != 'none' &&
               oldBook.bookFinishDate != 'null'
           ? DateTime.fromMillisecondsSinceEpoch(
-                  int.parse(oldBook.bookFinishDate!))
-              .toIso8601String()
+              int.parse(oldBook.bookFinishDate!))
           : null,
       pages: oldBook.bookNumberOfPages,
       publicationYear: oldBook.bookPublishYear,
@@ -194,6 +215,7 @@ class Book {
       cover: oldBook.bookCoverImg,
       blurHash: blurHash,
       bookType: BookType.paper,
+      hasCover: false,
     );
   }
 
@@ -208,8 +230,8 @@ class Book {
       'rating': rating,
       'favourite': favourite ? 1 : 0,
       'deleted': deleted ? 1 : 0,
-      'start_date': startDate,
-      'finish_date': finishDate,
+      'start_date': startDate?.toIso8601String(),
+      'finish_date': finishDate?.toIso8601String(),
       'pages': pages,
       'publication_year': publicationYear,
       'isbn': isbn,
@@ -218,6 +240,7 @@ class Book {
       'my_review': myReview,
       'cover': cover,
       'blur_hash': blurHash,
+      'has_cover': hasCover ? 1 : 0,
       'book_type': bookType == BookType.audiobook
           ? 'audiobook'
           : bookType == BookType.ebook
@@ -227,10 +250,11 @@ class Book {
   }
 
   File? getCoverFile() {
-    final fileExists = File('${directory.path}/$id.jpg').existsSync();
+    final fileExists =
+        File('${appDocumentsDirectory.path}/$id.jpg').existsSync();
 
     if (fileExists) {
-      return File('${directory.path}/$id.jpg');
+      return File('${appDocumentsDirectory.path}/$id.jpg');
     } else {
       return null;
     }
