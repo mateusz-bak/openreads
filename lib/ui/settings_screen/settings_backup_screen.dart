@@ -21,7 +21,6 @@ import 'package:openreads/model/yearly_challenge.dart';
 import 'package:openreads/ui/welcome_screen/widgets/widgets.dart';
 import 'package:package_info_plus/package_info_plus.dart';
 import 'package:path/path.dart' as path;
-import 'package:path_provider/path_provider.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:settings_ui/settings_ui.dart';
 import 'package:share_plus/share_plus.dart';
@@ -149,16 +148,15 @@ class _SettingsBackupScreenState extends State<SettingsBackupScreen> {
       List<String> list, String? challengeTargets) async {
     final data = list.join('@@@@@');
 
-    final tmpDir = await getApplicationSupportDirectory();
-
     final fileName = await _prepareBackupFileName();
 
-    final tmpFilePath = '${tmpDir.path}/$fileName';
+    final tmpFilePath = '${appTempDirectory.path}/$fileName';
 
     try {
-      File('${tmpDir.path}/books.backup').writeAsStringSync(data);
+      File('${appTempDirectory.path}/books.backup').writeAsStringSync(data);
 
-      final booksBytes = File('${tmpDir.path}/books.backup').readAsBytesSync();
+      final booksBytes =
+          File('${appTempDirectory.path}/books.backup').readAsBytesSync();
 
       final archivedBooks = ArchiveFile(
         'books.backup',
@@ -170,11 +168,12 @@ class _SettingsBackupScreenState extends State<SettingsBackupScreen> {
       archive.addFile(archivedBooks);
 
       if (challengeTargets != null) {
-        File('${tmpDir.path}/challenges.backup')
+        File('${appTempDirectory.path}/challenges.backup')
             .writeAsStringSync(challengeTargets);
 
         final challengeTargetsBytes =
-            File('${tmpDir.path}/challenges.backup').readAsBytesSync();
+            File('${appTempDirectory.path}/challenges.backup')
+                .readAsBytesSync();
 
         final archivedChallengeTargets = ArchiveFile(
           'challenges.backup',
@@ -347,7 +346,7 @@ class _SettingsBackupScreenState extends State<SettingsBackupScreen> {
   }
 
   Future _restoreLocalBackupWithScopedStorage() async {
-    final tmpDir = (await getApplicationSupportDirectory()).absolute;
+    final tmpDir = appTempDirectory.absolute;
     _deleteTmpData(tmpDir);
 
     final selectedUris = await openDocument(multiple: false);
@@ -424,7 +423,7 @@ class _SettingsBackupScreenState extends State<SettingsBackupScreen> {
   }
 
   _restoreLocalBackup() async {
-    final tmpDir = (await getApplicationSupportDirectory()).absolute;
+    final tmpDir = appTempDirectory.absolute;
     _deleteTmpData(tmpDir);
 
     try {
@@ -506,9 +505,21 @@ class _SettingsBackupScreenState extends State<SettingsBackupScreen> {
 
     for (var book in books) {
       try {
+        final newBook = Book.fromJSON(jsonDecode(book));
+        File? coverFile;
+
+        if (newBook.cover != null) {
+          coverFile = File('${tmpPath.path}/${newBook.id}.jpg');
+          coverFile.writeAsBytesSync(newBook.cover!);
+
+          newBook.hasCover = true;
+          newBook.cover = null;
+        }
+
         bookCubit.addBook(
-          Book.fromJSON(jsonDecode(book)),
+          newBook,
           refreshBooks: false,
+          coverFile: coverFile,
         );
       } catch (e) {
         ScaffoldMessenger.of(context).showSnackBar(
@@ -635,10 +646,22 @@ class _SettingsBackupScreenState extends State<SettingsBackupScreen> {
   }
 
   Future<void> _addBookFromBackupV3(BookFromBackupV3 book) async {
+    final tmpDir = (appTempDirectory).absolute;
+
     final blurHash = await compute(_generateBlurHash, book.bookCoverImg);
     final newBook = Book.fromBookFromBackupV3(book, blurHash);
 
-    bookCubit.addBook(newBook, refreshBooks: false);
+    File? coverFile;
+
+    if (newBook.cover != null) {
+      coverFile = File('${tmpDir.path}/${newBook.id}.jpg');
+      coverFile.writeAsBytesSync(newBook.cover!);
+
+      newBook.hasCover = true;
+      newBook.cover = null;
+    }
+
+    bookCubit.addBook(newBook, refreshBooks: false, coverFile: coverFile);
     booksBackupDone = booksBackupDone + 1;
 
     if (!mounted) return;
