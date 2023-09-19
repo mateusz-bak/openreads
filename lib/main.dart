@@ -17,7 +17,8 @@ import 'package:openreads/logic/bloc/sort_bloc/sort_bloc.dart';
 import 'package:openreads/logic/bloc/theme_bloc/theme_bloc.dart';
 import 'package:openreads/logic/bloc/welcome_bloc/welcome_bloc.dart';
 import 'package:openreads/logic/cubit/book_cubit.dart';
-import 'package:openreads/logic/cubit/edit_book_cubit_cubit.dart';
+import 'package:openreads/logic/cubit/current_book_cubit.dart';
+import 'package:openreads/logic/cubit/edit_book_cubit.dart';
 import 'package:openreads/resources/connectivity_service.dart';
 import 'package:openreads/resources/open_library_service.dart';
 import 'package:openreads/ui/books_screen/books_screen.dart';
@@ -70,6 +71,9 @@ class App extends StatelessWidget {
           BlocProvider<EditBookCubit>(create: (context) => EditBookCubit()),
           BlocProvider<EditBookCoverCubit>(
             create: (context) => EditBookCoverCubit(),
+          ),
+          BlocProvider<CurrentBookCubit>(
+            create: (context) => CurrentBookCubit(),
           ),
           BlocProvider<ThemeBloc>(create: (context) => ThemeBloc()),
           BlocProvider<DisplayBloc>(create: (context) => DisplayBloc()),

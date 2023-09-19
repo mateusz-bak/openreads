@@ -8,7 +8,7 @@ import 'package:openreads/generated/locale_keys.g.dart';
 import 'package:openreads/logic/bloc/display_bloc/display_bloc.dart';
 import 'package:openreads/logic/bloc/sort_bloc/sort_bloc.dart';
 import 'package:openreads/logic/bloc/theme_bloc/theme_bloc.dart';
-import 'package:openreads/logic/cubit/edit_book_cubit_cubit.dart';
+import 'package:openreads/logic/cubit/edit_book_cubit.dart';
 import 'package:openreads/main.dart';
 import 'package:openreads/model/book.dart';
 import 'package:openreads/ui/add_book_screen/add_book_screen.dart';

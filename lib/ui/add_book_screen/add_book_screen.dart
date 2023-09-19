@@ -12,7 +12,7 @@ import 'package:openreads/core/constants.dart/constants.dart';
 import 'package:openreads/core/constants.dart/enums.dart';
 import 'package:openreads/core/helpers/helpers.dart';
 import 'package:openreads/generated/locale_keys.g.dart';
-import 'package:openreads/logic/cubit/edit_book_cubit_cubit.dart';
+import 'package:openreads/logic/cubit/edit_book_cubit.dart';
 import 'package:openreads/resources/open_library_service.dart';
 import 'package:openreads/main.dart';
 import 'package:openreads/model/book.dart';

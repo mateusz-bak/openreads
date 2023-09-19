@@ -15,7 +15,7 @@ import 'package:openreads/ui/add_book_screen/widgets/cover_placeholder.dart';
 import 'package:openreads/core/constants.dart/constants.dart';
 import 'package:openreads/core/themes/app_theme.dart';
 import 'package:openreads/generated/locale_keys.g.dart';
-import 'package:openreads/logic/cubit/edit_book_cubit_cubit.dart';
+import 'package:openreads/logic/cubit/edit_book_cubit.dart';
 import 'package:openreads/main.dart';
 
 class CoverViewEdit extends StatelessWidget {
