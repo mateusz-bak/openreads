@@ -1,8 +1,10 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:openreads/core/themes/app_theme.dart';
 import 'package:openreads/generated/locale_keys.g.dart';
+import 'package:openreads/logic/bloc/theme_bloc/theme_bloc.dart';
 import 'package:openreads/logic/cubit/current_book_cubit.dart';
 import 'package:openreads/logic/cubit/edit_book_cubit.dart';
 import 'package:openreads/main.dart';
@@ -235,61 +237,93 @@ class BookScreen extends StatelessWidget {
     ];
 
     return Scaffold(
-      appBar: AppBar(
-        actions: [
-          BlocBuilder<CurrentBookCubit, Book>(
-            builder: (context, state) {
-              if (moreButtonOptions.length == 1) {
-                if (state.deleted == true) {
-                  moreButtonOptions.add(LocaleKeys.restore_book.tr());
-                  moreButtonOptions.add(LocaleKeys.delete_permanently.tr());
-                } else {
-                  moreButtonOptions.add(LocaleKeys.delete_book.tr());
-                }
-              }
+      extendBodyBehindAppBar: true,
+      appBar: PreferredSize(
+        preferredSize: AppBar().preferredSize,
+        // Needed to add BlocBuilder because the status bar was changing
+        // to different color then in BooksScreen
+        child: BlocBuilder<ThemeBloc, ThemeState>(
+          builder: (context, state) {
+            final themeMode = (state as SetThemeState).themeMode;
 
-              return PopupMenuButton<String>(
-                onSelected: (_) {},
-                itemBuilder: (_) {
-                  return moreButtonOptions.map((String choice) {
-                    return PopupMenuItem<String>(
-                      value: choice,
-                      child: Text(choice),
-                      onTap: () async {
-                        context.read<EditBookCubit>().setBook(state);
+            return AppBar(
+              backgroundColor: Colors.transparent,
+              scrolledUnderElevation: 0,
+              systemOverlayStyle: SystemUiOverlayStyle(
+                statusBarColor: Colors.transparent,
+                statusBarIconBrightness: themeMode == ThemeMode.system
+                    ? MediaQuery.platformBrightnessOf(context) ==
+                            Brightness.dark
+                        ? Brightness.light
+                        : Brightness.dark
+                    : themeMode == ThemeMode.dark
+                        ? Brightness.light
+                        : Brightness.dark,
+              ),
+              actions: [
+                BlocBuilder<CurrentBookCubit, Book>(
+                  builder: (context, state) {
+                    if (moreButtonOptions.length == 1) {
+                      if (state.deleted == true) {
+                        moreButtonOptions.add(LocaleKeys.restore_book.tr());
+                        moreButtonOptions.add(
+                          LocaleKeys.delete_permanently.tr(),
+                        );
+                      } else {
+                        moreButtonOptions.add(LocaleKeys.delete_book.tr());
+                      }
+                    }
 
-                        await Future.delayed(const Duration(
-                          milliseconds: 0,
-                        ));
-                        if (!context.mounted) return;
+                    return PopupMenuButton<String>(
+                      onSelected: (_) {},
+                      itemBuilder: (_) {
+                        return moreButtonOptions.map((String choice) {
+                          return PopupMenuItem<String>(
+                            value: choice,
+                            child: Text(choice),
+                            onTap: () async {
+                              context.read<EditBookCubit>().setBook(state);
 
-                        if (choice == moreButtonOptions[0]) {
-                          Navigator.of(context).push(
-                            MaterialPageRoute(
-                              builder: (_) => const AddBookScreen(
-                                editingExistingBook: true,
-                              ),
-                            ),
+                              await Future.delayed(const Duration(
+                                milliseconds: 0,
+                              ));
+                              if (!context.mounted) return;
+
+                              if (choice == moreButtonOptions[0]) {
+                                Navigator.of(context).push(
+                                  MaterialPageRoute(
+                                    builder: (_) => const AddBookScreen(
+                                      editingExistingBook: true,
+                                    ),
+                                  ),
+                                );
+                              } else if (choice == moreButtonOptions[1]) {
+                                if (state.deleted == false) {
+                                  _showDeleteRestoreDialog(
+                                      context, true, null, state);
+                                } else {
+                                  _showDeleteRestoreDialog(
+                                      context, false, null, state);
+                                }
+                              } else if (choice == moreButtonOptions[2]) {
+                                _showDeleteRestoreDialog(
+                                  context,
+                                  true,
+                                  true,
+                                  state,
+                                );
+                              }
+                            },
                           );
-                        } else if (choice == moreButtonOptions[1]) {
-                          if (state.deleted == false) {
-                            _showDeleteRestoreDialog(
-                                context, true, null, state);
-                          } else {
-                            _showDeleteRestoreDialog(
-                                context, false, null, state);
-                          }
-                        } else if (choice == moreButtonOptions[2]) {
-                          _showDeleteRestoreDialog(context, true, true, state);
-                        }
+                        }).toList();
                       },
                     );
-                  }).toList();
-                },
-              );
-            },
-          ),
-        ],
+                  },
+                ),
+              ],
+            );
+          },
+        ),
       ),
       body: BlocBuilder<CurrentBookCubit, Book>(
         builder: (context, state) {
@@ -299,14 +333,13 @@ class BookScreen extends StatelessWidget {
                 (state.hasCover == true)
                     ? Center(
                         child: CoverView(
-                          onPressed: null,
                           heroTag: heroTag,
                           book: state,
                         ),
                       )
                     : const SizedBox(),
                 Padding(
-                  padding: const EdgeInsets.all(5),
+                  padding: const EdgeInsets.fromLTRB(5, 0, 5, 5),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
