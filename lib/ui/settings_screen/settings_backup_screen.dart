@@ -144,17 +144,21 @@ class _SettingsBackupScreenState extends State<SettingsBackupScreen> {
     return null;
   }
 
+  // Current backup version: 5
   Future<String?> _writeTempBackupFile(
-      List<String> list, String? challengeTargets) async {
-    final data = list.join('@@@@@');
-
+    List<String> listOfBookJSONs,
+    String? challengeTargets,
+    List<File>? coverFiles,
+  ) async {
+    final data = listOfBookJSONs.join('@@@@@');
     final fileName = await _prepareBackupFileName();
-
     final tmpFilePath = '${appTempDirectory.path}/$fileName';
 
     try {
+      // Saving books to temp file
       File('${appTempDirectory.path}/books.backup').writeAsStringSync(data);
 
+      // Reading books temp file to memory
       final booksBytes =
           File('${appTempDirectory.path}/books.backup').readAsBytesSync();
 
@@ -164,13 +168,16 @@ class _SettingsBackupScreenState extends State<SettingsBackupScreen> {
         booksBytes,
       );
 
+      // Prepare main archive
       final archive = Archive();
       archive.addFile(archivedBooks);
 
       if (challengeTargets != null) {
+        // Saving challenges to temp file
         File('${appTempDirectory.path}/challenges.backup')
             .writeAsStringSync(challengeTargets);
 
+        // Reading challenges temp file to memory
         final challengeTargetsBytes =
             File('${appTempDirectory.path}/challenges.backup')
                 .readAsBytesSync();
@@ -183,6 +190,32 @@ class _SettingsBackupScreenState extends State<SettingsBackupScreen> {
 
         archive.addFile(archivedChallengeTargets);
       }
+
+      // Adding covers to the backup file
+      if (coverFiles != null && coverFiles.isNotEmpty) {
+        for (var coverFile in coverFiles) {
+          final coverBytes = coverFile.readAsBytesSync();
+
+          final archivedCover = ArchiveFile(
+            coverFile.path.split('/').last,
+            coverBytes.length,
+            coverBytes,
+          );
+
+          archive.addFile(archivedCover);
+        }
+      }
+
+      // Add info file
+      final info = await _prepareBackupInfo();
+      final infoBytes = utf8.encode(info);
+
+      final archivedInfo = ArchiveFile(
+        'info.txt',
+        infoBytes.length,
+        infoBytes,
+      );
+      archive.addFile(archivedInfo);
 
       final encodedArchive = ZipEncoder().encode(archive);
 
@@ -250,22 +283,43 @@ class _SettingsBackupScreenState extends State<SettingsBackupScreen> {
       await bookCubit.getAllBooks(tags: true);
 
       final books = await bookCubit.allBooks.first;
-      final backedBooks = List<String>.empty(growable: true);
+      final listOfBookJSONs = List<String>.empty(growable: true);
+      final coverFiles = List<File>.empty(growable: true);
 
       for (var book in books) {
-        backedBooks.add(jsonEncode(book.toJSON()));
+        // Making sure no covers are stored as JSON
+        final bookWithCoverNull = book.copyWithNullCover();
+
+        listOfBookJSONs.add(jsonEncode(bookWithCoverNull.toJSON()));
+
+        // Creating a list of current cover files
+        if (book.hasCover) {
+          // Check if cover file exists, if not then skip
+          if (!File('${appDocumentsDirectory.path}/${book.id}.jpg')
+              .existsSync()) {
+            continue;
+          }
+
+          final coverFile = File(
+            '${appDocumentsDirectory.path}/${book.id}.jpg',
+          );
+          coverFiles.add(coverFile);
+        }
+
         await Future.delayed(const Duration(milliseconds: 50));
       }
 
       final challengeTargets = await _getChallengeTargets();
 
       return await _writeTempBackupFile(
-        backedBooks,
+        listOfBookJSONs,
         challengeTargets,
+        coverFiles,
       );
     } catch (e) {
       setState(() => _creatingLocal = false);
 
+      if (!mounted) return null;
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
           content: Text(
@@ -288,9 +342,14 @@ class _SettingsBackupScreenState extends State<SettingsBackupScreen> {
     final date = DateTime.now();
     final backupDate =
         '${date.year}_${date.month}_${date.day}-${date.hour}_${date.minute}_${date.second}';
+
+    return 'Openreads-$backupDate.backup';
+  }
+
+  Future<String> _prepareBackupInfo() async {
     final appVersion = await _getAppVersion();
 
-    return 'Openreads-4-$appVersion-$backupDate.backup';
+    return 'App version: $appVersion\nBackup version: 5';
   }
 
   Future _createLocalBackupWithScopedStorage() async {
@@ -314,13 +373,15 @@ class _SettingsBackupScreenState extends State<SettingsBackupScreen> {
         bytes: File(tmpBackupPath).readAsBytesSync(),
       );
 
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
-          content: Text(
-            LocaleKeys.backup_successfull.tr(),
+      if (mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text(
+              LocaleKeys.backup_successfull.tr(),
+            ),
           ),
-        ),
-      );
+        );
+      }
     } catch (e) {
       setState(() => _creatingLocal = false);
       if (!mounted) return;
@@ -359,19 +420,27 @@ class _SettingsBackupScreenState extends State<SettingsBackupScreen> {
     final selectedUriDir = selectedUris[0];
     final backupFile = await getDocumentContent(selectedUriDir);
 
+    // Backups v3 and v4 are recognized by their file name
     if (selectedUriDir.path.contains('Openreads-4-')) {
       await restoreBackupVersion4(archiveFile: backupFile, tmpPath: tmpDir);
     } else if (selectedUriDir.path.contains('openreads_3_')) {
       await restoreBackupVersion3(archiveFile: backupFile, tmpPath: tmpDir);
     } else {
-      if (!mounted) return;
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
-          content: Text(
-            LocaleKeys.backup_not_valid.tr(),
+      // Because file name is not always possible to read
+      // backups v5 is recognized by the info.txt file
+      final infoFileVersion = _checkInfoFileVersion(backupFile, tmpDir);
+      if (infoFileVersion == 5) {
+        await _restoreBackupVersion5(backupFile, tmpDir);
+      } else {
+        if (!mounted) return;
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text(
+              LocaleKeys.backup_not_valid.tr(),
+            ),
           ),
-        ),
-      );
+        );
+      }
     }
 
     setState(() => _restoringLocal = false);
@@ -387,6 +456,26 @@ class _SettingsBackupScreenState extends State<SettingsBackupScreen> {
 
     Navigator.of(context).pop();
     Navigator.of(context).pop();
+  }
+
+  // Open the info.txt file and check the backup version
+  int? _checkInfoFileVersion(Uint8List? backupFile, Directory tmpDir) {
+    if (backupFile == null) return null;
+
+    final archive = ZipDecoder().decodeBytes(backupFile);
+    extractArchiveToDisk(archive, tmpDir.path);
+
+    final infoFile = File('${tmpDir.path}/info.txt');
+    if (!infoFile.existsSync()) return null;
+
+    final infoFileContent = infoFile.readAsStringSync();
+    final infoFileContentSplitted = infoFileContent.split('\n');
+
+    if (infoFileContentSplitted.isEmpty) return null;
+
+    final infoFileVersion = infoFileContentSplitted[1].split(': ')[1];
+
+    return int.tryParse(infoFileVersion);
   }
 
   Future<bool> _requestStoragePermission() async {
@@ -470,6 +559,68 @@ class _SettingsBackupScreenState extends State<SettingsBackupScreen> {
         ),
       );
     }
+  }
+
+  _restoreBackupVersion5(
+    Uint8List? archiveBytes,
+    Directory tmpPath,
+  ) async {
+    if (archiveBytes == null) {
+      setState(() => _restoringLocal = false);
+      return;
+    }
+
+    final archive = ZipDecoder().decodeBytes(archiveBytes);
+    extractArchiveToDisk(archive, tmpPath.path);
+
+    var booksData = File('${tmpPath.path}/books.backup').readAsStringSync();
+
+    // First backups of v2 used ||||| as separation between books,
+    // That caused problems because this is as well a separator for tags
+    // Now @@@@@ is a separator for books but some backups may need below line
+    booksData = booksData.replaceAll('}|||||{', '}@@@@@{');
+
+    final bookStrings = booksData.split('@@@@@');
+
+    await bookCubit.removeAllBooks();
+
+    for (var bookString in bookStrings) {
+      try {
+        final newBook = Book.fromJSON(jsonDecode(bookString));
+        File? coverFile;
+
+        if (newBook.hasCover) {
+          coverFile = File('${tmpPath.path}/${newBook.id}.jpg');
+
+          // Making sure cover is not stored in the Book object
+          newBook.cover = null;
+        }
+
+        bookCubit.addBook(
+          newBook,
+          refreshBooks: false,
+          coverFile: coverFile,
+        );
+      } catch (e) {
+        if (!mounted) return;
+
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text(
+              e.toString(),
+            ),
+          ),
+        );
+
+        setState(() => _restoringLocal = false);
+      }
+    }
+
+    bookCubit.getAllBooksByStatus();
+    bookCubit.getAllBooks();
+
+    // No changes in challenges since v4 so we can use the v4 method
+    await _restoreChallengeTargetsV4(tmpPath);
   }
 
   restoreBackupVersion4({
