@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:openreads/main.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:openreads/logic/cubit/current_book_cubit.dart';
 import 'package:openreads/model/book.dart';
 import 'package:openreads/ui/book_screen/book_screen.dart';
 import 'package:openreads/ui/books_screen/widgets/widgets.dart';
@@ -58,8 +59,8 @@ class _BooksGridState extends State<BooksGrid>
                   widget.onBookSelected!(widget.books[index].id!);
                   return;
                 }
-                bookCubit.clearCurrentBook();
-                bookCubit.getBook(widget.books[index].id!);
+
+                context.read<CurrentBookCubit>().setBook(widget.books[index]);
 
                 Navigator.push(
                   context,
@@ -71,7 +72,7 @@ class _BooksGridState extends State<BooksGrid>
                   ),
                 );
               },
-              onLongPressed: (){
+              onLongPressed: () {
                 if (widget.books[index].id == null) return;
                 if (widget.onBookSelected != null) {
                   widget.onBookSelected!(widget.books[index].id!);

@@ -17,6 +17,7 @@ class BookTextField extends StatefulWidget {
     this.hideCounter = true,
     this.textInputAction,
     this.textCapitalization = TextCapitalization.none,
+    this.padding = const EdgeInsets.symmetric(horizontal: 10),
     this.onSubmitted,
   }) : super(key: key);
 
@@ -32,6 +33,7 @@ class BookTextField extends StatefulWidget {
   final TextInputAction? textInputAction;
   final TextCapitalization textCapitalization;
   final Function(String)? onSubmitted;
+  final EdgeInsets padding;
 
   @override
   State<BookTextField> createState() => _BookTextFieldState();
@@ -58,49 +60,53 @@ class _BookTextFieldState extends State<BookTextField> {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 0),
-      decoration: BoxDecoration(
-        color: Theme.of(context).colorScheme.surfaceVariant,
-        borderRadius: BorderRadius.circular(cornerRadius),
-        border: Border.all(color: dividerColor),
-      ),
-      child: Scrollbar(
-        child: TextField(
-          autofocus: widget.autofocus,
-          keyboardType: widget.keyboardType,
-          inputFormatters: widget.inputFormatters,
-          textCapitalization: widget.textCapitalization,
-          controller: widget.controller,
-          focusNode: focusNode,
-          minLines: 1,
-          maxLines: widget.maxLines,
-          maxLength: widget.maxLength,
-          textInputAction: widget.textInputAction,
-          style: const TextStyle(fontSize: 14),
-          onSubmitted: widget.onSubmitted ?? (_) {},
-          decoration: InputDecoration(
-            labelText: widget.hint,
-            icon: (widget.icon != null)
-                ? Icon(
-                    widget.icon,
-                    color: Theme.of(context).colorScheme.primary,
-                  )
-                : null,
-            border: InputBorder.none,
-            counterText: widget.hideCounter ? "" : null,
-            suffixIcon: showClearButton
-                ? IconButton(
-                    onPressed: () {
-                      widget.controller.clear();
-                      setState(() {
-                        showClearButton = false;
-                      });
-                      focusNode.requestFocus();
-                    },
-                    icon: const Icon(Icons.clear),
-                  )
-                : null,
+    return Padding(
+      padding: widget.padding,
+      child: Container(
+        padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 0),
+        decoration: BoxDecoration(
+          color: Theme.of(context).colorScheme.surfaceVariant.withOpacity(0.5),
+          borderRadius: BorderRadius.circular(cornerRadius),
+          border: Border.all(color: dividerColor),
+        ),
+        child: Scrollbar(
+          child: TextField(
+            autofocus: widget.autofocus,
+            keyboardType: widget.keyboardType,
+            inputFormatters: widget.inputFormatters,
+            textCapitalization: widget.textCapitalization,
+            controller: widget.controller,
+            focusNode: focusNode,
+            minLines: 1,
+            maxLines: widget.maxLines,
+            maxLength: widget.maxLength,
+            textInputAction: widget.textInputAction,
+            style: const TextStyle(fontSize: 14),
+            onSubmitted: widget.onSubmitted ?? (_) {},
+            decoration: InputDecoration(
+              labelText: widget.hint,
+              labelStyle: const TextStyle(fontSize: 14),
+              icon: (widget.icon != null)
+                  ? Icon(
+                      widget.icon,
+                      color: Theme.of(context).colorScheme.primary,
+                    )
+                  : null,
+              border: InputBorder.none,
+              counterText: widget.hideCounter ? "" : null,
+              suffixIcon: showClearButton
+                  ? IconButton(
+                      onPressed: () {
+                        widget.controller.clear();
+                        setState(() {
+                          showClearButton = false;
+                        });
+                        focusNode.requestFocus();
+                      },
+                      icon: const Icon(Icons.clear),
+                    )
+                  : null,
+            ),
           ),
         ),
       ),

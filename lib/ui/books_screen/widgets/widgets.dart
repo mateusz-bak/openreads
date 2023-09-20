@@ -8,3 +8,5 @@ export 'year_filter_chip.dart';
 export 'tag_filter_chip.dart';
 export 'books_grid.dart';
 export 'book_grid_card.dart';
+export 'grid_card_cover.dart';
+export 'grid_card_no_cover.dart';

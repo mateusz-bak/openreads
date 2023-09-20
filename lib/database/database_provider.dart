@@ -18,7 +18,7 @@ class DatabaseProvider {
 
     return await openDatabase(
       path,
-      version: 3,
+      version: 4,
       onCreate: (Database db, int version) async {
         await db.execute("CREATE TABLE booksTable ("
             "id INTEGER PRIMARY KEY AUTOINCREMENT, "
@@ -39,6 +39,7 @@ class DatabaseProvider {
             "olid TEXT, "
             "tags TEXT, "
             "my_review TEXT, "
+            "has_cover INTEGER, "
             "cover BLOB, "
             "blur_hash TEXT "
             ")");
@@ -49,10 +50,13 @@ class DatabaseProvider {
 
           switch (oldVersion) {
             case 1:
-              _updateBookDatabaseV1toV3(batch);
+              _updateBookDatabaseV1toV4(batch);
               break;
             case 2:
-              _updateBookDatabaseV2toV3(batch);
+              _updateBookDatabaseV2toV4(batch);
+              break;
+            case 3:
+              _updateBookDatabaseV3toV4(batch);
               break;
           }
 
@@ -62,12 +66,18 @@ class DatabaseProvider {
     );
   }
 
-  void _updateBookDatabaseV1toV3(Batch batch) {
+  void _updateBookDatabaseV1toV4(Batch batch) {
     batch.execute("ALTER TABLE booksTable ADD description TEXT");
     batch.execute("ALTER TABLE booksTable ADD book_type TEXT DEFAULT paper");
+    batch.execute("ALTER TABLE booksTable ADD has_cover INTEGER DEFAULT 0");
   }
 
-  void _updateBookDatabaseV2toV3(Batch batch) {
+  void _updateBookDatabaseV2toV4(Batch batch) {
     batch.execute("ALTER TABLE booksTable ADD book_type TEXT");
+    batch.execute("ALTER TABLE booksTable ADD has_cover INTEGER DEFAULT 0");
+  }
+
+  void _updateBookDatabaseV3toV4(Batch batch) {
+    batch.execute("ALTER TABLE booksTable ADD has_cover INTEGER DEFAULT 0");
   }
 }
