@@ -220,5 +220,8 @@
     "custom_color": "Benutzerdefiniert",
     "dark_mode_natural": "Natürliches dunkles Design",
     "dark_mode_amoled": "AMOLED dunkles Design",
-    "dark_mode_style": "Stil des dunklen Designs"
+    "dark_mode_style": "Stil des dunklen Designs",
+    "selected": "Ausgewählt",
+    "update_successful_message": "Erfolgreich aktualisiert!",
+    "change_book_type": "Buchtyp ändern"
 }
