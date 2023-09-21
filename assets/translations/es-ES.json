@@ -31,7 +31,7 @@
     "reading_time": "Tiempo de lectura",
     "pages_uppercase": "Páginas",
     "pages_lowercase": "páginas",
-    "click_to_add_cover": "Haz clic para añadir portada",
+    "click_to_add_cover": "Haz clic para añadir una portada",
     "start_date": "Fecha de inicio",
     "finish_date": "Fecha de finalización",
     "edit_cover": "Editar portada",
@@ -82,8 +82,8 @@
     "set_books_goal_for_year": "Establecer objetivo de libros para",
     "add_pages_goal": "¿Agregar un objetivo de páginas?",
     "set_pages_goal": "Establecer objetivo de páginas:",
-    "books_challenge": "Desafío de libros terminado",
-    "pages_challenge": "Desafío de páginas terminado",
+    "books_challenge": "Desafío de libros terminados",
+    "pages_challenge": "Desafío de páginas terminadas",
     "all_years": "Todo",
     "no_finished_books": "No hay libros terminados",
     "all_books_by_status": "Todos los libros por estado",
@@ -220,5 +220,8 @@
     "dark_mode_natural": "Modo oscuro natural",
     "dark_mode_amoled": "Modo oscuro AMOLED",
     "book_type_all": "Todos los tipos de libros",
-    "filter_by_book_type": "Filtrar por el tipo de libro"
+    "filter_by_book_type": "Filtrar por el tipo de libro",
+    "selected": "Seleccionado",
+    "update_successful_message": "¡Actualizado con éxito!",
+    "change_book_type": "Cambiar el tipo de libro"
 }
