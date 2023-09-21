@@ -267,6 +267,7 @@ class _BooksScreenState extends State<BooksScreen>
         : list.sort((b, a) =>
             removeDiacritics(a.author.toString().toLowerCase())
                 .compareTo(removeDiacritics(b.title.toString().toLowerCase())));
+    // no secondary sorting
 
     return list;
   }
@@ -275,28 +276,32 @@ class _BooksScreenState extends State<BooksScreen>
     required List<Book> list,
     required bool isAsc,
   }) {
-    isAsc
-        ? list.sort((a, b) {
-            int authorComparison =
-                removeDiacritics(a.author.toString().toLowerCase()).compareTo(
-                    removeDiacritics(b.author.toString().toLowerCase()));
-            if (authorComparison == 0) {
-              // secondary sorting, by title
-              isAsc
-                  ? list.sort((a, b) => removeDiacritics(
-                          a.title.toString().toLowerCase())
-                      .compareTo(
-                          removeDiacritics(b.title.toString().toLowerCase())))
-                  : list.sort((b, a) => removeDiacritics(
-                          a.author.toString().toLowerCase())
-                      .compareTo(
-                          removeDiacritics(b.title.toString().toLowerCase())));
-            }
-            return authorComparison;
-          })
-        : list.sort((b, a) =>
-            removeDiacritics(a.author.toString().toLowerCase()).compareTo(
-                removeDiacritics(b.author.toString().toLowerCase())));
+    list.sort((a, b) {
+      int authorSorting = removeDiacritics(a.author.toString().toLowerCase())
+          .compareTo(removeDiacritics(b.author.toString().toLowerCase()));
+      if (!isAsc) {
+        authorSorting *= -1;
+      } // descending
+      if (authorSorting == 0) {
+        // secondary sorting, by release date
+        a.publicationYear ??= 0;
+        b.publicationYear ??= a.publicationYear;
+        int releaseSorting =
+            -a.publicationYear!.compareTo(b.publicationYear!); // descending
+        if (releaseSorting == 0) {
+          // tertiary sorting, by title
+          int titleSorting = removeDiacritics(a.title.toString().toLowerCase())
+              .compareTo(removeDiacritics(
+                  b.title.toString().toLowerCase())); // descending
+          if (!isAsc) {
+            titleSorting *= -1;
+          }
+          return titleSorting;
+        }
+        return releaseSorting;
+      }
+      return authorSorting;
+    });
 
     return list;
   }
@@ -312,9 +317,32 @@ class _BooksScreenState extends State<BooksScreen>
       (book.rating != null) ? booksRated.add(book) : booksNotRated.add(book);
     }
 
-    isAsc
-        ? booksRated.sort((a, b) => a.rating!.compareTo(b.rating!))
-        : booksRated.sort((b, a) => a.rating!.compareTo(b.rating!));
+    booksRated.sort((a, b) {
+      int ratingSorting = removeDiacritics(a.rating!.toString().toLowerCase())
+          .compareTo(removeDiacritics(b.rating!.toString().toLowerCase()));
+      if (!isAsc) {
+        ratingSorting *= -1;
+      } // descending
+      if (ratingSorting == 0) {
+        // secondary sorting, by release date
+        a.publicationYear ??= 0;
+        b.publicationYear ??= a.publicationYear;
+        int releaseSorting =
+        -a.publicationYear!.compareTo(b.publicationYear!); // descending
+        if (releaseSorting == 0) {
+          // tertiary sorting, by title
+          int titleSorting = removeDiacritics(a.title.toString().toLowerCase())
+              .compareTo(removeDiacritics(
+              b.title.toString().toLowerCase()));
+          if (!isAsc) {
+            titleSorting *= -1;
+          }
+          return titleSorting;
+        }
+        return releaseSorting;
+      }
+      return ratingSorting;
+    });
 
     return booksRated + booksNotRated;
   }
@@ -332,9 +360,32 @@ class _BooksScreenState extends State<BooksScreen>
           : booksWithoutPages.add(book);
     }
 
-    isAsc
-        ? booksWithPages.sort((a, b) => a.pages!.compareTo(b.pages!))
-        : booksWithPages.sort((b, a) => a.pages!.compareTo(b.pages!));
+    booksWithPages.sort((a, b) {
+      int pagesSorting = removeDiacritics(a.pages!.toString().toLowerCase())
+          .compareTo(removeDiacritics(b.pages!.toString().toLowerCase()));
+      if (!isAsc) {
+        pagesSorting *= -1;
+      } // descending
+      if (pagesSorting == 0) {
+        // secondary sorting, by release date
+        a.publicationYear ??= 0;
+        b.publicationYear ??= a.publicationYear;
+        int releaseSorting =
+        -a.publicationYear!.compareTo(b.publicationYear!); // descending
+        if (releaseSorting == 0) {
+          // tertiary sorting, by title
+          int titleSorting = removeDiacritics(a.title.toString().toLowerCase())
+              .compareTo(removeDiacritics(
+              b.title.toString().toLowerCase()));
+          if (!isAsc) {
+            titleSorting *= -1;
+          }
+          return titleSorting;
+        }
+        return releaseSorting;
+      }
+      return pagesSorting;
+    });
 
     return booksWithPages + booksWithoutPages;
   }
@@ -352,13 +403,33 @@ class _BooksScreenState extends State<BooksScreen>
           : booksWithoutStartDate.add(book);
     }
 
-    isAsc
-        ? booksWithStartDate.sort((a, b) =>
-            (DateTime.parse(a.startDate!).millisecondsSinceEpoch)
-                .compareTo(DateTime.parse(b.startDate!).millisecondsSinceEpoch))
-        : booksWithStartDate.sort((b, a) => (DateTime.parse(a.startDate!)
-                .millisecondsSinceEpoch)
-            .compareTo(DateTime.parse(b.startDate!).millisecondsSinceEpoch));
+    booksWithStartDate.sort((a, b) {
+      int startDateSorting = (DateTime.parse(a.startDate!)
+          .millisecondsSinceEpoch)
+          .compareTo(DateTime.parse(b.startDate!).millisecondsSinceEpoch);
+      if (!isAsc) {
+        startDateSorting *= -1;
+      } // descending
+      if (startDateSorting == 0) {
+        // secondary sorting, by release date
+        a.publicationYear ??= 0;
+        b.publicationYear ??= a.publicationYear;
+        int releaseSorting =
+        -a.publicationYear!.compareTo(b.publicationYear!); // descending
+        if (releaseSorting == 0) {
+          // tertiary sorting, by title
+          int titleSorting = removeDiacritics(a.title.toString().toLowerCase())
+              .compareTo(removeDiacritics(
+              b.title.toString().toLowerCase()));
+          if (!isAsc) {
+            titleSorting *= -1;
+          }
+          return titleSorting;
+        }
+        return releaseSorting;
+      }
+      return startDateSorting;
+    });
 
     return booksWithStartDate + booksWithoutStartDate;
   }
@@ -376,13 +447,33 @@ class _BooksScreenState extends State<BooksScreen>
           : booksWithoutFinishDate.add(book);
     }
 
-    isAsc
-        ? booksWithFinishDate.sort((a, b) => (DateTime.parse(a.finishDate!)
-                .millisecondsSinceEpoch)
-            .compareTo(DateTime.parse(b.finishDate!).millisecondsSinceEpoch))
-        : booksWithFinishDate.sort((b, a) => (DateTime.parse(a.finishDate!)
-                .millisecondsSinceEpoch)
-            .compareTo(DateTime.parse(b.finishDate!).millisecondsSinceEpoch));
+    booksWithFinishDate.sort((a, b) {
+      int finishDateSorting = (DateTime.parse(a.finishDate!)
+          .millisecondsSinceEpoch)
+          .compareTo(DateTime.parse(b.finishDate!).millisecondsSinceEpoch);
+      if (!isAsc) {
+        finishDateSorting *= -1;
+      } // descending
+      if (finishDateSorting == 0) {
+        // secondary sorting, by release date
+        a.publicationYear ??= 0;
+        b.publicationYear ??= a.publicationYear;
+        int releaseSorting =
+        -a.publicationYear!.compareTo(b.publicationYear!); // descending
+        if (releaseSorting == 0) {
+          // tertiary sorting, by title
+          int titleSorting = removeDiacritics(a.title.toString().toLowerCase())
+              .compareTo(removeDiacritics(
+              b.title.toString().toLowerCase()));
+          if (!isAsc) {
+            titleSorting *= -1;
+          }
+          return titleSorting;
+        }
+        return releaseSorting;
+      }
+      return finishDateSorting;
+    });
 
     return booksWithFinishDate + booksWithoutFinishDate;
   }
