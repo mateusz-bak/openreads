@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'dart:io';
 
 import 'package:archive/archive_io.dart';
+import 'package:csv/csv.dart';
 import 'package:device_info_plus/device_info_plus.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:filesystem_picker/filesystem_picker.dart';
@@ -9,6 +10,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:openreads/core/constants/enums.dart';
 import 'package:openreads/logic/bloc/migration_v1_to_v2_bloc/migration_v1_to_v2_bloc.dart';
 import 'package:openreads/generated/locale_keys.g.dart';
 import 'package:openreads/logic/bloc/challenge_bloc/challenge_bloc.dart';
@@ -45,6 +47,7 @@ class _SettingsBackupScreenState extends State<SettingsBackupScreen> {
   bool _creatingLocal = false;
   bool _creatingCloud = false;
   bool _restoringLocal = false;
+  bool _exportingCSV = false;
   int booksBackupLenght = 0;
   int booksBackupDone = 0;
   String restoredCounterText = '';
@@ -63,6 +66,22 @@ class _SettingsBackupScreenState extends State<SettingsBackupScreen> {
     }
 
     setState(() => _creatingLocal = false);
+  }
+
+  _startCSVExport(context) async {
+    setState(() => _exportingCSV = true);
+
+    DeviceInfoPlugin deviceInfo = DeviceInfoPlugin();
+    AndroidDeviceInfo androidInfo = await deviceInfo.androidInfo;
+
+    if (androidInfo.version.sdkInt <= 31) {
+      await _requestStoragePermission();
+      await _createLocalBackup();
+    } else {
+      await _exportCSVWithScopedStorage();
+    }
+
+    setState(() => _exportingCSV = false);
   }
 
   _startCloudBackup(context) async {
@@ -332,6 +351,103 @@ class _SettingsBackupScreenState extends State<SettingsBackupScreen> {
     }
   }
 
+  Future<String?> _prepareCSVExport() async {
+    try {
+      await bookCubit.getAllBooks(tags: true);
+
+      final books = await bookCubit.allBooks.first;
+      final rows = List<List<String>>.empty(growable: true);
+
+      final firstRow = [
+        ('id'),
+        ('title'),
+        ('subtitle'),
+        ('author'),
+        ('book_type'),
+        ('description'),
+        ('pages'),
+        ('isbn'),
+        ('olid'),
+        ('publication_year'),
+        ('status'),
+        ('rating'),
+        ('favourite'),
+        ('has_cover'),
+        ('deleted'),
+        ('start_date'),
+        ('finish_date'),
+        ('my_review'),
+        ('tags'),
+      ];
+
+      rows.add(firstRow);
+
+      for (var book in books) {
+        final newRow = List<String>.empty(growable: true);
+
+        newRow.add(book.id != null ? book.id.toString() : '');
+        newRow.add(book.title);
+        newRow.add(book.subtitle ?? '');
+        newRow.add(book.author);
+        newRow.add(book.bookType == BookType.paper
+            ? 'paper'
+            : book.bookType == BookType.ebook
+                ? 'ebook'
+                : book.bookType == BookType.audiobook
+                    ? 'audiobook'
+                    : '');
+        newRow.add(book.description ?? '');
+        newRow.add(book.pages != null ? book.pages.toString() : '');
+        newRow.add(book.isbn ?? '');
+        newRow.add(book.olid ?? '');
+        newRow.add(book.publicationYear != null
+            ? book.publicationYear.toString()
+            : '');
+        newRow.add(book.status == 0
+            ? 'finished'
+            : book.status == 1
+                ? 'in_progress'
+                : book.status == 2
+                    ? 'planned'
+                    : book.status == 4
+                        ? 'abandoned'
+                        : 'unknown');
+
+        newRow.add(book.rating != null ? (book.rating! / 10).toString() : '');
+        newRow.add(book.favourite.toString());
+        newRow.add(book.hasCover.toString());
+        newRow.add(book.deleted.toString());
+        newRow.add(
+            book.startDate != null ? book.startDate!.toIso8601String() : '');
+        newRow.add(
+            book.finishDate != null ? book.finishDate!.toIso8601String() : '');
+        newRow.add(book.myReview ?? '');
+        newRow.add(book.tags ?? '');
+
+        rows.add(newRow);
+      }
+
+      return const ListToCsvConverter().convert(
+        rows,
+        textDelimiter: '"',
+        textEndDelimiter: '"',
+      );
+    } catch (e) {
+      setState(() => _creatingLocal = false);
+
+      if (!mounted) return null;
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text(
+            e.toString(),
+          ),
+        ),
+      );
+
+      return null;
+    }
+  }
+
   Future<String> _getAppVersion() async {
     PackageInfo packageInfo = await PackageInfo.fromPlatform();
 
@@ -344,6 +460,15 @@ class _SettingsBackupScreenState extends State<SettingsBackupScreen> {
         '${date.year}_${date.month}_${date.day}-${date.hour}_${date.minute}_${date.second}';
 
     return 'Openreads-$backupDate.backup';
+  }
+
+  Future<String> _prepareCSVExportFileName() async {
+    final date = DateTime.now();
+
+    final exportDate =
+        '${date.year}_${date.month}_${date.day}-${date.hour}_${date.minute}_${date.second}';
+
+    return 'Openreads-$exportDate.csv';
   }
 
   Future<String> _prepareBackupInfo() async {
@@ -394,6 +519,51 @@ class _SettingsBackupScreenState extends State<SettingsBackupScreen> {
         ),
       );
     }
+  }
+
+  Future _exportCSVWithScopedStorage() async {
+    final csv = await _prepareCSVExport();
+    if (csv == null) return;
+
+    final selectedUriDir = await openDocumentTree();
+
+    if (selectedUriDir == null) {
+      setState(() => _exportingCSV = false);
+      return;
+    }
+
+    final fileName = await _prepareCSVExportFileName();
+
+    try {
+      createFileAsBytes(
+        selectedUriDir,
+        mimeType: 'text/csv',
+        displayName: fileName,
+        bytes: Uint8List.fromList(utf8.encode(csv)),
+      );
+
+      if (mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text(
+              LocaleKeys.export_successful.tr(),
+            ),
+          ),
+        );
+      }
+    } catch (e) {
+      if (!mounted) return;
+
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text(
+            e.toString(),
+          ),
+        ),
+      );
+    }
+
+    setState(() => _exportingCSV = false);
   }
 
   _deleteTmpData(Directory tmpDir) {
@@ -923,168 +1093,32 @@ class _SettingsBackupScreenState extends State<SettingsBackupScreen> {
                   ),
                   sections: [
                     SettingsSection(
+                      title: Text(
+                        LocaleKeys.openreads_backup.tr(),
+                        style: TextStyle(
+                          fontSize: 16,
+                          fontWeight: FontWeight.bold,
+                          color: Theme.of(context).colorScheme.primary,
+                        ),
+                      ),
                       tiles: <SettingsTile>[
-                        SettingsTile(
-                          title: Text(
-                            LocaleKeys.create_local_backup.tr(),
-                            style: const TextStyle(
-                              fontSize: 16,
-                            ),
-                          ),
-                          leading: (_creatingLocal)
-                              ? const SizedBox(
-                                  width: 24,
-                                  height: 24,
-                                  child: CircularProgressIndicator(),
-                                )
-                              : const Icon(FontAwesomeIcons.solidFloppyDisk),
-                          description: Text(
-                            LocaleKeys.create_local_backup_description.tr(),
-                          ),
-                          onPressed: _startLocalBackup,
+                        _buildCreateLocalBackup(),
+                        _buildCreateCloudBackup(),
+                        _buildRestoreBackup(),
+                        _buildV1ToV2Migration(context),
+                      ],
+                    ),
+                    SettingsSection(
+                      title: Text(
+                        LocaleKeys.csv.tr(),
+                        style: TextStyle(
+                          fontSize: 16,
+                          fontWeight: FontWeight.bold,
+                          color: Theme.of(context).colorScheme.primary,
                         ),
-                        SettingsTile(
-                          title: Text(
-                            LocaleKeys.create_cloud_backup.tr(),
-                            style: const TextStyle(
-                              fontSize: 16,
-                            ),
-                          ),
-                          leading: (_creatingCloud)
-                              ? const SizedBox(
-                                  width: 24,
-                                  height: 24,
-                                  child: CircularProgressIndicator(),
-                                )
-                              : const Icon(FontAwesomeIcons.cloudArrowUp),
-                          description: Text(
-                            LocaleKeys.create_cloud_backup_description.tr(),
-                          ),
-                          onPressed: _startCloudBackup,
-                        ),
-                        SettingsTile(
-                          title: Text(
-                            LocaleKeys.restore_backup.tr(),
-                            style: const TextStyle(
-                              fontSize: 16,
-                            ),
-                          ),
-                          leading: (_restoringLocal)
-                              ? const SizedBox(
-                                  width: 24,
-                                  height: 24,
-                                  child: CircularProgressIndicator(),
-                                )
-                              : const Icon(FontAwesomeIcons.arrowUpFromBracket),
-                          description: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              restoredCounterText.isNotEmpty
-                                  ? Text(
-                                      restoredCounterText,
-                                      style: const TextStyle(
-                                        fontWeight: FontWeight.bold,
-                                      ),
-                                    )
-                                  : const SizedBox(),
-                              Text(
-                                '${LocaleKeys.restore_backup_description_1.tr()}\n${LocaleKeys.restore_backup_description_2.tr()}',
-                              ),
-                            ],
-                          ),
-                          onPressed: (context) {
-                            showDialog(
-                              context: context,
-                              builder: (context) {
-                                return Builder(builder: (context) {
-                                  return AlertDialog(
-                                    title: Text(
-                                      LocaleKeys.are_you_sure.tr(),
-                                    ),
-                                    content: Text(
-                                      LocaleKeys.restore_backup_alert_content
-                                          .tr(),
-                                    ),
-                                    actionsAlignment:
-                                        MainAxisAlignment.spaceBetween,
-                                    actions: [
-                                      FilledButton.tonal(
-                                        onPressed: () {
-                                          _startLocalRestore(context);
-                                          Navigator.of(context).pop();
-                                        },
-                                        child: Text(LocaleKeys.yes.tr()),
-                                      ),
-                                      FilledButton.tonal(
-                                        onPressed: () =>
-                                            Navigator.of(context).pop(),
-                                        child: Text(LocaleKeys.no.tr()),
-                                      ),
-                                    ],
-                                  );
-                                });
-                              },
-                            );
-                          },
-                        ),
-                        SettingsTile(
-                          title: Text(
-                            LocaleKeys.migration_v1_to_v2_retrigger.tr(),
-                            style: TextStyle(
-                              fontSize: 16,
-                              color: widget.autoMigrationV1ToV2
-                                  ? Theme.of(context).colorScheme.primary
-                                  : null,
-                            ),
-                          ),
-                          leading: Icon(
-                            FontAwesomeIcons.wrench,
-                            color: widget.autoMigrationV1ToV2
-                                ? Theme.of(context).colorScheme.primary
-                                : null,
-                          ),
-                          description: Text(
-                            LocaleKeys.migration_v1_to_v2_retrigger_description
-                                .tr(),
-                            style: TextStyle(
-                              color: widget.autoMigrationV1ToV2
-                                  ? Theme.of(context).colorScheme.primary
-                                  : null,
-                            ),
-                          ),
-                          onPressed: (context) {
-                            showDialog(
-                              context: context,
-                              builder: (context) {
-                                return AlertDialog(
-                                  title: Text(
-                                    LocaleKeys.are_you_sure.tr(),
-                                  ),
-                                  content: Text(
-                                    LocaleKeys.restore_backup_alert_content
-                                        .tr(),
-                                  ),
-                                  actionsAlignment:
-                                      MainAxisAlignment.spaceBetween,
-                                  actions: [
-                                    FilledButton.tonal(
-                                      onPressed: () {
-                                        _startMigrationV1ToV2();
-                                        Navigator.of(context).pop();
-                                      },
-                                      child: Text(LocaleKeys.yes.tr()),
-                                    ),
-                                    FilledButton.tonal(
-                                      onPressed: () =>
-                                          Navigator.of(context).pop(),
-                                      child: Text(LocaleKeys.no.tr()),
-                                    ),
-                                  ],
-                                );
-                              },
-                            );
-                          },
-                        ),
+                      ),
+                      tiles: <SettingsTile>[
+                        _buildExportAsCSV(),
                       ],
                     ),
                   ],
@@ -1114,6 +1148,194 @@ class _SettingsBackupScreenState extends State<SettingsBackupScreen> {
           ),
         ],
       ),
+    );
+  }
+
+  SettingsTile _buildV1ToV2Migration(BuildContext context) {
+    return SettingsTile(
+      title: Text(
+        LocaleKeys.migration_v1_to_v2_retrigger.tr(),
+        style: TextStyle(
+          fontSize: 16,
+          color: widget.autoMigrationV1ToV2
+              ? Theme.of(context).colorScheme.primary
+              : null,
+        ),
+      ),
+      leading: Icon(
+        FontAwesomeIcons.wrench,
+        color: widget.autoMigrationV1ToV2
+            ? Theme.of(context).colorScheme.primary
+            : null,
+      ),
+      description: Text(
+        LocaleKeys.migration_v1_to_v2_retrigger_description.tr(),
+        style: TextStyle(
+          color: widget.autoMigrationV1ToV2
+              ? Theme.of(context).colorScheme.primary
+              : null,
+        ),
+      ),
+      onPressed: (context) {
+        showDialog(
+          context: context,
+          builder: (context) {
+            return AlertDialog(
+              title: Text(
+                LocaleKeys.are_you_sure.tr(),
+              ),
+              content: Text(
+                LocaleKeys.restore_backup_alert_content.tr(),
+              ),
+              actionsAlignment: MainAxisAlignment.spaceBetween,
+              actions: [
+                FilledButton.tonal(
+                  onPressed: () {
+                    _startMigrationV1ToV2();
+                    Navigator.of(context).pop();
+                  },
+                  child: Text(LocaleKeys.yes.tr()),
+                ),
+                FilledButton.tonal(
+                  onPressed: () => Navigator.of(context).pop(),
+                  child: Text(LocaleKeys.no.tr()),
+                ),
+              ],
+            );
+          },
+        );
+      },
+    );
+  }
+
+  SettingsTile _buildRestoreBackup() {
+    return SettingsTile(
+      title: Text(
+        LocaleKeys.restore_backup.tr(),
+        style: const TextStyle(
+          fontSize: 16,
+        ),
+      ),
+      leading: (_restoringLocal)
+          ? const SizedBox(
+              width: 24,
+              height: 24,
+              child: CircularProgressIndicator(),
+            )
+          : const Icon(FontAwesomeIcons.arrowUpFromBracket),
+      description: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          restoredCounterText.isNotEmpty
+              ? Text(
+                  restoredCounterText,
+                  style: const TextStyle(
+                    fontWeight: FontWeight.bold,
+                  ),
+                )
+              : const SizedBox(),
+          Text(
+            '${LocaleKeys.restore_backup_description_1.tr()}\n${LocaleKeys.restore_backup_description_2.tr()}',
+          ),
+        ],
+      ),
+      onPressed: (context) {
+        showDialog(
+          context: context,
+          builder: (context) {
+            return Builder(builder: (context) {
+              return AlertDialog(
+                title: Text(
+                  LocaleKeys.are_you_sure.tr(),
+                ),
+                content: Text(
+                  LocaleKeys.restore_backup_alert_content.tr(),
+                ),
+                actionsAlignment: MainAxisAlignment.spaceBetween,
+                actions: [
+                  FilledButton.tonal(
+                    onPressed: () {
+                      _startLocalRestore(context);
+                      Navigator.of(context).pop();
+                    },
+                    child: Text(LocaleKeys.yes.tr()),
+                  ),
+                  FilledButton.tonal(
+                    onPressed: () => Navigator.of(context).pop(),
+                    child: Text(LocaleKeys.no.tr()),
+                  ),
+                ],
+              );
+            });
+          },
+        );
+      },
+    );
+  }
+
+  SettingsTile _buildCreateCloudBackup() {
+    return SettingsTile(
+      title: Text(
+        LocaleKeys.create_cloud_backup.tr(),
+        style: const TextStyle(
+          fontSize: 16,
+        ),
+      ),
+      leading: (_creatingCloud)
+          ? const SizedBox(
+              width: 24,
+              height: 24,
+              child: CircularProgressIndicator(),
+            )
+          : const Icon(FontAwesomeIcons.cloudArrowUp),
+      description: Text(
+        LocaleKeys.create_cloud_backup_description.tr(),
+      ),
+      onPressed: _startCloudBackup,
+    );
+  }
+
+  SettingsTile _buildCreateLocalBackup() {
+    return SettingsTile(
+      title: Text(
+        LocaleKeys.create_local_backup.tr(),
+        style: const TextStyle(
+          fontSize: 16,
+        ),
+      ),
+      leading: (_creatingLocal)
+          ? const SizedBox(
+              width: 24,
+              height: 24,
+              child: CircularProgressIndicator(),
+            )
+          : const Icon(FontAwesomeIcons.solidFloppyDisk),
+      description: Text(
+        LocaleKeys.create_local_backup_description.tr(),
+      ),
+      onPressed: _startLocalBackup,
+    );
+  }
+
+  SettingsTile _buildExportAsCSV() {
+    return SettingsTile(
+      title: Text(
+        LocaleKeys.export_csv.tr(),
+        style: const TextStyle(
+          fontSize: 16,
+        ),
+      ),
+      leading: (_exportingCSV)
+          ? const SizedBox(
+              width: 24,
+              height: 24,
+              child: CircularProgressIndicator(),
+            )
+          : const Icon(FontAwesomeIcons.fileCsv),
+      description: Text(
+        LocaleKeys.export_csv_description_1.tr(),
+      ),
+      onPressed: _startCSVExport,
     );
   }
 }

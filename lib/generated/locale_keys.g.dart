@@ -230,4 +230,9 @@ abstract class LocaleKeys {
   static const selected = 'selected';
   static const change_book_type = 'change_book_type';
   static const update_successful_message = 'update_successful_message';
+  static const export_successful = 'export_successful';
+  static const openreads_backup = 'openreads_backup';
+  static const csv = 'csv';
+  static const export_csv = 'export_csv';
+  static const export_csv_description_1 = 'export_csv';
 }
