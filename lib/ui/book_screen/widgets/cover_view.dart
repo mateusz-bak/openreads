@@ -9,13 +9,11 @@ class CoverView extends StatefulWidget {
   const CoverView({
     Key? key,
     this.heroTag,
-    this.onPressed,
     this.book,
     this.coverFile,
     this.blurHashString,
   }) : super(key: key);
 
-  final Function()? onPressed;
   final String? heroTag;
   final String? blurHashString;
   final Book? book;
@@ -39,43 +37,49 @@ class _CoverViewState extends State<CoverView> {
   @override
   Widget build(BuildContext context) {
     _loadCoverFile();
+    final mediaQuery = MediaQuery.of(context);
 
-    return InkWell(
-      onTap: widget.onPressed,
-      child: Stack(
-        children: [
-          SizedBox(
-            width: MediaQuery.of(context).size.width,
-            height: MediaQuery.of(context).size.height / 2.5,
-            child: const Stack(
-              children: [
-                CoverBackground(),
-              ],
-            ),
+    return Stack(
+      children: [
+        SizedBox(
+          width: mediaQuery.size.width,
+          height: (mediaQuery.size.height / 2.5) + mediaQuery.padding.top,
+          child: const Stack(
+            children: [
+              CoverBackground(),
+            ],
           ),
-          Center(
-            child: SizedBox(
-              height: ((MediaQuery.of(context).size.height / 2.5) - 0),
-              child: Center(
-                child: ClipRRect(
-                  borderRadius: BorderRadius.circular(cornerRadius),
-                  child: coverFile != null
-                      ? Hero(
-                          tag: widget.heroTag ?? "",
-                          child: Image.file(
-                            coverFile!,
-                            fit: BoxFit.cover,
-                            height:
-                                (MediaQuery.of(context).size.height / 2.5) - 40,
-                          ),
-                        )
-                      : const SizedBox(),
+        ),
+        Column(
+          children: [
+            SizedBox(height: mediaQuery.padding.top),
+            Center(
+              child: SizedBox(
+                height: mediaQuery.size.height / 2.5,
+                child: Padding(
+                  padding: const EdgeInsets.fromLTRB(20, 0, 20, 20),
+                  child: Center(
+                    child: ClipRRect(
+                      borderRadius: BorderRadius.circular(cornerRadius),
+                      child: coverFile != null
+                          ? Hero(
+                              tag: widget.heroTag ?? "",
+                              child: Image.file(
+                                coverFile!,
+                                fit: BoxFit.cover,
+                                height: mediaQuery.size.height / 2.5,
+                              ),
+                            )
+                          : const SizedBox(),
+                    ),
+                  ),
                 ),
               ),
             ),
-          ),
-        ],
-      ),
+            const SizedBox(height: 10),
+          ],
+        ),
+      ],
     );
   }
 }
