@@ -127,6 +127,15 @@ class BookCubit extends Cubit {
     }
   }
 
+  Future importAdditionalBooks(List<Book> books) async {
+    for (var book in books) {
+      await repository.insertBook(book);
+    }
+
+    getAllBooksByStatus();
+    getAllBooks();
+  }
+
   Future _saveCoverToStorage(int? bookID, File? coverFile) async {
     if (bookID == null || coverFile == null) return;
 

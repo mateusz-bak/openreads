@@ -234,5 +234,8 @@ abstract class LocaleKeys {
   static const openreads_backup = 'openreads_backup';
   static const csv = 'csv';
   static const export_csv = 'export_csv';
-  static const export_csv_description_1 = 'export_csv';
+  static const export_csv_description_1 = 'export_csv_description_1';
+  static const import_goodreads_csv = 'import_goodreads_csv';
+  static const choose_not_finished_shelf = 'choose_not_finished_shelf';
+  static const import_successful = 'import_successful';
 }

@@ -228,5 +228,8 @@
     "openreads_backup": "Openreads backup",
     "csv": "CSV",
     "export_csv": "Export books as a CSV file",
-    "export_csv_description_1": "Covers are not exported"
+    "export_csv_description_1": "Covers are not exported",
+    "import_goodreads_csv": "Import Goodreads CSV",
+    "choose_not_finished_shelf": "Choose a shelf with not finished books:",
+    "import_successful": "Import successful"
 }
