@@ -76,7 +76,7 @@ class _SettingsBackupScreenState extends State<SettingsBackupScreen> {
 
     if (androidInfo.version.sdkInt <= 31) {
       await _requestStoragePermission();
-      await _createLocalBackup();
+      await _exportCSV();
     } else {
       await _exportCSVWithScopedStorage();
     }
@@ -139,6 +139,45 @@ class _SettingsBackupScreenState extends State<SettingsBackupScreen> {
       );
     } catch (e) {
       setState(() => _creatingLocal = false);
+      if (!mounted) return;
+
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text(
+            e.toString(),
+          ),
+        ),
+      );
+    }
+  }
+
+  _exportCSV() async {
+    final csv = await _prepareCSVExport();
+    if (csv == null) return;
+
+    final exportPath = await _openFolderPicker();
+    if (exportPath == null) return;
+
+    final fileName = await _prepareCSVExportFileName();
+    final filePath = '$exportPath/$fileName';
+
+    try {
+      createFileAsBytes(
+        Uri(path: filePath),
+        mimeType: 'text/csv',
+        displayName: fileName,
+        bytes: Uint8List.fromList(utf8.encode(csv)),
+      );
+
+      if (!mounted) return;
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text(
+            LocaleKeys.backup_successfull.tr(),
+          ),
+        ),
+      );
+    } catch (e) {
       if (!mounted) return;
 
       ScaffoldMessenger.of(context).showSnackBar(
