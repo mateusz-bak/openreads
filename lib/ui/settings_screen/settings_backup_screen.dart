@@ -106,10 +106,13 @@ class _SettingsBackupScreenState extends State<SettingsBackupScreen> {
     );
   }
 
-  @override
-  void initState() async {
+  initDeviceInfoPlugin() async {
     androidInfo = await DeviceInfoPlugin().androidInfo;
+  }
 
+  @override
+  void initState() {
+    initDeviceInfoPlugin();
     super.initState();
   }
 
