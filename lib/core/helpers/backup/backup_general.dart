@@ -4,22 +4,15 @@ import 'package:flutter/material.dart';
 
 import 'package:easy_localization/easy_localization.dart';
 import 'package:filesystem_picker/filesystem_picker.dart';
+import 'package:openreads/main.dart';
 import 'package:permission_handler/permission_handler.dart';
 
 import 'package:openreads/generated/locale_keys.g.dart';
 
 class BackupGeneral {
-  static showInfoSnackbar(
-    BuildContext context,
-    String message,
-  ) {
-    if (!context.mounted) return;
-
-    ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(
-        content: Text(message),
-      ),
-    );
+  static showInfoSnackbar(String message) {
+    final snackBar = SnackBar(content: Text(message));
+    snackbarKey.currentState?.showSnackBar(snackBar);
   }
 
   static Future<bool> requestStoragePermission(BuildContext context) async {

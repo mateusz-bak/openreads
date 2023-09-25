@@ -26,14 +26,9 @@ class CSVGoodreadsImport {
       final books = await _parseGoodreadsCSV(context, csvBytes);
       await bookCubit.importAdditionalBooks(books);
 
-      // ignore: use_build_context_synchronously
-      BackupGeneral.showInfoSnackbar(
-        context,
-        LocaleKeys.import_successful.tr(),
-      );
+      BackupGeneral.showInfoSnackbar(LocaleKeys.import_successful.tr());
     } catch (e) {
-      // ignore: use_build_context_synchronously
-      BackupGeneral.showInfoSnackbar(context, e.toString());
+      BackupGeneral.showInfoSnackbar(e.toString());
     }
   }
 
@@ -49,14 +44,9 @@ class CSVGoodreadsImport {
       final books = await _parseGoodreadsCSV(context, csvBytes);
       await bookCubit.importAdditionalBooks(books);
 
-      // ignore: use_build_context_synchronously
-      BackupGeneral.showInfoSnackbar(
-        context,
-        LocaleKeys.import_successful.tr(),
-      );
+      BackupGeneral.showInfoSnackbar(LocaleKeys.import_successful.tr());
     } catch (e) {
-      // ignore: use_build_context_synchronously
-      BackupGeneral.showInfoSnackbar(context, e.toString());
+      BackupGeneral.showInfoSnackbar(e.toString());
     }
   }
 
@@ -204,7 +194,7 @@ class CSVGoodreadsImport {
         bookType: _getBookType(i, csv, headers),
       );
     } catch (e) {
-      BackupGeneral.showInfoSnackbar(context, e.toString());
+      BackupGeneral.showInfoSnackbar(e.toString());
 
       return null;
     }

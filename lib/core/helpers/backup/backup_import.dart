@@ -58,28 +58,19 @@ class BackupImport {
             tmpDir,
           );
         } else {
-          // ignore: use_build_context_synchronously
-          BackupGeneral.showInfoSnackbar(
-            context,
-            LocaleKeys.backup_not_valid.tr(),
-          );
+          BackupGeneral.showInfoSnackbar(LocaleKeys.backup_not_valid.tr());
           return;
         }
       }
 
-      // ignore: use_build_context_synchronously
-      BackupGeneral.showInfoSnackbar(
-        context,
-        LocaleKeys.restore_successfull.tr(),
-      );
+      BackupGeneral.showInfoSnackbar(LocaleKeys.restore_successfull.tr());
 
       if (context.mounted) {
         Navigator.of(context).pop();
         Navigator.of(context).pop();
       }
     } catch (e) {
-      // ignore: use_build_context_synchronously
-      BackupGeneral.showInfoSnackbar(context, e.toString());
+      BackupGeneral.showInfoSnackbar(e.toString());
     }
   }
 
@@ -119,20 +110,12 @@ class BackupImport {
         // ignore: use_build_context_synchronously
         await _restoreBackupVersion5(context, backupFile, tmpDir);
       } else {
-        // ignore: use_build_context_synchronously
-        BackupGeneral.showInfoSnackbar(
-          context,
-          LocaleKeys.backup_not_valid.tr(),
-        );
+        BackupGeneral.showInfoSnackbar(LocaleKeys.backup_not_valid.tr());
         return;
       }
     }
 
-    // ignore: use_build_context_synchronously
-    BackupGeneral.showInfoSnackbar(
-      context,
-      LocaleKeys.restore_successfull.tr(),
-    );
+    BackupGeneral.showInfoSnackbar(LocaleKeys.restore_successfull.tr());
 
     if (context.mounted) {
       Navigator.of(context).pop();
@@ -181,8 +164,7 @@ class BackupImport {
           coverFile: coverFile,
         );
       } catch (e) {
-        // ignore: use_build_context_synchronously
-        BackupGeneral.showInfoSnackbar(context, e.toString());
+        BackupGeneral.showInfoSnackbar(e.toString());
       }
     }
 
@@ -295,8 +277,7 @@ class BackupImport {
     bookCubit.getAllBooksByStatus();
     bookCubit.getAllBooks();
 
-    // ignore: use_build_context_synchronously
-    await _restoreChallengeTargetsFromBackup3(context, tmpPath);
+      BackupGeneral.showInfoSnackbar(e.toString());
   }
 
   static _restoreChallengeTargetsFromBackup3(
@@ -377,8 +358,6 @@ class BackupImport {
     }
 
     bookCubit.addBook(newBook, refreshBooks: false, coverFile: coverFile);
-
-    if (!context.mounted) return;
   }
 
   static String? _generateBlurHash(Uint8List? cover) {

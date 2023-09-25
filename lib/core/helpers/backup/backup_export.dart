@@ -28,17 +28,9 @@ class BackupExport {
 
       File(filePath).writeAsBytesSync(File(tmpBackupPath).readAsBytesSync());
 
-      // ignore: use_build_context_synchronously
-      BackupGeneral.showInfoSnackbar(
-        context,
-        LocaleKeys.backup_successfull.tr(),
-      );
+      BackupGeneral.showInfoSnackbar(LocaleKeys.backup_successfull.tr());
     } catch (e) {
-      // ignore: use_build_context_synchronously
-      BackupGeneral.showInfoSnackbar(
-        context,
-        e.toString(),
-      );
+      BackupGeneral.showInfoSnackbar(e.toString());
     }
   }
 
@@ -62,17 +54,9 @@ class BackupExport {
         bytes: File(tmpBackupPath).readAsBytesSync(),
       );
 
-      // ignore: use_build_context_synchronously
-      BackupGeneral.showInfoSnackbar(
-        context,
-        LocaleKeys.backup_successfull.tr(),
-      );
+      BackupGeneral.showInfoSnackbar(LocaleKeys.backup_successfull.tr());
     } catch (e) {
-      // ignore: use_build_context_synchronously
-      BackupGeneral.showInfoSnackbar(
-        context,
-        e.toString(),
-      );
+      BackupGeneral.showInfoSnackbar(e.toString());
     }
   }
 
@@ -112,17 +96,12 @@ class BackupExport {
 
       // ignore: use_build_context_synchronously
       return await _writeTempBackupFile(
-        context,
         listOfBookJSONs,
         challengeTargets,
         coverFiles,
       );
     } catch (e) {
-      // ignore: use_build_context_synchronously
-      BackupGeneral.showInfoSnackbar(
-        context,
-        e.toString(),
-      );
+      BackupGeneral.showInfoSnackbar(e.toString());
 
       return null;
     }
@@ -142,7 +121,6 @@ class BackupExport {
 
   // Current backup version: 5
   static Future<String?> _writeTempBackupFile(
-    BuildContext context,
     List<String> listOfBookJSONs,
     String? challengeTargets,
     List<File>? coverFiles,
@@ -222,11 +200,7 @@ class BackupExport {
 
       return tmpFilePath;
     } catch (e) {
-      // ignore: use_build_context_synchronously
-      BackupGeneral.showInfoSnackbar(
-        context,
-        e.toString(),
-      );
+      BackupGeneral.showInfoSnackbar(e.toString());
 
       return null;
     }

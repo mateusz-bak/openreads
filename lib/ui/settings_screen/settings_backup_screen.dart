@@ -56,7 +56,7 @@ class _SettingsBackupScreenState extends State<SettingsBackupScreen> {
       await BackupGeneral.requestStoragePermission(context);
       await CSVExport.exportCSVLegacyStorage(context);
     } else {
-      await CSVExport.exportCSV(context);
+      await CSVExport.exportCSV();
     }
 
     setState(() => _exportingCSV = false);

@@ -14,7 +14,7 @@ import 'package:openreads/main.dart';
 
 class CSVExport {
   static exportCSVLegacyStorage(BuildContext context) async {
-    final csv = await _prepareCSVExport(context);
+    final csv = await _prepareCSVExport();
     if (csv == null) return;
 
     // ignore: use_build_context_synchronously
@@ -32,22 +32,14 @@ class CSVExport {
         bytes: Uint8List.fromList(utf8.encode(csv)),
       );
 
-      // ignore: use_build_context_synchronously
-      BackupGeneral.showInfoSnackbar(
-        context,
-        LocaleKeys.export_successful.tr(),
-      );
+      BackupGeneral.showInfoSnackbar(LocaleKeys.export_successful.tr());
     } catch (e) {
-      // ignore: use_build_context_synchronously
-      BackupGeneral.showInfoSnackbar(
-        context,
-        e.toString(),
-      );
+      BackupGeneral.showInfoSnackbar(e.toString());
     }
   }
 
-  static Future exportCSV(BuildContext context) async {
-    final csv = await _prepareCSVExport(context);
+  static Future exportCSV() async {
+    final csv = await _prepareCSVExport();
     if (csv == null) return;
 
     final selectedUriDir = await openDocumentTree();
@@ -66,18 +58,13 @@ class CSVExport {
         bytes: Uint8List.fromList(utf8.encode(csv)),
       );
 
-      // ignore: use_build_context_synchronously
-      BackupGeneral.showInfoSnackbar(
-        context,
-        LocaleKeys.export_successful.tr(),
-      );
+      BackupGeneral.showInfoSnackbar(LocaleKeys.export_successful.tr());
     } catch (e) {
-      // ignore: use_build_context_synchronously
-      BackupGeneral.showInfoSnackbar(context, e.toString());
+      BackupGeneral.showInfoSnackbar(e.toString());
     }
   }
 
-  static Future<String?> _prepareCSVExport(BuildContext context) async {
+  static Future<String?> _prepareCSVExport() async {
     try {
       await bookCubit.getAllBooks(tags: true);
 
@@ -159,8 +146,7 @@ class CSVExport {
         textEndDelimiter: '"',
       );
     } catch (e) {
-      // ignore: use_build_context_synchronously
-      BackupGeneral.showInfoSnackbar(context, e.toString());
+      BackupGeneral.showInfoSnackbar(e.toString());
 
       return null;
     }
