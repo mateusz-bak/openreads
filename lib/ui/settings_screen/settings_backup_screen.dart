@@ -8,6 +8,7 @@ import 'package:openreads/core/helpers/backup/backup_helpers.dart';
 import 'package:openreads/logic/bloc/migration_v1_to_v2_bloc/migration_v1_to_v2_bloc.dart';
 import 'package:openreads/generated/locale_keys.g.dart';
 import 'package:openreads/logic/bloc/theme_bloc/theme_bloc.dart';
+import 'package:openreads/logic/cubit/backup_progress_cubit.dart';
 import 'package:openreads/ui/welcome_screen/widgets/widgets.dart';
 import 'package:settings_ui/settings_ui.dart';
 import 'package:share_plus/share_plus.dart';
@@ -30,8 +31,6 @@ class _SettingsBackupScreenState extends State<SettingsBackupScreen> {
   bool _restoringLocal = false;
   bool _exportingCSV = false;
   bool _importingGoodreadsCSV = false;
-
-  String restoredCounterText = '';
 
   late DeviceInfoPlugin deviceInfo;
   late AndroidDeviceInfo androidInfo;
@@ -115,96 +114,130 @@ class _SettingsBackupScreenState extends State<SettingsBackupScreen> {
   }
 
   @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text(
-          LocaleKeys.backup.tr(),
-          style: const TextStyle(fontSize: 18),
-        ),
-      ),
-      body: Column(
-        children: [
-          Expanded(
-            child: BlocBuilder<ThemeBloc, ThemeState>(
-              builder: (context, state) {
-                late final bool amoledDark;
-
-                if (state is SetThemeState) {
-                  amoledDark = state.amoledDark;
-                } else {
-                  amoledDark = false;
-                }
-
-                return SettingsList(
-                  contentPadding: const EdgeInsets.only(top: 10),
-                  darkTheme: SettingsThemeData(
-                    settingsListBackground: amoledDark
-                        ? Colors.black
-                        : Theme.of(context).colorScheme.surface,
-                  ),
-                  lightTheme: SettingsThemeData(
-                    settingsListBackground:
-                        Theme.of(context).colorScheme.surface,
-                  ),
-                  sections: [
-                    SettingsSection(
-                      title: Text(
-                        LocaleKeys.openreads_backup.tr(),
-                        style: TextStyle(
-                          fontSize: 16,
-                          fontWeight: FontWeight.bold,
-                          color: Theme.of(context).colorScheme.primary,
-                        ),
-                      ),
-                      tiles: <SettingsTile>[
-                        _buildCreateLocalBackup(),
-                        _buildCreateCloudBackup(),
-                        _buildRestoreBackup(),
-                        _buildV1ToV2Migration(context),
-                      ],
-                    ),
-                    SettingsSection(
-                      title: Text(
-                        LocaleKeys.csv.tr(),
-                        style: TextStyle(
-                          fontSize: 16,
-                          fontWeight: FontWeight.bold,
-                          color: Theme.of(context).colorScheme.primary,
-                        ),
-                      ),
-                      tiles: <SettingsTile>[
-                        _buildExportAsCSV(),
-                        _buildImportGoodreadsCSV(),
-                      ],
-                    ),
-                  ],
-                );
-              },
+  Widget build(BuildContext originalContext) {
+    return BlocProvider(
+      create: (context) => BackupProgressCubit(),
+      child: Builder(builder: (context) {
+        return Scaffold(
+          appBar: AppBar(
+            title: Text(
+              LocaleKeys.backup.tr(),
+              style: const TextStyle(fontSize: 18),
             ),
           ),
-          BlocBuilder<MigrationV1ToV2Bloc, MigrationV1ToV2State>(
-            builder: (context, migrationState) {
-              if (migrationState is MigrationOnging) {
-                return MigrationNotification(
-                  done: migrationState.done,
-                  total: migrationState.total,
-                );
-              } else if (migrationState is MigrationFailed) {
-                return MigrationNotification(
-                  error: migrationState.error,
-                );
-              } else if (migrationState is MigrationSucceded) {
-                return const MigrationNotification(
-                  success: true,
-                );
-              }
+          body: Column(
+            children: [
+              BlocBuilder<BackupProgressCubit, String?>(
+                builder: (context, state) {
+                  if (state == null) return const SizedBox();
 
-              return const SizedBox();
-            },
+                  return Row(
+                    children: [
+                      Expanded(
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.stretch,
+                          children: [
+                            const LinearProgressIndicator(),
+                            Container(
+                              padding: const EdgeInsets.fromLTRB(20, 10, 20, 0),
+                              child: Text(
+                                state,
+                                textAlign: TextAlign.center,
+                                style: const TextStyle(
+                                  fontSize: 16,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ],
+                  );
+                },
+              ),
+              Expanded(
+                child: BlocBuilder<ThemeBloc, ThemeState>(
+                  builder: (context, state) {
+                    late final bool amoledDark;
+
+                    if (state is SetThemeState) {
+                      amoledDark = state.amoledDark;
+                    } else {
+                      amoledDark = false;
+                    }
+
+                    return SettingsList(
+                      contentPadding: const EdgeInsets.only(top: 10),
+                      darkTheme: SettingsThemeData(
+                        settingsListBackground: amoledDark
+                            ? Colors.black
+                            : Theme.of(context).colorScheme.surface,
+                      ),
+                      lightTheme: SettingsThemeData(
+                        settingsListBackground:
+                            Theme.of(context).colorScheme.surface,
+                      ),
+                      sections: [
+                        SettingsSection(
+                          title: Text(
+                            LocaleKeys.openreads_backup.tr(),
+                            style: TextStyle(
+                              fontSize: 16,
+                              fontWeight: FontWeight.bold,
+                              color: Theme.of(context).colorScheme.primary,
+                            ),
+                          ),
+                          tiles: <SettingsTile>[
+                            _buildCreateLocalBackup(),
+                            _buildCreateCloudBackup(),
+                            _buildRestoreBackup(context),
+                            _buildV1ToV2Migration(context),
+                          ],
+                        ),
+                        SettingsSection(
+                          title: Text(
+                            LocaleKeys.csv.tr(),
+                            style: TextStyle(
+                              fontSize: 16,
+                              fontWeight: FontWeight.bold,
+                              color: Theme.of(context).colorScheme.primary,
+                            ),
+                          ),
+                          tiles: <SettingsTile>[
+                            _buildExportAsCSV(),
+                            _buildImportGoodreadsCSV(),
+                          ],
+                        ),
+                      ],
+                    );
+                  },
+                ),
+              ),
+              BlocBuilder<MigrationV1ToV2Bloc, MigrationV1ToV2State>(
+                builder: (context, migrationState) {
+                  if (migrationState is MigrationOnging) {
+                    return MigrationNotification(
+                      done: migrationState.done,
+                      total: migrationState.total,
+                    );
+                  } else if (migrationState is MigrationFailed) {
+                    return MigrationNotification(
+                      error: migrationState.error,
+                    );
+                  } else if (migrationState is MigrationSucceded) {
+                    return const MigrationNotification(
+                      success: true,
+                    );
+                  }
+
+                  return const SizedBox();
+                },
+              ),
+            ],
           ),
-        ],
-      ),
+        );
+      }),
     );
   }
 
@@ -265,7 +298,7 @@ class _SettingsBackupScreenState extends State<SettingsBackupScreen> {
     );
   }
 
-  SettingsTile _buildRestoreBackup() {
+  SettingsTile _buildRestoreBackup(BuildContext builderContext) {
     return SettingsTile(
       title: Text(
         LocaleKeys.restore_backup.tr(),
@@ -280,21 +313,8 @@ class _SettingsBackupScreenState extends State<SettingsBackupScreen> {
               child: CircularProgressIndicator(),
             )
           : const Icon(FontAwesomeIcons.arrowUpFromBracket),
-      description: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          restoredCounterText.isNotEmpty
-              ? Text(
-                  restoredCounterText,
-                  style: const TextStyle(
-                    fontWeight: FontWeight.bold,
-                  ),
-                )
-              : const SizedBox(),
-          Text(
-            '${LocaleKeys.restore_backup_description_1.tr()}\n${LocaleKeys.restore_backup_description_2.tr()}',
-          ),
-        ],
+      description: Text(
+        '${LocaleKeys.restore_backup_description_1.tr()}\n${LocaleKeys.restore_backup_description_2.tr()}',
       ),
       onPressed: (context) {
         showDialog(
@@ -312,7 +332,7 @@ class _SettingsBackupScreenState extends State<SettingsBackupScreen> {
                 actions: [
                   FilledButton.tonal(
                     onPressed: () {
-                      _startRestoringLocalBackup(context);
+                      _startRestoringLocalBackup(builderContext);
                       Navigator.of(context).pop();
                     },
                     child: Text(LocaleKeys.yes.tr()),

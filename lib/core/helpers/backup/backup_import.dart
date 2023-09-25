@@ -7,6 +7,7 @@ import 'package:flutter/material.dart';
 import 'package:archive/archive_io.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:openreads/logic/cubit/backup_progress_cubit.dart';
 import 'package:shared_storage/shared_storage.dart';
 import 'package:sqflite/sqflite.dart';
 import 'package:path/path.dart' as path;
@@ -203,6 +204,12 @@ class BackupImport {
     booksData = booksData.replaceAll('}|||||{', '}@@@@@{');
 
     final books = booksData.split('@@@@@');
+    final booksCount = books.length;
+    int restoredBooks = 0;
+
+    context
+        .read<BackupProgressCubit>()
+        .updateString('$restoredBooks/$booksCount ${LocaleKeys.restored.tr()}');
 
     await bookCubit.removeAllBooks();
 
@@ -224,11 +231,18 @@ class BackupImport {
           refreshBooks: false,
           coverFile: coverFile,
         );
-      } catch (e) {
+
+        restoredBooks++;
+
         // ignore: use_build_context_synchronously
-        BackupGeneral.showInfoSnackbar(context, e.toString());
+        context.read<BackupProgressCubit>().updateString(
+            '$restoredBooks/$booksCount ${LocaleKeys.restored.tr()}');
+      } catch (e) {
+        BackupGeneral.showInfoSnackbar(e.toString());
       }
     }
+
+    await Future.delayed(const Duration(milliseconds: 500));
 
     bookCubit.getAllBooksByStatus();
     bookCubit.getAllBooks();
@@ -243,41 +257,56 @@ class BackupImport {
     Uint8List? archiveFile,
     required Directory tmpPath,
   }) async {
-    // int booksBackupLenght = 0;
-    // int booksBackupDone = 0;
-
     late Uint8List archiveBytes;
+    try {
+      if (archivePath != null) {
+        archiveBytes = File(archivePath).readAsBytesSync();
+      } else if (archiveFile != null) {
+        archiveBytes = archiveFile;
+      } else {
+        return;
+      }
 
-    if (archivePath != null) {
-      archiveBytes = File(archivePath).readAsBytesSync();
-    } else if (archiveFile != null) {
-      archiveBytes = archiveFile;
-    } else {
-      return;
-    }
+      final archive = ZipDecoder().decodeBytes(archiveBytes);
 
-    final archive = ZipDecoder().decodeBytes(archiveBytes);
+      extractArchiveToDisk(archive, tmpPath.path);
 
-    extractArchiveToDisk(archive, tmpPath.path);
+      final booksDB = await openDatabase(path.join(tmpPath.path, 'books.sql'));
+      final result = await booksDB.query("Book");
 
-    final booksDB = await openDatabase(path.join(tmpPath.path, 'books.sql'));
-    final result = await booksDB.query("Book");
+      final List<BookFromBackupV3> books = result.isNotEmpty
+          ? result.map((item) => BookFromBackupV3.fromJson(item)).toList()
+          : [];
 
-    final List<BookFromBackupV3> books = result.isNotEmpty
-        ? result.map((item) => BookFromBackupV3.fromJson(item)).toList()
-        : [];
+      final booksCount = books.length;
+      int restoredBooks = 0;
 
-    await bookCubit.removeAllBooks();
-
-    for (var book in books) {
       // ignore: use_build_context_synchronously
-      await _addBookFromBackupV3(context, book);
-    }
+      context.read<BackupProgressCubit>().updateString(
+          '$restoredBooks/$booksCount ${LocaleKeys.restored.tr()}');
 
-    bookCubit.getAllBooksByStatus();
-    bookCubit.getAllBooks();
+      await bookCubit.removeAllBooks();
 
+      for (var book in books) {
+        // ignore: use_build_context_synchronously
+        await _addBookFromBackupV3(context, book);
+
+        restoredBooks += 1;
+        // ignore: use_build_context_synchronously
+        context.read<BackupProgressCubit>().updateString(
+            '$restoredBooks/$booksCount ${LocaleKeys.restored.tr()}');
+      }
+
+      bookCubit.getAllBooksByStatus();
+      bookCubit.getAllBooks();
+
+      // ignore: use_build_context_synchronously
+      await _restoreChallengeTargetsFromBackup3(context, tmpPath);
+
+      await Future.delayed(const Duration(seconds: 2));
+    } catch (e) {
       BackupGeneral.showInfoSnackbar(e.toString());
+    }
   }
 
   static _restoreChallengeTargetsFromBackup3(
