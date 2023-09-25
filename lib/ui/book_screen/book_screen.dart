@@ -159,6 +159,8 @@ class BookScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final mediaQuery = MediaQuery.of(context);
+
     return Scaffold(
       extendBodyBehindAppBar: true,
       appBar: const BookScreenAppBar(),
@@ -174,7 +176,10 @@ class BookScreen extends StatelessWidget {
                           book: state,
                         ),
                       )
-                    : const SizedBox(),
+                    : SizedBox(
+                        height: mediaQuery.padding.top +
+                            AppBar().preferredSize.height,
+                      ),
                 Padding(
                   padding: const EdgeInsets.fromLTRB(5, 0, 5, 5),
                   child: Column(
