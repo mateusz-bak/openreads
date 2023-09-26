@@ -38,7 +38,7 @@ class _SettingsBackupScreenState extends State<SettingsBackupScreen> {
   _startCreatingLocalBackup(context) async {
     setState(() => _creatingLocal = true);
 
-    if (androidInfo.version.sdkInt <= 31) {
+    if (androidInfo.version.sdkInt < 30) {
       await BackupGeneral.requestStoragePermission(context);
       await BackupExport.createLocalBackupLegacyStorage(context);
     } else {
@@ -51,7 +51,7 @@ class _SettingsBackupScreenState extends State<SettingsBackupScreen> {
   _startExportingCSV(context) async {
     setState(() => _exportingCSV = true);
 
-    if (androidInfo.version.sdkInt <= 31) {
+    if (androidInfo.version.sdkInt < 30) {
       await BackupGeneral.requestStoragePermission(context);
       await CSVExport.exportCSVLegacyStorage(context);
     } else {
@@ -64,7 +64,7 @@ class _SettingsBackupScreenState extends State<SettingsBackupScreen> {
   _startImportingGoodreadsCSV(context) async {
     setState(() => _importingGoodreadsCSV = true);
 
-    if (androidInfo.version.sdkInt <= 31) {
+    if (androidInfo.version.sdkInt < 30) {
       await BackupGeneral.requestStoragePermission(context);
       await CSVGoodreadsImport.importGoodreadsCSVLegacyStorage(context);
     } else {
@@ -90,7 +90,7 @@ class _SettingsBackupScreenState extends State<SettingsBackupScreen> {
   _startRestoringLocalBackup(context) async {
     setState(() => _restoringLocal = true);
 
-    if (androidInfo.version.sdkInt <= 31) {
+    if (androidInfo.version.sdkInt < 30) {
       await BackupGeneral.requestStoragePermission(context);
       await BackupImport.restoreLocalBackupLegacyStorage(context);
     } else {
