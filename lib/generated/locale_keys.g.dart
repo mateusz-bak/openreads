@@ -55,6 +55,7 @@ abstract class LocaleKeys {
   static const open_library_ID = 'open_library_ID';
   static const enter_tags = 'enter_tags';
   static const my_review = 'my_review';
+  static const notes = 'notes';
   static const add_new_book = 'add_new_book';
   static const select_start_date = 'select_start_date';
   static const select_finish_date = 'select_finish_date';
