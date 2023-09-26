@@ -290,6 +290,17 @@ class BookScreen extends StatelessWidget {
                               text: state.myReview!,
                             )
                           : const SizedBox(),
+                      SizedBox(
+                        height: (state.notes != null && state.notes!.isNotEmpty)
+                            ? 5
+                            : 0,
+                      ),
+                      (state.notes != null && state.notes!.isNotEmpty)
+                          ? BookDetail(
+                              title: LocaleKeys.notes.tr(),
+                              text: state.notes!,
+                            )
+                          : const SizedBox(),
                       const SizedBox(height: 50.0),
                     ],
                   ),

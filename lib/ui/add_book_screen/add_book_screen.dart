@@ -50,6 +50,7 @@ class _AddBookScreenState extends State<AddBookScreen> {
   final _olidCtrl = TextEditingController();
   final _tagsCtrl = TextEditingController();
   final _myReviewCtrl = TextEditingController();
+  final _notesCtrl = TextEditingController();
 
   final _animDuration = const Duration(milliseconds: 250);
 
@@ -75,6 +76,7 @@ class _AddBookScreenState extends State<AddBookScreen> {
     _isbnCtrl.text = book.isbn ?? '';
     _olidCtrl.text = book.olid ?? '';
     _myReviewCtrl.text = book.myReview ?? '';
+    _notesCtrl.text = book.notes ?? '';
 
     if (!widget.fromOpenLibrary && !widget.fromOpenLibraryEdition) {
       context.read<EditBookCoverCubit>().setCover(book.getCoverFile());
@@ -309,6 +311,10 @@ class _AddBookScreenState extends State<AddBookScreen> {
     _myReviewCtrl.addListener(() {
       context.read<EditBookCubit>().setMyReview(_myReviewCtrl.text);
     });
+
+    _notesCtrl.addListener(() {
+      context.read<EditBookCubit>().setNotes(_notesCtrl.text);
+    });
   }
 
   @override
@@ -341,6 +347,7 @@ class _AddBookScreenState extends State<AddBookScreen> {
     _olidCtrl.dispose();
     _tagsCtrl.dispose();
     _myReviewCtrl.dispose();
+    _notesCtrl.dispose();
 
     super.dispose();
   }
@@ -524,6 +531,17 @@ class _AddBookScreenState extends State<AddBookScreen> {
               controller: _myReviewCtrl,
               hint: LocaleKeys.my_review.tr(),
               icon: FontAwesomeIcons.solidKeyboard,
+              keyboardType: TextInputType.multiline,
+              maxLength: 5000,
+              hideCounter: false,
+              maxLines: 15,
+              textCapitalization: TextCapitalization.sentences,
+            ),
+            const SizedBox(height: 10),
+            BookTextField(
+              controller: _notesCtrl,
+              hint: LocaleKeys.notes.tr(),
+              icon: FontAwesomeIcons.noteSticky,
               keyboardType: TextInputType.multiline,
               maxLength: 5000,
               hideCounter: false,

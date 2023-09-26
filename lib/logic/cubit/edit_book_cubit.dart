@@ -112,6 +112,13 @@ class EditBookCubit extends Cubit<Book> {
     emit(book);
   }
 
+  void setNotes(String notes) {
+    final book = state.copyWith();
+    book.notes = notes.isNotEmpty ? notes : null;
+
+    emit(book);
+  }
+
   void setBlurHash(String? blurHash) {
     final book = state.copyWith();
     book.blurHash = blurHash;

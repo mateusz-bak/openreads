@@ -24,6 +24,7 @@ class Book {
   String? olid;
   String? tags;
   String? myReview;
+  String? notes;
   Uint8List? cover; // Not used since 2.2.0
   String? blurHash;
   BookType bookType;
@@ -47,6 +48,7 @@ class Book {
     this.olid,
     this.tags,
     this.myReview,
+    this.notes,
     this.cover,
     this.blurHash,
     this.bookType = BookType.paper,
@@ -90,6 +92,7 @@ class Book {
       olid: json['olid'],
       tags: json['tags'],
       myReview: json['my_review'],
+      notes: json['notes'],
       cover: json['cover'] != null
           ? Uint8List.fromList(json['cover'].cast<int>().toList())
           : null,
@@ -119,6 +122,7 @@ class Book {
     String? olid,
     String? tags,
     String? myReview,
+    String? notes,
     Uint8List? cover,
     String? blurHash,
     BookType? bookType,
@@ -142,6 +146,7 @@ class Book {
       olid: olid ?? this.olid,
       tags: tags ?? this.tags,
       myReview: myReview ?? this.myReview,
+      notes: notes ?? this.notes,
       cover: cover ?? this.cover,
       blurHash: blurHash ?? this.blurHash,
       bookType: bookType ?? this.bookType,
@@ -168,6 +173,7 @@ class Book {
       olid: olid,
       tags: tags,
       myReview: myReview,
+      notes: notes,
       cover: null,
       blurHash: blurHash,
       bookType: bookType,
@@ -211,7 +217,7 @@ class Book {
       tags: oldBook.bookTags != null && oldBook.bookTags != 'null'
           ? jsonDecode(oldBook.bookTags!).join('|||||')
           : null,
-      myReview: oldBook.bookNotes,
+      notes: oldBook.bookNotes,
       cover: oldBook.bookCoverImg,
       blurHash: blurHash,
       bookType: BookType.paper,
@@ -238,6 +244,7 @@ class Book {
       'olid': olid,
       'tags': tags,
       'my_review': myReview,
+      'notes': notes,
       'cover': cover,
       'blur_hash': blurHash,
       'has_cover': hasCover ? 1 : 0,
