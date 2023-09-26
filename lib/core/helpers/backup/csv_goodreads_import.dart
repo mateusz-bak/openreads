@@ -17,7 +17,10 @@ import 'package:openreads/main.dart';
 class CSVGoodreadsImport {
   static importGoodreadsCSVLegacyStorage(BuildContext context) async {
     try {
-      final csvPath = await BackupGeneral.openFilePicker(context);
+      final csvPath = await BackupGeneral.openFilePicker(
+        context,
+        allowedExtensions: ['.csv'],
+      );
       if (csvPath == null) return;
 
       final csvBytes = await File(csvPath).readAsBytes();

@@ -74,7 +74,10 @@ class BackupGeneral {
     );
   }
 
-  static Future<String?> openFilePicker(BuildContext context) async {
+  static Future<String?> openFilePicker(
+    BuildContext context, {
+    List<String> allowedExtensions = const ['.backup', '.zip', '.png'],
+  }) async {
     if (!context.mounted) return null;
 
     return await FilesystemPicker.open(
@@ -84,7 +87,7 @@ class BackupGeneral {
       fsType: FilesystemType.file,
       rootDirectory: Directory('/storage/emulated/0/'),
       fileTileSelectMode: FileTileSelectMode.wholeTile,
-      allowedExtensions: ['.backup', '.zip', '.png'],
+      allowedExtensions: allowedExtensions,
       theme: FilesystemPickerTheme(
         backgroundColor: Theme.of(context).colorScheme.surface,
         fileList: FilesystemPickerFileListThemeData(
