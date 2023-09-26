@@ -28,6 +28,7 @@ import 'package:path_provider/path_provider.dart';
 late BookCubit bookCubit;
 late Directory appDocumentsDirectory;
 late Directory appTempDirectory;
+late GlobalKey<ScaffoldMessengerState> snackbarKey;
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -40,8 +41,9 @@ void main() async {
 
   appDocumentsDirectory = await getApplicationDocumentsDirectory();
   appTempDirectory = await getTemporaryDirectory();
+  snackbarKey = GlobalKey<ScaffoldMessengerState>();
 
-  bookCubit = BookCubit();
+  bookCubit = BookCubit(); // TODO: move to app's context
 
   final localeCodes = supportedLocales.map((e) => e.locale).toList();
 
@@ -197,6 +199,7 @@ class _OpenreadsAppState extends State<OpenreadsApp>
         ),
         child: MaterialApp(
           title: 'Openreads',
+          scaffoldMessengerKey: snackbarKey,
           builder: (context, child) => MediaQuery(
             // Temporary fix for https://github.com/AbdulRahmanAlHamali/flutter_typeahead/issues/463
             data: MediaQuery.of(context).copyWith(
