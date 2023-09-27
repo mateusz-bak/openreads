@@ -53,6 +53,7 @@
     "open_library_ID": "Open Library ID",
     "enter_tags": "Tags",
     "my_review": "My review",
+    "notes": "Notes",
     "add_new_book": "Add new book",
     "select_start_date": "Select reading start date",
     "select_finish_date": "Select reading finish date",
@@ -220,5 +221,16 @@
     "migration_v1_to_v2_retrigger_description": "Click if books are not showing up after update to v2.0.",
     "dark_mode_style": "Dark mode style",
     "dark_mode_natural": "Natural dark mode",
-    "dark_mode_amoled": "AMOLED dark mode"
+    "dark_mode_amoled": "AMOLED dark mode",
+    "selected": "Selected",
+    "change_book_type": "Change book type",
+    "update_successful_message": "Updated successfully!",
+    "export_successful": "Export successful",
+    "openreads_backup": "Openreads backup",
+    "csv": "CSV",
+    "export_csv": "Export books as a CSV file",
+    "export_csv_description_1": "Covers are not exported",
+    "import_goodreads_csv": "Import Goodreads CSV",
+    "choose_not_finished_shelf": "Choose a shelf with not finished books:",
+    "import_successful": "Import successful"
 }

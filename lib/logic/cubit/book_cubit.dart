@@ -1,7 +1,16 @@
+import 'dart:io';
+
+import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:openreads/logic/cubit/current_book_cubit.dart';
+import 'package:openreads/main.dart';
 import 'package:openreads/model/book.dart';
 import 'package:openreads/resources/repository.dart';
+import 'package:path_provider/path_provider.dart';
 import 'package:rxdart/rxdart.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+
+import '../../core/constants/enums.dart';
 
 class BookCubit extends Cubit {
   final Repository repository = Repository();
@@ -39,6 +48,14 @@ class BookCubit extends Cubit {
   Stream<Book?> get book => _bookFetcher.stream;
 
   BookCubit() : super(null) {
+    _initLoad();
+  }
+
+  Future<void> _initLoad() async {
+    if (!await _checkIfCoverMigrationDone()) {
+      await _migrateCoversFromDatabaseToStorage();
+    }
+
     getFinishedBooks();
     getInProgressBooks();
     getToReadBooks();
@@ -99,8 +116,10 @@ class BookCubit extends Cubit {
     }
   }
 
-  addBook(Book book, {bool refreshBooks = true}) async {
-    await repository.insertBook(book);
+  addBook(Book book, {bool refreshBooks = true, File? coverFile}) async {
+    final bookID = await repository.insertBook(book);
+
+    await _saveCoverToStorage(bookID, coverFile);
 
     if (refreshBooks) {
       getAllBooksByStatus();
@@ -108,9 +127,39 @@ class BookCubit extends Cubit {
     }
   }
 
-  updateBook(Book book) async {
+  Future importAdditionalBooks(List<Book> books) async {
+    for (var book in books) {
+      await repository.insertBook(book);
+    }
+
+    getAllBooksByStatus();
+    getAllBooks();
+  }
+
+  Future _saveCoverToStorage(int? bookID, File? coverFile) async {
+    if (bookID == null || coverFile == null) return;
+
+    final file = File('${appDocumentsDirectory.path}/$bookID.jpg');
+    await file.writeAsBytes(coverFile.readAsBytesSync());
+  }
+
+  updateBook(Book book, {File? coverFile, BuildContext? context}) async {
     repository.updateBook(book);
+    await _saveCoverToStorage(book.id!, coverFile);
+
+    if (context != null) {
+      // This looks bad but we need to wait for cover to be saved to storage
+      // before updating current book
+      context.read<CurrentBookCubit>().setBook(book.copyWith());
+    }
+
     getBook(book.id!);
+    getAllBooksByStatus();
+    getAllBooks();
+  }
+
+  updateBookType(Set<int> ids, BookType bookType) async {
+    repository.updateBookType(ids, bookType);
     getAllBooksByStatus();
     getAllBooks();
   }
@@ -126,16 +175,12 @@ class BookCubit extends Cubit {
     _bookFetcher.sink.add(book);
   }
 
-  clearCurrentBook() {
-    _bookFetcher.sink.add(null);
-  }
-
   List<int> _getFinishedYears(List<Book> books) {
     final years = List<int>.empty(growable: true);
 
     for (var book in books) {
       if (book.finishDate != null) {
-        years.add(DateTime.parse(book.finishDate!).year);
+        years.add(book.finishDate!.year);
       }
     }
 
@@ -160,5 +205,33 @@ class BookCubit extends Cubit {
     tags.sort((a, b) => a.compareTo(b));
 
     return tags;
+  }
+
+  Future<bool> _checkIfCoverMigrationDone() async {
+    final SharedPreferences prefs = await SharedPreferences.getInstance();
+    final bool? check = prefs.getBool('is_cover_migration_done');
+
+    return check == true ? true : false;
+  }
+
+  Future<void> _migrateCoversFromDatabaseToStorage() async {
+    List<Book> allBooks = await repository.getAllBooks();
+
+    for (var book in allBooks) {
+      if (book.cover != null) {
+        final directory = await getApplicationDocumentsDirectory();
+        final file = File('${directory.path}/${book.id}.jpg');
+
+        await file.writeAsBytes(book.cover!);
+        await repository.updateBook(book.copyWithNullCover());
+      }
+    }
+
+    await _saveCoverMigrationStatus();
+  }
+
+  Future<void> _saveCoverMigrationStatus() async {
+    final SharedPreferences prefs = await SharedPreferences.getInstance();
+    prefs.setBool('is_cover_migration_done', true);
   }
 }

@@ -55,6 +55,7 @@ abstract class LocaleKeys {
   static const open_library_ID = 'open_library_ID';
   static const enter_tags = 'enter_tags';
   static const my_review = 'my_review';
+  static const notes = 'notes';
   static const add_new_book = 'add_new_book';
   static const select_start_date = 'select_start_date';
   static const select_finish_date = 'select_finish_date';
@@ -227,4 +228,15 @@ abstract class LocaleKeys {
   static const dark_mode_style = 'dark_mode_style';
   static const dark_mode_natural = 'dark_mode_natural';
   static const dark_mode_amoled = 'dark_mode_amoled';
+  static const selected = 'selected';
+  static const change_book_type = 'change_book_type';
+  static const update_successful_message = 'update_successful_message';
+  static const export_successful = 'export_successful';
+  static const openreads_backup = 'openreads_backup';
+  static const csv = 'csv';
+  static const export_csv = 'export_csv';
+  static const export_csv_description_1 = 'export_csv_description_1';
+  static const import_goodreads_csv = 'import_goodreads_csv';
+  static const choose_not_finished_shelf = 'choose_not_finished_shelf';
+  static const import_successful = 'import_successful';
 }

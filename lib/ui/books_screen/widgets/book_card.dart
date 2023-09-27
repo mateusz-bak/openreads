@@ -17,12 +17,16 @@ class BookCard extends StatelessWidget {
     required this.onPressed,
     required this.heroTag,
     required this.addBottomPadding,
+    this.onLongPressed,
+    this.cardColor,
   }) : super(key: key);
 
   final Book book;
   final String heroTag;
   final bool addBottomPadding;
   final Function() onPressed;
+  final Function()? onLongPressed;
+  final Color? cardColor;
 
   Widget _buildSortAttribute() {
     return BlocBuilder<SortBloc, SortState>(
@@ -144,18 +148,21 @@ class BookCard extends StatelessWidget {
     return chips;
   }
 
-  String? _generateDate(String? date) {
+  String? _generateDate(DateTime? date) {
     if (date == null) return null;
 
     final DateFormat formatter = DateFormat('dd/MM/yyyy');
-    return formatter.format(DateTime.parse(date));
+    return formatter.format(date);
   }
 
   @override
   Widget build(BuildContext context) {
+    final coverFile = book.getCoverFile();
+
     return Padding(
-      padding: EdgeInsets.fromLTRB(10, 0, 10, addBottomPadding ? 90 : 5),
+      padding: EdgeInsets.fromLTRB(10, 0, 10, addBottomPadding ? 90 : 0),
       child: Card(
+        color: cardColor,
         shadowColor: Colors.transparent,
         shape: RoundedRectangleBorder(
           side: BorderSide(color: dividerColor, width: 1),
@@ -165,71 +172,112 @@ class BookCard extends StatelessWidget {
           borderRadius: BorderRadius.circular(cornerRadius),
           child: InkWell(
             onTap: onPressed,
+            onLongPress: onLongPressed,
             child: Padding(
               padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 15),
               child: Row(
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   SizedBox(
-                    width: (book.cover != null) ? 60 : 0,
-                    child: (book.cover != null)
+                    width: (coverFile != null) ? 70 : 0,
+                    height: 70 * 1.5,
+                    child: (coverFile != null)
                         ? ClipRRect(
-                            borderRadius: BorderRadius.circular(2),
+                            borderRadius: BorderRadius.circular(4),
                             child: Hero(
                               tag: heroTag,
-                              child: Image.memory(
-                                book.cover!,
+                              child: Image.file(
+                                coverFile,
+                                width: 70,
+                                height: 70 * 1.5,
                                 fit: BoxFit.cover,
+                                frameBuilder: (
+                                  BuildContext context,
+                                  Widget child,
+                                  int? frame,
+                                  bool wasSynchronouslyLoaded,
+                                ) {
+                                  if (wasSynchronouslyLoaded) {
+                                    return child;
+                                  }
+                                  return AnimatedOpacity(
+                                    opacity: frame == null ? 0 : 1,
+                                    duration: const Duration(milliseconds: 250),
+                                    curve: Curves.easeOut,
+                                    child: child,
+                                  );
+                                },
                               ),
                             ),
                           )
                         : const SizedBox(),
                   ),
-                  SizedBox(width: (book.cover != null) ? 20 : 0),
+                  SizedBox(width: (coverFile != null) ? 15 : 0),
                   Expanded(
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        Text(
-                          book.title,
-                          softWrap: true,
-                          overflow: TextOverflow.clip,
-                          style: const TextStyle(
-                            fontSize: 15,
-                            fontWeight: FontWeight.bold,
-                          ),
+                        Row(
+                          children: [
+                            Expanded(
+                              child: Text(
+                                book.title,
+                                softWrap: true,
+                                overflow: TextOverflow.clip,
+                                style: const TextStyle(
+                                  fontSize: 15,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
+                            ),
+                            book.favourite
+                                ? Padding(
+                                    padding: const EdgeInsets.only(left: 10),
+                                    child: FaIcon(
+                                      FontAwesomeIcons.solidHeart,
+                                      size: 18,
+                                      color: likeColor,
+                                    ),
+                                  )
+                                : const SizedBox(),
+                          ],
                         ),
                         Text(
                           book.author,
                           softWrap: true,
                           overflow: TextOverflow.clip,
-                          style: const TextStyle(
+                          style: TextStyle(
                             fontSize: 14,
+                            color: Theme.of(context)
+                                .colorScheme
+                                .onSurface
+                                .withOpacity(0.8),
                           ),
                         ),
+                        book.publicationYear != null
+                            ? Text(
+                                book.publicationYear.toString(),
+                                softWrap: true,
+                                overflow: TextOverflow.clip,
+                                style: TextStyle(
+                                  fontSize: 12,
+                                  color: Theme.of(context)
+                                      .colorScheme
+                                      .onSurface
+                                      .withOpacity(0.6),
+                                  letterSpacing: 0.05,
+                                ),
+                              )
+                            : const SizedBox(),
                         const SizedBox(height: 5),
                         Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           crossAxisAlignment: CrossAxisAlignment.center,
                           children: [
-                            Row(
-                              children: [
-                                book.favourite
-                                    ? Padding(
-                                        padding:
-                                            const EdgeInsets.only(right: 10),
-                                        child: FaIcon(
-                                          FontAwesomeIcons.solidHeart,
-                                          size: 18,
-                                          color: likeColor,
-                                        ),
-                                      )
-                                    : const SizedBox(),
-                                book.status == 0
-                                    ? _buildRating(context)
-                                    : const SizedBox(),
-                              ],
-                            ),
+                            book.status == 0
+                                ? _buildRating(context)
+                                : const SizedBox(),
                             _buildSortAttribute(),
                           ],
                         ),
@@ -256,11 +304,10 @@ class BookCard extends StatelessWidget {
             unratedColor: Theme.of(context).scaffoldBackgroundColor,
             glow: false,
             glowRadius: 1,
-            itemSize: 24,
+            itemSize: 20,
             ignoreGestures: true,
             itemBuilder: (context, _) => Icon(
               Icons.star_rounded,
-              // color: Theme.of(context).ratingColor,
               color: ratingColor,
             ),
             onRatingUpdate: (_) {},
@@ -274,7 +321,6 @@ class BookCard extends StatelessWidget {
               const SizedBox(width: 5),
               Icon(
                 Icons.star_rounded,
-                // color: Theme.of(context).ratingColor,
                 color: ratingColor,
                 size: 20,
               ),

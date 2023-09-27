@@ -1,12 +1,12 @@
 name: openreads
 description: A new Flutter project.
 
-publish_to: 'none'
+publish_to: "none"
 
 version: 2.1.0+44
 
 environment:
-  sdk: '>=2.18.2 <3.0.0'
+  sdk: ">=2.18.2 <3.0.0"
 
 dependencies:
   flutter:
@@ -22,8 +22,7 @@ dependencies:
   image_cropper: ^5.0.0
   flutter_bloc: ^8.1.1
   colours: ^0.0.2
-  flutter_blurhash: ^0.7.0
-  blurhash_dart: ^1.2.1
+  blurhash: ^1.1.1
   image: ^4.0.15
   fl_chart: ^0.63.0
   dropdown_button2: ^2.0.0
@@ -46,7 +45,7 @@ dependencies:
   barcode_scan2: ^4.2.1
   intro_slider: ^4.2.0
   flutter_email_sender: ^6.0.0
-  permission_handler: ^10.2.0
+  permission_handler: ^11.0.0
   filesystem_picker: ^3.1.0
   archive: ^3.3.5
   share_plus: ^7.0.2
@@ -56,11 +55,14 @@ dependencies:
   package_info_plus: ^4.0.2
   animated_widgets: ^1.1.0
   shared_storage: ^0.8.0
-  shared_preferences: ^2.0.18
+  shared_preferences: ^2.2.1
   easy_localization: ^3.0.2
   flutter_typeahead: ^4.6.1
   flex_color_picker: ^3.2.2
   diacritic: ^0.1.4
+  flutter_speed_dial: ^7.0.0
+  blurhash_dart: ^1.2.1
+  csv: ^5.0.2
 
 dev_dependencies:
   flutter_test:
@@ -75,13 +77,12 @@ flutter_icons:
   adaptive_icon_background: "#00bfa6"
   min_sdk_android: 21
 
-
 flutter:
   uses-material-design: true
   generate: true
   assets:
-  - assets/images/
-  - assets/translations/
+    - assets/images/
+    - assets/translations/
   fonts:
     - family: Montserrat
       fonts:

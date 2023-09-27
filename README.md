@@ -11,7 +11,6 @@
  <img src='doc/github/github-banner.png' width='100%'/>
 </p>
 
-[![Flutter](https://img.shields.io/badge/-Flutter-02569B?logo=flutter&logoColor=white&style=flat-square)](https://flutter.dev/)
 [![GitHub tag (latest by date)](https://img.shields.io/github/v/tag/mateusz-bak/openreads-android?label=latest%20version&style=flat-square)](https://github.com/mateusz-bak/openreads-android/releases/latest)
 [![GitHub Workflow Status (with event)](https://img.shields.io/github/actions/workflow/status/mateusz-bak/openreads-android/test_build.yml?style=flat-square)](https://github.com/mateusz-bak/openreads-android/actions/workflows/test_build.yml)
 [![Weblate project translated](https://img.shields.io/badge/weblate-translations_needed-orange?style=flat-square&logo=weblate)](https://hosted.weblate.org/engage/openreads/)
@@ -98,6 +97,8 @@ Submit an issue here: [Openreads issues](https://github.com/mateusz-bak/openread
    ```
 
 2. Build and install the app on your device
+
+WARNING: If you already have the openreads app installed on your device this step will uninstall it before installing the debug version, this deletes all app data, to keep your books please make a backup first.
 
    ```sh
    flutter run

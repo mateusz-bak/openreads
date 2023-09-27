@@ -1,12 +1,14 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:openreads/core/constants.dart/enums.dart';
+import 'package:flutter_speed_dial/flutter_speed_dial.dart';
+import 'package:openreads/core/constants/enums.dart';
 import 'package:openreads/core/themes/app_theme.dart';
 import 'package:openreads/generated/locale_keys.g.dart';
 import 'package:openreads/logic/bloc/display_bloc/display_bloc.dart';
 import 'package:openreads/logic/bloc/sort_bloc/sort_bloc.dart';
 import 'package:openreads/logic/bloc/theme_bloc/theme_bloc.dart';
+import 'package:openreads/logic/cubit/edit_book_cubit.dart';
 import 'package:openreads/main.dart';
 import 'package:openreads/model/book.dart';
 import 'package:openreads/ui/add_book_screen/add_book_screen.dart';
@@ -16,6 +18,8 @@ import 'package:openreads/ui/search_page/search_page.dart';
 import 'package:openreads/ui/settings_screen/settings_screen.dart';
 import 'package:openreads/ui/statistics_screen/statistics_screen.dart';
 import 'package:diacritic/diacritic.dart';
+
+import 'helper/multi_select_helper.dart';
 
 class BooksScreen extends StatefulWidget {
   const BooksScreen({Key? key}) : super(key: key);
@@ -27,6 +31,17 @@ class BooksScreen extends StatefulWidget {
 class _BooksScreenState extends State<BooksScreen>
     with AutomaticKeepAliveClientMixin {
   late List<String> moreButtonOptions;
+  Set<int> selectedBookIds = {};
+
+  _onItemSelected(int id) {
+    setState(() {
+      if (selectedBookIds.contains(id)) {
+        selectedBookIds.remove(id);
+      } else {
+        selectedBookIds.add(id);
+      }
+    });
+  }
 
   List<Book> _sortReadList({
     required SetSortState state,
@@ -162,7 +177,7 @@ class _BooksScreenState extends State<BooksScreen>
 
     for (var book in list) {
       if (book.finishDate != null) {
-        final year = DateTime.parse(book.finishDate!).year.toString();
+        final year = book.finishDate!.year.toString();
         if (yearsList.contains(year)) {
           filteredOut.add(book);
         }
@@ -409,6 +424,7 @@ class _BooksScreenState extends State<BooksScreen>
           : booksWithoutStartDate.add(book);
     }
 
+
     booksWithStartDate.sort((a, b) {
       int startDateSorting =
           (DateTime.parse(a.startDate!).millisecondsSinceEpoch)
@@ -541,16 +557,79 @@ class _BooksScreenState extends State<BooksScreen>
         if (state is SetThemeState) {
           AppTheme.init(state, context);
 
-          return Scaffold(
-            appBar: _buildAppBar(context),
-            floatingActionButton: _buildFAB(context),
-            body: _buildScaffoldBody(),
+          return WillPopScope(
+            child: Scaffold(
+              appBar: selectedBookIds.isNotEmpty
+                  ? _buildMultiSelectAppBar(context)
+                  : _buildAppBar(context),
+              floatingActionButton: selectedBookIds.isNotEmpty
+                  ? _buildMultiSelectFAB(state)
+                  : _buildFAB(context),
+              body: _buildScaffoldBody(),
+            ),
+            onWillPop: () {
+              if (selectedBookIds.isNotEmpty) {
+                _resetMultiselectMode();
+                return Future.value(false);
+              }
+              return Future.value(true);
+            },
           );
         } else {
           return const SizedBox();
         }
       },
     );
+  }
+
+  AppBar _buildMultiSelectAppBar(BuildContext context) {
+    return AppBar(
+        title: Row(
+      children: [
+        IconButton(
+          icon: const Icon(Icons.close),
+          onPressed: () {
+            _resetMultiselectMode();
+          },
+        ),
+        Text(
+          '${LocaleKeys.selected.tr()} ${selectedBookIds.length}',
+          style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+        ),
+      ],
+    ));
+  }
+
+  void _resetMultiselectMode() {
+    setState(() {
+      selectedBookIds = {};
+    });
+  }
+
+  Padding? _buildMultiSelectFAB(SetThemeState state) {
+    return selectedBookIds.isNotEmpty
+        ? Padding(
+            padding: const EdgeInsets.only(bottom: 50),
+            child: SpeedDial(
+              spacing: 3,
+              dialRoot: (ctx, open, toggleChildren) {
+                return FloatingActionButton(
+                    onPressed: toggleChildren, child: const Icon(Icons.create));
+              },
+              childPadding: const EdgeInsets.all(5),
+              spaceBetweenChildren: 4,
+              children: [
+                SpeedDialChild(
+                    child: const Icon(Icons.menu_book_outlined),
+                    backgroundColor:
+                        Theme.of(context).colorScheme.secondaryContainer,
+                    label: LocaleKeys.change_book_type.tr(),
+                    onTap: () {
+                      showEditBookTypeBottomSheet(context, selectedBookIds);
+                    }),
+              ],
+            ))
+        : null;
   }
 
   BlocBuilder<ThemeBloc, ThemeState> _buildScaffoldBody() {
@@ -576,36 +655,39 @@ class _BooksScreenState extends State<BooksScreen>
                           ]),
                   ),
                 ),
-                Builder(builder: (context) {
-                  return Container(
-                    color: Theme.of(context).scaffoldBackgroundColor,
-                    child: TabBar(
-                      tabs: state.readTabFirst
-                          ? List.of([
-                              BookTab(
-                                text: LocaleKeys.books_finished.tr(),
-                              ),
-                              BookTab(
-                                text: LocaleKeys.books_in_progress.tr(),
-                              ),
-                              BookTab(
-                                text: LocaleKeys.books_for_later.tr(),
-                              ),
-                            ])
-                          : List.of([
-                              BookTab(
-                                text: LocaleKeys.books_in_progress.tr(),
-                              ),
-                              BookTab(
-                                text: LocaleKeys.books_finished.tr(),
-                              ),
-                              BookTab(
-                                text: LocaleKeys.books_for_later.tr(),
-                              ),
-                            ]),
-                    ),
-                  );
-                }),
+                SafeArea(
+                  child: Builder(builder: (context) {
+                    return Container(
+                      color: Theme.of(context).scaffoldBackgroundColor,
+                      child: TabBar(
+                        dividerColor: Colors.transparent,
+                        tabs: state.readTabFirst
+                            ? List.of([
+                                BookTab(
+                                  text: LocaleKeys.books_finished.tr(),
+                                ),
+                                BookTab(
+                                  text: LocaleKeys.books_in_progress.tr(),
+                                ),
+                                BookTab(
+                                  text: LocaleKeys.books_for_later.tr(),
+                                ),
+                              ])
+                            : List.of([
+                                BookTab(
+                                  text: LocaleKeys.books_in_progress.tr(),
+                                ),
+                                BookTab(
+                                  text: LocaleKeys.books_finished.tr(),
+                                ),
+                                BookTab(
+                                  text: LocaleKeys.books_for_later.tr(),
+                                ),
+                              ]),
+                      ),
+                    );
+                  }),
+                ),
               ],
             ),
           );
@@ -614,6 +696,10 @@ class _BooksScreenState extends State<BooksScreen>
         }
       },
     );
+  }
+
+  _setEmptyBookForEditScreen() {
+    context.read<EditBookCubit>().setBook(Book.empty());
   }
 
   Padding _buildFAB(BuildContext context) {
@@ -628,8 +714,11 @@ class _BooksScreenState extends State<BooksScreen>
             builder: (context) {
               return AddBookSheet(
                 addManually: () async {
+                  _setEmptyBookForEditScreen();
+
                   Navigator.pop(context);
                   await Future.delayed(const Duration(milliseconds: 100));
+                  if (!mounted) return;
 
                   Navigator.of(context).push(
                     MaterialPageRoute(
@@ -638,8 +727,11 @@ class _BooksScreenState extends State<BooksScreen>
                   );
                 },
                 searchInOpenLibrary: () async {
+                  _setEmptyBookForEditScreen();
+
                   Navigator.pop(context);
                   await Future.delayed(const Duration(milliseconds: 100));
+                  if (!mounted) return;
 
                   Navigator.push(
                     context,
@@ -649,8 +741,11 @@ class _BooksScreenState extends State<BooksScreen>
                   );
                 },
                 scanBarcode: () async {
+                  _setEmptyBookForEditScreen();
+
                   Navigator.pop(context);
                   await Future.delayed(const Duration(milliseconds: 100));
+                  if (!mounted) return;
 
                   Navigator.push(
                     context,
@@ -768,6 +863,8 @@ class _BooksScreenState extends State<BooksScreen>
                           list: snapshot.data!,
                         ),
                         listNumber: 2,
+                        selectedBookIds: selectedBookIds,
+                        onBookSelected: _onItemSelected,
                       );
                     } else {
                       return BooksList(
@@ -776,6 +873,8 @@ class _BooksScreenState extends State<BooksScreen>
                           list: snapshot.data!,
                         ),
                         listNumber: 2,
+                        selectedBookIds: selectedBookIds,
+                        onBookSelected: _onItemSelected,
                       );
                     }
                   },
@@ -829,6 +928,8 @@ class _BooksScreenState extends State<BooksScreen>
                           list: snapshot.data!,
                         ),
                         listNumber: 1,
+                        selectedBookIds: selectedBookIds,
+                        onBookSelected: _onItemSelected,
                       );
                     } else {
                       return BooksList(
@@ -837,6 +938,8 @@ class _BooksScreenState extends State<BooksScreen>
                           list: snapshot.data!,
                         ),
                         listNumber: 1,
+                        selectedBookIds: selectedBookIds,
+                        onBookSelected: _onItemSelected,
                       );
                     }
                   },
@@ -890,6 +993,8 @@ class _BooksScreenState extends State<BooksScreen>
                           list: snapshot.data!,
                         ),
                         listNumber: 0,
+                        selectedBookIds: selectedBookIds,
+                        onBookSelected: _onItemSelected,
                       );
                     } else {
                       return BooksList(
@@ -898,6 +1003,8 @@ class _BooksScreenState extends State<BooksScreen>
                           list: snapshot.data!,
                         ),
                         listNumber: 0,
+                        selectedBookIds: selectedBookIds,
+                        onBookSelected: _onItemSelected,
                       );
                     }
                   },

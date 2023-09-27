@@ -2,6 +2,8 @@ import 'package:openreads/database/database_provider.dart';
 import 'package:openreads/model/book.dart';
 import 'package:sqflite/sqflite.dart';
 
+import '../core/constants/enums.dart';
+
 class DatabaseController {
   final dbClient = DatabaseProvider.dbProvider;
 
@@ -18,6 +20,19 @@ class DatabaseController {
       "booksTable",
       columns: columns,
       where: 'deleted = 0',
+    );
+
+    return result.isNotEmpty
+        ? result.map((item) => Book.fromJSON(item)).toList()
+        : [];
+  }
+
+  Future<List<Book>> getAllBooks({List<String>? columns}) async {
+    final db = await dbClient.db;
+
+    var result = await db.query(
+      "booksTable",
+      columns: columns,
     );
 
     return result.isNotEmpty
@@ -124,5 +139,22 @@ class DatabaseController {
   Future<int> removeAllBooks() async {
     final db = await dbClient.db;
     return await db.delete("booksTable");
+  }
+
+  Future<List<Object?>> updateBookType(Set<int> ids, BookType bookType) async {
+    final db = await dbClient.db;
+    var batch = db.batch();
+
+    String bookTypeString = bookType == BookType.audiobook
+        ? 'audiobook'
+        : bookType == BookType.ebook
+            ? 'ebook'
+            : 'paper';
+
+    for (int id in ids) {
+      batch.update("booksTable", {"book_type": bookTypeString},
+          where: "id = ?", whereArgs: [id]);
+    }
+    return await batch.commit();
   }
 }

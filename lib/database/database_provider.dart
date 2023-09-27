@@ -3,6 +3,16 @@ import 'package:path/path.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:sqflite/sqflite.dart';
 
+// Instruction how to add a new database field:
+// 1. Add new parameters to the Book class in book.dart
+// 2. Increase version number in the createDatabase method below
+// 3. Add new fields to the booksTable in the onCreate argument below
+// 4. Add a new case to the onUpgrade argument below
+// 5. Add a new list of migration scripts to the migrationScriptsVx
+// 6. Add a new method _updateBookDatabaseVytoVx
+// 7. Update existing methods with new migration scripts
+// 7. Update existing methods names with new version number
+
 class DatabaseProvider {
   static final DatabaseProvider dbProvider = DatabaseProvider();
 
@@ -18,7 +28,7 @@ class DatabaseProvider {
 
     return await openDatabase(
       path,
-      version: 3,
+      version: 5,
       onCreate: (Database db, int version) async {
         await db.execute("CREATE TABLE booksTable ("
             "id INTEGER PRIMARY KEY AUTOINCREMENT, "
@@ -39,6 +49,8 @@ class DatabaseProvider {
             "olid TEXT, "
             "tags TEXT, "
             "my_review TEXT, "
+            "notes TEXT, "
+            "has_cover INTEGER, "
             "cover BLOB, "
             "blur_hash TEXT "
             ")");
@@ -49,10 +61,16 @@ class DatabaseProvider {
 
           switch (oldVersion) {
             case 1:
-              _updateBookDatabaseV1toV3(batch);
+              _updateBookDatabaseV1toV5(batch);
               break;
             case 2:
-              _updateBookDatabaseV2toV3(batch);
+              _updateBookDatabaseV2toV5(batch);
+              break;
+            case 3:
+              _updateBookDatabaseV3toV5(batch);
+              break;
+            case 4:
+              _updateBookDatabaseV4toV5(batch);
               break;
           }
 
@@ -62,12 +80,56 @@ class DatabaseProvider {
     );
   }
 
-  void _updateBookDatabaseV1toV3(Batch batch) {
-    batch.execute("ALTER TABLE booksTable ADD description TEXT");
-    batch.execute("ALTER TABLE booksTable ADD book_type TEXT DEFAULT paper");
+  void _executeBatch(Batch batch, List<String> scripts) {
+    for (var script in scripts) {
+      batch.execute(script);
+    }
   }
 
-  void _updateBookDatabaseV2toV3(Batch batch) {
-    batch.execute("ALTER TABLE booksTable ADD book_type TEXT");
+  final migrationScriptsV2 = [
+    "ALTER TABLE booksTable ADD description TEXT",
+  ];
+
+  final migrationScriptsV3 = [
+    "ALTER TABLE booksTable ADD book_type TEXT",
+  ];
+
+  final migrationScriptsV4 = [
+    "ALTER TABLE booksTable ADD has_cover INTEGER DEFAULT 0",
+  ];
+
+  final migrationScriptsV5 = [
+    "ALTER TABLE booksTable ADD notes TEXT",
+  ];
+
+  void _updateBookDatabaseV1toV5(Batch batch) {
+    _executeBatch(
+      batch,
+      migrationScriptsV2 +
+          migrationScriptsV3 +
+          migrationScriptsV4 +
+          migrationScriptsV5,
+    );
+  }
+
+  void _updateBookDatabaseV2toV5(Batch batch) {
+    _executeBatch(
+      batch,
+      migrationScriptsV3 + migrationScriptsV4 + migrationScriptsV5,
+    );
+  }
+
+  void _updateBookDatabaseV3toV5(Batch batch) {
+    _executeBatch(
+      batch,
+      migrationScriptsV4 + migrationScriptsV5,
+    );
+  }
+
+  void _updateBookDatabaseV4toV5(Batch batch) {
+    _executeBatch(
+      batch,
+      migrationScriptsV5,
+    );
   }
 }

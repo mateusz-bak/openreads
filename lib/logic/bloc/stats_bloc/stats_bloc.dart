@@ -1,7 +1,7 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:openreads/core/constants.dart/enums.dart';
+import 'package:openreads/core/constants/enums.dart';
 import 'package:openreads/generated/locale_keys.g.dart';
 import 'package:openreads/model/book.dart';
 import 'package:openreads/model/book_read_stat.dart';
@@ -111,7 +111,7 @@ class StatsBloc extends Bloc<StatsEvent, StatsState> {
       final booksInyear = List<Book>.empty(growable: true);
       for (Book book in books) {
         if (book.finishDate != null && book.rating != null) {
-          final finishYear = DateTime.parse(book.finishDate!).year;
+          final finishYear = book.finishDate!.year;
 
           if (finishYear == year) {
             booksInyear.add(book);
@@ -134,8 +134,8 @@ class StatsBloc extends Bloc<StatsEvent, StatsState> {
 
     for (Book book in books) {
       if (book.startDate != null && book.finishDate != null) {
-        final startDate = DateTime.parse(book.startDate!);
-        final finishDate = DateTime.parse(book.finishDate!);
+        final startDate = book.startDate!;
+        final finishDate = book.finishDate!;
 
         final timeDifference = finishDate.difference(startDate);
 
@@ -182,7 +182,7 @@ class StatsBloc extends Bloc<StatsEvent, StatsState> {
       final booksInyear = List<Book>.empty(growable: true);
       for (Book book in books) {
         if (book.finishDate != null && book.rating != null) {
-          final finishYear = DateTime.parse(book.finishDate!).year;
+          final finishYear = book.finishDate!.year;
 
           if (finishYear == year) {
             booksInyear.add(book);
@@ -206,8 +206,8 @@ class StatsBloc extends Bloc<StatsEvent, StatsState> {
 
     for (Book book in books) {
       if (book.startDate != null && book.finishDate != null) {
-        final startDate = DateTime.parse(book.startDate!);
-        final finishDate = DateTime.parse(book.finishDate!);
+        final startDate = book.startDate!;
+        final finishDate = book.finishDate!;
 
         final timeDifference = finishDate.difference(startDate);
 
@@ -254,7 +254,7 @@ class StatsBloc extends Bloc<StatsEvent, StatsState> {
       final booksInyear = List<Book>.empty(growable: true);
       for (Book book in books) {
         if (book.finishDate != null && book.rating != null) {
-          final finishYear = DateTime.parse(book.finishDate!).year;
+          final finishYear = book.finishDate!.year;
 
           if (finishYear == year) {
             booksInyear.add(book);
@@ -310,7 +310,7 @@ class StatsBloc extends Bloc<StatsEvent, StatsState> {
       final booksInyear = List<Book>.empty(growable: true);
       for (Book book in books) {
         if (book.finishDate != null && book.rating != null) {
-          final finishYear = DateTime.parse(book.finishDate!).year;
+          final finishYear = book.finishDate!.year;
 
           if (finishYear == year) {
             booksInyear.add(book);
@@ -364,7 +364,7 @@ class StatsBloc extends Bloc<StatsEvent, StatsState> {
       final booksInyear = List<Book>.empty(growable: true);
       for (Book book in books) {
         if (book.finishDate != null && book.rating != null) {
-          final finishYear = DateTime.parse(book.finishDate!).year;
+          final finishYear = book.finishDate!.year;
 
           if (finishYear == year) {
             booksInyear.add(book);
@@ -389,8 +389,8 @@ class StatsBloc extends Bloc<StatsEvent, StatsState> {
 
     for (Book book in books) {
       if (book.startDate != null && book.finishDate != null) {
-        final startDate = DateTime.parse(book.startDate!);
-        final finishDate = DateTime.parse(book.finishDate!);
+        final startDate = book.startDate!;
+        final finishDate = book.finishDate!;
         final timeDifference = finishDate.difference(startDate).inDays;
 
         readTimeInDays += timeDifference;
@@ -421,7 +421,7 @@ class StatsBloc extends Bloc<StatsEvent, StatsState> {
       final booksInyear = List<Book>.empty(growable: true);
       for (Book book in books) {
         if (book.finishDate != null && book.rating != null) {
-          final finishYear = DateTime.parse(book.finishDate!).year;
+          final finishYear = book.finishDate!.year;
 
           if (finishYear == year) {
             booksInyear.add(book);
@@ -474,7 +474,7 @@ class StatsBloc extends Bloc<StatsEvent, StatsState> {
       final booksInyear = List<Book>.empty(growable: true);
       for (Book book in books) {
         if (book.finishDate != null && book.rating != null) {
-          final finishYear = DateTime.parse(book.finishDate!).year;
+          final finishYear = book.finishDate!.year;
 
           if (finishYear == year) {
             booksInyear.add(book);
@@ -526,7 +526,7 @@ class StatsBloc extends Bloc<StatsEvent, StatsState> {
       final booksInYear = List<Book>.empty(growable: true);
       for (Book book in books) {
         if (book.finishDate != null && book.pages != null) {
-          final finishYear = DateTime.parse(book.finishDate!).year;
+          final finishYear = book.finishDate!.year;
 
           if (finishYear == year) {
             booksInYear.add(book);
@@ -553,7 +553,7 @@ class StatsBloc extends Bloc<StatsEvent, StatsState> {
       }
 
       if (book.finishDate != null && book.pages != null) {
-        final finishMonth = DateTime.parse(book.finishDate!).month;
+        final finishMonth = book.finishDate!.month;
 
         finishedPagesByMonth[finishMonth - 1] += book.pages!;
       }
@@ -578,7 +578,7 @@ class StatsBloc extends Bloc<StatsEvent, StatsState> {
       final booksInyear = List<Book>.empty(growable: true);
       for (Book book in books) {
         if (book.finishDate != null) {
-          final finishYear = DateTime.parse(book.finishDate!).year;
+          final finishYear = book.finishDate!.year;
 
           if (finishYear == year) {
             booksInyear.add(book);
@@ -606,7 +606,7 @@ class StatsBloc extends Bloc<StatsEvent, StatsState> {
       }
 
       if (book.finishDate != null) {
-        final finishMonth = DateTime.parse(book.finishDate!).month;
+        final finishMonth = book.finishDate!.month;
 
         finishedBooksByMonth[finishMonth - 1] += 1;
       }
@@ -641,7 +641,7 @@ class StatsBloc extends Bloc<StatsEvent, StatsState> {
     final years = List<int>.empty(growable: true);
 
     for (var book in books) {
-      final year = DateTime.parse(book.finishDate!).year;
+      final year = book.finishDate!.year;
 
       if (!years.contains(year)) {
         years.add(year);

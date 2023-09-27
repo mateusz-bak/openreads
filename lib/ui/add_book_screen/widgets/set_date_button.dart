@@ -33,7 +33,10 @@ class SetDateButton extends StatelessWidget {
             child: Ink(
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(cornerRadius),
-                color: Theme.of(context).colorScheme.surfaceVariant,
+                color: Theme.of(context)
+                    .colorScheme
+                    .surfaceVariant
+                    .withOpacity(0.5),
                 border: Border.all(color: dividerColor),
               ),
               child: Padding(
