@@ -424,11 +424,9 @@ class _BooksScreenState extends State<BooksScreen>
           : booksWithoutStartDate.add(book);
     }
 
-
     booksWithStartDate.sort((a, b) {
-      int startDateSorting =
-          (DateTime.parse(a.startDate!).millisecondsSinceEpoch)
-              .compareTo(DateTime.parse(b.startDate!).millisecondsSinceEpoch);
+      int startDateSorting = (a.startDate!.millisecondsSinceEpoch)
+          .compareTo(b.startDate!.millisecondsSinceEpoch);
       if (!isAsc) {
         startDateSorting *= -1;
       } // descending
@@ -472,9 +470,8 @@ class _BooksScreenState extends State<BooksScreen>
     }
 
     booksWithFinishDate.sort((a, b) {
-      int finishDateSorting =
-          (DateTime.parse(a.finishDate!).millisecondsSinceEpoch)
-              .compareTo(DateTime.parse(b.finishDate!).millisecondsSinceEpoch);
+      int finishDateSorting = (a.finishDate!.millisecondsSinceEpoch)
+          .compareTo(b.finishDate!.millisecondsSinceEpoch);
       if (!isAsc) {
         finishDateSorting *= -1;
       } // descending
