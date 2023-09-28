@@ -260,11 +260,11 @@ class _SearchOLScreenState extends State<SearchOLScreen>
                               : '',
                           openLibraryKey: item.coverEditionKey,
                           doc: item,
-                          editions: item.seed,
+                          editions: item.editionKey,
                           pagesMedian: item.numberOfPagesMedian,
                           firstPublishYear: item.firstPublishYear,
                           onAddBookPressed: () => _saveNoEdition(
-                            editions: item.seed!,
+                            editions: item.editionKey!,
                             title: item.title!,
                             subtitle: item.subtitle,
                             author: (item.authorName != null &&
@@ -284,7 +284,7 @@ class _SearchOLScreenState extends State<SearchOLScreen>
                               context,
                               MaterialPageRoute(
                                 builder: (context) => SearchOLEditionsScreen(
-                                  editions: item.seed!,
+                                  editions: item.editionKey!,
                                   title: item.title!,
                                   subtitle: item.subtitle,
                                   author: (item.authorName != null &&
