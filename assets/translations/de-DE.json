@@ -223,5 +223,14 @@
     "dark_mode_style": "Stil des dunklen Designs",
     "selected": "Ausgewählt",
     "update_successful_message": "Erfolgreich aktualisiert!",
-    "change_book_type": "Buchtyp ändern"
+    "change_book_type": "Buchtyp ändern",
+    "csv": "CSV",
+    "choose_not_finished_shelf": "Wähle ein Regal mit nicht fertig gelesenen Büchern:",
+    "export_successful": "Export erfolgreich",
+    "import_goodreads_csv": "Goodreads CSV importieren",
+    "export_csv_description_1": "Titelbilder werden nicht exportiert",
+    "notes": "Notizen",
+    "import_successful": "Import erfolgreich",
+    "openreads_backup": "Openreads-Sicherung",
+    "export_csv": "Bücher als CSV-Datei exportieren"
 }

@@ -223,5 +223,7 @@
     "filter_by_book_type": "Filtrar por el tipo de libro",
     "selected": "Seleccionado",
     "update_successful_message": "¡Actualizado con éxito!",
-    "change_book_type": "Cambiar el tipo de libro"
+    "change_book_type": "Cambiar el tipo de libro",
+    "export_successful": "Exportación correcta",
+    "notes": "Notas"
 }

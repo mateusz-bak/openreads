@@ -223,5 +223,14 @@
     "custom_color": "Vlastní",
     "book_type_all": "Všechny typy knížek",
     "book_type_ebook": "Elektronická knížka",
-    "change_book_type": "Změnit typ knížky"
+    "change_book_type": "Změnit typ knížky",
+    "csv": "CSV",
+    "choose_not_finished_shelf": "Vyberte poličku s nedočtenými knížkami:",
+    "export_successful": "Export byl úspěšný",
+    "import_goodreads_csv": "Importovat CSV z Goodreads",
+    "export_csv_description_1": "Obálky nejsou exportovány",
+    "notes": "Poznámky",
+    "import_successful": "Import proběhl úspěšně",
+    "openreads_backup": "Záloha Openreads",
+    "export_csv": "Exportovat knížky jako soubor CSV"
 }
