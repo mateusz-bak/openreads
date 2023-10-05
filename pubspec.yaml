@@ -59,6 +59,7 @@ dependencies:
   easy_localization: ^3.0.2
   flutter_typeahead: ^4.6.1
   flex_color_picker: ^3.2.2
+  diacritic: ^0.1.4
   flutter_speed_dial: ^7.0.0
   blurhash_dart: ^1.2.1
   csv: ^5.0.2
