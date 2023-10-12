@@ -77,16 +77,11 @@ class _SearchOLEditionsScreenState extends State<SearchOLEditionsScreen> {
 
       while (hasEditions) {
         if (offset + i + skippedEditions < widget.editions.length) {
-          final newResult = await OpenLibraryService().getEdition(
-            widget.editions[offset + i + skippedEditions]
-          );
+          final newResult = await OpenLibraryService()
+              .getEdition(widget.editions[offset + i + skippedEditions]);
 
-          if (newResult.covers != null && newResult.covers!.isNotEmpty) {
-            results.add(newResult);
-            hasEditions = false;
-          } else {
-            skippedEditions += 1;
-          }
+          results.add(newResult);
+          hasEditions = false;
         } else {
           hasEditions = false;
         }
