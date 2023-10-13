@@ -27,5 +27,12 @@
     "start_reading": "Inicio",
     "delete_book_question": "Apagar esse livro?",
     "restore_book_question": "Restaurar livro?",
-    "finish_reading": "Fim"
+    "finish_reading": "Fim",
+    "books_for_later": "Para depois",
+    "book_status_for_later": "Para depois",
+    "book_status_in_progress": "Em progresso",
+    "book_status_unfinished": "Não finalizado",
+    "book_type_audiobook_plural": "Audiolivros",
+    "book_type_audiobook": "Audiolivro",
+    "rate_book": "Classificar livro"
 }
