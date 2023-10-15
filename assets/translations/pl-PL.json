@@ -220,5 +220,6 @@
     "select_color": "Wybierz kolor",
     "standard_color": "Standardowy",
     "filter_by_book_type": "Filtruj według rodzaju książek",
-    "book_type_all": "Wszystkie rodzaje"
+    "book_type_all": "Wszystkie rodzaje",
+    "update_successful_message": "Zaktualizowano pomyślnie!"
 }

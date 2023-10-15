@@ -225,5 +225,6 @@
     "update_successful_message": "¡Actualizado con éxito!",
     "change_book_type": "Cambiar el tipo de libro",
     "export_successful": "Exportación correcta",
-    "notes": "Notas"
+    "notes": "Notas",
+    "openreads_backup": "Copia de seguridad de Openreads"
 }
