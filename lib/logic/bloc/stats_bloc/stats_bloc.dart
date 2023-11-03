@@ -6,6 +6,7 @@ import 'package:openreads/generated/locale_keys.g.dart';
 import 'package:openreads/model/book.dart';
 import 'package:openreads/model/book_read_stat.dart';
 import 'package:openreads/model/book_yearly_stat.dart';
+import 'package:openreads/model/reading_time.dart';
 
 part 'stats_event.dart';
 part 'stats_state.dart';
@@ -363,7 +364,7 @@ class StatsBloc extends Bloc<StatsEvent, StatsState> {
     for (var year in years) {
       final booksInyear = List<Book>.empty(growable: true);
       for (Book book in books) {
-        if (book.finishDate != null && book.rating != null) {
+        if ((book.finishDate != null || book.readingTime != null) && book.rating != null) {
           final finishYear = book.finishDate!.year;
 
           if (finishYear == year) {
@@ -384,24 +385,30 @@ class StatsBloc extends Bloc<StatsEvent, StatsState> {
   }
 
   String _getAverageReadingTimeInYear(List<Book> books) {
-    int readTimeInDays = 0;
+    int readTimeInMilliSeconds = 0;
     int countedBooks = 0;
 
     for (Book book in books) {
+      if (book.readingTime != null) {
+        readTimeInMilliSeconds += book.readingTime!.timeInMilliSeconds;
+        countedBooks += 1;
+        continue;
+      }
       if (book.startDate != null && book.finishDate != null) {
         final startDate = book.startDate!;
         final finishDate = book.finishDate!;
-        final timeDifference = finishDate.difference(startDate).inDays;
+        final timeDifference = finishDate.difference(startDate).inMicroseconds;
 
-        readTimeInDays += timeDifference;
+        readTimeInMilliSeconds += timeDifference;
         countedBooks += 1;
       }
     }
 
-    if (readTimeInDays == 0 || countedBooks == 0) {
+    if (readTimeInMilliSeconds == 0 || countedBooks == 0) {
       return '';
     } else {
-      return (readTimeInDays / countedBooks).toStringAsFixed(0);
+      int avgTime = readTimeInMilliSeconds ~/ countedBooks;
+      return ReadingTime.fromMilliSeconds(avgTime).toString();
     }
   }
 
