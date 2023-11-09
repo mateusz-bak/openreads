@@ -226,5 +226,11 @@
     "change_book_type": "Cambiar el tipo de libro",
     "export_successful": "Exportación correcta",
     "notes": "Notas",
-    "openreads_backup": "Copia de seguridad de Openreads"
+    "openreads_backup": "Copia de seguridad de Openreads",
+    "csv": "CSV",
+    "choose_not_finished_shelf": "Elige una estantería con los libros no terminados:",
+    "import_goodreads_csv": "Importar el CSV de Goodreads",
+    "export_csv_description_1": "Las portadas no se exportan",
+    "import_successful": "Importación realizada",
+    "export_csv": "Exportar los libros en formato CSV"
 }
