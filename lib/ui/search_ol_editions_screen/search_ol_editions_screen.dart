@@ -73,22 +73,17 @@ class _SearchOLEditionsScreenState extends State<SearchOLEditionsScreen> {
     final results = List<OLEditionResult>.empty(growable: true);
 
     for (var i = 0; i < sizeOfPage && i < widget.editions.length; i++) {
-      bool getEdition = true;
+      bool hasEditions = true;
 
-      while (getEdition) {
+      while (hasEditions) {
         if (offset + i + skippedEditions < widget.editions.length) {
-          final newResult = await OpenLibraryService().getEdition(
-            widget.editions[offset + i + skippedEditions],
-          );
+          final newResult = await OpenLibraryService()
+              .getEdition(widget.editions[offset + i + skippedEditions]);
 
-          if (newResult.covers != null && newResult.covers!.isNotEmpty) {
-            results.add(newResult);
-            getEdition = false;
-          } else {
-            skippedEditions += 1;
-          }
+          results.add(newResult);
+          hasEditions = false;
         } else {
-          getEdition = false;
+          hasEditions = false;
         }
       }
     }

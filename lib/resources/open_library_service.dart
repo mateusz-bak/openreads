@@ -24,7 +24,7 @@ class OpenLibraryService {
 
     final response = await get(
       Uri.parse(
-        '$baseUrl$edition.json',
+        '$baseUrl/books/$edition.json',
       ),
     );
     return openLibraryEditionResultFromJson(response.body);
