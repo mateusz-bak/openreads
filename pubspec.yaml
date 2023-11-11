@@ -24,17 +24,12 @@ dependencies:
   colours: ^0.0.2
   blurhash: ^1.1.1
   image: ^4.0.15
-  fl_chart: ^0.63.0
+  fl_chart: ^0.64.0
   dropdown_button2: ^2.0.0
   equatable: ^2.0.5
-  connectivity_plus: ^4.0.1
+  connectivity_plus: ^5.0.1
   http: ^1.0.0
-  # cached_network_image: ^3.2.2
-  cached_network_image:
-    git:
-      url: https://github.com/lucasmiranda5/flutter_cached_network_image.git
-      ref: dart3
-      path: cached_network_image
+  cached_network_image: ^3.3.0
   loading_animation_widget: ^1.2.0+3
   infinite_scroll_pagination: ^4.0.0
   flutter_staggered_grid_view: ^0.7.0
@@ -46,7 +41,7 @@ dependencies:
   intro_slider: ^4.2.0
   flutter_email_sender: ^6.0.0
   permission_handler: ^11.0.0
-  filesystem_picker: ^3.1.0
+  filesystem_picker: ^4.0.0
   archive: ^3.3.5
   share_plus: ^7.0.2
   device_info_plus: ^9.0.2
@@ -67,7 +62,7 @@ dependencies:
 dev_dependencies:
   flutter_test:
     sdk: flutter
-  flutter_lints: ^2.0.0
+  flutter_lints: ^3.0.1
   flutter_launcher_icons: "^0.13.1"
 
 flutter_launcher_icons:
