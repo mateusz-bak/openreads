@@ -123,23 +123,20 @@ class DatabaseProvider {
 
   void _updateBookDatabaseV2toV6(Batch batch) {
     _executeBatch(
-      batch,
-      migrationScriptsV3 + migrationScriptsV4 + migrationScriptsV5 + migrationScriptsV6
-    );
+        batch,
+        migrationScriptsV3 +
+            migrationScriptsV4 +
+            migrationScriptsV5 +
+            migrationScriptsV6);
   }
 
   void _updateBookDatabaseV3toV6(Batch batch) {
     _executeBatch(
-      batch,
-      migrationScriptsV4 + migrationScriptsV5 + migrationScriptsV6
-    );
+        batch, migrationScriptsV4 + migrationScriptsV5 + migrationScriptsV6);
   }
 
   void _updateBookDatabaseV4toV6(Batch batch) {
-    _executeBatch(
-      batch,
-      migrationScriptsV5 + migrationScriptsV6
-    );
+    _executeBatch(batch, migrationScriptsV5 + migrationScriptsV6);
   }
 
   void _updateBookDatabaseV5toV6(Batch batch) {

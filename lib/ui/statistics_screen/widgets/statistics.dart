@@ -481,9 +481,7 @@ class Statistics extends StatelessWidget {
       if (bookYearlyStat.year == year) {
         return ReadStats(
           title: LocaleKeys.average_reading_time.tr(),
-          value: (bookYearlyStat.value != '')
-              ? '${bookYearlyStat.value}'
-              : '0',
+          value: (bookYearlyStat.value != '') ? '${bookYearlyStat.value}' : '0',
         );
       }
     }

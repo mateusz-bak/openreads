@@ -243,5 +243,4 @@ abstract class LocaleKeys {
   static const hours = 'hours';
   static const minutes = 'minutes';
   static const set_reading_time = 'set_reading_time';
-
 }

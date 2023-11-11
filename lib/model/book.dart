@@ -103,10 +103,11 @@ class Book {
         bookType: json['book_type'] == 'audiobook'
             ? BookType.audiobook
             : json['book_type'] == 'ebook'
-            ? BookType.ebook
-            : BookType.paper,
-        readingTime: json['reading_time'] != null ? ReadingTime.fromMilliSeconds(json['reading_time']): null
-    );
+                ? BookType.ebook
+                : BookType.paper,
+        readingTime: json['reading_time'] != null
+            ? ReadingTime.fromMilliSeconds(json['reading_time'])
+            : null);
   }
 
   Book copyWith({

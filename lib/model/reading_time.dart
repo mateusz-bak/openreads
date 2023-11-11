@@ -8,12 +8,11 @@ class ReadingTime {
 
   int timeInMilliSeconds;
 
-  ReadingTime({
-    required this.timeInMilliSeconds,
-    required this.days,
-    required this.minutes,
-    required this.hours
-});
+  ReadingTime(
+      {required this.timeInMilliSeconds,
+      required this.days,
+      required this.minutes,
+      required this.hours});
 
   factory ReadingTime.fromMilliSeconds(int milliSeconds) {
     int timeInSeconds = milliSeconds ~/ 1000;
@@ -25,15 +24,21 @@ class ReadingTime {
     timeInSeconds %= 3600;
     int minutes = timeInSeconds ~/ 60;
 
-
-    return ReadingTime(timeInMilliSeconds: milliSeconds, days: days, minutes: minutes, hours: hours);
+    return ReadingTime(
+        timeInMilliSeconds: milliSeconds,
+        days: days,
+        minutes: minutes,
+        hours: hours);
   }
 
   factory ReadingTime.toMilliSeconds(int days, hours, minutes) {
     int seconds = ((days * 86400) + (hours * 3600) + (minutes * 60)).toInt();
-    return ReadingTime(timeInMilliSeconds: seconds * 1000, days: days, minutes: minutes, hours: hours);
+    return ReadingTime(
+        timeInMilliSeconds: seconds * 1000,
+        days: days,
+        minutes: minutes,
+        hours: hours);
   }
-
 
   @override
   String toString() {
@@ -49,5 +54,4 @@ class ReadingTime {
     }
     return result;
   }
-
 }

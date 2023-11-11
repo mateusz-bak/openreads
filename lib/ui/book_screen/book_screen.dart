@@ -169,8 +169,9 @@ class BookScreen extends StatelessWidget {
       appBar: const BookScreenAppBar(),
       body: BlocBuilder<CurrentBookCubit, Book>(
         builder: (context, state) {
-          var showReadingTime = ((state.finishDate != null && state.startDate != null)
-              || state.readingTime != null);
+          var showReadingTime =
+              ((state.finishDate != null && state.startDate != null) ||
+                  state.readingTime != null);
           return SingleChildScrollView(
             child: Column(
               children: [
