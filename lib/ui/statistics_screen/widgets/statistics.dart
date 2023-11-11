@@ -482,7 +482,7 @@ class Statistics extends StatelessWidget {
         return ReadStats(
           title: LocaleKeys.average_reading_time.tr(),
           value: (bookYearlyStat.value != '')
-              ? '${bookYearlyStat.value} ${LocaleKeys.days.tr()}'
+              ? '${bookYearlyStat.value}'
               : '0',
         );
       }

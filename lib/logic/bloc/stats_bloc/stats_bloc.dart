@@ -364,7 +364,7 @@ class StatsBloc extends Bloc<StatsEvent, StatsState> {
     for (var year in years) {
       final booksInyear = List<Book>.empty(growable: true);
       for (Book book in books) {
-        if ((book.finishDate != null || book.readingTime != null) && book.rating != null) {
+        if ((book.finishDate != null) && book.rating != null) {
           final finishYear = book.finishDate!.year;
 
           if (finishYear == year) {
@@ -397,7 +397,7 @@ class StatsBloc extends Bloc<StatsEvent, StatsState> {
       if (book.startDate != null && book.finishDate != null) {
         final startDate = book.startDate!;
         final finishDate = book.finishDate!;
-        final timeDifference = finishDate.difference(startDate).inMicroseconds;
+        final timeDifference = finishDate.difference(startDate).inMilliseconds;
 
         readTimeInMilliSeconds += timeDifference;
         countedBooks += 1;
