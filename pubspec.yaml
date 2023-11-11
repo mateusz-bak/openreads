@@ -70,11 +70,13 @@ dev_dependencies:
   flutter_lints: ^2.0.0
   flutter_launcher_icons: "^0.13.1"
 
-flutter_icons:
+flutter_launcher_icons:
   android: "launcher_icon"
   ios: true
+  remove_alpha_ios: true
   image_path: "./assets/icons/icon.png"
-  adaptive_icon_background: "#00bfa6"
+  adaptive_icon_foreground: "./assets/icons/icon.png"
+  adaptive_icon_background: "#00BFA6"
   min_sdk_android: 21
 
 flutter:
