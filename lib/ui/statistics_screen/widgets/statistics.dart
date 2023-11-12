@@ -538,7 +538,7 @@ class Statistics extends StatelessWidget {
         return ReadStats(
           title: LocaleKeys.fastest_book.tr(),
           value: bookYearlyStat.title.toString(),
-          secondValue: '${bookYearlyStat.value} ${LocaleKeys.days.tr()}',
+          secondValue: bookYearlyStat.value,
         );
       }
     }
@@ -556,7 +556,7 @@ class Statistics extends StatelessWidget {
         return ReadStats(
           title: LocaleKeys.slowest_book.tr(),
           value: bookYearlyStat.title.toString(),
-          secondValue: '${bookYearlyStat.value} ${LocaleKeys.days.tr()}',
+          secondValue: bookYearlyStat.value,
         );
       }
     }

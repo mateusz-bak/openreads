@@ -1,15 +1,17 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:openreads/generated/locale_keys.g.dart';
 
+// Converts milliseconds to days, hours, minutes to exactly what has been set.
+// This is needed because built-in DateTime returns the whole duration either in days or hours but not both
 class ReadingTime {
   int days;
   int hours;
   int minutes;
 
-  int timeInMilliSeconds;
+  int milliSeconds;
 
   ReadingTime(
-      {required this.timeInMilliSeconds,
+      {required this.milliSeconds,
       required this.days,
       required this.minutes,
       required this.hours});
@@ -25,16 +27,13 @@ class ReadingTime {
     int minutes = timeInSeconds ~/ 60;
 
     return ReadingTime(
-        timeInMilliSeconds: milliSeconds,
-        days: days,
-        minutes: minutes,
-        hours: hours);
+        milliSeconds: milliSeconds, days: days, minutes: minutes, hours: hours);
   }
 
   factory ReadingTime.toMilliSeconds(int days, hours, minutes) {
     int seconds = ((days * 86400) + (hours * 3600) + (minutes * 60)).toInt();
     return ReadingTime(
-        timeInMilliSeconds: seconds * 1000,
+        milliSeconds: seconds * 1000,
         days: days,
         minutes: minutes,
         hours: hours);
@@ -44,13 +43,13 @@ class ReadingTime {
   String toString() {
     String result = "";
     if (days != 0) {
-      result += "$days ${LocaleKeys.days.tr()}";
+      result += LocaleKeys.day.plural(days).tr();
     }
     if (hours != 0) {
-      result += " $hours ${LocaleKeys.hours.tr()}";
+      result += " ${LocaleKeys.hour.plural(hours).tr()}";
     }
     if (minutes != 0) {
-      result += " $minutes ${LocaleKeys.minutes.tr()}";
+      result += " ${LocaleKeys.minute.plural(minutes).tr()}";
     }
     return result;
   }

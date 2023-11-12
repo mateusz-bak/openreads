@@ -1,7 +1,6 @@
-import 'dart:ui';
-
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:openreads/core/themes/app_theme.dart';
@@ -47,12 +46,13 @@ class _BookReadingTimeField extends State<BookReadingTimeField> {
     return showDialog<String>(
         context: context,
         builder: (BuildContext context) => AlertDialog(
-            title: Text(LocaleKeys.set_reading_time.tr()),
+            title: Text(LocaleKeys.set_custom_reading_time.tr(),
+                style: const TextStyle(fontSize: 20)),
             contentPadding: const EdgeInsets.symmetric(vertical: 25),
             actions: <Widget>[
               TextButton(
                 onPressed: () => Navigator.pop(context, 'Cancel'),
-                child: const Text(LocaleKeys.cancel),
+                child: Text(LocaleKeys.cancel.tr()),
               ),
               TextButton(
                 onPressed: _changeReadingTime,
@@ -67,14 +67,14 @@ class _BookReadingTimeField extends State<BookReadingTimeField> {
                   SizedBox(
                       width: 70,
                       child: TextField(
-                        selectionWidthStyle: BoxWidthStyle.tight,
-                        autofocus: false,
+                        inputFormatters: <TextInputFormatter>[
+                          FilteringTextInputFormatter.digitsOnly
+                        ],
                         keyboardType: TextInputType.number,
                         controller: _day,
-                        maxLines: 1,
                         maxLength: 5,
                         decoration: InputDecoration(
-                          labelText: LocaleKeys.days.tr(),
+                          labelText: LocaleKeys.day_title.tr(),
                           border: const OutlineInputBorder(),
                           counterText: "",
                         ),
@@ -82,14 +82,15 @@ class _BookReadingTimeField extends State<BookReadingTimeField> {
                   SizedBox(
                       width: 70,
                       child: TextField(
-                        selectionWidthStyle: BoxWidthStyle.tight,
                         autofocus: true,
                         keyboardType: TextInputType.number,
                         controller: _hours,
-                        maxLines: 1,
+                        inputFormatters: <TextInputFormatter>[
+                          FilteringTextInputFormatter.digitsOnly
+                        ],
                         maxLength: 2,
                         decoration: InputDecoration(
-                          labelText: LocaleKeys.hours.tr(),
+                          labelText: LocaleKeys.hour_title.tr(),
                           border: const OutlineInputBorder(),
                           counterText: "",
                         ),
@@ -97,14 +98,14 @@ class _BookReadingTimeField extends State<BookReadingTimeField> {
                   SizedBox(
                     width: 70,
                     child: TextField(
-                      selectionWidthStyle: BoxWidthStyle.tight,
-                      autofocus: false,
                       keyboardType: TextInputType.number,
                       controller: _minutes,
-                      maxLines: 1,
+                      inputFormatters: <TextInputFormatter>[
+                        FilteringTextInputFormatter.digitsOnly
+                      ],
                       maxLength: 2,
                       decoration: InputDecoration(
-                        labelText: LocaleKeys.minutes.tr(),
+                        labelText: LocaleKeys.minute_title.tr(),
                         border: const OutlineInputBorder(),
                         counterText: "",
                       ),
@@ -142,7 +143,7 @@ class _BookReadingTimeField extends State<BookReadingTimeField> {
   Widget buildReadingTimeTextField(BuildContext context, Book state) {
     String formattedText = state.readingTime != null
         ? state.readingTime.toString()
-        : LocaleKeys.reading_time.tr();
+        : LocaleKeys.set_custom_reading_time.tr();
     _setTextControllers(state.readingTime);
     return state.status != 0
         ? const SizedBox()

@@ -261,7 +261,7 @@ class Book {
           : bookType == BookType.ebook
               ? 'ebook'
               : 'paper',
-      'reading_time': readingTime?.timeInMilliSeconds,
+      'reading_time': readingTime?.milliSeconds,
     };
   }
 
