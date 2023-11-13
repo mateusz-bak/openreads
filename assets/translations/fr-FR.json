@@ -84,7 +84,7 @@
     "books_challenge": "Défi de livres finis",
     "pages_challenge": "Défi de pages finies",
     "all_years": "Tout",
-    "no_finished_books": "Livres inachevés",
+    "no_finished_books": "Pas de livre terminé",
     "all_books_by_status": "Tous les livres par statut",
     "finished_books_by_month": "Livres terminés par mois",
     "finished_pages_by_month": "Pages terminées par mois",
@@ -216,5 +216,16 @@
     "book_format_paper_plural": "Livres papier",
     "book_format_ebook_plural": "Livres numériques",
     "book_format_audiobook_plural": "Livres audio",
-    "dark_mode_natural": "Sombre naturel"
+    "dark_mode_natural": "Sombre naturel",
+    "csv": "CSV",
+    "choose_not_finished_shelf": "Choisir une étagère avec des livres non terminés :",
+    "export_successful": "Export réussi",
+    "import_goodreads_csv": "Importer un CSV Goodreads",
+    "export_csv_description_1": "Les couvertures ne sont pas exportées",
+    "notes": "Notes",
+    "selected": "Sélectionné",
+    "update_successful_message": "Mise à jour terminée !",
+    "openreads_backup": "Sauvegarde Openreads",
+    "export_csv": "Exporter les livres dans un fichier CSV",
+    "import_successful": "Import réussi"
 }

@@ -136,10 +136,10 @@
     "restore_backup_description_2": "Funciona amb còpies de seguretat més noves que les de la v1.14.2",
     "are_you_sure": "N'esteu segur?",
     "restore_backup_alert_content": "Això esborrarà tots els vostres llibres i reptes!",
-    "welcome_1": "Benvingut a Openreads",
+    "welcome_1": "Us donem la benvinguda a Openreads",
     "welcome_1_description_1": "Openreads us ajudarà a mantenir un registre dels llibres que llegiu.",
     "welcome_1_description_2": "També és una bona eina per organitzar la vostra biblioteca personal d'una manera fàcil i transparent.",
-    "welcome_2_description_1": "Avança amb les teves lectures gràcies a unes estadístiques increïbles i detallades.",
+    "welcome_2_description_1": "Avanceu amb les vostres lectures gràcies a unes estadístiques increïbles i detallades.",
     "welcome_2_description_2": "Desafieu-vos per ser un millor lector.",
     "welcome_3_description_1": "Openreads és completament de codi obert!",
     "welcome_3_description_2": "Això vol dir que podeu inspeccionar el codi de l'aplicació i contribuir al seu desenvolupament.",
@@ -148,5 +148,9 @@
     "start_button": "COMENÇA",
     "migration_v1_to_v2_1": "Els llibres s'estan traslladant a la nova versió",
     "migration_v1_to_v2_2": "No abandoneu aquesta pantalla abans que tots els llibres es traslladin, perquè els perdreu!",
-    "migration_v1_to_v2_finished": "S'ha finalitzat el trasllat de llibres, premeu START."
+    "migration_v1_to_v2_finished": "S'ha finalitzat el trasllat de llibres, premeu START.",
+    "set_books_goal_for_year": "Establiu un objectiu de llibres pel",
+    "flash_on": "Encén el flaix",
+    "flash_off": "Apaga el flaix",
+    "finished_books_by_month": "Llibres acabats per mes"
 }

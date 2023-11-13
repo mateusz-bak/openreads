@@ -204,5 +204,20 @@
     "migration_v1_to_v2_2": "在您所有的书籍迁移之前不要离开此屏幕，否则它们将丢失！",
     "migration_v1_to_v2_finished": "书籍迁移已完成，点击开始按钮。",
     "migration_v1_to_v2_retrigger": "重新运行 v2.0 迁移",
-    "migration_v1_to_v2_retrigger_description": "如果书籍在更新到 v2.0 后不会显示，请点击此处。"
+    "migration_v1_to_v2_retrigger_description": "如果书籍在更新到 v2.0 后不会显示，请点击此处。",
+    "csv": "CSV",
+    "dark_mode_style": "黑暗模式",
+    "export_successful": "导出成功",
+    "import_goodreads_csv": "导入Goodreads的CSV文件",
+    "export_csv_description_1": "未导出封面",
+    "dark_mode_natural": "自然深色模式",
+    "select_color": "颜色选择",
+    "notes": "笔记",
+    "selected": "选择",
+    "update_successful_message": "更新成功",
+    "import_successful": "成功导入",
+    "standard_color": "标准",
+    "dark_mode_amoled": "AMOLED黑暗模式",
+    "openreads_backup": "Openreads备份",
+    "export_csv": "以CSV格式导出书籍（名录）"
 }

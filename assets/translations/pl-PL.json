@@ -246,5 +246,10 @@
     },
     "import_successful": "Import zakończony sukcesem",
     "openreads_backup": "Kopia zapasowa Openreads",
-    "export_csv": "Wyeksportuj książki w pliku CSV"
+    "export_csv": "Wyeksportuj książki w pliku CSV",
+    "book_format_hardcover_plural": "Książki w twardej oprawie",
+    "change_book_format": "Zmień format książki",
+    "book_format_paperback": "Książka w miękkiej oprawie",
+    "book_format_hardcover": "Książka w twardej oprawie",
+    "book_format_paperback_plural": "Książki w miękkiej oprawie"
 }
