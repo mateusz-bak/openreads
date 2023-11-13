@@ -27,7 +27,6 @@
     "start_reading": "Rozpocznij",
     "rate_book": "Oceń książkę",
     "skip": "Pomiń",
-    "days": "dni",
     "reading_time": "Czas czytania",
     "pages_uppercase": "Stron",
     "pages_lowercase": "stron",
@@ -220,5 +219,33 @@
     "standard_color": "Standardowy",
     "filter_by_book_format": "Filtruj format książek",
     "book_format_all": "Wszystkie formaty",
-    "update_successful_message": "Zaktualizowano pomyślnie!"
+    "update_successful_message": "Zaktualizowano pomyślnie!",
+    "hour": {
+        "one": "{} godzina",
+        "title": "Godzin",
+        "other": "{} godzin"
+    },
+    "csv": "CSV",
+    "minute": {
+        "other": "{} minut",
+        "one": "{} minuta",
+        "title": "Minut"
+    },
+    "choose_not_finished_shelf": "Wybierz półkę z nieukończonymi książkami:",
+    "export_successful": "Eksport zakończony sukcesem",
+    "import_goodreads_csv": "Importuj plik CSV z Goodreads",
+    "export_csv_description_1": "Okładki nie zostaną wyeksportowane",
+    "notes": "Notatki",
+    "selected": "Wybrane",
+    "ok": "OK",
+    "set_custom_reading_time": "Ustaw inny czas czytania",
+    "day": {
+        "one": "{} dzień",
+        "title": "Dni",
+        "other": "{} dni"
+    },
+    "import_successful": "Import zakończony sukcesem",
+    "openreads_backup": "Kopia zapasowa Openreads",
+    "export_csv": "Wyeksportuj książki w pliku CSV",
+    "change_book_type": "Zmień rodzaj książki"
 }
