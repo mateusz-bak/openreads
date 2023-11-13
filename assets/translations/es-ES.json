@@ -197,7 +197,7 @@
     "welcome_2_description_2": "Desafíate a ser un mejor lector.",
     "welcome_3_description_1": "¡Openreads es completamente código abierto!",
     "welcome_3_description_2": "Esto significa que puedes inspeccionar el código de la aplicación tú mismo y contribuir a su desarrollo.",
-    "welcome_3_description_3": "¡Como extra, no vas a recibir anuncios ni vas a ser rastreado!",
+    "welcome_3_description_3": "¡Además, no tendrás ningún tipo de publicidad ni de rastreo!",
     "next_button": "SIGUIENTE",
     "start_button": "INICIAR",
     "migration_v1_to_v2_1": "Tus libros se están migrando a la nueva versión",
@@ -227,5 +227,29 @@
     "import_goodreads_csv": "Importar el CSV de Goodreads",
     "export_csv_description_1": "Las portadas no se exportan",
     "import_successful": "Importación realizada",
-    "export_csv": "Exportar los libros en formato CSV"
+    "export_csv": "Exportar los libros en formato CSV",
+    "hour": {
+        "one": "{} hora",
+        "title": "Horas",
+        "other": "{} horas"
+    },
+    "minute": {
+        "other": "{} minutos",
+        "one": "{} minuto",
+        "title": "Minutos"
+    },
+    "book_format_hardcover_plural": "Libro de tapa dura",
+    "change_book_format": "Cambiar el formato del libro",
+    "ok": "DE ACUERDO",
+    "filter_by_book_format": "Filtrar por formato del libro",
+    "set_custom_reading_time": "Fijar el tiempo de lectura personalizado",
+    "day": {
+        "one": "{} día",
+        "title": "Días",
+        "other": "{} días"
+    },
+    "book_format_all": "Todos los formatos de libro",
+    "book_format_paperback": "Tapa blanda",
+    "book_format_hardcover": "Libro de tapa dura",
+    "book_format_paperback_plural": "Libro de tapa blanda"
 }

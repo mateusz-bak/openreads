@@ -216,5 +216,16 @@
     "use_material_you": "Bruk Material You",
     "select_color": "Velg farge",
     "custom_color": "Tilpasset",
-    "dark_mode_amoled": "AMOLED mørkt tema"
+    "dark_mode_amoled": "AMOLED mørkt tema",
+    "notes": "Notater",
+    "selected": "Valgt",
+    "update_successful_message": "Oppdatert!",
+    "csv": "CSV",
+    "choose_not_finished_shelf": "Velg en bokhylle med bøker som ikke er fullført:",
+    "export_successful": "Eksportert",
+    "import_goodreads_csv": "Importer Goodreads-CSV",
+    "export_csv_description_1": "Omslag blir ikke eksportert",
+    "import_successful": "Importert",
+    "openreads_backup": "Openreads-sikkerhetskopi",
+    "export_csv": "Eksporter bøker som CSV-fil"
 }

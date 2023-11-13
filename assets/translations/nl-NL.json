@@ -201,5 +201,19 @@
     "migration_v1_to_v2_1": "Uw boeken worden gemigreerd naar de nieuwe versie",
     "migration_v1_to_v2_finished": "Migreren van boeken voltooid, klik op de START-knop.",
     "migration_v1_to_v2_retrigger": "Voer de v2.0 migratie opnieuw uit",
-    "migration_v1_to_v2_retrigger_description": "Klik als er geen boeken verschijnen na de update naar v2.0."
+    "migration_v1_to_v2_retrigger_description": "Klik als er geen boeken verschijnen na de update naar v2.0.",
+    "csv": "CSV",
+    "dark_mode_style": "Donkere modus stijl",
+    "export_successful": "Export succesvol",
+    "import_goodreads_csv": "Importeer Goodreads CSV",
+    "export_csv_description_1": "Omslagen worden niet geëxporteerd",
+    "dark_mode_natural": "Naturele donkere modus",
+    "select_color": "Kleur selecteren",
+    "notes": "Notities",
+    "selected": "Geselecteerd",
+    "standard_color": "Standaard",
+    "dark_mode_amoled": "AMOLED donkere modus",
+    "custom_color": "Aangepast",
+    "openreads_backup": "Openreads back-up",
+    "export_csv": "Exporteer boeken als CSV-bestand"
 }
