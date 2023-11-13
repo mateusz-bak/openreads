@@ -5,6 +5,7 @@ import 'package:flutter/foundation.dart';
 import 'package:openreads/core/constants/enums.dart';
 import 'package:openreads/main.dart';
 import 'package:openreads/model/book_from_backup_v3.dart';
+import 'package:openreads/model/reading_time.dart';
 
 class Book {
   int? id;
@@ -29,6 +30,7 @@ class Book {
   String? blurHash;
   BookType bookType;
   bool hasCover;
+  ReadingTime? readingTime;
 
   Book({
     this.id,
@@ -53,6 +55,7 @@ class Book {
     this.blurHash,
     this.bookType = BookType.paper,
     this.hasCover = false,
+    this.readingTime,
   });
 
   factory Book.empty() {
@@ -70,39 +73,41 @@ class Book {
 
   factory Book.fromJSON(Map<String, dynamic> json) {
     return Book(
-      id: json['id'],
-      title: json['title'],
-      subtitle: json['subtitle'],
-      author: json['author'],
-      description: json['description'],
-      status: json['status'],
-      rating: json['rating'],
-      favourite: (json['favourite'] == 1) ? true : false,
-      hasCover: (json['has_cover'] == 1) ? true : false,
-      deleted: (json['deleted'] == 1) ? true : false,
-      startDate: json['start_date'] != null
-          ? DateTime.parse(json['start_date'])
-          : null,
-      finishDate: json['finish_date'] != null
-          ? DateTime.parse(json['finish_date'])
-          : null,
-      pages: json['pages'],
-      publicationYear: json['publication_year'],
-      isbn: json['isbn'],
-      olid: json['olid'],
-      tags: json['tags'],
-      myReview: json['my_review'],
-      notes: json['notes'],
-      cover: json['cover'] != null
-          ? Uint8List.fromList(json['cover'].cast<int>().toList())
-          : null,
-      blurHash: json['blur_hash'],
-      bookType: json['book_type'] == 'audiobook'
-          ? BookType.audiobook
-          : json['book_type'] == 'ebook'
-              ? BookType.ebook
-              : BookType.paper,
-    );
+        id: json['id'],
+        title: json['title'],
+        subtitle: json['subtitle'],
+        author: json['author'],
+        description: json['description'],
+        status: json['status'],
+        rating: json['rating'],
+        favourite: (json['favourite'] == 1) ? true : false,
+        hasCover: (json['has_cover'] == 1) ? true : false,
+        deleted: (json['deleted'] == 1) ? true : false,
+        startDate: json['start_date'] != null
+            ? DateTime.parse(json['start_date'])
+            : null,
+        finishDate: json['finish_date'] != null
+            ? DateTime.parse(json['finish_date'])
+            : null,
+        pages: json['pages'],
+        publicationYear: json['publication_year'],
+        isbn: json['isbn'],
+        olid: json['olid'],
+        tags: json['tags'],
+        myReview: json['my_review'],
+        notes: json['notes'],
+        cover: json['cover'] != null
+            ? Uint8List.fromList(json['cover'].cast<int>().toList())
+            : null,
+        blurHash: json['blur_hash'],
+        bookType: json['book_type'] == 'audiobook'
+            ? BookType.audiobook
+            : json['book_type'] == 'ebook'
+                ? BookType.ebook
+                : BookType.paper,
+        readingTime: json['reading_time'] != null
+            ? ReadingTime.fromMilliSeconds(json['reading_time'])
+            : null);
   }
 
   Book copyWith({
@@ -127,6 +132,7 @@ class Book {
     String? blurHash,
     BookType? bookType,
     bool? hasCover,
+    ReadingTime? readingTime,
   }) {
     return Book(
       id: id,
@@ -151,6 +157,7 @@ class Book {
       blurHash: blurHash ?? this.blurHash,
       bookType: bookType ?? this.bookType,
       hasCover: hasCover ?? this.hasCover,
+      readingTime: readingTime ?? this.readingTime,
     );
   }
 
@@ -178,6 +185,7 @@ class Book {
       blurHash: blurHash,
       bookType: bookType,
       hasCover: hasCover,
+      readingTime: readingTime,
     );
   }
 
@@ -253,6 +261,7 @@ class Book {
           : bookType == BookType.ebook
               ? 'ebook'
               : 'paper',
+      'reading_time': readingTime?.milliSeconds,
     };
   }
 

@@ -7,6 +7,7 @@ import 'package:openreads/logic/cubit/current_book_cubit.dart';
 import 'package:openreads/main.dart';
 import 'package:openreads/model/book.dart';
 import 'package:openreads/ui/book_screen/widgets/widgets.dart';
+import 'package:openreads/model/reading_time.dart';
 
 class BookScreen extends StatelessWidget {
   const BookScreen({
@@ -148,13 +149,15 @@ class BookScreen extends StatelessWidget {
   }
 
   String _generateReadingTime({
-    required DateTime startDate,
-    required DateTime finishDate,
+    DateTime? startDate,
+    DateTime? finishDate,
     required BuildContext context,
+    ReadingTime? readingTime,
   }) {
-    final diff = finishDate.difference(startDate).inDays.toString();
+    if (readingTime != null) return readingTime.toString();
+    final diff = finishDate!.difference(startDate!).inDays;
 
-    return '$diff ${LocaleKeys.days.tr()}';
+    return LocaleKeys.day.plural(diff).tr();
   }
 
   @override
@@ -166,6 +169,9 @@ class BookScreen extends StatelessWidget {
       appBar: const BookScreenAppBar(),
       body: BlocBuilder<CurrentBookCubit, Book>(
         builder: (context, state) {
+          var showReadingTime =
+              ((state.finishDate != null && state.startDate != null) ||
+                  state.readingTime != null);
           return SingleChildScrollView(
             child: Column(
               children: [
@@ -228,12 +234,13 @@ class BookScreen extends StatelessWidget {
                             ? 5
                             : 0,
                       ),
-                      (state.finishDate != null && state.startDate != null)
+                      (showReadingTime)
                           ? BookDetail(
                               title: LocaleKeys.reading_time.tr(),
                               text: _generateReadingTime(
-                                finishDate: state.finishDate!,
-                                startDate: state.startDate!,
+                                finishDate: state.finishDate,
+                                startDate: state.startDate,
+                                readingTime: state.readingTime,
                                 context: context,
                               ),
                             )
