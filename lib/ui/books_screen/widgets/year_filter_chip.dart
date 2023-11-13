@@ -1,5 +1,7 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:openreads/core/themes/app_theme.dart';
+import 'package:openreads/generated/locale_keys.g.dart';
 
 class YearFilterChip extends StatelessWidget {
   const YearFilterChip({
@@ -9,7 +11,7 @@ class YearFilterChip extends StatelessWidget {
     required this.onYearChipPressed,
   }) : super(key: key);
 
-  final int dbYear;
+  final int? dbYear;
   final bool selected;
   final Function(bool) onYearChipPressed;
 
@@ -21,7 +23,7 @@ class YearFilterChip extends StatelessWidget {
         backgroundColor: Theme.of(context).colorScheme.surface,
         side: BorderSide(color: dividerColor, width: 1),
         label: Text(
-          dbYear.toString(),
+          dbYear != null ? dbYear.toString() : LocaleKeys.select_all.tr(),
           style: TextStyle(
             color: selected
                 ? Theme.of(context).colorScheme.onPrimary

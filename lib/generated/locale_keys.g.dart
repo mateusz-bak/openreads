@@ -249,4 +249,5 @@ abstract class LocaleKeys {
   static const minute_title = 'minute.title';
   static const minute = 'minute';
   static const set_custom_reading_time = 'set_custom_reading_time';
+  static const select_all = 'select_all';
 }

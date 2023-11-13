@@ -1,5 +1,7 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:openreads/core/themes/app_theme.dart';
+import 'package:openreads/generated/locale_keys.g.dart';
 
 class TagFilterChip extends StatelessWidget {
   const TagFilterChip({
@@ -9,7 +11,7 @@ class TagFilterChip extends StatelessWidget {
     required this.onTagChipPressed,
   }) : super(key: key);
 
-  final String tag;
+  final String? tag;
   final bool selected;
   final Function(bool) onTagChipPressed;
 
@@ -21,7 +23,7 @@ class TagFilterChip extends StatelessWidget {
         backgroundColor: Theme.of(context).colorScheme.surface,
         side: BorderSide(color: dividerColor, width: 1),
         label: Text(
-          tag.toString(),
+          tag != null ? tag.toString() : LocaleKeys.select_all.tr(),
           style: TextStyle(
             color: selected
                 ? Theme.of(context).colorScheme.onPrimary
