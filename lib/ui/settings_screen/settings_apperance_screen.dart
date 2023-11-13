@@ -195,6 +195,15 @@ class SettingsApperanceScreen extends StatelessWidget {
                                 ),
                                 const SizedBox(height: 5),
                                 SettingsDialogButton(
+                                  text: 'Inter',
+                                  onPressed: () => _setFont(
+                                    context,
+                                    state,
+                                    Font.inter,
+                                  ),
+                                ),
+                                const SizedBox(height: 5),
+                                SettingsDialogButton(
                                   text: 'Kanit',
                                   onPressed: () => _setFont(
                                     context,
@@ -590,6 +599,9 @@ class SettingsApperanceScreen extends StatelessWidget {
         break;
       case Font.barlow:
         fontFamily = 'Barlow';
+        break;
+      case Font.inter:
+        fontFamily = 'Inter';
         break;
       case Font.jost:
         fontFamily = 'Jost';
