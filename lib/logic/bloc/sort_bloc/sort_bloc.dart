@@ -76,12 +76,14 @@ class SortBloc extends HydratedBloc<SortEvent, SortState> {
       displayTags: displayTags,
       filterTagsAsAnd: filterTagsAsAnd,
       bookType: bookType == 'audiobook'
-          ? BookType.audiobook
+          ? BookFormat.audiobook
           : bookType == 'ebook'
-              ? BookType.ebook
-              : bookType == 'paper'
-                  ? BookType.paper
-                  : null,
+              ? BookFormat.ebook
+              : bookType == 'paper' || bookType == 'paperback'
+                  ? BookFormat.paperback
+                  : bookType == 'hardcover'
+                      ? BookFormat.hardcover
+                      : null,
     );
   }
 
@@ -120,13 +122,15 @@ class SortBloc extends HydratedBloc<SortEvent, SortState> {
         'tags': state.tags,
         'display_tags': state.displayTags,
         'filter_tags_as_and': state.filterTagsAsAnd,
-        'filter_book_type': state.bookType == BookType.audiobook
+        'filter_book_type': state.bookType == BookFormat.audiobook
             ? 'audiobook'
-            : state.bookType == BookType.ebook
+            : state.bookType == BookFormat.ebook
                 ? 'ebook'
-                : state.bookType == BookType.paper
-                    ? 'paper'
-                    : null,
+                : state.bookType == BookFormat.paperback
+                    ? 'paperback'
+                    : state.bookType == BookFormat.hardcover
+                        ? 'hardcover'
+                        : null,
       };
     } else {
       return {

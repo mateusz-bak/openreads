@@ -76,7 +76,7 @@ class CSVExport {
         ('title'),
         ('subtitle'),
         ('author'),
-        ('book_type'),
+        ('book_format'),
         ('description'),
         ('pages'),
         ('isbn'),
@@ -102,13 +102,15 @@ class CSVExport {
         newRow.add(book.title);
         newRow.add(book.subtitle ?? '');
         newRow.add(book.author);
-        newRow.add(book.bookType == BookType.paper
-            ? 'paper'
-            : book.bookType == BookType.ebook
-                ? 'ebook'
-                : book.bookType == BookType.audiobook
-                    ? 'audiobook'
-                    : '');
+        newRow.add(book.bookFormat == BookFormat.paperback
+            ? 'paperback'
+            : book.bookFormat == BookFormat.hardcover
+                ? 'hardcover'
+                : book.bookFormat == BookFormat.ebook
+                    ? 'ebook'
+                    : book.bookFormat == BookFormat.audiobook
+                        ? 'audiobook'
+                        : '');
         newRow.add(book.description ?? '');
         newRow.add(book.pages != null ? book.pages.toString() : '');
         newRow.add(book.isbn ?? '');

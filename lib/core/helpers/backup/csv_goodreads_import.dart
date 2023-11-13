@@ -194,7 +194,7 @@ class CSVGoodreadsImport {
         status: _getStatus(i, csv, headers, notFinishedShelf: notFinishedShelf),
         tags: _getTags(i, csv, headers, notFinishedShelf: notFinishedShelf),
         finishDate: _getFinishDate(i, csv, headers),
-        bookType: _getBookType(i, csv, headers),
+        bookFormat: _getBookFormat(i, csv, headers),
       );
     } catch (e) {
       BackupGeneral.showInfoSnackbar(e.toString());
@@ -368,7 +368,7 @@ class CSVGoodreadsImport {
     return dateRead;
   }
 
-  static BookType _getBookType(int i, List<List<dynamic>> csv, List headers) {
+  static BookFormat _getBookFormat(int i, List<List<dynamic>> csv, List headers) {
     // Example Binding fields:
     // Audible Audio
     // Audio Cassette
@@ -383,27 +383,27 @@ class CSVGoodreadsImport {
     // Nook
     // Paperback
     final bindingField = csv[i][headers.indexOf('Binding')].toString();
-    late BookType bookType;
+    late BookFormat bookFormat;
 
     if (bindingField == 'Audible Audio' ||
         bindingField == 'Audio Cassette' ||
         bindingField == 'Audio CD' ||
         bindingField == 'Audiobook') {
-      bookType = BookType.audiobook;
+      bookFormat = BookFormat.audiobook;
     } else if (bindingField == 'Kindle Edition' ||
         bindingField == 'Nook' ||
         bindingField == 'ebook') {
-      bookType = BookType.ebook;
-    } else if (bindingField == 'Hardcover' ||
-        bindingField == 'Mass Market Paperback' ||
+      bookFormat = BookFormat.ebook;
+    } else if (bindingField == 'Mass Market Paperback' ||
         bindingField == 'Paperback' ||
-        bindingField == 'Chapbook' ||
-        bindingField == 'Board Book') {
-      bookType = BookType.paper;
+        bindingField == 'Chapbook') {
+      bookFormat = BookFormat.paperback;
+    } else if (bindingField == 'Hardcover' || bindingField == 'Board Book') {
+      bookFormat = BookFormat.hardcover;
     } else {
-      bookType = BookType.paper;
+      bookFormat = BookFormat.paperback;
     }
 
-    return bookType;
+    return bookFormat;
   }
 }

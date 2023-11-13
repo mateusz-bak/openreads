@@ -314,20 +314,29 @@ class Statistics extends StatelessWidget {
   ) {
     final emptyList = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
 
-    List<int> finishedBooksByMonthPaperBooks = emptyList;
+    List<int> finishedBooksByMonthPaperbackBooks = emptyList;
+    List<int> finishedBooksByMonthHardcoverBooks = emptyList;
     List<int> finishedBooksByMonthEbooks = emptyList;
     List<int> finishedBooksByMonthAudiobooks = emptyList;
 
-    for (var bookReadStat in state.finishedBooksByMonthPaperBooks) {
+    for (var bookReadStat in state.finishedBooksByMonthPaperbackBooks) {
       if (bookReadStat.year == year) {
-        finishedBooksByMonthPaperBooks = bookReadStat.values;
+        finishedBooksByMonthPaperbackBooks = bookReadStat.values;
       }
     }
+
+    for (var bookReadStat in state.finishedBooksByMonthHardcoverBooks) {
+      if (bookReadStat.year == year) {
+        finishedBooksByMonthHardcoverBooks = bookReadStat.values;
+      }
+    }
+
     for (var bookReadStat in state.finishedBooksByMonthEbooks) {
       if (bookReadStat.year == year) {
         finishedBooksByMonthEbooks = bookReadStat.values;
       }
     }
+
     for (var bookReadStat in state.finishedBooksByMonthAudiobooks) {
       if (bookReadStat.year == year) {
         finishedBooksByMonthAudiobooks = bookReadStat.values;
@@ -340,7 +349,8 @@ class Statistics extends StatelessWidget {
 
     return ReadStatsByMonth(
       title: LocaleKeys.finished_books_by_month.tr(),
-      listPaperBooks: finishedBooksByMonthPaperBooks,
+      listPaperbackBooks: finishedBooksByMonthPaperbackBooks,
+      listHardcoverBooks: finishedBooksByMonthHardcoverBooks,
       listEbooks: finishedBooksByMonthEbooks,
       listAudiobooks: finishedBooksByMonthAudiobooks,
       theme: Theme.of(context),
@@ -354,13 +364,19 @@ class Statistics extends StatelessWidget {
   ) {
     final emptyList = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
 
-    List<int> finishedPagesByMonthPaperBooks = emptyList;
+    List<int> finishedPagesByMonthPaperbackBooks = emptyList;
+    List<int> finishedPagesByMonthHardcoverBooks = emptyList;
     List<int> finishedPagesByMonthEbooks = emptyList;
     List<int> finishedPagesByMonthAudiobooks = emptyList;
 
-    for (var bookReadStat in state.finishedPagesByMonthPaperBooks) {
+    for (var bookReadStat in state.finishedPagesByMonthPaperbackBooks) {
       if (bookReadStat.year == year) {
-        finishedPagesByMonthPaperBooks = bookReadStat.values;
+        finishedPagesByMonthPaperbackBooks = bookReadStat.values;
+      }
+    }
+    for (var bookReadStat in state.finishedPagesByMonthHardcoverBooks) {
+      if (bookReadStat.year == year) {
+        finishedPagesByMonthHardcoverBooks = bookReadStat.values;
       }
     }
     for (var bookReadStat in state.finishedPagesByMonthEbooks) {
@@ -380,7 +396,8 @@ class Statistics extends StatelessWidget {
 
     return ReadStatsByMonth(
       title: LocaleKeys.finished_pages_by_month.tr(),
-      listPaperBooks: finishedPagesByMonthPaperBooks,
+      listPaperbackBooks: finishedPagesByMonthPaperbackBooks,
+      listHardcoverBooks: finishedPagesByMonthHardcoverBooks,
       listEbooks: finishedPagesByMonthEbooks,
       listAudiobooks: finishedPagesByMonthAudiobooks,
       theme: Theme.of(context),

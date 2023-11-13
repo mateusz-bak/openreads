@@ -141,18 +141,25 @@ class DatabaseController {
     return await db.delete("booksTable");
   }
 
-  Future<List<Object?>> updateBookType(Set<int> ids, BookType bookType) async {
+  Future<List<Object?>> updateBookFormat(
+    Set<int> ids,
+    BookFormat bookFormat,
+  ) async {
     final db = await dbClient.db;
     var batch = db.batch();
 
-    String bookTypeString = bookType == BookType.audiobook
+    String bookFormatString = bookFormat == BookFormat.audiobook
         ? 'audiobook'
-        : bookType == BookType.ebook
+        : bookFormat == BookFormat.ebook
             ? 'ebook'
-            : 'paper';
+            : bookFormat == BookFormat.paperback
+                ? 'paperback'
+                : bookFormat == BookFormat.hardcover
+                    ? 'hardcover'
+                    : 'paperback';
 
     for (int id in ids) {
-      batch.update("booksTable", {"book_type": bookTypeString},
+      batch.update("booksTable", {"book_type": bookFormatString},
           where: "id = ?", whereArgs: [id]);
     }
     return await batch.commit();

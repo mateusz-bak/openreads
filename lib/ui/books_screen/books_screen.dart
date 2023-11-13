@@ -230,12 +230,12 @@ class _BooksScreenState extends State<BooksScreen>
 
   List<Book> _filterOutBookTypes(
     List<Book> list,
-    BookType bookType,
+    BookFormat bookType,
   ) {
     final filteredOut = List<Book>.empty(growable: true);
 
     for (var book in list) {
-      if (book.bookType == bookType) {
+      if (book.bookFormat == bookType) {
         filteredOut.add(book);
       }
     }
@@ -620,7 +620,7 @@ class _BooksScreenState extends State<BooksScreen>
                     child: const Icon(Icons.menu_book_outlined),
                     backgroundColor:
                         Theme.of(context).colorScheme.secondaryContainer,
-                    label: LocaleKeys.change_book_type.tr(),
+                    label: LocaleKeys.change_book_format.tr(),
                     onTap: () {
                       showEditBookTypeBottomSheet(context, selectedBookIds);
                     }),

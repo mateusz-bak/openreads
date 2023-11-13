@@ -41,8 +41,8 @@ class EditBookCubit extends Cubit<Book> {
     emit(state.copyWith(rating: (rating * 10).toInt()));
   }
 
-  void setBookType(BookType bookType) {
-    emit(state.copyWith(bookType: bookType));
+  void setBookFormat(BookFormat bookFormat) {
+    emit(state.copyWith(bookFormat: bookFormat));
   }
 
   void setStartDate(DateTime? startDate) {

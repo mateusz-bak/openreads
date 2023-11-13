@@ -20,7 +20,7 @@ class BookTitleDetail extends StatelessWidget {
   final String? subtitle;
   final String author;
   final String publicationYear;
-  final BookType bookType;
+  final BookFormat bookType;
   final List<String>? tags;
 
   Widget _buildTagChip({
@@ -131,9 +131,9 @@ class BookTitleDetail extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
                   FaIcon(
-                    bookType == BookType.audiobook
+                    bookType == BookFormat.audiobook
                         ? FontAwesomeIcons.headphones
-                        : bookType == BookType.ebook
+                        : bookType == BookFormat.ebook
                             ? FontAwesomeIcons.tablet
                             : FontAwesomeIcons.bookOpen,
                     size: 16,
@@ -142,11 +142,13 @@ class BookTitleDetail extends StatelessWidget {
                   ),
                   const SizedBox(width: 10),
                   SelectableText(
-                    bookType == BookType.audiobook
-                        ? LocaleKeys.book_type_audiobook.tr()
-                        : bookType == BookType.ebook
-                            ? LocaleKeys.book_type_ebook.tr()
-                            : LocaleKeys.book_type_paper.tr(),
+                    bookType == BookFormat.audiobook
+                        ? LocaleKeys.book_format_audiobook.tr()
+                        : bookType == BookFormat.ebook
+                            ? LocaleKeys.book_format_ebook.tr()
+                            : bookType == BookFormat.hardcover
+                                ? LocaleKeys.book_format_hardcover.tr()
+                                : LocaleKeys.book_format_paperback.tr(),
                     style: TextStyle(
                       fontSize: 16,
                       fontWeight: FontWeight.normal,

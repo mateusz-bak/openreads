@@ -192,7 +192,7 @@ class BookScreen extends StatelessWidget {
                         publicationYear:
                             (state.publicationYear ?? "").toString(),
                         tags: state.tags?.split('|||||'),
-                        bookType: state.bookType,
+                        bookType: state.bookFormat,
                       ),
                       const SizedBox(height: 5),
                       BookStatusDetail(

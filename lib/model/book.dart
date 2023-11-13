@@ -27,7 +27,7 @@ class Book {
   String? notes;
   Uint8List? cover; // Not used since 2.2.0
   String? blurHash;
-  BookType bookType;
+  BookFormat bookFormat;
   bool hasCover;
 
   Book({
@@ -51,7 +51,7 @@ class Book {
     this.notes,
     this.cover,
     this.blurHash,
-    this.bookType = BookType.paper,
+    this.bookFormat = BookFormat.paperback,
     this.hasCover = false,
   });
 
@@ -63,7 +63,7 @@ class Book {
       status: 0,
       favourite: false,
       deleted: false,
-      bookType: BookType.paper,
+      bookFormat: BookFormat.paperback,
       hasCover: false,
     );
   }
@@ -97,11 +97,15 @@ class Book {
           ? Uint8List.fromList(json['cover'].cast<int>().toList())
           : null,
       blurHash: json['blur_hash'],
-      bookType: json['book_type'] == 'audiobook'
-          ? BookType.audiobook
+      bookFormat: json['book_type'] == 'audiobook'
+          ? BookFormat.audiobook
           : json['book_type'] == 'ebook'
-              ? BookType.ebook
-              : BookType.paper,
+              ? BookFormat.ebook
+              : json['book_type'] == 'hardcover'
+                  ? BookFormat.hardcover
+                  : json['book_type'] == 'paperback'
+                      ? BookFormat.paperback
+                      : BookFormat.paperback,
     );
   }
 
@@ -125,7 +129,7 @@ class Book {
     String? notes,
     Uint8List? cover,
     String? blurHash,
-    BookType? bookType,
+    BookFormat? bookFormat,
     bool? hasCover,
   }) {
     return Book(
@@ -149,7 +153,7 @@ class Book {
       notes: notes ?? this.notes,
       cover: cover ?? this.cover,
       blurHash: blurHash ?? this.blurHash,
-      bookType: bookType ?? this.bookType,
+      bookFormat: bookFormat ?? this.bookFormat,
       hasCover: hasCover ?? this.hasCover,
     );
   }
@@ -176,7 +180,7 @@ class Book {
       notes: notes,
       cover: null,
       blurHash: blurHash,
-      bookType: bookType,
+      bookFormat: bookFormat,
       hasCover: hasCover,
     );
   }
@@ -220,7 +224,7 @@ class Book {
       notes: oldBook.bookNotes,
       cover: oldBook.bookCoverImg,
       blurHash: blurHash,
-      bookType: BookType.paper,
+      bookFormat: BookFormat.paperback,
       hasCover: false,
     );
   }
@@ -248,11 +252,15 @@ class Book {
       'cover': cover,
       'blur_hash': blurHash,
       'has_cover': hasCover ? 1 : 0,
-      'book_type': bookType == BookType.audiobook
+      'book_type': bookFormat == BookFormat.audiobook
           ? 'audiobook'
-          : bookType == BookType.ebook
+          : bookFormat == BookFormat.ebook
               ? 'ebook'
-              : 'paper',
+              : bookFormat == BookFormat.hardcover
+                  ? 'hardcover'
+                  : bookFormat == BookFormat.paperback
+                      ? 'paperback'
+                      : 'paperback',
     };
   }
 

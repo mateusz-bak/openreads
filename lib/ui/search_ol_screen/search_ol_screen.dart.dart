@@ -61,7 +61,7 @@ class _SearchOLScreenState extends State<SearchOLScreen>
       isbn: (isbn != null && isbn.isNotEmpty) ? isbn[0] : null,
       olid: (olid != null) ? olid.replaceAll('/works/', '') : null,
       publicationYear: firstPublishYear,
-      bookType: BookType.paper,
+      bookFormat: BookFormat.paperback,
     );
 
     context.read<EditBookCubit>().setBook(book);

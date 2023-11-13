@@ -158,8 +158,8 @@ class BookCubit extends Cubit {
     getAllBooks();
   }
 
-  updateBookType(Set<int> ids, BookType bookType) async {
-    repository.updateBookType(ids, bookType);
+  updateBookFormat(Set<int> ids, BookFormat bookFormat) async {
+    repository.updateBookFormat(ids, bookFormat);
     getAllBooksByStatus();
     getAllBooks();
   }
