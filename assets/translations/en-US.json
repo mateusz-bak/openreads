@@ -251,5 +251,6 @@
         "other": "{} minutes",
         "title": "Minutes"
     },
-    "set_custom_reading_time": "Set custom reading time"
+    "set_custom_reading_time": "Set custom reading time",
+    "select_all": "Select all"
 }

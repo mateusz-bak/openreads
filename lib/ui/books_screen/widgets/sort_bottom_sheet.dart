@@ -338,7 +338,33 @@ class _SortBottomSheetState extends State<SortBottomSheet> {
         inactiveChips.add(chip);
       }
     }
+
     chips.addAll(inactiveChips);
+
+    // Last chip is to select all/none years
+    chips.add(
+      YearFilterChip(
+        dbYear: null,
+        selected: selectedYears == dbYears.join('|||||'),
+        onYearChipPressed: (bool selected) {
+          BlocProvider.of<SortBloc>(context).add(
+            ChangeSortEvent(
+              sortType: state.sortType,
+              isAsc: state.isAsc,
+              onlyFavourite: state.onlyFavourite,
+              years: selectedYears == dbYears.join('|||||')
+                  ? null
+                  : dbYears.join('|||||'),
+              tags: state.tags,
+              displayTags: state.displayTags,
+              filterTagsAsAnd: state.filterTagsAsAnd,
+              bookType: state.bookType,
+            ),
+          );
+        },
+      ),
+    );
+
     return chips;
   }
 
@@ -385,7 +411,33 @@ class _SortBottomSheetState extends State<SortBottomSheet> {
         inactiveChips.add(chip);
       }
     }
+
     chips.addAll(inactiveChips);
+
+    // Last chip is to select all/none tags
+    chips.add(
+      TagFilterChip(
+        tag: null,
+        selected: selectedTags == dbTags.join('|||||'),
+        onTagChipPressed: (bool selected) {
+          BlocProvider.of<SortBloc>(context).add(
+            ChangeSortEvent(
+              sortType: state.sortType,
+              isAsc: state.isAsc,
+              onlyFavourite: state.onlyFavourite,
+              years: state.years,
+              tags: selectedTags == dbTags.join('|||||')
+                  ? null
+                  : dbTags.join('|||||'),
+              displayTags: state.displayTags,
+              filterTagsAsAnd: state.filterTagsAsAnd,
+              bookType: state.bookType,
+            ),
+          );
+        },
+      ),
+    );
+
     return chips;
   }
 
