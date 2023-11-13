@@ -6,6 +6,7 @@ import 'package:openreads/generated/locale_keys.g.dart';
 import 'package:openreads/model/book.dart';
 import 'package:openreads/model/book_read_stat.dart';
 import 'package:openreads/model/book_yearly_stat.dart';
+import 'package:openreads/model/reading_time.dart';
 
 part 'stats_event.dart';
 part 'stats_state.dart';
@@ -135,27 +136,27 @@ class StatsBloc extends Bloc<StatsEvent, StatsState> {
 
   BookYearlyStat? _getSlowestReadBookInYear(List<Book> books, int? year) {
     int? slowestReadTimeInMs;
-    int? slowestReadTimeInDays;
     String? slowestReadBook;
 
     for (Book book in books) {
-      if (book.startDate != null && book.finishDate != null) {
+      int? readTimeInMs;
+      if (book.readingTime != null) {
+        readTimeInMs = book.readingTime!.milliSeconds;
+      } else if (book.startDate != null && book.finishDate != null) {
         final startDate = book.startDate!;
         final finishDate = book.finishDate!;
+        readTimeInMs = finishDate.difference(startDate).inMilliseconds;
+      } else {
+        continue;
+      }
+      if (slowestReadTimeInMs == null) {
+        slowestReadTimeInMs = readTimeInMs;
+        slowestReadBook = '${book.title} - ${book.author}';
+      }
 
-        final timeDifference = finishDate.difference(startDate);
-
-        if (slowestReadTimeInMs == null) {
-          slowestReadTimeInMs = timeDifference.inMilliseconds;
-          slowestReadTimeInDays = timeDifference.inDays;
-          slowestReadBook = '${book.title} - ${book.author}';
-        }
-
-        if (timeDifference.inMilliseconds > slowestReadTimeInMs) {
-          slowestReadTimeInMs = timeDifference.inMilliseconds;
-          slowestReadTimeInDays = timeDifference.inDays;
-          slowestReadBook = '${book.title} - ${book.author}';
-        }
+      if (readTimeInMs > slowestReadTimeInMs) {
+        slowestReadTimeInMs = readTimeInMs;
+        slowestReadBook = '${book.title} - ${book.author}';
       }
     }
 
@@ -164,7 +165,7 @@ class StatsBloc extends Bloc<StatsEvent, StatsState> {
     } else {
       return BookYearlyStat(
         title: slowestReadBook,
-        value: slowestReadTimeInDays.toString(),
+        value: ReadingTime.fromMilliSeconds(slowestReadTimeInMs).toString(),
         year: year,
       );
     }
@@ -207,27 +208,27 @@ class StatsBloc extends Bloc<StatsEvent, StatsState> {
 
   BookYearlyStat? _getFastestReadBookInYear(List<Book> books, int? year) {
     int? fastestReadTimeInMs;
-    int? fastestReadTimeInDays;
     String? fastestReadBook;
 
     for (Book book in books) {
-      if (book.startDate != null && book.finishDate != null) {
+      int? readTimeInMs;
+      if (book.readingTime != null) {
+        readTimeInMs = book.readingTime!.milliSeconds;
+      } else if (book.startDate != null && book.finishDate != null) {
         final startDate = book.startDate!;
         final finishDate = book.finishDate!;
+        readTimeInMs = finishDate.difference(startDate).inMilliseconds;
+      } else {
+        continue;
+      }
+      if (fastestReadTimeInMs == null) {
+        fastestReadTimeInMs = readTimeInMs;
+        fastestReadBook = '${book.title} - ${book.author}';
+      }
 
-        final timeDifference = finishDate.difference(startDate);
-
-        if (fastestReadTimeInMs == null) {
-          fastestReadTimeInMs = timeDifference.inMilliseconds;
-          fastestReadTimeInDays = timeDifference.inDays;
-          fastestReadBook = '${book.title} - ${book.author}';
-        }
-
-        if (timeDifference.inMilliseconds < fastestReadTimeInMs) {
-          fastestReadTimeInMs = timeDifference.inMilliseconds;
-          fastestReadTimeInDays = timeDifference.inDays;
-          fastestReadBook = '${book.title} - ${book.author}';
-        }
+      if (readTimeInMs < fastestReadTimeInMs) {
+        fastestReadTimeInMs = readTimeInMs;
+        fastestReadBook = '${book.title} - ${book.author}';
       }
     }
 
@@ -236,7 +237,7 @@ class StatsBloc extends Bloc<StatsEvent, StatsState> {
     } else {
       return BookYearlyStat(
         title: fastestReadBook,
-        value: fastestReadTimeInDays.toString(),
+        value: ReadingTime.fromMilliSeconds(fastestReadTimeInMs).toString(),
         year: year,
       );
     }
@@ -369,7 +370,7 @@ class StatsBloc extends Bloc<StatsEvent, StatsState> {
     for (var year in years) {
       final booksInyear = List<Book>.empty(growable: true);
       for (Book book in books) {
-        if (book.finishDate != null && book.rating != null) {
+        if ((book.finishDate != null) && book.rating != null) {
           final finishYear = book.finishDate!.year;
 
           if (finishYear == year) {
@@ -390,24 +391,30 @@ class StatsBloc extends Bloc<StatsEvent, StatsState> {
   }
 
   String _getAverageReadingTimeInYear(List<Book> books) {
-    int readTimeInDays = 0;
+    int readTimeInMilliSeconds = 0;
     int countedBooks = 0;
 
     for (Book book in books) {
+      if (book.readingTime != null) {
+        readTimeInMilliSeconds += book.readingTime!.milliSeconds;
+        countedBooks += 1;
+        continue;
+      }
       if (book.startDate != null && book.finishDate != null) {
         final startDate = book.startDate!;
         final finishDate = book.finishDate!;
-        final timeDifference = finishDate.difference(startDate).inDays;
+        final timeDifference = finishDate.difference(startDate).inMilliseconds;
 
-        readTimeInDays += timeDifference;
+        readTimeInMilliSeconds += timeDifference;
         countedBooks += 1;
       }
     }
 
-    if (readTimeInDays == 0 || countedBooks == 0) {
+    if (readTimeInMilliSeconds == 0 || countedBooks == 0) {
       return '';
     } else {
-      return (readTimeInDays / countedBooks).toStringAsFixed(0);
+      int avgTime = readTimeInMilliSeconds ~/ countedBooks;
+      return ReadingTime.fromMilliSeconds(avgTime).toString();
     }
   }
 

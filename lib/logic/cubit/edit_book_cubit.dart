@@ -5,6 +5,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:openreads/core/constants/enums.dart';
 import 'package:openreads/main.dart';
 import 'package:openreads/model/book.dart';
+import 'package:openreads/model/reading_time.dart';
 
 class EditBookCubit extends Cubit<Book> {
   EditBookCubit() : super(Book.empty());
@@ -130,6 +131,12 @@ class EditBookCubit extends Cubit<Book> {
     final book = state.copyWith();
     book.hasCover = hasCover;
 
+    emit(book);
+  }
+
+  void setReadingTime(ReadingTime? readingTime) {
+    final book = state.copyWith();
+    book.readingTime = readingTime;
     emit(book);
   }
 

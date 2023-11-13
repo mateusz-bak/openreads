@@ -17,6 +17,7 @@ import 'package:openreads/resources/open_library_service.dart';
 import 'package:openreads/main.dart';
 import 'package:openreads/model/book.dart';
 import 'package:openreads/ui/add_book_screen/widgets/cover_view_edit.dart';
+import 'package:openreads/ui/add_book_screen/widgets/reading_time_field.dart';
 import 'package:openreads/ui/add_book_screen/widgets/widgets.dart';
 
 class AddBookScreen extends StatefulWidget {
@@ -444,6 +445,7 @@ class _AddBookScreenState extends State<AddBookScreen> {
               clearStartDate: _clearStartDate,
               clearFinishDate: _clearFinishDate,
             ),
+            const BookReadingTimeField(defaultHeight: defaultFormHeight),
             const Padding(
               padding: EdgeInsets.all(10),
               child: Divider(),

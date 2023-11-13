@@ -498,9 +498,7 @@ class Statistics extends StatelessWidget {
       if (bookYearlyStat.year == year) {
         return ReadStats(
           title: LocaleKeys.average_reading_time.tr(),
-          value: (bookYearlyStat.value != '')
-              ? '${bookYearlyStat.value} ${LocaleKeys.days.tr()}'
-              : '0',
+          value: (bookYearlyStat.value != '') ? '${bookYearlyStat.value}' : '0',
         );
       }
     }
@@ -557,7 +555,7 @@ class Statistics extends StatelessWidget {
         return ReadStats(
           title: LocaleKeys.fastest_book.tr(),
           value: bookYearlyStat.title.toString(),
-          secondValue: '${bookYearlyStat.value} ${LocaleKeys.days.tr()}',
+          secondValue: bookYearlyStat.value,
         );
       }
     }
@@ -575,7 +573,7 @@ class Statistics extends StatelessWidget {
         return ReadStats(
           title: LocaleKeys.slowest_book.tr(),
           value: bookYearlyStat.title.toString(),
-          secondValue: '${bookYearlyStat.value} ${LocaleKeys.days.tr()}',
+          secondValue: bookYearlyStat.value,
         );
       }
     }

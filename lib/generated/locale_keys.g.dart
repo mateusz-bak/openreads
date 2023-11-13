@@ -39,7 +39,6 @@ abstract class LocaleKeys {
   static const start_reading = 'start_reading';
   static const rate_book = 'rate_book';
   static const skip = 'skip';
-  static const days = 'days';
   static const reading_time = 'reading_time';
   static const pages_uppercase = 'pages_uppercase';
   static const pages_lowercase = 'pages_lowercase';
@@ -242,4 +241,12 @@ abstract class LocaleKeys {
   static const import_goodreads_csv = 'import_goodreads_csv';
   static const choose_not_finished_shelf = 'choose_not_finished_shelf';
   static const import_successful = 'import_successful';
+  static const ok = 'ok';
+  static const day_title = 'day.title';
+  static const day = 'day';
+  static const hour_title = 'hour.title';
+  static const hour = 'hour';
+  static const minute_title = 'minute.title';
+  static const minute = 'minute';
+  static const set_custom_reading_time = 'set_custom_reading_time';
 }

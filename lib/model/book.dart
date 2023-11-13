@@ -5,6 +5,7 @@ import 'package:flutter/foundation.dart';
 import 'package:openreads/core/constants/enums.dart';
 import 'package:openreads/main.dart';
 import 'package:openreads/model/book_from_backup_v3.dart';
+import 'package:openreads/model/reading_time.dart';
 
 class Book {
   int? id;
@@ -29,6 +30,7 @@ class Book {
   String? blurHash;
   BookFormat bookFormat;
   bool hasCover;
+  ReadingTime? readingTime;
 
   Book({
     this.id,
@@ -53,6 +55,7 @@ class Book {
     this.blurHash,
     this.bookFormat = BookFormat.paperback,
     this.hasCover = false,
+    this.readingTime,
   });
 
   factory Book.empty() {
@@ -106,6 +109,9 @@ class Book {
                   : json['book_type'] == 'paperback'
                       ? BookFormat.paperback
                       : BookFormat.paperback,
+      readingTime: json['reading_time'] != null
+        ? ReadingTime.fromMilliSeconds(json['reading_time'])
+        : null);
     );
   }
 
@@ -131,6 +137,7 @@ class Book {
     String? blurHash,
     BookFormat? bookFormat,
     bool? hasCover,
+    ReadingTime? readingTime,
   }) {
     return Book(
       id: id,
@@ -155,6 +162,7 @@ class Book {
       blurHash: blurHash ?? this.blurHash,
       bookFormat: bookFormat ?? this.bookFormat,
       hasCover: hasCover ?? this.hasCover,
+      readingTime: readingTime ?? this.readingTime,
     );
   }
 
@@ -182,6 +190,7 @@ class Book {
       blurHash: blurHash,
       bookFormat: bookFormat,
       hasCover: hasCover,
+      readingTime: readingTime,
     );
   }
 
@@ -261,6 +270,7 @@ class Book {
                   : bookFormat == BookFormat.paperback
                       ? 'paperback'
                       : 'paperback',
+      'reading_time': readingTime?.milliSeconds,
     };
   }
 
