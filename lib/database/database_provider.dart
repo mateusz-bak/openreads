@@ -13,7 +13,7 @@ import 'package:sqflite/sqflite.dart';
 // 7. Update existing methods with new migration scripts
 // 7. Update existing methods names with new version number
 
-// book_type actually represents book_format
+// book_type actually represents book's format
 
 class DatabaseProvider {
   static final DatabaseProvider dbProvider = DatabaseProvider();
