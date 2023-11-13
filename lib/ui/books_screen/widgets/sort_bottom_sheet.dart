@@ -28,10 +28,11 @@ final List<String> sortOptions = [
 ];
 
 final List<String> bookTypeOptions = [
-  LocaleKeys.book_type_all.tr(),
-  LocaleKeys.book_type_paper_plural.tr(),
-  LocaleKeys.book_type_ebook_plural.tr(),
-  LocaleKeys.book_type_audiobook_plural.tr(),
+  LocaleKeys.book_format_all.tr(),
+  LocaleKeys.book_format_paperback_plural.tr(),
+  LocaleKeys.book_format_hardcover_plural.tr(),
+  LocaleKeys.book_format_ebook_plural.tr(),
+  LocaleKeys.book_format_audiobook_plural.tr(),
 ];
 
 String _getSortDropdownValue(SetSortState state) {
@@ -51,12 +52,14 @@ String _getSortDropdownValue(SetSortState state) {
 }
 
 String _getBookTypeDropdownValue(SetSortState state) {
-  if (state.bookType == BookType.paper) {
+  if (state.bookType == BookFormat.paperback) {
     return bookTypeOptions[1];
-  } else if (state.bookType == BookType.ebook) {
+  } else if (state.bookType == BookFormat.hardcover) {
     return bookTypeOptions[2];
-  } else if (state.bookType == BookType.audiobook) {
+  } else if (state.bookType == BookFormat.ebook) {
     return bookTypeOptions[3];
+  } else if (state.bookType == BookFormat.audiobook) {
+    return bookTypeOptions[4];
   } else {
     return bookTypeOptions[0];
   }
@@ -118,14 +121,16 @@ void _updateSort(BuildContext context, String? value, SetSortState state) {
 }
 
 void _updateBookType(BuildContext context, String? value, SetSortState state) {
-  BookType? bookType;
+  BookFormat? bookType;
 
   if (value == bookTypeOptions[1]) {
-    bookType = BookType.paper;
+    bookType = BookFormat.paperback;
   } else if (value == bookTypeOptions[2]) {
-    bookType = BookType.ebook;
+    bookType = BookFormat.hardcover;
   } else if (value == bookTypeOptions[3]) {
-    bookType = BookType.audiobook;
+    bookType = BookFormat.ebook;
+  } else if (value == bookTypeOptions[4]) {
+    bookType = BookFormat.audiobook;
   } else {
     bookType = null;
   }
@@ -527,7 +532,7 @@ class _SortBottomSheetState extends State<SortBottomSheet> {
               ),
               const SizedBox(height: 8),
               Text(
-                LocaleKeys.filter_by_book_type.tr(),
+                LocaleKeys.filter_by_book_format.tr(),
                 style: const TextStyle(fontSize: 16),
               ),
               const SizedBox(height: 4),

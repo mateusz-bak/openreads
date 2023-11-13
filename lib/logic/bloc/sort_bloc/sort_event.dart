@@ -23,7 +23,7 @@ class ChangeSortEvent extends SortEvent {
   final String? tags;
   final bool displayTags;
   final bool filterTagsAsAnd;
-  final BookType? bookType;
+  final BookFormat? bookType;
 
   @override
   List<Object?> get props => [

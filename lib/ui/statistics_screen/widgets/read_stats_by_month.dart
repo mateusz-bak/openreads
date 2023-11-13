@@ -9,14 +9,16 @@ import 'package:collection/collection.dart';
 class ReadStatsByMonth extends StatelessWidget {
   ReadStatsByMonth({
     Key? key,
-    required this.listPaperBooks,
+    required this.listPaperbackBooks,
+    required this.listHardcoverBooks,
     required this.listEbooks,
     required this.listAudiobooks,
     required this.title,
     required this.theme,
   }) : super(key: key);
 
-  final List<int> listPaperBooks;
+  final List<int> listPaperbackBooks;
+  final List<int> listHardcoverBooks;
   final List<int> listEbooks;
   final List<int> listAudiobooks;
   final String title;
@@ -133,30 +135,44 @@ class ReadStatsByMonth extends StatelessWidget {
           x: i,
           barRods: [
             BarChartRodData(
-              toY: (listPaperBooks[i] + listEbooks[i] + listAudiobooks[i])
+              toY: (listPaperbackBooks[i] +
+                      listHardcoverBooks[i] +
+                      listEbooks[i] +
+                      listAudiobooks[i])
                   .toDouble(),
               width: MediaQuery.of(context).size.width / 20,
               color: theme.colorScheme.primary,
               borderRadius: BorderRadius.circular(3),
               rodStackItems: [
-                listPaperBooks[i] != 0
+                listPaperbackBooks[i] != 0
                     ? BarChartRodStackItem(
                         0,
-                        listPaperBooks[i].toDouble(),
+                        (listPaperbackBooks[i] + listHardcoverBooks[i])
+                            .toDouble(),
                         theme.colorScheme.primary,
                       )
                     : BarChartRodStackItem(0, 0, Colors.transparent),
                 listEbooks[i] != 0
                     ? BarChartRodStackItem(
-                        listPaperBooks[i].toDouble(),
-                        (listEbooks[i] + listPaperBooks[i]).toDouble(),
+                        (listPaperbackBooks[i] + listHardcoverBooks[i])
+                            .toDouble(),
+                        (listPaperbackBooks[i] +
+                                listHardcoverBooks[i] +
+                                listEbooks[i])
+                            .toDouble(),
                         theme.colorScheme.primaryContainer,
                       )
                     : BarChartRodStackItem(0, 0, Colors.transparent),
                 listAudiobooks[i] != 0
                     ? BarChartRodStackItem(
-                        (listPaperBooks[i] + listEbooks[i]).toDouble(),
-                        (listPaperBooks[i] + listEbooks[i] + listAudiobooks[i])
+                        (listPaperbackBooks[i] +
+                                listHardcoverBooks[i] +
+                                listEbooks[i])
+                            .toDouble(),
+                        (listPaperbackBooks[i] +
+                                listHardcoverBooks[i] +
+                                listEbooks[i] +
+                                listAudiobooks[i])
                             .toDouble(),
                         theme.colorScheme.onSurfaceVariant,
                       )
@@ -164,10 +180,13 @@ class ReadStatsByMonth extends StatelessWidget {
               ],
             )
           ],
-          showingTooltipIndicators:
-              ((listPaperBooks[i] + listEbooks[i] + listAudiobooks[i]) > 0)
-                  ? [0]
-                  : [1],
+          showingTooltipIndicators: ((listPaperbackBooks[i] +
+                      listHardcoverBooks[i] +
+                      listEbooks[i] +
+                      listAudiobooks[i]) >
+                  0)
+              ? [0]
+              : [1],
         ),
       );
     }
@@ -179,10 +198,15 @@ class ReadStatsByMonth extends StatelessWidget {
     int maxBooksInMonth = 0;
 
     for (var i = 0; i < 12; i++) {
-      if ((listPaperBooks[i] + listEbooks[i] + listAudiobooks[i]) >
+      if ((listPaperbackBooks[i] +
+              listHardcoverBooks[i] +
+              listEbooks[i] +
+              listAudiobooks[i]) >
           maxBooksInMonth) {
-        maxBooksInMonth =
-            (listPaperBooks[i] + listEbooks[i] + listAudiobooks[i]);
+        maxBooksInMonth = (listPaperbackBooks[i] +
+            listHardcoverBooks[i] +
+            listEbooks[i] +
+            listAudiobooks[i]);
       }
     }
 
@@ -252,22 +276,22 @@ class ReadStatsByMonth extends StatelessWidget {
             const SizedBox(height: 5),
             ChartLegendElement(
               color: theme.colorScheme.onSurfaceVariant,
-              text: LocaleKeys.book_type_audiobook_plural.tr(),
+              text: LocaleKeys.book_format_audiobook_plural.tr(),
               number: listAudiobooks.sum,
               reversed: true,
             ),
             const SizedBox(height: 5),
             ChartLegendElement(
               color: theme.colorScheme.primaryContainer,
-              text: LocaleKeys.book_type_ebook_plural.tr(),
+              text: LocaleKeys.book_format_ebook_plural.tr(),
               number: listEbooks.sum,
               reversed: true,
             ),
             const SizedBox(height: 5),
             ChartLegendElement(
               color: theme.colorScheme.primary,
-              text: LocaleKeys.book_type_paper_plural.tr(),
-              number: listPaperBooks.sum,
+              text: LocaleKeys.book_format_paper_plural.tr(),
+              number: listPaperbackBooks.sum + listHardcoverBooks.sum,
               reversed: true,
             ),
           ],

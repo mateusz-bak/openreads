@@ -12,7 +12,7 @@ class SetSortState extends SortState {
   final String? tags;
   final bool displayTags;
   final bool filterTagsAsAnd;
-  final BookType? bookType;
+  final BookFormat? bookType;
 
   const SetSortState({
     required this.sortType,

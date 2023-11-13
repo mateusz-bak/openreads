@@ -62,9 +62,10 @@ class _AddBookScreenState extends State<AddBookScreen> {
       '${coverBaseUrl}b/id/${widget.coverOpenLibraryID}-L.jpg';
 
   List<String> bookTypes = [
-    LocaleKeys.book_type_paper.tr(),
-    LocaleKeys.book_type_ebook.tr(),
-    LocaleKeys.book_type_audiobook.tr(),
+    LocaleKeys.book_format_paperback.tr(),
+    LocaleKeys.book_format_hardcover.tr(),
+    LocaleKeys.book_format_ebook.tr(),
+    LocaleKeys.book_format_audiobook.tr(),
   ];
 
   void _prefillBookDetails(Book book) {
@@ -165,13 +166,15 @@ class _AddBookScreenState extends State<AddBookScreen> {
     if (bookType == null) return;
 
     if (bookType == bookTypes[0]) {
-      context.read<EditBookCubit>().setBookType(BookType.paper);
+      context.read<EditBookCubit>().setBookFormat(BookFormat.paperback);
     } else if (bookType == bookTypes[1]) {
-      context.read<EditBookCubit>().setBookType(BookType.ebook);
+      context.read<EditBookCubit>().setBookFormat(BookFormat.hardcover);
     } else if (bookType == bookTypes[2]) {
-      context.read<EditBookCubit>().setBookType(BookType.audiobook);
+      context.read<EditBookCubit>().setBookFormat(BookFormat.ebook);
+    } else if (bookType == bookTypes[3]) {
+      context.read<EditBookCubit>().setBookFormat(BookFormat.audiobook);
     } else {
-      context.read<EditBookCubit>().setBookType(BookType.paper);
+      context.read<EditBookCubit>().setBookFormat(BookFormat.paperback);
     }
 
     FocusManager.instance.primaryFocus?.unfocus();

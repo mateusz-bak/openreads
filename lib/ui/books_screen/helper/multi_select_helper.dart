@@ -7,9 +7,10 @@ import 'package:openreads/core/constants/enums.dart';
 import 'package:openreads/ui/add_book_screen/widgets/book_type_dropdown.dart';
 
 List<String> bookTypes = [
-  LocaleKeys.book_type_paper.tr(),
-  LocaleKeys.book_type_ebook.tr(),
-  LocaleKeys.book_type_audiobook.tr(),
+  LocaleKeys.book_format_paperback.tr(),
+  LocaleKeys.book_format_hardcover.tr(),
+  LocaleKeys.book_format_ebook.tr(),
+  LocaleKeys.book_format_audiobook.tr(),
 ];
 
 showEditBookTypeBottomSheet(BuildContext context, Set<int> selectedBookIds) {
@@ -35,7 +36,7 @@ showEditBookTypeBottomSheet(BuildContext context, Set<int> selectedBookIds) {
                 children: [
                   const SizedBox(width: 10),
                   Text(
-                    LocaleKeys.change_book_type.tr(),
+                    LocaleKeys.change_book_format.tr(),
                     style: const TextStyle(
                       fontSize: 18,
                       fontWeight: FontWeight.bold,
@@ -46,7 +47,6 @@ showEditBookTypeBottomSheet(BuildContext context, Set<int> selectedBookIds) {
               ),
               const SizedBox(height: 20),
               BookTypeDropdown(
-                multiSelect: true,
                 bookTypes: bookTypes,
                 changeBookType: (bookType) {
                   if (bookType == null) return;
@@ -66,16 +66,19 @@ showEditBookTypeBottomSheet(BuildContext context, Set<int> selectedBookIds) {
 }
 
 void _updateBooks(String bookType, Set<int> selectedIds) async {
-  BookType selectedBookType = BookType.paper;
+  BookFormat selectedBookType = BookFormat.paperback;
+
   if (bookType == bookTypes[0]) {
-    selectedBookType = BookType.paper;
+    selectedBookType = BookFormat.paperback;
   } else if (bookType == bookTypes[1]) {
-    selectedBookType = BookType.ebook;
+    selectedBookType = BookFormat.hardcover;
   } else if (bookType == bookTypes[2]) {
-    selectedBookType = BookType.audiobook;
+    selectedBookType = BookFormat.ebook;
+  } else if (bookType == bookTypes[3]) {
+    selectedBookType = BookFormat.audiobook;
   } else {
-    selectedBookType = BookType.paper;
+    selectedBookType = BookFormat.paperback;
   }
 
-  bookCubit.updateBookType(selectedIds, selectedBookType);
+  bookCubit.updateBookFormat(selectedIds, selectedBookType);
 }

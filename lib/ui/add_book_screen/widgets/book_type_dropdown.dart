@@ -12,21 +12,21 @@ class BookTypeDropdown extends StatelessWidget {
     super.key,
     required this.bookTypes,
     required this.changeBookType,
-    this.multiSelect = false,
   });
 
   final List<String> bookTypes;
   final Function(String?) changeBookType;
-  final bool multiSelect;
 
-  String _getBookTypeDropdownValue(BookType bookType) {
+  String _getBookTypeDropdownValue(BookFormat bookType) {
     switch (bookType) {
-      case BookType.paper:
+      case BookFormat.paperback:
         return bookTypes[0];
-      case BookType.ebook:
+      case BookFormat.hardcover:
         return bookTypes[1];
-      case BookType.audiobook:
+      case BookFormat.ebook:
         return bookTypes[2];
+      case BookFormat.audiobook:
+        return bookTypes[3];
       default:
         return bookTypes[0];
     }
@@ -58,18 +58,18 @@ class BookTypeDropdown extends StatelessWidget {
                   padding: EdgeInsets.fromLTRB(
                     10,
                     0,
-                    state.bookType == BookType.audiobook
+                    state.bookFormat == BookFormat.audiobook
                         ? 2
-                        : state.bookType == BookType.ebook
+                        : state.bookFormat == BookFormat.ebook
                             ? 4
                             : 0,
                     0,
                   ),
                   child: Center(
                     child: FaIcon(
-                      state.bookType == BookType.audiobook
+                      state.bookFormat == BookFormat.audiobook
                           ? FontAwesomeIcons.headphones
-                          : state.bookType == BookType.ebook
+                          : state.bookFormat == BookFormat.ebook
                               ? FontAwesomeIcons.tablet
                               : FontAwesomeIcons.bookOpen,
                       size: 20,
@@ -95,7 +95,7 @@ class BookTypeDropdown extends StatelessWidget {
                                     style: const TextStyle(fontSize: 14)),
                               ))
                           .toList(),
-                      value: _getBookTypeDropdownValue(state.bookType),
+                      value: _getBookTypeDropdownValue(state.bookFormat),
                       onChanged: (value) {
                         changeBookType(value);
                       },

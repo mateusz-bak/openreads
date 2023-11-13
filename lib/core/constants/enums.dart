@@ -28,8 +28,9 @@ enum Font {
   jost,
 }
 
-enum BookType {
-  paper,
+enum BookFormat {
+  paperback,
+  hardcover,
   ebook,
   audiobook,
 }

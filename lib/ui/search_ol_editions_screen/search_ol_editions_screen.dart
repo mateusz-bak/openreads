@@ -110,7 +110,7 @@ class _SearchOLEditionsScreenState extends State<SearchOLEditionsScreen> {
               : null,
       olid: (result.key != null) ? result.key!.replaceAll('/books/', '') : null,
       publicationYear: widget.firstPublishYear,
-      bookType: BookType.paper,
+      bookFormat: BookFormat.paperback,
     );
 
     context.read<EditBookCubit>().setBook(book);

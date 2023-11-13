@@ -16,11 +16,13 @@ class StatsLoaded extends StatsState {
   final List<Book> forLaterBooks;
   final List<Book> unfinishedBooks;
   final List<BookReadStat> finishedBooksByMonthAllTypes;
-  final List<BookReadStat> finishedBooksByMonthPaperBooks;
+  final List<BookReadStat> finishedBooksByMonthPaperbackBooks;
+  final List<BookReadStat> finishedBooksByMonthHardcoverBooks;
   final List<BookReadStat> finishedBooksByMonthEbooks;
   final List<BookReadStat> finishedBooksByMonthAudiobooks;
   final List<BookReadStat> finishedPagesByMonthAllTypes;
-  final List<BookReadStat> finishedPagesByMonthPaperBooks;
+  final List<BookReadStat> finishedPagesByMonthPaperbackBooks;
+  final List<BookReadStat> finishedPagesByMonthHardcoverBooks;
   final List<BookReadStat> finishedPagesByMonthEbooks;
   final List<BookReadStat> finishedPagesByMonthAudiobooks;
   final int finishedBooksAll;
@@ -40,11 +42,13 @@ class StatsLoaded extends StatsState {
     required this.forLaterBooks,
     required this.unfinishedBooks,
     required this.finishedBooksByMonthAllTypes,
-    required this.finishedBooksByMonthPaperBooks,
+    required this.finishedBooksByMonthPaperbackBooks,
+    required this.finishedBooksByMonthHardcoverBooks,
     required this.finishedBooksByMonthEbooks,
     required this.finishedBooksByMonthAudiobooks,
     required this.finishedPagesByMonthAllTypes,
-    required this.finishedPagesByMonthPaperBooks,
+    required this.finishedPagesByMonthPaperbackBooks,
+    required this.finishedPagesByMonthHardcoverBooks,
     required this.finishedPagesByMonthEbooks,
     required this.finishedPagesByMonthAudiobooks,
     required this.finishedBooksAll,
@@ -66,11 +70,13 @@ class StatsLoaded extends StatsState {
         forLaterBooks,
         unfinishedBooks,
         finishedBooksByMonthAllTypes,
-        finishedBooksByMonthPaperBooks,
+        finishedBooksByMonthPaperbackBooks,
+        finishedBooksByMonthHardcoverBooks,
         finishedBooksByMonthEbooks,
         finishedBooksByMonthAudiobooks,
         finishedPagesByMonthAllTypes,
-        finishedPagesByMonthPaperBooks,
+        finishedPagesByMonthPaperbackBooks,
+        finishedPagesByMonthHardcoverBooks,
         finishedPagesByMonthEbooks,
         finishedPagesByMonthAudiobooks,
         finishedBooksAll,

@@ -28,7 +28,7 @@ class Book {
   String? notes;
   Uint8List? cover; // Not used since 2.2.0
   String? blurHash;
-  BookType bookType;
+  BookFormat bookFormat;
   bool hasCover;
   ReadingTime? readingTime;
 
@@ -53,7 +53,7 @@ class Book {
     this.notes,
     this.cover,
     this.blurHash,
-    this.bookType = BookType.paper,
+    this.bookFormat = BookFormat.paperback,
     this.hasCover = false,
     this.readingTime,
   });
@@ -66,48 +66,53 @@ class Book {
       status: 0,
       favourite: false,
       deleted: false,
-      bookType: BookType.paper,
+      bookFormat: BookFormat.paperback,
       hasCover: false,
     );
   }
 
   factory Book.fromJSON(Map<String, dynamic> json) {
     return Book(
-        id: json['id'],
-        title: json['title'],
-        subtitle: json['subtitle'],
-        author: json['author'],
-        description: json['description'],
-        status: json['status'],
-        rating: json['rating'],
-        favourite: (json['favourite'] == 1) ? true : false,
-        hasCover: (json['has_cover'] == 1) ? true : false,
-        deleted: (json['deleted'] == 1) ? true : false,
-        startDate: json['start_date'] != null
-            ? DateTime.parse(json['start_date'])
-            : null,
-        finishDate: json['finish_date'] != null
-            ? DateTime.parse(json['finish_date'])
-            : null,
-        pages: json['pages'],
-        publicationYear: json['publication_year'],
-        isbn: json['isbn'],
-        olid: json['olid'],
-        tags: json['tags'],
-        myReview: json['my_review'],
-        notes: json['notes'],
-        cover: json['cover'] != null
-            ? Uint8List.fromList(json['cover'].cast<int>().toList())
-            : null,
-        blurHash: json['blur_hash'],
-        bookType: json['book_type'] == 'audiobook'
-            ? BookType.audiobook
-            : json['book_type'] == 'ebook'
-                ? BookType.ebook
-                : BookType.paper,
-        readingTime: json['reading_time'] != null
-            ? ReadingTime.fromMilliSeconds(json['reading_time'])
-            : null);
+      id: json['id'],
+      title: json['title'],
+      subtitle: json['subtitle'],
+      author: json['author'],
+      description: json['description'],
+      status: json['status'],
+      rating: json['rating'],
+      favourite: (json['favourite'] == 1) ? true : false,
+      hasCover: (json['has_cover'] == 1) ? true : false,
+      deleted: (json['deleted'] == 1) ? true : false,
+      startDate: json['start_date'] != null
+          ? DateTime.parse(json['start_date'])
+          : null,
+      finishDate: json['finish_date'] != null
+          ? DateTime.parse(json['finish_date'])
+          : null,
+      pages: json['pages'],
+      publicationYear: json['publication_year'],
+      isbn: json['isbn'],
+      olid: json['olid'],
+      tags: json['tags'],
+      myReview: json['my_review'],
+      notes: json['notes'],
+      cover: json['cover'] != null
+          ? Uint8List.fromList(json['cover'].cast<int>().toList())
+          : null,
+      blurHash: json['blur_hash'],
+      bookFormat: json['book_type'] == 'audiobook'
+          ? BookFormat.audiobook
+          : json['book_type'] == 'ebook'
+              ? BookFormat.ebook
+              : json['book_type'] == 'hardcover'
+                  ? BookFormat.hardcover
+                  : json['book_type'] == 'paperback'
+                      ? BookFormat.paperback
+                      : BookFormat.paperback,
+      readingTime: json['reading_time'] != null
+          ? ReadingTime.fromMilliSeconds(json['reading_time'])
+          : null,
+    );
   }
 
   Book copyWith({
@@ -130,7 +135,7 @@ class Book {
     String? notes,
     Uint8List? cover,
     String? blurHash,
-    BookType? bookType,
+    BookFormat? bookFormat,
     bool? hasCover,
     ReadingTime? readingTime,
   }) {
@@ -155,7 +160,7 @@ class Book {
       notes: notes ?? this.notes,
       cover: cover ?? this.cover,
       blurHash: blurHash ?? this.blurHash,
-      bookType: bookType ?? this.bookType,
+      bookFormat: bookFormat ?? this.bookFormat,
       hasCover: hasCover ?? this.hasCover,
       readingTime: readingTime ?? this.readingTime,
     );
@@ -183,7 +188,7 @@ class Book {
       notes: notes,
       cover: null,
       blurHash: blurHash,
-      bookType: bookType,
+      bookFormat: bookFormat,
       hasCover: hasCover,
       readingTime: readingTime,
     );
@@ -228,7 +233,7 @@ class Book {
       notes: oldBook.bookNotes,
       cover: oldBook.bookCoverImg,
       blurHash: blurHash,
-      bookType: BookType.paper,
+      bookFormat: BookFormat.paperback,
       hasCover: false,
     );
   }
@@ -256,11 +261,15 @@ class Book {
       'cover': cover,
       'blur_hash': blurHash,
       'has_cover': hasCover ? 1 : 0,
-      'book_type': bookType == BookType.audiobook
+      'book_type': bookFormat == BookFormat.audiobook
           ? 'audiobook'
-          : bookType == BookType.ebook
+          : bookFormat == BookFormat.ebook
               ? 'ebook'
-              : 'paper',
+              : bookFormat == BookFormat.hardcover
+                  ? 'hardcover'
+                  : bookFormat == BookFormat.paperback
+                      ? 'paperback'
+                      : 'paperback',
       'reading_time': readingTime?.milliSeconds,
     };
   }
