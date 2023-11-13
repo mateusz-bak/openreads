@@ -110,8 +110,8 @@ class Book {
                       ? BookFormat.paperback
                       : BookFormat.paperback,
       readingTime: json['reading_time'] != null
-        ? ReadingTime.fromMilliSeconds(json['reading_time'])
-        : null);
+          ? ReadingTime.fromMilliSeconds(json['reading_time'])
+          : null,
     );
   }
 
