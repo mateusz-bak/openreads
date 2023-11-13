@@ -26,6 +26,7 @@ enum Font {
   quicksand,
   barlow,
   jost,
+  inter,
 }
 
 enum BookFormat {
