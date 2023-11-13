@@ -246,6 +246,5 @@
     },
     "import_successful": "Import zakończony sukcesem",
     "openreads_backup": "Kopia zapasowa Openreads",
-    "export_csv": "Wyeksportuj książki w pliku CSV",
-    "change_book_type": "Zmień rodzaj książki"
+    "export_csv": "Wyeksportuj książki w pliku CSV"
 }
