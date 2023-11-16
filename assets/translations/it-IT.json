@@ -208,5 +208,6 @@
     "book_format_ebook": "E-book",
     "book_format_audiobook": "Audiolibro",
     "book_format_ebook_plural": "E-books",
-    "book_format_audiobook_plural": "Audiolibri"
+    "book_format_audiobook_plural": "Audiolibri",
+    "book_format_paperback": "brosura"
 }

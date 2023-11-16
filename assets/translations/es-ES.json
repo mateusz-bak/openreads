@@ -251,5 +251,6 @@
     "book_format_all": "Todos los formatos de libro",
     "book_format_paperback": "Tapa blanda",
     "book_format_hardcover": "Libro de tapa dura",
-    "book_format_paperback_plural": "Libro de tapa blanda"
+    "book_format_paperback_plural": "Libro de tapa blanda",
+    "select_all": "Seleccionar todo"
 }
