@@ -223,7 +223,11 @@ class BookCubit extends Cubit {
         final file = File('${directory.path}/${book.id}.jpg');
 
         await file.writeAsBytes(book.cover!);
-        await repository.updateBook(book.copyWithNullCover());
+
+        Book updatedBook = book.copyWithNullCover();
+        updatedBook = book.copyWith(hasCover: true);
+
+        await repository.updateBook(updatedBook);
       }
     }
 

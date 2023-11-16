@@ -1,0 +1,13 @@
+- Import/export books from/to CSV.
+- New notes field.
+- Added custom reading time.
+- Corrected book's formats.
+- Bulk edit book's format.
+- Selecting all/none tags and years in filters.
+- Added secondary sorting.
+- Added Inter font.
+- New app icon.
+- Background image extends behind the status bar.
+- Added Japanese translations.
+- Covers are saved now in phone's storage.
+- Corrected number of displayed editions from Open Library.

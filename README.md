@@ -41,10 +41,11 @@ You can use custom tags and filter through them.
 <br/>
 
 <p align='left'>  
- <img src='doc/gplay/app-mockup/Google Pixel 4 XL Screenshot 0.png' width='24%'/>  
- <img src='doc/gplay/app-mockup/Google Pixel 4 XL Screenshot 1.png' width='24%'/>    
- <img src='doc/gplay/app-mockup/Google Pixel 4 XL Screenshot 2.png' width='24%'/>
- <img src='doc/gplay/app-mockup/Google Pixel 4 XL Screenshot 3.png' width='24%'/>
+ <img src='doc/gplay/app-mockup/Google Pixel 4 XL Screenshot 0.png' width='19%'/>  
+ <img src='doc/gplay/app-mockup/Google Pixel 4 XL Screenshot 1.png' width='19%'/>    
+ <img src='doc/gplay/app-mockup/Google Pixel 4 XL Screenshot 2.png' width='19%'/>
+ <img src='doc/gplay/app-mockup/Google Pixel 4 XL Screenshot 3.png' width='19%'/>
+ <img src='doc/gplay/app-mockup/Google Pixel 4 XL Screenshot 4.png' width='19%'/>
 </p>  
 
 <br/>
