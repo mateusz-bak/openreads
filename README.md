@@ -22,7 +22,7 @@
 <a href='https://play.google.com/store/apps/details?id=software.mdev.bookstracker'><img height=70 alt='Get it on Google Play' src='https://play.google.com/intl/en_us/badges/images/generic/en_badge_web_generic.png'/></a>
 <a href='https://github.com/mateusz-bak/openreads-android/releases/latest'><img height=70 alt='Get it on Github' src='https://raw.githubusercontent.com/mateusz-bak/openreads-android/master/doc/github/get-it-on-github.png'/></a>
 
-### Openreads is a privacy oriented and open source Android app written in Flutter for keeping tracks of your books.  
+### Openreads is a privacy oriented and open source Android app written in Flutter for keeping track of your books.  
 #### There are four lists provided so you won't get confused:  
 - books you finished,  
 - books you are currently reading,  
