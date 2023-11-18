@@ -33,7 +33,10 @@ late GlobalKey<ScaffoldMessengerState> snackbarKey;
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await EasyLocalization.ensureInitialized();
-  await FlutterDisplayMode.setHighRefreshRate();
+
+  if (Platform.isAndroid) {
+    await FlutterDisplayMode.setHighRefreshRate();
+  }
 
   HydratedBloc.storage = await HydratedStorage.build(
     storageDirectory: await getApplicationDocumentsDirectory(),
