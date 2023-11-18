@@ -63,3 +63,12 @@ jobs:
     - run: flutter pub get
     - run: flutter build -v appbundle
 
+  ios_build:
+    runs-on: macos-latest
+    steps:
+    - uses: actions/checkout@v3
+    - uses: subosito/flutter-action@v2
+      with:
+        flutter-version: '3.16.0'
+    - run: flutter pub get
+    - run: flutter build ios --no-codesign
