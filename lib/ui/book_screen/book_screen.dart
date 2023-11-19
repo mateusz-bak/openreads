@@ -155,7 +155,7 @@ class BookScreen extends StatelessWidget {
     ReadingTime? readingTime,
   }) {
     if (readingTime != null) return readingTime.toString();
-    final diff = finishDate!.difference(startDate!).inDays;
+    final diff = finishDate!.difference(startDate!).inDays + 1; // should be at least 1 day
 
     return LocaleKeys.day.plural(diff).tr();
   }
