@@ -203,13 +203,6 @@ class _OpenreadsAppState extends State<OpenreadsApp>
         child: MaterialApp(
           title: 'Openreads',
           scaffoldMessengerKey: snackbarKey,
-          builder: (context, child) => MediaQuery(
-            // Temporary fix for https://github.com/AbdulRahmanAlHamali/flutter_typeahead/issues/463
-            data: MediaQuery.of(context).copyWith(
-              accessibleNavigation: false,
-            ),
-            child: child!,
-          ),
           theme: ThemeData(
             useMaterial3: true,
             colorSchemeSeed: widget.themeState.useMaterialYou

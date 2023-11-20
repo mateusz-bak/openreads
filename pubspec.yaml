@@ -52,7 +52,7 @@ dependencies:
   shared_storage: ^0.8.0
   shared_preferences: ^2.2.1
   easy_localization: ^3.0.2
-  flutter_typeahead: ^4.6.1
+  flutter_typeahead: ^4.8.0
   flex_color_picker: ^3.2.2
   diacritic: ^0.1.4
   flutter_speed_dial: ^7.0.0

@@ -86,8 +86,6 @@ class TagsField extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final FocusNode focusNode = FocusNode();
-
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 10),
       child: Container(
@@ -101,6 +99,7 @@ class TagsField extends StatelessWidget {
           children: [
             Scrollbar(
                 child: TypeAheadField(
+              ignoreAccessibleNavigation: true,
               itemBuilder: (context, suggestion) {
                 return ListTile(
                   title: Text(suggestion),
@@ -132,7 +131,6 @@ class TagsField extends StatelessWidget {
                 inputFormatters: inputFormatters,
                 textCapitalization: textCapitalization,
                 controller: controller,
-                focusNode: focusNode,
                 minLines: 1,
                 maxLines: maxLines,
                 maxLength: maxLength,
