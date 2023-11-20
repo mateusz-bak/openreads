@@ -1,7 +1,7 @@
 {
     "books_in_progress": "Pågående",
     "books_for_later": "Läs senare",
-    "book_status_finished": "Avslutad",
+    "book_status_finished": "Utläst",
     "book_status_for_later": "Läs senare",
     "add_manually": "Lägg till bok manuellt",
     "add_search": "Sök i Open Library",
@@ -79,5 +79,15 @@
     "accent_color": "Accentfärg",
     "material_you": "Material You",
     "select_accent_color": "Välj en accentfärg",
-    "rating_type": "Visningstyp för omdöme"
+    "rating_type": "Visningstyp för omdöme",
+    "book_format_ebook": "E-bok",
+    "book_status_in_progress": "Pågående",
+    "book_status_unfinished": "Oavslutad",
+    "book_format_audiobook": "Ljudbok",
+    "books_unfinished": "Oavslutade",
+    "books_finished": "Utlästa",
+    "book_format_paperback": "Pocket",
+    "book_format_hardcover": "Inbunden",
+    "book_format_paperback_plural": "Pocketböcker",
+    "book_format_paper_plural": "Pappersböcker"
 }

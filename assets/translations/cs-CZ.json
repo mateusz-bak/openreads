@@ -227,5 +227,30 @@
     "notes": "Poznámky",
     "import_successful": "Import proběhl úspěšně",
     "openreads_backup": "Záloha Openreads",
-    "export_csv": "Exportovat knížky jako soubor CSV"
+    "export_csv": "Exportovat knížky jako soubor CSV",
+    "hour": {
+        "one": "{} hodina",
+        "title": "Hodiny",
+        "other": "{} hodin"
+    },
+    "minute": {
+        "other": "{} minut",
+        "one": "{} minuta",
+        "title": "Minuty"
+    },
+    "book_format_hardcover_plural": "Knížky s tuhou vazbou",
+    "change_book_format": "Změnit vazbu",
+    "ok": "OK",
+    "filter_by_book_format": "Filtrovat podle vazby",
+    "select_all": "Vybrat všechny",
+    "set_custom_reading_time": "Nastavit vlastní čas čtení",
+    "day": {
+        "one": "{} den",
+        "title": "Dny",
+        "other": "{} dní"
+    },
+    "book_format_all": "Všechny vazby",
+    "book_format_paperback": "Měkká vazba",
+    "book_format_hardcover": "Tuhá vazba",
+    "book_format_paperback_plural": "Knížky s měkkou vazbou"
 }
