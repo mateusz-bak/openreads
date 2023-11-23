@@ -33,6 +33,7 @@ jobs:
         KEYSTORE_KEY_PASSWORD: ${{ vars.KEYSTORE_KEY_PASSWORD_TEST }}
         KEYSTORE_STORE_PASSWORD: ${{ vars.KEYSTORE_STORE_PASSWORD_TEST }}
       working-directory: android
+    - run: flutter config --no-analytics
     - run: flutter pub get
     - run: flutter build -v apk
 
@@ -60,6 +61,7 @@ jobs:
         KEYSTORE_KEY_PASSWORD: ${{ vars.KEYSTORE_KEY_PASSWORD_TEST }}
         KEYSTORE_STORE_PASSWORD: ${{ vars.KEYSTORE_STORE_PASSWORD_TEST }}
       working-directory: android
+    - run: flutter config --no-analytics
     - run: flutter pub get
     - run: flutter build -v appbundle
 
@@ -70,5 +72,6 @@ jobs:
     - uses: subosito/flutter-action@v2
       with:
         flutter-version: '3.16.0'
+    - run: flutter config --no-analytics
     - run: flutter pub get
     - run: flutter build ios --no-codesign

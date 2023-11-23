@@ -24,7 +24,9 @@ jobs:
           flutter-version: "3.16.0"
 
       - name: Install dependencies
-        run: flutter pub get
+        run: |
+          flutter config --no-analytics
+          flutter pub get
 
       - name: Configure Keystore for Android
         run: |
