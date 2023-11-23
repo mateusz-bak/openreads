@@ -28,11 +28,12 @@ jobs:
         echo "storePassword=$KEYSTORE_STORE_PASSWORD" >> key.properties
         echo "keyPassword=$KEYSTORE_KEY_PASSWORD" >> key.properties
       env:
-        PLAY_STORE_UPLOAD_KEY: ${{ secrets.PLAY_STORE_UPLOAD_KEY }}
-        KEYSTORE_KEY_ALIAS: ${{ secrets.KEYSTORE_KEY_ALIAS }}
-        KEYSTORE_KEY_PASSWORD: ${{ secrets.KEYSTORE_KEY_PASSWORD }}
-        KEYSTORE_STORE_PASSWORD: ${{ secrets.KEYSTORE_STORE_PASSWORD }}
+        PLAY_STORE_UPLOAD_KEY: ${{ vars.PLAY_STORE_UPLOAD_KEY_TEST }}
+        KEYSTORE_KEY_ALIAS: ${{ vars.KEYSTORE_KEY_ALIAS_TEST }}
+        KEYSTORE_KEY_PASSWORD: ${{ vars.KEYSTORE_KEY_PASSWORD_TEST }}
+        KEYSTORE_STORE_PASSWORD: ${{ vars.KEYSTORE_STORE_PASSWORD_TEST }}
       working-directory: android
+    - run: flutter config --no-analytics
     - run: flutter pub get
     - run: flutter build -v apk
 
@@ -55,11 +56,12 @@ jobs:
         echo "storePassword=$KEYSTORE_STORE_PASSWORD" >> key.properties
         echo "keyPassword=$KEYSTORE_KEY_PASSWORD" >> key.properties
       env:
-        PLAY_STORE_UPLOAD_KEY: ${{ secrets.PLAY_STORE_UPLOAD_KEY }}
-        KEYSTORE_KEY_ALIAS: ${{ secrets.KEYSTORE_KEY_ALIAS }}
-        KEYSTORE_KEY_PASSWORD: ${{ secrets.KEYSTORE_KEY_PASSWORD }}
-        KEYSTORE_STORE_PASSWORD: ${{ secrets.KEYSTORE_STORE_PASSWORD }}
+        PLAY_STORE_UPLOAD_KEY: ${{ vars.PLAY_STORE_UPLOAD_KEY_TEST }}
+        KEYSTORE_KEY_ALIAS: ${{ vars.KEYSTORE_KEY_ALIAS_TEST }}
+        KEYSTORE_KEY_PASSWORD: ${{ vars.KEYSTORE_KEY_PASSWORD_TEST }}
+        KEYSTORE_STORE_PASSWORD: ${{ vars.KEYSTORE_STORE_PASSWORD_TEST }}
       working-directory: android
+    - run: flutter config --no-analytics
     - run: flutter pub get
     - run: flutter build -v appbundle
 
@@ -70,5 +72,6 @@ jobs:
     - uses: subosito/flutter-action@v2
       with:
         flutter-version: '3.16.0'
+    - run: flutter config --no-analytics
     - run: flutter pub get
     - run: flutter build ios --no-codesign
