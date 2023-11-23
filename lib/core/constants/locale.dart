@@ -34,5 +34,6 @@ final supportedLocales = [
   AppLanguage('svenska', const Locale('sv', 'SE')),
   AppLanguage('Türkçe', const Locale('tr', 'TR')),
   AppLanguage('Українська', const Locale('uk', 'UA')),
+  AppLanguage('Tiếng Việt', const Locale('vi', 'VN')),
   AppLanguage('中文', const Locale('zh', 'CN')),
 ];
