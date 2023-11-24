@@ -185,7 +185,9 @@ class _AddBookScreenState extends State<AddBookScreen> {
 
     final startDate = await showDatePicker(
       context: context,
-      initialDate: DateTime.now(),
+      // if startDate is null, use DateTime.now()
+      initialDate:
+          context.read<EditBookCubit>().state.startDate ?? DateTime.now(),
       firstDate: DateTime(1970),
       lastDate: DateTime.now(),
       helpText: LocaleKeys.select_start_date.tr(),
@@ -201,7 +203,9 @@ class _AddBookScreenState extends State<AddBookScreen> {
 
     final finishDate = await showDatePicker(
       context: context,
-      initialDate: DateTime.now(),
+      // if finishDate is null, use DateTime.now()
+      initialDate:
+          context.read<EditBookCubit>().state.finishDate ?? DateTime.now(),
       firstDate: DateTime(1970),
       lastDate: DateTime.now(),
       helpText: LocaleKeys.select_finish_date.tr(),
