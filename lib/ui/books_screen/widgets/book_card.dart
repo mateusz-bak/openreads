@@ -31,6 +31,10 @@ class BookCard extends StatelessWidget {
   Widget _buildSortAttribute() {
     return BlocBuilder<SortBloc, SortState>(
       builder: (context, state) {
+        final dateFormat = DateFormat.yMd(
+          '${context.locale.languageCode}-${context.locale.countryCode}',
+        );
+
         if (state is SetSortState) {
           if (state.sortType == SortType.byPages) {
             return (book.pages != null)
@@ -46,7 +50,7 @@ class BookCard extends StatelessWidget {
                         style: const TextStyle(fontSize: 12),
                       ),
                       Text(
-                        '${_generateDate(book.startDate)}',
+                        dateFormat.format(book.startDate!),
                         style: const TextStyle(
                           fontSize: 13,
                           fontWeight: FontWeight.bold,
@@ -65,7 +69,7 @@ class BookCard extends StatelessWidget {
                         style: const TextStyle(fontSize: 12),
                       ),
                       Text(
-                        '${_generateDate(book.finishDate)}',
+                        dateFormat.format(book.finishDate!),
                         style: const TextStyle(
                           fontSize: 13,
                           fontWeight: FontWeight.bold,
@@ -146,13 +150,6 @@ class BookCard extends StatelessWidget {
     }
 
     return chips;
-  }
-
-  String? _generateDate(DateTime? date) {
-    if (date == null) return null;
-
-    final DateFormat formatter = DateFormat('dd/MM/yyyy');
-    return formatter.format(date);
   }
 
   @override

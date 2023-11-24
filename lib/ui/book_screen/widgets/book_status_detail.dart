@@ -25,8 +25,8 @@ class BookStatusDetail extends StatelessWidget {
 
   final IconData? statusIcon;
   final String statusText;
-  final String? startDate;
-  final String? finishDate;
+  final DateTime? startDate;
+  final DateTime? finishDate;
   final int? rating;
   final Function() onLikeTap;
   final bool isLiked;
@@ -36,9 +36,13 @@ class BookStatusDetail extends StatelessWidget {
   final bool showRatingAndLike;
 
   Widget _buildStartAndFinishDate(BuildContext context) {
+    final dateFormat = DateFormat.yMd(
+      '${context.locale.languageCode}-${context.locale.countryCode}',
+    );
+
     if (startDate != null && finishDate != null) {
       return Text(
-        '$startDate - $finishDate',
+        '${dateFormat.format(startDate!)} - ${dateFormat.format(finishDate!)}',
         style: const TextStyle(
           fontSize: 14,
           fontWeight: FontWeight.normal,
@@ -48,7 +52,7 @@ class BookStatusDetail extends StatelessWidget {
 
     if (startDate == null && finishDate != null) {
       return Text(
-        '${LocaleKeys.finished_on_date.tr()} $finishDate',
+        '${LocaleKeys.finished_on_date.tr()} ${dateFormat.format(finishDate!)}',
         style: const TextStyle(
           fontSize: 14,
           fontWeight: FontWeight.normal,
@@ -58,7 +62,7 @@ class BookStatusDetail extends StatelessWidget {
 
     if (startDate != null && finishDate == null) {
       return Text(
-        '${LocaleKeys.started_on_date.tr()} $startDate',
+        '${LocaleKeys.started_on_date.tr()} ${dateFormat.format(startDate!)}',
         style: const TextStyle(
           fontSize: 14,
           fontWeight: FontWeight.normal,
