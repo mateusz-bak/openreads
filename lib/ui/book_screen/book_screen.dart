@@ -141,13 +141,6 @@ class BookScreen extends StatelessWidget {
     context.read<CurrentBookCubit>().setBook(book);
   }
 
-  String? _generateDate(DateTime? date) {
-    if (date == null) return null;
-
-    final DateFormat formatter = DateFormat('dd/MM/yyyy');
-    return formatter.format(date);
-  }
-
   String _generateReadingTime({
     DateTime? startDate,
     DateTime? finishDate,
@@ -208,8 +201,8 @@ class BookScreen extends StatelessWidget {
                           context,
                         ),
                         rating: state.rating,
-                        startDate: _generateDate(state.startDate),
-                        finishDate: _generateDate(state.finishDate),
+                        startDate: state.startDate,
+                        finishDate: state.finishDate,
                         onLikeTap: () => _onLikeTap(context, state),
                         isLiked: state.favourite,
                         showChangeStatus: (state.status == 1 ||

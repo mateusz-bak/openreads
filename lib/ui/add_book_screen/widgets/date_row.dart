@@ -28,6 +28,10 @@ class DateRow extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final dateFormat = DateFormat.yMd(
+      '${context.locale.languageCode}-${context.locale.countryCode}',
+    );
+
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 10),
       child: BlocBuilder<EditBookCubit, Book>(
@@ -52,7 +56,7 @@ class DateRow extends StatelessWidget {
                       icon: FontAwesomeIcons.play,
                       text: (state.startDate == null)
                           ? LocaleKeys.start_date.tr()
-                          : '${state.startDate?.day}/${state.startDate?.month}/${state.startDate?.year}',
+                          : dateFormat.format(state.startDate!),
                       onPressed: showStartDatePicker,
                       onClearPressed: clearStartDate,
                       showClearButton: (state.startDate == null) ? false : true,
@@ -74,7 +78,7 @@ class DateRow extends StatelessWidget {
                       icon: FontAwesomeIcons.flagCheckered,
                       text: (state.finishDate == null)
                           ? LocaleKeys.finish_date.tr()
-                          : '${state.finishDate?.day}/${state.finishDate?.month}/${state.finishDate?.year}',
+                          : dateFormat.format(state.finishDate!),
                       onPressed: showFinishDatePicker,
                       onClearPressed: clearFinishDate,
                       showClearButton:
