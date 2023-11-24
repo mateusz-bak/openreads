@@ -58,9 +58,8 @@ Do you want to support Openreads development? You are welcome to take below acti
 
 Fund the project, or simply say thank you.
 
-<a href="https://www.buymeacoffee.com/mateuszbak"><img src="https://cdn.buymeacoffee.com/buttons/v2/default-yellow.png" height="60"></a>
-
-<a href='https://github.com/sponsors/mateusz-bak'><img height=60 alt='Become a GitHub Sponsor' src='https://raw.githubusercontent.com/mateusz-bak/openreads-android/master/doc/github/button_become-a-github-sponsor.png'/></a>
+<a href='https://github.com/sponsors/mateusz-bak'><img height=50 alt='Become a GitHub Sponsor' src='https://raw.githubusercontent.com/mateusz-bak/openreads-android/master/doc/github/button_become-a-github-sponsor.png'/></a>
+<a href="https://www.buymeacoffee.com/mateuszbak"><img src="https://cdn.buymeacoffee.com/buttons/v2/default-yellow.png" height="50"></a>
 
 ### Translate Openreads
 
@@ -97,8 +96,7 @@ Submit an issue here: [Openreads issues](https://github.com/mateusz-bak/openread
    flutter pub get
    ```
 
-2. Build and install the app on your device
-
+2. Build and install the app on your device<br/>
 WARNING: If you already have the openreads app installed on your device this step will uninstall it before installing the debug version, this deletes all app data, to keep your books please make a backup first.
 
    ```sh
