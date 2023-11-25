@@ -7,14 +7,16 @@ import 'package:openreads/generated/locale_keys.g.dart';
 
 class BookCardOLEdition extends StatelessWidget {
   BookCardOLEdition({
-    Key? key,
+    super.key,
     required this.title,
     required this.cover,
     required this.onPressed,
-  }) : super(key: key);
+    required this.pages,
+  });
 
   final String title;
   final int? cover;
+  final int? pages;
   final Function() onPressed;
 
   static const String coverBaseUrl = 'https://covers.openlibrary.org/';
@@ -30,9 +32,13 @@ class BookCardOLEdition extends StatelessWidget {
         ),
         onTap: onPressed,
         child: Container(
-            padding: const EdgeInsets.all(10),
             decoration: BoxDecoration(
-              color: Theme.of(context).colorScheme.surfaceVariant,
+              color: cover == null
+                  ? Theme.of(context)
+                      .colorScheme
+                      .primaryContainer
+                      .withOpacity(0.3)
+                  : null,
               borderRadius: BorderRadius.circular(cornerRadius),
               border: Border.all(color: dividerColor),
             ),
@@ -63,9 +69,50 @@ class BookCardOLEdition extends StatelessWidget {
                         ),
                       )
                     : Expanded(
-                        child: Center(
-                          child: FittedBox(
-                            child: Text(LocaleKeys.no_cover.tr()),
+                        child: Padding(
+                          padding: const EdgeInsets.all(10),
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Flexible(
+                                child: Text(
+                                  title,
+                                  overflow: TextOverflow.ellipsis,
+                                  maxLines: 20,
+                                ),
+                              ),
+                              Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  pages != null
+                                      ? Text(
+                                          '$pages ${LocaleKeys.pages_lowercase.tr()}',
+                                          style: TextStyle(
+                                            fontSize: 12,
+                                            color: Theme.of(context)
+                                                .colorScheme
+                                                .onBackground
+                                                .withOpacity(0.6),
+                                          ),
+                                        )
+                                      : const SizedBox(),
+                                  Row(
+                                    children: [
+                                      Text(
+                                        LocaleKeys.no_cover.tr(),
+                                        style: TextStyle(
+                                          color: Theme.of(context)
+                                              .colorScheme
+                                              .onBackground
+                                              .withOpacity(0.7),
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                ],
+                              ),
+                            ],
                           ),
                         ),
                       ),
