@@ -82,6 +82,7 @@
     "no_cover": "No cover",
     "choose_edition": "Choose edition",
     "editions_lowercase": "editions",
+    "only_editions_with_covers": "Show only editions with covers",
     "published_lowercase": "published",
     "cancel": "Cancel",
     "flash_on": "Flash on",
