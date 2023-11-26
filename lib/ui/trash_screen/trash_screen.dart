@@ -41,6 +41,7 @@ class TrashScreen extends StatelessWidget {
             return BooksList(
               books: snapshot.data!,
               listNumber: 5,
+              allBooksCount: null,
             );
           } else if (snapshot.hasError) {
             return Text(

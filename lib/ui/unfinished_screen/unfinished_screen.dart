@@ -41,6 +41,7 @@ class UnfinishedScreen extends StatelessWidget {
             return BooksList(
               books: snapshot.data!,
               listNumber: 6,
+              allBooksCount: null,
             );
           } else if (snapshot.hasError) {
             return Text(
