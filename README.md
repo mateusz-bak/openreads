@@ -81,6 +81,36 @@ Submit an issue here: [Openreads issues](https://github.com/mateusz-bak/openread
 
 <br/>
 
+## CSV format
+
+Openreads supports importing and exporting books to/from a CSV file. See format of the CSV file:
+
+Column | Values
+--- | ---
+id | Unique key (1, 2, 3...)
+title | Text
+subtitle | Text
+author | Text
+book_format | paperback, hardcover, ebook, audiobook
+description | Text
+pages | Number
+isbn | Text (ISBN 10 or ISBN 13)
+olid | Text (Open Library ID)
+publication_year | Number
+status | finished, in_progress, planned, abandoned, unknown
+rating | 0.0 - 5.0, empty
+favourite | true, false
+has_cover | true, false
+deleted | true, false
+start_date | Text (ISO 8601 String)
+finish_date | Text (ISO 8601 String)
+my_review | Text
+tags | Text (tags separated with \|\|\|\|\|)
+
+
+#### Besides Openreads can Import CSV files from below apps:
+- Goodreads
+
 ## Build Process
 
 1. Clone or download this repository
