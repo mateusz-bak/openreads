@@ -87,7 +87,6 @@ Openreads supports importing and exporting books to/from a CSV file. See format 
 
 Column | Values
 --- | ---
-id | Unique key (1, 2, 3...)
 title | Text
 subtitle | Text
 author | Text
