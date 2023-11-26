@@ -333,6 +333,9 @@ class _AddBookScreenState extends State<AddBookScreen> {
     if (widget.fromOpenLibrary || widget.fromOpenLibraryEdition) {
       if (widget.coverOpenLibraryID != null) {
         _downloadCover();
+      } else {
+        // Remove temp cover file if book/edition has no cover
+        context.read<EditBookCoverCubit>().setCover(null);
       }
 
       if (widget.fromOpenLibrary) {

@@ -19,7 +19,7 @@ import 'package:openreads/logic/cubit/edit_book_cubit.dart';
 import 'package:openreads/main.dart';
 
 class CoverViewEdit extends StatelessWidget {
-  const CoverViewEdit({Key? key}) : super(key: key);
+  const CoverViewEdit({super.key});
 
   void _loadCoverFromStorage(BuildContext context) async {
     FocusManager.instance.primaryFocus?.unfocus();
