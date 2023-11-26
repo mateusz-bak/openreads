@@ -72,7 +72,6 @@ class CSVExport {
       final rows = List<List<String>>.empty(growable: true);
 
       final firstRow = [
-        ('id'),
         ('title'),
         ('subtitle'),
         ('author'),
@@ -98,7 +97,6 @@ class CSVExport {
       for (var book in books) {
         final newRow = List<String>.empty(growable: true);
 
-        newRow.add(book.id != null ? book.id.toString() : '');
         newRow.add(book.title);
         newRow.add(book.subtitle ?? '');
         newRow.add(book.author);
