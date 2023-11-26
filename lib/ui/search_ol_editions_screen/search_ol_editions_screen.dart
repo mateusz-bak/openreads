@@ -38,7 +38,7 @@ class SearchOLEditionsScreen extends StatefulWidget {
 
 class _SearchOLEditionsScreenState extends State<SearchOLEditionsScreen> {
   Uint8List? editionCoverPreview;
-  bool _onlyEditionsWithCovers = true;
+  bool _onlyEditionsWithCovers = false;
 
   void _saveEdition({
     required OLEditionResult result,
