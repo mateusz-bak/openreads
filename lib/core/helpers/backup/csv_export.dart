@@ -75,21 +75,22 @@ class CSVExport {
         ('title'),
         ('subtitle'),
         ('author'),
-        ('book_format'),
         ('description'),
-        ('pages'),
-        ('isbn'),
-        ('olid'),
-        ('publication_year'),
         ('status'),
-        ('rating'),
         ('favourite'),
-        ('has_cover'),
         ('deleted'),
+        ('rating'),
         ('start_date'),
         ('finish_date'),
-        ('my_review'),
+        ('pages'),
+        ('publication_year'),
+        ('isbn'),
+        ('olid'),
         ('tags'),
+        ('my_review'),
+        ('notes'),
+        ('book_format'),
+        ('reading_time'),
       ];
 
       rows.add(firstRow);
@@ -100,22 +101,7 @@ class CSVExport {
         newRow.add(book.title);
         newRow.add(book.subtitle ?? '');
         newRow.add(book.author);
-        newRow.add(book.bookFormat == BookFormat.paperback
-            ? 'paperback'
-            : book.bookFormat == BookFormat.hardcover
-                ? 'hardcover'
-                : book.bookFormat == BookFormat.ebook
-                    ? 'ebook'
-                    : book.bookFormat == BookFormat.audiobook
-                        ? 'audiobook'
-                        : '');
         newRow.add(book.description ?? '');
-        newRow.add(book.pages != null ? book.pages.toString() : '');
-        newRow.add(book.isbn ?? '');
-        newRow.add(book.olid ?? '');
-        newRow.add(book.publicationYear != null
-            ? book.publicationYear.toString()
-            : '');
         newRow.add(
           book.status == 0
               ? 'finished'
@@ -127,16 +113,34 @@ class CSVExport {
                           ? 'abandoned'
                           : 'unknown',
         );
-        newRow.add(book.rating != null ? (book.rating! / 10).toString() : '');
         newRow.add(book.favourite.toString());
-        newRow.add(book.hasCover.toString());
         newRow.add(book.deleted.toString());
+        newRow.add(book.rating != null ? (book.rating! / 10).toString() : '');
         newRow.add(
             book.startDate != null ? book.startDate!.toIso8601String() : '');
         newRow.add(
             book.finishDate != null ? book.finishDate!.toIso8601String() : '');
-        newRow.add(book.myReview ?? '');
+        newRow.add(book.pages != null ? book.pages.toString() : '');
+        newRow.add(book.publicationYear != null
+            ? book.publicationYear.toString()
+            : '');
+        newRow.add(book.isbn ?? '');
+        newRow.add(book.olid ?? '');
         newRow.add(book.tags ?? '');
+        newRow.add(book.myReview ?? '');
+        newRow.add(book.notes ?? '');
+        newRow.add(book.bookFormat == BookFormat.paperback
+            ? 'paperback'
+            : book.bookFormat == BookFormat.hardcover
+                ? 'hardcover'
+                : book.bookFormat == BookFormat.ebook
+                    ? 'ebook'
+                    : book.bookFormat == BookFormat.audiobook
+                        ? 'audiobook'
+                        : '');
+        newRow.add(book.readingTime != null
+            ? book.readingTime!.milliSeconds.toString()
+            : '');
 
         rows.add(newRow);
       }
