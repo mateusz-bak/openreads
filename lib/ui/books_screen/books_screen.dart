@@ -862,6 +862,7 @@ class _BooksScreenState extends State<BooksScreen>
                         listNumber: 2,
                         selectedBookIds: selectedBookIds,
                         onBookSelected: _onItemSelected,
+                        allBooksCount: snapshot.data!.length,
                       );
                     } else {
                       return BooksList(
@@ -872,6 +873,7 @@ class _BooksScreenState extends State<BooksScreen>
                         listNumber: 2,
                         selectedBookIds: selectedBookIds,
                         onBookSelected: _onItemSelected,
+                        allBooksCount: snapshot.data!.length,
                       );
                     }
                   },
@@ -927,6 +929,7 @@ class _BooksScreenState extends State<BooksScreen>
                         listNumber: 1,
                         selectedBookIds: selectedBookIds,
                         onBookSelected: _onItemSelected,
+                        allBooksCount: snapshot.data!.length,
                       );
                     } else {
                       return BooksList(
@@ -937,6 +940,7 @@ class _BooksScreenState extends State<BooksScreen>
                         listNumber: 1,
                         selectedBookIds: selectedBookIds,
                         onBookSelected: _onItemSelected,
+                        allBooksCount: snapshot.data!.length,
                       );
                     }
                   },
@@ -992,6 +996,7 @@ class _BooksScreenState extends State<BooksScreen>
                         listNumber: 0,
                         selectedBookIds: selectedBookIds,
                         onBookSelected: _onItemSelected,
+                        allBooksCount: snapshot.data!.length,
                       );
                     } else {
                       return BooksList(
@@ -1002,6 +1007,7 @@ class _BooksScreenState extends State<BooksScreen>
                         listNumber: 0,
                         selectedBookIds: selectedBookIds,
                         onBookSelected: _onItemSelected,
+                        allBooksCount: snapshot.data!.length,
                       );
                     }
                   },

@@ -7,17 +7,19 @@ import 'package:openreads/ui/books_screen/widgets/widgets.dart';
 
 class BooksGrid extends StatefulWidget {
   const BooksGrid({
-    Key? key,
+    super.key,
     required this.books,
     required this.listNumber,
     this.selectedBookIds,
     this.onBookSelected,
-  }) : super(key: key);
+    required this.allBooksCount,
+  });
 
   final List<Book> books;
   final int listNumber;
   final Set<int>? selectedBookIds;
   final Function(int id)? onBookSelected;
+  final int allBooksCount;
 
   @override
   State<BooksGrid> createState() => _BooksGridState();
@@ -25,62 +27,102 @@ class BooksGrid extends StatefulWidget {
 
 class _BooksGridState extends State<BooksGrid>
     with AutomaticKeepAliveClientMixin {
+  _onPressed(int index, bool multiSelectMode, String heroTag) {
+    if (widget.books[index].id == null) return;
+    if (multiSelectMode && widget.onBookSelected != null) {
+      widget.onBookSelected!(widget.books[index].id!);
+      return;
+    }
+
+    context.read<CurrentBookCubit>().setBook(widget.books[index]);
+
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) => BookScreen(
+          id: widget.books[index].id!,
+          heroTag: heroTag,
+        ),
+      ),
+    );
+  }
+
+  onLongPressed(int index) {
+    if (widget.books[index].id == null) return;
+    if (widget.onBookSelected != null) {
+      widget.onBookSelected!(widget.books[index].id!);
+      return;
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     super.build(context);
     var multiSelectMode = widget.selectedBookIds?.isNotEmpty ?? false;
-    return GridView.builder(
-      gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-        crossAxisCount: 3,
-        childAspectRatio: 1 / 1.5,
-        mainAxisSpacing: 4,
-        crossAxisSpacing: 4,
-      ),
-      padding: const EdgeInsets.fromLTRB(8, 8, 8, 90),
-      itemCount: widget.books.length,
-      itemBuilder: (context, index) {
-        final heroTag = 'tag_${widget.listNumber}_${widget.books[index].id}';
-        Color color = multiSelectMode &&
-                widget.selectedBookIds!.contains(widget.books[index].id)
-            ? Theme.of(context).colorScheme.primaryContainer
-            : Colors.transparent;
 
-        return Container(
-            decoration: multiSelectMode
-                ? BoxDecoration(border: Border.all(color: color, width: 4))
-                : null,
-            child: BookGridCard(
-              book: widget.books[index],
-              heroTag: heroTag,
-              addBottomPadding: (widget.books.length == index + 1),
-              onPressed: () {
-                if (widget.books[index].id == null) return;
-                if (multiSelectMode && widget.onBookSelected != null) {
-                  widget.onBookSelected!(widget.books[index].id!);
-                  return;
-                }
-
-                context.read<CurrentBookCubit>().setBook(widget.books[index]);
-
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => BookScreen(
-                      id: widget.books[index].id!,
-                      heroTag: heroTag,
-                    ),
+    return CustomScrollView(
+      slivers: [
+        SliverToBoxAdapter(
+          child: Padding(
+            padding: const EdgeInsets.fromLTRB(10, 0, 10, 10),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.end,
+              crossAxisAlignment: CrossAxisAlignment.end,
+              children: [
+                Text('${widget.books.length} '),
+                Text(
+                  '(${widget.allBooksCount})',
+                  style: TextStyle(
+                    color: Theme.of(context)
+                        .colorScheme
+                        .onBackground
+                        .withOpacity(0.7),
+                    fontSize: 13,
                   ),
-                );
-              },
-              onLongPressed: () {
-                if (widget.books[index].id == null) return;
-                if (widget.onBookSelected != null) {
-                  widget.onBookSelected!(widget.books[index].id!);
-                  return;
-                }
-              },
-            ));
-      },
+                ),
+              ],
+            ),
+          ),
+        ),
+        SliverPadding(
+          padding: const EdgeInsets.fromLTRB(8, 8, 8, 90),
+          sliver: SliverGrid.builder(
+            gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+              crossAxisCount: 3,
+              childAspectRatio: 1 / 1.5,
+              mainAxisSpacing: 4,
+              crossAxisSpacing: 4,
+            ),
+            itemCount: widget.books.length,
+            itemBuilder: (context, index) {
+              final heroTag =
+                  'tag_${widget.listNumber}_${widget.books[index].id}';
+              Color color = multiSelectMode &&
+                      widget.selectedBookIds!.contains(widget.books[index].id)
+                  ? Theme.of(context).colorScheme.primaryContainer
+                  : Colors.transparent;
+
+              return Container(
+                  decoration: multiSelectMode
+                      ? BoxDecoration(
+                          border: Border.all(color: color, width: 4),
+                        )
+                      : null,
+                  child: BookGridCard(
+                    book: widget.books[index],
+                    heroTag: heroTag,
+                    addBottomPadding: (widget.books.length == index + 1),
+                    onPressed: () => _onPressed(
+                      index,
+                      multiSelectMode,
+                      heroTag,
+                    ),
+                    onLongPressed: () => onLongPressed(index),
+                  ));
+            },
+          ),
+        ),
+      ],
     );
   }
 
