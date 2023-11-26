@@ -118,16 +118,17 @@ class CSVExport {
         newRow.add(book.publicationYear != null
             ? book.publicationYear.toString()
             : '');
-        newRow.add(book.status == 0
-            ? 'finished'
-            : book.status == 1
-                ? 'in_progress'
-                : book.status == 2
-                    ? 'planned'
-                    : book.status == 4
-                        ? 'abandoned'
-                        : 'unknown');
-
+        newRow.add(
+          book.status == 0
+              ? 'finished'
+              : book.status == 1
+                  ? 'in_progress'
+                  : book.status == 2
+                      ? 'planned'
+                      : book.status == 3
+                          ? 'abandoned'
+                          : 'unknown',
+        );
         newRow.add(book.rating != null ? (book.rating! / 10).toString() : '');
         newRow.add(book.favourite.toString());
         newRow.add(book.hasCover.toString());
