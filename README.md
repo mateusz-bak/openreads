@@ -90,21 +90,22 @@ Column | Values
 title | Text
 subtitle | Text
 author | Text
-book_format | paperback, hardcover, ebook, audiobook
 description | Text
-pages | Number
-isbn | Text (ISBN 10 or ISBN 13)
-olid | Text (Open Library ID)
-publication_year | Number
 status | finished, in_progress, planned, abandoned, unknown
-rating | 0.0 - 5.0, empty
 favourite | true, false
-has_cover | true, false
 deleted | true, false
+rating | 0.0 - 5.0, empty
 start_date | Text (ISO 8601 String)
 finish_date | Text (ISO 8601 String)
-my_review | Text
+pages | Number
+publication_year | Number
+isbn | Text (ISBN 10 or ISBN 13)
+olid | Text (Open Library ID)
 tags | Text (tags separated with \|\|\|\|\|)
+my_review | Text
+notes | Text
+book_format | paperback, hardcover, ebook, audiobook
+reading_time | Number (milliseconds)
 
 
 #### Besides Openreads can Import CSV files from below apps:
