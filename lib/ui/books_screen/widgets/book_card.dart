@@ -157,7 +157,7 @@ class BookCard extends StatelessWidget {
     final coverFile = book.getCoverFile();
 
     return Padding(
-      padding: EdgeInsets.fromLTRB(10, 0, 10, addBottomPadding ? 90 : 0),
+      padding: EdgeInsets.fromLTRB(5, 0, 5, addBottomPadding ? 90 : 0),
       child: Card(
         color: cardColor,
         shadowColor: Colors.transparent,
