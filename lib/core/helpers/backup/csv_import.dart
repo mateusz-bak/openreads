@@ -139,7 +139,13 @@ class CSVImport {
   }
 
   static ReadingTime? _getReadingTime(int i, List<List<dynamic>> csv) {
-    final readingTimeString = csv[i][csv[0].indexOf('reading_time')].toString();
+    final index = csv[0].indexOf('reading_time');
+
+    if (index == -1) {
+      return null;
+    }
+
+    final readingTimeString = csv[i][index].toString();
     final readingTimeMilliseconds = int.tryParse(readingTimeString);
 
     if (readingTimeMilliseconds == null) {
@@ -150,12 +156,15 @@ class CSVImport {
   }
 
   static int? _getRating(int i, List<List<dynamic>> csv) {
-    final rating = double.parse(
-          csv[i][csv[0].indexOf('rating')].toString(),
-        ) *
-        10;
+    final rating = double.tryParse(
+      csv[i][csv[0].indexOf('rating')].toString(),
+    );
 
-    return rating != 0 ? rating.toInt() : null;
+    if (rating == null) {
+      return null;
+    } else {
+      return (rating * 10).toInt();
+    }
   }
 
   static int? _getPages(int i, List<List<dynamic>> csv) {
