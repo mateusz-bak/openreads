@@ -234,6 +234,7 @@
     "export_csv": "Export books as a CSV file",
     "export_csv_description_1": "Covers are not exported",
     "import_goodreads_csv": "Import Goodreads CSV",
+    "import_csv": "Import Openreads CSV",
     "choose_not_finished_shelf": "Choose a shelf with not finished books:",
     "import_successful": "Import successful",
     "ok": "OK",
