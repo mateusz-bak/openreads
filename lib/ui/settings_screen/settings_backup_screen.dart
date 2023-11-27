@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:openreads/core/helpers/backup/backup_helpers.dart';
+import 'package:openreads/core/helpers/backup/csv_import.dart';
 import 'package:openreads/logic/bloc/migration_v1_to_v2_bloc/migration_v1_to_v2_bloc.dart';
 import 'package:openreads/generated/locale_keys.g.dart';
 import 'package:openreads/logic/bloc/theme_bloc/theme_bloc.dart';
@@ -31,6 +32,7 @@ class _SettingsBackupScreenState extends State<SettingsBackupScreen> {
   bool _restoringLocal = false;
   bool _exportingCSV = false;
   bool _importingGoodreadsCSV = false;
+  bool _importingCSV = false;
 
   late DeviceInfoPlugin deviceInfo;
   late AndroidDeviceInfo androidInfo;
@@ -72,6 +74,19 @@ class _SettingsBackupScreenState extends State<SettingsBackupScreen> {
     }
 
     setState(() => _importingGoodreadsCSV = false);
+  }
+
+  _startImportingCSV(context) async {
+    setState(() => _importingCSV = true);
+
+    if (androidInfo.version.sdkInt < 30) {
+      await BackupGeneral.requestStoragePermission(context);
+      await CSVImport.importCSVLegacyStorage(context);
+    } else {
+      await CSVImport.importCSV(context);
+    }
+
+    setState(() => _importingCSV = false);
   }
 
   _startCreatingCloudBackup(context) async {
@@ -209,6 +224,7 @@ class _SettingsBackupScreenState extends State<SettingsBackupScreen> {
                           ),
                           tiles: <SettingsTile>[
                             _buildExportAsCSV(),
+                            _buildImportCSV(),
                             _buildImportGoodreadsCSV(),
                           ],
                         ),
@@ -435,6 +451,29 @@ class _SettingsBackupScreenState extends State<SettingsBackupScreen> {
             )
           : const Icon(FontAwesomeIcons.g),
       onPressed: _startImportingGoodreadsCSV,
+    );
+  }
+
+  SettingsTile _buildImportCSV() {
+    return SettingsTile(
+      title: Text(
+        LocaleKeys.import_csv.tr(),
+        style: const TextStyle(
+          fontSize: 16,
+        ),
+      ),
+      leading: (_importingCSV)
+          ? const SizedBox(
+              width: 24,
+              height: 24,
+              child: CircularProgressIndicator(),
+            )
+          : Image.asset(
+              'assets/icons/icon_cropped.png',
+              width: 24,
+              height: 24,
+            ),
+      onPressed: _startImportingCSV,
     );
   }
 }
