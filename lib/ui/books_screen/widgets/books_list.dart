@@ -70,7 +70,10 @@ class _BooksListState extends State<BooksList>
                     mainAxisAlignment: MainAxisAlignment.end,
                     crossAxisAlignment: CrossAxisAlignment.end,
                     children: [
-                      Text('${widget.books.length} '),
+                      Text(
+                        '${widget.books.length} ',
+                        style: const TextStyle(fontSize: 13),
+                      ),
                       Text(
                         '(${widget.allBooksCount})',
                         style: TextStyle(
@@ -78,7 +81,7 @@ class _BooksListState extends State<BooksList>
                               .colorScheme
                               .onBackground
                               .withOpacity(0.7),
-                          fontSize: 13,
+                          fontSize: 12,
                         ),
                       ),
                     ],
