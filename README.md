@@ -47,7 +47,6 @@ You can use custom tags and filter through them.
  <img src='doc/gplay/app-mockup/Google Pixel 4 XL Screenshot 3.png' width='19%'/>
  <img src='doc/gplay/app-mockup/Google Pixel 4 XL Screenshot 4.png' width='19%'/>
 </p>  
-
 <br/>
 
 ## Contributing
@@ -71,41 +70,19 @@ Go to [Weblate](https://hosted.weblate.org/engage/openreads/) and help with the 
 
 ### Report bugs or new ideas
 Submit an issue here: [Openreads issues](https://github.com/mateusz-bak/openreads-android/issues).
-
 <br/>
 
 ## Attributions
 
 ### Icons
 [Font Awesome](https://fontawesome.com/ "Font Awesome")
-
 <br/>
 
-## CSV format
+## CSV import/export
 
-Openreads supports importing and exporting books to/from a CSV file. See format of the CSV file:
-
-Column | Values
---- | ---
-title | Text
-subtitle | Text
-author | Text
-description | Text
-status | finished, in_progress, planned, abandoned, unknown
-favourite | true, false
-deleted | true, false
-rating | 0.0 - 5.0, empty
-start_date | Text (ISO 8601 String)
-finish_date | Text (ISO 8601 String)
-pages | Number
-publication_year | Number
-isbn | Text (ISBN 10 or ISBN 13)
-olid | Text (Open Library ID)
-tags | Text (tags separated with \|\|\|\|\|)
-my_review | Text
-notes | Text
-book_format | paperback, hardcover, ebook, audiobook
-reading_time | Number (milliseconds)
+Openreads supports importing and exporting books to/from a CSV file.   
+See format of the CSV file: 
+[Openreads CSV format](doc/csv.md)
 
 
 #### Besides Openreads can Import CSV files from below apps:
