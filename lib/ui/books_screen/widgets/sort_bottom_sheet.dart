@@ -10,9 +10,7 @@ import 'package:openreads/main.dart';
 import 'package:openreads/ui/books_screen/widgets/widgets.dart';
 
 class SortBottomSheet extends StatefulWidget {
-  const SortBottomSheet({
-    Key? key,
-  }) : super(key: key);
+  const SortBottomSheet({super.key});
 
   @override
   State<SortBottomSheet> createState() => _SortBottomSheetState();
@@ -25,6 +23,7 @@ final List<String> sortOptions = [
   LocaleKeys.pages_uppercase.tr(),
   LocaleKeys.start_date.tr(),
   LocaleKeys.finish_date.tr(),
+  LocaleKeys.enter_publication_year.tr(),
 ];
 
 final List<String> bookTypeOptions = [
@@ -46,6 +45,8 @@ String _getSortDropdownValue(SetSortState state) {
     return sortOptions[4];
   } else if (state.sortType == SortType.byFinishDate) {
     return sortOptions[5];
+  } else if (state.sortType == SortType.byPublicationYear) {
+    return sortOptions[6];
   } else {
     return sortOptions[0];
   }
@@ -102,6 +103,8 @@ void _updateSort(BuildContext context, String? value, SetSortState state) {
     sortType = SortType.byStartDate;
   } else if (value == sortOptions[5]) {
     sortType = SortType.byFinishDate;
+  } else if (value == sortOptions[6]) {
+    sortType = SortType.byPublicationYear;
   } else {
     sortType = SortType.byTitle;
   }

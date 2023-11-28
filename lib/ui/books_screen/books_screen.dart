@@ -22,7 +22,7 @@ import 'package:diacritic/diacritic.dart';
 import 'helper/multi_select_helper.dart';
 
 class BooksScreen extends StatefulWidget {
-  const BooksScreen({Key? key}) : super(key: key);
+  const BooksScreen({super.key});
 
   @override
   State<BooksScreen> createState() => _BooksScreenState();
@@ -82,6 +82,9 @@ class _BooksScreenState extends State<BooksScreen>
         break;
       case SortType.byFinishDate:
         list = _sortByFinishDate(list: list, isAsc: state.isAsc);
+        break;
+      case SortType.byPublicationYear:
+        list = _sortByPublicationYear(list: list, isAsc: state.isAsc);
         break;
       default:
         list = _sortByTitle(list: list, isAsc: state.isAsc);
@@ -499,6 +502,40 @@ class _BooksScreenState extends State<BooksScreen>
     });
 
     return booksWithFinishDate + booksWithoutFinishDate;
+  }
+
+  List<Book> _sortByPublicationYear({
+    required List<Book> list,
+    required bool isAsc,
+  }) {
+    List<Book> booksWithoutPublicationDate = List.empty(growable: true);
+    List<Book> booksWithPublicationDate = List.empty(growable: true);
+
+    for (Book book in list) {
+      (book.publicationYear != null)
+          ? booksWithPublicationDate.add(book)
+          : booksWithoutPublicationDate.add(book);
+    }
+
+    booksWithPublicationDate.sort((a, b) {
+      int publicationYearSorting =
+          a.publicationYear!.compareTo(b.publicationYear!);
+      if (!isAsc) {
+        publicationYearSorting *= -1;
+      }
+
+      if (publicationYearSorting == 0) {
+        int titleSorting = removeDiacritics(a.title.toString().toLowerCase())
+            .compareTo(removeDiacritics(b.title.toString().toLowerCase()));
+        if (!isAsc) {
+          titleSorting *= -1;
+        }
+        return titleSorting;
+      }
+      return publicationYearSorting;
+    });
+
+    return booksWithPublicationDate + booksWithoutPublicationDate;
   }
 
   openSortFilterSheet() {
