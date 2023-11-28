@@ -12,14 +12,14 @@ import 'package:openreads/model/book.dart';
 
 class BookCard extends StatelessWidget {
   const BookCard({
-    Key? key,
+    super.key,
     required this.book,
     required this.onPressed,
     required this.heroTag,
     required this.addBottomPadding,
     this.onLongPressed,
     this.cardColor,
-  }) : super(key: key);
+  });
 
   final Book book;
   final String heroTag;
@@ -70,6 +70,25 @@ class BookCard extends StatelessWidget {
                       ),
                       Text(
                         dateFormat.format(book.finishDate!),
+                        style: const TextStyle(
+                          fontSize: 13,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                    ],
+                  )
+                : const SizedBox();
+          } else if (state.sortType == SortType.byPublicationYear) {
+            return (book.publicationYear != null)
+                ? Column(
+                    crossAxisAlignment: CrossAxisAlignment.end,
+                    children: [
+                      Text(
+                        LocaleKeys.enter_publication_year.tr(),
+                        style: const TextStyle(fontSize: 12),
+                      ),
+                      Text(
+                        book.publicationYear.toString(),
                         style: const TextStyle(
                           fontSize: 13,
                           fontWeight: FontWeight.bold,

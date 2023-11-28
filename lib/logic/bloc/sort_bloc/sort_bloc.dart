@@ -63,6 +63,9 @@ class SortBloc extends HydratedBloc<SortEvent, SortState> {
       case 5:
         sortType = SortType.byFinishDate;
         break;
+      case 6:
+        sortType = SortType.byPublicationYear;
+        break;
       default:
         sortType = SortType.byTitle;
     }
@@ -109,6 +112,9 @@ class SortBloc extends HydratedBloc<SortEvent, SortState> {
           break;
         case SortType.byFinishDate:
           sortTypeInt = 5;
+          break;
+        case SortType.byPublicationYear:
+          sortTypeInt = 6;
           break;
         default:
           sortTypeInt = 0;

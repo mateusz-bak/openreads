@@ -5,6 +5,7 @@ enum SortType {
   byPages,
   byStartDate,
   byFinishDate,
+  byPublicationYear,
 }
 
 enum RatingType {
