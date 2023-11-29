@@ -24,8 +24,11 @@ class Repository {
 
   Future updateBook(Book book) => dbController.updateBook(book);
 
-  Future updateBookFormat(Set<int> ids, BookFormat bookFormat) =>
-      dbController.updateBookFormat(ids, bookFormat);
+  Future bulkUpdateBookFormat(Set<int> ids, BookFormat bookFormat) =>
+      dbController.bulkUpdateBookFormat(ids, bookFormat);
+
+  Future bulkUpdateBookAuthor(Set<int> ids, String author) =>
+      dbController.bulkUpdateBookAuthor(ids, author);
 
   Future deleteBook(int index) => dbController.deleteBook(index);
 
