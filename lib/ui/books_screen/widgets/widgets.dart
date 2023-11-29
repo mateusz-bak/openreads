@@ -10,3 +10,4 @@ export 'books_grid.dart';
 export 'book_grid_card.dart';
 export 'grid_card_cover.dart';
 export 'grid_card_no_cover.dart';
+export 'multi_select_fab.dart';

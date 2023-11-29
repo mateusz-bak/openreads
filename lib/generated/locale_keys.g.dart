@@ -232,7 +232,10 @@ abstract class LocaleKeys {
   static const dark_mode_amoled = 'dark_mode_amoled';
   static const selected = 'selected';
   static const change_book_format = 'change_book_format';
+  static const change_books_author = 'change_books_author';
   static const update_successful_message = 'update_successful_message';
+  static const bulk_update_unsuccessful_message =
+      'bulk_update_unsuccessful_message';
   static const export_successful = 'export_successful';
   static const openreads_backup = 'openreads_backup';
   static const csv = 'csv';

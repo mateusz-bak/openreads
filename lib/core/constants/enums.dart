@@ -36,3 +36,8 @@ enum BookFormat {
   ebook,
   audiobook,
 }
+
+enum BulkEditOption {
+  format,
+  author,
+}

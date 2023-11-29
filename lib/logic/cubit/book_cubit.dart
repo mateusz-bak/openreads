@@ -158,8 +158,14 @@ class BookCubit extends Cubit {
     getAllBooks();
   }
 
-  updateBookFormat(Set<int> ids, BookFormat bookFormat) async {
-    repository.updateBookFormat(ids, bookFormat);
+  bulkUpdateBookFormat(Set<int> ids, BookFormat bookFormat) async {
+    repository.bulkUpdateBookFormat(ids, bookFormat);
+    getAllBooksByStatus();
+    getAllBooks();
+  }
+
+  bulkUpdateBookAuthor(Set<int> ids, String author) async {
+    repository.bulkUpdateBookAuthor(ids, author);
     getAllBooksByStatus();
     getAllBooks();
   }

@@ -141,7 +141,7 @@ class DatabaseController {
     return await db.delete("booksTable");
   }
 
-  Future<List<Object?>> updateBookFormat(
+  Future<List<Object?>> bulkUpdateBookFormat(
     Set<int> ids,
     BookFormat bookFormat,
   ) async {
@@ -160,6 +160,20 @@ class DatabaseController {
 
     for (int id in ids) {
       batch.update("booksTable", {"book_type": bookFormatString},
+          where: "id = ?", whereArgs: [id]);
+    }
+    return await batch.commit();
+  }
+
+  Future<List<Object?>> bulkUpdateBookAuthor(
+    Set<int> ids,
+    String author,
+  ) async {
+    final db = await dbClient.db;
+    var batch = db.batch();
+
+    for (int id in ids) {
+      batch.update("booksTable", {"author": author},
           where: "id = ?", whereArgs: [id]);
     }
     return await batch.commit();

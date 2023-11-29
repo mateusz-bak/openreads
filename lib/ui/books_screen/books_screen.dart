@@ -1,7 +1,6 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_speed_dial/flutter_speed_dial.dart';
 import 'package:openreads/core/constants/enums.dart';
 import 'package:openreads/core/themes/app_theme.dart';
 import 'package:openreads/generated/locale_keys.g.dart';
@@ -18,8 +17,6 @@ import 'package:openreads/ui/search_page/search_page.dart';
 import 'package:openreads/ui/settings_screen/settings_screen.dart';
 import 'package:openreads/ui/statistics_screen/statistics_screen.dart';
 import 'package:diacritic/diacritic.dart';
-
-import 'helper/multi_select_helper.dart';
 
 class BooksScreen extends StatefulWidget {
   const BooksScreen({super.key});
@@ -593,6 +590,7 @@ class _BooksScreenState extends State<BooksScreen>
 
           return WillPopScope(
             child: Scaffold(
+              resizeToAvoidBottomInset: true,
               appBar: selectedBookIds.isNotEmpty
                   ? _buildMultiSelectAppBar(context)
                   : _buildAppBar(context),
@@ -640,29 +638,11 @@ class _BooksScreenState extends State<BooksScreen>
     });
   }
 
-  Padding? _buildMultiSelectFAB(SetThemeState state) {
+  Widget? _buildMultiSelectFAB(SetThemeState state) {
     return selectedBookIds.isNotEmpty
-        ? Padding(
-            padding: const EdgeInsets.only(bottom: 50),
-            child: SpeedDial(
-              spacing: 3,
-              dialRoot: (ctx, open, toggleChildren) {
-                return FloatingActionButton(
-                    onPressed: toggleChildren, child: const Icon(Icons.create));
-              },
-              childPadding: const EdgeInsets.all(5),
-              spaceBetweenChildren: 4,
-              children: [
-                SpeedDialChild(
-                    child: const Icon(Icons.menu_book_outlined),
-                    backgroundColor:
-                        Theme.of(context).colorScheme.secondaryContainer,
-                    label: LocaleKeys.change_book_format.tr(),
-                    onTap: () {
-                      showEditBookTypeBottomSheet(context, selectedBookIds);
-                    }),
-              ],
-            ))
+        ? MultiSelectFAB(
+            selectedBookIds: selectedBookIds,
+          )
         : null;
   }
 
