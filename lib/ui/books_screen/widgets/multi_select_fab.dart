@@ -46,27 +46,29 @@ class MultiSelectFAB extends StatelessWidget {
         isScrollControlled: true,
         context: context,
         builder: (context) {
-          return AnimatedPadding(
-            duration: const Duration(milliseconds: 150),
-            curve: Curves.easeOut,
-            padding: EdgeInsets.only(
-                bottom: MediaQuery.of(context).viewInsets.bottom),
-            child: Padding(
-              padding: const EdgeInsets.fromLTRB(10, 0, 10, 50),
-              child: Column(
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  const SizedBox(height: 10),
-                  _buildTopLine(context),
-                  const SizedBox(height: 20),
-                  _buildHeader(bulkEditOption),
-                  const SizedBox(height: 20),
-                  bulkEditOption == BulkEditOption.format
-                      ? _buildEditFormat(selectedBookIds, context)
-                      : bulkEditOption == BulkEditOption.author
-                          ? _buildEditAuthor(selectedBookIds, context)
-                          : const SizedBox(),
-                ],
+          return SafeArea(
+            child: AnimatedPadding(
+              duration: const Duration(milliseconds: 150),
+              curve: Curves.easeOut,
+              padding: EdgeInsets.only(
+                  bottom: MediaQuery.of(context).viewInsets.bottom),
+              child: Padding(
+                padding: const EdgeInsets.fromLTRB(10, 0, 10, 50),
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    const SizedBox(height: 10),
+                    _buildTopLine(context),
+                    const SizedBox(height: 20),
+                    _buildHeader(bulkEditOption),
+                    const SizedBox(height: 20),
+                    bulkEditOption == BulkEditOption.format
+                        ? _buildEditFormat(selectedBookIds, context)
+                        : bulkEditOption == BulkEditOption.author
+                            ? _buildEditAuthor(selectedBookIds, context)
+                            : const SizedBox(),
+                  ],
+                ),
               ),
             ),
           );
