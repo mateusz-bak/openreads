@@ -389,211 +389,214 @@ class _AddBookScreenState extends State<AddBookScreen> {
           )
         ],
       ),
-      body: SingleChildScrollView(
-        child: Column(
-          children: <Widget>[
-            _buildCover(),
-            const Padding(
-              padding: EdgeInsets.all(10),
-              child: Divider(),
-            ),
-            BookTextField(
-              controller: _titleCtrl,
-              hint: LocaleKeys.enter_title.tr(),
-              icon: Icons.book,
-              keyboardType: TextInputType.name,
-              autofocus: (widget.fromOpenLibrary || widget.editingExistingBook)
-                  ? false
-                  : true,
-              maxLines: 5,
-              maxLength: 255,
-              textCapitalization: TextCapitalization.sentences,
-            ),
-            const SizedBox(height: 10),
-            BookTextField(
-              controller: _subtitleCtrl,
-              hint: LocaleKeys.enter_subtitle.tr(),
-              icon: Icons.book,
-              keyboardType: TextInputType.name,
-              maxLines: 5,
-              maxLength: 255,
-              textCapitalization: TextCapitalization.sentences,
-            ),
-            const SizedBox(height: 10),
-            BookTextField(
-              controller: _authorCtrl,
-              hint: LocaleKeys.enter_author.tr(),
-              icon: Icons.person,
-              keyboardType: TextInputType.name,
-              maxLines: 5,
-              maxLength: 255,
-              textCapitalization: TextCapitalization.words,
-            ),
-            const Padding(
-              padding: EdgeInsets.all(10),
-              child: Divider(),
-            ),
-            BookTypeDropdown(
-              bookTypes: bookTypes,
-              changeBookType: _changeBookType,
-            ),
-            const SizedBox(height: 10),
-            BookStatusRow(
-              animDuration: _animDuration,
-              defaultHeight: defaultFormHeight,
-            ),
-            const SizedBox(height: 10),
-            BookRatingBar(animDuration: _animDuration),
-            DateRow(
-              animDuration: _animDuration,
-              defaultHeight: defaultFormHeight,
-              showStartDatePicker: _showStartDatePicker,
-              showFinishDatePicker: _showFinishDatePicker,
-              clearStartDate: _clearStartDate,
-              clearFinishDate: _clearFinishDate,
-            ),
-            const BookReadingTimeField(defaultHeight: defaultFormHeight),
-            const Padding(
-              padding: EdgeInsets.all(10),
-              child: Divider(),
-            ),
-            Row(
-              children: [
-                Expanded(
-                  child: BookTextField(
-                    controller: _pagesCtrl,
-                    hint: LocaleKeys.enter_pages.tr(),
-                    icon: FontAwesomeIcons.solidFileLines,
-                    keyboardType: TextInputType.number,
-                    inputFormatters: <TextInputFormatter>[
-                      FilteringTextInputFormatter.digitsOnly
-                    ],
-                    maxLength: 10,
-                    padding: const EdgeInsets.fromLTRB(10, 0, 5, 0),
-                  ),
-                ),
-                Expanded(
-                  child: BookTextField(
-                    controller: _pubYearCtrl,
-                    hint: LocaleKeys.enter_publication_year.tr(),
-                    icon: FontAwesomeIcons.solidCalendar,
-                    keyboardType: TextInputType.number,
-                    inputFormatters: <TextInputFormatter>[
-                      FilteringTextInputFormatter.digitsOnly
-                    ],
-                    maxLength: 4,
-                    padding: const EdgeInsets.fromLTRB(5, 0, 10, 0),
-                  ),
-                ),
-              ],
-            ),
-            const SizedBox(height: 10),
-            BookTextField(
-              controller: _descriptionCtrl,
-              hint: LocaleKeys.enter_description.tr(),
-              icon: FontAwesomeIcons.solidKeyboard,
-              keyboardType: TextInputType.multiline,
-              maxLength: 5000,
-              hideCounter: false,
-              maxLines: 15,
-              textCapitalization: TextCapitalization.sentences,
-            ),
-            const SizedBox(height: 10),
-            BookTextField(
-              controller: _isbnCtrl,
-              hint: LocaleKeys.isbn.tr(),
-              icon: FontAwesomeIcons.i,
-              keyboardType: TextInputType.number,
-              inputFormatters: <TextInputFormatter>[
-                FilteringTextInputFormatter.digitsOnly
-              ],
-              maxLength: 20,
-            ),
-            const SizedBox(height: 10),
-            BookTextField(
-              controller: _olidCtrl,
-              hint: LocaleKeys.open_library_ID.tr(),
-              icon: FontAwesomeIcons.o,
-              keyboardType: TextInputType.text,
-              maxLength: 20,
-              textCapitalization: TextCapitalization.characters,
-            ),
-            const SizedBox(height: 10),
-            StreamBuilder<List<String>>(
-              stream: bookCubit.tags,
-              builder: (context, AsyncSnapshot<List<String>?> snapshot) {
-                return TagsField(
-                  controller: _tagsCtrl,
-                  hint: LocaleKeys.enter_tags.tr(),
-                  icon: FontAwesomeIcons.tags,
-                  keyboardType: TextInputType.text,
-                  maxLength: 20,
-                  onSubmitted: (_) => _addNewTag(),
-                  onEditingComplete: () {},
-                  unselectTag: (tag) => _unselectTag(tag),
-                  allTags: snapshot.data,
-                );
-              },
-            ),
-            const Padding(
-              padding: EdgeInsets.all(10),
-              child: Divider(),
-            ),
-            BookTextField(
-              controller: _myReviewCtrl,
-              hint: LocaleKeys.my_review.tr(),
-              icon: FontAwesomeIcons.solidKeyboard,
-              keyboardType: TextInputType.multiline,
-              maxLength: 5000,
-              hideCounter: false,
-              maxLines: 15,
-              textCapitalization: TextCapitalization.sentences,
-            ),
-            const SizedBox(height: 10),
-            BookTextField(
-              controller: _notesCtrl,
-              hint: LocaleKeys.notes.tr(),
-              icon: FontAwesomeIcons.noteSticky,
-              keyboardType: TextInputType.multiline,
-              maxLength: 5000,
-              hideCounter: false,
-              maxLines: 15,
-              textCapitalization: TextCapitalization.sentences,
-            ),
-            const SizedBox(height: 30),
-            Row(
-              children: [
-                const SizedBox(width: 10),
-                Expanded(
-                  flex: 10,
-                  child: FilledButton.tonal(
-                    onPressed: () => Navigator.pop(context),
-                    child: const Center(
-                      child: Text("Cancel"),
+      body: SafeArea(
+        child: SingleChildScrollView(
+          child: Column(
+            children: <Widget>[
+              _buildCover(),
+              const Padding(
+                padding: EdgeInsets.all(10),
+                child: Divider(),
+              ),
+              BookTextField(
+                controller: _titleCtrl,
+                hint: LocaleKeys.enter_title.tr(),
+                icon: Icons.book,
+                keyboardType: TextInputType.name,
+                autofocus:
+                    (widget.fromOpenLibrary || widget.editingExistingBook)
+                        ? false
+                        : true,
+                maxLines: 5,
+                maxLength: 255,
+                textCapitalization: TextCapitalization.sentences,
+              ),
+              const SizedBox(height: 10),
+              BookTextField(
+                controller: _subtitleCtrl,
+                hint: LocaleKeys.enter_subtitle.tr(),
+                icon: Icons.book,
+                keyboardType: TextInputType.name,
+                maxLines: 5,
+                maxLength: 255,
+                textCapitalization: TextCapitalization.sentences,
+              ),
+              const SizedBox(height: 10),
+              BookTextField(
+                controller: _authorCtrl,
+                hint: LocaleKeys.enter_author.tr(),
+                icon: Icons.person,
+                keyboardType: TextInputType.name,
+                maxLines: 5,
+                maxLength: 255,
+                textCapitalization: TextCapitalization.words,
+              ),
+              const Padding(
+                padding: EdgeInsets.all(10),
+                child: Divider(),
+              ),
+              BookTypeDropdown(
+                bookTypes: bookTypes,
+                changeBookType: _changeBookType,
+              ),
+              const SizedBox(height: 10),
+              BookStatusRow(
+                animDuration: _animDuration,
+                defaultHeight: defaultFormHeight,
+              ),
+              const SizedBox(height: 10),
+              BookRatingBar(animDuration: _animDuration),
+              DateRow(
+                animDuration: _animDuration,
+                defaultHeight: defaultFormHeight,
+                showStartDatePicker: _showStartDatePicker,
+                showFinishDatePicker: _showFinishDatePicker,
+                clearStartDate: _clearStartDate,
+                clearFinishDate: _clearFinishDate,
+              ),
+              const BookReadingTimeField(defaultHeight: defaultFormHeight),
+              const Padding(
+                padding: EdgeInsets.all(10),
+                child: Divider(),
+              ),
+              Row(
+                children: [
+                  Expanded(
+                    child: BookTextField(
+                      controller: _pagesCtrl,
+                      hint: LocaleKeys.enter_pages.tr(),
+                      icon: FontAwesomeIcons.solidFileLines,
+                      keyboardType: TextInputType.number,
+                      inputFormatters: <TextInputFormatter>[
+                        FilteringTextInputFormatter.digitsOnly
+                      ],
+                      maxLength: 10,
+                      padding: const EdgeInsets.fromLTRB(10, 0, 5, 0),
                     ),
                   ),
-                ),
-                const SizedBox(width: 10),
-                Expanded(
-                  flex: 19,
-                  child: BlocBuilder<EditBookCubit, Book>(
-                    builder: (context, state) {
-                      return FilledButton(
-                        onPressed: (state.id != null)
-                            ? () => _updateBook(state)
-                            : () => _saveBook(state),
-                        child: const Center(
-                          child: Text("Save"),
-                        ),
-                      );
-                    },
+                  Expanded(
+                    child: BookTextField(
+                      controller: _pubYearCtrl,
+                      hint: LocaleKeys.enter_publication_year.tr(),
+                      icon: FontAwesomeIcons.solidCalendar,
+                      keyboardType: TextInputType.number,
+                      inputFormatters: <TextInputFormatter>[
+                        FilteringTextInputFormatter.digitsOnly
+                      ],
+                      maxLength: 4,
+                      padding: const EdgeInsets.fromLTRB(5, 0, 10, 0),
+                    ),
                   ),
-                ),
-                const SizedBox(width: 10),
-              ],
-            ),
-            const SizedBox(height: 50.0),
-          ],
+                ],
+              ),
+              const SizedBox(height: 10),
+              BookTextField(
+                controller: _descriptionCtrl,
+                hint: LocaleKeys.enter_description.tr(),
+                icon: FontAwesomeIcons.solidKeyboard,
+                keyboardType: TextInputType.multiline,
+                maxLength: 5000,
+                hideCounter: false,
+                maxLines: 15,
+                textCapitalization: TextCapitalization.sentences,
+              ),
+              const SizedBox(height: 10),
+              BookTextField(
+                controller: _isbnCtrl,
+                hint: LocaleKeys.isbn.tr(),
+                icon: FontAwesomeIcons.i,
+                keyboardType: TextInputType.number,
+                inputFormatters: <TextInputFormatter>[
+                  FilteringTextInputFormatter.digitsOnly
+                ],
+                maxLength: 20,
+              ),
+              const SizedBox(height: 10),
+              BookTextField(
+                controller: _olidCtrl,
+                hint: LocaleKeys.open_library_ID.tr(),
+                icon: FontAwesomeIcons.o,
+                keyboardType: TextInputType.text,
+                maxLength: 20,
+                textCapitalization: TextCapitalization.characters,
+              ),
+              const SizedBox(height: 10),
+              StreamBuilder<List<String>>(
+                stream: bookCubit.tags,
+                builder: (context, AsyncSnapshot<List<String>?> snapshot) {
+                  return TagsField(
+                    controller: _tagsCtrl,
+                    hint: LocaleKeys.enter_tags.tr(),
+                    icon: FontAwesomeIcons.tags,
+                    keyboardType: TextInputType.text,
+                    maxLength: 20,
+                    onSubmitted: (_) => _addNewTag(),
+                    onEditingComplete: () {},
+                    unselectTag: (tag) => _unselectTag(tag),
+                    allTags: snapshot.data,
+                  );
+                },
+              ),
+              const Padding(
+                padding: EdgeInsets.all(10),
+                child: Divider(),
+              ),
+              BookTextField(
+                controller: _myReviewCtrl,
+                hint: LocaleKeys.my_review.tr(),
+                icon: FontAwesomeIcons.solidKeyboard,
+                keyboardType: TextInputType.multiline,
+                maxLength: 5000,
+                hideCounter: false,
+                maxLines: 15,
+                textCapitalization: TextCapitalization.sentences,
+              ),
+              const SizedBox(height: 10),
+              BookTextField(
+                controller: _notesCtrl,
+                hint: LocaleKeys.notes.tr(),
+                icon: FontAwesomeIcons.noteSticky,
+                keyboardType: TextInputType.multiline,
+                maxLength: 5000,
+                hideCounter: false,
+                maxLines: 15,
+                textCapitalization: TextCapitalization.sentences,
+              ),
+              const SizedBox(height: 30),
+              Row(
+                children: [
+                  const SizedBox(width: 10),
+                  Expanded(
+                    flex: 10,
+                    child: FilledButton.tonal(
+                      onPressed: () => Navigator.pop(context),
+                      child: const Center(
+                        child: Text("Cancel"),
+                      ),
+                    ),
+                  ),
+                  const SizedBox(width: 10),
+                  Expanded(
+                    flex: 19,
+                    child: BlocBuilder<EditBookCubit, Book>(
+                      builder: (context, state) {
+                        return FilledButton(
+                          onPressed: (state.id != null)
+                              ? () => _updateBook(state)
+                              : () => _saveBook(state),
+                          child: const Center(
+                            child: Text("Save"),
+                          ),
+                        );
+                      },
+                    ),
+                  ),
+                  const SizedBox(width: 10),
+                ],
+              ),
+              const SizedBox(height: 50.0),
+            ],
+          ),
         ),
       ),
     );
