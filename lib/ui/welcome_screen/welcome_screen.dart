@@ -204,6 +204,7 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
                   return const SizedBox();
                 },
               ),
+              SizedBox(height: MediaQuery.of(context).padding.bottom),
             ],
           );
         } else {
