@@ -178,4 +178,31 @@ class DatabaseController {
     }
     return await batch.commit();
   }
+
+  Future<List<Book>> getBooksWithTag(String tag) async {
+    final db = await dbClient.db;
+
+    var result = await db.query(
+      "booksTable",
+      where: 'tags IS NOT NULL AND deleted = 0',
+      orderBy: 'publication_year ASC',
+    );
+
+    final booksWithTag = List<Book>.empty(growable: true);
+
+    if (result.isNotEmpty) {
+      final books = result.map((item) => Book.fromJSON(item)).toList();
+      for (final book in books) {
+        if (book.tags != null && book.tags!.isNotEmpty) {
+          for (final bookTag in book.tags!.split('|||||')) {
+            if (bookTag == tag) {
+              booksWithTag.add(book);
+            }
+          }
+        }
+      }
+    }
+
+    return booksWithTag;
+  }
 }
