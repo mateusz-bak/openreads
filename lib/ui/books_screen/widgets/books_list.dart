@@ -12,7 +12,7 @@ class BooksList extends StatefulWidget {
     required this.listNumber,
     this.selectedBookIds,
     this.onBookSelected,
-    required this.allBooksCount,
+    this.allBooksCount,
   });
 
   final List<Book> books;
