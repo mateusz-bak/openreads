@@ -11,14 +11,14 @@ class BooksGrid extends StatefulWidget {
     required this.books,
     required this.listNumber,
     this.selectedBookIds,
-    this.onBookSelected,
+    this.onBookSelectedForMultiSelect,
     required this.allBooksCount,
   });
 
   final List<Book> books;
   final int listNumber;
   final Set<int>? selectedBookIds;
-  final Function(int id)? onBookSelected;
+  final Function(int id)? onBookSelectedForMultiSelect;
   final int allBooksCount;
 
   @override
@@ -29,8 +29,8 @@ class _BooksGridState extends State<BooksGrid>
     with AutomaticKeepAliveClientMixin {
   _onPressed(int index, bool multiSelectMode, String heroTag) {
     if (widget.books[index].id == null) return;
-    if (multiSelectMode && widget.onBookSelected != null) {
-      widget.onBookSelected!(widget.books[index].id!);
+    if (multiSelectMode && widget.onBookSelectedForMultiSelect != null) {
+      widget.onBookSelectedForMultiSelect!(widget.books[index].id!);
       return;
     }
 
@@ -49,8 +49,8 @@ class _BooksGridState extends State<BooksGrid>
 
   onLongPressed(int index) {
     if (widget.books[index].id == null) return;
-    if (widget.onBookSelected != null) {
-      widget.onBookSelected!(widget.books[index].id!);
+    if (widget.onBookSelectedForMultiSelect != null) {
+      widget.onBookSelectedForMultiSelect!(widget.books[index].id!);
       return;
     }
   }

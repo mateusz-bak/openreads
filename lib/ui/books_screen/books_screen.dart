@@ -878,7 +878,7 @@ class _BooksScreenState extends State<BooksScreen>
                         ),
                         listNumber: 2,
                         selectedBookIds: selectedBookIds,
-                        onBookSelected: _onItemSelected,
+                        onBookSelectedForMultiSelect: _onItemSelected,
                         allBooksCount: snapshot.data!.length,
                       );
                     } else {
@@ -945,7 +945,7 @@ class _BooksScreenState extends State<BooksScreen>
                         ),
                         listNumber: 1,
                         selectedBookIds: selectedBookIds,
-                        onBookSelected: _onItemSelected,
+                        onBookSelectedForMultiSelect: _onItemSelected,
                         allBooksCount: snapshot.data!.length,
                       );
                     } else {
@@ -1012,7 +1012,7 @@ class _BooksScreenState extends State<BooksScreen>
                         ),
                         listNumber: 0,
                         selectedBookIds: selectedBookIds,
-                        onBookSelected: _onItemSelected,
+                        onBookSelectedForMultiSelect: _onItemSelected,
                         allBooksCount: snapshot.data!.length,
                       );
                     } else {
