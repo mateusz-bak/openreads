@@ -256,5 +256,6 @@
         "title": "Minutes"
     },
     "set_custom_reading_time": "Set custom reading time",
-    "select_all": "Select all"
+    "select_all": "Select all",
+    "books_with_tag": "Books with tag"
 }

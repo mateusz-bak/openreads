@@ -34,6 +34,8 @@ class BookCubit extends Cubit {
   final BehaviorSubject<List<String>> _tagsFetcher =
       BehaviorSubject<List<String>>();
   final BehaviorSubject<Book?> _bookFetcher = BehaviorSubject<Book?>();
+  final BehaviorSubject<List<Book>?> _booksWithTagFetcher =
+      BehaviorSubject<List<Book>?>();
 
   Stream<List<Book>> get allBooks => _booksFetcher.stream;
   Stream<List<Book>> get finishedBooks => _finishedBooksFetcher.stream;
@@ -44,6 +46,7 @@ class BookCubit extends Cubit {
   Stream<List<Book>> get searchBooks => _searchBooksFetcher.stream;
   Stream<List<int>> get finishedYears => _finishedYearsFetcher.stream;
   Stream<List<String>> get tags => _tagsFetcher.stream;
+  Stream<List<Book>?> get booksWithTag => _booksWithTagFetcher.stream;
 
   Stream<Book?> get book => _bookFetcher.stream;
 
@@ -243,5 +246,13 @@ class BookCubit extends Cubit {
   Future<void> _saveCoverMigrationStatus() async {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
     prefs.setBool('is_cover_migration_done', true);
+  }
+
+  getBooksWithTag(String tag) async {
+    _booksWithTagFetcher.sink.add(null);
+
+    List<Book> books = await repository.getBooksWithTag(tag);
+
+    _booksWithTagFetcher.sink.add(books);
   }
 }

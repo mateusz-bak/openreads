@@ -4,17 +4,18 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:openreads/core/constants/enums.dart';
 import 'package:openreads/core/themes/app_theme.dart';
 import 'package:openreads/generated/locale_keys.g.dart';
+import 'package:openreads/ui/similiar_books_screen/similiar_books_screen.dart';
 
 class BookTitleDetail extends StatelessWidget {
   const BookTitleDetail({
-    Key? key,
+    super.key,
     required this.title,
     required this.subtitle,
     required this.author,
     required this.publicationYear,
     required this.bookType,
     this.tags,
-  }) : super(key: key);
+  });
 
   final String title;
   final String? subtitle;
@@ -41,7 +42,16 @@ class BookTitleDetail extends StatelessWidget {
             color: Theme.of(context).colorScheme.onSecondary,
           ),
         ),
-        onSelected: (_) {},
+        onSelected: (_) {
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) => SimiliarBooksScreen(
+                tag: tag,
+              ),
+            ),
+          );
+        },
       ),
     );
   }
