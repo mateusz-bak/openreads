@@ -104,6 +104,7 @@ class Statistics extends StatelessWidget {
                 _buildShortestBook(context, state, null),
                 _buildFastestRead(context, state, null),
                 _buildSlowestRead(context, state, null),
+                const SizedBox(height: 100)
               ],
             ),
           ),
