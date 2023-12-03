@@ -38,6 +38,9 @@ class Repository {
 
   Future<int> removeAllBooks() => dbController.removeAllBooks();
 
-  Future<List<Book>> getBooksWithTag(String tag) =>
-      dbController.getBooksWithTag(tag);
+  Future<List<Book>> getBooksWithSameTag(String tag) =>
+      dbController.getBooksWithSameTag(tag);
+
+  Future<List<Book>> getBooksWithSameAuthor(String author) =>
+      dbController.getBooksWithSameAuthor(author);
 }

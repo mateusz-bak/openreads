@@ -255,5 +255,5 @@ abstract class LocaleKeys {
   static const set_custom_reading_time = 'set_custom_reading_time';
   static const select_all = 'select_all';
   static const only_editions_with_covers = 'only_editions_with_covers';
-  static const books_with_tag = 'books_with_tag';
+  static const tags = 'tags';
 }

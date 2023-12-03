@@ -179,7 +179,7 @@ class DatabaseController {
     return await batch.commit();
   }
 
-  Future<List<Book>> getBooksWithTag(String tag) async {
+  Future<List<Book>> getBooksWithSameTag(String tag) async {
     final db = await dbClient.db;
 
     var result = await db.query(
@@ -204,5 +204,20 @@ class DatabaseController {
     }
 
     return booksWithTag;
+  }
+
+  Future<List<Book>> getBooksWithSameAuthor(String author) async {
+    final db = await dbClient.db;
+
+    var result = await db.query(
+      "booksTable",
+      where: 'author = ? AND deleted = 0',
+      whereArgs: [author],
+      orderBy: 'publication_year ASC',
+    );
+
+    return result.isNotEmpty
+        ? result.map((item) => Book.fromJSON(item)).toList()
+        : [];
   }
 }
