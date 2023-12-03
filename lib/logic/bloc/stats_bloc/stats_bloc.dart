@@ -280,13 +280,15 @@ class StatsBloc extends Bloc<StatsEvent, StatsState> {
 
   BookYearlyStat? _getShortestBookInYear(List<Book> books, int? year) {
     int shortestBookPages = 99999999;
-    String? shortestBook;
+    String? shortestBookString;
+    Book? shortestBook;
 
     for (Book book in books) {
       if (book.pages != null && book.pages! > 0) {
         if (book.pages! < shortestBookPages) {
           shortestBookPages = book.pages!;
-          shortestBook = '${book.title} - ${book.author}';
+          shortestBookString = '${book.title} - ${book.author}';
+          shortestBook = book;
         }
       }
     }
@@ -295,7 +297,11 @@ class StatsBloc extends Bloc<StatsEvent, StatsState> {
       return null;
     } else {
       return BookYearlyStat(
-          title: shortestBook, value: shortestBookPages.toString(), year: year);
+        book: shortestBook,
+        title: shortestBookString,
+        value: shortestBookPages.toString(),
+        year: year,
+      );
     }
   }
 
@@ -336,13 +342,15 @@ class StatsBloc extends Bloc<StatsEvent, StatsState> {
 
   BookYearlyStat? _getLongestBookInYear(List<Book> books, int? year) {
     int longestBookPages = 0;
-    String? longestBook;
+    String? longestBookString;
+    Book? longestBook;
 
     for (Book book in books) {
       if (book.pages != null && book.pages! > 0) {
         if (book.pages! > longestBookPages) {
           longestBookPages = book.pages!;
-          longestBook = '${book.title} - ${book.author}';
+          longestBookString = '${book.title} - ${book.author}';
+          longestBook = book;
         }
       }
     }
@@ -351,7 +359,11 @@ class StatsBloc extends Bloc<StatsEvent, StatsState> {
       return null;
     } else {
       return BookYearlyStat(
-          title: longestBook, value: longestBookPages.toString(), year: year);
+        book: longestBook,
+        title: longestBookString,
+        value: longestBookPages.toString(),
+        year: year,
+      );
     }
   }
 

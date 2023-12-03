@@ -519,6 +519,7 @@ class Statistics extends StatelessWidget {
           value: bookYearlyStat.title.toString(),
           secondValue:
               '${bookYearlyStat.value} ${LocaleKeys.pages_lowercase.tr()}',
+          book: bookYearlyStat.book,
         );
       }
     }
@@ -539,6 +540,7 @@ class Statistics extends StatelessWidget {
           secondValue: (bookYearlyStat.value != '')
               ? '${bookYearlyStat.value} ${LocaleKeys.pages_lowercase.tr()}'
               : '',
+          book: bookYearlyStat.book,
         );
       }
     }
