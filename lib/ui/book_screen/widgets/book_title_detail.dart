@@ -73,6 +73,17 @@ class BookTitleDetail extends StatelessWidget {
     return chips;
   }
 
+  void _navigateToSimiliarAuthorBooksScreen(BuildContext context) {
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) => SimiliarBooksScreen(
+          author: author,
+        ),
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Card(
@@ -109,13 +120,18 @@ class BookTitleDetail extends StatelessWidget {
                 : const SizedBox(),
             const Divider(height: 5),
             const SizedBox(height: 10),
-            Padding(
-              padding: const EdgeInsets.fromLTRB(5, 0, 5, 0),
-              child: SelectableText(
-                author,
-                style: const TextStyle(
-                  fontSize: 16,
-                  fontWeight: FontWeight.w500,
+            InkWell(
+              borderRadius: BorderRadius.circular(cornerRadius),
+              onTap: () => _navigateToSimiliarAuthorBooksScreen(context),
+              child: Padding(
+                padding: const EdgeInsets.fromLTRB(5, 5, 5, 5),
+                child: SelectableText(
+                  author,
+                  onTap: () => _navigateToSimiliarAuthorBooksScreen(context),
+                  style: const TextStyle(
+                    fontSize: 16,
+                    fontWeight: FontWeight.w500,
+                  ),
                 ),
               ),
             ),
