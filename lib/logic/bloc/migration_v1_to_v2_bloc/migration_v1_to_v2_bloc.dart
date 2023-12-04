@@ -5,6 +5,7 @@ import 'package:equatable/equatable.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:openreads/core/constants/constants.dart';
 import 'package:openreads/logic/bloc/challenge_bloc/challenge_bloc.dart';
 import 'package:openreads/main.dart';
 import 'package:openreads/model/book.dart';
@@ -149,8 +150,8 @@ class MigrationV1ToV2Bloc
 
     return blurhash_dart.BlurHash.encode(
       img.decodeImage(cover)!,
-      numCompX: 4,
-      numCompY: 3,
+      numCompX: blurHashX,
+      numCompY: blurHashY,
     ).hash;
   }
 

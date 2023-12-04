@@ -7,6 +7,7 @@ import 'package:flutter/material.dart';
 import 'package:archive/archive_io.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:openreads/core/constants/constants.dart';
 import 'package:openreads/logic/cubit/backup_progress_cubit.dart';
 import 'package:shared_storage/shared_storage.dart';
 import 'package:sqflite/sqflite.dart';
@@ -394,8 +395,8 @@ class BackupImport {
 
     return blurhash_dart.BlurHash.encode(
       img.decodeImage(cover)!,
-      numCompX: 4,
-      numCompY: 3,
+      numCompX: blurHashX,
+      numCompY: blurHashY,
     ).hash;
   }
 
