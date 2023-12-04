@@ -3,7 +3,7 @@ name: Build split apks and attach to release
 on:
   release:
     types:
-      - created
+      - published
 
 jobs:
   build:
