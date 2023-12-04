@@ -216,5 +216,42 @@
     "use_material_you": "استخدام Material You",
     "select_color": "اختر لوناً",
     "standard_color": "ألوان نموذجية",
-    "custom_color": "ألوان مخصصة"
+    "custom_color": "ألوان مخصصة",
+    "hour": {
+        "one": "{} ساعة",
+        "title": "الساعات",
+        "other": "{} من الساعات"
+    },
+    "csv": "CSV",
+    "minute": {
+        "other": "{} من الدقائق",
+        "one": "{} دقيقة",
+        "title": "الدقائق"
+    },
+    "choose_not_finished_shelf": "إختر لائحة الكتب غير المنجزة:",
+    "export_successful": "تم التصدير بنجاح",
+    "import_goodreads_csv": "استيراد ملف CSV من GoodReads",
+    "export_csv_description_1": "الغلافات لم تنسخ",
+    "only_editions_with_covers": "الطبعات ذات الغلاف فقط",
+    "book_format_hardcover_plural": "طبعات مجلدة",
+    "notes": "ملاحظات",
+    "change_book_format": "تغيير صنف الكتاب",
+    "selected": "إختير",
+    "ok": "حسنًا",
+    "filter_by_book_format": "صنف الكتاب",
+    "update_successful_message": "تم التحديث بنجاح!",
+    "select_all": "إختيار المجموع",
+    "set_custom_reading_time": "تحديد مدة القراءة",
+    "day": {
+        "one": "{} يوم",
+        "title": "الأيام",
+        "other": "{} من الأيام"
+    },
+    "import_successful": "تم الإستيراد بنجاح",
+    "book_format_all": "جميع الأصناف",
+    "openreads_backup": "النسخ الإحتياطي",
+    "export_csv": "نسخ الكتب في ملف CSV",
+    "book_format_paperback": "كتاب ورقي",
+    "book_format_hardcover": "طبعة مجلدة",
+    "book_format_paperback_plural": "كتب ورقية"
 }

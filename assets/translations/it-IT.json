@@ -209,5 +209,44 @@
     "book_format_audiobook": "Audiolibro",
     "book_format_ebook_plural": "E-books",
     "book_format_audiobook_plural": "Audiolibri",
-    "book_format_paperback": "brosura"
+    "book_format_paperback": "brosura",
+    "dark_mode_style": "Stile tema scuro",
+    "dark_mode_natural": "Tema scuro naturale",
+    "only_editions_with_covers": "Mostra solo edizioni con copertina",
+    "change_book_format": "Cambia formato del libro",
+    "selected": "Selezionato",
+    "standard_color": "Standard",
+    "dark_mode_amoled": "Tema scuro AMOLED",
+    "use_material_you": "Usa Material You",
+    "custom_color": "Personalizzato",
+    "book_format_paper_plural": "Libri cartacei",
+    "select_color": "Seleziona colore",
+    "notes": "Note",
+    "filter_by_book_format": "Filtra per formato",
+    "book_format_all": "Tutti I formati",
+    "book_format_hardcover": "Copertina rigida",
+    "csv": "CSV",
+    "minute": {
+        "other": "{} minuti",
+        "one": "{} minuto",
+        "title": "Minuti"
+    },
+    "export_successful": "Esportazione Completata!",
+    "hour": {
+        "title": "Ore",
+        "other": "{} ore"
+    },
+    "import_goodreads_csv": "Importa Goodreads CSV",
+    "export_csv_description_1": "Le copertine non vengono esportate",
+    "update_successful_message": "Aggiornamento Riuscito!",
+    "select_all": "Seleziona tutti",
+    "day": {
+        "one": "{} giorno",
+        "other": "{} giorni"
+    },
+    "import_successful": "Importazione completata",
+    "openreads_backup": "Backup Openreads",
+    "export_csv": "Esporta libri come file CSV",
+    "book_format_hardcover_plural": "Libri con copertina rigida",
+    "book_format_paperback_plural": "Brossure"
 }

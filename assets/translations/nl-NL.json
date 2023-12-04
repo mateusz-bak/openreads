@@ -215,5 +215,10 @@
     "dark_mode_amoled": "AMOLED donkere modus",
     "custom_color": "Aangepast",
     "openreads_backup": "Openreads back-up",
-    "export_csv": "Exporteer boeken als CSV-bestand"
+    "export_csv": "Exporteer boeken als CSV-bestand",
+    "import_csv": "Importeer Openreads CSV",
+    "book_format_audiobook": "Luisterboek",
+    "book_format_paperback": "Paperback",
+    "book_format_hardcover": "Hardcover",
+    "book_format_audiobook_plural": "Luisterboeken"
 }
