@@ -1,0 +1,12 @@
+- Toggle to show only OL editions with covers
+- Counter of displayed and all books
+- Import books from Openreads CSV
+- Sorting books by publication year
+- Bulk edit books author
+- Tapping on the author or a tag brings up list of books
+- Tapping on the fastest/slowest book shows the book
+- Dropdown is displayed for tags in Edit Screen
+- Date picker initial is the currently set one
+- Date format will follow device locale
+- Start button on welcome screen is clickable
+- Vietnamese language
