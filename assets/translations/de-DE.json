@@ -227,5 +227,33 @@
     "notes": "Notizen",
     "import_successful": "Import erfolgreich",
     "openreads_backup": "Openreads-Sicherung",
-    "export_csv": "Bücher als CSV-Datei exportieren"
+    "export_csv": "Bücher als CSV-Datei exportieren",
+    "hour": {
+        "one": "{} Stunde",
+        "title": "Stunden",
+        "other": "{} Stunden"
+    },
+    "minute": {
+        "other": "{} Minuten",
+        "one": "{} Minute",
+        "title": "Minuten"
+    },
+    "only_editions_with_covers": "Zeige nur Editionen mit Bildern",
+    "change_book_format": "Buchformat ändern",
+    "import_csv": "Openreads CSV importieren",
+    "filter_by_book_format": "Filtern nach Buchformat",
+    "select_all": "Alle auswählen",
+    "day": {
+        "one": "{} Tag",
+        "title": "Tage",
+        "other": "{} Tage"
+    },
+    "change_books_author": "Autor ändern",
+    "book_format_all": "Alle Buchformate",
+    "book_format_paperback": "Taschenbuch",
+    "book_format_hardcover": "Gebundenes Buch",
+    "book_format_hardcover_plural": "Gebundene Bücher",
+    "set_custom_reading_time": "Benutzerdefinierte Lesezeit einstellen",
+    "book_format_paperback_plural": "Taschenbücher",
+    "ok": "OK"
 }

@@ -219,5 +219,30 @@
     "standard_color": "标准",
     "dark_mode_amoled": "AMOLED黑暗模式",
     "openreads_backup": "Openreads备份",
-    "export_csv": "以CSV格式导出书籍（名录）"
+    "export_csv": "以CSV格式导出书籍（名录）",
+    "book_format_ebook_plural": "电子书",
+    "choose_not_finished_shelf": "选择未完成图书的书架",
+    "hour": {
+        "title": "小时"
+    },
+    "book_format_ebook": "电子书",
+    "book_format_hardcover_plural": "精装本图书",
+    "change_book_format": "变更图书格式",
+    "ok": "确认",
+    "filter_by_book_format": "以图书格式过滤",
+    "minute": {
+        "title": "分"
+    },
+    "set_custom_reading_time": "设置自定义阅读时间",
+    "book_format_audiobook": "有声书",
+    "book_format_all": "所有图书格式",
+    "use_material_you": "使用Material You风格",
+    "custom_color": "自定义",
+    "book_format_hardcover": "精装本",
+    "day": {
+        "title": "天"
+    },
+    "book_format_paperback_plural": "平装本图书",
+    "book_format_audiobook_plural": "有声书",
+    "book_format_paper_plural": "纸质书"
 }

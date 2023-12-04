@@ -69,5 +69,6 @@
     "author": "Autor",
     "finish_date_before_start": "Data de finalização não pode ser antes da data de início",
     "enter_subtitle": "Entrar com subtítulo",
-    "book_status_finished": "Concluído"
+    "book_status_finished": "Concluído",
+    "book_format_hardcover": "Capa Dura"
 }
