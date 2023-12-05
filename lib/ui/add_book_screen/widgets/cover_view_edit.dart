@@ -50,6 +50,16 @@ class CoverViewEdit extends StatelessWidget {
           lockAspectRatio: false,
           hideBottomControls: false,
         ),
+        IOSUiSettings(
+          title: LocaleKeys.edit_cover.tr(),
+          cancelButtonTitle: LocaleKeys.cancel.tr(),
+          doneButtonTitle: LocaleKeys.save.tr(),
+          rotateButtonsHidden: false,
+          rotateClockwiseButtonHidden: false,
+          aspectRatioPickerButtonHidden: false,
+          aspectRatioLockDimensionSwapEnabled: false,
+          minimumAspectRatio: 1.0,
+        ),
       ],
     );
 
