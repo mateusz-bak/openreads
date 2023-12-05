@@ -24,7 +24,7 @@ dependencies:
   colours: ^0.0.2
   blurhash: ^1.1.1
   image: ^4.0.15
-  fl_chart: ^0.64.0
+  fl_chart: ^0.65.0
   dropdown_button2: ^2.0.0
   equatable: ^2.0.5
   connectivity_plus: ^5.0.1
@@ -47,12 +47,12 @@ dependencies:
   device_info_plus: ^9.0.2
   dynamic_color: ^1.6.2
   image_fade: ^0.6.2
-  package_info_plus: ^4.0.2
+  package_info_plus: ^5.0.1
   animated_widgets: ^1.1.0
   shared_storage: ^0.8.0
   shared_preferences: ^2.2.1
   easy_localization: ^3.0.2
-  flutter_typeahead: ^4.8.0
+  flutter_typeahead: ^5.0.1
   flex_color_picker: ^3.2.2
   diacritic: ^0.1.4
   flutter_speed_dial: ^7.0.0
