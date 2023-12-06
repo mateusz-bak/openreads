@@ -169,6 +169,7 @@ class SettingsApperanceScreen extends StatelessWidget {
                                 const SizedBox(height: 5),
                                 SettingsDialogButton(
                                   text: 'Nunito',
+                                  fontFamily: 'Nunito',
                                   onPressed: () => _setFont(
                                     context,
                                     state,
@@ -178,6 +179,7 @@ class SettingsApperanceScreen extends StatelessWidget {
                                 const SizedBox(height: 5),
                                 SettingsDialogButton(
                                   text: 'Jost',
+                                  fontFamily: 'Jost',
                                   onPressed: () => _setFont(
                                     context,
                                     state,
@@ -187,6 +189,7 @@ class SettingsApperanceScreen extends StatelessWidget {
                                 const SizedBox(height: 5),
                                 SettingsDialogButton(
                                   text: 'Barlow',
+                                  fontFamily: 'Barlow',
                                   onPressed: () => _setFont(
                                     context,
                                     state,
@@ -196,6 +199,7 @@ class SettingsApperanceScreen extends StatelessWidget {
                                 const SizedBox(height: 5),
                                 SettingsDialogButton(
                                   text: 'Inter',
+                                  fontFamily: 'Inter',
                                   onPressed: () => _setFont(
                                     context,
                                     state,
@@ -205,6 +209,7 @@ class SettingsApperanceScreen extends StatelessWidget {
                                 const SizedBox(height: 5),
                                 SettingsDialogButton(
                                   text: 'Kanit',
+                                  fontFamily: 'Kanit',
                                   onPressed: () => _setFont(
                                     context,
                                     state,
@@ -214,6 +219,7 @@ class SettingsApperanceScreen extends StatelessWidget {
                                 const SizedBox(height: 5),
                                 SettingsDialogButton(
                                   text: 'Lato',
+                                  fontFamily: 'Lato',
                                   onPressed: () => _setFont(
                                     context,
                                     state,
@@ -223,6 +229,7 @@ class SettingsApperanceScreen extends StatelessWidget {
                                 const SizedBox(height: 5),
                                 SettingsDialogButton(
                                   text: 'Lora',
+                                  fontFamily: 'Lora',
                                   onPressed: () => _setFont(
                                     context,
                                     state,
@@ -232,6 +239,7 @@ class SettingsApperanceScreen extends StatelessWidget {
                                 const SizedBox(height: 5),
                                 SettingsDialogButton(
                                   text: 'Montserrat',
+                                  fontFamily: 'Montserrat',
                                   onPressed: () => _setFont(
                                     context,
                                     state,
@@ -241,6 +249,7 @@ class SettingsApperanceScreen extends StatelessWidget {
                                 const SizedBox(height: 5),
                                 SettingsDialogButton(
                                   text: 'Playfair Display',
+                                  fontFamily: 'PlayfairDisplay',
                                   onPressed: () => _setFont(
                                     context,
                                     state,
@@ -250,6 +259,7 @@ class SettingsApperanceScreen extends StatelessWidget {
                                 const SizedBox(height: 5),
                                 SettingsDialogButton(
                                   text: 'Poppins',
+                                  fontFamily: 'Poppins',
                                   onPressed: () => _setFont(
                                     context,
                                     state,
@@ -259,6 +269,7 @@ class SettingsApperanceScreen extends StatelessWidget {
                                 const SizedBox(height: 5),
                                 SettingsDialogButton(
                                   text: 'Raleway',
+                                  fontFamily: 'Raleway',
                                   onPressed: () => _setFont(
                                     context,
                                     state,
@@ -268,6 +279,7 @@ class SettingsApperanceScreen extends StatelessWidget {
                                 const SizedBox(height: 5),
                                 SettingsDialogButton(
                                   text: 'Sofia Sans',
+                                  fontFamily: 'SofiaSans',
                                   onPressed: () => _setFont(
                                     context,
                                     state,
@@ -277,6 +289,7 @@ class SettingsApperanceScreen extends StatelessWidget {
                                 const SizedBox(height: 5),
                                 SettingsDialogButton(
                                   text: 'Quicksand',
+                                  fontFamily: 'Quicksand',
                                   onPressed: () => _setFont(
                                     context,
                                     state,
