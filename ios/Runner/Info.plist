@@ -49,5 +49,10 @@
 	<string>$(PRODUCT_NAME) would like access to your photo gallery to choose the book cover image</string>
 	<key>NSCameraUsageDescription</key>
 	<string>$(PRODUCT_NAME) would like to use your camera to take a picture of the book cover</string>
+    <key>LSApplicationQueriesSchemes</key>
+	<array>
+		<string>https</string>
+		<string>itms-apps</string>
+	</array>
 </dict>
 </plist>

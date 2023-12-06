@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:animated_widgets/widgets/rotation_animated.dart';
 import 'package:animated_widgets/widgets/shake_animated_widget.dart';
 import 'package:easy_localization/easy_localization.dart';
@@ -19,21 +21,28 @@ import 'package:settings_ui/settings_ui.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class SettingsScreen extends StatelessWidget {
-  SettingsScreen({super.key});
+  const SettingsScreen({super.key});
 
-  String? version;
   static const licence = 'GNU General Public Licence v2.0';
   static const repoUrl = 'https://github.com/mateusz-bak/openreads-android';
   static const translationUrl = 'https://hosted.weblate.org/engage/openreads/';
   static const communityUrl = 'https://matrix.to/#/#openreads:matrix.org';
-  static const rateUrl = 'market://details?id=software.mdev.bookstracker';
-  final releasesUrl = '$repoUrl/releases';
-  final licenceUrl = '$repoUrl/blob/master/LICENSE';
-  final githubIssuesUrl = '$repoUrl/issues';
-  final githubSponsorUrl = 'https://github.com/sponsors/mateusz-bak';
-  final buyMeCoffeUrl = 'https://www.buymeacoffee.com/mateuszbak';
+  static const rateUrlAndroid =
+      'market://details?id=software.mdev.bookstracker';
+  static const iOSAppID = 'YOUR_APP_ID'; // TODO: replace with real ID
+  static const rateUrlIOS =
+      'itms-apps://itunes.apple.com/WebObjects/MZStore.woa/wa/viewContentsUserReviews?id=$iOSAppID&onlyLatestVersion=true&pageNumber=0&sortOrdering=1&type=Purple+Software';
+  static const releasesUrl = '$repoUrl/releases';
+  static const licenceUrl = '$repoUrl/blob/master/LICENSE';
+  static const githubIssuesUrl = '$repoUrl/issues';
+  static const githubSponsorUrl = 'https://github.com/sponsors/mateusz-bak';
+  static const buyMeCoffeUrl = 'https://www.buymeacoffee.com/mateuszbak';
 
-  _sendEmailToDev(BuildContext context, [bool mounted = true]) async {
+  _sendEmailToDev(
+    BuildContext context,
+    String version, [
+    bool mounted = true,
+  ]) async {
     final Email email = Email(
       subject: 'Openreads feedback',
       body: 'Version $version\n',
@@ -251,14 +260,37 @@ class SettingsScreen extends StatelessWidget {
 
         launchUrl(
           Uri.parse(url),
-          mode: LaunchMode.externalNonBrowserApplication,
+          mode: LaunchMode.externalApplication,
         );
       },
     );
   }
 
-  SettingsTile _buildFeedbackSetting(BuildContext context) {
+  SettingsTile _buildBasicSetting({
+    required String title,
+    String? description,
+    IconData? iconData,
+    required BuildContext context,
+  }) {
     return SettingsTile(
+      title: Text(
+        title,
+        style: const TextStyle(
+          fontSize: 16,
+        ),
+      ),
+      leading: (iconData == null) ? null : Icon(iconData),
+      description: (description != null)
+          ? Text(
+              description,
+              style: const TextStyle(),
+            )
+          : null,
+    );
+  }
+
+  SettingsTile _buildFeedbackSetting(BuildContext context, String version) {
+    return SettingsTile.navigation(
       title: Text(
         LocaleKeys.send_feedback.tr(),
         style: const TextStyle(
@@ -305,7 +337,7 @@ class SettingsScreen extends StatelessWidget {
                           child: ContactButton(
                             text: LocaleKeys.send_dev_email.tr(),
                             icon: FontAwesomeIcons.solidEnvelope,
-                            onPressed: () => _sendEmailToDev(context),
+                            onPressed: () => _sendEmailToDev(context, version),
                           ),
                         ),
                         const SizedBox(width: 20),
@@ -330,7 +362,7 @@ class SettingsScreen extends StatelessWidget {
   }
 
   SettingsTile _buildSupportSetting(BuildContext context) {
-    return SettingsTile(
+    return SettingsTile.navigation(
       title: Text(
         LocaleKeys.support_the_project.tr(),
         style: TextStyle(
@@ -412,7 +444,7 @@ class SettingsScreen extends StatelessWidget {
   }
 
   SettingsTile _buildTrashSetting(BuildContext context) {
-    return SettingsTile(
+    return SettingsTile.navigation(
       title: Text(
         LocaleKeys.deleted_books.tr(),
         style: const TextStyle(
@@ -435,7 +467,7 @@ class SettingsScreen extends StatelessWidget {
   }
 
   SettingsTile _buildUnfinishedSetting(BuildContext context) {
-    return SettingsTile(
+    return SettingsTile.navigation(
       title: Text(
         LocaleKeys.unfinished_books.tr(),
         style: const TextStyle(
@@ -455,7 +487,7 @@ class SettingsScreen extends StatelessWidget {
   }
 
   SettingsTile _buildBackupSetting(BuildContext context) {
-    return SettingsTile(
+    return SettingsTile.navigation(
       title: Text(
         LocaleKeys.backup_and_restore.tr(),
         style: const TextStyle(
@@ -475,7 +507,7 @@ class SettingsScreen extends StatelessWidget {
   }
 
   SettingsTile _buildAppearanceSetting(BuildContext context) {
-    return SettingsTile(
+    return SettingsTile.navigation(
       title: Text(
         LocaleKeys.apperance.tr(),
         style: const TextStyle(
@@ -551,7 +583,7 @@ class SettingsScreen extends StatelessWidget {
           future: _getAppVersion(),
           builder: (context, snapshot) {
             if (snapshot.hasData) {
-              version = snapshot.data;
+              final version = snapshot.data;
 
               return BlocBuilder<ThemeBloc, ThemeState>(
                 builder: (context, state) {
@@ -586,15 +618,14 @@ class SettingsScreen extends StatelessWidget {
                             iconData: FontAwesomeIcons.peopleGroup,
                             context: context,
                           ),
-                          // TODO: Show only on GPlay variant
                           _buildURLSetting(
                             title: LocaleKeys.rate_app.tr(),
                             description: LocaleKeys.rate_app_description.tr(),
-                            url: rateUrl,
+                            url: Platform.isIOS ? rateUrlAndroid : rateUrlIOS,
                             iconData: Icons.star_rounded,
                             context: context,
                           ),
-                          _buildFeedbackSetting(context),
+                          _buildFeedbackSetting(context, version!),
                           _buildURLSetting(
                             title: LocaleKeys.translate_app.tr(),
                             description:
@@ -632,7 +663,7 @@ class SettingsScreen extends StatelessWidget {
                           ),
                         ),
                         tiles: <SettingsTile>[
-                          _buildURLSetting(
+                          _buildBasicSetting(
                             title: LocaleKeys.version.tr(),
                             description: version,
                             iconData: FontAwesomeIcons.rocket,
