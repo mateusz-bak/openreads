@@ -8,7 +8,7 @@ import 'package:openreads/model/book.dart';
 
 class TagsField extends StatelessWidget {
   const TagsField({
-    Key? key,
+    super.key,
     this.controller,
     this.hint,
     this.icon,
@@ -24,7 +24,7 @@ class TagsField extends StatelessWidget {
     this.onEditingComplete,
     this.unselectTag,
     this.allTags,
-  }) : super(key: key);
+  });
 
   final TextEditingController? controller;
   final String? hint;
@@ -98,60 +98,72 @@ class TagsField extends StatelessWidget {
         child: Column(
           children: [
             Scrollbar(
-                child: TypeAheadField(
-              ignoreAccessibleNavigation: true,
-              itemBuilder: (context, suggestion) {
-                return ListTile(
-                  title: Text(suggestion),
-                );
-              },
-              suggestionsCallback: (pattern) {
-                if (allTags == null) {
-                  return List<String>.empty();
-                }
-                return allTags!.where((String option) {
-                  return option.toLowerCase().contains(pattern.toLowerCase());
-                }).toList();
-              },
-              onSuggestionSelected: (suggestion) {
-                controller?.text = suggestion;
-                if (onSubmitted != null) {
-                  onSubmitted!(suggestion);
-                }
-              },
-              hideOnLoading: true,
-              hideOnEmpty: true,
-              suggestionsBoxDecoration: SuggestionsBoxDecoration(
-                borderRadius: BorderRadius.circular(4.0),
-                elevation: 8.0,
+              child: TypeAheadField(
+                itemBuilder: (context, suggestion) {
+                  return Container(
+                    color: Theme.of(context).colorScheme.surfaceVariant,
+                    child: ListTile(
+                      title: Text(suggestion),
+                    ),
+                  );
+                },
+                suggestionsCallback: (pattern) {
+                  if (allTags == null) {
+                    return List<String>.empty();
+                  }
+                  return allTags!.where((String option) {
+                    return option.toLowerCase().contains(pattern.toLowerCase());
+                  }).toList();
+                },
+                onSelected: (suggestion) {
+                  controller?.text = suggestion;
+                  if (onSubmitted != null) {
+                    onSubmitted!(suggestion);
+                  }
+                },
+                hideOnLoading: true,
+                hideOnEmpty: true,
+                decorationBuilder: (context, child) {
+                  return Container(
+                    padding: const EdgeInsets.symmetric(vertical: 5),
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(cornerRadius),
+                      border: Border.all(color: dividerColor),
+                    ),
+                    child: child,
+                  );
+                },
+                builder: (context, controller, focusNode) {
+                  return TextField(
+                    focusNode: focusNode,
+                    autofocus: autofocus,
+                    keyboardType: keyboardType,
+                    inputFormatters: inputFormatters,
+                    textCapitalization: textCapitalization,
+                    controller: controller,
+                    minLines: 1,
+                    maxLines: maxLines,
+                    maxLength: maxLength,
+                    textInputAction: textInputAction,
+                    style: const TextStyle(fontSize: 14),
+                    onSubmitted: onSubmitted,
+                    onEditingComplete: onEditingComplete,
+                    decoration: InputDecoration(
+                      labelText: hint,
+                      labelStyle: const TextStyle(fontSize: 14),
+                      icon: (icon != null)
+                          ? Icon(
+                              icon,
+                              color: Theme.of(context).colorScheme.primary,
+                            )
+                          : null,
+                      border: InputBorder.none,
+                      counterText: hideCounter ? "" : null,
+                    ),
+                  );
+                },
               ),
-              textFieldConfiguration: TextFieldConfiguration(
-                autofocus: autofocus,
-                keyboardType: keyboardType,
-                inputFormatters: inputFormatters,
-                textCapitalization: textCapitalization,
-                controller: controller,
-                minLines: 1,
-                maxLines: maxLines,
-                maxLength: maxLength,
-                textInputAction: textInputAction,
-                style: const TextStyle(fontSize: 14),
-                onSubmitted: onSubmitted,
-                onEditingComplete: onEditingComplete,
-                decoration: InputDecoration(
-                  labelText: hint,
-                  labelStyle: const TextStyle(fontSize: 14),
-                  icon: (icon != null)
-                      ? Icon(
-                          icon,
-                          color: Theme.of(context).colorScheme.primary,
-                        )
-                      : null,
-                  border: InputBorder.none,
-                  counterText: hideCounter ? "" : null,
-                ),
-              ),
-            )),
+            ),
             Row(
               children: [
                 Expanded(
