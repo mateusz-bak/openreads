@@ -959,7 +959,7 @@ class SettingsApperanceScreen extends StatelessWidget {
   }
 
   SettingsTile _buildAccentSetting(BuildContext context) {
-    return SettingsTile(
+    return SettingsTile.navigation(
       title: Text(
         LocaleKeys.accent_color.tr(),
         style: const TextStyle(
