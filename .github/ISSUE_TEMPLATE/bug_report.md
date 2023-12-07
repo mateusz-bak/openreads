@@ -21,9 +21,9 @@ If applicable, add screenshots to help explain your problem.
 
 **Additional info(please complete the following information):**
  - Manufacturer and model:
- - Android version:
- - App version:
- - App source (F-Droid, Google Play, Github):
+- OS and version:
+- App version:
+- App source (F-Droid, Google Play, Github, AppStore):
 
 **Additional context**
 Add any other context about the problem here.
