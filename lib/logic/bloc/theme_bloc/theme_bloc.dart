@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
 import 'package:hydrated_bloc/hydrated_bloc.dart';
@@ -9,14 +11,14 @@ class ThemeBloc extends HydratedBloc<ThemeEvent, ThemeState> {
   String? fontFamily = 'Nunito';
 
   ThemeBloc()
-      : super(const SetThemeState(
+      : super(SetThemeState(
           themeMode: ThemeMode.system,
           showOutlines: false,
           cornerRadius: 5,
-          primaryColor: Color(0xff3FA796),
+          primaryColor: const Color(0xff3FA796),
           fontFamily: 'Nunito',
           readTabFirst: true,
-          useMaterialYou: true,
+          useMaterialYou: Platform.isAndroid ? true : false,
           amoledDark: false,
         )) {
     on<ChangeThemeEvent>((event, emit) {

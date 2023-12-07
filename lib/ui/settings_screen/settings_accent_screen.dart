@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flex_color_picker/flex_color_picker.dart';
 import 'package:flutter/material.dart';
@@ -57,23 +59,24 @@ class _SettingsAccentScreenState extends State<SettingsAccentScreen> {
           padding: const EdgeInsets.all(8),
           child: Column(
             children: [
-              Padding(
-                padding: const EdgeInsets.fromLTRB(8, 8, 8, 24),
-                child: Row(
-                  children: [
-                    Expanded(
-                      child: FilledButton(
-                        onPressed: () => _setMaterialYou(context),
-                        style: FilledButton.styleFrom(
-                          // backgroundColor: pickerColor,
-                          textStyle: const TextStyle(fontSize: 18),
-                        ),
-                        child: Text(LocaleKeys.use_material_you.tr()),
+              Platform.isAndroid
+                  ? Padding(
+                      padding: const EdgeInsets.fromLTRB(8, 8, 8, 24),
+                      child: Row(
+                        children: [
+                          Expanded(
+                            child: FilledButton(
+                              onPressed: () => _setMaterialYou(context),
+                              style: FilledButton.styleFrom(
+                                textStyle: const TextStyle(fontSize: 18),
+                              ),
+                              child: Text(LocaleKeys.use_material_you.tr()),
+                            ),
+                          ),
+                        ],
                       ),
-                    ),
-                  ],
-                ),
-              ),
+                    )
+                  : const SizedBox(),
               Card(
                 child: ColorPicker(
                   color: pickerColor,
