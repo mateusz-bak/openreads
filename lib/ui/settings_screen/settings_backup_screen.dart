@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:device_info_plus/device_info_plus.dart';
 import 'package:easy_localization/easy_localization.dart';
 
@@ -40,12 +42,14 @@ class _SettingsBackupScreenState extends State<SettingsBackupScreen> {
   _startCreatingLocalBackup(context) async {
     setState(() => _creatingLocal = true);
 
-    if (androidInfo.version.sdkInt < 30) {
-      await BackupGeneral.requestStoragePermission(context);
-      await BackupExport.createLocalBackupLegacyStorage(context);
-    } else {
-      await BackupExport.createLocalBackup(context);
-    }
+    if (Platform.isAndroid) {
+      if (androidInfo.version.sdkInt < 30) {
+        await BackupGeneral.requestStoragePermission(context);
+        await BackupExport.createLocalBackupLegacyStorage(context);
+      } else {
+        await BackupExport.createLocalBackup(context);
+      }
+    } else if (Platform.isIOS) {}
 
     setState(() => _creatingLocal = false);
   }
@@ -53,12 +57,14 @@ class _SettingsBackupScreenState extends State<SettingsBackupScreen> {
   _startExportingCSV(context) async {
     setState(() => _exportingCSV = true);
 
-    if (androidInfo.version.sdkInt < 30) {
-      await BackupGeneral.requestStoragePermission(context);
-      await CSVExport.exportCSVLegacyStorage(context);
-    } else {
-      await CSVExport.exportCSV();
-    }
+    if (Platform.isAndroid) {
+      if (androidInfo.version.sdkInt < 30) {
+        await BackupGeneral.requestStoragePermission(context);
+        await CSVExport.exportCSVLegacyStorage(context);
+      } else {
+        await CSVExport.exportCSV();
+      }
+    } else if (Platform.isIOS) {}
 
     setState(() => _exportingCSV = false);
   }
@@ -66,12 +72,14 @@ class _SettingsBackupScreenState extends State<SettingsBackupScreen> {
   _startImportingGoodreadsCSV(context) async {
     setState(() => _importingGoodreadsCSV = true);
 
-    if (androidInfo.version.sdkInt < 30) {
-      await BackupGeneral.requestStoragePermission(context);
-      await CSVGoodreadsImport.importGoodreadsCSVLegacyStorage(context);
-    } else {
-      await CSVGoodreadsImport.importGoodreadsCSV(context);
-    }
+    if (Platform.isAndroid) {
+      if (androidInfo.version.sdkInt < 30) {
+        await BackupGeneral.requestStoragePermission(context);
+        await CSVGoodreadsImport.importGoodreadsCSVLegacyStorage(context);
+      } else {
+        await CSVGoodreadsImport.importGoodreadsCSV(context);
+      }
+    } else if (Platform.isIOS) {}
 
     setState(() => _importingGoodreadsCSV = false);
   }
@@ -79,12 +87,14 @@ class _SettingsBackupScreenState extends State<SettingsBackupScreen> {
   _startImportingCSV(context) async {
     setState(() => _importingCSV = true);
 
-    if (androidInfo.version.sdkInt < 30) {
-      await BackupGeneral.requestStoragePermission(context);
-      await CSVImport.importCSVLegacyStorage(context);
-    } else {
-      await CSVImport.importCSV(context);
-    }
+    if (Platform.isAndroid) {
+      if (androidInfo.version.sdkInt < 30) {
+        await BackupGeneral.requestStoragePermission(context);
+        await CSVImport.importCSVLegacyStorage(context);
+      } else {
+        await CSVImport.importCSV(context);
+      }
+    } else if (Platform.isIOS) {}
 
     setState(() => _importingCSV = false);
   }
@@ -105,10 +115,14 @@ class _SettingsBackupScreenState extends State<SettingsBackupScreen> {
   _startRestoringLocalBackup(context) async {
     setState(() => _restoringLocal = true);
 
-    if (androidInfo.version.sdkInt < 30) {
-      await BackupGeneral.requestStoragePermission(context);
-      await BackupImport.restoreLocalBackupLegacyStorage(context);
-    } else {
+    if (Platform.isAndroid) {
+      if (androidInfo.version.sdkInt < 30) {
+        await BackupGeneral.requestStoragePermission(context);
+        await BackupImport.restoreLocalBackupLegacyStorage(context);
+      } else {
+        await BackupImport.restoreLocalBackup(context);
+      }
+    } else if (Platform.isIOS) {
       await BackupImport.restoreLocalBackup(context);
     }
 
@@ -127,7 +141,10 @@ class _SettingsBackupScreenState extends State<SettingsBackupScreen> {
 
   @override
   void initState() {
-    initDeviceInfoPlugin();
+    if (Platform.isAndroid) {
+      initDeviceInfoPlugin();
+    }
+
     super.initState();
   }
 
