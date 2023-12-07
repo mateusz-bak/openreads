@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'dart:io';
 
+import 'package:file_picker/file_picker.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
@@ -76,28 +77,53 @@ class BackupImport {
     }
   }
 
+  static Future<Uri?> getFileUriAndroid() async {
+    final selectedUris = await openDocument(multiple: false);
+
+    if (selectedUris == null || selectedUris.isEmpty) {
+      return null;
+    }
+
+    return selectedUris[0];
+  }
+
   static Future restoreLocalBackup(BuildContext context) async {
     final tmpDir = appTempDirectory.absolute;
     _deleteTmpData(tmpDir);
 
-    final selectedUris = await openDocument(multiple: false);
+    late Uint8List? backupFile;
+    late Uri? fileLocation;
 
-    if (selectedUris == null || selectedUris.isEmpty) {
+    if (Platform.isAndroid) {
+      fileLocation = await getFileUriAndroid();
+      if (fileLocation != null) {
+        backupFile = await getDocumentContent(fileLocation);
+      }
+    } else if (Platform.isIOS) {
+      FilePickerResult? result = await FilePicker.platform.pickFiles();
+
+      if (result != null) {
+        File file = File(result.files.single.path!);
+        backupFile = file.readAsBytesSync();
+        fileLocation = file.uri;
+      }
+    } else {
       return;
     }
 
-    final selectedUriDir = selectedUris[0];
-    final backupFile = await getDocumentContent(selectedUriDir);
+    if (backupFile == null || fileLocation == null) {
+      return;
+    }
 
     // Backups v3 and v4 are recognized by their file name
-    if (selectedUriDir.path.contains('Openreads-4-')) {
+    if (fileLocation.path.contains('Openreads-4-')) {
       // ignore: use_build_context_synchronously
       await _restoreBackupVersion4(
         context,
         archiveFile: backupFile,
         tmpPath: tmpDir,
       );
-    } else if (selectedUriDir.path.contains('openreads_3_')) {
+    } else if (fileLocation.path.contains('openreads_3_')) {
       // ignore: use_build_context_synchronously
       await _restoreBackupVersion3(
         context,
