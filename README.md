@@ -70,13 +70,15 @@ Go to [Weblate](https://hosted.weblate.org/engage/openreads/) and help with the 
 
 ### Report bugs or new ideas
 Submit an issue here: [Openreads issues](https://github.com/mateusz-bak/openreads-android/issues).
-<br/>
+
+### Contributors guide
+
+Take a look at our [CONTRIBUTING.md](CONTRIBUTING.md) file.
 
 ## Attributions
 
 ### Icons
 [Font Awesome](https://fontawesome.com/ "Font Awesome")
-<br/>
 
 ## CSV import/export
 
@@ -87,6 +89,7 @@ See format of the CSV file:
 
 #### Besides Openreads can Import CSV files from below apps:
 - Goodreads
+<br/>
 
 ## Build Process
 
