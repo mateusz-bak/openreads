@@ -17,12 +17,12 @@ import 'package:settings_ui/settings_ui.dart';
 import 'package:share_plus/share_plus.dart';
 
 class SettingsBackupScreen extends StatefulWidget {
-  SettingsBackupScreen({
+  const SettingsBackupScreen({
     super.key,
     this.autoMigrationV1ToV2 = false,
   });
 
-  bool autoMigrationV1ToV2;
+  final bool autoMigrationV1ToV2;
 
   @override
   State<SettingsBackupScreen> createState() => _SettingsBackupScreenState();
