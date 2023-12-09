@@ -91,8 +91,8 @@ class BackupImport {
     final tmpDir = appTempDirectory.absolute;
     _deleteTmpData(tmpDir);
 
-    late Uint8List? backupFile;
-    late Uri? fileLocation;
+    Uint8List? backupFile;
+    Uri? fileLocation;
 
     if (Platform.isAndroid) {
       fileLocation = await getFileUriAndroid();

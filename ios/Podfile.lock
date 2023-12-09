@@ -157,7 +157,7 @@ SPEC CHECKSUMS:
   device_info_plus: c6fb39579d0f423935b0c9ce7ee2f44b71b9fce6
   DKImagePickerController: b512c28220a2b8ac7419f21c491fc8534b7601ac
   DKPhotoGallery: fdfad5125a9fdda9cc57df834d49df790dbb4179
-  file_picker: 15fd9539e4eb735dc54bae8c0534a7a9511a03de
+  file_picker: ce3938a0df3cc1ef404671531facef740d03f920
   Flutter: f04841e97a9d0b0a8025694d0796dd46242b2854
   flutter_email_sender: 02d7443217d8c41483223627972bfdc09f74276b
   flutter_keyboard_visibility: 0339d06371254c3eb25eeb90ba8d17dca8f9c069
