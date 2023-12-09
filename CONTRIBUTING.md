@@ -42,7 +42,7 @@ flutter run
 ```
 
 ### Code Formatting
-Ensure that your code follows the Dart formatting conventions. Use the `dart format` command to format your code.
+Ensure that your code follows the Dart formatting conventions. Use the `dart format lib` command from the root of your repo to format your code.
 
 ### Testing
 Currently, there are no tests in the project, but contributions adding tests are welcome.
@@ -52,42 +52,11 @@ Go to [Openreads on Weblate](https://hosted.weblate.org/engage/openreads/) and t
 
 ## Bug Report
 Use the following template when submitting a bug report:
-
-**Describe the bug**
-A clear and concise description of what the bug is.
-
-**To Reproduce**
-Steps to reproduce the behavior:
-
-**Expected behavior**
-A clear and concise description of what you expected to happen.
-
-**Screenshots**
-If applicable, add screenshots to help explain your problem.
-
-**Additional info**
-- Manufacturer and model:
-- OS and version:
-- App version:
-- App source (F-Droid, Google Play, Github, AppStore):
-
-**Additional context**
-Add any other context about the problem here.
+[Bug report template](.github/ISSUE_TEMPLATE/bug_report.md)
 
 ## Feature Request
 Use the following template when submitting a feature request:
-
-**Is your feature request related to a problem? Please describe.**
-A clear and concise description of what the problem is. Ex. I'm always frustrated when [...]
-
-**Describe the solution you'd like**
-A clear and concise description of what you want to happen.
-
-**Describe alternatives you've considered**
-A clear and concise description of any alternative solutions or features you've considered.
-
-**Additional context**
-Add any other context or screenshots about the feature request here.
+[Feature request template](.github/ISSUE_TEMPLATE/feature_request.md)
 
 ## Decision Making
 Decisions are typically made by the project owner. The most important ones are discussed before in the Feature Request issue or in our Matrix chat when we can create polls.

@@ -20,10 +20,10 @@ A clear and concise description of what you expected to happen.
 If applicable, add screenshots to help explain your problem.
 
 **Additional info(please complete the following information):**
- - Manufacturer and model:
-- OS and version:
 - App version:
 - App source (F-Droid, Google Play, Github, AppStore):
+- Manufacturer and model:
+- OS and version:
 
 **Additional context**
 Add any other context about the problem here.
