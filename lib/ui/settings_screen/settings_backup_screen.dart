@@ -216,22 +216,7 @@ class _SettingsBackupScreenState extends State<SettingsBackupScreen> {
                             Theme.of(context).colorScheme.surface,
                       ),
                       sections: [
-                        SettingsSection(
-                          title: Text(
-                            LocaleKeys.openreads_backup.tr(),
-                            style: TextStyle(
-                              fontSize: 16,
-                              fontWeight: FontWeight.bold,
-                              color: Theme.of(context).colorScheme.primary,
-                            ),
-                          ),
-                          tiles: <SettingsTile>[
-                            _buildCreateLocalBackup(),
-                            _buildCreateCloudBackup(),
-                            _buildRestoreBackup(context),
-                            _buildV1ToV2Migration(context),
-                          ],
-                        ),
+                        _buildBackupSection(context),
                         SettingsSection(
                           title: Text(
                             LocaleKeys.csv.tr(),
@@ -493,6 +478,31 @@ class _SettingsBackupScreenState extends State<SettingsBackupScreen> {
               height: 24,
             ),
       onPressed: _startImportingCSV,
+    );
+  }
+
+  _buildBackupSection(BuildContext context) {
+    final listOfTiles = <SettingsTile>[
+      _buildCreateLocalBackup(),
+      _buildCreateCloudBackup(),
+      _buildRestoreBackup(context),
+    ];
+
+    //TODO: This should be removed in the future
+    if (Platform.isAndroid) {
+      listOfTiles.add(_buildV1ToV2Migration(context));
+    }
+
+    return SettingsSection(
+      title: Text(
+        LocaleKeys.openreads_backup.tr(),
+        style: TextStyle(
+          fontSize: 16,
+          fontWeight: FontWeight.bold,
+          color: Theme.of(context).colorScheme.primary,
+        ),
+      ),
+      tiles: listOfTiles,
     );
   }
 }
