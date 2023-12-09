@@ -55,10 +55,9 @@ class CoverViewEdit extends StatelessWidget {
           cancelButtonTitle: LocaleKeys.cancel.tr(),
           doneButtonTitle: LocaleKeys.save.tr(),
           rotateButtonsHidden: false,
-          rotateClockwiseButtonHidden: false,
+          rotateClockwiseButtonHidden: true,
           aspectRatioPickerButtonHidden: false,
           aspectRatioLockDimensionSwapEnabled: false,
-          minimumAspectRatio: 1.0,
         ),
       ],
     );
