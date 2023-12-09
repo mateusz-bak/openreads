@@ -1,0 +1,14 @@
+name: Format Dart code
+
+on:
+  push
+  pull_request:
+    branches:
+      - master
+
+jobs:
+  dart:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v3
+    - run: dart format --set-exit-if-changed lib
