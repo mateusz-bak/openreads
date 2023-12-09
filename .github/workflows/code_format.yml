@@ -1,7 +1,7 @@
 name: Format Dart code
 
 on:
-  push
+  push:
   pull_request:
     branches:
       - master
