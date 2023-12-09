@@ -10,10 +10,9 @@ class OLWorkResult {
 
   final String? description;
 
-  factory OLWorkResult.fromJson(Map<String, dynamic> json) =>
-      OLWorkResult(
-        description: json["description"] is Map ?
-          (json["description"]["value"] ?? json["description"]) :
-          json["description"],
+  factory OLWorkResult.fromJson(Map<String, dynamic> json) => OLWorkResult(
+        description: json["description"] is Map
+            ? (json["description"]["value"] ?? json["description"])
+            : json["description"],
       );
 }
