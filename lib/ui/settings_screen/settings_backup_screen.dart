@@ -66,7 +66,9 @@ class _SettingsBackupScreenState extends State<SettingsBackupScreen> {
       } else {
         await CSVExport.exportCSV();
       }
-    } else if (Platform.isIOS) {}
+    } else if (Platform.isIOS) {
+      await CSVExport.exportCSV();
+    }
 
     setState(() => _exportingCSV = false);
   }
@@ -81,7 +83,9 @@ class _SettingsBackupScreenState extends State<SettingsBackupScreen> {
       } else {
         await CSVGoodreadsImport.importGoodreadsCSV(context);
       }
-    } else if (Platform.isIOS) {}
+    } else if (Platform.isIOS) {
+      await CSVGoodreadsImport.importGoodreadsCSV(context);
+    }
 
     setState(() => _importingGoodreadsCSV = false);
   }
@@ -96,7 +100,9 @@ class _SettingsBackupScreenState extends State<SettingsBackupScreen> {
       } else {
         await CSVImport.importCSV(context);
       }
-    } else if (Platform.isIOS) {}
+    } else if (Platform.isIOS) {
+      await CSVImport.importCSV(context);
+    }
 
     setState(() => _importingCSV = false);
   }

@@ -1,5 +1,7 @@
 import 'dart:io';
 
+import 'package:file_picker/file_picker.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
 import 'package:easy_localization/easy_localization.dart';
@@ -8,6 +10,7 @@ import 'package:openreads/main.dart';
 import 'package:permission_handler/permission_handler.dart';
 
 import 'package:openreads/generated/locale_keys.g.dart';
+import 'package:shared_storage/shared_storage.dart';
 
 class BackupGeneral {
   static showInfoSnackbar(String message) {
@@ -123,5 +126,31 @@ class BackupGeneral {
         ),
       ),
     );
+  }
+
+  static Future<Uri?> pickFileAndroid() async {
+    final selectedUris = await openDocument(multiple: false);
+
+    if (selectedUris == null || selectedUris.isEmpty) return null;
+
+    return selectedUris[0];
+  }
+
+  static Future<Uint8List?> pickFileAndGetContent() async {
+    if (Platform.isAndroid) {
+      final fileLocation = await pickFileAndroid();
+      if (fileLocation != null) {
+        return await getDocumentContent(fileLocation);
+      }
+    } else if (Platform.isIOS) {
+      FilePickerResult? result = await FilePicker.platform.pickFiles();
+
+      if (result != null) {
+        File file = File(result.files.single.path!);
+        return file.readAsBytesSync();
+      }
+    }
+
+    return null;
   }
 }

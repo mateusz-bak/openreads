@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'dart:io';
 
+import 'package:file_picker/file_picker.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
@@ -38,10 +39,7 @@ class CSVImport {
 
   static Future importCSV(BuildContext context) async {
     try {
-      final csvURI = await openDocument(multiple: false);
-      if (csvURI == null || csvURI.isEmpty) return;
-
-      final csvBytes = await getDocumentContent(csvURI[0]);
+      final csvBytes = await BackupGeneral.pickFileAndGetContent();
       if (csvBytes == null) return;
 
       // ignore: use_build_context_synchronously

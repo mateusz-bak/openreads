@@ -1,5 +1,7 @@
 import 'dart:convert';
+import 'dart:io';
 
+import 'package:file_picker/file_picker.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
@@ -39,24 +41,32 @@ class CSVExport {
   }
 
   static Future exportCSV() async {
-    final csv = await _prepareCSVExport();
-    if (csv == null) return;
-
-    final selectedUriDir = await openDocumentTree();
-
-    if (selectedUriDir == null) {
-      return;
-    }
+    final csvString = await _prepareCSVExport();
+    if (csvString == null) return;
+    final csv = Uint8List.fromList(utf8.encode(csvString));
 
     final fileName = await _prepareCSVExportFileName();
 
     try {
-      createFileAsBytes(
-        selectedUriDir,
-        mimeType: 'text/csv',
-        displayName: fileName,
-        bytes: Uint8List.fromList(utf8.encode(csv)),
-      );
+      if (Platform.isAndroid) {
+        final selectedUriDir = await openDocumentTree();
+
+        if (selectedUriDir == null) return;
+
+        createFileAsBytes(
+          selectedUriDir,
+          mimeType: 'text/csv',
+          displayName: fileName,
+          bytes: csv,
+        );
+      } else if (Platform.isIOS) {
+        String? selectedDirectory =
+            await FilePicker.platform.getDirectoryPath();
+
+        if (selectedDirectory == null) return;
+
+        File('$selectedDirectory/$fileName').writeAsBytesSync(csv);
+      }
 
       BackupGeneral.showInfoSnackbar(LocaleKeys.export_successful.tr());
     } catch (e) {
