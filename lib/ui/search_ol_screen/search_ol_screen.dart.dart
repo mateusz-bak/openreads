@@ -7,6 +7,7 @@ import 'package:loading_animation_widget/loading_animation_widget.dart';
 import 'package:openreads/core/constants/enums.dart';
 import 'package:openreads/core/themes/app_theme.dart';
 import 'package:openreads/generated/locale_keys.g.dart';
+import 'package:openreads/logic/bloc/open_library_search_bloc/open_library_search_bloc.dart';
 import 'package:openreads/logic/cubit/edit_book_cubit.dart';
 import 'package:openreads/model/book.dart';
 import 'package:openreads/model/ol_search_result.dart';
@@ -33,6 +34,7 @@ class _SearchOLScreenState extends State<SearchOLScreen>
   String? _searchTerm;
   int? numberOfResults;
   ScanResult? scanResult;
+  int searchTimestamp = 0;
 
   bool searchActivated = false;
 
@@ -78,18 +80,24 @@ class _SearchOLScreenState extends State<SearchOLScreen>
   }
 
   Future<void> _fetchPage(int pageKey) async {
-    try {
-      if (_searchTerm == null) {
-        if (!mounted) return;
+    final searchTimestampSaved = DateTime.now().millisecondsSinceEpoch;
+    searchTimestamp = searchTimestampSaved;
 
-        return;
-      }
+    try {
+      if (_searchTerm == null) return;
 
       final newItems = await OpenLibraryService().getResults(
         query: _searchTerm!,
         offset: pageKey * _pageSize,
         limit: _pageSize,
+        searchType: _getOLSearchTypeEnum(
+          context.read<OpenLibrarySearchBloc>().state,
+        ),
       );
+
+      // Used to cancel the request if a new search is started
+      // to avoid showing results from a previous search
+      if (searchTimestamp != searchTimestampSaved) return;
 
       setState(() {
         numberOfResults = newItems.numFound;
@@ -112,10 +120,13 @@ class _SearchOLScreenState extends State<SearchOLScreen>
   }
 
   void _startNewSearch() {
+    if (_searchController.text.isEmpty) return;
+
     FocusManager.instance.primaryFocus?.unfocus();
     setState(() {
       searchActivated = true;
     });
+
     _searchTerm = _searchController.text;
     _pagingController.refresh();
   }
@@ -140,6 +151,39 @@ class _SearchOLScreenState extends State<SearchOLScreen>
       _searchTerm = result.rawContent;
       _pagingController.refresh();
     }
+  }
+
+  OLSearchType _getOLSearchTypeEnum(OpenLibrarySearchState state) {
+    if (state is OpenLibrarySearchGeneral) {
+      return OLSearchType.general;
+    } else if (state is OpenLibrarySearchAuthor) {
+      return OLSearchType.author;
+    } else if (state is OpenLibrarySearchTitle) {
+      return OLSearchType.title;
+    } else if (state is OpenLibrarySearchISBN) {
+      return OLSearchType.isbn;
+    } else {
+      return OLSearchType.general;
+    }
+  }
+
+  _changeSearchType(OLSearchType? value) async {
+    context.read<OpenLibrarySearchBloc>().add(
+          value == OLSearchType.general
+              ? const OpenLibrarySearchSetGeneral()
+              : value == OLSearchType.author
+                  ? const OpenLibrarySearchSetAuthor()
+                  : value == OLSearchType.title
+                      ? const OpenLibrarySearchSetTitle()
+                      : value == OLSearchType.isbn
+                          ? const OpenLibrarySearchSetISBN()
+                          : const OpenLibrarySearchSetGeneral(),
+        );
+
+    // Delay for the state to be updated
+    await Future.delayed(const Duration(milliseconds: 100));
+
+    _startNewSearch();
   }
 
   @override
@@ -178,7 +222,7 @@ class _SearchOLScreenState extends State<SearchOLScreen>
       body: Column(
         children: [
           Padding(
-            padding: const EdgeInsets.fromLTRB(10, 10, 10, 5),
+            padding: const EdgeInsets.fromLTRB(0, 10, 10, 5),
             child: Row(
               children: [
                 Expanded(
@@ -194,7 +238,7 @@ class _SearchOLScreenState extends State<SearchOLScreen>
                 ),
                 const SizedBox(width: 10),
                 SizedBox(
-                  height: 51,
+                  height: 48,
                   child: ElevatedButton(
                     onPressed: _startNewSearch,
                     style: ElevatedButton.styleFrom(
@@ -214,15 +258,49 @@ class _SearchOLScreenState extends State<SearchOLScreen>
               ],
             ),
           ),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              BlocBuilder<OpenLibrarySearchBloc, OpenLibrarySearchState>(
+                builder: (context, state) {
+                  return Wrap(
+                    crossAxisAlignment: WrapCrossAlignment.center,
+                    children: [
+                      for (var i = 0; i < 4; i++) ...[
+                        if (i != 0) const SizedBox(width: 5),
+                        Padding(
+                          padding: const EdgeInsets.only(right: 5),
+                          child: OLSearchRadio(
+                            searchType: OLSearchType.values[i],
+                            activeSearchType: _getOLSearchTypeEnum(state),
+                            onChanged: _changeSearchType,
+                          ),
+                        ),
+                      ],
+                    ],
+                  );
+                },
+              ),
+            ],
+          ),
+          const Padding(
+            padding: EdgeInsets.fromLTRB(10, 0, 10, 10),
+            child: Divider(height: 3),
+          ),
           (numberOfResults != null && numberOfResults! != 0)
               ? Padding(
-                  padding: const EdgeInsets.fromLTRB(18, 0, 10, 20),
+                  padding: const EdgeInsets.fromLTRB(10, 0, 10, 20),
                   child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    mainAxisAlignment: MainAxisAlignment.end,
                     children: [
-                      Text(
-                        '$numberOfResults ${LocaleKeys.results_lowercase.tr()}',
-                        style: const TextStyle(fontSize: 12),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Text(
+                            '$numberOfResults ${LocaleKeys.results_lowercase.tr()}',
+                            style: const TextStyle(fontSize: 12),
+                          ),
+                        ],
                       ),
                     ],
                   ),

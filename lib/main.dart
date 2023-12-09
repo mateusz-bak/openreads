@@ -12,6 +12,7 @@ import 'package:openreads/logic/bloc/challenge_bloc/challenge_bloc.dart';
 import 'package:openreads/logic/bloc/display_bloc/display_bloc.dart';
 import 'package:openreads/logic/bloc/migration_v1_to_v2_bloc/migration_v1_to_v2_bloc.dart';
 import 'package:openreads/logic/bloc/open_lib_bloc/open_lib_bloc.dart';
+import 'package:openreads/logic/bloc/open_library_search_bloc/open_library_search_bloc.dart';
 import 'package:openreads/logic/bloc/rating_type_bloc/rating_type_bloc.dart';
 import 'package:openreads/logic/bloc/sort_bloc/sort_bloc.dart';
 import 'package:openreads/logic/bloc/theme_bloc/theme_bloc.dart';
@@ -86,6 +87,8 @@ class App extends StatelessWidget {
           BlocProvider<WelcomeBloc>(create: (context) => WelcomeBloc()),
           BlocProvider<ChallengeBloc>(create: (context) => ChallengeBloc()),
           BlocProvider<RatingTypeBloc>(create: (context) => RatingTypeBloc()),
+          BlocProvider<OpenLibrarySearchBloc>(
+              create: (context) => OpenLibrarySearchBloc()),
           BlocProvider<MigrationV1ToV2Bloc>(
               create: (context) => MigrationV1ToV2Bloc()),
           BlocProvider<OpenLibBloc>(

@@ -41,3 +41,11 @@ enum BulkEditOption {
   format,
   author,
 }
+
+enum OLSearchType {
+  general,
+  title,
+  author,
+  isbn,
+  openlibraryId,
+}

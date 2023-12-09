@@ -256,4 +256,5 @@ abstract class LocaleKeys {
   static const select_all = 'select_all';
   static const only_editions_with_covers = 'only_editions_with_covers';
   static const tags = 'tags';
+  static const general_search = 'general_search';
 }
