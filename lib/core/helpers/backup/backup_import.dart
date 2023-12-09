@@ -77,16 +77,6 @@ class BackupImport {
     }
   }
 
-  static Future<Uri?> getFileUriAndroid() async {
-    final selectedUris = await openDocument(multiple: false);
-
-    if (selectedUris == null || selectedUris.isEmpty) {
-      return null;
-    }
-
-    return selectedUris[0];
-  }
-
   static Future restoreLocalBackup(BuildContext context) async {
     final tmpDir = appTempDirectory.absolute;
     _deleteTmpData(tmpDir);
@@ -95,7 +85,7 @@ class BackupImport {
     Uri? fileLocation;
 
     if (Platform.isAndroid) {
-      fileLocation = await getFileUriAndroid();
+      fileLocation = await BackupGeneral.pickFileAndroid();
       if (fileLocation != null) {
         backupFile = await getDocumentContent(fileLocation);
       }
