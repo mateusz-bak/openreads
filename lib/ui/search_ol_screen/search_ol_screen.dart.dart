@@ -132,6 +132,8 @@ class _SearchOLScreenState extends State<SearchOLScreen>
   }
 
   void _startScanner() async {
+    context.read<OpenLibrarySearchBloc>().add(const OpenLibrarySearchSetISBN());
+
     var result = await BarcodeScanner.scan(
       options: ScanOptions(
         strings: {
