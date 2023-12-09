@@ -49,7 +49,9 @@ class _SettingsBackupScreenState extends State<SettingsBackupScreen> {
       } else {
         await BackupExport.createLocalBackup(context);
       }
-    } else if (Platform.isIOS) {}
+    } else if (Platform.isIOS) {
+      await BackupExport.createLocalBackup(context);
+    }
 
     setState(() => _creatingLocal = false);
   }

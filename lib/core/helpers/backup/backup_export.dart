@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'dart:io';
 
+import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 
 import 'package:archive/archive.dart';
@@ -38,21 +39,30 @@ class BackupExport {
     final tmpBackupPath = await prepareTemporaryBackup(context);
     if (tmpBackupPath == null) return;
 
-    final selectedUriDir = await openDocumentTree();
-
-    if (selectedUriDir == null) {
-      return;
-    }
-
     final fileName = await _prepareBackupFileName();
 
     try {
-      createFileAsBytes(
-        selectedUriDir,
-        mimeType: '',
-        displayName: fileName,
-        bytes: File(tmpBackupPath).readAsBytesSync(),
-      );
+      if (Platform.isAndroid) {
+        final selectedUriDir = await openDocumentTree();
+        if (selectedUriDir == null) {
+          return;
+        }
+        createFileAsBytes(
+          selectedUriDir,
+          mimeType: '',
+          displayName: fileName,
+          bytes: File(tmpBackupPath).readAsBytesSync(),
+        );
+      } else if (Platform.isIOS) {
+        String? selectedDirectory =
+            await FilePicker.platform.getDirectoryPath();
+
+        if (selectedDirectory == null) return;
+
+        File('$selectedDirectory/$fileName').writeAsBytesSync(
+          File(tmpBackupPath).readAsBytesSync(),
+        );
+      }
 
       BackupGeneral.showInfoSnackbar(LocaleKeys.backup_successfull.tr());
     } catch (e) {
