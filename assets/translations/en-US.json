@@ -260,5 +260,6 @@
     "tags": {
         "one": "Tag",
         "other": "Tags"
-    }
+    },
+    "general_search": "General"
 }
