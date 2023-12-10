@@ -1,5 +1,3 @@
-import 'dart:math';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:openreads/core/themes/app_theme.dart';
@@ -31,7 +29,7 @@ class ReadStats extends StatelessWidget {
       MaterialPageRoute(
         builder: (context) => BookScreen(
           id: book!.id!,
-          heroTag: Random().nextInt(1000000).toString(),
+          heroTag: '${book?.id}',
         ),
       ),
     );
@@ -61,40 +59,65 @@ class ReadStats extends StatelessWidget {
                 ),
               ),
               const SizedBox(height: 5),
-              (iconData == null)
-                  ? Text(
-                      value,
-                      style: const TextStyle(
-                        fontSize: 16,
-                        fontWeight: FontWeight.normal,
-                      ),
-                    )
-                  : Row(
-                      children: [
-                        Text(
-                          value,
-                          style: const TextStyle(
-                            fontSize: 16,
-                            fontWeight: FontWeight.normal,
+              Row(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  book != null && book!.getCoverFile() != null
+                      ? Padding(
+                          padding: const EdgeInsets.only(right: 10),
+                          child: Hero(
+                            tag: '${book?.id}',
+                            child: Image.file(
+                              book!.getCoverFile()!,
+                              fit: BoxFit.cover,
+                              width: 60,
+                            ),
                           ),
-                        ),
-                        const SizedBox(width: 5),
-                        Icon(
-                          iconData,
-                          size: 16,
-                          color: ratingColor,
-                        ),
+                        )
+                      : const SizedBox(),
+                  Expanded(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        (iconData == null)
+                            ? Text(
+                                value,
+                                style: const TextStyle(
+                                  fontSize: 16,
+                                  fontWeight: FontWeight.normal,
+                                ),
+                              )
+                            : Row(
+                                children: [
+                                  Text(
+                                    value,
+                                    style: const TextStyle(
+                                      fontSize: 16,
+                                      fontWeight: FontWeight.normal,
+                                    ),
+                                  ),
+                                  const SizedBox(width: 5),
+                                  Icon(
+                                    iconData,
+                                    size: 16,
+                                    color: ratingColor,
+                                  ),
+                                ],
+                              ),
+                        (secondValue == null)
+                            ? const SizedBox()
+                            : Text(
+                                secondValue!,
+                                style: const TextStyle(
+                                  fontSize: 14,
+                                  fontWeight: FontWeight.normal,
+                                ),
+                              ),
                       ],
                     ),
-              (secondValue == null)
-                  ? const SizedBox()
-                  : Text(
-                      secondValue!,
-                      style: const TextStyle(
-                        fontSize: 16,
-                        fontWeight: FontWeight.normal,
-                      ),
-                    ),
+                  ),
+                ],
+              ),
             ],
           ),
         ),
