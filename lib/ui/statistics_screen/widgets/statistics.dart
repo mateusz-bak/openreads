@@ -559,6 +559,7 @@ class Statistics extends StatelessWidget {
           title: LocaleKeys.fastest_book.tr(),
           value: bookYearlyStat.title.toString(),
           secondValue: bookYearlyStat.value,
+          book: bookYearlyStat.book,
         );
       }
     }
@@ -577,6 +578,7 @@ class Statistics extends StatelessWidget {
           title: LocaleKeys.slowest_book.tr(),
           value: bookYearlyStat.title.toString(),
           secondValue: bookYearlyStat.value,
+          book: bookYearlyStat.book,
         );
       }
     }
