@@ -1,14 +1,19 @@
 import 'dart:io';
 
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:openreads/core/constants/constants.dart';
 import 'package:openreads/logic/cubit/current_book_cubit.dart';
 import 'package:openreads/main.dart';
 import 'package:openreads/model/book.dart';
+import 'package:openreads/resources/open_library_service.dart';
 import 'package:openreads/resources/repository.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:rxdart/rxdart.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:blurhash_dart/blurhash_dart.dart' as blurhash_dart;
+import 'package:image/image.dart' as img;
 
 import '../../core/constants/enums.dart';
 
@@ -266,5 +271,35 @@ class BookCubit extends Cubit {
     List<Book> books = await repository.getBooksWithSameAuthor(author);
 
     _booksWithSameAuthorFetcher.sink.add(books);
+  }
+
+  Future<bool> downloadCoverByISBN(Book book) async {
+    if (book.isbn == null) return false;
+    if (book.isbn!.isEmpty) return false;
+
+    final cover = await OpenLibraryService().getCover(book.isbn!);
+    if (cover == null) return false;
+
+    final file = File('${appDocumentsDirectory.path}/${book.id}.jpg');
+    await file.writeAsBytes(cover);
+
+    final blurHash = _generateBlurHash(cover);
+
+    await bookCubit.updateBook(book.copyWith(
+      hasCover: true,
+      blurHash: blurHash,
+    ));
+
+    return true;
+  }
+
+  static String? _generateBlurHash(Uint8List? cover) {
+    if (cover == null) return null;
+
+    return blurhash_dart.BlurHash.encode(
+      img.decodeImage(cover)!,
+      numCompX: blurHashX,
+      numCompY: blurHashY,
+    ).hash;
   }
 }

@@ -11,6 +11,7 @@ import 'package:openreads/core/constants/locale.dart';
 import 'package:openreads/core/themes/app_theme.dart';
 import 'package:openreads/generated/locale_keys.g.dart';
 import 'package:openreads/logic/bloc/theme_bloc/theme_bloc.dart';
+import 'package:openreads/ui/settings_screen/download_missing_covers_screen.dart';
 import 'package:openreads/ui/settings_screen/settings_backup_screen.dart';
 import 'package:openreads/ui/settings_screen/settings_apperance_screen.dart';
 import 'package:openreads/ui/settings_screen/widgets/widgets.dart';
@@ -486,6 +487,26 @@ class SettingsScreen extends StatelessWidget {
     );
   }
 
+  SettingsTile _buildDownloadMissingCovers(BuildContext context) {
+    return SettingsTile.navigation(
+      title: Text(
+        LocaleKeys.download_missing_covers.tr(),
+        style: const TextStyle(
+          fontSize: 16,
+        ),
+      ),
+      leading: const Icon(Icons.image),
+      onPressed: (context) {
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) => const DownloadMissingCoversScreen(),
+          ),
+        );
+      },
+    );
+  }
+
   SettingsTile _buildBackupSetting(BuildContext context) {
     return SettingsTile.navigation(
       title: Text(
@@ -638,6 +659,21 @@ class SettingsScreen extends StatelessWidget {
                       ),
                       SettingsSection(
                         title: Text(
+                          LocaleKeys.books_settings.tr(),
+                          style: TextStyle(
+                            fontSize: 16,
+                            fontWeight: FontWeight.bold,
+                            color: Theme.of(context).colorScheme.primary,
+                          ),
+                        ),
+                        tiles: <SettingsTile>[
+                          _buildTrashSetting(context),
+                          _buildUnfinishedSetting(context),
+                          _buildDownloadMissingCovers(context),
+                        ],
+                      ),
+                      SettingsSection(
+                        title: Text(
                           LocaleKeys.app.tr(),
                           style: TextStyle(
                             fontSize: 16,
@@ -646,11 +682,9 @@ class SettingsScreen extends StatelessWidget {
                           ),
                         ),
                         tiles: <SettingsTile>[
-                          _buildLanguageSetting(context),
-                          _buildTrashSetting(context),
-                          _buildUnfinishedSetting(context),
                           _buildBackupSetting(context),
                           _buildAppearanceSetting(context),
+                          _buildLanguageSetting(context),
                         ],
                       ),
                       SettingsSection(
