@@ -5,10 +5,10 @@ import 'package:openreads/generated/locale_keys.g.dart';
 
 class CoverPlaceholder extends StatelessWidget {
   const CoverPlaceholder({
-    Key? key,
+    super.key,
     required this.defaultHeight,
     required this.onPressed,
-  }) : super(key: key);
+  });
 
   final double defaultHeight;
   final Function() onPressed;
