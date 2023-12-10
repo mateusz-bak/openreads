@@ -11,7 +11,7 @@ class OpenLibraryService {
     required int limit,
     required OLSearchType searchType,
   }) async {
-    const baseUrl = 'http://openlibrary.org/';
+    const baseUrl = 'https://openlibrary.org/';
 
     final searchTypeKey = searchType == OLSearchType.general
         ? 'q'
@@ -32,7 +32,7 @@ class OpenLibraryService {
   }
 
   Future<OLEditionResult> getEdition(String edition) async {
-    const baseUrl = 'http://openlibrary.org';
+    const baseUrl = 'https://openlibrary.org';
 
     final response = await get(
       Uri.parse(
@@ -43,7 +43,7 @@ class OpenLibraryService {
   }
 
   Future<OLWorkResult> getWork(String work) async {
-    const baseUrl = 'http://openlibrary.org';
+    const baseUrl = 'https://openlibrary.org';
 
     final response = await get(
       Uri.parse(
