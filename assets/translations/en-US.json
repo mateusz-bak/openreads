@@ -261,5 +261,7 @@
         "one": "Tag",
         "other": "Tags"
     },
-    "general_search": "General"
+    "general_search": "General",
+    "no_search_results": "No results found",
+    "click_to_add_book_manually": "Click here to add the book manually"
 }

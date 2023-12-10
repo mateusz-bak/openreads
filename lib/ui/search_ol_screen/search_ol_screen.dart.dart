@@ -188,6 +188,30 @@ class _SearchOLScreenState extends State<SearchOLScreen>
     _startNewSearch();
   }
 
+  // Used when search results are empty
+  _addBookManually() {
+    FocusManager.instance.primaryFocus?.unfocus();
+
+    final searchType = _getOLSearchTypeEnum(
+      context.read<OpenLibrarySearchBloc>().state,
+    );
+
+    final book = Book(
+      title: searchType == OLSearchType.title ? _searchController.text : '',
+      author: searchType == OLSearchType.author ? _searchController.text : '',
+      status: 0,
+      isbn: searchType == OLSearchType.isbn ? _searchController.text : null,
+    );
+
+    context.read<EditBookCubit>().setBook(book);
+
+    Navigator.of(context).push(
+      MaterialPageRoute(
+        builder: (_) => const AddBookScreen(fromOpenLibrary: true),
+      ),
+    );
+  }
+
   @override
   void initState() {
     super.initState();
@@ -329,6 +353,40 @@ class _SearchOLScreenState extends State<SearchOLScreen>
                               color: Theme.of(context).colorScheme.primary,
                               size: 42,
                             ),
+                          ),
+                        ),
+                        noItemsFoundIndicatorBuilder: (_) => Center(
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              InkWell(
+                                borderRadius: BorderRadius.circular(
+                                  cornerRadius,
+                                ),
+                                onTap: _addBookManually,
+                                child: Padding(
+                                  padding: const EdgeInsets.all(10),
+                                  child: Column(
+                                    children: [
+                                      Text(
+                                        LocaleKeys.no_search_results.tr(),
+                                        style: const TextStyle(
+                                          fontSize: 18,
+                                        ),
+                                      ),
+                                      const SizedBox(height: 10),
+                                      Text(
+                                        LocaleKeys.click_to_add_book_manually
+                                            .tr(),
+                                        style: const TextStyle(
+                                          fontSize: 14,
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                              ),
+                            ],
                           ),
                         ),
                         itemBuilder: (context, item, index) => BookCardOL(
