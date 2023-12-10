@@ -137,6 +137,7 @@ class StatsBloc extends Bloc<StatsEvent, StatsState> {
   BookYearlyStat? _getSlowestReadBookInYear(List<Book> books, int? year) {
     int? slowestReadTimeInMs;
     String? slowestReadBook;
+    Book? slowestBook;
 
     for (Book book in books) {
       int? readTimeInMs;
@@ -152,11 +153,13 @@ class StatsBloc extends Bloc<StatsEvent, StatsState> {
       if (slowestReadTimeInMs == null) {
         slowestReadTimeInMs = readTimeInMs;
         slowestReadBook = '${book.title} - ${book.author}';
+        slowestBook = book;
       }
 
       if (readTimeInMs > slowestReadTimeInMs) {
         slowestReadTimeInMs = readTimeInMs;
         slowestReadBook = '${book.title} - ${book.author}';
+        slowestBook = book;
       }
     }
 
@@ -167,6 +170,7 @@ class StatsBloc extends Bloc<StatsEvent, StatsState> {
         title: slowestReadBook,
         value: ReadingTime.fromMilliSeconds(slowestReadTimeInMs).toString(),
         year: year,
+        book: slowestBook,
       );
     }
   }
@@ -209,6 +213,7 @@ class StatsBloc extends Bloc<StatsEvent, StatsState> {
   BookYearlyStat? _getFastestReadBookInYear(List<Book> books, int? year) {
     int? fastestReadTimeInMs;
     String? fastestReadBook;
+    Book? fastestBook;
 
     for (Book book in books) {
       int? readTimeInMs;
@@ -224,11 +229,13 @@ class StatsBloc extends Bloc<StatsEvent, StatsState> {
       if (fastestReadTimeInMs == null) {
         fastestReadTimeInMs = readTimeInMs;
         fastestReadBook = '${book.title} - ${book.author}';
+        fastestBook = book;
       }
 
       if (readTimeInMs < fastestReadTimeInMs) {
         fastestReadTimeInMs = readTimeInMs;
         fastestReadBook = '${book.title} - ${book.author}';
+        fastestBook = book;
       }
     }
 
@@ -239,6 +246,7 @@ class StatsBloc extends Bloc<StatsEvent, StatsState> {
         title: fastestReadBook,
         value: ReadingTime.fromMilliSeconds(fastestReadTimeInMs).toString(),
         year: year,
+        book: fastestBook,
       );
     }
   }
