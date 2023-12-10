@@ -13,5 +13,5 @@ jobs:
     - uses: actions/checkout@v3
     - uses: subosito/flutter-action@v2
       with:
-        flutter-version: '3.16.2'
+        flutter-version: ${{ vars.FLUTTER_VERSION }}
     - run: dart format --set-exit-if-changed lib

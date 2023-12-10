@@ -21,7 +21,7 @@ jobs:
       - name: Set up Flutter
         uses: subosito/flutter-action@v2
         with:
-          flutter-version: "3.16.2"
+          flutter-version: ${{ vars.FLUTTER_VERSION }}
 
       - name: Install dependencies
         run: |
