@@ -257,4 +257,6 @@ abstract class LocaleKeys {
   static const only_editions_with_covers = 'only_editions_with_covers';
   static const tags = 'tags';
   static const general_search = 'general_search';
+  static const no_search_results = 'no_search_results';
+  static const click_to_add_book_manually = 'click_to_add_book_manually';
 }
