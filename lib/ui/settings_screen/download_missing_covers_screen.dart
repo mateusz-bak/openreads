@@ -70,7 +70,7 @@ class _DownloadMissingCoversScreenState
               : const SizedBox(height: 4),
           Expanded(
             child: Padding(
-              padding: const EdgeInsets.fromLTRB(10, 20, 10, 20),
+              padding: const EdgeInsets.fromLTRB(20, 20, 10, 20),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
