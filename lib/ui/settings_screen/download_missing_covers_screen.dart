@@ -4,9 +4,16 @@ import 'package:openreads/core/themes/app_theme.dart';
 import 'package:openreads/generated/locale_keys.g.dart';
 import 'package:openreads/main.dart';
 import 'package:openreads/model/book.dart';
+import 'package:openreads/ui/books_screen/books_screen.dart';
+import 'package:openreads/ui/settings_screen/widgets/widgets.dart';
 
 class DownloadMissingCoversScreen extends StatefulWidget {
-  const DownloadMissingCoversScreen({super.key});
+  const DownloadMissingCoversScreen({
+    super.key,
+    this.bookIDs,
+  });
+
+  final List<int>? bookIDs;
 
   @override
   State<DownloadMissingCoversScreen> createState() =>
@@ -26,32 +33,99 @@ class _DownloadMissingCoversScreenState
       _progressValue = 0;
     });
 
-    final allBooks = await bookCubit.allBooks.first;
-
-    setState(() {
-      _progress = '$_progressValue/${allBooks.length}';
-    });
-
-    for (final book in allBooks) {
-      if (book.hasCover == false) {
-        final result = await bookCubit.downloadCoverByISBN(book);
-
-        if (result == true) {
-          setState(() {
-            downloadedCovers.add(book);
-          });
-        }
-      }
-
-      setState(() {
-        _progressValue++;
-        _progress = '$_progressValue/${allBooks.length}';
-      });
-    }
+    final books = await bookCubit.allBooks.first;
+    await _downloadCovers(books);
 
     setState(() {
       _isDownloading = false;
     });
+  }
+
+  _startCoverDownloadForImportedBooks() async {
+    setState(() {
+      _isDownloading = true;
+      _progressValue = 0;
+    });
+
+    final books = await _getListOfBooksFromListOfIDs(widget.bookIDs!);
+    await _downloadCovers(books);
+
+    setState(() {
+      _isDownloading = false;
+    });
+
+    // ignore: use_build_context_synchronously
+    Navigator.pushAndRemoveUntil(
+      context,
+      MaterialPageRoute(
+        builder: (context) => const BooksScreen(),
+      ),
+      (route) => false,
+    );
+  }
+
+  Future<List<Book>> _getListOfBooksFromListOfIDs(List<int> bookIDs) async {
+    final listOfBooks = List<Book>.empty(growable: true);
+
+    for (final bookID in widget.bookIDs!) {
+      final book = await bookCubit.getBook(bookID);
+
+      if (book != null) {
+        listOfBooks.add(book);
+      }
+    }
+
+    return listOfBooks;
+  }
+
+  _downloadCovers(List<Book> books) async {
+    setState(() {
+      _progress = '$_progressValue/${books.length}';
+    });
+
+    // Downloading covers 20 at a time
+    final asyncTasks = <Future>[];
+    const asyncTasksNumber = 20;
+
+    for (final book in books) {
+      if (book.hasCover == false) {
+        asyncTasks.add(_downloadCover(book));
+      }
+
+      if (asyncTasks.length == asyncTasksNumber) {
+        await Future.wait(asyncTasks);
+        asyncTasks.clear();
+      }
+
+      setState(() {
+        _progressValue++;
+        _progress = '$_progressValue/${books.length}';
+      });
+    }
+
+    // Wait for the rest of async tasks
+    await Future.wait(asyncTasks);
+  }
+
+  _downloadCover(Book book) async {
+    final result = await bookCubit.downloadCoverByISBN(book);
+
+    if (result == true) {
+      setState(() {
+        downloadedCovers.add(book);
+      });
+    }
+  }
+
+  @override
+  initState() {
+    super.initState();
+
+    // If bookIDs is not null, then we are downloading covers automatically
+    // for imported books
+    if (widget.bookIDs != null) {
+      _startCoverDownloadForImportedBooks();
+    }
   }
 
   @override
@@ -82,20 +156,9 @@ class _DownloadMissingCoversScreenState
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      ElevatedButton(
-                        onPressed: _startCoverDownload,
-                        style: ElevatedButton.styleFrom(
-                          elevation: 0,
-                          backgroundColor:
-                              Theme.of(context).colorScheme.secondary,
-                          foregroundColor:
-                              Theme.of(context).colorScheme.onSecondary,
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(cornerRadius),
-                          ),
-                        ),
-                        child: Text(LocaleKeys.start_button.tr()),
-                      ),
+                      widget.bookIDs == null
+                          ? _buildStartButton(context)
+                          : const SizedBox(),
                       const SizedBox(width: 20),
                       Text(
                         _progress,
@@ -111,58 +174,49 @@ class _DownloadMissingCoversScreenState
                         )
                       : const SizedBox(),
                   const SizedBox(height: 10),
-                  Expanded(
-                    child: Scrollbar(
-                      child: ListView.builder(
-                        itemCount: downloadedCovers.length,
-                        itemBuilder: (BuildContext context, int index) {
-                          final book = downloadedCovers[index];
-                          final coverFile = book.getCoverFile();
-
-                          return Padding(
-                            padding: const EdgeInsets.only(bottom: 10),
-                            child: Row(
-                              children: [
-                                ClipRRect(
-                                  borderRadius:
-                                      BorderRadius.circular(cornerRadius),
-                                  child: coverFile != null
-                                      ? Image.file(
-                                          coverFile,
-                                          fit: BoxFit.cover,
-                                          width: 100,
-                                        )
-                                      : const SizedBox(),
-                                ),
-                                const SizedBox(width: 10),
-                                Expanded(
-                                  child: Column(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                    children: [
-                                      Text(
-                                        book.title,
-                                        style: const TextStyle(fontSize: 16),
-                                      ),
-                                      Text(
-                                        book.author,
-                                        style: const TextStyle(fontSize: 16),
-                                      ),
-                                    ],
-                                  ),
-                                ),
-                              ],
-                            ),
-                          );
-                        },
-                      ),
-                    ),
-                  ),
+                  _buildGridOfCovers(),
                 ],
               ),
             ),
           ),
         ],
+      ),
+    );
+  }
+
+  ElevatedButton _buildStartButton(BuildContext context) {
+    return ElevatedButton(
+      onPressed: _startCoverDownload,
+      style: ElevatedButton.styleFrom(
+        elevation: 0,
+        backgroundColor: Theme.of(context).colorScheme.secondary,
+        foregroundColor: Theme.of(context).colorScheme.onSecondary,
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(cornerRadius),
+        ),
+      ),
+      child: Text(LocaleKeys.start_button.tr()),
+    );
+  }
+
+  Expanded _buildGridOfCovers() {
+    return Expanded(
+      child: Scrollbar(
+        child: GridView.builder(
+          itemCount: downloadedCovers.length,
+          itemBuilder: (BuildContext context, int index) {
+            final book = downloadedCovers[downloadedCovers.length - index - 1];
+            final coverFile = book.getCoverFile();
+
+            return MissingCoverView(coverFile: coverFile);
+          },
+          gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+            crossAxisCount: 4,
+            crossAxisSpacing: 5,
+            mainAxisSpacing: 5,
+            childAspectRatio: 1 / 1.5,
+          ),
+        ),
       ),
     );
   }

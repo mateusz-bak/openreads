@@ -32,7 +32,7 @@ class Repository {
 
   Future deleteBook(int index) => dbController.deleteBook(index);
 
-  Future getBook(int index) => dbController.getBook(index);
+  Future<Book?> getBook(int index) => dbController.getBook(index);
 
   Future<List<Book>> getDeletedBooks() => dbController.getDeletedBooks();
 

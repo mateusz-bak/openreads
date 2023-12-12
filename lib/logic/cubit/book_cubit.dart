@@ -139,13 +139,18 @@ class BookCubit extends Cubit {
     }
   }
 
-  Future importAdditionalBooks(List<Book> books) async {
+  Future<List<int>> importAdditionalBooks(List<Book> books) async {
+    final importedBookIDs = List<int>.empty(growable: true);
+
     for (var book in books) {
-      await repository.insertBook(book);
+      final id = await repository.insertBook(book);
+      importedBookIDs.add(id);
     }
 
     getAllBooksByStatus();
     getAllBooks();
+
+    return importedBookIDs;
   }
 
   Future _saveCoverToStorage(int? bookID, File? coverFile) async {
@@ -188,9 +193,11 @@ class BookCubit extends Cubit {
     getAllBooks();
   }
 
-  getBook(int id) async {
-    Book book = await repository.getBook(id);
+  Future<Book?> getBook(int id) async {
+    Book? book = await repository.getBook(id);
     _bookFetcher.sink.add(book);
+
+    return book;
   }
 
   List<int> _getFinishedYears(List<Book> books) {

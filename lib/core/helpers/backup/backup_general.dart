@@ -7,6 +7,8 @@ import 'package:flutter/material.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:filesystem_picker/filesystem_picker.dart';
 import 'package:openreads/main.dart';
+import 'package:openreads/ui/books_screen/books_screen.dart';
+import 'package:openreads/ui/settings_screen/download_missing_covers_screen.dart';
 import 'package:permission_handler/permission_handler.dart';
 
 import 'package:openreads/generated/locale_keys.g.dart';
@@ -152,5 +154,56 @@ class BackupGeneral {
     }
 
     return null;
+  }
+
+  static void showRestoreMissingCoversDialog({
+    required BuildContext context,
+    required List<int> bookIDs,
+  }) {
+    showDialog(
+      context: context,
+      builder: (context) {
+        return Builder(builder: (context) {
+          return AlertDialog(
+            title: Text(
+              LocaleKeys.import_successful.tr(),
+            ),
+            content: Text(LocaleKeys.try_downloading_covers.tr()),
+            actionsAlignment: MainAxisAlignment.spaceBetween,
+            actions: [
+              FilledButton.tonal(
+                onPressed: () {
+                  Navigator.of(context).pop();
+
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => DownloadMissingCoversScreen(
+                        bookIDs: bookIDs,
+                      ),
+                    ),
+                  );
+                },
+                child: Text(LocaleKeys.yes.tr()),
+              ),
+              FilledButton.tonal(
+                onPressed: () {
+                  Navigator.of(context).pop();
+
+                  Navigator.pushAndRemoveUntil(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => const BooksScreen(),
+                    ),
+                    (route) => false,
+                  );
+                },
+                child: Text(LocaleKeys.no.tr()),
+              ),
+            ],
+          );
+        });
+      },
+    );
   }
 }

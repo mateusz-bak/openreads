@@ -29,9 +29,13 @@ class CSVImport {
 
       // ignore: use_build_context_synchronously
       final books = await _parseCSV(context, csvBytes);
-      await bookCubit.importAdditionalBooks(books);
+      final importedBooksIDs = await bookCubit.importAdditionalBooks(books);
 
-      BackupGeneral.showInfoSnackbar(LocaleKeys.import_successful.tr());
+      // ignore: use_build_context_synchronously
+      BackupGeneral.showRestoreMissingCoversDialog(
+        bookIDs: importedBooksIDs,
+        context: context,
+      );
     } catch (e) {
       BackupGeneral.showInfoSnackbar(e.toString());
     }
@@ -44,9 +48,13 @@ class CSVImport {
 
       // ignore: use_build_context_synchronously
       final books = await _parseCSV(context, csvBytes);
-      await bookCubit.importAdditionalBooks(books);
+      final importedBooksIDs = await bookCubit.importAdditionalBooks(books);
 
-      BackupGeneral.showInfoSnackbar(LocaleKeys.import_successful.tr());
+      // ignore: use_build_context_synchronously
+      BackupGeneral.showRestoreMissingCoversDialog(
+        bookIDs: importedBooksIDs,
+        context: context,
+      );
     } catch (e) {
       BackupGeneral.showInfoSnackbar(e.toString());
     }
