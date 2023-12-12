@@ -7,6 +7,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:openreads/core/helpers/backup/backup_helpers.dart';
+import 'package:openreads/core/helpers/backup/csv_bookwyrm_import.dart';
 import 'package:openreads/core/helpers/backup/csv_import.dart';
 import 'package:openreads/logic/bloc/migration_v1_to_v2_bloc/migration_v1_to_v2_bloc.dart';
 import 'package:openreads/generated/locale_keys.g.dart';
@@ -34,6 +35,7 @@ class _SettingsBackupScreenState extends State<SettingsBackupScreen> {
   bool _restoringLocal = false;
   bool _exportingCSV = false;
   bool _importingGoodreadsCSV = false;
+  bool _importingBookwyrmCSV = false;
   bool _importingCSV = false;
 
   late DeviceInfoPlugin deviceInfo;
@@ -88,6 +90,23 @@ class _SettingsBackupScreenState extends State<SettingsBackupScreen> {
     }
 
     setState(() => _importingGoodreadsCSV = false);
+  }
+
+  _startImportingBookwyrmCSV(context) async {
+    setState(() => _importingBookwyrmCSV = true);
+
+    if (Platform.isAndroid) {
+      if (androidInfo.version.sdkInt < 30) {
+        await BackupGeneral.requestStoragePermission(context);
+        await CSVBookwyrmImport.importBookwyrmCSVLegacyStorage(context);
+      } else {
+        await CSVBookwyrmImport.importBookwyrmCSV(context);
+      }
+    } else if (Platform.isIOS) {
+      await CSVBookwyrmImport.importBookwyrmCSV(context);
+    }
+
+    setState(() => _importingBookwyrmCSV = false);
   }
 
   _startImportingCSV(context) async {
@@ -236,6 +255,7 @@ class _SettingsBackupScreenState extends State<SettingsBackupScreen> {
                             _buildExportAsCSV(),
                             _buildImportCSV(),
                             _buildImportGoodreadsCSV(),
+                            _buildImportBookwyrmCSV(),
                           ],
                         ),
                       ],
@@ -461,6 +481,25 @@ class _SettingsBackupScreenState extends State<SettingsBackupScreen> {
             )
           : const Icon(FontAwesomeIcons.g),
       onPressed: _startImportingGoodreadsCSV,
+    );
+  }
+
+  SettingsTile _buildImportBookwyrmCSV() {
+    return SettingsTile(
+      title: Text(
+        LocaleKeys.import_bookwyrm_csv.tr(),
+        style: const TextStyle(
+          fontSize: 16,
+        ),
+      ),
+      leading: (_importingBookwyrmCSV)
+          ? const SizedBox(
+              width: 24,
+              height: 24,
+              child: CircularProgressIndicator(),
+            )
+          : const Icon(FontAwesomeIcons.b),
+      onPressed: _startImportingBookwyrmCSV,
     );
   }
 
