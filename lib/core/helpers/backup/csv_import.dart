@@ -67,7 +67,7 @@ class CSVImport {
     final books = List<Book>.empty(growable: true);
 
     final csvString = utf8.decode(csvBytes);
-    final csv = const CsvToListConverter().convert(csvString, eol: '\n');
+    final csv = const CsvToListConverter().convert(csvString, eol: '\r\n');
 
     for (var i = 0; i < csv.length; i++) {
       // Skip first row with headers
