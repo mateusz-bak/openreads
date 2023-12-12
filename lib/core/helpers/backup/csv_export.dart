@@ -10,7 +10,7 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:shared_storage/shared_storage.dart';
 
 import 'package:openreads/core/constants/enums.dart';
-import 'package:openreads/core/helpers/backup/backup_helpers.dart';
+import 'package:openreads/core/helpers/backup/backup.dart';
 import 'package:openreads/generated/locale_keys.g.dart';
 import 'package:openreads/main.dart';
 

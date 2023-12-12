@@ -10,7 +10,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:package_info_plus/package_info_plus.dart';
 import 'package:shared_storage/shared_storage.dart';
 
-import 'package:openreads/core/helpers/backup/backup_helpers.dart';
+import 'package:openreads/core/helpers/backup/backup.dart';
 import 'package:openreads/generated/locale_keys.g.dart';
 import 'package:openreads/logic/bloc/challenge_bloc/challenge_bloc.dart';
 import 'package:openreads/main.dart';

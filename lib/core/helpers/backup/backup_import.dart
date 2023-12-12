@@ -16,7 +16,7 @@ import 'package:path/path.dart' as path;
 import 'package:blurhash_dart/blurhash_dart.dart' as blurhash_dart;
 import 'package:image/image.dart' as img;
 
-import 'package:openreads/core/helpers/backup/backup_helpers.dart';
+import 'package:openreads/core/helpers/backup/backup.dart';
 import 'package:openreads/generated/locale_keys.g.dart';
 import 'package:openreads/logic/bloc/challenge_bloc/challenge_bloc.dart';
 import 'package:openreads/main.dart';

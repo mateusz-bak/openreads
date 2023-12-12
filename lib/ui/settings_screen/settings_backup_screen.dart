@@ -6,9 +6,7 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:openreads/core/helpers/backup/backup_helpers.dart';
-import 'package:openreads/core/helpers/backup/csv_bookwyrm_import.dart';
-import 'package:openreads/core/helpers/backup/csv_import.dart';
+import 'package:openreads/core/helpers/backup/backup.dart';
 import 'package:openreads/logic/bloc/migration_v1_to_v2_bloc/migration_v1_to_v2_bloc.dart';
 import 'package:openreads/generated/locale_keys.g.dart';
 import 'package:openreads/logic/bloc/theme_bloc/theme_bloc.dart';
@@ -81,12 +79,12 @@ class _SettingsBackupScreenState extends State<SettingsBackupScreen> {
     if (Platform.isAndroid) {
       if (androidInfo.version.sdkInt < 30) {
         await BackupGeneral.requestStoragePermission(context);
-        await CSVGoodreadsImport.importGoodreadsCSVLegacyStorage(context);
+        await CSVImportGoodreads.importCSVLegacyStorage(context);
       } else {
-        await CSVGoodreadsImport.importGoodreadsCSV(context);
+        await CSVImportGoodreads.importCSV(context);
       }
     } else if (Platform.isIOS) {
-      await CSVGoodreadsImport.importGoodreadsCSV(context);
+      await CSVImportGoodreads.importCSV(context);
     }
 
     setState(() => _importingGoodreadsCSV = false);
@@ -98,12 +96,12 @@ class _SettingsBackupScreenState extends State<SettingsBackupScreen> {
     if (Platform.isAndroid) {
       if (androidInfo.version.sdkInt < 30) {
         await BackupGeneral.requestStoragePermission(context);
-        await CSVBookwyrmImport.importBookwyrmCSVLegacyStorage(context);
+        await CSVImportBookwyrm.importCSVLegacyStorage(context);
       } else {
-        await CSVBookwyrmImport.importBookwyrmCSV(context);
+        await CSVImportBookwyrm.importCSV(context);
       }
     } else if (Platform.isIOS) {
-      await CSVBookwyrmImport.importBookwyrmCSV(context);
+      await CSVImportBookwyrm.importCSV(context);
     }
 
     setState(() => _importingBookwyrmCSV = false);
@@ -115,12 +113,12 @@ class _SettingsBackupScreenState extends State<SettingsBackupScreen> {
     if (Platform.isAndroid) {
       if (androidInfo.version.sdkInt < 30) {
         await BackupGeneral.requestStoragePermission(context);
-        await CSVImport.importCSVLegacyStorage(context);
+        await CSVImportOpenreads.importCSVLegacyStorage(context);
       } else {
-        await CSVImport.importCSV(context);
+        await CSVImportOpenreads.importCSV(context);
       }
     } else if (Platform.isIOS) {
-      await CSVImport.importCSV(context);
+      await CSVImportOpenreads.importCSV(context);
     }
 
     setState(() => _importingCSV = false);
