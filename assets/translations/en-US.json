@@ -271,5 +271,6 @@
     "books_settings": "Books",
     "download_missing_covers": "Download missing covers",
     "download_missing_covers_explanation": "Download missing covers for books that have ISBN set",
-    "downloaded_covers": "Downloaded covers:"
+    "downloaded_covers": "Downloaded covers:",
+    "try_downloading_covers": "Do you want to try downloading missing covers for imported books?"
 }

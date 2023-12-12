@@ -1,13 +1,11 @@
 import 'dart:convert';
 import 'dart:io';
 
-import 'package:file_picker/file_picker.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
 import 'package:csv/csv.dart';
 import 'package:easy_localization/easy_localization.dart';
-import 'package:shared_storage/shared_storage.dart';
 
 import 'package:openreads/core/constants/enums.dart';
 import 'package:openreads/core/helpers/backup/backup_helpers.dart';
@@ -28,9 +26,13 @@ class CSVGoodreadsImport {
 
       // ignore: use_build_context_synchronously
       final books = await _parseGoodreadsCSV(context, csvBytes);
-      await bookCubit.importAdditionalBooks(books);
+      final importedBooksIDs = await bookCubit.importAdditionalBooks(books);
 
-      BackupGeneral.showInfoSnackbar(LocaleKeys.import_successful.tr());
+      // ignore: use_build_context_synchronously
+      BackupGeneral.showRestoreMissingCoversDialog(
+        bookIDs: importedBooksIDs,
+        context: context,
+      );
     } catch (e) {
       BackupGeneral.showInfoSnackbar(e.toString());
     }
@@ -43,9 +45,13 @@ class CSVGoodreadsImport {
 
       // ignore: use_build_context_synchronously
       final books = await _parseGoodreadsCSV(context, csvBytes);
-      await bookCubit.importAdditionalBooks(books);
+      final importedBooksIDs = await bookCubit.importAdditionalBooks(books);
 
-      BackupGeneral.showInfoSnackbar(LocaleKeys.import_successful.tr());
+      // ignore: use_build_context_synchronously
+      BackupGeneral.showRestoreMissingCoversDialog(
+        bookIDs: importedBooksIDs,
+        context: context,
+      );
     } catch (e) {
       BackupGeneral.showInfoSnackbar(e.toString());
     }

@@ -268,4 +268,5 @@ abstract class LocaleKeys {
   static const download_missing_covers_explanation =
       'download_missing_covers_explanation';
   static const downloaded_covers = 'downloaded_covers';
+  static const try_downloading_covers = 'try_downloading_covers';
 }
