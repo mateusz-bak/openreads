@@ -8,13 +8,13 @@ import 'package:csv/csv.dart';
 import 'package:easy_localization/easy_localization.dart';
 
 import 'package:openreads/core/constants/enums.dart';
-import 'package:openreads/core/helpers/backup/backup_helpers.dart';
+import 'package:openreads/core/helpers/backup/backup.dart';
 import 'package:openreads/generated/locale_keys.g.dart';
 import 'package:openreads/model/book.dart';
 import 'package:openreads/main.dart';
 
-class CSVGoodreadsImport {
-  static importGoodreadsCSVLegacyStorage(BuildContext context) async {
+class CSVImportGoodreads {
+  static importCSVLegacyStorage(BuildContext context) async {
     try {
       final csvPath = await BackupGeneral.openFilePicker(
         context,
@@ -25,7 +25,7 @@ class CSVGoodreadsImport {
       final csvBytes = await File(csvPath).readAsBytes();
 
       // ignore: use_build_context_synchronously
-      final books = await _parseGoodreadsCSV(context, csvBytes);
+      final books = await _parseCSV(context, csvBytes);
       final importedBooksIDs = await bookCubit.importAdditionalBooks(books);
 
       // ignore: use_build_context_synchronously
@@ -38,13 +38,13 @@ class CSVGoodreadsImport {
     }
   }
 
-  static Future importGoodreadsCSV(BuildContext context) async {
+  static Future importCSV(BuildContext context) async {
     try {
       final csvBytes = await BackupGeneral.pickFileAndGetContent();
       if (csvBytes == null) return;
 
       // ignore: use_build_context_synchronously
-      final books = await _parseGoodreadsCSV(context, csvBytes);
+      final books = await _parseCSV(context, csvBytes);
       final importedBooksIDs = await bookCubit.importAdditionalBooks(books);
 
       // ignore: use_build_context_synchronously
@@ -57,7 +57,7 @@ class CSVGoodreadsImport {
     }
   }
 
-  static Future<List<Book>> _parseGoodreadsCSV(
+  static Future<List<Book>> _parseCSV(
     BuildContext context,
     Uint8List csvBytes,
   ) async {
@@ -91,7 +91,7 @@ class CSVGoodreadsImport {
       if (i == 0) continue;
 
       // ignore: use_build_context_synchronously
-      final book = _parseGoodreadsBook(
+      final book = _parseBook(
         context,
         i,
         csv: csv,
@@ -177,7 +177,7 @@ class CSVGoodreadsImport {
     );
   }
 
-  static Book? _parseGoodreadsBook(
+  static Book? _parseBook(
     BuildContext context,
     int i, {
     required List<List> csv,

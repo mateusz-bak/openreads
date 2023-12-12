@@ -5,12 +5,12 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:csv/csv.dart';
 
-import 'package:openreads/core/helpers/backup/backup_helpers.dart';
+import 'package:openreads/core/helpers/backup/backup.dart';
 import 'package:openreads/model/book.dart';
 import 'package:openreads/main.dart';
 
-class CSVBookwyrmImport {
-  static importBookwyrmCSVLegacyStorage(BuildContext context) async {
+class CSVImportBookwyrm {
+  static importCSVLegacyStorage(BuildContext context) async {
     try {
       final csvPath = await BackupGeneral.openFilePicker(
         context,
@@ -21,7 +21,7 @@ class CSVBookwyrmImport {
       final csvBytes = await File(csvPath).readAsBytes();
 
       // ignore: use_build_context_synchronously
-      final books = await _parseBookwyrmCSV(context, csvBytes);
+      final books = await _parseCSV(context, csvBytes);
       final importedBooksIDs = await bookCubit.importAdditionalBooks(books);
 
       // ignore: use_build_context_synchronously
@@ -34,13 +34,13 @@ class CSVBookwyrmImport {
     }
   }
 
-  static Future importBookwyrmCSV(BuildContext context) async {
+  static Future importCSV(BuildContext context) async {
     try {
       final csvBytes = await BackupGeneral.pickFileAndGetContent();
       if (csvBytes == null) return;
 
       // ignore: use_build_context_synchronously
-      final books = await _parseBookwyrmCSV(context, csvBytes);
+      final books = await _parseCSV(context, csvBytes);
       final importedBooksIDs = await bookCubit.importAdditionalBooks(books);
 
       // ignore: use_build_context_synchronously
@@ -53,7 +53,7 @@ class CSVBookwyrmImport {
     }
   }
 
-  static Future<List<Book>> _parseBookwyrmCSV(
+  static Future<List<Book>> _parseCSV(
     BuildContext context,
     Uint8List csvBytes,
   ) async {
@@ -67,7 +67,7 @@ class CSVBookwyrmImport {
       if (i == 0) continue;
 
       // ignore: use_build_context_synchronously
-      final book = _parseBookwyrmBook(
+      final book = _parseBook(
         context,
         i,
         csv,
@@ -81,7 +81,7 @@ class CSVBookwyrmImport {
     return books;
   }
 
-  static Book? _parseBookwyrmBook(
+  static Book? _parseBook(
     BuildContext context,
     int i,
     List<List> csv,
