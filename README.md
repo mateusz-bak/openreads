@@ -60,6 +60,13 @@ Fund the project, or simply say thank you.
 <a href='https://github.com/sponsors/mateusz-bak'><img height=50 alt='Become a GitHub Sponsor' src='https://raw.githubusercontent.com/mateusz-bak/openreads-android/master/doc/github/button_become-a-github-sponsor.png'/></a>
 <a href="https://www.buymeacoffee.com/mateuszbak"><img src="https://cdn.buymeacoffee.com/buttons/v2/default-yellow.png" height="50"></a>
 
+### Spread the word about Openreads
+#### Vote on Alternativeto.net
+:thumbsup: [Alternativeto.net link](https://alternativeto.net/software/openreads/about/)
+
+#### Give a star to the project
+:star: [Github.com link](https://github.com/mateusz-bak/openreads-android)
+
 ### Translate Openreads
 
 Go to [Weblate](https://hosted.weblate.org/engage/openreads/) and help with the translations.
