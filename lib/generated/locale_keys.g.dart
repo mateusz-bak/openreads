@@ -28,11 +28,13 @@ abstract class LocaleKeys {
   static const your_rating = 'your_rating';
   static const edit_book = 'edit_book';
   static const delete_book = 'delete_book';
+  static const delete_books = 'delete_books';
   static const delete_permanently = 'delete_permanently';
   static const restore_book = 'restore_book';
   static const yes = 'yes';
   static const no = 'no';
   static const delete_book_question = 'delete_book_question';
+  static const delete_books_question = 'delete_books_question';
   static const delete_perm_question = 'delete_perm_question';
   static const restore_book_question = 'restore_book_question';
   static const finish_reading = 'finish_reading';

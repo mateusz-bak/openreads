@@ -2,6 +2,7 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_speed_dial/flutter_speed_dial.dart';
 import 'package:openreads/core/constants/enums.dart';
+import 'package:openreads/core/themes/app_theme.dart';
 import 'package:openreads/generated/locale_keys.g.dart';
 import 'package:openreads/main.dart';
 import 'package:openreads/ui/add_book_screen/widgets/book_text_field.dart';
@@ -11,15 +12,17 @@ class MultiSelectFAB extends StatelessWidget {
   MultiSelectFAB({
     super.key,
     required this.selectedBookIds,
+    required this.resetMultiselectMode,
   });
 
   final Set<int> selectedBookIds;
+  final Function resetMultiselectMode;
 
   final bookTypes = [
-    'Paperback',
-    'Hardcover',
-    'Ebook',
-    'Audiobook',
+    LocaleKeys.book_format_paperback.tr(),
+    LocaleKeys.book_format_hardcover.tr(),
+    LocaleKeys.book_format_ebook.tr(),
+    LocaleKeys.book_format_audiobook.tr(),
   ];
 
   final _authorCtrl = TextEditingController();
@@ -33,7 +36,10 @@ class MultiSelectFAB extends StatelessWidget {
       case BulkEditOption.author:
         label = LocaleKeys.change_books_author.tr();
         break;
+      default:
+        label = '';
     }
+
     return label;
   }
 
@@ -103,6 +109,57 @@ class MultiSelectFAB extends StatelessWidget {
     return true;
   }
 
+  _bulkDeleteBooks(BuildContext context) {
+    showDialog(
+        context: context,
+        builder: (BuildContext dialogContext) {
+          return AlertDialog(
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(cornerRadius),
+            ),
+            title: Text(
+              LocaleKeys.delete_books_question.tr(),
+              style: const TextStyle(fontSize: 18),
+            ),
+            actionsAlignment: MainAxisAlignment.spaceBetween,
+            actions: [
+              FilledButton.tonal(
+                onPressed: () {
+                  Navigator.of(context).pop();
+                },
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 10),
+                  child: Text(LocaleKeys.no.tr()),
+                ),
+              ),
+              FilledButton(
+                onPressed: () async {
+                  for (final bookId in selectedBookIds) {
+                    final book = await bookCubit.getBook(bookId);
+
+                    if (book == null) continue;
+
+                    await bookCubit.updateBook(book.copyWith(
+                      deleted: true,
+                    ));
+                  }
+
+                  bookCubit.getDeletedBooks();
+
+                  Navigator.of(context).pop();
+                  resetMultiselectMode();
+                  // Navigator.of(context).pop();
+                },
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 10),
+                  child: Text(LocaleKeys.yes.tr()),
+                ),
+              ),
+            ],
+          );
+        });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -111,7 +168,9 @@ class MultiSelectFAB extends StatelessWidget {
         spacing: 3,
         dialRoot: (ctx, open, toggleChildren) {
           return FloatingActionButton(
-              onPressed: toggleChildren, child: const Icon(Icons.create));
+            onPressed: toggleChildren,
+            child: const Icon(Icons.create),
+          );
         },
         childPadding: const EdgeInsets.all(5),
         spaceBetweenChildren: 4,
@@ -139,6 +198,12 @@ class MultiSelectFAB extends StatelessWidget {
                 BulkEditOption.author,
               );
             },
+          ),
+          SpeedDialChild(
+            child: const Icon(Icons.delete),
+            backgroundColor: Theme.of(context).colorScheme.secondaryContainer,
+            label: LocaleKeys.delete_books.tr(),
+            onTap: () => _bulkDeleteBooks(context),
           ),
         ],
       ),
