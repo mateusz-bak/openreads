@@ -40,6 +40,7 @@ enum BookFormat {
 enum BulkEditOption {
   format,
   author,
+  delete,
 }
 
 enum OLSearchType {

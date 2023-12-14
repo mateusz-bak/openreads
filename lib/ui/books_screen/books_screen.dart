@@ -642,6 +642,7 @@ class _BooksScreenState extends State<BooksScreen>
     return selectedBookIds.isNotEmpty
         ? MultiSelectFAB(
             selectedBookIds: selectedBookIds,
+            resetMultiselectMode: _resetMultiselectMode,
           )
         : null;
   }
