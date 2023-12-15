@@ -109,55 +109,58 @@ class MultiSelectFAB extends StatelessWidget {
     return true;
   }
 
-  _bulkDeleteBooks(BuildContext context) {
+  _showDeleteBooksDialog(BuildContext context) {
     showDialog(
-        context: context,
-        builder: (BuildContext dialogContext) {
-          return AlertDialog(
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(cornerRadius),
-            ),
-            title: Text(
-              LocaleKeys.delete_books_question.tr(),
-              style: const TextStyle(fontSize: 18),
-            ),
-            actionsAlignment: MainAxisAlignment.spaceBetween,
-            actions: [
-              FilledButton.tonal(
-                onPressed: () {
-                  Navigator.of(context).pop();
-                },
-                child: Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 10),
-                  child: Text(LocaleKeys.no.tr()),
-                ),
+      context: context,
+      builder: (BuildContext dialogContext) {
+        return AlertDialog(
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(cornerRadius),
+          ),
+          title: Text(
+            LocaleKeys.delete_books_question.tr(),
+            style: const TextStyle(fontSize: 18),
+          ),
+          actionsAlignment: MainAxisAlignment.spaceBetween,
+          actions: [
+            FilledButton.tonal(
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+              child: Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 10),
+                child: Text(LocaleKeys.no.tr()),
               ),
-              FilledButton(
-                onPressed: () async {
-                  for (final bookId in selectedBookIds) {
-                    final book = await bookCubit.getBook(bookId);
-
-                    if (book == null) continue;
-
-                    await bookCubit.updateBook(book.copyWith(
-                      deleted: true,
-                    ));
-                  }
-
-                  bookCubit.getDeletedBooks();
-
-                  Navigator.of(context).pop();
-                  resetMultiselectMode();
-                  // Navigator.of(context).pop();
-                },
-                child: Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 10),
-                  child: Text(LocaleKeys.yes.tr()),
-                ),
+            ),
+            FilledButton(
+              onPressed: () => _bulkDeleteBooks(context),
+              child: Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 10),
+                child: Text(LocaleKeys.yes.tr()),
               ),
-            ],
-          );
-        });
+            ),
+          ],
+        );
+      },
+    );
+  }
+
+  _bulkDeleteBooks(BuildContext context) async {
+    for (final bookId in selectedBookIds) {
+      final book = await bookCubit.getBook(bookId);
+
+      if (book == null) continue;
+
+      await bookCubit.updateBook(book.copyWith(
+        deleted: true,
+      ));
+    }
+
+    bookCubit.getDeletedBooks();
+
+    Navigator.of(context).pop();
+
+    resetMultiselectMode();
   }
 
   @override
@@ -203,7 +206,7 @@ class MultiSelectFAB extends StatelessWidget {
             child: const Icon(Icons.delete),
             backgroundColor: Theme.of(context).colorScheme.secondaryContainer,
             label: LocaleKeys.delete_books.tr(),
-            onTap: () => _bulkDeleteBooks(context),
+            onTap: () => _showDeleteBooksDialog(context),
           ),
         ],
       ),
