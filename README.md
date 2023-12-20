@@ -87,15 +87,26 @@ Take a look at our [CONTRIBUTING.md](CONTRIBUTING.md) file.
 ### Icons
 [Font Awesome](https://fontawesome.com/ "Font Awesome")
 
-## CSV import/export
+## FAQ
 
-Openreads supports importing and exporting books to/from a CSV file.   
-See format of the CSV file: 
+- Is it also available for iOS?
+
+The app is written to be cross-platform, and an iOS version is currently in [work in progress](https://github.com/mateusz-bak/openreads-android/issues/149). 
+Be aware that developing for iOS needs an Apple Developer account, which has a cost: please consider donating
+- Does Openreads support importing/exporting CSV file?
+
+Yes! See format of the CSV file: 
 [Openreads CSV format](doc/csv.md)
+- Which external apps it supports through import CSV files?
 
+GoodReads,BookWyrm
+- Which data provider OpenReads uses?
 
-#### Besides Openreads can Import CSV files from below apps:
-- Goodreads
+Currently, only [OpenLibrary](https://openlibrary.org/), an open and big crowdsourced library. Other sources (like BookBrainz) are considered for the future. No proprietary sources will be added (see: https://github.com/mateusz-bak/openreads-android/issues/90#issuecomment-1722339001)
+- Is it possible to upload my book's data to OpenLibrary?
+
+Not for now; see https://github.com/mateusz-bak/openreads-android/issues/85
+
 <br/>
 
 ## Build Process
