@@ -114,7 +114,13 @@ See format of the CSV file:
    ```
 
 2. Build and install the app on your device<br/>
-WARNING: If you already have the openreads app installed on your device this step will uninstall it before installing the debug version, this deletes all app data, to keep your books please make a backup first.
+
+⚠️⚠️⚠️
+
+WARNING: If you already have the Openreads app installed on your device, this step will uninstall it before installing the debug version.
+This deletes all app data, to keep your books please make a backup first.
+
+⚠️⚠️⚠️
 
    ```sh
    flutter run
