@@ -146,8 +146,10 @@ class StatsBloc extends Bloc<StatsEvent, StatsState> {
       } else if (book.startDate != null && book.finishDate != null) {
         final startDate = book.startDate!;
         final finishDate = book.finishDate!;
-        final readTimeinDays = finishDate.difference(startDate).inDays + 1; // should be at least 1 day
-        readTimeInMs = ReadingTime.toMilliSeconds(readTimeinDays, 0, 0).milliSeconds;
+        final readTimeinDays = finishDate.difference(startDate).inDays +
+            1; // should be at least 1 day
+        readTimeInMs =
+            ReadingTime.toMilliSeconds(readTimeinDays, 0, 0).milliSeconds;
       } else {
         continue;
       }
@@ -223,8 +225,10 @@ class StatsBloc extends Bloc<StatsEvent, StatsState> {
       } else if (book.startDate != null && book.finishDate != null) {
         final startDate = book.startDate!;
         final finishDate = book.finishDate!;
-        final readTimeinDays = finishDate.difference(startDate).inDays + 1; // should be at least 1 day
-        readTimeInMs = ReadingTime.toMilliSeconds(readTimeinDays, 0, 0).milliSeconds;
+        final readTimeinDays = finishDate.difference(startDate).inDays +
+            1; // should be at least 1 day
+        readTimeInMs =
+            ReadingTime.toMilliSeconds(readTimeinDays, 0, 0).milliSeconds;
       } else {
         continue;
       }
@@ -425,8 +429,10 @@ class StatsBloc extends Bloc<StatsEvent, StatsState> {
       if (book.startDate != null && book.finishDate != null) {
         final startDate = book.startDate!;
         final finishDate = book.finishDate!;
-        final readTimeinDays = finishDate.difference(startDate).inDays + 1; // should be at least 1 day
-        final timeDifference = ReadingTime.toMilliSeconds(readTimeinDays, 0, 0).milliSeconds;
+        final readTimeinDays = finishDate.difference(startDate).inDays +
+            1; // should be at least 1 day
+        final timeDifference =
+            ReadingTime.toMilliSeconds(readTimeinDays, 0, 0).milliSeconds;
 
         readTimeInMilliSeconds += timeDifference;
         countedBooks += 1;
