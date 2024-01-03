@@ -49,25 +49,25 @@ You can use custom tags and filter through them.
 </p>  
 <br/>
 
-## Contributing
+## 🤝 Contributing
 
 Do you want to support Openreads development? You are welcome to take below actions:
 
-### Become a Sponsor
+### 🪙 Become a Sponsor
 
 Fund the project, or simply say thank you.
 
 <a href='https://github.com/sponsors/mateusz-bak'><img height=50 alt='Become a GitHub Sponsor' src='https://raw.githubusercontent.com/mateusz-bak/openreads-android/master/doc/github/button_become-a-github-sponsor.png'/></a>
 <a href="https://www.buymeacoffee.com/mateuszbak"><img src="https://cdn.buymeacoffee.com/buttons/v2/default-yellow.png" height="50"></a>
 
-### Spread the word about Openreads
-#### Vote on Alternativeto.net
-:thumbsup: [Alternativeto.net link](https://alternativeto.net/software/openreads/about/)
+### 📣 Spread the word about Openreads
+#### 👍 Vote on Alternativeto.net
+[Alternativeto.net link](https://alternativeto.net/software/openreads/about/)
 
-#### Give a star to the project
-:star: [Github.com link](https://github.com/mateusz-bak/openreads-android)
+#### 🌟 Give a star to the project
+[Github.com link](https://github.com/mateusz-bak/openreads-android)
 
-### Translate Openreads
+### 📖 Translate Openreads
 
 Go to [Weblate](https://hosted.weblate.org/engage/openreads/) and help with the translations.
 
@@ -75,19 +75,19 @@ Go to [Weblate](https://hosted.weblate.org/engage/openreads/) and help with the 
 <img src="https://hosted.weblate.org/widgets/openreads/-/multi-auto.svg" alt="Translation status" />
 </a>
 
-### Report bugs or new ideas
+### 🐞 Report bugs or new ideas
 Submit an issue here: [Openreads issues](https://github.com/mateusz-bak/openreads-android/issues).
 
-### Contributors guide
+### 📝 Contributors guide
 
 Take a look at our [CONTRIBUTING.md](CONTRIBUTING.md) file.
 
-## Attributions
+## 📄 Attributions
 
-### Icons
+### 👁️‍🗨️ Icons
 [Font Awesome](https://fontawesome.com/ "Font Awesome")
 
-## FAQ
+## ❓ FAQ
 
 - Is it also available for iOS?
 
@@ -109,7 +109,7 @@ Not for now; see https://github.com/mateusz-bak/openreads-android/issues/85
 
 <br/>
 
-## Build Process
+## 🏗️ Build Process
 
 1. Clone or download this repository
 
