@@ -89,22 +89,17 @@ Take a look at our [CONTRIBUTING.md](CONTRIBUTING.md) file.
 
 ## ❓ FAQ
 
-- Is it also available for iOS?
-
-The app is written to be cross-platform, and an iOS version is currently in [work in progress](https://github.com/mateusz-bak/openreads-android/issues/149). 
-Be aware that developing for iOS needs an Apple Developer account, which has a cost: please consider donating
-- Does Openreads support importing/exporting CSV file?
-
+- **What platforms is Openreads available for?** </br>
+The app is written in the cross-platform framework Flutter. Currently Android version is available, an iOS version [is being worked on](https://github.com/mateusz-bak/openreads-android/issues/149).
+Be aware that releasing an app to the App Store requires paid Apple Developer account ($99 per year) so please consider donating.
+- **Does Openreads support importing/exporting CSV file?**</br>
 Yes! See format of the CSV file: 
 [Openreads CSV format](doc/csv.md)
-- Which external apps it supports through import CSV files?
-
-GoodReads,BookWyrm
-- Which data provider OpenReads uses?
-
-Currently, only [OpenLibrary](https://openlibrary.org/), an open and big crowdsourced library. Other sources (like BookBrainz) are considered for the future. No proprietary sources will be added (see: https://github.com/mateusz-bak/openreads-android/issues/90#issuecomment-1722339001)
-- Is it possible to upload my book's data to OpenLibrary?
-
+- **From which apps can Openreads import CSV files?**</br>
+GoodReads, BookWyrm
+- **Which data providers does OpenReads use?**</br>
+Currently the one and only data source for the app is [OpenLibrary](https://openlibrary.org/), a FOSS crowdsourced library. Other sources (like BookBrainz) are considered for the future. There are no plans to add proprietary sources to the app (see: https://github.com/mateusz-bak/openreads-android/issues/90#issuecomment-1722339001)
+- **Is it possible to upload my book's data to OpenLibrary?**</br>
 Not for now; see https://github.com/mateusz-bak/openreads-android/issues/85
 
 <br/>
@@ -125,13 +120,10 @@ Not for now; see https://github.com/mateusz-bak/openreads-android/issues/85
    ```
 
 2. Build and install the app on your device<br/>
-
-⚠️⚠️⚠️
-
+⚠️⚠️⚠️<br/>
 WARNING: If you already have the Openreads app installed on your device, this step will uninstall it before installing the debug version.
-This deletes all app data, to keep your books please make a backup first.
-
-⚠️⚠️⚠️
+This deletes all app data, to keep your books please make a backup first.<br/>
+⚠️⚠️⚠️<br/>
 
    ```sh
    flutter run
