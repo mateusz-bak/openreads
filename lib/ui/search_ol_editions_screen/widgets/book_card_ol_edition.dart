@@ -12,12 +12,16 @@ class BookCardOLEdition extends StatelessWidget {
     required this.cover,
     required this.onPressed,
     required this.pages,
+    this.publicationDate,
+    this.publishers,
   });
 
   final String title;
   final int? cover;
   final int? pages;
   final Function() onPressed;
+  final String? publicationDate;
+  final List<String>? publishers;
 
   static const String coverBaseUrl = 'https://covers.openlibrary.org/';
   late final String coverUrl = '${coverBaseUrl}b/id/$cover-M.jpg';
@@ -32,92 +36,122 @@ class BookCardOLEdition extends StatelessWidget {
         ),
         onTap: onPressed,
         child: Container(
-            decoration: BoxDecoration(
-              color: cover == null
-                  ? Theme.of(context)
-                      .colorScheme
-                      .primaryContainer
-                      .withOpacity(0.3)
-                  : null,
-              borderRadius: BorderRadius.circular(cornerRadius),
-              border: Border.all(color: dividerColor),
-            ),
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                cover != null
-                    ? Expanded(
-                        child: ClipRRect(
-                          borderRadius: BorderRadius.circular(2),
-                          child: CachedNetworkImage(
-                            imageUrl: coverUrl,
-                            fadeInDuration: const Duration(milliseconds: 100),
-                            fadeOutDuration: const Duration(milliseconds: 100),
-                            placeholder: (context, url) => Center(
-                              child: Container(
-                                padding: const EdgeInsets.all(5),
-                                child: LoadingAnimationWidget.threeArchedCircle(
-                                  color: Theme.of(context).colorScheme.primary,
-                                  size: 24,
-                                ),
+          decoration: BoxDecoration(
+            color: cover == null
+                ? Theme.of(context)
+                    .colorScheme
+                    .primaryContainer
+                    .withOpacity(0.3)
+                : null,
+            borderRadius: BorderRadius.circular(cornerRadius),
+            border: Border.all(color: dividerColor),
+          ),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              cover != null
+                  ? Expanded(
+                      child: ClipRRect(
+                        borderRadius: BorderRadius.circular(2),
+                        child: CachedNetworkImage(
+                          imageUrl: coverUrl,
+                          fadeInDuration: const Duration(milliseconds: 100),
+                          fadeOutDuration: const Duration(milliseconds: 100),
+                          placeholder: (context, url) => Center(
+                            child: Container(
+                              padding: const EdgeInsets.all(5),
+                              child: LoadingAnimationWidget.threeArchedCircle(
+                                color: Theme.of(context).colorScheme.primary,
+                                size: 24,
                               ),
                             ),
-                            errorWidget: (context, url, error) =>
-                                const Icon(Icons.error),
                           ),
+                          errorWidget: (context, url, error) =>
+                              const Icon(Icons.error),
                         ),
-                      )
-                    : Expanded(
-                        child: Padding(
-                          padding: const EdgeInsets.all(10),
-                          child: Column(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Flexible(
-                                child: Text(
-                                  title,
-                                  overflow: TextOverflow.ellipsis,
-                                  maxLines: 20,
-                                ),
+                      ),
+                    )
+                  : Expanded(
+                      child: Padding(
+                        padding: const EdgeInsets.all(10),
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Flexible(
+                              child: Text(
+                                title,
+                                overflow: TextOverflow.ellipsis,
+                                maxLines: 20,
                               ),
-                              Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  pages != null
-                                      ? Text(
-                                          '$pages ${LocaleKeys.pages_lowercase.tr()}',
-                                          style: TextStyle(
-                                            fontSize: 12,
-                                            color: Theme.of(context)
-                                                .colorScheme
-                                                .onBackground
-                                                .withOpacity(0.6),
-                                          ),
-                                        )
-                                      : const SizedBox(),
-                                  Row(
-                                    children: [
-                                      Text(
-                                        LocaleKeys.no_cover.tr(),
+                            ),
+                            Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                pages != null
+                                    ? Text(
+                                        '$pages ${LocaleKeys.pages_lowercase.tr()}',
                                         style: TextStyle(
+                                          fontSize: 12,
                                           color: Theme.of(context)
                                               .colorScheme
                                               .onBackground
-                                              .withOpacity(0.7),
+                                              .withOpacity(0.6),
                                         ),
-                                      ),
-                                    ],
-                                  ),
-                                ],
-                              ),
-                            ],
-                          ),
+                                      )
+                                    : const SizedBox(),
+                                publicationDate != null
+                                    ? Text(publicationDate!)
+                                    : SizedBox.shrink(),
+                                // Row(
+                                //   children: [
+                                //     Text(
+                                //       LocaleKeys.no_cover.tr(),
+                                //       style: TextStyle(
+                                //         color: Theme.of(context)
+                                //             .colorScheme
+                                //             .onBackground
+                                //             .withOpacity(0.7),
+                                //       ),
+                                //     ),
+                                //   ],
+                                // ),
+                              ],
+                            ),
+                          ],
                         ),
                       ),
-              ],
-            )),
+                    ),
+              (publishers != null && publishers!.isNotEmpty)
+                  ? Text(
+                      publishers![0],
+                      textAlign: TextAlign.center,
+                      style: TextStyle(
+                        fontSize: 10,
+                        color: Theme.of(context)
+                            .colorScheme
+                            .onBackground
+                            .withOpacity(0.8),
+                      ),
+                    )
+                  : SizedBox.shrink(),
+              publicationDate != null && cover != null
+                  ? Text(
+                      publicationDate!,
+                      textAlign: TextAlign.center,
+                      style: TextStyle(
+                        fontSize: 13,
+                        color: Theme.of(context)
+                            .colorScheme
+                            .onBackground
+                            .withOpacity(0.8),
+                      ),
+                    )
+                  : SizedBox.shrink(),
+            ],
+          ),
+        ),
       ),
     );
   }

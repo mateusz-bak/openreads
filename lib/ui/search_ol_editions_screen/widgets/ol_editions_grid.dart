@@ -113,6 +113,8 @@ class OLEditionsGrid extends StatelessWidget {
               ),
             ),
             itemBuilder: (context, item, index) => BookCardOLEdition(
+              publishers: item.publishers,
+              publicationDate: item.publishDate,
               title: item.title!,
               pages: item.numberOfPages,
               cover: item.covers != null && item.covers!.isNotEmpty
@@ -131,7 +133,7 @@ class OLEditionsGrid extends StatelessWidget {
           ),
           gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
             childAspectRatio: 5 / 8.0,
-            crossAxisCount: 3,
+            crossAxisCount: 2,
             crossAxisSpacing: 10,
             mainAxisSpacing: 10,
             mainAxisExtent: 225,
