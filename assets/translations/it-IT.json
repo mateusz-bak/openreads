@@ -248,5 +248,11 @@
     "openreads_backup": "Backup Openreads",
     "export_csv": "Esporta libri come file CSV",
     "book_format_hardcover_plural": "Libri con copertina rigida",
-    "book_format_paperback_plural": "Brossure"
+    "book_format_paperback_plural": "Brossure",
+    "import_csv": "Importa un CSV da Openreads",
+    "bulk_update_unsuccessful_message": "Non è stato possibile aggiornare i dettagli dei libri",
+    "books_settings": "Libri",
+    "download_missing_covers": "Scarica le copertine mancanti",
+    "change_books_author": "Cambia l'autore dei libri",
+    "delete_books_question": "Eliminare i libri selezionati?"
 }

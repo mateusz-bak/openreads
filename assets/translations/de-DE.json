@@ -238,10 +238,10 @@
         "one": "{} Minute",
         "title": "Minuten"
     },
-    "only_editions_with_covers": "Zeige nur Editionen mit Bildern",
+    "only_editions_with_covers": "Zeige nur Editionen mit Titelbildern",
     "change_book_format": "Buchformat ändern",
     "import_csv": "Openreads CSV importieren",
-    "filter_by_book_format": "Filtern nach Buchformat",
+    "filter_by_book_format": "Nach Buchformat filtern",
     "select_all": "Alle auswählen",
     "day": {
         "one": "{} Tag",
@@ -251,9 +251,29 @@
     "change_books_author": "Autor ändern",
     "book_format_all": "Alle Buchformate",
     "book_format_paperback": "Taschenbuch",
-    "book_format_hardcover": "Gebundenes Buch",
-    "book_format_hardcover_plural": "Gebundene Bücher",
+    "book_format_hardcover": "Hardcover",
+    "book_format_hardcover_plural": "Hardcover",
     "set_custom_reading_time": "Benutzerdefinierte Lesezeit einstellen",
     "book_format_paperback_plural": "Taschenbücher",
-    "ok": "OK"
+    "ok": "OK",
+    "tags": {
+        "one": "Schlagwort",
+        "other": "Schlagworte"
+    },
+    "get_cover_from_open_library": "Titelbild von Open Library mit der ISBN laden",
+    "download_missing_covers": "Fehlende Titelbilder herunterladen",
+    "import_bookwyrm_csv": "Import BookWyrm CSV",
+    "general_search": "Suchmodus in Open Library",
+    "cover_not_found_in_ol": "Titelbild nicht in der Open Library gefunden",
+    "no_search_results": "Keine Ergebnisse gefunden",
+    "download_missing_covers_explanation": "Herunterladen von fehlenden Titelbildern für Bücher, die eine ISBN haben",
+    "isbn_cannot_be_empty": "ISBN kann nicht leer sein",
+    "bulk_update_unsuccessful_message": "Buchdetails konnten nicht aktualisiert werden",
+    "books_settings": "Bücher",
+    "click_to_add_book_manually": "Klicke hier, um ein Buch manuell hinzuzufügen",
+    "delete_books_question": "Ausgewählte Bücher löschen?",
+    "delete_books": "Bücher löschen",
+    "load_cover_from_phone": "Titelbild von deinem Telefon laden",
+    "downloaded_covers": "Heruntergeladene Titelbilder:",
+    "try_downloading_covers": "Möchtest du versuchen, fehlende Titelbilder für importierte Bücher herunterzuladen?"
 }

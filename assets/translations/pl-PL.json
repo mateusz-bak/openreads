@@ -260,5 +260,16 @@
         "other": "Tagi",
         "one": "Tag"
     },
-    "import_csv": "Importuj Openreads CSV"
+    "import_csv": "Importuj Openreads CSV",
+    "get_cover_from_open_library": "Pobierz okładkę z Open Library przez ISBN książki",
+    "books_settings": "Książki",
+    "download_missing_covers": "Pobierz brakujące okładki",
+    "general_search": "Ogólnie",
+    "cover_not_found_in_ol": "Nie znaleziono okładki w Open Library",
+    "load_cover_from_phone": "Wczytaj okładkę z telefonu",
+    "click_to_add_book_manually": "Kliknij, żeby dodać książkę ręcznie",
+    "no_search_results": "Brak wyników",
+    "download_missing_covers_explanation": "Pobierz brakujące okładki dla książek które mają ustawiony ISBN",
+    "isbn_cannot_be_empty": "ISBN nie może być pusty",
+    "downloaded_covers": "Pobrane okładki:"
 }
