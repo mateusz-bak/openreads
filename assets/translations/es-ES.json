@@ -256,5 +256,16 @@
     "only_editions_with_covers": "Mostrar sólo las ediciones que tengan una portada",
     "import_csv": "Importar de Openreads un CSV",
     "change_books_author": "Cambiar el autor de los libros",
-    "bulk_update_unsuccessful_message": "No se han podido actualizar los datos de los libros"
+    "bulk_update_unsuccessful_message": "No se han podido actualizar los datos de los libros",
+    "tags": {
+        "one": "Etiqueta",
+        "other": "Etiquetas"
+    },
+    "delete_books": "Borrar libros",
+    "delete_books_question": "¿Borrar los libros seleccionados?",
+    "import_bookwyrm_csv": "Importar BookWyrm CSV",
+    "books_settings": "Libros",
+    "isbn_cannot_be_empty": "El ISBN no puede estar vacío",
+    "cover_not_found_in_ol": "Portada no encontrada en Open Library",
+    "downloaded_covers": "Portadas descargadas:"
 }

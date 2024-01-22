@@ -70,5 +70,22 @@
     "finish_date_before_start": "Data de finalização não pode ser antes da data de início",
     "enter_subtitle": "Entrar com subtítulo",
     "book_status_finished": "Concluído",
-    "book_format_hardcover": "Capa Dura"
+    "book_format_hardcover": "Capa Dura",
+    "book_format_paperback": "Brochura",
+    "book_format_all": "Todos os formatos de livros",
+    "filter_by_book_format": "Filtrar pelo formato do livro",
+    "search": "Buscar",
+    "all_years": "Tudo",
+    "delete_books": "Apagar livros",
+    "delete_books_question": "Deletar os livros selecionados?",
+    "longest_book": "Maior livro",
+    "this_list_is_empty_1": "Essa lista está vazia.",
+    "this_list_is_empty_2": "Clique no botão + abaixo para adicionar um novo livro",
+    "no_cover": "Sem capa",
+    "add_pages_goal": "Adicionar objetivo de páginas?",
+    "all_books_by_status": "Todos os livros por status",
+    "average_rating": "Avaliação média",
+    "choose_edition": "Escolha a edição",
+    "editions_lowercase": "edições",
+    "results_lowercase": "resultados"
 }

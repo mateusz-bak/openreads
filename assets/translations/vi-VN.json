@@ -28,7 +28,7 @@
     "open_settings": "Mở thiết đặt",
     "finished_books_by_month": "Sách hoàn thành theo tháng",
     "enter_description": "Nhập mô tả",
-    "books_challenge": "Thử thách hoàn thành đọc sách",
+    "books_challenge": "Thử thách sách đã hoàn thành",
     "statistics": "Số liệu thống kê",
     "enter_author": "Nhập tác giả",
     "no_unfinished_books": "Bạn không có cuốn sách nào chưa hoàn thành",
@@ -37,5 +37,5 @@
     "enter_pages": "Số trang",
     "migration_v1_to_v2_finished": "Quá trình di chuyển sách đã hoàn tất, hãy nhấp vào nút BẮT ĐẦU.",
     "finish_date_before_start": "Ngày kết thúc không được trước ngày bắt đầu",
-    "enter_subtitle": "Nhập tiêu đề phụ"
+    "enter_subtitle": "Nhập phụ đề"
 }

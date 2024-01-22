@@ -239,7 +239,7 @@
         "title": "Minuty"
     },
     "book_format_hardcover_plural": "Knížky s tuhou vazbou",
-    "change_book_format": "Změnit vazbu",
+    "change_book_format": "Změnit formát knihy",
     "ok": "OK",
     "filter_by_book_format": "Filtrovat podle vazby",
     "select_all": "Vybrat všechny",
@@ -252,5 +252,28 @@
     "book_format_all": "Všechny vazby",
     "book_format_paperback": "Měkká vazba",
     "book_format_hardcover": "Tuhá vazba",
-    "book_format_paperback_plural": "Knížky s měkkou vazbou"
+    "book_format_paperback_plural": "Knížky s měkkou vazbou",
+    "delete_books": "Smazat knížky",
+    "delete_books_question": "Smazat vybrané knížky?",
+    "only_editions_with_covers": "Zobrazit pouze edice s obálkami",
+    "change_books_author": "Změnit autora knížky",
+    "bulk_update_unsuccessful_message": "Nepodařilo se aktualizovat údaje o knížkách",
+    "tags": {
+        "other": "Štítky",
+        "one": "Štítek"
+    },
+    "import_bookwyrm_csv": "Importovat BookWyrm CSV",
+    "general_search": "Obecný",
+    "import_csv": "Importovat Openreads CSV",
+    "click_to_add_book_manually": "Kliknutím sem přidáte knížku ručně",
+    "no_search_results": "Nenalezeny žádné výsledky",
+    "load_cover_from_phone": "Načíst obálku z telefonu",
+    "get_cover_from_open_library": "Stáhnout obálku z Open Library podle ISBN knihy",
+    "cover_not_found_in_ol": "V Open Library nebyla nalezena žádná obálka",
+    "isbn_cannot_be_empty": "ISBN nemůže být prázdné",
+    "books_settings": "Knížky",
+    "download_missing_covers": "Stáhnout chybějící obálky",
+    "download_missing_covers_explanation": "Stáhnout chybějící obálky knih, u kterých je zadáno ISBN",
+    "try_downloading_covers": "Chcete zkusit stáhnout chybějící obálky importovaných knih?",
+    "downloaded_covers": "Stažené obálky:"
 }
