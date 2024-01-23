@@ -17,6 +17,7 @@ import 'package:openreads/ui/search_page/search_page.dart';
 import 'package:openreads/ui/settings_screen/settings_screen.dart';
 import 'package:openreads/ui/statistics_screen/statistics_screen.dart';
 import 'package:diacritic/diacritic.dart';
+import 'package:openreads/ui/unfinished_screen/unfinished_screen.dart';
 
 class BooksScreen extends StatefulWidget {
   const BooksScreen({super.key});
@@ -535,7 +536,7 @@ class _BooksScreenState extends State<BooksScreen>
     return booksWithPublicationDate + booksWithoutPublicationDate;
   }
 
-  openSortFilterSheet() {
+  void openSortFilterSheet() {
     FocusManager.instance.primaryFocus?.unfocus();
 
     showModalBottomSheet(
@@ -548,7 +549,7 @@ class _BooksScreenState extends State<BooksScreen>
     );
   }
 
-  goToStatisticsScreen() {
+  void goToStatisticsScreen() {
     FocusManager.instance.primaryFocus?.unfocus();
 
     Navigator.push(
@@ -559,13 +560,24 @@ class _BooksScreenState extends State<BooksScreen>
     );
   }
 
-  goToSettingsScreen() {
+  void goToSettingsScreen() {
     FocusManager.instance.primaryFocus?.unfocus();
 
     Navigator.push(
       context,
       MaterialPageRoute(
-        builder: (context) => SettingsScreen(),
+        builder: (context) => const SettingsScreen(),
+      ),
+    );
+  }
+
+  void goToUnfinishedBooksScreen() {
+    FocusManager.instance.primaryFocus?.unfocus();
+
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) => const UnfinishedScreen(),
       ),
     );
   }
@@ -581,6 +593,7 @@ class _BooksScreenState extends State<BooksScreen>
       LocaleKeys.sort_filter.tr(),
       LocaleKeys.statistics.tr(),
       LocaleKeys.settings.tr(),
+      LocaleKeys.unfinished_books.tr()
     ];
 
     return BlocBuilder<ThemeBloc, ThemeState>(
@@ -835,6 +848,8 @@ class _BooksScreenState extends State<BooksScreen>
                     goToStatisticsScreen();
                   } else if (choice == moreButtonOptions[2]) {
                     goToSettingsScreen();
+                  } else if (choice == moreButtonOptions[3]) {
+                    goToUnfinishedBooksScreen();
                   }
                 },
               );

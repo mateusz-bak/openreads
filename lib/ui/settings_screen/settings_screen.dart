@@ -467,26 +467,6 @@ class SettingsScreen extends StatelessWidget {
     );
   }
 
-  SettingsTile _buildUnfinishedSetting(BuildContext context) {
-    return SettingsTile.navigation(
-      title: Text(
-        LocaleKeys.unfinished_books.tr(),
-        style: const TextStyle(
-          fontSize: 16,
-        ),
-      ),
-      leading: const Icon(Icons.not_interested),
-      onPressed: (context) {
-        Navigator.push(
-          context,
-          MaterialPageRoute(
-            builder: (context) => const UnfinishedScreen(),
-          ),
-        );
-      },
-    );
-  }
-
   SettingsTile _buildDownloadMissingCovers(BuildContext context) {
     return SettingsTile.navigation(
       title: Text(
@@ -668,7 +648,6 @@ class SettingsScreen extends StatelessWidget {
                         ),
                         tiles: <SettingsTile>[
                           _buildTrashSetting(context),
-                          _buildUnfinishedSetting(context),
                           _buildDownloadMissingCovers(context),
                         ],
                       ),
