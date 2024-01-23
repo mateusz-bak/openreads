@@ -67,13 +67,14 @@ dev_dependencies:
   flutter_launcher_icons: "^0.13.1"
 
 flutter_launcher_icons:
-  android: "launcher_icon"
-  ios: true
-  remove_alpha_ios: true
   image_path: "./assets/icons/icon.png"
   adaptive_icon_foreground: "./assets/icons/icon.png"
   adaptive_icon_background: "#00BFA6"
   min_sdk_android: 21
+  android: "launcher_icon"
+  ios: true
+  image_path_ios: "./assets/icons/gplay-icon.png"
+  remove_alpha_ios: true
 
 flutter:
   uses-material-design: true
