@@ -54,10 +54,11 @@ class _BooksScreenState extends State<BooksScreen>
     }
 
     if (state.tags != null) {
-      list = _filterOutTags(
+      list = _filterTags(
         list: list,
         tags: state.tags!,
         filterTagsAsAnd: state.filterTagsAsAnd,
+        filterOutSelectedTags: state.filterOutTags,
       );
     }
 
@@ -96,10 +97,11 @@ class _BooksScreenState extends State<BooksScreen>
     required List<Book> list,
   }) {
     if (state.tags != null) {
-      list = _filterOutTags(
+      list = _filterTags(
         list: list,
         tags: state.tags!,
         filterTagsAsAnd: state.filterTagsAsAnd,
+        filterOutSelectedTags: state.filterOutTags,
       );
     }
 
@@ -130,10 +132,11 @@ class _BooksScreenState extends State<BooksScreen>
     required List<Book> list,
   }) {
     if (state.tags != null) {
-      list = _filterOutTags(
+      list = _filterTags(
         list: list,
         tags: state.tags!,
         filterTagsAsAnd: state.filterTagsAsAnd,
+        filterOutSelectedTags: state.filterOutTags,
       );
     }
 
@@ -188,19 +191,24 @@ class _BooksScreenState extends State<BooksScreen>
     return filteredOut;
   }
 
-  List<Book> _filterOutTags({
+  List<Book> _filterTags({
     required List<Book> list,
     required String tags,
     required bool filterTagsAsAnd,
+    required bool filterOutSelectedTags,
   }) {
-    if (filterTagsAsAnd) {
-      return _filterOutTagsModeAnd(list, tags);
+    if (filterOutSelectedTags) {
+      return _filterOutSelectedTags(list, tags);
     } else {
-      return _filterOutTagsModeOr(list, tags);
+      if (filterTagsAsAnd) {
+        return _filterTagsModeAnd(list, tags);
+      } else {
+        return _filterTagsModeOr(list, tags);
+      }
     }
   }
 
-  List<Book> _filterOutTagsModeOr(
+  List<Book> _filterTagsModeOr(
     List<Book> list,
     String tags,
   ) {
@@ -244,7 +252,7 @@ class _BooksScreenState extends State<BooksScreen>
     return filteredOut;
   }
 
-  List<Book> _filterOutTagsModeAnd(
+  List<Book> _filterTagsModeAnd(
     List<Book> list,
     String tags,
   ) {
@@ -260,6 +268,38 @@ class _BooksScreenState extends State<BooksScreen>
 
         for (var tagFromList in tagsList) {
           if (!bookTags.contains(tagFromList)) {
+            addThisBookToList = false;
+          }
+        }
+
+        if (addThisBookToList) {
+          filteredOut.add(book);
+        }
+      }
+    }
+
+    return filteredOut;
+  }
+
+  // Return list of books that do not have selected tags
+  List<Book> _filterOutSelectedTags(
+    List<Book> list,
+    String tags,
+  ) {
+    final tagsList = tags.split(('|||||'));
+
+    final filteredOut = List<Book>.empty(growable: true);
+
+    for (var book in list) {
+      if (book.tags == null) {
+        filteredOut.add(book);
+      } else {
+        final bookTags = book.tags!.split(('|||||'));
+
+        bool addThisBookToList = true;
+
+        for (var tagFromList in tagsList) {
+          if (bookTags.contains(tagFromList)) {
             addThisBookToList = false;
           }
         }

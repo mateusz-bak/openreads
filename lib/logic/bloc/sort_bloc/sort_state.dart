@@ -13,6 +13,7 @@ class SetSortState extends SortState {
   final bool displayTags;
   final bool filterTagsAsAnd;
   final BookFormat? bookType;
+  final bool filterOutTags;
 
   const SetSortState({
     required this.sortType,
@@ -23,6 +24,7 @@ class SetSortState extends SortState {
     required this.displayTags,
     required this.filterTagsAsAnd,
     required this.bookType,
+    this.filterOutTags = false,
   });
 
   @override
@@ -35,5 +37,6 @@ class SetSortState extends SortState {
         displayTags,
         filterTagsAsAnd,
         bookType,
+        filterOutTags,
       ];
 }
