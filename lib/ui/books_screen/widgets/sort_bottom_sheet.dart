@@ -84,6 +84,7 @@ Widget _getOrderButton(BuildContext context, SetSortState state) {
           displayTags: state.displayTags,
           filterTagsAsAnd: state.filterTagsAsAnd,
           bookType: state.bookType,
+          filterOutTags: state.filterOutTags,
         ),
       ),
     ),
@@ -119,6 +120,7 @@ void _updateSort(BuildContext context, String? value, SetSortState state) {
       displayTags: state.displayTags,
       filterTagsAsAnd: state.filterTagsAsAnd,
       bookType: state.bookType,
+      filterOutTags: state.filterOutTags,
     ),
   );
 }
@@ -148,6 +150,7 @@ void _updateBookType(BuildContext context, String? value, SetSortState state) {
       displayTags: state.displayTags,
       filterTagsAsAnd: state.filterTagsAsAnd,
       bookType: bookType,
+      filterOutTags: state.filterOutTags,
     ),
   );
 }
@@ -171,6 +174,7 @@ class _SortBottomSheetState extends State<SortBottomSheet> {
             displayTags: state.displayTags,
             filterTagsAsAnd: state.filterTagsAsAnd,
             bookType: state.bookType,
+            filterOutTags: state.filterOutTags,
           ),
         ),
       ),
@@ -193,6 +197,7 @@ class _SortBottomSheetState extends State<SortBottomSheet> {
           displayTags: value,
           filterTagsAsAnd: state.filterTagsAsAnd,
           bookType: state.bookType,
+          filterOutTags: state.filterOutTags,
         ),
       ),
     );
@@ -214,6 +219,29 @@ class _SortBottomSheetState extends State<SortBottomSheet> {
           displayTags: state.displayTags,
           filterTagsAsAnd: value,
           bookType: state.bookType,
+          filterOutTags: false,
+        ),
+      ),
+    );
+  }
+
+  Widget _getFilterOutTagsSwitch(
+    BuildContext context,
+    SetSortState state,
+  ) {
+    return Switch(
+      value: state.filterOutTags,
+      onChanged: (value) => BlocProvider.of<SortBloc>(context).add(
+        ChangeSortEvent(
+          sortType: state.sortType,
+          isAsc: state.isAsc,
+          onlyFavourite: state.onlyFavourite,
+          years: state.years,
+          tags: state.tags,
+          displayTags: state.displayTags,
+          filterTagsAsAnd: false,
+          bookType: state.bookType,
+          filterOutTags: value,
         ),
       ),
     );
@@ -251,6 +279,7 @@ class _SortBottomSheetState extends State<SortBottomSheet> {
         displayTags: state.displayTags,
         filterTagsAsAnd: state.filterTagsAsAnd,
         bookType: state.bookType,
+        filterOutTags: state.filterOutTags,
       ),
     );
   }
@@ -285,6 +314,7 @@ class _SortBottomSheetState extends State<SortBottomSheet> {
         displayTags: state.displayTags,
         filterTagsAsAnd: state.filterTagsAsAnd,
         bookType: state.bookType,
+        filterOutTags: state.filterOutTags,
       ),
     );
   }
@@ -362,6 +392,7 @@ class _SortBottomSheetState extends State<SortBottomSheet> {
               displayTags: state.displayTags,
               filterTagsAsAnd: state.filterTagsAsAnd,
               bookType: state.bookType,
+              filterOutTags: state.filterOutTags,
             ),
           );
         },
@@ -435,6 +466,7 @@ class _SortBottomSheetState extends State<SortBottomSheet> {
               displayTags: state.displayTags,
               filterTagsAsAnd: state.filterTagsAsAnd,
               bookType: state.bookType,
+              filterOutTags: state.filterOutTags,
             ),
           );
         },
@@ -553,6 +585,7 @@ class _SortBottomSheetState extends State<SortBottomSheet> {
                                     displayTags: state.displayTags,
                                     filterTagsAsAnd: state.filterTagsAsAnd,
                                     bookType: state.bookType,
+                                    filterOutTags: state.filterOutTags,
                                   ),
                                 );
                               },
@@ -762,10 +795,43 @@ class _SortBottomSheetState extends State<SortBottomSheet> {
                                     displayTags: state.displayTags,
                                     filterTagsAsAnd: !state.filterTagsAsAnd,
                                     bookType: state.bookType,
+                                    filterOutTags: state.filterOutTags,
                                   ),
                                 );
                               },
                               child: _buildOnlyBooksWithAllTags(context, state),
+                            ),
+                          ),
+                        ],
+                      );
+                    } else {
+                      return const SizedBox();
+                    }
+                  },
+                ),
+                BlocBuilder<SortBloc, SortState>(
+                  builder: (context, state) {
+                    if (state is SetSortState) {
+                      return Row(
+                        children: [
+                          Expanded(
+                            child: InkWell(
+                              onTap: () {
+                                BlocProvider.of<SortBloc>(context).add(
+                                  ChangeSortEvent(
+                                    sortType: state.sortType,
+                                    isAsc: state.isAsc,
+                                    onlyFavourite: state.onlyFavourite,
+                                    years: state.years,
+                                    tags: state.tags,
+                                    displayTags: state.displayTags,
+                                    filterTagsAsAnd: false,
+                                    bookType: state.bookType,
+                                    filterOutTags: !state.filterOutTags,
+                                  ),
+                                );
+                              },
+                              child: _buildBooksExceptTags(context, state),
                             ),
                           ),
                         ],
@@ -794,6 +860,7 @@ class _SortBottomSheetState extends State<SortBottomSheet> {
                                     displayTags: !state.displayTags,
                                     filterTagsAsAnd: state.filterTagsAsAnd,
                                     bookType: state.bookType,
+                                    filterOutTags: state.filterOutTags,
                                   ),
                                 );
                               },
@@ -900,6 +967,48 @@ class _SortBottomSheetState extends State<SortBottomSheet> {
                   Expanded(
                     child: Text(
                       LocaleKeys.only_books_with_all_tags.tr(),
+                      style: const TextStyle(fontSize: 16),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          );
+        } else if (snapshot.hasData && snapshot.data!.isEmpty) {
+          return const SizedBox();
+        } else if (snapshot.hasError) {
+          return Text(
+            snapshot.error.toString(),
+          );
+        } else {
+          return const Center(
+            child: CircularProgressIndicator(),
+          );
+        }
+      },
+    );
+  }
+
+  Widget _buildBooksExceptTags(BuildContext context, SetSortState state) {
+    return StreamBuilder<List<String>>(
+      stream: bookCubit.tags,
+      builder: (context, AsyncSnapshot<List<String>> snapshot) {
+        if (snapshot.hasData && snapshot.data!.isNotEmpty) {
+          return Padding(
+            padding: const EdgeInsets.only(top: 10),
+            child: Container(
+              decoration: BoxDecoration(
+                color: Theme.of(context).colorScheme.surfaceVariant,
+                borderRadius: BorderRadius.circular(cornerRadius),
+                border: Border.all(color: dividerColor),
+              ),
+              child: Row(
+                children: [
+                  _getFilterOutTagsSwitch(context, state),
+                  const SizedBox(width: 10),
+                  Expanded(
+                    child: Text(
+                      LocaleKeys.filter_out_selected_tags.tr(),
                       style: const TextStyle(fontSize: 16),
                     ),
                   ),
