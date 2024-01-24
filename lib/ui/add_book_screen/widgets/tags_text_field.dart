@@ -133,7 +133,7 @@ class TagsField extends StatelessWidget {
                     child: child,
                   );
                 },
-                builder: (context, controller, focusNode) {
+                builder: (context, _, focusNode) {
                   return TextField(
                     focusNode: focusNode,
                     autofocus: autofocus,
