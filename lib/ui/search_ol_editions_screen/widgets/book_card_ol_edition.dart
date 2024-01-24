@@ -77,13 +77,14 @@ class BookCardOLEdition extends StatelessWidget {
                         padding: const EdgeInsets.all(10),
                         child: Column(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          crossAxisAlignment: CrossAxisAlignment.start,
+                          crossAxisAlignment: CrossAxisAlignment.center,
                           children: [
                             Flexible(
                               child: Text(
                                 title,
                                 overflow: TextOverflow.ellipsis,
                                 maxLines: 20,
+                                textAlign: TextAlign.center,
                               ),
                             ),
                             Column(
@@ -103,20 +104,7 @@ class BookCardOLEdition extends StatelessWidget {
                                     : const SizedBox(),
                                 publicationDate != null
                                     ? Text(publicationDate!)
-                                    : SizedBox.shrink(),
-                                // Row(
-                                //   children: [
-                                //     Text(
-                                //       LocaleKeys.no_cover.tr(),
-                                //       style: TextStyle(
-                                //         color: Theme.of(context)
-                                //             .colorScheme
-                                //             .onBackground
-                                //             .withOpacity(0.7),
-                                //       ),
-                                //     ),
-                                //   ],
-                                // ),
+                                    : const SizedBox.shrink(),
                               ],
                             ),
                           ],
@@ -135,7 +123,7 @@ class BookCardOLEdition extends StatelessWidget {
                             .withOpacity(0.8),
                       ),
                     )
-                  : SizedBox.shrink(),
+                  : const SizedBox.shrink(),
               publicationDate != null && cover != null
                   ? Text(
                       publicationDate!,
@@ -148,7 +136,7 @@ class BookCardOLEdition extends StatelessWidget {
                             .withOpacity(0.8),
                       ),
                     )
-                  : SizedBox.shrink(),
+                  : const SizedBox.shrink(),
             ],
           ),
         ),
