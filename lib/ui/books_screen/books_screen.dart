@@ -592,8 +592,8 @@ class _BooksScreenState extends State<BooksScreen>
     moreButtonOptions = [
       LocaleKeys.sort_filter.tr(),
       LocaleKeys.statistics.tr(),
+      LocaleKeys.unfinished_books.tr(),
       LocaleKeys.settings.tr(),
-      LocaleKeys.unfinished_books.tr()
     ];
 
     return BlocBuilder<ThemeBloc, ThemeState>(
