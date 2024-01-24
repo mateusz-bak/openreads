@@ -847,9 +847,9 @@ class _BooksScreenState extends State<BooksScreen>
                   } else if (choice == moreButtonOptions[1]) {
                     goToStatisticsScreen();
                   } else if (choice == moreButtonOptions[2]) {
-                    goToSettingsScreen();
-                  } else if (choice == moreButtonOptions[3]) {
                     goToUnfinishedBooksScreen();
+                  } else if (choice == moreButtonOptions[3]) {
+                    goToSettingsScreen();
                   }
                 },
               );
