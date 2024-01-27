@@ -4,6 +4,7 @@ import 'dart:io';
 import 'package:flutter/foundation.dart';
 import 'package:openreads/core/constants/enums.dart';
 import 'package:openreads/main.dart';
+import 'package:openreads/model/additional_reading.dart';
 import 'package:openreads/model/book_from_backup_v3.dart';
 import 'package:openreads/model/reading_time.dart';
 
@@ -31,6 +32,7 @@ class Book {
   BookFormat bookFormat;
   bool hasCover;
   ReadingTime? readingTime;
+  List<AdditionalReading>? additionalReadings;
 
   Book({
     this.id,
@@ -56,6 +58,7 @@ class Book {
     this.bookFormat = BookFormat.paperback,
     this.hasCover = false,
     this.readingTime,
+    this.additionalReadings,
   });
 
   factory Book.empty() {
@@ -112,33 +115,38 @@ class Book {
       readingTime: json['reading_time'] != null
           ? ReadingTime.fromMilliSeconds(json['reading_time'])
           : null,
+      additionalReadings: json['additional_readings'] != null
+          ? List<AdditionalReading>.from(json['additional_readings']
+              .map((x) => AdditionalReading.fromString(x)))
+          : null,
     );
   }
 
-  Book copyWith({
-    String? title,
-    String? author,
-    int? status,
-    String? subtitle,
-    String? description,
-    bool? favourite,
-    bool? deleted,
-    int? rating,
-    DateTime? startDate,
-    DateTime? finishDate,
-    int? pages,
-    int? publicationYear,
-    String? isbn,
-    String? olid,
-    String? tags,
-    String? myReview,
-    String? notes,
-    Uint8List? cover,
-    String? blurHash,
-    BookFormat? bookFormat,
-    bool? hasCover,
-    ReadingTime? readingTime,
-  }) {
+  Book copyWith(
+      {String? title,
+      String? author,
+      int? status,
+      String? subtitle,
+      String? description,
+      bool? favourite,
+      bool? deleted,
+      int? rating,
+      DateTime? startDate,
+      DateTime? finishDate,
+      int? pages,
+      int? publicationYear,
+      String? isbn,
+      String? olid,
+      String? tags,
+      String? myReview,
+      String? notes,
+      Uint8List? cover,
+      String? blurHash,
+      BookFormat? bookFormat,
+      bool? hasCover,
+      ReadingTime? readingTime,
+      List<AdditionalReading>? additionalReadings,
+      x}) {
     return Book(
       id: id,
       title: title ?? this.title,
@@ -163,6 +171,7 @@ class Book {
       bookFormat: bookFormat ?? this.bookFormat,
       hasCover: hasCover ?? this.hasCover,
       readingTime: readingTime ?? this.readingTime,
+      additionalReadings: additionalReadings ?? this.additionalReadings,
     );
   }
 
@@ -191,6 +200,7 @@ class Book {
       bookFormat: bookFormat,
       hasCover: hasCover,
       readingTime: readingTime,
+      additionalReadings: additionalReadings,
     );
   }
 
@@ -271,6 +281,8 @@ class Book {
                       ? 'paperback'
                       : 'paperback',
       'reading_time': readingTime?.milliSeconds,
+      'additional_readings':
+          additionalReadings?.map((x) => x.toString()).toList(),
     };
   }
 
