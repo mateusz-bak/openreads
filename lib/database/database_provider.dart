@@ -30,7 +30,7 @@ class DatabaseProvider {
 
     return await openDatabase(
       path,
-      version: 6,
+      version: 7,
       onCreate: (Database db, int version) async {
         await db.execute("CREATE TABLE booksTable ("
             "id INTEGER PRIMARY KEY AUTOINCREMENT, "
@@ -55,7 +55,8 @@ class DatabaseProvider {
             "has_cover INTEGER, "
             "cover BLOB, "
             "blur_hash TEXT, "
-            "reading_time INTEGER"
+            "reading_time INTEGER, "
+            "additional_readings TEXT"
             ")");
       },
       onUpgrade: (Database db, int oldVersion, int newVersion) async {
@@ -64,19 +65,22 @@ class DatabaseProvider {
 
           switch (oldVersion) {
             case 1:
-              _updateBookDatabaseV1toV6(batch);
+              _updateBookDatabaseV1toV7(batch);
               break;
             case 2:
-              _updateBookDatabaseV2toV6(batch);
+              _updateBookDatabaseV2toV7(batch);
               break;
             case 3:
-              _updateBookDatabaseV3toV6(batch);
+              _updateBookDatabaseV3toV7(batch);
               break;
             case 4:
-              _updateBookDatabaseV4toV6(batch);
+              _updateBookDatabaseV4toV7(batch);
               break;
             case 5:
-              _updateBookDatabaseV5toV6(batch);
+              _updateBookDatabaseV5toV7(batch);
+              break;
+            case 6:
+              _updateBookDatabaseV6toV7(batch);
               break;
           }
 
@@ -112,39 +116,61 @@ class DatabaseProvider {
     "ALTER TABLE booksTable ADD reading_time INTEGER",
   ];
 
-  void _updateBookDatabaseV1toV6(Batch batch) {
+  final migrationScriptsV7 = [
+    "ALTER TABLE booksTable ADD additional_readings TEXT",
+  ];
+
+  void _updateBookDatabaseV1toV7(Batch batch) {
     _executeBatch(
       batch,
       migrationScriptsV2 +
           migrationScriptsV3 +
           migrationScriptsV4 +
           migrationScriptsV5 +
-          migrationScriptsV6,
+          migrationScriptsV6 +
+          migrationScriptsV7,
     );
   }
 
-  void _updateBookDatabaseV2toV6(Batch batch) {
-    _executeBatch(
-        batch,
-        migrationScriptsV3 +
-            migrationScriptsV4 +
-            migrationScriptsV5 +
-            migrationScriptsV6);
-  }
-
-  void _updateBookDatabaseV3toV6(Batch batch) {
-    _executeBatch(
-        batch, migrationScriptsV4 + migrationScriptsV5 + migrationScriptsV6);
-  }
-
-  void _updateBookDatabaseV4toV6(Batch batch) {
-    _executeBatch(batch, migrationScriptsV5 + migrationScriptsV6);
-  }
-
-  void _updateBookDatabaseV5toV6(Batch batch) {
+  void _updateBookDatabaseV2toV7(Batch batch) {
     _executeBatch(
       batch,
-      migrationScriptsV6,
+      migrationScriptsV3 +
+          migrationScriptsV4 +
+          migrationScriptsV5 +
+          migrationScriptsV6 +
+          migrationScriptsV7,
+    );
+  }
+
+  void _updateBookDatabaseV3toV7(Batch batch) {
+    _executeBatch(
+      batch,
+      migrationScriptsV4 +
+          migrationScriptsV5 +
+          migrationScriptsV6 +
+          migrationScriptsV7,
+    );
+  }
+
+  void _updateBookDatabaseV4toV7(Batch batch) {
+    _executeBatch(
+      batch,
+      migrationScriptsV5 + migrationScriptsV6 + migrationScriptsV7,
+    );
+  }
+
+  void _updateBookDatabaseV5toV7(Batch batch) {
+    _executeBatch(
+      batch,
+      migrationScriptsV6 + migrationScriptsV7,
+    );
+  }
+
+  void _updateBookDatabaseV6toV7(Batch batch) {
+    _executeBatch(
+      batch,
+      migrationScriptsV7,
     );
   }
 }
