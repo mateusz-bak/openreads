@@ -1,21 +1,24 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:openreads/core/themes/app_theme.dart';
 import 'package:openreads/generated/locale_keys.g.dart';
-import 'package:openreads/logic/cubit/edit_book_cubit.dart';
-import 'package:openreads/model/book.dart';
 import 'package:openreads/model/reading_time.dart';
 
 class BookReadingTimeField extends StatefulWidget {
   const BookReadingTimeField({
-    Key? key,
+    super.key,
     required this.defaultHeight,
-  }) : super(key: key);
+    required this.changeReadingTime,
+    required this.resetTime,
+    required this.readingTime,
+  });
 
   final double defaultHeight;
+  final Function(String, String, String) changeReadingTime;
+  final Function resetTime;
+  final ReadingTime? readingTime;
 
   @override
   State<BookReadingTimeField> createState() => _BookReadingTimeField();
@@ -28,9 +31,84 @@ class _BookReadingTimeField extends State<BookReadingTimeField> {
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<EditBookCubit, Book>(builder: (context, state) {
-      return buildReadingTimeTextField(context, state);
-    });
+    String formattedText = widget.readingTime != null
+        ? widget.readingTime.toString()
+        : LocaleKeys.set_custom_reading_time.tr();
+
+    _setTextControllers(widget.readingTime);
+
+    return Column(children: [
+      const SizedBox(height: 10),
+      Padding(
+        padding: const EdgeInsets.fromLTRB(10, 0, 10, 0),
+        child: SizedBox(
+          height: widget.defaultHeight,
+          child: Stack(
+            children: [
+              InkWell(
+                customBorder: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(cornerRadius),
+                ),
+                onTap: () => buildShowDialog(context),
+                child: Ink(
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(cornerRadius),
+                    color: Theme.of(context)
+                        .colorScheme
+                        .surfaceVariant
+                        .withOpacity(0.5),
+                    border: Border.all(color: dividerColor),
+                  ),
+                  child: Padding(
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: 10,
+                      vertical: 10,
+                    ),
+                    child: Center(
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          Icon(
+                            FontAwesomeIcons.solidClock,
+                            color: Theme.of(context).colorScheme.primary,
+                          ),
+                          const SizedBox(width: 15),
+                          FittedBox(
+                            child: Text(
+                              formattedText,
+                              maxLines: 1,
+                              style: const TextStyle(fontSize: 14),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                ),
+              ),
+              Center(
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.end,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    (widget.readingTime != null)
+                        ? IconButton(
+                            icon: const Icon(
+                              Icons.close,
+                              size: 20,
+                            ),
+                            onPressed: () => widget.resetTime(),
+                          )
+                        : const SizedBox(),
+                  ],
+                ),
+              ),
+            ],
+          ),
+        ),
+      )
+    ]);
   }
 
   @override
@@ -55,7 +133,11 @@ class _BookReadingTimeField extends State<BookReadingTimeField> {
                 child: Text(LocaleKeys.cancel.tr()),
               ),
               TextButton(
-                onPressed: _changeReadingTime,
+                onPressed: () => widget.changeReadingTime(
+                  _day.value.text,
+                  _hours.value.text,
+                  _minutes.value.text,
+                ),
                 child: Text(LocaleKeys.ok.tr()),
               ),
             ],
@@ -116,106 +198,10 @@ class _BookReadingTimeField extends State<BookReadingTimeField> {
             )));
   }
 
-  void _changeReadingTime() {
-    int days = int.tryParse(_day.value.text) ?? 0;
-    int hours = int.tryParse(_hours.value.text) ?? 0;
-    int mins = int.tryParse(_minutes.value.text) ?? 0;
-    context
-        .read<EditBookCubit>()
-        .setReadingTime(ReadingTime.toMilliSeconds(days, hours, mins));
-    Navigator.pop(context, 'OK');
-  }
-
   void _setTextControllers(ReadingTime? readingTime) {
     if (readingTime == null) return;
     _day.text = readingTime.days.toString();
     _hours.text = readingTime.hours.toString();
     _minutes.text = readingTime.minutes.toString();
-  }
-
-  void _resetTime() {
-    _day.clear();
-    _hours.clear();
-    _minutes.clear();
-    context.read<EditBookCubit>().setReadingTime(null);
-  }
-
-  Widget buildReadingTimeTextField(BuildContext context, Book state) {
-    String formattedText = state.readingTime != null
-        ? state.readingTime.toString()
-        : LocaleKeys.set_custom_reading_time.tr();
-    _setTextControllers(state.readingTime);
-    return state.status != 0
-        ? const SizedBox()
-        : Column(children: [
-            const SizedBox(height: 10),
-            SizedBox(
-              height: widget.defaultHeight,
-              width: MediaQuery.of(context).size.width - 20,
-              child: Stack(
-                children: [
-                  InkWell(
-                    customBorder: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(cornerRadius),
-                    ),
-                    onTap: () => buildShowDialog(context),
-                    child: Ink(
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(cornerRadius),
-                        color: Theme.of(context)
-                            .colorScheme
-                            .surfaceVariant
-                            .withOpacity(0.5),
-                        border: Border.all(color: dividerColor),
-                      ),
-                      child: Padding(
-                        padding: const EdgeInsets.symmetric(
-                          horizontal: 10,
-                          vertical: 10,
-                        ),
-                        child: Center(
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.start,
-                            crossAxisAlignment: CrossAxisAlignment.center,
-                            children: [
-                              Icon(
-                                FontAwesomeIcons.solidClock,
-                                color: Theme.of(context).colorScheme.primary,
-                              ),
-                              const SizedBox(width: 15),
-                              FittedBox(
-                                child: Text(
-                                  formattedText,
-                                  maxLines: 1,
-                                  style: const TextStyle(fontSize: 14),
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
-                      ),
-                    ),
-                  ),
-                  Center(
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.end,
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: [
-                        (state.readingTime != null)
-                            ? IconButton(
-                                icon: const Icon(
-                                  Icons.close,
-                                  size: 20,
-                                ),
-                                onPressed: _resetTime,
-                              )
-                            : const SizedBox(),
-                      ],
-                    ),
-                  ),
-                ],
-              ),
-            )
-          ]);
   }
 }

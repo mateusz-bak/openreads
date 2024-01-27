@@ -7,3 +7,4 @@ export 'date_row.dart';
 export 'book_rating_bar.dart';
 export 'tags_text_field.dart';
 export 'book_type_dropdown.dart';
+export 'additional_reading_row.dart';

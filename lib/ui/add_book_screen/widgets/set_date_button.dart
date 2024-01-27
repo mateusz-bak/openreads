@@ -3,14 +3,14 @@ import 'package:openreads/core/themes/app_theme.dart';
 
 class SetDateButton extends StatelessWidget {
   const SetDateButton({
-    Key? key,
+    super.key,
     required this.defaultHeight,
     required this.icon,
     required this.text,
     required this.onPressed,
     required this.onClearPressed,
     required this.showClearButton,
-  }) : super(key: key);
+  });
 
   final double defaultHeight;
   final IconData icon;
@@ -53,12 +53,12 @@ class SetDateButton extends StatelessWidget {
                         icon,
                         color: Theme.of(context).colorScheme.primary,
                       ),
-                      const SizedBox(width: 15),
+                      const SizedBox(width: 10),
                       FittedBox(
                         child: Text(
                           text,
                           maxLines: 1,
-                          style: const TextStyle(fontSize: 14),
+                          style: const TextStyle(fontSize: 12),
                         ),
                       ),
                     ],
