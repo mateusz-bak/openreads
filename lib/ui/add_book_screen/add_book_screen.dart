@@ -11,8 +11,11 @@ import 'package:loading_animation_widget/loading_animation_widget.dart';
 import 'package:openreads/core/constants/constants.dart';
 import 'package:openreads/core/constants/enums.dart';
 import 'package:openreads/core/helpers/helpers.dart';
+import 'package:openreads/core/themes/app_theme.dart';
 import 'package:openreads/generated/locale_keys.g.dart';
 import 'package:openreads/logic/cubit/edit_book_cubit.dart';
+import 'package:openreads/model/additional_reading.dart';
+import 'package:openreads/model/reading_time.dart';
 import 'package:openreads/resources/open_library_service.dart';
 import 'package:openreads/main.dart';
 import 'package:openreads/model/book.dart';
@@ -22,13 +25,13 @@ import 'package:openreads/ui/add_book_screen/widgets/widgets.dart';
 
 class AddBookScreen extends StatefulWidget {
   const AddBookScreen({
-    Key? key,
+    super.key,
     this.fromOpenLibrary = false,
     this.fromOpenLibraryEdition = false,
     this.editingExistingBook = false,
     this.coverOpenLibraryID,
     this.work,
-  }) : super(key: key);
+  });
 
   final bool fromOpenLibrary;
   final bool fromOpenLibraryEdition;
@@ -283,6 +286,26 @@ class _AddBookScreenState extends State<AddBookScreen> {
     context.read<EditBookCubit>().removeTag(tag);
   }
 
+  void _changeReadingTime(
+    String daysString,
+    String hoursString,
+    String minutesString,
+  ) {
+    int days = int.tryParse(daysString) ?? 0;
+    int hours = int.tryParse(hoursString) ?? 0;
+    int mins = int.tryParse(minutesString) ?? 0;
+
+    context
+        .read<EditBookCubit>()
+        .setReadingTime(ReadingTime.toMilliSeconds(days, hours, mins));
+
+    Navigator.pop(context, 'OK');
+  }
+
+  void _resetTime() {
+    context.read<EditBookCubit>().setReadingTime(null);
+  }
+
   _attachListeners() {
     _titleCtrl.addListener(() {
       context.read<EditBookCubit>().setTitle(_titleCtrl.text);
@@ -454,7 +477,60 @@ class _AddBookScreenState extends State<AddBookScreen> {
                 clearStartDate: _clearStartDate,
                 clearFinishDate: _clearFinishDate,
               ),
-              const BookReadingTimeField(defaultHeight: defaultFormHeight),
+              BlocBuilder<EditBookCubit, Book>(
+                builder: (context, state) {
+                  return BookReadingTimeField(
+                    defaultHeight: defaultFormHeight,
+                    changeReadingTime: _changeReadingTime,
+                    resetTime: _resetTime,
+                    readingTime: state.readingTime,
+                  );
+                },
+              ),
+              BlocBuilder<EditBookCubit, Book>(
+                builder: (context, state) {
+                  if (state.additionalReadings == null &&
+                      state.additionalReadings!.isEmpty) {
+                    return const SizedBox();
+                  }
+
+                  return Column(
+                    children: [
+                      const SizedBox(height: 10),
+                      ...state.additionalReadings!.asMap().entries.map(
+                        (entry) {
+                          return AdditionalReadingRow(
+                            index: entry.key,
+                            reading: entry.value,
+                          );
+                        },
+                      ),
+                    ],
+                  );
+                },
+              ),
+              Padding(
+                padding: const EdgeInsets.fromLTRB(10, 10, 10, 0),
+                child: FilledButton.tonal(
+                  onPressed: () {
+                    context
+                        .read<EditBookCubit>()
+                        .addNewAdditionalReading(AdditionalReading());
+                  },
+                  style: ButtonStyle(
+                    shape: MaterialStateProperty.all(RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(cornerRadius),
+                    )),
+                  ),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      const Icon(Icons.add),
+                      Text(LocaleKeys.add_additional_reading_time.tr()),
+                    ],
+                  ),
+                ),
+              ),
               const Padding(
                 padding: EdgeInsets.all(10),
                 child: Divider(),
@@ -570,6 +646,11 @@ class _AddBookScreenState extends State<AddBookScreen> {
                     flex: 10,
                     child: FilledButton.tonal(
                       onPressed: () => Navigator.pop(context),
+                      style: ButtonStyle(
+                        shape: MaterialStateProperty.all(RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(cornerRadius),
+                        )),
+                      ),
                       child: const Center(
                         child: Text("Cancel"),
                       ),
@@ -584,6 +665,12 @@ class _AddBookScreenState extends State<AddBookScreen> {
                           onPressed: (state.id != null)
                               ? () => _updateBook(state)
                               : () => _saveBook(state),
+                          style: ButtonStyle(
+                            shape: MaterialStateProperty.all(
+                                RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(cornerRadius),
+                            )),
+                          ),
                           child: const Center(
                             child: Text("Save"),
                           ),
