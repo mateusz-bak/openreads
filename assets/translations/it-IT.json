@@ -234,7 +234,8 @@
     "export_successful": "Esportazione Completata!",
     "hour": {
         "title": "Ore",
-        "other": "{} ore"
+        "other": "{} ore",
+        "one": "{} ora"
     },
     "import_goodreads_csv": "Importa Goodreads CSV",
     "export_csv_description_1": "Le copertine non vengono esportate",
@@ -242,7 +243,8 @@
     "select_all": "Seleziona tutti",
     "day": {
         "one": "{} giorno",
-        "other": "{} giorni"
+        "other": "{} giorni",
+        "title": "Giorni"
     },
     "import_successful": "Importazione completata",
     "openreads_backup": "Backup Openreads",
@@ -254,5 +256,11 @@
     "books_settings": "Libri",
     "download_missing_covers": "Scarica le copertine mancanti",
     "change_books_author": "Cambia l'autore dei libri",
-    "delete_books_question": "Eliminare i libri selezionati?"
+    "delete_books_question": "Eliminare i libri selezionati?",
+    "delete_books": "Elimina libri",
+    "ok": "OK",
+    "tags": {
+        "one": "Tag"
+    },
+    "general_search": "Generale"
 }

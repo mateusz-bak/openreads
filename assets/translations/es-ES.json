@@ -267,5 +267,11 @@
     "books_settings": "Libros",
     "isbn_cannot_be_empty": "El ISBN no puede estar vacío",
     "cover_not_found_in_ol": "Portada no encontrada en Open Library",
-    "downloaded_covers": "Portadas descargadas:"
+    "downloaded_covers": "Portadas descargadas:",
+    "general_search": "General",
+    "download_missing_covers": "Descargar portadas que faltan",
+    "click_to_add_book_manually": "Haga clic aquí para añadir el libro manualmente",
+    "get_cover_from_open_library": "Obtener portada desde Open Library con el ISBN del libro",
+    "try_downloading_covers": "¿Quieres descargar las portadas que faltan para los libros importados?",
+    "no_search_results": "Sin resultados"
 }
