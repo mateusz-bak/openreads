@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:openreads/core/constants/enums.dart';
 import 'package:openreads/main.dart';
+import 'package:openreads/model/additional_reading.dart';
 import 'package:openreads/model/book.dart';
 import 'package:openreads/model/reading_time.dart';
 
@@ -168,6 +169,61 @@ class EditBookCubit extends Cubit<Book> {
 
     final book = state.copyWith();
     book.tags = tags.isEmpty ? null : tags.join('|||||');
+
+    emit(book);
+  }
+
+  void addNewAdditionalReading(AdditionalReading additionalReading) {
+    List<AdditionalReading> additionalReadings = state.additionalReadings ?? [];
+
+    additionalReadings.add(additionalReading);
+
+    final book = state.copyWith();
+    book.additionalReadings = additionalReadings;
+
+    emit(book);
+  }
+
+  void removeAdditionalReading(int index) {
+    List<AdditionalReading> additionalReadings = state.additionalReadings ?? [];
+
+    additionalReadings.removeAt(index);
+
+    final book = state.copyWith();
+    book.additionalReadings = additionalReadings;
+
+    emit(book);
+  }
+
+  void setAdditionalStartDate(DateTime? startDate, int index) {
+    List<AdditionalReading> additionalReadings = state.additionalReadings ?? [];
+
+    additionalReadings[index].startDate = startDate;
+
+    final book = state.copyWith();
+    book.additionalReadings = additionalReadings;
+
+    emit(book);
+  }
+
+  setAdditionalFinishDate(DateTime? finishDate, int index) {
+    List<AdditionalReading> additionalReadings = state.additionalReadings ?? [];
+
+    additionalReadings[index].finishDate = finishDate;
+
+    final book = state.copyWith();
+    book.additionalReadings = additionalReadings;
+
+    emit(book);
+  }
+
+  setAdditionalReadingTime(ReadingTime? readingTime, int index) {
+    List<AdditionalReading> additionalReadings = state.additionalReadings ?? [];
+
+    additionalReadings[index].customReadingTime = readingTime;
+
+    final book = state.copyWith();
+    book.additionalReadings = additionalReadings;
 
     emit(book);
   }
