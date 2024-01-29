@@ -4,6 +4,7 @@ import 'dart:io';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:csv/csv.dart';
+import 'package:openreads/model/additional_reading.dart';
 import 'package:openreads/model/reading_time.dart';
 
 import 'package:openreads/core/constants/enums.dart';
@@ -103,6 +104,7 @@ class CSVImportOpenreads {
         notes: _getField(i, csv, 'notes'),
         bookFormat: _getBookFormat(i, csv),
         readingTime: _getReadingTime(i, csv),
+        additionalReadings: _getAdditionalReadings(i, csv),
       );
     } catch (e) {
       BackupGeneral.showInfoSnackbar(e.toString());
@@ -154,6 +156,50 @@ class CSVImportOpenreads {
     } else {
       return ReadingTime.fromMilliSeconds(readingTimeMilliseconds);
     }
+  }
+
+  static List<AdditionalReading>? _getAdditionalReadings(
+    int i,
+    List<List<dynamic>> csv,
+  ) {
+    final index = csv[0].indexOf('additional_readings');
+
+    if (index == -1) {
+      return null;
+    }
+
+    final additionalReadingsString = csv[i][index].toString();
+    final List<String> additionalReadings = additionalReadingsString.split(',');
+
+    if (additionalReadings.isEmpty) {
+      return null;
+    }
+
+    final List<AdditionalReading> additionalReadingsList =
+        List<AdditionalReading>.empty(growable: true);
+
+    for (final additionalReading in additionalReadings) {
+      if (additionalReading.split('|').length != 3) {
+        return null;
+      }
+
+      final startDate = additionalReading.split('|')[0];
+      final finishDate = additionalReading.split('|')[1];
+      final readingTime = additionalReading.split('|')[2];
+
+      additionalReadingsList.add(
+        AdditionalReading(
+          startDate: startDate.isNotEmpty ? DateTime.tryParse(startDate) : null,
+          finishDate:
+              finishDate.isNotEmpty ? DateTime.tryParse(finishDate) : null,
+          customReadingTime: readingTime.isNotEmpty
+              ? ReadingTime.fromMilliSeconds(int.parse(readingTime))
+              : null,
+        ),
+      );
+    }
+
+    return additionalReadingsList;
   }
 
   static int? _getRating(int i, List<List<dynamic>> csv) {

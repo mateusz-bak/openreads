@@ -101,6 +101,7 @@ class CSVExport {
         ('notes'),
         ('book_format'),
         ('reading_time'),
+        ('additional_readings'),
       ];
 
       rows.add(firstRow);
@@ -150,6 +151,10 @@ class CSVExport {
                         : '');
         newRow.add(book.readingTime != null
             ? book.readingTime!.milliSeconds.toString()
+            : '');
+        newRow.add(book.additionalReadings != null &&
+                book.additionalReadings!.isNotEmpty
+            ? book.additionalReadings!.map((e) => e.toString()).join(',')
             : '');
 
         rows.add(newRow);
