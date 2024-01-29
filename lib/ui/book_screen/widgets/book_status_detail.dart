@@ -6,66 +6,80 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:openreads/core/themes/app_theme.dart';
 import 'package:openreads/generated/locale_keys.g.dart';
 import 'package:openreads/logic/bloc/rating_type_bloc/rating_type_bloc.dart';
+import 'package:openreads/model/book.dart';
+import 'package:openreads/model/reading_time.dart';
 
 class BookStatusDetail extends StatelessWidget {
   const BookStatusDetail({
-    Key? key,
+    super.key,
+    required this.book,
     required this.statusIcon,
     required this.statusText,
-    required this.rating,
-    required this.startDate,
-    required this.finishDate,
     required this.onLikeTap,
-    required this.isLiked,
     this.showChangeStatus = false,
     this.changeStatusText,
     this.changeStatusAction,
     this.showRatingAndLike = false,
-  }) : super(key: key);
+  });
 
+  final Book book;
   final IconData? statusIcon;
   final String statusText;
-  final DateTime? startDate;
-  final DateTime? finishDate;
-  final int? rating;
   final Function() onLikeTap;
-  final bool isLiked;
   final bool showChangeStatus;
   final String? changeStatusText;
   final Function()? changeStatusAction;
   final bool showRatingAndLike;
 
-  Widget _buildStartAndFinishDate(BuildContext context) {
+  String _generateReadingTime({
+    DateTime? startDate,
+    DateTime? finishDate,
+    required BuildContext context,
+    ReadingTime? readingTime,
+  }) {
+    if (readingTime != null) return readingTime.toString();
+
+    final diff = finishDate!.difference(startDate!).inDays +
+        1; // should be at least 1 day
+
+    return LocaleKeys.day.plural(diff).tr();
+  }
+
+  Widget _buildStartAndFinishDate(
+    BuildContext context,
+    DateTime? startDate,
+    DateTime? finishDate,
+  ) {
     final dateFormat = DateFormat.yMd(
       '${context.locale.languageCode}-${context.locale.countryCode}',
     );
 
     if (startDate != null && finishDate != null) {
       return Text(
-        '${dateFormat.format(startDate!)} - ${dateFormat.format(finishDate!)}',
+        '${dateFormat.format(startDate)} - ${dateFormat.format(finishDate)}',
         style: const TextStyle(
           fontSize: 14,
-          fontWeight: FontWeight.normal,
+          fontWeight: FontWeight.bold,
         ),
       );
     }
 
     if (startDate == null && finishDate != null) {
       return Text(
-        '${LocaleKeys.finished_on_date.tr()} ${dateFormat.format(finishDate!)}',
+        '${LocaleKeys.finished_on_date.tr()} ${dateFormat.format(finishDate)}',
         style: const TextStyle(
           fontSize: 14,
-          fontWeight: FontWeight.normal,
+          fontWeight: FontWeight.bold,
         ),
       );
     }
 
     if (startDate != null && finishDate == null) {
       return Text(
-        '${LocaleKeys.started_on_date.tr()} ${dateFormat.format(startDate!)}',
+        '${LocaleKeys.started_on_date.tr()} ${dateFormat.format(startDate)}',
         style: const TextStyle(
           fontSize: 14,
-          fontWeight: FontWeight.normal,
+          fontWeight: FontWeight.bold,
         ),
       );
     }
@@ -78,7 +92,7 @@ class BookStatusDetail extends StatelessWidget {
       padding: const EdgeInsets.only(right: 10, top: 0),
       child: GestureDetector(
         onTap: onLikeTap,
-        child: (isLiked)
+        child: (book.favourite)
             ? FaIcon(
                 FontAwesomeIcons.solidHeart,
                 size: 30,
@@ -185,8 +199,6 @@ class BookStatusDetail extends StatelessWidget {
                     : const SizedBox(),
               ],
             ),
-            const SizedBox(height: 5),
-            _buildStartAndFinishDate(context),
             SizedBox(height: (showRatingAndLike) ? 10 : 0),
             (showRatingAndLike)
                 ? Column(
@@ -196,7 +208,7 @@ class BookStatusDetail extends StatelessWidget {
                           Text(
                             LocaleKeys.your_rating.tr(),
                             style: const TextStyle(
-                              fontSize: 14,
+                              fontSize: 16,
                               fontWeight: FontWeight.bold,
                             ),
                           ),
@@ -217,6 +229,25 @@ class BookStatusDetail extends StatelessWidget {
                     ],
                   )
                 : const SizedBox(),
+            const SizedBox(height: 10),
+            Row(
+              children: [
+                _buildStartAndFinishDate(
+                  context,
+                  book.startDate,
+                  book.finishDate,
+                ),
+                (book.startDate == null || book.finishDate == null)
+                    ? const SizedBox()
+                    : Text(' (${_generateReadingTime(
+                        finishDate: book.finishDate,
+                        startDate: book.startDate,
+                        readingTime: book.readingTime,
+                        context: context,
+                      )})'),
+              ],
+            ),
+            _buildAdditionalReadingDates(context)
           ],
         ),
       ),
@@ -228,7 +259,7 @@ class BookStatusDetail extends StatelessWidget {
       builder: (context, state) {
         if (state is RatingTypeBar) {
           return RatingBar.builder(
-            initialRating: (rating != null) ? rating! / 10 : 0,
+            initialRating: (book.rating != null) ? book.rating! / 10 : 0,
             allowHalfRating: true,
             unratedColor: Theme.of(context).scaffoldBackgroundColor,
             glow: false,
@@ -245,7 +276,7 @@ class BookStatusDetail extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               Text(
-                (rating == null) ? '0' : '${(rating! / 10)}',
+                (book.rating == null) ? '0' : '${(book.rating! / 10)}',
                 style: const TextStyle(
                   fontSize: 16,
                   fontWeight: FontWeight.bold,
@@ -262,5 +293,52 @@ class BookStatusDetail extends StatelessWidget {
         }
       },
     );
+  }
+
+  Widget _buildAdditionalReadingDates(BuildContext context) {
+    if (book.additionalReadings == null) return const SizedBox();
+    if (book.additionalReadings!.isEmpty) return const SizedBox();
+
+    List<Widget> widgets = [];
+
+    final sortedAdditionalReadings = book.additionalReadings!
+      ..sort((a, b) {
+        if (a.finishDate == null && b.finishDate == null) {
+          return 0;
+        } else if (a.finishDate == null) {
+          return 1;
+        } else if (b.finishDate == null) {
+          return -1;
+        } else {
+          return b.finishDate!.compareTo(a.finishDate!);
+        }
+      });
+
+    for (var reading in sortedAdditionalReadings) {
+      widgets.add(
+        Padding(
+          padding: const EdgeInsets.only(top: 5),
+          child: Row(
+            children: [
+              _buildStartAndFinishDate(
+                context,
+                reading.startDate,
+                reading.finishDate,
+              ),
+              (reading.startDate == null || reading.finishDate == null)
+                  ? const SizedBox()
+                  : Text(' (${_generateReadingTime(
+                      finishDate: reading.finishDate,
+                      startDate: reading.startDate,
+                      readingTime: reading.customReadingTime,
+                      context: context,
+                    )})'),
+            ],
+          ),
+        ),
+      );
+    }
+
+    return Column(children: widgets);
   }
 }
