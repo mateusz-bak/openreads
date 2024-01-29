@@ -116,8 +116,9 @@ class Book {
           ? ReadingTime.fromMilliSeconds(json['reading_time'])
           : null,
       additionalReadings: json['additional_readings'] != null
-          ? List<AdditionalReading>.from(json['additional_readings']
-              .map((x) => AdditionalReading.fromString(x)))
+          ? jsonDecode(json['additional_readings'])
+              .map<AdditionalReading>((e) => AdditionalReading.fromString(e))
+              .toList()
           : null,
     );
   }
@@ -281,8 +282,9 @@ class Book {
                       ? 'paperback'
                       : 'paperback',
       'reading_time': readingTime?.milliSeconds,
-      'additional_readings':
-          additionalReadings?.map((x) => x.toString()).toList(),
+      'additional_readings': additionalReadings != null
+          ? jsonEncode(additionalReadings!.map((e) => e.toString()).toList())
+          : null,
     };
   }
 
