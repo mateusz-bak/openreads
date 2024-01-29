@@ -122,6 +122,18 @@ class _AddBookScreenState extends State<AddBookScreen> {
       }
     }
 
+    if (book.additionalReadings != null &&
+        book.additionalReadings!.isNotEmpty) {
+      for (final reading in book.additionalReadings!) {
+        if (reading.startDate != null && reading.finishDate != null) {
+          if (reading.finishDate!.isBefore(reading.startDate!)) {
+            _showSnackbar(LocaleKeys.finish_date_before_start.tr());
+            return false;
+          }
+        }
+      }
+    }
+
     return true;
   }
 
