@@ -489,7 +489,7 @@ class _AddBookScreenState extends State<AddBookScreen> {
               ),
               BlocBuilder<EditBookCubit, Book>(
                 builder: (context, state) {
-                  if (state.additionalReadings == null &&
+                  if (state.additionalReadings == null ||
                       state.additionalReadings!.isEmpty) {
                     return const SizedBox();
                   }
