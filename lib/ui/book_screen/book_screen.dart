@@ -7,14 +7,13 @@ import 'package:openreads/logic/cubit/current_book_cubit.dart';
 import 'package:openreads/main.dart';
 import 'package:openreads/model/book.dart';
 import 'package:openreads/ui/book_screen/widgets/widgets.dart';
-import 'package:openreads/model/reading_time.dart';
 
 class BookScreen extends StatelessWidget {
   const BookScreen({
-    Key? key,
+    super.key,
     required this.id,
     required this.heroTag,
-  }) : super(key: key);
+  });
 
   final int id;
   final String heroTag;
@@ -141,19 +140,6 @@ class BookScreen extends StatelessWidget {
     context.read<CurrentBookCubit>().setBook(book);
   }
 
-  String _generateReadingTime({
-    DateTime? startDate,
-    DateTime? finishDate,
-    required BuildContext context,
-    ReadingTime? readingTime,
-  }) {
-    if (readingTime != null) return readingTime.toString();
-    final diff = finishDate!.difference(startDate!).inDays +
-        1; // should be at least 1 day
-
-    return LocaleKeys.day.plural(diff).tr();
-  }
-
   @override
   Widget build(BuildContext context) {
     final mediaQuery = MediaQuery.of(context);
@@ -163,9 +149,6 @@ class BookScreen extends StatelessWidget {
       appBar: const BookScreenAppBar(),
       body: BlocBuilder<CurrentBookCubit, Book>(
         builder: (context, state) {
-          var showReadingTime =
-              ((state.finishDate != null && state.startDate != null) ||
-                  state.readingTime != null);
           return SingleChildScrollView(
             child: Column(
               children: [
@@ -196,16 +179,13 @@ class BookScreen extends StatelessWidget {
                       ),
                       const SizedBox(height: 5),
                       BookStatusDetail(
+                        book: state,
                         statusIcon: _decideStatusIcon(state.status),
                         statusText: _decideStatusText(
                           state.status,
                           context,
                         ),
-                        rating: state.rating,
-                        startDate: state.startDate,
-                        finishDate: state.finishDate,
                         onLikeTap: () => _onLikeTap(context, state),
-                        isLiked: state.favourite,
                         showChangeStatus: (state.status == 1 ||
                             state.status == 2 ||
                             state.status == 3),
@@ -228,17 +208,6 @@ class BookScreen extends StatelessWidget {
                             ? 5
                             : 0,
                       ),
-                      (showReadingTime)
-                          ? BookDetail(
-                              title: LocaleKeys.reading_time.tr(),
-                              text: _generateReadingTime(
-                                finishDate: state.finishDate,
-                                startDate: state.startDate,
-                                readingTime: state.readingTime,
-                                context: context,
-                              ),
-                            )
-                          : const SizedBox(),
                       SizedBox(
                         height: (state.pages != null) ? 5 : 0,
                       ),
