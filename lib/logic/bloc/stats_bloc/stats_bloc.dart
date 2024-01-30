@@ -15,7 +15,7 @@ class StatsBloc extends Bloc<StatsEvent, StatsState> {
   StatsBloc() : super(StatsLoading()) {
     on<StatsLoad>((event, emit) {
       final allBooks = event.books;
-      final finishedBooks = _filterFinishedBooks(allBooks, 0);
+      final finishedBooks = _filterBooksByStatus(allBooks, 0);
 
       if (finishedBooks.isEmpty) {
         emit(StatsError(LocaleKeys.add_books_and_come_back.tr()));
@@ -23,9 +23,9 @@ class StatsBloc extends Bloc<StatsEvent, StatsState> {
       }
 
       final years = getYears(finishedBooks);
-      final inProgressBooks = _filterFinishedBooks(allBooks, 1);
-      final forLaterBooks = _filterFinishedBooks(allBooks, 2);
-      final unfinishedBooks = _filterFinishedBooks(allBooks, 3);
+      final inProgressBooks = _filterBooksByStatus(allBooks, 1);
+      final forLaterBooks = _filterBooksByStatus(allBooks, 2);
+      final unfinishedBooks = _filterBooksByStatus(allBooks, 3);
 
       final finishedBooksByMonthAllTypes =
           _getFinishedBooksByMonth(finishedBooks, null);
@@ -49,8 +49,6 @@ class StatsBloc extends Bloc<StatsEvent, StatsState> {
       final finishedPagesByMonthAudiobooks =
           _getFinishedPagesByMonth(finishedBooks, BookFormat.audiobook);
 
-      final finishedPagesAll = _calculateAllReadPages(finishedBooks);
-
       final averageRating = _getAverageRating(finishedBooks);
       final averagePages = _getAveragePages(finishedBooks);
       final averageReadingTime = _getAverageReadingTime(finishedBooks);
@@ -58,6 +56,8 @@ class StatsBloc extends Bloc<StatsEvent, StatsState> {
       final shortestBook = _getShortestBook(finishedBooks);
       final fastestBook = _getFastestReadBook(finishedBooks);
       final slowestBook = _getSlowestReadBook(finishedBooks);
+      final allFinishedBooks = _countFinishedBooks(finishedBooks);
+      final allFinishedPages = _countFinishedPages(finishedBooks);
 
       emit(StatsLoaded(
         years: years,
@@ -75,8 +75,8 @@ class StatsBloc extends Bloc<StatsEvent, StatsState> {
         finishedPagesByMonthHardcoverBooks: finishedPagesByMonthHardcoverBooks,
         finishedPagesByMonthEbooks: finishedPagesByMonthEbooks,
         finishedPagesByMonthAudiobooks: finishedPagesByMonthAudiobooks,
-        finishedBooksAll: finishedBooks.length,
-        finishedPagesAll: finishedPagesAll,
+        finishedBooksAll: allFinishedBooks,
+        finishedPagesAll: allFinishedPages,
         averageRating: averageRating,
         averagePages: averagePages,
         averageReadingTime: averageReadingTime,
@@ -86,18 +86,6 @@ class StatsBloc extends Bloc<StatsEvent, StatsState> {
         slowestBook: slowestBook,
       ));
     });
-  }
-
-  int _calculateAllReadPages(List<Book> books) {
-    int pages = 0;
-
-    for (var book in books) {
-      if (book.pages != null) {
-        pages = pages + book.pages!;
-      }
-    }
-
-    return pages;
   }
 
   List<BookYearlyStat> _getSlowestReadBook(List<Book> books) {
@@ -558,7 +546,7 @@ class StatsBloc extends Bloc<StatsEvent, StatsState> {
     List<BookReadStat> bookReadStats = List<BookReadStat>.empty(growable: true);
 
     bookReadStats.add(
-      BookReadStat(values: _getPagesByMonth(books, bookType)),
+      BookReadStat(values: _getPagesByMonth(books, bookType, null)),
     );
 
     final booksWithYears = _getBooksWithFinishDate(books);
@@ -566,12 +554,28 @@ class StatsBloc extends Bloc<StatsEvent, StatsState> {
 
     for (var year in years) {
       final booksInYear = List<Book>.empty(growable: true);
+
       for (Book book in books) {
         if (book.finishDate != null && book.pages != null) {
           final finishYear = book.finishDate!.year;
 
           if (finishYear == year) {
             booksInYear.add(book);
+          } else {
+            if (book.additionalReadings != null &&
+                book.additionalReadings!.isNotEmpty) {
+              for (final additionalReading in book.additionalReadings!) {
+                if (additionalReading.finishDate != null &&
+                    book.pages != null) {
+                  final additionalFinishYear =
+                      additionalReading.finishDate!.year;
+
+                  if (additionalFinishYear == year) {
+                    booksInYear.add(book);
+                  }
+                }
+              }
+            }
           }
         }
       }
@@ -579,14 +583,18 @@ class StatsBloc extends Bloc<StatsEvent, StatsState> {
       bookReadStats.add(
         BookReadStat(
           year: year,
-          values: _getPagesByMonth(booksInYear, bookType),
+          values: _getPagesByMonth(booksInYear, bookType, year),
         ),
       );
     }
     return bookReadStats;
   }
 
-  List<int> _getPagesByMonth(List<Book> books, BookFormat? bookType) {
+  List<int> _getPagesByMonth(
+    List<Book> books,
+    BookFormat? bookType,
+    int? year,
+  ) {
     List<int> finishedPagesByMonth = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
 
     for (Book book in books) {
@@ -595,9 +603,24 @@ class StatsBloc extends Bloc<StatsEvent, StatsState> {
       }
 
       if (book.finishDate != null && book.pages != null) {
-        final finishMonth = book.finishDate!.month;
+        if (year == null || book.finishDate!.year == year) {
+          final finishMonth = book.finishDate!.month;
 
-        finishedPagesByMonth[finishMonth - 1] += book.pages!;
+          finishedPagesByMonth[finishMonth - 1] += book.pages!;
+        }
+      }
+
+      if (book.additionalReadings != null &&
+          book.additionalReadings!.isNotEmpty) {
+        for (final additionalReading in book.additionalReadings!) {
+          if (additionalReading.finishDate != null && book.pages != null) {
+            final finishMonth = additionalReading.finishDate!.month;
+
+            if (year == null || additionalReading.finishDate!.year == year) {
+              finishedPagesByMonth[finishMonth - 1] += book.pages!;
+            }
+          }
+        }
       }
     }
     return finishedPagesByMonth;
@@ -610,20 +633,36 @@ class StatsBloc extends Bloc<StatsEvent, StatsState> {
     List<BookReadStat> bookReadStats = List<BookReadStat>.empty(growable: true);
 
     bookReadStats.add(
-      BookReadStat(values: _getBooksByMonth(books, bookType)),
+      BookReadStat(values: _getBooksByMonth(books, bookType, null)),
     );
 
     final booksWithYears = _getBooksWithFinishDate(books);
     final years = _calculateYears(booksWithYears);
 
     for (var year in years) {
-      final booksInyear = List<Book>.empty(growable: true);
+      final booksInYear = List<Book>.empty(growable: true);
+
       for (Book book in books) {
         if (book.finishDate != null) {
           final finishYear = book.finishDate!.year;
 
           if (finishYear == year) {
-            booksInyear.add(book);
+            booksInYear.add(book);
+          } else {
+            if (book.additionalReadings != null &&
+                book.additionalReadings!.isNotEmpty) {
+              for (final additionalReading in book.additionalReadings!) {
+                if (additionalReading.finishDate != null &&
+                    book.pages != null) {
+                  final additionalFinishYear =
+                      additionalReading.finishDate!.year;
+
+                  if (additionalFinishYear == year) {
+                    booksInYear.add(book);
+                  }
+                }
+              }
+            }
           }
         }
       }
@@ -631,7 +670,7 @@ class StatsBloc extends Bloc<StatsEvent, StatsState> {
       bookReadStats.add(
         BookReadStat(
           year: year,
-          values: _getBooksByMonth(booksInyear, bookType),
+          values: _getBooksByMonth(booksInYear, bookType, year),
         ),
       );
     }
@@ -639,7 +678,11 @@ class StatsBloc extends Bloc<StatsEvent, StatsState> {
     return bookReadStats;
   }
 
-  List<int> _getBooksByMonth(List<Book> books, BookFormat? bookType) {
+  List<int> _getBooksByMonth(
+    List<Book> books,
+    BookFormat? bookType,
+    int? year,
+  ) {
     List<int> finishedBooksByMonth = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
 
     for (Book book in books) {
@@ -648,9 +691,24 @@ class StatsBloc extends Bloc<StatsEvent, StatsState> {
       }
 
       if (book.finishDate != null) {
-        final finishMonth = book.finishDate!.month;
+        if (year == null || book.finishDate!.year == year) {
+          final finishMonth = book.finishDate!.month;
 
-        finishedBooksByMonth[finishMonth - 1] += 1;
+          finishedBooksByMonth[finishMonth - 1] += 1;
+        }
+      }
+
+      if (book.additionalReadings != null &&
+          book.additionalReadings!.isNotEmpty) {
+        for (final additionalReading in book.additionalReadings!) {
+          if (additionalReading.finishDate != null && book.pages != null) {
+            final finishMonth = additionalReading.finishDate!.month;
+
+            if (year == null || additionalReading.finishDate!.year == year) {
+              finishedBooksByMonth[finishMonth - 1] += 1;
+            }
+          }
+        }
       }
     }
     return finishedBooksByMonth;
@@ -667,7 +725,7 @@ class StatsBloc extends Bloc<StatsEvent, StatsState> {
     return booksWithYears;
   }
 
-  List<Book> _filterFinishedBooks(List<Book> books, int status) {
+  List<Book> _filterBooksByStatus(List<Book> books, int status) {
     final filteredBooks = List<Book>.empty(growable: true);
 
     for (var book in books) {
@@ -679,6 +737,48 @@ class StatsBloc extends Bloc<StatsEvent, StatsState> {
     return filteredBooks;
   }
 
+  int _countFinishedBooks(List<Book> books) {
+    int finishedBooks = 0;
+
+    for (var book in books) {
+      if (book.status == 0) {
+        finishedBooks += 1;
+
+        if (book.additionalReadings != null &&
+            book.additionalReadings!.isNotEmpty) {
+          for (final additionalReading in book.additionalReadings!) {
+            if (additionalReading.finishDate != null) {
+              finishedBooks += 1;
+            }
+          }
+        }
+      }
+    }
+
+    return finishedBooks;
+  }
+
+  int _countFinishedPages(List<Book> books) {
+    int finishedPages = 0;
+
+    for (var book in books) {
+      if (book.status == 0 && book.pages != null) {
+        finishedPages += book.pages!;
+
+        if (book.additionalReadings != null &&
+            book.additionalReadings!.isNotEmpty) {
+          for (final additionalReading in book.additionalReadings!) {
+            if (additionalReading.finishDate != null) {
+              finishedPages += book.pages!;
+            }
+          }
+        }
+      }
+    }
+
+    return finishedPages;
+  }
+
   List<int> _calculateYears(List<Book> books) {
     final years = List<int>.empty(growable: true);
 
@@ -687,6 +787,19 @@ class StatsBloc extends Bloc<StatsEvent, StatsState> {
 
       if (!years.contains(year)) {
         years.add(year);
+      }
+
+      if (book.additionalReadings != null &&
+          book.additionalReadings!.isNotEmpty) {
+        for (final additionalReading in book.additionalReadings!) {
+          if (additionalReading.finishDate != null) {
+            final additionalYear = additionalReading.finishDate!.year;
+
+            if (!years.contains(additionalYear)) {
+              years.add(additionalYear);
+            }
+          }
+        }
       }
     }
 
@@ -703,6 +816,16 @@ class StatsBloc extends Bloc<StatsEvent, StatsState> {
     for (var book in books) {
       if (book.finishDate != null) {
         bookWithYears.add(book);
+      } else {
+        if (book.additionalReadings != null &&
+            book.additionalReadings!.isNotEmpty) {
+          for (final additionalReading in book.additionalReadings!) {
+            if (additionalReading.finishDate != null) {
+              bookWithYears.add(book);
+              break;
+            }
+          }
+        }
       }
     }
 
