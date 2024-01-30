@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:openreads/core/themes/app_theme.dart';
@@ -21,7 +23,7 @@ class ReadStats extends StatelessWidget {
   final IconData? iconData;
   final Book? book;
 
-  onTap(BuildContext context) {
+  onTap(BuildContext context, int heroKey) {
     context.read<CurrentBookCubit>().setBook(book!);
 
     Navigator.push(
@@ -29,7 +31,7 @@ class ReadStats extends StatelessWidget {
       MaterialPageRoute(
         builder: (context) => BookScreen(
           id: book!.id!,
-          heroTag: '${book?.id}',
+          heroTag: '${book?.id}-$heroKey',
         ),
       ),
     );
@@ -37,9 +39,13 @@ class ReadStats extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final heroKey = Random().nextInt(1000000);
+
     return InkWell(
       borderRadius: BorderRadius.circular(cornerRadius),
-      onTap: book != null && book!.id != null ? () => onTap(context) : null,
+      onTap: book != null && book!.id != null
+          ? () => onTap(context, heroKey)
+          : null,
       child: Card(
         shadowColor: Colors.transparent,
         shape: RoundedRectangleBorder(
@@ -66,7 +72,7 @@ class ReadStats extends StatelessWidget {
                       ? Padding(
                           padding: const EdgeInsets.only(right: 10),
                           child: Hero(
-                            tag: '${book?.id}',
+                            tag: '${book?.id}-$heroKey',
                             child: Image.file(
                               book!.getCoverFile()!,
                               fit: BoxFit.cover,
