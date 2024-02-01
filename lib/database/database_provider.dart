@@ -13,8 +13,6 @@ import 'package:sqflite/sqflite.dart';
 // 7. Update existing methods with new migration scripts
 // 7. Update existing methods names with new version number
 
-// book_type actually represents book's format
-
 class DatabaseProvider {
   static final DatabaseProvider dbProvider = DatabaseProvider();
 
@@ -38,13 +36,11 @@ class DatabaseProvider {
             "subtitle TEXT, "
             "author TEXT, "
             "description TEXT, "
-            "book_type TEXT, "
+            "book_format TEXT, "
             "status INTEGER, "
             "rating INTEGER, "
             "favourite INTEGER, "
             "deleted INTEGER, "
-            "start_date TEXT, "
-            "finish_date TEXT, "
             "pages INTEGER, "
             "publication_year INTEGER, "
             "isbn TEXT, "
@@ -53,10 +49,8 @@ class DatabaseProvider {
             "my_review TEXT, "
             "notes TEXT, "
             "has_cover INTEGER, "
-            "cover BLOB, "
             "blur_hash TEXT, "
-            "reading_time INTEGER, "
-            "additional_readings TEXT"
+            "reading_dates TEXT "
             ")");
       },
       onUpgrade: (Database db, int oldVersion, int newVersion) async {
@@ -116,8 +110,81 @@ class DatabaseProvider {
     "ALTER TABLE booksTable ADD reading_time INTEGER",
   ];
 
+  // Big change in the database structure
+  // renamed book_type to book_format
+  // removed start_date and finish_date
+  // removed reading_time
+  // removed cover - now it's stored in the file system
+  // added reading_dates - combined start_date, finish_date and reading_time
   final migrationScriptsV7 = [
-    "ALTER TABLE booksTable ADD additional_readings TEXT",
+    "ALTER TABLE booksTable RENAME TO booksTableOld",
+    "CREATE TABLE booksTable ("
+        "id INTEGER PRIMARY KEY AUTOINCREMENT, "
+        "title TEXT, "
+        "subtitle TEXT, "
+        "author TEXT, "
+        "description TEXT, "
+        "book_format TEXT, "
+        "status INTEGER, "
+        "rating INTEGER, "
+        "favourite INTEGER, "
+        "deleted INTEGER, "
+        "pages INTEGER, "
+        "publication_year INTEGER, "
+        "isbn TEXT, "
+        "olid TEXT, "
+        "tags TEXT, "
+        "my_review TEXT, "
+        "notes TEXT, "
+        "has_cover INTEGER, "
+        "blur_hash TEXT, "
+        "reading_dates TEXT "
+        ")",
+    "INSERT INTO booksTable ("
+        "id, "
+        "title, "
+        "subtitle, "
+        "author, "
+        "description, "
+        "book_format, "
+        "status, "
+        "rating, "
+        "favourite, "
+        "deleted, "
+        "pages, "
+        "publication_year, "
+        "isbn, "
+        "olid, "
+        "tags, "
+        "my_review, "
+        "notes, "
+        "has_cover, "
+        "blur_hash, "
+        "reading_dates "
+        ") "
+        "SELECT "
+        "id, "
+        "title, "
+        "subtitle, "
+        "author, "
+        "description, "
+        "book_type, "
+        "status, "
+        "rating, "
+        "favourite, "
+        "deleted, "
+        "pages, "
+        "publication_year, "
+        "isbn, "
+        "olid, "
+        "tags, "
+        "my_review, "
+        "notes, "
+        "has_cover, "
+        "blur_hash, "
+        "start_date || '||' || finish_date || '||' || reading_time "
+        "FROM booksTableOld",
+    "DROP TABLE booksTableOld",
   ];
 
   void _updateBookDatabaseV1toV7(Batch batch) {
