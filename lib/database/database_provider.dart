@@ -180,7 +180,7 @@ class DatabaseProvider {
         "notes, "
         "has_cover, "
         "blur_hash, "
-        "start_date || '|' || finish_date || '|' || CAST(reading_time AS TEXT) AS readings"
+        "start_date || '|' || finish_date || '|' || CAST(reading_time AS TEXT) AS readings "
         "FROM booksTableOld",
     "DROP TABLE booksTableOld",
   ];
