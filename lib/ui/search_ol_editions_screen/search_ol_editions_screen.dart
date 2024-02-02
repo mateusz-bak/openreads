@@ -5,6 +5,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:openreads/core/constants/enums.dart';
 import 'package:openreads/generated/locale_keys.g.dart';
 import 'package:openreads/logic/cubit/edit_book_cubit.dart';
+import 'package:openreads/model/reading.dart';
 import 'package:openreads/model/book.dart';
 import 'package:openreads/model/ol_edition_result.dart';
 import 'package:openreads/ui/add_book_screen/add_book_screen.dart';
@@ -60,6 +61,7 @@ class _SearchOLEditionsScreenState extends State<SearchOLEditionsScreen> {
       olid: (result.key != null) ? result.key!.replaceAll('/books/', '') : null,
       publicationYear: widget.firstPublishYear,
       bookFormat: BookFormat.paperback,
+      readings: List<Reading>.empty(growable: true),
     );
 
     context.read<EditBookCubit>().setBook(book);

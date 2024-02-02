@@ -10,6 +10,7 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:openreads/core/constants/enums.dart';
 import 'package:openreads/core/helpers/backup/backup.dart';
 import 'package:openreads/generated/locale_keys.g.dart';
+import 'package:openreads/model/reading.dart';
 import 'package:openreads/model/book.dart';
 import 'package:openreads/main.dart';
 
@@ -197,7 +198,7 @@ class CSVImportGoodreads {
         myReview: _getMyReview(i, csv, headers),
         status: _getStatus(i, csv, headers, notFinishedShelf: notFinishedShelf),
         tags: _getTags(i, csv, headers, notFinishedShelf: notFinishedShelf),
-        finishDate: _getFinishDate(i, csv, headers),
+        readings: _getReadingDates(i, csv, headers),
         bookFormat: _getBookFormat(i, csv, headers),
       );
     } catch (e) {
@@ -350,13 +351,13 @@ class CSVImportGoodreads {
     return bookshelves?.join('|||||');
   }
 
-  static DateTime? _getFinishDate(
+  static List<Reading> _getReadingDates(
       int i, List<List<dynamic>> csv, List headers) {
     // Example Date Read fields:
     // 2021/04/06
     // 2022/04/27
     final dateReadField = csv[i][headers.indexOf('Date Read')].toString();
-    DateTime? dateRead;
+    final readingDates = List<Reading>.empty(growable: true);
 
     if (dateReadField.isNotEmpty) {
       final splittedDate = dateReadField.split('/');
@@ -365,11 +366,12 @@ class CSVImportGoodreads {
         final month = int.parse(splittedDate[1]);
         final day = int.parse(splittedDate[2]);
 
-        dateRead = DateTime(year, month, day);
+        final dateRead = DateTime(year, month, day);
+        readingDates.add(Reading(startDate: dateRead));
       }
     }
 
-    return dateRead;
+    return readingDates;
   }
 
   static BookFormat _getBookFormat(

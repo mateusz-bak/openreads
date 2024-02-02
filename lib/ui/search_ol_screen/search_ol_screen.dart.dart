@@ -9,6 +9,7 @@ import 'package:openreads/core/themes/app_theme.dart';
 import 'package:openreads/generated/locale_keys.g.dart';
 import 'package:openreads/logic/bloc/open_library_search_bloc/open_library_search_bloc.dart';
 import 'package:openreads/logic/cubit/edit_book_cubit.dart';
+import 'package:openreads/model/reading.dart';
 import 'package:openreads/model/book.dart';
 import 'package:openreads/model/ol_search_result.dart';
 import 'package:openreads/resources/open_library_service.dart';
@@ -64,6 +65,7 @@ class _SearchOLScreenState extends State<SearchOLScreen>
       olid: (olid != null) ? olid.replaceAll('/works/', '') : null,
       publicationYear: firstPublishYear,
       bookFormat: BookFormat.paperback,
+      readings: List<Reading>.empty(growable: true),
     );
 
     context.read<EditBookCubit>().setBook(book);
@@ -201,6 +203,7 @@ class _SearchOLScreenState extends State<SearchOLScreen>
       author: searchType == OLSearchType.author ? _searchController.text : '',
       status: 0,
       isbn: searchType == OLSearchType.isbn ? _searchController.text : null,
+      readings: List<Reading>.empty(growable: true),
     );
 
     context.read<EditBookCubit>().setBook(book);

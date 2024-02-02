@@ -90,8 +90,6 @@ class CSVExport {
         ('favourite'),
         ('deleted'),
         ('rating'),
-        ('start_date'),
-        ('finish_date'),
         ('pages'),
         ('publication_year'),
         ('isbn'),
@@ -100,8 +98,7 @@ class CSVExport {
         ('my_review'),
         ('notes'),
         ('book_format'),
-        ('reading_time'),
-        ('additional_readings'),
+        ('readings'),
       ];
 
       rows.add(firstRow);
@@ -127,10 +124,6 @@ class CSVExport {
         newRow.add(book.favourite.toString());
         newRow.add(book.deleted.toString());
         newRow.add(book.rating != null ? (book.rating! / 10).toString() : '');
-        newRow.add(
-            book.startDate != null ? book.startDate!.toIso8601String() : '');
-        newRow.add(
-            book.finishDate != null ? book.finishDate!.toIso8601String() : '');
         newRow.add(book.pages != null ? book.pages.toString() : '');
         newRow.add(book.publicationYear != null
             ? book.publicationYear.toString()
@@ -149,13 +142,12 @@ class CSVExport {
                     : book.bookFormat == BookFormat.audiobook
                         ? 'audiobook'
                         : '');
-        newRow.add(book.readingTime != null
-            ? book.readingTime!.milliSeconds.toString()
-            : '');
-        newRow.add(book.additionalReadings != null &&
-                book.additionalReadings!.isNotEmpty
-            ? book.additionalReadings!.map((e) => e.toString()).join(',')
-            : '');
+
+        newRow.add(
+          book.readings.isNotEmpty
+              ? book.readings.map((reading) => reading.toString()).join(';')
+              : '',
+        );
 
         rows.add(newRow);
       }

@@ -41,43 +41,47 @@ class BookCard extends StatelessWidget {
                 ? Text('${book.pages} ${LocaleKeys.pages_lowercase.tr()}')
                 : const SizedBox();
           } else if (state.sortType == SortType.byStartDate) {
-            return (book.startDate != null)
-                ? Column(
-                    crossAxisAlignment: CrossAxisAlignment.end,
-                    children: [
-                      Text(
-                        LocaleKeys.started_on_date.tr(),
-                        style: const TextStyle(fontSize: 12),
-                      ),
-                      Text(
-                        dateFormat.format(book.startDate!),
-                        style: const TextStyle(
-                          fontSize: 13,
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
-                    ],
-                  )
-                : const SizedBox();
+            // TODO implement with multiple readings
+            // return (book.startDate != null)
+            //     ? Column(
+            //         crossAxisAlignment: CrossAxisAlignment.end,
+            //         children: [
+            //           Text(
+            //             LocaleKeys.started_on_date.tr(),
+            //             style: const TextStyle(fontSize: 12),
+            //           ),
+            //           Text(
+            //             dateFormat.format(book.startDate!),
+            //             style: const TextStyle(
+            //               fontSize: 13,
+            //               fontWeight: FontWeight.bold,
+            //             ),
+            //           ),
+            //         ],
+            //       )
+            //     :
+            const SizedBox();
           } else if (state.sortType == SortType.byFinishDate) {
-            return (book.finishDate != null)
-                ? Column(
-                    crossAxisAlignment: CrossAxisAlignment.end,
-                    children: [
-                      Text(
-                        LocaleKeys.finished_on_date.tr(),
-                        style: const TextStyle(fontSize: 12),
-                      ),
-                      Text(
-                        dateFormat.format(book.finishDate!),
-                        style: const TextStyle(
-                          fontSize: 13,
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
-                    ],
-                  )
-                : const SizedBox();
+            // TODO implement with multiple readings
+            //   return (book.finishDate != null)
+            //       ? Column(
+            //           crossAxisAlignment: CrossAxisAlignment.end,
+            //           children: [
+            //             Text(
+            //               LocaleKeys.finished_on_date.tr(),
+            //               style: const TextStyle(fontSize: 12),
+            //             ),
+            //             Text(
+            //               dateFormat.format(book.finishDate!),
+            //               style: const TextStyle(
+            //                 fontSize: 13,
+            //                 fontWeight: FontWeight.bold,
+            //               ),
+            //             ),
+            //           ],
+            //         )
+            //       :
+            const SizedBox();
           } else if (state.sortType == SortType.byPublicationYear) {
             return (book.publicationYear != null)
                 ? Column(

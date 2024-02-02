@@ -36,7 +36,7 @@ class DatabaseProvider {
             "subtitle TEXT, "
             "author TEXT, "
             "description TEXT, "
-            "book_format TEXT, "
+            "book_type TEXT, "
             "status INTEGER, "
             "rating INTEGER, "
             "favourite INTEGER, "
@@ -110,11 +110,9 @@ class DatabaseProvider {
     "ALTER TABLE booksTable ADD reading_time INTEGER",
   ];
 
-  // Big change in the database structure
-  // renamed book_type to book_format
+  // Recreating database
   // removed start_date and finish_date
   // removed reading_time
-  // removed cover - now it's stored in the file system
   // added reading_dates - combined start_date, finish_date and reading_time
   final migrationScriptsV7 = [
     "ALTER TABLE booksTable RENAME TO booksTableOld",
@@ -124,7 +122,7 @@ class DatabaseProvider {
         "subtitle TEXT, "
         "author TEXT, "
         "description TEXT, "
-        "book_format TEXT, "
+        "book_type TEXT, "
         "status INTEGER, "
         "rating INTEGER, "
         "favourite INTEGER, "
@@ -146,7 +144,7 @@ class DatabaseProvider {
         "subtitle, "
         "author, "
         "description, "
-        "book_format, "
+        "book_type, "
         "status, "
         "rating, "
         "favourite, "
@@ -182,7 +180,7 @@ class DatabaseProvider {
         "notes, "
         "has_cover, "
         "blur_hash, "
-        "start_date || '||' || finish_date || '||' || reading_time "
+        "start_date || '|' || finish_date || '|' || reading_time "
         "FROM booksTableOld",
     "DROP TABLE booksTableOld",
   ];

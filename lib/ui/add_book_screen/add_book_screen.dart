@@ -14,7 +14,7 @@ import 'package:openreads/core/helpers/helpers.dart';
 import 'package:openreads/core/themes/app_theme.dart';
 import 'package:openreads/generated/locale_keys.g.dart';
 import 'package:openreads/logic/cubit/edit_book_cubit.dart';
-import 'package:openreads/model/additional_reading.dart';
+import 'package:openreads/model/reading.dart';
 import 'package:openreads/model/reading_time.dart';
 import 'package:openreads/resources/open_library_service.dart';
 import 'package:openreads/main.dart';
@@ -112,27 +112,28 @@ class _AddBookScreenState extends State<AddBookScreen> {
       _showSnackbar(LocaleKeys.author_cannot_be_empty.tr());
       return false;
     }
+    // TODO implement with multiple readings
+    // if (book.status == 0) {
+    //   if (book.startDate != null && book.finishDate != null) {
+    //     if (book.finishDate!.isBefore(book.startDate!)) {
+    //       _showSnackbar(LocaleKeys.finish_date_before_start.tr());
+    //       return false;
+    //     }
+    //   }
+    // }
 
-    if (book.status == 0) {
-      if (book.startDate != null && book.finishDate != null) {
-        if (book.finishDate!.isBefore(book.startDate!)) {
-          _showSnackbar(LocaleKeys.finish_date_before_start.tr());
-          return false;
-        }
-      }
-    }
-
-    if (book.additionalReadings != null &&
-        book.additionalReadings!.isNotEmpty) {
-      for (final reading in book.additionalReadings!) {
-        if (reading.startDate != null && reading.finishDate != null) {
-          if (reading.finishDate!.isBefore(reading.startDate!)) {
-            _showSnackbar(LocaleKeys.finish_date_before_start.tr());
-            return false;
-          }
-        }
-      }
-    }
+    // TODO implement with multiple readings
+    // if (book.additionalReadings != null &&
+    //     book.additionalReadings!.isNotEmpty) {
+    //   for (final reading in book.additionalReadings!) {
+    //     if (reading.startDate != null && reading.finishDate != null) {
+    //       if (reading.finishDate!.isBefore(reading.startDate!)) {
+    //         _showSnackbar(LocaleKeys.finish_date_before_start.tr());
+    //         return false;
+    //       }
+    //     }
+    //   }
+    // }
 
     return true;
   }
@@ -198,45 +199,49 @@ class _AddBookScreenState extends State<AddBookScreen> {
   void _showStartDatePicker() async {
     FocusManager.instance.primaryFocus?.unfocus();
 
-    final startDate = await showDatePicker(
-      context: context,
-      // if startDate is null, use DateTime.now()
-      initialDate:
-          context.read<EditBookCubit>().state.startDate ?? DateTime.now(),
-      firstDate: DateTime(1970),
-      lastDate: DateTime.now(),
-      helpText: LocaleKeys.select_start_date.tr(),
-    );
+    // TODO implement with multiple readings
+    // final startDate = await showDatePicker(
+    //   context: context,
+    //   // if startDate is null, use DateTime.now()
+    //   initialDate:
+    //       context.read<EditBookCubit>().state.startDate ?? DateTime.now(),
+    //   firstDate: DateTime(1970),
+    //   lastDate: DateTime.now(),
+    //   helpText: LocaleKeys.select_start_date.tr(),
+    // );
 
-    if (mounted && startDate != null) {
-      context.read<EditBookCubit>().setStartDate(startDate);
-    }
+    // if (mounted && startDate != null) {
+    //   context.read<EditBookCubit>().setStartDate(startDate);
+    // }
   }
 
   void _showFinishDatePicker() async {
     FocusManager.instance.primaryFocus?.unfocus();
 
-    final finishDate = await showDatePicker(
-      context: context,
-      // if finishDate is null, use DateTime.now()
-      initialDate:
-          context.read<EditBookCubit>().state.finishDate ?? DateTime.now(),
-      firstDate: DateTime(1970),
-      lastDate: DateTime.now(),
-      helpText: LocaleKeys.select_finish_date.tr(),
-    );
+    // TODO implement with multiple readings
+    // final finishDate = await showDatePicker(
+    //   context: context,
+    //   // if finishDate is null, use DateTime.now()
+    //   initialDate:
+    //       context.read<EditBookCubit>().state.finishDate ?? DateTime.now(),
+    //   firstDate: DateTime(1970),
+    //   lastDate: DateTime.now(),
+    //   helpText: LocaleKeys.select_finish_date.tr(),
+    // );
 
-    if (mounted && finishDate != null) {
-      context.read<EditBookCubit>().setFinishDate(finishDate);
-    }
+    // if (mounted && finishDate != null) {
+    //   context.read<EditBookCubit>().setFinishDate(finishDate);
+    // }
   }
 
   void _clearStartDate() {
-    context.read<EditBookCubit>().setStartDate(null);
+    // TODO implement with multiple readings
+    // context.read<EditBookCubit>().setStartDate(null);
   }
 
   void _clearFinishDate() {
-    context.read<EditBookCubit>().setFinishDate(null);
+    // TODO implement with multiple readings
+    // context.read<EditBookCubit>().setFinishDate(null);
   }
 
   void _downloadCover() async {
@@ -307,15 +312,17 @@ class _AddBookScreenState extends State<AddBookScreen> {
     int hours = int.tryParse(hoursString) ?? 0;
     int mins = int.tryParse(minutesString) ?? 0;
 
-    context
-        .read<EditBookCubit>()
-        .setReadingTime(ReadingTime.toMilliSeconds(days, hours, mins));
+    // TODO implement with multiple readings
+    // context
+    //     .read<EditBookCubit>()
+    // .setReadingTime(ReadingTime.toMilliSeconds(days, hours, mins));
 
     Navigator.pop(context, 'OK');
   }
 
   void _resetTime() {
-    context.read<EditBookCubit>().setReadingTime(null);
+    // TODO implement with multiple readings
+    // context.read<EditBookCubit>().setReadingTime(null);
   }
 
   _attachListeners() {
@@ -489,45 +496,44 @@ class _AddBookScreenState extends State<AddBookScreen> {
                 clearStartDate: _clearStartDate,
                 clearFinishDate: _clearFinishDate,
               ),
-              BlocBuilder<EditBookCubit, Book>(
-                builder: (context, state) {
-                  return BookReadingTimeField(
-                    defaultHeight: defaultFormHeight,
-                    changeReadingTime: _changeReadingTime,
-                    resetTime: _resetTime,
-                    readingTime: state.readingTime,
-                  );
-                },
-              ),
-              BlocBuilder<EditBookCubit, Book>(
-                builder: (context, state) {
-                  if (state.additionalReadings == null ||
-                      state.additionalReadings!.isEmpty) {
-                    return const SizedBox();
-                  }
+              // TODO implement with multiple readings
+              // BlocBuilder<EditBookCubit, Book>(
+              //   builder: (context, state) {
+              //     return BookReadingTimeField(
+              //       defaultHeight: defaultFormHeight,
+              //       changeReadingTime: _changeReadingTime,
+              //       resetTime: _resetTime,
+              //       readingTime: state.readingTime,
+              //     );
+              //   },
+              // ),
+              // BlocBuilder<EditBookCubit, Book>(
+              //   builder: (context, state) {
+              //     if (state.additionalReadings == null ||
+              //         state.additionalReadings!.isEmpty) {
+              //       return const SizedBox();
+              //     }
 
-                  return Column(
-                    children: [
-                      const SizedBox(height: 10),
-                      ...state.additionalReadings!.asMap().entries.map(
-                        (entry) {
-                          return AdditionalReadingRow(
-                            index: entry.key,
-                            reading: entry.value,
-                          );
-                        },
-                      ),
-                    ],
-                  );
-                },
-              ),
+              //     return Column(
+              //       children: [
+              //         const SizedBox(height: 10),
+              //         ...state.additionalReadings!.asMap().entries.map(
+              //           (entry) {
+              //             return AdditionalReadingRow(
+              //               index: entry.key,
+              //               reading: entry.value,
+              //             );
+              //           },
+              //         ),
+              //       ],
+              //     );
+              //   },
+              // ),
               Padding(
                 padding: const EdgeInsets.fromLTRB(10, 10, 10, 0),
                 child: FilledButton.tonal(
                   onPressed: () {
-                    context
-                        .read<EditBookCubit>()
-                        .addNewAdditionalReading(AdditionalReading());
+                    context.read<EditBookCubit>().addNewReading(Reading());
                   },
                   style: ButtonStyle(
                     shape: MaterialStateProperty.all(RoundedRectangleBorder(
