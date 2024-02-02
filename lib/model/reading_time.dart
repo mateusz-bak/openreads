@@ -46,10 +46,10 @@ class ReadingTime {
       result += LocaleKeys.day.plural(days).tr();
     }
     if (hours != 0) {
-      result += " ${LocaleKeys.hour.plural(hours).tr()}";
+      result += LocaleKeys.hour.plural(hours).tr();
     }
     if (minutes != 0) {
-      result += " ${LocaleKeys.minute.plural(minutes).tr()}";
+      result += LocaleKeys.minute.plural(minutes).tr();
     }
     return result;
   }

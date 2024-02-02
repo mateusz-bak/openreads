@@ -45,48 +45,6 @@ class BookStatusDetail extends StatelessWidget {
     return LocaleKeys.day.plural(diff).tr();
   }
 
-  Widget _buildStartAndFinishDate(
-    BuildContext context,
-    DateTime? startDate,
-    DateTime? finishDate,
-  ) {
-    final dateFormat = DateFormat.yMd(
-      '${context.locale.languageCode}-${context.locale.countryCode}',
-    );
-
-    if (startDate != null && finishDate != null) {
-      return Text(
-        '${dateFormat.format(startDate)} - ${dateFormat.format(finishDate)}',
-        style: const TextStyle(
-          fontSize: 14,
-          fontWeight: FontWeight.bold,
-        ),
-      );
-    }
-
-    if (startDate == null && finishDate != null) {
-      return Text(
-        '${LocaleKeys.finished_on_date.tr()} ${dateFormat.format(finishDate)}',
-        style: const TextStyle(
-          fontSize: 14,
-          fontWeight: FontWeight.bold,
-        ),
-      );
-    }
-
-    if (startDate != null && finishDate == null) {
-      return Text(
-        '${LocaleKeys.started_on_date.tr()} ${dateFormat.format(startDate)}',
-        style: const TextStyle(
-          fontSize: 14,
-          fontWeight: FontWeight.bold,
-        ),
-      );
-    }
-
-    return const SizedBox();
-  }
-
   Widget _buildLikeButton() {
     return Padding(
       padding: const EdgeInsets.only(right: 10, top: 0),
@@ -230,25 +188,7 @@ class BookStatusDetail extends StatelessWidget {
                   )
                 : const SizedBox(),
             const SizedBox(height: 10),
-            // TODO implement with multiple readings
-            // Row(
-            //   children: [
-            //     _buildStartAndFinishDate(
-            //       context,
-            //       book.startDate,
-            //       book.finishDate,
-            //     ),
-            //     (book.startDate == null || book.finishDate == null)
-            //         ? const SizedBox()
-            //         : Text(' (${_generateReadingTime(
-            //             finishDate: book.finishDate,
-            //             startDate: book.startDate,
-            //             readingTime: book.readingTime,
-            //             context: context,
-            //           )})'),
-            //   ],
-            // ),
-            _buildAdditionalReadingDates(context)
+            ..._buildStartAndFinishDates(context),
           ],
         ),
       ),
@@ -296,52 +236,126 @@ class BookStatusDetail extends StatelessWidget {
     );
   }
 
-  Widget _buildAdditionalReadingDates(BuildContext context) {
-    // TODO implement with multiple readings
-    // if (book.additionalReadings == null) return const SizedBox();
-    // if (book.additionalReadings!.isEmpty) return const SizedBox();
+  List<Widget> _buildStartAndFinishDates(BuildContext context) {
+    final dateFormat = DateFormat.yMd(
+      '${context.locale.languageCode}-${context.locale.countryCode}',
+    );
 
-    List<Widget> widgets = [];
+    final widgets = <Widget>[];
 
-    // TODO implement with multiple readings
-    // final sortedAdditionalReadings = book.additionalReadings!
-    //   ..sort((a, b) {
-    //     if (a.finishDate == null && b.finishDate == null) {
-    //       return 0;
-    //     } else if (a.finishDate == null) {
-    //       return 1;
-    //     } else if (b.finishDate == null) {
-    //       return -1;
-    //     } else {
-    //       return b.finishDate!.compareTo(a.finishDate!);
-    //     }
-    //   });
+    for (final reading in book.readings) {
+      late Widget widget;
+      final startDate = reading.startDate;
+      final finishDate = reading.finishDate;
+      final readingTime = reading.customReadingTime;
 
-    // for (var reading in sortedAdditionalReadings) {
-    //   widgets.add(
-    //     Padding(
-    //       padding: const EdgeInsets.only(top: 5),
-    //       child: Row(
-    //         children: [
-    //           _buildStartAndFinishDate(
-    //             context,
-    //             reading.startDate,
-    //             reading.finishDate,
-    //           ),
-    //           (reading.startDate == null || reading.finishDate == null)
-    //               ? const SizedBox()
-    //               : Text(' (${_generateReadingTime(
-    //                   finishDate: reading.finishDate,
-    //                   startDate: reading.startDate,
-    //                   readingTime: reading.customReadingTime,
-    //                   context: context,
-    //                 )})'),
-    //         ],
-    //       ),
-    //     ),
-    //   );
-    // }
+      if (startDate != null && finishDate != null) {
+        widget = _buildStartAndFinishDate(
+          dateFormat,
+          startDate,
+          finishDate,
+          readingTime,
+          context,
+        );
+      } else if (startDate == null && finishDate != null) {
+        widget = _buildOnlyFinishDate(
+          dateFormat,
+          finishDate,
+          readingTime,
+          context,
+        );
+      } else if (startDate != null && finishDate == null) {
+        widget = _buildOnlyStartDate(
+          dateFormat,
+          startDate,
+          context,
+        );
+      } else {
+        widget = const SizedBox();
+      }
 
-    return Column(children: widgets);
+      widgets.add(widget);
+    }
+
+    return widgets;
+  }
+
+  Widget _buildStartAndFinishDate(
+    DateFormat dateFormat,
+    DateTime startDate,
+    DateTime finishDate,
+    ReadingTime? readingTime,
+    BuildContext context,
+  ) {
+    final text = Text(
+      '${dateFormat.format(startDate)} - ${dateFormat.format(finishDate)}',
+      style: const TextStyle(
+        fontSize: 14,
+        fontWeight: FontWeight.bold,
+      ),
+    );
+
+    final readingTimeText = Text(
+      ' (${_generateReadingTime(
+        startDate: startDate,
+        finishDate: finishDate,
+        context: context,
+        readingTime: readingTime,
+      )})',
+      style: const TextStyle(
+        fontSize: 14,
+        fontWeight: FontWeight.bold,
+      ),
+    );
+
+    return Row(
+      children: [text, readingTimeText],
+    );
+  }
+
+  Widget _buildOnlyFinishDate(
+    DateFormat dateFormat,
+    DateTime finishDate,
+    ReadingTime? readingTime,
+    BuildContext context,
+  ) {
+    final text = Text(
+      '${LocaleKeys.finished_on_date.tr()} ${dateFormat.format(finishDate)}',
+      style: const TextStyle(
+        fontSize: 14,
+        fontWeight: FontWeight.bold,
+      ),
+    );
+
+    final readingTimeText = Text(
+      ' (${_generateReadingTime(
+        startDate: null,
+        finishDate: finishDate,
+        context: context,
+        readingTime: readingTime,
+      )})',
+      style: const TextStyle(
+        fontSize: 14,
+        fontWeight: FontWeight.bold,
+      ),
+    );
+
+    return Row(
+      children: [text, readingTimeText],
+    );
+  }
+
+  Widget _buildOnlyStartDate(
+    DateFormat dateFormat,
+    DateTime startDate,
+    BuildContext context,
+  ) {
+    return Text(
+      '${LocaleKeys.started_on_date.tr()} ${dateFormat.format(startDate)}',
+      style: const TextStyle(
+        fontSize: 14,
+        fontWeight: FontWeight.bold,
+      ),
+    );
   }
 }

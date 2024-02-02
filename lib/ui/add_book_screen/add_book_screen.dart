@@ -15,12 +15,10 @@ import 'package:openreads/core/themes/app_theme.dart';
 import 'package:openreads/generated/locale_keys.g.dart';
 import 'package:openreads/logic/cubit/edit_book_cubit.dart';
 import 'package:openreads/model/reading.dart';
-import 'package:openreads/model/reading_time.dart';
 import 'package:openreads/resources/open_library_service.dart';
 import 'package:openreads/main.dart';
 import 'package:openreads/model/book.dart';
 import 'package:openreads/ui/add_book_screen/widgets/cover_view_edit.dart';
-import 'package:openreads/ui/add_book_screen/widgets/reading_time_field.dart';
 import 'package:openreads/ui/add_book_screen/widgets/widgets.dart';
 
 class AddBookScreen extends StatefulWidget {
@@ -196,54 +194,6 @@ class _AddBookScreenState extends State<AddBookScreen> {
     FocusManager.instance.primaryFocus?.unfocus();
   }
 
-  void _showStartDatePicker() async {
-    FocusManager.instance.primaryFocus?.unfocus();
-
-    // TODO implement with multiple readings
-    // final startDate = await showDatePicker(
-    //   context: context,
-    //   // if startDate is null, use DateTime.now()
-    //   initialDate:
-    //       context.read<EditBookCubit>().state.startDate ?? DateTime.now(),
-    //   firstDate: DateTime(1970),
-    //   lastDate: DateTime.now(),
-    //   helpText: LocaleKeys.select_start_date.tr(),
-    // );
-
-    // if (mounted && startDate != null) {
-    //   context.read<EditBookCubit>().setStartDate(startDate);
-    // }
-  }
-
-  void _showFinishDatePicker() async {
-    FocusManager.instance.primaryFocus?.unfocus();
-
-    // TODO implement with multiple readings
-    // final finishDate = await showDatePicker(
-    //   context: context,
-    //   // if finishDate is null, use DateTime.now()
-    //   initialDate:
-    //       context.read<EditBookCubit>().state.finishDate ?? DateTime.now(),
-    //   firstDate: DateTime(1970),
-    //   lastDate: DateTime.now(),
-    //   helpText: LocaleKeys.select_finish_date.tr(),
-    // );
-
-    // if (mounted && finishDate != null) {
-    //   context.read<EditBookCubit>().setFinishDate(finishDate);
-    // }
-  }
-
-  void _clearStartDate() {
-    // TODO implement with multiple readings
-    // context.read<EditBookCubit>().setStartDate(null);
-  }
-
-  void _clearFinishDate() {
-    // TODO implement with multiple readings
-    // context.read<EditBookCubit>().setFinishDate(null);
-  }
-
   void _downloadCover() async {
     setState(() {
       _isCoverDownloading = true;
@@ -301,28 +251,6 @@ class _AddBookScreenState extends State<AddBookScreen> {
 
   void _unselectTag(String tag) {
     context.read<EditBookCubit>().removeTag(tag);
-  }
-
-  void _changeReadingTime(
-    String daysString,
-    String hoursString,
-    String minutesString,
-  ) {
-    int days = int.tryParse(daysString) ?? 0;
-    int hours = int.tryParse(hoursString) ?? 0;
-    int mins = int.tryParse(minutesString) ?? 0;
-
-    // TODO implement with multiple readings
-    // context
-    //     .read<EditBookCubit>()
-    // .setReadingTime(ReadingTime.toMilliSeconds(days, hours, mins));
-
-    Navigator.pop(context, 'OK');
-  }
-
-  void _resetTime() {
-    // TODO implement with multiple readings
-    // context.read<EditBookCubit>().setReadingTime(null);
   }
 
   _attachListeners() {
@@ -477,82 +405,38 @@ class _AddBookScreenState extends State<AddBookScreen> {
                 padding: EdgeInsets.all(10),
                 child: Divider(),
               ),
-              BookTypeDropdown(
-                bookTypes: bookTypes,
-                changeBookType: _changeBookType,
-              ),
-              const SizedBox(height: 10),
               BookStatusRow(
                 animDuration: _animDuration,
                 defaultHeight: defaultFormHeight,
               ),
               const SizedBox(height: 10),
               BookRatingBar(animDuration: _animDuration),
-              DateRow(
-                animDuration: _animDuration,
-                defaultHeight: defaultFormHeight,
-                showStartDatePicker: _showStartDatePicker,
-                showFinishDatePicker: _showFinishDatePicker,
-                clearStartDate: _clearStartDate,
-                clearFinishDate: _clearFinishDate,
-              ),
-              // TODO implement with multiple readings
-              // BlocBuilder<EditBookCubit, Book>(
-              //   builder: (context, state) {
-              //     return BookReadingTimeField(
-              //       defaultHeight: defaultFormHeight,
-              //       changeReadingTime: _changeReadingTime,
-              //       resetTime: _resetTime,
-              //       readingTime: state.readingTime,
-              //     );
-              //   },
-              // ),
-              // BlocBuilder<EditBookCubit, Book>(
-              //   builder: (context, state) {
-              //     if (state.additionalReadings == null ||
-              //         state.additionalReadings!.isEmpty) {
-              //       return const SizedBox();
-              //     }
-
-              //     return Column(
-              //       children: [
-              //         const SizedBox(height: 10),
-              //         ...state.additionalReadings!.asMap().entries.map(
-              //           (entry) {
-              //             return AdditionalReadingRow(
-              //               index: entry.key,
-              //               reading: entry.value,
-              //             );
-              //           },
-              //         ),
-              //       ],
-              //     );
-              //   },
-              // ),
-              Padding(
-                padding: const EdgeInsets.fromLTRB(10, 10, 10, 0),
-                child: FilledButton.tonal(
-                  onPressed: () {
-                    context.read<EditBookCubit>().addNewReading(Reading());
-                  },
-                  style: ButtonStyle(
-                    shape: MaterialStateProperty.all(RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(cornerRadius),
-                    )),
-                  ),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
+              BlocBuilder<EditBookCubit, Book>(
+                builder: (context, state) {
+                  return Column(
                     children: [
-                      const Icon(Icons.add),
-                      Text(LocaleKeys.add_additional_reading_time.tr()),
+                      ...state.readings.asMap().entries.map(
+                        (entry) {
+                          return ReadingRow(
+                            index: entry.key,
+                            reading: entry.value,
+                          );
+                        },
+                      ),
                     ],
-                  ),
-                ),
+                  );
+                },
               ),
+              _buildAddNewReadingButton(context),
               const Padding(
                 padding: EdgeInsets.all(10),
                 child: Divider(),
               ),
+              BookTypeDropdown(
+                bookTypes: bookTypes,
+                changeBookType: _changeBookType,
+              ),
+              const SizedBox(height: 10),
               Row(
                 children: [
                   Expanded(
@@ -702,6 +586,30 @@ class _AddBookScreenState extends State<AddBookScreen> {
               const SizedBox(height: 50.0),
             ],
           ),
+        ),
+      ),
+    );
+  }
+
+  Padding _buildAddNewReadingButton(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.fromLTRB(10, 10, 10, 0),
+      child: FilledButton.tonal(
+        onPressed: () {
+          context.read<EditBookCubit>().addNewReading(Reading());
+        },
+        style: ButtonStyle(
+          shape: MaterialStateProperty.all(RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(cornerRadius),
+          )),
+        ),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            const Icon(Icons.add),
+            const SizedBox(width: 10),
+            Text(LocaleKeys.add_additional_reading_time.tr()),
+          ],
         ),
       ),
     );

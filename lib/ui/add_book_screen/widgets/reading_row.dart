@@ -11,8 +11,8 @@ import 'package:openreads/model/reading_time.dart';
 import 'package:openreads/ui/add_book_screen/widgets/reading_time_field.dart';
 import 'package:openreads/ui/add_book_screen/widgets/widgets.dart';
 
-class AdditionalReadingRow extends StatefulWidget {
-  const AdditionalReadingRow({
+class ReadingRow extends StatefulWidget {
+  const ReadingRow({
     super.key,
     required this.index,
     required this.reading,
@@ -22,16 +22,15 @@ class AdditionalReadingRow extends StatefulWidget {
   final Reading reading;
 
   @override
-  State<AdditionalReadingRow> createState() => _AdditionalReadingRowState();
+  State<ReadingRow> createState() => _ReadingRowState();
 }
 
-class _AdditionalReadingRowState extends State<AdditionalReadingRow> {
+class _ReadingRowState extends State<ReadingRow> {
   void _showStartDatePicker() async {
     FocusManager.instance.primaryFocus?.unfocus();
 
     final startDate = await showDatePicker(
       context: context,
-      // if startDate is null, use DateTime.now()
       initialDate: widget.reading.startDate ?? DateTime.now(),
       firstDate: DateTime(1970),
       lastDate: DateTime.now(),
@@ -51,9 +50,7 @@ class _AdditionalReadingRowState extends State<AdditionalReadingRow> {
 
     final finishDate = await showDatePicker(
       context: context,
-      // if finishDate is null, use DateTime.now()
       initialDate: widget.reading.finishDate ?? DateTime.now(),
-
       firstDate: DateTime(1970),
       lastDate: DateTime.now(),
       helpText: LocaleKeys.select_finish_date.tr(),
@@ -103,26 +100,15 @@ class _AdditionalReadingRowState extends State<AdditionalReadingRow> {
     );
 
     return Container(
-      padding: const EdgeInsets.fromLTRB(0, 10, 10, 10),
+      padding: const EdgeInsets.fromLTRB(0, 20, 0, 0),
       child: Row(
         children: [
           Expanded(
             child: Column(
               children: [
-                Row(
-                  children: [
-                    Padding(
-                      padding: const EdgeInsets.fromLTRB(10, 0, 10, 0),
-                      child: Text(
-                        LocaleKeys.additional_reading.tr(),
-                        style: const TextStyle(fontWeight: FontWeight.bold),
-                      ),
-                    ),
-                  ],
-                ),
-                const SizedBox(height: 10),
+                const SizedBox(height: 0),
                 Padding(
-                  padding: const EdgeInsets.fromLTRB(20, 0, 10, 0),
+                  padding: const EdgeInsets.fromLTRB(10, 0, 10, 0),
                   child: Container(
                     clipBehavior: Clip.hardEdge,
                     decoration: const BoxDecoration(),
@@ -161,21 +147,18 @@ class _AdditionalReadingRowState extends State<AdditionalReadingRow> {
                     ),
                   ),
                 ),
-                Padding(
-                  padding: const EdgeInsets.only(left: 10),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    children: [
-                      Expanded(
-                        child: BookReadingTimeField(
-                          defaultHeight: defaultFormHeight,
-                          changeReadingTime: _changeReadingTime,
-                          resetTime: _resetTime,
-                          readingTime: widget.reading.customReadingTime,
-                        ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  children: [
+                    Expanded(
+                      child: BookReadingTimeField(
+                        defaultHeight: defaultFormHeight,
+                        changeReadingTime: _changeReadingTime,
+                        resetTime: _resetTime,
+                        readingTime: widget.reading.customReadingTime,
                       ),
-                    ],
-                  ),
+                    ),
+                  ],
                 ),
               ],
             ),
@@ -191,8 +174,11 @@ class _AdditionalReadingRowState extends State<AdditionalReadingRow> {
                 ),
               ),
             ),
-            child: const Icon(Icons.remove),
-          ),
+            child: const Padding(
+              padding: EdgeInsets.symmetric(vertical: 20),
+              child: Icon(Icons.delete),
+            ),
+          )
         ],
       ),
     );

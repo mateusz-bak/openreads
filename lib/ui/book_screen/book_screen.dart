@@ -6,6 +6,7 @@ import 'package:openreads/generated/locale_keys.g.dart';
 import 'package:openreads/logic/cubit/current_book_cubit.dart';
 import 'package:openreads/main.dart';
 import 'package:openreads/model/book.dart';
+import 'package:openreads/model/reading.dart';
 import 'package:openreads/ui/book_screen/widgets/widgets.dart';
 
 class BookScreen extends StatelessWidget {
@@ -65,75 +66,90 @@ class BookScreen extends StatelessWidget {
     }
   }
 
+  Future<int?> _getQuickRating(BuildContext context) async {
+    late int? rating;
+
+    await showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return SimpleDialog(
+          contentPadding: const EdgeInsets.all(20),
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(cornerRadius),
+          ),
+          title: Text(
+            LocaleKeys.rate_book.tr(),
+            style: const TextStyle(fontSize: 18),
+          ),
+          children: [
+            QuickRating(
+              onRatingUpdate: (double newRating) {
+                rating = (newRating * 10).toInt();
+              },
+            ),
+            const SizedBox(height: 10),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                FilledButton.tonal(
+                  onPressed: () {
+                    rating = null;
+                    Navigator.of(context).pop();
+                  },
+                  child: Text(LocaleKeys.skip.tr()),
+                ),
+                FilledButton(
+                  onPressed: () {
+                    Navigator.of(context).pop();
+                  },
+                  child: Text(LocaleKeys.save.tr()),
+                )
+              ],
+            )
+          ],
+        );
+      },
+    );
+
+    return rating;
+  }
+
   void _changeStatusAction(BuildContext context, int status, Book book) async {
     final dateNow = DateTime.now();
     final date = DateTime(dateNow.year, dateNow.month, dateNow.day);
 
+    // finishing the book
     if (status == 1) {
-      int? rating;
+      final rating = await _getQuickRating(context);
 
-      await showDialog(
-        context: context,
-        builder: (BuildContext context) {
-          return SimpleDialog(
-            contentPadding: const EdgeInsets.all(20),
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(cornerRadius),
-            ),
-            title: Text(
-              LocaleKeys.rate_book.tr(),
-              style: const TextStyle(fontSize: 18),
-            ),
-            children: [
-              QuickRating(
-                onRatingUpdate: (double newRating) {
-                  rating = (newRating * 10).toInt();
-                },
-              ),
-              const SizedBox(height: 10),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  FilledButton.tonal(
-                    onPressed: () {
-                      rating = null;
-                      Navigator.of(context).pop();
-                    },
-                    child: Text(LocaleKeys.skip.tr()),
-                  ),
-                  FilledButton(
-                    onPressed: () {
-                      Navigator.of(context).pop();
-                    },
-                    child: Text(LocaleKeys.save.tr()),
-                  )
-                ],
-              )
-            ],
-          );
-        },
-      );
       book = book.copyWith(
         status: 0,
         rating: rating,
-        // TODO implement with multiple readings
-        // finishDate: date,
+        readings: book.readings.isNotEmpty
+            ? (book.readings..[0] = book.readings[0].copyWith(finishDate: date))
+            : [Reading(finishDate: date)],
       );
 
       bookCubit.updateBook(book);
+
+      // starting the book
     } else if (status == 2) {
       book = book.copyWith(
         status: 1,
-        // TODO implement with multiple readings
-        // startDate: date,
+        readings: book.readings.isNotEmpty
+            ? (book.readings..[0] = book.readings[0].copyWith(startDate: date))
+            : [Reading(startDate: date)],
       );
 
       bookCubit.updateBook(book);
+
+      // starting the book
     } else if (status == 3) {
       book = book.copyWith(
         status: 1,
-        // TODO implement with multiple readings
-        // startDate: date,
+        readings: book.readings.isNotEmpty
+            ? (book.readings..[0] = book.readings[0].copyWith(startDate: date))
+            : [Reading(startDate: date)],
       );
 
       bookCubit.updateBook(book);
