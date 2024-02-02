@@ -116,21 +116,24 @@ class BookScreen extends StatelessWidget {
       book = book.copyWith(
         status: 0,
         rating: rating,
-        finishDate: date,
+        // TODO implement with multiple readings
+        // finishDate: date,
       );
 
       bookCubit.updateBook(book);
     } else if (status == 2) {
       book = book.copyWith(
         status: 1,
-        startDate: date,
+        // TODO implement with multiple readings
+        // startDate: date,
       );
 
       bookCubit.updateBook(book);
     } else if (status == 3) {
       book = book.copyWith(
         status: 1,
-        startDate: date,
+        // TODO implement with multiple readings
+        // startDate: date,
       );
 
       bookCubit.updateBook(book);
