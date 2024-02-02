@@ -41,6 +41,8 @@ class DatabaseProvider {
             "rating INTEGER, "
             "favourite INTEGER, "
             "deleted INTEGER, "
+            "start_date TEXT, "
+            "finish_date TEXT, "
             "pages INTEGER, "
             "publication_year INTEGER, "
             "isbn TEXT, "
@@ -116,7 +118,7 @@ class DatabaseProvider {
   // added readings - combined start_date, finish_date and reading_time
   final migrationScriptsV7 = [
     "ALTER TABLE booksTable ADD readings TEXT",
-    "UPDATE booksTable SET readings = start_date || '|' || finish_date || '|' || CAST(reading_time AS TEXT)",
+    "UPDATE booksTable SET readings = COALESCE(start_date, '') || '|' || COALESCE(finish_date, '') || '|' || COALESCE(CAST(reading_time AS TEXT), '')",
   ];
 
   void _updateBookDatabaseV1toV7(Batch batch) {
