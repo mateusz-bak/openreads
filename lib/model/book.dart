@@ -80,12 +80,6 @@ class Book {
       favourite: (json['favourite'] == 1) ? true : false,
       hasCover: (json['has_cover'] == 1) ? true : false,
       deleted: (json['deleted'] == 1) ? true : false,
-      // startDate: json['start_date'] != null
-      //     ? DateTime.parse(json['start_date'])
-      //     : null,
-      // finishDate: json['finish_date'] != null
-      //     ? DateTime.parse(json['finish_date'])
-      //     : null,
       pages: json['pages'],
       publicationYear: json['publication_year'],
       isbn: json['isbn'],
@@ -132,8 +126,6 @@ class Book {
     bool? favourite,
     bool? deleted,
     int? rating,
-    DateTime? startDate,
-    DateTime? finishDate,
     int? pages,
     int? publicationYear,
     String? isbn,
