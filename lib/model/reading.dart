@@ -1,17 +1,17 @@
 import 'package:openreads/model/reading_time.dart';
 
-class AdditionalReading {
+class Reading {
   DateTime? startDate;
   DateTime? finishDate;
   ReadingTime? customReadingTime;
 
-  AdditionalReading({
+  Reading({
     this.startDate,
     this.finishDate,
     this.customReadingTime,
   });
 
-  factory AdditionalReading.fromString(String input) {
+  factory Reading.fromString(String input) {
     List<String> dateAndValue = input.split('|');
 
     DateTime? startDate =
@@ -24,7 +24,7 @@ class AdditionalReading {
           )
         : null;
 
-    return AdditionalReading(
+    return Reading(
       startDate: startDate,
       finishDate: finishDate,
       customReadingTime: customReadingTime,

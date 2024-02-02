@@ -6,7 +6,7 @@ import 'package:openreads/core/constants/constants.dart';
 import 'package:openreads/core/themes/app_theme.dart';
 import 'package:openreads/generated/locale_keys.g.dart';
 import 'package:openreads/logic/cubit/edit_book_cubit.dart';
-import 'package:openreads/model/additional_reading.dart';
+import 'package:openreads/model/reading.dart';
 import 'package:openreads/model/reading_time.dart';
 import 'package:openreads/ui/add_book_screen/widgets/reading_time_field.dart';
 import 'package:openreads/ui/add_book_screen/widgets/widgets.dart';
@@ -19,7 +19,7 @@ class AdditionalReadingRow extends StatefulWidget {
   });
 
   final int index;
-  final AdditionalReading reading;
+  final Reading reading;
 
   @override
   State<AdditionalReadingRow> createState() => _AdditionalReadingRowState();
@@ -39,7 +39,7 @@ class _AdditionalReadingRowState extends State<AdditionalReadingRow> {
     );
 
     if (mounted && startDate != null) {
-      context.read<EditBookCubit>().setAdditionalStartDate(
+      context.read<EditBookCubit>().setReadingStartDate(
             startDate,
             widget.index,
           );
@@ -60,7 +60,7 @@ class _AdditionalReadingRowState extends State<AdditionalReadingRow> {
     );
 
     if (mounted && finishDate != null) {
-      context.read<EditBookCubit>().setAdditionalFinishDate(
+      context.read<EditBookCubit>().setReadingFinishDate(
             finishDate,
             widget.index,
           );
@@ -68,11 +68,11 @@ class _AdditionalReadingRowState extends State<AdditionalReadingRow> {
   }
 
   void _clearStartDate() {
-    context.read<EditBookCubit>().setAdditionalStartDate(null, widget.index);
+    context.read<EditBookCubit>().setReadingStartDate(null, widget.index);
   }
 
   void _clearFinishDate() {
-    context.read<EditBookCubit>().setAdditionalFinishDate(null, widget.index);
+    context.read<EditBookCubit>().setReadingFinishDate(null, widget.index);
   }
 
   void _changeReadingTime(
@@ -84,7 +84,7 @@ class _AdditionalReadingRowState extends State<AdditionalReadingRow> {
     int hours = int.tryParse(hoursString) ?? 0;
     int mins = int.tryParse(minutesString) ?? 0;
 
-    context.read<EditBookCubit>().setAdditionalReadingTime(
+    context.read<EditBookCubit>().setCustomReadingTime(
           ReadingTime.toMilliSeconds(days, hours, mins),
           widget.index,
         );
@@ -93,7 +93,7 @@ class _AdditionalReadingRowState extends State<AdditionalReadingRow> {
   }
 
   void _resetTime() {
-    context.read<EditBookCubit>().setAdditionalReadingTime(null, widget.index);
+    context.read<EditBookCubit>().setCustomReadingTime(null, widget.index);
   }
 
   @override
@@ -182,9 +182,7 @@ class _AdditionalReadingRowState extends State<AdditionalReadingRow> {
           ),
           FilledButton.tonal(
             onPressed: () {
-              context
-                  .read<EditBookCubit>()
-                  .removeAdditionalReading(widget.index);
+              context.read<EditBookCubit>().removeReading(widget.index);
             },
             style: ButtonStyle(
               shape: MaterialStateProperty.all(

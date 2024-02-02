@@ -230,23 +230,24 @@ class BookStatusDetail extends StatelessWidget {
                   )
                 : const SizedBox(),
             const SizedBox(height: 10),
-            Row(
-              children: [
-                _buildStartAndFinishDate(
-                  context,
-                  book.startDate,
-                  book.finishDate,
-                ),
-                (book.startDate == null || book.finishDate == null)
-                    ? const SizedBox()
-                    : Text(' (${_generateReadingTime(
-                        finishDate: book.finishDate,
-                        startDate: book.startDate,
-                        readingTime: book.readingTime,
-                        context: context,
-                      )})'),
-              ],
-            ),
+            // TODO implement with multiple readings
+            // Row(
+            //   children: [
+            //     _buildStartAndFinishDate(
+            //       context,
+            //       book.startDate,
+            //       book.finishDate,
+            //     ),
+            //     (book.startDate == null || book.finishDate == null)
+            //         ? const SizedBox()
+            //         : Text(' (${_generateReadingTime(
+            //             finishDate: book.finishDate,
+            //             startDate: book.startDate,
+            //             readingTime: book.readingTime,
+            //             context: context,
+            //           )})'),
+            //   ],
+            // ),
             _buildAdditionalReadingDates(context)
           ],
         ),
@@ -296,48 +297,50 @@ class BookStatusDetail extends StatelessWidget {
   }
 
   Widget _buildAdditionalReadingDates(BuildContext context) {
-    if (book.additionalReadings == null) return const SizedBox();
-    if (book.additionalReadings!.isEmpty) return const SizedBox();
+    // TODO implement with multiple readings
+    // if (book.additionalReadings == null) return const SizedBox();
+    // if (book.additionalReadings!.isEmpty) return const SizedBox();
 
     List<Widget> widgets = [];
 
-    final sortedAdditionalReadings = book.additionalReadings!
-      ..sort((a, b) {
-        if (a.finishDate == null && b.finishDate == null) {
-          return 0;
-        } else if (a.finishDate == null) {
-          return 1;
-        } else if (b.finishDate == null) {
-          return -1;
-        } else {
-          return b.finishDate!.compareTo(a.finishDate!);
-        }
-      });
+    // TODO implement with multiple readings
+    // final sortedAdditionalReadings = book.additionalReadings!
+    //   ..sort((a, b) {
+    //     if (a.finishDate == null && b.finishDate == null) {
+    //       return 0;
+    //     } else if (a.finishDate == null) {
+    //       return 1;
+    //     } else if (b.finishDate == null) {
+    //       return -1;
+    //     } else {
+    //       return b.finishDate!.compareTo(a.finishDate!);
+    //     }
+    //   });
 
-    for (var reading in sortedAdditionalReadings) {
-      widgets.add(
-        Padding(
-          padding: const EdgeInsets.only(top: 5),
-          child: Row(
-            children: [
-              _buildStartAndFinishDate(
-                context,
-                reading.startDate,
-                reading.finishDate,
-              ),
-              (reading.startDate == null || reading.finishDate == null)
-                  ? const SizedBox()
-                  : Text(' (${_generateReadingTime(
-                      finishDate: reading.finishDate,
-                      startDate: reading.startDate,
-                      readingTime: reading.customReadingTime,
-                      context: context,
-                    )})'),
-            ],
-          ),
-        ),
-      );
-    }
+    // for (var reading in sortedAdditionalReadings) {
+    //   widgets.add(
+    //     Padding(
+    //       padding: const EdgeInsets.only(top: 5),
+    //       child: Row(
+    //         children: [
+    //           _buildStartAndFinishDate(
+    //             context,
+    //             reading.startDate,
+    //             reading.finishDate,
+    //           ),
+    //           (reading.startDate == null || reading.finishDate == null)
+    //               ? const SizedBox()
+    //               : Text(' (${_generateReadingTime(
+    //                   finishDate: reading.finishDate,
+    //                   startDate: reading.startDate,
+    //                   readingTime: reading.customReadingTime,
+    //                   context: context,
+    //                 )})'),
+    //         ],
+    //       ),
+    //     ),
+    //   );
+    // }
 
     return Column(children: widgets);
   }

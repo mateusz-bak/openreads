@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:csv/csv.dart';
 
 import 'package:openreads/core/helpers/backup/backup.dart';
+import 'package:openreads/model/reading.dart';
 import 'package:openreads/model/book.dart';
 import 'package:openreads/main.dart';
 
@@ -97,6 +98,7 @@ class CSVImportBookwyrm {
         rating: _getRating(i, csv),
         myReview: _getMyReview(i, csv),
         status: 0,
+        readings: List<Reading>.empty(growable: true),
       );
     } catch (e) {
       BackupGeneral.showInfoSnackbar(e.toString());

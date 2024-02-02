@@ -4,7 +4,7 @@ import 'dart:io';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:csv/csv.dart';
-import 'package:openreads/model/additional_reading.dart';
+import 'package:openreads/model/reading.dart';
 import 'package:openreads/model/reading_time.dart';
 
 import 'package:openreads/core/constants/enums.dart';
@@ -93,8 +93,6 @@ class CSVImportOpenreads {
         favourite: _getBoolField(i, csv, 'favourite'),
         deleted: _getBoolField(i, csv, 'deleted'),
         rating: _getRating(i, csv),
-        startDate: _getDate(i, csv, 'start_date'),
-        finishDate: _getDate(i, csv, 'finish_date'),
         pages: _getPages(i, csv),
         publicationYear: _getPublicationYear(i, csv),
         isbn: _getISBN(i, csv),
@@ -103,8 +101,7 @@ class CSVImportOpenreads {
         myReview: _getField(i, csv, 'my_review'),
         notes: _getField(i, csv, 'notes'),
         bookFormat: _getBookFormat(i, csv),
-        readingTime: _getReadingTime(i, csv),
-        additionalReadings: _getAdditionalReadings(i, csv),
+        readings: _getReadingDates(i, csv),
       );
     } catch (e) {
       BackupGeneral.showInfoSnackbar(e.toString());
@@ -158,37 +155,36 @@ class CSVImportOpenreads {
     }
   }
 
-  static List<AdditionalReading>? _getAdditionalReadings(
+  static List<Reading> _getReadingDates(
     int i,
     List<List<dynamic>> csv,
   ) {
-    final index = csv[0].indexOf('additional_readings');
+    final List<Reading> readingsList = List<Reading>.empty(growable: true);
+
+    final index = csv[0].indexOf('readings');
 
     if (index == -1) {
-      return null;
+      return readingsList;
     }
 
-    final additionalReadingsString = csv[i][index].toString();
-    final List<String> additionalReadings = additionalReadingsString.split(',');
+    final readingsListString = csv[i][index].toString();
+    final List<String> readingStrings = readingsListString.split(';');
 
-    if (additionalReadings.isEmpty) {
-      return null;
+    if (readingStrings.isEmpty) {
+      return readingsList;
     }
 
-    final List<AdditionalReading> additionalReadingsList =
-        List<AdditionalReading>.empty(growable: true);
-
-    for (final additionalReading in additionalReadings) {
-      if (additionalReading.split('|').length != 3) {
-        return null;
+    for (final readingString in readingStrings) {
+      if (readingString.split('|').length != 3) {
+        return readingsList;
       }
 
-      final startDate = additionalReading.split('|')[0];
-      final finishDate = additionalReading.split('|')[1];
-      final readingTime = additionalReading.split('|')[2];
+      final startDate = readingString.split('|')[0];
+      final finishDate = readingString.split('|')[1];
+      final readingTime = readingString.split('|')[2];
 
-      additionalReadingsList.add(
-        AdditionalReading(
+      readingsList.add(
+        Reading(
           startDate: startDate.isNotEmpty ? DateTime.tryParse(startDate) : null,
           finishDate:
               finishDate.isNotEmpty ? DateTime.tryParse(finishDate) : null,
@@ -199,7 +195,7 @@ class CSVImportOpenreads {
       );
     }
 
-    return additionalReadingsList;
+    return readingsList;
   }
 
   static int? _getRating(int i, List<List<dynamic>> csv) {

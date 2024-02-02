@@ -44,47 +44,49 @@ class DateRow extends StatelessWidget {
               decoration: const BoxDecoration(),
               child: Row(
                 children: [
-                  AnimatedContainer(
-                    duration: animDuration,
-                    width: (state.status == 1 || state.status == 3)
-                        ? (MediaQuery.of(context).size.width - 20)
-                        : (state.status == 2)
-                            ? (MediaQuery.of(context).size.width - 20)
-                            : (MediaQuery.of(context).size.width - 40) / 2,
-                    child: SetDateButton(
-                      defaultHeight: defaultHeight,
-                      icon: FontAwesomeIcons.play,
-                      text: (state.startDate == null)
-                          ? LocaleKeys.start_date.tr()
-                          : dateFormat.format(state.startDate!),
-                      onPressed: showStartDatePicker,
-                      onClearPressed: clearStartDate,
-                      showClearButton: (state.startDate == null) ? false : true,
-                    ),
-                  ),
+                  // TODO implement with multiple readings
+                  // AnimatedContainer(
+                  //   duration: animDuration,
+                  //   width: (state.status == 1 || state.status == 3)
+                  //       ? (MediaQuery.of(context).size.width - 20)
+                  //       : (state.status == 2)
+                  //           ? (MediaQuery.of(context).size.width - 20)
+                  //           : (MediaQuery.of(context).size.width - 40) / 2,
+                  //   child: SetDateButton(
+                  //     defaultHeight: defaultHeight,
+                  //     icon: FontAwesomeIcons.play,
+                  //     text: (state.startDate == null)
+                  //         ? LocaleKeys.start_date.tr()
+                  //         : dateFormat.format(state.startDate!),
+                  //     onPressed: showStartDatePicker,
+                  //     onClearPressed: clearStartDate,
+                  //     showClearButton: (state.startDate == null) ? false : true,
+                  //   ),
+                  // ),
                   AnimatedContainer(
                     duration: animDuration,
                     width: (state.status == 0) ? 10 : 0,
                   ),
-                  AnimatedContainer(
-                    clipBehavior: Clip.hardEdge,
-                    decoration: const BoxDecoration(),
-                    duration: animDuration,
-                    width: (state.status == 0)
-                        ? (MediaQuery.of(context).size.width - 20) / 2
-                        : 0,
-                    child: SetDateButton(
-                      defaultHeight: defaultHeight,
-                      icon: FontAwesomeIcons.flagCheckered,
-                      text: (state.finishDate == null)
-                          ? LocaleKeys.finish_date.tr()
-                          : dateFormat.format(state.finishDate!),
-                      onPressed: showFinishDatePicker,
-                      onClearPressed: clearFinishDate,
-                      showClearButton:
-                          (state.finishDate == null) ? false : true,
-                    ),
-                  ),
+                  // TODO implement with multiple readings
+                  // AnimatedContainer(
+                  //   clipBehavior: Clip.hardEdge,
+                  //   decoration: const BoxDecoration(),
+                  //   duration: animDuration,
+                  //   width: (state.status == 0)
+                  //       ? (MediaQuery.of(context).size.width - 20) / 2
+                  //       : 0,
+                  //   child: SetDateButton(
+                  //     defaultHeight: defaultHeight,
+                  //     icon: FontAwesomeIcons.flagCheckered,
+                  //     text: (state.finishDate == null)
+                  //         ? LocaleKeys.finish_date.tr()
+                  //         : dateFormat.format(state.finishDate!),
+                  //     onPressed: showFinishDatePicker,
+                  //     onClearPressed: clearFinishDate,
+                  //     showClearButton:
+                  //         (state.finishDate == null) ? false : true,
+                  //   ),
+                  // ),
                 ],
               ),
             ),

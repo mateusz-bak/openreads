@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:openreads/core/constants/enums.dart';
 import 'package:openreads/main.dart';
-import 'package:openreads/model/additional_reading.dart';
+import 'package:openreads/model/reading.dart';
 import 'package:openreads/model/book.dart';
 import 'package:openreads/model/reading_time.dart';
 
@@ -26,15 +26,17 @@ class EditBookCubit extends Cubit<Book> {
   void setStatus(int status) {
     final book = state.copyWith();
 
-    // Book not started should not have a start date
+    // Book not started should not have reading dates
     if (state.status == 2) {
-      book.startDate = null;
+      book.readings = List<Reading>.empty(growable: true);
     }
 
-    // Book not finished should not have a finish date
-    if (state.status != 0) {
-      book.finishDate = null;
-    }
+    // Temporarily disable this feature as not sure how this
+    // should work with the new reading dates
+    // // Book not finished should not have a finish date
+    // if (state.status != 0) {
+    //   book.finishDate = null;
+    // }
 
     emit(book.copyWith(status: status));
   }
@@ -45,20 +47,6 @@ class EditBookCubit extends Cubit<Book> {
 
   void setBookFormat(BookFormat bookFormat) {
     emit(state.copyWith(bookFormat: bookFormat));
-  }
-
-  void setStartDate(DateTime? startDate) {
-    final book = state.copyWith();
-    book.startDate = startDate;
-
-    emit(book);
-  }
-
-  void setFinishDate(DateTime? finishDate) {
-    final book = state.copyWith();
-    book.finishDate = finishDate;
-
-    emit(book);
   }
 
   void setTitle(String title) {
@@ -135,12 +123,6 @@ class EditBookCubit extends Cubit<Book> {
     emit(book);
   }
 
-  void setReadingTime(ReadingTime? readingTime) {
-    final book = state.copyWith();
-    book.readingTime = readingTime;
-    emit(book);
-  }
-
   void addNewTag(String tag) {
     // Remove space at the end of the string if exists
     if (tag.substring(tag.length - 1) == ' ') {
@@ -173,57 +155,57 @@ class EditBookCubit extends Cubit<Book> {
     emit(book);
   }
 
-  void addNewAdditionalReading(AdditionalReading additionalReading) {
-    List<AdditionalReading> additionalReadings = state.additionalReadings ?? [];
+  void addNewReading(Reading reading) {
+    List<Reading> readings = state.readings;
 
-    additionalReadings.add(additionalReading);
+    readings.add(reading);
 
     final book = state.copyWith();
-    book.additionalReadings = additionalReadings;
+    book.readings = readings;
 
     emit(book);
   }
 
-  void removeAdditionalReading(int index) {
-    List<AdditionalReading> additionalReadings = state.additionalReadings ?? [];
+  void removeReading(int index) {
+    List<Reading> readings = state.readings;
 
-    additionalReadings.removeAt(index);
+    readings.removeAt(index);
 
     final book = state.copyWith();
-    book.additionalReadings = additionalReadings;
+    book.readings = readings;
 
     emit(book);
   }
 
-  void setAdditionalStartDate(DateTime? startDate, int index) {
-    List<AdditionalReading> additionalReadings = state.additionalReadings ?? [];
+  void setReadingStartDate(DateTime? startDate, int index) {
+    List<Reading> readings = state.readings;
 
-    additionalReadings[index].startDate = startDate;
+    readings[index].startDate = startDate;
 
     final book = state.copyWith();
-    book.additionalReadings = additionalReadings;
+    book.readings = readings;
 
     emit(book);
   }
 
-  setAdditionalFinishDate(DateTime? finishDate, int index) {
-    List<AdditionalReading> additionalReadings = state.additionalReadings ?? [];
+  setReadingFinishDate(DateTime? finishDate, int index) {
+    List<Reading> readings = state.readings;
 
-    additionalReadings[index].finishDate = finishDate;
+    readings[index].finishDate = finishDate;
 
     final book = state.copyWith();
-    book.additionalReadings = additionalReadings;
+    book.readings = readings;
 
     emit(book);
   }
 
-  setAdditionalReadingTime(ReadingTime? readingTime, int index) {
-    List<AdditionalReading> additionalReadings = state.additionalReadings ?? [];
+  setCustomReadingTime(ReadingTime? readingTime, int index) {
+    List<Reading> readings = state.readings;
 
-    additionalReadings[index].customReadingTime = readingTime;
+    readings[index].customReadingTime = readingTime;
 
     final book = state.copyWith();
-    book.additionalReadings = additionalReadings;
+    book.readings = readings;
 
     emit(book);
   }

@@ -204,8 +204,13 @@ class BookCubit extends Cubit {
     final years = List<int>.empty(growable: true);
 
     for (var book in books) {
-      if (book.finishDate != null) {
-        years.add(book.finishDate!.year);
+      for (var date in book.readings) {
+        if (date.finishDate != null) {
+          if (!years.contains(date.finishDate!.year)) {
+            //TODO check if years should be duplicated or not
+            years.add(date.finishDate!.year);
+          }
+        }
       }
     }
 
