@@ -106,12 +106,9 @@ class Book {
                   : json['book_type'] == 'paperback'
                       ? BookFormat.paperback
                       : BookFormat.paperback,
-
       readings: json['readings'] != null
-          ? json['readings']
-              .split(';')
-              .map((e) => Reading.fromString(e))
-              .toList()
+          ? List<Reading>.from(
+              json['readings'].split(';').map((e) => Reading.fromString(e)))
           : json['start_date'] != null || json['finish_date'] != null
               ? [
                   Reading(
