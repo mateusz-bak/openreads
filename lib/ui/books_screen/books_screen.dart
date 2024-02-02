@@ -2,6 +2,7 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:openreads/core/constants/enums.dart';
+import 'package:openreads/core/helpers/helpers.dart';
 import 'package:openreads/core/themes/app_theme.dart';
 import 'package:openreads/generated/locale_keys.g.dart';
 import 'package:openreads/logic/bloc/display_bloc/display_bloc.dart';
@@ -179,15 +180,16 @@ class _BooksScreenState extends State<BooksScreen>
 
     final filteredOut = List<Book>.empty(growable: true);
 
-    // TODO implement with multiple readings
-    // for (var book in list) {
-    //   if (book.finishDate != null) {
-    //     final year = book.finishDate!.year.toString();
-    //     if (yearsList.contains(year)) {
-    //       filteredOut.add(book);
-    //     }
-    //   }
-    // }
+    for (var book in list) {
+      for (final reading in book.readings) {
+        if (reading.finishDate != null) {
+          final year = reading.finishDate!.year.toString();
+          if (yearsList.contains(year)) {
+            filteredOut.add(book);
+          }
+        }
+      }
+    }
 
     return filteredOut;
   }
@@ -460,41 +462,52 @@ class _BooksScreenState extends State<BooksScreen>
     List<Book> booksWithoutStartDate = List.empty(growable: true);
     List<Book> booksWithStartDate = List.empty(growable: true);
 
-    // TODO implement with multiple readings
-    // for (Book book in list) {
-    //   (book.startDate != null)
-    //       ? booksWithStartDate.add(book)
-    //       : booksWithoutStartDate.add(book);
-    // }
+    for (Book book in list) {
+      bool hasStartDate = false;
 
-    // booksWithStartDate.sort((a, b) {
-    //   int startDateSorting = (a.startDate!.millisecondsSinceEpoch)
-    //       .compareTo(b.startDate!.millisecondsSinceEpoch);
-    //   if (!isAsc) {
-    //     startDateSorting *= -1;
-    //   } // descending
-    //   if (startDateSorting == 0) {
-    //     // secondary sorting, by release date
-    //     int releaseSorting = 0;
-    //     if ((a.publicationYear != null) && (b.publicationYear != null)) {
-    //       releaseSorting = a.publicationYear!.compareTo(b.publicationYear!);
-    //       if (!isAsc) {
-    //         releaseSorting *= -1;
-    //       }
-    //     }
-    //     if (releaseSorting == 0) {
-    //       // tertiary sorting, by title
-    //       int titleSorting = removeDiacritics(a.title.toString().toLowerCase())
-    //           .compareTo(removeDiacritics(b.title.toString().toLowerCase()));
-    //       if (!isAsc) {
-    //         titleSorting *= -1;
-    //       }
-    //       return titleSorting;
-    //     }
-    //     return releaseSorting;
-    //   }
-    //   return startDateSorting;
-    // });
+      for (final reading in book.readings) {
+        if (reading.startDate != null) {
+          hasStartDate = true;
+        }
+      }
+
+      hasStartDate
+          ? booksWithStartDate.add(book)
+          : booksWithoutStartDate.add(book);
+    }
+
+    booksWithStartDate.sort((a, b) {
+      final bookALatestStartDate = getLatestStartDate(a);
+      final bookBLatestStartDate = getLatestStartDate(b);
+
+      int startDateSorting = (bookALatestStartDate!.millisecondsSinceEpoch)
+          .compareTo(bookBLatestStartDate!.millisecondsSinceEpoch);
+
+      if (!isAsc) {
+        startDateSorting *= -1;
+      } // descending
+      if (startDateSorting == 0) {
+        // secondary sorting, by release date
+        int releaseSorting = 0;
+        if ((a.publicationYear != null) && (b.publicationYear != null)) {
+          releaseSorting = a.publicationYear!.compareTo(b.publicationYear!);
+          if (!isAsc) {
+            releaseSorting *= -1;
+          }
+        }
+        if (releaseSorting == 0) {
+          // tertiary sorting, by title
+          int titleSorting = removeDiacritics(a.title.toString().toLowerCase())
+              .compareTo(removeDiacritics(b.title.toString().toLowerCase()));
+          if (!isAsc) {
+            titleSorting *= -1;
+          }
+          return titleSorting;
+        }
+        return releaseSorting;
+      }
+      return startDateSorting;
+    });
 
     return booksWithStartDate + booksWithoutStartDate;
   }
@@ -506,41 +519,52 @@ class _BooksScreenState extends State<BooksScreen>
     List<Book> booksWithoutFinishDate = List.empty(growable: true);
     List<Book> booksWithFinishDate = List.empty(growable: true);
 
-    // TODO implement with multiple readings
-    // for (Book book in list) {
-    //   (book.finishDate != null)
-    //       ? booksWithFinishDate.add(book)
-    //       : booksWithoutFinishDate.add(book);
-    // }
+    for (Book book in list) {
+      bool hasFinishDate = false;
 
-    // booksWithFinishDate.sort((a, b) {
-    //   int finishDateSorting = (a.finishDate!.millisecondsSinceEpoch)
-    //       .compareTo(b.finishDate!.millisecondsSinceEpoch);
-    //   if (!isAsc) {
-    //     finishDateSorting *= -1;
-    //   } // descending
-    //   if (finishDateSorting == 0) {
-    //     // secondary sorting, by release date
-    //     int releaseSorting = 0;
-    //     if ((a.publicationYear != null) && (b.publicationYear != null)) {
-    //       releaseSorting = a.publicationYear!.compareTo(b.publicationYear!);
-    //       if (!isAsc) {
-    //         releaseSorting *= -1;
-    //       }
-    //     }
-    //     if (releaseSorting == 0) {
-    //       // tertiary sorting, by title
-    //       int titleSorting = removeDiacritics(a.title.toString().toLowerCase())
-    //           .compareTo(removeDiacritics(b.title.toString().toLowerCase()));
-    //       if (!isAsc) {
-    //         titleSorting *= -1;
-    //       }
-    //       return titleSorting;
-    //     }
-    //     return releaseSorting;
-    //   }
-    //   return finishDateSorting;
-    // });
+      for (final reading in book.readings) {
+        if (reading.finishDate != null) {
+          hasFinishDate = true;
+        }
+      }
+
+      hasFinishDate
+          ? booksWithFinishDate.add(book)
+          : booksWithoutFinishDate.add(book);
+    }
+
+    booksWithFinishDate.sort((a, b) {
+      final bookALatestFinishDate = getLatestFinishDate(a);
+      final bookBLatestFinishDate = getLatestFinishDate(b);
+
+      int finishDateSorting = (bookALatestFinishDate!.millisecondsSinceEpoch)
+          .compareTo(bookBLatestFinishDate!.millisecondsSinceEpoch);
+
+      if (!isAsc) {
+        finishDateSorting *= -1;
+      } // descending
+      if (finishDateSorting == 0) {
+        // secondary sorting, by release date
+        int releaseSorting = 0;
+        if ((a.publicationYear != null) && (b.publicationYear != null)) {
+          releaseSorting = a.publicationYear!.compareTo(b.publicationYear!);
+          if (!isAsc) {
+            releaseSorting *= -1;
+          }
+        }
+        if (releaseSorting == 0) {
+          // tertiary sorting, by title
+          int titleSorting = removeDiacritics(a.title.toString().toLowerCase())
+              .compareTo(removeDiacritics(b.title.toString().toLowerCase()));
+          if (!isAsc) {
+            titleSorting *= -1;
+          }
+          return titleSorting;
+        }
+        return releaseSorting;
+      }
+      return finishDateSorting;
+    });
 
     return booksWithFinishDate + booksWithoutFinishDate;
   }

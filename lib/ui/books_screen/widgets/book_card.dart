@@ -4,6 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:openreads/core/constants/enums.dart';
+import 'package:openreads/core/helpers/helpers.dart';
 import 'package:openreads/core/themes/app_theme.dart';
 import 'package:openreads/generated/locale_keys.g.dart';
 import 'package:openreads/logic/bloc/rating_type_bloc/rating_type_bloc.dart';
@@ -38,74 +39,91 @@ class BookCard extends StatelessWidget {
         if (state is SetSortState) {
           if (state.sortType == SortType.byPages) {
             return (book.pages != null)
-                ? Text('${book.pages} ${LocaleKeys.pages_lowercase.tr()}')
+                ? _buildPagesAttribute()
                 : const SizedBox();
           } else if (state.sortType == SortType.byStartDate) {
-            // TODO implement with multiple readings
-            // return (book.startDate != null)
-            //     ? Column(
-            //         crossAxisAlignment: CrossAxisAlignment.end,
-            //         children: [
-            //           Text(
-            //             LocaleKeys.started_on_date.tr(),
-            //             style: const TextStyle(fontSize: 12),
-            //           ),
-            //           Text(
-            //             dateFormat.format(book.startDate!),
-            //             style: const TextStyle(
-            //               fontSize: 13,
-            //               fontWeight: FontWeight.bold,
-            //             ),
-            //           ),
-            //         ],
-            //       )
-            //     :
-            const SizedBox();
+            final latestStartDate = getLatestStartDate(book);
+
+            return (latestStartDate != null)
+                ? _buildStartDateAttribute(dateFormat, latestStartDate)
+                : const SizedBox();
           } else if (state.sortType == SortType.byFinishDate) {
-            // TODO implement with multiple readings
-            //   return (book.finishDate != null)
-            //       ? Column(
-            //           crossAxisAlignment: CrossAxisAlignment.end,
-            //           children: [
-            //             Text(
-            //               LocaleKeys.finished_on_date.tr(),
-            //               style: const TextStyle(fontSize: 12),
-            //             ),
-            //             Text(
-            //               dateFormat.format(book.finishDate!),
-            //               style: const TextStyle(
-            //                 fontSize: 13,
-            //                 fontWeight: FontWeight.bold,
-            //               ),
-            //             ),
-            //           ],
-            //         )
-            //       :
-            const SizedBox();
+            final latestFinishDate = getLatestFinishDate(book);
+
+            return (latestFinishDate != null)
+                ? _buildFinishDateAttribute(dateFormat, latestFinishDate)
+                : const SizedBox();
           } else if (state.sortType == SortType.byPublicationYear) {
             return (book.publicationYear != null)
-                ? Column(
-                    crossAxisAlignment: CrossAxisAlignment.end,
-                    children: [
-                      Text(
-                        LocaleKeys.enter_publication_year.tr(),
-                        style: const TextStyle(fontSize: 12),
-                      ),
-                      Text(
-                        book.publicationYear.toString(),
-                        style: const TextStyle(
-                          fontSize: 13,
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
-                    ],
-                  )
+                ? _buildPublicationYearAttribute()
                 : const SizedBox();
           }
         }
 
         return const SizedBox();
       },
+    );
+  }
+
+  Text _buildPagesAttribute() =>
+      Text('${book.pages} ${LocaleKeys.pages_lowercase.tr()}');
+
+  Column _buildPublicationYearAttribute() {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.end,
+      children: [
+        Text(
+          LocaleKeys.enter_publication_year.tr(),
+          style: const TextStyle(fontSize: 12),
+        ),
+        Text(
+          book.publicationYear.toString(),
+          style: const TextStyle(
+            fontSize: 13,
+            fontWeight: FontWeight.bold,
+          ),
+        ),
+      ],
+    );
+  }
+
+  Column _buildFinishDateAttribute(
+      DateFormat dateFormat, DateTime latestFinishDate) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.end,
+      children: [
+        Text(
+          LocaleKeys.finished_on_date.tr(),
+          style: const TextStyle(fontSize: 12),
+        ),
+        Text(
+          dateFormat.format(latestFinishDate),
+          style: const TextStyle(
+            fontSize: 13,
+            fontWeight: FontWeight.bold,
+          ),
+        ),
+      ],
+    );
+  }
+
+  Column _buildStartDateAttribute(
+      DateFormat dateFormat, DateTime latestStartDate) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.end,
+      children: [
+        Text(
+          LocaleKeys.started_on_date.tr(),
+          style: const TextStyle(fontSize: 12),
+        ),
+        Text(
+          dateFormat.format(latestStartDate),
+          style: const TextStyle(
+            fontSize: 13,
+            fontWeight: FontWeight.bold,
+          ),
+        ),
+      ],
     );
   }
 

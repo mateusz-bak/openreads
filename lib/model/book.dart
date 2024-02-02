@@ -100,20 +100,7 @@ class Book {
                   : json['book_type'] == 'paperback'
                       ? BookFormat.paperback
                       : BookFormat.paperback,
-      readings: json['readings'] != null
-          ? List<Reading>.from(
-              json['readings'].split(';').map((e) => Reading.fromString(e)))
-          : json['start_date'] != null || json['finish_date'] != null
-              ? [
-                  Reading(
-                      startDate: json['start_date'] != null
-                          ? DateTime.parse(json['start_date'])
-                          : null,
-                      finishDate: json['finish_date'] != null
-                          ? DateTime.parse(json['finish_date'])
-                          : null)
-                ]
-              : List<Reading>.empty(growable: true),
+      readings: _sortReadings(_parseReadingsFromJson(json)),
     );
   }
 
@@ -286,5 +273,43 @@ class Book {
     } else {
       return null;
     }
+  }
+
+  static List<Reading> _parseReadingsFromJson(Map<String, dynamic> json) {
+    return json['readings'] != null
+        ? List<Reading>.from(
+            json['readings'].split(';').map((e) => Reading.fromString(e)))
+        : json['start_date'] != null || json['finish_date'] != null
+            ? [
+                Reading(
+                    startDate: json['start_date'] != null
+                        ? DateTime.parse(json['start_date'])
+                        : null,
+                    finishDate: json['finish_date'] != null
+                        ? DateTime.parse(json['finish_date'])
+                        : null)
+              ]
+            : List<Reading>.empty(growable: true);
+  }
+
+  // order readings
+  // first order the ones with only start date - first newest
+  // after them order ones with finish date - first newest
+  static List<Reading> _sortReadings(List<Reading> readings) {
+    final sortedReadings = readings;
+
+    sortedReadings.sort((a, b) {
+      if (a.finishDate == null && b.finishDate != null) {
+        return -1;
+      } else if (a.finishDate != null && b.finishDate == null) {
+        return 1;
+      } else if (a.finishDate != null && b.finishDate != null) {
+        return b.finishDate!.compareTo(a.finishDate!);
+      } else {
+        return b.startDate!.compareTo(a.startDate!);
+      }
+    });
+
+    return sortedReadings;
   }
 }

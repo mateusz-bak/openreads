@@ -8,9 +8,9 @@ import 'package:openreads/model/book.dart';
 
 class BookRatingBar extends StatelessWidget {
   const BookRatingBar({
-    Key? key,
+    super.key,
     required this.animDuration,
-  }) : super(key: key);
+  });
 
   final Duration animDuration;
 
@@ -59,10 +59,6 @@ class BookRatingBar extends StatelessWidget {
                   ),
                 ),
               ),
-            ),
-            AnimatedContainer(
-              duration: animDuration,
-              height: (state.status == 0) ? 10 : 0,
             ),
           ],
         );

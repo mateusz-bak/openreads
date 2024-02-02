@@ -43,4 +43,16 @@ class Reading {
 
     return '$startDate|$finishDate|$customReadingTime';
   }
+
+  Reading copyWith({
+    DateTime? startDate,
+    DateTime? finishDate,
+    ReadingTime? customReadingTime,
+  }) {
+    return Reading(
+      startDate: startDate ?? this.startDate,
+      finishDate: finishDate ?? this.finishDate,
+      customReadingTime: customReadingTime ?? this.customReadingTime,
+    );
+  }
 }
