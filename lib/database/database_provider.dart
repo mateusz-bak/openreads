@@ -50,7 +50,7 @@ class DatabaseProvider {
             "notes TEXT, "
             "has_cover INTEGER, "
             "blur_hash TEXT, "
-            "reading_dates TEXT "
+            "readings TEXT "
             ")");
       },
       onUpgrade: (Database db, int oldVersion, int newVersion) async {
@@ -113,7 +113,7 @@ class DatabaseProvider {
   // Recreating database
   // removed start_date and finish_date
   // removed reading_time
-  // added reading_dates - combined start_date, finish_date and reading_time
+  // added readings - combined start_date, finish_date and reading_time
   final migrationScriptsV7 = [
     "ALTER TABLE booksTable RENAME TO booksTableOld",
     "CREATE TABLE booksTable ("
@@ -136,7 +136,7 @@ class DatabaseProvider {
         "notes TEXT, "
         "has_cover INTEGER, "
         "blur_hash TEXT, "
-        "reading_dates TEXT "
+        "readings TEXT "
         ")",
     "INSERT INTO booksTable ("
         "id, "
@@ -158,7 +158,7 @@ class DatabaseProvider {
         "notes, "
         "has_cover, "
         "blur_hash, "
-        "reading_dates "
+        "readings "
         ") "
         "SELECT "
         "id, "
