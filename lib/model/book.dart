@@ -6,7 +6,6 @@ import 'package:openreads/core/constants/enums.dart';
 import 'package:openreads/main.dart';
 import 'package:openreads/model/reading.dart';
 import 'package:openreads/model/book_from_backup_v3.dart';
-import 'package:openreads/model/reading_time.dart';
 
 class Book {
   int? id;
