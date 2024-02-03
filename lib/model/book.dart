@@ -248,7 +248,6 @@ class Book {
       'tags': tags,
       'my_review': myReview,
       'notes': notes,
-      'cover': cover,
       'blur_hash': blurHash,
       'has_cover': hasCover ? 1 : 0,
       'book_type': bookFormat == BookFormat.audiobook
@@ -276,20 +275,39 @@ class Book {
   }
 
   static List<Reading> _parseReadingsFromJson(Map<String, dynamic> json) {
-    return json['readings'] != null
-        ? List<Reading>.from(
-            json['readings'].split(';').map((e) => Reading.fromString(e)))
-        : json['start_date'] != null || json['finish_date'] != null
-            ? [
-                Reading(
-                    startDate: json['start_date'] != null
-                        ? DateTime.parse(json['start_date'])
-                        : null,
-                    finishDate: json['finish_date'] != null
-                        ? DateTime.parse(json['finish_date'])
-                        : null)
-              ]
-            : List<Reading>.empty(growable: true);
+    if (json['readings'] != null) {
+      final splittedReadings = json['readings'].split(';');
+
+      if (splittedReadings.isNotEmpty) {
+        return List<Reading>.from(
+          splittedReadings.map((e) {
+            final reading = Reading.fromString(e);
+
+            if (reading.startDate == null &&
+                reading.finishDate == null &&
+                reading.customReadingTime == null) {
+              return null;
+            } else {
+              return reading;
+            }
+          }).where((reading) => reading != null),
+        );
+      } else {
+        return List<Reading>.empty(growable: true);
+      }
+    } else if (json['start_date'] != null || json['finish_date'] != null) {
+      return [
+        Reading(
+            startDate: json['start_date'] != null
+                ? DateTime.parse(json['start_date'])
+                : null,
+            finishDate: json['finish_date'] != null
+                ? DateTime.parse(json['finish_date'])
+                : null)
+      ];
+    } else {
+      return List<Reading>.empty(growable: true);
+    }
   }
 
   // order readings
