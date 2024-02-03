@@ -185,7 +185,9 @@ class _BooksScreenState extends State<BooksScreen>
         if (reading.finishDate != null) {
           final year = reading.finishDate!.year.toString();
           if (yearsList.contains(year)) {
-            filteredOut.add(book);
+            if (!filteredOut.contains(book)) {
+              filteredOut.add(book);
+            }
           }
         }
       }
