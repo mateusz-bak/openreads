@@ -16,7 +16,6 @@ import 'package:openreads/ui/settings_screen/settings_backup_screen.dart';
 import 'package:openreads/ui/settings_screen/settings_apperance_screen.dart';
 import 'package:openreads/ui/settings_screen/widgets/widgets.dart';
 import 'package:openreads/ui/trash_screen/trash_screen.dart';
-import 'package:openreads/ui/unfinished_screen/unfinished_screen.dart';
 import 'package:package_info_plus/package_info_plus.dart';
 import 'package:settings_ui/settings_ui.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -30,7 +29,7 @@ class SettingsScreen extends StatelessWidget {
   static const communityUrl = 'https://matrix.to/#/#openreads:matrix.org';
   static const rateUrlAndroid =
       'market://details?id=software.mdev.bookstracker';
-  static const iOSAppID = 'YOUR_APP_ID'; // TODO: replace with real ID
+  static const iOSAppID = '6476542305';
   static const rateUrlIOS =
       'itms-apps://itunes.apple.com/WebObjects/MZStore.woa/wa/viewContentsUserReviews?id=$iOSAppID&onlyLatestVersion=true&pageNumber=0&sortOrdering=1&type=Purple+Software';
   static const releasesUrl = '$repoUrl/releases';
