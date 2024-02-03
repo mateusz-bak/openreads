@@ -159,7 +159,7 @@ class CSVImportOpenreads {
     int i,
     List<List<dynamic>> csv,
   ) {
-    final List<Reading> readingsList = List<Reading>.empty(growable: true);
+    List<Reading> readingsList = List<Reading>.empty(growable: true);
 
     final index = csv[0].indexOf('readings');
 
@@ -174,26 +174,19 @@ class CSVImportOpenreads {
       return readingsList;
     }
 
-    for (final readingString in readingStrings) {
-      if (readingString.split('|').length != 3) {
-        return readingsList;
-      }
+    readingsList = List<Reading>.from(
+      readingStrings.map((e) {
+        final reading = Reading.fromString(e);
 
-      final startDate = readingString.split('|')[0];
-      final finishDate = readingString.split('|')[1];
-      final readingTime = readingString.split('|')[2];
-
-      readingsList.add(
-        Reading(
-          startDate: startDate.isNotEmpty ? DateTime.tryParse(startDate) : null,
-          finishDate:
-              finishDate.isNotEmpty ? DateTime.tryParse(finishDate) : null,
-          customReadingTime: readingTime.isNotEmpty
-              ? ReadingTime.fromMilliSeconds(int.parse(readingTime))
-              : null,
-        ),
-      );
-    }
+        if (reading.startDate == null &&
+            reading.finishDate == null &&
+            reading.customReadingTime == null) {
+          return null;
+        } else {
+          return reading;
+        }
+      }).where((reading) => reading != null),
+    );
 
     return readingsList;
   }
