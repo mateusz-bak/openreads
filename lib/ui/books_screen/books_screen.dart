@@ -670,7 +670,15 @@ class _BooksScreenState extends State<BooksScreen>
         if (state is SetThemeState) {
           AppTheme.init(state, context);
 
-          return WillPopScope(
+          return PopScope(
+            canPop: selectedBookIds.isEmpty,
+            onPopInvoked: (didPop) {
+              if (didPop) {
+                return;
+              }
+
+              _resetMultiselectMode();
+            },
             child: Scaffold(
               resizeToAvoidBottomInset: true,
               appBar: selectedBookIds.isNotEmpty
@@ -681,13 +689,6 @@ class _BooksScreenState extends State<BooksScreen>
                   : _buildFAB(context),
               body: _buildScaffoldBody(),
             ),
-            onWillPop: () {
-              if (selectedBookIds.isNotEmpty) {
-                _resetMultiselectMode();
-                return Future.value(false);
-              }
-              return Future.value(true);
-            },
           );
         } else {
           return const SizedBox();
