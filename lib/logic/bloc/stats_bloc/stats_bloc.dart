@@ -22,40 +22,40 @@ class StatsBloc extends Bloc<StatsEvent, StatsState> {
         return;
       }
 
-      final years = getYears(finishedBooks);
+      final years = _calculateYears(finishedBooks);
       final inProgressBooks = _filterBooksByStatus(allBooks, 1);
       final forLaterBooks = _filterBooksByStatus(allBooks, 2);
       final unfinishedBooks = _filterBooksByStatus(allBooks, 3);
 
       final finishedBooksByMonthAllTypes =
-          _getFinishedBooksByMonth(finishedBooks, null);
+          _getFinishedBooksByMonth(finishedBooks, null, years);
       final finishedBooksByMonthPaperbackBooks =
-          _getFinishedBooksByMonth(finishedBooks, BookFormat.paperback);
+          _getFinishedBooksByMonth(finishedBooks, BookFormat.paperback, years);
       final finishedBooksByMonthHardcoverBooks =
-          _getFinishedBooksByMonth(finishedBooks, BookFormat.hardcover);
+          _getFinishedBooksByMonth(finishedBooks, BookFormat.hardcover, years);
       final finishedBooksByMonthEbooks =
-          _getFinishedBooksByMonth(finishedBooks, BookFormat.ebook);
+          _getFinishedBooksByMonth(finishedBooks, BookFormat.ebook, years);
       final finishedBooksByMonthAudiobooks =
-          _getFinishedBooksByMonth(finishedBooks, BookFormat.audiobook);
+          _getFinishedBooksByMonth(finishedBooks, BookFormat.audiobook, years);
 
       final finishedPagesByMonthAllTypes =
-          _getFinishedPagesByMonth(finishedBooks, null);
+          _getFinishedPagesByMonth(finishedBooks, null, years);
       final finishedPagesByMonthPaperbackBooks =
-          _getFinishedPagesByMonth(finishedBooks, BookFormat.paperback);
+          _getFinishedPagesByMonth(finishedBooks, BookFormat.paperback, years);
       final finishedPagesByMonthHardcoverBooks =
-          _getFinishedPagesByMonth(finishedBooks, BookFormat.hardcover);
+          _getFinishedPagesByMonth(finishedBooks, BookFormat.hardcover, years);
       final finishedPagesByMonthEbooks =
-          _getFinishedPagesByMonth(finishedBooks, BookFormat.ebook);
+          _getFinishedPagesByMonth(finishedBooks, BookFormat.ebook, years);
       final finishedPagesByMonthAudiobooks =
-          _getFinishedPagesByMonth(finishedBooks, BookFormat.audiobook);
+          _getFinishedPagesByMonth(finishedBooks, BookFormat.audiobook, years);
 
-      final averageRating = _getAverageRating(finishedBooks);
-      final averagePages = _getAveragePages(finishedBooks);
-      final averageReadingTime = _getAverageReadingTime(finishedBooks);
-      final longestBook = _getLongestBook(finishedBooks);
-      final shortestBook = _getShortestBook(finishedBooks);
-      final fastestBook = _getFastestReadBook(finishedBooks);
-      final slowestBook = _getSlowestReadBook(finishedBooks);
+      final averageRating = _getAverageRating(finishedBooks, years);
+      final averagePages = _getAveragePages(finishedBooks, years);
+      final averageReadingTime = _getAverageReadingTime(finishedBooks, years);
+      final longestBook = _getLongestBook(finishedBooks, years);
+      final shortestBook = _getShortestBook(finishedBooks, years);
+      final fastestBook = _getFastestReadBook(finishedBooks, years);
+      final slowestBook = _getSlowestReadBooks(finishedBooks, years);
       final allFinishedBooks = _countFinishedBooks(finishedBooks);
       final allFinishedPages = _countFinishedPages(finishedBooks);
 
@@ -88,219 +88,200 @@ class StatsBloc extends Bloc<StatsEvent, StatsState> {
     });
   }
 
-  List<BookYearlyStat> _getSlowestReadBook(List<Book> books) {
+  List<BookYearlyStat> _getSlowestReadBooks(List<Book> books, List<int> years) {
     List<BookYearlyStat> bookYearlyStats = List<BookYearlyStat>.empty(
       growable: true,
     );
 
+    // Calculate stats for all time
     final slowestBook = _getSlowestReadBookInYear(books, null);
-
     if (slowestBook != null) {
       bookYearlyStats.add(slowestBook);
     }
 
-    final booksWithYears = _getBooksWithFinishDate(books);
-    final years = _calculateYears(booksWithYears);
+    // Calculate stats for each year
+    for (var year in years) {
+      final slowestBookInAYear = _getSlowestReadBookInYear(books, year);
 
-    // TODO implement with multiple readings
-    // for (var year in years) {
-    //   final booksInyear = List<Book>.empty(growable: true);
-    //   for (Book book in books) {
-    //     if (book.finishDate != null && book.rating != null) {
-    //       final finishYear = book.finishDate!.year;
-
-    //       if (finishYear == year) {
-    //         booksInyear.add(book);
-    //       }
-    //     }
-    //   }
-    //   final slowestBookInAYear = _getSlowestReadBookInYear(booksInyear, year);
-
-    //   if (slowestBookInAYear != null) {
-    //     bookYearlyStats.add(slowestBookInAYear);
-    //   }
-    // }
+      if (slowestBookInAYear != null) {
+        bookYearlyStats.add(slowestBookInAYear);
+      }
+    }
     return bookYearlyStats;
   }
 
   BookYearlyStat? _getSlowestReadBookInYear(List<Book> books, int? year) {
     int? slowestReadTimeInMs;
-    String? slowestReadBook;
-    Book? slowestBook;
+    String? slowestReadBookString;
+    Book? slowestReadBook;
 
-    // TODO implement with multiple readings
-    // for (Book book in books) {
-    //   int? readTimeInMs;
-    //   if (book.readingTime != null) {
-    //     readTimeInMs = book.readingTime!.milliSeconds;
-    //   } else if (book.startDate != null && book.finishDate != null) {
-    //     final startDate = book.startDate!;
-    //     final finishDate = book.finishDate!;
-    //     final readTimeinDays = finishDate.difference(startDate).inDays +
-    //         1; // should be at least 1 day
-    //     readTimeInMs =
-    //         ReadingTime.toMilliSeconds(readTimeinDays, 0, 0).milliSeconds;
-    //   } else {
-    //     continue;
-    //   }
-    //   if (slowestReadTimeInMs == null) {
-    //     slowestReadTimeInMs = readTimeInMs;
-    //     slowestReadBook = '${book.title} - ${book.author}';
-    //     slowestBook = book;
-    //   }
+    for (Book book in books) {
+      int? readTimeInMs;
 
-    //   if (readTimeInMs > slowestReadTimeInMs) {
-    //     slowestReadTimeInMs = readTimeInMs;
-    //     slowestReadBook = '${book.title} - ${book.author}';
-    //     slowestBook = book;
-    //   }
-    // }
+      for (final reading in book.readings) {
+        if (year != null && reading.finishDate?.year != year) {
+          continue;
+        }
+
+        if (reading.customReadingTime != null) {
+          readTimeInMs = reading.customReadingTime!.milliSeconds;
+        } else if (reading.startDate != null && reading.finishDate != null) {
+          // Reading duration should be at least 1 day
+          final readTimeinDays =
+              reading.finishDate!.difference(reading.startDate!).inDays + 1;
+
+          readTimeInMs =
+              ReadingTime.toMilliSeconds(readTimeinDays, 0, 0).milliSeconds;
+        } else {
+          continue;
+        }
+
+        if (slowestReadTimeInMs == null) {
+          slowestReadTimeInMs = readTimeInMs;
+          slowestReadBookString = '${book.title} - ${book.author}';
+          slowestReadBook = book;
+        } else {
+          if (readTimeInMs > slowestReadTimeInMs) {
+            slowestReadTimeInMs = readTimeInMs;
+            slowestReadBookString = '${book.title} - ${book.author}';
+            slowestReadBook = book;
+          }
+        }
+      }
+    }
 
     if (slowestReadTimeInMs == null) {
       return null;
     } else {
       return BookYearlyStat(
-        title: slowestReadBook,
+        title: slowestReadBookString,
         value: ReadingTime.fromMilliSeconds(slowestReadTimeInMs).toString(),
         year: year,
-        book: slowestBook,
+        book: slowestReadBook,
       );
     }
   }
 
-  List<BookYearlyStat> _getFastestReadBook(List<Book> books) {
+  List<BookYearlyStat> _getFastestReadBook(List<Book> books, List<int> years) {
     List<BookYearlyStat> bookYearlyStats = List<BookYearlyStat>.empty(
       growable: true,
     );
 
+    // Calculate stats for all time
     final fastestBook = _getFastestReadBookInYear(books, null);
-
     if (fastestBook != null) {
       bookYearlyStats.add(fastestBook);
     }
 
-    final booksWithYears = _getBooksWithFinishDate(books);
-    final years = _calculateYears(booksWithYears);
+    // Calculate stats for each year
+    for (var year in years) {
+      final fastestBookInAYear = _getFastestReadBookInYear(books, year);
 
-    // TODO implement with multiple readings
-    // for (var year in years) {
-    //   final booksInyear = List<Book>.empty(growable: true);
-    //   for (Book book in books) {
-    //     if (book.finishDate != null && book.rating != null) {
-    //       final finishYear = book.finishDate!.year;
-
-    //       if (finishYear == year) {
-    //         booksInyear.add(book);
-    //       }
-    //     }
-    //   }
-    //   final fastestBookInAYear = _getFastestReadBookInYear(booksInyear, year);
-
-    //   if (fastestBookInAYear != null) {
-    //     bookYearlyStats.add(fastestBookInAYear);
-    //   }
-    // }
+      if (fastestBookInAYear != null) {
+        bookYearlyStats.add(fastestBookInAYear);
+      }
+    }
 
     return bookYearlyStats;
   }
 
   BookYearlyStat? _getFastestReadBookInYear(List<Book> books, int? year) {
     int? fastestReadTimeInMs;
-    String? fastestReadBook;
-    Book? fastestBook;
+    String? fastestReadBookString;
+    Book? fastestReadBook;
 
-    // TODO implement with multiple readings
-    // for (Book book in books) {
-    //   int? readTimeInMs;
-    //   if (book.readingTime != null) {
-    //     readTimeInMs = book.readingTime!.milliSeconds;
-    //   } else if (book.startDate != null && book.finishDate != null) {
-    //     final startDate = book.startDate!;
-    //     final finishDate = book.finishDate!;
-    //     final readTimeinDays = finishDate.difference(startDate).inDays +
-    //         1; // should be at least 1 day
-    //     readTimeInMs =
-    //         ReadingTime.toMilliSeconds(readTimeinDays, 0, 0).milliSeconds;
-    //   } else {
-    //     continue;
-    //   }
-    //   if (fastestReadTimeInMs == null) {
-    //     fastestReadTimeInMs = readTimeInMs;
-    //     fastestReadBook = '${book.title} - ${book.author}';
-    //     fastestBook = book;
-    //   }
+    for (Book book in books) {
+      int? readTimeInMs;
 
-    //   if (readTimeInMs < fastestReadTimeInMs) {
-    //     fastestReadTimeInMs = readTimeInMs;
-    //     fastestReadBook = '${book.title} - ${book.author}';
-    //     fastestBook = book;
-    //   }
-    // }
+      for (final reading in book.readings) {
+        if (year != null && reading.finishDate?.year != year) {
+          continue;
+        }
+
+        if (reading.customReadingTime != null) {
+          readTimeInMs = reading.customReadingTime!.milliSeconds;
+        } else if (reading.startDate != null && reading.finishDate != null) {
+          // Reading duration should be at least 1 day
+          final readTimeinDays =
+              reading.finishDate!.difference(reading.startDate!).inDays + 1;
+
+          readTimeInMs =
+              ReadingTime.toMilliSeconds(readTimeinDays, 0, 0).milliSeconds;
+        } else {
+          continue;
+        }
+
+        if (fastestReadTimeInMs == null) {
+          fastestReadTimeInMs = readTimeInMs;
+          fastestReadBookString = '${book.title} - ${book.author}';
+          fastestReadBook = book;
+        } else {
+          if (readTimeInMs < fastestReadTimeInMs) {
+            fastestReadTimeInMs = readTimeInMs;
+            fastestReadBookString = '${book.title} - ${book.author}';
+            fastestReadBook = book;
+          }
+        }
+      }
+    }
 
     if (fastestReadTimeInMs == null) {
       return null;
     } else {
       return BookYearlyStat(
-        title: fastestReadBook,
+        title: fastestReadBookString,
         value: ReadingTime.fromMilliSeconds(fastestReadTimeInMs).toString(),
         year: year,
-        book: fastestBook,
+        book: fastestReadBook,
       );
     }
   }
 
-  List<BookYearlyStat> _getShortestBook(List<Book> books) {
+  List<BookYearlyStat> _getShortestBook(List<Book> books, List<int> years) {
     List<BookYearlyStat> bookYearlyStats = List<BookYearlyStat>.empty(
       growable: true,
     );
 
+    // Calculate stats for all time
     final shortestBook = _getShortestBookInYear(books, null);
-
     if (shortestBook != null) {
       bookYearlyStats.add(shortestBook);
     }
 
-    final booksWithYears = _getBooksWithFinishDate(books);
-    final years = _calculateYears(booksWithYears);
+    // Calculate stats for each year
+    for (var year in years) {
+      final shortestBookInAYear = _getShortestBookInYear(books, year);
 
-    // TODO implement with multiple readings
-    // for (var year in years) {
-    //   final booksInyear = List<Book>.empty(growable: true);
-    //   for (Book book in books) {
-    //     if (book.finishDate != null && book.rating != null) {
-    //       final finishYear = book.finishDate!.year;
-
-    //       if (finishYear == year) {
-    //         booksInyear.add(book);
-    //       }
-    //     }
-    //   }
-    //   final shortestBookInAYear = _getShortestBookInYear(booksInyear, year);
-
-    //   if (shortestBookInAYear != null) {
-    //     bookYearlyStats.add(shortestBookInAYear);
-    //   }
-    // }
+      if (shortestBookInAYear != null) {
+        bookYearlyStats.add(shortestBookInAYear);
+      }
+    }
 
     return bookYearlyStats;
   }
 
   BookYearlyStat? _getShortestBookInYear(List<Book> books, int? year) {
-    int shortestBookPages = 99999999;
+    int? shortestBookPages;
     String? shortestBookString;
     Book? shortestBook;
 
     for (Book book in books) {
-      if (book.pages != null && book.pages! > 0) {
-        if (book.pages! < shortestBookPages) {
-          shortestBookPages = book.pages!;
-          shortestBookString = '${book.title} - ${book.author}';
-          shortestBook = book;
+      for (final reading in book.readings) {
+        if (year != null && reading.finishDate?.year != year) {
+          continue;
+        }
+
+        if (book.pages != null && book.pages! > 0) {
+          if (shortestBookPages == null || book.pages! < shortestBookPages) {
+            shortestBookPages = book.pages!;
+            shortestBookString = '${book.title} - ${book.author}';
+            shortestBook = book;
+          }
         }
       }
     }
 
-    if (shortestBookPages == 99999999) {
+    if (shortestBookPages == null) {
       return null;
     } else {
       return BookYearlyStat(
@@ -312,58 +293,51 @@ class StatsBloc extends Bloc<StatsEvent, StatsState> {
     }
   }
 
-  List<BookYearlyStat> _getLongestBook(List<Book> books) {
+  List<BookYearlyStat> _getLongestBook(List<Book> books, List<int> years) {
     List<BookYearlyStat> bookYearlyStats = List<BookYearlyStat>.empty(
       growable: true,
     );
 
+    // Calculate stats for all time
     final longestBook = _getLongestBookInYear(books, null);
-
     if (longestBook != null) {
       bookYearlyStats.add(longestBook);
     }
 
-    final booksWithYears = _getBooksWithFinishDate(books);
-    final years = _calculateYears(booksWithYears);
+    // Calculate stats for each year
+    for (var year in years) {
+      final longestBookInAYear = _getLongestBookInYear(books, year);
 
-    // TODO implement with multiple readings
-    // for (var year in years) {
-    //   final booksInyear = List<Book>.empty(growable: true);
-    //   for (Book book in books) {
-    //     if (book.finishDate != null && book.rating != null) {
-    //       final finishYear = book.finishDate!.year;
-
-    //       if (finishYear == year) {
-    //         booksInyear.add(book);
-    //       }
-    //     }
-    //   }
-    //   final longestBookInAYear = _getLongestBookInYear(booksInyear, year);
-
-    //   if (longestBookInAYear != null) {
-    //     bookYearlyStats.add(longestBookInAYear);
-    //   }
-    // }
+      if (longestBookInAYear != null) {
+        bookYearlyStats.add(longestBookInAYear);
+      }
+    }
 
     return bookYearlyStats;
   }
 
   BookYearlyStat? _getLongestBookInYear(List<Book> books, int? year) {
-    int longestBookPages = 0;
+    int? longestBookPages;
     String? longestBookString;
     Book? longestBook;
 
     for (Book book in books) {
-      if (book.pages != null && book.pages! > 0) {
-        if (book.pages! > longestBookPages) {
-          longestBookPages = book.pages!;
-          longestBookString = '${book.title} - ${book.author}';
-          longestBook = book;
+      for (final reading in book.readings) {
+        if (year != null && reading.finishDate?.year != year) {
+          continue;
+        }
+
+        if (book.pages != null && book.pages! > 0) {
+          if (longestBookPages == null || book.pages! > longestBookPages) {
+            longestBookPages = book.pages!;
+            longestBookString = '${book.title} - ${book.author}';
+            longestBook = book;
+          }
         }
       }
     }
 
-    if (longestBookPages == 0) {
+    if (longestBookPages == null) {
       return null;
     } else {
       return BookYearlyStat(
@@ -375,65 +349,63 @@ class StatsBloc extends Bloc<StatsEvent, StatsState> {
     }
   }
 
-  List<BookYearlyStat> _getAverageReadingTime(List<Book> books) {
+  List<BookYearlyStat> _getAverageReadingTime(
+    List<Book> books,
+    List<int> years,
+  ) {
     List<BookYearlyStat> bookYearlyStats = List<BookYearlyStat>.empty(
       growable: true,
     );
 
+    // Calculate stats for all time
     bookYearlyStats.add(
-      BookYearlyStat(value: _getAverageReadingTimeInYear(books)),
+      BookYearlyStat(value: _getAverageReadingTimeInYear(books, null)),
     );
 
-    final booksWithYears = _getBooksWithFinishDate(books);
-    final years = _calculateYears(booksWithYears);
+    // Calculate stats for each year
+    for (var year in years) {
+      final averageReadingTimeInAYear = _getAverageReadingTimeInYear(
+        books,
+        year,
+      );
 
-    // TODO implement with multiple readings
-    // for (var year in years) {
-    //   final booksInyear = List<Book>.empty(growable: true);
-    //   for (Book book in books) {
-    //     if ((book.finishDate != null) && book.rating != null) {
-    //       final finishYear = book.finishDate!.year;
-
-    //       if (finishYear == year) {
-    //         booksInyear.add(book);
-    //       }
-    //     }
-    //   }
-
-    //   bookYearlyStats.add(
-    //     BookYearlyStat(
-    //       year: year,
-    //       value: _getAverageReadingTimeInYear(booksInyear),
-    //     ),
-    //   );
-    // }
+      bookYearlyStats.add(
+        BookYearlyStat(
+          year: year,
+          value: averageReadingTimeInAYear,
+        ),
+      );
+    }
 
     return bookYearlyStats;
   }
 
-  String _getAverageReadingTimeInYear(List<Book> books) {
+  String _getAverageReadingTimeInYear(List<Book> books, int? year) {
     int readTimeInMilliSeconds = 0;
     int countedBooks = 0;
 
-    // TODO implement with multiple readings
-    // for (Book book in books) {
-    //   if (book.readingTime != null) {
-    //     readTimeInMilliSeconds += book.readingTime!.milliSeconds;
-    //     countedBooks += 1;
-    //     continue;
-    //   }
-    //   if (book.startDate != null && book.finishDate != null) {
-    //     final startDate = book.startDate!;
-    //     final finishDate = book.finishDate!;
-    //     final readTimeinDays = finishDate.difference(startDate).inDays +
-    //         1; // should be at least 1 day
-    //     final timeDifference =
-    //         ReadingTime.toMilliSeconds(readTimeinDays, 0, 0).milliSeconds;
+    for (Book book in books) {
+      for (final reading in book.readings) {
+        if (year != null && reading.finishDate?.year != year) {
+          continue;
+        }
 
-    //     readTimeInMilliSeconds += timeDifference;
-    //     countedBooks += 1;
-    //   }
-    // }
+        if (reading.customReadingTime != null) {
+          readTimeInMilliSeconds += reading.customReadingTime!.milliSeconds;
+          countedBooks += 1;
+        } else if (reading.startDate != null && reading.finishDate != null) {
+          // Reading duration should be at least 1 day
+          final readTimeinDays =
+              reading.finishDate!.difference(reading.startDate!).inDays + 1;
+
+          final timeDifference =
+              ReadingTime.toMilliSeconds(readTimeinDays, 0, 0).milliSeconds;
+
+          readTimeInMilliSeconds += timeDifference;
+          countedBooks += 1;
+        }
+      }
+    }
 
     if (readTimeInMilliSeconds == 0 || countedBooks == 0) {
       return '';
@@ -443,50 +415,43 @@ class StatsBloc extends Bloc<StatsEvent, StatsState> {
     }
   }
 
-  List<BookYearlyStat> _getAveragePages(List<Book> books) {
+  List<BookYearlyStat> _getAveragePages(List<Book> books, List<int> years) {
     List<BookYearlyStat> bookYearlyStats = List<BookYearlyStat>.empty(
       growable: true,
     );
 
+    // Calculate stats for all time
     bookYearlyStats.add(
-      BookYearlyStat(value: _getAveragePagesInYear(books)),
+      BookYearlyStat(value: _getAveragePagesInYear(books, null)),
     );
 
-    final booksWithYears = _getBooksWithFinishDate(books);
-    final years = _calculateYears(booksWithYears);
-
-    // TODO implement with multiple readings
-    // for (var year in years) {
-    //   final booksInyear = List<Book>.empty(growable: true);
-    //   for (Book book in books) {
-    //     if (book.finishDate != null && book.rating != null) {
-    //       final finishYear = book.finishDate!.year;
-
-    //       if (finishYear == year) {
-    //         booksInyear.add(book);
-    //       }
-    //     }
-    //   }
-
-    //   bookYearlyStats.add(
-    //     BookYearlyStat(
-    //       year: year,
-    //       value: _getAveragePagesInYear(booksInyear),
-    //     ),
-    //   );
-    // }
+    // Calculate stats for each year
+    for (var year in years) {
+      bookYearlyStats.add(
+        BookYearlyStat(
+          year: year,
+          value: _getAveragePagesInYear(books, year),
+        ),
+      );
+    }
 
     return bookYearlyStats;
   }
 
-  String _getAveragePagesInYear(List<Book> books) {
+  String _getAveragePagesInYear(List<Book> books, int? year) {
     int finishedPages = 0;
     int countedBooks = 0;
 
     for (Book book in books) {
-      if (book.pages != null) {
-        finishedPages += book.pages!;
-        countedBooks += 1;
+      for (final reading in book.readings) {
+        if (year != null && reading.finishDate?.year != year) {
+          continue;
+        }
+
+        if (book.pages != null) {
+          finishedPages += book.pages!;
+          countedBooks += 1;
+        }
       }
     }
 
@@ -497,50 +462,43 @@ class StatsBloc extends Bloc<StatsEvent, StatsState> {
     }
   }
 
-  List<BookYearlyStat> _getAverageRating(List<Book> books) {
+  List<BookYearlyStat> _getAverageRating(List<Book> books, List<int> years) {
     List<BookYearlyStat> bookYearlyStats = List<BookYearlyStat>.empty(
       growable: true,
     );
 
+    // Calculate stats for all time
     bookYearlyStats.add(
-      BookYearlyStat(value: _getAverageRatingInYear(books)),
+      BookYearlyStat(value: _getAverageRatingInYear(books, null)),
     );
 
-    final booksWithYears = _getBooksWithFinishDate(books);
-    final years = _calculateYears(booksWithYears);
-
-    // TODO implement with multiple readings
-    // for (var year in years) {
-    //   final booksInyear = List<Book>.empty(growable: true);
-    //   for (Book book in books) {
-    //     if (book.finishDate != null && book.rating != null) {
-    //       final finishYear = book.finishDate!.year;
-
-    //       if (finishYear == year) {
-    //         booksInyear.add(book);
-    //       }
-    //     }
-    //   }
-
-    //   bookYearlyStats.add(
-    //     BookYearlyStat(
-    //       year: year,
-    //       value: _getAverageRatingInYear(booksInyear),
-    //     ),
-    //   );
-    // }
+    // Calculate stats for each year
+    for (var year in years) {
+      bookYearlyStats.add(
+        BookYearlyStat(
+          year: year,
+          value: _getAverageRatingInYear(books, year),
+        ),
+      );
+    }
 
     return bookYearlyStats;
   }
 
-  String _getAverageRatingInYear(List<Book> books) {
+  String _getAverageRatingInYear(List<Book> books, int? year) {
     double sumRating = 0;
     int countedBooks = 0;
 
     for (Book book in books) {
-      if (book.rating != null) {
-        sumRating += book.rating! / 10;
-        countedBooks += 1;
+      for (final reading in book.readings) {
+        if (year != null && reading.finishDate?.year != year) {
+          continue;
+        }
+
+        if (book.rating != null) {
+          sumRating += book.rating! / 10;
+          countedBooks += 1;
+        }
       }
     }
 
@@ -552,89 +510,53 @@ class StatsBloc extends Bloc<StatsEvent, StatsState> {
   }
 
   List<BookReadStat> _getFinishedPagesByMonth(
-      List<Book> books, BookFormat? bookType) {
+    List<Book> books,
+    BookFormat? bookType,
+    List<int> years,
+  ) {
     List<BookReadStat> bookReadStats = List<BookReadStat>.empty(growable: true);
 
+    // Calculate stats for all time
     bookReadStats.add(
-      BookReadStat(values: _getPagesByMonth(books, bookType, null)),
+      BookReadStat(
+        values: _getFinishedPagesInSpecificMonths(books, bookType, null),
+      ),
     );
 
-    final booksWithYears = _getBooksWithFinishDate(books);
-    final years = _calculateYears(booksWithYears);
-
-    // TODO implement with multiple readings
-    // for (var year in years) {
-    //   final booksInYear = List<Book>.empty(growable: true);
-
-    //   for (Book book in books) {
-    //     if (book.finishDate != null && book.pages != null) {
-    //       final finishYear = book.finishDate!.year;
-
-    //       if (finishYear == year) {
-    //         booksInYear.add(book);
-    //       } else {
-    //         if (book.additionalReadings != null &&
-    //             book.additionalReadings!.isNotEmpty) {
-    //           for (final additionalReading in book.additionalReadings!) {
-    //             if (additionalReading.finishDate != null &&
-    //                 book.pages != null) {
-    //               final additionalFinishYear =
-    //                   additionalReading.finishDate!.year;
-
-    //               if (additionalFinishYear == year) {
-    //                 booksInYear.add(book);
-    //               }
-    //             }
-    //           }
-    //         }
-    //       }
-    //     }
-    //   }
-
-    //   bookReadStats.add(
-    //     BookReadStat(
-    //       year: year,
-    //       values: _getPagesByMonth(booksInYear, bookType, year),
-    //     ),
-    //   );
-    // }
+    // Calculate stats for each year
+    for (var year in years) {
+      bookReadStats.add(
+        BookReadStat(
+          year: year,
+          values: _getFinishedPagesInSpecificMonths(books, bookType, year),
+        ),
+      );
+    }
     return bookReadStats;
   }
 
-  List<int> _getPagesByMonth(
+  List<int> _getFinishedPagesInSpecificMonths(
     List<Book> books,
     BookFormat? bookType,
     int? year,
   ) {
     List<int> finishedPagesByMonth = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
 
-    // TODO implement with multiple readings
-    // for (Book book in books) {
-    //   if (bookType != null && book.bookFormat != bookType) {
-    //     continue;
-    //   }
+    for (Book book in books) {
+      if (bookType != null && book.bookFormat != bookType) {
+        continue;
+      }
 
-    //   if (book.finishDate != null && book.pages != null) {
-    //     if (year == null || book.finishDate!.year == year) {
-    //       final finishMonth = book.finishDate!.month;
+      for (final reading in book.readings) {
+        if (reading.finishDate != null && book.pages != null) {
+          if (year == null || reading.finishDate!.year == year) {
+            final finishMonth = reading.finishDate!.month;
 
-    //       finishedPagesByMonth[finishMonth - 1] += book.pages!;
-    //     }
-    //   }
-
-    //   if (book.additionalReadings != null &&
-    //       book.additionalReadings!.isNotEmpty) {
-    //     for (final additionalReading in book.additionalReadings!) {
-    //       if (additionalReading.finishDate != null && book.pages != null) {
-    //         final finishMonth = additionalReading.finishDate!.month;
-
-    //         if (year == null || additionalReading.finishDate!.year == year) {
-    //           finishedPagesByMonth[finishMonth - 1] += book.pages!;
-    //         }
-    //       }
-    //     }
-    //   }
-    // }
+            finishedPagesByMonth[finishMonth - 1] += book.pages!;
+          }
+        }
+      }
+    }
 
     return finishedPagesByMonth;
   }
@@ -642,103 +564,58 @@ class StatsBloc extends Bloc<StatsEvent, StatsState> {
   List<BookReadStat> _getFinishedBooksByMonth(
     List<Book> books,
     BookFormat? bookType,
+    List<int> years,
   ) {
     List<BookReadStat> bookReadStats = List<BookReadStat>.empty(growable: true);
 
+    // Calculate stats for all time
     bookReadStats.add(
-      BookReadStat(values: _getBooksByMonth(books, bookType, null)),
+      BookReadStat(
+        values: _getFinishedBooksInSpecificMonths(books, bookType, null),
+      ),
     );
 
-    final booksWithYears = _getBooksWithFinishDate(books);
-    final years = _calculateYears(booksWithYears);
-
-    // TODO implement with multiple readings
-    // for (var year in years) {
-    //   final booksInYear = List<Book>.empty(growable: true);
-
-    //   for (Book book in books) {
-    //     if (book.finishDate != null) {
-    //       final finishYear = book.finishDate!.year;
-
-    //       if (finishYear == year) {
-    //         booksInYear.add(book);
-    //       } else {
-    //         if (book.additionalReadings != null &&
-    //             book.additionalReadings!.isNotEmpty) {
-    //           for (final additionalReading in book.additionalReadings!) {
-    //             if (additionalReading.finishDate != null &&
-    //                 book.pages != null) {
-    //               final additionalFinishYear =
-    //                   additionalReading.finishDate!.year;
-
-    //               if (additionalFinishYear == year) {
-    //                 booksInYear.add(book);
-    //               }
-    //             }
-    //           }
-    //         }
-    //       }
-    //     }
-    //   }
-
-    //   bookReadStats.add(
-    //     BookReadStat(
-    //       year: year,
-    //       values: _getBooksByMonth(booksInYear, bookType, year),
-    //     ),
-    //   );
-    // }
+    // Calculate stats for each year
+    for (var year in years) {
+      bookReadStats.add(
+        BookReadStat(
+          year: year,
+          values: _getFinishedBooksInSpecificMonths(
+            books,
+            bookType,
+            year,
+          ),
+        ),
+      );
+    }
 
     return bookReadStats;
   }
 
-  List<int> _getBooksByMonth(
+  List<int> _getFinishedBooksInSpecificMonths(
     List<Book> books,
     BookFormat? bookType,
     int? year,
   ) {
     List<int> finishedBooksByMonth = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
 
-    // TODO implement with multiple readings
-    // for (Book book in books) {
-    //   if (bookType != null && book.bookFormat != bookType) {
-    //     continue;
-    //   }
+    for (Book book in books) {
+      if (bookType != null && book.bookFormat != bookType) {
+        continue;
+      }
 
-    //   if (book.finishDate != null) {
-    //     if (year == null || book.finishDate!.year == year) {
-    //       final finishMonth = book.finishDate!.month;
+      for (final reading in book.readings) {
+        if (reading.finishDate != null) {
+          if (year == null || reading.finishDate!.year == year) {
+            final finishMonth = reading.finishDate!.month;
 
-    //       finishedBooksByMonth[finishMonth - 1] += 1;
-    //     }
-    //   }
+            finishedBooksByMonth[finishMonth - 1] += 1;
+          }
+        }
+      }
+    }
 
-    //   if (book.additionalReadings != null &&
-    //       book.additionalReadings!.isNotEmpty) {
-    //     for (final additionalReading in book.additionalReadings!) {
-    //       if (additionalReading.finishDate != null && book.pages != null) {
-    //         final finishMonth = additionalReading.finishDate!.month;
-
-    //         if (year == null || additionalReading.finishDate!.year == year) {
-    //           finishedBooksByMonth[finishMonth - 1] += 1;
-    //         }
-    //       }
-    //     }
-    //   }
-    // }
     return finishedBooksByMonth;
-  }
-
-  List<Book> _getBooksWithFinishDate(List<Book> books) {
-    final booksWithYears = List<Book>.empty(growable: true);
-
-    // TODO implement with multiple readings
-    // for (var book in books) {
-    //   if (book.finishDate != null) {
-    //     booksWithYears.add(book);
-    //   }
-    // }
-    return booksWithYears;
   }
 
   List<Book> _filterBooksByStatus(List<Book> books, int status) {
@@ -756,21 +633,13 @@ class StatsBloc extends Bloc<StatsEvent, StatsState> {
   int _countFinishedBooks(List<Book> books) {
     int finishedBooks = 0;
 
-    // TODO implement with multiple readings
-    // for (var book in books) {
-    //   if (book.status == 0) {
-    //     finishedBooks += 1;
-
-    //     if (book.additionalReadings != null &&
-    //         book.additionalReadings!.isNotEmpty) {
-    //       for (final additionalReading in book.additionalReadings!) {
-    //         if (additionalReading.finishDate != null) {
-    //           finishedBooks += 1;
-    //         }
-    //       }
-    //     }
-    //   }
-    // }
+    for (var book in books) {
+      for (final reading in book.readings) {
+        if (reading.finishDate != null) {
+          finishedBooks += 1;
+        }
+      }
+    }
 
     return finishedBooks;
   }
@@ -778,21 +647,15 @@ class StatsBloc extends Bloc<StatsEvent, StatsState> {
   int _countFinishedPages(List<Book> books) {
     int finishedPages = 0;
 
-    // TODO implement with multiple readings
-    // for (var book in books) {
-    //   if (book.status == 0 && book.pages != null) {
-    //     finishedPages += book.pages!;
-
-    //     if (book.additionalReadings != null &&
-    //         book.additionalReadings!.isNotEmpty) {
-    //       for (final additionalReading in book.additionalReadings!) {
-    //         if (additionalReading.finishDate != null) {
-    //           finishedPages += book.pages!;
-    //         }
-    //       }
-    //     }
-    //   }
-    // }
+    for (var book in books) {
+      if (book.pages != null) {
+        for (final reading in book.readings) {
+          if (reading.finishDate != null) {
+            finishedPages += book.pages!;
+          }
+        }
+      }
+    }
 
     return finishedPages;
   }
@@ -800,55 +663,23 @@ class StatsBloc extends Bloc<StatsEvent, StatsState> {
   List<int> _calculateYears(List<Book> books) {
     final years = List<int>.empty(growable: true);
 
-    // TODO implement with multiple readings
-    // for (var book in books) {
-    //   final year = book.finishDate!.year;
+    for (var book in books) {
+      for (final reading in book.readings) {
+        if (reading.finishDate != null) {
+          final year = reading.finishDate!.year;
 
-    //   if (!years.contains(year)) {
-    //     years.add(year);
-    //   }
+          if (!years.contains(year)) {
+            years.add(year);
+          }
+        }
+      }
+    }
 
-    //   if (book.additionalReadings != null &&
-    //       book.additionalReadings!.isNotEmpty) {
-    //     for (final additionalReading in book.additionalReadings!) {
-    //       if (additionalReading.finishDate != null) {
-    //         final additionalYear = additionalReading.finishDate!.year;
-
-    //         if (!years.contains(additionalYear)) {
-    //           years.add(additionalYear);
-    //         }
-    //       }
-    //     }
-    //   }
-    // }
-
+    // Sorting years in descending order
     years.sort((a, b) {
       return b.compareTo(a);
     });
 
     return years;
-  }
-
-  List<int> getYears(List<Book> books) {
-    final bookWithYears = List<Book>.empty(growable: true);
-
-    // TODO implement with multiple readings
-    // for (var book in books) {
-    //   if (book.finishDate != null) {
-    //     bookWithYears.add(book);
-    //   } else {
-    //     if (book.additionalReadings != null &&
-    //         book.additionalReadings!.isNotEmpty) {
-    //       for (final additionalReading in book.additionalReadings!) {
-    //         if (additionalReading.finishDate != null) {
-    //           bookWithYears.add(book);
-    //           break;
-    //         }
-    //       }
-    //     }
-    //   }
-    // }
-
-    return _calculateYears(bookWithYears);
   }
 }
