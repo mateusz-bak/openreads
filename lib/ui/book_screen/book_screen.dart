@@ -221,13 +221,6 @@ class BookScreen extends StatelessWidget {
                         },
                         showRatingAndLike: state.status == 0,
                       ),
-                      // TODO implement with multiple readings
-                      // SizedBox(
-                      //   height: (state.finishDate != null &&
-                      //           state.startDate != null)
-                      //       ? 5
-                      //       : 0,
-                      // ),
                       SizedBox(
                         height: (state.pages != null) ? 5 : 0,
                       ),

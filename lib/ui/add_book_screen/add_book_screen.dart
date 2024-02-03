@@ -110,28 +110,14 @@ class _AddBookScreenState extends State<AddBookScreen> {
       _showSnackbar(LocaleKeys.author_cannot_be_empty.tr());
       return false;
     }
-    // TODO implement with multiple readings
-    // if (book.status == 0) {
-    //   if (book.startDate != null && book.finishDate != null) {
-    //     if (book.finishDate!.isBefore(book.startDate!)) {
-    //       _showSnackbar(LocaleKeys.finish_date_before_start.tr());
-    //       return false;
-    //     }
-    //   }
-    // }
-
-    // TODO implement with multiple readings
-    // if (book.additionalReadings != null &&
-    //     book.additionalReadings!.isNotEmpty) {
-    //   for (final reading in book.additionalReadings!) {
-    //     if (reading.startDate != null && reading.finishDate != null) {
-    //       if (reading.finishDate!.isBefore(reading.startDate!)) {
-    //         _showSnackbar(LocaleKeys.finish_date_before_start.tr());
-    //         return false;
-    //       }
-    //     }
-    //   }
-    // }
+    for (final reading in book.readings) {
+      if (reading.startDate != null && reading.finishDate != null) {
+        if (reading.finishDate!.isBefore(reading.startDate!)) {
+          _showSnackbar(LocaleKeys.finish_date_before_start.tr());
+          return false;
+        }
+      }
+    }
 
     return true;
   }
