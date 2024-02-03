@@ -14,6 +14,10 @@ class Reading {
   factory Reading.fromString(String input) {
     List<String> dateAndValue = input.split('|');
 
+    if (dateAndValue.length != 3) {
+      return Reading();
+    }
+
     DateTime? startDate =
         dateAndValue[0] != '' ? DateTime.parse(dateAndValue[0]) : null;
     DateTime? finishDate =
