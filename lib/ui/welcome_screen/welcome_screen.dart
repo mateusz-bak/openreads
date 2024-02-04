@@ -5,7 +5,6 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:intro_slider/intro_slider.dart';
 import 'package:openreads/core/helpers/backup/backup_general.dart';
 import 'package:openreads/core/helpers/backup/backup_import.dart';
 import 'package:openreads/core/helpers/backup/csv_import_bookwyrm.dart';

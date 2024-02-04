@@ -701,14 +701,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "0.18.1"
-  intro_slider:
-    dependency: "direct main"
-    description:
-      name: intro_slider
-      sha256: eb43fefa27b0655edebc3e7fe7ff320cb5996a4e64649d79969c7099105fe52f
-      url: "https://pub.dev"
-    source: hosted
-    version: "4.2.1"
   js:
     dependency: transitive
     description:
