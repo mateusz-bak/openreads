@@ -38,7 +38,6 @@ dependencies:
   font_awesome_flutter: ^10.2.1
   hydrated_bloc: ^9.0.0
   barcode_scan2: ^4.2.1
-  intro_slider: ^4.2.0
   flutter_email_sender: ^6.0.0
   permission_handler: ^11.0.0
   filesystem_picker: ^4.0.0
