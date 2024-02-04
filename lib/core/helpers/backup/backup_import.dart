@@ -10,6 +10,7 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:openreads/core/constants/constants.dart';
 import 'package:openreads/logic/cubit/backup_progress_cubit.dart';
+import 'package:openreads/ui/books_screen/books_screen.dart';
 import 'package:shared_storage/shared_storage.dart';
 import 'package:sqflite/sqflite.dart';
 import 'package:path/path.dart' as path;
@@ -86,6 +87,7 @@ class BackupImport {
 
     if (Platform.isAndroid) {
       fileLocation = await BackupGeneral.pickFileAndroid();
+
       if (fileLocation != null) {
         backupFile = await getDocumentContent(fileLocation);
       }
@@ -126,6 +128,7 @@ class BackupImport {
       final infoFileVersion = _checkInfoFileVersion(backupFile, tmpDir);
       if (infoFileVersion == 5) {
         // ignore: use_build_context_synchronously
+
         await _restoreBackupVersion5(context, backupFile, tmpDir);
       } else {
         BackupGeneral.showInfoSnackbar(LocaleKeys.backup_not_valid.tr());
@@ -136,8 +139,10 @@ class BackupImport {
     BackupGeneral.showInfoSnackbar(LocaleKeys.restore_successfull.tr());
 
     if (context.mounted) {
-      Navigator.of(context).pop();
-      Navigator.of(context).pop();
+      Navigator.of(context).pushAndRemoveUntil(
+        MaterialPageRoute(builder: (context) => const BooksScreen()),
+        (Route<dynamic> route) => false,
+      );
     }
   }
 
