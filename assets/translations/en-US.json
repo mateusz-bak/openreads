@@ -277,5 +277,7 @@
     "downloaded_covers": "Downloaded covers:",
     "try_downloading_covers": "Do you want to try downloading missing covers for imported books?",
     "filter_out_selected_tags": "Filter out selected tags",
-    "add_additional_reading_time": "Capture reading"
+    "add_additional_reading_time": "Capture reading",
+    "start_adding_books": "Go to the app",
+    "help_to_get_started": "To help you get started, here are some things you can do"
 }

@@ -274,4 +274,6 @@ abstract class LocaleKeys {
   static const try_downloading_covers = 'try_downloading_covers';
   static const filter_out_selected_tags = 'filter_out_selected_tags';
   static const add_additional_reading_time = 'add_additional_reading_time';
+  static const start_adding_books = 'start_adding_books';
+  static const help_to_get_started = 'help_to_get_started';
 }

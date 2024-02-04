@@ -121,10 +121,10 @@ class App extends StatelessWidget {
 
 class OpenreadsApp extends StatefulWidget {
   const OpenreadsApp({
-    Key? key,
+    super.key,
     required this.themeState,
     required this.welcomeState,
-  }) : super(key: key);
+  });
 
   final SetThemeState themeState;
   final WelcomeState welcomeState;
@@ -136,9 +136,6 @@ class OpenreadsApp extends StatefulWidget {
 class _OpenreadsAppState extends State<OpenreadsApp>
     with WidgetsBindingObserver {
   late bool welcomeMode;
-  late Image welcomeImage1;
-  late Image welcomeImage2;
-  late Image welcomeImage3;
 
   _decideWelcomeMode(WelcomeState welcomeState) {
     if (welcomeState is ShowWelcomeState) {
@@ -149,19 +146,8 @@ class _OpenreadsAppState extends State<OpenreadsApp>
   }
 
   @override
-  void didChangeDependencies() {
-    precacheImage(welcomeImage1.image, context);
-    precacheImage(welcomeImage2.image, context);
-    precacheImage(welcomeImage3.image, context);
-    super.didChangeDependencies();
-  }
-
-  @override
   void initState() {
     super.initState();
-    welcomeImage1 = Image.asset('assets/images/welcome_1.jpg');
-    welcomeImage2 = Image.asset('assets/images/welcome_2.jpg');
-    welcomeImage3 = Image.asset('assets/images/welcome_3.jpg');
 
     _decideWelcomeMode(widget.welcomeState);
   }
