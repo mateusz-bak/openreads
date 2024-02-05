@@ -230,13 +230,11 @@
     "export_csv": "Exportar los libros en formato CSV",
     "hour": {
         "one": "{} hora",
-        "title": "Horas",
         "other": "{} horas"
     },
     "minute": {
         "other": "{} minutos",
-        "one": "{} minuto",
-        "title": "Minutos"
+        "one": "{} minuto"
     },
     "book_format_hardcover_plural": "Libro de tapa dura",
     "change_book_format": "Cambiar el formato de los libros",
@@ -245,7 +243,6 @@
     "set_custom_reading_time": "Fijar el tiempo de lectura personalizado",
     "day": {
         "one": "{} día",
-        "title": "Días",
         "other": "{} días"
     },
     "book_format_all": "Todos los formatos de libro",
@@ -273,5 +270,8 @@
     "click_to_add_book_manually": "Haga clic aquí para añadir el libro manualmente",
     "get_cover_from_open_library": "Obtener portada desde Open Library con el ISBN del libro",
     "try_downloading_covers": "¿Quieres descargar las portadas que faltan para los libros importados?",
-    "no_search_results": "Sin resultados"
+    "no_search_results": "Sin resultados",
+    "load_cover_from_phone": "Cargar portada desde tu dispositivo",
+    "download_missing_covers_explanation": "Descargar las portadas que faltan para los libros que tiene ISBN",
+    "filter_out_selected_tags": "No mostrar las etiquetas seleccionadas"
 }

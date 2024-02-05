@@ -230,13 +230,11 @@
     "export_csv": "Bücher als CSV-Datei exportieren",
     "hour": {
         "one": "{} Stunde",
-        "title": "Stunden",
         "other": "{} Stunden"
     },
     "minute": {
         "other": "{} Minuten",
-        "one": "{} Minute",
-        "title": "Minuten"
+        "one": "{} Minute"
     },
     "only_editions_with_covers": "Zeige nur Editionen mit Titelbildern",
     "change_book_format": "Buchformat ändern",
@@ -245,7 +243,6 @@
     "select_all": "Alle auswählen",
     "day": {
         "one": "{} Tag",
-        "title": "Tage",
         "other": "{} Tage"
     },
     "change_books_author": "Autor ändern",
@@ -262,7 +259,7 @@
     },
     "get_cover_from_open_library": "Titelbild von Open Library mit der ISBN laden",
     "download_missing_covers": "Fehlende Titelbilder herunterladen",
-    "import_bookwyrm_csv": "Import BookWyrm CSV",
+    "import_bookwyrm_csv": "BookWyrm CSV importieren",
     "general_search": "Suchmodus in Open Library",
     "cover_not_found_in_ol": "Titelbild nicht in der Open Library gefunden",
     "no_search_results": "Keine Ergebnisse gefunden",
@@ -275,5 +272,7 @@
     "delete_books": "Bücher löschen",
     "load_cover_from_phone": "Titelbild von deinem Telefon laden",
     "downloaded_covers": "Heruntergeladene Titelbilder:",
-    "try_downloading_covers": "Möchtest du versuchen, fehlende Titelbilder für importierte Bücher herunterzuladen?"
+    "try_downloading_covers": "Möchtest du versuchen, fehlende Titelbilder für importierte Bücher herunterzuladen?",
+    "filter_out_selected_tags": "Ausgewählte Schlagworte herausfiltern",
+    "add_additional_reading_time": "Zusätzliche Lesezeit hinzufügen"
 }
