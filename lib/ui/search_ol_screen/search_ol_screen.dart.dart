@@ -15,6 +15,7 @@ import 'package:openreads/model/ol_search_result.dart';
 import 'package:openreads/resources/open_library_service.dart';
 import 'package:openreads/ui/add_book_screen/add_book_screen.dart';
 import 'package:openreads/ui/add_book_screen/widgets/widgets.dart';
+import 'package:openreads/ui/common/keyboard_dismissable.dart';
 import 'package:openreads/ui/search_ol_editions_screen/search_ol_editions_screen.dart';
 import 'package:openreads/ui/search_ol_screen/widgets/widgets.dart';
 
@@ -241,211 +242,214 @@ class _SearchOLScreenState extends State<SearchOLScreen>
   Widget build(BuildContext context) {
     super.build(context);
 
-    return Scaffold(
-      appBar: AppBar(
-        title: Text(
-          LocaleKeys.add_search.tr(),
-          style: const TextStyle(fontSize: 18),
+    return KeyboardDismissible(
+      child: Scaffold(
+        appBar: AppBar(
+          title: Text(
+            LocaleKeys.add_search.tr(),
+            style: const TextStyle(fontSize: 18),
+          ),
         ),
-      ),
-      body: Column(
-        children: [
-          Padding(
-            padding: const EdgeInsets.fromLTRB(0, 10, 10, 5),
-            child: Row(
-              children: [
-                Expanded(
-                  child: BookTextField(
-                    controller: _searchController,
-                    keyboardType: TextInputType.name,
-                    maxLength: 99,
-                    autofocus: true,
-                    textInputAction: TextInputAction.search,
-                    textCapitalization: TextCapitalization.sentences,
-                    onSubmitted: (_) => _startNewSearch(),
+        body: Column(
+          children: [
+            Padding(
+              padding: const EdgeInsets.fromLTRB(0, 10, 10, 5),
+              child: Row(
+                children: [
+                  Expanded(
+                    child: BookTextField(
+                      controller: _searchController,
+                      keyboardType: TextInputType.name,
+                      maxLength: 99,
+                      autofocus: true,
+                      textInputAction: TextInputAction.search,
+                      textCapitalization: TextCapitalization.sentences,
+                      onSubmitted: (_) => _startNewSearch(),
+                    ),
                   ),
-                ),
-                const SizedBox(width: 10),
-                SizedBox(
-                  height: 48,
-                  child: ElevatedButton(
-                    onPressed: _startNewSearch,
-                    style: ElevatedButton.styleFrom(
-                      elevation: 0,
-                      backgroundColor: Theme.of(context).colorScheme.primary,
-                      foregroundColor: Theme.of(context).colorScheme.onPrimary,
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(cornerRadius),
+                  const SizedBox(width: 10),
+                  SizedBox(
+                    height: 48,
+                    child: ElevatedButton(
+                      onPressed: _startNewSearch,
+                      style: ElevatedButton.styleFrom(
+                        elevation: 0,
+                        backgroundColor: Theme.of(context).colorScheme.primary,
+                        foregroundColor:
+                            Theme.of(context).colorScheme.onPrimary,
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(cornerRadius),
+                        ),
+                      ),
+                      child: Text(
+                        LocaleKeys.search.tr(),
+                        style: const TextStyle(fontSize: 12),
                       ),
                     ),
-                    child: Text(
-                      LocaleKeys.search.tr(),
-                      style: const TextStyle(fontSize: 12),
-                    ),
                   ),
+                ],
+              ),
+            ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                BlocBuilder<OpenLibrarySearchBloc, OpenLibrarySearchState>(
+                  builder: (context, state) {
+                    return Wrap(
+                      crossAxisAlignment: WrapCrossAlignment.center,
+                      children: [
+                        for (var i = 0; i < 4; i++) ...[
+                          if (i != 0) const SizedBox(width: 5),
+                          Padding(
+                            padding: const EdgeInsets.only(right: 5),
+                            child: OLSearchRadio(
+                              searchType: OLSearchType.values[i],
+                              activeSearchType: _getOLSearchTypeEnum(state),
+                              onChanged: _changeSearchType,
+                            ),
+                          ),
+                        ],
+                      ],
+                    );
+                  },
                 ),
               ],
             ),
-          ),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              BlocBuilder<OpenLibrarySearchBloc, OpenLibrarySearchState>(
-                builder: (context, state) {
-                  return Wrap(
-                    crossAxisAlignment: WrapCrossAlignment.center,
-                    children: [
-                      for (var i = 0; i < 4; i++) ...[
-                        if (i != 0) const SizedBox(width: 5),
-                        Padding(
-                          padding: const EdgeInsets.only(right: 5),
-                          child: OLSearchRadio(
-                            searchType: OLSearchType.values[i],
-                            activeSearchType: _getOLSearchTypeEnum(state),
-                            onChanged: _changeSearchType,
-                          ),
+            const Padding(
+              padding: EdgeInsets.fromLTRB(10, 0, 10, 10),
+              child: Divider(height: 3),
+            ),
+            (numberOfResults != null && numberOfResults! != 0)
+                ? Padding(
+                    padding: const EdgeInsets.fromLTRB(10, 0, 10, 20),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.end,
+                      children: [
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Text(
+                              '$numberOfResults ${LocaleKeys.results_lowercase.tr()}',
+                              style: const TextStyle(fontSize: 12),
+                            ),
+                          ],
                         ),
                       ],
-                    ],
-                  );
-                },
-              ),
-            ],
-          ),
-          const Padding(
-            padding: EdgeInsets.fromLTRB(10, 0, 10, 10),
-            child: Divider(height: 3),
-          ),
-          (numberOfResults != null && numberOfResults! != 0)
-              ? Padding(
-                  padding: const EdgeInsets.fromLTRB(10, 0, 10, 20),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.end,
-                    children: [
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Text(
-                            '$numberOfResults ${LocaleKeys.results_lowercase.tr()}',
-                            style: const TextStyle(fontSize: 12),
-                          ),
-                        ],
-                      ),
-                    ],
-                  ),
-                )
-              : const SizedBox(),
-          Expanded(
-            child: (!searchActivated)
-                ? const SizedBox()
-                : Scrollbar(
-                    child: PagedListView<int, OLSearchResultDoc>(
-                      pagingController: _pagingController,
-                      builderDelegate:
-                          PagedChildBuilderDelegate<OLSearchResultDoc>(
-                        firstPageProgressIndicatorBuilder: (_) => Center(
-                          child: LoadingAnimationWidget.staggeredDotsWave(
-                            color: Theme.of(context).colorScheme.primary,
-                            size: 42,
-                          ),
-                        ),
-                        newPageProgressIndicatorBuilder: (_) => Center(
-                          child: Padding(
-                            padding: const EdgeInsets.all(20.0),
+                    ),
+                  )
+                : const SizedBox(),
+            Expanded(
+              child: (!searchActivated)
+                  ? const SizedBox()
+                  : Scrollbar(
+                      child: PagedListView<int, OLSearchResultDoc>(
+                        pagingController: _pagingController,
+                        builderDelegate:
+                            PagedChildBuilderDelegate<OLSearchResultDoc>(
+                          firstPageProgressIndicatorBuilder: (_) => Center(
                             child: LoadingAnimationWidget.staggeredDotsWave(
                               color: Theme.of(context).colorScheme.primary,
                               size: 42,
                             ),
                           ),
-                        ),
-                        noItemsFoundIndicatorBuilder: (_) => Center(
-                          child: Column(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              InkWell(
-                                borderRadius: BorderRadius.circular(
-                                  cornerRadius,
-                                ),
-                                onTap: _addBookManually,
-                                child: Padding(
-                                  padding: const EdgeInsets.all(10),
-                                  child: Column(
-                                    children: [
-                                      Text(
-                                        LocaleKeys.no_search_results.tr(),
-                                        style: const TextStyle(
-                                          fontSize: 18,
+                          newPageProgressIndicatorBuilder: (_) => Center(
+                            child: Padding(
+                              padding: const EdgeInsets.all(20.0),
+                              child: LoadingAnimationWidget.staggeredDotsWave(
+                                color: Theme.of(context).colorScheme.primary,
+                                size: 42,
+                              ),
+                            ),
+                          ),
+                          noItemsFoundIndicatorBuilder: (_) => Center(
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                InkWell(
+                                  borderRadius: BorderRadius.circular(
+                                    cornerRadius,
+                                  ),
+                                  onTap: _addBookManually,
+                                  child: Padding(
+                                    padding: const EdgeInsets.all(10),
+                                    child: Column(
+                                      children: [
+                                        Text(
+                                          LocaleKeys.no_search_results.tr(),
+                                          style: const TextStyle(
+                                            fontSize: 18,
+                                          ),
                                         ),
-                                      ),
-                                      const SizedBox(height: 10),
-                                      Text(
-                                        LocaleKeys.click_to_add_book_manually
-                                            .tr(),
-                                        style: const TextStyle(
-                                          fontSize: 14,
+                                        const SizedBox(height: 10),
+                                        Text(
+                                          LocaleKeys.click_to_add_book_manually
+                                              .tr(),
+                                          style: const TextStyle(
+                                            fontSize: 14,
+                                          ),
                                         ),
-                                      ),
-                                    ],
+                                      ],
+                                    ),
                                   ),
                                 ),
-                              ),
-                            ],
+                              ],
+                            ),
                           ),
-                        ),
-                        itemBuilder: (context, item, index) => BookCardOL(
-                          title: item.title!,
-                          subtitle: item.subtitle,
-                          author: (item.authorName != null &&
-                                  item.authorName!.isNotEmpty)
-                              ? item.authorName![0]
-                              : '',
-                          openLibraryKey: item.coverEditionKey,
-                          doc: item,
-                          editions: item.editionKey,
-                          pagesMedian: item.numberOfPagesMedian,
-                          firstPublishYear: item.firstPublishYear,
-                          onAddBookPressed: () => _saveNoEdition(
-                            editions: item.editionKey!,
+                          itemBuilder: (context, item, index) => BookCardOL(
                             title: item.title!,
                             subtitle: item.subtitle,
                             author: (item.authorName != null &&
                                     item.authorName!.isNotEmpty)
                                 ? item.authorName![0]
                                 : '',
+                            openLibraryKey: item.coverEditionKey,
+                            doc: item,
+                            editions: item.editionKey,
                             pagesMedian: item.numberOfPagesMedian,
-                            isbn: item.isbn,
-                            olid: item.key,
                             firstPublishYear: item.firstPublishYear,
-                            cover: item.coverI,
-                          ),
-                          onChooseEditionPressed: () {
-                            FocusManager.instance.primaryFocus?.unfocus();
+                            onAddBookPressed: () => _saveNoEdition(
+                              editions: item.editionKey!,
+                              title: item.title!,
+                              subtitle: item.subtitle,
+                              author: (item.authorName != null &&
+                                      item.authorName!.isNotEmpty)
+                                  ? item.authorName![0]
+                                  : '',
+                              pagesMedian: item.numberOfPagesMedian,
+                              isbn: item.isbn,
+                              olid: item.key,
+                              firstPublishYear: item.firstPublishYear,
+                              cover: item.coverI,
+                            ),
+                            onChooseEditionPressed: () {
+                              FocusManager.instance.primaryFocus?.unfocus();
 
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                builder: (context) => SearchOLEditionsScreen(
-                                  editions: item.editionKey!,
-                                  title: item.title!,
-                                  subtitle: item.subtitle,
-                                  author: (item.authorName != null &&
-                                          item.authorName!.isNotEmpty)
-                                      ? item.authorName![0]
-                                      : '',
-                                  pagesMedian: item.numberOfPagesMedian,
-                                  isbn: item.isbn,
-                                  olid: item.key,
-                                  firstPublishYear: item.firstPublishYear,
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) => SearchOLEditionsScreen(
+                                    editions: item.editionKey!,
+                                    title: item.title!,
+                                    subtitle: item.subtitle,
+                                    author: (item.authorName != null &&
+                                            item.authorName!.isNotEmpty)
+                                        ? item.authorName![0]
+                                        : '',
+                                    pagesMedian: item.numberOfPagesMedian,
+                                    isbn: item.isbn,
+                                    olid: item.key,
+                                    firstPublishYear: item.firstPublishYear,
+                                  ),
                                 ),
-                              ),
-                            );
-                          },
+                              );
+                            },
+                          ),
                         ),
                       ),
                     ),
-                  ),
-          ),
-        ],
+            ),
+          ],
+        ),
       ),
     );
   }
