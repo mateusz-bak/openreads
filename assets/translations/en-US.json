@@ -245,18 +245,15 @@
     "ok": "OK",
     "day": {
         "one": "{} day",
-        "other": "{} days",
-        "title": "Days"
+        "other": "{} days"
     },
     "hour": {
         "one": "{} hour",
-        "other": "{} hours",
-        "title": "Hours"
+        "other": "{} hours"
     },
     "minute": {
         "one": "{} minute",
-        "other": "{} minutes",
-        "title": "Minutes"
+        "other": "{} minutes"
     },
     "set_custom_reading_time": "Set custom reading time",
     "select_all": "Select all",
@@ -267,7 +264,7 @@
     "general_search": "General",
     "no_search_results": "No results found",
     "click_to_add_book_manually": "Click here to add the book manually",
-    "load_cover_from_phone": "Load cover from your phone",
+    "load_cover_from_phone": "Load cover from your device",
     "get_cover_from_open_library": "Get cover from Open Library by book's ISBN",
     "isbn_cannot_be_empty": "ISBN cannot be empty",
     "cover_not_found_in_ol": "Cover not found in Open Library",
