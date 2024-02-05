@@ -222,18 +222,16 @@
     "update_successful_message": "Zaktualizowano pomyślnie!",
     "hour": {
         "one": "{} godzina",
-        "title": "Godzin",
         "other": "{} godzin"
     },
     "csv": "CSV",
     "minute": {
         "other": "{} minut",
-        "one": "{} minuta",
-        "title": "Minut"
+        "one": "{} minuta"
     },
     "choose_not_finished_shelf": "Wybierz półkę z nieukończonymi książkami:",
     "export_successful": "Eksport zakończony sukcesem",
-    "import_goodreads_csv": "Importuj plik CSV z Goodreads",
+    "import_goodreads_csv": "Importuj Goodreads CSV",
     "export_csv_description_1": "Okładki nie zostaną wyeksportowane",
     "notes": "Notatki",
     "selected": "Wybrane",
@@ -241,7 +239,6 @@
     "set_custom_reading_time": "Ustaw inny czas czytania",
     "day": {
         "one": "{} dzień",
-        "title": "Dni",
         "other": "{} dni"
     },
     "import_successful": "Import zakończony sukcesem",
@@ -271,5 +268,13 @@
     "no_search_results": "Brak wyników",
     "download_missing_covers_explanation": "Pobierz brakujące okładki dla książek które mają ustawiony ISBN",
     "isbn_cannot_be_empty": "ISBN nie może być pusty",
-    "downloaded_covers": "Pobrane okładki:"
+    "downloaded_covers": "Pobrane okładki:",
+    "import_bookwyrm_csv": "Importuj BookWyrm CSV",
+    "delete_books": "Usuń książki",
+    "delete_books_question": "Usunąć wybrane książki?",
+    "try_downloading_covers": "Czy chcesz spróbować pobrać brakujące okładki dla zaimportowanych książek?",
+    "filter_out_selected_tags": "Nie pokazuj książek z zaznaczonymi tagami",
+    "add_additional_reading_time": "Zarejestruj czytanie",
+    "start_adding_books": "Otwórz aplikację",
+    "help_to_get_started": "Oto kilka opcji, które możesz teraz wykonać"
 }

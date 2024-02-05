@@ -220,5 +220,41 @@
     "book_format_audiobook": "Luisterboek",
     "book_format_paperback": "Paperback",
     "book_format_hardcover": "Hardcover",
-    "book_format_audiobook_plural": "Luisterboeken"
+    "book_format_audiobook_plural": "Luisterboeken",
+    "book_format_ebook": "e-boek",
+    "delete_books": "Verwijder boeken",
+    "book_format_paperback_plural": "paperbacks",
+    "book_format_hardcover_plural": "ingebonden boeken",
+    "book_format_ebook_plural": "e-boek",
+    "book_format_all": "Alle boekformaten",
+    "filter_by_book_format": "Filteren naar boekformaat",
+    "day": {
+        "one": "{} dag",
+        "other": "{} dagen"
+    },
+    "change_books_author": "Wijzig auteur",
+    "update_successful_message": "Succesvol bijgewerkt!",
+    "bulk_update_unsuccessful_message": "Boek details konden niet worden bijgewerkt",
+    "minute": {
+        "other": "{} minuten",
+        "one": "{} minuut"
+    },
+    "select_all": "Selecteer alles",
+    "change_book_format": "Wijzig boekformaat",
+    "set_custom_reading_time": "Gebruikersgedefinieerde leestijd instellen",
+    "only_editions_with_covers": "Toon alleen boeken met afbeeldingen",
+    "support_option_2": "Koop een kopje koffie bij buymeacoffee.com",
+    "choose_not_finished_shelf": "Kies een plank met niet-afgemaakte boeken:",
+    "ok": "OK",
+    "hour": {
+        "one": "{} uur",
+        "other": "{} uren"
+    },
+    "tags": {
+        "one": "Dag",
+        "other": "Dagen"
+    },
+    "migration_v1_to_v2_2": "Verlaat dit scherm niet voordat al je boeken zijn gemigreerd, want dan gaan ze verloren!",
+    "support_the_project_description": "De programmeur met een kopje koffie bedanken",
+    "import_successful": "Import gelukt"
 }

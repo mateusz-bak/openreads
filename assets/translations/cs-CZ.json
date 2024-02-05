@@ -230,13 +230,11 @@
     "export_csv": "Exportovat knížky jako soubor CSV",
     "hour": {
         "one": "{} hodina",
-        "title": "Hodiny",
         "other": "{} hodin"
     },
     "minute": {
         "other": "{} minut",
-        "one": "{} minuta",
-        "title": "Minuty"
+        "one": "{} minuta"
     },
     "book_format_hardcover_plural": "Knížky s tuhou vazbou",
     "change_book_format": "Změnit formát knihy",
@@ -246,7 +244,6 @@
     "set_custom_reading_time": "Nastavit vlastní čas čtení",
     "day": {
         "one": "{} den",
-        "title": "Dny",
         "other": "{} dní"
     },
     "book_format_all": "Všechny vazby",
@@ -275,5 +272,7 @@
     "download_missing_covers": "Stáhnout chybějící obálky",
     "download_missing_covers_explanation": "Stáhnout chybějící obálky knih, u kterých je zadáno ISBN",
     "try_downloading_covers": "Chcete zkusit stáhnout chybějící obálky importovaných knih?",
-    "downloaded_covers": "Stažené obálky:"
+    "downloaded_covers": "Stažené obálky:",
+    "filter_out_selected_tags": "Odfiltrovat vybrané štítky",
+    "add_additional_reading_time": "Přidat další čas čtení"
 }
