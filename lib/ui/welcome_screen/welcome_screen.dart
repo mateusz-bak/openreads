@@ -143,23 +143,23 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
           AppTheme.init(state, context);
 
           return Scaffold(
+            appBar: AppBar(
+              automaticallyImplyLeading: false,
+            ),
             body: SafeArea(
               child: Column(
                 children: [
                   Row(
                     children: [
-                      Padding(
-                        padding: EdgeInsets.fromLTRB(
-                          20,
-                          MediaQuery.of(context).padding.top,
-                          20,
-                          20,
-                        ),
-                        child: Text(
-                          LocaleKeys.welcome_1.tr(),
-                          style: const TextStyle(
-                            fontSize: 36,
-                            fontWeight: FontWeight.bold,
+                      Expanded(
+                        child: Padding(
+                          padding: const EdgeInsets.fromLTRB(20, 0, 20, 20),
+                          child: Text(
+                            LocaleKeys.welcome_1.tr(),
+                            style: const TextStyle(
+                              fontSize: 36,
+                              fontWeight: FontWeight.bold,
+                            ),
                           ),
                         ),
                       ),
@@ -214,9 +214,9 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
                   SmoothPageIndicator(
                     controller: _controller,
                     count: 4,
-                    effect: const ExpandingDotsEffect(
-                      activeDotColor: Color(0xFF58928D),
-                      dotColor: Colors.grey,
+                    effect: ExpandingDotsEffect(
+                      activeDotColor: widget.themeData.colorScheme.primary,
+                      dotColor: widget.themeData.colorScheme.surfaceVariant,
                       dotHeight: 12,
                       dotWidth: 12,
                     ),
