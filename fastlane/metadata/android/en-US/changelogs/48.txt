@@ -1,0 +1,11 @@
+- Additional reading dates.
+- Open Library search modes.
+- Connection to Open Library with SSL.
+- Auto downloading covers from Open Library.
+- Importing books from BookWyrm.
+- Bulk delete books.
+- Auto reading length is at least one day.
+- Publisher info in Open Library editions.
+- Filter out books with selected tags.
+- Keyboard can be dismissed on tap on screen.
+- Small UI/UX improvements and bug fixes.
