@@ -231,6 +231,13 @@ class _AddBookScreenState extends State<AddBookScreen> {
   }
 
   void _addNewTag() {
+    final tag = _tagsCtrl.text;
+
+    if (tag.isEmpty) {
+      FocusManager.instance.primaryFocus?.unfocus();
+      return;
+    }
+
     context.read<EditBookCubit>().addNewTag(_tagsCtrl.text);
 
     _tagsCtrl.clear();
