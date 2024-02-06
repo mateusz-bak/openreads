@@ -20,12 +20,16 @@ Future generateBlurHash(Uint8List bytes, BuildContext context) async {
 }
 
 DateTime? getLatestFinishDate(Book book) {
+  if (book.readings.isEmpty) return null;
+
   return book.readings
       .map((e) => e.finishDate)
       .reduce((value, element) => value!.isAfter(element!) ? value : element);
 }
 
 DateTime? getLatestStartDate(Book book) {
+  if (book.readings.isEmpty) return null;
+
   return book.readings
       .map((e) => e.startDate)
       .reduce((value, element) => value!.isAfter(element!) ? value : element);
