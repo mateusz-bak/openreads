@@ -39,8 +39,9 @@ class BookStatusDetail extends StatelessWidget {
   }) {
     if (readingTime != null) return readingTime.toString();
 
-    final diff = finishDate!.difference(startDate!).inDays +
-        1; // should be at least 1 day
+    if (startDate == null || finishDate == null) return '';
+
+    final diff = finishDate.difference(startDate).inDays + 1;
 
     return LocaleKeys.day.plural(diff).tr();
   }
