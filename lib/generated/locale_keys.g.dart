@@ -264,6 +264,7 @@ abstract class LocaleKeys {
   static const click_to_add_book_manually = 'click_to_add_book_manually';
   static const load_cover_from_phone = 'load_cover_from_phone';
   static const get_cover_from_open_library = 'get_cover_from_open_library';
+  static const edit_current_cover = 'edit_current_cover';
   static const isbn_cannot_be_empty = 'isbn_cannot_be_empty';
   static const cover_not_found_in_ol = 'cover_not_found_in_ol';
   static const books_settings = 'books_settings';
