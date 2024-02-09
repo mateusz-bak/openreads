@@ -116,7 +116,7 @@ class _ReadingRowState extends State<ReadingRow> {
                       children: [
                         Expanded(
                           child: SetDateButton(
-                            defaultHeight: defaultFormHeight,
+                            defaultHeight: Constants.formHeight,
                             icon: FontAwesomeIcons.play,
                             text: widget.reading.startDate != null
                                 ? dateFormat.format(widget.reading.startDate!)
@@ -131,7 +131,7 @@ class _ReadingRowState extends State<ReadingRow> {
                         const SizedBox(width: 10),
                         Expanded(
                           child: SetDateButton(
-                            defaultHeight: defaultFormHeight,
+                            defaultHeight: Constants.formHeight,
                             icon: FontAwesomeIcons.flagCheckered,
                             text: widget.reading.finishDate != null
                                 ? dateFormat.format(widget.reading.finishDate!)
@@ -152,7 +152,7 @@ class _ReadingRowState extends State<ReadingRow> {
                   children: [
                     Expanded(
                       child: BookReadingTimeField(
-                        defaultHeight: defaultFormHeight,
+                        defaultHeight: Constants.formHeight,
                         changeReadingTime: _changeReadingTime,
                         resetTime: _resetTime,
                         readingTime: widget.reading.customReadingTime,

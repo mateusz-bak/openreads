@@ -43,8 +43,11 @@ class TagsField extends StatelessWidget {
   final Function(String)? unselectTag;
   final List<String>? allTags;
 
-  Widget _buildTagChip(BuildContext context,
-      {required String tag, required bool selected}) {
+  Widget _buildTagChip(
+    BuildContext context, {
+    required String tag,
+    required bool selected,
+  }) {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 5),
       child: FilterChip(
@@ -54,7 +57,11 @@ class TagsField extends StatelessWidget {
           style: TextStyle(
             color: selected ? Theme.of(context).colorScheme.onSecondary : null,
           ),
+          overflow: TextOverflow.fade,
+          softWrap: true,
+          maxLines: 5,
         ),
+        clipBehavior: Clip.none,
         checkmarkColor:
             selected ? Theme.of(context).colorScheme.onSecondary : null,
         selected: selected,

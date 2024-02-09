@@ -1,4 +1,8 @@
-const defaultFormHeight = 60.0;
+class Constants {
+  static const formHeight = 60.0;
 
-const blurHashX = 2;
-const blurHashY = 2;
+  static const blurHashX = 2;
+  static const blurHashY = 2;
+
+  static const maxTagLength = 100;
+}
