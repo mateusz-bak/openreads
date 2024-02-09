@@ -10,15 +10,15 @@ import 'package:blurhash_dart/blurhash_dart.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:openreads/core/helpers/helpers.dart';
+import 'package:openreads/model/book.dart';
 import 'package:openreads/resources/open_library_service.dart';
 
-import 'package:openreads/ui/add_book_screen/widgets/cover_placeholder.dart';
 import 'package:openreads/core/constants/constants.dart';
 import 'package:openreads/core/themes/app_theme.dart';
 import 'package:openreads/generated/locale_keys.g.dart';
 import 'package:openreads/logic/cubit/edit_book_cubit.dart';
 import 'package:openreads/main.dart';
-import 'package:openreads/ui/settings_screen/widgets/widgets.dart';
+import 'package:openreads/ui/add_book_screen/widgets/widgets.dart';
 
 class CoverViewEdit extends StatefulWidget {
   const CoverViewEdit({super.key});
@@ -45,8 +45,6 @@ class _CoverViewEditState extends State<CoverViewEdit> {
     _setCoverLoading(true);
     Navigator.of(context).pop();
 
-    final colorScheme = Theme.of(context).colorScheme;
-
     final photoXFile = await ImagePicker().pickImage(
       source: ImageSource.gallery,
     );
@@ -56,35 +54,7 @@ class _CoverViewEditState extends State<CoverViewEdit> {
       return;
     }
 
-    final croppedPhoto = await ImageCropper().cropImage(
-      maxWidth: 1024,
-      maxHeight: 1024,
-      sourcePath: photoXFile.path,
-      compressQuality: 90,
-      uiSettings: [
-        AndroidUiSettings(
-          toolbarTitle: LocaleKeys.edit_cover.tr(),
-          toolbarColor: Colors.black,
-          statusBarColor: Colors.black,
-          toolbarWidgetColor: Colors.white,
-          backgroundColor: colorScheme.surface,
-          cropGridColor: Colors.black87,
-          activeControlsWidgetColor: colorScheme.primary,
-          cropFrameColor: Colors.black87,
-          lockAspectRatio: false,
-          hideBottomControls: false,
-        ),
-        IOSUiSettings(
-          title: LocaleKeys.edit_cover.tr(),
-          cancelButtonTitle: LocaleKeys.cancel.tr(),
-          doneButtonTitle: LocaleKeys.save.tr(),
-          rotateButtonsHidden: false,
-          rotateClockwiseButtonHidden: true,
-          aspectRatioPickerButtonHidden: false,
-          aspectRatioLockDimensionSwapEnabled: false,
-        ),
-      ],
-    );
+    final croppedPhoto = await _cropFile(photoXFile.path);
 
     if (croppedPhoto == null) {
       _setCoverLoading(false);
@@ -113,6 +83,83 @@ class _CoverViewEditState extends State<CoverViewEdit> {
     context.read<EditBookCubit>().setHasCover(true);
 
     _setCoverLoading(false);
+  }
+
+  void _editCurrentCover(BuildContext context) async {
+    _setCoverLoading(true);
+    Navigator.of(context).pop();
+
+    final coverFile = context.read<EditBookCoverCubit>().state;
+
+    if (coverFile == null) {
+      _setCoverLoading(false);
+      return;
+    }
+
+    final croppedPhoto = await _cropFile(coverFile.path);
+
+    if (croppedPhoto == null) {
+      _setCoverLoading(false);
+      return;
+    }
+
+    final croppedPhotoBytes = await croppedPhoto.readAsBytes();
+    final tmpCoverTimestamp = DateTime.now().millisecondsSinceEpoch;
+    final coverFileForSaving = File(
+      '${appTempDirectory.path}/$tmpCoverTimestamp.jpg',
+    );
+
+    await coverFileForSaving.writeAsBytes(croppedPhotoBytes);
+
+    if (!context.mounted) {
+      _setCoverLoading(false);
+      return;
+    }
+
+    await generateBlurHash(croppedPhotoBytes, context);
+    if (!context.mounted) {
+      _setCoverLoading(false);
+      return;
+    }
+
+    context.read<EditBookCoverCubit>().setCover(coverFileForSaving);
+    context.read<EditBookCubit>().setHasCover(true);
+
+    _setCoverLoading(false);
+  }
+
+  Future<CroppedFile?> _cropFile(String path) async {
+    final colorScheme = Theme.of(context).colorScheme;
+
+    return await ImageCropper().cropImage(
+      maxWidth: 1024,
+      maxHeight: 1024,
+      sourcePath: path,
+      compressQuality: 90,
+      uiSettings: [
+        AndroidUiSettings(
+          toolbarTitle: LocaleKeys.edit_cover.tr(),
+          toolbarColor: Colors.black,
+          statusBarColor: Colors.black,
+          toolbarWidgetColor: Colors.white,
+          backgroundColor: colorScheme.surface,
+          cropGridColor: Colors.black87,
+          activeControlsWidgetColor: colorScheme.primary,
+          cropFrameColor: Colors.black87,
+          lockAspectRatio: false,
+          hideBottomControls: false,
+        ),
+        IOSUiSettings(
+          title: LocaleKeys.edit_cover.tr(),
+          cancelButtonTitle: LocaleKeys.cancel.tr(),
+          doneButtonTitle: LocaleKeys.save.tr(),
+          rotateButtonsHidden: false,
+          rotateClockwiseButtonHidden: true,
+          aspectRatioPickerButtonHidden: false,
+          aspectRatioLockDimensionSwapEnabled: false,
+        ),
+      ],
+    );
   }
 
   _deleteCover(BuildContext context) async {
@@ -188,32 +235,41 @@ class _CoverViewEditState extends State<CoverViewEdit> {
             ),
             Container(
               padding: const EdgeInsets.fromLTRB(10, 30, 10, 60),
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(15),
-              ),
-              child: IntrinsicHeight(
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  children: [
-                    const SizedBox(width: 15),
-                    Expanded(
-                      child: ContactButton(
-                        text: LocaleKeys.load_cover_from_phone.tr(),
-                        icon: FontAwesomeIcons.mobile,
-                        onPressed: () => _loadCoverFromStorage(context),
-                      ),
-                    ),
-                    const SizedBox(width: 30),
-                    Expanded(
-                      child: ContactButton(
-                        text: LocaleKeys.get_cover_from_open_library.tr(),
-                        icon: FontAwesomeIcons.globe,
-                        onPressed: () => _loadCoverFromOpenLibrary(context),
-                      ),
-                    ),
-                    const SizedBox(width: 15),
-                  ],
-                ),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: [
+                  CoverOptionButton(
+                    text: LocaleKeys.load_cover_from_phone.tr(),
+                    icon: FontAwesomeIcons.mobile,
+                    onPressed: () => _loadCoverFromStorage(context),
+                  ),
+                  const SizedBox(height: 15),
+                  CoverOptionButton(
+                    text: LocaleKeys.get_cover_from_open_library.tr(),
+                    icon: FontAwesomeIcons.globe,
+                    onPressed: () => _loadCoverFromOpenLibrary(context),
+                  ),
+                  BlocBuilder<EditBookCubit, Book>(
+                    builder: (blocContext, state) {
+                      if (state.hasCover) {
+                        return Column(
+                          children: [
+                            const SizedBox(height: 15),
+                            CoverOptionButton(
+                              text: LocaleKeys.edit_current_cover.tr(),
+                              icon: FontAwesomeIcons.image,
+                              onPressed: () => _editCurrentCover(
+                                context,
+                              ),
+                            ),
+                          ],
+                        );
+                      } else {
+                        return const SizedBox();
+                      }
+                    },
+                  ),
+                ],
               ),
             ),
           ],
