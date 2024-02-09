@@ -67,6 +67,7 @@ class _SearchOLScreenState extends State<SearchOLScreen>
       publicationYear: firstPublishYear,
       bookFormat: BookFormat.paperback,
       readings: List<Reading>.empty(growable: true),
+      tags: LocaleKeys.owned_book_tag.tr(),
     );
 
     context.read<EditBookCubit>().setBook(book);
@@ -205,6 +206,7 @@ class _SearchOLScreenState extends State<SearchOLScreen>
       status: 0,
       isbn: searchType == OLSearchType.isbn ? _searchController.text : null,
       readings: List<Reading>.empty(growable: true),
+      tags: 'owned',
     );
 
     context.read<EditBookCubit>().setBook(book);

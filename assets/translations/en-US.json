@@ -277,5 +277,6 @@
     "filter_out_selected_tags": "Filter out selected tags",
     "add_additional_reading_time": "Capture reading",
     "start_adding_books": "Go to the app",
-    "help_to_get_started": "To help you get started, here are some things you can do"
+    "help_to_get_started": "To help you get started, here are some things you can do",
+    "owned_book_tag": "owned"
 }
