@@ -1,8 +1,10 @@
 import 'dart:convert';
 import 'dart:io';
 
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/foundation.dart';
 import 'package:openreads/core/constants/enums.dart';
+import 'package:openreads/generated/locale_keys.g.dart';
 import 'package:openreads/main.dart';
 import 'package:openreads/model/reading.dart';
 import 'package:openreads/model/book_from_backup_v3.dart';
@@ -65,6 +67,7 @@ class Book {
       bookFormat: BookFormat.paperback,
       hasCover: false,
       readings: List<Reading>.empty(growable: true),
+      tags: LocaleKeys.owned_book_tag.tr(),
     );
   }
 
