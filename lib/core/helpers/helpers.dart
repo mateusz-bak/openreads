@@ -10,8 +10,8 @@ import 'package:openreads/model/book.dart';
 Future generateBlurHash(Uint8List bytes, BuildContext context) async {
   final blurHashStringTmp = await blurhash.BlurHash.encode(
     bytes,
-    blurHashX,
-    blurHashY,
+    Constants.blurHashX,
+    Constants.blurHashY,
   );
 
   if (!context.mounted) return;

@@ -416,8 +416,8 @@ class BackupImport {
 
     return blurhash_dart.BlurHash.encode(
       img.decodeImage(cover)!,
-      numCompX: blurHashX,
-      numCompY: blurHashY,
+      numCompX: Constants.blurHashX,
+      numCompY: Constants.blurHashY,
     ).hash;
   }
 

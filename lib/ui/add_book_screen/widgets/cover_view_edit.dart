@@ -299,7 +299,7 @@ class _CoverViewEditState extends State<CoverViewEdit> {
                 );
               } else {
                 return CoverPlaceholder(
-                  defaultHeight: defaultFormHeight,
+                  defaultHeight: Constants.formHeight,
                   onPressed: () => showCoverLoadBottomSheet(context),
                 );
               }

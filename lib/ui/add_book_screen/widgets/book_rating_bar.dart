@@ -24,7 +24,7 @@ class BookRatingBar extends StatelessWidget {
               padding: const EdgeInsets.symmetric(horizontal: 10),
               child: AnimatedContainer(
                 duration: animDuration,
-                height: (state.status == 0) ? defaultFormHeight : 0,
+                height: (state.status == 0) ? Constants.formHeight : 0,
                 child: Container(
                   width: double.infinity,
                   clipBehavior: Clip.hardEdge,

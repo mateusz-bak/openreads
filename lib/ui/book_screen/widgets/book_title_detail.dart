@@ -38,10 +38,14 @@ class BookTitleDetail extends StatelessWidget {
         ),
         label: Text(
           tag,
+          overflow: TextOverflow.fade,
+          softWrap: true,
+          maxLines: 5,
           style: TextStyle(
             color: Theme.of(context).colorScheme.onSecondary,
           ),
         ),
+        clipBehavior: Clip.none,
         onSelected: (_) {
           Navigator.push(
             context,

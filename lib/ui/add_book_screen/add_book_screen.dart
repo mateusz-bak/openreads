@@ -402,7 +402,7 @@ class _AddBookScreenState extends State<AddBookScreen> {
                 ),
                 BookStatusRow(
                   animDuration: _animDuration,
-                  defaultHeight: defaultFormHeight,
+                  defaultHeight: Constants.formHeight,
                 ),
                 const SizedBox(height: 10),
                 BookRatingBar(animDuration: _animDuration),
@@ -502,7 +502,7 @@ class _AddBookScreenState extends State<AddBookScreen> {
                       hint: LocaleKeys.enter_tags.tr(),
                       icon: FontAwesomeIcons.tags,
                       keyboardType: TextInputType.text,
-                      maxLength: 20,
+                      maxLength: Constants.maxTagLength,
                       onSubmitted: (_) => _addNewTag(),
                       onEditingComplete: () {},
                       unselectTag: (tag) => _unselectTag(tag),
