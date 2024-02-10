@@ -1,3 +1,4 @@
+import 'package:diacritic/diacritic.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -183,7 +184,12 @@ class BookCard extends StatelessWidget {
       return [];
     }
 
-    for (var tag in book.tags!.split('|||||')) {
+    final tags = book.tags!.split('|||||');
+
+    tags.sort((a, b) => removeDiacritics(a.toLowerCase())
+        .compareTo(removeDiacritics(b.toLowerCase())));
+
+    for (var tag in tags) {
       chips.add(_buildTagChip(
         tag: tag,
         context: context,
