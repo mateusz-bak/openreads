@@ -1,3 +1,4 @@
+import 'package:diacritic/diacritic.dart';
 import 'package:dropdown_button2/dropdown_button2.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
@@ -418,11 +419,17 @@ class _SortBottomSheetState extends State<SortBottomSheet> {
       selectedTagsList = List<String>.empty(growable: true);
     }
 
+    selectedTagsList.sort((a, b) => removeDiacritics(a.toLowerCase())
+        .compareTo(removeDiacritics(b.toLowerCase())));
+
     for (var selectedTag in selectedTagsList) {
       if (!dbTags.contains(selectedTag)) {
         dbTags.add(selectedTag);
       }
     }
+
+    dbTags.sort((a, b) => removeDiacritics(a.toLowerCase())
+        .compareTo(removeDiacritics(b.toLowerCase())));
 
     for (var dbTag in dbTags) {
       bool isSelected = selectedTagsList.contains(dbTag.toString());

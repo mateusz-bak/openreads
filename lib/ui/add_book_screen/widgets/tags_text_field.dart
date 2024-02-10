@@ -1,3 +1,4 @@
+import 'package:diacritic/diacritic.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -79,6 +80,9 @@ class TagsField extends StatelessWidget {
     List<String> tags,
   ) {
     final chips = List<Widget>.empty(growable: true);
+
+    tags.sort((a, b) => removeDiacritics(a.toLowerCase())
+        .compareTo(removeDiacritics(b.toLowerCase())));
 
     for (var tag in tags) {
       chips.add(_buildTagChip(

@@ -1,3 +1,4 @@
+import 'package:diacritic/diacritic.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -66,6 +67,9 @@ class BookTitleDetail extends StatelessWidget {
     if (tags == null) {
       return [];
     }
+
+    tags!.sort((a, b) => removeDiacritics(a.toLowerCase())
+        .compareTo(removeDiacritics(b.toLowerCase())));
 
     for (var tag in tags!) {
       chips.add(_buildTagChip(
