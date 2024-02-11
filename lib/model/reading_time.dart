@@ -43,12 +43,22 @@ class ReadingTime {
   String toString() {
     String result = "";
     if (days != 0) {
-      result += "${LocaleKeys.day.plural(days).tr()} ";
+      result += LocaleKeys.day.plural(days).tr();
     }
+
     if (hours != 0) {
-      result += "${LocaleKeys.hour.plural(hours).tr()} ";
+      if (result.isNotEmpty) {
+        result += " ";
+      }
+
+      result += LocaleKeys.hour.plural(hours).tr();
     }
+
     if (minutes != 0) {
+      if (result.isNotEmpty) {
+        result += " ";
+      }
+
       result += LocaleKeys.minute.plural(minutes).tr();
     }
     return result;

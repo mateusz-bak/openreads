@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:intl/date_symbol_data_local.dart';
 import 'package:openreads/core/constants/enums.dart';
 import 'package:openreads/core/helpers/helpers.dart';
 import 'package:openreads/core/themes/app_theme.dart';
@@ -12,7 +13,7 @@ import 'package:openreads/logic/bloc/rating_type_bloc/rating_type_bloc.dart';
 import 'package:openreads/logic/bloc/sort_bloc/sort_bloc.dart';
 import 'package:openreads/model/book.dart';
 
-class BookCard extends StatelessWidget {
+class BookCard extends StatefulWidget {
   const BookCard({
     super.key,
     required this.book,
@@ -30,32 +31,35 @@ class BookCard extends StatelessWidget {
   final Function()? onLongPressed;
   final Color? cardColor;
 
+  @override
+  State<BookCard> createState() => _BookCardState();
+}
+
+class _BookCardState extends State<BookCard> {
+  late DateFormat dateFormat;
+
   Widget _buildSortAttribute() {
     return BlocBuilder<SortBloc, SortState>(
       builder: (context, state) {
-        final dateFormat = DateFormat.yMd(
-          '${context.locale.languageCode}-${context.locale.countryCode}',
-        );
-
         if (state is SetSortState) {
           if (state.sortType == SortType.byPages) {
-            return (book.pages != null)
+            return (widget.book.pages != null)
                 ? _buildPagesAttribute()
                 : const SizedBox();
           } else if (state.sortType == SortType.byStartDate) {
-            final latestStartDate = getLatestStartDate(book);
+            final latestStartDate = getLatestStartDate(widget.book);
 
             return (latestStartDate != null)
-                ? _buildStartDateAttribute(dateFormat, latestStartDate)
+                ? _buildStartDateAttribute(latestStartDate)
                 : const SizedBox();
           } else if (state.sortType == SortType.byFinishDate) {
-            final latestFinishDate = getLatestFinishDate(book);
+            final latestFinishDate = getLatestFinishDate(widget.book);
 
             return (latestFinishDate != null)
-                ? _buildFinishDateAttribute(dateFormat, latestFinishDate)
+                ? _buildFinishDateAttribute(latestFinishDate)
                 : const SizedBox();
           } else if (state.sortType == SortType.byPublicationYear) {
-            return (book.publicationYear != null)
+            return (widget.book.publicationYear != null)
                 ? _buildPublicationYearAttribute()
                 : const SizedBox();
           }
@@ -67,7 +71,7 @@ class BookCard extends StatelessWidget {
   }
 
   Text _buildPagesAttribute() =>
-      Text('${book.pages} ${LocaleKeys.pages_lowercase.tr()}');
+      Text('${widget.book.pages} ${LocaleKeys.pages_lowercase.tr()}');
 
   Column _buildPublicationYearAttribute() {
     return Column(
@@ -78,7 +82,7 @@ class BookCard extends StatelessWidget {
           style: const TextStyle(fontSize: 12),
         ),
         Text(
-          book.publicationYear.toString(),
+          widget.book.publicationYear.toString(),
           style: const TextStyle(
             fontSize: 13,
             fontWeight: FontWeight.bold,
@@ -89,7 +93,8 @@ class BookCard extends StatelessWidget {
   }
 
   Column _buildFinishDateAttribute(
-      DateFormat dateFormat, DateTime latestFinishDate) {
+    DateTime latestFinishDate,
+  ) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.end,
       children: [
@@ -109,7 +114,8 @@ class BookCard extends StatelessWidget {
   }
 
   Column _buildStartDateAttribute(
-      DateFormat dateFormat, DateTime latestStartDate) {
+    DateTime latestStartDate,
+  ) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.end,
       children: [
@@ -133,7 +139,7 @@ class BookCard extends StatelessWidget {
       builder: (context, state) {
         if (state is SetSortState) {
           if (state.displayTags) {
-            return (book.tags == null)
+            return (widget.book.tags == null)
                 ? const SizedBox()
                 : Row(
                     mainAxisAlignment: MainAxisAlignment.start,
@@ -180,11 +186,11 @@ class BookCard extends StatelessWidget {
   List<Widget> _generateTagChips({required BuildContext context}) {
     final chips = List<Widget>.empty(growable: true);
 
-    if (book.tags == null) {
+    if (widget.book.tags == null) {
       return [];
     }
 
-    final tags = book.tags!.split('|||||');
+    final tags = widget.book.tags!.split('|||||');
 
     tags.sort((a, b) => removeDiacritics(a.toLowerCase())
         .compareTo(removeDiacritics(b.toLowerCase())));
@@ -199,143 +205,162 @@ class BookCard extends StatelessWidget {
     return chips;
   }
 
+  Future _initDateFormat(BuildContext context) async {
+    await initializeDateFormatting();
+
+    // ignore: use_build_context_synchronously
+    dateFormat = DateFormat.yMMMMd(context.locale.toString());
+  }
+
   @override
   Widget build(BuildContext context) {
-    final coverFile = book.getCoverFile();
+    final coverFile = widget.book.getCoverFile();
 
-    return Padding(
-      padding: EdgeInsets.fromLTRB(5, 0, 5, addBottomPadding ? 90 : 0),
-      child: Card(
-        color: cardColor,
-        shadowColor: Colors.transparent,
-        shape: RoundedRectangleBorder(
-          side: BorderSide(color: dividerColor, width: 1),
-          borderRadius: BorderRadius.circular(cornerRadius),
-        ),
-        child: ClipRRect(
-          borderRadius: BorderRadius.circular(cornerRadius),
-          child: InkWell(
-            onTap: onPressed,
-            onLongPress: onLongPressed,
-            child: Padding(
-              padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 15),
-              child: Row(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  SizedBox(
-                    width: (coverFile != null) ? 70 : 0,
-                    height: 70 * 1.5,
-                    child: (coverFile != null)
-                        ? ClipRRect(
-                            borderRadius: BorderRadius.circular(4),
-                            child: Hero(
-                              tag: heroTag,
-                              child: Image.file(
-                                coverFile,
-                                width: 70,
-                                height: 70 * 1.5,
-                                fit: BoxFit.cover,
-                                frameBuilder: (
-                                  BuildContext context,
-                                  Widget child,
-                                  int? frame,
-                                  bool wasSynchronouslyLoaded,
-                                ) {
-                                  if (wasSynchronouslyLoaded) {
-                                    return child;
-                                  }
-                                  return AnimatedOpacity(
-                                    opacity: frame == null ? 0 : 1,
-                                    duration: const Duration(milliseconds: 250),
-                                    curve: Curves.easeOut,
-                                    child: child,
-                                  );
-                                },
-                              ),
-                            ),
-                          )
-                        : const SizedBox(),
-                  ),
-                  SizedBox(width: (coverFile != null) ? 15 : 0),
-                  Expanded(
-                    child: Column(
+    return FutureBuilder(
+        future: _initDateFormat(context),
+        builder: (context, snapshot) {
+          if (snapshot.connectionState != ConnectionState.done) {
+            return const SizedBox();
+          }
+          return Padding(
+            padding:
+                EdgeInsets.fromLTRB(5, 0, 5, widget.addBottomPadding ? 90 : 0),
+            child: Card(
+              color: widget.cardColor,
+              shadowColor: Colors.transparent,
+              shape: RoundedRectangleBorder(
+                side: BorderSide(color: dividerColor, width: 1),
+                borderRadius: BorderRadius.circular(cornerRadius),
+              ),
+              child: ClipRRect(
+                borderRadius: BorderRadius.circular(cornerRadius),
+                child: InkWell(
+                  onTap: widget.onPressed,
+                  onLongPress: widget.onLongPressed,
+                  child: Padding(
+                    padding: const EdgeInsets.symmetric(
+                        vertical: 10, horizontal: 15),
+                    child: Row(
                       crossAxisAlignment: CrossAxisAlignment.start,
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        Row(
-                          children: [
-                            Expanded(
-                              child: Text(
-                                book.title,
-                                softWrap: true,
-                                overflow: TextOverflow.clip,
-                                style: const TextStyle(
-                                  fontSize: 15,
-                                  fontWeight: FontWeight.bold,
-                                ),
-                              ),
-                            ),
-                            book.favourite
-                                ? Padding(
-                                    padding: const EdgeInsets.only(left: 10),
-                                    child: FaIcon(
-                                      FontAwesomeIcons.solidHeart,
-                                      size: 18,
-                                      color: likeColor,
+                        SizedBox(
+                          width: (coverFile != null) ? 70 : 0,
+                          height: 70 * 1.5,
+                          child: (coverFile != null)
+                              ? ClipRRect(
+                                  borderRadius: BorderRadius.circular(4),
+                                  child: Hero(
+                                    tag: widget.heroTag,
+                                    child: Image.file(
+                                      coverFile,
+                                      width: 70,
+                                      height: 70 * 1.5,
+                                      fit: BoxFit.cover,
+                                      frameBuilder: (
+                                        BuildContext context,
+                                        Widget child,
+                                        int? frame,
+                                        bool wasSynchronouslyLoaded,
+                                      ) {
+                                        if (wasSynchronouslyLoaded) {
+                                          return child;
+                                        }
+                                        return AnimatedOpacity(
+                                          opacity: frame == null ? 0 : 1,
+                                          duration:
+                                              const Duration(milliseconds: 250),
+                                          curve: Curves.easeOut,
+                                          child: child,
+                                        );
+                                      },
                                     ),
-                                  )
-                                : const SizedBox(),
-                          ],
+                                  ),
+                                )
+                              : const SizedBox(),
                         ),
-                        Text(
-                          book.author,
-                          softWrap: true,
-                          overflow: TextOverflow.clip,
-                          style: TextStyle(
-                            fontSize: 14,
-                            color: Theme.of(context)
-                                .colorScheme
-                                .onSurface
-                                .withOpacity(0.8),
-                          ),
-                        ),
-                        book.publicationYear != null
-                            ? Text(
-                                book.publicationYear.toString(),
+                        SizedBox(width: (coverFile != null) ? 15 : 0),
+                        Expanded(
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Row(
+                                children: [
+                                  Expanded(
+                                    child: Text(
+                                      widget.book.title,
+                                      softWrap: true,
+                                      overflow: TextOverflow.clip,
+                                      style: const TextStyle(
+                                        fontSize: 15,
+                                        fontWeight: FontWeight.bold,
+                                      ),
+                                    ),
+                                  ),
+                                  widget.book.favourite
+                                      ? Padding(
+                                          padding:
+                                              const EdgeInsets.only(left: 10),
+                                          child: FaIcon(
+                                            FontAwesomeIcons.solidHeart,
+                                            size: 18,
+                                            color: likeColor,
+                                          ),
+                                        )
+                                      : const SizedBox(),
+                                ],
+                              ),
+                              Text(
+                                widget.book.author,
                                 softWrap: true,
                                 overflow: TextOverflow.clip,
                                 style: TextStyle(
-                                  fontSize: 12,
+                                  fontSize: 14,
                                   color: Theme.of(context)
                                       .colorScheme
                                       .onSurface
-                                      .withOpacity(0.6),
-                                  letterSpacing: 0.05,
+                                      .withOpacity(0.8),
                                 ),
-                              )
-                            : const SizedBox(),
-                        const SizedBox(height: 5),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          children: [
-                            book.status == 0
-                                ? _buildRating(context)
-                                : const SizedBox(),
-                            _buildSortAttribute(),
-                          ],
+                              ),
+                              widget.book.publicationYear != null
+                                  ? Text(
+                                      widget.book.publicationYear.toString(),
+                                      softWrap: true,
+                                      overflow: TextOverflow.clip,
+                                      style: TextStyle(
+                                        fontSize: 12,
+                                        color: Theme.of(context)
+                                            .colorScheme
+                                            .onSurface
+                                            .withOpacity(0.6),
+                                        letterSpacing: 0.05,
+                                      ),
+                                    )
+                                  : const SizedBox(),
+                              const SizedBox(height: 5),
+                              Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                crossAxisAlignment: CrossAxisAlignment.center,
+                                children: [
+                                  widget.book.status == 0
+                                      ? _buildRating(context)
+                                      : const SizedBox(),
+                                  _buildSortAttribute(),
+                                ],
+                              ),
+                              _buildTags(),
+                            ],
+                          ),
                         ),
-                        _buildTags(),
                       ],
                     ),
                   ),
-                ],
+                ),
               ),
             ),
-          ),
-        ),
-      ),
-    );
+          );
+        });
   }
 
   Widget _buildRating(BuildContext context) {
@@ -343,7 +368,8 @@ class BookCard extends StatelessWidget {
       builder: (context, state) {
         if (state is RatingTypeBar) {
           return RatingBar.builder(
-            initialRating: (book.rating == null) ? 0 : (book.rating! / 10),
+            initialRating:
+                (widget.book.rating == null) ? 0 : (widget.book.rating! / 10),
             allowHalfRating: true,
             unratedColor: Theme.of(context).scaffoldBackgroundColor,
             glow: false,
@@ -360,7 +386,9 @@ class BookCard extends StatelessWidget {
           return Row(
             children: [
               Text(
-                (book.rating == null) ? '0' : '${(book.rating! / 10)}',
+                (widget.book.rating == null)
+                    ? '0'
+                    : '${(widget.book.rating! / 10)}',
               ),
               const SizedBox(width: 5),
               Icon(
