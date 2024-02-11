@@ -95,10 +95,6 @@ class _ReadingRowState extends State<ReadingRow> {
 
   @override
   Widget build(BuildContext context) {
-    final dateFormat = DateFormat.yMd(
-      '${context.locale.languageCode}-${context.locale.countryCode}',
-    );
-
     return Container(
       padding: const EdgeInsets.fromLTRB(0, 20, 0, 0),
       child: Row(
@@ -118,9 +114,8 @@ class _ReadingRowState extends State<ReadingRow> {
                           child: SetDateButton(
                             defaultHeight: Constants.formHeight,
                             icon: FontAwesomeIcons.play,
-                            text: widget.reading.startDate != null
-                                ? dateFormat.format(widget.reading.startDate!)
-                                : LocaleKeys.start_date.tr(),
+                            date: widget.reading.startDate,
+                            text: LocaleKeys.start_date.tr(),
                             onPressed: _showStartDatePicker,
                             onClearPressed: _clearStartDate,
                             showClearButton: (widget.reading.startDate != null)
@@ -133,9 +128,8 @@ class _ReadingRowState extends State<ReadingRow> {
                           child: SetDateButton(
                             defaultHeight: Constants.formHeight,
                             icon: FontAwesomeIcons.flagCheckered,
-                            text: widget.reading.finishDate != null
-                                ? dateFormat.format(widget.reading.finishDate!)
-                                : LocaleKeys.finish_date.tr(),
+                            date: widget.reading.finishDate,
+                            text: LocaleKeys.finish_date.tr(),
                             onPressed: _showFinishDatePicker,
                             onClearPressed: _clearFinishDate,
                             showClearButton: (widget.reading.finishDate != null)
