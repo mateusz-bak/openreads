@@ -110,6 +110,7 @@ class TagsField extends StatelessWidget {
           children: [
             Scrollbar(
               child: TypeAheadField(
+                controller: controller,
                 itemBuilder: (context, suggestion) {
                   return Container(
                     color: Theme.of(context).colorScheme.surfaceVariant,
@@ -118,14 +119,13 @@ class TagsField extends StatelessWidget {
                     ),
                   );
                 },
-                suggestionsCallback: (pattern) {
-                  if (allTags == null) {
-                    return List<String>.empty();
-                  }
-                  return allTags!.where((String option) {
-                    return option.toLowerCase().contains(pattern.toLowerCase());
-                  }).toList();
-                },
+                suggestionsCallback: (pattern) =>
+                    allTags?.where((String option) {
+                      return option
+                          .toLowerCase()
+                          .startsWith(pattern.toLowerCase());
+                    }).toList() ??
+                    [],
                 onSelected: (suggestion) {
                   controller?.text = suggestion;
                   if (onSubmitted != null) {
@@ -144,14 +144,14 @@ class TagsField extends StatelessWidget {
                     child: child,
                   );
                 },
-                builder: (context, _, focusNode) {
+                builder: (context, control, focusNode) {
                   return TextField(
                     focusNode: focusNode,
                     autofocus: autofocus,
                     keyboardType: keyboardType,
                     inputFormatters: inputFormatters,
                     textCapitalization: textCapitalization,
-                    controller: controller,
+                    controller: control,
                     minLines: 1,
                     maxLines: maxLines,
                     maxLength: maxLength,
