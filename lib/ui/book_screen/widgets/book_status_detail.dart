@@ -183,6 +183,7 @@ class _BookStatusDetailState extends State<BookStatusDetail> {
                           : const SizedBox(),
                     ],
                   ),
+                  _generateHowManyTimesRead(context),
                   SizedBox(height: (widget.showRatingAndLike) ? 10 : 0),
                   (widget.showRatingAndLike)
                       ? Column(
@@ -377,5 +378,24 @@ class _BookStatusDetailState extends State<BookStatusDetail> {
         fontWeight: FontWeight.bold,
       ),
     );
+  }
+
+  Widget _generateHowManyTimesRead(BuildContext context) {
+    int timesRead = 0;
+
+    for (final reading in widget.book.readings) {
+      if (reading.finishDate != null) {
+        timesRead++;
+      }
+    }
+
+    return timesRead > 1
+        ? Padding(
+            padding: const EdgeInsets.fromLTRB(0, 5, 0, 5),
+            child: Text(LocaleKeys.read_x_times
+                .plural(widget.book.readings.length)
+                .tr()),
+          )
+        : const SizedBox();
   }
 }

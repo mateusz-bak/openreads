@@ -278,4 +278,5 @@ abstract class LocaleKeys {
   static const start_adding_books = 'start_adding_books';
   static const help_to_get_started = 'help_to_get_started';
   static const owned_book_tag = 'owned_book_tag';
+  static const read_x_times = 'read_x_times';
 }
