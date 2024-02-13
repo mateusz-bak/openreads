@@ -7,6 +7,7 @@ final supportedLocales = [
   // AppLanguage('Беларуская мова', const Locale('be', 'BY')),
   AppLanguage('català', const Locale('ca', 'ES')),
   AppLanguage('čeština', const Locale('cs', 'CZ')),
+  AppLanguage('hrvatski', const Locale('hr', 'HR')),
   AppLanguage('dansk', const Locale('da', 'DK')),
   AppLanguage('Deutsch', const Locale('de', 'DE')),
   // AppLanguage('ελληνικά', const Locale('el', 'GR')),
