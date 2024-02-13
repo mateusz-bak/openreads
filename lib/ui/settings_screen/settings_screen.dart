@@ -29,9 +29,7 @@ class SettingsScreen extends StatelessWidget {
   static const communityUrl = 'https://matrix.to/#/#openreads:matrix.org';
   static const rateUrlAndroid =
       'market://details?id=software.mdev.bookstracker';
-  static const iOSAppID = '6476542305';
-  static const rateUrlIOS =
-      'itms-apps://itunes.apple.com/WebObjects/MZStore.woa/wa/viewContentsUserReviews?id=$iOSAppID&onlyLatestVersion=true&pageNumber=0&sortOrdering=1&type=Purple+Software';
+  static const rateUrlIOS = 'https://apps.apple.com/app/id6476542305';
   static const releasesUrl = '$repoUrl/releases';
   static const licenceUrl = '$repoUrl/blob/master/LICENSE';
   static const githubIssuesUrl = '$repoUrl/issues';
@@ -499,7 +497,7 @@ class SettingsScreen extends StatelessWidget {
         Navigator.push(
           context,
           MaterialPageRoute(
-            builder: (context) => SettingsBackupScreen(),
+            builder: (context) => const SettingsBackupScreen(),
           ),
         );
       },
@@ -621,7 +619,11 @@ class SettingsScreen extends StatelessWidget {
                           _buildURLSetting(
                             title: LocaleKeys.rate_app.tr(),
                             description: LocaleKeys.rate_app_description.tr(),
-                            url: Platform.isIOS ? rateUrlAndroid : rateUrlIOS,
+                            url: Platform.isIOS
+                                ? rateUrlIOS
+                                : Platform.isAndroid
+                                    ? rateUrlAndroid
+                                    : null,
                             iconData: Icons.star_rounded,
                             context: context,
                           ),
