@@ -426,8 +426,7 @@ class _BooksScreenState extends State<BooksScreen>
     }
 
     booksWithPages.sort((a, b) {
-      int pagesSorting = removeDiacritics(a.pages!.toString().toLowerCase())
-          .compareTo(removeDiacritics(b.pages!.toString().toLowerCase()));
+      int pagesSorting = a.pages!.compareTo(b.pages!);
       if (!isAsc) {
         pagesSorting *= -1;
       } // descending
