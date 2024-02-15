@@ -266,12 +266,20 @@ class StatsBloc extends Bloc<StatsEvent, StatsState> {
     Book? shortestBook;
 
     for (Book book in books) {
-      for (final reading in book.readings) {
-        if (year != null && reading.finishDate?.year != year) {
-          continue;
-        }
+      if (book.pages == null || book.pages! == 0) continue;
 
-        if (book.pages != null && book.pages! > 0) {
+      if (book.readings.isEmpty) {
+        if (shortestBookPages == null || book.pages! < shortestBookPages) {
+          shortestBookPages = book.pages!;
+          shortestBookString = '${book.title} - ${book.author}';
+          shortestBook = book;
+        }
+      } else {
+        for (final reading in book.readings) {
+          if (year != null && reading.finishDate?.year != year) {
+            continue;
+          }
+
           if (shortestBookPages == null || book.pages! < shortestBookPages) {
             shortestBookPages = book.pages!;
             shortestBookString = '${book.title} - ${book.author}';
@@ -322,12 +330,20 @@ class StatsBloc extends Bloc<StatsEvent, StatsState> {
     Book? longestBook;
 
     for (Book book in books) {
-      for (final reading in book.readings) {
-        if (year != null && reading.finishDate?.year != year) {
-          continue;
-        }
+      if (book.pages == null || book.pages! == 0) continue;
 
-        if (book.pages != null && book.pages! > 0) {
+      if (book.readings.isEmpty) {
+        if (longestBookPages == null || book.pages! > longestBookPages) {
+          longestBookPages = book.pages!;
+          longestBookString = '${book.title} - ${book.author}';
+          longestBook = book;
+        }
+      } else {
+        for (final reading in book.readings) {
+          if (year != null && reading.finishDate?.year != year) {
+            continue;
+          }
+
           if (longestBookPages == null || book.pages! > longestBookPages) {
             longestBookPages = book.pages!;
             longestBookString = '${book.title} - ${book.author}';
@@ -443,12 +459,17 @@ class StatsBloc extends Bloc<StatsEvent, StatsState> {
     int countedBooks = 0;
 
     for (Book book in books) {
-      for (final reading in book.readings) {
-        if (year != null && reading.finishDate?.year != year) {
-          continue;
-        }
+      if (book.pages == null) continue;
 
-        if (book.pages != null) {
+      if (book.readings.isEmpty) {
+        finishedPages += book.pages!;
+        countedBooks += 1;
+      } else {
+        for (final reading in book.readings) {
+          if (year != null && reading.finishDate?.year != year) {
+            continue;
+          }
+
           finishedPages += book.pages!;
           countedBooks += 1;
         }
@@ -490,12 +511,17 @@ class StatsBloc extends Bloc<StatsEvent, StatsState> {
     int countedBooks = 0;
 
     for (Book book in books) {
-      for (final reading in book.readings) {
-        if (year != null && reading.finishDate?.year != year) {
-          continue;
-        }
+      if (book.rating == null) continue;
 
-        if (book.rating != null) {
+      if (year == null && book.readings.isEmpty) {
+        sumRating += book.rating! / 10;
+        countedBooks += 1;
+      } else {
+        for (final reading in book.readings) {
+          if (year != null && reading.finishDate?.year != year) {
+            continue;
+          }
+
           sumRating += book.rating! / 10;
           countedBooks += 1;
         }
@@ -634,9 +660,13 @@ class StatsBloc extends Bloc<StatsEvent, StatsState> {
     int finishedBooks = 0;
 
     for (var book in books) {
-      for (final reading in book.readings) {
-        if (reading.finishDate != null) {
-          finishedBooks += 1;
+      if (book.readings.isEmpty) {
+        finishedBooks += 1;
+      } else {
+        for (final reading in book.readings) {
+          if (reading.finishDate != null) {
+            finishedBooks += 1;
+          }
         }
       }
     }
@@ -649,9 +679,13 @@ class StatsBloc extends Bloc<StatsEvent, StatsState> {
 
     for (var book in books) {
       if (book.pages != null) {
-        for (final reading in book.readings) {
-          if (reading.finishDate != null) {
-            finishedPages += book.pages!;
+        if (book.readings.isEmpty) {
+          finishedPages += book.pages!;
+        } else {
+          for (final reading in book.readings) {
+            if (reading.finishDate != null) {
+              finishedPages += book.pages!;
+            }
           }
         }
       }
