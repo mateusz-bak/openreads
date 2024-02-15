@@ -281,4 +281,6 @@ abstract class LocaleKeys {
   static const read_x_times = 'read_x_times';
   static const date_added = 'date_added';
   static const date_modified = 'date_modified';
+  static const added_on = 'added_on';
+  static const modified_on = 'modified_on';
 }
