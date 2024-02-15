@@ -46,18 +46,20 @@ class _BookDetailDateAddedUpdatedState
               side: BorderSide(color: dividerColor, width: 1),
               borderRadius: BorderRadius.circular(cornerRadius),
             ),
+            elevation: 0,
             child: Container(
               padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
               child: Column(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
                   Column(
-                    crossAxisAlignment: CrossAxisAlignment.stretch,
+                    crossAxisAlignment: CrossAxisAlignment.end,
                     children: [
                       SelectableText(
-                        LocaleKeys.date_added.tr(),
+                        LocaleKeys.added_on.tr(),
                         style: const TextStyle(
-                          fontSize: 14,
-                          fontWeight: FontWeight.bold,
+                          fontSize: 12,
+                          fontWeight: FontWeight.normal,
                         ),
                       ),
                       SelectableText(
@@ -72,13 +74,14 @@ class _BookDetailDateAddedUpdatedState
                   widget.dateAdded.millisecondsSinceEpoch !=
                           widget.dateModified.millisecondsSinceEpoch
                       ? Column(
-                          crossAxisAlignment: CrossAxisAlignment.stretch,
+                          crossAxisAlignment: CrossAxisAlignment.end,
                           children: [
+                            const SizedBox(height: 10),
                             SelectableText(
-                              LocaleKeys.date_modified.tr(),
+                              LocaleKeys.modified_on.tr(),
                               style: const TextStyle(
-                                fontSize: 14,
-                                fontWeight: FontWeight.bold,
+                                fontSize: 12,
+                                fontWeight: FontWeight.normal,
                               ),
                             ),
                             SelectableText(
