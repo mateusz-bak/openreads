@@ -99,6 +99,8 @@ class CSVImportBookwyrm {
         myReview: _getMyReview(i, csv),
         status: 0,
         readings: List<Reading>.empty(growable: true),
+        dateAdded: DateTime.now(),
+        dateModified: DateTime.now(),
       );
     } catch (e) {
       BackupGeneral.showInfoSnackbar(e.toString());

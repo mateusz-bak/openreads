@@ -63,6 +63,8 @@ class _SearchOLEditionsScreenState extends State<SearchOLEditionsScreen> {
       bookFormat: BookFormat.paperback,
       readings: List<Reading>.empty(growable: true),
       tags: LocaleKeys.owned_book_tag.tr(),
+      dateAdded: DateTime.now(),
+      dateModified: DateTime.now(),
     );
 
     context.read<EditBookCubit>().setBook(book);

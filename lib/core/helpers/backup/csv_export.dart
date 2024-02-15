@@ -99,6 +99,8 @@ class CSVExport {
         ('notes'),
         ('book_format'),
         ('readings'),
+        ('date_added'),
+        ('date_modified'),
       ];
 
       rows.add(firstRow);
@@ -142,12 +144,13 @@ class CSVExport {
                     : book.bookFormat == BookFormat.audiobook
                         ? 'audiobook'
                         : '');
-
         newRow.add(
           book.readings.isNotEmpty
               ? book.readings.map((reading) => reading.toString()).join(';')
               : '',
         );
+        newRow.add(book.dateAdded.toIso8601String());
+        newRow.add(book.dateModified.toIso8601String());
 
         rows.add(newRow);
       }
