@@ -48,7 +48,7 @@ class _SearchOLEditionsScreenState extends State<SearchOLEditionsScreen> {
   }) {
     final book = Book(
       title: result.title!,
-      subtitle: widget.subtitle,
+      subtitle: result.subtitle,
       author: widget.author,
       pages: result.numberOfPages,
       status: 0,

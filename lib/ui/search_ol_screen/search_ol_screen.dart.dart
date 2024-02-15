@@ -397,55 +397,58 @@ class _SearchOLScreenState extends State<SearchOLScreen>
                               ],
                             ),
                           ),
-                          itemBuilder: (context, item, index) => BookCardOL(
-                            title: item.title!,
-                            subtitle: item.subtitle,
-                            author: (item.authorName != null &&
-                                    item.authorName!.isNotEmpty)
-                                ? item.authorName![0]
-                                : '',
-                            openLibraryKey: item.coverEditionKey,
-                            doc: item,
-                            editions: item.editionKey,
-                            pagesMedian: item.numberOfPagesMedian,
-                            firstPublishYear: item.firstPublishYear,
-                            onAddBookPressed: () => _saveNoEdition(
-                              editions: item.editionKey!,
-                              title: item.title!,
+                          itemBuilder: (context, item, index) =>
+                              Builder(builder: (context) {
+                            return BookCardOL(
+                              title: item.title ?? '',
                               subtitle: item.subtitle,
                               author: (item.authorName != null &&
                                       item.authorName!.isNotEmpty)
                                   ? item.authorName![0]
                                   : '',
-                              pagesMedian: item.numberOfPagesMedian,
-                              isbn: item.isbn,
-                              olid: item.key,
+                              coverKey: item.coverEditionKey,
+                              editions: item.editionKey,
+                              pagesMedian: item.medianPages,
                               firstPublishYear: item.firstPublishYear,
-                              cover: item.coverI,
-                            ),
-                            onChooseEditionPressed: () {
-                              FocusManager.instance.primaryFocus?.unfocus();
+                              onAddBookPressed: () => _saveNoEdition(
+                                editions: item.editionKey!,
+                                title: item.title ?? '',
+                                subtitle: item.subtitle,
+                                author: (item.authorName != null &&
+                                        item.authorName!.isNotEmpty)
+                                    ? item.authorName![0]
+                                    : '',
+                                pagesMedian: item.medianPages,
+                                isbn: item.isbn,
+                                olid: item.key,
+                                firstPublishYear: item.firstPublishYear,
+                                cover: item.coverI,
+                              ),
+                              onChooseEditionPressed: () {
+                                FocusManager.instance.primaryFocus?.unfocus();
 
-                              Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                  builder: (context) => SearchOLEditionsScreen(
-                                    editions: item.editionKey!,
-                                    title: item.title!,
-                                    subtitle: item.subtitle,
-                                    author: (item.authorName != null &&
-                                            item.authorName!.isNotEmpty)
-                                        ? item.authorName![0]
-                                        : '',
-                                    pagesMedian: item.numberOfPagesMedian,
-                                    isbn: item.isbn,
-                                    olid: item.key,
-                                    firstPublishYear: item.firstPublishYear,
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) =>
+                                        SearchOLEditionsScreen(
+                                      editions: item.editionKey!,
+                                      title: item.title!,
+                                      subtitle: item.subtitle,
+                                      author: (item.authorName != null &&
+                                              item.authorName!.isNotEmpty)
+                                          ? item.authorName![0]
+                                          : '',
+                                      pagesMedian: item.medianPages,
+                                      isbn: item.isbn,
+                                      olid: item.key,
+                                      firstPublishYear: item.firstPublishYear,
+                                    ),
                                   ),
-                                ),
-                              );
-                            },
-                          ),
+                                );
+                              },
+                            );
+                          }),
                         ),
                       ),
                     ),
