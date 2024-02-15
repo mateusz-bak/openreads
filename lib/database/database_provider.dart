@@ -124,8 +124,8 @@ class DatabaseProvider {
   ];
 
   final migrationScriptsV8 = [
-    "ALTER TABLE booksTable ADD date_added TEXT DEFAULT ${DateTime.now().toIso8601String()}",
-    "ALTER TABLE booksTable ADD date_modified TEXT DEFAULT ${DateTime.now().toIso8601String()}",
+    "ALTER TABLE booksTable ADD date_added TEXT DEFAULT '${DateTime.now().toIso8601String()}'",
+    "ALTER TABLE booksTable ADD date_modified TEXT DEFAULT '${DateTime.now().toIso8601String()}'",
   ];
 
   void _updateBookDatabaseV1toV8(Batch batch) {
