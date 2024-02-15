@@ -200,6 +200,8 @@ class CSVImportGoodreads {
         tags: _getTags(i, csv, headers, notFinishedShelf: notFinishedShelf),
         readings: _getReadingDates(i, csv, headers),
         bookFormat: _getBookFormat(i, csv, headers),
+        dateAdded: _getDateAdded(i, csv, headers),
+        dateModified: DateTime.now(),
       );
     } catch (e) {
       BackupGeneral.showInfoSnackbar(e.toString());
@@ -372,6 +374,26 @@ class CSVImportGoodreads {
     }
 
     return readingDates;
+  }
+
+  static DateTime _getDateAdded(int i, List<List<dynamic>> csv, List headers) {
+    // Example Date Added fields:
+    // 2021/04/06
+    // 2022/04/27
+    final dateReadField = csv[i][headers.indexOf('Date Added')].toString();
+
+    if (dateReadField.isNotEmpty) {
+      final splittedDate = dateReadField.split('/');
+      if (splittedDate.length == 3) {
+        final year = int.parse(splittedDate[0]);
+        final month = int.parse(splittedDate[1]);
+        final day = int.parse(splittedDate[2]);
+
+        return DateTime(year, month, day);
+      }
+    }
+
+    return DateTime.now();
   }
 
   static BookFormat _getBookFormat(

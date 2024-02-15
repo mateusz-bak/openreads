@@ -284,6 +284,11 @@ class BookScreen extends StatelessWidget {
                               text: state.notes!,
                             )
                           : const SizedBox(),
+                      const SizedBox(height: 5),
+                      BookDetailDateAddedUpdated(
+                        dateAdded: state.dateAdded,
+                        dateModified: state.dateModified,
+                      ),
                       const SizedBox(height: 50.0),
                     ],
                   ),
