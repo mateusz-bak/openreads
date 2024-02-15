@@ -889,7 +889,7 @@ class _BooksScreenState extends State<BooksScreen>
             context: context,
             isScrollControlled: true,
             elevation: 0,
-            builder: (context) {
+            builder: (_) {
               return AddBookSheet(
                 addManually: () async {
                   _setEmptyBookForEditScreen();
