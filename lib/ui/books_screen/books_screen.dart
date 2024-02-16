@@ -1,7 +1,7 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:openreads/core/constants/enums.dart';
+import 'package:openreads/core/constants/enums/enums.dart';
 import 'package:openreads/core/helpers/helpers.dart';
 import 'package:openreads/core/themes/app_theme.dart';
 import 'package:openreads/generated/locale_keys.g.dart';
@@ -28,9 +28,11 @@ class BooksScreen extends StatefulWidget {
 }
 
 class _BooksScreenState extends State<BooksScreen>
-    with AutomaticKeepAliveClientMixin {
+    with AutomaticKeepAliveClientMixin, TickerProviderStateMixin {
   late List<String> moreButtonOptions;
   Set<int> selectedBookIds = {};
+
+  late TabController _tabController;
 
   _onItemSelected(int id) {
     setState(() {
@@ -735,6 +737,13 @@ class _BooksScreenState extends State<BooksScreen>
   bool get wantKeepAlive => true;
 
   @override
+  void initState() {
+    super.initState();
+
+    _tabController = TabController(length: 3, vsync: this);
+  }
+
+  @override
   Widget build(BuildContext context) {
     super.build(context);
 
@@ -814,60 +823,59 @@ class _BooksScreenState extends State<BooksScreen>
     return BlocBuilder<ThemeBloc, ThemeState>(
       builder: (context, state) {
         if (state is SetThemeState) {
-          return DefaultTabController(
-            length: 3,
-            child: Column(
-              children: [
-                Expanded(
-                  child: TabBarView(
-                    children: state.readTabFirst
-                        ? List.of([
-                            _buildReadBooksTabView(),
-                            _buildInProgressBooksTabView(),
-                            _buildToReadBooksTabView(),
-                          ])
-                        : List.of([
-                            _buildInProgressBooksTabView(),
-                            _buildReadBooksTabView(),
-                            _buildToReadBooksTabView(),
-                          ]),
-                  ),
+          return Column(
+            children: [
+              Expanded(
+                child: TabBarView(
+                  controller: _tabController,
+                  children: state.readTabFirst
+                      ? List.of([
+                          _buildReadBooksTabView(),
+                          _buildInProgressBooksTabView(),
+                          _buildToReadBooksTabView(),
+                        ])
+                      : List.of([
+                          _buildInProgressBooksTabView(),
+                          _buildReadBooksTabView(),
+                          _buildToReadBooksTabView(),
+                        ]),
                 ),
-                SafeArea(
-                  child: Builder(builder: (context) {
-                    return Container(
-                      color: Theme.of(context).scaffoldBackgroundColor,
-                      child: TabBar(
-                        dividerColor: Colors.transparent,
-                        tabs: state.readTabFirst
-                            ? List.of([
-                                BookTab(
-                                  text: LocaleKeys.books_finished.tr(),
-                                ),
-                                BookTab(
-                                  text: LocaleKeys.books_in_progress.tr(),
-                                ),
-                                BookTab(
-                                  text: LocaleKeys.books_for_later.tr(),
-                                ),
-                              ])
-                            : List.of([
-                                BookTab(
-                                  text: LocaleKeys.books_in_progress.tr(),
-                                ),
-                                BookTab(
-                                  text: LocaleKeys.books_finished.tr(),
-                                ),
-                                BookTab(
-                                  text: LocaleKeys.books_for_later.tr(),
-                                ),
-                              ]),
-                      ),
-                    );
-                  }),
-                ),
-              ],
-            ),
+              ),
+              SafeArea(
+                child: Builder(builder: (context) {
+                  return Container(
+                    color: Theme.of(context).scaffoldBackgroundColor,
+                    child: TabBar(
+                      controller: _tabController,
+                      dividerColor: Colors.transparent,
+                      tabs: state.readTabFirst
+                          ? List.of([
+                              BookTab(
+                                text: LocaleKeys.books_finished.tr(),
+                              ),
+                              BookTab(
+                                text: LocaleKeys.books_in_progress.tr(),
+                              ),
+                              BookTab(
+                                text: LocaleKeys.books_for_later.tr(),
+                              ),
+                            ])
+                          : List.of([
+                              BookTab(
+                                text: LocaleKeys.books_in_progress.tr(),
+                              ),
+                              BookTab(
+                                text: LocaleKeys.books_finished.tr(),
+                              ),
+                              BookTab(
+                                text: LocaleKeys.books_for_later.tr(),
+                              ),
+                            ]),
+                    ),
+                  );
+                }),
+              ),
+            ],
           );
         } else {
           return const SizedBox();
@@ -877,7 +885,21 @@ class _BooksScreenState extends State<BooksScreen>
   }
 
   _setEmptyBookForEditScreen() {
-    context.read<EditBookCubit>().setBook(Book.empty());
+    late BookStatus status;
+
+    if (_tabController.index == 1) {
+      status = BookStatus.inProgress;
+    } else if (_tabController.index == 2) {
+      status = BookStatus.forLater;
+    } else {
+      status = BookStatus.read;
+    }
+
+    context.read<EditBookCubit>().setBook(
+          Book.empty(
+            status: status,
+          ),
+        );
   }
 
   Padding _buildFAB(BuildContext context) {
