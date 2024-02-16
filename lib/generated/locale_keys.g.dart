@@ -221,7 +221,6 @@ abstract class LocaleKeys {
   static const welcome_3_description_1 = 'welcome_3_description_1';
   static const welcome_3_description_2 = 'welcome_3_description_2';
   static const welcome_3_description_3 = 'welcome_3_description_3';
-  static const next_button = 'next_button';
   static const start_button = 'start_button';
   static const migration_v1_to_v2_1 = 'migration_v1_to_v2_1';
   static const migration_v1_to_v2_2 = 'migration_v1_to_v2_2';
