@@ -8,6 +8,7 @@ import 'package:openreads/generated/locale_keys.g.dart';
 import 'package:openreads/logic/bloc/display_bloc/display_bloc.dart';
 import 'package:openreads/logic/bloc/sort_bloc/sort_bloc.dart';
 import 'package:openreads/logic/bloc/theme_bloc/theme_bloc.dart';
+import 'package:openreads/logic/cubit/default_book_status_cubit.dart';
 import 'package:openreads/logic/cubit/edit_book_cubit.dart';
 import 'package:openreads/main.dart';
 import 'package:openreads/model/book.dart';
@@ -895,9 +896,12 @@ class _BooksScreenState extends State<BooksScreen>
       status = BookStatus.read;
     }
 
+    final defaultBookFormat = context.read<DefaultBooksFormatCubit>().state;
+
     context.read<EditBookCubit>().setBook(
           Book.empty(
             status: status,
+            bookFormat: defaultBookFormat,
           ),
         );
   }

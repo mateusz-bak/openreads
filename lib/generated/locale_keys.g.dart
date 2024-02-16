@@ -282,4 +282,5 @@ abstract class LocaleKeys {
   static const date_modified = 'date_modified';
   static const added_on = 'added_on';
   static const modified_on = 'modified_on';
+  static const default_books_format = 'default_books_format';
 }
