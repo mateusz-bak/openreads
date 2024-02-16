@@ -5,12 +5,12 @@ import 'package:openreads/generated/locale_keys.g.dart';
 
 class ChallengeDialog extends StatefulWidget {
   const ChallengeDialog({
-    Key? key,
+    super.key,
     required this.setChallenge,
     required this.year,
     this.booksTarget,
     this.pagesTarget,
-  }) : super(key: key);
+  });
 
   final Function(int, int, int) setChallenge;
   final int? booksTarget;

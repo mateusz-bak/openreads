@@ -2,9 +2,9 @@ import 'package:flutter/material.dart';
 
 class BookTab extends StatelessWidget {
   const BookTab({
-    Key? key,
+    super.key,
     required this.text,
-  }) : super(key: key);
+  });
 
   final String text;
 

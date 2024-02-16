@@ -5,11 +5,11 @@ import 'package:openreads/generated/locale_keys.g.dart';
 
 class TagFilterChip extends StatelessWidget {
   const TagFilterChip({
-    Key? key,
+    super.key,
     required this.tag,
     required this.selected,
     required this.onTagChipPressed,
-  }) : super(key: key);
+  });
 
   final String? tag;
   final bool selected;

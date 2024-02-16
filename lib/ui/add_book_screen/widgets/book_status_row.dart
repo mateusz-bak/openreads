@@ -8,10 +8,10 @@ import 'package:openreads/ui/add_book_screen/widgets/widgets.dart';
 
 class BookStatusRow extends StatelessWidget {
   const BookStatusRow({
-    Key? key,
+    super.key,
     required this.animDuration,
     required this.defaultHeight,
-  }) : super(key: key);
+  });
 
   final Duration animDuration;
   final double defaultHeight;

@@ -128,7 +128,6 @@ class BackupImport {
       final infoFileVersion = _checkInfoFileVersion(backupFile, tmpDir);
       if (infoFileVersion == 5) {
         // ignore: use_build_context_synchronously
-
         await _restoreBackupVersion5(context, backupFile, tmpDir);
       } else {
         BackupGeneral.showInfoSnackbar(LocaleKeys.backup_not_valid.tr());
