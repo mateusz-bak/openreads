@@ -48,7 +48,7 @@ class _SearchOLEditionsScreenState extends State<SearchOLEditionsScreen> {
   }) {
     final book = Book(
       title: result.title!,
-      subtitle: widget.subtitle,
+      subtitle: result.subtitle,
       author: widget.author,
       pages: result.numberOfPages,
       status: 0,
@@ -63,6 +63,8 @@ class _SearchOLEditionsScreenState extends State<SearchOLEditionsScreen> {
       bookFormat: BookFormat.paperback,
       readings: List<Reading>.empty(growable: true),
       tags: LocaleKeys.owned_book_tag.tr(),
+      dateAdded: DateTime.now(),
+      dateModified: DateTime.now(),
     );
 
     context.read<EditBookCubit>().setBook(book);

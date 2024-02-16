@@ -4,28 +4,25 @@ import 'package:flutter/material.dart';
 import 'package:loading_animation_widget/loading_animation_widget.dart';
 import 'package:openreads/core/themes/app_theme.dart';
 import 'package:openreads/generated/locale_keys.g.dart';
-import 'package:openreads/model/ol_search_result.dart';
 
 class BookCardOL extends StatelessWidget {
   BookCardOL({
-    Key? key,
+    super.key,
     required this.title,
     required this.subtitle,
     required this.author,
-    required this.openLibraryKey,
+    required this.coverKey,
     required this.onChooseEditionPressed,
     required this.onAddBookPressed,
-    required this.doc,
     required this.editions,
     required this.pagesMedian,
     required this.firstPublishYear,
-  }) : super(key: key);
+  });
 
   final String title;
   final String? subtitle;
   final String author;
-  final String? openLibraryKey;
-  final OLSearchResultDoc doc;
+  final String? coverKey;
   final Function() onChooseEditionPressed;
   final Function() onAddBookPressed;
   final List<String>? editions;
@@ -33,7 +30,7 @@ class BookCardOL extends StatelessWidget {
   final int? firstPublishYear;
 
   static const String coverBaseUrl = 'https://covers.openlibrary.org/';
-  late final String coverUrl = '${coverBaseUrl}b/olid/$openLibraryKey-M.jpg';
+  late final String coverUrl = '${coverBaseUrl}b/olid/$coverKey-M.jpg';
 
   @override
   Widget build(BuildContext context) {
@@ -51,7 +48,7 @@ class BookCardOL extends StatelessWidget {
             children: [
               SizedBox(
                 width: 120,
-                child: (openLibraryKey != null)
+                child: (coverKey != null)
                     ? ClipRRect(
                         borderRadius: BorderRadius.circular(2),
                         child: CachedNetworkImage(

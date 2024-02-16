@@ -151,6 +151,10 @@ class _AddBookScreenState extends State<AddBookScreen> {
 
     if (!_validate()) return;
 
+    context.read<EditBookCubit>().setBook(book.copyWith(
+          dateModified: DateTime.now(),
+        ));
+
     if (book.hasCover == false) {
       context.read<EditBookCoverCubit>().deleteCover(book.id);
       context.read<EditBookCubit>().updateBook(null, context);

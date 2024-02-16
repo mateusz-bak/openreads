@@ -221,7 +221,6 @@ abstract class LocaleKeys {
   static const welcome_3_description_1 = 'welcome_3_description_1';
   static const welcome_3_description_2 = 'welcome_3_description_2';
   static const welcome_3_description_3 = 'welcome_3_description_3';
-  static const next_button = 'next_button';
   static const start_button = 'start_button';
   static const migration_v1_to_v2_1 = 'migration_v1_to_v2_1';
   static const migration_v1_to_v2_2 = 'migration_v1_to_v2_2';
@@ -279,4 +278,8 @@ abstract class LocaleKeys {
   static const help_to_get_started = 'help_to_get_started';
   static const owned_book_tag = 'owned_book_tag';
   static const read_x_times = 'read_x_times';
+  static const date_added = 'date_added';
+  static const date_modified = 'date_modified';
+  static const added_on = 'added_on';
+  static const modified_on = 'modified_on';
 }

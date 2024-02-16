@@ -50,14 +50,34 @@ class _BookCardState extends State<BookCard> {
             final latestStartDate = getLatestStartDate(widget.book);
 
             return (latestStartDate != null)
-                ? _buildStartDateAttribute(latestStartDate)
+                ? _buildDateAttribute(
+                    latestStartDate,
+                    LocaleKeys.started_on_date.tr(),
+                    false,
+                  )
                 : const SizedBox();
           } else if (state.sortType == SortType.byFinishDate) {
             final latestFinishDate = getLatestFinishDate(widget.book);
 
             return (latestFinishDate != null)
-                ? _buildFinishDateAttribute(latestFinishDate)
+                ? _buildDateAttribute(
+                    latestFinishDate,
+                    LocaleKeys.finished_on_date.tr(),
+                    false,
+                  )
                 : const SizedBox();
+          } else if (state.sortType == SortType.byDateAdded) {
+            return _buildDateAttribute(
+              widget.book.dateAdded,
+              LocaleKeys.added_on.tr(),
+              true,
+            );
+          } else if (state.sortType == SortType.byDateModified) {
+            return _buildDateAttribute(
+              widget.book.dateModified,
+              LocaleKeys.modified_on.tr(),
+              true,
+            );
           } else if (state.sortType == SortType.byPublicationYear) {
             return (widget.book.publicationYear != null)
                 ? _buildPublicationYearAttribute()
@@ -92,44 +112,31 @@ class _BookCardState extends State<BookCard> {
     );
   }
 
-  Column _buildFinishDateAttribute(
-    DateTime latestFinishDate,
+  Column _buildDateAttribute(
+    DateTime date,
+    String label,
+    bool includeTime,
   ) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.end,
-      children: [
-        Text(
-          LocaleKeys.finished_on_date.tr(),
-          style: const TextStyle(fontSize: 12),
-        ),
-        Text(
-          dateFormat.format(latestFinishDate),
-          style: const TextStyle(
-            fontSize: 13,
-            fontWeight: FontWeight.bold,
-          ),
-        ),
-      ],
+    const timeTextStyle = TextStyle(
+      fontSize: 13,
+      fontWeight: FontWeight.bold,
     );
-  }
-
-  Column _buildStartDateAttribute(
-    DateTime latestStartDate,
-  ) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.end,
       children: [
         Text(
-          LocaleKeys.started_on_date.tr(),
+          label,
           style: const TextStyle(fontSize: 12),
         ),
-        Text(
-          dateFormat.format(latestStartDate),
-          style: const TextStyle(
-            fontSize: 13,
-            fontWeight: FontWeight.bold,
-          ),
-        ),
+        includeTime
+            ? Text(
+                '${dateFormat.format(date)} ${date.hour}:${date.minute.toString().padLeft(2, '0')}',
+                style: timeTextStyle,
+              )
+            : Text(
+                dateFormat.format(date),
+                style: timeTextStyle,
+              ),
       ],
     );
   }

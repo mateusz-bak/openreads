@@ -86,6 +86,13 @@ class _BooksScreenState extends State<BooksScreen>
       case SortType.byPublicationYear:
         list = _sortByPublicationYear(list: list, isAsc: state.isAsc);
         break;
+      case SortType.byDateAdded:
+        list = _sortByDateAdded(list: list, isAsc: state.isAsc);
+        break;
+      case SortType.byDateModified:
+        list = _sortByDateModified(list: list, isAsc: state.isAsc);
+        break;
+
       default:
         list = _sortByTitle(list: list, isAsc: state.isAsc);
     }
@@ -456,6 +463,80 @@ class _BooksScreenState extends State<BooksScreen>
     return booksWithPages + booksWithoutPages;
   }
 
+  List<Book> _sortByDateAdded({
+    required List<Book> list,
+    required bool isAsc,
+  }) {
+    list.sort((a, b) {
+      int dateAddedSorting = a.dateAdded.millisecondsSinceEpoch
+          .compareTo(b.dateAdded.millisecondsSinceEpoch);
+
+      if (!isAsc) {
+        dateAddedSorting *= -1;
+      } // descending
+      if (dateAddedSorting == 0) {
+        // secondary sorting, by release date
+        int releaseSorting = 0;
+        if ((a.publicationYear != null) && (b.publicationYear != null)) {
+          releaseSorting = a.publicationYear!.compareTo(b.publicationYear!);
+          if (!isAsc) {
+            releaseSorting *= -1;
+          }
+        }
+        if (releaseSorting == 0) {
+          // tertiary sorting, by title
+          int titleSorting = removeDiacritics(a.title.toString().toLowerCase())
+              .compareTo(removeDiacritics(b.title.toString().toLowerCase()));
+          if (!isAsc) {
+            titleSorting *= -1;
+          }
+          return titleSorting;
+        }
+        return releaseSorting;
+      }
+      return dateAddedSorting;
+    });
+
+    return list;
+  }
+
+  List<Book> _sortByDateModified({
+    required List<Book> list,
+    required bool isAsc,
+  }) {
+    list.sort((a, b) {
+      int dateModifiedSorting = a.dateModified.millisecondsSinceEpoch
+          .compareTo(b.dateModified.millisecondsSinceEpoch);
+
+      if (!isAsc) {
+        dateModifiedSorting *= -1;
+      } // descending
+      if (dateModifiedSorting == 0) {
+        // secondary sorting, by release date
+        int releaseSorting = 0;
+        if ((a.publicationYear != null) && (b.publicationYear != null)) {
+          releaseSorting = a.publicationYear!.compareTo(b.publicationYear!);
+          if (!isAsc) {
+            releaseSorting *= -1;
+          }
+        }
+        if (releaseSorting == 0) {
+          // tertiary sorting, by title
+          int titleSorting = removeDiacritics(a.title.toString().toLowerCase())
+              .compareTo(removeDiacritics(b.title.toString().toLowerCase()));
+          if (!isAsc) {
+            titleSorting *= -1;
+          }
+          return titleSorting;
+        }
+        return releaseSorting;
+      }
+      return dateModifiedSorting;
+    });
+
+    return list;
+  }
+
   List<Book> _sortByStartDate({
     required List<Book> list,
     required bool isAsc,
@@ -808,7 +889,7 @@ class _BooksScreenState extends State<BooksScreen>
             context: context,
             isScrollControlled: true,
             elevation: 0,
-            builder: (context) {
+            builder: (_) {
               return AddBookSheet(
                 addManually: () async {
                   _setEmptyBookForEditScreen();
