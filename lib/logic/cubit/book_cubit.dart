@@ -15,7 +15,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:blurhash_dart/blurhash_dart.dart' as blurhash_dart;
 import 'package:image/image.dart' as img;
 
-import '../../core/constants/enums.dart';
+import 'package:openreads/core/constants/enums/enums.dart';
 
 class BookCubit extends Cubit {
   final Repository repository = Repository();

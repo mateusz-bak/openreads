@@ -1,6 +1,6 @@
 import 'package:flutter/services.dart';
 import 'package:http/http.dart';
-import 'package:openreads/core/constants/enums.dart';
+import 'package:openreads/core/constants/enums/enums.dart';
 import 'package:openreads/model/ol_edition_result.dart';
 import 'package:openreads/model/ol_search_result.dart';
 import 'package:openreads/model/ol_work_result.dart';

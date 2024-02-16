@@ -3,7 +3,7 @@ import 'dart:io';
 
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/foundation.dart';
-import 'package:openreads/core/constants/enums.dart';
+import 'package:openreads/core/constants/enums/enums.dart';
 import 'package:openreads/generated/locale_keys.g.dart';
 import 'package:openreads/main.dart';
 import 'package:openreads/model/reading.dart';
@@ -60,15 +60,18 @@ class Book {
     required this.dateModified,
   });
 
-  factory Book.empty() {
+  factory Book.empty({
+    BookStatus status = BookStatus.read,
+    BookFormat bookFormat = BookFormat.paperback,
+  }) {
     return Book(
       id: null,
       title: '',
       author: '',
-      status: BookStatus.read,
+      status: status,
       favourite: false,
       deleted: false,
-      bookFormat: BookFormat.paperback,
+      bookFormat: bookFormat,
       hasCover: false,
       readings: List<Reading>.empty(growable: true),
       tags: LocaleKeys.owned_book_tag.tr(),
