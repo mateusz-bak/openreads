@@ -288,7 +288,7 @@ class CSVImportGoodreads {
     return myReview.isNotEmpty ? myReview : null;
   }
 
-  static int _getStatus(
+  static BookStatus _getStatus(
     int i,
     List<List<dynamic>> csv,
     List headers, {
@@ -303,16 +303,14 @@ class CSVImportGoodreads {
     // did-not-finish
     final exclusiveShelfField =
         csv[i][headers.indexOf('Exclusive Shelf')].toString();
-    return exclusiveShelfField == 'read'
-        ? 0
-        : exclusiveShelfField == 'currently-reading'
-            ? 1
-            : exclusiveShelfField == 'to-read'
-                ? 2
-                : notFinishedShelf != null &&
-                        exclusiveShelfField == notFinishedShelf
-                    ? 3
-                    : 0;
+    return exclusiveShelfField == 'currently-reading'
+        ? BookStatus.inProgress
+        : exclusiveShelfField == 'to-read'
+            ? BookStatus.forLater
+            : notFinishedShelf != null &&
+                    exclusiveShelfField == notFinishedShelf
+                ? BookStatus.unfinished
+                : BookStatus.read;
   }
 
   static String? _getTags(

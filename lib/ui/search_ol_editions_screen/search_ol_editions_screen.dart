@@ -51,7 +51,7 @@ class _SearchOLEditionsScreenState extends State<SearchOLEditionsScreen> {
       subtitle: result.subtitle,
       author: widget.author,
       pages: result.numberOfPages,
-      status: 0,
+      status: BookStatus.read,
       favourite: false,
       isbn: (result.isbn13 != null && result.isbn13!.isNotEmpty)
           ? result.isbn13![0]

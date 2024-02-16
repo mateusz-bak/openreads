@@ -4,6 +4,7 @@ import 'dart:io';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:csv/csv.dart';
+import 'package:openreads/core/constants/enums.dart';
 
 import 'package:openreads/core/helpers/backup/backup.dart';
 import 'package:openreads/model/reading.dart';
@@ -97,7 +98,7 @@ class CSVImportBookwyrm {
         olid: _getOLID(i, csv),
         rating: _getRating(i, csv),
         myReview: _getMyReview(i, csv),
-        status: 0,
+        status: BookStatus.read,
         readings: List<Reading>.empty(growable: true),
         dateAdded: DateTime.now(),
         dateModified: DateTime.now(),
