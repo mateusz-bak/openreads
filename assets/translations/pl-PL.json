@@ -263,7 +263,7 @@
     "download_missing_covers": "Pobierz brakujące okładki",
     "general_search": "Ogólnie",
     "cover_not_found_in_ol": "Nie znaleziono okładki w Open Library",
-    "load_cover_from_phone": "Wczytaj okładkę z telefonu",
+    "load_cover_from_phone": "Wczytaj okładkę z urządzenia",
     "click_to_add_book_manually": "Kliknij, żeby dodać książkę ręcznie",
     "no_search_results": "Brak wyników",
     "download_missing_covers_explanation": "Pobierz brakujące okładki dla książek które mają ustawiony ISBN",
@@ -276,5 +276,12 @@
     "filter_out_selected_tags": "Nie pokazuj książek z zaznaczonymi tagami",
     "add_additional_reading_time": "Zarejestruj czytanie",
     "start_adding_books": "Otwórz aplikację",
-    "help_to_get_started": "Oto kilka opcji, które możesz teraz wykonać"
+    "help_to_get_started": "Oto kilka opcji, które możesz teraz wykonać",
+    "owned_book_tag": "posiadana",
+    "edit_current_cover": "Edytuj obecną okładkę",
+    "modified_on": "Zmodyfikowano",
+    "date_added": "Data dodania",
+    "date_modified": "Data modyfikacji",
+    "added_on": "Dodano",
+    "read_x_times": "Przeczytano {} razy"
 }

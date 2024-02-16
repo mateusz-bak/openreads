@@ -189,7 +189,7 @@
     "are_you_sure": "Opravdu?",
     "restore_backup_alert_content": "Tímto smažete všechny vaše aktuální knížky a výzvy!",
     "error_getting_book": "Při získávání knížky došlo k chybě",
-    "add_books_and_come_back": "Přidejte nějaké knížky a přijďte znovu",
+    "add_books_and_come_back": "Přidat nějaké knížky a vrátit se sem",
     "welcome_1": "Vítejte v Openreads",
     "welcome_1_description_1": "Openreads vám pomůže udržet si přehled o vašich knížkách.",
     "welcome_1_description_2": "Je to také skvělý nástroj pro snadnou a transparentní organizaci vaší osobní knihovny.",
@@ -264,7 +264,7 @@
     "import_csv": "Importovat Openreads CSV",
     "click_to_add_book_manually": "Kliknutím sem přidáte knížku ručně",
     "no_search_results": "Nenalezeny žádné výsledky",
-    "load_cover_from_phone": "Načíst obálku z telefonu",
+    "load_cover_from_phone": "Načíst obálku ze zařízení",
     "get_cover_from_open_library": "Stáhnout obálku z Open Library podle ISBN knihy",
     "cover_not_found_in_ol": "V Open Library nebyla nalezena žádná obálka",
     "isbn_cannot_be_empty": "ISBN nemůže být prázdné",
@@ -274,5 +274,9 @@
     "try_downloading_covers": "Chcete zkusit stáhnout chybějící obálky importovaných knih?",
     "downloaded_covers": "Stažené obálky:",
     "filter_out_selected_tags": "Odfiltrovat vybrané štítky",
-    "add_additional_reading_time": "Přidat další čas čtení"
+    "add_additional_reading_time": "Přidat další čas čtení",
+    "edit_current_cover": "Upravit aktuální obálku",
+    "start_adding_books": "Přejít do aplikace",
+    "help_to_get_started": "Pro začátek můžete",
+    "owned_book_tag": "vlastněné"
 }
