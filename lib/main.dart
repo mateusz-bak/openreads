@@ -19,6 +19,7 @@ import 'package:openreads/logic/bloc/theme_bloc/theme_bloc.dart';
 import 'package:openreads/logic/bloc/welcome_bloc/welcome_bloc.dart';
 import 'package:openreads/logic/cubit/book_cubit.dart';
 import 'package:openreads/logic/cubit/current_book_cubit.dart';
+import 'package:openreads/logic/cubit/default_book_status_cubit.dart';
 import 'package:openreads/logic/cubit/edit_book_cubit.dart';
 import 'package:openreads/resources/connectivity_service.dart';
 import 'package:openreads/resources/open_library_service.dart';
@@ -80,6 +81,9 @@ class App extends StatelessWidget {
           ),
           BlocProvider<CurrentBookCubit>(
             create: (context) => CurrentBookCubit(),
+          ),
+          BlocProvider<DefaultBooksFormatCubit>(
+            create: (context) => DefaultBooksFormatCubit(),
           ),
           BlocProvider<ThemeBloc>(create: (context) => ThemeBloc()),
           BlocProvider<DisplayBloc>(create: (context) => DisplayBloc()),
