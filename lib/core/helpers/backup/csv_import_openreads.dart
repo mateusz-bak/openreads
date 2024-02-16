@@ -200,17 +200,15 @@ class CSVImportOpenreads {
         : null;
   }
 
-  static int _getStatus(int i, List<List<dynamic>> csv) {
+  static BookStatus _getStatus(int i, List<List<dynamic>> csv) {
     final statusField = csv[i][csv[0].indexOf('status')].toString();
-    return statusField == 'finished'
-        ? 0
-        : statusField == 'in_progress'
-            ? 1
-            : statusField == 'planned'
-                ? 2
-                : statusField == 'abandoned'
-                    ? 3
-                    : 0;
+    return statusField == 'in_progress'
+        ? BookStatus.inProgress
+        : statusField == 'planned'
+            ? BookStatus.forLater
+            : statusField == 'abandoned'
+                ? BookStatus.unfinished
+                : BookStatus.read;
   }
 
   static String? _getTags(int i, List<List<dynamic>> csv) {

@@ -113,13 +113,13 @@ class CSVExport {
         newRow.add(book.author);
         newRow.add(book.description ?? '');
         newRow.add(
-          book.status == 0
+          book.status == BookStatus.read
               ? 'finished'
-              : book.status == 1
+              : book.status == BookStatus.inProgress
                   ? 'in_progress'
-                  : book.status == 2
+                  : book.status == BookStatus.forLater
                       ? 'planned'
-                      : book.status == 3
+                      : book.status == BookStatus.unfinished
                           ? 'abandoned'
                           : 'unknown',
         );

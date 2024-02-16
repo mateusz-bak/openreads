@@ -23,20 +23,8 @@ class EditBookCubit extends Cubit<Book> {
     bookCubit.addBook(state, coverFile: coverFile);
   }
 
-  void setStatus(int status) {
+  void setStatus(BookStatus status) {
     final book = state.copyWith();
-
-    // Book not started should not have reading dates
-    if (state.status == 2) {
-      book.readings = List<Reading>.empty(growable: true);
-    }
-
-    // Temporarily disable this feature as not sure how this
-    // should work with the new reading dates
-    // // Book not finished should not have a finish date
-    // if (state.status != 0) {
-    //   book.finishDate = null;
-    // }
 
     emit(book.copyWith(status: status));
   }

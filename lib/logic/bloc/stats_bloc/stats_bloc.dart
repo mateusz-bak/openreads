@@ -15,7 +15,7 @@ class StatsBloc extends Bloc<StatsEvent, StatsState> {
   StatsBloc() : super(StatsLoading()) {
     on<StatsLoad>((event, emit) {
       final allBooks = event.books;
-      final finishedBooks = _filterBooksByStatus(allBooks, 0);
+      final finishedBooks = _filterBooksByStatus(allBooks, BookStatus.read);
 
       if (finishedBooks.isEmpty) {
         emit(StatsError(LocaleKeys.add_books_and_come_back.tr()));
@@ -23,9 +23,19 @@ class StatsBloc extends Bloc<StatsEvent, StatsState> {
       }
 
       final years = _calculateYears(finishedBooks);
-      final inProgressBooks = _filterBooksByStatus(allBooks, 1);
-      final forLaterBooks = _filterBooksByStatus(allBooks, 2);
-      final unfinishedBooks = _filterBooksByStatus(allBooks, 3);
+
+      final inProgressBooks = _filterBooksByStatus(
+        allBooks,
+        BookStatus.inProgress,
+      );
+      final forLaterBooks = _filterBooksByStatus(
+        allBooks,
+        BookStatus.forLater,
+      );
+      final unfinishedBooks = _filterBooksByStatus(
+        allBooks,
+        BookStatus.unfinished,
+      );
 
       final finishedBooksByMonthAllTypes =
           _getFinishedBooksByMonth(finishedBooks, null, years);
@@ -644,7 +654,7 @@ class StatsBloc extends Bloc<StatsEvent, StatsState> {
     return finishedBooksByMonth;
   }
 
-  List<Book> _filterBooksByStatus(List<Book> books, int status) {
+  List<Book> _filterBooksByStatus(List<Book> books, BookStatus status) {
     final filteredBooks = List<Book>.empty(growable: true);
 
     for (var book in books) {

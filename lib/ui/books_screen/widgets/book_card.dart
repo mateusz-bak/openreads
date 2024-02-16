@@ -350,7 +350,7 @@ class _BookCardState extends State<BookCard> {
                                     MainAxisAlignment.spaceBetween,
                                 crossAxisAlignment: CrossAxisAlignment.center,
                                 children: [
-                                  widget.book.status == 0
+                                  widget.book.status == BookStatus.read
                                       ? _buildRating(context)
                                       : const SizedBox(),
                                   _buildSortAttribute(),

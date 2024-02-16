@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:openreads/core/constants/enums.dart';
 import 'package:openreads/core/themes/app_theme.dart';
 
 class AnimatedStatusButton extends StatelessWidget {
@@ -20,7 +21,7 @@ class AnimatedStatusButton extends StatelessWidget {
   final IconData icon;
   final String text;
   final bool isSelected;
-  final int? currentStatus;
+  final BookStatus? currentStatus;
 
   @override
   Widget build(BuildContext context) {

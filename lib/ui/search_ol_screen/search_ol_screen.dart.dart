@@ -59,7 +59,7 @@ class _SearchOLScreenState extends State<SearchOLScreen>
       title: title,
       subtitle: subtitle,
       author: author,
-      status: 0,
+      status: BookStatus.read,
       favourite: false,
       pages: pagesMedian,
       isbn: (isbn != null && isbn.isNotEmpty) ? isbn[0] : null,
@@ -205,7 +205,7 @@ class _SearchOLScreenState extends State<SearchOLScreen>
     final book = Book(
       title: searchType == OLSearchType.title ? _searchController.text : '',
       author: searchType == OLSearchType.author ? _searchController.text : '',
-      status: 0,
+      status: BookStatus.read,
       isbn: searchType == OLSearchType.isbn ? _searchController.text : null,
       readings: List<Reading>.empty(growable: true),
       tags: 'owned',

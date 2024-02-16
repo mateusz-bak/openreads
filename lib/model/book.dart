@@ -15,7 +15,7 @@ class Book {
   String? subtitle;
   String author;
   String? description;
-  int status;
+  BookStatus status;
   bool favourite;
   bool deleted;
   int? rating;
@@ -65,7 +65,7 @@ class Book {
       id: null,
       title: '',
       author: '',
-      status: 0,
+      status: BookStatus.read,
       favourite: false,
       deleted: false,
       bookFormat: BookFormat.paperback,
@@ -84,7 +84,7 @@ class Book {
       subtitle: json['subtitle'],
       author: json['author'],
       description: json['description'],
-      status: json['status'],
+      status: parseBookStatus(json['status']),
       rating: json['rating'],
       favourite: (json['favourite'] == 1) ? true : false,
       hasCover: (json['has_cover'] == 1) ? true : false,
@@ -118,7 +118,7 @@ class Book {
   Book copyWith({
     String? title,
     String? author,
-    int? status,
+    BookStatus? status,
     String? subtitle,
     String? description,
     bool? favourite,
@@ -200,12 +200,12 @@ class Book {
       title: oldBook.bookTitle ?? '',
       author: oldBook.bookAuthor ?? '',
       status: oldBook.bookStatus == 'not_finished'
-          ? 3
+          ? BookStatus.unfinished
           : oldBook.bookStatus == 'to_read'
-              ? 2
+              ? BookStatus.forLater
               : oldBook.bookStatus == 'in_progress'
-                  ? 1
-                  : 0,
+                  ? BookStatus.inProgress
+                  : BookStatus.read,
       rating: oldBook.bookRating != null
           ? (oldBook.bookRating! * 10).toInt()
           : null,
@@ -257,7 +257,7 @@ class Book {
       'subtitle': subtitle,
       'author': author,
       'description': description,
-      'status': status,
+      'status': status.value,
       'rating': rating,
       'favourite': favourite ? 1 : 0,
       'deleted': deleted ? 1 : 0,

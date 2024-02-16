@@ -1,6 +1,7 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:openreads/core/constants/enums.dart';
 import 'package:openreads/core/themes/app_theme.dart';
 import 'package:openreads/generated/locale_keys.g.dart';
 import 'package:openreads/logic/cubit/current_book_cubit.dart';
@@ -26,40 +27,40 @@ class BookScreen extends StatelessWidget {
     context.read<CurrentBookCubit>().setBook(book);
   }
 
-  IconData? _decideStatusIcon(int? status) {
-    if (status == 0) {
+  IconData? _decideStatusIcon(BookStatus? status) {
+    if (status == BookStatus.read) {
       return Icons.done;
-    } else if (status == 1) {
+    } else if (status == BookStatus.inProgress) {
       return Icons.autorenew;
-    } else if (status == 2) {
+    } else if (status == BookStatus.forLater) {
       return Icons.timelapse;
-    } else if (status == 3) {
+    } else if (status == BookStatus.unfinished) {
       return Icons.not_interested;
     } else {
       return null;
     }
   }
 
-  String _decideStatusText(int? status, BuildContext context) {
-    if (status == 0) {
+  String _decideStatusText(BookStatus? status, BuildContext context) {
+    if (status == BookStatus.read) {
       return LocaleKeys.book_status_finished.tr();
-    } else if (status == 1) {
+    } else if (status == BookStatus.inProgress) {
       return LocaleKeys.book_status_in_progress.tr();
-    } else if (status == 2) {
+    } else if (status == BookStatus.forLater) {
       return LocaleKeys.book_status_for_later.tr();
-    } else if (status == 3) {
+    } else if (status == BookStatus.unfinished) {
       return LocaleKeys.book_status_unfinished.tr();
     } else {
       return '';
     }
   }
 
-  String? _decideChangeStatusText(int? status, BuildContext context) {
-    if (status == 1) {
+  String? _decideChangeStatusText(BookStatus? status, BuildContext context) {
+    if (status == BookStatus.inProgress) {
       return LocaleKeys.finish_reading.tr();
-    } else if (status == 2) {
+    } else if (status == BookStatus.forLater) {
       return LocaleKeys.start_reading.tr();
-    } else if (status == 3) {
+    } else if (status == BookStatus.unfinished) {
       return LocaleKeys.start_reading.tr();
     } else {
       return null;
@@ -114,16 +115,20 @@ class BookScreen extends StatelessWidget {
     return rating;
   }
 
-  void _changeStatusAction(BuildContext context, int status, Book book) async {
+  void _changeStatusAction(
+    BuildContext context,
+    BookStatus status,
+    Book book,
+  ) async {
     final dateNow = DateTime.now();
     final date = DateTime(dateNow.year, dateNow.month, dateNow.day);
 
     // finishing the book
-    if (status == 1) {
+    if (status == BookStatus.inProgress) {
       final rating = await _getQuickRating(context);
 
       book = book.copyWith(
-        status: 0,
+        status: BookStatus.read,
         rating: rating,
         readings: book.readings.isNotEmpty
             ? (book.readings..[0] = book.readings[0].copyWith(finishDate: date))
@@ -133,9 +138,9 @@ class BookScreen extends StatelessWidget {
       bookCubit.updateBook(book);
 
       // starting the book
-    } else if (status == 2) {
+    } else if (status == BookStatus.forLater) {
       book = book.copyWith(
-        status: 1,
+        status: BookStatus.inProgress,
         readings: book.readings.isNotEmpty
             ? (book.readings..[0] = book.readings[0].copyWith(startDate: date))
             : [Reading(startDate: date)],
@@ -144,9 +149,9 @@ class BookScreen extends StatelessWidget {
       bookCubit.updateBook(book);
 
       // starting the book
-    } else if (status == 3) {
+    } else if (status == BookStatus.unfinished) {
       book = book.copyWith(
-        status: 1,
+        status: BookStatus.inProgress,
         readings: book.readings.isNotEmpty
             ? (book.readings..[0] = book.readings[0].copyWith(startDate: date))
             : [Reading(startDate: date)],
@@ -205,9 +210,10 @@ class BookScreen extends StatelessWidget {
                           context,
                         ),
                         onLikeTap: () => _onLikeTap(context, state),
-                        showChangeStatus: (state.status == 1 ||
-                            state.status == 2 ||
-                            state.status == 3),
+                        showChangeStatus:
+                            (state.status == BookStatus.inProgress ||
+                                state.status == BookStatus.forLater ||
+                                state.status == BookStatus.unfinished),
                         changeStatusText: _decideChangeStatusText(
                           state.status,
                           context,
@@ -219,7 +225,7 @@ class BookScreen extends StatelessWidget {
                             state,
                           );
                         },
-                        showRatingAndLike: state.status == 0,
+                        showRatingAndLike: state.status == BookStatus.read,
                       ),
                       SizedBox(
                         height: (state.pages != null) ? 5 : 0,
