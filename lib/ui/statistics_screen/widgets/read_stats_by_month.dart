@@ -8,14 +8,14 @@ import 'package:collection/collection.dart';
 
 class ReadStatsByMonth extends StatelessWidget {
   ReadStatsByMonth({
-    Key? key,
+    super.key,
     required this.listPaperbackBooks,
     required this.listHardcoverBooks,
     required this.listEbooks,
     required this.listAudiobooks,
     required this.title,
     required this.theme,
-  }) : super(key: key);
+  });
 
   final List<int> listPaperbackBooks;
   final List<int> listHardcoverBooks;
