@@ -132,7 +132,6 @@ class _BookStatusDetailState extends State<BookStatusDetail> {
             child: Container(
               padding: const EdgeInsets.all(10),
               child: Column(
-                crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
                   const SizedBox(height: 5),
                   Row(
@@ -298,7 +297,15 @@ class _BookStatusDetailState extends State<BookStatusDetail> {
         widget = const SizedBox();
       }
 
-      widgets.add(widget);
+      widgets.add(
+        SizedBox(
+          child: Row(
+            children: [
+              Expanded(child: widget),
+            ],
+          ),
+        ),
+      );
     }
 
     return widgets;
@@ -310,29 +317,31 @@ class _BookStatusDetailState extends State<BookStatusDetail> {
     ReadingTime? readingTime,
     BuildContext context,
   ) {
-    final text = Text(
-      '${dateFormat.format(startDate)} - ${dateFormat.format(finishDate)}',
-      style: const TextStyle(
-        fontSize: 14,
-        fontWeight: FontWeight.bold,
-      ),
-    );
+    final readingTimeText = ' ${_generateReadingTime(
+      startDate: startDate,
+      finishDate: finishDate,
+      context: context,
+      readingTime: readingTime,
+    )}';
 
-    final readingTimeText = Text(
-      ' ${_generateReadingTime(
-        startDate: startDate,
-        finishDate: finishDate,
-        context: context,
-        readingTime: readingTime,
-      )}',
-      style: const TextStyle(
-        fontSize: 14,
-        fontWeight: FontWeight.bold,
+    return RichText(
+      text: TextSpan(
+        style: TextStyle(
+          fontSize: 14,
+          fontWeight: FontWeight.bold,
+          color: Theme.of(context).colorScheme.onSurface,
+        ),
+        children: [
+          TextSpan(
+            text:
+                '${dateFormat.format(startDate)} - ${dateFormat.format(finishDate)}',
+          ),
+          TextSpan(
+            text: readingTimeText,
+            style: const TextStyle(fontWeight: FontWeight.normal),
+          ),
+        ],
       ),
-    );
-
-    return Row(
-      children: [text, readingTimeText],
     );
   }
 
@@ -341,29 +350,31 @@ class _BookStatusDetailState extends State<BookStatusDetail> {
     ReadingTime? readingTime,
     BuildContext context,
   ) {
-    final text = Text(
-      '${LocaleKeys.finished_on_date.tr()} ${dateFormat.format(finishDate)}',
-      style: const TextStyle(
-        fontSize: 14,
-        fontWeight: FontWeight.bold,
-      ),
-    );
+    final readingTimeText = ' ${_generateReadingTime(
+      startDate: null,
+      finishDate: null,
+      context: context,
+      readingTime: readingTime,
+    )}';
 
-    final readingTimeText = Text(
-      ' ${_generateReadingTime(
-        startDate: null,
-        finishDate: null,
-        context: context,
-        readingTime: readingTime,
-      )}',
-      style: const TextStyle(
-        fontSize: 14,
-        fontWeight: FontWeight.bold,
+    return RichText(
+      text: TextSpan(
+        style: TextStyle(
+          fontSize: 14,
+          fontWeight: FontWeight.bold,
+          color: Theme.of(context).colorScheme.onSurface,
+        ),
+        children: [
+          TextSpan(
+            text:
+                '${LocaleKeys.finished_on_date.tr()} ${dateFormat.format(finishDate)}',
+          ),
+          TextSpan(
+            text: readingTimeText,
+            style: const TextStyle(fontWeight: FontWeight.normal),
+          ),
+        ],
       ),
-    );
-
-    return Row(
-      children: [text, readingTimeText],
     );
   }
 
@@ -371,11 +382,19 @@ class _BookStatusDetailState extends State<BookStatusDetail> {
     DateTime startDate,
     BuildContext context,
   ) {
-    return Text(
-      '${LocaleKeys.started_on_date.tr()} ${dateFormat.format(startDate)}',
-      style: const TextStyle(
-        fontSize: 14,
-        fontWeight: FontWeight.bold,
+    return RichText(
+      text: TextSpan(
+        style: TextStyle(
+          fontSize: 14,
+          fontWeight: FontWeight.bold,
+          color: Theme.of(context).colorScheme.onSurface,
+        ),
+        children: [
+          TextSpan(
+            text:
+                '${LocaleKeys.started_on_date.tr()} ${dateFormat.format(startDate)}',
+          ),
+        ],
       ),
     );
   }
