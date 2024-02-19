@@ -1,6 +1,7 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:openreads/core/constants/constants.dart';
 import 'package:openreads/core/constants/enums/enums.dart';
 import 'package:openreads/core/helpers/helpers.dart';
 import 'package:openreads/core/themes/app_theme.dart';
@@ -970,7 +971,7 @@ class _BooksScreenState extends State<BooksScreen>
   AppBar _buildAppBar(BuildContext context) {
     return AppBar(
       title: const Text(
-        'Openreads',
+        Constants.appName,
         style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
       ),
       actions: [

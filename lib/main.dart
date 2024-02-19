@@ -7,6 +7,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_displaymode/flutter_displaymode.dart';
 import 'package:hydrated_bloc/hydrated_bloc.dart';
+import 'package:openreads/core/constants/constants.dart';
 import 'package:openreads/core/constants/locale.dart';
 import 'package:openreads/logic/bloc/challenge_bloc/challenge_bloc.dart';
 import 'package:openreads/logic/bloc/display_bloc/display_bloc.dart';
@@ -194,7 +195,7 @@ class _OpenreadsAppState extends State<OpenreadsApp>
                   : Brightness.dark,
         ),
         child: MaterialApp(
-          title: 'Openreads',
+          title: Constants.appName,
           scaffoldMessengerKey: snackbarKey,
           theme: ThemeData(
             useMaterial3: true,
