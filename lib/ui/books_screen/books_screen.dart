@@ -735,6 +735,125 @@ class _BooksScreenState extends State<BooksScreen>
     );
   }
 
+  BookStatus _getStatusForNewBook() {
+    if (_tabController.index == 1) {
+      return BookStatus.inProgress;
+    } else if (_tabController.index == 2) {
+      return BookStatus.forLater;
+    } else {
+      return BookStatus.read;
+    }
+  }
+
+  _setEmptyBookForEditScreen() {
+    final status = _getStatusForNewBook();
+    final defaultBookFormat = context.read<DefaultBooksFormatCubit>().state;
+
+    context.read<EditBookCubit>().setBook(
+          Book.empty(status: status, bookFormat: defaultBookFormat),
+        );
+  }
+
+  _goToSearchPage() {
+    Navigator.of(context).push(
+      MaterialPageRoute(builder: (_) => const SearchPage()),
+    );
+  }
+
+  _changeBooksDisplayType() {
+    final state = context.read<DisplayBloc>().state;
+
+    if (state is GridDisplayState) {
+      BlocProvider.of<DisplayBloc>(context).add(
+        const ChangeDisplayEvent(displayAsGrid: false),
+      );
+    } else {
+      BlocProvider.of<DisplayBloc>(context).add(
+        const ChangeDisplayEvent(displayAsGrid: true),
+      );
+    }
+  }
+
+  _invokeThreeDotMenuOption(String choice) async {
+    await Future.delayed(const Duration(milliseconds: 0));
+
+    if (!mounted) return;
+
+    if (choice == moreButtonOptions[0]) {
+      openSortFilterSheet();
+    } else if (choice == moreButtonOptions[1]) {
+      goToStatisticsScreen();
+    } else if (choice == moreButtonOptions[2]) {
+      goToUnfinishedBooksScreen();
+    } else if (choice == moreButtonOptions[3]) {
+      goToSettingsScreen();
+    }
+  }
+
+  _onFabPressed() {
+    showModalBottomSheet(
+      context: context,
+      isScrollControlled: true,
+      elevation: 0,
+      builder: (_) {
+        return AddBookSheet(
+          addManually: _addBookManually,
+          searchInOpenLibrary: _searchInOpenLibrary,
+          scanBarcode: _scanBarcode,
+        );
+      },
+    );
+  }
+
+  _addBookManually() async {
+    _setEmptyBookForEditScreen();
+
+    Navigator.pop(context);
+    await Future.delayed(const Duration(milliseconds: 100));
+    if (!mounted) return;
+
+    Navigator.of(context).push(
+      MaterialPageRoute(
+        builder: (_) => const AddBookScreen(),
+      ),
+    );
+  }
+
+  _searchInOpenLibrary() async {
+    _setEmptyBookForEditScreen();
+
+    Navigator.pop(context);
+    await Future.delayed(const Duration(milliseconds: 100));
+    if (!mounted) return;
+
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) => SearchOLScreen(
+          status: _getStatusForNewBook(),
+        ),
+      ),
+    );
+  }
+
+  _scanBarcode() async {
+    _setEmptyBookForEditScreen();
+
+    Navigator.pop(context);
+    await Future.delayed(const Duration(milliseconds: 100));
+    if (!mounted) return;
+
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) => SearchOLScreen(
+          scan: true,
+          status: _getStatusForNewBook(),
+        ),
+      ),
+    );
+  }
+
   @override
   bool get wantKeepAlive => true;
 
@@ -886,83 +1005,11 @@ class _BooksScreenState extends State<BooksScreen>
     );
   }
 
-  _setEmptyBookForEditScreen() {
-    late BookStatus status;
-
-    if (_tabController.index == 1) {
-      status = BookStatus.inProgress;
-    } else if (_tabController.index == 2) {
-      status = BookStatus.forLater;
-    } else {
-      status = BookStatus.read;
-    }
-
-    final defaultBookFormat = context.read<DefaultBooksFormatCubit>().state;
-
-    context.read<EditBookCubit>().setBook(
-          Book.empty(
-            status: status,
-            bookFormat: defaultBookFormat,
-          ),
-        );
-  }
-
   Padding _buildFAB(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.only(bottom: 50),
       child: FloatingActionButton(
-        onPressed: () {
-          showModalBottomSheet(
-            context: context,
-            isScrollControlled: true,
-            elevation: 0,
-            builder: (_) {
-              return AddBookSheet(
-                addManually: () async {
-                  _setEmptyBookForEditScreen();
-
-                  Navigator.pop(context);
-                  await Future.delayed(const Duration(milliseconds: 100));
-                  if (!mounted) return;
-
-                  Navigator.of(context).push(
-                    MaterialPageRoute(
-                      builder: (_) => const AddBookScreen(),
-                    ),
-                  );
-                },
-                searchInOpenLibrary: () async {
-                  _setEmptyBookForEditScreen();
-
-                  Navigator.pop(context);
-                  await Future.delayed(const Duration(milliseconds: 100));
-                  if (!mounted) return;
-
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => const SearchOLScreen(),
-                    ),
-                  );
-                },
-                scanBarcode: () async {
-                  _setEmptyBookForEditScreen();
-
-                  Navigator.pop(context);
-                  await Future.delayed(const Duration(milliseconds: 100));
-                  if (!mounted) return;
-
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => const SearchOLScreen(scan: true),
-                    ),
-                  );
-                },
-              );
-            },
-          );
-        },
+        onPressed: _onFabPressed,
         child: const Icon(Icons.add),
       ),
     );
@@ -976,25 +1023,11 @@ class _BooksScreenState extends State<BooksScreen>
       ),
       actions: [
         IconButton(
-          onPressed: () => Navigator.of(context).push(
-            MaterialPageRoute(builder: (_) => const SearchPage()),
-          ),
+          onPressed: _goToSearchPage,
           icon: const Icon(Icons.search),
         ),
         IconButton(
-          onPressed: () {
-            final state = context.read<DisplayBloc>().state;
-
-            if (state is GridDisplayState) {
-              BlocProvider.of<DisplayBloc>(context).add(
-                const ChangeDisplayEvent(displayAsGrid: false),
-              );
-            } else {
-              BlocProvider.of<DisplayBloc>(context).add(
-                const ChangeDisplayEvent(displayAsGrid: true),
-              );
-            }
-          },
+          onPressed: _changeBooksDisplayType,
           icon: BlocBuilder<DisplayBloc, DisplayState>(
             builder: (context, state) {
               if (state is GridDisplayState) {
@@ -1014,21 +1047,7 @@ class _BooksScreenState extends State<BooksScreen>
                 child: Text(
                   choice,
                 ),
-                onTap: () async {
-                  await Future.delayed(const Duration(milliseconds: 0));
-
-                  if (!mounted) return;
-
-                  if (choice == moreButtonOptions[0]) {
-                    openSortFilterSheet();
-                  } else if (choice == moreButtonOptions[1]) {
-                    goToStatisticsScreen();
-                  } else if (choice == moreButtonOptions[2]) {
-                    goToUnfinishedBooksScreen();
-                  } else if (choice == moreButtonOptions[3]) {
-                    goToSettingsScreen();
-                  }
-                },
+                onTap: () => _invokeThreeDotMenuOption(choice),
               );
             }).toList();
           },

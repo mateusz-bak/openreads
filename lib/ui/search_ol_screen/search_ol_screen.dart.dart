@@ -8,6 +8,7 @@ import 'package:openreads/core/constants/enums/enums.dart';
 import 'package:openreads/core/themes/app_theme.dart';
 import 'package:openreads/generated/locale_keys.g.dart';
 import 'package:openreads/logic/bloc/open_library_search_bloc/open_library_search_bloc.dart';
+import 'package:openreads/logic/cubit/default_book_status_cubit.dart';
 import 'package:openreads/logic/cubit/edit_book_cubit.dart';
 import 'package:openreads/model/reading.dart';
 import 'package:openreads/model/book.dart';
@@ -20,9 +21,14 @@ import 'package:openreads/ui/search_ol_editions_screen/search_ol_editions_screen
 import 'package:openreads/ui/search_ol_screen/widgets/widgets.dart';
 
 class SearchOLScreen extends StatefulWidget {
-  const SearchOLScreen({super.key, this.scan = false});
+  const SearchOLScreen({
+    super.key,
+    this.scan = false,
+    required this.status,
+  });
 
   final bool scan;
+  final BookStatus status;
 
   @override
   State<SearchOLScreen> createState() => _SearchOLScreenState();
@@ -55,17 +61,19 @@ class _SearchOLScreenState extends State<SearchOLScreen>
     List<String>? isbn,
     String? olid,
   }) {
+    final defaultBookFormat = context.read<DefaultBooksFormatCubit>().state;
+
     final book = Book(
       title: title,
       subtitle: subtitle,
       author: author,
-      status: BookStatus.read,
+      status: widget.status,
       favourite: false,
       pages: pagesMedian,
       isbn: (isbn != null && isbn.isNotEmpty) ? isbn[0] : null,
       olid: (olid != null) ? olid.replaceAll('/works/', '') : null,
       publicationYear: firstPublishYear,
-      bookFormat: BookFormat.paperback,
+      bookFormat: defaultBookFormat,
       readings: List<Reading>.empty(growable: true),
       tags: LocaleKeys.owned_book_tag.tr(),
       dateAdded: DateTime.now(),
@@ -218,6 +226,29 @@ class _SearchOLScreenState extends State<SearchOLScreen>
     Navigator.of(context).push(
       MaterialPageRoute(
         builder: (_) => const AddBookScreen(fromOpenLibrary: true),
+      ),
+    );
+  }
+
+  _onChooseEditionPressed(OLSearchResultDoc item) {
+    FocusManager.instance.primaryFocus?.unfocus();
+
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) => SearchOLEditionsScreen(
+          status: widget.status,
+          editions: item.editionKey!,
+          title: item.title!,
+          subtitle: item.subtitle,
+          author: (item.authorName != null && item.authorName!.isNotEmpty)
+              ? item.authorName![0]
+              : '',
+          pagesMedian: item.medianPages,
+          isbn: item.isbn,
+          olid: item.key,
+          firstPublishYear: item.firstPublishYear,
+        ),
       ),
     );
   }
@@ -428,29 +459,8 @@ class _SearchOLScreenState extends State<SearchOLScreen>
                                 firstPublishYear: item.firstPublishYear,
                                 cover: item.coverI,
                               ),
-                              onChooseEditionPressed: () {
-                                FocusManager.instance.primaryFocus?.unfocus();
-
-                                Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                    builder: (context) =>
-                                        SearchOLEditionsScreen(
-                                      editions: item.editionKey!,
-                                      title: item.title!,
-                                      subtitle: item.subtitle,
-                                      author: (item.authorName != null &&
-                                              item.authorName!.isNotEmpty)
-                                          ? item.authorName![0]
-                                          : '',
-                                      pagesMedian: item.medianPages,
-                                      isbn: item.isbn,
-                                      olid: item.key,
-                                      firstPublishYear: item.firstPublishYear,
-                                    ),
-                                  ),
-                                );
-                              },
+                              onChooseEditionPressed: () =>
+                                  _onChooseEditionPressed(item),
                             );
                           }),
                         ),

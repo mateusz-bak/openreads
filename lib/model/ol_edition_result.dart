@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'package:openreads/core/constants/enums/enums.dart';
 
 OLEditionResult openLibraryEditionResultFromJson(String str) =>
     OLEditionResult.fromJson(json.decode(str));
@@ -28,6 +29,7 @@ class OLEditionResult {
     this.revision,
     this.created,
     this.lastModified,
+    this.physicalFormat,
   });
 
   final List<String>? publishers;
@@ -53,6 +55,7 @@ class OLEditionResult {
   final int? revision;
   final Created? created;
   final Created? lastModified;
+  final BookFormat? physicalFormat;
 
   factory OLEditionResult.fromJson(Map<String, dynamic> json) {
     return OLEditionResult(
@@ -106,6 +109,13 @@ class OLEditionResult {
       lastModified: json["last_modified"] == null
           ? null
           : Created.fromJson(json["last_modified"]),
+      physicalFormat: json['physical_format'] != null
+          ? json['physical_format'] == 'Hardcover'
+              ? BookFormat.hardcover
+              : json['physical_format'] == 'Mass Market Paperback'
+                  ? BookFormat.paperback
+                  : null
+          : null,
     );
   }
 }

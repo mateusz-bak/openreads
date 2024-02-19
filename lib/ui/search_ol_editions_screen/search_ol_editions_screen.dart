@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:openreads/core/constants/enums/enums.dart';
 import 'package:openreads/generated/locale_keys.g.dart';
+import 'package:openreads/logic/cubit/default_book_status_cubit.dart';
 import 'package:openreads/logic/cubit/edit_book_cubit.dart';
 import 'package:openreads/model/reading.dart';
 import 'package:openreads/model/book.dart';
@@ -22,6 +23,7 @@ class SearchOLEditionsScreen extends StatefulWidget {
     required this.isbn,
     required this.olid,
     required this.firstPublishYear,
+    required this.status,
   });
 
   final List<String> editions;
@@ -32,6 +34,7 @@ class SearchOLEditionsScreen extends StatefulWidget {
   final List<String>? isbn;
   final String? olid;
   final int? firstPublishYear;
+  final BookStatus status;
 
   @override
   State<SearchOLEditionsScreen> createState() => _SearchOLEditionsScreenState();
@@ -46,12 +49,14 @@ class _SearchOLEditionsScreenState extends State<SearchOLEditionsScreen> {
     required int? cover,
     String? work,
   }) {
+    final defaultBookFormat = context.read<DefaultBooksFormatCubit>().state;
+
     final book = Book(
       title: result.title!,
       subtitle: result.subtitle,
       author: widget.author,
       pages: result.numberOfPages,
-      status: BookStatus.read,
+      status: widget.status,
       favourite: false,
       isbn: (result.isbn13 != null && result.isbn13!.isNotEmpty)
           ? result.isbn13![0]
@@ -60,7 +65,7 @@ class _SearchOLEditionsScreenState extends State<SearchOLEditionsScreen> {
               : null,
       olid: (result.key != null) ? result.key!.replaceAll('/books/', '') : null,
       publicationYear: widget.firstPublishYear,
-      bookFormat: BookFormat.paperback,
+      bookFormat: result.physicalFormat ?? defaultBookFormat,
       readings: List<Reading>.empty(growable: true),
       tags: LocaleKeys.owned_book_tag.tr(),
       dateAdded: DateTime.now(),
