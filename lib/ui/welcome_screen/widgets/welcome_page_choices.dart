@@ -36,7 +36,7 @@ class WelcomePageChoices extends StatelessWidget {
         children: [
           Expanded(
             child: Column(
-              mainAxisAlignment: MainAxisAlignment.start,
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Row(
                   children: [
@@ -51,24 +51,30 @@ class WelcomePageChoices extends StatelessWidget {
                     ),
                   ],
                 ),
-                const SizedBox(height: 30),
-                WelcomeChoiceButton(
-                  description: LocaleKeys.restore_backup.tr(),
-                  onPressed: restoreBackup,
+                Expanded(
+                  child: SingleChildScrollView(
+                    child: Column(
+                      children: [
+                        WelcomeChoiceButton(
+                          description: LocaleKeys.restore_backup.tr(),
+                          onPressed: restoreBackup,
+                        ),
+                        WelcomeChoiceButton(
+                          description: LocaleKeys.import_csv.tr(),
+                          onPressed: importOpenreadsCsv,
+                        ),
+                        WelcomeChoiceButton(
+                          description: LocaleKeys.import_goodreads_csv.tr(),
+                          onPressed: importGoodreadsCsv,
+                        ),
+                        WelcomeChoiceButton(
+                          description: LocaleKeys.import_bookwyrm_csv.tr(),
+                          onPressed: importBookwyrmCsv,
+                        ),
+                      ],
+                    ),
+                  ),
                 ),
-                WelcomeChoiceButton(
-                  description: LocaleKeys.import_csv.tr(),
-                  onPressed: importOpenreadsCsv,
-                ),
-                WelcomeChoiceButton(
-                  description: LocaleKeys.import_goodreads_csv.tr(),
-                  onPressed: importGoodreadsCsv,
-                ),
-                WelcomeChoiceButton(
-                  description: LocaleKeys.import_bookwyrm_csv.tr(),
-                  onPressed: importBookwyrmCsv,
-                ),
-                const Spacer(),
                 WelcomeChoiceButton(
                   description: LocaleKeys.start_adding_books.tr(),
                   onPressed: skipImportingBooks,
@@ -77,7 +83,6 @@ class WelcomePageChoices extends StatelessWidget {
               ],
             ),
           ),
-          const SizedBox(height: 50),
         ],
       ),
     );

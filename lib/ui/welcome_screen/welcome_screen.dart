@@ -228,6 +228,7 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
                       );
                     },
                   ),
+                  const SizedBox(height: 20),
                   BlocBuilder<MigrationV1ToV2Bloc, MigrationV1ToV2State>(
                     builder: (context, migrationState) {
                       if (migrationState is MigrationNotStarted) {
