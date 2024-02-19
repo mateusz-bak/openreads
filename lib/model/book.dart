@@ -113,8 +113,12 @@ class Book {
                       ? BookFormat.paperback
                       : BookFormat.paperback,
       readings: _sortReadings(_parseReadingsFromJson(json)),
-      dateAdded: DateTime.parse(json['date_added']),
-      dateModified: DateTime.parse(json['date_modified']),
+      dateAdded: json['date_added'] != null
+          ? DateTime.parse(json['date_added'])
+          : DateTime.now(),
+      dateModified: json['date_modified'] != null
+          ? DateTime.parse(json['date_modified'])
+          : DateTime.now(),
     );
   }
 
