@@ -336,9 +336,8 @@ class _BooksScreenState extends State<BooksScreen>
     isAsc
         ? list.sort((a, b) => removeDiacritics(a.title.toString().toLowerCase())
             .compareTo(removeDiacritics(b.title.toString().toLowerCase())))
-        : list.sort((b, a) =>
-            removeDiacritics(a.author.toString().toLowerCase())
-                .compareTo(removeDiacritics(b.title.toString().toLowerCase())));
+        : list.sort((b, a) => removeDiacritics(a.title.toString().toLowerCase())
+            .compareTo(removeDiacritics(b.title.toString().toLowerCase())));
     // no secondary sorting
 
     return list;
