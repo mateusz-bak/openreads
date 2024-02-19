@@ -1,4 +1,6 @@
 class Constants {
+  static const appName = 'Openreads';
+
   static const formHeight = 60.0;
 
   static const blurHashX = 2;
