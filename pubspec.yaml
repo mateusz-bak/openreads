@@ -16,7 +16,7 @@ dependencies:
   sqflite: ^2.1.0
   path_provider: ^2.0.11
   rxdart: ^0.27.5
-  path: ^1.8.2
+  path: ^1.9.0
   flutter_displaymode: ^0.6.0
   image_picker: ^1.0.0
   image_cropper: ^5.0.0
