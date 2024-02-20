@@ -204,6 +204,8 @@ class EditBookCoverCubit extends Cubit<Uint8List?> {
   EditBookCoverCubit() : super(null);
 
   setCover(Uint8List? cover) {
+    imageCache.clear();
+
     emit(cover);
   }
 
