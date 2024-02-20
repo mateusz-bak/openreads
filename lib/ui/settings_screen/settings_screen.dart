@@ -583,7 +583,7 @@ class SettingsScreen extends StatelessWidget {
               LocaleKeys.book_format_ebook.tr(),
               style: const TextStyle(),
             );
-          } else if (state == BookFormat.hardcover) {
+          } else if (state == BookFormat.audiobook) {
             return Text(
               LocaleKeys.book_format_audiobook.tr(),
               style: const TextStyle(),
