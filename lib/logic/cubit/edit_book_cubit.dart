@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:openreads/core/constants/enums/enums.dart';
@@ -13,14 +14,14 @@ class EditBookCubit extends Cubit<Book> {
 
   setBook(Book book) => emit(book);
 
-  void updateBook(File? coverFile, BuildContext context) {
+  void updateBook(Uint8List? cover, BuildContext context) {
     if (state.id == null) return;
 
-    bookCubit.updateBook(state, coverFile: coverFile, context: context);
+    bookCubit.updateBook(state, cover: cover, context: context);
   }
 
-  void addNewBook(File? coverFile) {
-    bookCubit.addBook(state, coverFile: coverFile);
+  void addNewBook(Uint8List? cover) {
+    bookCubit.addBook(state, cover: cover);
   }
 
   void setStatus(BookStatus status) {
@@ -199,11 +200,11 @@ class EditBookCubit extends Cubit<Book> {
   }
 }
 
-class EditBookCoverCubit extends Cubit<File?> {
+class EditBookCoverCubit extends Cubit<Uint8List?> {
   EditBookCoverCubit() : super(null);
 
-  setCover(File? file) {
-    emit(file);
+  setCover(Uint8List? cover) {
+    emit(cover);
   }
 
   deleteCover(int? bookID) async {

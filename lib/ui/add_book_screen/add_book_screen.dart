@@ -83,7 +83,7 @@ class _AddBookScreenState extends State<AddBookScreen> {
     _notesCtrl.text = book.notes ?? '';
 
     if (!widget.fromOpenLibrary && !widget.fromOpenLibraryEdition) {
-      context.read<EditBookCoverCubit>().setCover(book.getCoverFile());
+      context.read<EditBookCoverCubit>().setCover(book.getCoverBytes());
     }
   }
 
@@ -192,15 +192,12 @@ class _AddBookScreenState extends State<AddBookScreen> {
 
     http.get(Uri.parse(coverUrl)).then((response) async {
       if (!mounted) return;
-      final tmpCoverTimestamp = DateTime.now().millisecondsSinceEpoch;
-      final tmpFile = File('${appTempDirectory.path}/$tmpCoverTimestamp.jpg');
-      await tmpFile.writeAsBytes(response.bodyBytes);
 
       if (!mounted) return;
       await generateBlurHash(response.bodyBytes, context);
 
       if (!mounted) return;
-      context.read<EditBookCoverCubit>().setCover(tmpFile);
+      context.read<EditBookCoverCubit>().setCover(response.bodyBytes);
       context.read<EditBookCubit>().setHasCover(true);
 
       setState(() {

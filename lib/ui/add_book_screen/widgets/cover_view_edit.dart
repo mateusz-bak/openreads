@@ -54,7 +54,7 @@ class _CoverViewEditState extends State<CoverViewEdit> {
       return;
     }
 
-    final croppedPhoto = await _cropFile(photoXFile.path);
+    final croppedPhoto = await _cropImage(await photoXFile.readAsBytes());
 
     if (croppedPhoto == null) {
       _setCoverLoading(false);
@@ -62,12 +62,7 @@ class _CoverViewEditState extends State<CoverViewEdit> {
     }
 
     final croppedPhotoBytes = await croppedPhoto.readAsBytes();
-    final tmpCoverTimestamp = DateTime.now().millisecondsSinceEpoch;
-    final coverFileForSaving = File(
-      '${appTempDirectory.path}/$tmpCoverTimestamp.jpg',
-    );
 
-    await coverFileForSaving.writeAsBytes(croppedPhotoBytes);
     if (!context.mounted) {
       _setCoverLoading(false);
       return;
@@ -79,7 +74,7 @@ class _CoverViewEditState extends State<CoverViewEdit> {
       return;
     }
 
-    context.read<EditBookCoverCubit>().setCover(coverFileForSaving);
+    context.read<EditBookCoverCubit>().setCover(croppedPhotoBytes);
     context.read<EditBookCubit>().setHasCover(true);
 
     _setCoverLoading(false);
@@ -89,14 +84,14 @@ class _CoverViewEditState extends State<CoverViewEdit> {
     _setCoverLoading(true);
     Navigator.of(context).pop();
 
-    final coverFile = context.read<EditBookCoverCubit>().state;
+    final cover = context.read<EditBookCoverCubit>().state;
 
-    if (coverFile == null) {
+    if (cover == null) {
       _setCoverLoading(false);
       return;
     }
 
-    final croppedPhoto = await _cropFile(coverFile.path);
+    final croppedPhoto = await _cropImage(cover);
 
     if (croppedPhoto == null) {
       _setCoverLoading(false);
@@ -104,12 +99,6 @@ class _CoverViewEditState extends State<CoverViewEdit> {
     }
 
     final croppedPhotoBytes = await croppedPhoto.readAsBytes();
-    final tmpCoverTimestamp = DateTime.now().millisecondsSinceEpoch;
-    final coverFileForSaving = File(
-      '${appTempDirectory.path}/$tmpCoverTimestamp.jpg',
-    );
-
-    await coverFileForSaving.writeAsBytes(croppedPhotoBytes);
 
     if (!context.mounted) {
       _setCoverLoading(false);
@@ -117,24 +106,32 @@ class _CoverViewEditState extends State<CoverViewEdit> {
     }
 
     await generateBlurHash(croppedPhotoBytes, context);
+
     if (!context.mounted) {
       _setCoverLoading(false);
       return;
     }
 
-    context.read<EditBookCoverCubit>().setCover(coverFileForSaving);
+    context.read<EditBookCoverCubit>().setCover(croppedPhotoBytes);
     context.read<EditBookCubit>().setHasCover(true);
 
     _setCoverLoading(false);
   }
 
-  Future<CroppedFile?> _cropFile(String path) async {
+  Future<CroppedFile?> _cropImage(Uint8List cover) async {
     final colorScheme = Theme.of(context).colorScheme;
+
+    //write temporary file as ImageCropper requires a file
+    final tmpCoverTimestamp = DateTime.now().millisecondsSinceEpoch;
+    final tmpCoverFile = File(
+      '${appTempDirectory.path}/$tmpCoverTimestamp.jpg',
+    );
+    await tmpCoverFile.writeAsBytes(cover);
 
     return await ImageCropper().cropImage(
       maxWidth: 1024,
       maxHeight: 1024,
-      sourcePath: path,
+      sourcePath: tmpCoverFile.path,
       compressQuality: 90,
       uiSettings: [
         AndroidUiSettings(
@@ -192,20 +189,17 @@ class _CoverViewEditState extends State<CoverViewEdit> {
       return;
     }
 
-    final coverTimestamp = DateTime.now().millisecondsSinceEpoch;
-
-    final coverFileForSaving = File(
-      '${appTempDirectory.path}/$coverTimestamp.jpg',
-    );
-
-    await coverFileForSaving.writeAsBytes(cover);
-
-    // ignore: use_build_context_synchronously
+    if (!context.mounted) {
+      _setCoverLoading(false);
+      return;
+    }
     await generateBlurHash(cover, context);
 
-    // ignore: use_build_context_synchronously
-    context.read<EditBookCoverCubit>().setCover(coverFileForSaving);
-    // ignore: use_build_context_synchronously
+    if (!context.mounted) {
+      _setCoverLoading(false);
+      return;
+    }
+    context.read<EditBookCoverCubit>().setCover(cover);
     context.read<EditBookCubit>().setHasCover(true);
 
     _setCoverLoading(false);
@@ -287,7 +281,7 @@ class _CoverViewEditState extends State<CoverViewEdit> {
             : const SizedBox(height: 3),
         const SizedBox(height: 5),
         Builder(builder: (context) {
-          return BlocBuilder<EditBookCoverCubit, File?>(
+          return BlocBuilder<EditBookCoverCubit, Uint8List?>(
             buildWhen: (p, c) {
               return p != c;
             },
@@ -324,7 +318,7 @@ class _CoverViewEditState extends State<CoverViewEdit> {
               height: boxConstraints.maxWidth / 1.2,
               child: Stack(
                 children: [
-                  BlocBuilder<EditBookCoverCubit, File?>(
+                  BlocBuilder<EditBookCoverCubit, Uint8List?>(
                     builder: (context, state) {
                       return _buildBlurHash(
                         context,
@@ -347,13 +341,13 @@ class _CoverViewEditState extends State<CoverViewEdit> {
                   ),
                   child: Stack(
                     children: [
-                      BlocBuilder<EditBookCoverCubit, File?>(
+                      BlocBuilder<EditBookCoverCubit, Uint8List?>(
                         builder: (context, state) {
                           return Center(
                             child: ClipRRect(
                               borderRadius: BorderRadius.circular(cornerRadius),
                               child: (state != null)
-                                  ? Image.file(
+                                  ? Image.memory(
                                       state,
                                       fit: BoxFit.contain,
                                       width: double.infinity,
