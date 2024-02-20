@@ -303,6 +303,17 @@ class Book {
     }
   }
 
+  Uint8List? getCoverBytes() {
+    final fileExists =
+        File('${appDocumentsDirectory.path}/$id.jpg').existsSync();
+
+    if (fileExists) {
+      return File('${appDocumentsDirectory.path}/$id.jpg').readAsBytesSync();
+    } else {
+      return null;
+    }
+  }
+
   static List<Reading> _parseReadingsFromJson(Map<String, dynamic> json) {
     if (json['readings'] != null) {
       final splittedReadings = json['readings'].split(';');
