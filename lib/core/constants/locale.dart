@@ -13,6 +13,7 @@ final supportedLocales = [
   // AppLanguage('ελληνικά', const Locale('el', 'GR')),
   AppLanguage('English', const Locale('en', 'US')),
   AppLanguage('español', const Locale('es', 'ES')),
+  AppLanguage('Filipino', const Locale('fil', 'PH')),
   AppLanguage('français', const Locale('fr', 'FR')),
   AppLanguage('suomi', const Locale('fi', 'FI')),
   AppLanguage('हिन्दी', const Locale('hi', 'IN')),
