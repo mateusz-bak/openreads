@@ -50,13 +50,13 @@ jobs:
 
       - name: Create native debug symbols zip
       - run: |
-          zip -r debug_symbols.zip |
-          build/app/intermediates/merged_native_libs/release/out/lib/arm64-v8a |
-          build/app/intermediates/merged_native_libs/release/out/lib/armeabi-v7a |
-          build/app/intermediates/merged_native_libs/release/out/lib/x86_64
+          zip -r debug_symbols.zip \
+            build/app/intermediates/merged_native_libs/release/out/lib/arm64-v8a \
+            build/app/intermediates/merged_native_libs/release/out/lib/armeabi-v7a \
+            build/app/intermediates/merged_native_libs/release/out/lib/x86_64
           zip -d debug_symbols.zip "__MACOSX*"
 
-      - Create whatsnew file
+      - name: Create whatsnew file
       - run: |
           mkdir whatsnew
           export RELEASE_BUILD="$(cat pubspec.yaml | grep 'version:' | awk '{print $2}' | cut -d '+' -f2)"
