@@ -172,7 +172,7 @@ class _ReadingRowState extends State<ReadingRow> {
               padding: EdgeInsets.symmetric(vertical: 20),
               child: Icon(Icons.delete),
             ),
-          )
+          ),
         ],
       ),
     );

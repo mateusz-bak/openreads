@@ -3,10 +3,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:intl/date_symbol_data_local.dart';
 import 'package:openreads/core/themes/app_theme.dart';
 import 'package:openreads/generated/locale_keys.g.dart';
 import 'package:openreads/logic/bloc/rating_type_bloc/rating_type_bloc.dart';
+import 'package:openreads/main.dart';
 import 'package:openreads/model/book.dart';
 import 'package:openreads/model/reading_time.dart';
 
@@ -37,8 +37,6 @@ class BookStatusDetail extends StatefulWidget {
 }
 
 class _BookStatusDetailState extends State<BookStatusDetail> {
-  late DateFormat dateFormat;
-
   String _generateReadingTime({
     DateTime? startDate,
     DateTime? finishDate,
@@ -107,119 +105,101 @@ class _BookStatusDetailState extends State<BookStatusDetail> {
     );
   }
 
-  Future _initDateFormat() async {
-    await initializeDateFormatting();
-
-    // ignore: use_build_context_synchronously
-    dateFormat = DateFormat.yMMMMd(context.locale.toString());
-  }
-
   @override
   Widget build(BuildContext context) {
-    return FutureBuilder(
-        future: _initDateFormat(),
-        builder: (context, snapshot) {
-          if (snapshot.connectionState != ConnectionState.done) {
-            return const SizedBox();
-          }
-
-          return Card(
-            shadowColor: Colors.transparent,
-            shape: RoundedRectangleBorder(
-              side: BorderSide(color: dividerColor, width: 1),
-              borderRadius: BorderRadius.circular(cornerRadius),
-            ),
-            child: Container(
-              padding: const EdgeInsets.all(10),
-              child: Column(
-                children: [
-                  const SizedBox(height: 5),
-                  Row(
-                    children: [
-                      Expanded(
-                        child: Container(
-                          decoration: BoxDecoration(
-                            color: Theme.of(context).colorScheme.primary,
-                            borderRadius: BorderRadius.circular(cornerRadius),
-                          ),
-                          child: Padding(
-                            padding: const EdgeInsets.symmetric(
-                              vertical: 5,
-                              horizontal: 10,
+    return Card(
+      shadowColor: Colors.transparent,
+      shape: RoundedRectangleBorder(
+        side: BorderSide(color: dividerColor, width: 1),
+        borderRadius: BorderRadius.circular(cornerRadius),
+      ),
+      child: Container(
+        padding: const EdgeInsets.all(10),
+        child: Column(
+          children: [
+            const SizedBox(height: 5),
+            Row(
+              children: [
+                Expanded(
+                  child: Container(
+                    decoration: BoxDecoration(
+                      color: Theme.of(context).colorScheme.primary,
+                      borderRadius: BorderRadius.circular(cornerRadius),
+                    ),
+                    child: Padding(
+                      padding: const EdgeInsets.symmetric(
+                        vertical: 5,
+                        horizontal: 10,
+                      ),
+                      child: Center(
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: [
+                            Icon(
+                              widget.statusIcon,
+                              size: 24,
+                              color: Theme.of(context).colorScheme.onPrimary,
                             ),
-                            child: Center(
-                              child: Row(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                crossAxisAlignment: CrossAxisAlignment.center,
-                                children: [
-                                  Icon(
-                                    widget.statusIcon,
-                                    size: 24,
-                                    color:
-                                        Theme.of(context).colorScheme.onPrimary,
-                                  ),
-                                  const SizedBox(width: 15),
-                                  Text(
-                                    widget.statusText,
-                                    maxLines: 1,
-                                    style: TextStyle(
-                                      fontSize: 12,
-                                      fontWeight: FontWeight.bold,
-                                      color: Theme.of(context)
-                                          .colorScheme
-                                          .onPrimary,
-                                    ),
-                                  ),
-                                ],
+                            const SizedBox(width: 15),
+                            Text(
+                              widget.statusText,
+                              maxLines: 1,
+                              style: TextStyle(
+                                fontSize: 12,
+                                fontWeight: FontWeight.bold,
+                                color: Theme.of(context).colorScheme.onPrimary,
                               ),
                             ),
-                          ),
+                          ],
                         ),
                       ),
-                      SizedBox(width: (widget.showChangeStatus) ? 10 : 0),
-                      (widget.showChangeStatus)
-                          ? _buildChangeStatusButton(context)
-                          : const SizedBox(),
-                    ],
+                    ),
                   ),
-                  _generateHowManyTimesRead(context),
-                  SizedBox(height: (widget.showRatingAndLike) ? 10 : 0),
-                  (widget.showRatingAndLike)
-                      ? Column(
-                          children: [
-                            Row(
-                              children: [
-                                Text(
-                                  LocaleKeys.your_rating.tr(),
-                                  style: const TextStyle(
-                                    fontSize: 16,
-                                    fontWeight: FontWeight.bold,
-                                  ),
-                                ),
-                              ],
-                            ),
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    _buildRating(context),
-                                  ],
-                                ),
-                                _buildLikeButton(),
-                              ],
-                            ),
-                          ],
-                        )
-                      : const SizedBox(),
-                  const SizedBox(height: 10),
-                  ..._buildStartAndFinishDates(context),
-                ],
-              ),
+                ),
+                SizedBox(width: (widget.showChangeStatus) ? 10 : 0),
+                (widget.showChangeStatus)
+                    ? _buildChangeStatusButton(context)
+                    : const SizedBox(),
+              ],
             ),
-          );
-        });
+            _generateHowManyTimesRead(context),
+            SizedBox(height: (widget.showRatingAndLike) ? 10 : 0),
+            (widget.showRatingAndLike)
+                ? Column(
+                    children: [
+                      Row(
+                        children: [
+                          Text(
+                            LocaleKeys.your_rating.tr(),
+                            style: const TextStyle(
+                              fontSize: 16,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                        ],
+                      ),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              _buildRating(context),
+                            ],
+                          ),
+                          _buildLikeButton(),
+                        ],
+                      ),
+                    ],
+                  )
+                : const SizedBox(),
+            const SizedBox(height: 10),
+            ..._buildStartAndFinishDates(context),
+          ],
+        ),
+      ),
+    );
   }
 
   Widget _buildRating(BuildContext context) {
