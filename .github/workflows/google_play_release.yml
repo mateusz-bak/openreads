@@ -62,7 +62,7 @@ jobs:
           releaseFiles: build/app/outputs/bundle/release/app-release.aab
           track: production
           inAppUpdatePriority: 5
-          userFraction: 0.99999
+          # userFraction: 0.99999 Draft does not support userFraction
           whatsNewDirectory: whatsnew
           mappingFile: build/app/outputs/mapping/release/mapping.txt
           debugSymbols: build/app/intermediates/merged_native_libs/release/out/lib
