@@ -719,37 +719,7 @@ class SettingsScreen extends StatelessWidget {
                     ),
                     sections: [
                       SettingsSection(
-                        tiles: <SettingsTile>[
-                          _buildSupportSetting(context),
-                          _buildURLSetting(
-                            title: LocaleKeys.join_community.tr(),
-                            description:
-                                LocaleKeys.join_community_description.tr(),
-                            url: communityUrl,
-                            iconData: FontAwesomeIcons.peopleGroup,
-                            context: context,
-                          ),
-                          _buildURLSetting(
-                            title: LocaleKeys.rate_app.tr(),
-                            description: LocaleKeys.rate_app_description.tr(),
-                            url: Platform.isIOS
-                                ? rateUrlIOS
-                                : Platform.isAndroid
-                                    ? rateUrlAndroid
-                                    : null,
-                            iconData: Icons.star_rounded,
-                            context: context,
-                          ),
-                          _buildFeedbackSetting(context, version!),
-                          _buildURLSetting(
-                            title: LocaleKeys.translate_app.tr(),
-                            description:
-                                LocaleKeys.translate_app_description.tr(),
-                            url: translationUrl,
-                            iconData: Icons.translate_rounded,
-                            context: context,
-                          ),
-                        ],
+                        tiles: _buildGeneralSettingsTiles(context, version),
                       ),
                       SettingsSection(
                         title: Text(
@@ -830,5 +800,45 @@ class SettingsScreen extends StatelessWidget {
             }
           }),
     );
+  }
+
+  List<SettingsTile> _buildGeneralSettingsTiles(
+      BuildContext context, String? version) {
+    final tiles = List<SettingsTile>.empty(growable: true);
+
+    // TODO: Implement in app purchase for iOS
+    if (!Platform.isIOS) {
+      tiles.add(_buildSupportSetting(context));
+    }
+
+    tiles.add(_buildURLSetting(
+      title: LocaleKeys.join_community.tr(),
+      description: LocaleKeys.join_community_description.tr(),
+      url: communityUrl,
+      iconData: FontAwesomeIcons.peopleGroup,
+      context: context,
+    ));
+
+    tiles.add(_buildURLSetting(
+      title: LocaleKeys.rate_app.tr(),
+      description: LocaleKeys.rate_app_description.tr(),
+      url: Platform.isIOS
+          ? rateUrlIOS
+          : Platform.isAndroid
+              ? rateUrlAndroid
+              : null,
+      iconData: Icons.star_rounded,
+      context: context,
+    ));
+    tiles.add(_buildFeedbackSetting(context, version!));
+    tiles.add(_buildURLSetting(
+      title: LocaleKeys.translate_app.tr(),
+      description: LocaleKeys.translate_app_description.tr(),
+      url: translationUrl,
+      iconData: Icons.translate_rounded,
+      context: context,
+    ));
+
+    return tiles;
   }
 }
