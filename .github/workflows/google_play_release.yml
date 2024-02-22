@@ -57,7 +57,7 @@ jobs:
       - name: Create release in Google Play
         uses: r0adkll/upload-google-play@v1
         with:
-          serviceAccountJsonPlainText: $SERVICE_ACCOUNT_JSON
+          serviceAccountJsonPlainText: ${{ secrets.SERVICE_ACCOUNT_JSON }}
           packageName: software.mdev.bookstracker
           releaseFiles: build/app/outputs/bundle/release/app-release.aab
           track: production
@@ -67,5 +67,3 @@ jobs:
           mappingFile: build/app/outputs/mapping/release/mapping.txt
           debugSymbols: build/app/intermediates/merged_native_libs/release/out/lib
           status: draft
-        env:
-          SERVICE_ACCOUNT_JSON: ${{ secrets.SERVICE_ACCOUNT_JSON }}
