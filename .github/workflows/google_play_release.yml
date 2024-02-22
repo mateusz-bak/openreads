@@ -48,14 +48,6 @@ jobs:
       - name: Build appbundle
         run: flutter build appbundle --release
 
-      - name: Create native debug symbols zip
-        run: |
-          zip -r debug_symbols.zip \
-            build/app/intermediates/merged_native_libs/release/out/lib/arm64-v8a \
-            build/app/intermediates/merged_native_libs/release/out/lib/armeabi-v7a \
-            build/app/intermediates/merged_native_libs/release/out/lib/x86_64
-          zip -d debug_symbols.zip "__MACOSX*"
-
       - name: Create whatsnew file
         run: |
           mkdir whatsnew
@@ -73,7 +65,7 @@ jobs:
           userFraction: 0.99999
           whatsNewDirectory: whatsnew
           mappingFile: build/app/outputs/mapping/release/mapping.txt
-          debugSymbols: debug_symbols.zip
+          debugSymbols: build/app/intermediates/merged_native_libs/release/out/lib
           status: draft
         env:
           SERVICE_ACCOUNT_JSON: ${{ secrets.SERVICE_ACCOUNT_JSON }}
