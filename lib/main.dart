@@ -8,6 +8,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_displaymode/flutter_displaymode.dart';
 import 'package:hydrated_bloc/hydrated_bloc.dart';
+import 'package:intl/date_symbol_data_local.dart';
 import 'package:openreads/core/constants/constants.dart';
 import 'package:openreads/core/constants/locale.dart';
 import 'package:openreads/core/helpers/old_android_http_overrides.dart';
@@ -34,6 +35,7 @@ late BookCubit bookCubit;
 late Directory appDocumentsDirectory;
 late Directory appTempDirectory;
 late GlobalKey<ScaffoldMessengerState> snackbarKey;
+late DateFormat dateFormat;
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -159,6 +161,8 @@ class _OpenreadsAppState extends State<OpenreadsApp>
 
   @override
   Widget build(BuildContext context) {
+    _initDateFormat(context);
+
     return DynamicColorBuilder(
         builder: (ColorScheme? lightDynamic, ColorScheme? darkDynamic) {
       if (widget.themeState.amoledDark) {
@@ -247,4 +251,11 @@ _setAndroidConfig() async {
       HttpOverrides.global = OldAndroidHttpOverrides();
     }
   }
+}
+
+Future _initDateFormat(BuildContext context) async {
+  await initializeDateFormatting();
+
+  // ignore: use_build_context_synchronously
+  dateFormat = DateFormat.yMMMMd(context.locale.toString());
 }
