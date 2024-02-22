@@ -75,3 +75,5 @@ jobs:
           mappingFile: build/app/outputs/mapping/release/mapping.txt
           debugSymbols: debug_symbols.zip
           status: draft
+        env:
+          SERVICE_ACCOUNT_JSON: ${{ secrets.SERVICE_ACCOUNT_JSON }}
