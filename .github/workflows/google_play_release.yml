@@ -49,7 +49,7 @@ jobs:
         run: flutter build appbundle --release
 
       - name: Create native debug symbols zip
-      - run: |
+        run: |
           zip -r debug_symbols.zip \
             build/app/intermediates/merged_native_libs/release/out/lib/arm64-v8a \
             build/app/intermediates/merged_native_libs/release/out/lib/armeabi-v7a \
@@ -57,7 +57,7 @@ jobs:
           zip -d debug_symbols.zip "__MACOSX*"
 
       - name: Create whatsnew file
-      - run: |
+        run: |
           mkdir whatsnew
           export RELEASE_BUILD="$(cat pubspec.yaml | grep 'version:' | awk '{print $2}' | cut -d '+' -f2)"
           cp fastlane/metadata/android/en-US/changelogs/$RELEASE_BUILD.txt whatsnew/whatsnew-en-US
