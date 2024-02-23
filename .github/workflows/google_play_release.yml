@@ -60,6 +60,7 @@ jobs:
           track: production
           inAppUpdatePriority: 5
           userFraction: 0.99999
+          status: inProgress
           whatsNewDirectory: whatsnew
           mappingFile: build/app/outputs/mapping/release/mapping.txt
           debugSymbols: build/app/intermediates/merged_native_libs/release/out/lib
