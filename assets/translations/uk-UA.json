@@ -224,5 +224,19 @@
     "dark_mode_style": "Темний режим",
     "dark_mode_natural": "Природний стиль",
     "dark_mode_amoled": "Темний режим AMOLED",
-    "notes": "Записи"
+    "notes": "Записи",
+    "selected": "Обраний",
+    "change_book_format": "Змінити формат книги",
+    "tags": {
+        "other": "Теги",
+        "one": "Тег"
+    },
+    "use_material_you": "Використовувати Material You",
+    "day": {
+        "one": "{} день",
+        "other": "{} дні(в)"
+    },
+    "set_custom_reading_time": "Записати час читання",
+    "update_successful_message": "Інформацію оновлено!",
+    "change_books_author": "Змінити автора книги"
 }
