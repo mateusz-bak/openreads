@@ -18,6 +18,7 @@ class OLSearchRadio extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Row(
+      mainAxisSize: MainAxisSize.min,
       children: [
         Radio<OLSearchType>(
           value: searchType,
