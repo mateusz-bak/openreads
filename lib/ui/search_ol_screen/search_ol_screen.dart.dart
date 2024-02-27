@@ -327,30 +327,22 @@ class _SearchOLScreenState extends State<SearchOLScreen>
                 ],
               ),
             ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                BlocBuilder<OpenLibrarySearchBloc, OpenLibrarySearchState>(
-                  builder: (context, state) {
-                    return Wrap(
-                      crossAxisAlignment: WrapCrossAlignment.center,
-                      children: [
-                        for (var i = 0; i < 4; i++) ...[
-                          if (i != 0) const SizedBox(width: 5),
-                          Padding(
-                            padding: const EdgeInsets.only(right: 5),
-                            child: OLSearchRadio(
-                              searchType: OLSearchType.values[i],
-                              activeSearchType: _getOLSearchTypeEnum(state),
-                              onChanged: _changeSearchType,
-                            ),
-                          ),
-                        ],
-                      ],
-                    );
-                  },
-                ),
-              ],
+            BlocBuilder<OpenLibrarySearchBloc, OpenLibrarySearchState>(
+              builder: (context, state) {
+                return Wrap(
+                  crossAxisAlignment: WrapCrossAlignment.center,
+                  children: [
+                    for (var i = 0; i < 4; i++) ...[
+                      if (i != 0) const SizedBox(width: 5),
+                      OLSearchRadio(
+                        searchType: OLSearchType.values[i],
+                        activeSearchType: _getOLSearchTypeEnum(state),
+                        onChanged: _changeSearchType,
+                      ),
+                    ],
+                  ],
+                );
+              },
             ),
             const Padding(
               padding: EdgeInsets.fromLTRB(10, 0, 10, 10),
