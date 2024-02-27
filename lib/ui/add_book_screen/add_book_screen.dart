@@ -230,6 +230,13 @@ class _AddBookScreenState extends State<AddBookScreen> {
   }
 
   void _addNewTag() {
+    final tag = _tagsCtrl.text;
+
+    if (tag.isEmpty) {
+      FocusManager.instance.primaryFocus?.unfocus();
+      return;
+    }
+
     context.read<EditBookCubit>().addNewTag(_tagsCtrl.text);
 
     _tagsCtrl.clear();
@@ -496,7 +503,11 @@ class _AddBookScreenState extends State<AddBookScreen> {
                     icon: FontAwesomeIcons.tags,
                     keyboardType: TextInputType.text,
                     maxLength: 20,
-                    onSubmitted: (_) => _addNewTag(),
+                    onSubmitted: (_) {
+                      _addNewTag();
+                      // Adding setState causes reload which is needed so that tag suggestions update
+                      setState(() {});
+                    },
                     onEditingComplete: () {},
                     unselectTag: (tag) => _unselectTag(tag),
                     allTags: snapshot.data,
