@@ -18,9 +18,10 @@
 <a rel="me" href='https://fosstodon.org/@openreads'><img alt="Mastodon Follow" src="https://img.shields.io/mastodon/follow/110707338082983645?domain=https%3A%2F%2Ffosstodon.org&style=flat-square&logo=mastodon&color=royalblue"></a>
 <br/>
 
+<a href='https://github.com/mateusz-bak/openreads/releases/latest'><img height=70 alt='Get it on Github' src='https://raw.githubusercontent.com/mateusz-bak/openreads/master/doc/github/get-it-on-github.png'/></a>
 <a href='https://f-droid.org/en/packages/software.mdev.bookstracker'><img height=70 alt='Get it on F-Droid' src='https://fdroid.gitlab.io/artwork/badge/get-it-on.png'/></a>
 <a href='https://play.google.com/store/apps/details?id=software.mdev.bookstracker'><img height=70 alt='Get it on Google Play' src='https://play.google.com/intl/en_us/badges/images/generic/en_badge_web_generic.png'/></a>
-<a href='https://github.com/mateusz-bak/openreads/releases/latest'><img height=70 alt='Get it on Github' src='https://raw.githubusercontent.com/mateusz-bak/openreads/master/doc/github/get-it-on-github.png'/></a>
+<a href='https://apps.apple.com/app/id6476542305'><img height=70 alt='Download on App Store' src='https://raw.githubusercontent.com/mateusz-bak/openreads/master/doc/app_store/download_on_app_store.png'/></a>
 
 ### Openreads is a privacy oriented and open source cross-platform app written in Flutter available for Android and iOS for keeping track of your books.  
 #### There are four lists provided so you won't get confused:  
