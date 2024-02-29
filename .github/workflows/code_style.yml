@@ -1,4 +1,4 @@
-name: Format Dart code
+name: Code style
 
 on:
   push:
@@ -7,7 +7,8 @@ on:
       - master
 
 jobs:
-  dart:
+  dart_format:
+    name: Dart format
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v3

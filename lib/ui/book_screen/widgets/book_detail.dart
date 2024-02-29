@@ -4,10 +4,10 @@ import 'package:openreads/core/themes/app_theme.dart';
 
 class BookDetail extends StatelessWidget {
   const BookDetail({
-    Key? key,
+    super.key,
     required this.title,
     required this.text,
-  }) : super(key: key);
+  });
 
   final String title;
   final String text;

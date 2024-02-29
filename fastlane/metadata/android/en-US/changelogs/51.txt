@@ -1,0 +1,15 @@
+- Editing current cover
+- Increased tag limit to 100
+- Added auto owned tag
+- Tags are sorted alphabetically
+- Counter for book readings
+- Added croatian language
+- Sorting by date added/modified
+- Subtitle is fetched for OL editions
+- Book status for new book is auto filled
+- Default book format
+- Fix: Sorting by pages
+- Fix: Adding book buttons with disabled animations
+- Fix: Total stats include all finished books
+- Fix: Dates are displayed correctly
+- Fix: Tags suggestions are filtered

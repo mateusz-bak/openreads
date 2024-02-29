@@ -4,10 +4,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
 import 'package:loading_animation_widget/loading_animation_widget.dart';
-import 'package:openreads/core/constants/enums.dart';
+import 'package:openreads/core/constants/enums/enums.dart';
 import 'package:openreads/core/themes/app_theme.dart';
 import 'package:openreads/generated/locale_keys.g.dart';
 import 'package:openreads/logic/bloc/open_library_search_bloc/open_library_search_bloc.dart';
+import 'package:openreads/logic/cubit/default_book_status_cubit.dart';
 import 'package:openreads/logic/cubit/edit_book_cubit.dart';
 import 'package:openreads/model/reading.dart';
 import 'package:openreads/model/book.dart';
@@ -15,13 +16,19 @@ import 'package:openreads/model/ol_search_result.dart';
 import 'package:openreads/resources/open_library_service.dart';
 import 'package:openreads/ui/add_book_screen/add_book_screen.dart';
 import 'package:openreads/ui/add_book_screen/widgets/widgets.dart';
+import 'package:openreads/ui/common/keyboard_dismissable.dart';
 import 'package:openreads/ui/search_ol_editions_screen/search_ol_editions_screen.dart';
 import 'package:openreads/ui/search_ol_screen/widgets/widgets.dart';
 
 class SearchOLScreen extends StatefulWidget {
-  const SearchOLScreen({super.key, this.scan = false});
+  const SearchOLScreen({
+    super.key,
+    this.scan = false,
+    required this.status,
+  });
 
   final bool scan;
+  final BookStatus status;
 
   @override
   State<SearchOLScreen> createState() => _SearchOLScreenState();
@@ -54,18 +61,23 @@ class _SearchOLScreenState extends State<SearchOLScreen>
     List<String>? isbn,
     String? olid,
   }) {
+    final defaultBookFormat = context.read<DefaultBooksFormatCubit>().state;
+
     final book = Book(
       title: title,
       subtitle: subtitle,
       author: author,
-      status: 0,
+      status: widget.status,
       favourite: false,
       pages: pagesMedian,
       isbn: (isbn != null && isbn.isNotEmpty) ? isbn[0] : null,
       olid: (olid != null) ? olid.replaceAll('/works/', '') : null,
       publicationYear: firstPublishYear,
-      bookFormat: BookFormat.paperback,
+      bookFormat: defaultBookFormat,
       readings: List<Reading>.empty(growable: true),
+      tags: LocaleKeys.owned_book_tag.tr(),
+      dateAdded: DateTime.now(),
+      dateModified: DateTime.now(),
     );
 
     context.read<EditBookCubit>().setBook(book);
@@ -201,9 +213,12 @@ class _SearchOLScreenState extends State<SearchOLScreen>
     final book = Book(
       title: searchType == OLSearchType.title ? _searchController.text : '',
       author: searchType == OLSearchType.author ? _searchController.text : '',
-      status: 0,
+      status: BookStatus.read,
       isbn: searchType == OLSearchType.isbn ? _searchController.text : null,
       readings: List<Reading>.empty(growable: true),
+      tags: 'owned',
+      dateAdded: DateTime.now(),
+      dateModified: DateTime.now(),
     );
 
     context.read<EditBookCubit>().setBook(book);
@@ -211,6 +226,29 @@ class _SearchOLScreenState extends State<SearchOLScreen>
     Navigator.of(context).push(
       MaterialPageRoute(
         builder: (_) => const AddBookScreen(fromOpenLibrary: true),
+      ),
+    );
+  }
+
+  _onChooseEditionPressed(OLSearchResultDoc item) {
+    FocusManager.instance.primaryFocus?.unfocus();
+
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) => SearchOLEditionsScreen(
+          status: widget.status,
+          editions: item.editionKey!,
+          title: item.title!,
+          subtitle: item.subtitle,
+          author: (item.authorName != null && item.authorName!.isNotEmpty)
+              ? item.authorName![0]
+              : '',
+          pagesMedian: item.medianPages,
+          isbn: item.isbn,
+          olid: item.key,
+          firstPublishYear: item.firstPublishYear,
+        ),
       ),
     );
   }
@@ -241,211 +279,196 @@ class _SearchOLScreenState extends State<SearchOLScreen>
   Widget build(BuildContext context) {
     super.build(context);
 
-    return Scaffold(
-      appBar: AppBar(
-        title: Text(
-          LocaleKeys.add_search.tr(),
-          style: const TextStyle(fontSize: 18),
+    return KeyboardDismissible(
+      child: Scaffold(
+        appBar: AppBar(
+          title: Text(
+            LocaleKeys.add_search.tr(),
+            style: const TextStyle(fontSize: 18),
+          ),
         ),
-      ),
-      body: Column(
-        children: [
-          Padding(
-            padding: const EdgeInsets.fromLTRB(0, 10, 10, 5),
-            child: Row(
-              children: [
-                Expanded(
-                  child: BookTextField(
-                    controller: _searchController,
-                    keyboardType: TextInputType.name,
-                    maxLength: 99,
-                    autofocus: true,
-                    textInputAction: TextInputAction.search,
-                    textCapitalization: TextCapitalization.sentences,
-                    onSubmitted: (_) => _startNewSearch(),
+        body: Column(
+          children: [
+            Padding(
+              padding: const EdgeInsets.fromLTRB(0, 10, 10, 5),
+              child: Row(
+                children: [
+                  Expanded(
+                    child: BookTextField(
+                      controller: _searchController,
+                      keyboardType: TextInputType.name,
+                      maxLength: 99,
+                      autofocus: true,
+                      textInputAction: TextInputAction.search,
+                      textCapitalization: TextCapitalization.sentences,
+                      onSubmitted: (_) => _startNewSearch(),
+                    ),
                   ),
-                ),
-                const SizedBox(width: 10),
-                SizedBox(
-                  height: 48,
-                  child: ElevatedButton(
-                    onPressed: _startNewSearch,
-                    style: ElevatedButton.styleFrom(
-                      elevation: 0,
-                      backgroundColor: Theme.of(context).colorScheme.primary,
-                      foregroundColor: Theme.of(context).colorScheme.onPrimary,
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(cornerRadius),
+                  const SizedBox(width: 10),
+                  SizedBox(
+                    height: 48,
+                    child: ElevatedButton(
+                      onPressed: _startNewSearch,
+                      style: ElevatedButton.styleFrom(
+                        elevation: 0,
+                        backgroundColor: Theme.of(context).colorScheme.primary,
+                        foregroundColor:
+                            Theme.of(context).colorScheme.onPrimary,
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(cornerRadius),
+                        ),
+                      ),
+                      child: Text(
+                        LocaleKeys.search.tr(),
+                        style: const TextStyle(fontSize: 12),
                       ),
                     ),
-                    child: Text(
-                      LocaleKeys.search.tr(),
-                      style: const TextStyle(fontSize: 12),
-                    ),
                   ),
+                ],
+              ),
+            ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                BlocBuilder<OpenLibrarySearchBloc, OpenLibrarySearchState>(
+                  builder: (context, state) {
+                    return Wrap(
+                      crossAxisAlignment: WrapCrossAlignment.center,
+                      children: [
+                        for (var i = 0; i < 4; i++) ...[
+                          if (i != 0) const SizedBox(width: 5),
+                          Padding(
+                            padding: const EdgeInsets.only(right: 5),
+                            child: OLSearchRadio(
+                              searchType: OLSearchType.values[i],
+                              activeSearchType: _getOLSearchTypeEnum(state),
+                              onChanged: _changeSearchType,
+                            ),
+                          ),
+                        ],
+                      ],
+                    );
+                  },
                 ),
               ],
             ),
-          ),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              BlocBuilder<OpenLibrarySearchBloc, OpenLibrarySearchState>(
-                builder: (context, state) {
-                  return Wrap(
-                    crossAxisAlignment: WrapCrossAlignment.center,
-                    children: [
-                      for (var i = 0; i < 4; i++) ...[
-                        if (i != 0) const SizedBox(width: 5),
-                        Padding(
-                          padding: const EdgeInsets.only(right: 5),
-                          child: OLSearchRadio(
-                            searchType: OLSearchType.values[i],
-                            activeSearchType: _getOLSearchTypeEnum(state),
-                            onChanged: _changeSearchType,
-                          ),
+            const Padding(
+              padding: EdgeInsets.fromLTRB(10, 0, 10, 10),
+              child: Divider(height: 3),
+            ),
+            (numberOfResults != null && numberOfResults! != 0)
+                ? Padding(
+                    padding: const EdgeInsets.fromLTRB(10, 0, 10, 20),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.end,
+                      children: [
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Text(
+                              '$numberOfResults ${LocaleKeys.results_lowercase.tr()}',
+                              style: const TextStyle(fontSize: 12),
+                            ),
+                          ],
                         ),
                       ],
-                    ],
-                  );
-                },
-              ),
-            ],
-          ),
-          const Padding(
-            padding: EdgeInsets.fromLTRB(10, 0, 10, 10),
-            child: Divider(height: 3),
-          ),
-          (numberOfResults != null && numberOfResults! != 0)
-              ? Padding(
-                  padding: const EdgeInsets.fromLTRB(10, 0, 10, 20),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.end,
-                    children: [
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Text(
-                            '$numberOfResults ${LocaleKeys.results_lowercase.tr()}',
-                            style: const TextStyle(fontSize: 12),
-                          ),
-                        ],
-                      ),
-                    ],
-                  ),
-                )
-              : const SizedBox(),
-          Expanded(
-            child: (!searchActivated)
-                ? const SizedBox()
-                : Scrollbar(
-                    child: PagedListView<int, OLSearchResultDoc>(
-                      pagingController: _pagingController,
-                      builderDelegate:
-                          PagedChildBuilderDelegate<OLSearchResultDoc>(
-                        firstPageProgressIndicatorBuilder: (_) => Center(
-                          child: LoadingAnimationWidget.staggeredDotsWave(
-                            color: Theme.of(context).colorScheme.primary,
-                            size: 42,
-                          ),
-                        ),
-                        newPageProgressIndicatorBuilder: (_) => Center(
-                          child: Padding(
-                            padding: const EdgeInsets.all(20.0),
+                    ),
+                  )
+                : const SizedBox(),
+            Expanded(
+              child: (!searchActivated)
+                  ? const SizedBox()
+                  : Scrollbar(
+                      child: PagedListView<int, OLSearchResultDoc>(
+                        pagingController: _pagingController,
+                        builderDelegate:
+                            PagedChildBuilderDelegate<OLSearchResultDoc>(
+                          firstPageProgressIndicatorBuilder: (_) => Center(
                             child: LoadingAnimationWidget.staggeredDotsWave(
                               color: Theme.of(context).colorScheme.primary,
                               size: 42,
                             ),
                           ),
-                        ),
-                        noItemsFoundIndicatorBuilder: (_) => Center(
-                          child: Column(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              InkWell(
-                                borderRadius: BorderRadius.circular(
-                                  cornerRadius,
-                                ),
-                                onTap: _addBookManually,
-                                child: Padding(
-                                  padding: const EdgeInsets.all(10),
-                                  child: Column(
-                                    children: [
-                                      Text(
-                                        LocaleKeys.no_search_results.tr(),
-                                        style: const TextStyle(
-                                          fontSize: 18,
+                          newPageProgressIndicatorBuilder: (_) => Center(
+                            child: Padding(
+                              padding: const EdgeInsets.all(20.0),
+                              child: LoadingAnimationWidget.staggeredDotsWave(
+                                color: Theme.of(context).colorScheme.primary,
+                                size: 42,
+                              ),
+                            ),
+                          ),
+                          noItemsFoundIndicatorBuilder: (_) => Center(
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                InkWell(
+                                  borderRadius: BorderRadius.circular(
+                                    cornerRadius,
+                                  ),
+                                  onTap: _addBookManually,
+                                  child: Padding(
+                                    padding: const EdgeInsets.all(10),
+                                    child: Column(
+                                      children: [
+                                        Text(
+                                          LocaleKeys.no_search_results.tr(),
+                                          style: const TextStyle(
+                                            fontSize: 18,
+                                          ),
                                         ),
-                                      ),
-                                      const SizedBox(height: 10),
-                                      Text(
-                                        LocaleKeys.click_to_add_book_manually
-                                            .tr(),
-                                        style: const TextStyle(
-                                          fontSize: 14,
+                                        const SizedBox(height: 10),
+                                        Text(
+                                          LocaleKeys.click_to_add_book_manually
+                                              .tr(),
+                                          style: const TextStyle(
+                                            fontSize: 14,
+                                          ),
                                         ),
-                                      ),
-                                    ],
+                                      ],
+                                    ),
                                   ),
                                 ),
-                              ),
-                            ],
+                              ],
+                            ),
                           ),
-                        ),
-                        itemBuilder: (context, item, index) => BookCardOL(
-                          title: item.title!,
-                          subtitle: item.subtitle,
-                          author: (item.authorName != null &&
-                                  item.authorName!.isNotEmpty)
-                              ? item.authorName![0]
-                              : '',
-                          openLibraryKey: item.coverEditionKey,
-                          doc: item,
-                          editions: item.editionKey,
-                          pagesMedian: item.numberOfPagesMedian,
-                          firstPublishYear: item.firstPublishYear,
-                          onAddBookPressed: () => _saveNoEdition(
-                            editions: item.editionKey!,
-                            title: item.title!,
-                            subtitle: item.subtitle,
-                            author: (item.authorName != null &&
-                                    item.authorName!.isNotEmpty)
-                                ? item.authorName![0]
-                                : '',
-                            pagesMedian: item.numberOfPagesMedian,
-                            isbn: item.isbn,
-                            olid: item.key,
-                            firstPublishYear: item.firstPublishYear,
-                            cover: item.coverI,
-                          ),
-                          onChooseEditionPressed: () {
-                            FocusManager.instance.primaryFocus?.unfocus();
-
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                builder: (context) => SearchOLEditionsScreen(
-                                  editions: item.editionKey!,
-                                  title: item.title!,
-                                  subtitle: item.subtitle,
-                                  author: (item.authorName != null &&
-                                          item.authorName!.isNotEmpty)
-                                      ? item.authorName![0]
-                                      : '',
-                                  pagesMedian: item.numberOfPagesMedian,
-                                  isbn: item.isbn,
-                                  olid: item.key,
-                                  firstPublishYear: item.firstPublishYear,
-                                ),
+                          itemBuilder: (context, item, index) =>
+                              Builder(builder: (context) {
+                            return BookCardOL(
+                              title: item.title ?? '',
+                              subtitle: item.subtitle,
+                              author: (item.authorName != null &&
+                                      item.authorName!.isNotEmpty)
+                                  ? item.authorName![0]
+                                  : '',
+                              coverKey: item.coverEditionKey,
+                              editions: item.editionKey,
+                              pagesMedian: item.medianPages,
+                              firstPublishYear: item.firstPublishYear,
+                              onAddBookPressed: () => _saveNoEdition(
+                                editions: item.editionKey!,
+                                title: item.title ?? '',
+                                subtitle: item.subtitle,
+                                author: (item.authorName != null &&
+                                        item.authorName!.isNotEmpty)
+                                    ? item.authorName![0]
+                                    : '',
+                                pagesMedian: item.medianPages,
+                                isbn: item.isbn,
+                                olid: item.key,
+                                firstPublishYear: item.firstPublishYear,
+                                cover: item.coverI,
                               ),
+                              onChooseEditionPressed: () =>
+                                  _onChooseEditionPressed(item),
                             );
-                          },
+                          }),
                         ),
                       ),
                     ),
-                  ),
-          ),
-        ],
+            ),
+          ],
+        ),
       ),
     );
   }

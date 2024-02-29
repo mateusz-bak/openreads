@@ -128,7 +128,6 @@ class BackupImport {
       final infoFileVersion = _checkInfoFileVersion(backupFile, tmpDir);
       if (infoFileVersion == 5) {
         // ignore: use_build_context_synchronously
-
         await _restoreBackupVersion5(context, backupFile, tmpDir);
       } else {
         BackupGeneral.showInfoSnackbar(LocaleKeys.backup_not_valid.tr());
@@ -184,7 +183,7 @@ class BackupImport {
         bookCubit.addBook(
           newBook,
           refreshBooks: false,
-          coverFile: coverFile,
+          cover: coverFile?.readAsBytesSync(),
         );
       } catch (e) {
         BackupGeneral.showInfoSnackbar(e.toString());
@@ -238,12 +237,10 @@ class BackupImport {
     for (var book in books) {
       try {
         final newBook = Book.fromJSON(jsonDecode(book));
-        File? coverFile;
 
+        Uint8List? cover;
         if (newBook.cover != null) {
-          coverFile = File('${tmpPath.path}/${newBook.id}.jpg');
-          coverFile.writeAsBytesSync(newBook.cover!);
-
+          cover = newBook.cover;
           newBook.hasCover = true;
           newBook.cover = null;
         }
@@ -251,7 +248,7 @@ class BackupImport {
         bookCubit.addBook(
           newBook,
           refreshBooks: false,
-          coverFile: coverFile,
+          cover: cover,
         );
 
         restoredBooks++;
@@ -393,22 +390,21 @@ class BackupImport {
 
   static Future<void> _addBookFromBackupV3(
       BuildContext context, BookFromBackupV3 book) async {
-    final tmpDir = (appTempDirectory).absolute;
-
     final blurHash = await compute(_generateBlurHash, book.bookCoverImg);
     final newBook = Book.fromBookFromBackupV3(book, blurHash);
 
-    File? coverFile;
-
+    Uint8List? cover;
     if (newBook.cover != null) {
-      coverFile = File('${tmpDir.path}/${newBook.id}.jpg');
-      coverFile.writeAsBytesSync(newBook.cover!);
-
+      cover = newBook.cover;
       newBook.hasCover = true;
       newBook.cover = null;
     }
 
-    bookCubit.addBook(newBook, refreshBooks: false, coverFile: coverFile);
+    bookCubit.addBook(
+      newBook,
+      refreshBooks: false,
+      cover: cover,
+    );
   }
 
   static String? _generateBlurHash(Uint8List? cover) {
@@ -416,8 +412,8 @@ class BackupImport {
 
     return blurhash_dart.BlurHash.encode(
       img.decodeImage(cover)!,
-      numCompX: blurHashX,
-      numCompY: blurHashY,
+      numCompX: Constants.blurHashX,
+      numCompY: Constants.blurHashY,
     ).hash;
   }
 

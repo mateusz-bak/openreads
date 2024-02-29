@@ -221,7 +221,6 @@ abstract class LocaleKeys {
   static const welcome_3_description_1 = 'welcome_3_description_1';
   static const welcome_3_description_2 = 'welcome_3_description_2';
   static const welcome_3_description_3 = 'welcome_3_description_3';
-  static const next_button = 'next_button';
   static const start_button = 'start_button';
   static const migration_v1_to_v2_1 = 'migration_v1_to_v2_1';
   static const migration_v1_to_v2_2 = 'migration_v1_to_v2_2';
@@ -264,6 +263,7 @@ abstract class LocaleKeys {
   static const click_to_add_book_manually = 'click_to_add_book_manually';
   static const load_cover_from_phone = 'load_cover_from_phone';
   static const get_cover_from_open_library = 'get_cover_from_open_library';
+  static const edit_current_cover = 'edit_current_cover';
   static const isbn_cannot_be_empty = 'isbn_cannot_be_empty';
   static const cover_not_found_in_ol = 'cover_not_found_in_ol';
   static const books_settings = 'books_settings';
@@ -276,4 +276,11 @@ abstract class LocaleKeys {
   static const add_additional_reading_time = 'add_additional_reading_time';
   static const start_adding_books = 'start_adding_books';
   static const help_to_get_started = 'help_to_get_started';
+  static const owned_book_tag = 'owned_book_tag';
+  static const read_x_times = 'read_x_times';
+  static const date_added = 'date_added';
+  static const date_modified = 'date_modified';
+  static const added_on = 'added_on';
+  static const modified_on = 'modified_on';
+  static const default_books_format = 'default_books_format';
 }

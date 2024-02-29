@@ -5,7 +5,7 @@ import 'package:openreads/core/themes/app_theme.dart';
 
 class BookTextField extends StatefulWidget {
   const BookTextField({
-    Key? key,
+    super.key,
     required this.controller,
     this.hint,
     this.icon,
@@ -19,7 +19,7 @@ class BookTextField extends StatefulWidget {
     this.textCapitalization = TextCapitalization.none,
     this.padding = const EdgeInsets.symmetric(horizontal: 10),
     this.onSubmitted,
-  }) : super(key: key);
+  });
 
   final TextEditingController controller;
   final String? hint;

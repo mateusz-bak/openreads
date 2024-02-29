@@ -6,11 +6,11 @@ import 'package:openreads/ui/books_screen/widgets/widgets.dart';
 
 class AddBookSheet extends StatefulWidget {
   const AddBookSheet({
-    Key? key,
+    super.key,
     required this.addManually,
     required this.searchInOpenLibrary,
     required this.scanBarcode,
-  }) : super(key: key);
+  });
 
   final Function() addManually;
   final Function() searchInOpenLibrary;

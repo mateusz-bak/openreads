@@ -1,3 +1,4 @@
+import 'package:diacritic/diacritic.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -43,8 +44,11 @@ class TagsField extends StatelessWidget {
   final Function(String)? unselectTag;
   final List<String>? allTags;
 
-  Widget _buildTagChip(BuildContext context,
-      {required String tag, required bool selected}) {
+  Widget _buildTagChip(
+    BuildContext context, {
+    required String tag,
+    required bool selected,
+  }) {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 5),
       child: FilterChip(
@@ -54,7 +58,11 @@ class TagsField extends StatelessWidget {
           style: TextStyle(
             color: selected ? Theme.of(context).colorScheme.onSecondary : null,
           ),
+          overflow: TextOverflow.fade,
+          softWrap: true,
+          maxLines: 5,
         ),
+        clipBehavior: Clip.none,
         checkmarkColor:
             selected ? Theme.of(context).colorScheme.onSecondary : null,
         selected: selected,
@@ -72,6 +80,9 @@ class TagsField extends StatelessWidget {
     List<String> tags,
   ) {
     final chips = List<Widget>.empty(growable: true);
+
+    tags.sort((a, b) => removeDiacritics(a.toLowerCase())
+        .compareTo(removeDiacritics(b.toLowerCase())));
 
     for (var tag in tags) {
       chips.add(_buildTagChip(
@@ -99,6 +110,7 @@ class TagsField extends StatelessWidget {
           children: [
             Scrollbar(
               child: TypeAheadField(
+                controller: controller,
                 itemBuilder: (context, suggestion) {
                   if (existingTags.contains(suggestion)) {
                     return const SizedBox.shrink();
@@ -111,14 +123,13 @@ class TagsField extends StatelessWidget {
                     ),
                   );
                 },
-                suggestionsCallback: (pattern) {
-                  if (allTags == null) {
-                    return List<String>.empty();
-                  }
-                  return allTags!.where((String option) {
-                    return option.toLowerCase().contains(pattern.toLowerCase());
-                  }).toList();
-                },
+                suggestionsCallback: (pattern) =>
+                    allTags?.where((String option) {
+                      return option
+                          .toLowerCase()
+                          .startsWith(pattern.toLowerCase());
+                    }).toList() ??
+                    [],
                 onSelected: (suggestion) {
                   controller?.text = suggestion;
                   if (onSubmitted != null) {
@@ -137,14 +148,14 @@ class TagsField extends StatelessWidget {
                     child: child,
                   );
                 },
-                builder: (context, _, focusNode) {
+                builder: (context, control, focusNode) {
                   return TextField(
                     focusNode: focusNode,
                     autofocus: autofocus,
                     keyboardType: keyboardType,
                     inputFormatters: inputFormatters,
                     textCapitalization: textCapitalization,
-                    controller: controller,
+                    controller: control,
                     minLines: 1,
                     maxLines: maxLines,
                     maxLength: maxLength,

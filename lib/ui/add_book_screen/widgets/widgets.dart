@@ -7,3 +7,4 @@ export 'book_rating_bar.dart';
 export 'tags_text_field.dart';
 export 'book_type_dropdown.dart';
 export 'reading_row.dart';
+export 'cover_option_button.dart';

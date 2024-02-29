@@ -10,15 +10,15 @@ import 'package:blurhash_dart/blurhash_dart.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:openreads/core/helpers/helpers.dart';
+import 'package:openreads/model/book.dart';
 import 'package:openreads/resources/open_library_service.dart';
 
-import 'package:openreads/ui/add_book_screen/widgets/cover_placeholder.dart';
 import 'package:openreads/core/constants/constants.dart';
 import 'package:openreads/core/themes/app_theme.dart';
 import 'package:openreads/generated/locale_keys.g.dart';
 import 'package:openreads/logic/cubit/edit_book_cubit.dart';
 import 'package:openreads/main.dart';
-import 'package:openreads/ui/settings_screen/widgets/widgets.dart';
+import 'package:openreads/ui/add_book_screen/widgets/widgets.dart';
 
 class CoverViewEdit extends StatefulWidget {
   const CoverViewEdit({super.key});
@@ -45,8 +45,6 @@ class _CoverViewEditState extends State<CoverViewEdit> {
     _setCoverLoading(true);
     Navigator.of(context).pop();
 
-    final colorScheme = Theme.of(context).colorScheme;
-
     final photoXFile = await ImagePicker().pickImage(
       source: ImageSource.gallery,
     );
@@ -56,10 +54,84 @@ class _CoverViewEditState extends State<CoverViewEdit> {
       return;
     }
 
-    final croppedPhoto = await ImageCropper().cropImage(
+    final croppedPhoto = await _cropImage(await photoXFile.readAsBytes());
+
+    if (croppedPhoto == null) {
+      _setCoverLoading(false);
+      return;
+    }
+
+    final croppedPhotoBytes = await croppedPhoto.readAsBytes();
+
+    if (!context.mounted) {
+      _setCoverLoading(false);
+      return;
+    }
+
+    await generateBlurHash(croppedPhotoBytes, context);
+    if (!context.mounted) {
+      _setCoverLoading(false);
+      return;
+    }
+
+    context.read<EditBookCoverCubit>().setCover(croppedPhotoBytes);
+    context.read<EditBookCubit>().setHasCover(true);
+
+    _setCoverLoading(false);
+  }
+
+  void _editCurrentCover(BuildContext context) async {
+    _setCoverLoading(true);
+    Navigator.of(context).pop();
+
+    final cover = context.read<EditBookCoverCubit>().state;
+
+    if (cover == null) {
+      _setCoverLoading(false);
+      return;
+    }
+
+    final croppedPhoto = await _cropImage(cover);
+
+    if (croppedPhoto == null) {
+      _setCoverLoading(false);
+      return;
+    }
+
+    final croppedPhotoBytes = await croppedPhoto.readAsBytes();
+
+    if (!context.mounted) {
+      _setCoverLoading(false);
+      return;
+    }
+
+    await generateBlurHash(croppedPhotoBytes, context);
+
+    if (!context.mounted) {
+      _setCoverLoading(false);
+      return;
+    }
+
+    context.read<EditBookCoverCubit>().setCover(croppedPhotoBytes);
+    context.read<EditBookCubit>().setHasCover(true);
+
+    _setCoverLoading(false);
+  }
+
+  Future<CroppedFile?> _cropImage(Uint8List cover) async {
+    final colorScheme = Theme.of(context).colorScheme;
+
+    //write temporary file as ImageCropper requires a file
+    final tmpCoverTimestamp = DateTime.now().millisecondsSinceEpoch;
+    final tmpCoverFile = File(
+      '${appTempDirectory.path}/$tmpCoverTimestamp.jpg',
+    );
+    await tmpCoverFile.writeAsBytes(cover);
+
+    return await ImageCropper().cropImage(
       maxWidth: 1024,
       maxHeight: 1024,
-      sourcePath: photoXFile.path,
+      sourcePath: tmpCoverFile.path,
       compressQuality: 90,
       uiSettings: [
         AndroidUiSettings(
@@ -85,34 +157,6 @@ class _CoverViewEditState extends State<CoverViewEdit> {
         ),
       ],
     );
-
-    if (croppedPhoto == null) {
-      _setCoverLoading(false);
-      return;
-    }
-
-    final croppedPhotoBytes = await croppedPhoto.readAsBytes();
-    final tmpCoverTimestamp = DateTime.now().millisecondsSinceEpoch;
-    final coverFileForSaving = File(
-      '${appTempDirectory.path}/$tmpCoverTimestamp.jpg',
-    );
-
-    await coverFileForSaving.writeAsBytes(croppedPhotoBytes);
-    if (!context.mounted) {
-      _setCoverLoading(false);
-      return;
-    }
-
-    await generateBlurHash(croppedPhotoBytes, context);
-    if (!context.mounted) {
-      _setCoverLoading(false);
-      return;
-    }
-
-    context.read<EditBookCoverCubit>().setCover(coverFileForSaving);
-    context.read<EditBookCubit>().setHasCover(true);
-
-    _setCoverLoading(false);
   }
 
   _deleteCover(BuildContext context) async {
@@ -145,20 +189,17 @@ class _CoverViewEditState extends State<CoverViewEdit> {
       return;
     }
 
-    final coverTimestamp = DateTime.now().millisecondsSinceEpoch;
-
-    final coverFileForSaving = File(
-      '${appTempDirectory.path}/$coverTimestamp.jpg',
-    );
-
-    await coverFileForSaving.writeAsBytes(cover);
-
-    // ignore: use_build_context_synchronously
+    if (!context.mounted) {
+      _setCoverLoading(false);
+      return;
+    }
     await generateBlurHash(cover, context);
 
-    // ignore: use_build_context_synchronously
-    context.read<EditBookCoverCubit>().setCover(coverFileForSaving);
-    // ignore: use_build_context_synchronously
+    if (!context.mounted) {
+      _setCoverLoading(false);
+      return;
+    }
+    context.read<EditBookCoverCubit>().setCover(cover);
     context.read<EditBookCubit>().setHasCover(true);
 
     _setCoverLoading(false);
@@ -188,32 +229,41 @@ class _CoverViewEditState extends State<CoverViewEdit> {
             ),
             Container(
               padding: const EdgeInsets.fromLTRB(10, 30, 10, 60),
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(15),
-              ),
-              child: IntrinsicHeight(
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  children: [
-                    const SizedBox(width: 15),
-                    Expanded(
-                      child: ContactButton(
-                        text: LocaleKeys.load_cover_from_phone.tr(),
-                        icon: FontAwesomeIcons.mobile,
-                        onPressed: () => _loadCoverFromStorage(context),
-                      ),
-                    ),
-                    const SizedBox(width: 30),
-                    Expanded(
-                      child: ContactButton(
-                        text: LocaleKeys.get_cover_from_open_library.tr(),
-                        icon: FontAwesomeIcons.globe,
-                        onPressed: () => _loadCoverFromOpenLibrary(context),
-                      ),
-                    ),
-                    const SizedBox(width: 15),
-                  ],
-                ),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: [
+                  CoverOptionButton(
+                    text: LocaleKeys.load_cover_from_phone.tr(),
+                    icon: FontAwesomeIcons.mobile,
+                    onPressed: () => _loadCoverFromStorage(context),
+                  ),
+                  const SizedBox(height: 15),
+                  CoverOptionButton(
+                    text: LocaleKeys.get_cover_from_open_library.tr(),
+                    icon: FontAwesomeIcons.globe,
+                    onPressed: () => _loadCoverFromOpenLibrary(context),
+                  ),
+                  BlocBuilder<EditBookCubit, Book>(
+                    builder: (blocContext, state) {
+                      if (state.hasCover) {
+                        return Column(
+                          children: [
+                            const SizedBox(height: 15),
+                            CoverOptionButton(
+                              text: LocaleKeys.edit_current_cover.tr(),
+                              icon: FontAwesomeIcons.image,
+                              onPressed: () => _editCurrentCover(
+                                context,
+                              ),
+                            ),
+                          ],
+                        );
+                      } else {
+                        return const SizedBox();
+                      }
+                    },
+                  ),
+                ],
               ),
             ),
           ],
@@ -231,7 +281,7 @@ class _CoverViewEditState extends State<CoverViewEdit> {
             : const SizedBox(height: 3),
         const SizedBox(height: 5),
         Builder(builder: (context) {
-          return BlocBuilder<EditBookCoverCubit, File?>(
+          return BlocBuilder<EditBookCoverCubit, Uint8List?>(
             buildWhen: (p, c) {
               return p != c;
             },
@@ -243,7 +293,7 @@ class _CoverViewEditState extends State<CoverViewEdit> {
                 );
               } else {
                 return CoverPlaceholder(
-                  defaultHeight: defaultFormHeight,
+                  defaultHeight: Constants.formHeight,
                   onPressed: () => showCoverLoadBottomSheet(context),
                 );
               }
@@ -268,7 +318,7 @@ class _CoverViewEditState extends State<CoverViewEdit> {
               height: boxConstraints.maxWidth / 1.2,
               child: Stack(
                 children: [
-                  BlocBuilder<EditBookCoverCubit, File?>(
+                  BlocBuilder<EditBookCoverCubit, Uint8List?>(
                     builder: (context, state) {
                       return _buildBlurHash(
                         context,
@@ -291,13 +341,13 @@ class _CoverViewEditState extends State<CoverViewEdit> {
                   ),
                   child: Stack(
                     children: [
-                      BlocBuilder<EditBookCoverCubit, File?>(
+                      BlocBuilder<EditBookCoverCubit, Uint8List?>(
                         builder: (context, state) {
                           return Center(
                             child: ClipRRect(
                               borderRadius: BorderRadius.circular(cornerRadius),
                               child: (state != null)
-                                  ? Image.file(
+                                  ? Image.memory(
                                       state,
                                       fit: BoxFit.contain,
                                       width: double.infinity,

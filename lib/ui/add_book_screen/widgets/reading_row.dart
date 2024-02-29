@@ -95,10 +95,6 @@ class _ReadingRowState extends State<ReadingRow> {
 
   @override
   Widget build(BuildContext context) {
-    final dateFormat = DateFormat.yMd(
-      '${context.locale.languageCode}-${context.locale.countryCode}',
-    );
-
     return Container(
       padding: const EdgeInsets.fromLTRB(0, 20, 0, 0),
       child: Row(
@@ -116,11 +112,10 @@ class _ReadingRowState extends State<ReadingRow> {
                       children: [
                         Expanded(
                           child: SetDateButton(
-                            defaultHeight: defaultFormHeight,
+                            defaultHeight: Constants.formHeight,
                             icon: FontAwesomeIcons.play,
-                            text: widget.reading.startDate != null
-                                ? dateFormat.format(widget.reading.startDate!)
-                                : LocaleKeys.start_date.tr(),
+                            date: widget.reading.startDate,
+                            text: LocaleKeys.start_date.tr(),
                             onPressed: _showStartDatePicker,
                             onClearPressed: _clearStartDate,
                             showClearButton: (widget.reading.startDate != null)
@@ -131,11 +126,10 @@ class _ReadingRowState extends State<ReadingRow> {
                         const SizedBox(width: 10),
                         Expanded(
                           child: SetDateButton(
-                            defaultHeight: defaultFormHeight,
+                            defaultHeight: Constants.formHeight,
                             icon: FontAwesomeIcons.flagCheckered,
-                            text: widget.reading.finishDate != null
-                                ? dateFormat.format(widget.reading.finishDate!)
-                                : LocaleKeys.finish_date.tr(),
+                            date: widget.reading.finishDate,
+                            text: LocaleKeys.finish_date.tr(),
                             onPressed: _showFinishDatePicker,
                             onClearPressed: _clearFinishDate,
                             showClearButton: (widget.reading.finishDate != null)
@@ -152,7 +146,7 @@ class _ReadingRowState extends State<ReadingRow> {
                   children: [
                     Expanded(
                       child: BookReadingTimeField(
-                        defaultHeight: defaultFormHeight,
+                        defaultHeight: Constants.formHeight,
                         changeReadingTime: _changeReadingTime,
                         resetTime: _resetTime,
                         readingTime: widget.reading.customReadingTime,
@@ -178,7 +172,7 @@ class _ReadingRowState extends State<ReadingRow> {
               padding: EdgeInsets.symmetric(vertical: 20),
               child: Icon(Icons.delete),
             ),
-          )
+          ),
         ],
       ),
     );

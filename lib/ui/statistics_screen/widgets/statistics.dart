@@ -285,12 +285,7 @@ class Statistics extends StatelessWidget {
             );
           }
         } else {
-          return (year == null)
-              ? SetChallengeBox(
-                  setChallenge: setChallenge,
-                  year: year ?? DateTime.now().year,
-                )
-              : const SizedBox();
+          return const SizedBox();
         }
       },
     );

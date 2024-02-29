@@ -7,10 +7,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_email_sender/flutter_email_sender.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:openreads/core/constants/enums/enums.dart';
 import 'package:openreads/core/constants/locale.dart';
 import 'package:openreads/core/themes/app_theme.dart';
 import 'package:openreads/generated/locale_keys.g.dart';
 import 'package:openreads/logic/bloc/theme_bloc/theme_bloc.dart';
+import 'package:openreads/logic/cubit/default_book_status_cubit.dart';
 import 'package:openreads/ui/settings_screen/download_missing_covers_screen.dart';
 import 'package:openreads/ui/settings_screen/settings_backup_screen.dart';
 import 'package:openreads/ui/settings_screen/settings_apperance_screen.dart';
@@ -24,14 +26,12 @@ class SettingsScreen extends StatelessWidget {
   const SettingsScreen({super.key});
 
   static const licence = 'GNU General Public Licence v2.0';
-  static const repoUrl = 'https://github.com/mateusz-bak/openreads-android';
+  static const repoUrl = 'https://github.com/mateusz-bak/openreads';
   static const translationUrl = 'https://hosted.weblate.org/engage/openreads/';
   static const communityUrl = 'https://matrix.to/#/#openreads:matrix.org';
   static const rateUrlAndroid =
       'market://details?id=software.mdev.bookstracker';
-  static const iOSAppID = '6476542305';
-  static const rateUrlIOS =
-      'itms-apps://itunes.apple.com/WebObjects/MZStore.woa/wa/viewContentsUserReviews?id=$iOSAppID&onlyLatestVersion=true&pageNumber=0&sortOrdering=1&type=Purple+Software';
+  static const rateUrlIOS = 'https://apps.apple.com/app/id6476542305';
   static const releasesUrl = '$repoUrl/releases';
   static const licenceUrl = '$repoUrl/blob/master/LICENSE';
   static const githubIssuesUrl = '$repoUrl/issues';
@@ -174,6 +174,77 @@ class SettingsScreen extends StatelessWidget {
         );
       },
     );
+  }
+
+  _showDefaultBooksFormatDialog(BuildContext context) {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return Dialog(
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(cornerRadius),
+          ),
+          backgroundColor: Theme.of(context).colorScheme.surface,
+          child: Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 20),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Padding(
+                  padding: const EdgeInsets.only(left: 10),
+                  child: Text(
+                    LocaleKeys.default_books_format.tr(),
+                    style: const TextStyle(
+                      fontSize: 18,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                ),
+                const SizedBox(height: 15),
+                SettingsDialogButton(
+                  text: LocaleKeys.book_format_paperback.tr(),
+                  onPressed: () => _setDefaultBooksFormat(
+                    context,
+                    BookFormat.paperback,
+                  ),
+                ),
+                const SizedBox(height: 5),
+                SettingsDialogButton(
+                  text: LocaleKeys.book_format_hardcover.tr(),
+                  onPressed: () => _setDefaultBooksFormat(
+                    context,
+                    BookFormat.hardcover,
+                  ),
+                ),
+                const SizedBox(height: 5),
+                SettingsDialogButton(
+                  text: LocaleKeys.book_format_ebook.tr(),
+                  onPressed: () => _setDefaultBooksFormat(
+                    context,
+                    BookFormat.ebook,
+                  ),
+                ),
+                const SizedBox(height: 5),
+                SettingsDialogButton(
+                  text: LocaleKeys.book_format_audiobook.tr(),
+                  onPressed: () => _setDefaultBooksFormat(
+                    context,
+                    BookFormat.audiobook,
+                  ),
+                ),
+              ],
+            ),
+          ),
+        );
+      },
+    );
+  }
+
+  _setDefaultBooksFormat(BuildContext context, BookFormat bookFormat) {
+    BlocProvider.of<DefaultBooksFormatCubit>(context).setBookFormat(bookFormat);
+
+    Navigator.of(context).pop();
   }
 
   List<Widget> _buildLanguageButtons(
@@ -486,6 +557,46 @@ class SettingsScreen extends StatelessWidget {
     );
   }
 
+  SettingsTile _buildDefaultBooksFormat(BuildContext context) {
+    return SettingsTile(
+      title: Text(
+        LocaleKeys.default_books_format.tr(),
+        style: const TextStyle(
+          fontSize: 16,
+        ),
+      ),
+      leading: const Icon(Icons.book_rounded),
+      description: BlocBuilder<DefaultBooksFormatCubit, BookFormat>(
+        builder: (_, state) {
+          if (state == BookFormat.paperback) {
+            return Text(
+              LocaleKeys.book_format_paperback.tr(),
+              style: const TextStyle(),
+            );
+          } else if (state == BookFormat.hardcover) {
+            return Text(
+              LocaleKeys.book_format_hardcover.tr(),
+              style: const TextStyle(),
+            );
+          } else if (state == BookFormat.ebook) {
+            return Text(
+              LocaleKeys.book_format_ebook.tr(),
+              style: const TextStyle(),
+            );
+          } else if (state == BookFormat.audiobook) {
+            return Text(
+              LocaleKeys.book_format_audiobook.tr(),
+              style: const TextStyle(),
+            );
+          } else {
+            return const SizedBox();
+          }
+        },
+      ),
+      onPressed: (context) => _showDefaultBooksFormatDialog(context),
+    );
+  }
+
   SettingsTile _buildBackupSetting(BuildContext context) {
     return SettingsTile.navigation(
       title: Text(
@@ -499,7 +610,7 @@ class SettingsScreen extends StatelessWidget {
         Navigator.push(
           context,
           MaterialPageRoute(
-            builder: (context) => SettingsBackupScreen(),
+            builder: (context) => const SettingsBackupScreen(),
           ),
         );
       },
@@ -608,33 +719,7 @@ class SettingsScreen extends StatelessWidget {
                     ),
                     sections: [
                       SettingsSection(
-                        tiles: <SettingsTile>[
-                          _buildSupportSetting(context),
-                          _buildURLSetting(
-                            title: LocaleKeys.join_community.tr(),
-                            description:
-                                LocaleKeys.join_community_description.tr(),
-                            url: communityUrl,
-                            iconData: FontAwesomeIcons.peopleGroup,
-                            context: context,
-                          ),
-                          _buildURLSetting(
-                            title: LocaleKeys.rate_app.tr(),
-                            description: LocaleKeys.rate_app_description.tr(),
-                            url: Platform.isIOS ? rateUrlAndroid : rateUrlIOS,
-                            iconData: Icons.star_rounded,
-                            context: context,
-                          ),
-                          _buildFeedbackSetting(context, version!),
-                          _buildURLSetting(
-                            title: LocaleKeys.translate_app.tr(),
-                            description:
-                                LocaleKeys.translate_app_description.tr(),
-                            url: translationUrl,
-                            iconData: Icons.translate_rounded,
-                            context: context,
-                          ),
-                        ],
+                        tiles: _buildGeneralSettingsTiles(context, version),
                       ),
                       SettingsSection(
                         title: Text(
@@ -648,6 +733,7 @@ class SettingsScreen extends StatelessWidget {
                         tiles: <SettingsTile>[
                           _buildTrashSetting(context),
                           _buildDownloadMissingCovers(context),
+                          _buildDefaultBooksFormat(context),
                         ],
                       ),
                       SettingsSection(
@@ -714,5 +800,45 @@ class SettingsScreen extends StatelessWidget {
             }
           }),
     );
+  }
+
+  List<SettingsTile> _buildGeneralSettingsTiles(
+      BuildContext context, String? version) {
+    final tiles = List<SettingsTile>.empty(growable: true);
+
+    // TODO: Implement in app purchase for iOS
+    if (!Platform.isIOS) {
+      tiles.add(_buildSupportSetting(context));
+    }
+
+    tiles.add(_buildURLSetting(
+      title: LocaleKeys.join_community.tr(),
+      description: LocaleKeys.join_community_description.tr(),
+      url: communityUrl,
+      iconData: FontAwesomeIcons.peopleGroup,
+      context: context,
+    ));
+
+    tiles.add(_buildURLSetting(
+      title: LocaleKeys.rate_app.tr(),
+      description: LocaleKeys.rate_app_description.tr(),
+      url: Platform.isIOS
+          ? rateUrlIOS
+          : Platform.isAndroid
+              ? rateUrlAndroid
+              : null,
+      iconData: Icons.star_rounded,
+      context: context,
+    ));
+    tiles.add(_buildFeedbackSetting(context, version!));
+    tiles.add(_buildURLSetting(
+      title: LocaleKeys.translate_app.tr(),
+      description: LocaleKeys.translate_app_description.tr(),
+      url: translationUrl,
+      iconData: Icons.translate_rounded,
+      context: context,
+    ));
+
+    return tiles;
   }
 }

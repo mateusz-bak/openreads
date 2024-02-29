@@ -6,10 +6,11 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:openreads/core/themes/app_theme.dart';
 import 'package:openreads/generated/locale_keys.g.dart';
 import 'package:openreads/logic/bloc/rating_type_bloc/rating_type_bloc.dart';
+import 'package:openreads/main.dart';
 import 'package:openreads/model/book.dart';
 import 'package:openreads/model/reading_time.dart';
 
-class BookStatusDetail extends StatelessWidget {
+class BookStatusDetail extends StatefulWidget {
   const BookStatusDetail({
     super.key,
     required this.book,
@@ -31,26 +32,32 @@ class BookStatusDetail extends StatelessWidget {
   final Function()? changeStatusAction;
   final bool showRatingAndLike;
 
+  @override
+  State<BookStatusDetail> createState() => _BookStatusDetailState();
+}
+
+class _BookStatusDetailState extends State<BookStatusDetail> {
   String _generateReadingTime({
     DateTime? startDate,
     DateTime? finishDate,
     required BuildContext context,
     ReadingTime? readingTime,
   }) {
-    if (readingTime != null) return readingTime.toString();
+    if (readingTime != null) return '($readingTime)';
 
-    final diff = finishDate!.difference(startDate!).inDays +
-        1; // should be at least 1 day
+    if (startDate == null || finishDate == null) return '';
 
-    return LocaleKeys.day.plural(diff).tr();
+    final diff = finishDate.difference(startDate).inDays + 1;
+
+    return '(${LocaleKeys.day.plural(diff).tr()})';
   }
 
   Widget _buildLikeButton() {
     return Padding(
       padding: const EdgeInsets.only(right: 10, top: 0),
       child: GestureDetector(
-        onTap: onLikeTap,
-        child: (book.favourite)
+        onTap: widget.onLikeTap,
+        child: (widget.book.favourite)
             ? FaIcon(
                 FontAwesomeIcons.solidHeart,
                 size: 30,
@@ -63,7 +70,7 @@ class BookStatusDetail extends StatelessWidget {
 
   Widget _buildChangeStatusButton(BuildContext context) {
     return InkWell(
-      onTap: changeStatusAction,
+      onTap: widget.changeStatusAction,
       child: Container(
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(cornerRadius),
@@ -82,7 +89,7 @@ class BookStatusDetail extends StatelessWidget {
               children: [
                 const SizedBox(height: 22),
                 Text(
-                  changeStatusText!,
+                  widget.changeStatusText!,
                   maxLines: 1,
                   style: TextStyle(
                     fontSize: 12,
@@ -109,7 +116,6 @@ class BookStatusDetail extends StatelessWidget {
       child: Container(
         padding: const EdgeInsets.all(10),
         child: Column(
-          crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
             const SizedBox(height: 5),
             Row(
@@ -131,13 +137,13 @@ class BookStatusDetail extends StatelessWidget {
                           crossAxisAlignment: CrossAxisAlignment.center,
                           children: [
                             Icon(
-                              statusIcon,
+                              widget.statusIcon,
                               size: 24,
                               color: Theme.of(context).colorScheme.onPrimary,
                             ),
                             const SizedBox(width: 15),
                             Text(
-                              statusText,
+                              widget.statusText,
                               maxLines: 1,
                               style: TextStyle(
                                 fontSize: 12,
@@ -151,14 +157,15 @@ class BookStatusDetail extends StatelessWidget {
                     ),
                   ),
                 ),
-                SizedBox(width: (showChangeStatus) ? 10 : 0),
-                (showChangeStatus)
+                SizedBox(width: (widget.showChangeStatus) ? 10 : 0),
+                (widget.showChangeStatus)
                     ? _buildChangeStatusButton(context)
                     : const SizedBox(),
               ],
             ),
-            SizedBox(height: (showRatingAndLike) ? 10 : 0),
-            (showRatingAndLike)
+            _generateHowManyTimesRead(context),
+            SizedBox(height: (widget.showRatingAndLike) ? 10 : 0),
+            (widget.showRatingAndLike)
                 ? Column(
                     children: [
                       Row(
@@ -200,7 +207,8 @@ class BookStatusDetail extends StatelessWidget {
       builder: (context, state) {
         if (state is RatingTypeBar) {
           return RatingBar.builder(
-            initialRating: (book.rating != null) ? book.rating! / 10 : 0,
+            initialRating:
+                (widget.book.rating != null) ? widget.book.rating! / 10 : 0,
             allowHalfRating: true,
             unratedColor: Theme.of(context).scaffoldBackgroundColor,
             glow: false,
@@ -217,7 +225,9 @@ class BookStatusDetail extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               Text(
-                (book.rating == null) ? '0' : '${(book.rating! / 10)}',
+                (widget.book.rating == null)
+                    ? '0'
+                    : '${(widget.book.rating! / 10)}',
                 style: const TextStyle(
                   fontSize: 16,
                   fontWeight: FontWeight.bold,
@@ -237,13 +247,9 @@ class BookStatusDetail extends StatelessWidget {
   }
 
   List<Widget> _buildStartAndFinishDates(BuildContext context) {
-    final dateFormat = DateFormat.yMd(
-      '${context.locale.languageCode}-${context.locale.countryCode}',
-    );
-
     final widgets = <Widget>[];
 
-    for (final reading in book.readings) {
+    for (final reading in widget.book.readings) {
       late Widget widget;
       final startDate = reading.startDate;
       final finishDate = reading.finishDate;
@@ -251,7 +257,6 @@ class BookStatusDetail extends StatelessWidget {
 
       if (startDate != null && finishDate != null) {
         widget = _buildStartAndFinishDate(
-          dateFormat,
           startDate,
           finishDate,
           readingTime,
@@ -259,14 +264,12 @@ class BookStatusDetail extends StatelessWidget {
         );
       } else if (startDate == null && finishDate != null) {
         widget = _buildOnlyFinishDate(
-          dateFormat,
           finishDate,
           readingTime,
           context,
         );
       } else if (startDate != null && finishDate == null) {
         widget = _buildOnlyStartDate(
-          dateFormat,
           startDate,
           context,
         );
@@ -274,88 +277,124 @@ class BookStatusDetail extends StatelessWidget {
         widget = const SizedBox();
       }
 
-      widgets.add(widget);
+      widgets.add(
+        SizedBox(
+          child: Row(
+            children: [
+              Expanded(child: widget),
+            ],
+          ),
+        ),
+      );
     }
 
     return widgets;
   }
 
   Widget _buildStartAndFinishDate(
-    DateFormat dateFormat,
     DateTime startDate,
     DateTime finishDate,
     ReadingTime? readingTime,
     BuildContext context,
   ) {
-    final text = Text(
-      '${dateFormat.format(startDate)} - ${dateFormat.format(finishDate)}',
-      style: const TextStyle(
-        fontSize: 14,
-        fontWeight: FontWeight.bold,
-      ),
-    );
+    final readingTimeText = ' ${_generateReadingTime(
+      startDate: startDate,
+      finishDate: finishDate,
+      context: context,
+      readingTime: readingTime,
+    )}';
 
-    final readingTimeText = Text(
-      ' (${_generateReadingTime(
-        startDate: startDate,
-        finishDate: finishDate,
-        context: context,
-        readingTime: readingTime,
-      )})',
-      style: const TextStyle(
-        fontSize: 14,
-        fontWeight: FontWeight.bold,
+    return RichText(
+      text: TextSpan(
+        style: TextStyle(
+          fontSize: 14,
+          fontWeight: FontWeight.bold,
+          color: Theme.of(context).colorScheme.onSurface,
+        ),
+        children: [
+          TextSpan(
+            text:
+                '${dateFormat.format(startDate)} - ${dateFormat.format(finishDate)}',
+          ),
+          TextSpan(
+            text: readingTimeText,
+            style: const TextStyle(fontWeight: FontWeight.normal),
+          ),
+        ],
       ),
-    );
-
-    return Row(
-      children: [text, readingTimeText],
     );
   }
 
   Widget _buildOnlyFinishDate(
-    DateFormat dateFormat,
     DateTime finishDate,
     ReadingTime? readingTime,
     BuildContext context,
   ) {
-    final text = Text(
-      '${LocaleKeys.finished_on_date.tr()} ${dateFormat.format(finishDate)}',
-      style: const TextStyle(
-        fontSize: 14,
-        fontWeight: FontWeight.bold,
-      ),
-    );
+    final readingTimeText = ' ${_generateReadingTime(
+      startDate: null,
+      finishDate: null,
+      context: context,
+      readingTime: readingTime,
+    )}';
 
-    final readingTimeText = Text(
-      ' (${_generateReadingTime(
-        startDate: null,
-        finishDate: finishDate,
-        context: context,
-        readingTime: readingTime,
-      )})',
-      style: const TextStyle(
-        fontSize: 14,
-        fontWeight: FontWeight.bold,
+    return RichText(
+      text: TextSpan(
+        style: TextStyle(
+          fontSize: 14,
+          fontWeight: FontWeight.bold,
+          color: Theme.of(context).colorScheme.onSurface,
+        ),
+        children: [
+          TextSpan(
+            text:
+                '${LocaleKeys.finished_on_date.tr()} ${dateFormat.format(finishDate)}',
+          ),
+          TextSpan(
+            text: readingTimeText,
+            style: const TextStyle(fontWeight: FontWeight.normal),
+          ),
+        ],
       ),
-    );
-
-    return Row(
-      children: [text, readingTimeText],
     );
   }
 
   Widget _buildOnlyStartDate(
-    DateFormat dateFormat,
     DateTime startDate,
     BuildContext context,
   ) {
-    return Text(
-      '${LocaleKeys.started_on_date.tr()} ${dateFormat.format(startDate)}',
-      style: const TextStyle(
-        fontSize: 14,
-        fontWeight: FontWeight.bold,
+    return RichText(
+      text: TextSpan(
+        style: TextStyle(
+          fontSize: 14,
+          fontWeight: FontWeight.bold,
+          color: Theme.of(context).colorScheme.onSurface,
+        ),
+        children: [
+          TextSpan(
+            text:
+                '${LocaleKeys.started_on_date.tr()} ${dateFormat.format(startDate)}',
+          ),
+        ],
       ),
     );
+  }
+
+  Widget _generateHowManyTimesRead(BuildContext context) {
+    int timesRead = 0;
+
+    for (final reading in widget.book.readings) {
+      if (reading.finishDate != null) {
+        timesRead++;
+      }
+    }
+
+    return timesRead > 1
+        ? Padding(
+            padding: const EdgeInsets.fromLTRB(0, 5, 0, 5),
+            child: Text(LocaleKeys.read_x_times
+                .plural(widget.book.readings.length)
+                .tr()),
+          )
+        : const SizedBox();
   }
 }

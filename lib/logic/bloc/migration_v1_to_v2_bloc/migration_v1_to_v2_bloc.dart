@@ -37,6 +37,7 @@ class MigrationV1ToV2Bloc
 
       if (v1BooksDbPath == null) {
         if (event.retrigger) {
+          // ignore: use_build_context_synchronously
           _showSnackbar(event.context, 'Migration error 1');
         }
 
@@ -49,9 +50,11 @@ class MigrationV1ToV2Bloc
       await _migrateBooksFromV1ToV2(v1BooksDbPath);
 
       if (v1YearsDbPath != null) {
+        // ignore: use_build_context_synchronously
         await _migrateYearsFromV1ToV2(event.context, v1YearsDbPath);
       } else {
         if (event.retrigger) {
+          // ignore: use_build_context_synchronously
           _showSnackbar(event.context, 'Migration error 3');
         }
       }
@@ -117,6 +120,7 @@ class MigrationV1ToV2Bloc
     final totalBooksToMigrate = books.length;
     var booksMigrated = 0;
 
+    // ignore: invalid_use_of_visible_for_testing_member
     emit(MigrationOnging(total: totalBooksToMigrate, done: booksMigrated));
 
     for (var book in books) {
@@ -127,6 +131,7 @@ class MigrationV1ToV2Bloc
       );
       booksMigrated += 1;
 
+      // ignore: invalid_use_of_visible_for_testing_member
       emit(MigrationOnging(total: totalBooksToMigrate, done: booksMigrated));
     }
 
@@ -150,8 +155,8 @@ class MigrationV1ToV2Bloc
 
     return blurhash_dart.BlurHash.encode(
       img.decodeImage(cover)!,
-      numCompX: blurHashX,
-      numCompY: blurHashY,
+      numCompX: Constants.blurHashX,
+      numCompY: Constants.blurHashY,
     ).hash;
   }
 
@@ -202,6 +207,7 @@ class MigrationV1ToV2Bloc
       }
     }
 
+    // ignore: use_build_context_synchronously
     BlocProvider.of<ChallengeBloc>(context).add(
       RestoreChallengesEvent(
         challenges: newChallenges,

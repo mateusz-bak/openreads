@@ -1,4 +1,4 @@
-name: Build split apks and attach to release
+name: GitHub release
 
 on:
   release:
@@ -6,7 +6,8 @@ on:
       - published
 
 jobs:
-  build:
+  build_github:
+    name: Build split apks and attach to release
     runs-on: ubuntu-latest
 
     steps:

@@ -1,8 +1,10 @@
 import 'dart:convert';
 import 'dart:io';
 
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/foundation.dart';
-import 'package:openreads/core/constants/enums.dart';
+import 'package:openreads/core/constants/enums/enums.dart';
+import 'package:openreads/generated/locale_keys.g.dart';
 import 'package:openreads/main.dart';
 import 'package:openreads/model/reading.dart';
 import 'package:openreads/model/book_from_backup_v3.dart';
@@ -13,7 +15,7 @@ class Book {
   String? subtitle;
   String author;
   String? description;
-  int status;
+  BookStatus status;
   bool favourite;
   bool deleted;
   int? rating;
@@ -29,6 +31,8 @@ class Book {
   BookFormat bookFormat;
   bool hasCover;
   List<Reading> readings;
+  DateTime dateAdded;
+  DateTime dateModified;
 
   Book({
     this.id,
@@ -52,19 +56,27 @@ class Book {
     this.bookFormat = BookFormat.paperback,
     this.hasCover = false,
     required this.readings,
+    required this.dateAdded,
+    required this.dateModified,
   });
 
-  factory Book.empty() {
+  factory Book.empty({
+    BookStatus status = BookStatus.read,
+    BookFormat bookFormat = BookFormat.paperback,
+  }) {
     return Book(
       id: null,
       title: '',
       author: '',
-      status: 0,
+      status: status,
       favourite: false,
       deleted: false,
-      bookFormat: BookFormat.paperback,
+      bookFormat: bookFormat,
       hasCover: false,
       readings: List<Reading>.empty(growable: true),
+      tags: LocaleKeys.owned_book_tag.tr(),
+      dateAdded: DateTime.now(),
+      dateModified: DateTime.now(),
     );
   }
 
@@ -75,7 +87,7 @@ class Book {
       subtitle: json['subtitle'],
       author: json['author'],
       description: json['description'],
-      status: json['status'],
+      status: parseBookStatus(json['status']),
       rating: json['rating'],
       favourite: (json['favourite'] == 1) ? true : false,
       hasCover: (json['has_cover'] == 1) ? true : false,
@@ -101,13 +113,19 @@ class Book {
                       ? BookFormat.paperback
                       : BookFormat.paperback,
       readings: _sortReadings(_parseReadingsFromJson(json)),
+      dateAdded: json['date_added'] != null
+          ? DateTime.parse(json['date_added'])
+          : DateTime.now(),
+      dateModified: json['date_modified'] != null
+          ? DateTime.parse(json['date_modified'])
+          : DateTime.now(),
     );
   }
 
   Book copyWith({
     String? title,
     String? author,
-    int? status,
+    BookStatus? status,
     String? subtitle,
     String? description,
     bool? favourite,
@@ -125,6 +143,8 @@ class Book {
     BookFormat? bookFormat,
     bool? hasCover,
     List<Reading>? readings,
+    DateTime? dateAdded,
+    DateTime? dateModified,
   }) {
     return Book(
       id: id,
@@ -148,6 +168,8 @@ class Book {
       bookFormat: bookFormat ?? this.bookFormat,
       hasCover: hasCover ?? this.hasCover,
       readings: readings ?? this.readings,
+      dateAdded: dateAdded ?? this.dateAdded,
+      dateModified: dateModified ?? this.dateModified,
     );
   }
 
@@ -174,60 +196,65 @@ class Book {
       bookFormat: bookFormat,
       hasCover: hasCover,
       readings: readings,
+      dateAdded: dateAdded,
+      dateModified: dateModified,
     );
   }
 
   factory Book.fromBookFromBackupV3(
       BookFromBackupV3 oldBook, String? blurHash) {
     return Book(
-        title: oldBook.bookTitle ?? '',
-        author: oldBook.bookAuthor ?? '',
-        status: oldBook.bookStatus == 'not_finished'
-            ? 3
-            : oldBook.bookStatus == 'to_read'
-                ? 2
-                : oldBook.bookStatus == 'in_progress'
-                    ? 1
-                    : 0,
-        rating: oldBook.bookRating != null
-            ? (oldBook.bookRating! * 10).toInt()
-            : null,
-        favourite: oldBook.bookIsFav == 1,
-        deleted: oldBook.bookIsDeleted == 1,
-        pages: oldBook.bookNumberOfPages,
-        publicationYear: oldBook.bookPublishYear,
-        isbn: oldBook.bookISBN13 ?? oldBook.bookISBN10,
-        olid: oldBook.bookOLID,
-        tags: oldBook.bookTags != null && oldBook.bookTags != 'null'
-            ? jsonDecode(oldBook.bookTags!).join('|||||')
-            : null,
-        notes: oldBook.bookNotes,
-        cover: oldBook.bookCoverImg,
-        blurHash: blurHash,
-        bookFormat: BookFormat.paperback,
-        hasCover: false,
-        readings: (oldBook.bookStartDate == null ||
-                    oldBook.bookStartDate == "null" ||
-                    oldBook.bookStartDate == "none") &&
-                (oldBook.bookFinishDate == null ||
-                    oldBook.bookFinishDate == "null" ||
-                    oldBook.bookFinishDate == "none")
-            ? List<Reading>.empty(growable: true)
-            : [
-                Reading(
-                    startDate: oldBook.bookStartDate != null &&
-                            oldBook.bookStartDate != 'none' &&
-                            oldBook.bookStartDate != 'null'
-                        ? DateTime.fromMillisecondsSinceEpoch(
-                            int.parse(oldBook.bookStartDate!))
-                        : null,
-                    finishDate: oldBook.bookFinishDate != null &&
-                            oldBook.bookFinishDate != 'none' &&
-                            oldBook.bookFinishDate != 'null'
-                        ? DateTime.fromMillisecondsSinceEpoch(
-                            int.parse(oldBook.bookFinishDate!))
-                        : null)
-              ]);
+      title: oldBook.bookTitle ?? '',
+      author: oldBook.bookAuthor ?? '',
+      status: oldBook.bookStatus == 'not_finished'
+          ? BookStatus.unfinished
+          : oldBook.bookStatus == 'to_read'
+              ? BookStatus.forLater
+              : oldBook.bookStatus == 'in_progress'
+                  ? BookStatus.inProgress
+                  : BookStatus.read,
+      rating: oldBook.bookRating != null
+          ? (oldBook.bookRating! * 10).toInt()
+          : null,
+      favourite: oldBook.bookIsFav == 1,
+      deleted: oldBook.bookIsDeleted == 1,
+      pages: oldBook.bookNumberOfPages,
+      publicationYear: oldBook.bookPublishYear,
+      isbn: oldBook.bookISBN13 ?? oldBook.bookISBN10,
+      olid: oldBook.bookOLID,
+      tags: oldBook.bookTags != null && oldBook.bookTags != 'null'
+          ? jsonDecode(oldBook.bookTags!).join('|||||')
+          : null,
+      notes: oldBook.bookNotes,
+      cover: oldBook.bookCoverImg,
+      blurHash: blurHash,
+      bookFormat: BookFormat.paperback,
+      hasCover: false,
+      readings: (oldBook.bookStartDate == null ||
+                  oldBook.bookStartDate == "null" ||
+                  oldBook.bookStartDate == "none") &&
+              (oldBook.bookFinishDate == null ||
+                  oldBook.bookFinishDate == "null" ||
+                  oldBook.bookFinishDate == "none")
+          ? List<Reading>.empty(growable: true)
+          : [
+              Reading(
+                  startDate: oldBook.bookStartDate != null &&
+                          oldBook.bookStartDate != 'none' &&
+                          oldBook.bookStartDate != 'null'
+                      ? DateTime.fromMillisecondsSinceEpoch(
+                          int.parse(oldBook.bookStartDate!))
+                      : null,
+                  finishDate: oldBook.bookFinishDate != null &&
+                          oldBook.bookFinishDate != 'none' &&
+                          oldBook.bookFinishDate != 'null'
+                      ? DateTime.fromMillisecondsSinceEpoch(
+                          int.parse(oldBook.bookFinishDate!))
+                      : null)
+            ],
+      dateAdded: DateTime.now(),
+      dateModified: DateTime.now(),
+    );
   }
 
   Map<String, dynamic> toJSON() {
@@ -237,7 +264,7 @@ class Book {
       'subtitle': subtitle,
       'author': author,
       'description': description,
-      'status': status,
+      'status': status.value,
       'rating': rating,
       'favourite': favourite ? 1 : 0,
       'deleted': deleted ? 1 : 0,
@@ -259,7 +286,9 @@ class Book {
                   : bookFormat == BookFormat.paperback
                       ? 'paperback'
                       : 'paperback',
-      'readings': readings.map((reading) => reading.toString()).join(';')
+      'readings': readings.map((reading) => reading.toString()).join(';'),
+      'date_added': dateAdded.toIso8601String(),
+      'date_modified': dateModified.toIso8601String(),
     };
   }
 
@@ -269,6 +298,17 @@ class Book {
 
     if (fileExists) {
       return File('${appDocumentsDirectory.path}/$id.jpg');
+    } else {
+      return null;
+    }
+  }
+
+  Uint8List? getCoverBytes() {
+    final fileExists =
+        File('${appDocumentsDirectory.path}/$id.jpg').existsSync();
+
+    if (fileExists) {
+      return File('${appDocumentsDirectory.path}/$id.jpg').readAsBytesSync();
     } else {
       return null;
     }

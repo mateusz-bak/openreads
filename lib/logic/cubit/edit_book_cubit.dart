@@ -1,8 +1,9 @@
 import 'dart:io';
 
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:openreads/core/constants/enums.dart';
+import 'package:openreads/core/constants/enums/enums.dart';
 import 'package:openreads/main.dart';
 import 'package:openreads/model/reading.dart';
 import 'package:openreads/model/book.dart';
@@ -13,30 +14,18 @@ class EditBookCubit extends Cubit<Book> {
 
   setBook(Book book) => emit(book);
 
-  void updateBook(File? coverFile, BuildContext context) {
+  void updateBook(Uint8List? cover, BuildContext context) {
     if (state.id == null) return;
 
-    bookCubit.updateBook(state, coverFile: coverFile, context: context);
+    bookCubit.updateBook(state, cover: cover, context: context);
   }
 
-  void addNewBook(File? coverFile) {
-    bookCubit.addBook(state, coverFile: coverFile);
+  void addNewBook(Uint8List? cover) {
+    bookCubit.addBook(state, cover: cover);
   }
 
-  void setStatus(int status) {
+  void setStatus(BookStatus status) {
     final book = state.copyWith();
-
-    // Book not started should not have reading dates
-    if (state.status == 2) {
-      book.readings = List<Reading>.empty(growable: true);
-    }
-
-    // Temporarily disable this feature as not sure how this
-    // should work with the new reading dates
-    // // Book not finished should not have a finish date
-    // if (state.status != 0) {
-    //   book.finishDate = null;
-    // }
 
     emit(book.copyWith(status: status));
   }
@@ -211,11 +200,13 @@ class EditBookCubit extends Cubit<Book> {
   }
 }
 
-class EditBookCoverCubit extends Cubit<File?> {
+class EditBookCoverCubit extends Cubit<Uint8List?> {
   EditBookCoverCubit() : super(null);
 
-  setCover(File? file) {
-    emit(file);
+  setCover(Uint8List? cover) {
+    imageCache.clear();
+
+    emit(cover);
   }
 
   deleteCover(int? bookID) async {

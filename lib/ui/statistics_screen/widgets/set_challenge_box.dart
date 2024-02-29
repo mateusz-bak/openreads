@@ -6,12 +6,12 @@ import 'package:openreads/ui/statistics_screen/widgets/widgets.dart';
 
 class SetChallengeBox extends StatelessWidget {
   const SetChallengeBox({
-    Key? key,
+    super.key,
     required this.setChallenge,
     required this.year,
     this.booksTarget,
     this.pagesTarget,
-  }) : super(key: key);
+  });
 
   final Function(int, int, int) setChallenge;
   final int year;

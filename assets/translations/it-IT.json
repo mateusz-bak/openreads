@@ -198,7 +198,6 @@
     "welcome_3_description_1": "Openreads è completamente open source!",
     "welcome_3_description_2": "Significa che puoi ispezionare il codice sorgente dell'applicazione e contribuire al suo sviluppo.",
     "welcome_3_description_3": "In più, non c'è pubblicità e nessuna forma di profilazione!",
-    "next_button": "PROSSIMO",
     "start_button": "INIZIA",
     "migration_v1_to_v2_1": "I tuoi libri sono in fase di migrazione verso la nuova versione",
     "migration_v1_to_v2_2": "Non lasciare questa schermata prima che tutti i tuoi libri siano migrati, altrimenti saranno persi!",
@@ -213,7 +212,7 @@
     "dark_mode_style": "Stile tema scuro",
     "dark_mode_natural": "Tema scuro naturale",
     "only_editions_with_covers": "Mostra solo edizioni con copertina",
-    "change_book_format": "Cambia formato del libro",
+    "change_book_format": "Cambia formato dei libri",
     "selected": "Selezionato",
     "standard_color": "Standard",
     "dark_mode_amoled": "Tema scuro AMOLED",
@@ -228,12 +227,10 @@
     "csv": "CSV",
     "minute": {
         "other": "{} minuti",
-        "one": "{} minuto",
-        "title": "Minuti"
+        "one": "{} minuto"
     },
     "export_successful": "Esportazione Completata!",
     "hour": {
-        "title": "Ore",
         "other": "{} ore",
         "one": "{} ora"
     },
@@ -243,8 +240,7 @@
     "select_all": "Seleziona tutti",
     "day": {
         "one": "{} giorno",
-        "other": "{} giorni",
-        "title": "Giorni"
+        "other": "{} giorni"
     },
     "import_successful": "Importazione completata",
     "openreads_backup": "Backup Openreads",
@@ -260,7 +256,20 @@
     "delete_books": "Elimina libri",
     "ok": "OK",
     "tags": {
-        "one": "Tag"
+        "one": "Tag",
+        "other": "Tags"
     },
-    "general_search": "Generale"
+    "general_search": "Generale",
+    "get_cover_from_open_library": "Recupera la copertina da Open Library tramite l'ISBN del libro",
+    "no_search_results": "Nessun risultato trovato",
+    "load_cover_from_phone": "Carica una copertina dal tuo telefono",
+    "isbn_cannot_be_empty": "l'ISBN non può essere vuoto",
+    "set_custom_reading_time": "Imposta un tempo di lettura personalizzato",
+    "cover_not_found_in_ol": "Non è stata trovata nessuna cover in Open Library",
+    "click_to_add_book_manually": "Clicca qua per aggiungere il libro manualmente",
+    "choose_not_finished_shelf": "Seleziona una libreria coi libri non finiti",
+    "try_downloading_covers": "Vuoi provare a scaricare le copertine mancanti per i libri importati?",
+    "download_missing_covers_explanation": "Scarica le copertine mancanti per i libri che hanno l'indicazione ISBN",
+    "downloaded_covers": "Copertine scaricate:",
+    "import_bookwyrm_csv": "Importa CSV da BookWyrm"
 }

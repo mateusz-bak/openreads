@@ -1,12 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:openreads/core/themes/app_theme.dart';
+import 'package:openreads/main.dart';
 
-class SetDateButton extends StatelessWidget {
+class SetDateButton extends StatefulWidget {
   const SetDateButton({
     super.key,
     required this.defaultHeight,
     required this.icon,
     required this.text,
+    required this.date,
     required this.onPressed,
     required this.onClearPressed,
     required this.showClearButton,
@@ -15,21 +17,27 @@ class SetDateButton extends StatelessWidget {
   final double defaultHeight;
   final IconData icon;
   final String text;
+  final DateTime? date;
   final Function() onPressed;
   final Function() onClearPressed;
   final bool showClearButton;
 
   @override
+  State<SetDateButton> createState() => _SetDateButtonState();
+}
+
+class _SetDateButtonState extends State<SetDateButton> {
+  @override
   Widget build(BuildContext context) {
     return SizedBox(
-      height: defaultHeight,
+      height: widget.defaultHeight,
       child: Stack(
         children: [
           InkWell(
             customBorder: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(cornerRadius),
             ),
-            onTap: onPressed,
+            onTap: widget.onPressed,
             child: Ink(
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(cornerRadius),
@@ -50,13 +58,15 @@ class SetDateButton extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
                       Icon(
-                        icon,
+                        widget.icon,
                         color: Theme.of(context).colorScheme.primary,
                       ),
                       const SizedBox(width: 10),
                       FittedBox(
                         child: Text(
-                          text,
+                          widget.date != null
+                              ? dateFormat.format(widget.date!)
+                              : widget.text,
                           maxLines: 1,
                           style: const TextStyle(fontSize: 12),
                         ),
@@ -72,13 +82,13 @@ class SetDateButton extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.end,
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
-                (showClearButton)
+                (widget.showClearButton)
                     ? IconButton(
                         icon: const Icon(
                           Icons.close,
                           size: 20,
                         ),
-                        onPressed: onClearPressed,
+                        onPressed: widget.onClearPressed,
                       )
                     : const SizedBox(),
               ],

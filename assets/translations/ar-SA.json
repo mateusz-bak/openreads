@@ -198,7 +198,6 @@
     "welcome_3_description_1": "Openreads مفتوح المصدر تمامًا!",
     "welcome_3_description_2": "هذا يعني أنه يمكنك فحص كود التطبيق بنفسك والمساهمة في تطويره.",
     "welcome_3_description_3": "بالإضافة هذا التطبيق خالٍ من الإعلانات ولا تتبع على الإطلاق!",
-    "next_button": "التالي",
     "start_button": "ابدأ",
     "migration_v1_to_v2_1": "جاري نقل كتبك إلى الإصدار الجديد",
     "migration_v1_to_v2_2": "لا تترك هذه الصفحة قبل أن يتم نقل جميع الكتب، وإلا سوف تفقد!",
@@ -219,14 +218,12 @@
     "custom_color": "ألوان مخصصة",
     "hour": {
         "one": "{} ساعة",
-        "title": "الساعات",
         "other": "{} من الساعات"
     },
     "csv": "CSV",
     "minute": {
         "other": "{} من الدقائق",
-        "one": "{} دقيقة",
-        "title": "الدقائق"
+        "one": "{} دقيقة"
     },
     "choose_not_finished_shelf": "إختر لائحة الكتب غير المنجزة:",
     "export_successful": "تم التصدير بنجاح",
@@ -244,7 +241,6 @@
     "set_custom_reading_time": "تحديد مدة القراءة",
     "day": {
         "one": "{} يوم",
-        "title": "الأيام",
         "other": "{} من الأيام"
     },
     "import_successful": "تم الإستيراد بنجاح",
@@ -253,5 +249,18 @@
     "export_csv": "نسخ الكتب في ملف CSV",
     "book_format_paperback": "كتاب ورقي",
     "book_format_hardcover": "طبعة مجلدة",
-    "book_format_paperback_plural": "كتب ورقية"
+    "book_format_paperback_plural": "كتب ورقية",
+    "change_books_author": "غير مؤلفي الكتاب",
+    "bulk_update_unsuccessful_message": "لا يمكن تحديث تفاصيل الكتب",
+    "tags": {
+        "one": "وسم",
+        "other": "أوسمة"
+    },
+    "get_cover_from_open_library": "أحصل على الغلاف من Open Library باستعمال الرقم الدولي الموحد للكتاب (ISBN)",
+    "click_to_add_book_manually": "أنقر هنا لاضافة الكتاب يدويا",
+    "load_cover_from_phone": "حمل الغلاف من هاتفك",
+    "isbn_cannot_be_empty": "الرقم الدولي الموحد للكتاب (ISBN) لا يمكن أن يكون فارغا",
+    "cover_not_found_in_ol": "لم يتم العثور على الغلاف في Open Library",
+    "no_search_results": "لم يتم العثور على أية نتائج",
+    "delete_books": "حذف الكتب"
 }
