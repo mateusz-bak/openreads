@@ -10,7 +10,7 @@ on:
 
 jobs:
   android_apk_build:
-    name: Test build of Android apk
+    name: Android apk
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v3
@@ -29,7 +29,7 @@ jobs:
     - run: flutter build -v apk
 
   android_appbundle_build:
-    name: Test build of Android appbundle
+    name: Android appbundle
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v3
@@ -48,7 +48,7 @@ jobs:
     - run: flutter build -v appbundle
 
   ios_build:
-    name: Test build of iOS ipa
+    name: iOS ipa
     runs-on: macos-latest
     steps:
     - uses: actions/checkout@v3

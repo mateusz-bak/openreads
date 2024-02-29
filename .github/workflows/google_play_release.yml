@@ -1,4 +1,4 @@
-name: Build appbundle and upload to Google Play
+name: Google Play Release
 
 on:
   release:
@@ -7,7 +7,7 @@ on:
 
 jobs:
   build_google_play:
-    name: Build and publish app to Google Play Store
+    name: Build appbundle and upload to Google Play
     runs-on: ubuntu-latest
 
     steps:

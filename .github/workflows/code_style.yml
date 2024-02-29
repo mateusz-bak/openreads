@@ -1,4 +1,4 @@
-name: Format Dart code
+name: Code style
 
 on:
   push:
