@@ -6,7 +6,8 @@ on:
       - published
 
 jobs:
-  build:
+  build_google_play:
+    name: Build and publish app to Google Play Store
     runs-on: ubuntu-latest
 
     steps:

@@ -6,7 +6,8 @@ on:
       - published
 
 jobs:
-  build:
+  build_github:
+    name: Build and publish app to GitHub
     runs-on: ubuntu-latest
 
     steps:
