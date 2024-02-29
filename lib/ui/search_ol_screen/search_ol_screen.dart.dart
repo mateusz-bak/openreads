@@ -1,6 +1,7 @@
 import 'package:barcode_scan2/barcode_scan2.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
 import 'package:loading_animation_widget/loading_animation_widget.dart';
@@ -327,22 +328,26 @@ class _SearchOLScreenState extends State<SearchOLScreen>
                 ],
               ),
             ),
-            BlocBuilder<OpenLibrarySearchBloc, OpenLibrarySearchState>(
-              builder: (context, state) {
-                return Wrap(
-                  crossAxisAlignment: WrapCrossAlignment.center,
-                  children: [
-                    for (var i = 0; i < 4; i++) ...[
-                      if (i != 0) const SizedBox(width: 5),
-                      OLSearchRadio(
-                        searchType: OLSearchType.values[i],
-                        activeSearchType: _getOLSearchTypeEnum(state),
-                        onChanged: _changeSearchType,
-                      ),
+            Align(
+              alignment: Alignment.centerLeft,
+              child: BlocBuilder<OpenLibrarySearchBloc, OpenLibrarySearchState>(
+                builder: (context, state) {
+                  return Wrap(
+                    alignment: WrapAlignment.start,
+                    crossAxisAlignment: WrapCrossAlignment.center,
+                    children: [
+                      for (var i = 0; i < 4; i++) ...[
+                        if (i != 0) const SizedBox(width: 5),
+                        OLSearchRadio(
+                          searchType: OLSearchType.values[i],
+                          activeSearchType: _getOLSearchTypeEnum(state),
+                          onChanged: _changeSearchType,
+                        ),
+                      ],
                     ],
-                  ],
-                );
-              },
+                  );
+                },
+              ),
             ),
             const Padding(
               padding: EdgeInsets.fromLTRB(10, 0, 10, 10),
