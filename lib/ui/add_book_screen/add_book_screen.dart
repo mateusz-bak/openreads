@@ -446,100 +446,6 @@ class _AddBookScreenState extends State<AddBookScreen> {
                         padding: const EdgeInsets.fromLTRB(10, 0, 5, 0),
                       ),
                     ),
-                  ),
-                ],
-              ),
-              const SizedBox(height: 10),
-              BookTextField(
-                controller: _descriptionCtrl,
-                hint: LocaleKeys.enter_description.tr(),
-                icon: FontAwesomeIcons.solidKeyboard,
-                keyboardType: TextInputType.multiline,
-                maxLength: 5000,
-                hideCounter: false,
-                maxLines: 15,
-                textCapitalization: TextCapitalization.sentences,
-              ),
-              const SizedBox(height: 10),
-              BookTextField(
-                controller: _isbnCtrl,
-                hint: LocaleKeys.isbn.tr(),
-                icon: FontAwesomeIcons.i,
-                keyboardType: TextInputType.number,
-                inputFormatters: <TextInputFormatter>[
-                  FilteringTextInputFormatter.digitsOnly
-                ],
-                maxLength: 20,
-              ),
-              const SizedBox(height: 10),
-              BookTextField(
-                controller: _olidCtrl,
-                hint: LocaleKeys.open_library_ID.tr(),
-                icon: FontAwesomeIcons.o,
-                keyboardType: TextInputType.text,
-                maxLength: 20,
-                textCapitalization: TextCapitalization.characters,
-              ),
-              const SizedBox(height: 10),
-              StreamBuilder<List<String>>(
-                stream: bookCubit.tags,
-                builder: (context, AsyncSnapshot<List<String>?> snapshot) {
-                  final book = context.read<EditBookCubit>().state;
-                  return TagsField(
-                    existingTags: _parseBookTags(book.tags),
-                    controller: _tagsCtrl,
-                    hint: LocaleKeys.enter_tags.tr(),
-                    icon: FontAwesomeIcons.tags,
-                    keyboardType: TextInputType.text,
-                    maxLength: 20,
-                    onSubmitted: (_) {
-                      _addNewTag();
-                      // Adding setState causes reload which is needed so that tag suggestions update
-                      setState(() {});
-                    },
-                    onEditingComplete: () {},
-                    unselectTag: (tag) => _unselectTag(tag),
-                    allTags: snapshot.data,
-                  );
-                },
-              ),
-              const Padding(
-                padding: EdgeInsets.all(10),
-                child: Divider(),
-              ),
-              BookTextField(
-                controller: _myReviewCtrl,
-                hint: LocaleKeys.my_review.tr(),
-                icon: FontAwesomeIcons.solidKeyboard,
-                keyboardType: TextInputType.multiline,
-                maxLength: 5000,
-                hideCounter: false,
-                maxLines: 15,
-                textCapitalization: TextCapitalization.sentences,
-              ),
-              const SizedBox(height: 10),
-              BookTextField(
-                controller: _notesCtrl,
-                hint: LocaleKeys.notes.tr(),
-                icon: FontAwesomeIcons.noteSticky,
-                keyboardType: TextInputType.multiline,
-                maxLength: 5000,
-                hideCounter: false,
-                maxLines: 15,
-                textCapitalization: TextCapitalization.sentences,
-              ),
-              const SizedBox(height: 30),
-              Row(
-                children: [
-                  const SizedBox(width: 10),
-                  Expanded(
-                    flex: 10,
-                    child: FilledButton.tonal(
-                      onPressed: () => Navigator.pop(context),
-                      style: ButtonStyle(
-                        shape: MaterialStateProperty.all(RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(cornerRadius),
-                        )),
                     Expanded(
                       child: BookTextField(
                         controller: _pubYearCtrl,
@@ -551,7 +457,6 @@ class _AddBookScreenState extends State<AddBookScreen> {
                         ],
                         maxLength: 4,
                         padding: const EdgeInsets.fromLTRB(5, 0, 10, 0),
-
                       ),
                     ),
                   ],
@@ -591,13 +496,19 @@ class _AddBookScreenState extends State<AddBookScreen> {
                 StreamBuilder<List<String>>(
                   stream: bookCubit.tags,
                   builder: (context, AsyncSnapshot<List<String>?> snapshot) {
+                    final book = context.read<EditBookCubit>().state;
                     return TagsField(
+                      existingTags: _parseBookTags(book.tags),
                       controller: _tagsCtrl,
                       hint: LocaleKeys.enter_tags.tr(),
                       icon: FontAwesomeIcons.tags,
                       keyboardType: TextInputType.text,
-                      maxLength: Constants.maxTagLength,
-                      onSubmitted: (_) => _addNewTag(),
+                      maxLength: 20,
+                      onSubmitted: (_) {
+                        _addNewTag();
+                        // Adding setState causes reload which is needed so that tag suggestions update
+                        setState(() {});
+                      },
                       onEditingComplete: () {},
                       unselectTag: (tag) => _unselectTag(tag),
                       allTags: snapshot.data,
