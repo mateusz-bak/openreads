@@ -283,4 +283,7 @@ abstract class LocaleKeys {
   static const added_on = 'added_on';
   static const modified_on = 'modified_on';
   static const default_books_format = 'default_books_format';
+  static const coverStillDownloaded = 'cover_still_downloaded';
+  static const waitForDownloadingToFinish = 'wait_for_downloading_to_finish';
+  static const saveWithoutCover = 'save_without_cover';
 }

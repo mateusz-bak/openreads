@@ -1,3 +1,6 @@
+import 'dart:io';
+
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:http/http.dart' as http;
@@ -125,6 +128,8 @@ class _AddBookScreenState extends State<AddBookScreen> {
     FocusManager.instance.primaryFocus?.unfocus();
 
     if (!_validate()) return;
+    if (await _checkIfWaitForCoverDownload(context) == true) return;
+    if (!mounted) return;
 
     if (book.hasCover == false) {
       context.read<EditBookCoverCubit>().deleteCover(book.id);
@@ -148,6 +153,8 @@ class _AddBookScreenState extends State<AddBookScreen> {
     FocusManager.instance.primaryFocus?.unfocus();
 
     if (!_validate()) return;
+    if (await _checkIfWaitForCoverDownload(context) == true) return;
+    if (!mounted) return;
 
     context.read<EditBookCubit>().setBook(book.copyWith(
           dateModified: DateTime.now(),
@@ -163,6 +170,58 @@ class _AddBookScreenState extends State<AddBookScreen> {
 
     if (!mounted) return;
     Navigator.pop(context);
+  }
+
+  Future<bool?> _checkIfWaitForCoverDownload(BuildContext context) {
+    if (_isCoverDownloading) {
+      return showDialog<bool>(
+        context: context,
+        builder: (context) {
+          return AlertDialog.adaptive(
+            title: Text(
+              LocaleKeys.coverStillDownloaded.tr(),
+            ),
+            actionsAlignment: MainAxisAlignment.spaceBetween,
+            actions: [
+              Platform.isIOS
+                  ? CupertinoDialogAction(
+                      isDefaultAction: true,
+                      child: Text(LocaleKeys.waitForDownloadingToFinish.tr()),
+                      onPressed: () {
+                        Navigator.of(context).pop(true);
+                      },
+                    )
+                  : TextButton(
+                      child: Text(LocaleKeys.waitForDownloadingToFinish.tr()),
+                      onPressed: () {
+                        Navigator.of(context).pop(true);
+                      },
+                    ),
+              Platform.isIOS
+                  ? CupertinoDialogAction(
+                      isDestructiveAction: true,
+                      child: Text(LocaleKeys.saveWithoutCover.tr()),
+                      onPressed: () {
+                        Navigator.of(context).pop(false);
+                      },
+                    )
+                  : TextButton(
+                      child: Text(
+                        LocaleKeys.saveWithoutCover.tr(),
+                        style: TextStyle(
+                            color: Theme.of(context).colorScheme.error),
+                      ),
+                      onPressed: () {
+                        Navigator.of(context).pop(false);
+                      },
+                    ),
+            ],
+          );
+        },
+      );
+    } else {
+      return Future.value(false);
+    }
   }
 
   void _changeBookType(String? bookType) {

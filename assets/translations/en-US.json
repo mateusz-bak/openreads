@@ -283,5 +283,8 @@
     "date_modified": "Date modified",
     "added_on": "Added on",
     "modified_on": "Modified on",
-    "default_books_format": "Default books format"
+    "default_books_format": "Default books format",
+    "cover_still_downloaded": "Cover is still being downloaded",
+    "wait_for_downloading_to_finish": "Wait for downloading to finish",
+    "save_without_cover": "Save without the cover"
 }
