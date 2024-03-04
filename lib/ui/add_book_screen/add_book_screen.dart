@@ -1,5 +1,7 @@
 import 'dart:io';
 
+import 'package:barcode_scan2/gen/protos/protos.pbenum.dart';
+import 'package:barcode_scan2/platform_wrapper.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:http/http.dart' as http;
@@ -474,15 +476,56 @@ class _AddBookScreenState extends State<AddBookScreen> {
                   textCapitalization: TextCapitalization.sentences,
                 ),
                 const SizedBox(height: 10),
-                BookTextField(
-                  controller: _isbnCtrl,
-                  hint: LocaleKeys.isbn.tr(),
-                  icon: FontAwesomeIcons.i,
-                  keyboardType: TextInputType.number,
-                  inputFormatters: <TextInputFormatter>[
-                    FilteringTextInputFormatter.digitsOnly
+                Row(
+                  children: [
+                    Expanded(
+                      child: BookTextField(
+                        controller: _isbnCtrl,
+                        hint: LocaleKeys.isbn.tr(),
+                        icon: FontAwesomeIcons.i,
+                        keyboardType: TextInputType.number,
+                        inputFormatters: <TextInputFormatter>[
+                          FilteringTextInputFormatter.digitsOnly
+                        ],
+                        maxLength: 20,
+                      ),
+                    ),
+                    InkWell(
+                      customBorder: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(cornerRadius),
+                      ),
+                      onTap: () async {
+                        var result = await BarcodeScanner.scan();
+
+                        if (result.type == ResultType.Barcode) {
+                          setState(() {
+                            _isbnCtrl.text = result.rawContent;
+                          });
+                        }
+                      },
+                      child: Container(
+                        height: 60,
+                        width: 60,
+                        padding: const EdgeInsets.all(10),
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(cornerRadius),
+                          color: Theme.of(context)
+                              .colorScheme
+                              .surfaceVariant
+                              .withOpacity(0.5),
+                          border: Border.all(color: dividerColor),
+                        ),
+                        child: Icon(
+                          FontAwesomeIcons.barcode,
+                          size: 28,
+                          color: Theme.of(context).colorScheme.primary,
+                        ),
+                      ),
+                    ),
+                    const SizedBox(
+                      width: 12,
+                    )
                   ],
-                  maxLength: 20,
                 ),
                 const SizedBox(height: 10),
                 BookTextField(
