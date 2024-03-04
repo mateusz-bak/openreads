@@ -1,0 +1,6 @@
+- Fix: Book status is autofilled for books from Open Library.
+- Fix: Sorting by books start or finish dates does not break the list.
+- Fix: Selecting books does not rearrange them.
+- Fix: Editing book's current cover does not require app restart to present the change.
+- Fix: Default book format audiobook is properly shown in settings.
+- Fix: Edit book state does not jitter when typing.

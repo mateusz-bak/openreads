@@ -7,7 +7,7 @@ import 'package:flutter/material.dart';
 import 'package:csv/csv.dart';
 import 'package:easy_localization/easy_localization.dart';
 
-import 'package:openreads/core/constants/enums.dart';
+import 'package:openreads/core/constants/enums/enums.dart';
 import 'package:openreads/core/helpers/backup/backup.dart';
 import 'package:openreads/generated/locale_keys.g.dart';
 import 'package:openreads/model/reading.dart';
@@ -200,6 +200,8 @@ class CSVImportGoodreads {
         tags: _getTags(i, csv, headers, notFinishedShelf: notFinishedShelf),
         readings: _getReadingDates(i, csv, headers),
         bookFormat: _getBookFormat(i, csv, headers),
+        dateAdded: _getDateAdded(i, csv, headers),
+        dateModified: DateTime.now(),
       );
     } catch (e) {
       BackupGeneral.showInfoSnackbar(e.toString());
@@ -286,7 +288,7 @@ class CSVImportGoodreads {
     return myReview.isNotEmpty ? myReview : null;
   }
 
-  static int _getStatus(
+  static BookStatus _getStatus(
     int i,
     List<List<dynamic>> csv,
     List headers, {
@@ -301,16 +303,14 @@ class CSVImportGoodreads {
     // did-not-finish
     final exclusiveShelfField =
         csv[i][headers.indexOf('Exclusive Shelf')].toString();
-    return exclusiveShelfField == 'read'
-        ? 0
-        : exclusiveShelfField == 'currently-reading'
-            ? 1
-            : exclusiveShelfField == 'to-read'
-                ? 2
-                : notFinishedShelf != null &&
-                        exclusiveShelfField == notFinishedShelf
-                    ? 3
-                    : 0;
+    return exclusiveShelfField == 'currently-reading'
+        ? BookStatus.inProgress
+        : exclusiveShelfField == 'to-read'
+            ? BookStatus.forLater
+            : notFinishedShelf != null &&
+                    exclusiveShelfField == notFinishedShelf
+                ? BookStatus.unfinished
+                : BookStatus.read;
   }
 
   static String? _getTags(
@@ -372,6 +372,26 @@ class CSVImportGoodreads {
     }
 
     return readingDates;
+  }
+
+  static DateTime _getDateAdded(int i, List<List<dynamic>> csv, List headers) {
+    // Example Date Added fields:
+    // 2021/04/06
+    // 2022/04/27
+    final dateReadField = csv[i][headers.indexOf('Date Added')].toString();
+
+    if (dateReadField.isNotEmpty) {
+      final splittedDate = dateReadField.split('/');
+      if (splittedDate.length == 3) {
+        final year = int.parse(splittedDate[0]);
+        final month = int.parse(splittedDate[1]);
+        final day = int.parse(splittedDate[2]);
+
+        return DateTime(year, month, day);
+      }
+    }
+
+    return DateTime.now();
   }
 
   static BookFormat _getBookFormat(

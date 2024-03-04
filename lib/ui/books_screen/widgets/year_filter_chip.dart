@@ -5,11 +5,11 @@ import 'package:openreads/generated/locale_keys.g.dart';
 
 class YearFilterChip extends StatelessWidget {
   const YearFilterChip({
-    Key? key,
+    super.key,
     required this.dbYear,
     required this.selected,
     required this.onYearChipPressed,
-  }) : super(key: key);
+  });
 
   final int? dbYear;
   final bool selected;

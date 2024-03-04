@@ -2,7 +2,7 @@ import 'package:diacritic/diacritic.dart';
 import 'package:dropdown_button2/dropdown_button2.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
-import 'package:openreads/core/constants/enums.dart';
+import 'package:openreads/core/constants/enums/enums.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:openreads/core/themes/app_theme.dart';
 import 'package:openreads/generated/locale_keys.g.dart';
@@ -25,6 +25,8 @@ final List<String> sortOptions = [
   LocaleKeys.start_date.tr(),
   LocaleKeys.finish_date.tr(),
   LocaleKeys.enter_publication_year.tr(),
+  LocaleKeys.date_added.tr(),
+  LocaleKeys.date_modified.tr(),
 ];
 
 final List<String> bookTypeOptions = [
@@ -48,6 +50,10 @@ String _getSortDropdownValue(SetSortState state) {
     return sortOptions[5];
   } else if (state.sortType == SortType.byPublicationYear) {
     return sortOptions[6];
+  } else if (state.sortType == SortType.byDateAdded) {
+    return sortOptions[7];
+  } else if (state.sortType == SortType.byDateModified) {
+    return sortOptions[8];
   } else {
     return sortOptions[0];
   }
@@ -107,6 +113,10 @@ void _updateSort(BuildContext context, String? value, SetSortState state) {
     sortType = SortType.byFinishDate;
   } else if (value == sortOptions[6]) {
     sortType = SortType.byPublicationYear;
+  } else if (value == sortOptions[7]) {
+    sortType = SortType.byDateAdded;
+  } else if (value == sortOptions[8]) {
+    sortType = SortType.byDateModified;
   } else {
     sortType = SortType.byTitle;
   }
@@ -514,119 +524,9 @@ class _SortBottomSheetState extends State<SortBottomSheet> {
                   style: const TextStyle(fontSize: 16),
                 ),
                 const SizedBox(height: 4),
-                BlocBuilder<SortBloc, SortState>(
-                  builder: (context, state) {
-                    if (state is SetSortState) {
-                      return Row(
-                        children: [
-                          Expanded(
-                            child: DropdownButtonHideUnderline(
-                              child: DropdownButton2(
-                                isExpanded: true,
-                                buttonStyleData: ButtonStyleData(
-                                  height: 42,
-                                  decoration: BoxDecoration(
-                                    border: Border.all(
-                                      color: dividerColor,
-                                    ),
-                                    color: Theme.of(context)
-                                        .colorScheme
-                                        .surfaceVariant,
-                                    borderRadius:
-                                        BorderRadius.circular(cornerRadius),
-                                  ),
-                                ),
-                                items: sortOptions
-                                    .map((item) => DropdownMenuItem<String>(
-                                          value: item,
-                                          child: Text(
-                                            item,
-                                            overflow: TextOverflow.ellipsis,
-                                          ),
-                                        ))
-                                    .toList(),
-                                value: _getSortDropdownValue(state),
-                                onChanged: (value) => _updateSort(
-                                  context,
-                                  value,
-                                  state,
-                                ),
-                              ),
-                            ),
-                          ),
-                          const SizedBox(width: 8),
-                          Container(
-                            decoration: BoxDecoration(
-                              color:
-                                  Theme.of(context).colorScheme.surfaceVariant,
-                              borderRadius: BorderRadius.circular(cornerRadius),
-                              border: Border.all(
-                                color: dividerColor,
-                              ),
-                            ),
-                            child: _getOrderButton(context, state),
-                          )
-                        ],
-                      );
-                    } else {
-                      return const SizedBox();
-                    }
-                  },
-                ),
+                _buildSortDropdown(),
                 const SizedBox(height: 8),
-                BlocBuilder<SortBloc, SortState>(
-                  builder: (context, state) {
-                    if (state is SetSortState) {
-                      return Row(
-                        children: [
-                          Expanded(
-                            child: InkWell(
-                              onTap: () {
-                                BlocProvider.of<SortBloc>(context).add(
-                                  ChangeSortEvent(
-                                    sortType: state.sortType,
-                                    isAsc: state.isAsc,
-                                    onlyFavourite: !state.onlyFavourite,
-                                    years: state.years,
-                                    tags: state.tags,
-                                    displayTags: state.displayTags,
-                                    filterTagsAsAnd: state.filterTagsAsAnd,
-                                    bookType: state.bookType,
-                                    filterOutTags: state.filterOutTags,
-                                  ),
-                                );
-                              },
-                              child: Container(
-                                decoration: BoxDecoration(
-                                  color: Theme.of(context)
-                                      .colorScheme
-                                      .surfaceVariant,
-                                  borderRadius:
-                                      BorderRadius.circular(cornerRadius),
-                                  border: Border.all(
-                                    color: dividerColor,
-                                  ),
-                                ),
-                                child: Row(
-                                  children: [
-                                    _getFavouriteSwitch(context, state),
-                                    const SizedBox(width: 8),
-                                    Text(
-                                      LocaleKeys.only_favourite.tr(),
-                                      style: const TextStyle(fontSize: 16),
-                                    ),
-                                  ],
-                                ),
-                              ),
-                            ),
-                          ),
-                        ],
-                      );
-                    } else {
-                      return const SizedBox();
-                    }
-                  },
-                ),
+                _buildOnlyFavouriteSwitch(),
                 const SizedBox(height: 8),
                 Text(
                   LocaleKeys.filter_by_book_format.tr(),
@@ -634,280 +534,406 @@ class _SortBottomSheetState extends State<SortBottomSheet> {
                 ),
                 const SizedBox(height: 4),
                 _buildBookTypeFilter(),
-                StreamBuilder<List<int>>(
-                  stream: bookCubit.finishedYears,
-                  builder: (context, AsyncSnapshot<List<int>> snapshot) {
-                    if (snapshot.hasData) {
-                      return BlocBuilder<SortBloc, SortState>(
-                        builder: (context, state) {
-                          if (state is SetSortState) {
-                            if (snapshot.data!.isEmpty && state.years == null) {
-                              return const SizedBox();
-                            }
-
-                            return Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                const SizedBox(height: 8),
-                                Text(
-                                  LocaleKeys.filter_by_finish_year.tr(),
-                                  style: const TextStyle(fontSize: 16),
-                                ),
-                                const SizedBox(height: 4),
-                                Row(
-                                  children: [
-                                    Expanded(
-                                      child: Container(
-                                        decoration: BoxDecoration(
-                                          color: Theme.of(context)
-                                              .colorScheme
-                                              .surfaceVariant,
-                                          borderRadius: BorderRadius.circular(
-                                            cornerRadius,
-                                          ),
-                                          border: Border.all(
-                                            color: dividerColor,
-                                          ),
-                                        ),
-                                        child: SingleChildScrollView(
-                                          scrollDirection: Axis.horizontal,
-                                          child: Padding(
-                                            padding: const EdgeInsets.symmetric(
-                                              vertical: 5,
-                                              horizontal: 2.5,
-                                            ),
-                                            child: Row(
-                                              children: _buildYearChips(
-                                                state,
-                                                snapshot.data!,
-                                                state.years,
-                                              ),
-                                            ),
-                                          ),
-                                        ),
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                              ],
-                            );
-                          } else {
-                            return const SizedBox();
-                          }
-                        },
-                      );
-                    } else if (snapshot.hasData && snapshot.data!.isEmpty) {
-                      return const SizedBox();
-                    } else if (snapshot.hasError) {
-                      return Text(
-                        snapshot.error.toString(),
-                      );
-                    } else {
-                      return const Center(
-                        child: CircularProgressIndicator(),
-                      );
-                    }
-                  },
-                ),
-                StreamBuilder<List<String>>(
-                  stream: bookCubit.tags,
-                  builder: (context, AsyncSnapshot<List<String>> snapshot) {
-                    if (snapshot.hasData) {
-                      return BlocBuilder<SortBloc, SortState>(
-                        builder: (context, state) {
-                          if (state is SetSortState) {
-                            if (snapshot.data!.isEmpty && state.tags == null) {
-                              return const SizedBox();
-                            }
-
-                            return Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                const SizedBox(height: 8),
-                                Text(
-                                  LocaleKeys.filter_by_tags.tr(),
-                                  style: const TextStyle(fontSize: 16),
-                                ),
-                                const SizedBox(height: 4),
-                                Row(
-                                  children: [
-                                    Expanded(
-                                      child: Container(
-                                        decoration: BoxDecoration(
-                                          color: Theme.of(context)
-                                              .colorScheme
-                                              .surfaceVariant,
-                                          borderRadius: BorderRadius.circular(
-                                            cornerRadius,
-                                          ),
-                                          border: Border.all(
-                                            color: dividerColor,
-                                          ),
-                                        ),
-                                        child: SingleChildScrollView(
-                                          scrollDirection: Axis.horizontal,
-                                          child: Padding(
-                                            padding: const EdgeInsets.symmetric(
-                                              vertical: 5,
-                                              horizontal: 2.5,
-                                            ),
-                                            child: Row(
-                                              children: _buildTagChips(
-                                                state,
-                                                snapshot.data!,
-                                                state.tags,
-                                              ),
-                                            ),
-                                          ),
-                                        ),
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                              ],
-                            );
-                          } else {
-                            return const SizedBox();
-                          }
-                        },
-                      );
-                    } else if (snapshot.hasData && snapshot.data!.isEmpty) {
-                      return const SizedBox();
-                    } else if (snapshot.hasError) {
-                      return Text(
-                        snapshot.error.toString(),
-                      );
-                    } else {
-                      return const Center(
-                        child: CircularProgressIndicator(),
-                      );
-                    }
-                  },
-                ),
-                BlocBuilder<SortBloc, SortState>(
-                  builder: (context, state) {
-                    if (state is SetSortState) {
-                      return Row(
-                        children: [
-                          Expanded(
-                            child: InkWell(
-                              onTap: () {
-                                BlocProvider.of<SortBloc>(context).add(
-                                  ChangeSortEvent(
-                                    sortType: state.sortType,
-                                    isAsc: state.isAsc,
-                                    onlyFavourite: state.onlyFavourite,
-                                    years: state.years,
-                                    tags: state.tags,
-                                    displayTags: state.displayTags,
-                                    filterTagsAsAnd: !state.filterTagsAsAnd,
-                                    bookType: state.bookType,
-                                    filterOutTags: state.filterOutTags,
-                                  ),
-                                );
-                              },
-                              child: _buildOnlyBooksWithAllTags(context, state),
-                            ),
-                          ),
-                        ],
-                      );
-                    } else {
-                      return const SizedBox();
-                    }
-                  },
-                ),
-                BlocBuilder<SortBloc, SortState>(
-                  builder: (context, state) {
-                    if (state is SetSortState) {
-                      return Row(
-                        children: [
-                          Expanded(
-                            child: InkWell(
-                              onTap: () {
-                                BlocProvider.of<SortBloc>(context).add(
-                                  ChangeSortEvent(
-                                    sortType: state.sortType,
-                                    isAsc: state.isAsc,
-                                    onlyFavourite: state.onlyFavourite,
-                                    years: state.years,
-                                    tags: state.tags,
-                                    displayTags: state.displayTags,
-                                    filterTagsAsAnd: false,
-                                    bookType: state.bookType,
-                                    filterOutTags: !state.filterOutTags,
-                                  ),
-                                );
-                              },
-                              child: _buildBooksExceptTags(context, state),
-                            ),
-                          ),
-                        ],
-                      );
-                    } else {
-                      return const SizedBox();
-                    }
-                  },
-                ),
+                _buildFilterByFinishYears(),
+                _buildFilterByTags(),
+                _buildFilterTagsAsAnd(),
+                _buildFilterOutTags(),
                 const SizedBox(height: 8),
-                BlocBuilder<SortBloc, SortState>(
-                  builder: (context, state) {
-                    if (state is SetSortState) {
-                      return Row(
-                        children: [
-                          Expanded(
-                            child: InkWell(
-                              onTap: () {
-                                BlocProvider.of<SortBloc>(context).add(
-                                  ChangeSortEvent(
-                                    sortType: state.sortType,
-                                    isAsc: state.isAsc,
-                                    onlyFavourite: state.onlyFavourite,
-                                    years: state.years,
-                                    tags: state.tags,
-                                    displayTags: !state.displayTags,
-                                    filterTagsAsAnd: state.filterTagsAsAnd,
-                                    bookType: state.bookType,
-                                    filterOutTags: state.filterOutTags,
-                                  ),
-                                );
-                              },
-                              child: Container(
-                                decoration: BoxDecoration(
-                                  color: Theme.of(context)
-                                      .colorScheme
-                                      .surfaceVariant,
-                                  borderRadius:
-                                      BorderRadius.circular(cornerRadius),
-                                  border: Border.all(
-                                    color: dividerColor,
-                                  ),
-                                ),
-                                child: Row(
-                                  children: [
-                                    _getTagsSwitch(context, state),
-                                    const SizedBox(width: 10),
-                                    Text(
-                                      LocaleKeys.display_tags.tr(),
-                                      style: const TextStyle(fontSize: 16),
-                                    ),
-                                  ],
-                                ),
-                              ),
-                            ),
-                          ),
-                        ],
-                      );
-                    } else {
-                      return const SizedBox();
-                    }
-                  },
-                ),
+                _buildDisplayTags(),
                 const SizedBox(height: 50),
               ],
             ),
           ),
         ],
       ),
+    );
+  }
+
+  BlocBuilder<SortBloc, SortState> _buildDisplayTags() {
+    return BlocBuilder<SortBloc, SortState>(
+      builder: (context, state) {
+        if (state is SetSortState) {
+          return Row(
+            children: [
+              Expanded(
+                child: InkWell(
+                  onTap: () {
+                    BlocProvider.of<SortBloc>(context).add(
+                      ChangeSortEvent(
+                        sortType: state.sortType,
+                        isAsc: state.isAsc,
+                        onlyFavourite: state.onlyFavourite,
+                        years: state.years,
+                        tags: state.tags,
+                        displayTags: !state.displayTags,
+                        filterTagsAsAnd: state.filterTagsAsAnd,
+                        bookType: state.bookType,
+                        filterOutTags: state.filterOutTags,
+                      ),
+                    );
+                  },
+                  child: Container(
+                    decoration: BoxDecoration(
+                      color: Theme.of(context).colorScheme.surfaceVariant,
+                      borderRadius: BorderRadius.circular(cornerRadius),
+                      border: Border.all(
+                        color: dividerColor,
+                      ),
+                    ),
+                    child: Row(
+                      children: [
+                        _getTagsSwitch(context, state),
+                        const SizedBox(width: 10),
+                        Text(
+                          LocaleKeys.display_tags.tr(),
+                          style: const TextStyle(fontSize: 16),
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+              ),
+            ],
+          );
+        } else {
+          return const SizedBox();
+        }
+      },
+    );
+  }
+
+  BlocBuilder<SortBloc, SortState> _buildFilterOutTags() {
+    return BlocBuilder<SortBloc, SortState>(
+      builder: (context, state) {
+        if (state is SetSortState) {
+          return Row(
+            children: [
+              Expanded(
+                child: InkWell(
+                  onTap: () {
+                    BlocProvider.of<SortBloc>(context).add(
+                      ChangeSortEvent(
+                        sortType: state.sortType,
+                        isAsc: state.isAsc,
+                        onlyFavourite: state.onlyFavourite,
+                        years: state.years,
+                        tags: state.tags,
+                        displayTags: state.displayTags,
+                        filterTagsAsAnd: false,
+                        bookType: state.bookType,
+                        filterOutTags: !state.filterOutTags,
+                      ),
+                    );
+                  },
+                  child: _buildBooksExceptTags(context, state),
+                ),
+              ),
+            ],
+          );
+        } else {
+          return const SizedBox();
+        }
+      },
+    );
+  }
+
+  BlocBuilder<SortBloc, SortState> _buildFilterTagsAsAnd() {
+    return BlocBuilder<SortBloc, SortState>(
+      builder: (context, state) {
+        if (state is SetSortState) {
+          return Row(
+            children: [
+              Expanded(
+                child: InkWell(
+                  onTap: () {
+                    BlocProvider.of<SortBloc>(context).add(
+                      ChangeSortEvent(
+                        sortType: state.sortType,
+                        isAsc: state.isAsc,
+                        onlyFavourite: state.onlyFavourite,
+                        years: state.years,
+                        tags: state.tags,
+                        displayTags: state.displayTags,
+                        filterTagsAsAnd: !state.filterTagsAsAnd,
+                        bookType: state.bookType,
+                        filterOutTags: state.filterOutTags,
+                      ),
+                    );
+                  },
+                  child: _buildOnlyBooksWithAllTags(context, state),
+                ),
+              ),
+            ],
+          );
+        } else {
+          return const SizedBox();
+        }
+      },
+    );
+  }
+
+  StreamBuilder<List<String>> _buildFilterByTags() {
+    return StreamBuilder<List<String>>(
+      stream: bookCubit.tags,
+      builder: (context, AsyncSnapshot<List<String>> snapshot) {
+        if (snapshot.hasData) {
+          return BlocBuilder<SortBloc, SortState>(
+            builder: (context, state) {
+              if (state is SetSortState) {
+                if (snapshot.data!.isEmpty && state.tags == null) {
+                  return const SizedBox();
+                }
+
+                return Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    const SizedBox(height: 8),
+                    Text(
+                      LocaleKeys.filter_by_tags.tr(),
+                      style: const TextStyle(fontSize: 16),
+                    ),
+                    const SizedBox(height: 4),
+                    Row(
+                      children: [
+                        Expanded(
+                          child: Container(
+                            decoration: BoxDecoration(
+                              color:
+                                  Theme.of(context).colorScheme.surfaceVariant,
+                              borderRadius: BorderRadius.circular(
+                                cornerRadius,
+                              ),
+                              border: Border.all(
+                                color: dividerColor,
+                              ),
+                            ),
+                            child: SingleChildScrollView(
+                              scrollDirection: Axis.horizontal,
+                              child: Padding(
+                                padding: const EdgeInsets.symmetric(
+                                  vertical: 5,
+                                  horizontal: 2.5,
+                                ),
+                                child: Row(
+                                  children: _buildTagChips(
+                                    state,
+                                    snapshot.data!,
+                                    state.tags,
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ],
+                );
+              } else {
+                return const SizedBox();
+              }
+            },
+          );
+        } else if (snapshot.hasData && snapshot.data!.isEmpty) {
+          return const SizedBox();
+        } else if (snapshot.hasError) {
+          return Text(
+            snapshot.error.toString(),
+          );
+        } else {
+          return const Center(
+            child: CircularProgressIndicator(),
+          );
+        }
+      },
+    );
+  }
+
+  StreamBuilder<List<int>> _buildFilterByFinishYears() {
+    return StreamBuilder<List<int>>(
+      stream: bookCubit.finishedYears,
+      builder: (context, AsyncSnapshot<List<int>> snapshot) {
+        if (snapshot.hasData) {
+          return BlocBuilder<SortBloc, SortState>(
+            builder: (context, state) {
+              if (state is SetSortState) {
+                if (snapshot.data!.isEmpty && state.years == null) {
+                  return const SizedBox();
+                }
+
+                return Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    const SizedBox(height: 8),
+                    Text(
+                      LocaleKeys.filter_by_finish_year.tr(),
+                      style: const TextStyle(fontSize: 16),
+                    ),
+                    const SizedBox(height: 4),
+                    Row(
+                      children: [
+                        Expanded(
+                          child: Container(
+                            decoration: BoxDecoration(
+                              color:
+                                  Theme.of(context).colorScheme.surfaceVariant,
+                              borderRadius: BorderRadius.circular(
+                                cornerRadius,
+                              ),
+                              border: Border.all(
+                                color: dividerColor,
+                              ),
+                            ),
+                            child: SingleChildScrollView(
+                              scrollDirection: Axis.horizontal,
+                              child: Padding(
+                                padding: const EdgeInsets.symmetric(
+                                  vertical: 5,
+                                  horizontal: 2.5,
+                                ),
+                                child: Row(
+                                  children: _buildYearChips(
+                                    state,
+                                    snapshot.data!,
+                                    state.years,
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ],
+                );
+              } else {
+                return const SizedBox();
+              }
+            },
+          );
+        } else if (snapshot.hasData && snapshot.data!.isEmpty) {
+          return const SizedBox();
+        } else if (snapshot.hasError) {
+          return Text(
+            snapshot.error.toString(),
+          );
+        } else {
+          return const Center(
+            child: CircularProgressIndicator(),
+          );
+        }
+      },
+    );
+  }
+
+  BlocBuilder<SortBloc, SortState> _buildOnlyFavouriteSwitch() {
+    return BlocBuilder<SortBloc, SortState>(
+      builder: (context, state) {
+        if (state is SetSortState) {
+          return Row(
+            children: [
+              Expanded(
+                child: InkWell(
+                  onTap: () {
+                    BlocProvider.of<SortBloc>(context).add(
+                      ChangeSortEvent(
+                        sortType: state.sortType,
+                        isAsc: state.isAsc,
+                        onlyFavourite: !state.onlyFavourite,
+                        years: state.years,
+                        tags: state.tags,
+                        displayTags: state.displayTags,
+                        filterTagsAsAnd: state.filterTagsAsAnd,
+                        bookType: state.bookType,
+                        filterOutTags: state.filterOutTags,
+                      ),
+                    );
+                  },
+                  child: Container(
+                    decoration: BoxDecoration(
+                      color: Theme.of(context).colorScheme.surfaceVariant,
+                      borderRadius: BorderRadius.circular(cornerRadius),
+                      border: Border.all(
+                        color: dividerColor,
+                      ),
+                    ),
+                    child: Row(
+                      children: [
+                        _getFavouriteSwitch(context, state),
+                        const SizedBox(width: 8),
+                        Text(
+                          LocaleKeys.only_favourite.tr(),
+                          style: const TextStyle(fontSize: 16),
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+              ),
+            ],
+          );
+        } else {
+          return const SizedBox();
+        }
+      },
+    );
+  }
+
+  BlocBuilder<SortBloc, SortState> _buildSortDropdown() {
+    return BlocBuilder<SortBloc, SortState>(
+      builder: (context, state) {
+        if (state is SetSortState) {
+          return Row(
+            children: [
+              Expanded(
+                child: DropdownButtonHideUnderline(
+                  child: DropdownButton2(
+                    isExpanded: true,
+                    buttonStyleData: ButtonStyleData(
+                      height: 42,
+                      decoration: BoxDecoration(
+                        border: Border.all(
+                          color: dividerColor,
+                        ),
+                        color: Theme.of(context).colorScheme.surfaceVariant,
+                        borderRadius: BorderRadius.circular(cornerRadius),
+                      ),
+                    ),
+                    items: sortOptions
+                        .map((item) => DropdownMenuItem<String>(
+                              value: item,
+                              child: Text(
+                                item,
+                                overflow: TextOverflow.ellipsis,
+                              ),
+                            ))
+                        .toList(),
+                    value: _getSortDropdownValue(state),
+                    onChanged: (value) => _updateSort(
+                      context,
+                      value,
+                      state,
+                    ),
+                  ),
+                ),
+              ),
+              const SizedBox(width: 8),
+              Container(
+                decoration: BoxDecoration(
+                  color: Theme.of(context).colorScheme.surfaceVariant,
+                  borderRadius: BorderRadius.circular(cornerRadius),
+                  border: Border.all(
+                    color: dividerColor,
+                  ),
+                ),
+                child: _getOrderButton(context, state),
+              )
+            ],
+          );
+        } else {
+          return const SizedBox();
+        }
+      },
     );
   }
 

@@ -15,7 +15,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:blurhash_dart/blurhash_dart.dart' as blurhash_dart;
 import 'package:image/image.dart' as img;
 
-import '../../core/constants/enums.dart';
+import 'package:openreads/core/constants/enums/enums.dart';
 
 class BookCubit extends Cubit {
   final Repository repository = Repository();
@@ -128,10 +128,10 @@ class BookCubit extends Cubit {
     }
   }
 
-  addBook(Book book, {bool refreshBooks = true, File? coverFile}) async {
+  addBook(Book book, {bool refreshBooks = true, Uint8List? cover}) async {
     final bookID = await repository.insertBook(book);
 
-    await _saveCoverToStorage(bookID, coverFile);
+    await _saveCoverToStorage(bookID, cover);
 
     if (refreshBooks) {
       getAllBooksByStatus();
@@ -153,16 +153,16 @@ class BookCubit extends Cubit {
     return importedBookIDs;
   }
 
-  Future _saveCoverToStorage(int? bookID, File? coverFile) async {
-    if (bookID == null || coverFile == null) return;
+  Future _saveCoverToStorage(int? bookID, Uint8List? cover) async {
+    if (bookID == null || cover == null) return;
 
     final file = File('${appDocumentsDirectory.path}/$bookID.jpg');
-    await file.writeAsBytes(coverFile.readAsBytesSync());
+    await file.writeAsBytes(cover);
   }
 
-  updateBook(Book book, {File? coverFile, BuildContext? context}) async {
+  updateBook(Book book, {Uint8List? cover, BuildContext? context}) async {
     repository.updateBook(book);
-    await _saveCoverToStorage(book.id!, coverFile);
+    await _saveCoverToStorage(book.id!, cover);
 
     if (context != null) {
       // This looks bad but we need to wait for cover to be saved to storage

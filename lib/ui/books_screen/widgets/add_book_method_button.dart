@@ -4,11 +4,11 @@ import 'package:openreads/core/themes/app_theme.dart';
 
 class AddBookMethodButton extends StatelessWidget {
   const AddBookMethodButton({
-    Key? key,
+    super.key,
     required this.text,
     required this.icon,
     required this.onPressed,
-  }) : super(key: key);
+  });
 
   final String text;
   final IconData icon;

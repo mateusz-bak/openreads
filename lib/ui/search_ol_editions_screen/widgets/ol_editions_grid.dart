@@ -115,7 +115,7 @@ class OLEditionsGrid extends StatelessWidget {
             itemBuilder: (context, item, index) => BookCardOLEdition(
               publishers: item.publishers,
               publicationDate: item.publishDate,
-              title: item.title!,
+              title: item.title ?? '',
               pages: item.numberOfPages,
               cover: item.covers != null && item.covers!.isNotEmpty
                   ? item.covers![0]

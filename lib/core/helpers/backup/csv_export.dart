@@ -9,7 +9,7 @@ import 'package:csv/csv.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:shared_storage/shared_storage.dart';
 
-import 'package:openreads/core/constants/enums.dart';
+import 'package:openreads/core/constants/enums/enums.dart';
 import 'package:openreads/core/helpers/backup/backup.dart';
 import 'package:openreads/generated/locale_keys.g.dart';
 import 'package:openreads/main.dart';
@@ -99,6 +99,8 @@ class CSVExport {
         ('notes'),
         ('book_format'),
         ('readings'),
+        ('date_added'),
+        ('date_modified'),
       ];
 
       rows.add(firstRow);
@@ -111,13 +113,13 @@ class CSVExport {
         newRow.add(book.author);
         newRow.add(book.description ?? '');
         newRow.add(
-          book.status == 0
+          book.status == BookStatus.read
               ? 'finished'
-              : book.status == 1
+              : book.status == BookStatus.inProgress
                   ? 'in_progress'
-                  : book.status == 2
+                  : book.status == BookStatus.forLater
                       ? 'planned'
-                      : book.status == 3
+                      : book.status == BookStatus.unfinished
                           ? 'abandoned'
                           : 'unknown',
         );
@@ -142,12 +144,13 @@ class CSVExport {
                     : book.bookFormat == BookFormat.audiobook
                         ? 'audiobook'
                         : '');
-
         newRow.add(
           book.readings.isNotEmpty
               ? book.readings.map((reading) => reading.toString()).join(';')
               : '',
         );
+        newRow.add(book.dateAdded.toIso8601String());
+        newRow.add(book.dateModified.toIso8601String());
 
         rows.add(newRow);
       }

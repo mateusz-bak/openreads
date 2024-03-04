@@ -46,7 +46,7 @@ class OLSearchResultDoc {
     this.publishDate,
     this.publishYear,
     this.firstPublishYear,
-    this.numberOfPagesMedian,
+    this.medianPages,
     this.lccn,
     this.publishPlace,
     this.oclc,
@@ -125,7 +125,7 @@ class OLSearchResultDoc {
   final List<String>? publishDate;
   final List<int>? publishYear;
   final int? firstPublishYear;
-  final int? numberOfPagesMedian;
+  final int? medianPages;
   final List<String>? lccn;
   final List<String>? publishPlace;
   final List<String>? oclc;
@@ -213,7 +213,7 @@ class OLSearchResultDoc {
             ? null
             : List<int>.from(json["publish_year"].map((x) => x)),
         firstPublishYear: json["first_publish_year"],
-        numberOfPagesMedian: json["number_of_pages_median"],
+        medianPages: json["number_of_pages_median"],
         lccn: json["lccn"] == null
             ? null
             : List<String>.from(json["lccn"].map((x) => x)),

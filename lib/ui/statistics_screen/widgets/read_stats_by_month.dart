@@ -8,14 +8,14 @@ import 'package:collection/collection.dart';
 
 class ReadStatsByMonth extends StatelessWidget {
   ReadStatsByMonth({
-    Key? key,
+    super.key,
     required this.listPaperbackBooks,
     required this.listHardcoverBooks,
     required this.listEbooks,
     required this.listAudiobooks,
     required this.title,
     required this.theme,
-  }) : super(key: key);
+  });
 
   final List<int> listPaperbackBooks;
   final List<int> listHardcoverBooks;
@@ -273,26 +273,34 @@ class ReadStatsByMonth extends StatelessWidget {
                 swapAnimationCurve: Curves.linear,
               ),
             ),
-            const SizedBox(height: 5),
-            ChartLegendElement(
-              color: theme.colorScheme.onSurfaceVariant,
-              text: LocaleKeys.book_format_audiobook_plural.tr(),
-              number: listAudiobooks.sum,
-              reversed: true,
-            ),
-            const SizedBox(height: 5),
-            ChartLegendElement(
-              color: theme.colorScheme.primaryContainer,
-              text: LocaleKeys.book_format_ebook_plural.tr(),
-              number: listEbooks.sum,
-              reversed: true,
-            ),
-            const SizedBox(height: 5),
-            ChartLegendElement(
-              color: theme.colorScheme.primary,
-              text: LocaleKeys.book_format_paper_plural.tr(),
-              number: listPaperbackBooks.sum + listHardcoverBooks.sum,
-              reversed: true,
+            Align(
+              alignment: Alignment.centerRight,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  const SizedBox(height: 5),
+                  ChartLegendElement(
+                    color: theme.colorScheme.onSurfaceVariant,
+                    text: LocaleKeys.book_format_audiobook_plural.tr(),
+                    number: listAudiobooks.sum,
+                    reversed: true,
+                  ),
+                  const SizedBox(height: 5),
+                  ChartLegendElement(
+                    color: theme.colorScheme.primaryContainer,
+                    text: LocaleKeys.book_format_ebook_plural.tr(),
+                    number: listEbooks.sum,
+                    reversed: true,
+                  ),
+                  const SizedBox(height: 5),
+                  ChartLegendElement(
+                    color: theme.colorScheme.primary,
+                    text: LocaleKeys.book_format_paper_plural.tr(),
+                    number: listPaperbackBooks.sum + listHardcoverBooks.sum,
+                    reversed: true,
+                  ),
+                ],
+              ),
             ),
           ],
         ),

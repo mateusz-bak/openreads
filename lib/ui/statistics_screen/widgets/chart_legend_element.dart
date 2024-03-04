@@ -18,9 +18,11 @@ class ChartLegendElement extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     List<Widget> widgets = [
-      Text(
-        '$text ($number)',
-        style: const TextStyle(fontSize: 11),
+      Flexible(
+        child: Text(
+          '$text ($number)',
+          style: const TextStyle(fontSize: 9.5),
+        ),
       ),
       const SizedBox(width: 8),
       Container(
@@ -40,6 +42,7 @@ class ChartLegendElement extends StatelessWidget {
       ),
     ];
     return Row(
+      mainAxisAlignment: MainAxisAlignment.end,
       mainAxisSize: MainAxisSize.min,
       children: reversed ? widgets.reversed.toList() : widgets,
     );

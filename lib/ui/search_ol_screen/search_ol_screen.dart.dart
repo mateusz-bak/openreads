@@ -1,13 +1,15 @@
 import 'package:barcode_scan2/barcode_scan2.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
 import 'package:loading_animation_widget/loading_animation_widget.dart';
-import 'package:openreads/core/constants/enums.dart';
+import 'package:openreads/core/constants/enums/enums.dart';
 import 'package:openreads/core/themes/app_theme.dart';
 import 'package:openreads/generated/locale_keys.g.dart';
 import 'package:openreads/logic/bloc/open_library_search_bloc/open_library_search_bloc.dart';
+import 'package:openreads/logic/cubit/default_book_status_cubit.dart';
 import 'package:openreads/logic/cubit/edit_book_cubit.dart';
 import 'package:openreads/model/reading.dart';
 import 'package:openreads/model/book.dart';
@@ -20,9 +22,14 @@ import 'package:openreads/ui/search_ol_editions_screen/search_ol_editions_screen
 import 'package:openreads/ui/search_ol_screen/widgets/widgets.dart';
 
 class SearchOLScreen extends StatefulWidget {
-  const SearchOLScreen({super.key, this.scan = false});
+  const SearchOLScreen({
+    super.key,
+    this.scan = false,
+    required this.status,
+  });
 
   final bool scan;
+  final BookStatus status;
 
   @override
   State<SearchOLScreen> createState() => _SearchOLScreenState();
@@ -55,19 +62,23 @@ class _SearchOLScreenState extends State<SearchOLScreen>
     List<String>? isbn,
     String? olid,
   }) {
+    final defaultBookFormat = context.read<DefaultBooksFormatCubit>().state;
+
     final book = Book(
       title: title,
       subtitle: subtitle,
       author: author,
-      status: 0,
+      status: widget.status,
       favourite: false,
       pages: pagesMedian,
       isbn: (isbn != null && isbn.isNotEmpty) ? isbn[0] : null,
       olid: (olid != null) ? olid.replaceAll('/works/', '') : null,
       publicationYear: firstPublishYear,
-      bookFormat: BookFormat.paperback,
+      bookFormat: defaultBookFormat,
       readings: List<Reading>.empty(growable: true),
       tags: LocaleKeys.owned_book_tag.tr(),
+      dateAdded: DateTime.now(),
+      dateModified: DateTime.now(),
     );
 
     context.read<EditBookCubit>().setBook(book);
@@ -203,10 +214,12 @@ class _SearchOLScreenState extends State<SearchOLScreen>
     final book = Book(
       title: searchType == OLSearchType.title ? _searchController.text : '',
       author: searchType == OLSearchType.author ? _searchController.text : '',
-      status: 0,
+      status: BookStatus.read,
       isbn: searchType == OLSearchType.isbn ? _searchController.text : null,
       readings: List<Reading>.empty(growable: true),
       tags: 'owned',
+      dateAdded: DateTime.now(),
+      dateModified: DateTime.now(),
     );
 
     context.read<EditBookCubit>().setBook(book);
@@ -214,6 +227,29 @@ class _SearchOLScreenState extends State<SearchOLScreen>
     Navigator.of(context).push(
       MaterialPageRoute(
         builder: (_) => const AddBookScreen(fromOpenLibrary: true),
+      ),
+    );
+  }
+
+  _onChooseEditionPressed(OLSearchResultDoc item) {
+    FocusManager.instance.primaryFocus?.unfocus();
+
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) => SearchOLEditionsScreen(
+          status: widget.status,
+          editions: item.editionKey!,
+          title: item.title!,
+          subtitle: item.subtitle,
+          author: (item.authorName != null && item.authorName!.isNotEmpty)
+              ? item.authorName![0]
+              : '',
+          pagesMedian: item.medianPages,
+          isbn: item.isbn,
+          olid: item.key,
+          firstPublishYear: item.firstPublishYear,
+        ),
       ),
     );
   }
@@ -292,30 +328,26 @@ class _SearchOLScreenState extends State<SearchOLScreen>
                 ],
               ),
             ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                BlocBuilder<OpenLibrarySearchBloc, OpenLibrarySearchState>(
-                  builder: (context, state) {
-                    return Wrap(
-                      crossAxisAlignment: WrapCrossAlignment.center,
-                      children: [
-                        for (var i = 0; i < 4; i++) ...[
-                          if (i != 0) const SizedBox(width: 5),
-                          Padding(
-                            padding: const EdgeInsets.only(right: 5),
-                            child: OLSearchRadio(
-                              searchType: OLSearchType.values[i],
-                              activeSearchType: _getOLSearchTypeEnum(state),
-                              onChanged: _changeSearchType,
-                            ),
-                          ),
-                        ],
+            Align(
+              alignment: Alignment.centerLeft,
+              child: BlocBuilder<OpenLibrarySearchBloc, OpenLibrarySearchState>(
+                builder: (context, state) {
+                  return Wrap(
+                    alignment: WrapAlignment.start,
+                    crossAxisAlignment: WrapCrossAlignment.center,
+                    children: [
+                      for (var i = 0; i < 4; i++) ...[
+                        if (i != 0) const SizedBox(width: 5),
+                        OLSearchRadio(
+                          searchType: OLSearchType.values[i],
+                          activeSearchType: _getOLSearchTypeEnum(state),
+                          onChanged: _changeSearchType,
+                        ),
                       ],
-                    );
-                  },
-                ),
-              ],
+                    ],
+                  );
+                },
+              ),
             ),
             const Padding(
               padding: EdgeInsets.fromLTRB(10, 0, 10, 10),
@@ -397,55 +429,37 @@ class _SearchOLScreenState extends State<SearchOLScreen>
                               ],
                             ),
                           ),
-                          itemBuilder: (context, item, index) => BookCardOL(
-                            title: item.title!,
-                            subtitle: item.subtitle,
-                            author: (item.authorName != null &&
-                                    item.authorName!.isNotEmpty)
-                                ? item.authorName![0]
-                                : '',
-                            openLibraryKey: item.coverEditionKey,
-                            doc: item,
-                            editions: item.editionKey,
-                            pagesMedian: item.numberOfPagesMedian,
-                            firstPublishYear: item.firstPublishYear,
-                            onAddBookPressed: () => _saveNoEdition(
-                              editions: item.editionKey!,
-                              title: item.title!,
+                          itemBuilder: (context, item, index) =>
+                              Builder(builder: (context) {
+                            return BookCardOL(
+                              title: item.title ?? '',
                               subtitle: item.subtitle,
                               author: (item.authorName != null &&
                                       item.authorName!.isNotEmpty)
                                   ? item.authorName![0]
                                   : '',
-                              pagesMedian: item.numberOfPagesMedian,
-                              isbn: item.isbn,
-                              olid: item.key,
+                              coverKey: item.coverEditionKey,
+                              editions: item.editionKey,
+                              pagesMedian: item.medianPages,
                               firstPublishYear: item.firstPublishYear,
-                              cover: item.coverI,
-                            ),
-                            onChooseEditionPressed: () {
-                              FocusManager.instance.primaryFocus?.unfocus();
-
-                              Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                  builder: (context) => SearchOLEditionsScreen(
-                                    editions: item.editionKey!,
-                                    title: item.title!,
-                                    subtitle: item.subtitle,
-                                    author: (item.authorName != null &&
-                                            item.authorName!.isNotEmpty)
-                                        ? item.authorName![0]
-                                        : '',
-                                    pagesMedian: item.numberOfPagesMedian,
-                                    isbn: item.isbn,
-                                    olid: item.key,
-                                    firstPublishYear: item.firstPublishYear,
-                                  ),
-                                ),
-                              );
-                            },
-                          ),
+                              onAddBookPressed: () => _saveNoEdition(
+                                editions: item.editionKey!,
+                                title: item.title ?? '',
+                                subtitle: item.subtitle,
+                                author: (item.authorName != null &&
+                                        item.authorName!.isNotEmpty)
+                                    ? item.authorName![0]
+                                    : '',
+                                pagesMedian: item.medianPages,
+                                isbn: item.isbn,
+                                olid: item.key,
+                                firstPublishYear: item.firstPublishYear,
+                                cover: item.coverI,
+                              ),
+                              onChooseEditionPressed: () =>
+                                  _onChooseEditionPressed(item),
+                            );
+                          }),
                         ),
                       ),
                     ),

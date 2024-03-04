@@ -1,6 +1,6 @@
 import 'package:flutter/services.dart';
 import 'package:http/http.dart';
-import 'package:openreads/core/constants/enums.dart';
+import 'package:openreads/core/constants/enums/enums.dart';
 import 'package:openreads/model/ol_edition_result.dart';
 import 'package:openreads/model/ol_search_result.dart';
 import 'package:openreads/model/ol_work_result.dart';
@@ -15,7 +15,7 @@ class OpenLibraryService {
     required int limit,
     required OLSearchType searchType,
   }) async {
-    final searchTypeKey = searchType == OLSearchType.general
+    final searchTypeParam = searchType == OLSearchType.general
         ? 'q'
         : searchType == OLSearchType.author
             ? 'author'
@@ -24,26 +24,29 @@ class OpenLibraryService {
                 : searchType == OLSearchType.isbn
                     ? 'isbn'
                     : 'q';
+    const modeParam = '&mode=everything';
+    const fieldsParam =
+        '&fields=key,title,subtitle,author_key,author_name,editions,number_of_pages_median,first_publish_year,isbn,edition_key,cover_edition_key,cover_i';
+    final offsetParam = '&offset=$offset';
+    final limitParam = '&limit=$limit';
 
-    final response = await get(
-      Uri.parse(
-        '${baseUrl}search.json?$searchTypeKey=$query&limit=$limit&offset=$offset',
-      ),
+    final uri = Uri.parse(
+      '${baseUrl}search.json?$searchTypeParam=$query$limitParam$offsetParam$modeParam$fieldsParam',
     );
+
+    final response = await get(uri);
     return openLibrarySearchResultFromJson(response.body);
   }
 
   Future<OLEditionResult> getEdition(String edition) async {
-    final response = await get(
-      Uri.parse('$baseUrl/books/$edition.json'),
-    );
+    final uri = Uri.parse('$baseUrl/works/$edition.json');
+    final response = await get(uri);
     return openLibraryEditionResultFromJson(response.body);
   }
 
   Future<OLWorkResult> getWork(String work) async {
-    final response = await get(
-      Uri.parse('$baseUrl$work.json'),
-    );
+    final uri = Uri.parse('$baseUrl$work.json');
+    final response = await get(uri);
     return openLibraryWorkResultFromJson(response.body);
   }
 

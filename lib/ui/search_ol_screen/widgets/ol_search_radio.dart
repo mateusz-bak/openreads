@@ -1,6 +1,6 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
-import 'package:openreads/core/constants/enums.dart';
+import 'package:openreads/core/constants/enums/enums.dart';
 import 'package:openreads/generated/locale_keys.g.dart';
 
 class OLSearchRadio extends StatelessWidget {
@@ -18,6 +18,7 @@ class OLSearchRadio extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Row(
+      mainAxisSize: MainAxisSize.min,
       children: [
         Radio<OLSearchType>(
           value: searchType,

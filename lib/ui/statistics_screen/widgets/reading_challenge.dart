@@ -4,7 +4,7 @@ import 'package:openreads/ui/statistics_screen/widgets/widgets.dart';
 
 class ReadingChallenge extends StatelessWidget {
   const ReadingChallenge({
-    Key? key,
+    super.key,
     required this.value,
     required this.target,
     required this.title,
@@ -12,7 +12,7 @@ class ReadingChallenge extends StatelessWidget {
     required this.year,
     this.booksTarget,
     this.pagesTarget,
-  }) : super(key: key);
+  });
 
   final int value;
   final int target;

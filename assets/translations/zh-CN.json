@@ -198,7 +198,6 @@
     "welcome_3_description_1": "Openreads是完全开源的！",
     "welcome_3_description_2": "这意味着您可以自行检查应用代码并为其开发作出贡献。",
     "welcome_3_description_3": "作为奖励，您获得无广告，绝对没有跟踪的体验！",
-    "next_button": "下一步",
     "start_button": "开始",
     "migration_v1_to_v2_1": "您的书籍正在迁移到新版本",
     "migration_v1_to_v2_2": "在您所有的书籍迁移之前不要离开此屏幕，否则它们将丢失！",
@@ -235,5 +234,54 @@
     "book_format_hardcover": "精装本",
     "book_format_paperback_plural": "平装本图书",
     "book_format_audiobook_plural": "有声书",
-    "book_format_paper_plural": "纸质书"
+    "book_format_paper_plural": "纸质书",
+    "bulk_update_unsuccessful_message": "无法更新书籍细节",
+    "import_bookwyrm_csv": "导入Book的CSV文件",
+    "import_csv": "导入Openreads的CSV文件",
+    "load_cover_from_phone": "从你的设备加载封面",
+    "edit_current_cover": "编辑当前封面",
+    "isbn_cannot_be_empty": "ISBN不能为空",
+    "download_missing_covers_explanation": "下载设置了 ISBN 的书籍缺少的封面",
+    "filter_out_selected_tags": "筛选出所选标签",
+    "start_adding_books": "进入app",
+    "help_to_get_started": "为了帮助你开始，你可以做这些事情",
+    "owned_book_tag": "拥有的书",
+    "read_x_times": "读了{}次",
+    "default_books_format": "默认书籍格式",
+    "tags": {
+        "one": "标签",
+        "other": "标签"
+    },
+    "general_search": "常规",
+    "no_search_results": "找不到结果",
+    "get_cover_from_open_library": "按书籍的ISBN从Open Library获得的封面",
+    "add_additional_reading_time": "捕捉阅读",
+    "click_to_add_book_manually": "点击此处，手动添加该书",
+    "book_format_paperback": "简装书",
+    "day": {
+        "one": "{}天",
+        "other": "{}天"
+    },
+    "hour": {
+        "other": "{}小时",
+        "one": "{}小时"
+    },
+    "minute": {
+        "other": "{}分钟",
+        "one": "{}分钟"
+    },
+    "books_settings": "书籍",
+    "download_missing_covers": "下载缺失的封面",
+    "downloaded_covers": "已下载封面：",
+    "change_books_author": "修改书籍作者",
+    "date_added": "添加日期",
+    "date_modified": "修改日期",
+    "added_on": "添加于",
+    "modified_on": "修改自",
+    "delete_books": "删除书籍",
+    "delete_books_question": "是否删除选定书籍？",
+    "cover_not_found_in_ol": "未在Open Library发现封面",
+    "select_all": "全选",
+    "try_downloading_covers": "您想尝试下载导入书籍的缺失封面吗？",
+    "only_editions_with_covers": "仅显示具有封面的版本"
 }

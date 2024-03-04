@@ -5,9 +5,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:csv/csv.dart';
 import 'package:openreads/model/reading.dart';
-import 'package:openreads/model/reading_time.dart';
-
-import 'package:openreads/core/constants/enums.dart';
+import 'package:openreads/core/constants/enums/enums.dart';
 import 'package:openreads/core/helpers/backup/backup.dart';
 import 'package:openreads/model/book.dart';
 import 'package:openreads/main.dart';
@@ -102,6 +100,8 @@ class CSVImportOpenreads {
         notes: _getField(i, csv, 'notes'),
         bookFormat: _getBookFormat(i, csv),
         readings: _getReadingDates(i, csv),
+        dateAdded: _getDate(i, csv, 'date_added') ?? DateTime.now(),
+        dateModified: _getDate(i, csv, 'date_modified') ?? DateTime.now(),
       );
     } catch (e) {
       BackupGeneral.showInfoSnackbar(e.toString());
@@ -136,23 +136,6 @@ class CSVImportOpenreads {
 
   static bool _getBoolField(int i, List<List<dynamic>> csv, String field) {
     return csv[i][csv[0].indexOf(field)].toString() == 'true';
-  }
-
-  static ReadingTime? _getReadingTime(int i, List<List<dynamic>> csv) {
-    final index = csv[0].indexOf('reading_time');
-
-    if (index == -1) {
-      return null;
-    }
-
-    final readingTimeString = csv[i][index].toString();
-    final readingTimeMilliseconds = int.tryParse(readingTimeString);
-
-    if (readingTimeMilliseconds == null) {
-      return null;
-    } else {
-      return ReadingTime.fromMilliSeconds(readingTimeMilliseconds);
-    }
   }
 
   static List<Reading> _getReadingDates(
@@ -217,17 +200,15 @@ class CSVImportOpenreads {
         : null;
   }
 
-  static int _getStatus(int i, List<List<dynamic>> csv) {
+  static BookStatus _getStatus(int i, List<List<dynamic>> csv) {
     final statusField = csv[i][csv[0].indexOf('status')].toString();
-    return statusField == 'finished'
-        ? 0
-        : statusField == 'in_progress'
-            ? 1
-            : statusField == 'planned'
-                ? 2
-                : statusField == 'abandoned'
-                    ? 3
-                    : 0;
+    return statusField == 'in_progress'
+        ? BookStatus.inProgress
+        : statusField == 'planned'
+            ? BookStatus.forLater
+            : statusField == 'abandoned'
+                ? BookStatus.unfinished
+                : BookStatus.read;
   }
 
   static String? _getTags(int i, List<List<dynamic>> csv) {

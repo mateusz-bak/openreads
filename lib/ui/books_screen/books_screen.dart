@@ -1,13 +1,15 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:openreads/core/constants/enums.dart';
+import 'package:openreads/core/constants/constants.dart';
+import 'package:openreads/core/constants/enums/enums.dart';
 import 'package:openreads/core/helpers/helpers.dart';
 import 'package:openreads/core/themes/app_theme.dart';
 import 'package:openreads/generated/locale_keys.g.dart';
 import 'package:openreads/logic/bloc/display_bloc/display_bloc.dart';
 import 'package:openreads/logic/bloc/sort_bloc/sort_bloc.dart';
 import 'package:openreads/logic/bloc/theme_bloc/theme_bloc.dart';
+import 'package:openreads/logic/cubit/default_book_status_cubit.dart';
 import 'package:openreads/logic/cubit/edit_book_cubit.dart';
 import 'package:openreads/main.dart';
 import 'package:openreads/model/book.dart';
@@ -28,9 +30,11 @@ class BooksScreen extends StatefulWidget {
 }
 
 class _BooksScreenState extends State<BooksScreen>
-    with AutomaticKeepAliveClientMixin {
+    with AutomaticKeepAliveClientMixin, TickerProviderStateMixin {
   late List<String> moreButtonOptions;
   Set<int> selectedBookIds = {};
+
+  late TabController _tabController;
 
   _onItemSelected(int id) {
     setState(() {
@@ -86,6 +90,13 @@ class _BooksScreenState extends State<BooksScreen>
       case SortType.byPublicationYear:
         list = _sortByPublicationYear(list: list, isAsc: state.isAsc);
         break;
+      case SortType.byDateAdded:
+        list = _sortByDateAdded(list: list, isAsc: state.isAsc);
+        break;
+      case SortType.byDateModified:
+        list = _sortByDateModified(list: list, isAsc: state.isAsc);
+        break;
+
       default:
         list = _sortByTitle(list: list, isAsc: state.isAsc);
     }
@@ -325,9 +336,8 @@ class _BooksScreenState extends State<BooksScreen>
     isAsc
         ? list.sort((a, b) => removeDiacritics(a.title.toString().toLowerCase())
             .compareTo(removeDiacritics(b.title.toString().toLowerCase())))
-        : list.sort((b, a) =>
-            removeDiacritics(a.author.toString().toLowerCase())
-                .compareTo(removeDiacritics(b.title.toString().toLowerCase())));
+        : list.sort((b, a) => removeDiacritics(a.title.toString().toLowerCase())
+            .compareTo(removeDiacritics(b.title.toString().toLowerCase())));
     // no secondary sorting
 
     return list;
@@ -426,8 +436,7 @@ class _BooksScreenState extends State<BooksScreen>
     }
 
     booksWithPages.sort((a, b) {
-      int pagesSorting = removeDiacritics(a.pages!.toString().toLowerCase())
-          .compareTo(removeDiacritics(b.pages!.toString().toLowerCase()));
+      int pagesSorting = a.pages!.compareTo(b.pages!);
       if (!isAsc) {
         pagesSorting *= -1;
       } // descending
@@ -455,6 +464,80 @@ class _BooksScreenState extends State<BooksScreen>
     });
 
     return booksWithPages + booksWithoutPages;
+  }
+
+  List<Book> _sortByDateAdded({
+    required List<Book> list,
+    required bool isAsc,
+  }) {
+    list.sort((a, b) {
+      int dateAddedSorting = a.dateAdded.millisecondsSinceEpoch
+          .compareTo(b.dateAdded.millisecondsSinceEpoch);
+
+      if (!isAsc) {
+        dateAddedSorting *= -1;
+      } // descending
+      if (dateAddedSorting == 0) {
+        // secondary sorting, by release date
+        int releaseSorting = 0;
+        if ((a.publicationYear != null) && (b.publicationYear != null)) {
+          releaseSorting = a.publicationYear!.compareTo(b.publicationYear!);
+          if (!isAsc) {
+            releaseSorting *= -1;
+          }
+        }
+        if (releaseSorting == 0) {
+          // tertiary sorting, by title
+          int titleSorting = removeDiacritics(a.title.toString().toLowerCase())
+              .compareTo(removeDiacritics(b.title.toString().toLowerCase()));
+          if (!isAsc) {
+            titleSorting *= -1;
+          }
+          return titleSorting;
+        }
+        return releaseSorting;
+      }
+      return dateAddedSorting;
+    });
+
+    return list;
+  }
+
+  List<Book> _sortByDateModified({
+    required List<Book> list,
+    required bool isAsc,
+  }) {
+    list.sort((a, b) {
+      int dateModifiedSorting = a.dateModified.millisecondsSinceEpoch
+          .compareTo(b.dateModified.millisecondsSinceEpoch);
+
+      if (!isAsc) {
+        dateModifiedSorting *= -1;
+      } // descending
+      if (dateModifiedSorting == 0) {
+        // secondary sorting, by release date
+        int releaseSorting = 0;
+        if ((a.publicationYear != null) && (b.publicationYear != null)) {
+          releaseSorting = a.publicationYear!.compareTo(b.publicationYear!);
+          if (!isAsc) {
+            releaseSorting *= -1;
+          }
+        }
+        if (releaseSorting == 0) {
+          // tertiary sorting, by title
+          int titleSorting = removeDiacritics(a.title.toString().toLowerCase())
+              .compareTo(removeDiacritics(b.title.toString().toLowerCase()));
+          if (!isAsc) {
+            titleSorting *= -1;
+          }
+          return titleSorting;
+        }
+        return releaseSorting;
+      }
+      return dateModifiedSorting;
+    });
+
+    return list;
   }
 
   List<Book> _sortByStartDate({
@@ -651,8 +734,134 @@ class _BooksScreenState extends State<BooksScreen>
     );
   }
 
+  BookStatus _getStatusForNewBook() {
+    if (_tabController.index == 1) {
+      return BookStatus.inProgress;
+    } else if (_tabController.index == 2) {
+      return BookStatus.forLater;
+    } else {
+      return BookStatus.read;
+    }
+  }
+
+  _setEmptyBookForEditScreen() {
+    final status = _getStatusForNewBook();
+    final defaultBookFormat = context.read<DefaultBooksFormatCubit>().state;
+
+    context.read<EditBookCubit>().setBook(
+          Book.empty(status: status, bookFormat: defaultBookFormat),
+        );
+  }
+
+  _goToSearchPage() {
+    Navigator.of(context).push(
+      MaterialPageRoute(builder: (_) => const SearchPage()),
+    );
+  }
+
+  _changeBooksDisplayType() {
+    final state = context.read<DisplayBloc>().state;
+
+    if (state is GridDisplayState) {
+      BlocProvider.of<DisplayBloc>(context).add(
+        const ChangeDisplayEvent(displayAsGrid: false),
+      );
+    } else {
+      BlocProvider.of<DisplayBloc>(context).add(
+        const ChangeDisplayEvent(displayAsGrid: true),
+      );
+    }
+  }
+
+  _invokeThreeDotMenuOption(String choice) async {
+    await Future.delayed(const Duration(milliseconds: 0));
+
+    if (!mounted) return;
+
+    if (choice == moreButtonOptions[0]) {
+      openSortFilterSheet();
+    } else if (choice == moreButtonOptions[1]) {
+      goToStatisticsScreen();
+    } else if (choice == moreButtonOptions[2]) {
+      goToUnfinishedBooksScreen();
+    } else if (choice == moreButtonOptions[3]) {
+      goToSettingsScreen();
+    }
+  }
+
+  _onFabPressed() {
+    showModalBottomSheet(
+      context: context,
+      isScrollControlled: true,
+      elevation: 0,
+      builder: (_) {
+        return AddBookSheet(
+          addManually: _addBookManually,
+          searchInOpenLibrary: _searchInOpenLibrary,
+          scanBarcode: _scanBarcode,
+        );
+      },
+    );
+  }
+
+  _addBookManually() async {
+    _setEmptyBookForEditScreen();
+
+    Navigator.pop(context);
+    await Future.delayed(const Duration(milliseconds: 100));
+    if (!mounted) return;
+
+    Navigator.of(context).push(
+      MaterialPageRoute(
+        builder: (_) => const AddBookScreen(),
+      ),
+    );
+  }
+
+  _searchInOpenLibrary() async {
+    _setEmptyBookForEditScreen();
+
+    Navigator.pop(context);
+    await Future.delayed(const Duration(milliseconds: 100));
+    if (!mounted) return;
+
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) => SearchOLScreen(
+          status: _getStatusForNewBook(),
+        ),
+      ),
+    );
+  }
+
+  _scanBarcode() async {
+    _setEmptyBookForEditScreen();
+
+    Navigator.pop(context);
+    await Future.delayed(const Duration(milliseconds: 100));
+    if (!mounted) return;
+
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) => SearchOLScreen(
+          scan: true,
+          status: _getStatusForNewBook(),
+        ),
+      ),
+    );
+  }
+
   @override
   bool get wantKeepAlive => true;
+
+  @override
+  void initState() {
+    super.initState();
+
+    _tabController = TabController(length: 3, vsync: this);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -734,60 +943,59 @@ class _BooksScreenState extends State<BooksScreen>
     return BlocBuilder<ThemeBloc, ThemeState>(
       builder: (context, state) {
         if (state is SetThemeState) {
-          return DefaultTabController(
-            length: 3,
-            child: Column(
-              children: [
-                Expanded(
-                  child: TabBarView(
-                    children: state.readTabFirst
-                        ? List.of([
-                            _buildReadBooksTabView(),
-                            _buildInProgressBooksTabView(),
-                            _buildToReadBooksTabView(),
-                          ])
-                        : List.of([
-                            _buildInProgressBooksTabView(),
-                            _buildReadBooksTabView(),
-                            _buildToReadBooksTabView(),
-                          ]),
-                  ),
+          return Column(
+            children: [
+              Expanded(
+                child: TabBarView(
+                  controller: _tabController,
+                  children: state.readTabFirst
+                      ? List.of([
+                          _buildReadBooksTabView(),
+                          _buildInProgressBooksTabView(),
+                          _buildToReadBooksTabView(),
+                        ])
+                      : List.of([
+                          _buildInProgressBooksTabView(),
+                          _buildReadBooksTabView(),
+                          _buildToReadBooksTabView(),
+                        ]),
                 ),
-                SafeArea(
-                  child: Builder(builder: (context) {
-                    return Container(
-                      color: Theme.of(context).scaffoldBackgroundColor,
-                      child: TabBar(
-                        dividerColor: Colors.transparent,
-                        tabs: state.readTabFirst
-                            ? List.of([
-                                BookTab(
-                                  text: LocaleKeys.books_finished.tr(),
-                                ),
-                                BookTab(
-                                  text: LocaleKeys.books_in_progress.tr(),
-                                ),
-                                BookTab(
-                                  text: LocaleKeys.books_for_later.tr(),
-                                ),
-                              ])
-                            : List.of([
-                                BookTab(
-                                  text: LocaleKeys.books_in_progress.tr(),
-                                ),
-                                BookTab(
-                                  text: LocaleKeys.books_finished.tr(),
-                                ),
-                                BookTab(
-                                  text: LocaleKeys.books_for_later.tr(),
-                                ),
-                              ]),
-                      ),
-                    );
-                  }),
-                ),
-              ],
-            ),
+              ),
+              SafeArea(
+                child: Builder(builder: (context) {
+                  return Container(
+                    color: Theme.of(context).scaffoldBackgroundColor,
+                    child: TabBar(
+                      controller: _tabController,
+                      dividerColor: Colors.transparent,
+                      tabs: state.readTabFirst
+                          ? List.of([
+                              BookTab(
+                                text: LocaleKeys.books_finished.tr(),
+                              ),
+                              BookTab(
+                                text: LocaleKeys.books_in_progress.tr(),
+                              ),
+                              BookTab(
+                                text: LocaleKeys.books_for_later.tr(),
+                              ),
+                            ])
+                          : List.of([
+                              BookTab(
+                                text: LocaleKeys.books_in_progress.tr(),
+                              ),
+                              BookTab(
+                                text: LocaleKeys.books_finished.tr(),
+                              ),
+                              BookTab(
+                                text: LocaleKeys.books_for_later.tr(),
+                              ),
+                            ]),
+                    ),
+                  );
+                }),
+              ),
+            ],
           );
         } else {
           return const SizedBox();
@@ -796,66 +1004,11 @@ class _BooksScreenState extends State<BooksScreen>
     );
   }
 
-  _setEmptyBookForEditScreen() {
-    context.read<EditBookCubit>().setBook(Book.empty());
-  }
-
   Padding _buildFAB(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.only(bottom: 50),
       child: FloatingActionButton(
-        onPressed: () {
-          showModalBottomSheet(
-            context: context,
-            isScrollControlled: true,
-            elevation: 0,
-            builder: (context) {
-              return AddBookSheet(
-                addManually: () async {
-                  _setEmptyBookForEditScreen();
-
-                  Navigator.pop(context);
-                  await Future.delayed(const Duration(milliseconds: 100));
-                  if (!mounted) return;
-
-                  Navigator.of(context).push(
-                    MaterialPageRoute(
-                      builder: (_) => const AddBookScreen(),
-                    ),
-                  );
-                },
-                searchInOpenLibrary: () async {
-                  _setEmptyBookForEditScreen();
-
-                  Navigator.pop(context);
-                  await Future.delayed(const Duration(milliseconds: 100));
-                  if (!mounted) return;
-
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => const SearchOLScreen(),
-                    ),
-                  );
-                },
-                scanBarcode: () async {
-                  _setEmptyBookForEditScreen();
-
-                  Navigator.pop(context);
-                  await Future.delayed(const Duration(milliseconds: 100));
-                  if (!mounted) return;
-
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => const SearchOLScreen(scan: true),
-                    ),
-                  );
-                },
-              );
-            },
-          );
-        },
+        onPressed: _onFabPressed,
         child: const Icon(Icons.add),
       ),
     );
@@ -864,30 +1017,16 @@ class _BooksScreenState extends State<BooksScreen>
   AppBar _buildAppBar(BuildContext context) {
     return AppBar(
       title: const Text(
-        'Openreads',
+        Constants.appName,
         style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
       ),
       actions: [
         IconButton(
-          onPressed: () => Navigator.of(context).push(
-            MaterialPageRoute(builder: (_) => const SearchPage()),
-          ),
+          onPressed: _goToSearchPage,
           icon: const Icon(Icons.search),
         ),
         IconButton(
-          onPressed: () {
-            final state = context.read<DisplayBloc>().state;
-
-            if (state is GridDisplayState) {
-              BlocProvider.of<DisplayBloc>(context).add(
-                const ChangeDisplayEvent(displayAsGrid: false),
-              );
-            } else {
-              BlocProvider.of<DisplayBloc>(context).add(
-                const ChangeDisplayEvent(displayAsGrid: true),
-              );
-            }
-          },
+          onPressed: _changeBooksDisplayType,
           icon: BlocBuilder<DisplayBloc, DisplayState>(
             builder: (context, state) {
               if (state is GridDisplayState) {
@@ -907,21 +1046,7 @@ class _BooksScreenState extends State<BooksScreen>
                 child: Text(
                   choice,
                 ),
-                onTap: () async {
-                  await Future.delayed(const Duration(milliseconds: 0));
-
-                  if (!mounted) return;
-
-                  if (choice == moreButtonOptions[0]) {
-                    openSortFilterSheet();
-                  } else if (choice == moreButtonOptions[1]) {
-                    goToStatisticsScreen();
-                  } else if (choice == moreButtonOptions[2]) {
-                    goToUnfinishedBooksScreen();
-                  } else if (choice == moreButtonOptions[3]) {
-                    goToSettingsScreen();
-                  }
-                },
+                onTap: () => _invokeThreeDotMenuOption(choice),
               );
             }).toList();
           },

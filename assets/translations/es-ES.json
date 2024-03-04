@@ -198,7 +198,6 @@
     "welcome_3_description_1": "¡Openreads es completamente código abierto!",
     "welcome_3_description_2": "Esto significa que puedes inspeccionar el código de la aplicación tú mismo y contribuir a su desarrollo.",
     "welcome_3_description_3": "¡Además, no tendrás ningún tipo de publicidad ni de rastreo!",
-    "next_button": "SIGUIENTE",
     "start_button": "INICIAR",
     "migration_v1_to_v2_1": "Tus libros se están migrando a la nueva versión",
     "migration_v1_to_v2_2": "¡No deje esta pantalla antes de que todos sus libros se migren, porque se perderán!",
@@ -271,7 +270,18 @@
     "get_cover_from_open_library": "Obtener portada desde Open Library con el ISBN del libro",
     "try_downloading_covers": "¿Quieres descargar las portadas que faltan para los libros importados?",
     "no_search_results": "Sin resultados",
-    "load_cover_from_phone": "Cargar portada desde tu dispositivo",
+    "load_cover_from_phone": "Añadir portada desde el dispositivo",
     "download_missing_covers_explanation": "Descargar las portadas que faltan para los libros que tiene ISBN",
-    "filter_out_selected_tags": "No mostrar las etiquetas seleccionadas"
+    "filter_out_selected_tags": "No mostrar las etiquetas seleccionadas",
+    "start_adding_books": "Acceder a la aplicación",
+    "edit_current_cover": "Editar la portada actual",
+    "help_to_get_started": "Para ayudarte a empezar, aquí tienes algunas cosas que puedes hacer",
+    "owned_book_tag": "propiedad",
+    "add_additional_reading_time": "Capturar la lectura",
+    "read_x_times": "Leído {} veces",
+    "date_added": "Fecha en que se añadió",
+    "added_on": "Añadido el",
+    "modified_on": "Modificado el",
+    "default_books_format": "Formato de los libros por defecto",
+    "date_modified": "Fecha de la modificación"
 }

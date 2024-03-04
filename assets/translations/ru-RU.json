@@ -157,5 +157,9 @@
     "rating_as_bar": "Рейтинг в звёздах",
     "select_start_date": "Выберите дату начала чтения",
     "select_finish_date": "Выберите дату конца чтения",
-    "theme_mode": "Тема приложения"
+    "theme_mode": "Тема приложения",
+    "book_format_ebook": "Электронная книга",
+    "book_format_audiobook": "Аудиокнига",
+    "book_format_paperback": "Мягкая обложка",
+    "book_format_hardcover": "Твердая обложка"
 }

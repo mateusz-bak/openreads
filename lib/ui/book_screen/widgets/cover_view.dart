@@ -7,12 +7,12 @@ import 'package:openreads/ui/book_screen/widgets/widgets.dart';
 
 class CoverView extends StatefulWidget {
   const CoverView({
-    Key? key,
+    super.key,
     this.heroTag,
     this.book,
     this.coverFile,
     this.blurHashString,
-  }) : super(key: key);
+  });
 
   final String? heroTag;
   final String? blurHashString;

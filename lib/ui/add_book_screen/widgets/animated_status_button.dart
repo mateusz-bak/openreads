@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:openreads/core/constants/enums/enums.dart';
 import 'package:openreads/core/themes/app_theme.dart';
 
 class AnimatedStatusButton extends StatelessWidget {
   const AnimatedStatusButton({
-    Key? key,
+    super.key,
     required Duration duration,
     required this.height,
     required this.onPressed,
@@ -11,8 +12,7 @@ class AnimatedStatusButton extends StatelessWidget {
     required this.text,
     required this.isSelected,
     required this.currentStatus,
-  })  : _duration = duration,
-        super(key: key);
+  }) : _duration = duration;
 
   final Duration _duration;
 
@@ -21,7 +21,7 @@ class AnimatedStatusButton extends StatelessWidget {
   final IconData icon;
   final String text;
   final bool isSelected;
-  final int? currentStatus;
+  final BookStatus? currentStatus;
 
   @override
   Widget build(BuildContext context) {

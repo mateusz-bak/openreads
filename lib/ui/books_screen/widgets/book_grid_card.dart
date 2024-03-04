@@ -4,13 +4,13 @@ import 'package:openreads/ui/books_screen/widgets/widgets.dart';
 
 class BookGridCard extends StatelessWidget {
   const BookGridCard({
-    Key? key,
+    super.key,
     required this.book,
     required this.onPressed,
     required this.heroTag,
     required this.addBottomPadding,
     this.onLongPressed,
-  }) : super(key: key);
+  });
 
   final Book book;
   final String heroTag;
