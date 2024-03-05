@@ -107,7 +107,7 @@ class BookTitleDetail extends StatelessWidget {
           children: [
             Padding(
               padding: const EdgeInsets.fromLTRB(5, 5, 5, 0),
-              child: SelectableText(
+              child: Text(
                 title,
                 style: const TextStyle(
                   fontSize: 20,
@@ -118,7 +118,7 @@ class BookTitleDetail extends StatelessWidget {
             subtitle != null
                 ? Padding(
                     padding: const EdgeInsets.fromLTRB(5, 0, 5, 0),
-                    child: SelectableText(
+                    child: Text(
                       subtitle!,
                       style: const TextStyle(
                         fontSize: 18,
@@ -133,9 +133,8 @@ class BookTitleDetail extends StatelessWidget {
               onTap: () => _navigateToSimiliarAuthorBooksScreen(context),
               child: Padding(
                 padding: const EdgeInsets.fromLTRB(5, 5, 5, 5),
-                child: SelectableText(
+                child: Text(
                   author,
-                  onTap: () => _navigateToSimiliarAuthorBooksScreen(context),
                   style: const TextStyle(
                     fontSize: 16,
                     fontWeight: FontWeight.w500,
@@ -146,7 +145,7 @@ class BookTitleDetail extends StatelessWidget {
             (publicationYear != '')
                 ? Padding(
                     padding: const EdgeInsets.fromLTRB(5, 0, 5, 0),
-                    child: SelectableText(
+                    child: Text(
                       publicationYear,
                       style: TextStyle(
                         fontSize: 15,
@@ -175,7 +174,7 @@ class BookTitleDetail extends StatelessWidget {
                         Theme.of(context).colorScheme.primary.withOpacity(0.7),
                   ),
                   const SizedBox(width: 10),
-                  SelectableText(
+                  Text(
                     bookType == BookFormat.audiobook
                         ? LocaleKeys.book_format_audiobook.tr()
                         : bookType == BookFormat.ebook

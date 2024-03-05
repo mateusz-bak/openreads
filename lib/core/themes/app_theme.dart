@@ -22,3 +22,8 @@ class AppTheme {
         : Colors.transparent;
   }
 }
+
+class ThemeGetters {
+  static Color getSelectionColor(BuildContext context) =>
+      Theme.of(context).colorScheme.primary.withOpacity(0.4);
+}

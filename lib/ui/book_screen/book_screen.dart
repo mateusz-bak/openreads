@@ -168,141 +168,146 @@ class BookScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     final mediaQuery = MediaQuery.of(context);
 
-    return Scaffold(
-      extendBodyBehindAppBar: true,
-      appBar: const BookScreenAppBar(),
-      body: BlocBuilder<CurrentBookCubit, Book>(
-        builder: (context, state) {
-          return SingleChildScrollView(
-            child: Column(
-              children: [
-                (state.hasCover == true)
-                    ? Center(
-                        child: CoverView(
-                          heroTag: heroTag,
+    return SelectableRegion(
+      selectionControls: materialTextSelectionControls,
+      focusNode: FocusNode(),
+      child: Scaffold(
+        extendBodyBehindAppBar: true,
+        appBar: const BookScreenAppBar(),
+        body: BlocBuilder<CurrentBookCubit, Book>(
+          builder: (context, state) {
+            return SingleChildScrollView(
+              child: Column(
+                children: [
+                  (state.hasCover == true)
+                      ? Center(
+                          child: CoverView(
+                            heroTag: heroTag,
+                            book: state,
+                          ),
+                        )
+                      : SizedBox(
+                          height: mediaQuery.padding.top +
+                              AppBar().preferredSize.height,
+                        ),
+                  Padding(
+                    padding: const EdgeInsets.fromLTRB(5, 0, 5, 5),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        BookTitleDetail(
+                          title: state.title.toString(),
+                          subtitle: state.subtitle,
+                          author: state.author.toString(),
+                          publicationYear:
+                              (state.publicationYear ?? "").toString(),
+                          tags: state.tags?.split('|||||'),
+                          bookType: state.bookFormat,
+                        ),
+                        const SizedBox(height: 5),
+                        BookStatusDetail(
                           book: state,
-                        ),
-                      )
-                    : SizedBox(
-                        height: mediaQuery.padding.top +
-                            AppBar().preferredSize.height,
-                      ),
-                Padding(
-                  padding: const EdgeInsets.fromLTRB(5, 0, 5, 5),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      BookTitleDetail(
-                        title: state.title.toString(),
-                        subtitle: state.subtitle,
-                        author: state.author.toString(),
-                        publicationYear:
-                            (state.publicationYear ?? "").toString(),
-                        tags: state.tags?.split('|||||'),
-                        bookType: state.bookFormat,
-                      ),
-                      const SizedBox(height: 5),
-                      BookStatusDetail(
-                        book: state,
-                        statusIcon: _decideStatusIcon(state.status),
-                        statusText: _decideStatusText(
-                          state.status,
-                          context,
-                        ),
-                        onLikeTap: () => _onLikeTap(context, state),
-                        showChangeStatus:
-                            (state.status == BookStatus.inProgress ||
-                                state.status == BookStatus.forLater ||
-                                state.status == BookStatus.unfinished),
-                        changeStatusText: _decideChangeStatusText(
-                          state.status,
-                          context,
-                        ),
-                        changeStatusAction: () {
-                          _changeStatusAction(
-                            context,
+                          statusIcon: _decideStatusIcon(state.status),
+                          statusText: _decideStatusText(
                             state.status,
-                            state,
-                          );
-                        },
-                        showRatingAndLike: state.status == BookStatus.read,
-                      ),
-                      SizedBox(
-                        height: (state.pages != null) ? 5 : 0,
-                      ),
-                      (state.pages != null)
-                          ? BookDetail(
-                              title: LocaleKeys.pages_uppercase.tr(),
-                              text: (state.pages ?? "").toString(),
-                            )
-                          : const SizedBox(),
-                      SizedBox(
-                        height: (state.description != null &&
+                            context,
+                          ),
+                          onLikeTap: () => _onLikeTap(context, state),
+                          showChangeStatus:
+                              (state.status == BookStatus.inProgress ||
+                                  state.status == BookStatus.forLater ||
+                                  state.status == BookStatus.unfinished),
+                          changeStatusText: _decideChangeStatusText(
+                            state.status,
+                            context,
+                          ),
+                          changeStatusAction: () {
+                            _changeStatusAction(
+                              context,
+                              state.status,
+                              state,
+                            );
+                          },
+                          showRatingAndLike: state.status == BookStatus.read,
+                        ),
+                        SizedBox(
+                          height: (state.pages != null) ? 5 : 0,
+                        ),
+                        (state.pages != null)
+                            ? BookDetail(
+                                title: LocaleKeys.pages_uppercase.tr(),
+                                text: (state.pages ?? "").toString(),
+                              )
+                            : const SizedBox(),
+                        SizedBox(
+                          height: (state.description != null &&
+                                  state.description!.isNotEmpty)
+                              ? 5
+                              : 0,
+                        ),
+                        (state.description != null &&
                                 state.description!.isNotEmpty)
-                            ? 5
-                            : 0,
-                      ),
-                      (state.description != null &&
-                              state.description!.isNotEmpty)
-                          ? BookDetail(
-                              title: LocaleKeys.description.tr(),
-                              text: state.description!,
-                            )
-                          : const SizedBox(),
-                      SizedBox(
-                        height: (state.isbn != null) ? 5 : 0,
-                      ),
-                      (state.isbn != null)
-                          ? BookDetail(
-                              title: LocaleKeys.isbn.tr(),
-                              text: (state.isbn ?? "").toString(),
-                            )
-                          : const SizedBox(),
-                      SizedBox(
-                        height: (state.olid != null) ? 5 : 0,
-                      ),
-                      (state.olid != null)
-                          ? BookDetail(
-                              title: LocaleKeys.open_library_ID.tr(),
-                              text: (state.olid ?? "").toString(),
-                            )
-                          : const SizedBox(),
-                      SizedBox(
-                        height: (state.myReview != null &&
-                                state.myReview!.isNotEmpty)
-                            ? 5
-                            : 0,
-                      ),
-                      (state.myReview != null && state.myReview!.isNotEmpty)
-                          ? BookDetail(
-                              title: LocaleKeys.my_review.tr(),
-                              text: state.myReview!,
-                            )
-                          : const SizedBox(),
-                      SizedBox(
-                        height: (state.notes != null && state.notes!.isNotEmpty)
-                            ? 5
-                            : 0,
-                      ),
-                      (state.notes != null && state.notes!.isNotEmpty)
-                          ? BookDetail(
-                              title: LocaleKeys.notes.tr(),
-                              text: state.notes!,
-                            )
-                          : const SizedBox(),
-                      const SizedBox(height: 5),
-                      BookDetailDateAddedUpdated(
-                        dateAdded: state.dateAdded,
-                        dateModified: state.dateModified,
-                      ),
-                      const SizedBox(height: 50.0),
-                    ],
+                            ? BookDetail(
+                                title: LocaleKeys.description.tr(),
+                                text: state.description!,
+                              )
+                            : const SizedBox(),
+                        SizedBox(
+                          height: (state.isbn != null) ? 5 : 0,
+                        ),
+                        (state.isbn != null)
+                            ? BookDetail(
+                                title: LocaleKeys.isbn.tr(),
+                                text: (state.isbn ?? "").toString(),
+                              )
+                            : const SizedBox(),
+                        SizedBox(
+                          height: (state.olid != null) ? 5 : 0,
+                        ),
+                        (state.olid != null)
+                            ? BookDetail(
+                                title: LocaleKeys.open_library_ID.tr(),
+                                text: (state.olid ?? "").toString(),
+                              )
+                            : const SizedBox(),
+                        SizedBox(
+                          height: (state.myReview != null &&
+                                  state.myReview!.isNotEmpty)
+                              ? 5
+                              : 0,
+                        ),
+                        (state.myReview != null && state.myReview!.isNotEmpty)
+                            ? BookDetail(
+                                title: LocaleKeys.my_review.tr(),
+                                text: state.myReview!,
+                              )
+                            : const SizedBox(),
+                        SizedBox(
+                          height:
+                              (state.notes != null && state.notes!.isNotEmpty)
+                                  ? 5
+                                  : 0,
+                        ),
+                        (state.notes != null && state.notes!.isNotEmpty)
+                            ? BookDetail(
+                                title: LocaleKeys.notes.tr(),
+                                text: state.notes!,
+                              )
+                            : const SizedBox(),
+                        const SizedBox(height: 5),
+                        BookDetailDateAddedUpdated(
+                          dateAdded: state.dateAdded,
+                          dateModified: state.dateModified,
+                        ),
+                        const SizedBox(height: 50.0),
+                      ],
+                    ),
                   ),
-                ),
-              ],
-            ),
-          );
-        },
+                ],
+              ),
+            );
+          },
+        ),
       ),
     );
   }
