@@ -25,14 +25,14 @@ class BookDetail extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
-            SelectableText(
+            Text(
               title,
               style: const TextStyle(
                 fontSize: 14,
                 fontWeight: FontWeight.bold,
               ),
             ),
-            SelectableText(
+            Text(
               text,
               style: const TextStyle(
                 fontSize: 14,

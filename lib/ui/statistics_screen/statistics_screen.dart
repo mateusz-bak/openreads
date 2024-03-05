@@ -18,6 +18,8 @@ class StatisticsScreen extends StatefulWidget {
 }
 
 class _StatisticsScreenState extends State<StatisticsScreen> {
+  late FocusNode _focusNode;
+
   void _setChallenge(int books, int pages, int year) {
     BlocProvider.of<ChallengeBloc>(context).add(
       ChangeChallengeEvent(
@@ -29,6 +31,12 @@ class _StatisticsScreenState extends State<StatisticsScreen> {
   }
 
   @override
+  void initState() {
+    _focusNode = FocusNode();
+    super.initState();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return StreamBuilder<List<Book>>(
         stream: bookCubit.allBooks,
@@ -36,43 +44,47 @@ class _StatisticsScreenState extends State<StatisticsScreen> {
           if (snapshot.hasData) {
             return BlocProvider(
               create: (context) => StatsBloc()..add(StatsLoad(snapshot.data!)),
-              child: Scaffold(
-                appBar: AppBar(
-                  title: Text(
-                    LocaleKeys.statistics.tr(),
-                    style: const TextStyle(fontSize: 18),
+              child: SelectableRegion(
+                selectionControls: materialTextSelectionControls,
+                focusNode: _focusNode,
+                child: Scaffold(
+                  appBar: AppBar(
+                    title: Text(
+                      LocaleKeys.statistics.tr(),
+                      style: const TextStyle(fontSize: 18),
+                    ),
                   ),
-                ),
-                body: BlocBuilder<StatsBloc, StatsState>(
-                  builder: (context, state) {
-                    if (state is StatsLoaded) {
-                      return Statistics(
-                        state: state,
-                        setChallenge: _setChallenge,
-                      );
-                    } else if (state is StatsError) {
-                      return Center(
-                        child: Padding(
-                          padding: const EdgeInsets.all(50),
-                          child: Text(
-                            state.msg,
-                            textAlign: TextAlign.center,
-                            style: const TextStyle(
-                              fontSize: 16,
-                              letterSpacing: 1.5,
+                  body: BlocBuilder<StatsBloc, StatsState>(
+                    builder: (context, state) {
+                      if (state is StatsLoaded) {
+                        return Statistics(
+                          state: state,
+                          setChallenge: _setChallenge,
+                        );
+                      } else if (state is StatsError) {
+                        return Center(
+                          child: Padding(
+                            padding: const EdgeInsets.all(50),
+                            child: Text(
+                              state.msg,
+                              textAlign: TextAlign.center,
+                              style: const TextStyle(
+                                fontSize: 16,
+                                letterSpacing: 1.5,
+                              ),
                             ),
                           ),
-                        ),
-                      );
-                    } else {
-                      return Center(
-                        child: LoadingAnimationWidget.fourRotatingDots(
-                          color: Theme.of(context).primaryColor,
-                          size: 42,
-                        ),
-                      );
-                    }
-                  },
+                        );
+                      } else {
+                        return Center(
+                          child: LoadingAnimationWidget.fourRotatingDots(
+                            color: Theme.of(context).primaryColor,
+                            size: 42,
+                          ),
+                        );
+                      }
+                    },
+                  ),
                 ),
               ),
             );

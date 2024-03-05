@@ -305,6 +305,8 @@ class _BookStatusDetailState extends State<BookStatusDetail> {
     )}';
 
     return RichText(
+      selectionRegistrar: SelectionContainer.maybeOf(context),
+      selectionColor: ThemeGetters.getSelectionColor(context),
       text: TextSpan(
         style: TextStyle(
           fontSize: 14,
@@ -338,6 +340,8 @@ class _BookStatusDetailState extends State<BookStatusDetail> {
     )}';
 
     return RichText(
+      selectionRegistrar: SelectionContainer.maybeOf(context),
+      selectionColor: ThemeGetters.getSelectionColor(context),
       text: TextSpan(
         style: TextStyle(
           fontSize: 14,
@@ -363,6 +367,8 @@ class _BookStatusDetailState extends State<BookStatusDetail> {
     BuildContext context,
   ) {
     return RichText(
+      selectionRegistrar: SelectionContainer.maybeOf(context),
+      selectionColor: ThemeGetters.getSelectionColor(context),
       text: TextSpan(
         style: TextStyle(
           fontSize: 14,

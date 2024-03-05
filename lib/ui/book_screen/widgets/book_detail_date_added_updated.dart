@@ -39,14 +39,14 @@ class _BookDetailDateAddedUpdatedState
             Column(
               crossAxisAlignment: CrossAxisAlignment.end,
               children: [
-                SelectableText(
+                Text(
                   LocaleKeys.added_on.tr(),
                   style: const TextStyle(
                     fontSize: 12,
                     fontWeight: FontWeight.normal,
                   ),
                 ),
-                SelectableText(
+                Text(
                   '${dateFormat.format(widget.dateAdded)} ${widget.dateAdded.hour}:${widget.dateAdded.minute.toString().padLeft(2, '0')}',
                   style: const TextStyle(
                     fontSize: 14,
@@ -61,14 +61,14 @@ class _BookDetailDateAddedUpdatedState
                     crossAxisAlignment: CrossAxisAlignment.end,
                     children: [
                       const SizedBox(height: 10),
-                      SelectableText(
+                      Text(
                         LocaleKeys.modified_on.tr(),
                         style: const TextStyle(
                           fontSize: 12,
                           fontWeight: FontWeight.normal,
                         ),
                       ),
-                      SelectableText(
+                      Text(
                         '${dateFormat.format(widget.dateModified)} ${widget.dateModified.hour}:${widget.dateModified.minute}',
                         style: const TextStyle(
                           fontSize: 14,
