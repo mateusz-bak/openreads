@@ -579,9 +579,7 @@ class _AddBookScreenState extends State<AddBookScreen> {
                         ),
                       ),
                     ),
-                    const SizedBox(
-                      width: 12,
-                    )
+                    const SizedBox(width: 10),
                   ],
                 ),
                 const SizedBox(height: 10),
