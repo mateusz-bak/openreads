@@ -12,6 +12,7 @@ final supportedLocales = [
   AppLanguage('Deutsch', const Locale('de', 'DE')),
   // AppLanguage('ελληνικά', const Locale('el', 'GR')),
   AppLanguage('English', const Locale('en', 'US')),
+  AppLanguage('eesti keel', const Locale('et')),
   AppLanguage('español', const Locale('es', 'ES')),
   AppLanguage('Filipino', const Locale('fil', 'PH')),
   AppLanguage('français', const Locale('fr', 'FR')),
