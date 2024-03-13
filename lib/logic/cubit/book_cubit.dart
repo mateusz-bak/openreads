@@ -38,6 +38,8 @@ class BookCubit extends Cubit {
       BehaviorSubject<List<int>>();
   final BehaviorSubject<List<String>> _tagsFetcher =
       BehaviorSubject<List<String>>();
+  final BehaviorSubject<List<String>> _authorsFetcher =
+      BehaviorSubject<List<String>>();
   final BehaviorSubject<Book?> _bookFetcher = BehaviorSubject<Book?>();
   final BehaviorSubject<List<Book>?> _booksWithSameTagFetcher =
       BehaviorSubject<List<Book>?>();
@@ -53,6 +55,7 @@ class BookCubit extends Cubit {
   Stream<List<Book>> get searchBooks => _searchBooksFetcher.stream;
   Stream<List<int>> get finishedYears => _finishedYearsFetcher.stream;
   Stream<List<String>> get tags => _tagsFetcher.stream;
+  Stream<List<String>> get authors => _authorsFetcher.stream;
   Stream<List<Book>?> get booksWithSameTag => _booksWithSameTagFetcher.stream;
   Stream<List<Book>?> get booksWithSameAuthor =>
       _booksWithSameAuthorFetcher.stream;
@@ -74,11 +77,20 @@ class BookCubit extends Cubit {
     getAllBooks();
   }
 
-  getAllBooks({bool tags = false}) async {
+  getAllBooks({
+    bool getTags = true,
+    bool getAuthors = true,
+  }) async {
     List<Book> books = await repository.getAllNotDeletedBooks();
     _booksFetcher.sink.add(books);
-    if (tags) return;
-    _tagsFetcher.sink.add(_getTags(books));
+
+    if (getTags) {
+      _tagsFetcher.sink.add(_getTags(books));
+    }
+
+    if (getAuthors) {
+      _authorsFetcher.sink.add(_getAuthors(books));
+    }
   }
 
   removeAllBooks() async {
@@ -235,6 +247,20 @@ class BookCubit extends Cubit {
     tags.sort((a, b) => a.compareTo(b));
 
     return tags;
+  }
+
+  List<String> _getAuthors(List<Book> books) {
+    final authors = List<String>.empty(growable: true);
+
+    for (var book in books) {
+      if (!authors.contains(book.author)) {
+        authors.add(book.author);
+      }
+    }
+
+    authors.sort((a, b) => a.compareTo(b));
+
+    return authors;
   }
 
   Future<bool> _checkIfCoverMigrationDone() async {

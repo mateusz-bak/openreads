@@ -72,7 +72,7 @@ class BackupExport {
 
   static Future<String?> prepareTemporaryBackup(BuildContext context) async {
     try {
-      await bookCubit.getAllBooks(tags: true);
+      await bookCubit.getAllBooks(getTags: false, getAuthors: false);
 
       final books = await bookCubit.allBooks.first;
       final listOfBookJSONs = List<String>.empty(growable: true);

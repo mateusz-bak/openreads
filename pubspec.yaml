@@ -28,7 +28,7 @@ dependencies:
   dropdown_button2: ^2.0.0
   equatable: ^2.0.5
   connectivity_plus: ^5.0.1
-  http: ^1.0.0
+  http: ^1.2.0
   cached_network_image: ^3.3.0
   loading_animation_widget: ^1.2.0+3
   infinite_scroll_pagination: ^4.0.0
@@ -56,7 +56,7 @@ dependencies:
   diacritic: ^0.1.4
   flutter_speed_dial: ^7.0.0
   blurhash_dart: ^1.2.1
-  csv: ^5.0.2
+  csv: ^6.0.0
   file_picker: 5.3.2
   smooth_page_indicator: ^1.1.0
   intl: ^0.18.1
