@@ -76,7 +76,7 @@ class CSVExport {
 
   static Future<String?> _prepareCSVExport() async {
     try {
-      await bookCubit.getAllBooks(tags: true);
+      await bookCubit.getAllBooks(getAuthors: false, getTags: false);
 
       final books = await bookCubit.allBooks.first;
       final rows = List<List<String>>.empty(growable: true);

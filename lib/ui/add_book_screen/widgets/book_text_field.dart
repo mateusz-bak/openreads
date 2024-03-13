@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_typeahead/flutter_typeahead.dart';
 
 import 'package:openreads/core/themes/app_theme.dart';
 
@@ -19,6 +20,7 @@ class BookTextField extends StatefulWidget {
     this.textCapitalization = TextCapitalization.none,
     this.padding = const EdgeInsets.symmetric(horizontal: 10),
     this.onSubmitted,
+    this.suggestions,
   });
 
   final TextEditingController controller;
@@ -34,13 +36,13 @@ class BookTextField extends StatefulWidget {
   final TextCapitalization textCapitalization;
   final Function(String)? onSubmitted;
   final EdgeInsets padding;
+  final List<String>? suggestions;
 
   @override
   State<BookTextField> createState() => _BookTextFieldState();
 }
 
 class _BookTextFieldState extends State<BookTextField> {
-  final FocusNode focusNode = FocusNode();
   bool showClearButton = false;
 
   @override
@@ -70,45 +72,90 @@ class _BookTextFieldState extends State<BookTextField> {
           border: Border.all(color: dividerColor),
         ),
         child: Scrollbar(
-          child: TextField(
-            autofocus: widget.autofocus,
-            keyboardType: widget.keyboardType,
-            inputFormatters: widget.inputFormatters,
-            textCapitalization: widget.textCapitalization,
-            controller: widget.controller,
-            focusNode: focusNode,
-            minLines: 1,
-            maxLines: widget.maxLines,
-            maxLength: widget.maxLength,
-            textInputAction: widget.textInputAction,
-            style: const TextStyle(fontSize: 14),
-            onSubmitted: widget.onSubmitted ?? (_) {},
-            decoration: InputDecoration(
-              labelText: widget.hint,
-              labelStyle: const TextStyle(fontSize: 14),
-              icon: (widget.icon != null)
-                  ? Icon(
-                      widget.icon,
-                      color: Theme.of(context).colorScheme.primary,
-                    )
-                  : null,
-              border: InputBorder.none,
-              counterText: widget.hideCounter ? "" : null,
-              suffixIcon: showClearButton
-                  ? IconButton(
-                      onPressed: () {
-                        widget.controller.clear();
-                        setState(() {
-                          showClearButton = false;
-                        });
-                        focusNode.requestFocus();
-                      },
-                      icon: const Icon(Icons.clear),
-                    )
-                  : null,
-            ),
-          ),
+          child: widget.suggestions != null && widget.suggestions!.isNotEmpty
+              ? _buildTypeAheadField()
+              : _buildTextField(context),
         ),
+      ),
+    );
+  }
+
+  TypeAheadField<String> _buildTypeAheadField() {
+    return TypeAheadField(
+        controller: widget.controller,
+        hideOnLoading: true,
+        hideOnEmpty: true,
+        itemBuilder: (context, suggestion) {
+          return Container(
+            color: Theme.of(context).colorScheme.surfaceVariant,
+            child: ListTile(
+              title: Text(suggestion),
+            ),
+          );
+        },
+        decorationBuilder: (context, child) {
+          return Container(
+            padding: const EdgeInsets.symmetric(vertical: 5),
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(cornerRadius),
+              border: Border.all(color: dividerColor),
+            ),
+            child: child,
+          );
+        },
+        suggestionsCallback: (pattern) {
+          return widget.suggestions!.where((String option) {
+            return option.toLowerCase().startsWith(pattern.toLowerCase());
+          }).toList();
+        },
+        onSelected: (suggestion) {
+          widget.controller.text = suggestion;
+        },
+        builder: (_, __, focusNode) {
+          return _buildTextField(context, focusNode: focusNode);
+        });
+  }
+
+  TextField _buildTextField(
+    BuildContext context, {
+    FocusNode? focusNode,
+  }) {
+    return TextField(
+      autofocus: widget.autofocus,
+      keyboardType: widget.keyboardType,
+      inputFormatters: widget.inputFormatters,
+      textCapitalization: widget.textCapitalization,
+      controller: widget.controller,
+      focusNode: focusNode,
+      minLines: 1,
+      maxLines: widget.maxLines,
+      maxLength: widget.maxLength,
+      textInputAction: widget.textInputAction,
+      style: const TextStyle(fontSize: 14),
+      onSubmitted: widget.onSubmitted ?? (_) {},
+      decoration: InputDecoration(
+        labelText: widget.hint,
+        labelStyle: const TextStyle(fontSize: 14),
+        icon: (widget.icon != null)
+            ? Icon(
+                widget.icon,
+                color: Theme.of(context).colorScheme.primary,
+              )
+            : null,
+        border: InputBorder.none,
+        counterText: widget.hideCounter ? "" : null,
+        suffixIcon: showClearButton
+            ? IconButton(
+                onPressed: () {
+                  widget.controller.clear();
+                  setState(() {
+                    showClearButton = false;
+                  });
+                  focusNode?.requestFocus();
+                },
+                icon: const Icon(Icons.clear),
+              )
+            : null,
       ),
     );
   }
