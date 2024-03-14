@@ -1,0 +1,6 @@
+- Feat: Monochrome icon for Android 14+
+- Feat: Suggestion of author while editing book details
+- Feat: Scan ISBN while editing book details
+- Fix: Improved overflow of text
+- Fix: Displaying list of books with no start/finish dates
+- Fix: Proper selecting of text
