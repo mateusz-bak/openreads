@@ -83,7 +83,7 @@
     "select_accent_color": "Vurgu rengini seçin",
     "rating_type": "Derecelendirme görüntüleme türü",
     "seletct_rating_type": "Derecelendirme görüntüleme türünü seçin",
-    "rating_as_bar": "Yıldız çubuğu olarak derecelendirme",
+    "rating_as_bar": "Yıldız olarak değerlendirme",
     "rating_as_number": "Sayı olarak derecelendirme",
     "theme_mode": "Uygulama tema modu",
     "select_theme_mode": "Tema modunu seç",
@@ -108,7 +108,7 @@
     "send_feedback": "Geri bildirim gönder",
     "report_bugs_or_ideas": "Bir hata veya fikir bildir",
     "send_dev_email": "Geliştiriciye bir e-posta gönder",
-    "raise_github_issue": "Github'da bir konu oluşturun",
+    "raise_github_issue": "GitHub'da bir konu oluşturun",
     "deleted_books": "Silinen kitaplar",
     "unfinished_books": "Tamamlanmamış kitaplar",
     "finished_books": "Tamamlanan kitaplar",
@@ -283,5 +283,8 @@
     "licence": "Lisans",
     "source_code_description": "GitHub'da görün",
     "import_csv": "Openreads CSV dosyasını içe aktar",
-    "add_additional_reading_time": "Okumayı kaydet"
+    "add_additional_reading_time": "Okumayı kaydet",
+    "cover_still_downloaded": "Kapak hâlâ indiriliyor",
+    "wait_for_downloading_to_finish": "İndirmenin bitmesini bekleyin",
+    "save_without_cover": "Kapaksız kaydet"
 }

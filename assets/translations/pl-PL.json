@@ -283,5 +283,8 @@
     "date_modified": "Data modyfikacji",
     "added_on": "Dodano",
     "read_x_times": "Przeczytano {} razy",
-    "default_books_format": "Domyślny format książek"
+    "default_books_format": "Domyślny format książek",
+    "cover_still_downloaded": "Okładka jest wciąż pobierana",
+    "wait_for_downloading_to_finish": "Poczekaj aż pobieranie się zakończy",
+    "save_without_cover": "Zapisz bez okładki"
 }

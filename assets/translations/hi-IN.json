@@ -283,5 +283,8 @@
     "date_added": "तिथि जोड़ी",
     "date_modified": "तिथि संशोधित",
     "default_books_format": "डिफ़ॉल्ट पुस्तकों का प्रारूप",
-    "modified_on": "संशोधित हुआ"
+    "modified_on": "संशोधित हुआ",
+    "cover_still_downloaded": "कवर अभी भी डाउनलोड हो रहा है",
+    "wait_for_downloading_to_finish": "डाउनलोडिंग समाप्त होने तक प्रतीक्षा करें",
+    "save_without_cover": "बिना कवर के सहेजें"
 }
