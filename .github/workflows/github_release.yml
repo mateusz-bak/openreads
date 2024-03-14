@@ -10,12 +10,12 @@ jobs:
     name: Append project info
     runs-on: ubuntu-latest
     steps:
-    - name: Add Test Report to Release
+    - name: Add project info to Release
       uses: irongut/EditRelease@v1.2.0
       with:
         token: ${{ secrets.GITHUB_TOKEN }}
         id: ${{ github.event.release.id }}
-        files: "assets/project_info.md"
+        files: "./assets/project_info.md"
 
   build_github:
     name: Build split apks and attach to release
