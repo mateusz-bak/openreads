@@ -278,5 +278,9 @@
     "help_to_get_started": "Pour vous aider à démarrer, voici quelques actions que vous pouvez faire",
     "owned_book_tag": "possédé",
     "add_additional_reading_time": "Enregistrer une lecture",
-    "read_x_times": "Lu {} fois"
+    "read_x_times": "Lu {} fois",
+    "date_modified": "Date de modification",
+    "default_books_format": "Format de livre par défaut",
+    "added_on": "Ajouté à",
+    "date_added": "Date d'ajout"
 }

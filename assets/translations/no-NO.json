@@ -226,5 +226,62 @@
     "export_csv_description_1": "Omslag blir ikke eksportert",
     "import_successful": "Importert",
     "openreads_backup": "Openreads-sikkerhetskopi",
-    "export_csv": "Eksporter bøker som CSV-fil"
+    "export_csv": "Eksporter bøker som CSV-fil",
+    "edit_current_cover": "Rediger omslaget",
+    "cover_not_found_in_ol": "Omslag ikke funnet i Open Library",
+    "download_missing_covers_explanation": "Last ned manglende omslag til bøker med lagret ISBN",
+    "filter_out_selected_tags": "Skjul valgte etiketter",
+    "start_adding_books": "Fortsett til appen",
+    "owned_book_tag": "eid",
+    "read_x_times": "Lest {} ganger",
+    "date_added": "Dato lagt til",
+    "date_modified": "Dato endret",
+    "added_on": "Lagt til på",
+    "modified_on": "Sist redigert",
+    "default_books_format": "Forhåndsvalgte bokformat",
+    "book_format_paperback_plural": "Heftede bøker",
+    "book_format_all": "Alle bokformat",
+    "day": {
+        "one": "{} dag",
+        "other": "{} dager"
+    },
+    "hour": {
+        "other": "{} timer",
+        "one": "{} time"
+    },
+    "tags": {
+        "one": "Etikett",
+        "other": "Etiketter"
+    },
+    "load_cover_from_phone": "Legg til omslag fra filene dine",
+    "downloaded_covers": "Nedlastede omslag:",
+    "try_downloading_covers": "Vil du forsøke å laste ned manglende omslag til importerte bøker?",
+    "import_bookwyrm_csv": "Importer CSV-fil fra BookWyrm",
+    "add_additional_reading_time": "Registrer lesetid",
+    "help_to_get_started": "Her er noen ting du kan gjøre før du starter",
+    "click_to_add_book_manually": "Trykk her for å legge til bok manuelt",
+    "no_search_results": "Ingen søkeresultater",
+    "isbn_cannot_be_empty": "ISBN må fylles inn",
+    "get_cover_from_open_library": "Hent omslag fra Open Library med bokens ISBN",
+    "book_format_paperback": "Heftet",
+    "book_format_hardcover": "Innbundet",
+    "book_format_hardcover_plural": "Innbundne bøker",
+    "ok": "OK",
+    "minute": {
+        "one": "{} minutt",
+        "other": "{} minutter"
+    },
+    "delete_books": "Fjern bøker",
+    "delete_books_question": "Fjern valgte bøker?",
+    "filter_by_book_format": "Filtrer etter bokformat",
+    "only_editions_with_covers": "Vis kun utgaver med omslag",
+    "change_book_format": "Bytt bokformat",
+    "change_books_author": "Bytt forfatter",
+    "bulk_update_unsuccessful_message": "Oppdatering av detaljer feilet",
+    "import_csv": "Importer CSV-fil fra Openreads",
+    "set_custom_reading_time": "Velg lesetid manuelt",
+    "select_all": "Velg alle",
+    "general_search": "Generelt",
+    "books_settings": "Bøker",
+    "download_missing_covers": "Last ned manglende omslag"
 }

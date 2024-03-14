@@ -226,5 +226,16 @@
     "welcome_2_description_2": "Desafie-se a si próprio para se tornar um melhor leitor.",
     "all_years": "Todos",
     "average_rating": "Avaliação média",
-    "deleted_books": "Eliminar livros"
+    "deleted_books": "Eliminar livros",
+    "change_books_author": "Mudar de autor de livros",
+    "change_book_format": "Alterar formato dos livros",
+    "book_format_paperback": "Brochura",
+    "book_format_hardcover": "Capa-dura",
+    "book_format_paperback_plural": "Livros em brochura",
+    "book_format_hardcover_plural": "Livros de capa-dura",
+    "book_format_all": "Todos os formatos de livro",
+    "filter_by_book_format": "Filtrar por formato de livro",
+    "delete_books": "Eliminar livros",
+    "delete_books_question": "Eliminar livros selecionados?",
+    "only_editions_with_covers": "Mostrar apenas edições com capa"
 }

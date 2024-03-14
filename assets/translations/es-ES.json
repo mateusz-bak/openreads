@@ -283,5 +283,8 @@
     "added_on": "Añadido el",
     "modified_on": "Modificado el",
     "default_books_format": "Formato de los libros por defecto",
-    "date_modified": "Fecha de la modificación"
+    "date_modified": "Fecha de la modificación",
+    "cover_still_downloaded": "La portada sigue descargándose",
+    "wait_for_downloading_to_finish": "Espere a que termine la descarga",
+    "save_without_cover": "Guardar sin la portada"
 }
