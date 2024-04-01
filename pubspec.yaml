@@ -60,6 +60,7 @@ dependencies:
   file_picker: 5.3.2
   smooth_page_indicator: ^1.1.0
   intl: ^0.18.1
+  dotted_border: ^2.1.0
 
 dev_dependencies:
   flutter_test:
