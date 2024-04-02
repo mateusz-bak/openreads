@@ -283,5 +283,8 @@
     "added_on": "Hinzugefügt am",
     "modified_on": "Geändert am",
     "default_books_format": "Standardformat für Bücher",
-    "date_added": "Datum hinzugefügt"
+    "date_added": "Datum hinzugefügt",
+    "cover_still_downloaded": "Das Cover wird noch heruntergeladen",
+    "wait_for_downloading_to_finish": "Warten, bis der Download beendet ist",
+    "save_without_cover": "Ohne Cover speichern"
 }

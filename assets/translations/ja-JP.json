@@ -48,7 +48,7 @@
     "set_book_status": "本のステータスを設定",
     "books_for_later": "あとで読む",
     "sort_filter": "並び替え / フィルタ",
-    "no": "いいで",
+    "no": "いいえ",
     "january_short": "1月",
     "changelog": "Changelog",
     "longest_book": "最も長い本",
@@ -198,5 +198,19 @@
     "day": {
         "one": "{}日",
         "other": "{}日"
-    }
+    },
+    "delete_books_question": "選択した本を削除しますか？",
+    "filter_by_book_format": "本の種類でフィルタ",
+    "only_editions_with_covers": "カバーありの版のみを表示",
+    "pages_challenge": "完了したページチャレンジ",
+    "book_format_paperback": "ペーパーバック",
+    "book_format_hardcover": "ハードカバー",
+    "book_format_ebook": "電子ブック",
+    "book_format_audiobook": "オーディオブック",
+    "book_format_ebook_plural": "電子ブック",
+    "book_format_audiobook_plural": "オーディオブック",
+    "set_books_goal_for_year": "本の目標を設定",
+    "delete_books": "本を削除",
+    "notes": "メモ",
+    "books_challenge": "完了したブックチャレンジ"
 }

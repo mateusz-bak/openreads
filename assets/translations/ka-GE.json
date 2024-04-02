@@ -173,5 +173,16 @@
     "welcome_3_description_1": "Openreads-ის კოდი არის სრულიად საჯარო!",
     "welcome_3_description_2": "ეს იმას ნიშნავს, რომ თავად შეგიძლია შეამოწმო აპლიკაციის კოდი და წვლილი შეიტანო მის განვითარებაში.",
     "welcome_3_description_3": "ასევე, აპლიკაცია არ გიჩვენებს რეკლამებს და არ გითვალთვალებს!",
-    "start_button": "დაწყება"
+    "start_button": "დაწყება",
+    "filter_by_book_format": "გაფილტრე ფორმატის მიხედვით",
+    "results_lowercase": "შედეგები",
+    "default_locale": "სისტემის ენა",
+    "select_color": "აირჩიე ფერი",
+    "title": "სათაური",
+    "author": "ავტორი",
+    "description": "აღწერა",
+    "search": "ძებნა",
+    "language": "ენა",
+    "select_language": "აირჩიე ენა",
+    "no": "არა"
 }

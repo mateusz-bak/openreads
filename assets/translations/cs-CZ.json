@@ -283,5 +283,12 @@
     "read_x_times": "Přečteno {}krát",
     "date_added": "Datum přidání",
     "modified_on": "Změněno dne",
-    "default_books_format": "Výchozí formát knížky"
+    "default_books_format": "Výchozí formát knížky",
+    "cover_still_downloaded": "Obálka se ještě stahuje",
+    "wait_for_downloading_to_finish": "Počkejte na dokončení stažení",
+    "save_without_cover": "Uložit bez obálky",
+    "search_online_for_cover": "Najít obálku online",
+    "book_cover": "Text přidaný při hledání obálek online. Vypadá takto: \"{název knížky){autor knížky}{překlad obálky}\"",
+    "duplicate_book": "Duplikátní knížka",
+    "copy_book": "kopie"
 }
