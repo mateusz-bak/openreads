@@ -92,6 +92,7 @@ class BookScreenAppBar extends StatelessWidget implements PreferredSizeWidget {
   Widget build(BuildContext context) {
     final moreButtonOptions = [
       LocaleKeys.edit_book.tr(),
+      LocaleKeys.duplicateBook.tr(),
     ];
 
     // Needed to add BlocBuilder because the status bar was changing
@@ -116,7 +117,7 @@ class BookScreenAppBar extends StatelessWidget implements PreferredSizeWidget {
           actions: [
             BlocBuilder<CurrentBookCubit, Book>(
               builder: (context, state) {
-                if (moreButtonOptions.length == 1) {
+                if (moreButtonOptions.length == 2) {
                   if (state.deleted == true) {
                     moreButtonOptions.add(LocaleKeys.restore_book.tr());
                     moreButtonOptions.add(
@@ -151,6 +152,26 @@ class BookScreenAppBar extends StatelessWidget implements PreferredSizeWidget {
                               ),
                             );
                           } else if (choice == moreButtonOptions[1]) {
+                            final cover = state.getCoverBytes();
+
+                            context.read<EditBookCoverCubit>().setCover(cover);
+                            final newBook = state.copyWith(
+                              title:
+                                  '${state.title} ${LocaleKeys.copyBook.tr()}',
+                            );
+                            newBook.id = null;
+
+                            context.read<EditBookCubit>().setBook(newBook);
+                            context.read<EditBookCubit>().setHasCover(true);
+
+                            Navigator.of(context).push(
+                              MaterialPageRoute(
+                                builder: (_) => const AddBookScreen(
+                                  duplicatingBook: true,
+                                ),
+                              ),
+                            );
+                          } else if (choice == moreButtonOptions[2]) {
                             if (state.deleted == false) {
                               _showDeleteRestoreDialog(
                                   context, true, null, state);
@@ -158,7 +179,7 @@ class BookScreenAppBar extends StatelessWidget implements PreferredSizeWidget {
                               _showDeleteRestoreDialog(
                                   context, false, null, state);
                             }
-                          } else if (choice == moreButtonOptions[2]) {
+                          } else if (choice == moreButtonOptions[3]) {
                             _showDeleteRestoreDialog(
                               context,
                               true,
