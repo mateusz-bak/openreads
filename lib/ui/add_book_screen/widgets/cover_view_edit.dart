@@ -1,11 +1,11 @@
-import 'dart:io';
+// ignore_for_file: use_build_context_synchronously
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
 import 'package:image/image.dart' as img;
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:image_cropper/image_cropper.dart';
 import 'package:blurhash_dart/blurhash_dart.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -19,6 +19,7 @@ import 'package:openreads/generated/locale_keys.g.dart';
 import 'package:openreads/logic/cubit/edit_book_cubit.dart';
 import 'package:openreads/main.dart';
 import 'package:openreads/ui/add_book_screen/widgets/widgets.dart';
+import 'package:openreads/ui/search_covers_screen/search_covers_screen.dart';
 
 class CoverViewEdit extends StatefulWidget {
   const CoverViewEdit({super.key});
@@ -54,7 +55,10 @@ class _CoverViewEditState extends State<CoverViewEdit> {
       return;
     }
 
-    final croppedPhoto = await _cropImage(await photoXFile.readAsBytes());
+    final croppedPhoto = await cropImage(
+      context,
+      await photoXFile.readAsBytes(),
+    );
 
     if (croppedPhoto == null) {
       _setCoverLoading(false);
@@ -80,9 +84,15 @@ class _CoverViewEditState extends State<CoverViewEdit> {
     _setCoverLoading(false);
   }
 
-  void _editCurrentCover(BuildContext context) async {
+  void _editCurrentCover({
+    required BuildContext context,
+    bool pop = true,
+  }) async {
     _setCoverLoading(true);
-    Navigator.of(context).pop();
+
+    if (pop) {
+      Navigator.of(context).pop();
+    }
 
     final cover = context.read<EditBookCoverCubit>().state;
 
@@ -91,7 +101,7 @@ class _CoverViewEditState extends State<CoverViewEdit> {
       return;
     }
 
-    final croppedPhoto = await _cropImage(cover);
+    final croppedPhoto = await cropImage(context, cover);
 
     if (croppedPhoto == null) {
       _setCoverLoading(false);
@@ -116,47 +126,6 @@ class _CoverViewEditState extends State<CoverViewEdit> {
     context.read<EditBookCubit>().setHasCover(true);
 
     _setCoverLoading(false);
-  }
-
-  Future<CroppedFile?> _cropImage(Uint8List cover) async {
-    final colorScheme = Theme.of(context).colorScheme;
-
-    //write temporary file as ImageCropper requires a file
-    final tmpCoverTimestamp = DateTime.now().millisecondsSinceEpoch;
-    final tmpCoverFile = File(
-      '${appTempDirectory.path}/$tmpCoverTimestamp.jpg',
-    );
-    await tmpCoverFile.writeAsBytes(cover);
-
-    return await ImageCropper().cropImage(
-      maxWidth: 1024,
-      maxHeight: 1024,
-      sourcePath: tmpCoverFile.path,
-      compressQuality: 90,
-      uiSettings: [
-        AndroidUiSettings(
-          toolbarTitle: LocaleKeys.edit_cover.tr(),
-          toolbarColor: Colors.black,
-          statusBarColor: Colors.black,
-          toolbarWidgetColor: Colors.white,
-          backgroundColor: colorScheme.surface,
-          cropGridColor: Colors.black87,
-          activeControlsWidgetColor: colorScheme.primary,
-          cropFrameColor: Colors.black87,
-          lockAspectRatio: false,
-          hideBottomControls: false,
-        ),
-        IOSUiSettings(
-          title: LocaleKeys.edit_cover.tr(),
-          cancelButtonTitle: LocaleKeys.cancel.tr(),
-          doneButtonTitle: LocaleKeys.save.tr(),
-          rotateButtonsHidden: false,
-          rotateClockwiseButtonHidden: true,
-          aspectRatioPickerButtonHidden: false,
-          aspectRatioLockDimensionSwapEnabled: false,
-        ),
-      ],
-    );
   }
 
   _deleteCover(BuildContext context) async {
@@ -205,6 +174,19 @@ class _CoverViewEditState extends State<CoverViewEdit> {
     _setCoverLoading(false);
   }
 
+  _searchForCoverOnline(BuildContext context) async {
+    Navigator.of(context).pop();
+
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) => SearchCoversScreen(
+          book: context.read<EditBookCubit>().state,
+        ),
+      ),
+    );
+  }
+
   showCoverLoadBottomSheet(BuildContext context) {
     FocusManager.instance.primaryFocus?.unfocus();
 
@@ -239,6 +221,12 @@ class _CoverViewEditState extends State<CoverViewEdit> {
                   ),
                   const SizedBox(height: 15),
                   CoverOptionButton(
+                    text: LocaleKeys.searchOnlineForCover.tr(),
+                    icon: FontAwesomeIcons.magnifyingGlass,
+                    onPressed: () => _searchForCoverOnline(context),
+                  ),
+                  const SizedBox(height: 15),
+                  CoverOptionButton(
                     text: LocaleKeys.get_cover_from_open_library.tr(),
                     icon: FontAwesomeIcons.globe,
                     onPressed: () => _loadCoverFromOpenLibrary(context),
@@ -253,7 +241,7 @@ class _CoverViewEditState extends State<CoverViewEdit> {
                               text: LocaleKeys.edit_current_cover.tr(),
                               icon: FontAwesomeIcons.image,
                               onPressed: () => _editCurrentCover(
-                                context,
+                                context: context,
                               ),
                             ),
                           ],
