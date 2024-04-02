@@ -152,3 +152,13 @@ flutter:
         - asset: assets/fonts/Jost-Regular.ttf
         - asset: assets/fonts/Jost-Bold.ttf
           weight: 700
+    - family: AtkinsonHyperlegible
+      fonts:
+        - asset: assets/fonts/Atkinson-Hyperlegible-Regular-102.ttf
+        - asset: assets/fonts/Atkinson-Hyperlegible-Bold-102.ttf
+          weight: 700
+    - family: OpenDyslexic
+      fonts:
+        - asset: assets/fonts/OpenDyslexic3-Regular.ttf
+        - asset: assets/fonts/OpenDyslexic3-Bold.ttf
+          weight: 700
