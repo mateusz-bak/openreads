@@ -49,6 +49,10 @@ class _BookTextFieldState extends State<BookTextField> {
   void initState() {
     super.initState();
 
+    if (widget.controller.text.isNotEmpty) {
+      showClearButton = true;
+    }
+
     widget.controller.addListener(() {
       setState(() {
         if (widget.controller.text.isNotEmpty) {
