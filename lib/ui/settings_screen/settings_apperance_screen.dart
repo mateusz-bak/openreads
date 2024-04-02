@@ -168,6 +168,26 @@ class SettingsApperanceScreen extends StatelessWidget {
                                 ),
                                 const SizedBox(height: 5),
                                 SettingsDialogButton(
+                                  text: 'Atkinson Hyperlegible',
+                                  fontFamily: 'AtkinsonHyperlegible',
+                                  onPressed: () => _setFont(
+                                    context,
+                                    state,
+                                    Font.atkinsonHyperlegible,
+                                  ),
+                                ),
+                                const SizedBox(height: 5),
+                                SettingsDialogButton(
+                                  text: 'Open Dyslexic',
+                                  fontFamily: 'OpenDyslexic',
+                                  onPressed: () => _setFont(
+                                    context,
+                                    state,
+                                    Font.openDyslexic,
+                                  ),
+                                ),
+                                const SizedBox(height: 5),
+                                SettingsDialogButton(
                                   text: 'Nunito',
                                   fontFamily: 'Nunito',
                                   onPressed: () => _setFont(
@@ -618,6 +638,12 @@ class SettingsApperanceScreen extends StatelessWidget {
         break;
       case Font.jost:
         fontFamily = 'Jost';
+        break;
+      case Font.atkinsonHyperlegible:
+        fontFamily = 'AtkinsonHyperlegible';
+        break;
+      case Font.openDyslexic:
+        fontFamily = 'OpenDyslexic';
         break;
       default:
         fontFamily = 'Nunito';
