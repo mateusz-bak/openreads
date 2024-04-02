@@ -286,4 +286,6 @@ abstract class LocaleKeys {
   static const coverStillDownloaded = 'cover_still_downloaded';
   static const waitForDownloadingToFinish = 'wait_for_downloading_to_finish';
   static const saveWithoutCover = 'save_without_cover';
+  static const searchOnlineForCover = 'search_online_for_cover';
+  static const bookCover = 'book_cover';
 }
