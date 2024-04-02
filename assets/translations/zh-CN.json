@@ -283,5 +283,7 @@
     "cover_not_found_in_ol": "未在Open Library发现封面",
     "select_all": "全选",
     "try_downloading_covers": "您想尝试下载导入书籍的缺失封面吗？",
-    "only_editions_with_covers": "仅显示具有封面的版本"
+    "only_editions_with_covers": "仅显示具有封面的版本",
+    "cover_still_downloaded": "封面仍在下载中",
+    "wait_for_downloading_to_finish": "等待下载完成"
 }

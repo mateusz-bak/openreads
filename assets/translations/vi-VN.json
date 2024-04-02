@@ -37,5 +37,12 @@
     "enter_pages": "Số trang",
     "migration_v1_to_v2_finished": "Quá trình di chuyển sách đã hoàn tất, hãy nhấp vào nút BẮT ĐẦU.",
     "finish_date_before_start": "Ngày kết thúc không được trước ngày bắt đầu",
-    "enter_subtitle": "Nhập phụ đề"
+    "enter_subtitle": "Nhập phụ đề",
+    "books_for_later": "Để sau",
+    "book_status_for_later": "Để sau",
+    "book_format_paperback": "Bìa giấy",
+    "book_format_hardcover": "Bìa cứng",
+    "book_format_ebook": "Sách điện tử",
+    "book_format_audiobook": "Sách nói",
+    "book_format_paper_plural": "Sách giấy"
 }

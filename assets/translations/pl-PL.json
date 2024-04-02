@@ -286,5 +286,9 @@
     "default_books_format": "Domyślny format książek",
     "cover_still_downloaded": "Okładka jest wciąż pobierana",
     "wait_for_downloading_to_finish": "Poczekaj aż pobieranie się zakończy",
-    "save_without_cover": "Zapisz bez okładki"
+    "save_without_cover": "Zapisz bez okładki",
+    "book_cover": "okładka książki",
+    "search_online_for_cover": "Szukaj okładki w internecie",
+    "duplicate_book": "Zduplikuj książkę",
+    "copy_book": "kopia"
 }

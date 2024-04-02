@@ -117,7 +117,7 @@
     "results_lowercase": "resultados",
     "edit_book": "Editar livro",
     "welcome_2_description_1": "Progrida nas suas leituras graças a estatísticas incríveis e detalhadas.",
-    "source_code_description": "Ver no Github",
+    "source_code_description": "Ver no GitHub",
     "notes": "Notas",
     "version": "Versão",
     "isbn": "ISBN",
@@ -180,7 +180,7 @@
     "reading_time": "Tempo de leitura",
     "licence": "Licença",
     "custom_color": "Personalizado",
-    "rating_as_bar": "Avaliação como barra de estrelas",
+    "rating_as_bar": "Classificação por estrelas",
     "editions_lowercase": "edições",
     "support_the_project_description": "Agradeça pagando um café ao programador",
     "translate_app": "Ajude a traduzir",
@@ -237,5 +237,54 @@
     "filter_by_book_format": "Filtrar por formato de livro",
     "delete_books": "Eliminar livros",
     "delete_books_question": "Eliminar livros selecionados?",
-    "only_editions_with_covers": "Mostrar apenas edições com capa"
+    "only_editions_with_covers": "Mostrar apenas edições com capa",
+    "bulk_update_unsuccessful_message": "Não foi possível atualizar os dados dos livros",
+    "import_bookwyrm_csv": "Importar CSV de BookWyrm",
+    "import_csv": "Importar CSV de Openreads",
+    "ok": "OK",
+    "day": {
+        "one": "{} dia",
+        "other": "{} dias"
+    },
+    "hour": {
+        "one": "{} hora",
+        "other": "{} horas"
+    },
+    "minute": {
+        "one": "{} minuto",
+        "other": "{} minutos"
+    },
+    "set_custom_reading_time": "Definir tempo de leitura personalizado",
+    "tags": {
+        "one": "Etiqueta",
+        "other": "Etiquetas"
+    },
+    "general_search": "Geral",
+    "load_cover_from_phone": "Carregar capa a partir do seu dispositivo",
+    "get_cover_from_open_library": "Obter capa do Open Library a partir do ISBN do livro",
+    "edit_current_cover": "Editar capa atual",
+    "isbn_cannot_be_empty": "O ISBN não pode estar vazio",
+    "download_missing_covers": "Descarregar capas em falta",
+    "try_downloading_covers": "Quer tentar descarregar as capas em falta para livros importados?",
+    "filter_out_selected_tags": "Filtrar etiquetas selecionadas",
+    "start_adding_books": "Ir para a aplicação",
+    "help_to_get_started": "Para ajudar a começar, eis algumas coisas que pode fazer",
+    "owned_book_tag": "adquiridos",
+    "read_x_times": "Lido {} vezes",
+    "date_added": "Data em que foi adicionado",
+    "date_modified": "Data da alteração",
+    "added_on": "Adicionado em",
+    "modified_on": "Alterado em",
+    "default_books_format": "Formato dos livros por defeito",
+    "books_settings": "Livros",
+    "cover_not_found_in_ol": "Capa não encontrada no Open Library",
+    "no_search_results": "Nenhum resultado encontrado",
+    "click_to_add_book_manually": "Clique aqui para adicionar o livro manualmente",
+    "save_without_cover": "Guardar sem a capa",
+    "select_all": "Selecionar tudo",
+    "downloaded_covers": "Capas descarregadas:",
+    "download_missing_covers_explanation": "Descarregar capas em falta para livros com ISBN definido",
+    "add_additional_reading_time": "Definir datas de leitura",
+    "cover_still_downloaded": "A capa está a ser descarregada",
+    "wait_for_downloading_to_finish": "Aguarde enquanto o descarregamento termina"
 }
