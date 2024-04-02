@@ -288,4 +288,6 @@ abstract class LocaleKeys {
   static const saveWithoutCover = 'save_without_cover';
   static const searchOnlineForCover = 'search_online_for_cover';
   static const bookCover = 'book_cover';
+  static const duplicateBook = 'duplicate_book';
+  static const copyBook = 'copy_book';
 }

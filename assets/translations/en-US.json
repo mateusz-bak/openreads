@@ -288,5 +288,7 @@
     "wait_for_downloading_to_finish": "Wait for downloading to finish",
     "save_without_cover": "Save without the cover",
     "search_online_for_cover": "Search online for the cover",
-    "book_cover": "book cover"
+    "book_cover": "book cover",
+    "duplicate_book": "Duplicate book",
+    "copy_book": "copy"
 }

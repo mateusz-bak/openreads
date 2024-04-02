@@ -30,6 +30,7 @@ class AddBookScreen extends StatefulWidget {
     this.fromOpenLibrary = false,
     this.fromOpenLibraryEdition = false,
     this.editingExistingBook = false,
+    this.duplicatingBook = false,
     this.coverOpenLibraryID,
     this.work,
   });
@@ -37,6 +38,7 @@ class AddBookScreen extends StatefulWidget {
   final bool fromOpenLibrary;
   final bool fromOpenLibraryEdition;
   final bool editingExistingBook;
+  final bool duplicatingBook;
   final int? coverOpenLibraryID;
   final String? work;
 
@@ -85,7 +87,9 @@ class _AddBookScreenState extends State<AddBookScreen> {
     _notesCtrl.text = book.notes ?? '';
 
     if (!widget.fromOpenLibrary && !widget.fromOpenLibraryEdition) {
-      context.read<EditBookCoverCubit>().setCover(book.getCoverBytes());
+      if (!widget.duplicatingBook) {
+        context.read<EditBookCoverCubit>().setCover(book.getCoverBytes());
+      }
     }
   }
 
@@ -142,6 +146,10 @@ class _AddBookScreenState extends State<AddBookScreen> {
 
     if (!mounted) return;
     Navigator.pop(context);
+
+    if (widget.duplicatingBook) {
+      Navigator.pop(context);
+    }
 
     if (widget.fromOpenLibrary) {
       Navigator.pop(context);
