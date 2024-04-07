@@ -63,6 +63,11 @@ class _BooksGridState extends State<BooksGrid>
     return CustomScrollView(
       slivers: [
         SliverToBoxAdapter(
+          child: SizedBox(
+            height: MediaQuery.of(context).padding.top,
+          ),
+        ),
+        SliverToBoxAdapter(
           child: Padding(
             padding: const EdgeInsets.fromLTRB(10, 0, 10, 10),
             child: Row(

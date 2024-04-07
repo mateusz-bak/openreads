@@ -1,3 +1,6 @@
+import 'dart:io';
+import 'dart:ui';
+
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -32,6 +35,7 @@ class BooksScreen extends StatefulWidget {
 class _BooksScreenState extends State<BooksScreen>
     with AutomaticKeepAliveClientMixin, TickerProviderStateMixin {
   late List<String> moreButtonOptions;
+  late double appBarHeight;
   Set<int> selectedBookIds = {};
 
   late TabController _tabController;
@@ -858,6 +862,8 @@ class _BooksScreenState extends State<BooksScreen>
 
   @override
   void initState() {
+    appBarHeight = AppBar().preferredSize.height;
+
     super.initState();
 
     _tabController = TabController(length: 3, vsync: this);
@@ -889,6 +895,7 @@ class _BooksScreenState extends State<BooksScreen>
               _resetMultiselectMode();
             },
             child: Scaffold(
+              extendBodyBehindAppBar: true,
               resizeToAvoidBottomInset: true,
               appBar: selectedBookIds.isNotEmpty
                   ? _buildMultiSelectAppBar(context)
@@ -961,10 +968,11 @@ class _BooksScreenState extends State<BooksScreen>
                         ]),
                 ),
               ),
-              SafeArea(
-                child: Builder(builder: (context) {
-                  return Container(
-                    color: Theme.of(context).scaffoldBackgroundColor,
+              Builder(builder: (context) {
+                return Container(
+                  color: Theme.of(context).scaffoldBackgroundColor,
+                  child: SafeArea(
+                    top: false,
                     child: TabBar(
                       controller: _tabController,
                       dividerColor: Colors.transparent,
@@ -992,9 +1000,9 @@ class _BooksScreenState extends State<BooksScreen>
                               ),
                             ]),
                     ),
-                  );
-                }),
-              ),
+                  ),
+                );
+              }),
             ],
           );
         } else {
@@ -1014,8 +1022,9 @@ class _BooksScreenState extends State<BooksScreen>
     );
   }
 
-  AppBar _buildAppBar(BuildContext context) {
-    return AppBar(
+  PreferredSizeWidget _buildAppBar(BuildContext context) {
+    AppBar appBar = AppBar(
+      backgroundColor: Theme.of(context).colorScheme.surface.withOpacity(0.9),
       title: const Text(
         Constants.appName,
         style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
@@ -1053,6 +1062,18 @@ class _BooksScreenState extends State<BooksScreen>
         ),
       ],
     );
+
+    return Platform.isAndroid
+        ? appBar
+        : PreferredSize(
+            preferredSize: Size(double.infinity, appBarHeight),
+            child: ClipRRect(
+              child: BackdropFilter(
+                filter: ImageFilter.blur(sigmaX: 30, sigmaY: 30),
+                child: appBar,
+              ),
+            ),
+          );
   }
 
   StreamBuilder<List<Book>> _buildToReadBooksTabView() {
