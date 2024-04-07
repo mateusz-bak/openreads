@@ -286,5 +286,9 @@
     "add_additional_reading_time": "Okumayı kaydet",
     "cover_still_downloaded": "Kapak hâlâ indiriliyor",
     "wait_for_downloading_to_finish": "İndirmenin bitmesini bekleyin",
-    "save_without_cover": "Kapaksız kaydet"
+    "save_without_cover": "Kapaksız kaydet",
+    "duplicate_book": "Kitabı kopyala",
+    "copy_book": "kopya",
+    "search_online_for_cover": "Kapağı çevrim içi ara",
+    "book_cover": "kitap kapağı"
 }

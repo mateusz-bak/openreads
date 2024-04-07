@@ -282,5 +282,13 @@
     "date_modified": "Date de modification",
     "default_books_format": "Format de livre par défaut",
     "added_on": "Ajouté à",
-    "date_added": "Date d'ajout"
+    "date_added": "Date d'ajout",
+    "cover_still_downloaded": "La couverture est encore en cours de téléchargement",
+    "save_without_cover": "Enregistrer sans la couverture",
+    "duplicate_book": "Dupliquer un livre",
+    "copy_book": "Copie",
+    "search_online_for_cover": "Chercher en ligne la couverture",
+    "book_cover": "Couverture du livre",
+    "modified_on": "Modifié le",
+    "wait_for_downloading_to_finish": "Attendez que le téléchargement se finisse"
 }
