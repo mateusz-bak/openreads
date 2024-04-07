@@ -1,0 +1,4 @@
+- Feat: User can get covers from online search (DuckDuckGo)
+- Feat: Added accessible fonts
+- Feat: Option to duplicate existing book
+- Translation: New languages: Galician, Korean and Punjabi
