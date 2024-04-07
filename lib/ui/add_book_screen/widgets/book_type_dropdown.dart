@@ -70,7 +70,7 @@ class BookTypeDropdown extends StatelessWidget {
                       state.bookFormat == BookFormat.audiobook
                           ? FontAwesomeIcons.headphones
                           : state.bookFormat == BookFormat.ebook
-                              ? FontAwesomeIcons.tablet
+                              ? FontAwesomeIcons.tabletScreenButton
                               : FontAwesomeIcons.bookOpen,
                       size: 20,
                       color: Theme.of(context).colorScheme.primary,
