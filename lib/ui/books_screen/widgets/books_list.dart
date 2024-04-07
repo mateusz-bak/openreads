@@ -63,6 +63,11 @@ class _BooksListState extends State<BooksList>
     return CustomScrollView(
       slivers: [
         SliverToBoxAdapter(
+          child: SizedBox(
+            height: MediaQuery.of(context).padding.top,
+          ),
+        ),
+        SliverToBoxAdapter(
           child: widget.allBooksCount != null
               ? Padding(
                   padding: const EdgeInsets.fromLTRB(10, 0, 10, 10),
