@@ -15,7 +15,7 @@ jobs:
       with:
         token: ${{ secrets.GITHUB_TOKEN }}
         id: ${{ github.event.release.id }}
-        files: "./assets/project_info.md"
+        files: ".github/workflows/assets/project_info.md"
 
   build_github:
     name: Build split apks and attach to release
