@@ -286,5 +286,9 @@
     "click_to_add_book_manually": "Klikni ovdje za ručno dodavanje knjige",
     "cover_still_downloaded": "Naslovnica se još preuzima",
     "wait_for_downloading_to_finish": "Pričekaj da se preuzimanje završi",
-    "save_without_cover": "Spremi bez naslovnice"
+    "save_without_cover": "Spremi bez naslovnice",
+    "duplicate_book": "Kopiraj knjigu",
+    "copy_book": "kopija",
+    "book_cover": "naslovnica",
+    "search_online_for_cover": "Potraži naslovnicu na internetu"
 }

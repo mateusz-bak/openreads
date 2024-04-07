@@ -288,5 +288,7 @@
     "wait_for_downloading_to_finish": "डाउनलोडिंग समाप्त होने तक प्रतीक्षा करें",
     "save_without_cover": "बिना कवर के सहेजें",
     "search_online_for_cover": "कवर के लिए ऑनलाइन खोजें",
-    "book_cover": "पुस्तक का कवर"
+    "book_cover": "पुस्तक का कवर",
+    "duplicate_book": "डुप्लिकेट पुस्तक",
+    "copy_book": "कॉपी"
 }

@@ -277,5 +277,18 @@
     "isbn_cannot_be_empty": "O ISBN non pode estar baleiro",
     "cover_not_found_in_ol": "Non se atopou a portada en Open Library",
     "books_settings": "Libros",
-    "download_missing_covers": "Descargar portadas ausentes"
+    "download_missing_covers": "Descargar portadas ausentes",
+    "copy_book": "copia",
+    "duplicate_book": "Duplicar libro",
+    "search_online_for_cover": "Buscar portada en liña",
+    "book_cover": "portada do libro",
+    "book_format_paperback": "Libro de bolso",
+    "book_format_hardcover": "Tapa dura",
+    "book_format_paper_plural": "Libros de papel",
+    "book_format_paperback_plural": "Libros con tapa branda",
+    "book_format_hardcover_plural": "Libros con tapa dura",
+    "display_outlines": "Mostrar contornos na interface",
+    "show_outlines": "Mostrar contornos",
+    "hide_outlines": "Agochar contornos",
+    "owned_book_tag": "en propiedade"
 }

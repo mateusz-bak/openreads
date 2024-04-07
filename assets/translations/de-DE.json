@@ -286,5 +286,9 @@
     "date_added": "Datum hinzugefügt",
     "cover_still_downloaded": "Das Cover wird noch heruntergeladen",
     "wait_for_downloading_to_finish": "Warten, bis der Download beendet ist",
-    "save_without_cover": "Ohne Cover speichern"
+    "save_without_cover": "Ohne Cover speichern",
+    "duplicate_book": "Buch duplizieren",
+    "copy_book": "Kopie",
+    "search_online_for_cover": "Suche Online nach dem Cover",
+    "book_cover": "Buchcover"
 }
