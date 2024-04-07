@@ -167,7 +167,7 @@ class BookTitleDetail extends StatelessWidget {
                     bookType == BookFormat.audiobook
                         ? FontAwesomeIcons.headphones
                         : bookType == BookFormat.ebook
-                            ? FontAwesomeIcons.tablet
+                            ? FontAwesomeIcons.tabletScreenButton
                             : FontAwesomeIcons.bookOpen,
                     size: 16,
                     color:

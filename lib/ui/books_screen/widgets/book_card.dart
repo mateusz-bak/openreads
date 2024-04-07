@@ -274,6 +274,7 @@ class _BookCardState extends State<BookCard> {
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         Row(
+                          crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Expanded(
                               child: Text(
@@ -291,11 +292,24 @@ class _BookCardState extends State<BookCard> {
                                     padding: const EdgeInsets.only(left: 10),
                                     child: FaIcon(
                                       FontAwesomeIcons.solidHeart,
-                                      size: 18,
+                                      size: 15,
                                       color: likeColor,
                                     ),
                                   )
                                 : const SizedBox(),
+                            const SizedBox(width: 10),
+                            FaIcon(
+                              widget.book.bookFormat == BookFormat.audiobook
+                                  ? FontAwesomeIcons.headphones
+                                  : widget.book.bookFormat == BookFormat.ebook
+                                      ? FontAwesomeIcons.tabletScreenButton
+                                      : FontAwesomeIcons.bookOpen,
+                              size: 15,
+                              color: Theme.of(context)
+                                  .colorScheme
+                                  .onSurface
+                                  .withOpacity(0.4),
+                            ),
                           ],
                         ),
                         Text(
