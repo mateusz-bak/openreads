@@ -24,10 +24,10 @@ dependencies:
   colours: ^0.0.2
   blurhash: ^1.1.1
   image: ^4.0.15
-  fl_chart: ^0.66.1
+  fl_chart: ^0.67.0
   dropdown_button2: ^2.0.0
   equatable: ^2.0.5
-  connectivity_plus: ^5.0.1
+  connectivity_plus: ^6.0.1
   http: ^1.2.0
   cached_network_image: ^3.3.0
   loading_animation_widget: ^1.2.0+3
@@ -42,11 +42,11 @@ dependencies:
   permission_handler: ^11.0.0
   filesystem_picker: ^4.0.0
   archive: ^3.3.5
-  share_plus: ^7.0.2
-  device_info_plus: ^9.0.2
+  share_plus: ^8.0.2
+  device_info_plus: ^10.0.1
   dynamic_color: ^1.6.2
   image_fade: ^0.6.2
-  package_info_plus: ^5.0.1
+  package_info_plus: ^6.0.0
   animated_widgets: ^1.1.0
   shared_storage: ^0.8.0
   shared_preferences: ^2.2.1
