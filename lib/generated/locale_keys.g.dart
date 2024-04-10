@@ -248,11 +248,11 @@ abstract class LocaleKeys {
   static const choose_not_finished_shelf = 'choose_not_finished_shelf';
   static const import_successful = 'import_successful';
   static const ok = 'ok';
-  static const day_title = 'day.title';
+  static const daysSetCustomTimeTitle = 'day.set_custom_time_title';
   static const day = 'day';
-  static const hour_title = 'hour.title';
+  static const hoursSetCustomTimeTitle = 'hour.set_custom_time_title';
   static const hour = 'hour';
-  static const minute_title = 'minute.title';
+  static const minutesSetCustomTimeTitle = 'minute.set_custom_time_title';
   static const minute = 'minute';
   static const set_custom_reading_time = 'set_custom_reading_time';
   static const select_all = 'select_all';

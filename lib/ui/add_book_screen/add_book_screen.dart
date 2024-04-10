@@ -660,9 +660,7 @@ class _AddBookScreenState extends State<AddBookScreen> {
                             borderRadius: BorderRadius.circular(cornerRadius),
                           )),
                         ),
-                        child: const Center(
-                          child: Text("Cancel"),
-                        ),
+                        child: Center(child: Text(LocaleKeys.cancel.tr())),
                       ),
                     ),
                     const SizedBox(width: 10),
@@ -681,9 +679,7 @@ class _AddBookScreenState extends State<AddBookScreen> {
                                     BorderRadius.circular(cornerRadius),
                               )),
                             ),
-                            child: const Center(
-                              child: Text("Save"),
-                            ),
+                            child: Center(child: Text(LocaleKeys.save.tr())),
                           );
                         },
                       ),

@@ -243,14 +243,17 @@
     "import_successful": "Import successful",
     "ok": "OK",
     "day": {
+        "set_custom_time_title": "Days",
         "one": "{} day",
         "other": "{} days"
     },
     "hour": {
+        "set_custom_time_title": "Hours",
         "one": "{} hour",
         "other": "{} hours"
     },
     "minute": {
+        "set_custom_time_title": "Minutes",
         "one": "{} minute",
         "other": "{} minutes"
     },
