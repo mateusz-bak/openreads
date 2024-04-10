@@ -46,7 +46,7 @@ dependencies:
   device_info_plus: ^10.0.1
   dynamic_color: ^1.6.2
   image_fade: ^0.6.2
-  package_info_plus: ^6.0.0
+  package_info_plus: ^7.0.0
   animated_widgets: ^1.1.0
   shared_storage: ^0.8.0
   shared_preferences: ^2.2.1
