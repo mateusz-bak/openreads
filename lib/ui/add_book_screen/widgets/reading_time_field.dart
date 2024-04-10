@@ -156,7 +156,7 @@ class _BookReadingTimeField extends State<BookReadingTimeField> {
                         controller: _day,
                         maxLength: 5,
                         decoration: InputDecoration(
-                          labelText: LocaleKeys.day_title.tr(),
+                          labelText: LocaleKeys.daysSetCustomTimeTitle.tr(),
                           border: const OutlineInputBorder(),
                           counterText: "",
                         ),
@@ -172,7 +172,7 @@ class _BookReadingTimeField extends State<BookReadingTimeField> {
                         ],
                         maxLength: 2,
                         decoration: InputDecoration(
-                          labelText: LocaleKeys.hour_title.tr(),
+                          labelText: LocaleKeys.hoursSetCustomTimeTitle.tr(),
                           border: const OutlineInputBorder(),
                           counterText: "",
                         ),
@@ -187,7 +187,7 @@ class _BookReadingTimeField extends State<BookReadingTimeField> {
                       ],
                       maxLength: 2,
                       decoration: InputDecoration(
-                        labelText: LocaleKeys.minute_title.tr(),
+                        labelText: LocaleKeys.minutesSetCustomTimeTitle.tr(),
                         border: const OutlineInputBorder(),
                         counterText: "",
                       ),
