@@ -290,5 +290,9 @@
     "search_online_for_cover": "Search online for the cover",
     "book_cover": "book cover",
     "duplicate_book": "Duplicate book",
-    "copy_book": "copy"
+    "copy_book": "copy",
+    "duck_duck_go_warning": "Searching for covers online is facilitated through DuckDuckGo, a proprietary service. Please be cautious regarding privacy implications",
+    "warning_yes": "I'm okay with that",
+    "warning_no": "Take me back",
+    "warning_yes_and_dont_show": "I'm okay with that and don't show this again"
 }

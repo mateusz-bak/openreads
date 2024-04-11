@@ -290,4 +290,8 @@ abstract class LocaleKeys {
   static const bookCover = 'book_cover';
   static const duplicateBook = 'duplicate_book';
   static const copyBook = 'copy_book';
+  static const duckDuckGoWarning = 'duck_duck_go_warning';
+  static const warningYes = 'warning_yes';
+  static const warningNo = 'warning_no';
+  static const warningYesAndDontShow = 'warning_yes_and_dont_show';
 }

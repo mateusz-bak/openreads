@@ -11,3 +11,7 @@ class Constants {
   static const duckDuckGoURL = 'https://duckduckgo.com/';
   static const duckDuckGoImagesURL = 'https://duckduckgo.com/i.js';
 }
+
+class SharedPreferencesKeys{
+  static const duckDuckGoWarning = 'show_duck_duck_go_warning';
+}
