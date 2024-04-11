@@ -265,7 +265,7 @@ class BookCubit extends Cubit {
 
   Future<bool> _checkIfCoverMigrationDone() async {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
-    final bool? check = prefs.getBool('is_cover_migration_done');
+    final bool? check = prefs.getBool(SharedPreferencesKeys.coverMigrationDone);
 
     return check == true ? true : false;
   }
@@ -292,7 +292,7 @@ class BookCubit extends Cubit {
 
   Future<void> _saveCoverMigrationStatus() async {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
-    prefs.setBool('is_cover_migration_done', true);
+    prefs.setBool(SharedPreferencesKeys.coverMigrationDone, true);
   }
 
   getBooksWithSameTag(String tag) async {
