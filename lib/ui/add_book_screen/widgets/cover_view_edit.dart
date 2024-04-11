@@ -20,6 +20,7 @@ import 'package:openreads/logic/cubit/edit_book_cubit.dart';
 import 'package:openreads/main.dart';
 import 'package:openreads/ui/add_book_screen/widgets/widgets.dart';
 import 'package:openreads/ui/search_covers_screen/search_covers_screen.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class CoverViewEdit extends StatefulWidget {
   const CoverViewEdit({super.key});
@@ -174,9 +175,31 @@ class _CoverViewEditState extends State<CoverViewEdit> {
     _setCoverLoading(false);
   }
 
+  _showDuckDuckGoWarning(BuildContext context) {
+    showDialog(
+        context: context,
+        builder: (BuildContext _) {
+          return DuckDuckGoAlert(
+            openDuckDuckGoSearchScreen: _openDuckDuckGoSearchScreen,
+          );
+        });
+  }
+
   _searchForCoverOnline(BuildContext context) async {
     Navigator.of(context).pop();
 
+    final SharedPreferences prefs = await SharedPreferences.getInstance();
+    final bool? showDuckDuckGoWarning =
+        prefs.getBool(SharedPreferencesKeys.duckDuckGoWarning);
+
+    if (showDuckDuckGoWarning == false) {
+      _openDuckDuckGoSearchScreen(context);
+    } else {
+      _showDuckDuckGoWarning(context);
+    }
+  }
+
+  _openDuckDuckGoSearchScreen(BuildContext context) {
     Navigator.push(
       context,
       MaterialPageRoute(
