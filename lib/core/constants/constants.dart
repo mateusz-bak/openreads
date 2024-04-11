@@ -13,5 +13,6 @@ class Constants {
 }
 
 class SharedPreferencesKeys{
+  static const coverMigrationDone = 'is_cover_migration_done';
   static const duckDuckGoWarning = 'show_duck_duck_go_warning';
 }
