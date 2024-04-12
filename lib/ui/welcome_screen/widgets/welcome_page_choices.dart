@@ -19,14 +19,6 @@ class WelcomePageChoices extends StatelessWidget {
   final Function() importBookwyrmCsv;
   final Function() skipImportingBooks;
 
-  static List<String> choices = [
-    LocaleKeys.restore_backup.tr(),
-    LocaleKeys.import_csv.tr(),
-    LocaleKeys.import_goodreads_csv.tr(),
-    LocaleKeys.import_bookwyrm_csv.tr(),
-    LocaleKeys.add_books_and_come_back.tr(),
-  ];
-
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -55,6 +47,7 @@ class WelcomePageChoices extends StatelessWidget {
                   child: SingleChildScrollView(
                     child: Column(
                       children: [
+                        const SizedBox(height: 20),
                         WelcomeChoiceButton(
                           description: LocaleKeys.restore_backup.tr(),
                           onPressed: restoreBackup,

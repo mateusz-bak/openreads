@@ -158,14 +158,6 @@ class Statistics extends StatelessWidget {
       builder: (context, challengeState) {
         if (challengeState is SetChallengeState &&
             challengeState.yearlyChallenges != null) {
-          if (state.finishedBooksByMonthAllTypes.isEmpty) {
-            return Center(
-              child: Text(
-                LocaleKeys.no_finished_books.tr(),
-              ),
-            );
-          }
-
           final yearlyChallenges = List<YearlyChallenge>.empty(
             growable: true,
           );
@@ -233,14 +225,6 @@ class Statistics extends StatelessWidget {
       builder: (context, challengeState) {
         if (challengeState is SetChallengeState &&
             challengeState.yearlyChallenges != null) {
-          if (state.finishedPagesByMonthAllTypes.isEmpty) {
-            return Center(
-              child: Text(
-                LocaleKeys.no_finished_books.tr(),
-              ),
-            );
-          }
-
           final yearlyChallenges = List<YearlyChallenge>.empty(
             growable: true,
           );

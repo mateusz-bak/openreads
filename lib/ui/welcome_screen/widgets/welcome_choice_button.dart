@@ -15,7 +15,7 @@ class WelcomeChoiceButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.only(bottom: 20),
+      padding: const EdgeInsets.only(bottom: 10),
       child: Row(
         children: [
           Expanded(
@@ -23,7 +23,7 @@ class WelcomeChoiceButton extends StatelessWidget {
               style: ButtonStyle(
                 backgroundColor: isSkipImporting
                     ? MaterialStateProperty.all(
-                        Theme.of(context).colorScheme.secondary,
+                        Theme.of(context).colorScheme.primary,
                       )
                     : MaterialStateProperty.all(
                         Theme.of(context)
@@ -64,7 +64,7 @@ class WelcomeChoiceButton extends StatelessWidget {
                       child: Text(
                         description,
                         style: TextStyle(
-                          fontSize: isSkipImporting ? 20 : 18,
+                          fontSize: 16,
                           fontWeight: isSkipImporting
                               ? FontWeight.bold
                               : FontWeight.normal,
