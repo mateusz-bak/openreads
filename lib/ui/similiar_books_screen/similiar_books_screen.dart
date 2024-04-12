@@ -1,6 +1,6 @@
 import 'package:easy_localization/easy_localization.dart';
-import 'package:flex_color_picker/flex_color_picker.dart';
 import 'package:flutter/material.dart';
+import 'package:openreads/core/themes/app_theme.dart';
 import 'package:openreads/generated/locale_keys.g.dart';
 import 'package:openreads/main.dart';
 import 'package:openreads/model/book.dart';
@@ -38,24 +38,22 @@ class _SimiliarBooksScreenState extends State<SimiliarBooksScreen> {
         title: Row(
           children: [
             widget.tag != null
-                ? Text(
-                    '${LocaleKeys.tags.plural(1).capitalize.tr()}: ',
-                    style: const TextStyle(fontSize: 18),
-                  )
+                ? const SizedBox()
                 : widget.author != null
                     ? Text(
                         '${LocaleKeys.author.tr()}: ',
                         style: const TextStyle(fontSize: 18),
                       )
                     : const SizedBox(),
-            Text(
-              widget.tag != null
-                  ? widget.tag!
-                  : widget.author != null
-                      ? widget.author!
-                      : '',
-              style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
-            ),
+            widget.tag != null
+                ? _buildTag(widget.tag!)
+                : widget.author != null
+                    ? Text(
+                        widget.author!,
+                        style: const TextStyle(
+                            fontSize: 18, fontWeight: FontWeight.bold),
+                      )
+                    : const SizedBox(),
           ],
         ),
       ),
@@ -79,6 +77,30 @@ class _SimiliarBooksScreenState extends State<SimiliarBooksScreen> {
               );
             }
           }),
+    );
+  }
+
+  Widget _buildTag(String tag) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 5),
+      child: FilterChip(
+        backgroundColor: Theme.of(context).colorScheme.secondary,
+        side: BorderSide(
+          color: dividerColor,
+          width: 1,
+        ),
+        label: Text(
+          tag,
+          overflow: TextOverflow.fade,
+          softWrap: true,
+          maxLines: 5,
+          style: TextStyle(
+            color: Theme.of(context).colorScheme.onSecondary,
+          ),
+        ),
+        clipBehavior: Clip.none,
+        onSelected: (_) {},
+      ),
     );
   }
 }

@@ -41,7 +41,6 @@ abstract class LocaleKeys {
   static const start_reading = 'start_reading';
   static const rate_book = 'rate_book';
   static const skip = 'skip';
-  static const reading_time = 'reading_time';
   static const pages_uppercase = 'pages_uppercase';
   static const pages_lowercase = 'pages_lowercase';
   static const click_to_add_cover = 'click_to_add_cover';
@@ -65,7 +64,6 @@ abstract class LocaleKeys {
   static const select_finish_date = 'select_finish_date';
   static const title_cannot_be_empty = 'title_cannot_be_empty';
   static const author_cannot_be_empty = 'author_cannot_be_empty';
-  static const set_book_status = 'set_book_status';
   static const finish_date_before_start = 'finish_date_before_start';
   static const title = 'title';
   static const author = 'author';
@@ -100,7 +98,6 @@ abstract class LocaleKeys {
   static const books_challenge = 'books_challenge';
   static const pages_challenge = 'pages_challenge';
   static const all_years = 'all_years';
-  static const no_finished_books = 'no_finished_books';
   static const all_books_by_status = 'all_books_by_status';
   static const finished_books_by_month = 'finished_books_by_month';
   static const finished_pages_by_month = 'finished_pages_by_month';
@@ -211,7 +208,6 @@ abstract class LocaleKeys {
   static const restore_backup_description_2 = 'restore_backup_description_2';
   static const are_you_sure = 'are_you_sure';
   static const restore_backup_alert_content = 'restore_backup_alert_content';
-  static const error_getting_book = 'error_getting_book';
   static const add_books_and_come_back = 'add_books_and_come_back';
   static const welcome_1 = 'welcome_1';
   static const welcome_1_description_1 = 'welcome_1_description_1';
@@ -257,7 +253,6 @@ abstract class LocaleKeys {
   static const set_custom_reading_time = 'set_custom_reading_time';
   static const select_all = 'select_all';
   static const only_editions_with_covers = 'only_editions_with_covers';
-  static const tags = 'tags';
   static const general_search = 'general_search';
   static const no_search_results = 'no_search_results';
   static const click_to_add_book_manually = 'click_to_add_book_manually';

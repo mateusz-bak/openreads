@@ -1,6 +1,5 @@
 import 'dart:io';
-import 'package:barcode_scan2/gen/protos/protos.pbenum.dart';
-import 'package:barcode_scan2/platform_wrapper.dart';
+import 'package:barcode_scan2/barcode_scan2.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -565,7 +564,15 @@ class _AddBookScreenState extends State<AddBookScreen> {
                         borderRadius: BorderRadius.circular(cornerRadius),
                       ),
                       onTap: () async {
-                        var result = await BarcodeScanner.scan();
+                        var result = await BarcodeScanner.scan(
+                          options: ScanOptions(
+                            strings: {
+                              'cancel': LocaleKeys.cancel.tr(),
+                              'flash_on': LocaleKeys.flash_on.tr(),
+                              'flash_off': LocaleKeys.flash_off.tr(),
+                            },
+                          ),
+                        );
 
                         if (result.type == ResultType.Barcode) {
                           setState(() {
