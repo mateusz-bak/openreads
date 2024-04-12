@@ -27,7 +27,6 @@
     "start_reading": "Aloita",
     "rate_book": "Arvostele tämä kirja",
     "skip": "Ohita",
-    "reading_time": "Lukuaika",
     "pages_uppercase": "Sivut",
     "pages_lowercase": "sivua",
     "click_to_add_cover": "Lisää kansikuva",
@@ -50,7 +49,6 @@
     "select_finish_date": "Valitse lukemisen päättämispäivä",
     "title_cannot_be_empty": "Otsikko ei voi olla tyhjä",
     "author_cannot_be_empty": "Kirjailija ei voi olla tyhjä",
-    "set_book_status": "Aseta kirjan tila",
     "finish_date_before_start": "Päättämispäivä ei voi olla ennen aloituspäivää",
     "title": "Otsikko",
     "author": "Kirjailija",
@@ -84,7 +82,6 @@
     "books_challenge": "Kirjojen lukuhaaste",
     "pages_challenge": "Sivujen lukuhaaste",
     "all_years": "Kaikki",
-    "no_finished_books": "Ei luettuja kirjoja",
     "all_books_by_status": "Kaikki kirjat tilan mukaan",
     "finished_books_by_month": "Luetut kirjat kuukausittain",
     "finished_pages_by_month": "Luetut sivut kuukausittain",
@@ -188,7 +185,6 @@
     "restore_backup_description_2": "Toimii varmuuskopioille, jotka eivät ole vanhempia kuin v1.14.2",
     "are_you_sure": "Oletko varma?",
     "restore_backup_alert_content": "Tämä poistaa kaikki nykyiset kirjasi ja haasteesi!",
-    "error_getting_book": "Virhe haettaessa kirjaa",
     "add_books_and_come_back": "Lisää joitakin kirjoja ja palaa tänne",
     "welcome_1": "Tervetuloa Openreadsiin",
     "welcome_1_description_1": "Openreads auttaa sinua pitämään kirjaa kirjoistasi.",
@@ -249,10 +245,6 @@
     "import_goodreads_csv": "Tuo Goodreads CSV",
     "set_custom_reading_time": "Aseta mukautettu lukemisaika",
     "select_all": "Valitse kaikki",
-    "tags": {
-        "one": "Tag",
-        "other": "Tagit"
-    },
     "download_missing_covers_explanation": "Lataa puuttuvat kannet kirjoille joille on asetettu ISBN",
     "hour": {
         "other": "{} tunnit",

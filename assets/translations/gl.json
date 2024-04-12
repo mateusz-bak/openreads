@@ -28,7 +28,6 @@
     "select_finish_date": "Escolle a data de remate da lectura",
     "title_cannot_be_empty": "O título non pode quedar baleiro",
     "author_cannot_be_empty": "Debes engadir algunha autora",
-    "set_book_status": "Establece estado da lectura",
     "title": "Título",
     "filter_by_book_format": "Filtrar por formato do libro",
     "settings": "Axustes",
@@ -73,7 +72,6 @@
     "start_reading": "Comezar",
     "rate_book": "Valora o libro",
     "skip": "Omitir",
-    "reading_time": "Tempo de lectura",
     "pages_uppercase": "Páxinas",
     "pages_lowercase": "páxinas",
     "start_date": "Data de inicio",
@@ -120,7 +118,6 @@
     "restore_backup_description_2": "Funciona co copias non anteriores á versión 1.14.2",
     "are_you_sure": "Tes certeza?",
     "restore_backup_alert_content": "Isto vai eliminar todos os libros actuais e desafíos!",
-    "error_getting_book": "Erro ao obter o libro",
     "add_books_and_come_back": "Engade algún libro e volve por aquí",
     "welcome_1": "Benvida a Openreads",
     "welcome_1_description_1": "Openreads axúdache a manter un rexistro das túas lecturas.",
@@ -173,7 +170,6 @@
     "books_challenge": "Desafío de lecturas rematado",
     "pages_challenge": "Desafío de páxinas rematado",
     "all_years": "Todo",
-    "no_finished_books": "Libros non finalizados",
     "slowest_book": "Lectura máis lenta",
     "january_short": "Xan",
     "february_short": "Feb",
@@ -257,22 +253,21 @@
     "migration_v1_to_v2_retrigger": "Realizar outra vez a migración a v2.0",
     "day": {
         "one": "{} día",
-        "other": "{} días"
+        "other": "{} días",
+        "set_custom_time_title": "Días"
     },
     "hour": {
         "one": "{} hora",
-        "other": "{} horas"
+        "other": "{} horas",
+        "set_custom_time_title": "Horas"
     },
     "minute": {
         "one": "{} minuto",
-        "other": "{} minutos"
+        "other": "{} minutos",
+        "set_custom_time_title": "Minutos"
     },
     "set_custom_reading_time": "Tempo de lectura personalizado",
     "select_all": "Seleccionar todo",
-    "tags": {
-        "one": "Etiqueta",
-        "other": "Etiquetas"
-    },
     "edit_current_cover": "Editar portada actual",
     "isbn_cannot_be_empty": "O ISBN non pode estar baleiro",
     "cover_not_found_in_ol": "Non se atopou a portada en Open Library",
@@ -290,5 +285,9 @@
     "display_outlines": "Mostrar contornos na interface",
     "show_outlines": "Mostrar contornos",
     "hide_outlines": "Agochar contornos",
-    "owned_book_tag": "en propiedade"
+    "owned_book_tag": "en propiedade",
+    "duck_duck_go_warning": "A busca en liña das portadas faise grazas a DuckDuckGo, un servizo propietario. Ten en conta as implicacións respecto da privacidade",
+    "warning_yes": "Estou ben con iso",
+    "warning_no": "Lévame de volta",
+    "warning_yes_and_dont_show": "Estou de acordo, non mostrar aviso outra vez"
 }

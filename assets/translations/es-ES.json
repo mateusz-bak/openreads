@@ -27,7 +27,6 @@
     "start_reading": "Iniciar",
     "rate_book": "Puntuar este libro",
     "skip": "Omitir",
-    "reading_time": "Tiempo de lectura",
     "pages_uppercase": "Páginas",
     "pages_lowercase": "páginas",
     "click_to_add_cover": "Haz clic para añadir una portada",
@@ -50,7 +49,6 @@
     "select_finish_date": "Selecciona la fecha de finalización de lectura",
     "title_cannot_be_empty": "El título no puede estar vacío",
     "author_cannot_be_empty": "El campo autor no puede estar vacío",
-    "set_book_status": "Establecer estado del libro",
     "finish_date_before_start": "La fecha de finalización no puede ser anterior a la fecha de inicio",
     "title": "Título",
     "author": "Autor",
@@ -84,7 +82,6 @@
     "books_challenge": "Desafío de libros terminados",
     "pages_challenge": "Desafío de páginas terminadas",
     "all_years": "Todo",
-    "no_finished_books": "No hay libros terminados",
     "all_books_by_status": "Todos los libros por estado",
     "finished_books_by_month": "Libros terminados por mes",
     "finished_pages_by_month": "Páginas terminadas por mes",
@@ -188,7 +185,6 @@
     "restore_backup_description_2": "Funciona para copias de seguridad posteriores a la versión v1.14.2",
     "are_you_sure": "¿Estás seguro?",
     "restore_backup_alert_content": "¡Esto eliminará todos tus libros y desafíos actuales!",
-    "error_getting_book": "Error al obtener el libro",
     "add_books_and_come_back": "Añade algunos libros y vuelve aquí",
     "welcome_1": "Bienvenido a Openreads",
     "welcome_1_description_1": "Openreads te ayudará a llevar un registro de sus libros.",
@@ -229,11 +225,13 @@
     "export_csv": "Exportar los libros en formato CSV",
     "hour": {
         "one": "{} hora",
-        "other": "{} horas"
+        "other": "{} horas",
+        "set_custom_time_title": "Horas"
     },
     "minute": {
         "other": "{} minutos",
-        "one": "{} minuto"
+        "one": "{} minuto",
+        "set_custom_time_title": "Minutos"
     },
     "book_format_hardcover_plural": "Libro de tapa dura",
     "change_book_format": "Cambiar el formato de los libros",
@@ -242,7 +240,8 @@
     "set_custom_reading_time": "Fijar el tiempo de lectura personalizado",
     "day": {
         "one": "{} día",
-        "other": "{} días"
+        "other": "{} días",
+        "set_custom_time_title": "Días"
     },
     "book_format_all": "Todos los formatos de libro",
     "book_format_paperback": "Tapa blanda",
@@ -253,10 +252,6 @@
     "import_csv": "Importar de Openreads un CSV",
     "change_books_author": "Cambiar el autor de los libros",
     "bulk_update_unsuccessful_message": "No se han podido actualizar los datos de los libros",
-    "tags": {
-        "one": "Etiqueta",
-        "other": "Etiquetas"
-    },
     "delete_books": "Borrar libros",
     "delete_books_question": "¿Borrar los libros seleccionados?",
     "import_bookwyrm_csv": "Importar BookWyrm CSV",

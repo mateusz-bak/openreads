@@ -41,7 +41,6 @@
     "start_reading": "Započni",
     "rate_book": "Ocjeni ovu knjigu",
     "skip": "Preskoči",
-    "reading_time": "Vrijeme čitanja",
     "pages_uppercase": "Stranice",
     "pages_lowercase": "stranice",
     "start_date": "Datum početka",
@@ -68,7 +67,6 @@
     "select_finish_date": "Odaberi datum završetka čitanja",
     "title_cannot_be_empty": "Polje naslova ne može biti prazno",
     "author_cannot_be_empty": "Polje autora ne može biti prazno",
-    "set_book_status": "Odaberi status knjige",
     "finish_date_before_start": "Datum završetka ne može biti raniji od datuma početka",
     "title": "Naslov",
     "filter_by_finish_year": "Filtriraj po godini završetka",
@@ -130,7 +128,6 @@
     "books_challenge": "Izazov čitanja knjiga",
     "pages_challenge": "Izazov pročitanih stranica",
     "all_years": "Sve",
-    "no_finished_books": "Nema pročitanih knjiga",
     "finished_books_by_month": "Pročitane knjige po mjesecu",
     "average_rating": "Prosječna ocjena",
     "average_pages": "Prosječan broj stranica",
@@ -161,11 +158,13 @@
     "migration_v1_to_v2_finished": "Migriranje knjiga je završeno, klikni gumb POČETAK.",
     "hour": {
         "other": "{} sati",
-        "one": "{} sat"
+        "one": "{} sat",
+        "set_custom_time_title": "Sati"
     },
     "minute": {
         "one": "{} minuta",
-        "other": "{} minuta"
+        "other": "{} minuta",
+        "set_custom_time_title": "Minute"
     },
     "set_custom_reading_time": "Postavi prilagođeno vrijeme čitanja",
     "general_search": "Općenito",
@@ -193,10 +192,6 @@
     "dark_mode_amoled": "AMOLED tamna tema",
     "modified_on": "Izmjenjeno",
     "select_all": "Odaberi sve",
-    "tags": {
-        "one": "Oznaka",
-        "other": "Oznake"
-    },
     "isbn_cannot_be_empty": "ISBN polje ne može biti prazno",
     "cover_not_found_in_ol": "Naslovnica nije pronađena u Open Library",
     "download_missing_covers_explanation": "Preuzmi naslovnice koje nedostaju za knjige koje imaju postavljen ISBN",
@@ -258,7 +253,6 @@
     "restore_backup_description_2": "Radi za sigurnosne kopije ne starije od v1.14.2",
     "are_you_sure": "Stvarno?",
     "restore_backup_alert_content": "Ovo će izbrisati sve trenutne knjige i izazove!",
-    "error_getting_book": "Došlo je do pogreške prilikom dohvaćanja knjige",
     "add_books_and_come_back": "Dodaj neke knjige i dođi opet ovamo",
     "welcome_1": "Dobrodošli u Openreads",
     "welcome_1_description_1": "Openreads će ti pomoći da pratiš svoje knjige.",
@@ -266,7 +260,8 @@
     "ok": "OK",
     "day": {
         "one": "{} dan",
-        "other": "{} dana"
+        "other": "{} dana",
+        "set_custom_time_title": "Dani"
     },
     "selected": "Odabrano",
     "change_book_format": "Promjeni format knjiga",
@@ -290,5 +285,9 @@
     "duplicate_book": "Kopiraj knjigu",
     "copy_book": "kopija",
     "book_cover": "naslovnica",
-    "search_online_for_cover": "Potraži naslovnicu na internetu"
+    "search_online_for_cover": "Potraži naslovnicu na internetu",
+    "duck_duck_go_warning": "Pretraživanje naslovnica na mreži olakšano je DuckDuckGoom, njihovom vlastitom uslugom. Budite oprezni u pogledu implikacija na privatnost",
+    "warning_yes": "Slažem se s tim",
+    "warning_no": "Vrati me nazad",
+    "warning_yes_and_dont_show": "Slažem se s tim i nemoj ovo više prikazivati"
 }

@@ -27,7 +27,6 @@
     "start_reading": "Start",
     "rate_book": "Vurder denne boken",
     "skip": "Hopp over",
-    "reading_time": "Lesetid",
     "pages_uppercase": "Sider",
     "pages_lowercase": "sider",
     "click_to_add_cover": "Trykk for å legge til omslag",
@@ -50,7 +49,6 @@
     "select_finish_date": "Velg sluttdato for lesing",
     "title_cannot_be_empty": "Tittelfeltet kan ikke stå tomt",
     "author_cannot_be_empty": "Forfatterfeltet kan ikke stå tomt",
-    "set_book_status": "Angi status for boken",
     "finish_date_before_start": "Sluttdato kan ikke være før startdato",
     "title": "Tittel",
     "author": "Forfatter",
@@ -84,7 +82,6 @@
     "books_challenge": "Årets lesemål",
     "pages_challenge": "Årets sidemål",
     "all_years": "Alle",
-    "no_finished_books": "Ingen fullførte bøker",
     "all_books_by_status": "Alle bøker etter status",
     "finished_books_by_month": "Fullførte bøker per måned",
     "finished_pages_by_month": "Fullførte sider per måned",
@@ -188,7 +185,6 @@
     "restore_backup_description_2": "Fungerer for sikkerhetskopier skapt tidligst i versjon 1.14.2",
     "are_you_sure": "Er du sikker?",
     "restore_backup_alert_content": "Dette vil slette alle dine nåværende bøker og utfordringer!",
-    "error_getting_book": "Feil under henting av boken",
     "add_books_and_come_back": "Legg til noen bøker, og kom tilbake hit igjen",
     "welcome_1": "Velkommen til Openreads",
     "welcome_1_description_1": "Openreads vil hjelpe deg med å holde orden på bøkene dine.",
@@ -248,10 +244,6 @@
     "hour": {
         "other": "{} timer",
         "one": "{} time"
-    },
-    "tags": {
-        "one": "Etikett",
-        "other": "Etiketter"
     },
     "load_cover_from_phone": "Legg til omslag fra filene dine",
     "downloaded_covers": "Nedlastede omslag:",

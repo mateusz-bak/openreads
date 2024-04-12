@@ -27,7 +27,6 @@
     "start_reading": "Начать",
     "rate_book": "Оцените эту книгу",
     "skip": "Пропустить",
-    "reading_time": "Время чтения",
     "pages_uppercase": "Страницы",
     "pages_lowercase": "страницы",
     "click_to_add_cover": "Нажмите для добавления обложки",
@@ -48,7 +47,6 @@
     "add_new_book": "Добавить новую книгу",
     "title_cannot_be_empty": "Заголовок не может быть пустым",
     "author_cannot_be_empty": "Автор не может быть пустым",
-    "set_book_status": "Установить статус книги",
     "finish_date_before_start": "Дата окончания не может быть раньше даты начала",
     "title": "Название",
     "author": "Автор",
@@ -131,7 +129,6 @@
     "start_button": "НАЧАТЬ",
     "set_pages_goal": "Укажите цель по страницам:",
     "set_books_goal_for_year": "Установить цель книг на",
-    "no_finished_books": "Нет прочитанных книг",
     "add_pages_goal": "Добавить цель по страницам?",
     "flash_on": "Вспышка включена",
     "select_corner_radius": "Выберите радиус края",
@@ -210,7 +207,6 @@
     "changelog_description": "Узнать что нового в Openreads",
     "support_option_1": "Стать спонсором на GitHub",
     "restore_successfull": "Восстановление выполнено успешно",
-    "error_getting_book": "Ошибка при получении книги",
     "report_bugs_or_ideas": "Рассказать об ошибке или предложить идею",
     "only_editions_with_covers": "Показать только издания с обложками",
     "rating_type": "Тип отображаемого рейтинга",
@@ -248,10 +244,6 @@
     "minute": {
         "other": "{} минут",
         "one": "{} минута"
-    },
-    "tags": {
-        "one": "Тег",
-        "other": "Теги"
     },
     "load_cover_from_phone": "Загрузить обложку с вашего устройства",
     "get_cover_from_open_library": "Получить обложку с Open Library по ISBN книги",
