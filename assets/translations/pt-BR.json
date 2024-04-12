@@ -11,7 +11,6 @@
     "delete_permanently": "Apagar livro definitivamente",
     "delete_perm_question": "Apagar o livro definitivamente?",
     "skip": "Pular",
-    "reading_time": "Tempo de leitura",
     "add_manually": "Adicionar livro manualmente",
     "add_search": "Procurar na biblioteca",
     "finished_on_date": "Finalizado",
@@ -41,7 +40,6 @@
     "start_date": "Data de início",
     "filter_by_finish_year": "Filtrar por ano que finalizou",
     "pages_lowercase": "páginas",
-    "set_book_status": "Selecione o status do livro",
     "sort_filter": "Ordenar / filtrar",
     "enter_tags": "Tags",
     "filter_by_tags": "Filtrar por tags",
@@ -88,16 +86,15 @@
     "choose_edition": "Escolha a edição",
     "editions_lowercase": "edições",
     "results_lowercase": "resultados",
-    "book_format_paperback_plural": "Livros de Capa",
-    "book_format_hardcover_plural": "Livros de Capa Dura",
+    "book_format_paperback_plural": "Livros de bolso",
+    "book_format_hardcover_plural": "Livros de capa dura",
     "search_in_books": "Procure nos seus livros",
-    "no_finished_books": "Livros não terminados",
     "fastest_book": "Livro lido mais rápido",
     "slowest_book": "Livro lido mais lentamente",
     "only_editions_with_covers": "Somente edições com capa",
     "set_pages_goal": "Fixar o objetivo de páginas:",
     "books_challenge": "Desafio de livros acabados",
-    "click_here_to_set_challenge": "Clique aqui para fixar o desafio anual",
+    "click_here_to_set_challenge": "Clique aqui para definir o desafio anual",
     "set_books_goal_for_year": "Fixar objetivo de livros",
     "pages_challenge": "Desafio de páginas finalizados",
     "finished_books_by_month": "Livros finalizados por mês",
@@ -178,7 +175,7 @@
     "support_option_2": "Compre um café em buymeacoffee.com",
     "restore_successfull": "Restauração bem-sucedida!",
     "choose_backup_file": "Escolha o arquivo de backup",
-    "use_this_file": "Use esse arquivo",
+    "use_this_file": "Usar esse arquivo",
     "seletct_rating_type": "Selecione o tipo de exibição de classificação",
     "rating_as_bar": "Classificar como favoritos",
     "select_font": "Selecionar a fonte",
@@ -212,10 +209,6 @@
     "books_settings": "Livros",
     "load_cover_from_phone": "Carregar capa de seu dispositivo",
     "downloaded_covers": "Capas baixadas:",
-    "tags": {
-        "one": "Etiqueta",
-        "other": "Etiquetas"
-    },
     "no_search_results": "Nenhum resultado encontrado",
     "start_adding_books": "Ir para o aplicativo",
     "welcome_1_description_2": "Também é uma ótima ferramenta para organizar sua biblioteca pessoal de forma fácil e transparente.",
@@ -229,15 +222,18 @@
     "choose_not_finished_shelf": "Escolha uma prateleira com livros não finalizados:",
     "day": {
         "other": "{} dias",
-        "one": "{} dia"
+        "one": "{} dia",
+        "set_custom_time_title": "Dias"
     },
     "hour": {
         "one": "{} hora",
-        "other": "{} horas"
+        "other": "{} horas",
+        "set_custom_time_title": "Horas"
     },
     "minute": {
         "one": "{} minuto",
-        "other": "{} minutos"
+        "other": "{} minutos",
+        "set_custom_time_title": "Minutos"
     },
     "restore_backup_description_2": "Funciona para backups não anteriores à versão v1.14.2",
     "restore_backup_alert_content": "Isso excluirá todos os seus livros e desafios atuais!",
@@ -253,7 +249,6 @@
     "create_cloud_backup_description": "Backup de livros na nuvem",
     "restore_backup": "Restaurar backup",
     "restore_backup_description_1": "Restaurar livros do seu dispositivo.",
-    "error_getting_book": "Erro ao obter o livro",
     "welcome_1_description_1": "Openreads irá ajudá-lo a acompanhar seus livros.",
     "welcome_3_description_3": "Como um bônus você recebe zero anúncios e absolutamente nenhum rastreamento!",
     "migration_v1_to_v2_finished": "Migração de livros finalizada, clique no botão INICIAR.",
@@ -286,5 +281,13 @@
     "welcome_2_description_2": "Desafie-se para ser um leitor melhor.",
     "cover_still_downloaded": "A capa ainda está sendo baixada",
     "wait_for_downloading_to_finish": "Aguarde o download terminar",
-    "save_without_cover": "Salvar sem a capa"
+    "save_without_cover": "Salvar sem a capa",
+    "copy_book": "copiar",
+    "search_online_for_cover": "Procurar pela capa na Internet",
+    "book_cover": "capa do livro",
+    "duplicate_book": "Duplicar livro",
+    "warning_no": "Voltar",
+    "duck_duck_go_warning": "A busca por capas na Internet é facilitada pelo DuckDuckGo, um serviço proprietário. Tenha cuidado com as implicações de privacidade",
+    "warning_yes": "Compreendo",
+    "warning_yes_and_dont_show": "Não me importo com isso e não mostrar novamente"
 }

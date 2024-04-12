@@ -27,7 +27,6 @@
     "start_reading": "Beginnen",
     "rate_book": "Dit boek beoordelen",
     "skip": "Overslaan",
-    "reading_time": "Leestijd",
     "pages_uppercase": "Pagina's",
     "pages_lowercase": "pagina's",
     "click_to_add_cover": "Klik om omslag toe te voegen",
@@ -50,7 +49,6 @@
     "select_finish_date": "Selecteer de einddatum van lezen",
     "title_cannot_be_empty": "Titel kan niet leeg zijn",
     "author_cannot_be_empty": "Auteur kan niet leeg zijn",
-    "set_book_status": "Boekstatus instellen",
     "finish_date_before_start": "Einddatum kan niet vóór de begindatum zijn",
     "title": "Titel",
     "author": "Auteur",
@@ -84,7 +82,6 @@
     "books_challenge": "Afgeronde boeken uitdaging",
     "pages_challenge": "Afgeronde pagina's uitdaging",
     "all_years": "Alles",
-    "no_finished_books": "Geen voltooide boeken",
     "all_books_by_status": "Alle boeken volgens status",
     "finished_books_by_month": "Afgeronde boeken per maand",
     "finished_pages_by_month": "Afgeronde pagina's per maand",
@@ -186,7 +183,6 @@
     "restore_backup_description_2": "Werkt voor back-ups niet ouder dan van v1.14.2",
     "are_you_sure": "Weet je het zeker?",
     "restore_backup_alert_content": "Dit zal al je huidige boeken en uitdagingen verwijderen!",
-    "error_getting_book": "Fout bij het ophalen van het boek",
     "add_books_and_come_back": "Voeg wat boeken toe en kom hier weer",
     "welcome_1": "Welkom bij Openreads",
     "welcome_1_description_1": "Openreads zal je helpen om je boeken bij te houden.",
@@ -248,10 +244,6 @@
     "hour": {
         "one": "{} uur",
         "other": "{} uren"
-    },
-    "tags": {
-        "one": "Dag",
-        "other": "Dagen"
     },
     "migration_v1_to_v2_2": "Verlaat dit scherm niet voordat al je boeken zijn gemigreerd, want dan gaan ze verloren!",
     "support_the_project_description": "De programmeur met een kopje koffie bedanken",

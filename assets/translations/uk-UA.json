@@ -27,7 +27,6 @@
     "start_reading": "Почати",
     "rate_book": "Оцінити книгу",
     "skip": "Пропустити",
-    "reading_time": "Час читання",
     "pages_uppercase": "Сторінки",
     "pages_lowercase": "сторінки",
     "click_to_add_cover": "Натисніть, щоб додати обкладинку",
@@ -50,7 +49,6 @@
     "select_finish_date": "Виберіть дату завершення читання",
     "title_cannot_be_empty": "Назва не може бути порожньою",
     "author_cannot_be_empty": "Автор не може бути порожнім",
-    "set_book_status": "Встановіть статус книги",
     "finish_date_before_start": "Дата завершення не може бути раніше дати початку",
     "title": "Назва",
     "author": "Автор",
@@ -84,7 +82,6 @@
     "books_challenge": "Виклик завершених книг",
     "pages_challenge": "Виклик завершених сторінок",
     "all_years": "Всі",
-    "no_finished_books": "Немає завершених книг",
     "all_books_by_status": "Всі книги за статусом",
     "finished_books_by_month": "Завершені книги за місяцем",
     "finished_pages_by_month": "Завершені сторінки за місяцем",
@@ -188,7 +185,6 @@
     "restore_backup_description_2": "Працює для резервних копій не старіші за v1.14.2",
     "are_you_sure": "Ви впевнені?",
     "restore_backup_alert_content": "Це видалить усі ваші книги та виклики!",
-    "error_getting_book": "Помилка при отриманні книги",
     "add_books_and_come_back": "Додайте кілька книг і поверніться сюди",
     "welcome_1": "Ласкаво просимо до Openreads",
     "welcome_1_description_1": "Openreads допоможе вам відстежувати ваші книги.",
@@ -227,10 +223,6 @@
     "notes": "Записи",
     "selected": "Обраний",
     "change_book_format": "Змінити формат книги",
-    "tags": {
-        "other": "Теги",
-        "one": "Тег"
-    },
     "use_material_you": "Використовувати Material You",
     "day": {
         "one": "{} день",

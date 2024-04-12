@@ -41,7 +41,6 @@
     "set_pages_goal": "ਪੰਨਿਆਂ ਦਾ ਟੀਚਾ ਸ਼ਾਮਲ ਕਰੋ:",
     "all_years": "ਸਾਰੇ",
     "finished_pages_by_month": "ਮਹੀਨੇ ਮੁਤਾਬਕ ਖ਼ਤਮ ਕੀਤੇ ਪੰਨੇ",
-    "no_finished_books": "ਖ਼ਤਮ ਕੀਤੀ ਕੋਈ ਕਿਤਾਬ ਨਹੀਂ",
     "finished_books_by_month": "ਮਹੀਨੇ ਮੁਤਾਬਕ ਖ਼ਤਮ ਕੀਤੀਆਂ ਕਿਤਾਬਾਂ",
     "average_rating": "ਔਸਤਨ ਰੇਟਿੰਗ",
     "average_pages": "ਪੰਨਿਆਂ ਦੀ ਔਸਤਨ ਗਿਣਤੀ",
@@ -125,7 +124,6 @@
     "finish_reading": "ਮੁਕੰਮਲ",
     "start_reading": "ਸ਼ੁਰੂ ਕੀਤੀ",
     "rate_book": "ਕਿਤਾਬ ਨੂੰ ਰੈਟਿੰਗ ਦਿਓ",
-    "reading_time": "ਪੜ੍ਹਨ ਦਾ ਸਮਾਂ",
     "pages_lowercase": "ਸਫ਼ੇ",
     "start_date": "ਸ਼ੁਰੂ ਕਰਨ ਦੀ ਮਿਤੀ",
     "enter_subtitle": "ਉਪ-ਸਿਰਲੇਖ ਦਾਖ਼ਲ ਕਰੋ",
@@ -137,7 +135,6 @@
     "select_finish_date": "ਖ਼ਤਮ ਕਰਨ ਦੀ ਮਿਤੀ ਚੁਣੋ",
     "title_cannot_be_empty": "ਸਿਰਲੇਖ ਖ਼ਾਲੀ ਨਹੀਂ ਹੋਣਾ ਚਾਹੀਦਾ",
     "author_cannot_be_empty": "ਲੇਖਕ ਦੀ ਥਾਂ ਖ਼ਾਲੀ ਨਹੀਂ ਹੋ ਸਕਦੀ",
-    "set_book_status": "ਕਿਤਾਬ ਦੀ ਸਥਿਤੀ ਦਿਓ",
     "finish_date_before_start": "ਖ਼ਤਮ ਕਰਨ ਦੀ ਮਿਤੀ ਸ਼ੁਰੂ ਕਰਨ ਦੀ ਮਿਤੀ ਤੋਂ ਪਹਿਲਾਂ ਦੀ ਨਹੀਂ ਹੋ ਸਕਦੀ",
     "sort_filter": "ਤਰਤੀਬ / ਛਾਣਨੀ",
     "statistics": "ਅੰਕੜੇ",
@@ -221,7 +218,6 @@
     "restore_backup_description_1": "ਆਪਣੀ ਡਿਵਾਈਸ ਤੋਂ ਕਿਤਾਬਾਂ ਰੀਸਟੋਰ ਕਰੋ।",
     "are_you_sure": "ਤੁਹਾਨੂੰ ਪੱਕਾ ਯਕੀਨ ਹੈ?",
     "restore_backup_alert_content": "ਇਹ ਤੁਹਾਡੀਆਂ ਸਾਰੀਆਂ ਮੌਜੂਦਾ ਕਿਤਾਬਾਂ ਅਤੇ ਚੈਲੇਂਜ ਮਿਟਾ ਦੇਵੇਗਾ!",
-    "error_getting_book": "ਕਿਤਾਬ ਹਾਸਲ ਕਰਦੇ ਸਮੇਂ ਗ਼ਲਤੀ ਹੋਈ",
     "welcome_1": "ਓਪਨਰੀਡ ਤੇ ਜੀ ਆਇਆਂ ਨੂੰ",
     "welcome_1_description_1": "ਓਪਨਰੀਡਸ ਤੁਹਾਨੂੰ ਤੁਹਾਡੀਆਂ ਕਿਤਾਬਾਂ ਦਾ ਰਿਕਾਰਡ ਰੱਖਣ ਵਿਚ ਮਦਦ ਕਰੇਗਾ।",
     "welcome_2_description_1": "ਕਮਾਲ ਦੇ ਵੇਰਵੇ ਵਾਲੇ ਅੰਕੜਿਆਂ ਦੀ ਬਦੌਲਤ ਤੁਸੀਂ ਆਪਣੀ ਪੜ੍ਹਾਈ ਨਾਲ ਅੱਗੇ ਵਧ ਸਕਦੇ ਹੋ।",
@@ -253,10 +249,6 @@
         "other": "{} ਮਿੰਟ"
     },
     "set_custom_reading_time": "ਪੜ੍ਹਨ ਦਾ ਸਮਾਂ ਖ਼ੁਦ ਸੈੱਟ ਕਰੋ",
-    "tags": {
-        "one": "ਟੈਗ",
-        "other": "ਟੈਗ"
-    },
     "general_search": "ਆਮ",
     "no_search_results": "ਕੋਈ ਨਤੀਜੇ ਨਹੀਂ ਮਿਲੇ",
     "click_to_add_book_manually": "ਹੱਥੀਂ ਕਿਤਾਬ ਸ਼ਾਮਲ ਕਰਨ ਲਈ ਇੱਥੇ ਕਲਿਕ ਕਰੋ",
@@ -289,5 +281,6 @@
     "default_books_format": "ਡਿਫਾਲਟ ਕਿਤਾਬ ਫ਼ਾਰਮੈਟ",
     "cover_still_downloaded": "ਕਵਰ ਹਾਲੇ ਵੀ ਡਾਊਨਲੋਡ ਹੋ ਰਿਹਾ ਹੈ",
     "wait_for_downloading_to_finish": "ਡਾਊਨਲੋਡ ਮੁਕੰਮਲ ਹੋਣ ਦੀ ਉਡੀਕ ਕਰੋ",
-    "save_without_cover": "ਕਵਰ ਤੋਂ ਬਿਨਾ ਹੀ ਸਾਂਭੋ"
+    "save_without_cover": "ਕਵਰ ਤੋਂ ਬਿਨਾ ਹੀ ਸਾਂਭੋ",
+    "restored": "ਰੀਸਟੋਰ ਹੋਈਆਂ"
 }

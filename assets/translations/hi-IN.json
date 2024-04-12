@@ -27,7 +27,6 @@
     "start_reading": "शुरू करें",
     "rate_book": "इस पुस्‍तक का मूल्यांकन करें",
     "skip": "स्किप करें",
-    "reading_time": "पढ़ने का समय",
     "pages_uppercase": "पृष्ठ",
     "pages_lowercase": "पृष्ठ",
     "click_to_add_cover": "कवर जोड़ने के लिए क्लिक करें",
@@ -75,19 +74,18 @@
     "change_book_format": "पुस्तकों का प्रारूप बदलें",
     "minute": {
         "one": "{} मिनट",
-        "other": "{} मिनट"
+        "other": "{} मिनट",
+        "set_custom_time_title": "मिनट"
     },
     "set_custom_reading_time": "पढ़ने का कस्टम समय निर्धारित करें",
     "select_all": "सभी चुनें",
     "delete_books_question": "चयनित पुस्तकें हटाएँ?",
     "delete_books": "पुस्तकें हटाएँ",
-    "set_book_status": "पुस्तक की स्थिति सेट करें",
     "sort_by": "इसके अनुसार क्रमबद्ध",
     "only_favourite": "केवल पसंदीदा",
     "filter_by_tags": "टैग द्वारा फिल्टर करें",
     "add_pages_goal": "पेज लक्ष्य जोड़ें?",
     "all_years": "सभी",
-    "no_finished_books": "कोई समाप्त पुस्तकें नहीं",
     "all_books_by_status": "स्थिति के अनुसार सभी पुस्तकें",
     "longest_book": "सबसे लम्बी पुस्तक",
     "shortest_book": "सबसे छोटी पुस्तक",
@@ -116,11 +114,8 @@
     "export_csv_description_1": "कवर निर्यात नहीं किए गए",
     "hour": {
         "one": "{} घंटा",
-        "other": "{} घंटे"
-    },
-    "tags": {
-        "one": "टैग",
-        "other": "टैग्स"
+        "other": "{} घंटे",
+        "set_custom_time_title": "घंटे"
     },
     "general_search": "सामान्य",
     "load_cover_from_phone": "अपने डिवाइस से कवर लोड करें",
@@ -148,7 +143,6 @@
     "rate_app_description": "आपको Openreads पसंद है? इसे रेट करने के लिए यहां क्लिक करें!",
     "join_community_description": "Openreads प्रोजेक्ट के साथ अद्यतित रहें",
     "translate_app": "अनुवाद में सहायता करें",
-    "error_getting_book": "पुस्तक प्राप्त करते समय त्रुटि",
     "migration_v1_to_v2_retrigger": "v2.0 माइग्रेशन फिर से चलाएँ",
     "migration_v1_to_v2_retrigger_description": "यदि v2.0 में अपडेट के बाद पुस्तकें दिखाई नहीं दे रही हैं तो क्लिक करें।",
     "dark_mode_style": "गहरी मोड शैली",
@@ -223,7 +217,8 @@
     "import_successful": "आयात सफल",
     "day": {
         "one": "{} दिन",
-        "other": "{} दिन"
+        "other": "{} दिन",
+        "set_custom_time_title": "दिन"
     },
     "click_to_add_book_manually": "पुस्तक को मैन्युअल रूप से जोड़ने के लिए यहां क्लिक करें",
     "migration_v1_to_v2_2": "आपकी सभी पुस्तकें माइग्रेट होने से पहले इस स्क्रीन को न छोड़ें, क्योंकि वे खो जाएँगी!",
@@ -290,5 +285,9 @@
     "search_online_for_cover": "कवर के लिए ऑनलाइन खोजें",
     "book_cover": "पुस्तक का कवर",
     "duplicate_book": "डुप्लिकेट पुस्तक",
-    "copy_book": "कॉपी"
+    "copy_book": "कॉपी",
+    "warning_yes": "मैं इससे सहमत हूं",
+    "duck_duck_go_warning": "एक मालिकाना सेवा, DuckDuckGo के माध्यम से ऑनलाइन कवर की खोज की सुविधा प्रदान की जाती है। कृपया गोपनीयता संबंधी निहितार्थों के संबंध में सतर्क रहें",
+    "warning_yes_and_dont_show": "मुझे इससे कोई आपत्ति नहीं है और इसे दोबारा नहीं दिखाएं",
+    "warning_no": "मुझे वापस ले जायें"
 }

@@ -25,7 +25,6 @@
     "start_reading": "Başla",
     "rate_book": "Kitabı değerlendir",
     "skip": "Atla",
-    "reading_time": "Okuma zamanı",
     "pages_uppercase": "Sayfalar",
     "pages_lowercase": "sayfalar",
     "click_to_add_cover": "Kapak eklemek için tıklayın",
@@ -45,7 +44,6 @@
     "select_finish_date": "Okuma bitiş tarihini seçin",
     "title_cannot_be_empty": "Başlık boş olamaz",
     "author_cannot_be_empty": "Yazar boş olamaz",
-    "set_book_status": "Kitap durumunu ayarla",
     "finish_date_before_start": "Bitiş tarihi başlangıç tarihinden önce olamaz",
     "title": "Başlık",
     "author": "Yazar",
@@ -76,7 +74,6 @@
     "add_pages_goal": "Sayfa hedefi eklensin mi?",
     "set_pages_goal": "Sayfa hedefi belirleyin:",
     "all_years": "Tümü",
-    "no_finished_books": "Bitmiş kitap yok",
     "all_books_by_status": "Durumuna göre tüm kitaplar",
     "accent_color": "Vurgu rengi",
     "material_you": "Material You",
@@ -179,11 +176,13 @@
     "import_bookwyrm_csv": "BookWyrm CSV dosyasını içe aktar",
     "day": {
         "one": "{} gün",
-        "other": "{} gün"
+        "other": "{} gün",
+        "set_custom_time_title": "Günler"
     },
     "hour": {
         "other": "{} saat",
-        "one": "{} saat"
+        "one": "{} saat",
+        "set_custom_time_title": "Saatler"
     },
     "download_missing_covers": "Eksik kapakları indir",
     "load_cover_from_phone": "Kapağı aygıtınızdan yükleyin",
@@ -200,7 +199,8 @@
     "dark_mode_style": "Koyu mod biçimi",
     "minute": {
         "other": "{} dakika",
-        "one": "{} dakika"
+        "one": "{} dakika",
+        "set_custom_time_title": "Dakikalar"
     },
     "select_all": "Tümünü seç",
     "no_deleted_books": "Silinen kitabınız yok",
@@ -231,12 +231,7 @@
     "export_csv": "Kitapları CSV dosyası olarak dışa aktar",
     "import_successful": "Başarıyla içe aktarıldı",
     "ok": "Tamam",
-    "tags": {
-        "other": "Etiketler",
-        "one": "Etiket"
-    },
     "restore_backup_alert_content": "Bu, var olan tüm kitaplarınızı ve mücadelelerinizi silecektir!",
-    "error_getting_book": "Kitap alınırken hata oluştu",
     "restore_backup_description_1": "Kitapları aygıtınızdan geri yükleyin.",
     "add_books_and_come_back": "Birkaç kitap ekleyin ve buraya tekrar gelin",
     "restore_backup_description_2": "1.14.2 sürümünden daha eski olmayan yedeklemeler için çalışır",
@@ -290,5 +285,9 @@
     "duplicate_book": "Kitabı kopyala",
     "copy_book": "kopya",
     "search_online_for_cover": "Kapağı çevrim içi ara",
-    "book_cover": "kitap kapağı"
+    "book_cover": "kitap kapağı",
+    "warning_yes": "Benim için sorun değil",
+    "warning_no": "Beni geri götür",
+    "warning_yes_and_dont_show": "Benim için sorun yok ve bunu bir daha gösterme",
+    "duck_duck_go_warning": "Çevrim içi kapak araması, özgür olmayan bir hizmet olan DuckDuckGo aracılığıyla gerçekleştirilir. Lütfen gizlilik konusunda dikkatli olun"
 }

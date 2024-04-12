@@ -27,7 +27,6 @@
     "start_reading": "Rozpocznij",
     "rate_book": "Oceń książkę",
     "skip": "Pomiń",
-    "reading_time": "Czas czytania",
     "pages_uppercase": "Stron",
     "pages_lowercase": "stron",
     "click_to_add_cover": "Kliknij, żeby dodać okładkę",
@@ -50,7 +49,6 @@
     "select_finish_date": "Wybierz datę zakończenia czytania",
     "title_cannot_be_empty": "Uzupełnij tytuł",
     "author_cannot_be_empty": "Uzupełnij autora",
-    "set_book_status": "Ustaw status książki",
     "finish_date_before_start": "Data zakończenia nie może być wcześniej niż data rozpoczęcia",
     "title": "Tytuł",
     "author": "Autor",
@@ -84,7 +82,6 @@
     "books_challenge": "Wyzwanie przeczytanych książek",
     "pages_challenge": "Wyzwanie przeczytanych stron",
     "all_years": "Wszystkie",
-    "no_finished_books": "Brak ukończonych książek",
     "all_books_by_status": "Wszystkie książki według statusu",
     "finished_books_by_month": "Przeczytane książki według miesiąca",
     "finished_pages_by_month": "Przeczytane strony według miesiąca",
@@ -188,7 +185,6 @@
     "restore_backup_description_2": "Działa dla kopii zapasowych nie starszych niż z wersji 1.14.2",
     "are_you_sure": "Czy na pewno?",
     "restore_backup_alert_content": "Spowoduje to usunięcie wszystkich Twoich bieżących książek i wyzwań!",
-    "error_getting_book": "Błąd podczas wczytywania książki",
     "add_books_and_come_back": "Dodaj kilka książek i przyjdź tutaj ponownie",
     "welcome_1": "Witaj w Openreads",
     "welcome_1_description_1": "Openreads pomoże Ci śledzić status Twoich książek.",
@@ -221,12 +217,14 @@
     "update_successful_message": "Zaktualizowano pomyślnie!",
     "hour": {
         "one": "{} godzina",
-        "other": "{} godzin"
+        "other": "{} godzin",
+        "set_custom_time_title": "Godziny"
     },
     "csv": "CSV",
     "minute": {
         "other": "{} minut",
-        "one": "{} minuta"
+        "one": "{} minuta",
+        "set_custom_time_title": "Minuty"
     },
     "choose_not_finished_shelf": "Wybierz półkę z nieukończonymi książkami:",
     "export_successful": "Eksport zakończony sukcesem",
@@ -238,7 +236,8 @@
     "set_custom_reading_time": "Ustaw inny czas czytania",
     "day": {
         "one": "{} dzień",
-        "other": "{} dni"
+        "other": "{} dni",
+        "set_custom_time_title": "Dni"
     },
     "import_successful": "Import zakończony sukcesem",
     "openreads_backup": "Kopia zapasowa Openreads",
@@ -252,10 +251,6 @@
     "only_editions_with_covers": "Wyświetl tylko edycje z okładkami",
     "change_books_author": "Zmień autora książek",
     "bulk_update_unsuccessful_message": "Aktualizacja książek nie powiodła się",
-    "tags": {
-        "other": "Tagi",
-        "one": "Tag"
-    },
     "import_csv": "Importuj Openreads CSV",
     "get_cover_from_open_library": "Pobierz okładkę z Open Library przez ISBN książki",
     "books_settings": "Książki",
@@ -290,5 +285,9 @@
     "book_cover": "okładka książki",
     "search_online_for_cover": "Szukaj okładki w internecie",
     "duplicate_book": "Zduplikuj książkę",
-    "copy_book": "kopia"
+    "copy_book": "kopia",
+    "warning_yes": "Nie przeszkadza mi to",
+    "warning_no": "Zabierz mnie stąd",
+    "duck_duck_go_warning": "Szukanie okładek online jest umożliwione dzięki DuckDuckGo, prywatnemu serwisowi. Proszę być ostrożnym w związku z kwestiami prywatności",
+    "warning_yes_and_dont_show": "Nie przeszkadza mi to i nie pokazuj tego ostrzeżenia więcej"
 }
