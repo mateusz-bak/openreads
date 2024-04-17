@@ -22,6 +22,7 @@ final supportedLocales = [
   AppLanguage('한국어', const Locale('ko')),
   AppLanguage('ქართული', const Locale('ka', 'GE')),
   AppLanguage('limba română', const Locale('ro', 'RO')),
+  AppLanguage('മലയാളം', const Locale('ml')),
   AppLanguage('Nederlands', const Locale('nl', 'NL')),
   AppLanguage('Norsk', const Locale('no', 'NO')),
   AppLanguage('ଓଡ଼ିଆ', const Locale('or', 'IN')),
