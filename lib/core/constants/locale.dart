@@ -9,6 +9,7 @@ final supportedLocales = [
   AppLanguage('Deutsch', const Locale('de', 'DE')),
   AppLanguage('dansk', const Locale('da', 'DK')),
   AppLanguage('English', const Locale('en', 'US')),
+  AppLanguage('Euskara', const Locale('eu')),
   AppLanguage('eesti keel', const Locale('et')),
   AppLanguage('español', const Locale('es', 'ES')),
   AppLanguage('suomi', const Locale('fi', 'FI')),
