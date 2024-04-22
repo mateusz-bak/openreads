@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:file_picker/file_picker.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
@@ -164,42 +165,73 @@ class BackupGeneral {
       context: context,
       builder: (context) {
         return Builder(builder: (context) {
-          return AlertDialog(
+          return AlertDialog.adaptive(
             title: Text(
               LocaleKeys.import_successful.tr(),
             ),
             content: Text(LocaleKeys.try_downloading_covers.tr()),
-            actionsAlignment: MainAxisAlignment.spaceBetween,
             actions: [
-              FilledButton.tonal(
-                onPressed: () {
-                  Navigator.of(context).pop();
+              Platform.isIOS
+                  ? CupertinoDialogAction(
+                      onPressed: () {
+                        Navigator.of(context).pop();
 
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => DownloadMissingCoversScreen(
-                        bookIDs: bookIDs,
-                      ),
-                    ),
-                  );
-                },
-                child: Text(LocaleKeys.yes.tr()),
-              ),
-              FilledButton.tonal(
-                onPressed: () {
-                  Navigator.of(context).pop();
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => DownloadMissingCoversScreen(
+                              bookIDs: bookIDs,
+                            ),
+                          ),
+                        );
+                      },
+                      isDefaultAction: true,
+                      child: Text(LocaleKeys.yes.tr()),
+                    )
+                  : FilledButton(
+                      onPressed: () {
+                        Navigator.of(context).pop();
 
-                  Navigator.pushAndRemoveUntil(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => const BooksScreen(),
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => DownloadMissingCoversScreen(
+                              bookIDs: bookIDs,
+                            ),
+                          ),
+                        );
+                      },
+                      child: Text(LocaleKeys.yes.tr()),
                     ),
-                    (route) => false,
-                  );
-                },
-                child: Text(LocaleKeys.no.tr()),
-              ),
+              Platform.isIOS
+                  ? CupertinoDialogAction(
+                      onPressed: () {
+                        Navigator.of(context).pop();
+
+                        Navigator.pushAndRemoveUntil(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => const BooksScreen(),
+                          ),
+                          (route) => false,
+                        );
+                      },
+                      child: Text(LocaleKeys.no.tr()),
+                    )
+                  : FilledButton.tonal(
+                      onPressed: () {
+                        Navigator.of(context).pop();
+
+                        Navigator.pushAndRemoveUntil(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => const BooksScreen(),
+                          ),
+                          (route) => false,
+                        );
+                      },
+                      child: Text(LocaleKeys.no.tr()),
+                    ),
             ],
           );
         });

@@ -30,7 +30,7 @@ class EditCoverOptions extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.end,
           mainAxisSize: MainAxisSize.min,
           children: [
-            if (Platform.isIOS)
+            if (Platform.isAndroid)
               Padding(
                 padding: const EdgeInsets.fromLTRB(0, 10, 0, 10),
                 child: Container(

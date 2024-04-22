@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'dart:io';
 
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
@@ -157,7 +158,7 @@ class CSVImportGoodreads {
     return await showDialog<String>(
       context: context,
       builder: (context) {
-        return AlertDialog(
+        return AlertDialog.adaptive(
           title: Text(
             LocaleKeys.choose_not_finished_shelf.tr(),
           ),
@@ -165,10 +166,15 @@ class CSVImportGoodreads {
             child: ListBody(
               children: notFinishedShelfPropositions
                   .map(
-                    (e) => ListTile(
-                      title: Text(e),
-                      onTap: () => Navigator.of(context).pop(e),
-                    ),
+                    (e) => Platform.isIOS
+                        ? CupertinoDialogAction(
+                            onPressed: () => Navigator.of(context).pop(e),
+                            child: Text(e),
+                          )
+                        : ListTile(
+                            title: Text(e),
+                            onTap: () => Navigator.of(context).pop(e),
+                          ),
                   )
                   .toList(),
             ),
