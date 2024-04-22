@@ -118,10 +118,12 @@ class _ReadingRowState extends State<ReadingRow> {
     int hours = int.tryParse(hoursString) ?? 0;
     int mins = int.tryParse(minutesString) ?? 0;
 
-    context.read<EditBookCubit>().setCustomReadingTime(
-          ReadingTime.toMilliSeconds(days, hours, mins),
-          widget.index,
-        );
+    if (days != 0 || hours != 0 || mins != 0) {
+      context.read<EditBookCubit>().setCustomReadingTime(
+            ReadingTime.toMilliSeconds(days, hours, mins),
+            widget.index,
+          );
+    }
 
     Navigator.pop(context, 'OK');
   }
