@@ -52,46 +52,37 @@ class _SetDateButtonState extends State<SetDateButton> {
                   horizontal: 8,
                   vertical: 10,
                 ),
-                child: Center(
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
-                      Icon(
-                        widget.icon,
-                        color: Theme.of(context).colorScheme.primary,
+                child: Row(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    Icon(
+                      widget.icon,
+                      color: Theme.of(context).colorScheme.primary,
+                    ),
+                    const SizedBox(width: 10),
+                    Expanded(
+                      child: Text(
+                        widget.date != null
+                            ? dateFormat.format(widget.date!)
+                            : widget.text,
+                        maxLines: 1,
+                        style: const TextStyle(fontSize: 11),
+                        overflow: TextOverflow.ellipsis,
                       ),
-                      const SizedBox(width: 10),
-                      FittedBox(
-                        child: Text(
-                          widget.date != null
-                              ? dateFormat.format(widget.date!)
-                              : widget.text,
-                          maxLines: 1,
-                          style: const TextStyle(fontSize: 12),
-                        ),
-                      ),
-                    ],
-                  ),
+                    ),
+                    (widget.showClearButton)
+                        ? IconButton(
+                            icon: const Icon(
+                              Icons.close,
+                              size: 20,
+                            ),
+                            visualDensity: VisualDensity.compact,
+                            onPressed: widget.onClearPressed,
+                          )
+                        : const SizedBox(height: 40),
+                  ],
                 ),
               ),
-            ),
-          ),
-          Center(
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.end,
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                (widget.showClearButton)
-                    ? IconButton(
-                        icon: const Icon(
-                          Icons.close,
-                          size: 20,
-                        ),
-                        onPressed: widget.onClearPressed,
-                      )
-                    : const SizedBox(),
-              ],
             ),
           ),
         ],
