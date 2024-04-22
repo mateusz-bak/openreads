@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:diacritic/diacritic.dart';
 import 'package:dropdown_button2/dropdown_button2.dart';
 import 'package:easy_localization/easy_localization.dart';
@@ -495,56 +497,59 @@ class _SortBottomSheetState extends State<SortBottomSheet> {
 
   @override
   Widget build(BuildContext context) {
-    return SafeArea(
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.end,
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          const SizedBox(height: 10),
-          Container(
-            height: 3,
-            width: MediaQuery.of(context).size.width / 4,
-            decoration: BoxDecoration(
-              color: Colors.grey.shade300,
-              borderRadius: BorderRadius.circular(10),
-            ),
-          ),
-          Container(
-            padding: const EdgeInsets.fromLTRB(20, 10, 20, 10),
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(15),
-              color: Theme.of(context).colorScheme.surface,
-            ),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                const SizedBox(height: 8),
-                Text(
-                  LocaleKeys.sort_by.tr(),
-                  style: const TextStyle(fontSize: 16),
+    return Material(
+      child: SafeArea(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.end,
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            if (Platform.isAndroid)
+              Padding(
+                padding: const EdgeInsets.fromLTRB(0, 10, 0, 10),
+                child: Container(
+                  height: 5,
+                  width: 40,
+                  decoration: BoxDecoration(
+                    color: Theme.of(context)
+                        .colorScheme
+                        .onSurfaceVariant
+                        .withOpacity(0.4),
+                    borderRadius: BorderRadius.circular(50),
+                  ),
                 ),
-                const SizedBox(height: 4),
-                _buildSortDropdown(),
-                const SizedBox(height: 8),
-                _buildOnlyFavouriteSwitch(),
-                const SizedBox(height: 8),
-                Text(
-                  LocaleKeys.filter_by_book_format.tr(),
-                  style: const TextStyle(fontSize: 16),
-                ),
-                const SizedBox(height: 4),
-                _buildBookTypeFilter(),
-                _buildFilterByFinishYears(),
-                _buildFilterByTags(),
-                _buildFilterTagsAsAnd(),
-                _buildFilterOutTags(),
-                const SizedBox(height: 8),
-                _buildDisplayTags(),
-                const SizedBox(height: 50),
-              ],
+              ),
+            Padding(
+              padding: const EdgeInsets.fromLTRB(20, 10, 20, 10),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  const SizedBox(height: 5),
+                  Text(
+                    LocaleKeys.sort_by.tr(),
+                    style: const TextStyle(fontSize: 16),
+                  ),
+                  const SizedBox(height: 5),
+                  _buildSortDropdown(),
+                  const SizedBox(height: 5),
+                  _buildOnlyFavouriteSwitch(),
+                  const SizedBox(height: 5),
+                  Text(
+                    LocaleKeys.filter_by_book_format.tr(),
+                    style: const TextStyle(fontSize: 16),
+                  ),
+                  const SizedBox(height: 5),
+                  _buildBookTypeFilter(),
+                  _buildFilterByFinishYears(),
+                  _buildFilterByTags(),
+                  _buildFilterTagsAsAnd(),
+                  _buildFilterOutTags(),
+                  const SizedBox(height: 5),
+                  _buildDisplayTags(),
+                ],
+              ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }
@@ -687,12 +692,12 @@ class _SortBottomSheetState extends State<SortBottomSheet> {
                 return Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    const SizedBox(height: 8),
+                    const SizedBox(height: 5),
                     Text(
                       LocaleKeys.filter_by_tags.tr(),
                       style: const TextStyle(fontSize: 16),
                     ),
-                    const SizedBox(height: 4),
+                    const SizedBox(height: 5),
                     Row(
                       children: [
                         Expanded(
@@ -764,12 +769,12 @@ class _SortBottomSheetState extends State<SortBottomSheet> {
                 return Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    const SizedBox(height: 8),
+                    const SizedBox(height: 5),
                     Text(
                       LocaleKeys.filter_by_finish_year.tr(),
                       style: const TextStyle(fontSize: 16),
                     ),
-                    const SizedBox(height: 4),
+                    const SizedBox(height: 5),
                     Row(
                       children: [
                         Expanded(
@@ -917,7 +922,7 @@ class _SortBottomSheetState extends State<SortBottomSheet> {
                   ),
                 ),
               ),
-              const SizedBox(width: 8),
+              const SizedBox(width: 5),
               Container(
                 decoration: BoxDecoration(
                   color: Theme.of(context).colorScheme.surfaceVariant,
