@@ -7,6 +7,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_email_sender/flutter_email_sender.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 import 'package:openreads/core/constants/enums/enums.dart';
 import 'package:openreads/core/constants/locale.dart';
 import 'package:openreads/core/themes/app_theme.dart';
@@ -376,59 +377,70 @@ class SettingsScreen extends StatelessWidget {
       onPressed: (context) {
         FocusManager.instance.primaryFocus?.unfocus();
 
-        showModalBottomSheet(
-          context: context,
-          isScrollControlled: true,
-          elevation: 0,
-          backgroundColor: Theme.of(context).colorScheme.surface,
-          builder: (context) {
-            return Column(
-              mainAxisAlignment: MainAxisAlignment.end,
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                const SizedBox(height: 5),
-                Container(
-                  height: 3,
-                  width: MediaQuery.of(context).size.width / 4,
-                  decoration: BoxDecoration(
-                      color: Colors.grey.shade300,
-                      borderRadius: BorderRadius.circular(10)),
-                ),
-                Container(
-                  padding: const EdgeInsets.fromLTRB(10, 20, 10, 40),
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(15),
-                  ),
-                  child: IntrinsicHeight(
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                      children: [
-                        const SizedBox(width: 10),
-                        Expanded(
-                          child: ContactButton(
-                            text: LocaleKeys.send_dev_email.tr(),
-                            icon: FontAwesomeIcons.solidEnvelope,
-                            onPressed: () => _sendEmailToDev(context, version),
-                          ),
-                        ),
-                        const SizedBox(width: 20),
-                        Expanded(
-                          child: ContactButton(
-                            text: LocaleKeys.raise_github_issue.tr(),
-                            icon: FontAwesomeIcons.github,
-                            onPressed: () => _openGithubIssue(context),
-                          ),
-                        ),
-                        const SizedBox(width: 10),
-                      ],
-                    ),
-                  ),
-                ),
-              ],
-            );
-          },
-        );
+        if (Platform.isIOS) {
+          showCupertinoModalBottomSheet(
+            context: context,
+            expand: false,
+            builder: (_) {
+              return _buildFeedbackBottomSheet(context, version);
+            },
+          );
+        } else if (Platform.isAndroid) {
+          showModalBottomSheet(
+            context: context,
+            isScrollControlled: true,
+            elevation: 0,
+            backgroundColor: Theme.of(context).colorScheme.surface,
+            builder: (context) {
+              return _buildFeedbackBottomSheet(context, version);
+            },
+          );
+        }
       },
+    );
+  }
+
+  Widget _buildFeedbackBottomSheet(BuildContext context, String version) {
+    return Material(
+      child: SafeArea(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.end,
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            if (Platform.isAndroid)
+              Padding(
+                padding: const EdgeInsets.fromLTRB(0, 10, 0, 10),
+                child: Container(
+                  height: 5,
+                  width: 40,
+                  decoration: BoxDecoration(
+                    color: Theme.of(context)
+                        .colorScheme
+                        .onSurfaceVariant
+                        .withOpacity(0.4),
+                    borderRadius: BorderRadius.circular(50),
+                  ),
+                ),
+              ),
+            ListTile(
+              title: Text(LocaleKeys.send_dev_email.tr()),
+              leading: FaIcon(
+                FontAwesomeIcons.solidEnvelope,
+                color: Theme.of(context).colorScheme.primary,
+              ),
+              onTap: () => _sendEmailToDev(context, version),
+            ),
+            ListTile(
+              title: Text(LocaleKeys.raise_github_issue.tr()),
+              leading: FaIcon(
+                FontAwesomeIcons.github,
+                color: Theme.of(context).colorScheme.primary,
+              ),
+              onTap: () => _openGithubIssue(context),
+            ),
+          ],
+        ),
+      ),
     );
   }
 
@@ -457,60 +469,70 @@ class SettingsScreen extends StatelessWidget {
       ),
       onPressed: (context) {
         FocusManager.instance.primaryFocus?.unfocus();
-
-        showModalBottomSheet(
-          context: context,
-          isScrollControlled: true,
-          elevation: 0,
-          backgroundColor: Theme.of(context).colorScheme.surface,
-          builder: (context) {
-            return Column(
-              mainAxisAlignment: MainAxisAlignment.end,
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                const SizedBox(height: 10),
-                Container(
-                  height: 3,
-                  width: MediaQuery.of(context).size.width / 4,
-                  decoration: BoxDecoration(
-                      color: Colors.grey.shade300,
-                      borderRadius: BorderRadius.circular(10)),
-                ),
-                Container(
-                  padding: const EdgeInsets.fromLTRB(10, 32, 10, 40),
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(15),
-                  ),
-                  child: IntrinsicHeight(
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                      children: [
-                        const SizedBox(width: 10),
-                        Expanded(
-                          child: ContactButton(
-                            text: LocaleKeys.support_option_1.tr(),
-                            icon: FontAwesomeIcons.github,
-                            onPressed: () => _supportGithub(context),
-                          ),
-                        ),
-                        const SizedBox(width: 20),
-                        Expanded(
-                          child: ContactButton(
-                            text: LocaleKeys.support_option_2.tr(),
-                            icon: FontAwesomeIcons.mugHot,
-                            onPressed: () => _supportBuyMeCoffe(context),
-                          ),
-                        ),
-                        const SizedBox(width: 10),
-                      ],
-                    ),
-                  ),
-                ),
-              ],
-            );
-          },
-        );
+        if (Platform.isIOS) {
+          showCupertinoModalBottomSheet(
+            context: context,
+            expand: false,
+            builder: (_) {
+              return _buildSupportBottomSheet(context);
+            },
+          );
+        } else if (Platform.isAndroid) {
+          showModalBottomSheet(
+            context: context,
+            isScrollControlled: true,
+            elevation: 0,
+            backgroundColor: Theme.of(context).colorScheme.surface,
+            builder: (context) {
+              return _buildSupportBottomSheet(context);
+            },
+          );
+        }
       },
+    );
+  }
+
+  Widget _buildSupportBottomSheet(BuildContext context) {
+    return Material(
+      child: SafeArea(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.end,
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            if (Platform.isAndroid)
+              Padding(
+                padding: const EdgeInsets.fromLTRB(0, 10, 0, 10),
+                child: Container(
+                  height: 5,
+                  width: 40,
+                  decoration: BoxDecoration(
+                    color: Theme.of(context)
+                        .colorScheme
+                        .onSurfaceVariant
+                        .withOpacity(0.4),
+                    borderRadius: BorderRadius.circular(50),
+                  ),
+                ),
+              ),
+            ListTile(
+              title: Text(LocaleKeys.support_option_1.tr()),
+              leading: FaIcon(
+                FontAwesomeIcons.github,
+                color: Theme.of(context).colorScheme.primary,
+              ),
+              onTap: () => _supportGithub(context),
+            ),
+            ListTile(
+              title: Text(LocaleKeys.support_option_2.tr()),
+              leading: FaIcon(
+                FontAwesomeIcons.mugHot,
+                color: Theme.of(context).colorScheme.primary,
+              ),
+              onTap: () => _supportBuyMeCoffe(context),
+            ),
+          ],
+        ),
+      ),
     );
   }
 
