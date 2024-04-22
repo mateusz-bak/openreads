@@ -8,14 +8,15 @@ import 'package:openreads/logic/cubit/edit_book_cubit.dart';
 import 'package:openreads/model/book.dart';
 
 class BookTypeDropdown extends StatelessWidget {
-  const BookTypeDropdown({
-    super.key,
-    required this.bookTypes,
-    required this.changeBookType,
-  });
+  const BookTypeDropdown(
+      {super.key,
+      required this.bookTypes,
+      required this.changeBookType,
+      this.padding = const EdgeInsets.symmetric(horizontal: 10)});
 
   final List<String> bookTypes;
   final Function(String?) changeBookType;
+  final EdgeInsets padding;
 
   String _getBookTypeDropdownValue(BookFormat bookType) {
     switch (bookType) {
@@ -35,7 +36,7 @@ class BookTypeDropdown extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 10),
+      padding: padding,
       child: Container(
         decoration: BoxDecoration(
           border: Border.all(
