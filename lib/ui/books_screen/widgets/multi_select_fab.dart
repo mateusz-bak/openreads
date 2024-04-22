@@ -1,6 +1,9 @@
+import 'dart:io';
+
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_speed_dial/flutter_speed_dial.dart';
+import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 import 'package:openreads/core/constants/enums/enums.dart';
 import 'package:openreads/core/themes/app_theme.dart';
 import 'package:openreads/generated/locale_keys.g.dart';
@@ -43,42 +46,43 @@ class MultiSelectFAB extends StatelessWidget {
     return label;
   }
 
-  showEditBooksBottomSheet(
-    BuildContext context,
-    Set<int> selectedBookIds,
-    BulkEditOption bulkEditOption,
-  ) {
-    return showModalBottomSheet(
-        isScrollControlled: true,
-        context: context,
-        builder: (context) {
-          return SafeArea(
-            child: AnimatedPadding(
-              duration: const Duration(milliseconds: 150),
-              curve: Curves.easeOut,
-              padding: EdgeInsets.only(
-                  bottom: MediaQuery.of(context).viewInsets.bottom),
-              child: Padding(
-                padding: const EdgeInsets.fromLTRB(10, 0, 10, 50),
-                child: Column(
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    const SizedBox(height: 10),
-                    _buildTopLine(context),
-                    const SizedBox(height: 20),
-                    _buildHeader(bulkEditOption),
-                    const SizedBox(height: 20),
-                    bulkEditOption == BulkEditOption.format
-                        ? _buildEditFormat(selectedBookIds, context)
-                        : bulkEditOption == BulkEditOption.author
-                            ? _buildEditAuthor(selectedBookIds, context)
-                            : const SizedBox(),
-                  ],
+  Material _buildBottomSheet(BuildContext context,
+      BulkEditOption bulkEditOption, Set<int> selectedBookIds) {
+    return Material(
+      child: SafeArea(
+        child: Padding(
+          padding: const EdgeInsets.fromLTRB(10, 10, 10, 20),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              if (Platform.isAndroid)
+                Padding(
+                  padding: const EdgeInsets.fromLTRB(0, 10, 0, 10),
+                  child: Container(
+                    height: 5,
+                    width: 40,
+                    decoration: BoxDecoration(
+                      color: Theme.of(context)
+                          .colorScheme
+                          .onSurfaceVariant
+                          .withOpacity(0.4),
+                      borderRadius: BorderRadius.circular(50),
+                    ),
+                  ),
                 ),
-              ),
-            ),
-          );
-        });
+              const SizedBox(height: 10),
+              _buildHeader(bulkEditOption),
+              const SizedBox(height: 30),
+              bulkEditOption == BulkEditOption.format
+                  ? _buildEditFormat(selectedBookIds, context)
+                  : bulkEditOption == BulkEditOption.author
+                      ? _buildEditAuthor(selectedBookIds, context)
+                      : const SizedBox(),
+            ],
+          ),
+        ),
+      ),
+    );
   }
 
   void _updateBooksFormat(String bookType, Set<int> selectedIds) {
@@ -168,7 +172,7 @@ class MultiSelectFAB extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.only(bottom: 50),
       child: SpeedDial(
-        spacing: 3,
+        spacing: 20,
         dialRoot: (ctx, open, toggleChildren) {
           return FloatingActionButton(
             onPressed: toggleChildren,
@@ -176,35 +180,88 @@ class MultiSelectFAB extends StatelessWidget {
           );
         },
         childPadding: const EdgeInsets.all(5),
-        spaceBetweenChildren: 4,
+        spaceBetweenChildren: 10,
         children: [
           SpeedDialChild(
-            child: const Icon(Icons.menu_book_outlined),
-            backgroundColor: Theme.of(context).colorScheme.secondaryContainer,
+            child: Icon(
+              Icons.menu_book_outlined,
+              color: Theme.of(context).colorScheme.onSecondary,
+            ),
+            backgroundColor: Theme.of(context).colorScheme.secondary,
+            labelBackgroundColor: Theme.of(context).colorScheme.surfaceVariant,
+            foregroundColor: Theme.of(context).colorScheme.onSurfaceVariant,
             label: LocaleKeys.change_book_format.tr(),
             onTap: () {
-              showEditBooksBottomSheet(
-                context,
-                selectedBookIds,
-                BulkEditOption.format,
-              );
+              if (Platform.isIOS) {
+                showCupertinoModalBottomSheet(
+                  context: context,
+                  expand: false,
+                  builder: (_) {
+                    return _buildBottomSheet(
+                      context,
+                      BulkEditOption.format,
+                      selectedBookIds,
+                    );
+                  },
+                );
+              } else if (Platform.isAndroid) {
+                showModalBottomSheet(
+                    isScrollControlled: true,
+                    context: context,
+                    builder: (context) {
+                      return _buildBottomSheet(
+                        context,
+                        BulkEditOption.format,
+                        selectedBookIds,
+                      );
+                    });
+              }
             },
           ),
           SpeedDialChild(
-            child: const Icon(Icons.person),
-            backgroundColor: Theme.of(context).colorScheme.secondaryContainer,
+            child: Icon(
+              Icons.person,
+              color: Theme.of(context).colorScheme.onSecondary,
+            ),
+            backgroundColor: Theme.of(context).colorScheme.secondary,
+            labelBackgroundColor: Theme.of(context).colorScheme.surfaceVariant,
+            foregroundColor: Theme.of(context).colorScheme.onSurfaceVariant,
             label: LocaleKeys.change_books_author.tr(),
             onTap: () {
-              showEditBooksBottomSheet(
-                context,
-                selectedBookIds,
-                BulkEditOption.author,
-              );
+              if (Platform.isIOS) {
+                showCupertinoModalBottomSheet(
+                  context: context,
+                  expand: false,
+                  builder: (_) {
+                    return _buildBottomSheet(
+                      context,
+                      BulkEditOption.author,
+                      selectedBookIds,
+                    );
+                  },
+                );
+              } else if (Platform.isAndroid) {
+                showModalBottomSheet(
+                    isScrollControlled: true,
+                    context: context,
+                    builder: (context) {
+                      return _buildBottomSheet(
+                        context,
+                        BulkEditOption.author,
+                        selectedBookIds,
+                      );
+                    });
+              }
             },
           ),
           SpeedDialChild(
-            child: const Icon(Icons.delete),
-            backgroundColor: Theme.of(context).colorScheme.secondaryContainer,
+            child: Icon(
+              Icons.delete,
+              color: Theme.of(context).colorScheme.onSecondary,
+            ),
+            backgroundColor: Theme.of(context).colorScheme.secondary,
+            labelBackgroundColor: Theme.of(context).colorScheme.surfaceVariant,
+            foregroundColor: Theme.of(context).colorScheme.onSurfaceVariant,
             label: LocaleKeys.delete_books.tr(),
             onTap: () => _showDeleteBooksDialog(context),
           ),
@@ -224,13 +281,20 @@ class MultiSelectFAB extends StatelessWidget {
           maxLines: 5,
           maxLength: 255,
           textCapitalization: TextCapitalization.words,
+          padding: const EdgeInsets.all(0),
         ),
         const SizedBox(height: 20),
         Row(
           children: [
-            const SizedBox(width: 10),
             Expanded(
               child: FilledButton(
+                style: ButtonStyle(
+                  shape: MaterialStateProperty.all(
+                    RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(cornerRadius),
+                    ),
+                  ),
+                ),
                 onPressed: () {
                   final result = _updateBooksAuthor(selectedBookIds);
                   Navigator.pop(context);
@@ -247,7 +311,6 @@ class MultiSelectFAB extends StatelessWidget {
                 child: Text(LocaleKeys.save.tr()),
               ),
             ),
-            const SizedBox(width: 10),
           ],
         ),
       ],
@@ -258,6 +321,7 @@ class MultiSelectFAB extends StatelessWidget {
       Set<int> selectedBookIds, BuildContext context) {
     return BookTypeDropdown(
       bookTypes: bookTypes,
+      padding: const EdgeInsets.all(0),
       changeBookType: (bookType) {
         if (bookType == null) return;
         _updateBooksFormat(bookType, selectedBookIds);
@@ -274,27 +338,16 @@ class MultiSelectFAB extends StatelessWidget {
   Row _buildHeader(BulkEditOption bulkEditOption) {
     return Row(
       children: [
-        const SizedBox(width: 10),
-        Text(
-          _getLabel(bulkEditOption),
-          style: const TextStyle(
-            fontSize: 18,
-            fontWeight: FontWeight.bold,
+        Expanded(
+          child: Text(
+            _getLabel(bulkEditOption),
+            style: const TextStyle(
+              fontSize: 18,
+              fontWeight: FontWeight.bold,
+            ),
           ),
         ),
-        const SizedBox(width: 10),
       ],
-    );
-  }
-
-  Container _buildTopLine(BuildContext context) {
-    return Container(
-      height: 3,
-      width: MediaQuery.of(context).size.width / 4,
-      decoration: BoxDecoration(
-        color: Colors.grey.shade300,
-        borderRadius: BorderRadius.circular(10),
-      ),
     );
   }
 }
