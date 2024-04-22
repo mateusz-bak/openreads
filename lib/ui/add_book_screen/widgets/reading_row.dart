@@ -1,4 +1,7 @@
+import 'dart:io';
+
 import 'package:easy_localization/easy_localization.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -29,38 +32,72 @@ class _ReadingRowState extends State<ReadingRow> {
   void _showStartDatePicker() async {
     FocusManager.instance.primaryFocus?.unfocus();
 
-    final startDate = await showDatePicker(
-      context: context,
-      initialDate: widget.reading.startDate ?? DateTime.now(),
-      firstDate: DateTime(1970),
-      lastDate: DateTime.now(),
-      helpText: LocaleKeys.select_start_date.tr(),
-    );
+    if (Platform.isIOS) {
+      showCupertinoModalPopup(
+          context: context,
+          builder: (_) {
+            return CupertinoDatePickerBottomSheet(
+              text: LocaleKeys.select_start_date.tr(),
+              initialDate: widget.reading.startDate ?? DateTime.now(),
+              onDateTimeChanged: (value) {
+                context.read<EditBookCubit>().setReadingStartDate(
+                      value,
+                      widget.index,
+                    );
+              },
+            );
+          });
+    } else if (Platform.isAndroid) {
+      final startDate = await showDatePicker(
+        context: context,
+        initialDate: widget.reading.startDate ?? DateTime.now(),
+        firstDate: DateTime(1970),
+        lastDate: DateTime.now(),
+        helpText: LocaleKeys.select_start_date.tr(),
+      );
 
-    if (mounted && startDate != null) {
-      context.read<EditBookCubit>().setReadingStartDate(
-            startDate,
-            widget.index,
-          );
+      if (mounted && startDate != null) {
+        context.read<EditBookCubit>().setReadingStartDate(
+              startDate,
+              widget.index,
+            );
+      }
     }
   }
 
   void _showFinishDatePicker() async {
     FocusManager.instance.primaryFocus?.unfocus();
 
-    final finishDate = await showDatePicker(
-      context: context,
-      initialDate: widget.reading.finishDate ?? DateTime.now(),
-      firstDate: DateTime(1970),
-      lastDate: DateTime.now(),
-      helpText: LocaleKeys.select_finish_date.tr(),
-    );
+    if (Platform.isIOS) {
+      showCupertinoModalPopup(
+          context: context,
+          builder: (_) {
+            return CupertinoDatePickerBottomSheet(
+              text: LocaleKeys.select_finish_date.tr(),
+              initialDate: widget.reading.finishDate ?? DateTime.now(),
+              onDateTimeChanged: (value) {
+                context.read<EditBookCubit>().setReadingFinishDate(
+                      value,
+                      widget.index,
+                    );
+              },
+            );
+          });
+    } else if (Platform.isAndroid) {
+      final finishDate = await showDatePicker(
+        context: context,
+        initialDate: widget.reading.finishDate ?? DateTime.now(),
+        firstDate: DateTime(1970),
+        lastDate: DateTime.now(),
+        helpText: LocaleKeys.select_finish_date.tr(),
+      );
 
-    if (mounted && finishDate != null) {
-      context.read<EditBookCubit>().setReadingFinishDate(
-            finishDate,
-            widget.index,
-          );
+      if (mounted && finishDate != null) {
+        context.read<EditBookCubit>().setReadingFinishDate(
+              finishDate,
+              widget.index,
+            );
+      }
     }
   }
 
