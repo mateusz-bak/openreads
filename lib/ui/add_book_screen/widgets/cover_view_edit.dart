@@ -1,5 +1,7 @@
 // ignore_for_file: use_build_context_synchronously
 
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
@@ -9,8 +11,8 @@ import 'package:image_picker/image_picker.dart';
 import 'package:blurhash_dart/blurhash_dart.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 import 'package:openreads/core/helpers/helpers.dart';
-import 'package:openreads/model/book.dart';
 import 'package:openreads/resources/open_library_service.dart';
 
 import 'package:openreads/core/constants/constants.dart';
@@ -18,6 +20,7 @@ import 'package:openreads/core/themes/app_theme.dart';
 import 'package:openreads/generated/locale_keys.g.dart';
 import 'package:openreads/logic/cubit/edit_book_cubit.dart';
 import 'package:openreads/main.dart';
+import 'package:openreads/ui/add_book_screen/widgets/edit_cover_options.dart';
 import 'package:openreads/ui/add_book_screen/widgets/widgets.dart';
 import 'package:openreads/ui/search_covers_screen/search_covers_screen.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -85,15 +88,8 @@ class _CoverViewEditState extends State<CoverViewEdit> {
     _setCoverLoading(false);
   }
 
-  void _editCurrentCover({
-    required BuildContext context,
-    bool pop = true,
-  }) async {
+  void _editCurrentCover(BuildContext context) async {
     _setCoverLoading(true);
-
-    if (pop) {
-      Navigator.of(context).pop();
-    }
 
     final cover = context.read<EditBookCoverCubit>().state;
 
@@ -213,74 +209,35 @@ class _CoverViewEditState extends State<CoverViewEdit> {
   showCoverLoadBottomSheet(BuildContext context) {
     FocusManager.instance.primaryFocus?.unfocus();
 
-    showModalBottomSheet(
-      context: context,
-      isScrollControlled: true,
-      elevation: 0,
-      backgroundColor: Theme.of(context).colorScheme.surface,
-      builder: (modalContext) {
-        return Column(
-          mainAxisAlignment: MainAxisAlignment.end,
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            const SizedBox(height: 10),
-            Container(
-              height: 3,
-              width: MediaQuery.of(context).size.width / 4,
-              decoration: BoxDecoration(
-                color: Colors.grey.shade300,
-                borderRadius: BorderRadius.circular(10),
-              ),
-            ),
-            Container(
-              padding: const EdgeInsets.fromLTRB(10, 30, 10, 60),
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                children: [
-                  CoverOptionButton(
-                    text: LocaleKeys.load_cover_from_phone.tr(),
-                    icon: FontAwesomeIcons.mobile,
-                    onPressed: () => _loadCoverFromStorage(context),
-                  ),
-                  const SizedBox(height: 15),
-                  CoverOptionButton(
-                    text: LocaleKeys.searchOnlineForCover.tr(),
-                    icon: FontAwesomeIcons.magnifyingGlass,
-                    onPressed: () => _searchForCoverOnline(context),
-                  ),
-                  const SizedBox(height: 15),
-                  CoverOptionButton(
-                    text: LocaleKeys.get_cover_from_open_library.tr(),
-                    icon: FontAwesomeIcons.globe,
-                    onPressed: () => _loadCoverFromOpenLibrary(context),
-                  ),
-                  BlocBuilder<EditBookCubit, Book>(
-                    builder: (blocContext, state) {
-                      if (state.hasCover) {
-                        return Column(
-                          children: [
-                            const SizedBox(height: 15),
-                            CoverOptionButton(
-                              text: LocaleKeys.edit_current_cover.tr(),
-                              icon: FontAwesomeIcons.image,
-                              onPressed: () => _editCurrentCover(
-                                context: context,
-                              ),
-                            ),
-                          ],
-                        );
-                      } else {
-                        return const SizedBox();
-                      }
-                    },
-                  ),
-                ],
-              ),
-            ),
-          ],
-        );
-      },
-    );
+    if (Platform.isIOS) {
+      showCupertinoModalBottomSheet(
+        context: context,
+        expand: false,
+        builder: (_) {
+          return EditCoverOptions(
+            loadCoverFromStorage: _loadCoverFromStorage,
+            searchForCoverOnline: _searchForCoverOnline,
+            loadCoverFromOpenLibrary: _loadCoverFromOpenLibrary,
+            editCurrentCover: _editCurrentCover,
+          );
+        },
+      );
+    } else if (Platform.isAndroid) {
+      showModalBottomSheet(
+        context: context,
+        isScrollControlled: true,
+        elevation: 0,
+        backgroundColor: Theme.of(context).colorScheme.surface,
+        builder: (modalContext) {
+          return EditCoverOptions(
+            loadCoverFromStorage: _loadCoverFromStorage,
+            searchForCoverOnline: _searchForCoverOnline,
+            loadCoverFromOpenLibrary: _loadCoverFromOpenLibrary,
+            editCurrentCover: _editCurrentCover,
+          );
+        },
+      );
+    }
   }
 
   @override
