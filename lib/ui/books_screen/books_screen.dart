@@ -4,6 +4,7 @@ import 'dart:ui';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 import 'package:openreads/core/constants/constants.dart';
 import 'package:openreads/core/constants/enums/enums.dart';
 import 'package:openreads/core/helpers/helpers.dart';
@@ -695,14 +696,24 @@ class _BooksScreenState extends State<BooksScreen>
   void openSortFilterSheet() {
     FocusManager.instance.primaryFocus?.unfocus();
 
-    showModalBottomSheet(
-      context: context,
-      isScrollControlled: true,
-      elevation: 0,
-      builder: (context) {
-        return const SortBottomSheet();
-      },
-    );
+    if (Platform.isIOS) {
+      showCupertinoModalBottomSheet(
+        context: context,
+        expand: false,
+        builder: (_) {
+          return const SortBottomSheet();
+        },
+      );
+    } else if (Platform.isAndroid) {
+      showModalBottomSheet(
+        context: context,
+        isScrollControlled: true,
+        backgroundColor: Colors.transparent,
+        builder: (context) {
+          return const SortBottomSheet();
+        },
+      );
+    }
   }
 
   void goToStatisticsScreen() {
@@ -794,18 +805,31 @@ class _BooksScreenState extends State<BooksScreen>
   }
 
   _onFabPressed() {
-    showModalBottomSheet(
-      context: context,
-      isScrollControlled: true,
-      elevation: 0,
-      builder: (_) {
-        return AddBookSheet(
-          addManually: _addBookManually,
-          searchInOpenLibrary: _searchInOpenLibrary,
-          scanBarcode: _scanBarcode,
-        );
-      },
-    );
+    if (Platform.isIOS) {
+      showCupertinoModalBottomSheet(
+        context: context,
+        expand: false,
+        builder: (_) {
+          return AddBookSheet(
+            addManually: _addBookManually,
+            searchInOpenLibrary: _searchInOpenLibrary,
+            scanBarcode: _scanBarcode,
+          );
+        },
+      );
+    } else if (Platform.isAndroid) {
+      showModalBottomSheet(
+        context: context,
+        backgroundColor: Colors.transparent,
+        builder: (_) {
+          return AddBookSheet(
+            addManually: _addBookManually,
+            searchInOpenLibrary: _searchInOpenLibrary,
+            scanBarcode: _scanBarcode,
+          );
+        },
+      );
+    }
   }
 
   _addBookManually() async {
