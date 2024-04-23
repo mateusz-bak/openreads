@@ -286,10 +286,15 @@ class _AddBookScreenState extends State<AddBookScreen> {
     if (_isCoverDownloading) {
       return Padding(
         padding: const EdgeInsets.symmetric(vertical: 50),
-        child: LoadingAnimationWidget.threeArchedCircle(
-          color: Theme.of(context).colorScheme.primary,
-          size: 36,
-        ),
+        child: Platform.isIOS
+            ? CupertinoActivityIndicator(
+                radius: 20,
+                color: Theme.of(context).colorScheme.primary,
+              )
+            : LoadingAnimationWidget.threeArchedCircle(
+                color: Theme.of(context).colorScheme.primary,
+                size: 36,
+              ),
       );
     } else {
       return const CoverViewEdit();

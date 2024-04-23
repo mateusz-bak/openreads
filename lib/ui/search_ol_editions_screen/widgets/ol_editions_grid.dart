@@ -1,3 +1,6 @@
+import 'dart:io';
+
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
 import 'package:loading_animation_widget/loading_animation_widget.dart';
@@ -98,18 +101,28 @@ class OLEditionsGrid extends StatelessWidget {
           showNoMoreItemsIndicatorAsGridChild: false,
           builderDelegate: PagedChildBuilderDelegate<OLEditionResult>(
             firstPageProgressIndicatorBuilder: (_) => Center(
-              child: LoadingAnimationWidget.staggeredDotsWave(
-                color: Theme.of(context).colorScheme.primary,
-                size: 50,
-              ),
+              child: Platform.isIOS
+                  ? CupertinoActivityIndicator(
+                      radius: 20,
+                      color: Theme.of(context).colorScheme.primary,
+                    )
+                  : LoadingAnimationWidget.staggeredDotsWave(
+                      color: Theme.of(context).colorScheme.primary,
+                      size: 50,
+                    ),
             ),
             newPageProgressIndicatorBuilder: (_) => Center(
               child: Padding(
                 padding: const EdgeInsets.all(20.0),
-                child: LoadingAnimationWidget.staggeredDotsWave(
-                  color: Theme.of(context).colorScheme.primary,
-                  size: 50,
-                ),
+                child: Platform.isIOS
+                    ? CupertinoActivityIndicator(
+                        radius: 20,
+                        color: Theme.of(context).colorScheme.primary,
+                      )
+                    : LoadingAnimationWidget.staggeredDotsWave(
+                        color: Theme.of(context).colorScheme.primary,
+                        size: 50,
+                      ),
               ),
             ),
             itemBuilder: (context, item, index) => BookCardOLEdition(

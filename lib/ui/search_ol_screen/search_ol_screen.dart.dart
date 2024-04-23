@@ -1,5 +1,8 @@
+import 'dart:io';
+
 import 'package:barcode_scan2/barcode_scan2.dart';
 import 'package:easy_localization/easy_localization.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
@@ -380,18 +383,32 @@ class _SearchOLScreenState extends State<SearchOLScreen>
                         builderDelegate:
                             PagedChildBuilderDelegate<OLSearchResultDoc>(
                           firstPageProgressIndicatorBuilder: (_) => Center(
-                            child: LoadingAnimationWidget.staggeredDotsWave(
-                              color: Theme.of(context).colorScheme.primary,
-                              size: 42,
-                            ),
+                            child: Platform.isIOS
+                                ? CupertinoActivityIndicator(
+                                    radius: 20,
+                                    color:
+                                        Theme.of(context).colorScheme.primary,
+                                  )
+                                : LoadingAnimationWidget.staggeredDotsWave(
+                                    color:
+                                        Theme.of(context).colorScheme.primary,
+                                    size: 42,
+                                  ),
                           ),
                           newPageProgressIndicatorBuilder: (_) => Center(
                             child: Padding(
                               padding: const EdgeInsets.all(20.0),
-                              child: LoadingAnimationWidget.staggeredDotsWave(
-                                color: Theme.of(context).colorScheme.primary,
-                                size: 42,
-                              ),
+                              child: Platform.isIOS
+                                  ? CupertinoActivityIndicator(
+                                      radius: 20,
+                                      color:
+                                          Theme.of(context).colorScheme.primary,
+                                    )
+                                  : LoadingAnimationWidget.staggeredDotsWave(
+                                      color:
+                                          Theme.of(context).colorScheme.primary,
+                                      size: 42,
+                                    ),
                             ),
                           ),
                           noItemsFoundIndicatorBuilder: (_) => Center(
