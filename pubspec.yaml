@@ -21,7 +21,7 @@ dependencies:
   image_picker: ^1.0.0
   image_cropper: ^5.0.0
   flutter_bloc: ^8.1.1
-  colours: ^0.0.2
+  # colours: ^0.0.2
   blurhash: ^1.1.1
   image: ^4.0.15
   fl_chart: ^0.67.0
