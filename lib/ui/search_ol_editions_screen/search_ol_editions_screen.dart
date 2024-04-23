@@ -105,7 +105,7 @@ class _SearchOLEditionsScreenState extends State<SearchOLEditionsScreen> {
                   padding: const EdgeInsets.all(10),
                   child: Row(
                     children: [
-                      Switch(
+                      Switch.adaptive(
                         value: _onlyEditionsWithCovers,
                         onChanged: (value) {
                           setState(() {
