@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:easy_localization/easy_localization.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_speed_dial/flutter_speed_dial.dart';
 import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
@@ -117,32 +118,61 @@ class MultiSelectFAB extends StatelessWidget {
     showDialog(
       context: context,
       builder: (BuildContext dialogContext) {
-        return AlertDialog(
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(cornerRadius),
-          ),
+        return AlertDialog.adaptive(
+          shape: Platform.isAndroid
+              ? RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(cornerRadius),
+                )
+              : null,
           title: Text(
             LocaleKeys.delete_books_question.tr(),
             style: const TextStyle(fontSize: 18),
           ),
           actionsAlignment: MainAxisAlignment.spaceBetween,
           actions: [
-            FilledButton.tonal(
-              onPressed: () {
-                Navigator.of(context).pop();
-              },
-              child: Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 10),
-                child: Text(LocaleKeys.no.tr()),
-              ),
-            ),
-            FilledButton(
-              onPressed: () => _bulkDeleteBooks(context),
-              child: Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 10),
-                child: Text(LocaleKeys.yes.tr()),
-              ),
-            ),
+            Platform.isIOS
+                ? CupertinoDialogAction(
+                    child: Text(LocaleKeys.no.tr()),
+                    onPressed: () {
+                      Navigator.of(context).pop();
+                    },
+                  )
+                : FilledButton.tonal(
+                    style: ButtonStyle(
+                      shape: MaterialStateProperty.all(
+                        RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(cornerRadius),
+                        ),
+                      ),
+                    ),
+                    onPressed: () {
+                      Navigator.of(context).pop();
+                    },
+                    child: Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 10),
+                      child: Text(LocaleKeys.no.tr()),
+                    ),
+                  ),
+            Platform.isIOS
+                ? CupertinoDialogAction(
+                    isDefaultAction: true,
+                    child: Text(LocaleKeys.yes.tr()),
+                    onPressed: () => _bulkDeleteBooks(context),
+                  )
+                : FilledButton(
+                    style: ButtonStyle(
+                      shape: MaterialStateProperty.all(
+                        RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(cornerRadius),
+                        ),
+                      ),
+                    ),
+                    onPressed: () => _bulkDeleteBooks(context),
+                    child: Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 10),
+                      child: Text(LocaleKeys.yes.tr()),
+                    ),
+                  ),
           ],
         );
       },
