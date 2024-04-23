@@ -2,7 +2,6 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:openreads/core/constants/enums/enums.dart';
-import 'package:openreads/core/themes/app_theme.dart';
 import 'package:openreads/generated/locale_keys.g.dart';
 import 'package:openreads/logic/cubit/current_book_cubit.dart';
 import 'package:openreads/main.dart';
@@ -68,51 +67,12 @@ class BookScreen extends StatelessWidget {
   }
 
   Future<int?> _getQuickRating(BuildContext context) async {
-    late int? rating;
-
-    await showDialog(
+    return await showDialog<int?>(
       context: context,
       builder: (BuildContext context) {
-        return SimpleDialog(
-          contentPadding: const EdgeInsets.all(20),
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(cornerRadius),
-          ),
-          title: Text(
-            LocaleKeys.rate_book.tr(),
-            style: const TextStyle(fontSize: 18),
-          ),
-          children: [
-            QuickRating(
-              onRatingUpdate: (double newRating) {
-                rating = (newRating * 10).toInt();
-              },
-            ),
-            const SizedBox(height: 10),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                FilledButton.tonal(
-                  onPressed: () {
-                    rating = null;
-                    Navigator.of(context).pop();
-                  },
-                  child: Text(LocaleKeys.skip.tr()),
-                ),
-                FilledButton(
-                  onPressed: () {
-                    Navigator.of(context).pop();
-                  },
-                  child: Text(LocaleKeys.save.tr()),
-                )
-              ],
-            )
-          ],
-        );
+        return const QuickRatingDialog();
       },
     );
-
-    return rating;
   }
 
   void _changeStatusAction(
