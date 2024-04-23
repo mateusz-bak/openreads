@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:device_info_plus/device_info_plus.dart';
 import 'package:easy_localization/easy_localization.dart';
+import 'package:flutter/cupertino.dart';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -367,30 +368,46 @@ class _SettingsBackupScreenState extends State<SettingsBackupScreen> {
         showDialog(
           context: context,
           builder: (context) {
-            return Builder(builder: (context) {
-              return AlertDialog(
-                title: Text(
-                  LocaleKeys.are_you_sure.tr(),
-                ),
-                content: Text(
-                  LocaleKeys.restore_backup_alert_content.tr(),
-                ),
-                actionsAlignment: MainAxisAlignment.spaceBetween,
-                actions: [
-                  FilledButton.tonal(
-                    onPressed: () {
-                      _startRestoringLocalBackup(builderContext);
-                      Navigator.of(context).pop();
-                    },
-                    child: Text(LocaleKeys.yes.tr()),
+            return Builder(
+              builder: (context) {
+                return AlertDialog.adaptive(
+                  title: Text(
+                    LocaleKeys.are_you_sure.tr(),
                   ),
-                  FilledButton.tonal(
-                    onPressed: () => Navigator.of(context).pop(),
-                    child: Text(LocaleKeys.no.tr()),
+                  content: Text(
+                    LocaleKeys.restore_backup_alert_content.tr(),
                   ),
-                ],
-              );
-            });
+                  actionsAlignment: MainAxisAlignment.spaceBetween,
+                  actions: [
+                    Platform.isIOS
+                        ? CupertinoDialogAction(
+                            onPressed: () {
+                              _startRestoringLocalBackup(builderContext);
+                              Navigator.of(context).pop();
+                            },
+                            child: Text(LocaleKeys.yes.tr()),
+                          )
+                        : FilledButton.tonal(
+                            onPressed: () {
+                              _startRestoringLocalBackup(builderContext);
+                              Navigator.of(context).pop();
+                            },
+                            child: Text(LocaleKeys.yes.tr()),
+                          ),
+                    Platform.isIOS
+                        ? CupertinoDialogAction(
+                            isDefaultAction: true,
+                            onPressed: () => Navigator.of(context).pop(),
+                            child: Text(LocaleKeys.no.tr()),
+                          )
+                        : FilledButton(
+                            onPressed: () => Navigator.of(context).pop(),
+                            child: Text(LocaleKeys.no.tr()),
+                          ),
+                  ],
+                );
+              },
+            );
           },
         );
       },
