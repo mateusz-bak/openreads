@@ -1,3 +1,5 @@
+import 'dart:ui';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:openreads/logic/cubit/current_book_cubit.dart';
@@ -105,27 +107,64 @@ class _BooksGridState extends State<BooksGrid>
             itemBuilder: (context, index) {
               final heroTag =
                   'tag_${widget.listNumber}_${widget.books[index].id}';
-              Color color = multiSelectMode &&
+              Color borderColor = multiSelectMode &&
                       widget.selectedBookIds!.contains(widget.books[index].id)
-                  ? Theme.of(context).colorScheme.primaryContainer
+                  ? Theme.of(context).colorScheme.tertiary
                   : Colors.transparent;
+              final double borderWidth = multiSelectMode &&
+                      widget.selectedBookIds!.contains(widget.books[index].id)
+                  ? 3.0
+                  : 0.0;
 
               return Container(
                   decoration: multiSelectMode
                       ? BoxDecoration(
-                          border: Border.all(color: color, width: 4),
+                          border: Border.all(
+                            color: borderColor,
+                            width: borderWidth,
+                          ),
+                          borderRadius: BorderRadius.circular(3),
                         )
                       : null,
-                  child: BookGridCard(
-                    book: widget.books[index],
-                    heroTag: heroTag,
-                    addBottomPadding: (widget.books.length == index + 1),
-                    onPressed: () => _onPressed(
-                      index,
-                      multiSelectMode,
-                      heroTag,
-                    ),
-                    onLongPressed: () => onLongPressed(index),
+                  child: Stack(
+                    fit: StackFit.expand,
+                    children: [
+                      BookGridCard(
+                        book: widget.books[index],
+                        heroTag: heroTag,
+                        addBottomPadding: (widget.books.length == index + 1),
+                        onPressed: () => _onPressed(
+                          index,
+                          multiSelectMode,
+                          heroTag,
+                        ),
+                        onLongPressed: () => onLongPressed(index),
+                      ),
+                      multiSelectMode &&
+                              widget.selectedBookIds!
+                                  .contains(widget.books[index].id)
+                          ? InkWell(
+                              onTap: () => _onPressed(
+                                index,
+                                multiSelectMode,
+                                heroTag,
+                              ),
+                              onLongPress: () => onLongPressed(index),
+                              child: BackdropFilter(
+                                filter:
+                                    ImageFilter.blur(sigmaX: 0.5, sigmaY: 0.5),
+                                child: Container(
+                                  decoration: BoxDecoration(
+                                    color: Theme.of(context)
+                                        .colorScheme
+                                        .primary
+                                        .withOpacity(0.2),
+                                  ),
+                                ),
+                              ),
+                            )
+                          : const SizedBox(),
+                    ],
                   ));
             },
           ),
