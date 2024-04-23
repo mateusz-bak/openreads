@@ -1,4 +1,7 @@
+import 'dart:io';
+
 import 'package:easy_localization/easy_localization.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:loading_animation_widget/loading_animation_widget.dart';
@@ -77,10 +80,15 @@ class _StatisticsScreenState extends State<StatisticsScreen> {
                         );
                       } else {
                         return Center(
-                          child: LoadingAnimationWidget.fourRotatingDots(
-                            color: Theme.of(context).primaryColor,
-                            size: 42,
-                          ),
+                          child: Platform.isIOS
+                              ? CupertinoActivityIndicator(
+                                  radius: 20,
+                                  color: Theme.of(context).colorScheme.primary,
+                                )
+                              : LoadingAnimationWidget.fourRotatingDots(
+                                  color: Theme.of(context).primaryColor,
+                                  size: 42,
+                                ),
                         );
                       }
                     },
