@@ -6,3 +6,4 @@ export 'cover_background.dart';
 export 'quick_rating.dart';
 export 'book_screen_app_bar.dart';
 export 'book_detail_date_added_updated.dart';
+export 'quick_rating_dialog.dart';

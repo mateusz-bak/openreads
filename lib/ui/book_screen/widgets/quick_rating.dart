@@ -19,9 +19,9 @@ class _QuickRatingState extends State<QuickRating> {
   Widget build(BuildContext context) {
     return Container(
       width: double.infinity,
+      height: 50,
       clipBehavior: Clip.hardEdge,
       decoration: BoxDecoration(
-        color: Theme.of(context).colorScheme.surfaceVariant.withOpacity(0.5),
         borderRadius: BorderRadius.circular(cornerRadius),
         border: Border.all(color: dividerColor),
       ),
@@ -29,10 +29,10 @@ class _QuickRatingState extends State<QuickRating> {
         child: RatingBar.builder(
           initialRating: 0.0,
           allowHalfRating: true,
-          glow: false,
-          glowRadius: 1,
-          itemSize: 42,
-          itemPadding: const EdgeInsets.all(5),
+          glow: true,
+          glowRadius: 0.5,
+          itemSize: 40,
+          itemPadding: const EdgeInsets.all(0),
           wrapAlignment: WrapAlignment.center,
           itemBuilder: (_, __) => Icon(
             Icons.star_rounded,
