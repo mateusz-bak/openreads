@@ -1,4 +1,7 @@
+import 'dart:io';
+
 import 'package:easy_localization/easy_localization.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:openreads/core/themes/app_theme.dart';
 import 'package:openreads/generated/locale_keys.g.dart';
@@ -163,7 +166,7 @@ class _ChallengeDialogState extends State<ChallengeDialog>
                 fontWeight: FontWeight.bold,
               ),
             ),
-            Slider(
+            Slider.adaptive(
               value: _booksSliderValue,
               min: minBooks,
               max: maxBooks,
@@ -183,65 +186,66 @@ class _ChallengeDialogState extends State<ChallengeDialog>
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Container(
-                    width: 100,
+                    width: 150,
                     padding: const EdgeInsets.symmetric(
                       horizontal: 8,
                       vertical: 0,
                     ),
-                    decoration: BoxDecoration(
-                      color: Theme.of(context).colorScheme.surface,
-                      borderRadius: BorderRadius.circular(cornerRadius),
-                      border: Border.all(color: dividerColor),
-                    ),
-                    child: TextField(
-                      textAlign: TextAlign.center,
-                      keyboardType: TextInputType.number,
-                      controller: _booksController,
-                      style: const TextStyle(fontSize: 14),
-                      decoration: const InputDecoration(
-                        border: InputBorder.none,
-                      ),
-                    ),
+                    child: Platform.isIOS
+                        ? CupertinoTextField(
+                            textAlign: TextAlign.center,
+                            keyboardType: TextInputType.number,
+                            controller: _booksController,
+                          )
+                        : Container(
+                            decoration: BoxDecoration(
+                              color: Theme.of(context).colorScheme.surface,
+                              borderRadius: BorderRadius.circular(cornerRadius),
+                              border: Border.all(color: dividerColor),
+                            ),
+                            child: TextField(
+                              textAlign: TextAlign.center,
+                              keyboardType: TextInputType.number,
+                              controller: _booksController,
+                              style: const TextStyle(fontSize: 14),
+                              decoration: const InputDecoration(
+                                border: InputBorder.none,
+                              ),
+                            ),
+                          ),
                   ),
                 ],
               ),
             ),
             const SizedBox(height: 30),
-            Container(
-              decoration: BoxDecoration(
-                color: Theme.of(context).colorScheme.surface,
-                borderRadius: BorderRadius.circular(cornerRadius),
-                border: Border.all(color: dividerColor),
-              ),
-              child: Row(
-                children: [
-                  Switch(
-                    value: _showPagesChallenge,
-                    activeColor: Theme.of(context).colorScheme.primary,
-                    onChanged: (value) {
-                      setState(() {
-                        _showPagesChallenge = value;
-                      });
+            Row(
+              children: [
+                Switch.adaptive(
+                  value: _showPagesChallenge,
+                  activeColor: Theme.of(context).colorScheme.primary,
+                  onChanged: (value) {
+                    setState(() {
+                      _showPagesChallenge = value;
+                    });
 
-                      if (value) {
-                        _animController.forward();
-                      } else {
-                        _animController.animateBack(0,
-                            duration: const Duration(
-                              milliseconds: 250,
-                            ));
-                      }
-                    },
+                    if (value) {
+                      _animController.forward();
+                    } else {
+                      _animController.animateBack(0,
+                          duration: const Duration(
+                            milliseconds: 250,
+                          ));
+                    }
+                  },
+                ),
+                const SizedBox(width: 10),
+                Text(
+                  LocaleKeys.add_pages_goal.tr(),
+                  style: const TextStyle(
+                    fontSize: 16,
                   ),
-                  const SizedBox(width: 10),
-                  Text(
-                    LocaleKeys.add_pages_goal.tr(),
-                    style: const TextStyle(
-                      fontSize: 16,
-                    ),
-                  ),
-                ],
-              ),
+                ),
+              ],
             ),
             const SizedBox(height: 30),
             SizeTransition(
@@ -256,7 +260,7 @@ class _ChallengeDialogState extends State<ChallengeDialog>
                       fontWeight: FontWeight.bold,
                     ),
                   ),
-                  Slider(
+                  Slider.adaptive(
                     value: _pagesSliderValue,
                     min: minPages,
                     max: maxPages,
@@ -277,27 +281,37 @@ class _ChallengeDialogState extends State<ChallengeDialog>
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         Container(
-                          width: 100,
+                          width: 150,
                           padding: const EdgeInsets.symmetric(
                             horizontal: 8,
                             vertical: 0,
                           ),
-                          decoration: BoxDecoration(
-                            color: Theme.of(context).colorScheme.surface,
-                            borderRadius: BorderRadius.circular(cornerRadius),
-                            border: Border.all(color: dividerColor),
-                          ),
-                          child: TextField(
-                            textAlign: TextAlign.center,
-                            keyboardType: TextInputType.number,
-                            controller: _pagesController,
-                            style: const TextStyle(
-                              fontSize: 14,
-                            ),
-                            decoration: const InputDecoration(
-                              border: InputBorder.none,
-                            ),
-                          ),
+                          child: Platform.isIOS
+                              ? CupertinoTextField(
+                                  textAlign: TextAlign.center,
+                                  keyboardType: TextInputType.number,
+                                  controller: _pagesController,
+                                )
+                              : Container(
+                                  decoration: BoxDecoration(
+                                    color:
+                                        Theme.of(context).colorScheme.surface,
+                                    borderRadius:
+                                        BorderRadius.circular(cornerRadius),
+                                    border: Border.all(color: dividerColor),
+                                  ),
+                                  child: TextField(
+                                    textAlign: TextAlign.center,
+                                    keyboardType: TextInputType.number,
+                                    controller: _pagesController,
+                                    style: const TextStyle(
+                                      fontSize: 14,
+                                    ),
+                                    decoration: const InputDecoration(
+                                      border: InputBorder.none,
+                                    ),
+                                  ),
+                                ),
                         ),
                       ],
                     ),
@@ -306,27 +320,40 @@ class _ChallengeDialogState extends State<ChallengeDialog>
               ),
             ),
             const SizedBox(height: 10),
-            ElevatedButton(
-              onPressed: () {
-                widget.setChallenge(_booksTarget ?? 0,
-                    _showPagesChallenge ? _pagesTarget ?? 0 : 0, widget.year);
+            Platform.isIOS
+                ? CupertinoButton(
+                    child: const Text("Save"),
+                    onPressed: () {
+                      widget.setChallenge(
+                          _booksTarget ?? 0,
+                          _showPagesChallenge ? _pagesTarget ?? 0 : 0,
+                          widget.year);
 
-                if (mounted) {
-                  Navigator.of(context).pop();
-                }
-              },
-              style: ElevatedButton.styleFrom(
-                elevation: 0,
-                backgroundColor: Theme.of(context).colorScheme.primary,
-                foregroundColor: Theme.of(context).colorScheme.onPrimary,
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(cornerRadius),
-                ),
-              ),
-              child: const Center(
-                child: Text("Save"),
-              ),
-            )
+                      if (mounted) {
+                        Navigator.of(context).pop();
+                      }
+                    },
+                  )
+                : FilledButton(
+                    onPressed: () {
+                      widget.setChallenge(
+                          _booksTarget ?? 0,
+                          _showPagesChallenge ? _pagesTarget ?? 0 : 0,
+                          widget.year);
+
+                      if (mounted) {
+                        Navigator.of(context).pop();
+                      }
+                    },
+                    style: ElevatedButton.styleFrom(
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(cornerRadius),
+                      ),
+                    ),
+                    child: const Center(
+                      child: Text("Save"),
+                    ),
+                  )
           ],
         ),
       ),
