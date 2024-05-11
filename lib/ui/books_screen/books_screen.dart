@@ -750,7 +750,9 @@ class _BooksScreenState extends State<BooksScreen>
   }
 
   BookStatus _getStatusForNewBook() {
-    if (_tabController.index == 1) {
+    final inProgressIndex = readTabFirst ? 1 : 0;
+
+    if (_tabController.index == inProgressIndex) {
       return BookStatus.inProgress;
     } else if (_tabController.index == 2) {
       return BookStatus.forLater;
