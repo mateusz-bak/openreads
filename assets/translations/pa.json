@@ -83,7 +83,8 @@
     "choose_not_finished_shelf": "ਨਾ-ਮੁਕੰਮਲ ਕਿਤਾਬਾਂ ਵਾਲੀ ਇਕ ਸ਼ੈਲਫ਼ ਚੁਣੋ:",
     "hour": {
         "one": "{} ਘੰਟਾ",
-        "other": "{} ਘੰਟੇ"
+        "other": "{} ਘੰਟੇ",
+        "set_custom_time_title": "ਘੰਟੇ"
     },
     "select_all": "ਸਾਰੇ ਚੁਣੋ",
     "load_cover_from_phone": "ਕਵਰ ਆਪਣੀ ਡਿਵਾਈਸ ਤੋਂ ਲੋਡ ਕਰੋ",
@@ -242,11 +243,13 @@
     "ok": "ਠੀਕ",
     "day": {
         "one": "{} ਦਿਨ",
-        "other": "{} ਦਿਨ"
+        "other": "{} ਦਿਨ",
+        "set_custom_time_title": "ਦਿਨ"
     },
     "minute": {
         "one": "{} ਮਿੰਟ",
-        "other": "{} ਮਿੰਟ"
+        "other": "{} ਮਿੰਟ",
+        "set_custom_time_title": "ਮਿੰਟ"
     },
     "set_custom_reading_time": "ਪੜ੍ਹਨ ਦਾ ਸਮਾਂ ਖ਼ੁਦ ਸੈੱਟ ਕਰੋ",
     "general_search": "ਆਮ",
@@ -282,5 +285,9 @@
     "cover_still_downloaded": "ਕਵਰ ਹਾਲੇ ਵੀ ਡਾਊਨਲੋਡ ਹੋ ਰਿਹਾ ਹੈ",
     "wait_for_downloading_to_finish": "ਡਾਊਨਲੋਡ ਮੁਕੰਮਲ ਹੋਣ ਦੀ ਉਡੀਕ ਕਰੋ",
     "save_without_cover": "ਕਵਰ ਤੋਂ ਬਿਨਾ ਹੀ ਸਾਂਭੋ",
-    "restored": "ਰੀਸਟੋਰ ਹੋਈਆਂ"
+    "restored": "ਰੀਸਟੋਰ ਹੋਈਆਂ",
+    "duck_duck_go_warning": "ਕਵਰ ਲਈ ਆਨਲਾਈਨ ਖੋਜ ਕਰਨਾ ਡਕਡਕਗੋ (DuckDuckGo) ਜ਼ਰੀਏ ਮੁਹੱਈਆ ਕਰਵਾਇਆ ਗਿਆ ਹੈ, ਜੋ ਕਿ ਇਕ ਮਲਕੀਅਤੀ ਸੇਵਾ ਹੈ। ਮਿਹਰਬਾਨੀ ਕਰਕੇ ਲਾਗੂ ਹੋ ਰਹੀ ਪਰਦੇਦਾਰੀ ਨੀਤੀ ਬਾਰੇ ਚੌਕਸ ਰਹਿਣਾ",
+    "warning_yes": "ਮੈਂ ਸਹਿਮਤ ਹਾਂ",
+    "warning_no": "ਮੈਨੂੰ ਵਾਪਸ ਲੈ ਜਾਓ",
+    "warning_yes_and_dont_show": "ਮੈਂ ਸਹਿਮਤ ਹਾਂ ਅਤੇ ਇਹ ਦੁਬਾਰਾ ਨਾ ਪੁੱਛਣਾ"
 }
