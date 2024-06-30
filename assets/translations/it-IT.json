@@ -223,12 +223,14 @@
     "csv": "CSV",
     "minute": {
         "other": "{} minuti",
-        "one": "{} minuto"
+        "one": "{} minuto",
+        "set_custom_time_title": "Minuti"
     },
     "export_successful": "Esportazione completata",
     "hour": {
         "other": "{} ore",
-        "one": "{} ora"
+        "one": "{} ora",
+        "set_custom_time_title": "Ora"
     },
     "import_goodreads_csv": "Importa Goodreads CSV",
     "export_csv_description_1": "Le copertine non vengono esportate",
@@ -236,7 +238,8 @@
     "select_all": "Seleziona tutti",
     "day": {
         "one": "{} giorno",
-        "other": "{} giorni"
+        "other": "{} giorni",
+        "set_custom_time_title": "Giorni"
     },
     "import_successful": "Importazione completata",
     "openreads_backup": "Backup Openreads",
@@ -281,5 +284,10 @@
     "default_books_format": "Formato libri predefinito",
     "save_without_cover": "Salva senza la copertina",
     "cover_still_downloaded": "La copertina è ancora in fase di download",
-    "wait_for_downloading_to_finish": "Attendi il completamento del download"
+    "wait_for_downloading_to_finish": "Attendi il completamento del download",
+    "duck_duck_go_warning": "La ricerca di copertine online è facilitata attraverso DuckDuckGo, un servizio non pubblico. Si prega di essere cauti per quanto riguarda le implicazioni sulla privacy",
+    "warning_yes": "Sono ok con questo",
+    "warning_no": "Ritornare indietro",
+    "add_additional_reading_time": "Aggiungi passate letture",
+    "warning_yes_and_dont_show": "Sono ok con questo non mostrarlo di nuovo"
 }

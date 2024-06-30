@@ -242,15 +242,18 @@
     "ok": "OK",
     "day": {
         "one": "{} 일",
-        "other": "{} 일"
+        "other": "{} 일",
+        "set_custom_time_title": "일"
     },
     "hour": {
         "one": "{} 시간",
-        "other": "{} 시간"
+        "other": "{} 시간",
+        "set_custom_time_title": "시간"
     },
     "minute": {
         "one": "{} 분",
-        "other": "{} 분"
+        "other": "{} 분",
+        "set_custom_time_title": "분"
     },
     "set_custom_reading_time": "독서 시간 임의로 설정하기",
     "select_all": "모두 선택",
@@ -282,5 +285,9 @@
     "welcome_1_description_1": "Openreads는 당신의 독서 습관을 위한 도우미입니다.",
     "selected": "선택됨",
     "add_additional_reading_time": "읽기 기록",
-    "start_adding_books": "앱으로 이동"
+    "start_adding_books": "앱으로 이동",
+    "warning_yes": "동의하고 계속하기",
+    "warning_no": "돌아가기",
+    "warning_yes_and_dont_show": "동의하고 이 메시지 다시 보지 않기",
+    "duck_duck_go_warning": "온라인에서 표지를 검색하는 것은 독점 서비스인 DuckDuckGo를 통해 가능합니다. 개인정보 보호에 유의하세요."
 }
