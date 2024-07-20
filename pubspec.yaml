@@ -50,7 +50,7 @@ dependencies:
   animated_widgets: ^1.1.0
   shared_storage: ^0.8.0
   shared_preferences: ^2.2.1
-  easy_localization: ^3.0.2
+  easy_localization: ^3.0.7
   flutter_typeahead: ^5.0.1
   flex_color_picker: ^3.2.2
   diacritic: ^0.1.4
@@ -59,7 +59,7 @@ dependencies:
   csv: ^6.0.0
   file_picker: 5.3.2
   smooth_page_indicator: ^1.1.0
-  intl: ^0.18.1
+  intl: ^0.19.0
   dotted_border: ^2.1.0
   flutter_cache_manager: ^3.3.1
   modal_bottom_sheet: ^3.0.0
