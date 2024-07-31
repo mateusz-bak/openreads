@@ -220,7 +220,7 @@
     "delete_books": "Verwijder boeken",
     "book_format_paperback_plural": "paperbacks",
     "book_format_hardcover_plural": "ingebonden boeken",
-    "book_format_ebook_plural": "e-boek",
+    "book_format_ebook_plural": "e-boeken",
     "book_format_all": "Alle boekformaten",
     "filter_by_book_format": "Filteren naar boekformaat",
     "day": {
