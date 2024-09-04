@@ -225,11 +225,13 @@
     "export_csv": "Exportovat knížky jako soubor CSV",
     "hour": {
         "one": "{} hodina",
-        "other": "{} hodin"
+        "other": "{} hodin",
+        "set_custom_time_title": "Hodiny"
     },
     "minute": {
         "other": "{} minut",
-        "one": "{} minuta"
+        "one": "{} minuta",
+        "set_custom_time_title": "Minuty"
     },
     "book_format_hardcover_plural": "Knížky s tuhou vazbou",
     "change_book_format": "Změnit formát knihy",
@@ -239,7 +241,8 @@
     "set_custom_reading_time": "Nastavit vlastní čas čtení",
     "day": {
         "one": "{} den",
-        "other": "{} dní"
+        "other": "{} dní",
+        "set_custom_time_title": "Dny"
     },
     "book_format_all": "Všechny formáty",
     "book_format_paperback": "Měkká vazba",
@@ -282,5 +285,9 @@
     "search_online_for_cover": "Najít obálku online",
     "book_cover": "Text přidaný při hledání obálek online. Vypadá takto: \"{název knížky){autor knížky}{překlad obálky}\"",
     "duplicate_book": "Duplikátní knížka",
-    "copy_book": "kopie"
+    "copy_book": "kopie",
+    "duck_duck_go_warning": "Vyhledávání obálek online probíhá přes nesvobodnou službu DuckDuckGo. Dbejte proto prosím na dopady na ochranu osobních údajů",
+    "warning_yes": "Jsem s tím v pořádku",
+    "warning_no": "Nesouhlasím",
+    "warning_yes_and_dont_show": "Jsem s tím v pořádku, tuto zprávu mi už neukazujte"
 }

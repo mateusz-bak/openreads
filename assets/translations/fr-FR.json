@@ -112,7 +112,7 @@
     "select_accent_color": "Sélectionnez la couleur d'accentuation",
     "rating_type": "Façon d'affichage de note",
     "seletct_rating_type": "Sélectionnez la façon d'affichage de note",
-    "rating_as_bar": "Comme barre d'étoiles",
+    "rating_as_bar": "Notation en étoiles",
     "rating_as_number": "Comme nombre",
     "theme_mode": "Thème de l'application",
     "select_theme_mode": "Sélectionnez le thème",
@@ -138,7 +138,7 @@
     "send_feedback": "Laissez vos remarques",
     "report_bugs_or_ideas": "Rapporter un bug ou une nouvelle idée",
     "send_dev_email": "Envoyer un email au développeur",
-    "raise_github_issue": "Créer une issue sur GitHub",
+    "raise_github_issue": "Créer un ticket sur GitHub",
     "deleted_books": "Livres supprimés",
     "unfinished_books": "Livres inachevés",
     "finished_books": "Livres finis",
@@ -157,13 +157,13 @@
     "about": "À propos",
     "version": "Version",
     "source_code": "Code source",
-    "source_code_description": "Voir sur Github",
+    "source_code_description": "Voir sur GitHub",
     "changelog": "Journal des modifications",
     "changelog_description": "Découvrez ce qui est nouveau sur Openreads",
     "licence": "Licence",
     "support_the_project": "Soutenir le développement",
     "support_the_project_description": "Dites merci en achetant un café au développeur",
-    "support_option_1": "Devenir un Sponsor Github",
+    "support_option_1": "Devenir un Sponsor GitHub",
     "support_option_2": "Acheter un café sur buymeacoffee.com",
     "need_storage_permission": "Vous devez accorder la permission de stockage",
     "open_settings": "Ouvrir les paramètres",
@@ -231,7 +231,8 @@
     "change_book_format": "Changer le format de livre",
     "hour": {
         "one": "{} heure",
-        "other": "{} heures"
+        "other": "{} heures",
+        "set_custom_time_title": "Heures"
     },
     "get_cover_from_open_library": "Charger une couverture depuis Open Library depuis l'ISBN",
     "isbn_cannot_be_empty": "L'ISBN ne peut être vide",
@@ -239,11 +240,13 @@
     "book_format_all": "Tous les formats de livre",
     "day": {
         "other": "{} jours",
-        "one": "{} jour"
+        "one": "{} jour",
+        "set_custom_time_title": "Jours"
     },
     "minute": {
         "one": "{} minute",
-        "other": "{} minutes"
+        "other": "{} minutes",
+        "set_custom_time_title": "Minutes"
     },
     "import_bookwyrm_csv": "Importer un CSV BookWyrm",
     "ok": "Ok",
@@ -282,5 +285,9 @@
     "search_online_for_cover": "Chercher en ligne la couverture",
     "book_cover": "Couverture du livre",
     "modified_on": "Modifié le",
-    "wait_for_downloading_to_finish": "Attendez que le téléchargement se finisse"
+    "wait_for_downloading_to_finish": "Attendez que le téléchargement se finisse",
+    "duck_duck_go_warning": "La recherche de couverture en ligne utilise DuckDuckGo, qui est un service propriétaire. Soyez prudent avec les données partagées",
+    "warning_yes": "Ça me va",
+    "warning_no": "Retour",
+    "warning_yes_and_dont_show": "Ça me va, ne plus me le rappeler"
 }

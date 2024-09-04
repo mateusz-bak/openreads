@@ -148,5 +148,9 @@
     "set_books_goal_for_year": "Establiu un objectiu de llibres pel",
     "flash_on": "Encén el flaix",
     "flash_off": "Apaga el flaix",
-    "finished_books_by_month": "Llibres acabats per mes"
+    "finished_books_by_month": "Llibres acabats per mes",
+    "book_format_ebook": "Llibre electrònic",
+    "book_format_paperback": "Tapa tova",
+    "book_format_hardcover": "Tapa dura",
+    "warning_yes": "Hi estic d’acord"
 }

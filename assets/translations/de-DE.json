@@ -225,11 +225,13 @@
     "export_csv": "Bücher als CSV-Datei exportieren",
     "hour": {
         "one": "{} Stunde",
-        "other": "{} Stunden"
+        "other": "{} Stunden",
+        "set_custom_time_title": "Stunden"
     },
     "minute": {
         "other": "{} Minuten",
-        "one": "{} Minute"
+        "one": "{} Minute",
+        "set_custom_time_title": "Minuten"
     },
     "only_editions_with_covers": "Zeige nur Editionen mit Titelbildern",
     "change_book_format": "Buchformat ändern",
@@ -238,7 +240,8 @@
     "select_all": "Alle auswählen",
     "day": {
         "one": "{} Tag",
-        "other": "{} Tage"
+        "other": "{} Tage",
+        "set_custom_time_title": "Tage"
     },
     "change_books_author": "Autor ändern",
     "book_format_all": "Alle Buchformate",
@@ -282,5 +285,9 @@
     "duplicate_book": "Buch duplizieren",
     "copy_book": "Kopie",
     "search_online_for_cover": "Suche Online nach dem Cover",
-    "book_cover": "Buchcover"
+    "book_cover": "Buchcover",
+    "warning_yes": "Ich bin einverstanden",
+    "duck_duck_go_warning": "Die Online-Suche nach Titeln wird durch DuckDuckGo, einen proprietären Dienst, bereitgestellt. Bitte sei vorsichtig in Bezug auf die Auswirkungen auf die Privatsphäre",
+    "warning_no": "Ich will zurück",
+    "warning_yes_and_dont_show": "Ich habe kein Problem damit und zeige das nicht noch einmal"
 }

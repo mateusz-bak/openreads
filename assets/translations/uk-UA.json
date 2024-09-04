@@ -226,9 +226,44 @@
     "use_material_you": "Використовувати Material You",
     "day": {
         "one": "{} день",
-        "other": "{} дні(в)"
+        "other": "{} дні(в)",
+        "set_custom_time_title": "Дні"
     },
     "set_custom_reading_time": "Записати час читання",
     "update_successful_message": "Інформацію оновлено!",
-    "change_books_author": "Змінити автора книги"
+    "change_books_author": "Змінити автора книги",
+    "import_bookwyrm_csv": "Імпорт CSV з BookWyrm",
+    "load_cover_from_phone": "Завантажити обкладинку з пристрою",
+    "import_csv": "Імпорт CSV з Openreads",
+    "minute": {
+        "set_custom_time_title": "Хвилин",
+        "other": "{} хвилини",
+        "one": "{} хвилина"
+    },
+    "click_to_add_book_manually": "Натисніть сюди щоб додати книгу вручну",
+    "get_cover_from_open_library": "Отрмиати обкладинку з Open Library через ISBN книги",
+    "download_missing_covers_explanation": "Завантажити відсутні обкладинки для книг, які мають ISBN",
+    "try_downloading_covers": "Спробувати завантажити відсутні обкладинки для імпортованих книг?",
+    "hour": {
+        "one": "{} година",
+        "set_custom_time_title": "Години",
+        "other": "{} години"
+    },
+    "export_successful": "Експорт успішно здійснено",
+    "openreads_backup": "Резервна копія Openreads",
+    "csv": "CSV",
+    "export_csv": "Експорт книг в CSV файл",
+    "books_settings": "Книги",
+    "download_missing_covers": "Завантажити відсутні обкладинки",
+    "cover_not_found_in_ol": "Обкладинку не знайдено в Open Library",
+    "export_csv_description_1": "Обкладинки не експортовано",
+    "import_goodreads_csv": "Імпорт CSV з Goodreads",
+    "select_all": "Обрати всі",
+    "no_search_results": "Нічого не знайдено",
+    "edit_current_cover": "Редагувати поточну обкладинку",
+    "isbn_cannot_be_empty": "ISBN не може бути пустим",
+    "downloaded_covers": "Завантажені обкладинки:",
+    "filter_out_selected_tags": "Відфільтрувати вибрані теги",
+    "ok": "ОК",
+    "bulk_update_unsuccessful_message": "Не можу оновити інформацію о книгах"
 }
