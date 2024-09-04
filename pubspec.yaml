@@ -49,7 +49,7 @@ dependencies:
   animated_widgets: ^1.1.0
   shared_storage: ^0.8.0
   shared_preferences: ^2.2.1
-  easy_localization: ^3.0.2
+  easy_localization: ^3.0.7
   flutter_typeahead: ^5.0.1
   flex_color_picker: ^3.2.2
   diacritic: ^0.1.4
