@@ -1,5 +1,5 @@
 name: openreads
-description: A new Flutter project.
+description: A mobile books tracker written in Flutter. Free, private and open source.
 
 publish_to: "none"
 
@@ -15,21 +15,20 @@ dependencies:
   flutter_rating_bar: ^4.0.1
   sqflite: ^2.1.0
   path_provider: ^2.0.11
-  rxdart: ^0.27.7
+  rxdart: ^0.28.0
   path: ^1.9.0
   flutter_displaymode: ^0.6.0
   image_picker: ^1.0.0
-  image_cropper: ^7.0.5
+  image_cropper: ^8.0.2
   flutter_bloc: ^8.1.1
-  # colours: ^0.0.2
   blurhash: ^1.1.1
   image: ^4.0.15
-  fl_chart: ^0.68.0
+  fl_chart: ^0.69.0
   dropdown_button2: ^2.0.0
   equatable: ^2.0.5
   connectivity_plus: ^6.0.1
   http: ^1.2.0
-  cached_network_image: ^3.3.0
+  cached_network_image: ^3.4.1
   loading_animation_widget: ^1.2.0+3
   infinite_scroll_pagination: ^4.0.0
   flutter_staggered_grid_view: ^0.7.0
@@ -42,7 +41,7 @@ dependencies:
   permission_handler: ^11.0.0
   filesystem_picker: ^4.0.0
   archive: ^3.3.5
-  share_plus: ^9.0.0
+  share_plus: ^10.0.2
   device_info_plus: ^10.0.1
   dynamic_color: ^1.6.2
   image_fade: ^0.6.2
