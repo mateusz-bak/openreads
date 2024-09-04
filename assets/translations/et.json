@@ -1,1 +1,15 @@
-{}
+{
+    "books_in_progress": "Lugemisel",
+    "books_for_later": "Jääb tulevikuks",
+    "book_status_unfinished": "Lugematta",
+    "book_format_hardcover": "Kõvakaaneline",
+    "book_status_in_progress": "Lugemisel",
+    "books_unfinished": "Lugematta",
+    "book_format_paperback": "Pehmekaaneline",
+    "book_format_audiobook": "Heliraamat",
+    "book_status_finished": "Loetud",
+    "book_status_for_later": "Jääb tulevikuks",
+    "book_format_ebook": "E-raamat",
+    "book_format_paper_plural": "Paberraamatud",
+    "books_finished": "Loetud"
+}

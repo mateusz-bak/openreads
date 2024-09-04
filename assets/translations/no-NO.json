@@ -239,11 +239,13 @@
     "book_format_all": "Alle bokformat",
     "day": {
         "one": "{} dag",
-        "other": "{} dager"
+        "other": "{} dager",
+        "set_custom_time_title": "Dager"
     },
     "hour": {
         "other": "{} timer",
-        "one": "{} time"
+        "one": "{} time",
+        "set_custom_time_title": "Timer"
     },
     "load_cover_from_phone": "Legg til omslag fra filene dine",
     "downloaded_covers": "Nedlastede omslag:",
@@ -261,7 +263,8 @@
     "ok": "OK",
     "minute": {
         "one": "{} minutt",
-        "other": "{} minutter"
+        "other": "{} minutter",
+        "set_custom_time_title": "Minutter"
     },
     "delete_books": "Fjern bøker",
     "delete_books_question": "Fjern valgte bøker?",
@@ -275,5 +278,16 @@
     "select_all": "Velg alle",
     "general_search": "Generelt",
     "books_settings": "Bøker",
-    "download_missing_covers": "Last ned manglende omslag"
+    "download_missing_covers": "Last ned manglende omslag",
+    "duck_duck_go_warning": "Søk etter omslag på internett går gjennom DuckDuckGo, en proprietær nettside. Vær var personvernsrisikoer.",
+    "warning_yes": "Det er akseptabelt",
+    "duplicate_book": "Kopier bok",
+    "copy_book": "kopi",
+    "cover_still_downloaded": "Omslag lastes fortsatt ned",
+    "wait_for_downloading_to_finish": "Vent til nedlastningen er ferdig",
+    "save_without_cover": "Lagre uten omslag",
+    "search_online_for_cover": "Søk etter omslag på internett",
+    "book_cover": "omslag",
+    "warning_no": "Gå tilbake",
+    "warning_yes_and_dont_show": "Det er akseptabelt, ikke vis dette varselet igjen"
 }

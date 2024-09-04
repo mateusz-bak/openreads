@@ -73,14 +73,14 @@
     "all_years": "Все",
     "all_books_by_status": "Все книги по статусу",
     "finished_books_by_month": "Завершенные книги по месяцам",
-    "finished_pages_by_month": "Завершенные книги по месяцам",
+    "finished_pages_by_month": "Прочитанные страницы по месяцам",
     "average_rating": "Средняя оценка",
     "average_pages": "Среднее количество страниц",
     "average_reading_time": "Среднее время чтения",
     "longest_book": "Самая длинная книга",
     "shortest_book": "Кратчайшая книга",
-    "fastest_book": "Самая быстрая книга",
-    "slowest_book": "Самая быстрая книга",
+    "fastest_book": "Самая быстропрочитинная книга",
+    "slowest_book": "Самая медленнопрочитанная книга",
     "january_short": "Янв",
     "february_short": "Фев",
     "march_short": "Мар",
@@ -112,7 +112,7 @@
     "changelog": "Журнал изменений",
     "licence": "Лицензия",
     "open_settings": "Открыть настройки",
-    "choose_backup_folder": "Выберите файл резервной копии",
+    "choose_backup_folder": "Выберите папку для резервной копии",
     "save_file_to_this_folder": "Сохранить в этой папке",
     "restored": "восстановлено",
     "backup_not_valid": "Это некорректная резервная копия Openreads",
@@ -151,7 +151,7 @@
     "books_challenge": "Цель по прочитанным книгам",
     "use_material_you": "Использовать Material You",
     "custom_color": "Свой",
-    "rating_as_bar": "Рейтинг в звёздах",
+    "rating_as_bar": "Рейтинг по звёздам",
     "select_start_date": "Выберите дату начала чтения",
     "select_finish_date": "Выберите дату конца чтения",
     "theme_mode": "Тема приложения",
@@ -202,7 +202,7 @@
     "backup_successfull": "Резервирование выполнено успешно",
     "add_books_and_come_back": "Добавьте несколько книг и возвращайтесь позднее",
     "welcome_1_description_1": "Openreads поможет вам отслеживать ваши книги",
-    "welcome_2_description_2": "Бросьте себе вызов  в чтении",
+    "welcome_2_description_2": "Бросьте себе вызов в чтении.",
     "version": "Версия",
     "changelog_description": "Узнать что нового в Openreads",
     "support_option_1": "Стать спонсором на GitHub",
@@ -239,11 +239,13 @@
     "ok": "ОК",
     "day": {
         "one": "{} день",
-        "other": "{} дней"
+        "other": "{} дней",
+        "set_custom_time_title": "Дни"
     },
     "minute": {
         "other": "{} минут",
-        "one": "{} минута"
+        "one": "{} минута",
+        "set_custom_time_title": "Минуты"
     },
     "load_cover_from_phone": "Загрузить обложку с вашего устройства",
     "get_cover_from_open_library": "Получить обложку с Open Library по ISBN книги",
@@ -261,7 +263,8 @@
     "choose_not_finished_shelf": "Выберите полку с недочитанными книгами:",
     "hour": {
         "one": "{} час",
-        "other": "{} часов"
+        "other": "{} часов",
+        "set_custom_time_title": "Часы"
     },
     "general_search": "Основной",
     "cover_not_found_in_ol": "Обложка не найдена в Open Library",
@@ -274,5 +277,17 @@
     "downloaded_covers": "Загруженные обложки:",
     "isbn_cannot_be_empty": "ISBN не может быть пустым",
     "download_missing_covers": "Загрузить недостающие обложки",
-    "edit_current_cover": "Редактировать текущую обложку"
+    "edit_current_cover": "Редактировать текущую обложку",
+    "duplicate_book": "Клонировать книгу",
+    "search_online_for_cover": "Найти обложку в интернете",
+    "book_cover": "обложка книги",
+    "wait_for_downloading_to_finish": "Дождаться завершения скачивания",
+    "save_without_cover": "Сохранить без обложки",
+    "duck_duck_go_warning": "Поиск обложек происходит через проприетарный поисковик DuckDuckGo. Учитывайте возможные проблемы с конфиденциальностью",
+    "warning_yes": "Я согласен",
+    "warning_no": "Не надо",
+    "warning_yes_and_dont_show": "Я согласен и не надо больше спрашивать",
+    "owned_book_tag": "владею",
+    "copy_book": "копия",
+    "cover_still_downloaded": "Обложка все ещё загружается"
 }

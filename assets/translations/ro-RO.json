@@ -224,7 +224,8 @@
     "ok": "OK",
     "day": {
         "one": "{} zi",
-        "other": "{} zile"
+        "other": "{} zile",
+        "set_custom_time_title": "Zile"
     },
     "edit_current_cover": "Editează coperta curentă",
     "filter_out_selected_tags": "Nu afișa tag-urile selectate",
@@ -237,7 +238,8 @@
     "import_bookwyrm_csv": "Importă dintr-un fișier CSV BookWyrm",
     "minute": {
         "one": "{} munit",
-        "other": "{} minute"
+        "other": "{} minute",
+        "set_custom_time_title": "Minute"
     },
     "cover_not_found_in_ol": "Coperta nu a fost găsită în Open Library",
     "isbn_cannot_be_empty": "ISBN-ul nu poate fi gol",
@@ -255,7 +257,8 @@
     "only_editions_with_covers": "Arată numai ediții cu coperte",
     "hour": {
         "other": "{} ore",
-        "one": "{} oră"
+        "one": "{} oră",
+        "set_custom_time_title": "Ore"
     },
     "general_search": "General",
     "books_settings": "Cărți",
@@ -274,5 +277,17 @@
     "import_goodreads_csv": "Importă dintr-un fișier CSV Goodreads",
     "export_csv": "Exportă cărtile în format CSV",
     "export_csv_description_1": "Copertele nu sunt exportate",
-    "notes": "Notițe"
+    "notes": "Notițe",
+    "warning_yes": "Sunt de acord cu asta",
+    "warning_no": "Du-mă înapoi",
+    "search_online_for_cover": "Caută online coperta",
+    "duplicate_book": "Fă duplicat",
+    "copy_book": "copiază",
+    "wait_for_downloading_to_finish": "Așteaptă să se termine descărcarea",
+    "warning_yes_and_dont_show": "Sunt de acord cu asta și nu o mai arăta",
+    "book_cover": "copertă carte",
+    "save_without_cover": "Salvează fără copertă",
+    "cover_still_downloaded": "Coperta este încă în curs de descărcare",
+    "duck_duck_go_warning": "Căutarea copertelor online este facilitată prin DuckDuckGo, un serviciu proprietar. Vă rugăm să fiți atenți cu privire la implicațiile privind confidențialitatea",
+    "add_additional_reading_time": "Capturați citirea"
 }

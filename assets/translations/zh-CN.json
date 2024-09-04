@@ -252,15 +252,18 @@
     "book_format_paperback": "简装书",
     "day": {
         "one": "{}天",
-        "other": "{}天"
+        "other": "{}天",
+        "set_custom_time_title": "天"
     },
     "hour": {
         "other": "{}小时",
-        "one": "{}小时"
+        "one": "{}小时",
+        "set_custom_time_title": "小时"
     },
     "minute": {
         "other": "{}分钟",
-        "one": "{}分钟"
+        "one": "{}分钟",
+        "set_custom_time_title": "分钟"
     },
     "books_settings": "书籍",
     "download_missing_covers": "下载缺失的封面",
@@ -277,5 +280,14 @@
     "try_downloading_covers": "您想尝试下载导入书籍的缺失封面吗？",
     "only_editions_with_covers": "仅显示具有封面的版本",
     "cover_still_downloaded": "封面仍在下载中",
-    "wait_for_downloading_to_finish": "等待下载完成"
+    "wait_for_downloading_to_finish": "等待下载完成",
+    "search_online_for_cover": "在线搜索该封面",
+    "book_cover": "书籍封面",
+    "warning_yes": "我知道了",
+    "copy_book": "复制",
+    "duck_duck_go_warning": "通过DuckDuckGo搜索图片，正在跳转第三方服务，请谨慎保护隐私",
+    "warning_no": "返回",
+    "warning_yes_and_dont_show": "我知道了，下次不再提示",
+    "save_without_cover": "不带封面保存",
+    "duplicate_book": "重复书籍"
 }
