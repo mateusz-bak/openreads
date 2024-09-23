@@ -175,7 +175,7 @@ class _SortBottomSheetState extends State<SortBottomSheet> {
   ) {
     return SizedBox(
       height: 40,
-      child: Switch(
+      child: Switch.adaptive(
         value: state.onlyFavourite,
         onChanged: (value) => BlocProvider.of<SortBloc>(context).add(
           ChangeSortEvent(
@@ -198,7 +198,7 @@ class _SortBottomSheetState extends State<SortBottomSheet> {
     BuildContext context,
     SetSortState state,
   ) {
-    return Switch(
+    return Switch.adaptive(
       value: state.displayTags,
       onChanged: (value) => BlocProvider.of<SortBloc>(context).add(
         ChangeSortEvent(
@@ -220,7 +220,7 @@ class _SortBottomSheetState extends State<SortBottomSheet> {
     BuildContext context,
     SetSortState state,
   ) {
-    return Switch(
+    return Switch.adaptive(
       value: state.filterTagsAsAnd,
       onChanged: (value) => BlocProvider.of<SortBloc>(context).add(
         ChangeSortEvent(
@@ -242,7 +242,7 @@ class _SortBottomSheetState extends State<SortBottomSheet> {
     BuildContext context,
     SetSortState state,
   ) {
-    return Switch(
+    return Switch.adaptive(
       value: state.filterOutTags,
       onChanged: (value) => BlocProvider.of<SortBloc>(context).add(
         ChangeSortEvent(
