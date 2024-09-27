@@ -1,13 +1,14 @@
 import 'dart:convert';
 import 'dart:io';
 
-import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 
 import 'package:archive/archive.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:package_info_plus/package_info_plus.dart';
+import 'package:path_provider/path_provider.dart';
+import 'package:share_plus/share_plus.dart';
 import 'package:shared_storage/shared_storage.dart';
 
 import 'package:openreads/core/helpers/backup/backup.dart';
@@ -54,14 +55,12 @@ class BackupExport {
           bytes: File(tmpBackupPath).readAsBytesSync(),
         );
       } else if (Platform.isIOS) {
-        String? selectedDirectory =
-            await FilePicker.platform.getDirectoryPath();
-
-        if (selectedDirectory == null) return;
-
-        File('$selectedDirectory/$fileName').writeAsBytesSync(
+        final directory = await getApplicationDocumentsDirectory();
+        String path = '${directory.path}/$fileName';
+        File(path).writeAsBytesSync(
           File(tmpBackupPath).readAsBytesSync(),
         );
+        await Share.shareXFiles([XFile(path)]);
       }
 
       BackupGeneral.showInfoSnackbar(LocaleKeys.backup_successfull.tr());
