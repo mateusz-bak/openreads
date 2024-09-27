@@ -1,12 +1,13 @@
 import 'dart:convert';
 import 'dart:io';
 
-import 'package:file_picker/file_picker.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
 import 'package:csv/csv.dart';
 import 'package:easy_localization/easy_localization.dart';
+import 'package:path_provider/path_provider.dart';
+import 'package:share_plus/share_plus.dart';
 import 'package:shared_storage/shared_storage.dart';
 
 import 'package:openreads/core/constants/enums/enums.dart';
@@ -60,12 +61,11 @@ class CSVExport {
           bytes: csv,
         );
       } else if (Platform.isIOS) {
-        String? selectedDirectory =
-            await FilePicker.platform.getDirectoryPath();
+        final directory = await getApplicationDocumentsDirectory();
+        String path = '${directory.path}/$fileName';
 
-        if (selectedDirectory == null) return;
-
-        File('$selectedDirectory/$fileName').writeAsBytesSync(csv);
+        File(path).writeAsBytesSync(csv);
+        await Share.shareXFiles([XFile(path)]);
       }
 
       BackupGeneral.showInfoSnackbar(LocaleKeys.export_successful.tr());
