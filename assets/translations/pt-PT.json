@@ -240,15 +240,18 @@
     "ok": "OK",
     "day": {
         "one": "{} dia",
-        "other": "{} dias"
+        "other": "{} dias",
+        "set_custom_time_title": "Dias"
     },
     "hour": {
         "one": "{} hora",
-        "other": "{} horas"
+        "other": "{} horas",
+        "set_custom_time_title": "Horas"
     },
     "minute": {
         "one": "{} minuto",
-        "other": "{} minutos"
+        "other": "{} minutos",
+        "set_custom_time_title": "Minutos"
     },
     "set_custom_reading_time": "Definir tempo de leitura personalizado",
     "general_search": "Geral",
@@ -278,5 +281,7 @@
     "download_missing_covers_explanation": "Descarregar capas em falta para livros com ISBN definido",
     "add_additional_reading_time": "Definir datas de leitura",
     "cover_still_downloaded": "A capa está a ser descarregada",
-    "wait_for_downloading_to_finish": "Aguarde enquanto o descarregamento termina"
+    "wait_for_downloading_to_finish": "Aguarde enquanto o descarregamento termina",
+    "duplicate_book": "Livro duplicado",
+    "book_cover": "Capa do livro"
 }
