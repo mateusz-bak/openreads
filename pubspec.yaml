@@ -47,7 +47,6 @@ dependencies:
   image_fade: ^0.6.2
   package_info_plus: ^8.0.0
   animated_widgets: ^1.1.0
-  shared_storage: ^0.8.0
   shared_preferences: ^2.2.1
   easy_localization: ^3.0.7
   flutter_typeahead: ^5.0.1
