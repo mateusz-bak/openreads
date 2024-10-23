@@ -8,7 +8,7 @@ import 'package:archive/archive.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:package_info_plus/package_info_plus.dart';
-import 'package:shared_storage/shared_storage.dart';
+// import 'package:shared_storage/shared_storage.dart'; // TODO: Migrate to another package
 
 import 'package:openreads/core/helpers/backup/backup.dart';
 import 'package:openreads/generated/locale_keys.g.dart';
@@ -43,16 +43,17 @@ class BackupExport {
 
     try {
       if (Platform.isAndroid) {
-        final selectedUriDir = await openDocumentTree();
-        if (selectedUriDir == null) {
-          return;
-        }
-        createFileAsBytes(
-          selectedUriDir,
-          mimeType: '',
-          displayName: fileName,
-          bytes: File(tmpBackupPath).readAsBytesSync(),
-        );
+        // TODO: Migrate to another package
+        // final selectedUriDir = await openDocumentTree();
+        // if (selectedUriDir == null) {
+        //   return;
+        // }
+        // createFileAsBytes(
+        //   selectedUriDir,
+        //   mimeType: '',
+        //   displayName: fileName,
+        //   bytes: File(tmpBackupPath).readAsBytesSync(),
+        // );
       } else if (Platform.isIOS) {
         String? selectedDirectory =
             await FilePicker.platform.getDirectoryPath();
