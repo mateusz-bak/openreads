@@ -13,7 +13,7 @@ import 'package:openreads/ui/settings_screen/download_missing_covers_screen.dart
 import 'package:permission_handler/permission_handler.dart';
 
 import 'package:openreads/generated/locale_keys.g.dart';
-import 'package:shared_storage/shared_storage.dart';
+// import 'package:shared_storage/shared_storage.dart'; // TODO: Migrate to another package
 
 class BackupGeneral {
   static showInfoSnackbar(String message) {
@@ -132,18 +132,20 @@ class BackupGeneral {
   }
 
   static Future<Uri?> pickFileAndroid() async {
-    final selectedUris = await openDocument(multiple: false);
+    // TODO: Migrate to another package
+    // final selectedUris = await openDocument(multiple: false);
 
-    if (selectedUris == null || selectedUris.isEmpty) return null;
+    // if (selectedUris == null || selectedUris.isEmpty) return null;
 
-    return selectedUris[0];
+    // return selectedUris[0];
   }
 
   static Future<Uint8List?> pickFileAndGetContent() async {
     if (Platform.isAndroid) {
       final fileLocation = await pickFileAndroid();
       if (fileLocation != null) {
-        return await getDocumentContent(fileLocation);
+        // TODO: Migrate to another package
+        // return await getDocumentContent(fileLocation);
       }
     } else if (Platform.isIOS) {
       FilePickerResult? result = await FilePicker.platform.pickFiles();

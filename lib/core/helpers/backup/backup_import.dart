@@ -11,7 +11,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:openreads/core/constants/constants.dart';
 import 'package:openreads/logic/cubit/backup_progress_cubit.dart';
 import 'package:openreads/ui/books_screen/books_screen.dart';
-import 'package:shared_storage/shared_storage.dart';
+// import 'package:shared_storage/shared_storage.dart'; // TODO: Migrate to another package
 import 'package:sqflite/sqflite.dart';
 import 'package:path/path.dart' as path;
 import 'package:blurhash_dart/blurhash_dart.dart' as blurhash_dart;
@@ -89,7 +89,8 @@ class BackupImport {
       fileLocation = await BackupGeneral.pickFileAndroid();
 
       if (fileLocation != null) {
-        backupFile = await getDocumentContent(fileLocation);
+        // TODO: Migrate to another package
+        // backupFile = await getDocumentContent(fileLocation);
       }
     } else if (Platform.isIOS) {
       FilePickerResult? result = await FilePicker.platform.pickFiles();

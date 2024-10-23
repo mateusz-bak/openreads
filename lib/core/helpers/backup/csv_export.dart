@@ -7,7 +7,7 @@ import 'package:flutter/material.dart';
 
 import 'package:csv/csv.dart';
 import 'package:easy_localization/easy_localization.dart';
-import 'package:shared_storage/shared_storage.dart';
+// import 'package:shared_storage/shared_storage.dart'; // TODO: Migrate to another package
 
 import 'package:openreads/core/constants/enums/enums.dart';
 import 'package:openreads/core/helpers/backup/backup.dart';
@@ -27,12 +27,13 @@ class CSVExport {
     final filePath = '$exportPath/$fileName';
 
     try {
-      createFileAsBytes(
-        Uri(path: filePath),
-        mimeType: 'text/csv',
-        displayName: fileName,
-        bytes: Uint8List.fromList(utf8.encode(csv)),
-      );
+      // TODO: Migrate to another package
+      // createFileAsBytes(
+      //   Uri(path: filePath),
+      //   mimeType: 'text/csv',
+      //   displayName: fileName,
+      //   bytes: Uint8List.fromList(utf8.encode(csv)),
+      // );
 
       BackupGeneral.showInfoSnackbar(LocaleKeys.export_successful.tr());
     } catch (e) {
@@ -49,16 +50,17 @@ class CSVExport {
 
     try {
       if (Platform.isAndroid) {
-        final selectedUriDir = await openDocumentTree();
+        // TODO: Migrate to another package
+        // final selectedUriDir = await openDocumentTree();
 
-        if (selectedUriDir == null) return;
+        // if (selectedUriDir == null) return;
 
-        createFileAsBytes(
-          selectedUriDir,
-          mimeType: 'text/csv',
-          displayName: fileName,
-          bytes: csv,
-        );
+        // createFileAsBytes(
+        //   selectedUriDir,
+        //   mimeType: 'text/csv',
+        //   displayName: fileName,
+        //   bytes: csv,
+        // );
       } else if (Platform.isIOS) {
         String? selectedDirectory =
             await FilePicker.platform.getDirectoryPath();
