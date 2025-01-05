@@ -112,7 +112,7 @@
     "select_accent_color": "Виберіть колір акценту",
     "rating_type": "Тип відображення рейтингу",
     "seletct_rating_type": "Виберіть тип відображення рейтингу",
-    "rating_as_bar": "Рейтинг як рядок зірок",
+    "rating_as_bar": "Рейтинг зірочками",
     "rating_as_number": "Рейтинг як номер",
     "theme_mode": "Режим теми додатку",
     "select_theme_mode": "Вибір режиму теми",
@@ -265,5 +265,12 @@
     "downloaded_covers": "Завантажені обкладинки:",
     "filter_out_selected_tags": "Відфільтрувати вибрані теги",
     "ok": "ОК",
-    "bulk_update_unsuccessful_message": "Не можу оновити інформацію о книгах"
+    "bulk_update_unsuccessful_message": "Не можу оновити інформацію о книгах",
+    "date_added": "Дата додавання",
+    "import_successful": "Імпорт успішний",
+    "general_search": "Загальний",
+    "read_x_times": "Прочитано {} разів",
+    "added_on": "Додано",
+    "copy_book": "копія",
+    "book_cover": "обкладинка книги"
 }

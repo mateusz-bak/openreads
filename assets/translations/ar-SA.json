@@ -219,7 +219,8 @@
     "csv": "CSV",
     "minute": {
         "other": "{} من الدقائق",
-        "one": "{} دقيقة"
+        "one": "{} دقيقة",
+        "set_custom_time_title": "دقائق"
     },
     "choose_not_finished_shelf": "إختر لائحة الكتب غير المنجزة:",
     "export_successful": "تم التصدير بنجاح",
