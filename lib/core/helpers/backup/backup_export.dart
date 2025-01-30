@@ -13,6 +13,8 @@ import 'package:openreads/core/helpers/backup/backup.dart';
 import 'package:openreads/generated/locale_keys.g.dart';
 import 'package:openreads/logic/bloc/challenge_bloc/challenge_bloc.dart';
 import 'package:openreads/main.dart';
+import 'package:path_provider/path_provider.dart';
+import 'package:share_plus/share_plus.dart';
 
 class BackupExport {
   static createLocalBackupLegacyStorage(BuildContext context) async {
@@ -41,11 +43,22 @@ class BackupExport {
     final fileName = await _prepareBackupFileName();
 
     try {
-      String? selectedDirectory = await FilePicker.platform.getDirectoryPath();
+      if (Platform.isAndroid) {
+        String? selectedDirectory =
+            await FilePicker.platform.getDirectoryPath();
 
-      File('$selectedDirectory/$fileName').writeAsBytesSync(
-        File(tmpBackupPath).readAsBytesSync(),
-      );
+        File('$selectedDirectory/$fileName').writeAsBytesSync(
+          File(tmpBackupPath).readAsBytesSync(),
+        );
+      } else if (Platform.isIOS) {
+        final directory = await getApplicationDocumentsDirectory();
+        final path = '${directory.path}/$fileName';
+
+        File(path).writeAsBytesSync(
+          File(tmpBackupPath).readAsBytesSync(),
+        );
+        await Share.shareXFiles([XFile(path)]);
+      }
 
       BackupGeneral.showInfoSnackbar(LocaleKeys.backup_successfull.tr());
     } catch (e) {
