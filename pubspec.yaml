@@ -40,7 +40,7 @@ dependencies:
   flutter_email_sender: ^6.0.0
   permission_handler: ^11.0.0
   filesystem_picker: ^4.0.0
-  archive: ^3.3.5
+  archive: ^4.0.2
   share_plus: ^10.0.2
   device_info_plus: ^10.0.1
   dynamic_color: ^1.6.2
@@ -55,7 +55,7 @@ dependencies:
   flutter_speed_dial: ^7.0.0
   blurhash_dart: ^1.2.1
   csv: ^6.0.0
-  file_picker: 5.3.2
+  file_picker: ^8.3.1
   smooth_page_indicator: ^1.1.0
   intl: ^0.19.0
   dotted_border: ^2.1.0

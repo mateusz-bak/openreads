@@ -11,7 +11,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:openreads/core/constants/constants.dart';
 import 'package:openreads/logic/cubit/backup_progress_cubit.dart';
 import 'package:openreads/ui/books_screen/books_screen.dart';
-// import 'package:shared_storage/shared_storage.dart'; // TODO: Migrate to another package
 import 'package:sqflite/sqflite.dart';
 import 'package:path/path.dart' as path;
 import 'package:blurhash_dart/blurhash_dart.dart' as blurhash_dart;
@@ -81,84 +80,68 @@ class BackupImport {
   static Future restoreLocalBackup(BuildContext context) async {
     final tmpDir = appTempDirectory.absolute;
     _deleteTmpData(tmpDir);
+    PlatformFile? file;
 
-    Uint8List? backupFile;
-    Uri? fileLocation;
-
-    if (Platform.isAndroid) {
-      fileLocation = await BackupGeneral.pickFileAndroid();
-
-      if (fileLocation != null) {
-        // TODO: Migrate to another package
-        // backupFile = await getDocumentContent(fileLocation);
-      }
-    } else if (Platform.isIOS) {
-      FilePickerResult? result = await FilePicker.platform.pickFiles();
-
-      if (result != null) {
-        File file = File(result.files.single.path!);
-        backupFile = file.readAsBytesSync();
-        fileLocation = file.uri;
-      }
-    } else {
-      return;
-    }
-
-    if (backupFile == null || fileLocation == null) {
-      return;
-    }
-
-    // Backups v3 and v4 are recognized by their file name
-    if (fileLocation.path.contains('Openreads-4-')) {
-      // ignore: use_build_context_synchronously
-      await _restoreBackupVersion4(
-        context,
-        archiveFile: backupFile,
-        tmpPath: tmpDir,
+    try {
+      FilePickerResult? result = await FilePicker.platform.pickFiles(
+        withData: true,
       );
-    } else if (fileLocation.path.contains('openreads_3_')) {
-      // ignore: use_build_context_synchronously
-      await _restoreBackupVersion3(
-        context,
-        archiveFile: backupFile,
-        tmpPath: tmpDir,
-      );
-    } else {
-      // Because file name is not always possible to read
-      // backups v5 is recognized by the info.txt file
-      final infoFileVersion = _checkInfoFileVersion(backupFile, tmpDir);
-      if (infoFileVersion == 5) {
+
+      file = result!.files.single;
+
+      // Backups v3 and v4 are recognized by their file name
+      if (file.path!.contains('Openreads-4-')) {
         // ignore: use_build_context_synchronously
-        await _restoreBackupVersion5(context, backupFile, tmpDir);
+        await _restoreBackupVersion4(
+          context,
+          archiveFile: file.bytes,
+          tmpPath: tmpDir,
+        );
+      } else if (file.path != null && file.path!.contains('openreads_3_')) {
+        // ignore: use_build_context_synchronously
+        await _restoreBackupVersion3(
+          context,
+          archiveFile: file.bytes,
+          tmpPath: tmpDir,
+        );
       } else {
-        BackupGeneral.showInfoSnackbar(LocaleKeys.backup_not_valid.tr());
-        return;
+        // Because file name is not always possible to read
+        // backups v5 is recognized by the info.txt file
+        final infoFileVersion = _checkInfoFileVersion(file.bytes, tmpDir);
+        if (infoFileVersion == 5) {
+          // ignore: use_build_context_synchronously
+          await _restoreBackupVersion5(context, file.bytes!, tmpDir);
+        } else {
+          BackupGeneral.showInfoSnackbar(LocaleKeys.backup_not_valid.tr());
+          return;
+        }
       }
-    }
 
-    BackupGeneral.showInfoSnackbar(LocaleKeys.restore_successfull.tr());
+      BackupGeneral.showInfoSnackbar(LocaleKeys.restore_successfull.tr());
 
-    if (context.mounted) {
-      Navigator.of(context).pushAndRemoveUntil(
-        MaterialPageRoute(builder: (context) => const BooksScreen()),
-        (Route<dynamic> route) => false,
-      );
+      if (context.mounted) {
+        Navigator.of(context).pushAndRemoveUntil(
+          MaterialPageRoute(builder: (context) => const BooksScreen()),
+          (Route<dynamic> route) => false,
+        );
+      }
+    } catch (e) {
+      BackupGeneral.showInfoSnackbar(e.toString());
     }
   }
 
   static _restoreBackupVersion5(
     BuildContext context,
-    Uint8List? archiveBytes,
+    Uint8List archiveBytes,
     Directory tmpPath,
   ) async {
-    if (archiveBytes == null) {
-      return;
-    }
+    final decoder = ZipDecoder();
+    final archive = decoder.decodeBytes(archiveBytes);
 
-    final archive = ZipDecoder().decodeBytes(archiveBytes);
     extractArchiveToDisk(archive, tmpPath.path);
 
-    var booksData = File('${tmpPath.path}/books.backup').readAsStringSync();
+    String? booksData;
+    booksData = File('${tmpPath.path}/books.backup').readAsStringSync();
 
     // First backups of v2 used ||||| as separation between books,
     // That caused problems because this is as well a separator for tags
