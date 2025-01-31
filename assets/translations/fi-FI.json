@@ -227,7 +227,8 @@
     "import_bookwyrm_csv": "Tuo BookWyrm CSV",
     "minute": {
         "other": "{} minuutit",
-        "one": "{} minuutti"
+        "one": "{} minuutti",
+        "set_custom_time_title": "minuuttia"
     },
     "general_search": "Yleinen",
     "no_search_results": "Ei hakutuloksia",
@@ -248,7 +249,8 @@
     "download_missing_covers_explanation": "Lataa puuttuvat kannet kirjoille joille on asetettu ISBN",
     "hour": {
         "other": "{} tunnit",
-        "one": "{} tunti"
+        "one": "{} tunti",
+        "set_custom_time_title": "tuntia"
     },
     "click_to_add_book_manually": "Klikkaa tästä lisätäksesi kirjan käsin",
     "load_cover_from_phone": "Lataa kansi laitteestasi",
@@ -263,7 +265,8 @@
     "ok": "OK",
     "day": {
         "other": "{} päivät",
-        "one": "{} päivä"
+        "one": "{} päivä",
+        "set_custom_time_title": "päivää"
     },
     "import_successful": "Tuonti onnistui",
     "downloaded_covers": "Ladatut kannet:",

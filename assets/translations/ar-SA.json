@@ -214,7 +214,8 @@
     "custom_color": "ألوان مخصصة",
     "hour": {
         "one": "{} ساعة",
-        "other": "{} من الساعات"
+        "other": "{} من الساعات",
+        "set_custom_time_title": "ساعات"
     },
     "csv": "CSV",
     "minute": {
@@ -238,7 +239,8 @@
     "set_custom_reading_time": "تحديد مدة القراءة",
     "day": {
         "one": "{} يوم",
-        "other": "{} من الأيام"
+        "other": "{} من الأيام",
+        "set_custom_time_title": "أيام"
     },
     "import_successful": "تم الإستيراد بنجاح",
     "book_format_all": "جميع الأصناف",
@@ -255,5 +257,13 @@
     "isbn_cannot_be_empty": "الرقم الدولي الموحد للكتاب (ISBN) لا يمكن أن يكون فارغا",
     "cover_not_found_in_ol": "لم يتم العثور على الغلاف في Open Library",
     "no_search_results": "لم يتم العثور على أية نتائج",
-    "delete_books": "حذف الكتب"
+    "delete_books": "حذف الكتب",
+    "delete_books_question": "هل ترغب في حذف الكتب المختارة؟",
+    "book_cover": "غلاف الكتاب",
+    "date_added": "تاريخ الإضافة",
+    "date_modified": "تاريخ التعديل",
+    "added_on": "تمت إضافته بتاريخ",
+    "modified_on": "تم تعديله بتاريخ",
+    "edit_current_cover": "تعديل الغلاف الحالي",
+    "books_settings": "الكتب"
 }

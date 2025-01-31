@@ -272,5 +272,22 @@
     "read_x_times": "Прочитано {} разів",
     "added_on": "Додано",
     "copy_book": "копія",
-    "book_cover": "обкладинка книги"
+    "book_cover": "обкладинка книги",
+    "search_online_for_cover": "Знайти обкладинку в інтернеті",
+    "start_adding_books": "Перейти до застосунку",
+    "owned_book_tag": "володію",
+    "date_modified": "Дата зміни",
+    "modified_on": "Змінено",
+    "duplicate_book": "Дублювати книгу",
+    "warning_yes_and_dont_show": "Я згоден з цим і не запитуйте мене знову",
+    "save_without_cover": "Зберегти без обкладинки",
+    "duck_duck_go_warning": "Пошук обкладинок в інтернеті відбувається через пропрієтарний сервіс DuckDuckGo. Будь ласка враховуйте можливі наслідки щодо конфіденційності",
+    "help_to_get_started": "Щоб допомогти вам розпочати, ось кілька речей, які ви можете зробити",
+    "choose_not_finished_shelf": "Виберіть полицю з незакінченими книгами:",
+    "add_additional_reading_time": "Захопити читання",
+    "default_books_format": "Стандартний формат книг",
+    "warning_yes": "Я в порядку з цим",
+    "warning_no": "Відвези мене назад",
+    "cover_still_downloaded": "Обкладинка ще завантажується",
+    "wait_for_downloading_to_finish": "Дочекайтеся закінчення завантаження"
 }

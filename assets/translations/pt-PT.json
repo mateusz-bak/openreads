@@ -283,5 +283,11 @@
     "cover_still_downloaded": "A capa está a ser descarregada",
     "wait_for_downloading_to_finish": "Aguarde enquanto o descarregamento termina",
     "duplicate_book": "Livro duplicado",
-    "book_cover": "Capa do livro"
+    "book_cover": "Capa do livro",
+    "copy_book": "cópia",
+    "search_online_for_cover": "Pesquise online por capas",
+    "warning_yes": "Estou bem com isso",
+    "warning_no": "Cancelar",
+    "warning_yes_and_dont_show": "Estou bem com isso e não me mostre novamente",
+    "duck_duck_go_warning": "Pesquisa por capas online é mais fácil usando o DuckDuckGo, um software proprietário. Favor se atentar a implicações de privacidade."
 }
