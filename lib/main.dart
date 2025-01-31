@@ -44,7 +44,9 @@ void main() async {
   _setAndroidConfig();
 
   HydratedBloc.storage = await HydratedStorage.build(
-    storageDirectory: await getApplicationDocumentsDirectory(),
+    storageDirectory: HydratedStorageDirectory(
+      (await getApplicationDocumentsDirectory()).path,
+    ),
   );
 
   appDocumentsDirectory = await getApplicationDocumentsDirectory();
