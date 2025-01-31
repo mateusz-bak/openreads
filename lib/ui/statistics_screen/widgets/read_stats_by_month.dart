@@ -108,7 +108,7 @@ class ReadStatsByMonth extends StatelessWidget {
     return (value % meta.appliedInterval == 0)
         ? Builder(builder: (context) {
             return SideTitleWidget(
-              axisSide: meta.axisSide,
+              meta: meta,
               space: 8,
               child: Text(
                 text,
