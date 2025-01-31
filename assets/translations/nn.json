@@ -133,5 +133,51 @@
     "tabs_order_read_first": "Lesne bøker først",
     "send_feedback": "Send tilbakemelding",
     "report_bugs_or_ideas": "Meld frå om feil eller kom med forslag",
-    "send_dev_email": "Send ein e-post til utviklaren"
+    "send_dev_email": "Send ein e-post til utviklaren",
+    "set_books_goal_for_year": "Sett leseliste for",
+    "change_book_format": "Endra bokformatet",
+    "change_books_author": "Endra forfattar av boka",
+    "export_csv_description_1": "Omslag vert ikkje eksporterte",
+    "import_successful": "Importeringa er fullført",
+    "ok": "OK",
+    "day": {
+        "set_custom_time_title": "Dagar",
+        "one": "{} dag",
+        "other": "{} dagar"
+    },
+    "hour": {
+        "one": "{} time",
+        "other": "{} timar",
+        "set_custom_time_title": "Timar"
+    },
+    "minute": {
+        "set_custom_time_title": "Minutt",
+        "one": "{} minutt",
+        "other": "{} minutt"
+    },
+    "select_all": "Vel alle",
+    "general_search": "Generelt",
+    "no_search_results": "Ingen resultat",
+    "click_to_add_book_manually": "Trykk her for å leggja til boka manuelt",
+    "load_cover_from_phone": "Last inn omslag frå eininga",
+    "get_cover_from_open_library": "Hent omslag frå Open Library ved hjelp av ISBN",
+    "isbn_cannot_be_empty": "ISBN kan ikkje vera tomt",
+    "cover_not_found_in_ol": "Fann inkje omslag i Open Library",
+    "books_settings": "Bøker",
+    "owned_book_tag": "eigd",
+    "read_x_times": "Lesen {} gongar",
+    "date_added": "Dato lagt til",
+    "modified_on": "Endra",
+    "default_books_format": "Standard bokformat",
+    "cover_still_downloaded": "Omslaget vert fortsatt lasta ned",
+    "wait_for_downloading_to_finish": "Vent på nedlastinga",
+    "save_without_cover": "Lagra utan omslag",
+    "search_online_for_cover": "Søk på nettet etter omslag",
+    "book_cover": "book cover",
+    "duplicate_book": "Lag kopi av bok",
+    "copy_book": "– kopi",
+    "edit_current_cover": "Rediger noverande omslag",
+    "date_modified": "Dato endra",
+    "update_successful_message": "Oppdateringa er fullført.",
+    "added_on": "Lagt til"
 }
