@@ -1,0 +1,6 @@
+- Book format is shown in the books lists
+- Added alert about searching covers in DuckDuckGo
+- Unified look of bottom sheets
+- fix: New book screen respects "Read tab first" setting
+- fix: Added localization for some missed strings
+- translation: New languages: Basque, Malayalam, Nynorsk
