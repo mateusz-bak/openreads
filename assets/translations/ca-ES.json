@@ -187,5 +187,12 @@
     "book_format_hardcover_plural": "Llibres de tapa dura",
     "book_format_audiobook_plural": "Audiollibres",
     "use_material_you": "Utilitza el Material You",
-    "translate_app_description": "Podem utilitzar les vostres habilitats lingüístiques"
+    "translate_app_description": "Podem utilitzar les vostres habilitats lingüístiques",
+    "unfinished_books": "Llibres inacabats",
+    "finished_pages": "Pàgines acabades",
+    "small_rounded_corners": "Radi petit",
+    "medium_rounded_corners": "Radi mitjà",
+    "big_rounded_corners": "Radi gran",
+    "no_unfinished_books": "No teniu cap llibre inacabat",
+    "finished_books": "Llibres acabats"
 }
