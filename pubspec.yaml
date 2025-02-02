@@ -61,6 +61,8 @@ dependencies:
   dotted_border: ^2.1.0
   flutter_cache_manager: ^3.3.1
   modal_bottom_sheet: ^3.0.0
+  flutter_localizations:
+    sdk: flutter
 
 dev_dependencies:
   flutter_test:
