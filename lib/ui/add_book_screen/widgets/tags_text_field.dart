@@ -8,24 +8,24 @@ import 'package:openreads/logic/cubit/edit_book_cubit.dart';
 import 'package:openreads/model/book.dart';
 
 class TagsField extends StatelessWidget {
-  const TagsField({
-    super.key,
-    this.controller,
-    this.hint,
-    this.icon,
-    required this.keyboardType,
-    required this.maxLength,
-    this.inputFormatters,
-    this.autofocus = false,
-    this.maxLines = 1,
-    this.hideCounter = true,
-    this.textInputAction,
-    this.textCapitalization = TextCapitalization.none,
-    this.onSubmitted,
-    this.onEditingComplete,
-    this.unselectTag,
-    this.allTags,
-  });
+  const TagsField(
+      {super.key,
+      this.controller,
+      this.hint,
+      this.icon,
+      required this.keyboardType,
+      required this.maxLength,
+      this.inputFormatters,
+      this.autofocus = false,
+      this.maxLines = 1,
+      this.hideCounter = true,
+      this.textInputAction,
+      this.textCapitalization = TextCapitalization.none,
+      this.onSubmitted,
+      this.onEditingComplete,
+      this.unselectTag,
+      this.allTags,
+      required this.existingTags});
 
   final TextEditingController? controller;
   final String? hint;
@@ -40,7 +40,7 @@ class TagsField extends StatelessWidget {
   final TextCapitalization textCapitalization;
   final Function(String)? onSubmitted;
   final Function()? onEditingComplete;
-
+  final List<String> existingTags;
   final Function(String)? unselectTag;
   final List<String>? allTags;
 
@@ -112,6 +112,10 @@ class TagsField extends StatelessWidget {
               child: TypeAheadField(
                 controller: controller,
                 itemBuilder: (context, suggestion) {
+                  if (existingTags.contains(suggestion)) {
+                    return const SizedBox.shrink();
+                  }
+
                   return Container(
                     color: Theme.of(context).colorScheme.surfaceVariant,
                     child: ListTile(
