@@ -17,10 +17,10 @@ class EditCoverOptions extends StatelessWidget {
     required this.editCurrentCover,
   });
 
-  final Function(BuildContext) loadCoverFromStorage;
-  final Function(BuildContext) searchForCoverOnline;
-  final Function(BuildContext) loadCoverFromOpenLibrary;
-  final Function(BuildContext) editCurrentCover;
+  final void Function() loadCoverFromStorage;
+  final void Function() searchForCoverOnline;
+  final void Function() loadCoverFromOpenLibrary;
+  final void Function() editCurrentCover;
 
   @override
   Widget build(BuildContext context) {
@@ -51,7 +51,7 @@ class EditCoverOptions extends StatelessWidget {
                 FontAwesomeIcons.mobile,
                 color: Theme.of(context).colorScheme.primary,
               ),
-              onTap: () => loadCoverFromStorage(context),
+              onTap: loadCoverFromStorage,
             ),
             ListTile(
               title: Text(LocaleKeys.searchOnlineForCover.tr()),
@@ -59,7 +59,7 @@ class EditCoverOptions extends StatelessWidget {
                 FontAwesomeIcons.magnifyingGlass,
                 color: Theme.of(context).colorScheme.primary,
               ),
-              onTap: () => searchForCoverOnline(context),
+              onTap: searchForCoverOnline,
             ),
             ListTile(
               title: Text(LocaleKeys.get_cover_from_open_library.tr()),
@@ -67,7 +67,7 @@ class EditCoverOptions extends StatelessWidget {
                 FontAwesomeIcons.globe,
                 color: Theme.of(context).colorScheme.primary,
               ),
-              onTap: () => loadCoverFromOpenLibrary(context),
+              onTap: loadCoverFromOpenLibrary,
             ),
             BlocBuilder<EditBookCubit, Book>(
               builder: (blocContext, state) {
@@ -78,7 +78,7 @@ class EditCoverOptions extends StatelessWidget {
                       FontAwesomeIcons.image,
                       color: Theme.of(context).colorScheme.primary,
                     ),
-                    onTap: () => editCurrentCover(context),
+                    onTap: editCurrentCover,
                   );
                 } else {
                   return const SizedBox();
