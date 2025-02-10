@@ -19,7 +19,7 @@ dependencies:
   path: ^1.9.0
   flutter_displaymode: ^0.6.0
   image_picker: ^1.0.0
-  image_cropper: ^8.0.2
+  image_cropper: ^9.0.0
   flutter_bloc: ^9.0.0
   blurhash: ^1.1.1
   image: ^4.0.15
