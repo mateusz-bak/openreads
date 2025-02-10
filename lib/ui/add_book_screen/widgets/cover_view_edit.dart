@@ -215,10 +215,10 @@ class _CoverViewEditState extends State<CoverViewEdit> {
         expand: false,
         builder: (_) {
           return EditCoverOptions(
-            loadCoverFromStorage: _loadCoverFromStorage,
-            searchForCoverOnline: _searchForCoverOnline,
-            loadCoverFromOpenLibrary: _loadCoverFromOpenLibrary,
-            editCurrentCover: _editCurrentCover,
+            loadCoverFromStorage: () => _loadCoverFromStorage(context),
+            searchForCoverOnline: () => _searchForCoverOnline(context),
+            loadCoverFromOpenLibrary: () => _loadCoverFromOpenLibrary(context),
+            editCurrentCover: () => _editCurrentCover(context),
           );
         },
       );
@@ -230,10 +230,10 @@ class _CoverViewEditState extends State<CoverViewEdit> {
         backgroundColor: Theme.of(context).colorScheme.surface,
         builder: (modalContext) {
           return EditCoverOptions(
-            loadCoverFromStorage: _loadCoverFromStorage,
-            searchForCoverOnline: _searchForCoverOnline,
-            loadCoverFromOpenLibrary: _loadCoverFromOpenLibrary,
-            editCurrentCover: _editCurrentCover,
+            loadCoverFromStorage: () => _loadCoverFromStorage(context),
+            searchForCoverOnline: () => _searchForCoverOnline(context),
+            loadCoverFromOpenLibrary: () => _loadCoverFromOpenLibrary(context),
+            editCurrentCover: () => _editCurrentCover(context),
           );
         },
       );
