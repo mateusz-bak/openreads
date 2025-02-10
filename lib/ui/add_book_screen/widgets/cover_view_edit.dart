@@ -90,6 +90,7 @@ class _CoverViewEditState extends State<CoverViewEdit> {
 
   void _editCurrentCover(BuildContext context) async {
     _setCoverLoading(true);
+    Navigator.of(context).pop();
 
     final cover = context.read<EditBookCoverCubit>().state;
 
