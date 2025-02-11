@@ -64,4 +64,4 @@ jobs:
           status: inProgress
           whatsNewDirectory: whatsnew
           mappingFile: build/app/outputs/mapping/release/mapping.txt
-          debugSymbols: build/app/intermediates/merged_native_libs/release/out/lib
+          debugSymbols: build/app/intermediates/merged_native_libs/release/mergeReleaseNativeLibs/out/lib
