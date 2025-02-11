@@ -487,11 +487,11 @@
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 56;
+				CURRENT_PROJECT_VERSION = 57;
 				DEVELOPMENT_TEAM = 9LL87RQMCY;
 				ENABLE_BITCODE = NO;
-				FLUTTER_BUILD_NAME = 2.8.0;
-				FLUTTER_BUILD_NUMBER = 56;
+				FLUTTER_BUILD_NAME = 2.9.0;
+				FLUTTER_BUILD_NUMBER = 57;
 				INFOPLIST_FILE = Runner/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = Openreads;
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.books";
@@ -499,7 +499,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 2.8.0;
+				MARKETING_VERSION = 2.9.0;
 				PRODUCT_BUNDLE_IDENTIFIER = software.mdev.bookstracker;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -679,11 +679,11 @@
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 56;
+				CURRENT_PROJECT_VERSION = 57;
 				DEVELOPMENT_TEAM = 9LL87RQMCY;
 				ENABLE_BITCODE = NO;
-				FLUTTER_BUILD_NAME = 2.8.0;
-				FLUTTER_BUILD_NUMBER = 56;
+				FLUTTER_BUILD_NAME = 2.9.0;
+				FLUTTER_BUILD_NUMBER = 57;
 				INFOPLIST_FILE = Runner/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = Openreads;
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.books";
@@ -691,7 +691,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 2.8.0;
+				MARKETING_VERSION = 2.9.0;
 				PRODUCT_BUNDLE_IDENTIFIER = software.mdev.bookstracker;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -715,11 +715,11 @@
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 56;
+				CURRENT_PROJECT_VERSION = 57;
 				DEVELOPMENT_TEAM = 9LL87RQMCY;
 				ENABLE_BITCODE = NO;
-				FLUTTER_BUILD_NAME = 2.8.0;
-				FLUTTER_BUILD_NUMBER = 56;
+				FLUTTER_BUILD_NAME = 2.9.0;
+				FLUTTER_BUILD_NUMBER = 57;
 				INFOPLIST_FILE = Runner/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = Openreads;
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.books";
@@ -727,7 +727,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 2.8.0;
+				MARKETING_VERSION = 2.9.0;
 				PRODUCT_BUNDLE_IDENTIFIER = software.mdev.bookstracker;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
