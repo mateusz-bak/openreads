@@ -424,8 +424,8 @@ class SettingsScreen extends StatelessWidget {
               ),
             ListTile(
               title: Text(LocaleKeys.send_dev_email.tr()),
-              leading: FaIcon(
-                FontAwesomeIcons.solidEnvelope,
+              leading: Icon(
+                Icons.email,
                 color: Theme.of(context).colorScheme.primary,
               ),
               onTap: () => _sendEmailToDev(context, version),
@@ -462,7 +462,7 @@ class SettingsScreen extends StatelessWidget {
         duration: const Duration(seconds: 3),
         shakeAngle: Rotation.deg(z: 20),
         curve: Curves.bounceInOut,
-        child: Icon(
+        child: FaIcon(
           FontAwesomeIcons.mugHot,
           color: Theme.of(context).colorScheme.primary,
         ),
@@ -544,10 +544,7 @@ class SettingsScreen extends StatelessWidget {
           fontSize: 16,
         ),
       ),
-      leading: const Icon(
-        FontAwesomeIcons.trash,
-        size: 20,
-      ),
+      leading: const Icon(Icons.delete),
       onPressed: (context) {
         Navigator.push(
           context,
@@ -667,7 +664,7 @@ class SettingsScreen extends StatelessWidget {
           fontSize: 16,
         ),
       ),
-      leading: const Icon(FontAwesomeIcons.earthAmericas),
+      leading: const Icon(Icons.public),
       description: BlocBuilder<ThemeBloc, ThemeState>(
         builder: (_, themeState) {
           if (themeState is SetThemeState) {
@@ -786,7 +783,7 @@ class SettingsScreen extends StatelessWidget {
                           _buildBasicSetting(
                             title: LocaleKeys.version.tr(),
                             description: version,
-                            iconData: FontAwesomeIcons.rocket,
+                            iconData: Icons.rocket_launch,
                             context: context,
                           ),
                           _buildURLSetting(
@@ -801,7 +798,7 @@ class SettingsScreen extends StatelessWidget {
                             description:
                                 LocaleKeys.source_code_description.tr(),
                             url: repoUrl,
-                            iconData: FontAwesomeIcons.code,
+                            iconData: Icons.code,
                             context: context,
                           ),
                           _buildURLSetting(
@@ -837,7 +834,7 @@ class SettingsScreen extends StatelessWidget {
       title: LocaleKeys.join_community.tr(),
       description: LocaleKeys.join_community_description.tr(),
       url: communityUrl,
-      iconData: FontAwesomeIcons.peopleGroup,
+      iconData: Icons.groups,
       context: context,
     ));
 
