@@ -229,7 +229,7 @@ class _BookCardState extends State<BookCard> {
             onTap: widget.onPressed,
             onLongPress: widget.onLongPressed,
             child: Padding(
-              padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 15),
+              padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 10),
               child: Row(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
@@ -238,7 +238,7 @@ class _BookCardState extends State<BookCard> {
                     height: 70 * 1.5,
                     child: (coverFile != null)
                         ? ClipRRect(
-                            borderRadius: BorderRadius.circular(4),
+                            borderRadius: BorderRadius.circular(3),
                             child: Hero(
                               tag: widget.heroTag,
                               child: Image.file(
