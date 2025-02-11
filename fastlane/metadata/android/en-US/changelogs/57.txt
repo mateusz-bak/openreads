@@ -1,0 +1,6 @@
+- App will open when Nynorsk langauge is used
+- Cover editor will be displayed properly on Android 15
+- Cover can be loaded from device
+- Local backup/restore is fixed on Android
+- CSV is imported properly
+- Added removed card backgrounds
