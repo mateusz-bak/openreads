@@ -146,7 +146,9 @@ class BackupGeneral {
 
       return await safStream.readFileBytes(pickedFile.uri);
     } else if (Platform.isIOS) {
-      FilePickerResult? result = await FilePicker.platform.pickFiles();
+      FilePickerResult? result = await FilePicker.platform.pickFiles(
+        withData: true,
+      );
 
       if (result != null) {
         File file = File(result.files.single.path!);
