@@ -71,7 +71,7 @@ class _SearchPageState extends State<SearchPage> {
                           cardColor: Theme.of(context)
                               .colorScheme
                               .secondaryContainer
-                              .withAlpha(100),
+                              .withAlpha(50),
                           onPressed: () {
                             if (snapshot.data![index].id == null) return;
 
