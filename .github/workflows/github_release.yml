@@ -10,6 +10,9 @@ jobs:
     name: Append project info
     runs-on: ubuntu-latest
     steps:
+    - name: Check out code
+      uses: actions/checkout@v4
+
     - name: Add project info to Release
       uses: irongut/EditRelease@v1.2.0
       with:
