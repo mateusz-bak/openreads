@@ -1021,6 +1021,22 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "0.28.0"
+  saf_stream:
+    dependency: "direct main"
+    description:
+      name: saf_stream
+      sha256: f9258bc3b39256e0af3de7c05a70a4c7ac846d186a3ea8c1e5bef7b53876c566
+      url: "https://pub.dev"
+    source: hosted
+    version: "0.11.1"
+  saf_util:
+    dependency: "direct main"
+    description:
+      name: saf_util
+      sha256: "4e07d11463a97cd3feecb66192e423e6d17f082f16f1acf2ce923a538cacced0"
+      url: "https://pub.dev"
+    source: hosted
+    version: "0.6.2"
   settings_ui:
     dependency: "direct main"
     description:

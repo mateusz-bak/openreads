@@ -37,7 +37,7 @@ class CSVImportOpenreads {
 
   static Future importCSV(BuildContext context) async {
     try {
-      final csvBytes = await BackupGeneral.pickFileAndGetContent();
+      final csvBytes = await BackupGeneral.pickCSVFileAndGetContent();
       if (csvBytes == null) return;
 
       // ignore: use_build_context_synchronously
