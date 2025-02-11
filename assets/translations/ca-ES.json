@@ -194,5 +194,45 @@
     "medium_rounded_corners": "Radi mitjà",
     "big_rounded_corners": "Radi gran",
     "no_unfinished_books": "No teniu cap llibre inacabat",
-    "finished_books": "Llibres acabats"
+    "finished_books": "Llibres acabats",
+    "dark_mode_amoled": "Mode fosc AMOLED",
+    "selected": "Seleccionat",
+    "change_book_format": "Canvia el format dels llibres",
+    "update_successful_message": "S'ha actualitzat correctament.",
+    "import_goodreads_csv": "Importa un CSV del Goodreads",
+    "general_search": "General",
+    "click_to_add_book_manually": "Feu clic ací per a afegir el llibre manualment",
+    "edit_current_cover": "Edita la coberta actual",
+    "isbn_cannot_be_empty": "L'ISBN no pot estar buit",
+    "import_bookwyrm_csv": "Importa un CSV del BookWyrm",
+    "minute": {
+        "other": "{} minuts",
+        "set_custom_time_title": "Minuts",
+        "one": "{} minut"
+    },
+    "downloaded_covers": "Cobertes baixades:",
+    "no_search_results": "No s'ha trobat cap resultat",
+    "ok": "D'acord",
+    "set_custom_reading_time": "Defineix un temps de lectura personalitzat",
+    "select_all": "Selecciona-ho tot",
+    "dark_mode_style": "Estil de mode fosc",
+    "day": {
+        "one": "{} dia",
+        "set_custom_time_title": "Dies",
+        "other": "{} dies"
+    },
+    "dark_mode_natural": "Mode fosc natural",
+    "change_books_author": "Canvia l'autor dels llibres",
+    "hour": {
+        "set_custom_time_title": "Hores",
+        "one": "{} hora",
+        "other": "{} hores"
+    },
+    "cover_not_found_in_ol": "No s'ha trobat la coberta a l'Open Library",
+    "download_missing_covers": "Baixa les cobertes faltants",
+    "start_adding_books": "Ves a l'aplicació",
+    "import_csv": "Importa un CSV de l'Openreads",
+    "load_cover_from_phone": "Carrega una coberta des del dispositiu",
+    "books_settings": "Llibres",
+    "bulk_update_unsuccessful_message": "No s'han pogut actualitzar els detalls dels llibres"
 }
