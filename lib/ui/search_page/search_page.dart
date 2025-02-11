@@ -42,7 +42,7 @@ class _SearchPageState extends State<SearchPage> {
         body: Column(
           children: [
             Padding(
-              padding: const EdgeInsets.all(10),
+              padding: const EdgeInsets.fromLTRB(0, 10, 0, 20),
               child: BookTextField(
                 controller: _searchController,
                 keyboardType: TextInputType.name,
@@ -68,6 +68,10 @@ class _SearchPageState extends State<SearchPage> {
                           heroTag: heroTag,
                           addBottomPadding:
                               (snapshot.data!.length == index + 1),
+                          cardColor: Theme.of(context)
+                              .colorScheme
+                              .secondaryContainer
+                              .withAlpha(100),
                           onPressed: () {
                             if (snapshot.data![index].id == null) return;
 
