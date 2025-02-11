@@ -105,7 +105,7 @@ class _BooksListState extends State<BooksList>
                 : Theme.of(context)
                     .colorScheme
                     .secondaryContainer
-                    .withAlpha(100);
+                    .withAlpha(50);
             return BookCard(
               book: widget.books[index],
               heroTag: heroTag,

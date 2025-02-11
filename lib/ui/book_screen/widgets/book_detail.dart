@@ -20,6 +20,7 @@ class BookDetail extends StatelessWidget {
         side: BorderSide(color: dividerColor, width: 1),
         borderRadius: BorderRadius.circular(cornerRadius),
       ),
+      color: Theme.of(context).colorScheme.secondaryContainer.withAlpha(50),
       child: Container(
         padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
         child: Column(
