@@ -13,6 +13,8 @@ import 'package:openreads/ui/settings_screen/download_missing_covers_screen.dart
 import 'package:permission_handler/permission_handler.dart';
 
 import 'package:openreads/generated/locale_keys.g.dart';
+import 'package:saf_stream/saf_stream.dart';
+import 'package:saf_util/saf_util.dart';
 
 class BackupGeneral {
   static showInfoSnackbar(String message) {
@@ -130,12 +132,26 @@ class BackupGeneral {
     );
   }
 
-  static Future<Uint8List?> pickFileAndGetContent() async {
-    FilePickerResult? result = await FilePicker.platform.pickFiles();
+  static Future<Uint8List?> pickCSVFileAndGetContent() async {
+    if (Platform.isAndroid) {
+      final safStream = SafStream();
+      final safUtil = SafUtil();
 
-    if (result != null) {
-      File file = File(result.files.single.path!);
-      return file.readAsBytesSync();
+      final pickedFile = await safUtil.pickFile();
+
+      if (pickedFile == null) {
+        BackupGeneral.showInfoSnackbar(LocaleKeys.backup_not_valid.tr());
+        return null;
+      }
+
+      return await safStream.readFileBytes(pickedFile.uri);
+    } else if (Platform.isIOS) {
+      FilePickerResult? result = await FilePicker.platform.pickFiles();
+
+      if (result != null) {
+        File file = File(result.files.single.path!);
+        return file.readAsBytesSync();
+      }
     }
 
     return null;

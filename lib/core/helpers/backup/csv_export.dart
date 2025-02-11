@@ -1,7 +1,6 @@
 import 'dart:convert';
 import 'dart:io';
 
-import 'package:file_picker/file_picker.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
@@ -13,6 +12,8 @@ import 'package:openreads/core/helpers/backup/backup.dart';
 import 'package:openreads/generated/locale_keys.g.dart';
 import 'package:openreads/main.dart';
 import 'package:path_provider/path_provider.dart';
+import 'package:saf_stream/saf_stream.dart';
+import 'package:saf_util/saf_util.dart';
 import 'package:share_plus/share_plus.dart';
 
 class CSVExport {
@@ -43,10 +44,19 @@ class CSVExport {
       final csv = Uint8List.fromList(utf8.encode(csvString!));
 
       if (Platform.isAndroid) {
-        final directory = await FilePicker.platform.getDirectoryPath();
-        final path = '$directory/$fileName';
+        final safStream = SafStream();
+        final safUtil = SafUtil();
 
-        File(path).writeAsBytesSync(csv);
+        final selectedDirectory = await safUtil.pickDirectory(
+          writePermission: true,
+        );
+
+        await safStream.writeFileBytes(
+          selectedDirectory!.uri,
+          fileName,
+          'text/csv',
+          csv,
+        );
       } else if (Platform.isIOS) {
         final directory = await getApplicationDocumentsDirectory();
         final path = '${directory.path}/$fileName';

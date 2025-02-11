@@ -1,7 +1,6 @@
 import 'dart:convert';
 import 'dart:io';
 
-import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 
 import 'package:archive/archive.dart';
@@ -14,6 +13,8 @@ import 'package:openreads/generated/locale_keys.g.dart';
 import 'package:openreads/logic/bloc/challenge_bloc/challenge_bloc.dart';
 import 'package:openreads/main.dart';
 import 'package:path_provider/path_provider.dart';
+import 'package:saf_stream/saf_stream.dart';
+import 'package:saf_util/saf_util.dart';
 import 'package:share_plus/share_plus.dart';
 
 class BackupExport {
@@ -44,10 +45,17 @@ class BackupExport {
 
     try {
       if (Platform.isAndroid) {
-        String? selectedDirectory =
-            await FilePicker.platform.getDirectoryPath();
+        final safStream = SafStream();
+        final safUtil = SafUtil();
 
-        File('$selectedDirectory/$fileName').writeAsBytesSync(
+        final selectedDirectory = await safUtil.pickDirectory(
+          writePermission: true,
+        );
+
+        await safStream.writeFileBytes(
+          selectedDirectory!.uri,
+          fileName,
+          'application/zip',
           File(tmpBackupPath).readAsBytesSync(),
         );
       } else if (Platform.isIOS) {
