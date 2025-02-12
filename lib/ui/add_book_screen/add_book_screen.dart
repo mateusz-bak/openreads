@@ -620,13 +620,19 @@ class _AddBookScreenState extends State<AddBookScreen> {
                 StreamBuilder<List<String>>(
                   stream: bookCubit.tags,
                   builder: (context, AsyncSnapshot<List<String>?> snapshot) {
+                    final book = context.read<EditBookCubit>().state;
                     return TagsField(
+                      existingTags: _parseBookTags(book.tags),
                       controller: _tagsCtrl,
                       hint: LocaleKeys.enter_tags.tr(),
                       icon: FontAwesomeIcons.tags,
                       keyboardType: TextInputType.text,
-                      maxLength: Constants.maxTagLength,
-                      onSubmitted: (_) => _addNewTag(),
+                      maxLength: 20,
+                      onSubmitted: (_) {
+                        _addNewTag();
+                        // Adding setState causes reload which is needed so that tag suggestions update
+                        setState(() {});
+                      },
                       onEditingComplete: () {},
                       unselectTag: (tag) => _unselectTag(tag),
                       allTags: snapshot.data,
@@ -730,5 +736,21 @@ class _AddBookScreenState extends State<AddBookScreen> {
         ),
       ),
     );
+  }
+
+  List<String> _parseBookTags(String? tags) {
+    if (tags == null) {
+      return [];
+    }
+    final List<String> parsedTags = List<String>.empty(growable: true);
+
+    for (String tag in tags.split('|||||')) {
+      if (!parsedTags.contains(tag)) {
+        parsedTags.add(tag);
+      }
+    }
+    parsedTags.sort((a, b) => a.compareTo(b));
+
+    return parsedTags;
   }
 }
