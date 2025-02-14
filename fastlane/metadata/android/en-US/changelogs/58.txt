@@ -1,0 +1,1 @@
+- Fixed display artifacts and black screens on some devices.

@@ -3,7 +3,7 @@ description: A mobile books tracker written in Flutter. Free, private and open s
 
 publish_to: "none"
 
-version: 2.9.0+57
+version: 2.10.0+58
 
 environment:
   sdk: ">=2.18.2 <3.0.0"
@@ -21,7 +21,10 @@ dependencies:
   image_picker: ^1.0.0
   image_cropper: ^9.0.0
   flutter_bloc: ^9.0.0
-  blurhash: ^1.1.1
+  blurhash:
+    git:
+      url: https://github.com/mateusz-bak/blurhash.git
+      ref: master
   image: ^4.0.15
   fl_chart: ^0.70.2
   dropdown_button2: ^2.0.0
