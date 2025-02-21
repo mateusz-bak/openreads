@@ -373,7 +373,7 @@ class CSVImportGoodreads {
         final day = int.parse(splittedDate[2]);
 
         final dateRead = DateTime(year, month, day);
-        readingDates.add(Reading(startDate: dateRead));
+        readingDates.add(Reading(finishDate: dateRead));
       }
     }
 
