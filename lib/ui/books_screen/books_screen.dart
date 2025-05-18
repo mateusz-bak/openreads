@@ -396,8 +396,7 @@ class _BooksScreenState extends State<BooksScreen>
     }
 
     booksRated.sort((a, b) {
-      int ratingSorting = removeDiacritics(a.rating!.toString().toLowerCase())
-          .compareTo(removeDiacritics(b.rating!.toString().toLowerCase()));
+      int ratingSorting = a.rating!.compareTo(b.rating!);
       if (!isAsc) {
         ratingSorting *= -1;
       } // descending
