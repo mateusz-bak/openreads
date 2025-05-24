@@ -279,6 +279,10 @@ class StatsBloc extends Bloc<StatsEvent, StatsState> {
       if (book.pages == null || book.pages! == 0) continue;
 
       if (book.readings.isEmpty) {
+        if (year != null) {
+          continue;
+        }
+
         if (shortestBookPages == null || book.pages! < shortestBookPages) {
           shortestBookPages = book.pages!;
           shortestBookString = '${book.title} - ${book.author}';
@@ -343,6 +347,10 @@ class StatsBloc extends Bloc<StatsEvent, StatsState> {
       if (book.pages == null || book.pages! == 0) continue;
 
       if (book.readings.isEmpty) {
+        if (year != null) {
+          continue;
+        }
+
         if (longestBookPages == null || book.pages! > longestBookPages) {
           longestBookPages = book.pages!;
           longestBookString = '${book.title} - ${book.author}';
@@ -472,6 +480,10 @@ class StatsBloc extends Bloc<StatsEvent, StatsState> {
       if (book.pages == null) continue;
 
       if (book.readings.isEmpty) {
+        if (year != null) {
+          continue;
+        }
+
         finishedPages += book.pages!;
         countedBooks += 1;
       } else {
