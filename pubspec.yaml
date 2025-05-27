@@ -60,7 +60,7 @@ dependencies:
   csv: ^6.0.0
   file_picker: ^8.3.1
   smooth_page_indicator: ^1.1.0
-  intl: ^0.19.0
+  intl: ^0.20.0
   dotted_border: ^2.1.0
   flutter_cache_manager: ^3.3.1
   modal_bottom_sheet: ^3.0.0
