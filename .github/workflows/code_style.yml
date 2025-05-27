@@ -15,4 +15,5 @@ jobs:
     - uses: subosito/flutter-action@v2
       with:
         flutter-version: ${{ vars.FLUTTER_VERSION }}
+    - run: flutter pub get
     - run: dart format --set-exit-if-changed lib
