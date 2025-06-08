@@ -703,7 +703,7 @@ class _BooksScreenState extends State<BooksScreen>
           return const SortBottomSheet();
         },
       );
-    } else if (Platform.isAndroid) {
+    } else {
       showModalBottomSheet(
         context: context,
         isScrollControlled: true,
@@ -818,7 +818,7 @@ class _BooksScreenState extends State<BooksScreen>
           );
         },
       );
-    } else if (Platform.isAndroid) {
+    } else {
       showModalBottomSheet(
         context: context,
         backgroundColor: Colors.transparent,

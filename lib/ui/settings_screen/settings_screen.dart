@@ -385,7 +385,7 @@ class SettingsScreen extends StatelessWidget {
               return _buildFeedbackBottomSheet(context, version);
             },
           );
-        } else if (Platform.isAndroid) {
+        } else {
           showModalBottomSheet(
             context: context,
             isScrollControlled: true,
@@ -477,7 +477,7 @@ class SettingsScreen extends StatelessWidget {
               return _buildSupportBottomSheet(context);
             },
           );
-        } else if (Platform.isAndroid) {
+        } else {
           showModalBottomSheet(
             context: context,
             isScrollControlled: true,

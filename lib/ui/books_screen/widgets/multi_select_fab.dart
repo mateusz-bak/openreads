@@ -234,7 +234,7 @@ class MultiSelectFAB extends StatelessWidget {
                     );
                   },
                 );
-              } else if (Platform.isAndroid) {
+              } else {
                 showModalBottomSheet(
                     isScrollControlled: true,
                     context: context,
@@ -270,7 +270,7 @@ class MultiSelectFAB extends StatelessWidget {
                     );
                   },
                 );
-              } else if (Platform.isAndroid) {
+              } else {
                 showModalBottomSheet(
                     isScrollControlled: true,
                     context: context,
