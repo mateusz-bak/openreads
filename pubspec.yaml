@@ -69,6 +69,7 @@ dependencies:
   
   flutter_localizations:
     sdk: flutter
+  blurhash_ffi: ^1.2.7
 
 dev_dependencies:
   flutter_test:

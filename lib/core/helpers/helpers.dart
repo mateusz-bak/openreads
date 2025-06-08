@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:blurhash/blurhash.dart' as blurhash;
+import 'package:blurhash_ffi/blurhash_ffi.dart' as blurhash_ffi;
 import 'package:image_cropper/image_cropper.dart';
 import 'package:openreads/core/constants/constants.dart';
 import 'package:openreads/generated/locale_keys.g.dart';
@@ -14,11 +15,25 @@ import 'package:openreads/main.dart';
 import 'package:openreads/model/book.dart';
 
 Future generateBlurHash(Uint8List bytes, BuildContext context) async {
-  final blurHashStringTmp = await blurhash.BlurHash.encode(
-    bytes,
-    Constants.blurHashX,
-    Constants.blurHashY,
-  );
+  String blurHashStringTmp;
+  if (Platform.isLinux) {
+    // blurhash_ffi expects an ImageProvider, so you need to convert bytes to MemoryImage
+    final imageProvider = MemoryImage(bytes);
+    blurHashStringTmp = await blurhash_ffi.BlurhashFFI.encode(
+      imageProvider,
+      componentX: Constants.blurHashX,
+      componentY: Constants.blurHashY,
+    );
+  } else if (Platform.isAndroid || Platform.isIOS) {
+    // blurhash.encode expects bytes and dimensions
+    blurHashStringTmp = await blurhash.BlurHash.encode(
+      bytes,
+      Constants.blurHashX,
+      Constants.blurHashY,
+    );
+  } else {
+    throw Exception('Unsupported platform for generating BlurHash');
+  }
 
   if (!context.mounted) return;
 
