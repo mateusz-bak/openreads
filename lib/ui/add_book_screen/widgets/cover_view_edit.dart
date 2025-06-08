@@ -223,7 +223,7 @@ class _CoverViewEditState extends State<CoverViewEdit> {
           );
         },
       );
-    } else if (Platform.isAndroid) {
+    } else {
       showModalBottomSheet(
         context: context,
         isScrollControlled: true,
