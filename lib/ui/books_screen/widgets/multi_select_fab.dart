@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_speed_dial/flutter_speed_dial.dart';
 import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 import 'package:openreads/core/constants/enums/enums.dart';
+import 'package:openreads/core/helpers/cross_platform/alert_dialog.dart';
 import 'package:openreads/core/themes/app_theme.dart';
 import 'package:openreads/generated/locale_keys.g.dart';
 import 'package:openreads/main.dart';
@@ -118,7 +119,7 @@ class MultiSelectFAB extends StatelessWidget {
     showDialog(
       context: context,
       builder: (BuildContext dialogContext) {
-        return AlertDialog.adaptive(
+        return buildPlatformSpecificAlertDialog(
           shape: Platform.isAndroid
               ? RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(cornerRadius),
