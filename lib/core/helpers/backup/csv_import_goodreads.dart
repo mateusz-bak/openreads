@@ -10,6 +10,7 @@ import 'package:easy_localization/easy_localization.dart';
 
 import 'package:openreads/core/constants/enums/enums.dart';
 import 'package:openreads/core/helpers/backup/backup.dart';
+import 'package:openreads/core/helpers/cross_platform/alert_dialog.dart';
 import 'package:openreads/generated/locale_keys.g.dart';
 import 'package:openreads/model/reading.dart';
 import 'package:openreads/model/book.dart';
@@ -158,7 +159,7 @@ class CSVImportGoodreads {
     return await showDialog<String>(
       context: context,
       builder: (context) {
-        return AlertDialog.adaptive(
+        return buildPlatformSpecificAlertDialog(
           title: Text(
             LocaleKeys.choose_not_finished_shelf.tr(),
           ),

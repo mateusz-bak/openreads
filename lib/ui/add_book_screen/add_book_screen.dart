@@ -11,6 +11,7 @@ import 'package:loading_animation_widget/loading_animation_widget.dart';
 
 import 'package:openreads/core/constants/constants.dart';
 import 'package:openreads/core/constants/enums/enums.dart';
+import 'package:openreads/core/helpers/cross_platform/alert_dialog.dart';
 import 'package:openreads/core/helpers/helpers.dart';
 import 'package:openreads/core/themes/app_theme.dart';
 import 'package:openreads/generated/locale_keys.g.dart';
@@ -192,7 +193,7 @@ class _AddBookScreenState extends State<AddBookScreen> {
       return showDialog<bool>(
         context: context,
         builder: (context) {
-          return AlertDialog.adaptive(
+          return buildPlatformSpecificAlertDialog(
             title: Text(
               LocaleKeys.coverStillDownloaded.tr(),
             ),
