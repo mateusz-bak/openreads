@@ -244,6 +244,8 @@ class _SearchOLScreenState extends State<SearchOLScreen>
   }
 
   void _startScanner() async {
+    if (!Platform.isAndroid && !Platform.isIOS) return;
+
     FocusManager.instance.primaryFocus?.unfocus();
     context.read<OpenLibrarySearchBloc>().add(const OpenLibrarySearchSetISBN());
 

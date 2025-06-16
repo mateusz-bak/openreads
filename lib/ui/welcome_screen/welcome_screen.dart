@@ -82,8 +82,12 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
       } else {
         await CSVImportOpenreads.importCSV(context);
       }
-    } else {
+    } else if (Platform.isIOS) {
       await CSVImportOpenreads.importCSV(context);
+    } else {
+      BackupGeneral.showInfoSnackbar(
+        'Openreads CSV import is not implemented for ${Platform.operatingSystem} yet.',
+      );
     }
   }
 
@@ -100,8 +104,12 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
       } else {
         await CSVImportGoodreads.importCSV(context);
       }
-    } else {
+    } else if (Platform.isIOS) {
       await CSVImportGoodreads.importCSV(context);
+    } else {
+      BackupGeneral.showInfoSnackbar(
+        'Goodreads CSV import is not implemented for ${Platform.operatingSystem} yet.',
+      );
     }
   }
 
@@ -118,8 +126,12 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
       } else {
         await CSVImportBookwyrm.importCSV(context);
       }
-    } else {
+    } else if (Platform.isIOS) {
       await CSVImportBookwyrm.importCSV(context);
+    } else {
+      BackupGeneral.showInfoSnackbar(
+        'BookWyrm CSV import is not implemented for ${Platform.operatingSystem} yet.',
+      );
     }
   }
 

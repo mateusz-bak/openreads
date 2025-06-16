@@ -53,6 +53,10 @@ class _SettingsBackupScreenState extends State<SettingsBackupScreen> {
       }
     } else if (Platform.isIOS) {
       await BackupExport.createLocalBackup(context);
+    } else {
+      BackupGeneral.showInfoSnackbar(
+        'Backup export is not implemented for ${Platform.operatingSystem} yet.',
+      );
     }
 
     setState(() => _creatingLocal = false);
@@ -70,6 +74,10 @@ class _SettingsBackupScreenState extends State<SettingsBackupScreen> {
       }
     } else if (Platform.isIOS) {
       await CSVExport.exportCSV();
+    } else {
+      BackupGeneral.showInfoSnackbar(
+        'CSV export is not implemented for ${Platform.operatingSystem} yet.',
+      );
     }
 
     setState(() => _exportingCSV = false);
@@ -85,8 +93,12 @@ class _SettingsBackupScreenState extends State<SettingsBackupScreen> {
       } else {
         await CSVImportGoodreads.importCSV(context);
       }
-    } else {
+    } else if (Platform.isIOS) {
       await CSVImportGoodreads.importCSV(context);
+    } else {
+      BackupGeneral.showInfoSnackbar(
+        'Goodreads CSV import is not implemented for ${Platform.operatingSystem} yet.',
+      );
     }
 
     setState(() => _importingGoodreadsCSV = false);
@@ -102,8 +114,12 @@ class _SettingsBackupScreenState extends State<SettingsBackupScreen> {
       } else {
         await CSVImportBookwyrm.importCSV(context);
       }
-    } else {
+    } else if (Platform.isIOS) {
       await CSVImportBookwyrm.importCSV(context);
+    } else {
+      BackupGeneral.showInfoSnackbar(
+        'BookWyrm CSV import is not implemented for ${Platform.operatingSystem} yet.',
+      );
     }
 
     setState(() => _importingBookwyrmCSV = false);
@@ -119,14 +135,25 @@ class _SettingsBackupScreenState extends State<SettingsBackupScreen> {
       } else {
         await CSVImportOpenreads.importCSV(context);
       }
-    } else {
+    } else if (Platform.isIOS) {
       await CSVImportOpenreads.importCSV(context);
+    } else {
+      BackupGeneral.showInfoSnackbar(
+        'Openreads CSV import is not implemented for ${Platform.operatingSystem} yet.',
+      );
     }
 
     setState(() => _importingCSV = false);
   }
 
   _startCreatingCloudBackup(context) async {
+    if (!(Platform.isAndroid || Platform.isIOS)) {
+      BackupGeneral.showInfoSnackbar(
+        'Cloud backup is not implemented for ${Platform.operatingSystem} yet.',
+      );
+      return;
+    }
+
     setState(() => _creatingCloud = true);
 
     final tmpBackupPath = await BackupExport.prepareTemporaryBackup(context);

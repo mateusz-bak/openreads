@@ -189,6 +189,8 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 
   Future<void> _scanBarcode() async {
+    if (!Platform.isAndroid && !Platform.isIOS) return;
+
     _setEmptyBookForEditScreen();
 
     Navigator.pop(context);

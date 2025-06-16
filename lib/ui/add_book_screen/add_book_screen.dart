@@ -594,6 +594,8 @@ class _AddBookScreenState extends State<AddBookScreen> {
                         borderRadius: BorderRadius.circular(cornerRadius),
                       ),
                       onTap: () async {
+                        if (!Platform.isAndroid && !Platform.isIOS) return;
+
                         var result = await BarcodeScanner.scan(
                           options: ScanOptions(
                             strings: {
