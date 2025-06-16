@@ -53,6 +53,11 @@ class _SettingsBackupScreenState extends State<SettingsBackupScreen> {
       }
     } else if (Platform.isIOS) {
       await BackupExport.createLocalBackup(context);
+    } else {
+      BackupGeneral.showInfoSnackbar(
+        'Backup export is not implemented for ${Platform.operatingSystem} yet.',
+      );
+      return;
     }
 
     setState(() => _creatingLocal = false);
@@ -70,6 +75,11 @@ class _SettingsBackupScreenState extends State<SettingsBackupScreen> {
       }
     } else if (Platform.isIOS) {
       await CSVExport.exportCSV();
+    } else {
+      BackupGeneral.showInfoSnackbar(
+        'CSV export is not implemented for ${Platform.operatingSystem} yet.',
+      );
+      return;
     }
 
     setState(() => _exportingCSV = false);
@@ -127,6 +137,13 @@ class _SettingsBackupScreenState extends State<SettingsBackupScreen> {
   }
 
   _startCreatingCloudBackup(context) async {
+    if (!(Platform.isAndroid || Platform.isIOS)) {
+      BackupGeneral.showInfoSnackbar(
+        'Cloud backup is not implemented for ${Platform.operatingSystem} yet.',
+      );
+      return;
+    }
+
     setState(() => _creatingCloud = true);
 
     final tmpBackupPath = await BackupExport.prepareTemporaryBackup(context);
