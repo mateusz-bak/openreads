@@ -808,17 +808,19 @@ class SettingsScreen extends StatelessWidget {
       context: context,
     ));
 
-    tiles.add(_buildURLSetting(
-      title: LocaleKeys.rate_app.tr(),
-      description: LocaleKeys.rate_app_description.tr(),
-      url: Platform.isIOS
-          ? rateUrlIOS
-          : Platform.isAndroid
-              ? rateUrlAndroid
-              : null,
-      iconData: Icons.star_rounded,
-      context: context,
-    ));
+    if (Platform.isAndroid || Platform.isIOS) {
+      tiles.add(_buildURLSetting(
+        title: LocaleKeys.rate_app.tr(),
+        description: LocaleKeys.rate_app_description.tr(),
+        url: Platform.isIOS
+            ? rateUrlIOS
+            : Platform.isAndroid
+                ? rateUrlAndroid
+                : null,
+        iconData: Icons.star_rounded,
+        context: context,
+      ));
+    }
     tiles.add(_buildFeedbackSetting(context));
     tiles.add(_buildURLSetting(
       title: LocaleKeys.translate_app.tr(),
