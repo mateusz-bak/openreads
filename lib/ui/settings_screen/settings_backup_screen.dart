@@ -84,7 +84,7 @@ class _SettingsBackupScreenState extends State<SettingsBackupScreen> {
       } else {
         await CSVImportGoodreads.importCSV(context);
       }
-    } else if (Platform.isIOS) {
+    } else {
       await CSVImportGoodreads.importCSV(context);
     }
 
@@ -101,7 +101,7 @@ class _SettingsBackupScreenState extends State<SettingsBackupScreen> {
       } else {
         await CSVImportBookwyrm.importCSV(context);
       }
-    } else if (Platform.isIOS) {
+    } else {
       await CSVImportBookwyrm.importCSV(context);
     }
 
@@ -118,7 +118,7 @@ class _SettingsBackupScreenState extends State<SettingsBackupScreen> {
       } else {
         await CSVImportOpenreads.importCSV(context);
       }
-    } else if (Platform.isIOS) {
+    } else {
       await CSVImportOpenreads.importCSV(context);
     }
 
@@ -148,7 +148,7 @@ class _SettingsBackupScreenState extends State<SettingsBackupScreen> {
       } else {
         await BackupImport.restoreLocalBackup(context);
       }
-    } else if (Platform.isIOS) {
+    } else {
       await BackupImport.restoreLocalBackup(context);
     }
 
