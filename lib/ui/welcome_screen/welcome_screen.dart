@@ -64,7 +64,7 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
       } else {
         await BackupImport.restoreLocalBackup(context);
       }
-    } else if (Platform.isIOS) {
+    } else {
       await BackupImport.restoreLocalBackup(context);
     }
   }
@@ -82,7 +82,7 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
       } else {
         await CSVImportOpenreads.importCSV(context);
       }
-    } else if (Platform.isIOS) {
+    } else {
       await CSVImportOpenreads.importCSV(context);
     }
   }
@@ -100,7 +100,7 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
       } else {
         await CSVImportGoodreads.importCSV(context);
       }
-    } else if (Platform.isIOS) {
+    } else {
       await CSVImportGoodreads.importCSV(context);
     }
   }
@@ -118,7 +118,7 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
       } else {
         await CSVImportBookwyrm.importCSV(context);
       }
-    } else if (Platform.isIOS) {
+    } else {
       await CSVImportBookwyrm.importCSV(context);
     }
   }
