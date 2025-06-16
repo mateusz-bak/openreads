@@ -1088,9 +1088,8 @@ class _BooksScreenState extends State<BooksScreen>
       ],
     );
 
-    return Platform.isAndroid
-        ? appBar
-        : PreferredSize(
+    return Platform.isIOS
+        ? PreferredSize(
             preferredSize: Size(double.infinity, appBarHeight),
             child: ClipRRect(
               child: BackdropFilter(
@@ -1098,7 +1097,8 @@ class _BooksScreenState extends State<BooksScreen>
                 child: appBar,
               ),
             ),
-          );
+          )
+        : appBar;
   }
 
   StreamBuilder<List<Book>> _buildToReadBooksTabView() {
