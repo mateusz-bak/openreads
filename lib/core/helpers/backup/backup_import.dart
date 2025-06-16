@@ -124,12 +124,12 @@ class BackupImport {
             return;
           }
         }
-      } else if (Platform.isIOS) {
-        FilePickerResult? result = await FilePicker.platform.pickFiles(
+      } else {
+        FilePickerResult? pickedFile = await FilePicker.platform.pickFiles(
           withData: true,
         );
 
-        final file = result!.files.single;
+        final file = pickedFile!.files.single;
 
         // iOS app was released when backup 5 was the latest
         final infoFileVersion = _checkInfoFileVersion(file.bytes, tmpDir);
@@ -140,8 +140,6 @@ class BackupImport {
           BackupGeneral.showInfoSnackbar(LocaleKeys.backup_not_valid.tr());
           return;
         }
-      } else {
-        return;
       }
 
       BackupGeneral.showInfoSnackbar(LocaleKeys.restore_successfull.tr());
