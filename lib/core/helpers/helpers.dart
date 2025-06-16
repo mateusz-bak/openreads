@@ -38,6 +38,11 @@ Future generateBlurHash(Uint8List bytes, BuildContext context) async {
   context.read<EditBookCubit>().setBlurHash(blurHashStringTmp);
 }
 
+void errorSnackBar(String message) async {
+  final snackBar = SnackBar(content: Text(message));
+  snackbarKey.currentState?.showSnackBar(snackBar);
+}
+
 DateTime? getLatestFinishDate(Book book) {
   if (book.readings.isEmpty) return null;
 

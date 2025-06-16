@@ -9,6 +9,7 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
 import 'package:loading_animation_widget/loading_animation_widget.dart';
 import 'package:openreads/core/constants/enums/enums.dart';
+import 'package:openreads/core/helpers/helpers.dart';
 import 'package:openreads/core/themes/app_theme.dart';
 import 'package:openreads/generated/locale_keys.g.dart';
 import 'package:openreads/logic/bloc/open_library_search_bloc/open_library_search_bloc.dart';
@@ -244,6 +245,11 @@ class _SearchOLScreenState extends State<SearchOLScreen>
   }
 
   void _startScanner() async {
+    if (!(Platform.isAndroid || Platform.isIOS)) {
+      errorSnackBar(LocaleKeys.action_not_supported_on_platform_error.tr());
+      return;
+    }
+
     FocusManager.instance.primaryFocus?.unfocus();
     context.read<OpenLibrarySearchBloc>().add(const OpenLibrarySearchSetISBN());
 
@@ -389,9 +395,12 @@ class _SearchOLScreenState extends State<SearchOLScreen>
             style: const TextStyle(fontSize: 18),
           ),
           actions: [
-            IconButton(
-              onPressed: _startScanner,
-              icon: const FaIcon(FontAwesomeIcons.solidCamera, size: 18),
+            Opacity(
+              opacity: (Platform.isAndroid || Platform.isIOS) ? 1.0 : 0.5,
+              child: IconButton(
+                onPressed: _startScanner,
+                icon: const FaIcon(FontAwesomeIcons.solidCamera, size: 18),
+              ),
             ),
           ],
         ),

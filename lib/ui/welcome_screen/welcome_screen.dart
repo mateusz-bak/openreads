@@ -82,8 +82,12 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
       } else {
         await CSVImportOpenreads.importCSV(context);
       }
-    } else {
+    } else if (Platform.isIOS) {
       await CSVImportOpenreads.importCSV(context);
+    } else {
+      BackupGeneral.showInfoSnackbar(
+        LocaleKeys.action_not_supported_on_platform_error.tr(),
+      );
     }
   }
 
@@ -100,8 +104,12 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
       } else {
         await CSVImportGoodreads.importCSV(context);
       }
-    } else {
+    } else if (Platform.isIOS) {
       await CSVImportGoodreads.importCSV(context);
+    } else {
+      BackupGeneral.showInfoSnackbar(
+        LocaleKeys.action_not_supported_on_platform_error.tr(),
+      );
     }
   }
 
@@ -118,8 +126,12 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
       } else {
         await CSVImportBookwyrm.importCSV(context);
       }
-    } else {
+    } else if (Platform.isIOS) {
       await CSVImportBookwyrm.importCSV(context);
+    } else {
+      BackupGeneral.showInfoSnackbar(
+        LocaleKeys.action_not_supported_on_platform_error.tr(),
+      );
     }
   }
 
