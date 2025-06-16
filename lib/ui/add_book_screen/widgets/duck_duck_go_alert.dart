@@ -45,20 +45,20 @@ class DuckDuckGoAlert extends StatelessWidget {
       ),
       actionsAlignment: MainAxisAlignment.spaceBetween,
       actions: [
-        Platform.isAndroid
-            ? _buildAndroidNoButton(context)
-            : _buildIOSNoButton(context),
-        Platform.isAndroid
-            ? _buildAndroidYesButton(context)
-            : _buildIOSYesButton(context),
-        Platform.isAndroid
-            ? _buildAndroidYesAndDontShowButton(context)
-            : _buildIOSYesAndDontShowButton(context),
+        Platform.isIOS
+            ? _buildIOSNoButton(context)
+            : _buildNonIOSNoButton(context),
+        Platform.isIOS
+            ? _buildIOSYesButton(context)
+            : _buildNonIOSYesButton(context),
+        Platform.isIOS
+            ? _buildIOSYesAndDontShowButton(context)
+            : _buildNonIOSYesAndDontShowButton(context),
       ],
     );
   }
 
-  Widget _buildAndroidYesButton(BuildContext context) {
+  Widget _buildNonIOSYesButton(BuildContext context) {
     return FilledButton.tonal(
       onPressed: () => _yesButtonAction(context),
       style: FilledButton.styleFrom(
@@ -76,7 +76,7 @@ class DuckDuckGoAlert extends StatelessWidget {
     );
   }
 
-  Widget _buildAndroidYesAndDontShowButton(BuildContext context) {
+  Widget _buildNonIOSYesAndDontShowButton(BuildContext context) {
     return FilledButton(
       onPressed: () => _yesAndDontShowButtonAction(context),
       style: FilledButton.styleFrom(
@@ -94,7 +94,7 @@ class DuckDuckGoAlert extends StatelessWidget {
     );
   }
 
-  Widget _buildAndroidNoButton(BuildContext context) {
+  Widget _buildNonIOSNoButton(BuildContext context) {
     return FilledButton(
       onPressed: () => _noButtonAction(context),
       style: TextButton.styleFrom(
