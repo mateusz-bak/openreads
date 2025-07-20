@@ -193,5 +193,7 @@
     "migration_v1_to_v2_1": "Dine bøger bliver migreret til den nye version",
     "migration_v1_to_v2_2": "Forlad ikke denne skærm før alle dine bøger er migreret, for de vil gå tabt!",
     "migration_v1_to_v2_finished": "Migrering af bøger færdig, klik på START-knappen.",
-    "book_format_paperback": "Paperback"
+    "book_format_paperback": "Paperback",
+    "book_format_ebook": "E-bog",
+    "book_format_audiobook": "Lydbog"
 }

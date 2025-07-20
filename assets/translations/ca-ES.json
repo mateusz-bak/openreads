@@ -97,8 +97,8 @@
     "material_you": "Material You",
     "theme_mode_light": "Mode clar",
     "theme_mode_dark": "Mode fosc",
-    "font": "Font",
-    "select_font": "Seleccioneu la font",
+    "font": "Lletra tipogràfica",
+    "select_font": "Seleccioneu la lletra",
     "font_default": "Font per defecte del sistema",
     "rounded_corners": "Cantonades arrodonides",
     "no_rounded_corners": "Cantonades no arrodonides",
@@ -115,7 +115,7 @@
     "about": "Sobre",
     "version": "Versió",
     "source_code": "Codi font",
-    "source_code_description": "Veure a Github",
+    "source_code_description": "Mostra al GitHub",
     "licence": "Llicència",
     "support_the_project": "Doneu suport al desenvolupament",
     "support_the_project_description": "Doneu les gràcies comprant una tassa de cafè al desenvolupador",
@@ -234,5 +234,6 @@
     "import_csv": "Importa un CSV de l'Openreads",
     "load_cover_from_phone": "Carrega una coberta des del dispositiu",
     "books_settings": "Llibres",
-    "bulk_update_unsuccessful_message": "No s'han pogut actualitzar els detalls dels llibres"
+    "bulk_update_unsuccessful_message": "No s'han pogut actualitzar els detalls dels llibres",
+    "try_downloading_covers": "Voleu provar de baixar les cobertes faltants per als llibres importats?"
 }

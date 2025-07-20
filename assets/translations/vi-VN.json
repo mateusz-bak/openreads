@@ -43,5 +43,6 @@
     "book_format_hardcover": "Bìa cứng",
     "book_format_ebook": "Sách điện tử",
     "book_format_audiobook": "Sách nói",
-    "book_format_paper_plural": "Sách giấy"
+    "book_format_paper_plural": "Sách giấy",
+    "book_format_all": "Tất cả các định dạng sách"
 }
