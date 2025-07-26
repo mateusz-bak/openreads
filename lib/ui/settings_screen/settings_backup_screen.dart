@@ -8,6 +8,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:openreads/core/helpers/backup/backup.dart';
+import 'package:openreads/core/helpers/cross_platform/alert_dialog.dart';
 import 'package:openreads/logic/bloc/migration_v1_to_v2_bloc/migration_v1_to_v2_bloc.dart';
 import 'package:openreads/generated/locale_keys.g.dart';
 import 'package:openreads/logic/bloc/theme_bloc/theme_bloc.dart';
@@ -52,6 +53,11 @@ class _SettingsBackupScreenState extends State<SettingsBackupScreen> {
       }
     } else if (Platform.isIOS) {
       await BackupExport.createLocalBackup(context);
+    } else {
+      BackupGeneral.showInfoSnackbar(
+        'Backup export is not implemented for ${Platform.operatingSystem} yet.',
+      );
+      return;
     }
 
     setState(() => _creatingLocal = false);
@@ -69,6 +75,11 @@ class _SettingsBackupScreenState extends State<SettingsBackupScreen> {
       }
     } else if (Platform.isIOS) {
       await CSVExport.exportCSV();
+    } else {
+      BackupGeneral.showInfoSnackbar(
+        'CSV export is not implemented for ${Platform.operatingSystem} yet.',
+      );
+      return;
     }
 
     setState(() => _exportingCSV = false);
@@ -84,7 +95,7 @@ class _SettingsBackupScreenState extends State<SettingsBackupScreen> {
       } else {
         await CSVImportGoodreads.importCSV(context);
       }
-    } else if (Platform.isIOS) {
+    } else {
       await CSVImportGoodreads.importCSV(context);
     }
 
@@ -101,7 +112,7 @@ class _SettingsBackupScreenState extends State<SettingsBackupScreen> {
       } else {
         await CSVImportBookwyrm.importCSV(context);
       }
-    } else if (Platform.isIOS) {
+    } else {
       await CSVImportBookwyrm.importCSV(context);
     }
 
@@ -118,7 +129,7 @@ class _SettingsBackupScreenState extends State<SettingsBackupScreen> {
       } else {
         await CSVImportOpenreads.importCSV(context);
       }
-    } else if (Platform.isIOS) {
+    } else {
       await CSVImportOpenreads.importCSV(context);
     }
 
@@ -126,6 +137,13 @@ class _SettingsBackupScreenState extends State<SettingsBackupScreen> {
   }
 
   _startCreatingCloudBackup(context) async {
+    if (!(Platform.isAndroid || Platform.isIOS)) {
+      BackupGeneral.showInfoSnackbar(
+        'Cloud backup is not implemented for ${Platform.operatingSystem} yet.',
+      );
+      return;
+    }
+
     setState(() => _creatingCloud = true);
 
     final tmpBackupPath = await BackupExport.prepareTemporaryBackup(context);
@@ -148,7 +166,7 @@ class _SettingsBackupScreenState extends State<SettingsBackupScreen> {
       } else {
         await BackupImport.restoreLocalBackup(context);
       }
-    } else if (Platform.isIOS) {
+    } else {
       await BackupImport.restoreLocalBackup(context);
     }
 
@@ -318,7 +336,7 @@ class _SettingsBackupScreenState extends State<SettingsBackupScreen> {
         showDialog(
           context: context,
           builder: (context) {
-            return AlertDialog(
+            return buildPlatformSpecificAlertDialog(
               title: Text(
                 LocaleKeys.are_you_sure.tr(),
               ),
@@ -368,45 +386,39 @@ class _SettingsBackupScreenState extends State<SettingsBackupScreen> {
         showDialog(
           context: context,
           builder: (context) {
+            final actions = [
+              Platform.isIOS
+                  ? CupertinoDialogAction(
+                      onPressed: () {
+                        _startRestoringLocalBackup(builderContext);
+                        Navigator.of(context).pop();
+                      },
+                      child: Text(LocaleKeys.yes.tr()),
+                    )
+                  : FilledButton.tonal(
+                      onPressed: () {
+                        _startRestoringLocalBackup(builderContext);
+                        Navigator.of(context).pop();
+                      },
+                      child: Text(LocaleKeys.yes.tr()),
+                    ),
+              Platform.isIOS
+                  ? CupertinoDialogAction(
+                      isDefaultAction: true,
+                      onPressed: () => Navigator.of(context).pop(),
+                      child: Text(LocaleKeys.no.tr()),
+                    )
+                  : FilledButton(
+                      onPressed: () => Navigator.of(context).pop(),
+                      child: Text(LocaleKeys.no.tr()),
+                    ),
+            ];
             return Builder(
-              builder: (context) {
-                return AlertDialog.adaptive(
-                  title: Text(
-                    LocaleKeys.are_you_sure.tr(),
-                  ),
-                  content: Text(
-                    LocaleKeys.restore_backup_alert_content.tr(),
-                  ),
-                  actionsAlignment: MainAxisAlignment.spaceBetween,
-                  actions: [
-                    Platform.isIOS
-                        ? CupertinoDialogAction(
-                            onPressed: () {
-                              _startRestoringLocalBackup(builderContext);
-                              Navigator.of(context).pop();
-                            },
-                            child: Text(LocaleKeys.yes.tr()),
-                          )
-                        : FilledButton.tonal(
-                            onPressed: () {
-                              _startRestoringLocalBackup(builderContext);
-                              Navigator.of(context).pop();
-                            },
-                            child: Text(LocaleKeys.yes.tr()),
-                          ),
-                    Platform.isIOS
-                        ? CupertinoDialogAction(
-                            isDefaultAction: true,
-                            onPressed: () => Navigator.of(context).pop(),
-                            child: Text(LocaleKeys.no.tr()),
-                          )
-                        : FilledButton(
-                            onPressed: () => Navigator.of(context).pop(),
-                            child: Text(LocaleKeys.no.tr()),
-                          ),
-                  ],
-                );
-              },
+              builder: (context) => buildPlatformSpecificAlertDialog(
+                  title: Text(LocaleKeys.are_you_sure.tr()),
+                  content: Text(LocaleKeys.restore_backup_alert_content.tr()),
+                  actions: actions,
+                  actionsAlignment: MainAxisAlignment.spaceBetween),
             );
           },
         );
