@@ -114,9 +114,13 @@ class _SearchOLEditionsScreenState extends State<SearchOLEditionsScreen> {
                         },
                       ),
                       const SizedBox(width: 10),
-                      Text(
-                        LocaleKeys.only_editions_with_covers.tr(),
-                        style: const TextStyle(fontSize: 16),
+                      Expanded(
+                        child: Text(
+                          LocaleKeys.only_editions_with_covers.tr(),
+                          style: const TextStyle(fontSize: 16),
+                          overflow: TextOverflow.ellipsis,
+                          maxLines: 2,
+                        ),
                       )
                     ],
                   ),
