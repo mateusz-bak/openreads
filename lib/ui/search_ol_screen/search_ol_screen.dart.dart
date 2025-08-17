@@ -13,6 +13,7 @@ import 'package:openreads/generated/locale_keys.g.dart';
 import 'package:openreads/logic/bloc/open_library_search_bloc/open_library_search_bloc.dart';
 import 'package:openreads/logic/cubit/default_book_status_cubit.dart';
 import 'package:openreads/logic/cubit/edit_book_cubit.dart';
+import 'package:openreads/model/ol_edition_result.dart';
 import 'package:openreads/model/reading.dart';
 import 'package:openreads/model/book.dart';
 import 'package:openreads/model/ol_search_result.dart';
@@ -48,10 +49,55 @@ class _SearchOLScreenState extends State<SearchOLScreen>
   int searchTimestamp = 0;
 
   bool searchActivated = false;
+  bool inScanning = false;
 
   final _pagingController = PagingController<int, OLSearchResultDoc>(
     firstPageKey: 0,
   );
+
+  void _saveEdition({
+    required OLEditionResult result,
+    required int? cover,
+    required String author,
+    required int firstPublishYear,
+    String? work,
+  }) {
+    final defaultBookFormat = context.read<DefaultBooksFormatCubit>().state;
+
+    final book = Book(
+      title: result.title!,
+      subtitle: result.subtitle,
+      author: author,
+      pages: result.numberOfPages,
+      status: widget.status,
+      favourite: false,
+      isbn: (result.isbn13 != null && result.isbn13!.isNotEmpty)
+          ? result.isbn13![0]
+          : (result.isbn10 != null && result.isbn10!.isNotEmpty)
+              ? result.isbn10![0]
+              : null,
+      olid: (result.key != null) ? result.key!.replaceAll('/books/', '') : null,
+      publicationYear: firstPublishYear,
+      bookFormat: result.physicalFormat ?? defaultBookFormat,
+      readings: List<Reading>.empty(growable: true),
+      tags: LocaleKeys.owned_book_tag.tr(),
+      dateAdded: DateTime.now(),
+      dateModified: DateTime.now(),
+    );
+
+    context.read<EditBookCubit>().setBook(book);
+
+    Navigator.of(context).push(
+      MaterialPageRoute(
+        builder: (_) => AddBookScreen(
+          fromOpenLibrary: true,
+          fromOpenLibraryEdition: true,
+          work: work,
+          coverOpenLibraryID: cover,
+        ),
+      ),
+    );
+  }
 
   void _saveNoEdition({
     required List<String> editions,
@@ -162,13 +208,43 @@ class _SearchOLScreenState extends State<SearchOLScreen>
     );
 
     if (result.type == ResultType.Barcode) {
+      final isbn = result.rawContent;
+
+      final bookResult = await OpenLibraryService().getBookByISBN(isbn);
+
+      if (bookResult?.docs.first.editions == null ||
+          bookResult!.docs.first.editions!.docs.isEmpty) {
+        setState(() {
+          searchActivated = true;
+          inScanning = false;
+          _searchController.text = result.rawContent;
+        });
+
+        _searchTerm = result.rawContent;
+        _pagingController.refresh();
+
+        return;
+      }
+
+      final editionResult = await OpenLibraryService().getEdition(bookResult
+          .docs.first.editions!.docs[0].key!
+          .replaceAll('/books/', ''));
+
       setState(() {
-        searchActivated = true;
-        _searchController.text = result.rawContent;
+        inScanning = false;
       });
 
-      _searchTerm = result.rawContent;
-      _pagingController.refresh();
+      _saveEdition(
+        result: editionResult,
+        cover: editionResult.covers != null && editionResult.covers!.isNotEmpty
+            ? editionResult.covers![0]
+            : null,
+        work: editionResult.works != null && editionResult.works!.isNotEmpty
+            ? editionResult.works![0].key
+            : null,
+        author: bookResult.docs.first.authorName![0],
+        firstPublishYear: bookResult.docs.first.firstPublishYear!,
+      );
     }
   }
 
@@ -260,6 +336,9 @@ class _SearchOLScreenState extends State<SearchOLScreen>
   void initState() {
     super.initState();
     if (widget.scan) {
+      setState(() {
+        inScanning = true;
+      });
       _startScanner();
     }
 
@@ -290,198 +369,222 @@ class _SearchOLScreenState extends State<SearchOLScreen>
             style: const TextStyle(fontSize: 18),
           ),
         ),
-        body: Column(
-          children: [
-            Padding(
-              padding: const EdgeInsets.fromLTRB(0, 10, 10, 5),
-              child: Row(
+        body: inScanning
+            ? Center(
+                child: Platform.isIOS
+                    ? CupertinoActivityIndicator(
+                        radius: 20,
+                        color: Theme.of(context).colorScheme.primary,
+                      )
+                    : LoadingAnimationWidget.threeArchedCircle(
+                        color: Theme.of(context).colorScheme.primary,
+                        size: 36,
+                      ))
+            : Column(
                 children: [
-                  Expanded(
-                    child: BookTextField(
-                      controller: _searchController,
-                      keyboardType: TextInputType.name,
-                      maxLength: 99,
-                      autofocus: true,
-                      textInputAction: TextInputAction.search,
-                      textCapitalization: TextCapitalization.sentences,
-                      onSubmitted: (_) => _startNewSearch(),
+                  Padding(
+                    padding: const EdgeInsets.fromLTRB(0, 10, 10, 5),
+                    child: Row(
+                      children: [
+                        Expanded(
+                          child: BookTextField(
+                            controller: _searchController,
+                            keyboardType: TextInputType.name,
+                            maxLength: 99,
+                            autofocus: true,
+                            textInputAction: TextInputAction.search,
+                            textCapitalization: TextCapitalization.sentences,
+                            onSubmitted: (_) => _startNewSearch(),
+                          ),
+                        ),
+                        const SizedBox(width: 10),
+                        SizedBox(
+                          height: 48,
+                          child: ElevatedButton(
+                            onPressed: _startNewSearch,
+                            style: ElevatedButton.styleFrom(
+                              elevation: 0,
+                              backgroundColor:
+                                  Theme.of(context).colorScheme.primary,
+                              foregroundColor:
+                                  Theme.of(context).colorScheme.onPrimary,
+                              shape: RoundedRectangleBorder(
+                                borderRadius:
+                                    BorderRadius.circular(cornerRadius),
+                              ),
+                            ),
+                            child: Text(
+                              LocaleKeys.search.tr(),
+                              style: const TextStyle(fontSize: 12),
+                            ),
+                          ),
+                        ),
+                      ],
                     ),
                   ),
-                  const SizedBox(width: 10),
-                  SizedBox(
-                    height: 48,
-                    child: ElevatedButton(
-                      onPressed: _startNewSearch,
-                      style: ElevatedButton.styleFrom(
-                        elevation: 0,
-                        backgroundColor: Theme.of(context).colorScheme.primary,
-                        foregroundColor:
-                            Theme.of(context).colorScheme.onPrimary,
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(cornerRadius),
-                        ),
-                      ),
-                      child: Text(
-                        LocaleKeys.search.tr(),
-                        style: const TextStyle(fontSize: 12),
-                      ),
+                  Align(
+                    alignment: Alignment.centerLeft,
+                    child: BlocBuilder<OpenLibrarySearchBloc,
+                        OpenLibrarySearchState>(
+                      builder: (context, state) {
+                        return Wrap(
+                          alignment: WrapAlignment.start,
+                          crossAxisAlignment: WrapCrossAlignment.center,
+                          children: [
+                            for (var i = 0; i < 4; i++) ...[
+                              if (i != 0) const SizedBox(width: 5),
+                              OLSearchRadio(
+                                searchType: OLSearchType.values[i],
+                                activeSearchType: _getOLSearchTypeEnum(state),
+                                onChanged: _changeSearchType,
+                              ),
+                            ],
+                          ],
+                        );
+                      },
                     ),
+                  ),
+                  const Padding(
+                    padding: EdgeInsets.fromLTRB(10, 0, 10, 10),
+                    child: Divider(height: 3),
+                  ),
+                  (numberOfResults != null && numberOfResults! != 0)
+                      ? Padding(
+                          padding: const EdgeInsets.fromLTRB(10, 0, 10, 20),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.end,
+                            children: [
+                              Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                children: [
+                                  Text(
+                                    '$numberOfResults ${LocaleKeys.results_lowercase.tr()}',
+                                    style: const TextStyle(fontSize: 12),
+                                  ),
+                                ],
+                              ),
+                            ],
+                          ),
+                        )
+                      : const SizedBox(),
+                  Expanded(
+                    child: (!searchActivated)
+                        ? const SizedBox()
+                        : Scrollbar(
+                            child: PagedListView<int, OLSearchResultDoc>(
+                              pagingController: _pagingController,
+                              builderDelegate:
+                                  PagedChildBuilderDelegate<OLSearchResultDoc>(
+                                firstPageProgressIndicatorBuilder: (_) =>
+                                    Center(
+                                  child: Platform.isIOS
+                                      ? CupertinoActivityIndicator(
+                                          radius: 20,
+                                          color: Theme.of(context)
+                                              .colorScheme
+                                              .primary,
+                                        )
+                                      : LoadingAnimationWidget
+                                          .staggeredDotsWave(
+                                          color: Theme.of(context)
+                                              .colorScheme
+                                              .primary,
+                                          size: 42,
+                                        ),
+                                ),
+                                newPageProgressIndicatorBuilder: (_) => Center(
+                                  child: Padding(
+                                    padding: const EdgeInsets.all(20.0),
+                                    child: Platform.isIOS
+                                        ? CupertinoActivityIndicator(
+                                            radius: 20,
+                                            color: Theme.of(context)
+                                                .colorScheme
+                                                .primary,
+                                          )
+                                        : LoadingAnimationWidget
+                                            .staggeredDotsWave(
+                                            color: Theme.of(context)
+                                                .colorScheme
+                                                .primary,
+                                            size: 42,
+                                          ),
+                                  ),
+                                ),
+                                noItemsFoundIndicatorBuilder: (_) => Center(
+                                  child: Column(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: [
+                                      InkWell(
+                                        borderRadius: BorderRadius.circular(
+                                          cornerRadius,
+                                        ),
+                                        onTap: _addBookManually,
+                                        child: Padding(
+                                          padding: const EdgeInsets.all(10),
+                                          child: Column(
+                                            children: [
+                                              Text(
+                                                LocaleKeys.no_search_results
+                                                    .tr(),
+                                                style: const TextStyle(
+                                                  fontSize: 18,
+                                                ),
+                                              ),
+                                              const SizedBox(height: 10),
+                                              Text(
+                                                LocaleKeys
+                                                    .click_to_add_book_manually
+                                                    .tr(),
+                                                style: const TextStyle(
+                                                  fontSize: 14,
+                                                ),
+                                              ),
+                                            ],
+                                          ),
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                                itemBuilder: (context, item, index) =>
+                                    Builder(builder: (context) {
+                                  return BookCardOL(
+                                    title: item.title ?? '',
+                                    subtitle: item.subtitle,
+                                    author: (item.authorName != null &&
+                                            item.authorName!.isNotEmpty)
+                                        ? item.authorName![0]
+                                        : '',
+                                    coverKey: item.coverEditionKey,
+                                    editions: item.editionKey,
+                                    pagesMedian: item.medianPages,
+                                    firstPublishYear: item.firstPublishYear,
+                                    onAddBookPressed: () => _saveNoEdition(
+                                      editions: item.editionKey!,
+                                      title: item.title ?? '',
+                                      subtitle: item.subtitle,
+                                      author: (item.authorName != null &&
+                                              item.authorName!.isNotEmpty)
+                                          ? item.authorName![0]
+                                          : '',
+                                      pagesMedian: item.medianPages,
+                                      isbn: item.isbn,
+                                      olid: item.key,
+                                      firstPublishYear: item.firstPublishYear,
+                                      cover: item.coverI,
+                                    ),
+                                    onChooseEditionPressed: () =>
+                                        _onChooseEditionPressed(item),
+                                  );
+                                }),
+                              ),
+                            ),
+                          ),
                   ),
                 ],
               ),
-            ),
-            Align(
-              alignment: Alignment.centerLeft,
-              child: BlocBuilder<OpenLibrarySearchBloc, OpenLibrarySearchState>(
-                builder: (context, state) {
-                  return Wrap(
-                    alignment: WrapAlignment.start,
-                    crossAxisAlignment: WrapCrossAlignment.center,
-                    children: [
-                      for (var i = 0; i < 4; i++) ...[
-                        if (i != 0) const SizedBox(width: 5),
-                        OLSearchRadio(
-                          searchType: OLSearchType.values[i],
-                          activeSearchType: _getOLSearchTypeEnum(state),
-                          onChanged: _changeSearchType,
-                        ),
-                      ],
-                    ],
-                  );
-                },
-              ),
-            ),
-            const Padding(
-              padding: EdgeInsets.fromLTRB(10, 0, 10, 10),
-              child: Divider(height: 3),
-            ),
-            (numberOfResults != null && numberOfResults! != 0)
-                ? Padding(
-                    padding: const EdgeInsets.fromLTRB(10, 0, 10, 20),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.end,
-                      children: [
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Text(
-                              '$numberOfResults ${LocaleKeys.results_lowercase.tr()}',
-                              style: const TextStyle(fontSize: 12),
-                            ),
-                          ],
-                        ),
-                      ],
-                    ),
-                  )
-                : const SizedBox(),
-            Expanded(
-              child: (!searchActivated)
-                  ? const SizedBox()
-                  : Scrollbar(
-                      child: PagedListView<int, OLSearchResultDoc>(
-                        pagingController: _pagingController,
-                        builderDelegate:
-                            PagedChildBuilderDelegate<OLSearchResultDoc>(
-                          firstPageProgressIndicatorBuilder: (_) => Center(
-                            child: Platform.isIOS
-                                ? CupertinoActivityIndicator(
-                                    radius: 20,
-                                    color:
-                                        Theme.of(context).colorScheme.primary,
-                                  )
-                                : LoadingAnimationWidget.staggeredDotsWave(
-                                    color:
-                                        Theme.of(context).colorScheme.primary,
-                                    size: 42,
-                                  ),
-                          ),
-                          newPageProgressIndicatorBuilder: (_) => Center(
-                            child: Padding(
-                              padding: const EdgeInsets.all(20.0),
-                              child: Platform.isIOS
-                                  ? CupertinoActivityIndicator(
-                                      radius: 20,
-                                      color:
-                                          Theme.of(context).colorScheme.primary,
-                                    )
-                                  : LoadingAnimationWidget.staggeredDotsWave(
-                                      color:
-                                          Theme.of(context).colorScheme.primary,
-                                      size: 42,
-                                    ),
-                            ),
-                          ),
-                          noItemsFoundIndicatorBuilder: (_) => Center(
-                            child: Column(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                InkWell(
-                                  borderRadius: BorderRadius.circular(
-                                    cornerRadius,
-                                  ),
-                                  onTap: _addBookManually,
-                                  child: Padding(
-                                    padding: const EdgeInsets.all(10),
-                                    child: Column(
-                                      children: [
-                                        Text(
-                                          LocaleKeys.no_search_results.tr(),
-                                          style: const TextStyle(
-                                            fontSize: 18,
-                                          ),
-                                        ),
-                                        const SizedBox(height: 10),
-                                        Text(
-                                          LocaleKeys.click_to_add_book_manually
-                                              .tr(),
-                                          style: const TextStyle(
-                                            fontSize: 14,
-                                          ),
-                                        ),
-                                      ],
-                                    ),
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ),
-                          itemBuilder: (context, item, index) =>
-                              Builder(builder: (context) {
-                            return BookCardOL(
-                              title: item.title ?? '',
-                              subtitle: item.subtitle,
-                              author: (item.authorName != null &&
-                                      item.authorName!.isNotEmpty)
-                                  ? item.authorName![0]
-                                  : '',
-                              coverKey: item.coverEditionKey,
-                              editions: item.editionKey,
-                              pagesMedian: item.medianPages,
-                              firstPublishYear: item.firstPublishYear,
-                              onAddBookPressed: () => _saveNoEdition(
-                                editions: item.editionKey!,
-                                title: item.title ?? '',
-                                subtitle: item.subtitle,
-                                author: (item.authorName != null &&
-                                        item.authorName!.isNotEmpty)
-                                    ? item.authorName![0]
-                                    : '',
-                                pagesMedian: item.medianPages,
-                                isbn: item.isbn,
-                                olid: item.key,
-                                firstPublishYear: item.firstPublishYear,
-                                cover: item.coverI,
-                              ),
-                              onChooseEditionPressed: () =>
-                                  _onChooseEditionPressed(item),
-                            );
-                          }),
-                        ),
-                      ),
-                    ),
-            ),
-          ],
-        ),
       ),
     );
   }

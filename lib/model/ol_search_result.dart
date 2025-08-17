@@ -41,6 +41,7 @@ class OLSearchResultDoc {
     this.seed,
     this.title,
     this.titleSuggest,
+    this.editions,
     this.editionCount,
     this.editionKey,
     this.publishDate,
@@ -121,6 +122,7 @@ class OLSearchResultDoc {
   final String? title;
   final String? titleSuggest;
   final int? editionCount;
+  final OLSearchResultEdition? editions;
   final List<String>? editionKey;
   final List<String>? publishDate;
   final List<int>? publishYear;
@@ -202,6 +204,9 @@ class OLSearchResultDoc {
             : List<String>.from(json["seed"].map((x) => x)),
         title: json["title"],
         titleSuggest: json["title_suggest"],
+        editions: json["editions"] == null
+            ? null
+            : OLSearchResultEdition.fromJson(json["editions"]),
         editionCount: json["edition_count"],
         editionKey: json["edition_key"] == null
             ? null
@@ -337,8 +342,7 @@ class OLSearchResultDoc {
         subjectFacet: json["subject_facet"] == null
             ? null
             : List<String>.from(json["subject_facet"].map((x) => x)),
-        version:
-            json["_version_"] == null ? null : json["_version_"].toDouble(),
+        version: json["_version_"]?.toDouble(),
         placeFacet: json["place_facet"] == null
             ? null
             : List<String>.from(json["place_facet"].map((x) => x)),
@@ -393,6 +397,33 @@ class OLSearchResultDoc {
         subtitle: json["subtitle"],
       );
 }
+
+class OLSearchResultEdition {
+  OLSearchResultEdition(
+      {this.key,
+      this.numFound,
+      this.start,
+      this.numFoundExact,
+      required this.docs});
+
+  final String? key;
+  final int? numFound;
+  final int? start;
+  final bool? numFoundExact;
+  final List<OLSearchResultDoc> docs;
+
+  factory OLSearchResultEdition.fromJson(Map<String, dynamic> json) =>
+      OLSearchResultEdition(
+        numFound: json["numFound"],
+        start: json["start"],
+        numFoundExact: json["numFoundExact"],
+        docs: List<OLSearchResultDoc>.from(
+            json["docs"].map((x) => OLSearchResultDoc.fromJson(x))),
+      );
+}
+
+OLSearchResultEdition openLibrarySearchResultEditionFromJson(String str) =>
+    OLSearchResultEdition.fromJson(json.decode(str));
 
 enum EbookAccess { borrowable, noEbook, public, printdisabled }
 

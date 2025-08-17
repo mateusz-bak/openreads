@@ -65,4 +65,19 @@ class OpenLibraryService {
       return null;
     }
   }
+
+  Future<OLSearchResult?> getBookByISBN(String isbn) async {
+    try {
+      final uri = Uri.parse(
+          '${baseUrl}search.json?isbn=$isbn&limit=1&fields=key,title,subtitle,author_key,author_name,editions,number_of_pages_median,first_publish_year,isbn,edition_key,cover_edition_key,cover_i');
+      final response = await get(uri);
+      final result = openLibrarySearchResultFromJson(response.body);
+
+      if (result.docs.isEmpty) return null;
+
+      return result;
+    } catch (e) {
+      return null;
+    }
+  }
 }
