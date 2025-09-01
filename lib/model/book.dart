@@ -64,6 +64,7 @@ class Book {
     BookStatus status = BookStatus.read,
     BookFormat bookFormat = BookFormat.paperback,
   }) {
+    final newBookDate = DateTime.now();
     return Book(
       id: null,
       title: '',
@@ -75,8 +76,8 @@ class Book {
       hasCover: false,
       readings: List<Reading>.empty(growable: true),
       tags: LocaleKeys.owned_book_tag.tr(),
-      dateAdded: DateTime.now(),
-      dateModified: DateTime.now(),
+      dateAdded: newBookDate,
+      dateModified: newBookDate,
     );
   }
 
