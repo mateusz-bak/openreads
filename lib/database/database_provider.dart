@@ -63,25 +63,25 @@ class DatabaseProvider {
 
           switch (oldVersion) {
             case 1:
-              _updateBookDatabaseV1toV8(batch);
+              _updateBookDatabaseV1toLatest(batch);
               break;
             case 2:
-              _updateBookDatabaseV2toV8(batch);
+              _updateBookDatabaseV2toLatest(batch);
               break;
             case 3:
-              _updateBookDatabaseV3toV8(batch);
+              _updateBookDatabaseV3toLatest(batch);
               break;
             case 4:
-              _updateBookDatabaseV4toV8(batch);
+              _updateBookDatabaseV4toLatest(batch);
               break;
             case 5:
-              _updateBookDatabaseV5toV8(batch);
+              _updateBookDatabaseV5toLatest(batch);
               break;
             case 6:
-              _updateBookDatabaseV6toV8(batch);
+              _updateBookDatabaseV6toLatest(batch);
               break;
             case 7:
-              _updateBookDatabaseV7toV8(batch);
+              _updateBookDatabaseV7toLatest(batch);
               break;
           }
 
@@ -128,7 +128,7 @@ class DatabaseProvider {
     "ALTER TABLE booksTable ADD date_modified TEXT DEFAULT '${DateTime.now().toIso8601String()}'",
   ];
 
-  void _updateBookDatabaseV1toV8(Batch batch) {
+  void _updateBookDatabaseV1toLatest(Batch batch) {
     _executeBatch(
       batch,
       migrationScriptsV2 +
@@ -141,7 +141,7 @@ class DatabaseProvider {
     );
   }
 
-  void _updateBookDatabaseV2toV8(Batch batch) {
+  void _updateBookDatabaseV2toLatest(Batch batch) {
     _executeBatch(
       batch,
       migrationScriptsV3 +
@@ -153,7 +153,7 @@ class DatabaseProvider {
     );
   }
 
-  void _updateBookDatabaseV3toV8(Batch batch) {
+  void _updateBookDatabaseV3toLatest(Batch batch) {
     _executeBatch(
       batch,
       migrationScriptsV4 +
@@ -164,7 +164,7 @@ class DatabaseProvider {
     );
   }
 
-  void _updateBookDatabaseV4toV8(Batch batch) {
+  void _updateBookDatabaseV4toLatest(Batch batch) {
     _executeBatch(
       batch,
       migrationScriptsV5 +
@@ -174,21 +174,21 @@ class DatabaseProvider {
     );
   }
 
-  void _updateBookDatabaseV5toV8(Batch batch) {
+  void _updateBookDatabaseV5toLatest(Batch batch) {
     _executeBatch(
       batch,
       migrationScriptsV6 + migrationScriptsV7 + migrationScriptsV8,
     );
   }
 
-  void _updateBookDatabaseV6toV8(Batch batch) {
+  void _updateBookDatabaseV6toLatest(Batch batch) {
     _executeBatch(
       batch,
       migrationScriptsV7 + migrationScriptsV8,
     );
   }
 
-  void _updateBookDatabaseV7toV8(Batch batch) {
+  void _updateBookDatabaseV7toLatest(Batch batch) {
     _executeBatch(
       batch,
       migrationScriptsV8,
