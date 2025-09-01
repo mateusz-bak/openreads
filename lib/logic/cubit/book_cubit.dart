@@ -77,7 +77,7 @@ class BookCubit extends Cubit {
     getAllBooks();
   }
 
-  getAllBooks({
+  Future<void> getAllBooks({
     bool getTags = true,
     bool getAuthors = true,
   }) async {
@@ -95,13 +95,16 @@ class BookCubit extends Cubit {
 
   removeAllBooks() async {
     await repository.removeAllBooks();
+
+    await getAllBooks();
+    await getAllBooksByStatus();
   }
 
-  getAllBooksByStatus() async {
-    getFinishedBooks();
-    getInProgressBooks();
-    getToReadBooks();
-    getUnfinishedBooks();
+  Future<void> getAllBooksByStatus() async {
+    await getFinishedBooks();
+    await getInProgressBooks();
+    await getToReadBooks();
+    await getUnfinishedBooks();
   }
 
   getFinishedBooks() async {
@@ -140,7 +143,11 @@ class BookCubit extends Cubit {
     }
   }
 
-  addBook(Book book, {bool refreshBooks = true, Uint8List? cover}) async {
+  Future<int> addBook(
+    Book book, {
+    bool refreshBooks = true,
+    Uint8List? cover,
+  }) async {
     final bookID = await repository.insertBook(book);
 
     await _saveCoverToStorage(bookID, cover);
@@ -149,6 +156,7 @@ class BookCubit extends Cubit {
       getAllBooksByStatus();
       getAllBooks();
     }
+    return bookID;
   }
 
   Future<List<int>> importAdditionalBooks(List<Book> books) async {
@@ -172,7 +180,11 @@ class BookCubit extends Cubit {
     await file.writeAsBytes(cover);
   }
 
-  updateBook(Book book, {Uint8List? cover, BuildContext? context}) async {
+  Future<void> updateBook(
+    Book book, {
+    Uint8List? cover,
+    BuildContext? context,
+  }) async {
     repository.updateBook(book);
     await _saveCoverToStorage(book.id!, cover);
 
@@ -181,6 +193,8 @@ class BookCubit extends Cubit {
       // before updating current book
       context.read<CurrentBookCubit>().setBook(book.copyWith());
     }
+
+    emit(null);
 
     getBook(book.id!);
     getAllBooksByStatus();
