@@ -128,33 +128,33 @@ class _AddBookScreenState extends State<AddBookScreen> {
     return true;
   }
 
-  void _saveBook(Book book) async {
+  void _saveNewBook(Book book) async {
     FocusManager.instance.primaryFocus?.unfocus();
 
     if (!_validate()) return;
     if (await _checkIfWaitForCoverDownload(context) == true) return;
     if (!mounted) return;
 
-    if (book.hasCover == false) {
-      context.read<EditBookCoverCubit>().deleteCover(book.id);
-      context.read<EditBookCubit>().addNewBook(null);
-    } else {
-      final cover = context.read<EditBookCoverCubit>().state;
-      context.read<EditBookCubit>().addNewBook(cover);
-    }
+    Uint8List? cover;
 
+    book.hasCover == false
+        ? context.read<EditBookCoverCubit>().deleteCover(book.id)
+        : cover = context.read<EditBookCoverCubit>().state;
+
+    final newBookID = await context.read<EditBookCubit>().addNewBook(cover);
+    book = book.copyWith(id: newBookID);
     if (!mounted) return;
-    Navigator.pop(context);
 
-    if (widget.duplicatingBook) {
-      Navigator.pop(context);
-    }
+    context.read<CurrentBookCubit>().setBook(book);
+    
 
-    if (widget.fromOpenLibrary) {
-      Navigator.pop(context);
-      if (!widget.fromOpenLibraryEdition) return;
-      Navigator.pop(context);
-    }
+    Navigator.pushAndRemoveUntil(
+      context,
+      MaterialPageRoute(
+        builder: (context) => const BookScreen(heroTag: ""),
+      ),
+      (route) => route.isFirst,
+    );
   }
 
   void _updateBook(Book book) async {
@@ -164,19 +164,20 @@ class _AddBookScreenState extends State<AddBookScreen> {
     if (await _checkIfWaitForCoverDownload(context) == true) return;
     if (!mounted) return;
 
-    context.read<EditBookCubit>().setBook(book.copyWith(
-          dateModified: DateTime.now(),
-        ));
+    book = book.copyWith(dateModified: DateTime.now());
+    context.read<EditBookCubit>().setBook(book);
 
     if (book.hasCover == false) {
       context.read<EditBookCoverCubit>().deleteCover(book.id);
       context.read<EditBookCubit>().updateBook(null, context);
     } else {
-      final cover = context.read<EditBookCoverCubit>().state;
-      context.read<EditBookCubit>().updateBook(cover, context);
+      context.read<EditBookCubit>().updateBook(
+            context.read<EditBookCoverCubit>().state,
+            context,
+          );
     }
 
-    if (!mounted) return;
+
     Navigator.pop(context);
   }
 
@@ -415,7 +416,7 @@ class _AddBookScreenState extends State<AddBookScreen> {
                 return TextButton(
                   onPressed: (state.id != null)
                       ? () => _updateBook(state)
-                      : () => _saveBook(state),
+                      : () => _saveNewBook(state),
                   child: Text(
                     LocaleKeys.save.tr(),
                     style: const TextStyle(fontSize: 16),
@@ -683,7 +684,7 @@ class _AddBookScreenState extends State<AddBookScreen> {
                           return FilledButton(
                             onPressed: (state.id != null)
                                 ? () => _updateBook(state)
-                                : () => _saveBook(state),
+                                : () => _saveNewBook(state),
                             style: ButtonStyle(
                               shape: MaterialStateProperty.all(
                                   RoundedRectangleBorder(
