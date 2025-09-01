@@ -672,6 +672,7 @@ class SettingsScreen extends StatelessWidget {
                     sections: [
                       SettingsSection(
                         tiles: _buildGeneralSettingsTiles(context, version),
+                      ),
                       SettingsSection(
                         title: Text(
                           LocaleKeys.books_settings.tr(),
