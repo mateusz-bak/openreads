@@ -124,6 +124,7 @@ class Book {
   }
 
   Book copyWith({
+    int? id,
     String? title,
     String? author,
     BookStatus? status,
@@ -148,7 +149,7 @@ class Book {
     DateTime? dateModified,
   }) {
     return Book(
-      id: id,
+      id: this.id ?? id,
       title: title ?? this.title,
       subtitle: subtitle ?? this.subtitle,
       author: author ?? this.author,
