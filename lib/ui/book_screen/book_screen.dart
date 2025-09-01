@@ -12,15 +12,13 @@ import 'package:openreads/ui/book_screen/widgets/widgets.dart';
 class BookScreen extends StatelessWidget {
   const BookScreen({
     super.key,
-    required this.id,
     required this.heroTag,
   });
 
-  final int id;
   final String heroTag;
 
   _onLikeTap(BuildContext context, Book book) {
-    book = book.copyWith(favourite: book.favourite == true ? false : true);
+    book = book.copyWith(favourite: !book.favourite == true);
 
     bookCubit.updateBook(book);
     context.read<CurrentBookCubit>().setBook(book);
@@ -94,10 +92,6 @@ class BookScreen extends StatelessWidget {
             ? (book.readings..[0] = book.readings[0].copyWith(finishDate: date))
             : [Reading(finishDate: date)],
       );
-
-      bookCubit.updateBook(book);
-
-      // starting the book
     } else if (status == BookStatus.forLater) {
       book = book.copyWith(
         status: BookStatus.inProgress,
@@ -105,10 +99,6 @@ class BookScreen extends StatelessWidget {
             ? (book.readings..[0] = book.readings[0].copyWith(startDate: date))
             : [Reading(startDate: date)],
       );
-
-      bookCubit.updateBook(book);
-
-      // starting the book
     } else if (status == BookStatus.unfinished) {
       book = book.copyWith(
         status: BookStatus.inProgress,
@@ -116,9 +106,9 @@ class BookScreen extends StatelessWidget {
             ? (book.readings..[0] = book.readings[0].copyWith(startDate: date))
             : [Reading(startDate: date)],
       );
-
-      bookCubit.updateBook(book);
     }
+
+    bookCubit.updateBook(book);
 
     if (!context.mounted) return;
     context.read<CurrentBookCubit>().setBook(book);

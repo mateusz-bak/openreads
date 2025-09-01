@@ -111,18 +111,21 @@ class BookScreenAppBar extends StatelessWidget implements PreferredSizeWidget {
     if (deletePermanently == true) {
       _deleteBookPermanently(book);
     } else {
-      _changeDeleteStatus(deleted, book);
+      _changeDeleteStatus(context, deleted, book);
     }
 
     Navigator.of(context).pop();
     Navigator.of(context).pop();
   }
 
-  Future<void> _changeDeleteStatus(bool deleted, Book book) async {
-    await bookCubit.updateBook(book.copyWith(
-      deleted: deleted,
-    ));
+  Future<void> _changeDeleteStatus(
+    BuildContext context,
+    bool deleted,
+    Book book,
+  ) async {
+    book = book.copyWith(deleted: deleted);
 
+    await bookCubit.updateBook(book);
     bookCubit.getDeletedBooks();
   }
 

@@ -29,10 +29,7 @@ class ReadStats extends StatelessWidget {
     Navigator.push(
       context,
       MaterialPageRoute(
-        builder: (context) => BookScreen(
-          id: book!.id!,
-          heroTag: '${book?.id}-$heroKey',
-        ),
+        builder: (context) => BookScreen(heroTag: '${book?.id}-$heroKey'),
       ),
     );
   }

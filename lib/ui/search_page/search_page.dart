@@ -83,7 +83,6 @@ class _SearchPageState extends State<SearchPage> {
                               context,
                               MaterialPageRoute(
                                 builder: (context) => BookScreen(
-                                  id: snapshot.data![index].id!,
                                   heroTag: heroTag,
                                 ),
                               ),
