@@ -22,12 +22,19 @@ class WelcomePageText extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.start,
               children: [
                 for (var description in descriptions)
-                  Padding(
-                    padding: const EdgeInsets.only(bottom: 40),
-                    child: Text(
-                      description,
-                      style: const TextStyle(fontSize: 20),
-                    ),
+                  Row(
+                    children: [
+                      Expanded(
+                        child: Padding(
+                          padding: const EdgeInsets.only(bottom: 40),
+                          child: Text(
+                            description,
+                            style: const TextStyle(fontSize: 20),
+                            textAlign: TextAlign.center,
+                          ),
+                        ),
+                      ),
+                    ],
                   ),
               ],
             ),

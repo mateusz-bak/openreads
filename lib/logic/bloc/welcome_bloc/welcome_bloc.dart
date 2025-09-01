@@ -17,22 +17,28 @@ class WelcomeBloc extends HydratedBloc<WelcomeEvent, WelcomeState> {
 
   @override
   WelcomeState? fromJson(Map<String, dynamic> json) {
-    final storedValue = json['welcome_state'] as int;
+    final showWelcomeScreen = json['show_welcome_screen'] as bool?;
 
-    switch (storedValue) {
-      case 0:
+    if (showWelcomeScreen == false) {
+      return HideWelcomeState();
         return HideWelcomeState();
-      default:
-        return ShowWelcomeState();
+    } else {
+      return ShowWelcomeState();
     }
   }
 
   @override
   Map<String, dynamic>? toJson(WelcomeState state) {
     if (state is ShowWelcomeState) {
-      return {'welcome_state': 1};
+      return {
+        'show_welcome_screen': true,
+      };
+    } else if (state is HideWelcomeState) {
+      return {
+        'show_welcome_screen': false,
+      };
     } else {
-      return {'welcome_state': 0};
+      return null;
     }
   }
 }

@@ -5,7 +5,7 @@ abstract class WelcomeEvent extends Equatable {
 }
 
 class ChangeWelcomeEvent extends WelcomeEvent {
-  const ChangeWelcomeEvent(this.showWelcome);
+  const ChangeWelcomeEvent({required this.showWelcome});
 
   final bool showWelcome;
 

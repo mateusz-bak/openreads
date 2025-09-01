@@ -45,7 +45,7 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
 
   _setWelcomeState() {
     BlocProvider.of<WelcomeBloc>(context).add(
-      const ChangeWelcomeEvent(false),
+      const ChangeWelcomeEvent(showWelcome: false),
     );
   }
 
@@ -156,8 +156,9 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
                           padding: const EdgeInsets.fromLTRB(20, 0, 20, 20),
                           child: Text(
                             LocaleKeys.welcome_1.tr(),
+                            textAlign: TextAlign.center,
                             style: const TextStyle(
-                              fontSize: 36,
+                              fontSize: 32,
                               fontWeight: FontWeight.bold,
                             ),
                           ),
