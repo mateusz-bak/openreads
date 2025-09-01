@@ -20,8 +20,10 @@ class EditBookCubit extends Cubit<Book> {
     bookCubit.updateBook(state, cover: cover, context: context);
   }
 
-  void addNewBook(Uint8List? cover) {
-    bookCubit.addBook(state, cover: cover);
+  Future<int> addNewBook(Uint8List? cover) async {
+    final bookID = await bookCubit.addBook(state, cover: cover);
+
+    return bookID;
   }
 
   void setStatus(BookStatus status) {
