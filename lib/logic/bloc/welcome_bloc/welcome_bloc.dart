@@ -21,7 +21,7 @@ class WelcomeBloc extends HydratedBloc<WelcomeEvent, WelcomeState> {
 
     if (showWelcomeScreen == false) {
       return HideWelcomeState();
-        return HideWelcomeState();
+      // return HideWelcomeState();
     } else {
       return ShowWelcomeState();
     }

@@ -101,7 +101,6 @@ class App extends StatelessWidget {
       ),
     ];
 
-
     return [
       ...bookProviders,
       ...settingsProviders,
