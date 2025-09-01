@@ -39,10 +39,7 @@ class _BooksListState extends State<BooksList>
     Navigator.push(
       context,
       MaterialPageRoute(
-        builder: (context) => BookScreen(
-          id: widget.books[index].id!,
-          heroTag: heroTag,
-        ),
+        builder: (context) => BookScreen(heroTag: heroTag),
       ),
     );
   }
