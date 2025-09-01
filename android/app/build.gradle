@@ -49,7 +49,7 @@ android {
 
     defaultConfig {
         applicationId "software.mdev.bookstracker"
-        minSdkVersion 21
+        minSdkVersion flutter.minSdkVersion
         targetSdkVersion flutter.targetSdkVersion
         versionCode flutterVersionCode.toInteger()
         versionName flutterVersionName
