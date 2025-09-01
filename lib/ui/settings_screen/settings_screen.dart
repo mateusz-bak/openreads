@@ -57,11 +57,7 @@ class SettingsScreen extends StatelessWidget {
       if (!mounted) return;
 
       ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
-          content: Text(
-            '$error',
-          ),
-        ),
+        SnackBar(content: Text('$error')),
       );
     }
   }
@@ -76,11 +72,7 @@ class SettingsScreen extends StatelessWidget {
       if (!mounted) return;
 
       ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
-          content: Text(
-            '$error',
-          ),
-        ),
+        SnackBar(content: Text('$error')),
       );
     }
   }
@@ -95,11 +87,7 @@ class SettingsScreen extends StatelessWidget {
       if (!mounted) return;
 
       ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
-          content: Text(
-            '$error',
-          ),
-        ),
+        SnackBar(content: Text('$error')),
       );
     }
   }
@@ -114,11 +102,7 @@ class SettingsScreen extends StatelessWidget {
       if (!mounted) return;
 
       ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
-          content: Text(
-            '$error',
-          ),
-        ),
+        SnackBar(content: Text('$error')),
       );
     }
   }
@@ -257,11 +241,7 @@ class SettingsScreen extends StatelessWidget {
     widgets.add(
       LanguageButton(
         language: LocaleKeys.default_locale.tr(),
-        onPressed: () => _setLanguage(
-          context,
-          state,
-          null,
-        ),
+        onPressed: () => _setLanguage(context, state, null),
       ),
     );
 
@@ -269,11 +249,7 @@ class SettingsScreen extends StatelessWidget {
       widgets.add(
         LanguageButton(
           language: language.fullName,
-          onPressed: () => _setLanguage(
-            context,
-            state,
-            language.locale,
-          ),
+          onPressed: () => _setLanguage(context, state, language.locale),
         ),
       );
     }
@@ -314,26 +290,15 @@ class SettingsScreen extends StatelessWidget {
     required BuildContext context,
   }) {
     return SettingsTile.navigation(
-      title: Text(
-        title,
-        style: const TextStyle(
-          fontSize: 16,
-        ),
-      ),
+      title: Text(title, style: const TextStyle(fontSize: 16)),
       leading: (iconData == null) ? null : Icon(iconData),
       description: (description != null)
-          ? Text(
-              description,
-              style: const TextStyle(),
-            )
+          ? Text(description, style: const TextStyle())
           : null,
       onPressed: (_) {
         if (url == null) return;
 
-        launchUrl(
-          Uri.parse(url),
-          mode: LaunchMode.externalApplication,
-        );
+        launchUrl(Uri.parse(url), mode: LaunchMode.externalApplication);
       },
     );
   }
@@ -345,18 +310,10 @@ class SettingsScreen extends StatelessWidget {
     required BuildContext context,
   }) {
     return SettingsTile(
-      title: Text(
-        title,
-        style: const TextStyle(
-          fontSize: 16,
-        ),
-      ),
+      title: Text(title, style: const TextStyle(fontSize: 16)),
       leading: (iconData == null) ? null : Icon(iconData),
       description: (description != null)
-          ? Text(
-              description,
-              style: const TextStyle(),
-            )
+          ? Text(description, style: const TextStyle())
           : null,
     );
   }
@@ -365,9 +322,7 @@ class SettingsScreen extends StatelessWidget {
     return SettingsTile.navigation(
       title: Text(
         LocaleKeys.send_feedback.tr(),
-        style: const TextStyle(
-          fontSize: 16,
-        ),
+        style: const TextStyle(fontSize: 16),
       ),
       description: Text(
         LocaleKeys.report_bugs_or_ideas.tr(),
@@ -455,9 +410,7 @@ class SettingsScreen extends StatelessWidget {
           letterSpacing: 0.8,
         ),
       ),
-      description: Text(
-        LocaleKeys.support_the_project_description.tr(),
-      ),
+      description: Text(LocaleKeys.support_the_project_description.tr()),
       leading: ShakeAnimatedWidget(
         duration: const Duration(seconds: 3),
         shakeAngle: Rotation.deg(z: 20),
@@ -540,17 +493,13 @@ class SettingsScreen extends StatelessWidget {
     return SettingsTile.navigation(
       title: Text(
         LocaleKeys.deleted_books.tr(),
-        style: const TextStyle(
-          fontSize: 16,
-        ),
+        style: const TextStyle(fontSize: 16),
       ),
       leading: const Icon(Icons.delete),
       onPressed: (context) {
         Navigator.push(
           context,
-          MaterialPageRoute(
-            builder: (context) => const TrashScreen(),
-          ),
+          MaterialPageRoute(builder: (context) => const TrashScreen()),
         );
       },
     );
@@ -560,9 +509,7 @@ class SettingsScreen extends StatelessWidget {
     return SettingsTile.navigation(
       title: Text(
         LocaleKeys.download_missing_covers.tr(),
-        style: const TextStyle(
-          fontSize: 16,
-        ),
+        style: const TextStyle(fontSize: 16),
       ),
       leading: const Icon(Icons.image),
       onPressed: (context) {
@@ -580,9 +527,7 @@ class SettingsScreen extends StatelessWidget {
     return SettingsTile(
       title: Text(
         LocaleKeys.default_books_format.tr(),
-        style: const TextStyle(
-          fontSize: 16,
-        ),
+        style: const TextStyle(fontSize: 16),
       ),
       leading: const Icon(Icons.book_rounded),
       description: BlocBuilder<DefaultBooksFormatCubit, BookFormat>(
@@ -620,17 +565,13 @@ class SettingsScreen extends StatelessWidget {
     return SettingsTile.navigation(
       title: Text(
         LocaleKeys.backup_and_restore.tr(),
-        style: const TextStyle(
-          fontSize: 16,
-        ),
+        style: const TextStyle(fontSize: 16),
       ),
       leading: const Icon(Icons.settings_backup_restore_rounded),
       onPressed: (context) {
         Navigator.push(
           context,
-          MaterialPageRoute(
-            builder: (context) => const SettingsBackupScreen(),
-          ),
+          MaterialPageRoute(builder: (context) => const SettingsBackupScreen()),
         );
       },
     );
@@ -640,9 +581,7 @@ class SettingsScreen extends StatelessWidget {
     return SettingsTile.navigation(
       title: Text(
         LocaleKeys.apperance.tr(),
-        style: const TextStyle(
-          fontSize: 16,
-        ),
+        style: const TextStyle(fontSize: 16),
       ),
       leading: const Icon(Icons.color_lens),
       onPressed: (context) {
@@ -660,9 +599,7 @@ class SettingsScreen extends StatelessWidget {
     return SettingsTile(
       title: Text(
         LocaleKeys.language.tr(),
-        style: const TextStyle(
-          fontSize: 16,
-        ),
+        style: const TextStyle(fontSize: 16),
       ),
       leading: const Icon(Icons.public),
       description: BlocBuilder<ThemeBloc, ThemeState>(
@@ -672,10 +609,7 @@ class SettingsScreen extends StatelessWidget {
 
             for (var language in supportedLocales) {
               if (language.locale == locale) {
-                return Text(
-                  language.fullName,
-                  style: const TextStyle(),
-                );
+                return Text(language.fullName, style: const TextStyle());
               }
             }
 
@@ -704,127 +638,127 @@ class SettingsScreen extends StatelessWidget {
       appBar: AppBar(
         title: Text(
           LocaleKeys.settings.tr(),
-          style: const TextStyle(
-            fontSize: 18,
-          ),
+          style: const TextStyle(fontSize: 18),
         ),
       ),
       body: SafeArea(
         child: FutureBuilder<String>(
-            future: _getAppVersion(),
-            builder: (context, snapshot) {
-              if (snapshot.hasData) {
-                final version = snapshot.data;
+          future: _getAppVersion(),
+          builder: (context, snapshot) {
+            if (snapshot.hasData) {
+              final version = snapshot.data;
 
-                return BlocBuilder<ThemeBloc, ThemeState>(
-                  builder: (context, state) {
-                    late final bool amoledDark;
+              return BlocBuilder<ThemeBloc, ThemeState>(
+                builder: (context, state) {
+                  late final bool amoledDark;
 
-                    if (state is SetThemeState) {
-                      amoledDark = state.amoledDark;
-                    } else {
-                      amoledDark = false;
-                    }
+                  if (state is SetThemeState) {
+                    amoledDark = state.amoledDark;
+                  } else {
+                    amoledDark = false;
+                  }
 
-                    return SettingsList(
-                      contentPadding: const EdgeInsets.only(top: 10),
-                      darkTheme: SettingsThemeData(
-                        settingsListBackground: amoledDark
-                            ? Colors.black
-                            : Theme.of(context).colorScheme.surface,
+                  return SettingsList(
+                    contentPadding: const EdgeInsets.only(top: 10),
+                    darkTheme: SettingsThemeData(
+                      settingsListBackground: amoledDark
+                          ? Colors.black
+                          : Theme.of(context).colorScheme.surface,
+                    ),
+                    lightTheme: SettingsThemeData(
+                      settingsListBackground:
+                          Theme.of(context).colorScheme.surface,
+                    ),
+                    sections: [
+                      SettingsSection(
+                        tiles: _buildGeneralSettingsTiles(context, version),
+                      SettingsSection(
+                        title: Text(
+                          LocaleKeys.books_settings.tr(),
+                          style: TextStyle(
+                            fontSize: 16,
+                            fontWeight: FontWeight.bold,
+                            color: Theme.of(context).colorScheme.primary,
+                          ),
+                        ),
+                        tiles: <SettingsTile>[
+                          _buildTrashSetting(context),
+                          _buildDownloadMissingCovers(context),
+                          _buildDefaultBooksFormat(context),
+                        ],
                       ),
-                      lightTheme: SettingsThemeData(
-                        settingsListBackground:
-                            Theme.of(context).colorScheme.surface,
+                      SettingsSection(
+                        title: Text(
+                          LocaleKeys.app.tr(),
+                          style: TextStyle(
+                            fontSize: 16,
+                            fontWeight: FontWeight.bold,
+                            color: Theme.of(context).colorScheme.primary,
+                          ),
+                        ),
+                        tiles: <SettingsTile>[
+                          _buildBackupSetting(context),
+                          _buildAppearanceSetting(context),
+                          _buildLanguageSetting(context),
+                        ],
                       ),
-                      sections: [
-                        SettingsSection(
-                          tiles: _buildGeneralSettingsTiles(context, version),
-                        ),
-                        SettingsSection(
-                          title: Text(
-                            LocaleKeys.books_settings.tr(),
-                            style: TextStyle(
-                              fontSize: 16,
-                              fontWeight: FontWeight.bold,
-                              color: Theme.of(context).colorScheme.primary,
-                            ),
+                      SettingsSection(
+                        title: Text(
+                          LocaleKeys.about.tr(),
+                          style: TextStyle(
+                            fontSize: 16,
+                            fontWeight: FontWeight.bold,
+                            color: Theme.of(context).colorScheme.primary,
                           ),
-                          tiles: <SettingsTile>[
-                            _buildTrashSetting(context),
-                            _buildDownloadMissingCovers(context),
-                            _buildDefaultBooksFormat(context),
-                          ],
                         ),
-                        SettingsSection(
-                          title: Text(
-                            LocaleKeys.app.tr(),
-                            style: TextStyle(
-                              fontSize: 16,
-                              fontWeight: FontWeight.bold,
-                              color: Theme.of(context).colorScheme.primary,
-                            ),
+                        tiles: <SettingsTile>[
+                          _buildBasicSetting(
+                            title: LocaleKeys.version.tr(),
+                            description: version,
+                            iconData: Icons.rocket_launch,
+                            context: context,
                           ),
-                          tiles: <SettingsTile>[
-                            _buildBackupSetting(context),
-                            _buildAppearanceSetting(context),
-                            _buildLanguageSetting(context),
-                          ],
-                        ),
-                        SettingsSection(
-                          title: Text(
-                            LocaleKeys.about.tr(),
-                            style: TextStyle(
-                              fontSize: 16,
-                              fontWeight: FontWeight.bold,
-                              color: Theme.of(context).colorScheme.primary,
-                            ),
+                          _buildURLSetting(
+                            title: LocaleKeys.changelog.tr(),
+                            description: LocaleKeys.changelog_description.tr(),
+                            url: releasesUrl,
+                            iconData: Icons.auto_awesome_rounded,
+                            context: context,
                           ),
-                          tiles: <SettingsTile>[
-                            _buildBasicSetting(
-                              title: LocaleKeys.version.tr(),
-                              description: version,
-                              iconData: Icons.rocket_launch,
-                              context: context,
-                            ),
-                            _buildURLSetting(
-                              title: LocaleKeys.changelog.tr(),
-                              description: LocaleKeys.changelog_description.tr(),
-                              url: releasesUrl,
-                              iconData: Icons.auto_awesome_rounded,
-                              context: context,
-                            ),
-                            _buildURLSetting(
-                              title: LocaleKeys.source_code.tr(),
-                              description:
-                                  LocaleKeys.source_code_description.tr(),
-                              url: repoUrl,
-                              iconData: Icons.code,
-                              context: context,
-                            ),
-                            _buildURLSetting(
-                              title: LocaleKeys.licence.tr(),
-                              description: licence,
-                              url: licenceUrl,
-                              iconData: Icons.copyright_rounded,
-                              context: context,
-                            ),
-                          ],
-                        ),
-                      ],
-                    );
-                  },
-                );
-              } else {
-                return const SizedBox();
-              }
-            }),
+                          _buildURLSetting(
+                            title: LocaleKeys.source_code.tr(),
+                            description:
+                                LocaleKeys.source_code_description.tr(),
+                            url: repoUrl,
+                            iconData: Icons.code,
+                            context: context,
+                          ),
+                          _buildURLSetting(
+                            title: LocaleKeys.licence.tr(),
+                            description: licence,
+                            url: licenceUrl,
+                            iconData: Icons.copyright_rounded,
+                            context: context,
+                          ),
+                        ],
+                      ),
+                    ],
+                  );
+                },
+              );
+            } else {
+              return const SizedBox();
+            }
+          },
+        ),
       ),
     );
   }
 
   List<SettingsTile> _buildGeneralSettingsTiles(
-      BuildContext context, String? version) {
+    BuildContext context,
+    String? version,
+  ) {
     final tiles = List<SettingsTile>.empty(growable: true);
 
     // TODO: Implement in app purchase for iOS
