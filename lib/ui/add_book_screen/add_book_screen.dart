@@ -14,6 +14,7 @@ import 'package:openreads/core/constants/enums/enums.dart';
 import 'package:openreads/core/helpers/helpers.dart';
 import 'package:openreads/core/themes/app_theme.dart';
 import 'package:openreads/generated/locale_keys.g.dart';
+import 'package:openreads/logic/cubit/current_book_cubit.dart';
 import 'package:openreads/logic/cubit/edit_book_cubit.dart';
 import 'package:openreads/model/reading.dart';
 import 'package:openreads/resources/open_library_service.dart';
@@ -21,6 +22,7 @@ import 'package:openreads/main.dart';
 import 'package:openreads/model/book.dart';
 import 'package:openreads/ui/add_book_screen/widgets/cover_view_edit.dart';
 import 'package:openreads/ui/add_book_screen/widgets/widgets.dart';
+import 'package:openreads/ui/book_screen/book_screen.dart';
 import 'package:openreads/ui/common/keyboard_dismissable.dart';
 
 class AddBookScreen extends StatefulWidget {
@@ -146,7 +148,6 @@ class _AddBookScreenState extends State<AddBookScreen> {
     if (!mounted) return;
 
     context.read<CurrentBookCubit>().setBook(book);
-    
 
     Navigator.pushAndRemoveUntil(
       context,
@@ -176,7 +177,6 @@ class _AddBookScreenState extends State<AddBookScreen> {
             context,
           );
     }
-
 
     Navigator.pop(context);
   }

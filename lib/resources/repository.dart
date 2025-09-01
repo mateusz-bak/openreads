@@ -6,7 +6,8 @@ import 'package:openreads/core/constants/enums/enums.dart';
 class Repository {
   final DatabaseController dbController = DatabaseController();
 
-  Future<List<Book>> getAllNotDeletedBooks() => dbController.getAllNotDeletedBooks();
+  Future<List<Book>> getAllNotDeletedBooks() =>
+      dbController.getAllNotDeletedBooks();
 
   Future<List<Book>> getAllBooks() => dbController.getAllBooks();
 
