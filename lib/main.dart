@@ -29,6 +29,7 @@ import 'package:openreads/logic/cubit/default_book_status_cubit.dart';
 import 'package:openreads/logic/cubit/edit_book_cubit.dart';
 import 'package:openreads/resources/connectivity_service.dart';
 import 'package:openreads/resources/open_library_service.dart';
+import 'package:openreads/ui/books_screen/books_screen.dart';
 import 'package:openreads/ui/welcome_screen/welcome_screen.dart';
 import 'package:path_provider/path_provider.dart';
 
@@ -252,8 +253,7 @@ class _OpenreadsAppState extends State<OpenreadsApp>
           themeMode: themeMode,
           home: showWelcomeScreen
               ? WelcomeScreen(themeData: Theme.of(context))
-              : const HomeScreen(),
-              
+              : const BooksScreen(),
           localizationsDelegates: localizationsDelegates,
           supportedLocales: context.supportedLocales,
           locale: context.locale,
