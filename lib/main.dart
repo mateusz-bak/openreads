@@ -9,6 +9,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_displaymode/flutter_displaymode.dart';
 import 'package:hydrated_bloc/hydrated_bloc.dart';
 import 'package:intl/date_symbol_data_local.dart';
+import 'package:openreads/ui/home_screen/home_screen.dart';
 import 'package:openreads/core/constants/constants.dart';
 import 'package:openreads/core/constants/locale.dart';
 import 'package:openreads/core/helpers/locale_delegates/locale_delegates.dart';
@@ -28,7 +29,6 @@ import 'package:openreads/logic/cubit/default_book_status_cubit.dart';
 import 'package:openreads/logic/cubit/edit_book_cubit.dart';
 import 'package:openreads/resources/connectivity_service.dart';
 import 'package:openreads/resources/open_library_service.dart';
-import 'package:openreads/ui/books_screen/books_screen.dart';
 import 'package:openreads/ui/welcome_screen/welcome_screen.dart';
 import 'package:path_provider/path_provider.dart';
 
@@ -72,42 +72,55 @@ void main() async {
 class App extends StatelessWidget {
   const App({super.key});
 
+  _listOfBlocProviders(BuildContext context) {
+    final bookProviders = [
+      BlocProvider(create: (_) => EditBookCubit()),
+      BlocProvider(create: (_) => EditBookCoverCubit()),
+      BlocProvider(create: (_) => CurrentBookCubit()),
+      BlocProvider(create: (_) => ChallengeBloc()),
+    ];
+
+    final settingsProviders = [
+      BlocProvider(create: (_) => DefaultBooksFormatCubit()),
+      BlocProvider(create: (_) => ThemeBloc()),
+      BlocProvider(create: (_) => DisplayBloc()),
+      BlocProvider(create: (_) => SortBloc()),
+      BlocProvider(create: (_) => WelcomeBloc()),
+      BlocProvider(create: (_) => RatingTypeBloc()),
+      BlocProvider(create: (_) => MigrationV1ToV2Bloc()),
+    ];
+
+    final openLibraryProviders = [
+      BlocProvider(create: (_) => OpenLibrarySearchBloc()),
+      BlocProvider(
+        create: (context) => OpenLibBloc(
+          RepositoryProvider.of<OpenLibraryService>(context),
+          RepositoryProvider.of<ConnectivityService>(context),
+        ),
+      ),
+    ];
+
+
+    return [
+      ...bookProviders,
+      ...settingsProviders,
+      ...openLibraryProviders,
+    ];
+  }
+
+  _listOfRepositoryProviders(BuildContext context) {
+    return [
+      RepositoryProvider(create: (_) => OpenLibraryService()),
+      RepositoryProvider(create: (_) => ConnectivityService()),
+    ];
+  }
+
   @override
   Widget build(BuildContext context) {
     return MultiRepositoryProvider(
-      providers: [
-        RepositoryProvider(create: (context) => OpenLibraryService()),
-        RepositoryProvider(create: (context) => ConnectivityService()),
-      ],
+      providers: _listOfRepositoryProviders(context),
       child: MultiBlocProvider(
-        providers: [
-          BlocProvider<EditBookCubit>(create: (context) => EditBookCubit()),
-          BlocProvider<EditBookCoverCubit>(
-            create: (context) => EditBookCoverCubit(),
-          ),
-          BlocProvider<CurrentBookCubit>(
-            create: (context) => CurrentBookCubit(),
-          ),
-          BlocProvider<DefaultBooksFormatCubit>(
-            create: (context) => DefaultBooksFormatCubit(),
-          ),
-          BlocProvider<ThemeBloc>(create: (context) => ThemeBloc()),
-          BlocProvider<DisplayBloc>(create: (context) => DisplayBloc()),
-          BlocProvider<SortBloc>(create: (context) => SortBloc()),
-          BlocProvider<WelcomeBloc>(create: (context) => WelcomeBloc()),
-          BlocProvider<ChallengeBloc>(create: (context) => ChallengeBloc()),
-          BlocProvider<RatingTypeBloc>(create: (context) => RatingTypeBloc()),
-          BlocProvider<OpenLibrarySearchBloc>(
-              create: (context) => OpenLibrarySearchBloc()),
-          BlocProvider<MigrationV1ToV2Bloc>(
-              create: (context) => MigrationV1ToV2Bloc()),
-          BlocProvider<OpenLibBloc>(
-            create: (context) => OpenLibBloc(
-              RepositoryProvider.of<OpenLibraryService>(context),
-              RepositoryProvider.of<ConnectivityService>(context),
-            ),
-          ),
-        ],
+        providers: _listOfBlocProviders(context),
         child: BlocBuilder<ThemeBloc, ThemeState>(
           builder: (_, themeState) {
             if (themeState is SetThemeState) {
@@ -145,13 +158,15 @@ class OpenreadsApp extends StatefulWidget {
 
 class _OpenreadsAppState extends State<OpenreadsApp>
     with WidgetsBindingObserver {
-  late bool welcomeMode;
+  late bool showWelcomeScreen;
 
   _decideWelcomeMode(WelcomeState welcomeState) {
     if (welcomeState is ShowWelcomeState) {
-      welcomeMode = true;
+      showWelcomeScreen = true;
+    } else if (welcomeState is HideWelcomeState) {
+      showWelcomeScreen = false;
     } else {
-      welcomeMode = false;
+      showWelcomeScreen = true;
     }
   }
 
@@ -181,6 +196,7 @@ class _OpenreadsAppState extends State<OpenreadsApp>
       }
       SystemChrome.setEnabledSystemUIMode(SystemUiMode.edgeToEdge);
       final themeMode = widget.themeState.themeMode;
+
       return AnnotatedRegion<SystemUiOverlayStyle>(
         value: SystemUiOverlayStyle(
           statusBarColor: Colors.transparent,
@@ -234,9 +250,10 @@ class _OpenreadsAppState extends State<OpenreadsApp>
                 : null,
           ),
           themeMode: themeMode,
-          home: welcomeMode
+          home: showWelcomeScreen
               ? WelcomeScreen(themeData: Theme.of(context))
-              : const BooksScreen(),
+              : const HomeScreen(),
+              
           localizationsDelegates: localizationsDelegates,
           supportedLocales: context.supportedLocales,
           locale: context.locale,
@@ -246,7 +263,7 @@ class _OpenreadsAppState extends State<OpenreadsApp>
   }
 }
 
-_setAndroidConfig() async {
+Future<void> _setAndroidConfig() async {
   if (Platform.isAndroid) {
     var androidInfo = await DeviceInfoPlugin().androidInfo;
     var sdkInt = androidInfo.version.sdkInt;
