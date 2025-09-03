@@ -39,6 +39,7 @@ class Statistics extends StatelessWidget {
               children: [
                 Expanded(
                   child: TabBar(
+                    tabAlignment: TabAlignment.start,
                     isScrollable: true,
                     tabs: _buildYearsTabBars(context, state.years),
                   ),
