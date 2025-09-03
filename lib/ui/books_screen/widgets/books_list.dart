@@ -45,6 +45,7 @@ class _BooksListState extends State<BooksList>
   onLongPressed(int index) {
     if (widget.books[index].id == null) return;
 
+    context.read<SelectedBooksCubit>().onBookPressed(widget.books[index].id!);
   }
 
   @override
