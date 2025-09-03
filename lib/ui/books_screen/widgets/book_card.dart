@@ -374,10 +374,11 @@ class _BookCardState extends State<BookCard> {
             unratedColor: Theme.of(context).scaffoldBackgroundColor,
             glow: false,
             glowRadius: 1,
-            itemSize: 20,
+            itemSize: 18,
             ignoreGestures: true,
-            itemBuilder: (context, _) => Icon(
-              Icons.star_rounded,
+            itemPadding: const EdgeInsets.only(right: 3),
+            itemBuilder: (context, _) => FaIcon(
+              FontAwesomeIcons.solidStar,
               color: ratingColor,
             ),
             onRatingUpdate: (_) {},
@@ -391,10 +392,10 @@ class _BookCardState extends State<BookCard> {
                     : '${(widget.book.rating! / 10)}',
               ),
               const SizedBox(width: 5),
-              Icon(
-                Icons.star_rounded,
+              FaIcon(
+                FontAwesomeIcons.solidStar,
                 color: ratingColor,
-                size: 20,
+                size: 14,
               ),
             ],
           );
