@@ -7,44 +7,40 @@ class ChartLegendElement extends StatelessWidget {
     this.size = 14,
     required this.text,
     required this.number,
-    this.reversed = false,
   });
   final Color color;
   final double size;
   final String text;
   final int number;
-  final bool reversed;
 
   @override
   Widget build(BuildContext context) {
-    List<Widget> widgets = [
-      Flexible(
-        child: Text(
-          '$text ($number)',
-          style: const TextStyle(fontSize: 9.5),
-        ),
-      ),
-      const SizedBox(width: 8),
-      Container(
-        padding: const EdgeInsets.all(1),
-        decoration: BoxDecoration(
-          shape: BoxShape.circle,
-          color: Theme.of(context).colorScheme.onSurfaceVariant,
-        ),
-        child: Container(
-          width: size,
-          height: size,
-          decoration: BoxDecoration(
-            shape: BoxShape.circle,
-            color: color,
-          ),
-        ),
-      ),
-    ];
     return Row(
-      mainAxisAlignment: MainAxisAlignment.end,
-      mainAxisSize: MainAxisSize.min,
-      children: reversed ? widgets.reversed.toList() : widgets,
-    );
+        mainAxisAlignment: MainAxisAlignment.start,
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          Container(
+            padding: const EdgeInsets.all(1),
+            decoration: BoxDecoration(
+              shape: BoxShape.circle,
+              color: Theme.of(context).colorScheme.onSurfaceVariant,
+            ),
+            child: Container(
+              width: size,
+              height: size,
+              decoration: BoxDecoration(
+                shape: BoxShape.circle,
+                color: color,
+              ),
+            ),
+          ),
+          const SizedBox(width: 8),
+          Expanded(
+            child: Text(
+              '$text ($number)',
+              style: const TextStyle(fontSize: 11),
+            ),
+          ),
+        ]);
   }
 }

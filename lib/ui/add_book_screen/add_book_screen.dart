@@ -149,7 +149,7 @@ class _AddBookScreenState extends State<AddBookScreen> {
     if (!mounted) return;
 
     context.read<CurrentBookCubit>().setBook(book);
-    
+
     // context.read<PbSyncBloc>().add(TriggerSyncEvent(booksToSync: [book]));
 
     Navigator.pushAndRemoveUntil(
@@ -181,7 +181,6 @@ class _AddBookScreenState extends State<AddBookScreen> {
           );
     }
 
-    
     // context.read<PbSyncBloc>().add(TriggerSyncEvent(booksToSync: [book]));
 
     Navigator.pop(context);

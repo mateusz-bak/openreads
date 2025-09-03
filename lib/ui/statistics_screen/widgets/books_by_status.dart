@@ -23,13 +23,14 @@ class BooksByStatusState extends State<BooksByStatus> {
   @override
   Widget build(BuildContext context) {
     return Card(
+      color: Theme.of(context).colorScheme.secondaryContainer.withAlpha(80),
       shadowColor: Colors.transparent,
       shape: RoundedRectangleBorder(
         side: BorderSide(color: dividerColor, width: 1),
         borderRadius: BorderRadius.circular(cornerRadius),
       ),
       child: Padding(
-        padding: const EdgeInsets.fromLTRB(10, 10, 10, 30),
+        padding: const EdgeInsets.fromLTRB(10, 10, 10, 10),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
@@ -49,9 +50,7 @@ class BooksByStatusState extends State<BooksByStatus> {
               children: [
                 Text(
                   '${LocaleKeys.books_finished.tr()} - ${widget.list![0]}',
-                  style: const TextStyle(
-                    fontSize: 16,
-                  ),
+                  style: const TextStyle(fontSize: 14),
                 ),
               ],
             ),
@@ -59,9 +58,7 @@ class BooksByStatusState extends State<BooksByStatus> {
               children: [
                 Text(
                   '${LocaleKeys.books_in_progress.tr()} - ${widget.list![1]}',
-                  style: const TextStyle(
-                    fontSize: 16,
-                  ),
+                  style: const TextStyle(fontSize: 14),
                 ),
               ],
             ),
@@ -69,9 +66,7 @@ class BooksByStatusState extends State<BooksByStatus> {
               children: [
                 Text(
                   '${LocaleKeys.books_for_later.tr()} - ${widget.list![2]}',
-                  style: const TextStyle(
-                    fontSize: 16,
-                  ),
+                  style: const TextStyle(fontSize: 14),
                 ),
               ],
             ),
