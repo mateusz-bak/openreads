@@ -93,7 +93,7 @@ class Statistics extends StatelessWidget {
               children: [
                 _buildBooksChallenge(context, state, null),
                 _buildPagesChallenge(context, state, null),
-                _buildAllBooksPieChart(context),
+                _buildAllBooksStat(context),
                 _buildFinishedBooksByMonth(context, state, null),
                 _buildFinishedPagesByMonth(context, state, null),
                 _buildNumberOfFinishedBooks(context, state, null),
@@ -276,7 +276,7 @@ class Statistics extends StatelessWidget {
     );
   }
 
-  Widget _buildAllBooksPieChart(BuildContext context) {
+  Widget _buildAllBooksStat(BuildContext context) {
     return BooksByStatus(
       title: LocaleKeys.all_books_by_status.tr(),
       list: [
