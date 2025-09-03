@@ -14,6 +14,7 @@ import 'package:openreads/core/constants/enums/enums.dart';
 import 'package:openreads/core/helpers/helpers.dart';
 import 'package:openreads/core/themes/app_theme.dart';
 import 'package:openreads/generated/locale_keys.g.dart';
+// import 'package:openreads/logic/bloc/pb_sync_bloc/pb_sync_bloc.dart';
 import 'package:openreads/logic/cubit/current_book_cubit.dart';
 import 'package:openreads/logic/cubit/edit_book_cubit.dart';
 import 'package:openreads/model/reading.dart';
@@ -148,6 +149,8 @@ class _AddBookScreenState extends State<AddBookScreen> {
     if (!mounted) return;
 
     context.read<CurrentBookCubit>().setBook(book);
+    
+    // context.read<PbSyncBloc>().add(TriggerSyncEvent(booksToSync: [book]));
 
     Navigator.pushAndRemoveUntil(
       context,
@@ -177,6 +180,9 @@ class _AddBookScreenState extends State<AddBookScreen> {
             context,
           );
     }
+
+    
+    // context.read<PbSyncBloc>().add(TriggerSyncEvent(booksToSync: [book]));
 
     Navigator.pop(context);
   }

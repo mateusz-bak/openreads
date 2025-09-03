@@ -1,30 +1,17 @@
-import 'dart:io';
-import 'dart:ui';
-
+import 'package:diacritic/diacritic.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
-import 'package:openreads/core/constants/constants.dart';
-import 'package:openreads/core/constants/enums/enums.dart';
+import 'package:openreads/core/constants/enums/book_format.dart';
+import 'package:openreads/core/constants/enums/sort_type.dart';
 import 'package:openreads/core/helpers/helpers.dart';
-import 'package:openreads/core/themes/app_theme.dart';
 import 'package:openreads/generated/locale_keys.g.dart';
 import 'package:openreads/logic/bloc/display_bloc/display_bloc.dart';
 import 'package:openreads/logic/bloc/sort_bloc/sort_bloc.dart';
 import 'package:openreads/logic/bloc/theme_bloc/theme_bloc.dart';
-import 'package:openreads/logic/cubit/default_book_status_cubit.dart';
-import 'package:openreads/logic/cubit/edit_book_cubit.dart';
 import 'package:openreads/main.dart';
 import 'package:openreads/model/book.dart';
-import 'package:openreads/ui/add_book_screen/add_book_screen.dart';
 import 'package:openreads/ui/books_screen/widgets/widgets.dart';
-import 'package:openreads/ui/search_ol_screen/search_ol_screen.dart';
-import 'package:openreads/ui/search_page/search_page.dart';
-import 'package:openreads/ui/settings_screen/settings_screen.dart';
-import 'package:openreads/ui/statistics_screen/statistics_screen.dart';
-import 'package:diacritic/diacritic.dart';
-import 'package:openreads/ui/unfinished_screen/unfinished_screen.dart';
 
 class BooksScreen extends StatefulWidget {
   const BooksScreen({super.key});
@@ -35,21 +22,10 @@ class BooksScreen extends StatefulWidget {
 
 class _BooksScreenState extends State<BooksScreen>
     with AutomaticKeepAliveClientMixin, TickerProviderStateMixin {
-  late List<String> moreButtonOptions;
-  late double appBarHeight;
-  Set<int> selectedBookIds = {};
+  int _booksTabIndex = 0;
 
   late TabController _tabController;
-
-  _onItemSelected(int id) {
-    setState(() {
-      if (selectedBookIds.contains(id)) {
-        selectedBookIds.remove(id);
-      } else {
-        selectedBookIds.add(id);
-      }
-    });
-  }
+  late ScrollController _chipScrollController;
 
   List<Book> _sortReadList({
     required SetSortState state,
@@ -692,194 +668,20 @@ class _BooksScreenState extends State<BooksScreen>
     return booksWithPublicationDate + booksWithoutPublicationDate;
   }
 
-  void openSortFilterSheet() {
-    FocusManager.instance.primaryFocus?.unfocus();
+  _changeTab(int index, SetThemeState state) {
+    setState(() {
+      _booksTabIndex = index;
+    });
 
-    if (Platform.isIOS) {
-      showCupertinoModalBottomSheet(
-        context: context,
-        expand: false,
-        builder: (_) {
-          return const SortBottomSheet();
-        },
-      );
-    } else if (Platform.isAndroid) {
-      showModalBottomSheet(
-        context: context,
-        isScrollControlled: true,
-        backgroundColor: Colors.transparent,
-        builder: (context) {
-          return const SortBottomSheet();
-        },
-      );
+    if (index == 0) {
+      _tabController.index = state.readTabFirst ? 0 : 1;
+    } else if (index == 1) {
+      _tabController.index = state.readTabFirst ? 1 : 0;
+    } else if (index == 2) {
+      _tabController.index = 2;
+    } else if (index == 3) {
+      _tabController.index = 3;
     }
-  }
-
-  void goToStatisticsScreen() {
-    FocusManager.instance.primaryFocus?.unfocus();
-
-    Navigator.push(
-      context,
-      MaterialPageRoute(
-        builder: (context) => const StatisticsScreen(),
-      ),
-    );
-  }
-
-  void goToSettingsScreen() {
-    FocusManager.instance.primaryFocus?.unfocus();
-
-    Navigator.push(
-      context,
-      MaterialPageRoute(
-        builder: (context) => const SettingsScreen(),
-      ),
-    );
-  }
-
-  void goToUnfinishedBooksScreen() {
-    FocusManager.instance.primaryFocus?.unfocus();
-
-    Navigator.push(
-      context,
-      MaterialPageRoute(
-        builder: (context) => const UnfinishedScreen(),
-      ),
-    );
-  }
-
-  BookStatus _getStatusForNewBook() {
-    final inProgressIndex = readTabFirst ? 1 : 0;
-
-    if (_tabController.index == inProgressIndex) {
-      return BookStatus.inProgress;
-    } else if (_tabController.index == 2) {
-      return BookStatus.forLater;
-    } else {
-      return BookStatus.read;
-    }
-  }
-
-  _setEmptyBookForEditScreen() {
-    final status = _getStatusForNewBook();
-    final defaultBookFormat = context.read<DefaultBooksFormatCubit>().state;
-
-    context.read<EditBookCubit>().setBook(
-          Book.empty(status: status, bookFormat: defaultBookFormat),
-        );
-  }
-
-  _goToSearchPage() {
-    Navigator.of(context).push(
-      MaterialPageRoute(builder: (_) => const SearchPage()),
-    );
-  }
-
-  _changeBooksDisplayType() {
-    final state = context.read<DisplayBloc>().state;
-
-    if (state is GridDisplayState) {
-      BlocProvider.of<DisplayBloc>(context).add(
-        const ChangeDisplayEvent(displayAsGrid: false),
-      );
-    } else {
-      BlocProvider.of<DisplayBloc>(context).add(
-        const ChangeDisplayEvent(displayAsGrid: true),
-      );
-    }
-  }
-
-  _invokeThreeDotMenuOption(String choice) async {
-    await Future.delayed(const Duration(milliseconds: 0));
-
-    if (!mounted) return;
-
-    if (choice == moreButtonOptions[0]) {
-      openSortFilterSheet();
-    } else if (choice == moreButtonOptions[1]) {
-      goToStatisticsScreen();
-    } else if (choice == moreButtonOptions[2]) {
-      goToUnfinishedBooksScreen();
-    } else if (choice == moreButtonOptions[3]) {
-      goToSettingsScreen();
-    }
-  }
-
-  _onFabPressed() {
-    if (Platform.isIOS) {
-      showCupertinoModalBottomSheet(
-        context: context,
-        expand: false,
-        builder: (_) {
-          return AddBookSheet(
-            addManually: _addBookManually,
-            searchInOpenLibrary: _searchInOpenLibrary,
-            scanBarcode: _scanBarcode,
-          );
-        },
-      );
-    } else if (Platform.isAndroid) {
-      showModalBottomSheet(
-        context: context,
-        backgroundColor: Colors.transparent,
-        builder: (_) {
-          return AddBookSheet(
-            addManually: _addBookManually,
-            searchInOpenLibrary: _searchInOpenLibrary,
-            scanBarcode: _scanBarcode,
-          );
-        },
-      );
-    }
-  }
-
-  _addBookManually() async {
-    _setEmptyBookForEditScreen();
-
-    Navigator.pop(context);
-    await Future.delayed(const Duration(milliseconds: 100));
-    if (!mounted) return;
-
-    Navigator.of(context).push(
-      MaterialPageRoute(
-        builder: (_) => const AddBookScreen(),
-      ),
-    );
-  }
-
-  _searchInOpenLibrary() async {
-    _setEmptyBookForEditScreen();
-
-    Navigator.pop(context);
-    await Future.delayed(const Duration(milliseconds: 100));
-    if (!mounted) return;
-
-    Navigator.push(
-      context,
-      MaterialPageRoute(
-        builder: (context) => SearchOLScreen(
-          status: _getStatusForNewBook(),
-        ),
-      ),
-    );
-  }
-
-  _scanBarcode() async {
-    _setEmptyBookForEditScreen();
-
-    Navigator.pop(context);
-    await Future.delayed(const Duration(milliseconds: 100));
-    if (!mounted) return;
-
-    Navigator.push(
-      context,
-      MaterialPageRoute(
-        builder: (context) => SearchOLScreen(
-          scan: true,
-          status: _getStatusForNewBook(),
-        ),
-      ),
-    );
   }
 
   @override
@@ -887,373 +689,152 @@ class _BooksScreenState extends State<BooksScreen>
 
   @override
   void initState() {
-    appBarHeight = AppBar().preferredSize.height;
-
     super.initState();
 
-    _tabController = TabController(length: 3, vsync: this);
+    _tabController = TabController(length: 4, vsync: this);
+    _chipScrollController = ScrollController();
+
+    // Selects the chip when the tab changes
+    // Not needed when NeverScrollableScrollPhysics
+    // _tabController.addListener(() {
+    //   setState(() {
+    //     _booksTabIndex = _tabController.index;
+    //   });
+    // });
   }
 
   @override
   Widget build(BuildContext context) {
     super.build(context);
 
-    moreButtonOptions = [
-      LocaleKeys.sort_filter.tr(),
-      LocaleKeys.statistics.tr(),
-      LocaleKeys.unfinished_books.tr(),
-      LocaleKeys.settings.tr(),
-    ];
-
-    return BlocBuilder<ThemeBloc, ThemeState>(
-      builder: (context, state) {
-        if (state is SetThemeState) {
-          AppTheme.init(state, context);
-
-          return PopScope(
-            canPop: selectedBookIds.isEmpty,
-            onPopInvoked: (didPop) {
-              if (didPop) {
-                return;
-              }
-
-              _resetMultiselectMode();
-            },
-            child: Scaffold(
-              extendBodyBehindAppBar: true,
-              resizeToAvoidBottomInset: true,
-              appBar: selectedBookIds.isNotEmpty
-                  ? _buildMultiSelectAppBar(context)
-                  : _buildAppBar(context),
-              floatingActionButton: selectedBookIds.isNotEmpty
-                  ? _buildMultiSelectFAB(state)
-                  : _buildFAB(context),
-              body: _buildScaffoldBody(),
-            ),
-          );
-        } else {
-          return const SizedBox();
-        }
-      },
-    );
-  }
-
-  AppBar _buildMultiSelectAppBar(BuildContext context) {
-    return AppBar(
-        title: Row(
-      children: [
-        IconButton(
-          icon: const Icon(Icons.close),
-          onPressed: () {
-            _resetMultiselectMode();
-          },
-        ),
-        Text(
-          '${LocaleKeys.selected.tr()} ${selectedBookIds.length}',
-          style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
-        ),
-      ],
-    ));
-  }
-
-  void _resetMultiselectMode() {
-    setState(() {
-      selectedBookIds = {};
-    });
-  }
-
-  Widget? _buildMultiSelectFAB(SetThemeState state) {
-    return selectedBookIds.isNotEmpty
-        ? MultiSelectFAB(
-            selectedBookIds: selectedBookIds,
-            resetMultiselectMode: _resetMultiselectMode,
-          )
-        : null;
-  }
-
-  BlocBuilder<ThemeBloc, ThemeState> _buildScaffoldBody() {
     return BlocBuilder<ThemeBloc, ThemeState>(
       builder: (context, state) {
         if (state is SetThemeState) {
           return Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
+              SizedBox(height: MediaQuery.of(context).padding.top),
+              SingleChildScrollView(
+                controller: _chipScrollController,
+                scrollDirection: Axis.horizontal,
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  children: [
+                    BooksTabChip(
+                      selected: _booksTabIndex == 0,
+                      setThemeState: state,
+                      index: 0,
+                      changeTab: _changeTab,
+                      tabController: _tabController,
+                      title: LocaleKeys.finished_books.tr(),
+                    ),
+                    BooksTabChip(
+                      selected: _booksTabIndex == 1,
+                      setThemeState: state,
+                      index: 1,
+                      changeTab: _changeTab,
+                      tabController: _tabController,
+                      title: LocaleKeys.books_in_progress.tr(),
+                    ),
+                    BooksTabChip(
+                      selected: _booksTabIndex == 2,
+                      setThemeState: state,
+                      index: 2,
+                      changeTab: _changeTab,
+                      tabController: _tabController,
+                      title: LocaleKeys.books_for_later.tr(),
+                    ),
+                    BooksTabChip(
+                      selected: _booksTabIndex == 3,
+                      setThemeState: state,
+                      index: 3,
+                      changeTab: _changeTab,
+                      tabController: _tabController,
+                      title: LocaleKeys.books_unfinished.tr(),
+                    ),
+                    const SizedBox(width: 8)
+                  ],
+                ),
+              ),
+              const SizedBox(height: 8),
               Expanded(
                 child: TabBarView(
                   controller: _tabController,
+                  // TODO: decide if we want to keep NeverScrollableScrollPhysics
+                  physics: const NeverScrollableScrollPhysics(),
                   children: state.readTabFirst
                       ? List.of([
-                          _buildReadBooksTabView(),
+                          _buildFinishedBooksTabView(),
                           _buildInProgressBooksTabView(),
                           _buildToReadBooksTabView(),
+                          _buildUnfinishedBooksTabView(),
                         ])
                       : List.of([
                           _buildInProgressBooksTabView(),
-                          _buildReadBooksTabView(),
+                          _buildFinishedBooksTabView(),
                           _buildToReadBooksTabView(),
+                          _buildUnfinishedBooksTabView(),
                         ]),
                 ),
               ),
-              Builder(builder: (context) {
-                return Container(
-                  color: Theme.of(context).scaffoldBackgroundColor,
-                  child: SafeArea(
-                    top: false,
-                    child: TabBar(
-                      controller: _tabController,
-                      dividerColor: Colors.transparent,
-                      tabs: state.readTabFirst
-                          ? List.of([
-                              BookTab(
-                                text: LocaleKeys.books_finished.tr(),
-                              ),
-                              BookTab(
-                                text: LocaleKeys.books_in_progress.tr(),
-                              ),
-                              BookTab(
-                                text: LocaleKeys.books_for_later.tr(),
-                              ),
-                            ])
-                          : List.of([
-                              BookTab(
-                                text: LocaleKeys.books_in_progress.tr(),
-                              ),
-                              BookTab(
-                                text: LocaleKeys.books_finished.tr(),
-                              ),
-                              BookTab(
-                                text: LocaleKeys.books_for_later.tr(),
-                              ),
-                            ]),
-                    ),
-                  ),
-                );
-              }),
             ],
           );
         } else {
-          return const SizedBox();
+          return const SizedBox.shrink();
         }
       },
     );
   }
 
-  Padding _buildFAB(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.only(bottom: 50),
-      child: FloatingActionButton(
-        onPressed: _onFabPressed,
-        child: const Icon(Icons.add),
-      ),
-    );
-  }
-
-  PreferredSizeWidget _buildAppBar(BuildContext context) {
-    AppBar appBar = AppBar(
-      backgroundColor: Theme.of(context).colorScheme.surface.withOpacity(0.9),
-      title: const Text(
-        Constants.appName,
-        style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
-      ),
-      actions: [
-        IconButton(
-          onPressed: _goToSearchPage,
-          icon: const Icon(Icons.search),
-        ),
-        IconButton(
-          onPressed: _changeBooksDisplayType,
-          icon: BlocBuilder<DisplayBloc, DisplayState>(
-            builder: (context, state) {
-              if (state is GridDisplayState) {
-                return const Icon(Icons.list);
-              } else {
-                return const Icon(Icons.apps);
-              }
-            },
-          ),
-        ),
-        PopupMenuButton<String>(
-          onSelected: (_) {},
-          itemBuilder: (_) {
-            return moreButtonOptions.map((String choice) {
-              return PopupMenuItem<String>(
-                value: choice,
-                child: Text(
-                  choice,
-                ),
-                onTap: () => _invokeThreeDotMenuOption(choice),
-              );
-            }).toList();
-          },
-        ),
-      ],
-    );
-
-    return Platform.isAndroid
-        ? appBar
-        : PreferredSize(
-            preferredSize: Size(double.infinity, appBarHeight),
-            child: ClipRRect(
-              child: BackdropFilter(
-                filter: ImageFilter.blur(sigmaX: 30, sigmaY: 30),
-                child: appBar,
-              ),
-            ),
-          );
-  }
-
-  StreamBuilder<List<Book>> _buildToReadBooksTabView() {
-    return StreamBuilder<List<Book>>(
-      stream: bookCubit.toReadBooks,
-      builder: (context, AsyncSnapshot<List<Book>> snapshot) {
-        if (snapshot.hasData) {
-          if (snapshot.data == null || snapshot.data!.isEmpty) {
-            return Center(
-              child: Padding(
-                padding: const EdgeInsets.all(50),
-                child: Text(
-                  '${LocaleKeys.this_list_is_empty_1.tr()}\n${LocaleKeys.this_list_is_empty_2.tr()}',
-                  textAlign: TextAlign.center,
-                  style: const TextStyle(
-                    letterSpacing: 1.5,
-                    fontSize: 16,
-                  ),
-                ),
-              ),
-            );
-          }
-
-          return BlocBuilder<SortBloc, SortState>(
-            builder: (context, state) {
-              if (state is SetSortState) {
-                return BlocBuilder<DisplayBloc, DisplayState>(
-                  builder: (context, displayState) {
-                    if (displayState is GridDisplayState) {
-                      return BooksGrid(
-                        books: _sortForLaterList(
-                          state: state,
-                          list: snapshot.data!,
-                        ),
-                        listNumber: 2,
-                        selectedBookIds: selectedBookIds,
-                        onBookSelectedForMultiSelect: _onItemSelected,
-                        allBooksCount: snapshot.data!.length,
-                      );
-                    } else {
-                      return BooksList(
-                        books: _sortForLaterList(
-                          state: state,
-                          list: snapshot.data!,
-                        ),
-                        listNumber: 2,
-                        selectedBookIds: selectedBookIds,
-                        onBookSelected: _onItemSelected,
-                        allBooksCount: snapshot.data!.length,
-                      );
-                    }
-                  },
-                );
-              } else {
-                return const SizedBox();
-              }
-            },
-          );
-        } else if (snapshot.hasError) {
-          return Text(
-            snapshot.error.toString(),
-          );
-        } else {
-          return const SizedBox();
-        }
-      },
+  StreamBuilder<List<Book>> _buildFinishedBooksTabView() {
+    return _buildBooksTabView(
+      listNumber: 0,
+      stream: bookCubit.finishedBooks,
+      sorting: _sortReadList,
     );
   }
 
   StreamBuilder<List<Book>> _buildInProgressBooksTabView() {
-    return StreamBuilder<List<Book>>(
+    return _buildBooksTabView(
+      listNumber: 1,
       stream: bookCubit.inProgressBooks,
-      builder: (context, AsyncSnapshot<List<Book>> snapshot) {
-        if (snapshot.hasData) {
-          if (snapshot.data == null || snapshot.data!.isEmpty) {
-            return Center(
-              child: Padding(
-                padding: const EdgeInsets.all(50),
-                child: Text(
-                  '${LocaleKeys.this_list_is_empty_1.tr()}\n${LocaleKeys.this_list_is_empty_2.tr()}',
-                  textAlign: TextAlign.center,
-                  style: const TextStyle(
-                    letterSpacing: 1.5,
-                    fontSize: 16,
-                  ),
-                ),
-              ),
-            );
-          }
-
-          return BlocBuilder<SortBloc, SortState>(
-            builder: (context, state) {
-              if (state is SetSortState) {
-                return BlocBuilder<DisplayBloc, DisplayState>(
-                  builder: (context, displayState) {
-                    if (displayState is GridDisplayState) {
-                      return BooksGrid(
-                        books: _sortInProgressList(
-                          state: state,
-                          list: snapshot.data!,
-                        ),
-                        listNumber: 1,
-                        selectedBookIds: selectedBookIds,
-                        onBookSelectedForMultiSelect: _onItemSelected,
-                        allBooksCount: snapshot.data!.length,
-                      );
-                    } else {
-                      return BooksList(
-                        books: _sortInProgressList(
-                          state: state,
-                          list: snapshot.data!,
-                        ),
-                        listNumber: 1,
-                        selectedBookIds: selectedBookIds,
-                        onBookSelected: _onItemSelected,
-                        allBooksCount: snapshot.data!.length,
-                      );
-                    }
-                  },
-                );
-              } else {
-                return const SizedBox();
-              }
-            },
-          );
-        } else if (snapshot.hasError) {
-          return Text(
-            snapshot.error.toString(),
-          );
-        } else {
-          return const SizedBox();
-        }
-      },
+      sorting: _sortInProgressList,
     );
   }
 
-  StreamBuilder<List<Book>> _buildReadBooksTabView() {
+  StreamBuilder<List<Book>> _buildToReadBooksTabView() {
+    return _buildBooksTabView(
+      listNumber: 2,
+      stream: bookCubit.toReadBooks,
+      sorting: _sortForLaterList,
+    );
+  }
+
+  StreamBuilder<List<Book>> _buildUnfinishedBooksTabView() {
+    bookCubit.getUnfinishedBooks();
+
+    //TODO: sort unfinished book by date of modification
+    return _buildBooksTabView(
+      listNumber: 3,
+      stream: bookCubit.unfinishedBooks,
+      sorting: null,
+    );
+  }
+
+  StreamBuilder<List<Book>> _buildBooksTabView({
+    required int listNumber,
+    required Stream<List<Book>> stream,
+    required List<Book> Function({
+      required SetSortState state,
+      required List<Book> list,
+    })? sorting,
+  }) {
     return StreamBuilder<List<Book>>(
-      stream: bookCubit.finishedBooks,
+      stream: stream,
       builder: (context, AsyncSnapshot<List<Book>> snapshot) {
         if (snapshot.hasData) {
           if (snapshot.data == null || snapshot.data!.isEmpty) {
-            return Center(
-              child: Padding(
-                padding: const EdgeInsets.all(50),
-                child: Text(
-                  '${LocaleKeys.this_list_is_empty_1.tr()}\n${LocaleKeys.this_list_is_empty_2.tr()}',
-                  textAlign: TextAlign.center,
-                  style: const TextStyle(
-                    letterSpacing: 1.5,
-                    fontSize: 16,
-                  ),
-                ),
-              ),
-            );
+            return const ThisListIsEmpty();
           }
 
           return BlocBuilder<SortBloc, SortState>(
@@ -1263,31 +844,31 @@ class _BooksScreenState extends State<BooksScreen>
                   builder: (context, displayState) {
                     if (displayState is GridDisplayState) {
                       return BooksGrid(
-                        books: _sortReadList(
-                          state: state,
-                          list: snapshot.data!,
-                        ),
-                        listNumber: 0,
-                        selectedBookIds: selectedBookIds,
-                        onBookSelectedForMultiSelect: _onItemSelected,
+                        books: sorting != null
+                            ? sorting(
+                                state: state,
+                                list: snapshot.data!,
+                              )
+                            : snapshot.data!,
+                        listNumber: listNumber,
                         allBooksCount: snapshot.data!.length,
                       );
                     } else {
                       return BooksList(
-                        books: _sortReadList(
-                          state: state,
-                          list: snapshot.data!,
-                        ),
-                        listNumber: 0,
-                        selectedBookIds: selectedBookIds,
-                        onBookSelected: _onItemSelected,
+                        books: sorting != null
+                            ? sorting(
+                                state: state,
+                                list: snapshot.data!,
+                              )
+                            : snapshot.data!,
+                        listNumber: listNumber,
                         allBooksCount: snapshot.data!.length,
                       );
                     }
                   },
                 );
               } else {
-                return const SizedBox();
+                return const SizedBox.shrink();
               }
             },
           );

@@ -9,7 +9,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_displaymode/flutter_displaymode.dart';
 import 'package:hydrated_bloc/hydrated_bloc.dart';
 import 'package:intl/date_symbol_data_local.dart';
-// import 'package:openreads/ui/home_screen/home_screen.dart';
 import 'package:openreads/core/constants/constants.dart';
 import 'package:openreads/core/constants/locale.dart';
 import 'package:openreads/core/helpers/locale_delegates/locale_delegates.dart';
@@ -27,9 +26,10 @@ import 'package:openreads/logic/cubit/book_cubit.dart';
 import 'package:openreads/logic/cubit/current_book_cubit.dart';
 import 'package:openreads/logic/cubit/default_book_status_cubit.dart';
 import 'package:openreads/logic/cubit/edit_book_cubit.dart';
+import 'package:openreads/logic/cubit/selected_books_cubit.dart';
 import 'package:openreads/resources/connectivity_service.dart';
 import 'package:openreads/resources/open_library_service.dart';
-import 'package:openreads/ui/books_screen/books_screen.dart';
+import 'package:openreads/ui/home_screen/home_screen.dart';
 import 'package:openreads/ui/welcome_screen/welcome_screen.dart';
 import 'package:path_provider/path_provider.dart';
 
@@ -78,6 +78,7 @@ class App extends StatelessWidget {
       BlocProvider(create: (_) => EditBookCubit()),
       BlocProvider(create: (_) => EditBookCoverCubit()),
       BlocProvider(create: (_) => CurrentBookCubit()),
+      BlocProvider(create: (_) => SelectedBooksCubit()),
       BlocProvider(create: (_) => ChallengeBloc()),
     ];
 
@@ -252,7 +253,7 @@ class _OpenreadsAppState extends State<OpenreadsApp>
           themeMode: themeMode,
           home: showWelcomeScreen
               ? WelcomeScreen(themeData: Theme.of(context))
-              : const BooksScreen(),
+              : const HomeScreen(),
           localizationsDelegates: localizationsDelegates,
           supportedLocales: context.supportedLocales,
           locale: context.locale,

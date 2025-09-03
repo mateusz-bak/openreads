@@ -4,7 +4,7 @@ import 'package:openreads/core/themes/app_theme.dart';
 import 'package:openreads/generated/locale_keys.g.dart';
 import 'package:openreads/main.dart';
 import 'package:openreads/model/book.dart';
-import 'package:openreads/ui/books_screen/books_screen.dart';
+import 'package:openreads/ui/home_screen/home_screen.dart';
 import 'package:openreads/ui/settings_screen/widgets/widgets.dart';
 
 class DownloadMissingCoversScreen extends StatefulWidget {
@@ -41,7 +41,7 @@ class _DownloadMissingCoversScreenState
     });
   }
 
-  _startCoverDownloadForImportedBooks() async {
+  _startCoverDownloadForImportedBooks(BuildContext context) async {
     setState(() {
       _isDownloading = true;
       _progressValue = 0;
@@ -54,11 +54,11 @@ class _DownloadMissingCoversScreenState
       _isDownloading = false;
     });
 
-    // ignore: use_build_context_synchronously
+    if (!context.mounted) return;
     Navigator.pushAndRemoveUntil(
       context,
       MaterialPageRoute(
-        builder: (context) => const BooksScreen(),
+        builder: (context) => const HomeScreen(),
       ),
       (route) => false,
     );
@@ -124,7 +124,7 @@ class _DownloadMissingCoversScreenState
     // If bookIDs is not null, then we are downloading covers automatically
     // for imported books
     if (widget.bookIDs != null) {
-      _startCoverDownloadForImportedBooks();
+      _startCoverDownloadForImportedBooks(context);
     }
   }
 
