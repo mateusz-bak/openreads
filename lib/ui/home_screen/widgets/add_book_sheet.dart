@@ -69,6 +69,7 @@ class _AddBookSheetState extends State<AddBookSheet> {
               ),
               onTap: widget.scanBarcode,
             ),
+            const SizedBox(height: 10)
           ],
         ),
       ),

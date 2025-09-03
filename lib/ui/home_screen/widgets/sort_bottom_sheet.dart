@@ -4,6 +4,7 @@ import 'package:diacritic/diacritic.dart';
 import 'package:dropdown_button2/dropdown_button2.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:openreads/core/constants/enums/enums.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:openreads/core/themes/app_theme.dart';
@@ -81,8 +82,8 @@ Widget _getOrderButton(BuildContext context, SetSortState state) {
     width: 40,
     child: IconButton(
       icon: (state.isAsc)
-          ? const Icon(Icons.arrow_upward)
-          : const Icon(Icons.arrow_downward),
+          ? const FaIcon(FontAwesomeIcons.arrowUp, size: 18)
+          : const FaIcon(FontAwesomeIcons.arrowDown, size: 18),
       onPressed: () => BlocProvider.of<SortBloc>(context).add(
         ChangeSortEvent(
           sortType: state.sortType,

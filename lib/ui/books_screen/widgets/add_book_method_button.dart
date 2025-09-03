@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 import 'package:openreads/core/themes/app_theme.dart';
 
@@ -34,7 +35,7 @@ class AddBookMethodButton extends StatelessWidget {
           ),
           child: Column(
             children: [
-              Icon(
+              FaIcon(
                 icon,
                 size: 28,
                 color: Theme.of(context).colorScheme.primary,

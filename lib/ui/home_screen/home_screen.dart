@@ -287,7 +287,7 @@ class _HomeScreenState extends State<HomeScreen> {
         title: Row(
       children: [
         IconButton(
-          icon: const Icon(Icons.close),
+          icon: const FaIcon(FontAwesomeIcons.xmark, size: 18),
           onPressed: () {
             context.read<SelectedBooksCubit>().resetSelection();
           },
