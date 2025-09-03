@@ -216,6 +216,7 @@ class ReadStatsByMonth extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Card(
+      color: Theme.of(context).colorScheme.secondaryContainer.withAlpha(80),
       shadowColor: Colors.transparent,
       shape: RoundedRectangleBorder(
         side: BorderSide(color: dividerColor, width: 1),
@@ -273,34 +274,33 @@ class ReadStatsByMonth extends StatelessWidget {
                 swapAnimationCurve: Curves.linear,
               ),
             ),
-            Align(
-              alignment: Alignment.centerRight,
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  const SizedBox(height: 5),
-                  ChartLegendElement(
-                    color: theme.colorScheme.onSurfaceVariant,
-                    text: LocaleKeys.book_format_audiobook_plural.tr(),
-                    number: listAudiobooks.sum,
-                    reversed: true,
-                  ),
-                  const SizedBox(height: 5),
-                  ChartLegendElement(
-                    color: theme.colorScheme.primaryContainer,
-                    text: LocaleKeys.book_format_ebook_plural.tr(),
-                    number: listEbooks.sum,
-                    reversed: true,
-                  ),
-                  const SizedBox(height: 5),
-                  ChartLegendElement(
-                    color: theme.colorScheme.primary,
-                    text: LocaleKeys.book_format_paper_plural.tr(),
-                    number: listPaperbackBooks.sum + listHardcoverBooks.sum,
-                    reversed: true,
-                  ),
-                ],
-              ),
+            Container(
+              margin: const EdgeInsets.only(bottom: 5),
+              height: 1,
+              color: Theme.of(context).colorScheme.onSurfaceVariant,
+            ),
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                const SizedBox(height: 5),
+                ChartLegendElement(
+                  color: theme.colorScheme.onSurfaceVariant,
+                  text: LocaleKeys.book_format_audiobook_plural.tr(),
+                  number: listAudiobooks.sum,
+                ),
+                const SizedBox(height: 5),
+                ChartLegendElement(
+                  color: theme.colorScheme.primaryContainer,
+                  text: LocaleKeys.book_format_ebook_plural.tr(),
+                  number: listEbooks.sum,
+                ),
+                const SizedBox(height: 5),
+                ChartLegendElement(
+                  color: theme.colorScheme.primary,
+                  text: LocaleKeys.book_format_paper_plural.tr(),
+                  number: listPaperbackBooks.sum + listHardcoverBooks.sum,
+                ),
+              ],
             ),
           ],
         ),

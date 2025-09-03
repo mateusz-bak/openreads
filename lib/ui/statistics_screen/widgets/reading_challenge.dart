@@ -25,6 +25,7 @@ class ReadingChallenge extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Card(
+      color: Theme.of(context).colorScheme.secondaryContainer.withAlpha(80),
       shadowColor: Colors.transparent,
       shape: RoundedRectangleBorder(
         side: BorderSide(color: dividerColor, width: 1),

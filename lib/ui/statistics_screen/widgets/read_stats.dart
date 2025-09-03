@@ -44,6 +44,7 @@ class ReadStats extends StatelessWidget {
           ? () => onTap(context, heroKey)
           : null,
       child: Card(
+        color: Theme.of(context).colorScheme.secondaryContainer.withAlpha(80),
         shadowColor: Colors.transparent,
         shape: RoundedRectangleBorder(
           side: BorderSide(color: dividerColor, width: 1),
@@ -85,19 +86,13 @@ class ReadStats extends StatelessWidget {
                         (iconData == null)
                             ? Text(
                                 value,
-                                style: const TextStyle(
-                                  fontSize: 16,
-                                  fontWeight: FontWeight.normal,
-                                ),
+                                style: const TextStyle(fontSize: 14),
                               )
                             : Row(
                                 children: [
                                   Text(
                                     value,
-                                    style: const TextStyle(
-                                      fontSize: 16,
-                                      fontWeight: FontWeight.normal,
-                                    ),
+                                    style: const TextStyle(fontSize: 14),
                                   ),
                                   const SizedBox(width: 5),
                                   Icon(
@@ -111,10 +106,7 @@ class ReadStats extends StatelessWidget {
                             ? const SizedBox()
                             : Text(
                                 secondValue!,
-                                style: const TextStyle(
-                                  fontSize: 14,
-                                  fontWeight: FontWeight.normal,
-                                ),
+                                style: const TextStyle(fontSize: 14),
                               ),
                       ],
                     ),
