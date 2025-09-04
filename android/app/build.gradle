@@ -76,3 +76,12 @@ flutter {
 }
 
 dependencies {}
+
+// run with ./gradlew printSdkVersions
+task printSdkVersions {
+    doLast {
+        println "The current compileSdkVersion is: ${android.compileSdkVersion}"
+        println "The current targetSdkVersion is: ${android.defaultConfig.targetSdkVersion}"
+        println "The current minSdkVersion is: ${android.defaultConfig.minSdkVersion}"
+    }
+} 
