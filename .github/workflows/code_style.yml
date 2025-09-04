@@ -11,9 +11,19 @@ jobs:
     name: Dart format
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v4
-    - uses: subosito/flutter-action@v2
+    - name: Checkout code
+      uses: actions/checkout@v4
+
+    - name: Set up Flutter version
+      run: echo "VERSION=$(cat .flutter-version)" >> $GITHUB_ENV
+
+    - name: Set up Flutter
+      uses: subosito/flutter-action@v2
       with:
-        flutter-version: ${{ vars.FLUTTER_VERSION }}
-    - run: flutter pub get
-    - run: dart format --set-exit-if-changed lib
+        flutter-version: ${{ env.VERSION }}
+
+    - name: Get Flutter packages
+      run: flutter pub get
+
+    - name: Format Dart code
+      run: dart format --set-exit-if-changed lib

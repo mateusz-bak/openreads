@@ -28,15 +28,19 @@ jobs:
       - name: Check out code
         uses: actions/checkout@v4
 
-      - uses: actions/setup-java@v4
+      - name: Set up Java
+        uses: actions/setup-java@v4
         with:
           distribution: "zulu"
           java-version: "17"
 
+      - name: Set up Flutter version
+        run: echo "VERSION=$(cat .flutter-version)" >> $GITHUB_ENV
+
       - name: Set up Flutter
         uses: subosito/flutter-action@v2
         with:
-          flutter-version: ${{ vars.FLUTTER_VERSION }}
+          flutter-version: ${{ env.VERSION }}
 
       - name: Install dependencies
         run: |
