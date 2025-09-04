@@ -12,8 +12,9 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v4
+    - run: echo "VERSION=$(cat .flutter-version)" >> $GITHUB_ENV
     - uses: subosito/flutter-action@v2
       with:
-        flutter-version: ${{ vars.FLUTTER_VERSION }}
+        flutter-version: $VERSION
     - run: flutter pub get
     - run: dart format --set-exit-if-changed lib
