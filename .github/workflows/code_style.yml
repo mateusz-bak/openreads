@@ -15,6 +15,6 @@ jobs:
     - run: echo "VERSION=$(cat .flutter-version)" >> $GITHUB_ENV
     - uses: subosito/flutter-action@v2
       with:
-        flutter-version: $VERSION
+        flutter-version: ${{ env.VERSION }}
     - run: flutter pub get
     - run: dart format --set-exit-if-changed lib
