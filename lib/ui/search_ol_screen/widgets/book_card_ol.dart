@@ -42,7 +42,8 @@ class BookCardOL extends StatelessWidget {
       child: Container(
         padding: const EdgeInsets.all(10),
         decoration: BoxDecoration(
-          color: Theme.of(context).colorScheme.surfaceVariant,
+          color:
+              Theme.of(context).colorScheme.secondaryContainer.withAlpha(120),
           borderRadius: BorderRadius.circular(cornerRadius),
           border: Border.all(color: dividerColor),
         ),

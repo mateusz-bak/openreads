@@ -44,7 +44,7 @@ class ReadStats extends StatelessWidget {
           ? () => onTap(context, heroKey)
           : null,
       child: Card(
-        color: Theme.of(context).colorScheme.secondaryContainer.withAlpha(80),
+        color: Theme.of(context).colorScheme.secondaryContainer.withAlpha(120),
         shadowColor: Colors.transparent,
         shape: RoundedRectangleBorder(
           side: BorderSide(color: dividerColor, width: 1),
