@@ -31,21 +31,16 @@ class Statistics extends StatelessWidget {
       length: state.years.length + 1,
       child: Column(
         children: [
-          Container(
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(cornerRadius),
-            ),
-            child: Row(
-              children: [
-                Expanded(
-                  child: TabBar(
-                    tabAlignment: TabAlignment.start,
-                    isScrollable: true,
-                    tabs: _buildYearsTabBars(context, state.years),
-                  ),
+          Row(
+            children: [
+              Expanded(
+                child: TabBar(
+                  tabAlignment: TabAlignment.start,
+                  isScrollable: true,
+                  tabs: _buildYearsTabBars(context, state.years),
                 ),
-              ],
-            ),
+              ),
+            ],
           ),
           Expanded(
             child: TabBarView(

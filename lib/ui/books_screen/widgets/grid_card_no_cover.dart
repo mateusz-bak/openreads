@@ -15,7 +15,7 @@ class GridCardNoCover extends StatelessWidget {
     return Container(
       padding: const EdgeInsets.all(10),
       decoration: BoxDecoration(
-        color: Theme.of(context).colorScheme.primaryContainer.withOpacity(0.5),
+        color: Theme.of(context).colorScheme.secondaryContainer.withAlpha(120),
         borderRadius: BorderRadius.circular(cornerRadius),
         border: Border.all(color: dividerColor, width: 1),
       ),
