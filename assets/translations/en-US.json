@@ -156,7 +156,6 @@
     "tabs_order_in_progress_first": "In progress books first",
     "send_feedback": "Send feedback",
     "report_bugs_or_ideas": "Report a bug or a new idea",
-    "send_dev_email": "Send an email to the developer",
     "raise_github_issue": "Raise an issue on GitHub",
     "deleted_books": "Deleted books",
     "unfinished_books": "Unfinished books",
@@ -289,5 +288,6 @@
     "duck_duck_go_warning": "Searching for covers online is facilitated through DuckDuckGo, a proprietary service. Please be cautious regarding privacy implications",
     "warning_yes": "I'm okay with that",
     "warning_no": "Take me back",
-    "warning_yes_and_dont_show": "I'm okay with that and don't show this again"
+    "warning_yes_and_dont_show": "I'm okay with that and don't show this again",
+    "create_discussion": "Create a discussion on GitHub"
 }

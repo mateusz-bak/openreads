@@ -5,7 +5,6 @@ import 'package:animated_widgets/widgets/shake_animated_widget.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_email_sender/flutter_email_sender.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 import 'package:openreads/core/constants/enums/enums.dart';
@@ -36,23 +35,16 @@ class SettingsScreen extends StatelessWidget {
   static const releasesUrl = '$repoUrl/releases';
   static const licenceUrl = '$repoUrl/blob/master/LICENSE';
   static const githubIssuesUrl = '$repoUrl/issues';
+  static const githubDiscussionUrl = '$repoUrl/discussions';
   static const githubSponsorUrl = 'https://github.com/sponsors/mateusz-bak';
   static const buyMeCoffeUrl = 'https://www.buymeacoffee.com/mateuszbak';
 
-  _sendEmailToDev(
-    BuildContext context,
-    String version, [
-    bool mounted = true,
-  ]) async {
-    final Email email = Email(
-      subject: 'Openreads feedback',
-      body: 'Version $version\n',
-      recipients: ['mateusz.bak.dev@gmail.com'],
-      isHTML: false,
-    );
-
+  _openGithubIssue(BuildContext context, [bool mounted = true]) async {
     try {
-      await FlutterEmailSender.send(email);
+      await launchUrl(
+        Uri.parse(githubIssuesUrl),
+        mode: LaunchMode.externalApplication,
+      );
     } catch (error) {
       if (!mounted) return;
 
@@ -62,10 +54,10 @@ class SettingsScreen extends StatelessWidget {
     }
   }
 
-  _openGithubIssue(BuildContext context, [bool mounted = true]) async {
+  _openGithubDiscussion(BuildContext context, [bool mounted = true]) async {
     try {
       await launchUrl(
-        Uri.parse(githubIssuesUrl),
+        Uri.parse(githubDiscussionUrl),
         mode: LaunchMode.externalApplication,
       );
     } catch (error) {
@@ -378,18 +370,20 @@ class SettingsScreen extends StatelessWidget {
                 ),
               ),
             ListTile(
-              title: Text(LocaleKeys.send_dev_email.tr()),
-              leading: Icon(
-                Icons.email,
+              title: Text(LocaleKeys.create_discussion.tr()),
+              leading: FaIcon(
+                FontAwesomeIcons.comments,
                 color: Theme.of(context).colorScheme.primary,
+                size: 24,
               ),
-              onTap: () => _sendEmailToDev(context, version),
+              onTap: () => _openGithubDiscussion(context),
             ),
             ListTile(
               title: Text(LocaleKeys.raise_github_issue.tr()),
               leading: FaIcon(
-                FontAwesomeIcons.github,
+                FontAwesomeIcons.triangleExclamation,
                 color: Theme.of(context).colorScheme.primary,
+                size: 24,
               ),
               onTap: () => _openGithubIssue(context),
             ),
