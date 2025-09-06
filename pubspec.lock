@@ -538,10 +538,10 @@ packages:
     dependency: transitive
     description:
       name: hive_ce
-      sha256: "708bb39050998707c5d422752159f91944d3c81ab42d80e1bd0ee37d8e130658"
+      sha256: "5620f634fb51c760144de69b55199419360f2aadba56bbcd5c7c2f1fe4bbfdd6"
       url: "https://pub.dev"
     source: hosted
-    version: "2.11.3"
+    version: "2.11.4"
   http:
     dependency: "direct main"
     description:
@@ -674,10 +674,10 @@ packages:
     dependency: "direct main"
     description:
       name: infinite_scroll_pagination
-      sha256: "4047eb8191e8b33573690922a9e995af64c3949dc87efc844f936b039ea279df"
+      sha256: b0d28e37cd8f62490ff6aef63f9db93d4c78b7f11b7c6b26f33c69d8476fda78
       url: "https://pub.dev"
     source: hosted
-    version: "4.1.0"
+    version: "5.1.1"
   intl:
     dependency: "direct main"
     description:

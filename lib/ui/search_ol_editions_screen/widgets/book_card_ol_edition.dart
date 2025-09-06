@@ -32,26 +32,24 @@ class BookCardOLEdition extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.fromLTRB(0, 0, 0, 0),
+      padding: cover != null ? EdgeInsets.zero : const EdgeInsets.all(5),
       child: InkWell(
         customBorder: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(cornerRadius),
         ),
         onTap: onPressed,
         child: Container(
+          padding: const EdgeInsets.all(5),
           decoration: BoxDecoration(
             color: cover == null
-                ? Theme.of(context)
-                    .colorScheme
-                    .primaryContainer
-                    .withOpacity(0.3)
+                ? Theme.of(context).colorScheme.primaryContainer.withAlpha(80)
                 : null,
             borderRadius: BorderRadius.circular(cornerRadius),
             border: Border.all(color: dividerColor),
           ),
           child: Column(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            crossAxisAlignment: CrossAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
               cover != null
                   ? Expanded(
@@ -87,18 +85,18 @@ class BookCardOLEdition extends StatelessWidget {
                         padding: const EdgeInsets.all(10),
                         child: Column(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          crossAxisAlignment: CrossAxisAlignment.center,
+                          crossAxisAlignment: CrossAxisAlignment.stretch,
                           children: [
                             Flexible(
                               child: Text(
                                 title,
                                 overflow: TextOverflow.ellipsis,
                                 maxLines: 20,
-                                textAlign: TextAlign.center,
+                                textAlign: TextAlign.start,
                               ),
                             ),
                             Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
+                              crossAxisAlignment: CrossAxisAlignment.stretch,
                               children: [
                                 pages != null
                                     ? Text(
@@ -122,28 +120,50 @@ class BookCardOLEdition extends StatelessWidget {
                       ),
                     ),
               (publishers != null && publishers!.isNotEmpty)
-                  ? Text(
-                      publishers![0],
-                      textAlign: TextAlign.center,
-                      style: TextStyle(
-                        fontSize: 10,
-                        color: Theme.of(context)
-                            .colorScheme
-                            .onBackground
-                            .withOpacity(0.8),
+                  ? Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 10),
+                      child: Row(
+                        children: [
+                          Expanded(
+                            child: Text(
+                              publishers![0],
+                              textAlign: cover != null
+                                  ? TextAlign.center
+                                  : TextAlign.start,
+                              style: TextStyle(
+                                fontSize: 10,
+                                color: Theme.of(context)
+                                    .colorScheme
+                                    .onBackground
+                                    .withOpacity(0.8),
+                              ),
+                            ),
+                          ),
+                        ],
                       ),
                     )
                   : const SizedBox.shrink(),
               publicationDate != null && cover != null
-                  ? Text(
-                      publicationDate!,
-                      textAlign: TextAlign.center,
-                      style: TextStyle(
-                        fontSize: 13,
-                        color: Theme.of(context)
-                            .colorScheme
-                            .onBackground
-                            .withOpacity(0.8),
+                  ? Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 10),
+                      child: Row(
+                        children: [
+                          Expanded(
+                            child: Text(
+                              publicationDate!,
+                              textAlign: cover != null
+                                  ? TextAlign.center
+                                  : TextAlign.start,
+                              style: TextStyle(
+                                fontSize: 13,
+                                color: Theme.of(context)
+                                    .colorScheme
+                                    .onBackground
+                                    .withOpacity(0.8),
+                              ),
+                            ),
+                          ),
+                        ],
                       ),
                     )
                   : const SizedBox.shrink(),

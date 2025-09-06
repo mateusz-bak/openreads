@@ -25,15 +25,19 @@ class OLEditionsGrid extends StatelessWidget {
     String? work,
   }) saveEdition;
 
-  final sizeOfPage = 3;
-  final _pagingController = PagingController<int, OLEditionResult>(
-    firstPageKey: 0,
-    invisibleItemsThreshold: 12,
+  final sizeOfPage = 1;
+
+  late final _pagingController = PagingController<int, OLEditionResult>(
+    fetchPage: (pageKey) => _fetchPage(pageKey),
+    getNextPageKey: (state) =>
+        state.lastPageIsEmpty ? null : state.nextIntPageKey,
   );
 
-  Future<void> _fetchPage(int pageKey) async {
+  Future<List<OLEditionResult>> _fetchPage(int pageKey) async {
     try {
-      List<OLEditionResult> newResults = await _fetchResults(offset: pageKey);
+      List<OLEditionResult> newResults = await _fetchResults(
+        offset: (pageKey - 1) * sizeOfPage,
+      );
 
       // If first page is empty the package will abort further requests.
       // This is a workaround to fetch the next page if the first page is empty
@@ -43,40 +47,32 @@ class OLEditionsGrid extends StatelessWidget {
         newResults = await _fetchResults(offset: pageKey);
       }
 
-      if (pageKey >= editions.length) {
-        _pagingController.appendLastPage(newResults);
-      } else {
-        final nextPageKey = pageKey + sizeOfPage;
-        _pagingController.appendPage(newResults, nextPageKey);
-      }
+      return newResults;
     } catch (error) {
-      _pagingController.error = error;
+      // TODO: Handle error and show message to user
+      return [];
     }
   }
 
   Future<List<OLEditionResult>> _fetchResults({required int offset}) async {
-    final results = List<OLEditionResult>.empty(growable: true);
+    final results = <OLEditionResult>[];
 
-    for (var i = 0; i < sizeOfPage && i < editions.length; i++) {
-      bool hasEditions = true;
+    final keysToFetch = <String>[];
+    for (var i = 0; i < sizeOfPage && (offset + i) < editions.length; i++) {
+      keysToFetch.add(editions[offset + i]);
+    }
 
-      while (hasEditions) {
-        if (offset + i < editions.length) {
-          final newResult =
-              await OpenLibraryService().getEdition(editions[offset + i]);
+    final fetchedResults = await Future.wait(
+      keysToFetch.map((key) => OpenLibraryService().getEdition(key)),
+    );
 
-          if (onlyEditionsWithCovers) {
-            if (newResult.covers != null && newResult.covers!.isNotEmpty) {
-              results.add(newResult);
-            }
-          } else {
-            results.add(newResult);
-          }
-
-          hasEditions = false;
-        } else {
-          hasEditions = false;
+    for (final newResult in fetchedResults) {
+      if (onlyEditionsWithCovers) {
+        if (newResult.covers != null && newResult.covers!.isNotEmpty) {
+          results.add(newResult);
         }
+      } else {
+        results.add(newResult);
       }
     }
 
@@ -85,35 +81,21 @@ class OLEditionsGrid extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    if (editions.isNotEmpty) {
-      _pagingController.addPageRequestListener((pageKey) {
-        _fetchPage(pageKey);
-      });
-    }
-
     return Expanded(
       child: Scrollbar(
-        child: PagedGridView(
-          padding: const EdgeInsets.all(10.0),
-          pagingController: _pagingController,
-          showNewPageProgressIndicatorAsGridChild: false,
-          showNewPageErrorIndicatorAsGridChild: false,
-          showNoMoreItemsIndicatorAsGridChild: false,
-          builderDelegate: PagedChildBuilderDelegate<OLEditionResult>(
-            firstPageProgressIndicatorBuilder: (_) => Center(
-              child: Platform.isIOS
-                  ? CupertinoActivityIndicator(
-                      radius: 20,
-                      color: Theme.of(context).colorScheme.primary,
-                    )
-                  : LoadingAnimationWidget.staggeredDotsWave(
-                      color: Theme.of(context).colorScheme.primary,
-                      size: 50,
-                    ),
-            ),
-            newPageProgressIndicatorBuilder: (_) => Center(
-              child: Padding(
-                padding: const EdgeInsets.all(20.0),
+        child: PagingListener(
+          controller: _pagingController,
+          builder: (context, state, fetchNextPage) =>
+              PagedGridView<int, OLEditionResult>(
+            state: state,
+            fetchNextPage: fetchNextPage,
+            padding: const EdgeInsets.all(10.0),
+            showNewPageProgressIndicatorAsGridChild: false,
+            showNewPageErrorIndicatorAsGridChild: false,
+            showNoMoreItemsIndicatorAsGridChild: false,
+            builderDelegate: PagedChildBuilderDelegate<OLEditionResult>(
+              invisibleItemsThreshold: 12,
+              firstPageProgressIndicatorBuilder: (_) => Center(
                 child: Platform.isIOS
                     ? CupertinoActivityIndicator(
                         radius: 20,
@@ -124,32 +106,46 @@ class OLEditionsGrid extends StatelessWidget {
                         size: 50,
                       ),
               ),
-            ),
-            itemBuilder: (context, item, index) => BookCardOLEdition(
-              publishers: item.publishers,
-              publicationDate: item.publishDate,
-              title: item.title ?? '',
-              pages: item.numberOfPages,
-              cover: item.covers != null && item.covers!.isNotEmpty
-                  ? item.covers![0]
-                  : null,
-              onPressed: () => saveEdition(
-                result: item,
+              newPageProgressIndicatorBuilder: (_) => Center(
+                child: Padding(
+                  padding: const EdgeInsets.all(20.0),
+                  child: Platform.isIOS
+                      ? CupertinoActivityIndicator(
+                          radius: 20,
+                          color: Theme.of(context).colorScheme.primary,
+                        )
+                      : LoadingAnimationWidget.staggeredDotsWave(
+                          color: Theme.of(context).colorScheme.primary,
+                          size: 50,
+                        ),
+                ),
+              ),
+              itemBuilder: (context, item, index) => BookCardOLEdition(
+                publishers: item.publishers,
+                publicationDate: item.publishDate,
+                title: item.title ?? '',
+                pages: item.numberOfPages,
                 cover: item.covers != null && item.covers!.isNotEmpty
                     ? item.covers![0]
                     : null,
-                work: item.works != null && item.works!.isNotEmpty
-                    ? item.works![0].key
-                    : null,
+                onPressed: () => saveEdition(
+                  result: item,
+                  cover: item.covers != null && item.covers!.isNotEmpty
+                      ? item.covers![0]
+                      : null,
+                  work: item.works != null && item.works!.isNotEmpty
+                      ? item.works![0].key
+                      : null,
+                ),
               ),
             ),
-          ),
-          gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-            childAspectRatio: 5 / 8.0,
-            crossAxisCount: 2,
-            crossAxisSpacing: 10,
-            mainAxisSpacing: 10,
-            mainAxisExtent: 225,
+            gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+              childAspectRatio: 5 / 8.0,
+              crossAxisCount: 2,
+              crossAxisSpacing: 10,
+              mainAxisSpacing: 10,
+              mainAxisExtent: 225,
+            ),
           ),
         ),
       ),
