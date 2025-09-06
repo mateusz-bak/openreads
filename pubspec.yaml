@@ -41,10 +41,10 @@ dependencies:
   hydrated_bloc: ^10.0.0
   barcode_scan2: ^4.2.1
   flutter_email_sender: ^6.0.0
-  permission_handler: ^11.0.0
+  permission_handler: ^12.0.1
   filesystem_picker: ^4.0.0
   archive: ^4.0.2
-  share_plus: ^10.0.2
+  share_plus: ^11.1.0
   device_info_plus: ^11.2.2
   dynamic_color: ^1.6.2
   image_fade: ^0.6.2
