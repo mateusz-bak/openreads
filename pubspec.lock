@@ -1034,18 +1034,18 @@ packages:
     dependency: "direct main"
     description:
       name: saf_stream
-      sha256: "417501ced1caeb98958524e1a93e64be87af203395a7ba7bb1da47b19234ccf1"
+      sha256: c05449997698c481a03e428162a999f93b1ee1bcc0349d651899a59f7b10230a
       url: "https://pub.dev"
     source: hosted
-    version: "0.11.3"
+    version: "0.12.3"
   saf_util:
     dependency: "direct main"
     description:
       name: saf_util
-      sha256: "4e07d11463a97cd3feecb66192e423e6d17f082f16f1acf2ce923a538cacced0"
+      sha256: "219f983e5f17b28998335158cdc97add9d52af9884e38b5a43f10dcc070510ec"
       url: "https://pub.dev"
     source: hosted
-    version: "0.6.2"
+    version: "0.11.0"
   settings_ui:
     dependency: "direct main"
     description:
