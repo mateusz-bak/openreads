@@ -62,7 +62,10 @@ class CSVExport {
         final path = '${directory.path}/$fileName';
 
         File(path).writeAsBytesSync(csv);
-        await Share.shareXFiles([XFile(path)]);
+
+        await SharePlus.instance.share(ShareParams(
+          files: [XFile(path)],
+        ));
       }
 
       BackupGeneral.showInfoSnackbar(LocaleKeys.export_successful.tr());

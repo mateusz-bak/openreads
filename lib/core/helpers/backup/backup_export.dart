@@ -65,7 +65,10 @@ class BackupExport {
         File(path).writeAsBytesSync(
           File(tmpBackupPath).readAsBytesSync(),
         );
-        await Share.shareXFiles([XFile(path)]);
+
+        await SharePlus.instance.share(ShareParams(
+          files: [XFile(path)],
+        ));
       }
 
       BackupGeneral.showInfoSnackbar(LocaleKeys.backup_successfull.tr());
