@@ -157,7 +157,6 @@ abstract class LocaleKeys {
   static const tabs_order_in_progress_first = 'tabs_order_in_progress_first';
   static const send_feedback = 'send_feedback';
   static const report_bugs_or_ideas = 'report_bugs_or_ideas';
-  static const send_dev_email = 'send_dev_email';
   static const raise_github_issue = 'raise_github_issue';
   static const deleted_books = 'deleted_books';
   static const unfinished_books = 'unfinished_books';
@@ -289,4 +288,5 @@ abstract class LocaleKeys {
   static const warningYes = 'warning_yes';
   static const warningNo = 'warning_no';
   static const warningYesAndDontShow = 'warning_yes_and_dont_show';
+  static const create_discussion = 'create_discussion';
 }
