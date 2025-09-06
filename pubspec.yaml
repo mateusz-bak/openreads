@@ -64,8 +64,8 @@ dependencies:
   dotted_border: ^3.1.0
   flutter_cache_manager: ^3.3.1
   modal_bottom_sheet: ^3.0.0
-  saf_stream: ^0.11.1
-  saf_util: ^0.6.2
+  saf_stream: ^0.12.3
+  saf_util: ^0.11.0
   
   flutter_localizations:
     sdk: flutter
