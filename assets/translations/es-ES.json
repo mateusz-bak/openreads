@@ -1,10 +1,10 @@
 {
     "books_finished": "Terminado",
-    "books_in_progress": "En progreso",
+    "books_in_progress": "Leyendo",
     "books_for_later": "Para más tarde",
     "books_unfinished": "Sin terminar",
     "book_status_finished": "Terminado",
-    "book_status_in_progress": "En progreso",
+    "book_status_in_progress": "Leyendo",
     "book_status_for_later": "Para más tarde",
     "book_status_unfinished": "Sin terminar",
     "add_manually": "Añadir manualmente un libro",
@@ -244,7 +244,7 @@
         "set_custom_time_title": "Días"
     },
     "book_format_all": "Todos los formatos de libro",
-    "book_format_paperback": "Tapa blanda",
+    "book_format_paperback": "Libro de tapa blanda",
     "book_format_hardcover": "Libro de tapa dura",
     "book_format_paperback_plural": "Libros de tapa blanda",
     "select_all": "Seleccionar todo",
@@ -252,7 +252,7 @@
     "import_csv": "Importar de Openreads un CSV",
     "change_books_author": "Cambiar el autor de los libros",
     "bulk_update_unsuccessful_message": "No se han podido actualizar los datos de los libros",
-    "delete_books": "Borrar libros",
+    "delete_books": "Eliminar libros",
     "delete_books_question": "¿Desea borrar los libros seleccionados?",
     "import_bookwyrm_csv": "Importar BookWyrm CSV",
     "books_settings": "Libros",
@@ -287,7 +287,7 @@
     "book_cover": "portada del libro",
     "duck_duck_go_warning": "Buscar portadas en internet se realiza a través de DuckDuckGo, un servicio propietario. Oír favor, ten cuidado con lo que eso implica rm respecto de la privacidad.",
     "warning_no": "Volver atrás",
-    "duplicate_book": "Libro duplicado",
+    "duplicate_book": "Duplicar libro",
     "warning_yes": "Me parece bien",
     "warning_yes_and_dont_show": "Me parece bien, no volver a mostrar esto"
 }
