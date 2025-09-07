@@ -271,7 +271,6 @@
     "add_additional_reading_time": "Capture reading",
     "start_adding_books": "Go to the app",
     "help_to_get_started": "To help you get started, here are some things you can do",
-    "owned_book_tag": "owned",
     "read_x_times": "Read {} times",
     "date_added": "Date added",
     "date_modified": "Date modified",
@@ -289,5 +288,7 @@
     "warning_yes": "I'm okay with that",
     "warning_no": "Take me back",
     "warning_yes_and_dont_show": "I'm okay with that and don't show this again",
-    "create_discussion": "Create a discussion on GitHub"
+    "create_discussion": "Create a discussion on GitHub",
+    "set_default_tags": "Set default tags for new books",
+    "add_new_default_tag": "Add new default tag:"
 }

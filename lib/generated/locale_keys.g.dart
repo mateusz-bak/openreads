@@ -270,7 +270,6 @@ abstract class LocaleKeys {
   static const add_additional_reading_time = 'add_additional_reading_time';
   static const start_adding_books = 'start_adding_books';
   static const help_to_get_started = 'help_to_get_started';
-  static const owned_book_tag = 'owned_book_tag';
   static const read_x_times = 'read_x_times';
   static const date_added = 'date_added';
   static const date_modified = 'date_modified';
@@ -289,4 +288,6 @@ abstract class LocaleKeys {
   static const warningNo = 'warning_no';
   static const warningYesAndDontShow = 'warning_yes_and_dont_show';
   static const create_discussion = 'create_discussion';
+  static const set_default_tags = 'set_default_tags';
+  static const add_new_default_tag = 'add_new_default_tag';
 }
