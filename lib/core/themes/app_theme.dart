@@ -3,8 +3,6 @@ import 'package:openreads/logic/bloc/theme_bloc/theme_bloc.dart';
 
 double get cornerRadius => _cornerRadius!;
 double? _cornerRadius;
-bool get readTabFirst => _readTabFirst!;
-bool? _readTabFirst;
 Color get dividerColor => _dividerColor!;
 Color? _dividerColor;
 
