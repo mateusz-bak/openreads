@@ -74,8 +74,6 @@ class _HomeScreenState extends State<HomeScreen> {
 
   //TODO: fix this logic
   BookStatus _getStatusForNewBook() {
-    final inProgressIndex = readTabFirst ? 1 : 0;
-
     // if (_tabController.index == inProgressIndex) {
     //   return BookStatus.inProgress;
     // } else if (_tabController.index == 2) {
