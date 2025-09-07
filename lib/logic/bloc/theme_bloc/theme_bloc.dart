@@ -17,7 +17,6 @@ class ThemeBloc extends HydratedBloc<ThemeEvent, ThemeState> {
           cornerRadius: 5,
           primaryColor: const Color(0xff3FA796),
           fontFamily: 'Nunito',
-          readTabFirst: true,
           useMaterialYou: Platform.isAndroid ? true : false,
           amoledDark: false,
         )) {
@@ -32,7 +31,6 @@ class ThemeBloc extends HydratedBloc<ThemeEvent, ThemeState> {
         cornerRadius: event.cornerRadius,
         primaryColor: event.primaryColor,
         fontFamily: fontFamily,
-        readTabFirst: event.readTabFirst,
         useMaterialYou: event.useMaterialYou,
         amoledDark: event.amoledDark,
       ));
@@ -58,7 +56,6 @@ class ThemeBloc extends HydratedBloc<ThemeEvent, ThemeState> {
     final cornerRadius = json['corner_radius'] as double?;
     final primaryColor = json['primary_color'] as int?;
     final fontFamily = json['font_family'] as String?;
-    final readTabFirst = json['read_tab_first'] as bool?;
     final useMaterialYou = json['use_material_you'] as bool?;
     final amoledDark = json['amoled_dark'] as bool?;
 
@@ -70,7 +67,6 @@ class ThemeBloc extends HydratedBloc<ThemeEvent, ThemeState> {
           cornerRadius: cornerRadius ?? 5,
           primaryColor: Color(primaryColor ?? 0xff2146C7),
           fontFamily: fontFamily ?? 'Nunito',
-          readTabFirst: readTabFirst ?? true,
           useMaterialYou: useMaterialYou ?? true,
           amoledDark: amoledDark ?? false,
         );
@@ -81,7 +77,6 @@ class ThemeBloc extends HydratedBloc<ThemeEvent, ThemeState> {
           cornerRadius: cornerRadius ?? 5,
           primaryColor: Color(primaryColor ?? 0xff2146C7),
           fontFamily: fontFamily ?? 'Nunito',
-          readTabFirst: readTabFirst ?? true,
           useMaterialYou: useMaterialYou ?? true,
           amoledDark: amoledDark ?? false,
         );
@@ -92,7 +87,6 @@ class ThemeBloc extends HydratedBloc<ThemeEvent, ThemeState> {
           cornerRadius: cornerRadius ?? 5,
           primaryColor: Color(primaryColor ?? 0xff2146C7),
           fontFamily: fontFamily ?? 'Nunito',
-          readTabFirst: readTabFirst ?? true,
           useMaterialYou: useMaterialYou ?? true,
           amoledDark: amoledDark ?? false,
         );
@@ -110,7 +104,6 @@ class ThemeBloc extends HydratedBloc<ThemeEvent, ThemeState> {
             'corner_radius': state.cornerRadius,
             'primary_color': state.primaryColor.value,
             'font_family': state.fontFamily,
-            'read_tab_first': state.readTabFirst,
             'use_material_you': state.useMaterialYou,
             'amoled_dark': state.amoledDark,
           };
@@ -121,7 +114,6 @@ class ThemeBloc extends HydratedBloc<ThemeEvent, ThemeState> {
             'corner_radius': state.cornerRadius,
             'primary_color': state.primaryColor.value,
             'font_family': state.fontFamily,
-            'read_tab_first': state.readTabFirst,
             'use_material_you': state.useMaterialYou,
             'amoled_dark': state.amoledDark,
           };
@@ -132,7 +124,6 @@ class ThemeBloc extends HydratedBloc<ThemeEvent, ThemeState> {
             'corner_radius': state.cornerRadius,
             'primary_color': state.primaryColor.value,
             'font_family': state.fontFamily,
-            'read_tab_first': state.readTabFirst,
             'use_material_you': state.useMaterialYou,
             'amoled_dark': state.amoledDark,
           };

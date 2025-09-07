@@ -14,6 +14,7 @@ import 'package:openreads/generated/locale_keys.g.dart';
 import 'package:openreads/logic/bloc/theme_bloc/theme_bloc.dart';
 import 'package:openreads/logic/cubit/default_book_status_cubit.dart';
 import 'package:openreads/ui/settings_screen/download_missing_covers_screen.dart';
+import 'package:openreads/ui/settings_screen/set_book_lists_order_screen.dart';
 import 'package:openreads/ui/settings_screen/set_default_book_tags_screen.dart';
 import 'package:openreads/ui/settings_screen/settings_backup_screen.dart';
 import 'package:openreads/ui/settings_screen/settings_apperance_screen.dart';
@@ -267,7 +268,6 @@ class SettingsScreen extends StatelessWidget {
       cornerRadius: state.cornerRadius,
       primaryColor: state.primaryColor,
       fontFamily: state.fontFamily,
-      readTabFirst: state.readTabFirst,
       useMaterialYou: state.useMaterialYou,
       amoledDark: state.amoledDark,
     ));
@@ -518,13 +518,34 @@ class SettingsScreen extends StatelessWidget {
     );
   }
 
+  SettingsTile _buildTabOrderSetting(BuildContext context) {
+    return SettingsTile.navigation(
+      title: Text(
+        LocaleKeys.tabs_order.tr(),
+        style: const TextStyle(fontSize: 16),
+      ),
+      leading: const FaIcon(FontAwesomeIcons.tableColumns),
+      onPressed: (context) {
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) => const SetBookListsOrderScreen(),
+          ),
+        );
+      },
+    );
+  }
+
   SettingsTile _buildDefaultTags(BuildContext context) {
     return SettingsTile.navigation(
       title: Text(
         LocaleKeys.set_default_tags.tr(),
         style: const TextStyle(fontSize: 16),
       ),
-      leading: const FaIcon(FontAwesomeIcons.tags),
+      leading: const FaIcon(
+        FontAwesomeIcons.tags,
+        size: 20,
+      ),
       onPressed: (context) {
         Navigator.push(
           context,
@@ -697,9 +718,10 @@ class SettingsScreen extends StatelessWidget {
                         ),
                         tiles: <SettingsTile>[
                           _buildTrashSetting(context),
-                          _buildDownloadMissingCovers(context),
                           _buildDefaultBooksFormat(context),
+                          _buildTabOrderSetting(context),
                           _buildDefaultTags(context),
+                          _buildDownloadMissingCovers(context),
                         ],
                       ),
                       SettingsSection(

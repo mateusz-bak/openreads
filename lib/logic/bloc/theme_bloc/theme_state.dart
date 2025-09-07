@@ -17,7 +17,6 @@ class SetThemeState extends ThemeState {
   final double cornerRadius;
   final Color primaryColor;
   final String? fontFamily;
-  final bool readTabFirst;
   final bool useMaterialYou;
   final bool amoledDark;
 
@@ -27,7 +26,6 @@ class SetThemeState extends ThemeState {
     required this.cornerRadius,
     required this.primaryColor,
     required this.fontFamily,
-    required this.readTabFirst,
     required this.useMaterialYou,
     required this.amoledDark,
   });
@@ -38,7 +36,6 @@ class SetThemeState extends ThemeState {
     double? cornerRadius,
     Color? primaryColor,
     String? fontFamily,
-    bool? readTabFirst,
     bool? useMaterialYou,
     bool? amoledDark,
   }) {
@@ -48,7 +45,6 @@ class SetThemeState extends ThemeState {
       cornerRadius: cornerRadius ?? this.cornerRadius,
       primaryColor: primaryColor ?? this.primaryColor,
       fontFamily: fontFamily ?? this.fontFamily,
-      readTabFirst: readTabFirst ?? this.readTabFirst,
       useMaterialYou: useMaterialYou ?? this.useMaterialYou,
       amoledDark: amoledDark ?? this.amoledDark,
     );
@@ -61,7 +57,6 @@ class SetThemeState extends ThemeState {
         cornerRadius,
         primaryColor,
         fontFamily,
-        readTabFirst,
         useMaterialYou,
         amoledDark,
       ];

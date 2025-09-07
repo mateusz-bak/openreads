@@ -23,6 +23,7 @@ import 'package:openreads/logic/bloc/sort_bloc/sort_bloc.dart';
 import 'package:openreads/logic/bloc/theme_bloc/theme_bloc.dart';
 import 'package:openreads/logic/bloc/welcome_bloc/welcome_bloc.dart';
 import 'package:openreads/logic/cubit/book_cubit.dart';
+import 'package:openreads/logic/cubit/book_lists_order_cubit.dart';
 import 'package:openreads/logic/cubit/current_book_cubit.dart';
 import 'package:openreads/logic/cubit/default_book_status_cubit.dart';
 import 'package:openreads/logic/cubit/default_book_tags_cubit.dart';
@@ -82,6 +83,7 @@ class App extends StatelessWidget {
       BlocProvider(create: (_) => SelectedBooksCubit()),
       BlocProvider(create: (_) => ChallengeBloc()),
       BlocProvider(create: (_) => DefaultBookTagsCubit()),
+      BlocProvider(create: (_) => BookListsOrderCubit()),
     ];
 
     final settingsProviders = [

@@ -151,9 +151,6 @@
     "medium_rounded_corners": "Medium radius",
     "big_rounded_corners": "Big radius",
     "tabs_order": "Book lists order",
-    "select_tabs_order": "Select book lists order",
-    "tabs_order_read_first": "Read books first",
-    "tabs_order_in_progress_first": "In progress books first",
     "send_feedback": "Send feedback",
     "report_bugs_or_ideas": "Report a bug or a new idea",
     "raise_github_issue": "Raise an issue on GitHub",
@@ -289,6 +286,6 @@
     "warning_no": "Take me back",
     "warning_yes_and_dont_show": "I'm okay with that and don't show this again",
     "create_discussion": "Create a discussion on GitHub",
-    "set_default_tags": "Set default tags for new books",
+    "set_default_tags": "Default tags for new books",
     "add_new_default_tag": "Add new default tag:"
 }
