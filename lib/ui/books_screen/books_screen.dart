@@ -3,12 +3,13 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:openreads/core/constants/enums/book_format.dart';
+import 'package:openreads/core/constants/enums/book_status.dart';
 import 'package:openreads/core/constants/enums/sort_type.dart';
 import 'package:openreads/core/helpers/helpers.dart';
 import 'package:openreads/generated/locale_keys.g.dart';
 import 'package:openreads/logic/bloc/display_bloc/display_bloc.dart';
 import 'package:openreads/logic/bloc/sort_bloc/sort_bloc.dart';
-import 'package:openreads/logic/bloc/theme_bloc/theme_bloc.dart';
+import 'package:openreads/logic/cubit/book_lists_order_cubit.dart';
 import 'package:openreads/main.dart';
 import 'package:openreads/model/book.dart';
 import 'package:openreads/ui/books_screen/widgets/widgets.dart';
@@ -668,20 +669,12 @@ class _BooksScreenState extends State<BooksScreen>
     return booksWithPublicationDate + booksWithoutPublicationDate;
   }
 
-  _changeTab(int index, SetThemeState state) {
+  _changeTab(int index) {
     setState(() {
       _booksTabIndex = index;
     });
 
-    if (index == 0) {
-      _tabController.index = state.readTabFirst ? 0 : 1;
-    } else if (index == 1) {
-      _tabController.index = state.readTabFirst ? 1 : 0;
-    } else if (index == 2) {
-      _tabController.index = 2;
-    } else if (index == 3) {
-      _tabController.index = 3;
-    }
+    _tabController.index = index;
   }
 
   @override
@@ -693,95 +686,36 @@ class _BooksScreenState extends State<BooksScreen>
 
     _tabController = TabController(length: 4, vsync: this);
     _chipScrollController = ScrollController();
-
-    // Selects the chip when the tab changes
-    // Not needed when NeverScrollableScrollPhysics
-    // _tabController.addListener(() {
-    //   setState(() {
-    //     _booksTabIndex = _tabController.index;
-    //   });
-    // });
   }
 
   @override
   Widget build(BuildContext context) {
     super.build(context);
 
-    return BlocBuilder<ThemeBloc, ThemeState>(
-      builder: (context, state) {
-        if (state is SetThemeState) {
-          return Column(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: [
-              SizedBox(height: MediaQuery.of(context).padding.top),
-              SingleChildScrollView(
-                controller: _chipScrollController,
-                scrollDirection: Axis.horizontal,
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  children: [
-                    BooksTabChip(
-                      selected: _booksTabIndex == 0,
-                      setThemeState: state,
-                      index: 0,
-                      changeTab: _changeTab,
-                      tabController: _tabController,
-                      title: LocaleKeys.finished_books.tr(),
-                    ),
-                    BooksTabChip(
-                      selected: _booksTabIndex == 1,
-                      setThemeState: state,
-                      index: 1,
-                      changeTab: _changeTab,
-                      tabController: _tabController,
-                      title: LocaleKeys.books_in_progress.tr(),
-                    ),
-                    BooksTabChip(
-                      selected: _booksTabIndex == 2,
-                      setThemeState: state,
-                      index: 2,
-                      changeTab: _changeTab,
-                      tabController: _tabController,
-                      title: LocaleKeys.books_for_later.tr(),
-                    ),
-                    BooksTabChip(
-                      selected: _booksTabIndex == 3,
-                      setThemeState: state,
-                      index: 3,
-                      changeTab: _changeTab,
-                      tabController: _tabController,
-                      title: LocaleKeys.books_unfinished.tr(),
-                    ),
-                    const SizedBox(width: 8)
-                  ],
-                ),
+    return BlocBuilder<BookListsOrderCubit, List<BookStatus>>(
+      builder: (context, bookListsOrder) {
+        return Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [
+            SizedBox(height: MediaQuery.of(context).padding.top),
+            SingleChildScrollView(
+              controller: _chipScrollController,
+              scrollDirection: Axis.horizontal,
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: _buildTabChips(context, bookListsOrder),
               ),
-              const SizedBox(height: 8),
-              Expanded(
-                child: TabBarView(
-                  controller: _tabController,
-                  // TODO: decide if we want to keep NeverScrollableScrollPhysics
-                  physics: const NeverScrollableScrollPhysics(),
-                  children: state.readTabFirst
-                      ? List.of([
-                          _buildFinishedBooksTabView(),
-                          _buildInProgressBooksTabView(),
-                          _buildToReadBooksTabView(),
-                          _buildUnfinishedBooksTabView(),
-                        ])
-                      : List.of([
-                          _buildInProgressBooksTabView(),
-                          _buildFinishedBooksTabView(),
-                          _buildToReadBooksTabView(),
-                          _buildUnfinishedBooksTabView(),
-                        ]),
-                ),
+            ),
+            const SizedBox(height: 8),
+            Expanded(
+              child: TabBarView(
+                controller: _tabController,
+                physics: const NeverScrollableScrollPhysics(),
+                children: _buildTabs(context, bookListsOrder),
               ),
-            ],
-          );
-        } else {
-          return const SizedBox.shrink();
-        }
+            ),
+          ],
+        );
       },
     );
   }
@@ -883,5 +817,84 @@ class _BooksScreenState extends State<BooksScreen>
         }
       },
     );
+  }
+
+  List<Widget> _buildTabChips(
+    BuildContext context,
+    List<BookStatus> bookListsOrder,
+  ) {
+    List<Widget> tabChips = [];
+    int index = 0;
+
+    for (var status in bookListsOrder) {
+      switch (status) {
+        case BookStatus.read:
+          tabChips.add(BooksTabChip(
+            selected: _booksTabIndex == index,
+            index: index,
+            changeTab: _changeTab,
+            tabController: _tabController,
+            title: LocaleKeys.books_finished.tr(),
+          ));
+          break;
+        case BookStatus.inProgress:
+          tabChips.add(BooksTabChip(
+            selected: _booksTabIndex == index,
+            index: index,
+            changeTab: _changeTab,
+            tabController: _tabController,
+            title: LocaleKeys.books_in_progress.tr(),
+          ));
+          break;
+        case BookStatus.forLater:
+          tabChips.add(BooksTabChip(
+            selected: _booksTabIndex == index,
+            index: index,
+            changeTab: _changeTab,
+            tabController: _tabController,
+            title: LocaleKeys.books_for_later.tr(),
+          ));
+          break;
+        case BookStatus.unfinished:
+          tabChips.add(BooksTabChip(
+            selected: _booksTabIndex == index,
+            index: index,
+            changeTab: _changeTab,
+            tabController: _tabController,
+            title: LocaleKeys.books_unfinished.tr(),
+          ));
+          break;
+      }
+
+      index++;
+    }
+
+    return tabChips;
+  }
+
+  List<Widget> _buildTabs(
+    BuildContext context,
+    List<BookStatus> bookListsOrder,
+  ) {
+    List<Widget> tabs = [];
+
+    for (var status in bookListsOrder) {
+      switch (status) {
+        case BookStatus.read:
+          tabs.add(_buildFinishedBooksTabView());
+          break;
+        case BookStatus.inProgress:
+          tabs.add(_buildInProgressBooksTabView());
+          break;
+        case BookStatus.forLater:
+          tabs.add(_buildToReadBooksTabView());
+          break;
+        case BookStatus.unfinished:
+          tabs.add(_buildUnfinishedBooksTabView());
+          break;
+      }
+    }
+
+    return tabs;
   }
 }

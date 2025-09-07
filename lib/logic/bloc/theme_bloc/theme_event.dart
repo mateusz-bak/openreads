@@ -10,7 +10,6 @@ class ChangeThemeEvent extends ThemeEvent {
   final double cornerRadius;
   final Color primaryColor;
   final String? fontFamily;
-  final bool readTabFirst;
   final bool useMaterialYou;
   final bool amoledDark;
 
@@ -20,7 +19,6 @@ class ChangeThemeEvent extends ThemeEvent {
     required this.cornerRadius,
     required this.primaryColor,
     required this.fontFamily,
-    required this.readTabFirst,
     required this.useMaterialYou,
     required this.amoledDark,
   });
@@ -32,7 +30,6 @@ class ChangeThemeEvent extends ThemeEvent {
         cornerRadius,
         primaryColor,
         fontFamily,
-        readTabFirst,
         useMaterialYou,
         amoledDark,
       ];

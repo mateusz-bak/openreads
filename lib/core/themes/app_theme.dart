@@ -16,7 +16,6 @@ Color primaryRed = const Color(0xffB73E3E);
 class AppTheme {
   static init(SetThemeState state, BuildContext context) {
     _cornerRadius = state.cornerRadius;
-    _readTabFirst = state.readTabFirst;
     _dividerColor = state.showOutlines
         ? Theme.of(context).colorScheme.onSurface
         : Colors.transparent;

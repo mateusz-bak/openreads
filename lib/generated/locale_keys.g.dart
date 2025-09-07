@@ -152,9 +152,6 @@ abstract class LocaleKeys {
   static const medium_rounded_corners = 'medium_rounded_corners';
   static const big_rounded_corners = 'big_rounded_corners';
   static const tabs_order = 'tabs_order';
-  static const select_tabs_order = 'select_tabs_order';
-  static const tabs_order_read_first = 'tabs_order_read_first';
-  static const tabs_order_in_progress_first = 'tabs_order_in_progress_first';
   static const send_feedback = 'send_feedback';
   static const report_bugs_or_ideas = 'report_bugs_or_ideas';
   static const raise_github_issue = 'raise_github_issue';

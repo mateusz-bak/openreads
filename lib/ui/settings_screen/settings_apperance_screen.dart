@@ -2,7 +2,7 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flex_color_picker/flex_color_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:openreads/core/constants/constants.dart';
 import 'package:openreads/core/constants/enums/enums.dart';
 import 'package:openreads/core/themes/app_theme.dart';
 import 'package:openreads/generated/locale_keys.g.dart';
@@ -163,159 +163,21 @@ class SettingsApperanceScreen extends StatelessWidget {
                                   onPressed: () => _setFont(
                                     context,
                                     state,
-                                    Font.system,
+                                    null,
                                   ),
                                 ),
-                                const SizedBox(height: 5),
-                                SettingsDialogButton(
-                                  text: 'Atkinson Hyperlegible',
-                                  fontFamily: 'AtkinsonHyperlegible',
-                                  onPressed: () => _setFont(
-                                    context,
-                                    state,
-                                    Font.atkinsonHyperlegible,
+                                for (var font in Constants.fonts) ...[
+                                  const SizedBox(height: 5),
+                                  SettingsDialogButton(
+                                    text: font['text'] as String,
+                                    fontFamily: font['family'] as String,
+                                    onPressed: () => _setFont(
+                                      context,
+                                      state,
+                                      font['family'] as String,
+                                    ),
                                   ),
-                                ),
-                                const SizedBox(height: 5),
-                                SettingsDialogButton(
-                                  text: 'Open Dyslexic',
-                                  fontFamily: 'OpenDyslexic',
-                                  onPressed: () => _setFont(
-                                    context,
-                                    state,
-                                    Font.openDyslexic,
-                                  ),
-                                ),
-                                const SizedBox(height: 5),
-                                SettingsDialogButton(
-                                  text: 'Nunito',
-                                  fontFamily: 'Nunito',
-                                  onPressed: () => _setFont(
-                                    context,
-                                    state,
-                                    Font.nunito,
-                                  ),
-                                ),
-                                const SizedBox(height: 5),
-                                SettingsDialogButton(
-                                  text: 'Jost',
-                                  fontFamily: 'Jost',
-                                  onPressed: () => _setFont(
-                                    context,
-                                    state,
-                                    Font.jost,
-                                  ),
-                                ),
-                                const SizedBox(height: 5),
-                                SettingsDialogButton(
-                                  text: 'Barlow',
-                                  fontFamily: 'Barlow',
-                                  onPressed: () => _setFont(
-                                    context,
-                                    state,
-                                    Font.barlow,
-                                  ),
-                                ),
-                                const SizedBox(height: 5),
-                                SettingsDialogButton(
-                                  text: 'Inter',
-                                  fontFamily: 'Inter',
-                                  onPressed: () => _setFont(
-                                    context,
-                                    state,
-                                    Font.inter,
-                                  ),
-                                ),
-                                const SizedBox(height: 5),
-                                SettingsDialogButton(
-                                  text: 'Kanit',
-                                  fontFamily: 'Kanit',
-                                  onPressed: () => _setFont(
-                                    context,
-                                    state,
-                                    Font.kanit,
-                                  ),
-                                ),
-                                const SizedBox(height: 5),
-                                SettingsDialogButton(
-                                  text: 'Lato',
-                                  fontFamily: 'Lato',
-                                  onPressed: () => _setFont(
-                                    context,
-                                    state,
-                                    Font.lato,
-                                  ),
-                                ),
-                                const SizedBox(height: 5),
-                                SettingsDialogButton(
-                                  text: 'Lora',
-                                  fontFamily: 'Lora',
-                                  onPressed: () => _setFont(
-                                    context,
-                                    state,
-                                    Font.lora,
-                                  ),
-                                ),
-                                const SizedBox(height: 5),
-                                SettingsDialogButton(
-                                  text: 'Montserrat',
-                                  fontFamily: 'Montserrat',
-                                  onPressed: () => _setFont(
-                                    context,
-                                    state,
-                                    Font.montserrat,
-                                  ),
-                                ),
-                                const SizedBox(height: 5),
-                                SettingsDialogButton(
-                                  text: 'Playfair Display',
-                                  fontFamily: 'PlayfairDisplay',
-                                  onPressed: () => _setFont(
-                                    context,
-                                    state,
-                                    Font.playfairDisplay,
-                                  ),
-                                ),
-                                const SizedBox(height: 5),
-                                SettingsDialogButton(
-                                  text: 'Poppins',
-                                  fontFamily: 'Poppins',
-                                  onPressed: () => _setFont(
-                                    context,
-                                    state,
-                                    Font.poppins,
-                                  ),
-                                ),
-                                const SizedBox(height: 5),
-                                SettingsDialogButton(
-                                  text: 'Raleway',
-                                  fontFamily: 'Raleway',
-                                  onPressed: () => _setFont(
-                                    context,
-                                    state,
-                                    Font.raleway,
-                                  ),
-                                ),
-                                const SizedBox(height: 5),
-                                SettingsDialogButton(
-                                  text: 'Sofia Sans',
-                                  fontFamily: 'SofiaSans',
-                                  onPressed: () => _setFont(
-                                    context,
-                                    state,
-                                    Font.sofiaSans,
-                                  ),
-                                ),
-                                const SizedBox(height: 5),
-                                SettingsDialogButton(
-                                  text: 'Quicksand',
-                                  fontFamily: 'Quicksand',
-                                  onPressed: () => _setFont(
-                                    context,
-                                    state,
-                                    Font.quicksand,
-                                  ),
-                                ),
+                                ],
                               ],
                             ),
                           ),
@@ -448,87 +310,6 @@ class SettingsApperanceScreen extends StatelessWidget {
     );
   }
 
-  _showTabsOrderDialog(BuildContext context) {
-    showDialog(
-      context: context,
-      builder: (BuildContext context) {
-        return Dialog(
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(cornerRadius),
-          ),
-          backgroundColor: Theme.of(context).colorScheme.surface,
-          child: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 20),
-            child: BlocBuilder<ThemeBloc, ThemeState>(
-              builder: (context, state) {
-                if (state is SetThemeState) {
-                  return Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      Padding(
-                        padding: const EdgeInsets.only(left: 10),
-                        child: Text(
-                          LocaleKeys.select_tabs_order.tr(),
-                          style: const TextStyle(
-                            fontSize: 18,
-                            fontWeight: FontWeight.bold,
-                          ),
-                        ),
-                      ),
-                      const SizedBox(height: 15),
-                      SettingsDialogButton(
-                        text: LocaleKeys.tabs_order_read_first.tr(),
-                        onPressed: () {
-                          BlocProvider.of<ThemeBloc>(context).add(
-                            ChangeThemeEvent(
-                              themeMode: state.themeMode,
-                              showOutlines: state.showOutlines,
-                              cornerRadius: state.cornerRadius,
-                              primaryColor: state.primaryColor,
-                              fontFamily: state.fontFamily,
-                              readTabFirst: true,
-                              useMaterialYou: state.useMaterialYou,
-                              amoledDark: state.amoledDark,
-                            ),
-                          );
-
-                          Navigator.of(context).pop();
-                        },
-                      ),
-                      const SizedBox(height: 5),
-                      SettingsDialogButton(
-                        text: LocaleKeys.tabs_order_in_progress_first.tr(),
-                        onPressed: () {
-                          BlocProvider.of<ThemeBloc>(context).add(
-                            ChangeThemeEvent(
-                              themeMode: state.themeMode,
-                              showOutlines: state.showOutlines,
-                              cornerRadius: state.cornerRadius,
-                              primaryColor: state.primaryColor,
-                              fontFamily: state.fontFamily,
-                              readTabFirst: false,
-                              useMaterialYou: state.useMaterialYou,
-                              amoledDark: state.amoledDark,
-                            ),
-                          );
-
-                          Navigator.of(context).pop();
-                        },
-                      ),
-                    ],
-                  );
-                } else {
-                  return const SizedBox();
-                }
-              },
-            ),
-          ),
-        );
-      },
-    );
-  }
-
   _setThemeModeAuto(BuildContext context, SetThemeState state) {
     BlocProvider.of<ThemeBloc>(context).add(ChangeThemeEvent(
       themeMode: ThemeMode.system,
@@ -536,7 +317,6 @@ class SettingsApperanceScreen extends StatelessWidget {
       cornerRadius: state.cornerRadius,
       primaryColor: state.primaryColor,
       fontFamily: state.fontFamily,
-      readTabFirst: state.readTabFirst,
       useMaterialYou: state.useMaterialYou,
       amoledDark: state.amoledDark,
     ));
@@ -551,7 +331,6 @@ class SettingsApperanceScreen extends StatelessWidget {
       cornerRadius: state.cornerRadius,
       primaryColor: state.primaryColor,
       fontFamily: state.fontFamily,
-      readTabFirst: state.readTabFirst,
       useMaterialYou: state.useMaterialYou,
       amoledDark: state.amoledDark,
     ));
@@ -566,7 +345,6 @@ class SettingsApperanceScreen extends StatelessWidget {
       cornerRadius: state.cornerRadius,
       primaryColor: state.primaryColor,
       fontFamily: state.fontFamily,
-      readTabFirst: state.readTabFirst,
       useMaterialYou: state.useMaterialYou,
       amoledDark: state.amoledDark,
     ));
@@ -581,7 +359,6 @@ class SettingsApperanceScreen extends StatelessWidget {
       cornerRadius: state.cornerRadius,
       primaryColor: state.primaryColor,
       fontFamily: state.fontFamily,
-      readTabFirst: state.readTabFirst,
       useMaterialYou: state.useMaterialYou,
       amoledDark: amoledDark,
     ));
@@ -592,71 +369,14 @@ class SettingsApperanceScreen extends StatelessWidget {
   _setFont(
     BuildContext context,
     SetThemeState state,
-    Font font,
+    String? fontFamily,
   ) {
-    String? fontFamily;
-
-    switch (font) {
-      case Font.system:
-        fontFamily = null;
-        break;
-      case Font.montserrat:
-        fontFamily = 'Montserrat';
-        break;
-      case Font.lato:
-        fontFamily = 'Lato';
-        break;
-      case Font.sofiaSans:
-        fontFamily = 'SofiaSans';
-        break;
-      case Font.poppins:
-        fontFamily = 'Poppins';
-        break;
-      case Font.raleway:
-        fontFamily = 'Raleway';
-        break;
-      case Font.nunito:
-        fontFamily = 'Nunito';
-        break;
-      case Font.playfairDisplay:
-        fontFamily = 'PlayfairDisplay';
-        break;
-      case Font.kanit:
-        fontFamily = 'Kanit';
-        break;
-      case Font.lora:
-        fontFamily = 'Lora';
-        break;
-      case Font.quicksand:
-        fontFamily = 'Quicksand';
-        break;
-      case Font.barlow:
-        fontFamily = 'Barlow';
-        break;
-      case Font.inter:
-        fontFamily = 'Inter';
-        break;
-      case Font.jost:
-        fontFamily = 'Jost';
-        break;
-      case Font.atkinsonHyperlegible:
-        fontFamily = 'AtkinsonHyperlegible';
-        break;
-      case Font.openDyslexic:
-        fontFamily = 'OpenDyslexic';
-        break;
-      default:
-        fontFamily = 'Nunito';
-        break;
-    }
-
     BlocProvider.of<ThemeBloc>(context).add(ChangeThemeEvent(
       themeMode: state.themeMode,
       showOutlines: state.showOutlines,
       cornerRadius: state.cornerRadius,
       primaryColor: state.primaryColor,
       fontFamily: fontFamily,
-      readTabFirst: state.readTabFirst,
       useMaterialYou: state.useMaterialYou,
       amoledDark: state.amoledDark,
     ));
@@ -671,7 +391,6 @@ class SettingsApperanceScreen extends StatelessWidget {
       cornerRadius: state.cornerRadius,
       primaryColor: state.primaryColor,
       fontFamily: state.fontFamily,
-      readTabFirst: state.readTabFirst,
       useMaterialYou: state.useMaterialYou,
       amoledDark: state.amoledDark,
     ));
@@ -686,7 +405,6 @@ class SettingsApperanceScreen extends StatelessWidget {
       cornerRadius: state.cornerRadius,
       primaryColor: state.primaryColor,
       fontFamily: state.fontFamily,
-      readTabFirst: state.readTabFirst,
       useMaterialYou: state.useMaterialYou,
       amoledDark: state.amoledDark,
     ));
@@ -702,7 +420,6 @@ class SettingsApperanceScreen extends StatelessWidget {
       cornerRadius: radius,
       primaryColor: state.primaryColor,
       fontFamily: state.fontFamily,
-      readTabFirst: state.readTabFirst,
       useMaterialYou: state.useMaterialYou,
       amoledDark: state.amoledDark,
     ));
@@ -802,7 +519,6 @@ class SettingsApperanceScreen extends StatelessWidget {
                   _buildDarkModeSetting(context),
                   _buildFontSetting(context),
                   _buildRatingTypeSetting(context),
-                  _buildTabOrderSetting(context),
                   _buildOutlinesSetting(context),
                   _buildCornersSetting(context),
                 ],
@@ -946,41 +662,6 @@ class SettingsApperanceScreen extends StatelessWidget {
         },
       ),
       onPressed: (context) => _showRatingBarDialog(context),
-    );
-  }
-
-  SettingsTile _buildTabOrderSetting(BuildContext context) {
-    return SettingsTile(
-      title: Text(
-        LocaleKeys.tabs_order.tr(),
-        style: const TextStyle(
-          fontSize: 16,
-        ),
-      ),
-      leading: const FaIcon(
-        FontAwesomeIcons.tableColumns,
-        size: 22,
-      ),
-      description: BlocBuilder<ThemeBloc, ThemeState>(
-        builder: (_, state) {
-          if (state is SetThemeState) {
-            if (state.readTabFirst) {
-              return Text(
-                LocaleKeys.tabs_order_read_first.tr(),
-                style: const TextStyle(),
-              );
-            } else {
-              return Text(
-                LocaleKeys.tabs_order_in_progress_first.tr(),
-                style: const TextStyle(),
-              );
-            }
-          } else {
-            return const SizedBox();
-          }
-        },
-      ),
-      onPressed: (context) => _showTabsOrderDialog(context),
     );
   }
 
