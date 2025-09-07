@@ -9,18 +9,22 @@ class TagFilterChip extends StatelessWidget {
     required this.tag,
     required this.selected,
     required this.onTagChipPressed,
+    this.invertColors = false,
   });
 
   final String? tag;
   final bool selected;
   final Function(bool) onTagChipPressed;
+  final bool invertColors;
 
   @override
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 5),
       child: FilterChip(
-        backgroundColor: Theme.of(context).colorScheme.surface,
+        backgroundColor: invertColors
+            ? Theme.of(context).colorScheme.surfaceContainerHighest
+            : Theme.of(context).colorScheme.surface,
         side: BorderSide(color: dividerColor, width: 1),
         label: Text(
           tag != null ? tag.toString() : LocaleKeys.select_all.tr(),

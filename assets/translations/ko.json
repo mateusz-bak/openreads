@@ -269,7 +269,6 @@
     "download_missing_covers_explanation": "ISBN이 설정된 책들의 누락된 커버를 다운로드합니다",
     "downloaded_covers": "다운로드된 커버:",
     "try_downloading_covers": "들여온 책들에 대해 커버 다운로드를 시도할까요?",
-    "owned_book_tag": "소유한 책",
     "read_x_times": "{} 번 읽음",
     "added_on": "추가된 날짜",
     "modified_on": "수정된 날짜",

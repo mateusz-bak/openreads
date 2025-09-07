@@ -163,7 +163,6 @@
     "isbn_cannot_be_empty": "ISBN kan ikkje vera tomt",
     "cover_not_found_in_ol": "Fann inkje omslag i Open Library",
     "books_settings": "Bøker",
-    "owned_book_tag": "eigd",
     "read_x_times": "Lesen {} gongar",
     "date_added": "Dato lagt til",
     "modified_on": "Endra",

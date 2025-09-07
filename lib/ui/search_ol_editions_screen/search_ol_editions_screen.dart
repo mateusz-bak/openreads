@@ -5,6 +5,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:openreads/core/constants/enums/enums.dart';
 import 'package:openreads/generated/locale_keys.g.dart';
 import 'package:openreads/logic/cubit/default_book_status_cubit.dart';
+import 'package:openreads/logic/cubit/default_book_tags_cubit.dart';
 import 'package:openreads/logic/cubit/edit_book_cubit.dart';
 import 'package:openreads/model/reading.dart';
 import 'package:openreads/model/book.dart';
@@ -50,6 +51,7 @@ class _SearchOLEditionsScreenState extends State<SearchOLEditionsScreen> {
     String? work,
   }) {
     final defaultBookFormat = context.read<DefaultBooksFormatCubit>().state;
+    final defaultTags = context.read<DefaultBookTagsCubit>().state;
 
     final book = Book(
       title: result.title!,
@@ -67,7 +69,7 @@ class _SearchOLEditionsScreenState extends State<SearchOLEditionsScreen> {
       publicationYear: widget.firstPublishYear,
       bookFormat: result.physicalFormat ?? defaultBookFormat,
       readings: List<Reading>.empty(growable: true),
-      tags: LocaleKeys.owned_book_tag.tr(),
+      tags: defaultTags.isNotEmpty == true ? defaultTags.join('|||||') : null,
       dateAdded: DateTime.now(),
       dateModified: DateTime.now(),
     );

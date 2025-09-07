@@ -16,6 +16,7 @@ import 'package:openreads/core/themes/app_theme.dart';
 import 'package:openreads/generated/locale_keys.g.dart';
 // import 'package:openreads/logic/bloc/pb_sync_bloc/pb_sync_bloc.dart';
 import 'package:openreads/logic/cubit/current_book_cubit.dart';
+import 'package:openreads/logic/cubit/default_book_tags_cubit.dart';
 import 'package:openreads/logic/cubit/edit_book_cubit.dart';
 import 'package:openreads/model/reading.dart';
 import 'package:openreads/resources/open_library_service.dart';
@@ -366,11 +367,17 @@ class _AddBookScreenState extends State<AddBookScreen> {
     });
   }
 
-  @override
-  void initState() {
-    _prefillBookDetails(context.read<EditBookCubit>().state);
-    _attachListeners();
+  void _setDefaultTags(Book book) {
+    final defaultTags = context.read<DefaultBookTagsCubit>().state;
 
+    if (book.id == null) {
+      context.read<EditBookCubit>().setBook(book.copyWith(
+            tags: defaultTags.isNotEmpty ? defaultTags.join('|||||') : null,
+          ));
+    }
+  }
+
+  void _downloadInitData() {
     if (widget.fromOpenLibrary || widget.fromOpenLibraryEdition) {
       if (widget.coverOpenLibraryID != null) {
         _downloadCover();
@@ -383,6 +390,16 @@ class _AddBookScreenState extends State<AddBookScreen> {
         _downloadWork();
       }
     }
+  }
+
+  @override
+  void initState() {
+    final book = context.read<EditBookCubit>().state;
+
+    _setDefaultTags(book);
+    _prefillBookDetails(book);
+    _attachListeners();
+    _downloadInitData();
 
     super.initState();
   }

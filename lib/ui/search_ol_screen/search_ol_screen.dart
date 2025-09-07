@@ -12,6 +12,7 @@ import 'package:openreads/core/themes/app_theme.dart';
 import 'package:openreads/generated/locale_keys.g.dart';
 import 'package:openreads/logic/bloc/open_library_search_bloc/open_library_search_bloc.dart';
 import 'package:openreads/logic/cubit/default_book_status_cubit.dart';
+import 'package:openreads/logic/cubit/default_book_tags_cubit.dart';
 import 'package:openreads/logic/cubit/edit_book_cubit.dart';
 import 'package:openreads/model/reading.dart';
 import 'package:openreads/model/book.dart';
@@ -67,6 +68,7 @@ class _SearchOLScreenState extends State<SearchOLScreen>
     String? olid,
   }) {
     final defaultBookFormat = context.read<DefaultBooksFormatCubit>().state;
+    final defaultTags = context.read<DefaultBookTagsCubit>().state;
 
     final book = Book(
       title: title,
@@ -80,7 +82,7 @@ class _SearchOLScreenState extends State<SearchOLScreen>
       publicationYear: firstPublishYear,
       bookFormat: defaultBookFormat,
       readings: List<Reading>.empty(growable: true),
-      tags: LocaleKeys.owned_book_tag.tr(),
+      tags: defaultTags.isNotEmpty ? defaultTags.join('|||||') : null,
       dateAdded: DateTime.now(),
       dateModified: DateTime.now(),
     );
