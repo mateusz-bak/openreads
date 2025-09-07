@@ -204,9 +204,12 @@ class BookScreenAppBar extends StatelessWidget implements PreferredSizeWidget {
                             final cover = state.getCoverBytes();
 
                             context.read<EditBookCoverCubit>().setCover(cover);
+
                             final newBook = state.copyWith(
                               title:
                                   '${state.title} ${LocaleKeys.copyBook.tr()}',
+                              readings: [],
+                              rating: 0,
                             );
                             newBook.id = null;
 
