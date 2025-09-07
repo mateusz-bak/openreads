@@ -131,9 +131,9 @@ class _SettingsBackupScreenState extends State<SettingsBackupScreen> {
     final tmpBackupPath = await BackupExport.prepareTemporaryBackup(context);
     if (tmpBackupPath == null) return;
 
-    Share.shareXFiles([
-      XFile(tmpBackupPath),
-    ]);
+    SharePlus.instance.share(ShareParams(
+      files: [XFile(tmpBackupPath)],
+    ));
 
     setState(() => _creatingCloud = false);
   }

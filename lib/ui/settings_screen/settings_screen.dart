@@ -5,7 +5,6 @@ import 'package:animated_widgets/widgets/shake_animated_widget.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_email_sender/flutter_email_sender.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 import 'package:openreads/core/constants/enums/enums.dart';
@@ -15,6 +14,7 @@ import 'package:openreads/generated/locale_keys.g.dart';
 import 'package:openreads/logic/bloc/theme_bloc/theme_bloc.dart';
 import 'package:openreads/logic/cubit/default_book_status_cubit.dart';
 import 'package:openreads/ui/settings_screen/download_missing_covers_screen.dart';
+import 'package:openreads/ui/settings_screen/set_default_book_tags_screen.dart';
 import 'package:openreads/ui/settings_screen/settings_backup_screen.dart';
 import 'package:openreads/ui/settings_screen/settings_apperance_screen.dart';
 import 'package:openreads/ui/settings_screen/widgets/widgets.dart';
@@ -36,23 +36,16 @@ class SettingsScreen extends StatelessWidget {
   static const releasesUrl = '$repoUrl/releases';
   static const licenceUrl = '$repoUrl/blob/master/LICENSE';
   static const githubIssuesUrl = '$repoUrl/issues';
+  static const githubDiscussionUrl = '$repoUrl/discussions';
   static const githubSponsorUrl = 'https://github.com/sponsors/mateusz-bak';
   static const buyMeCoffeUrl = 'https://www.buymeacoffee.com/mateuszbak';
 
-  _sendEmailToDev(
-    BuildContext context,
-    String version, [
-    bool mounted = true,
-  ]) async {
-    final Email email = Email(
-      subject: 'Openreads feedback',
-      body: 'Version $version\n',
-      recipients: ['mateusz.bak.dev@gmail.com'],
-      isHTML: false,
-    );
-
+  _openGithubIssue(BuildContext context, [bool mounted = true]) async {
     try {
-      await FlutterEmailSender.send(email);
+      await launchUrl(
+        Uri.parse(githubIssuesUrl),
+        mode: LaunchMode.externalApplication,
+      );
     } catch (error) {
       if (!mounted) return;
 
@@ -62,10 +55,10 @@ class SettingsScreen extends StatelessWidget {
     }
   }
 
-  _openGithubIssue(BuildContext context, [bool mounted = true]) async {
+  _openGithubDiscussion(BuildContext context, [bool mounted = true]) async {
     try {
       await launchUrl(
-        Uri.parse(githubIssuesUrl),
+        Uri.parse(githubDiscussionUrl),
         mode: LaunchMode.externalApplication,
       );
     } catch (error) {
@@ -318,7 +311,7 @@ class SettingsScreen extends StatelessWidget {
     );
   }
 
-  SettingsTile _buildFeedbackSetting(BuildContext context, String version) {
+  SettingsTile _buildFeedbackSetting(BuildContext context) {
     return SettingsTile.navigation(
       title: Text(
         LocaleKeys.send_feedback.tr(),
@@ -337,7 +330,7 @@ class SettingsScreen extends StatelessWidget {
             context: context,
             expand: false,
             builder: (_) {
-              return _buildFeedbackBottomSheet(context, version);
+              return _buildFeedbackBottomSheet(context);
             },
           );
         } else if (Platform.isAndroid) {
@@ -347,7 +340,7 @@ class SettingsScreen extends StatelessWidget {
             elevation: 0,
             backgroundColor: Theme.of(context).colorScheme.surface,
             builder: (context) {
-              return _buildFeedbackBottomSheet(context, version);
+              return _buildFeedbackBottomSheet(context);
             },
           );
         }
@@ -355,7 +348,7 @@ class SettingsScreen extends StatelessWidget {
     );
   }
 
-  Widget _buildFeedbackBottomSheet(BuildContext context, String version) {
+  Widget _buildFeedbackBottomSheet(BuildContext context) {
     return Material(
       child: SafeArea(
         child: Column(
@@ -378,18 +371,20 @@ class SettingsScreen extends StatelessWidget {
                 ),
               ),
             ListTile(
-              title: Text(LocaleKeys.send_dev_email.tr()),
-              leading: Icon(
-                Icons.email,
+              title: Text(LocaleKeys.create_discussion.tr()),
+              leading: FaIcon(
+                FontAwesomeIcons.comments,
                 color: Theme.of(context).colorScheme.primary,
+                size: 24,
               ),
-              onTap: () => _sendEmailToDev(context, version),
+              onTap: () => _openGithubDiscussion(context),
             ),
             ListTile(
               title: Text(LocaleKeys.raise_github_issue.tr()),
               leading: FaIcon(
-                FontAwesomeIcons.github,
+                FontAwesomeIcons.triangleExclamation,
                 color: Theme.of(context).colorScheme.primary,
+                size: 24,
               ),
               onTap: () => _openGithubIssue(context),
             ),
@@ -517,6 +512,24 @@ class SettingsScreen extends StatelessWidget {
           context,
           MaterialPageRoute(
             builder: (context) => const DownloadMissingCoversScreen(),
+          ),
+        );
+      },
+    );
+  }
+
+  SettingsTile _buildDefaultTags(BuildContext context) {
+    return SettingsTile.navigation(
+      title: Text(
+        LocaleKeys.set_default_tags.tr(),
+        style: const TextStyle(fontSize: 16),
+      ),
+      leading: const FaIcon(FontAwesomeIcons.tags),
+      onPressed: (context) {
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) => SetDefaultBookTagsScreen(),
           ),
         );
       },
@@ -671,7 +684,7 @@ class SettingsScreen extends StatelessWidget {
                     ),
                     sections: [
                       SettingsSection(
-                        tiles: _buildGeneralSettingsTiles(context, version),
+                        tiles: _buildGeneralSettingsTiles(context),
                       ),
                       SettingsSection(
                         title: Text(
@@ -686,6 +699,7 @@ class SettingsScreen extends StatelessWidget {
                           _buildTrashSetting(context),
                           _buildDownloadMissingCovers(context),
                           _buildDefaultBooksFormat(context),
+                          _buildDefaultTags(context),
                         ],
                       ),
                       SettingsSection(
@@ -756,10 +770,7 @@ class SettingsScreen extends StatelessWidget {
     );
   }
 
-  List<SettingsTile> _buildGeneralSettingsTiles(
-    BuildContext context,
-    String? version,
-  ) {
+  List<SettingsTile> _buildGeneralSettingsTiles(BuildContext context) {
     final tiles = List<SettingsTile>.empty(growable: true);
 
     // TODO: Implement in app purchase for iOS
@@ -786,7 +797,7 @@ class SettingsScreen extends StatelessWidget {
       iconData: Icons.star_rounded,
       context: context,
     ));
-    tiles.add(_buildFeedbackSetting(context, version!));
+    tiles.add(_buildFeedbackSetting(context));
     tiles.add(_buildURLSetting(
       title: LocaleKeys.translate_app.tr(),
       description: LocaleKeys.translate_app_description.tr(),

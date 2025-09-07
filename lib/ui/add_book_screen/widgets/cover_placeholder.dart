@@ -19,11 +19,13 @@ class CoverPlaceholder extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 10),
       child: DottedBorder(
-        borderType: BorderType.RRect,
-        radius: Radius.circular(cornerRadius),
-        dashPattern: const [10, 8],
-        color: Theme.of(context).colorScheme.onSurface.withOpacity(0.3),
-        strokeWidth: 2,
+        options: RoundedRectDottedBorderOptions(
+          radius: Radius.circular(cornerRadius),
+          dashPattern: const [10, 8],
+          color: Theme.of(context).colorScheme.onSurface.withOpacity(0.3),
+          strokeWidth: 2,
+          padding: EdgeInsets.zero,
+        ),
         child: Padding(
           padding: const EdgeInsets.all(10),
           child: InkWell(

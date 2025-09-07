@@ -33,18 +33,17 @@ dependencies:
   http: ^1.2.0
   cached_network_image: ^3.4.1
   loading_animation_widget: ^1.2.0+3
-  infinite_scroll_pagination: ^4.0.0
+  infinite_scroll_pagination: ^5.1.1
   flutter_staggered_grid_view: ^0.7.0
   settings_ui: ^2.0.2
   url_launcher: ^6.1.6
   font_awesome_flutter: ^10.2.1
   hydrated_bloc: ^10.0.0
   barcode_scan2: ^4.2.1
-  flutter_email_sender: ^6.0.0
-  permission_handler: ^11.0.0
+  permission_handler: ^12.0.1
   filesystem_picker: ^4.0.0
   archive: ^4.0.2
-  share_plus: ^10.0.2
+  share_plus: ^11.1.0
   device_info_plus: ^11.2.2
   dynamic_color: ^1.6.2
   image_fade: ^0.6.2
@@ -61,11 +60,11 @@ dependencies:
   file_picker: ^8.3.1
   smooth_page_indicator: ^1.1.0
   intl: ^0.20.2
-  dotted_border: ^2.1.0
+  dotted_border: ^3.1.0
   flutter_cache_manager: ^3.3.1
   modal_bottom_sheet: ^3.0.0
-  saf_stream: ^0.11.1
-  saf_util: ^0.6.2
+  saf_stream: ^0.12.3
+  saf_util: ^0.11.0
   
   flutter_localizations:
     sdk: flutter

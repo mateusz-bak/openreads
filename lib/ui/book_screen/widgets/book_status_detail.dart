@@ -113,7 +113,7 @@ class _BookStatusDetailState extends State<BookStatusDetail> {
         side: BorderSide(color: dividerColor, width: 1),
         borderRadius: BorderRadius.circular(cornerRadius),
       ),
-      color: Theme.of(context).colorScheme.secondaryContainer.withAlpha(50),
+      color: Theme.of(context).colorScheme.secondaryContainer.withAlpha(120),
       child: Container(
         padding: const EdgeInsets.all(10),
         child: Column(

@@ -25,6 +25,7 @@ import 'package:openreads/logic/bloc/welcome_bloc/welcome_bloc.dart';
 import 'package:openreads/logic/cubit/book_cubit.dart';
 import 'package:openreads/logic/cubit/current_book_cubit.dart';
 import 'package:openreads/logic/cubit/default_book_status_cubit.dart';
+import 'package:openreads/logic/cubit/default_book_tags_cubit.dart';
 import 'package:openreads/logic/cubit/edit_book_cubit.dart';
 import 'package:openreads/logic/cubit/selected_books_cubit.dart';
 import 'package:openreads/resources/connectivity_service.dart';
@@ -80,6 +81,7 @@ class App extends StatelessWidget {
       BlocProvider(create: (_) => CurrentBookCubit()),
       BlocProvider(create: (_) => SelectedBooksCubit()),
       BlocProvider(create: (_) => ChallengeBloc()),
+      BlocProvider(create: (_) => DefaultBookTagsCubit()),
     ];
 
     final settingsProviders = [

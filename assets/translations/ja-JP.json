@@ -185,7 +185,6 @@
     "flash_off": "フラッシュオフ",
     "dark_mode_amoled": "ＡＭＯＬＥＤダークモード",
     "use_material_you": "「 Ｍａｔｅｒｉａｌ　Ｙｏｕ」使う",
-    "send_dev_email": "デベロッパーメルする",
     "add_books_and_come_back": "本を追加して、ここに戻って",
     "hour": {
         "one": "{}時間",
@@ -231,7 +230,6 @@
     "add_additional_reading_time": "読書の進捗を設定",
     "start_adding_books": "アプリをはじめる",
     "help_to_get_started": "はじめるにあたって、次のことが実行できます",
-    "owned_book_tag": "所有",
     "read_x_times": "{} 回読書",
     "date_added": "追加した日",
     "date_modified": "更新した日",

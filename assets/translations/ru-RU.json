@@ -168,7 +168,6 @@
     "send_feedback": "Обратная связь",
     "finished_books": "Прочитанные книги",
     "backup_and_restore": "Резервирование и восстановление",
-    "send_dev_email": "Написать e-mail разработчику",
     "finished_pages": "Прочитанные страницы",
     "join_community": "Присоединиться к сообществу",
     "join_community_description": "Оставаться в кусе с проектом Openreads",
@@ -287,7 +286,6 @@
     "warning_yes": "Я согласен",
     "warning_no": "Не надо",
     "warning_yes_and_dont_show": "Я согласен и не надо больше спрашивать",
-    "owned_book_tag": "владею",
     "copy_book": "копия",
     "cover_still_downloaded": "Обложка все ещё загружается"
 }

@@ -65,6 +65,7 @@ class Book {
     BookFormat bookFormat = BookFormat.paperback,
   }) {
     final newBookDate = DateTime.now();
+
     return Book(
       id: null,
       title: '',
@@ -75,7 +76,7 @@ class Book {
       bookFormat: bookFormat,
       hasCover: false,
       readings: List<Reading>.empty(growable: true),
-      tags: LocaleKeys.owned_book_tag.tr(),
+      tags: null,
       dateAdded: newBookDate,
       dateModified: newBookDate,
     );
@@ -226,7 +227,7 @@ class Book {
       olid: oldBook.bookOLID,
       tags: oldBook.bookTags != null && oldBook.bookTags != 'null'
           ? jsonDecode(oldBook.bookTags!).join('|||||')
-          : null,
+          : null, //TODO: improve saving tags
       notes: oldBook.bookNotes,
       cover: oldBook.bookCoverImg,
       blurHash: blurHash,
