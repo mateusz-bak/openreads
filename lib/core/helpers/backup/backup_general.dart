@@ -7,6 +7,7 @@ import 'package:flutter/material.dart';
 
 import 'package:easy_localization/easy_localization.dart';
 import 'package:filesystem_picker/filesystem_picker.dart';
+import 'package:openreads/core/helpers/cross_platform/alert_dialog.dart';
 import 'package:openreads/main.dart';
 import 'package:openreads/ui/home_screen/home_screen.dart';
 import 'package:openreads/ui/settings_screen/download_missing_covers_screen.dart';
@@ -167,7 +168,7 @@ class BackupGeneral {
       context: context,
       builder: (context) {
         return Builder(builder: (context) {
-          return AlertDialog.adaptive(
+          return buildPlatformSpecificAlertDialog(
             title: Text(
               LocaleKeys.import_successful.tr(),
             ),

@@ -49,7 +49,7 @@ class _HomeScreenState extends State<HomeScreen> {
           return const SortBottomSheet();
         },
       );
-    } else if (Platform.isAndroid) {
+    } else {
       showModalBottomSheet(
         context: context,
         isScrollControlled: true,
@@ -145,7 +145,7 @@ class _HomeScreenState extends State<HomeScreen> {
           );
         },
       );
-    } else if (Platform.isAndroid) {
+    } else {
       showModalBottomSheet(
         context: context,
         backgroundColor: Colors.transparent,
