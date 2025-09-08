@@ -281,6 +281,9 @@ class _AddBookScreenState extends State<AddBookScreen> {
   void _downloadWork() async {
     if (widget.work != null) {
       final openLibraryWork = await OpenLibraryService().getWork(widget.work!);
+
+      if (!mounted) return;
+
       setState(() {
         if (openLibraryWork.description != null) {
           _descriptionCtrl.text = openLibraryWork.description ?? '';
