@@ -281,5 +281,6 @@
     "duck_duck_go_warning": "إن البحث عن أغلفة على الشبكة عبر محرك(DuckDuckGo)، خدمة مملوكة. رجاء انتبه للخصوصية",
     "warning_yes": "أنا موافق على ذلك",
     "warning_no": "خذني للوراء",
-    "warning_yes_and_dont_show": "أنا موافق على ذلك ولا تظهر مرة أخرى"
+    "warning_yes_and_dont_show": "أنا موافق على ذلك ولا تظهر مرة أخرى",
+    "filter_out_selected_tags": "استبعاد الفئات المحددة"
 }
