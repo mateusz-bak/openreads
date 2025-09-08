@@ -284,5 +284,8 @@
     "warning_yes": "Ich bin einverstanden",
     "duck_duck_go_warning": "Die Online-Suche nach Titeln wird durch DuckDuckGo, einen proprietären Dienst, bereitgestellt. Bitte sei vorsichtig in Bezug auf die Auswirkungen auf die Privatsphäre",
     "warning_no": "Ich will zurück",
-    "warning_yes_and_dont_show": "Ich habe kein Problem damit und zeige das nicht noch einmal"
+    "warning_yes_and_dont_show": "Ich habe kein Problem damit und zeige das nicht noch einmal",
+    "set_default_tags": "Standardschlagworte für neue Bücher festlegen",
+    "add_new_default_tag": "Neues Standardschlagwort hinzufügen:",
+    "create_discussion": "Eine Diskussion auf GitHub erstellen"
 }

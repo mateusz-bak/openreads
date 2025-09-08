@@ -284,5 +284,8 @@
     "added_on": "Lisatud",
     "modified_on": "Muudetud",
     "default_books_format": "Vakimisi raamatutüüp",
-    "duck_duck_go_warning": "Kaanepiltide otsimisel võrgust kasutame DuckDuckGo otsingut. Tegemist on mitteavatud teenusega, seega palun arvesta sinu privaatsusega seotud asjaolusid"
+    "duck_duck_go_warning": "Kaanepiltide otsimisel võrgust kasutame DuckDuckGo otsingut. Tegemist on mitteavatud teenusega, seega palun arvesta sinu privaatsusega seotud asjaolusid",
+    "create_discussion": "Alusta keskustelu GitHubis",
+    "set_default_tags": "Määra uute raamatute vaikimisi sildid",
+    "add_new_default_tag": "Lisa uus vaikimisi silt:"
 }
