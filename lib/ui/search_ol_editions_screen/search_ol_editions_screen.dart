@@ -53,6 +53,8 @@ class _SearchOLEditionsScreenState extends State<SearchOLEditionsScreen> {
     final defaultBookFormat = context.read<DefaultBooksFormatCubit>().state;
     final defaultTags = context.read<DefaultBookTagsCubit>().state;
 
+    final addDate = DateTime.now();
+
     final book = Book(
       title: result.title!,
       subtitle: result.subtitle,
@@ -70,8 +72,8 @@ class _SearchOLEditionsScreenState extends State<SearchOLEditionsScreen> {
       bookFormat: result.physicalFormat ?? defaultBookFormat,
       readings: List<Reading>.empty(growable: true),
       tags: defaultTags.isNotEmpty == true ? defaultTags.join('|||||') : null,
-      dateAdded: DateTime.now(),
-      dateModified: DateTime.now(),
+      dateAdded: addDate,
+      dateModified: addDate,
     );
 
     context.read<EditBookCubit>().setBook(book);

@@ -37,7 +37,7 @@ class OLEditionResult {
   final List<String>? isbn10;
   final List<int?>? covers;
   final String? key;
-  final List<Type>? authors;
+  final List<Author>? authors;
   final String? ocaid;
   final List<String>? contributions;
   final List<Type>? languages;
@@ -72,7 +72,7 @@ class OLEditionResult {
       key: json["key"],
       authors: json["authors"] == null
           ? null
-          : List<Type>.from(json["authors"].map((x) => Type.fromJson(x))),
+          : List<Author>.from(json["authors"].map((x) => Author.fromJson(x))),
       ocaid: json["ocaid"],
       contributions: json["contributions"] == null
           ? null
@@ -137,6 +137,20 @@ class Classifications {
 
   factory Classifications.fromJson(Map<String, dynamic> json) =>
       Classifications();
+}
+
+class Author {
+  Author({
+    this.key,
+    this.name,
+  });
+
+  final String? key;
+  final String? name;
+
+  factory Author.fromJson(Map<String, dynamic> json) => Author(
+        key: json["key"],
+      );
 }
 
 class Created {

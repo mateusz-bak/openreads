@@ -1,12 +1,13 @@
 import 'package:flutter/services.dart';
 import 'package:http/http.dart';
 import 'package:openreads/core/constants/enums/enums.dart';
+import 'package:openreads/model/ol_author_result.dart';
 import 'package:openreads/model/ol_edition_result.dart';
 import 'package:openreads/model/ol_search_result.dart';
 import 'package:openreads/model/ol_work_result.dart';
 
 class OpenLibraryService {
-  static const baseUrl = 'https://openlibrary.org/';
+  static const baseUrl = 'https://openlibrary.org';
   static const coversBaseUrl = 'https://covers.openlibrary.org';
 
   Future<OLSearchResult> getResults({
@@ -31,7 +32,7 @@ class OpenLibraryService {
     final limitParam = '&limit=$limit';
 
     final uri = Uri.parse(
-      '${baseUrl}search.json?$searchTypeParam=$query$limitParam$offsetParam$modeParam$fieldsParam',
+      '$baseUrl/search.json?$searchTypeParam=$query$limitParam$offsetParam$modeParam$fieldsParam',
     );
 
     final response = await get(uri);
@@ -45,7 +46,7 @@ class OpenLibraryService {
   }
 
   Future<OLWorkResult> getWork(String work) async {
-    final uri = Uri.parse('$baseUrl$work.json');
+    final uri = Uri.parse('$baseUrl/$work.json');
     final response = await get(uri);
     return openLibraryWorkResultFromJson(response.body);
   }
@@ -62,6 +63,38 @@ class OpenLibraryService {
 
       return response.bodyBytes;
     } catch (e) {
+      return null;
+    }
+  }
+
+  Future<OLEditionResult?> getEditionByISBN({
+    required String isbn,
+  }) async {
+    final uri = Uri.parse(
+      '$baseUrl/isbn/$isbn.json',
+    );
+
+    final response = await get(uri);
+
+    if (response.statusCode == 200) {
+      return openLibraryEditionResultFromJson(response.body);
+    } else {
+      return null;
+    }
+  }
+
+  Future<OLAuthorResult?> getAuthor({
+    required String key,
+  }) async {
+    final uri = Uri.parse(
+      '$baseUrl$key.json',
+    );
+
+    final response = await get(uri);
+
+    if (response.statusCode == 200) {
+      return openLibraryAuthorResultFromJson(response.body);
+    } else {
       return null;
     }
   }
