@@ -235,13 +235,19 @@ class _HomeScreenState extends State<HomeScreen> {
           return BlocBuilder<SelectedBooksCubit, List<int>>(
               builder: (context, list) {
             return PopScope(
-              canPop: list.isEmpty,
-              onPopInvoked: (didPop) {
+              canPop: list.isEmpty && currentPageIndex == 0,
+              onPopInvokedWithResult: (didPop, result) {
                 if (didPop) {
                   return;
                 }
 
-                context.read<SelectedBooksCubit>().resetSelection();
+                if (currentPageIndex == 0) {
+                  context.read<SelectedBooksCubit>().resetSelection();
+                } else {
+                  setState(() {
+                    currentPageIndex = 0;
+                  });
+                }
               },
               child: Scaffold(
                 extendBodyBehindAppBar: true,
@@ -254,6 +260,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 bottomNavigationBar: HomeNavigationBar(
                   currentIndex: currentPageIndex,
                   onTap: (index) {
+                    context.read<SelectedBooksCubit>().resetSelection();
                     setState(() {
                       currentPageIndex = index;
                     });
