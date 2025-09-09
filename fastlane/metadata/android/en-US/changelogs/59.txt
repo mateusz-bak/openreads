@@ -1,0 +1,10 @@
+- New home screen with books and statistics views
+- Ability to change default tags
+- Custom books lists order
+- Scanned/typed ISBN will get the book edition instantly from Open Library
+- New langauges Indonesian, Hebrew, Hungarian, Burmese, Greek
+- Goodreads CSV import `Date Read` will populate finish date
+- Correctly sorting books with a half-star rating
+- Books without readings are not included in yearly statistics
+- Duplicated books have readings and ratings cleared
+- UI improvements
