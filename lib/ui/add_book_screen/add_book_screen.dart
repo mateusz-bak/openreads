@@ -464,7 +464,7 @@ class _AddBookScreenState extends State<AddBookScreen> {
                   controller: _titleCtrl,
                   hint: LocaleKeys.enter_title.tr(),
                   icon: Icons.book,
-                  keyboardType: TextInputType.name,
+                  keyboardType: TextInputType.text,
                   autofocus:
                       (widget.fromOpenLibrary || widget.editingExistingBook)
                           ? false
@@ -478,7 +478,7 @@ class _AddBookScreenState extends State<AddBookScreen> {
                   controller: _subtitleCtrl,
                   hint: LocaleKeys.enter_subtitle.tr(),
                   icon: Icons.book,
-                  keyboardType: TextInputType.name,
+                  keyboardType: TextInputType.text,
                   maxLines: 5,
                   maxLength: 255,
                   textCapitalization: TextCapitalization.sentences,
@@ -491,7 +491,7 @@ class _AddBookScreenState extends State<AddBookScreen> {
                         controller: _authorCtrl,
                         hint: LocaleKeys.enter_author.tr(),
                         icon: Icons.person,
-                        keyboardType: TextInputType.name,
+                        keyboardType: TextInputType.text,
                         maxLines: 5,
                         maxLength: 255,
                         textCapitalization: TextCapitalization.words,
@@ -583,10 +583,8 @@ class _AddBookScreenState extends State<AddBookScreen> {
                         controller: _isbnCtrl,
                         hint: LocaleKeys.isbn.tr(),
                         icon: FontAwesomeIcons.i,
-                        keyboardType: TextInputType.number,
-                        inputFormatters: <TextInputFormatter>[
-                          FilteringTextInputFormatter.digitsOnly
-                        ],
+                        textCapitalization: TextCapitalization.characters,
+                        keyboardType: TextInputType.text,
                         maxLength: 20,
                       ),
                     ),
