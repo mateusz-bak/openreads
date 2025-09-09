@@ -3,7 +3,7 @@ description: A mobile books tracker written in Flutter. Free, private and open s
 
 publish_to: "none"
 
-version: 2.10.0+58
+version: 2.11.0+59
 
 environment:
   sdk: ">=2.18.2 <3.0.0"
