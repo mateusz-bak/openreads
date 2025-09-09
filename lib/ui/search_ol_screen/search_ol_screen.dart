@@ -258,7 +258,7 @@ class _SearchOLScreenState extends State<SearchOLScreen>
     if (result.type == ResultType.Barcode) {
       setState(() {
         _searchingISBNError = false;
-        // searchActivated = true;
+        searchActivated = true;
         _searchController.text = result.rawContent;
       });
 
