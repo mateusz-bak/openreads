@@ -5,6 +5,7 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
 import 'package:loading_animation_widget/loading_animation_widget.dart';
 import 'package:openreads/core/constants/enums/enums.dart';
@@ -243,6 +244,7 @@ class _SearchOLScreenState extends State<SearchOLScreen>
   }
 
   void _startScanner() async {
+    FocusManager.instance.primaryFocus?.unfocus();
     context.read<OpenLibrarySearchBloc>().add(const OpenLibrarySearchSetISBN());
 
     var result = await BarcodeScanner.scan(
@@ -386,6 +388,12 @@ class _SearchOLScreenState extends State<SearchOLScreen>
             LocaleKeys.add_search.tr(),
             style: const TextStyle(fontSize: 18),
           ),
+          actions: [
+            IconButton(
+              onPressed: _startScanner,
+              icon: const FaIcon(FontAwesomeIcons.solidCamera, size: 18),
+            ),
+          ],
         ),
         body: Column(
           children: [
@@ -610,7 +618,7 @@ class _SearchOLScreenState extends State<SearchOLScreen>
               ),
               child: Text(
                 LocaleKeys.search.tr(),
-                style: const TextStyle(fontSize: 12),
+                style: const TextStyle(fontSize: 14),
               ),
             ),
           ),
