@@ -15,7 +15,7 @@ import 'package:openreads/logic/bloc/migration_v1_to_v2_bloc/migration_v1_to_v2_
 import 'package:openreads/generated/locale_keys.g.dart';
 import 'package:openreads/logic/bloc/theme_bloc/theme_bloc.dart';
 import 'package:openreads/logic/bloc/welcome_bloc/welcome_bloc.dart';
-import 'package:openreads/ui/books_screen/books_screen.dart';
+import 'package:openreads/ui/home_screen/home_screen.dart';
 import 'package:openreads/ui/welcome_screen/widgets/widgets.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 
@@ -51,7 +51,7 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
 
   _moveToBooksScreen() {
     Navigator.of(context).pushAndRemoveUntil(
-      MaterialPageRoute(builder: (context) => const BooksScreen()),
+      MaterialPageRoute(builder: (context) => const HomeScreen()),
       (Route<dynamic> route) => false,
     );
   }
