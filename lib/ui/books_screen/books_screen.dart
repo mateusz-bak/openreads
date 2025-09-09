@@ -869,6 +869,8 @@ class _BooksScreenState extends State<BooksScreen>
       index++;
     }
 
+    tabChips.add(const SizedBox(width: 10));
+
     return tabChips;
   }
 
