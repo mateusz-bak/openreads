@@ -283,5 +283,9 @@
     "duck_duck_go_warning": "A busca en liña das portadas faise grazas a DuckDuckGo, un servizo propietario. Ten en conta as implicacións respecto da privacidade",
     "warning_yes": "Estou ben con iso",
     "warning_no": "Lévame de volta",
-    "warning_yes_and_dont_show": "Estou de acordo, non mostrar aviso outra vez"
+    "warning_yes_and_dont_show": "Estou de acordo, non mostrar aviso outra vez",
+    "seletct_rating_type": "Elixe como mostrar as valoracións",
+    "create_discussion": "Abrir unha conversa en GitHub",
+    "set_default_tags": "Etiquetas por defecto para novos libros",
+    "add_new_default_tag": "Engadir nova etiqueta por defecto:"
 }
