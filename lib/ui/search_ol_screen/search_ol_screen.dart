@@ -193,7 +193,8 @@ class _SearchOLScreenState extends State<SearchOLScreen>
     });
 
     if (context.read<OpenLibrarySearchBloc>().state is OpenLibrarySearchISBN) {
-      _searchByISBN();
+      final isbn = _searchController.text.replaceAll('-', '').trim();
+      _searchByISBN(isbn);
     } else {
       _searchTerm = _searchController.text;
 
@@ -201,13 +202,11 @@ class _SearchOLScreenState extends State<SearchOLScreen>
     }
   }
 
-  void _searchByISBN() async {
+  void _searchByISBN(String isbn) async {
     setState(() {
       _searchingISBNError = false;
       _searchingISBN = true;
     });
-
-    final isbn = _searchController.text.replaceAll('-', '').trim();
     final edition = await OpenLibraryService().getEditionByISBN(isbn: isbn);
 
     final authors = List<String>.empty(growable: true);
@@ -259,12 +258,13 @@ class _SearchOLScreenState extends State<SearchOLScreen>
     if (result.type == ResultType.Barcode) {
       setState(() {
         _searchingISBNError = false;
-        searchActivated = true;
+        // searchActivated = true;
         _searchController.text = result.rawContent;
       });
 
       _searchTerm = result.rawContent;
-      _pagingController.refresh();
+      // _pagingController.refresh();
+      _searchByISBN(result.rawContent);
     }
   }
 
