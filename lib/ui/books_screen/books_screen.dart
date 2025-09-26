@@ -23,8 +23,6 @@ class BooksScreen extends StatefulWidget {
 
 class _BooksScreenState extends State<BooksScreen>
     with AutomaticKeepAliveClientMixin, TickerProviderStateMixin {
-  int _booksTabIndex = 0;
-
   late TabController _tabController;
   late ScrollController _chipScrollController;
 
@@ -114,6 +112,15 @@ class _BooksScreenState extends State<BooksScreen>
       case SortType.byStartDate:
         list = _sortByStartDate(list: list, isAsc: state.isAsc);
         break;
+      case SortType.byPublicationYear:
+        list = _sortByPublicationYear(list: list, isAsc: state.isAsc);
+        break;
+      case SortType.byDateAdded:
+        list = _sortByDateAdded(list: list, isAsc: state.isAsc);
+        break;
+      case SortType.byDateModified:
+        list = _sortByDateModified(list: list, isAsc: state.isAsc);
+        break;
       default:
         list = _sortByTitle(list: list, isAsc: state.isAsc);
     }
@@ -142,9 +149,61 @@ class _BooksScreenState extends State<BooksScreen>
       case SortType.byAuthor:
         list = _sortByAuthor(list: list, isAsc: state.isAsc);
         break;
-
       case SortType.byPages:
         list = _sortByPages(list: list, isAsc: state.isAsc);
+        break;
+      case SortType.byPublicationYear:
+        list = _sortByPublicationYear(list: list, isAsc: state.isAsc);
+        break;
+      case SortType.byDateAdded:
+        list = _sortByDateAdded(list: list, isAsc: state.isAsc);
+        break;
+      case SortType.byDateModified:
+        list = _sortByDateModified(list: list, isAsc: state.isAsc);
+        break;
+
+      default:
+        list = _sortByTitle(list: list, isAsc: state.isAsc);
+    }
+
+    return list;
+  }
+
+  List<Book> _sortUnfinishedList({
+    required SetSortState state,
+    required List<Book> list,
+  }) {
+    if (state.tags != null) {
+      list = _filterTags(
+        list: list,
+        tags: state.tags!,
+        filterTagsAsAnd: state.filterTagsAsAnd,
+        filterOutSelectedTags: state.filterOutTags,
+      );
+    }
+
+    if (state.bookType != null) {
+      list = _filterOutBookTypes(list, state.bookType!);
+    }
+
+    switch (state.sortType) {
+      case SortType.byAuthor:
+        list = _sortByAuthor(list: list, isAsc: state.isAsc);
+        break;
+      case SortType.byPages:
+        list = _sortByPages(list: list, isAsc: state.isAsc);
+        break;
+      case SortType.byStartDate:
+        list = _sortByStartDate(list: list, isAsc: state.isAsc);
+        break;
+      case SortType.byPublicationYear:
+        list = _sortByPublicationYear(list: list, isAsc: state.isAsc);
+        break;
+      case SortType.byDateAdded:
+        list = _sortByDateAdded(list: list, isAsc: state.isAsc);
+        break;
+      case SortType.byDateModified:
+        list = _sortByDateModified(list: list, isAsc: state.isAsc);
         break;
       default:
         list = _sortByTitle(list: list, isAsc: state.isAsc);
@@ -669,14 +728,6 @@ class _BooksScreenState extends State<BooksScreen>
     return booksWithPublicationDate + booksWithoutPublicationDate;
   }
 
-  _changeTab(int index) {
-    setState(() {
-      _booksTabIndex = index;
-    });
-
-    _tabController.index = index;
-  }
-
   @override
   bool get wantKeepAlive => true;
 
@@ -747,11 +798,10 @@ class _BooksScreenState extends State<BooksScreen>
   StreamBuilder<List<Book>> _buildUnfinishedBooksTabView() {
     bookCubit.getUnfinishedBooks();
 
-    //TODO: sort unfinished book by date of modification
     return _buildBooksTabView(
       listNumber: 3,
       stream: bookCubit.unfinishedBooks,
-      sorting: null,
+      sorting: _sortUnfinishedList,
     );
   }
 
@@ -830,36 +880,28 @@ class _BooksScreenState extends State<BooksScreen>
       switch (status) {
         case BookStatus.read:
           tabChips.add(BooksTabChip(
-            selected: _booksTabIndex == index,
             index: index,
-            changeTab: _changeTab,
             tabController: _tabController,
             title: LocaleKeys.books_finished.tr(),
           ));
           break;
         case BookStatus.inProgress:
           tabChips.add(BooksTabChip(
-            selected: _booksTabIndex == index,
             index: index,
-            changeTab: _changeTab,
             tabController: _tabController,
             title: LocaleKeys.books_in_progress.tr(),
           ));
           break;
         case BookStatus.forLater:
           tabChips.add(BooksTabChip(
-            selected: _booksTabIndex == index,
             index: index,
-            changeTab: _changeTab,
             tabController: _tabController,
             title: LocaleKeys.books_for_later.tr(),
           ));
           break;
         case BookStatus.unfinished:
           tabChips.add(BooksTabChip(
-            selected: _booksTabIndex == index,
             index: index,
-            changeTab: _changeTab,
             tabController: _tabController,
             title: LocaleKeys.books_unfinished.tr(),
           ));

@@ -1,18 +1,16 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:openreads/logic/cubit/books_tab_index_cubit.dart';
 
 class BooksTabChip extends StatefulWidget {
   const BooksTabChip({
     super.key,
-    required this.selected,
     required this.index,
-    required this.changeTab,
     required this.tabController,
     required this.title,
   });
 
-  final bool selected;
   final int index;
-  final Function(int) changeTab;
   final TabController tabController;
   final String title;
 
@@ -44,14 +42,20 @@ class _BookTabChipState extends State<BooksTabChip> {
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.fromLTRB(8, 0, 0, 0),
-      child: FilterChip(
-        selected: widget.selected,
-        label: Text(widget.title),
-        visualDensity: VisualDensity.compact,
-        showCheckmark: false,
-        onSelected: (bool _) {
-          _scrollToChip(widget.index, context);
-          widget.changeTab(widget.index);
+      child: BlocBuilder<BooksTabIndexCubit, int>(
+        builder: (context, tabIndex) {
+          return FilterChip(
+            selected: tabIndex == widget.index,
+            label: Text(widget.title),
+            visualDensity: VisualDensity.compact,
+            showCheckmark: false,
+            onSelected: (bool _) {
+              _scrollToChip(widget.index, context);
+              BlocProvider.of<BooksTabIndexCubit>(context)
+                  .setTabIndex(widget.index);
+              widget.tabController.index = widget.index;
+            },
+          );
         },
       ),
     );

@@ -10,6 +10,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:openreads/core/themes/app_theme.dart';
 import 'package:openreads/generated/locale_keys.g.dart';
 import 'package:openreads/logic/bloc/sort_bloc/sort_bloc.dart';
+import 'package:openreads/logic/cubit/book_lists_order_cubit.dart';
+import 'package:openreads/logic/cubit/books_tab_index_cubit.dart';
 import 'package:openreads/main.dart';
 import 'package:openreads/ui/books_screen/widgets/widgets.dart';
 
@@ -40,16 +42,67 @@ final List<String> bookTypeOptions = [
   LocaleKeys.book_format_audiobook_plural.tr(),
 ];
 
-String _getSortDropdownValue(SetSortState state) {
+List<String> _getValidSortOptions(BookStatus bookStatus) {
+  switch (bookStatus) {
+    case BookStatus.read:
+      return [
+        LocaleKeys.title.tr(),
+        LocaleKeys.author.tr(),
+        LocaleKeys.rating.tr(),
+        LocaleKeys.pages_uppercase.tr(),
+        LocaleKeys.start_date.tr(),
+        LocaleKeys.finish_date.tr(),
+        LocaleKeys.enter_publication_year.tr(),
+        LocaleKeys.date_added.tr(),
+        LocaleKeys.date_modified.tr(),
+      ];
+    case BookStatus.inProgress:
+      return [
+        LocaleKeys.title.tr(),
+        LocaleKeys.author.tr(),
+        LocaleKeys.pages_uppercase.tr(),
+        LocaleKeys.start_date.tr(),
+        LocaleKeys.enter_publication_year.tr(),
+        LocaleKeys.date_added.tr(),
+        LocaleKeys.date_modified.tr(),
+      ];
+    case BookStatus.forLater:
+      return [
+        LocaleKeys.title.tr(),
+        LocaleKeys.author.tr(),
+        LocaleKeys.pages_uppercase.tr(),
+        LocaleKeys.enter_publication_year.tr(),
+        LocaleKeys.date_added.tr(),
+        LocaleKeys.date_modified.tr(),
+      ];
+    case BookStatus.unfinished:
+      return [
+        LocaleKeys.title.tr(),
+        LocaleKeys.author.tr(),
+        LocaleKeys.pages_uppercase.tr(),
+        LocaleKeys.start_date.tr(),
+        LocaleKeys.enter_publication_year.tr(),
+        LocaleKeys.date_added.tr(),
+        LocaleKeys.date_modified.tr(),
+      ];
+    default:
+      return [];
+  }
+}
+
+String _getSortDropdownValue(BookStatus bookStatus, SetSortState state) {
   if (state.sortType == SortType.byAuthor) {
     return sortOptions[1];
-  } else if (state.sortType == SortType.byRating) {
+  } else if (bookStatus == BookStatus.read &&
+      state.sortType == SortType.byRating) {
     return sortOptions[2];
   } else if (state.sortType == SortType.byPages) {
     return sortOptions[3];
-  } else if (state.sortType == SortType.byStartDate) {
+  } else if (bookStatus != BookStatus.forLater &&
+      state.sortType == SortType.byStartDate) {
     return sortOptions[4];
-  } else if (state.sortType == SortType.byFinishDate) {
+  } else if (bookStatus == BookStatus.read &&
+      state.sortType == SortType.byFinishDate) {
     return sortOptions[5];
   } else if (state.sortType == SortType.byPublicationYear) {
     return sortOptions[6];
@@ -885,62 +938,71 @@ class _SortBottomSheetState extends State<SortBottomSheet> {
     );
   }
 
-  BlocBuilder<SortBloc, SortState> _buildSortDropdown() {
-    return BlocBuilder<SortBloc, SortState>(
-      builder: (context, state) {
-        if (state is SetSortState) {
-          return Row(
-            children: [
-              Expanded(
-                child: DropdownButtonHideUnderline(
-                  child: DropdownButton2(
-                    isExpanded: true,
-                    buttonStyleData: ButtonStyleData(
-                      height: 42,
+  BlocBuilder<BookListsOrderCubit, List<BookStatus>> _buildSortDropdown() {
+    return BlocBuilder<BookListsOrderCubit, List<BookStatus>>(
+        builder: (context, bookStatusList) {
+      return BlocBuilder<BooksTabIndexCubit, int>(
+        builder: (context, tabIndex) {
+          return BlocBuilder<SortBloc, SortState>(
+            builder: (context, state) {
+              if (state is SetSortState) {
+                return Row(
+                  children: [
+                    Expanded(
+                      child: DropdownButtonHideUnderline(
+                        child: DropdownButton2(
+                          isExpanded: true,
+                          buttonStyleData: ButtonStyleData(
+                            height: 42,
+                            decoration: BoxDecoration(
+                              border: Border.all(
+                                color: dividerColor,
+                              ),
+                              color:
+                                  Theme.of(context).colorScheme.surfaceVariant,
+                              borderRadius: BorderRadius.circular(cornerRadius),
+                            ),
+                          ),
+                          items: _getValidSortOptions(bookStatusList[tabIndex])
+                              .map((item) => DropdownMenuItem<String>(
+                                    value: item,
+                                    child: Text(
+                                      item,
+                                      overflow: TextOverflow.ellipsis,
+                                    ),
+                                  ))
+                              .toList(),
+                          value: _getSortDropdownValue(
+                              bookStatusList[tabIndex], state),
+                          onChanged: (value) => _updateSort(
+                            context,
+                            value,
+                            state,
+                          ),
+                        ),
+                      ),
+                    ),
+                    const SizedBox(width: 5),
+                    Container(
                       decoration: BoxDecoration(
+                        color: Theme.of(context).colorScheme.surfaceVariant,
+                        borderRadius: BorderRadius.circular(cornerRadius),
                         border: Border.all(
                           color: dividerColor,
                         ),
-                        color: Theme.of(context).colorScheme.surfaceVariant,
-                        borderRadius: BorderRadius.circular(cornerRadius),
                       ),
-                    ),
-                    items: sortOptions
-                        .map((item) => DropdownMenuItem<String>(
-                              value: item,
-                              child: Text(
-                                item,
-                                overflow: TextOverflow.ellipsis,
-                              ),
-                            ))
-                        .toList(),
-                    value: _getSortDropdownValue(state),
-                    onChanged: (value) => _updateSort(
-                      context,
-                      value,
-                      state,
-                    ),
-                  ),
-                ),
-              ),
-              const SizedBox(width: 5),
-              Container(
-                decoration: BoxDecoration(
-                  color: Theme.of(context).colorScheme.surfaceVariant,
-                  borderRadius: BorderRadius.circular(cornerRadius),
-                  border: Border.all(
-                    color: dividerColor,
-                  ),
-                ),
-                child: _getOrderButton(context, state),
-              )
-            ],
+                      child: _getOrderButton(context, state),
+                    )
+                  ],
+                );
+              } else {
+                return const SizedBox();
+              }
+            },
           );
-        } else {
-          return const SizedBox();
-        }
-      },
-    );
+        },
+      );
+    });
   }
 
   Widget _buildBookTypeFilter() {
