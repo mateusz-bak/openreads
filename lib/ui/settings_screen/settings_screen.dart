@@ -408,9 +408,9 @@ class SettingsScreen extends StatelessWidget {
       ),
       description: Text(LocaleKeys.support_the_project_description.tr()),
       leading: ShakeAnimatedWidget(
-        duration: const Duration(seconds: 3),
+        duration: const Duration(seconds: 1),
         shakeAngle: Rotation.deg(z: 20),
-        curve: Curves.bounceInOut,
+        curve: Curves.easeInOutSine,
         child: FaIcon(
           FontAwesomeIcons.mugHot,
           color: Theme.of(context).colorScheme.primary,

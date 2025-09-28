@@ -565,10 +565,10 @@ class _SortBottomSheetState extends State<SortBottomSheet> {
           children: [
             if (Platform.isAndroid)
               Padding(
-                padding: const EdgeInsets.fromLTRB(0, 10, 0, 10),
+                padding: const EdgeInsets.fromLTRB(0, 15, 0, 10),
                 child: Container(
                   height: 5,
-                  width: 40,
+                  width: MediaQuery.of(context).size.width * 0.25,
                   decoration: BoxDecoration(
                     color: Theme.of(context)
                         .colorScheme
