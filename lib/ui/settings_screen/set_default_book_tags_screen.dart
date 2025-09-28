@@ -6,6 +6,7 @@ import 'package:openreads/logic/cubit/default_book_tags_cubit.dart';
 import 'package:openreads/main.dart';
 import 'package:openreads/ui/add_book_screen/widgets/book_text_field.dart';
 import 'package:openreads/ui/books_screen/widgets/tag_filter_chip.dart';
+import 'package:openreads/ui/common/themed_scaffold.dart';
 import 'package:openreads/ui/common/keyboard_dismissable.dart';
 
 class SetDefaultBookTagsScreen extends StatelessWidget {
@@ -33,7 +34,7 @@ class SetDefaultBookTagsScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return KeyboardDismissible(
-      child: Scaffold(
+      child: ThemedScaffold(
         appBar: AppBar(
           title: Text(
             LocaleKeys.set_default_tags.tr(),

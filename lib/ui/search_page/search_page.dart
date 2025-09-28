@@ -8,6 +8,7 @@ import 'package:openreads/model/book.dart';
 import 'package:openreads/ui/add_book_screen/widgets/book_text_field.dart';
 import 'package:openreads/ui/book_screen/book_screen.dart';
 import 'package:openreads/ui/books_screen/widgets/widgets.dart';
+import 'package:openreads/ui/common/themed_scaffold.dart';
 import 'package:openreads/ui/common/keyboard_dismissable.dart';
 
 class SearchPage extends StatefulWidget {
@@ -32,7 +33,7 @@ class _SearchPageState extends State<SearchPage> {
   @override
   Widget build(BuildContext context) {
     return KeyboardDismissible(
-      child: Scaffold(
+      child: ThemedScaffold(
         appBar: AppBar(
           title: Text(
             LocaleKeys.search_in_books.tr(),

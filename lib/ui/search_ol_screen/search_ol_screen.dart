@@ -22,6 +22,7 @@ import 'package:openreads/model/ol_search_result.dart';
 import 'package:openreads/resources/open_library_service.dart';
 import 'package:openreads/ui/add_book_screen/add_book_screen.dart';
 import 'package:openreads/ui/add_book_screen/widgets/widgets.dart';
+import 'package:openreads/ui/common/themed_scaffold.dart';
 import 'package:openreads/ui/common/keyboard_dismissable.dart';
 import 'package:openreads/ui/search_ol_editions_screen/search_ol_editions_screen.dart';
 import 'package:openreads/ui/search_ol_screen/widgets/widgets.dart';
@@ -382,7 +383,7 @@ class _SearchOLScreenState extends State<SearchOLScreen>
     super.build(context);
 
     return KeyboardDismissible(
-      child: Scaffold(
+      child: ThemedScaffold(
         appBar: AppBar(
           title: Text(
             LocaleKeys.add_search.tr(),

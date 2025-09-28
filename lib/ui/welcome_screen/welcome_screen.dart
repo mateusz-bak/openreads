@@ -10,11 +10,11 @@ import 'package:openreads/core/helpers/backup/backup_import.dart';
 import 'package:openreads/core/helpers/backup/csv_import_bookwyrm.dart';
 import 'package:openreads/core/helpers/backup/csv_import_goodreads.dart';
 import 'package:openreads/core/helpers/backup/csv_import_openreads.dart';
-import 'package:openreads/core/themes/app_theme.dart';
 import 'package:openreads/logic/bloc/migration_v1_to_v2_bloc/migration_v1_to_v2_bloc.dart';
 import 'package:openreads/generated/locale_keys.g.dart';
 import 'package:openreads/logic/bloc/theme_bloc/theme_bloc.dart';
 import 'package:openreads/logic/bloc/welcome_bloc/welcome_bloc.dart';
+import 'package:openreads/ui/common/themed_scaffold.dart';
 import 'package:openreads/ui/home_screen/home_screen.dart';
 import 'package:openreads/ui/welcome_screen/widgets/widgets.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
@@ -140,9 +140,7 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
     return BlocBuilder<ThemeBloc, ThemeState>(
       builder: (context, state) {
         if (state is SetThemeState) {
-          AppTheme.init(state, context);
-
-          return Scaffold(
+          return ThemedScaffold(
             appBar: AppBar(
               automaticallyImplyLeading: false,
             ),

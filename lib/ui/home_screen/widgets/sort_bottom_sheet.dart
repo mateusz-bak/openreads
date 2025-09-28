@@ -552,6 +552,12 @@ class _SortBottomSheetState extends State<SortBottomSheet> {
   @override
   Widget build(BuildContext context) {
     return Material(
+      shape: const RoundedRectangleBorder(
+        borderRadius: BorderRadius.vertical(top: Radius.circular(15)),
+      ),
+      color: Theme.of(context).brightness == Brightness.dark
+          ? darkBackgroundColor
+          : lightBackgroundColor,
       child: SafeArea(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.end,

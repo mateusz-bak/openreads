@@ -4,6 +4,7 @@ import 'package:openreads/core/themes/app_theme.dart';
 import 'package:openreads/generated/locale_keys.g.dart';
 import 'package:openreads/main.dart';
 import 'package:openreads/model/book.dart';
+import 'package:openreads/ui/common/themed_scaffold.dart';
 import 'package:openreads/ui/home_screen/home_screen.dart';
 import 'package:openreads/ui/settings_screen/widgets/widgets.dart';
 
@@ -130,7 +131,7 @@ class _DownloadMissingCoversScreenState
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+    return ThemedScaffold(
       appBar: AppBar(
         title: Text(
           LocaleKeys.download_missing_covers.tr(),

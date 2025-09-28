@@ -8,7 +8,6 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 import 'package:openreads/core/constants/constants.dart';
 import 'package:openreads/core/constants/enums/book_status.dart';
-import 'package:openreads/core/themes/app_theme.dart';
 import 'package:openreads/generated/locale_keys.g.dart';
 import 'package:openreads/logic/bloc/display_bloc/display_bloc.dart';
 import 'package:openreads/logic/bloc/theme_bloc/theme_bloc.dart';
@@ -18,6 +17,7 @@ import 'package:openreads/logic/cubit/selected_books_cubit.dart';
 import 'package:openreads/model/book.dart';
 import 'package:openreads/ui/add_book_screen/add_book_screen.dart';
 import 'package:openreads/ui/books_screen/books_screen.dart';
+import 'package:openreads/ui/common/themed_scaffold.dart';
 import 'package:openreads/ui/search_ol_screen/search_ol_screen.dart';
 import 'package:openreads/ui/search_page/search_page.dart';
 import 'package:openreads/ui/settings_screen/settings_screen.dart';
@@ -230,8 +230,6 @@ class _HomeScreenState extends State<HomeScreen> {
     return BlocBuilder<ThemeBloc, ThemeState>(
       builder: (context, themeState) {
         if (themeState is SetThemeState) {
-          AppTheme.init(themeState, context);
-
           return BlocBuilder<SelectedBooksCubit, List<int>>(
               builder: (context, list) {
             return PopScope(
@@ -249,7 +247,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   });
                 }
               },
-              child: Scaffold(
+              child: ThemedScaffold(
                 extendBodyBehindAppBar: true,
                 resizeToAvoidBottomInset: true,
                 appBar: list.isNotEmpty
@@ -289,20 +287,21 @@ class _HomeScreenState extends State<HomeScreen> {
     List<int> multiSelectList,
   ) {
     return AppBar(
-        title: Row(
-      children: [
-        IconButton(
-          icon: const FaIcon(FontAwesomeIcons.xmark, size: 18),
-          onPressed: () {
-            context.read<SelectedBooksCubit>().resetSelection();
-          },
-        ),
-        Text(
-          '${LocaleKeys.selected.tr()} ${multiSelectList.length}',
-          style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
-        ),
-      ],
-    ));
+      title: Row(
+        children: [
+          IconButton(
+            icon: const FaIcon(FontAwesomeIcons.xmark, size: 18),
+            onPressed: () {
+              context.read<SelectedBooksCubit>().resetSelection();
+            },
+          ),
+          Text(
+            '${LocaleKeys.selected.tr()} ${multiSelectList.length}',
+            style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+          ),
+        ],
+      ),
+    );
   }
 
   Widget _buildFAB(
@@ -322,7 +321,6 @@ class _HomeScreenState extends State<HomeScreen> {
 
   PreferredSizeWidget _buildAppBar(BuildContext context) {
     AppBar appBar = AppBar(
-      backgroundColor: Theme.of(context).colorScheme.surface.withOpacity(0.9),
       elevation: 0,
       scrolledUnderElevation: 0,
       title: const Row(

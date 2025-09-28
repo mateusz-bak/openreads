@@ -8,6 +8,7 @@ import 'package:openreads/core/constants/constants.dart';
 import 'package:openreads/generated/locale_keys.g.dart';
 import 'package:openreads/model/book.dart';
 import 'package:openreads/ui/add_book_screen/widgets/widgets.dart';
+import 'package:openreads/ui/common/themed_scaffold.dart';
 import 'package:openreads/ui/search_covers_screen/widgets/widgets.dart';
 
 class SearchCoversScreen extends StatefulWidget {
@@ -118,7 +119,7 @@ class _SearchCoversScreenState extends State<SearchCoversScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+    return ThemedScaffold(
       appBar: AppBar(
         title: Text(
           LocaleKeys.searchOnlineForCover.tr(),

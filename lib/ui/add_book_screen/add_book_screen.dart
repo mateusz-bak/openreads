@@ -25,6 +25,7 @@ import 'package:openreads/model/book.dart';
 import 'package:openreads/ui/add_book_screen/widgets/cover_view_edit.dart';
 import 'package:openreads/ui/add_book_screen/widgets/widgets.dart';
 import 'package:openreads/ui/book_screen/book_screen.dart';
+import 'package:openreads/ui/common/themed_scaffold.dart';
 import 'package:openreads/ui/common/keyboard_dismissable.dart';
 
 class AddBookScreen extends StatefulWidget {
@@ -427,7 +428,7 @@ class _AddBookScreenState extends State<AddBookScreen> {
   @override
   Widget build(BuildContext context) {
     return KeyboardDismissible(
-      child: Scaffold(
+      child: ThemedScaffold(
         appBar: AppBar(
           title: Text(
             widget.editingExistingBook

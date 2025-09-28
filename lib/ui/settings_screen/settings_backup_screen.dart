@@ -10,8 +10,8 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:openreads/core/helpers/backup/backup.dart';
 import 'package:openreads/logic/bloc/migration_v1_to_v2_bloc/migration_v1_to_v2_bloc.dart';
 import 'package:openreads/generated/locale_keys.g.dart';
-import 'package:openreads/logic/bloc/theme_bloc/theme_bloc.dart';
 import 'package:openreads/logic/cubit/backup_progress_cubit.dart';
+import 'package:openreads/ui/common/themed_scaffold.dart';
 import 'package:openreads/ui/welcome_screen/widgets/widgets.dart';
 import 'package:settings_ui/settings_ui.dart';
 import 'package:share_plus/share_plus.dart';
@@ -179,111 +179,110 @@ class _SettingsBackupScreenState extends State<SettingsBackupScreen> {
     return BlocProvider(
       create: (context) => BackupProgressCubit(),
       child: Builder(builder: (context) {
-        return Scaffold(
+        return ThemedScaffold(
           appBar: AppBar(
             title: Text(
               LocaleKeys.backup.tr(),
               style: const TextStyle(fontSize: 18),
             ),
           ),
-          body: Column(
-            children: [
-              BlocBuilder<BackupProgressCubit, String?>(
-                builder: (context, state) {
-                  if (state == null) return const SizedBox();
+          // FutureBuilder added to fix screen colors
+          body: FutureBuilder(
+              future: Future.delayed(const Duration(milliseconds: 0)),
+              builder: (context, asyncSnapshot) {
+                return Column(
+                  children: [
+                    BlocBuilder<BackupProgressCubit, String?>(
+                      builder: (context, state) {
+                        if (state == null) return const SizedBox();
 
-                  return Row(
-                    children: [
-                      Expanded(
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.stretch,
+                        return Row(
                           children: [
-                            const LinearProgressIndicator(),
-                            Container(
-                              padding: const EdgeInsets.fromLTRB(20, 10, 20, 0),
-                              child: Text(
-                                state,
-                                textAlign: TextAlign.center,
-                                style: const TextStyle(
-                                  fontSize: 16,
-                                  fontWeight: FontWeight.bold,
-                                ),
+                            Expanded(
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.stretch,
+                                children: [
+                                  const LinearProgressIndicator(),
+                                  Container(
+                                    padding: const EdgeInsets.fromLTRB(
+                                      20,
+                                      10,
+                                      20,
+                                      0,
+                                    ),
+                                    child: Text(
+                                      state,
+                                      textAlign: TextAlign.center,
+                                      style: const TextStyle(
+                                        fontSize: 16,
+                                        fontWeight: FontWeight.bold,
+                                      ),
+                                    ),
+                                  ),
+                                ],
                               ),
                             ),
                           ],
+                        );
+                      },
+                    ),
+                    Expanded(
+                      child: SettingsList(
+                        contentPadding: const EdgeInsets.only(top: 10),
+                        darkTheme: SettingsThemeData(
+                          settingsListBackground: Theme.of(
+                            context,
+                          ).scaffoldBackgroundColor,
                         ),
-                      ),
-                    ],
-                  );
-                },
-              ),
-              Expanded(
-                child: BlocBuilder<ThemeBloc, ThemeState>(
-                  builder: (context, state) {
-                    late final bool amoledDark;
-
-                    if (state is SetThemeState) {
-                      amoledDark = state.amoledDark;
-                    } else {
-                      amoledDark = false;
-                    }
-
-                    return SettingsList(
-                      contentPadding: const EdgeInsets.only(top: 10),
-                      darkTheme: SettingsThemeData(
-                        settingsListBackground: amoledDark
-                            ? Colors.black
-                            : Theme.of(context).colorScheme.surface,
-                      ),
-                      lightTheme: SettingsThemeData(
-                        settingsListBackground:
-                            Theme.of(context).colorScheme.surface,
-                      ),
-                      sections: [
-                        _buildBackupSection(context),
-                        SettingsSection(
-                          title: Text(
-                            LocaleKeys.csv.tr(),
-                            style: TextStyle(
-                              fontSize: 16,
-                              fontWeight: FontWeight.bold,
-                              color: Theme.of(context).colorScheme.primary,
+                        lightTheme: SettingsThemeData(
+                          settingsListBackground: Theme.of(
+                            context,
+                          ).scaffoldBackgroundColor,
+                        ),
+                        sections: [
+                          _buildBackupSection(context),
+                          SettingsSection(
+                            title: Text(
+                              LocaleKeys.csv.tr(),
+                              style: TextStyle(
+                                fontSize: 16,
+                                fontWeight: FontWeight.bold,
+                                color: Theme.of(context).colorScheme.primary,
+                              ),
                             ),
+                            tiles: <SettingsTile>[
+                              _buildExportAsCSV(),
+                              _buildImportCSV(),
+                              _buildImportGoodreadsCSV(),
+                              _buildImportBookwyrmCSV(),
+                            ],
                           ),
-                          tiles: <SettingsTile>[
-                            _buildExportAsCSV(),
-                            _buildImportCSV(),
-                            _buildImportGoodreadsCSV(),
-                            _buildImportBookwyrmCSV(),
-                          ],
-                        ),
-                      ],
-                    );
-                  },
-                ),
-              ),
-              BlocBuilder<MigrationV1ToV2Bloc, MigrationV1ToV2State>(
-                builder: (context, migrationState) {
-                  if (migrationState is MigrationOnging) {
-                    return MigrationNotification(
-                      done: migrationState.done,
-                      total: migrationState.total,
-                    );
-                  } else if (migrationState is MigrationFailed) {
-                    return MigrationNotification(
-                      error: migrationState.error,
-                    );
-                  } else if (migrationState is MigrationSucceded) {
-                    return const MigrationNotification(
-                      success: true,
-                    );
-                  }
+                        ],
+                      ),
+                    ),
+                    BlocBuilder<MigrationV1ToV2Bloc, MigrationV1ToV2State>(
+                      builder: (context, migrationState) {
+                        if (migrationState is MigrationOnging) {
+                          return MigrationNotification(
+                            done: migrationState.done,
+                            total: migrationState.total,
+                          );
+                        } else if (migrationState is MigrationFailed) {
+                          return MigrationNotification(
+                            error: migrationState.error,
+                          );
+                        } else if (migrationState is MigrationSucceded) {
+                          return const MigrationNotification(
+                            success: true,
+                          );
+                        }
 
-                  return const SizedBox();
-                },
-              ),
-            ],
-          ),
+                        return const SizedBox();
+                      },
+                    ),
+                  ],
+                );
+              }),
         );
       }),
     );

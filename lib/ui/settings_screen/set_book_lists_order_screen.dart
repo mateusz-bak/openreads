@@ -4,6 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:openreads/core/constants/enums/book_status.dart';
 import 'package:openreads/generated/locale_keys.g.dart';
 import 'package:openreads/logic/cubit/book_lists_order_cubit.dart';
+import 'package:openreads/ui/common/themed_scaffold.dart';
 
 class SetBookListsOrderScreen extends StatelessWidget {
   const SetBookListsOrderScreen({super.key});
@@ -41,7 +42,7 @@ class SetBookListsOrderScreen extends StatelessWidget {
       );
     }
 
-    return Scaffold(
+    return ThemedScaffold(
       appBar: AppBar(
         title: Text(
           LocaleKeys.tabs_order.tr(),

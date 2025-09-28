@@ -4,6 +4,7 @@ import 'package:openreads/generated/locale_keys.g.dart';
 import 'package:openreads/main.dart';
 import 'package:openreads/model/book.dart';
 import 'package:openreads/ui/books_screen/widgets/widgets.dart';
+import 'package:openreads/ui/common/themed_scaffold.dart';
 
 class TrashScreen extends StatelessWidget {
   const TrashScreen({super.key});
@@ -12,7 +13,7 @@ class TrashScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     bookCubit.getDeletedBooks();
 
-    return Scaffold(
+    return ThemedScaffold(
       appBar: AppBar(
         title: Text(
           LocaleKeys.deleted_books.tr(),

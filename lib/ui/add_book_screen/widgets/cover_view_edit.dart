@@ -228,7 +228,9 @@ class _CoverViewEditState extends State<CoverViewEdit> {
         context: context,
         isScrollControlled: true,
         elevation: 0,
-        backgroundColor: Theme.of(context).colorScheme.surface,
+        backgroundColor: Theme.of(context).brightness == Brightness.dark
+            ? darkBackgroundColor
+            : lightBackgroundColor,
         builder: (modalContext) {
           return EditCoverOptions(
             loadCoverFromStorage: () => _loadCoverFromStorage(context),

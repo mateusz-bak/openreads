@@ -5,6 +5,7 @@ import 'package:openreads/generated/locale_keys.g.dart';
 import 'package:openreads/main.dart';
 import 'package:openreads/model/book.dart';
 import 'package:openreads/ui/books_screen/widgets/widgets.dart';
+import 'package:openreads/ui/common/themed_scaffold.dart';
 
 class SimiliarBooksScreen extends StatefulWidget {
   const SimiliarBooksScreen({
@@ -33,7 +34,7 @@ class _SimiliarBooksScreenState extends State<SimiliarBooksScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+    return ThemedScaffold(
       appBar: AppBar(
         title: Row(
           children: [

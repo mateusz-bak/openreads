@@ -2,6 +2,7 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:openreads/core/themes/app_theme.dart';
 import 'package:openreads/generated/locale_keys.g.dart';
 import 'package:openreads/logic/bloc/welcome_bloc/welcome_bloc.dart';
 
@@ -36,6 +37,9 @@ class _HomeNavigationBarState extends State<HomeNavigationBar> {
     return BlocBuilder<WelcomeBloc, WelcomeState>(builder: (context, state) {
       // final useHub = state is HideWelcomeState ? state.useHub : false;
       return NavigationBar(
+        backgroundColor: Theme.of(context).brightness == Brightness.dark
+            ? darkBackgroundColor
+            : lightBackgroundColor,
         onDestinationSelected: (int index) {
           widget.onTap(index);
         },

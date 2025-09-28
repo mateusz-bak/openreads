@@ -8,6 +8,7 @@ import 'package:openreads/main.dart';
 import 'package:openreads/model/book.dart';
 import 'package:openreads/model/reading.dart';
 import 'package:openreads/ui/book_screen/widgets/widgets.dart';
+import 'package:openreads/ui/common/themed_scaffold.dart';
 
 class BookScreen extends StatelessWidget {
   const BookScreen({
@@ -121,7 +122,7 @@ class BookScreen extends StatelessWidget {
     return SelectableRegion(
       selectionControls: materialTextSelectionControls,
       focusNode: FocusNode(),
-      child: Scaffold(
+      child: ThemedScaffold(
         extendBodyBehindAppBar: true,
         appBar: const BookScreenAppBar(),
         body: BlocBuilder<CurrentBookCubit, Book>(

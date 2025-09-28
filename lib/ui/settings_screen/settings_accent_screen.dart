@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:openreads/generated/locale_keys.g.dart';
 import 'package:openreads/logic/bloc/theme_bloc/theme_bloc.dart';
+import 'package:openreads/ui/common/themed_scaffold.dart';
 
 class SettingsAccentScreen extends StatefulWidget {
   const SettingsAccentScreen({super.key});
@@ -50,7 +51,7 @@ class _SettingsAccentScreenState extends State<SettingsAccentScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+    return ThemedScaffold(
       appBar: AppBar(
         title: Text(LocaleKeys.select_accent_color.tr()),
       ),

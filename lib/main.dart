@@ -194,8 +194,10 @@ class _OpenreadsAppState extends State<OpenreadsApp>
       const NynorskCupertinoLocalizationsDelegate(),
     ];
 
-    return DynamicColorBuilder(
-        builder: (ColorScheme? lightDynamic, ColorScheme? darkDynamic) {
+    return DynamicColorBuilder(builder: (
+      ColorScheme? lightDynamic,
+      ColorScheme? darkDynamic,
+    ) {
       if (widget.themeState.amoledDark) {
         darkDynamic = darkDynamic?.copyWith(
           background: Colors.black,
@@ -234,27 +236,18 @@ class _OpenreadsAppState extends State<OpenreadsApp>
           title: Constants.appName,
           scaffoldMessengerKey: snackbarKey,
           theme: ThemeData(
-            useMaterial3: true,
             colorSchemeSeed: widget.themeState.useMaterialYou
-                ? null
+                ? lightDynamic?.primary
                 : widget.themeState.primaryColor,
-            colorScheme: widget.themeState.useMaterialYou ? lightDynamic : null,
             brightness: Brightness.light,
             fontFamily: widget.themeState.fontFamily,
           ),
           darkTheme: ThemeData(
-            useMaterial3: true,
             colorSchemeSeed: widget.themeState.useMaterialYou
-                ? null
+                ? darkDynamic?.primary
                 : widget.themeState.primaryColor,
-            colorScheme: widget.themeState.useMaterialYou ? darkDynamic : null,
             brightness: Brightness.dark,
             fontFamily: widget.themeState.fontFamily,
-            scaffoldBackgroundColor:
-                widget.themeState.amoledDark ? Colors.black : null,
-            appBarTheme: widget.themeState.amoledDark
-                ? const AppBarTheme(backgroundColor: Colors.black)
-                : null,
           ),
           themeMode: themeMode,
           home: showWelcomeScreen

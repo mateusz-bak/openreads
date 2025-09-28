@@ -13,6 +13,7 @@ import 'package:openreads/core/themes/app_theme.dart';
 import 'package:openreads/generated/locale_keys.g.dart';
 import 'package:openreads/logic/bloc/theme_bloc/theme_bloc.dart';
 import 'package:openreads/logic/cubit/default_book_status_cubit.dart';
+import 'package:openreads/ui/common/themed_scaffold.dart';
 import 'package:openreads/ui/settings_screen/download_missing_covers_screen.dart';
 import 'package:openreads/ui/settings_screen/set_book_lists_order_screen.dart';
 import 'package:openreads/ui/settings_screen/set_default_book_tags_screen.dart';
@@ -668,7 +669,7 @@ class SettingsScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+    return ThemedScaffold(
       appBar: AppBar(
         title: Text(
           LocaleKeys.settings.tr(),
@@ -682,106 +683,94 @@ class SettingsScreen extends StatelessWidget {
             if (snapshot.hasData) {
               final version = snapshot.data;
 
-              return BlocBuilder<ThemeBloc, ThemeState>(
-                builder: (context, state) {
-                  late final bool amoledDark;
-
-                  if (state is SetThemeState) {
-                    amoledDark = state.amoledDark;
-                  } else {
-                    amoledDark = false;
-                  }
-
-                  return SettingsList(
-                    contentPadding: const EdgeInsets.only(top: 10),
-                    darkTheme: SettingsThemeData(
-                      settingsListBackground: amoledDark
-                          ? Colors.black
-                          : Theme.of(context).colorScheme.surface,
+              return SettingsList(
+                contentPadding: const EdgeInsets.only(top: 10),
+                darkTheme: SettingsThemeData(
+                  settingsListBackground: Theme.of(
+                    context,
+                  ).scaffoldBackgroundColor,
+                ),
+                lightTheme: SettingsThemeData(
+                  settingsListBackground: Theme.of(
+                    context,
+                  ).scaffoldBackgroundColor,
+                ),
+                sections: [
+                  SettingsSection(
+                    tiles: _buildGeneralSettingsTiles(context),
+                  ),
+                  SettingsSection(
+                    title: Text(
+                      LocaleKeys.books_settings.tr(),
+                      style: TextStyle(
+                        fontSize: 16,
+                        fontWeight: FontWeight.bold,
+                        color: Theme.of(context).colorScheme.primary,
+                      ),
                     ),
-                    lightTheme: SettingsThemeData(
-                      settingsListBackground:
-                          Theme.of(context).colorScheme.surface,
+                    tiles: <SettingsTile>[
+                      _buildTrashSetting(context),
+                      _buildDefaultBooksFormat(context),
+                      _buildTabOrderSetting(context),
+                      _buildDefaultTags(context),
+                      _buildDownloadMissingCovers(context),
+                    ],
+                  ),
+                  SettingsSection(
+                    title: Text(
+                      LocaleKeys.app.tr(),
+                      style: TextStyle(
+                        fontSize: 16,
+                        fontWeight: FontWeight.bold,
+                        color: Theme.of(context).colorScheme.primary,
+                      ),
                     ),
-                    sections: [
-                      SettingsSection(
-                        tiles: _buildGeneralSettingsTiles(context),
+                    tiles: <SettingsTile>[
+                      _buildBackupSetting(context),
+                      _buildAppearanceSetting(context),
+                      _buildLanguageSetting(context),
+                    ],
+                  ),
+                  SettingsSection(
+                    title: Text(
+                      LocaleKeys.about.tr(),
+                      style: TextStyle(
+                        fontSize: 16,
+                        fontWeight: FontWeight.bold,
+                        color: Theme.of(context).colorScheme.primary,
                       ),
-                      SettingsSection(
-                        title: Text(
-                          LocaleKeys.books_settings.tr(),
-                          style: TextStyle(
-                            fontSize: 16,
-                            fontWeight: FontWeight.bold,
-                            color: Theme.of(context).colorScheme.primary,
-                          ),
-                        ),
-                        tiles: <SettingsTile>[
-                          _buildTrashSetting(context),
-                          _buildDefaultBooksFormat(context),
-                          _buildTabOrderSetting(context),
-                          _buildDefaultTags(context),
-                          _buildDownloadMissingCovers(context),
-                        ],
+                    ),
+                    tiles: <SettingsTile>[
+                      _buildBasicSetting(
+                        title: LocaleKeys.version.tr(),
+                        description: version,
+                        iconData: Icons.rocket_launch,
+                        context: context,
                       ),
-                      SettingsSection(
-                        title: Text(
-                          LocaleKeys.app.tr(),
-                          style: TextStyle(
-                            fontSize: 16,
-                            fontWeight: FontWeight.bold,
-                            color: Theme.of(context).colorScheme.primary,
-                          ),
-                        ),
-                        tiles: <SettingsTile>[
-                          _buildBackupSetting(context),
-                          _buildAppearanceSetting(context),
-                          _buildLanguageSetting(context),
-                        ],
+                      _buildURLSetting(
+                        title: LocaleKeys.changelog.tr(),
+                        description: LocaleKeys.changelog_description.tr(),
+                        url: releasesUrl,
+                        iconData: Icons.auto_awesome_rounded,
+                        context: context,
                       ),
-                      SettingsSection(
-                        title: Text(
-                          LocaleKeys.about.tr(),
-                          style: TextStyle(
-                            fontSize: 16,
-                            fontWeight: FontWeight.bold,
-                            color: Theme.of(context).colorScheme.primary,
-                          ),
-                        ),
-                        tiles: <SettingsTile>[
-                          _buildBasicSetting(
-                            title: LocaleKeys.version.tr(),
-                            description: version,
-                            iconData: Icons.rocket_launch,
-                            context: context,
-                          ),
-                          _buildURLSetting(
-                            title: LocaleKeys.changelog.tr(),
-                            description: LocaleKeys.changelog_description.tr(),
-                            url: releasesUrl,
-                            iconData: Icons.auto_awesome_rounded,
-                            context: context,
-                          ),
-                          _buildURLSetting(
-                            title: LocaleKeys.source_code.tr(),
-                            description:
-                                LocaleKeys.source_code_description.tr(),
-                            url: repoUrl,
-                            iconData: Icons.code,
-                            context: context,
-                          ),
-                          _buildURLSetting(
-                            title: LocaleKeys.licence.tr(),
-                            description: licence,
-                            url: licenceUrl,
-                            iconData: Icons.copyright_rounded,
-                            context: context,
-                          ),
-                        ],
+                      _buildURLSetting(
+                        title: LocaleKeys.source_code.tr(),
+                        description: LocaleKeys.source_code_description.tr(),
+                        url: repoUrl,
+                        iconData: Icons.code,
+                        context: context,
+                      ),
+                      _buildURLSetting(
+                        title: LocaleKeys.licence.tr(),
+                        description: licence,
+                        url: licenceUrl,
+                        iconData: Icons.copyright_rounded,
+                        context: context,
                       ),
                     ],
-                  );
-                },
+                  ),
+                ],
               );
             } else {
               return const SizedBox();

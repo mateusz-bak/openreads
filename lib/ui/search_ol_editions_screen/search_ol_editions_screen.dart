@@ -11,6 +11,7 @@ import 'package:openreads/model/reading.dart';
 import 'package:openreads/model/book.dart';
 import 'package:openreads/model/ol_edition_result.dart';
 import 'package:openreads/ui/add_book_screen/add_book_screen.dart';
+import 'package:openreads/ui/common/themed_scaffold.dart';
 import 'package:openreads/ui/search_ol_editions_screen/widgets/widgets.dart';
 
 class SearchOLEditionsScreen extends StatefulWidget {
@@ -92,7 +93,7 @@ class _SearchOLEditionsScreenState extends State<SearchOLEditionsScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+    return ThemedScaffold(
       appBar: AppBar(
         title: Text(
           LocaleKeys.choose_edition.tr(),

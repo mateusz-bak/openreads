@@ -8,6 +8,7 @@ import 'package:openreads/core/themes/app_theme.dart';
 import 'package:openreads/generated/locale_keys.g.dart';
 import 'package:openreads/logic/bloc/rating_type_bloc/rating_type_bloc.dart';
 import 'package:openreads/logic/bloc/theme_bloc/theme_bloc.dart';
+import 'package:openreads/ui/common/themed_scaffold.dart';
 import 'package:openreads/ui/settings_screen/settings_accent_screen.dart';
 import 'package:openreads/ui/settings_screen/widgets/widgets.dart';
 import 'package:settings_ui/settings_ui.dart';
@@ -484,49 +485,44 @@ class SettingsApperanceScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+    return ThemedScaffold(
       appBar: AppBar(
         title: Text(
           LocaleKeys.apperance.tr(),
           style: const TextStyle(fontSize: 18),
         ),
       ),
-      body: BlocBuilder<ThemeBloc, ThemeState>(
-        builder: (context, state) {
-          late final bool amoledDark;
-
-          if (state is SetThemeState) {
-            amoledDark = state.amoledDark;
-          } else {
-            amoledDark = false;
-          }
-
-          return SettingsList(
-            contentPadding: const EdgeInsets.only(top: 10),
-            darkTheme: SettingsThemeData(
-              settingsListBackground: amoledDark
-                  ? Colors.black
-                  : Theme.of(context).colorScheme.surface,
-            ),
-            lightTheme: SettingsThemeData(
-              settingsListBackground: Theme.of(context).colorScheme.surface,
-            ),
-            sections: [
-              SettingsSection(
-                tiles: <SettingsTile>[
-                  _buildAccentSetting(context),
-                  _buildThemeModeSetting(context),
-                  _buildDarkModeSetting(context),
-                  _buildFontSetting(context),
-                  _buildRatingTypeSetting(context),
-                  _buildOutlinesSetting(context),
-                  _buildCornersSetting(context),
-                ],
+      // FutureBuilder added to fix screen colors
+      body: FutureBuilder(
+          future: Future.delayed(const Duration(milliseconds: 0)),
+          builder: (context, asyncSnapshot) {
+            return SettingsList(
+              contentPadding: const EdgeInsets.only(top: 10),
+              darkTheme: SettingsThemeData(
+                settingsListBackground: Theme.of(
+                  context,
+                ).scaffoldBackgroundColor,
               ),
-            ],
-          );
-        },
-      ),
+              lightTheme: SettingsThemeData(
+                settingsListBackground: Theme.of(
+                  context,
+                ).scaffoldBackgroundColor,
+              ),
+              sections: [
+                SettingsSection(
+                  tiles: <SettingsTile>[
+                    _buildAccentSetting(context),
+                    _buildThemeModeSetting(context),
+                    _buildDarkModeSetting(context),
+                    _buildFontSetting(context),
+                    _buildRatingTypeSetting(context),
+                    _buildOutlinesSetting(context),
+                    _buildCornersSetting(context),
+                  ],
+                ),
+              ],
+            );
+          }),
     );
   }
 
