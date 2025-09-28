@@ -22,29 +22,27 @@ class ReadingChallenge extends StatelessWidget {
   final int? pagesTarget;
   final int year;
 
+  void onCardTap(BuildContext context) {
+    showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return ChallengeDialog(
+            setChallenge: setChallenge,
+            booksTarget: booksTarget,
+            pagesTarget: pagesTarget,
+            year: year,
+          );
+        });
+  }
+
   @override
   Widget build(BuildContext context) {
-    return Card(
-      color: Theme.of(context).colorScheme.secondaryContainer.withAlpha(120),
-      shadowColor: Colors.transparent,
-      shape: RoundedRectangleBorder(
-        side: BorderSide(color: dividerColor, width: 1),
-        borderRadius: BorderRadius.circular(cornerRadius),
-      ),
+    return StatsCard(
       child: InkWell(
-        onTap: () => showDialog(
-            context: context,
-            builder: (BuildContext context) {
-              return ChallengeDialog(
-                setChallenge: setChallenge,
-                booksTarget: booksTarget,
-                pagesTarget: pagesTarget,
-                year: year,
-              );
-            }),
+        onTap: () => onCardTap(context),
         borderRadius: BorderRadius.circular(cornerRadius),
         child: Padding(
-          padding: const EdgeInsets.all(10.0),
+          padding: const EdgeInsets.all(15),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -56,70 +54,74 @@ class ReadingChallenge extends StatelessWidget {
                 ),
               ),
               const SizedBox(height: 10),
-              Row(
-                children: [
-                  Expanded(
-                    child: Container(
-                      padding: const EdgeInsets.symmetric(vertical: 3),
-                      decoration: BoxDecoration(
-                        color: Theme.of(context).colorScheme.surface,
-                        borderRadius: BorderRadius.circular(cornerRadius),
-                      ),
-                      child: Row(
-                        children: [
-                          (target != 0)
-                              ? Expanded(
-                                  flex: ((value / target) * 100).toInt(),
-                                  child: Container(
-                                    height: 15,
-                                    decoration: BoxDecoration(
-                                      color:
-                                          Theme.of(context).colorScheme.primary,
-                                      borderRadius:
-                                          BorderRadius.circular(cornerRadius),
-                                    ),
-                                  ),
-                                )
-                              : const SizedBox(
-                                  height: 15,
-                                ),
-                          (target != 0 &&
-                                  (100 - ((value / target) * 100)).toInt() > 0)
-                              ? Spacer(
-                                  flex:
-                                      (100 - ((value / target) * 100)).toInt(),
-                                )
-                              : const SizedBox()
-                        ],
-                      ),
-                    ),
-                  ),
-                ],
-              ),
+              _buildProgressBar(context),
               const SizedBox(height: 10),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Text(
-                    '$value/$target',
-                    style: const TextStyle(
-                      fontSize: 16,
-                    ),
-                  ),
-                  Text(
-                    (target == 0)
-                        ? ''
-                        : '${((value / target * 100) <= 100) ? (value / target * 100).toStringAsFixed(2) : 100}%',
-                    style: const TextStyle(
-                      fontSize: 16,
-                    ),
-                  ),
-                ],
-              ),
+              _buildDetails(),
             ],
           ),
         ),
       ),
+    );
+  }
+
+  Row _buildProgressBar(BuildContext context) {
+    return Row(
+      children: [
+        Expanded(
+          child: Container(
+            padding: const EdgeInsets.symmetric(vertical: 3),
+            decoration: BoxDecoration(
+              color: Theme.of(context).colorScheme.surface,
+              borderRadius: BorderRadius.circular(cornerRadius),
+            ),
+            child: Row(
+              children: [
+                (target != 0)
+                    ? Expanded(
+                        flex: ((value / target) * 100).toInt(),
+                        child: Container(
+                          height: 10,
+                          decoration: BoxDecoration(
+                            color: Theme.of(context).colorScheme.primary,
+                            borderRadius: BorderRadius.circular(cornerRadius),
+                          ),
+                        ),
+                      )
+                    : const SizedBox(
+                        height: 15,
+                      ),
+                (target != 0 && (100 - ((value / target) * 100)).toInt() > 0)
+                    ? Spacer(
+                        flex: (100 - ((value / target) * 100)).toInt(),
+                      )
+                    : const SizedBox()
+              ],
+            ),
+          ),
+        ),
+      ],
+    );
+  }
+
+  Row _buildDetails() {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      children: [
+        Text(
+          '$value/$target',
+          style: const TextStyle(
+            fontSize: 16,
+          ),
+        ),
+        Text(
+          (target == 0)
+              ? ''
+              : '${((value / target * 100) <= 100) ? (value / target * 100).toStringAsFixed(0) : 100}%',
+          style: const TextStyle(
+            fontSize: 16,
+          ),
+        ),
+      ],
     );
   }
 }

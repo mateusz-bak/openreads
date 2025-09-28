@@ -6,6 +6,7 @@ import 'package:openreads/core/themes/app_theme.dart';
 import 'package:openreads/logic/cubit/current_book_cubit.dart';
 import 'package:openreads/model/book.dart';
 import 'package:openreads/ui/book_screen/book_screen.dart';
+import 'package:openreads/ui/statistics_screen/widgets/stats_card.dart';
 
 class ReadStats extends StatelessWidget {
   const ReadStats({
@@ -38,20 +39,14 @@ class ReadStats extends StatelessWidget {
   Widget build(BuildContext context) {
     final heroKey = Random().nextInt(1000000);
 
-    return InkWell(
-      borderRadius: BorderRadius.circular(cornerRadius),
-      onTap: book != null && book!.id != null
-          ? () => onTap(context, heroKey)
-          : null,
-      child: Card(
-        color: Theme.of(context).colorScheme.secondaryContainer.withAlpha(120),
-        shadowColor: Colors.transparent,
-        shape: RoundedRectangleBorder(
-          side: BorderSide(color: dividerColor, width: 1),
-          borderRadius: BorderRadius.circular(cornerRadius),
-        ),
+    return StatsCard(
+      child: InkWell(
+        borderRadius: BorderRadius.circular(cornerRadius),
+        onTap: book != null && book!.id != null
+            ? () => onTap(context, heroKey)
+            : null,
         child: Padding(
-          padding: const EdgeInsets.all(10.0),
+          padding: const EdgeInsets.all(15),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [

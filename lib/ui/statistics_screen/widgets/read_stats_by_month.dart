@@ -127,6 +127,10 @@ class ReadStatsByMonth extends StatelessWidget {
       );
 
   List<BarChartGroupData> barGroups(BuildContext context) {
+    final firstColor = Theme.of(context).colorScheme.primary;
+    final secondColor = Theme.of(context).colorScheme.tertiaryContainer;
+    final thirdColor = Theme.of(context).colorScheme.secondary;
+
     final List<BarChartGroupData> barList = List.empty(growable: true);
 
     for (var i = 0; i < 12; i++) {
@@ -141,7 +145,7 @@ class ReadStatsByMonth extends StatelessWidget {
                       listAudiobooks[i])
                   .toDouble(),
               width: MediaQuery.of(context).size.width / 20,
-              color: theme.colorScheme.primary,
+              color: firstColor,
               borderRadius: BorderRadius.circular(3),
               rodStackItems: [
                 listPaperbackBooks[i] != 0
@@ -149,7 +153,7 @@ class ReadStatsByMonth extends StatelessWidget {
                         0,
                         (listPaperbackBooks[i] + listHardcoverBooks[i])
                             .toDouble(),
-                        theme.colorScheme.primary,
+                        firstColor,
                       )
                     : BarChartRodStackItem(0, 0, Colors.transparent),
                 listEbooks[i] != 0
@@ -160,7 +164,7 @@ class ReadStatsByMonth extends StatelessWidget {
                                 listHardcoverBooks[i] +
                                 listEbooks[i])
                             .toDouble(),
-                        theme.colorScheme.primaryContainer,
+                        secondColor,
                       )
                     : BarChartRodStackItem(0, 0, Colors.transparent),
                 listAudiobooks[i] != 0
@@ -174,7 +178,7 @@ class ReadStatsByMonth extends StatelessWidget {
                                 listEbooks[i] +
                                 listAudiobooks[i])
                             .toDouble(),
-                        theme.colorScheme.onSurfaceVariant,
+                        thirdColor,
                       )
                     : BarChartRodStackItem(0, 0, Colors.transparent),
               ],
@@ -215,96 +219,101 @@ class ReadStatsByMonth extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Card(
-      color: Theme.of(context).colorScheme.secondaryContainer.withAlpha(120),
-      shadowColor: Colors.transparent,
-      shape: RoundedRectangleBorder(
-        side: BorderSide(color: dividerColor, width: 1),
-        borderRadius: BorderRadius.circular(cornerRadius),
-      ),
-      child: Padding(
-        padding: const EdgeInsets.all(10.0),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text(
-              title,
-              style: const TextStyle(
-                fontSize: 16,
-                fontWeight: FontWeight.bold,
-              ),
+    return StatsCard(
+        child: Padding(
+      padding: const EdgeInsets.all(15),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text(
+            title,
+            style: const TextStyle(
+              fontSize: 16,
+              fontWeight: FontWeight.bold,
             ),
-            const SizedBox(height: 10),
-            AspectRatio(
-              aspectRatio: 2.2,
-              child: BarChart(
-                BarChartData(
-                  barTouchData: BarTouchData(
-                    enabled: false,
-                    touchTooltipData: BarTouchTooltipData(
-                      getTooltipColor: (_) => Colors.transparent,
-                      tooltipPadding: EdgeInsets.zero,
-                      tooltipMargin: 8,
-                      fitInsideHorizontally: true,
-                      fitInsideVertically: true,
-                      getTooltipItem: (
-                        BarChartGroupData group,
-                        int groupIndex,
-                        BarChartRodData rod,
-                        int rodIndex,
-                      ) {
-                        return BarTooltipItem(
-                          rod.toY.round().toString(),
-                          const TextStyle(
-                            fontWeight: FontWeight.bold,
-                            fontSize: 10,
-                          ),
-                        );
-                      },
-                    ),
+          ),
+          const SizedBox(height: 15),
+          _buildBarChart(context),
+          const Divider(),
+          const SizedBox(height: 10),
+          _buildLegend(context),
+        ],
+      ),
+    ));
+  }
+
+  AspectRatio _buildBarChart(BuildContext context) {
+    return AspectRatio(
+      aspectRatio: 2.5,
+      child: BarChart(
+        BarChartData(
+          barTouchData: BarTouchData(
+            enabled: false,
+            touchTooltipData: BarTouchTooltipData(
+              getTooltipColor: (_) => Colors.transparent,
+              tooltipPadding: EdgeInsets.zero,
+              tooltipMargin: 8,
+              fitInsideHorizontally: true,
+              fitInsideVertically: true,
+              getTooltipItem: (
+                BarChartGroupData group,
+                int groupIndex,
+                BarChartRodData rod,
+                int rodIndex,
+              ) {
+                return BarTooltipItem(
+                  rod.toY.round().toString(),
+                  const TextStyle(
+                    fontWeight: FontWeight.bold,
+                    fontSize: 10,
                   ),
-                  titlesData: titlesData,
-                  borderData: borderData,
-                  barGroups: barGroups(context),
-                  gridData: const FlGridData(show: false),
-                  alignment: BarChartAlignment.spaceAround,
-                  maxY: calculateMaxY(),
-                ),
-                swapAnimationDuration: const Duration(milliseconds: 150),
-                swapAnimationCurve: Curves.linear,
-              ),
+                );
+              },
             ),
-            Container(
-              margin: const EdgeInsets.only(bottom: 5),
-              height: 1,
-              color: Theme.of(context).colorScheme.onSurfaceVariant,
-            ),
-            Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                const SizedBox(height: 5),
-                ChartLegendElement(
-                  color: theme.colorScheme.onSurfaceVariant,
-                  text: LocaleKeys.book_format_audiobook_plural.tr(),
-                  number: listAudiobooks.sum,
-                ),
-                const SizedBox(height: 5),
-                ChartLegendElement(
-                  color: theme.colorScheme.primaryContainer,
-                  text: LocaleKeys.book_format_ebook_plural.tr(),
-                  number: listEbooks.sum,
-                ),
-                const SizedBox(height: 5),
-                ChartLegendElement(
-                  color: theme.colorScheme.primary,
-                  text: LocaleKeys.book_format_paper_plural.tr(),
-                  number: listPaperbackBooks.sum + listHardcoverBooks.sum,
-                ),
-              ],
-            ),
-          ],
+          ),
+          titlesData: titlesData,
+          borderData: borderData,
+          barGroups: barGroups(context),
+          gridData: const FlGridData(show: false),
+          alignment: BarChartAlignment.spaceAround,
+          maxY: calculateMaxY(),
         ),
+        swapAnimationDuration: const Duration(milliseconds: 150),
+        swapAnimationCurve: Curves.linear,
       ),
+    );
+  }
+
+  Column _buildLegend(BuildContext context) {
+    final firstColor = Theme.of(context).colorScheme.primary;
+    final secondColor = Theme.of(context).colorScheme.tertiaryContainer;
+    final thirdColor = Theme.of(context).colorScheme.secondary;
+
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        const SizedBox(height: 5),
+        ChartLegendElement(
+          color: firstColor,
+          text: LocaleKeys.book_format_audiobook_plural.tr(),
+          number: listAudiobooks.sum,
+          size: 16,
+        ),
+        const SizedBox(height: 5),
+        ChartLegendElement(
+          color: secondColor,
+          text: LocaleKeys.book_format_ebook_plural.tr(),
+          number: listEbooks.sum,
+          size: 16,
+        ),
+        const SizedBox(height: 5),
+        ChartLegendElement(
+          color: thirdColor,
+          text: LocaleKeys.book_format_paper_plural.tr(),
+          number: listPaperbackBooks.sum + listHardcoverBooks.sum,
+          size: 16,
+        ),
+      ],
     );
   }
 }

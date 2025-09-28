@@ -1,7 +1,7 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
-import 'package:openreads/core/themes/app_theme.dart';
 import 'package:openreads/generated/locale_keys.g.dart';
+import 'package:openreads/ui/statistics_screen/widgets/widgets.dart';
 
 class BooksByStatus extends StatefulWidget {
   const BooksByStatus({
@@ -22,15 +22,9 @@ class BooksByStatusState extends State<BooksByStatus> {
 
   @override
   Widget build(BuildContext context) {
-    return Card(
-      color: Theme.of(context).colorScheme.secondaryContainer.withAlpha(120),
-      shadowColor: Colors.transparent,
-      shape: RoundedRectangleBorder(
-        side: BorderSide(color: dividerColor, width: 1),
-        borderRadius: BorderRadius.circular(cornerRadius),
-      ),
+    return StatsCard(
       child: Padding(
-        padding: const EdgeInsets.fromLTRB(10, 10, 10, 10),
+        padding: const EdgeInsets.all(15),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
@@ -54,6 +48,7 @@ class BooksByStatusState extends State<BooksByStatus> {
                 ),
               ],
             ),
+            const SizedBox(height: 5),
             Row(
               children: [
                 Text(
@@ -62,6 +57,7 @@ class BooksByStatusState extends State<BooksByStatus> {
                 ),
               ],
             ),
+            const SizedBox(height: 5),
             Row(
               children: [
                 Text(

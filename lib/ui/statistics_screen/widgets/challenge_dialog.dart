@@ -151,9 +151,11 @@ class _ChallengeDialogState extends State<ChallengeDialog>
     return KeyboardDismissible(
       child: Dialog(
         shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(cornerRadius),
+          borderRadius: BorderRadius.circular(10),
         ),
-        backgroundColor: Theme.of(context).colorScheme.surfaceDim,
+        backgroundColor: Theme.of(context).brightness == Brightness.dark
+            ? darkBackgroundColor
+            : lightBackgroundColor,
         child: Padding(
           padding: const EdgeInsets.all(20),
           child: Column(
@@ -172,20 +174,26 @@ class _ChallengeDialogState extends State<ChallengeDialog>
                   ),
                 ],
               ),
-              Slider.adaptive(
-                value: _booksSliderValue,
-                min: minBooks,
-                max: maxBooks,
-                divisions: 50,
-                label: _booksSliderValue.round().toString(),
-                activeColor: Theme.of(context).colorScheme.primary,
-                onChanged: (double value) {
-                  setState(() {
-                    _booksSliderValue = value;
-                    _booksController.text =
-                        _booksSliderValue.round().toString();
-                  });
-                },
+              Row(
+                children: [
+                  Expanded(
+                    child: Slider.adaptive(
+                      value: _booksSliderValue,
+                      min: minBooks,
+                      max: maxBooks,
+                      divisions: 50,
+                      label: _booksSliderValue.round().toString(),
+                      activeColor: Theme.of(context).colorScheme.primary,
+                      onChanged: (double value) {
+                        setState(() {
+                          _booksSliderValue = value;
+                          _booksController.text =
+                              _booksSliderValue.round().toString();
+                        });
+                      },
+                    ),
+                  ),
+                ],
               ),
               Row(
                 children: [
@@ -198,7 +206,9 @@ class _ChallengeDialogState extends State<ChallengeDialog>
                           )
                         : Container(
                             decoration: BoxDecoration(
-                              color: Theme.of(context).colorScheme.surface,
+                              color: Theme.of(context)
+                                  .colorScheme
+                                  .surfaceContainerHighest,
                               borderRadius: BorderRadius.circular(cornerRadius),
                               border: Border.all(color: dividerColor),
                             ),
@@ -292,8 +302,9 @@ class _ChallengeDialogState extends State<ChallengeDialog>
                                 )
                               : Container(
                                   decoration: BoxDecoration(
-                                    color:
-                                        Theme.of(context).colorScheme.surface,
+                                    color: Theme.of(context)
+                                        .colorScheme
+                                        .surfaceContainerHighest,
                                     borderRadius:
                                         BorderRadius.circular(cornerRadius),
                                     border: Border.all(color: dividerColor),

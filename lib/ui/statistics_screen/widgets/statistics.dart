@@ -3,7 +3,6 @@ import 'dart:convert';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:openreads/core/themes/app_theme.dart';
 import 'package:openreads/generated/locale_keys.g.dart';
 import 'package:openreads/logic/bloc/challenge_bloc/challenge_bloc.dart';
 import 'package:openreads/logic/bloc/stats_bloc/stats_bloc.dart';
@@ -82,7 +81,7 @@ class Statistics extends StatelessWidget {
       Tab(
         child: SingleChildScrollView(
           child: Padding(
-            padding: const EdgeInsets.all(5),
+            padding: const EdgeInsets.fromLTRB(5, 15, 5, 125),
             child: Column(
               mainAxisAlignment: MainAxisAlignment.start,
               children: [
@@ -100,7 +99,6 @@ class Statistics extends StatelessWidget {
                 _buildShortestBook(context, state, null),
                 _buildFastestRead(context, state, null),
                 _buildSlowestRead(context, state, null),
-                const SizedBox(height: 100)
               ],
             ),
           ),
