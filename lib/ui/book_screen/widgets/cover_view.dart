@@ -1,7 +1,6 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
-import 'package:openreads/core/themes/app_theme.dart';
 import 'package:openreads/model/book.dart';
 import 'package:openreads/ui/book_screen/widgets/widgets.dart';
 
@@ -11,11 +10,9 @@ class CoverView extends StatefulWidget {
     this.heroTag,
     this.book,
     this.coverFile,
-    this.blurHashString,
   });
 
   final String? heroTag;
-  final String? blurHashString;
   final Book? book;
   final File? coverFile;
 

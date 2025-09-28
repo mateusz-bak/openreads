@@ -250,9 +250,7 @@ class _OpenreadsAppState extends State<OpenreadsApp>
             fontFamily: widget.themeState.fontFamily,
           ),
           themeMode: themeMode,
-          home: showWelcomeScreen
-              ? WelcomeScreen(themeData: Theme.of(context))
-              : const HomeScreen(),
+          home: showWelcomeScreen ? const WelcomeScreen() : const HomeScreen(),
           localizationsDelegates: localizationsDelegates,
           supportedLocales: context.supportedLocales,
           locale: context.locale,

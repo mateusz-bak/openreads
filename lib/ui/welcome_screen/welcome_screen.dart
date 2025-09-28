@@ -20,12 +20,7 @@ import 'package:openreads/ui/welcome_screen/widgets/widgets.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 
 class WelcomeScreen extends StatefulWidget {
-  const WelcomeScreen({
-    super.key,
-    required this.themeData,
-  });
-
-  final ThemeData themeData;
+  const WelcomeScreen({super.key});
 
   @override
   State<WelcomeScreen> createState() => _WelcomeScreenState();
