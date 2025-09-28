@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:openreads/core/themes/app_theme.dart';
 import 'package:openreads/generated/locale_keys.g.dart';
+import 'package:openreads/ui/home_screen/widgets/widgets.dart';
 
 class AddBookSheet extends StatefulWidget {
   const AddBookSheet({
@@ -52,28 +53,19 @@ class _AddBookSheetState extends State<AddBookSheet> {
                   ),
                 ),
               ),
-            ListTile(
-              title: Text(LocaleKeys.add_manually.tr()),
-              leading: FaIcon(
-                FontAwesomeIcons.solidKeyboard,
-                color: Theme.of(context).colorScheme.primary,
-              ),
+            AddBookMethodButton(
+              title: LocaleKeys.add_manually.tr(),
+              icon: FontAwesomeIcons.solidKeyboard,
               onTap: widget.addManually,
             ),
-            ListTile(
-              title: Text(LocaleKeys.add_search.tr()),
-              leading: FaIcon(
-                FontAwesomeIcons.magnifyingGlass,
-                color: Theme.of(context).colorScheme.primary,
-              ),
+            AddBookMethodButton(
+              title: LocaleKeys.add_search.tr(),
+              icon: FontAwesomeIcons.magnifyingGlass,
               onTap: widget.searchInOpenLibrary,
             ),
-            ListTile(
-              title: Text(LocaleKeys.add_scan.tr()),
-              leading: FaIcon(
-                FontAwesomeIcons.barcode,
-                color: Theme.of(context).colorScheme.primary,
-              ),
+            AddBookMethodButton(
+              title: LocaleKeys.add_scan.tr(),
+              icon: FontAwesomeIcons.barcode,
               onTap: widget.scanBarcode,
             ),
             const SizedBox(height: 10)
