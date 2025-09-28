@@ -67,12 +67,7 @@ class _SearchPageState extends State<SearchPage> {
                         return BookCard(
                           book: snapshot.data![index],
                           heroTag: heroTag,
-                          addBottomPadding:
-                              (snapshot.data!.length == index + 1),
-                          cardColor: Theme.of(context)
-                              .colorScheme
-                              .secondaryContainer
-                              .withAlpha(150),
+                          isLastItem: (snapshot.data!.length == index + 1),
                           onPressed: () {
                             if (snapshot.data![index].id == null) return;
 

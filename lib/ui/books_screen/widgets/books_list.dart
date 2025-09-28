@@ -24,15 +24,16 @@ class BooksList extends StatefulWidget {
 
 class _BooksListState extends State<BooksList>
     with AutomaticKeepAliveClientMixin {
-  onPressed(int index, bool multiSelectMode, String heroTag) {
-    if (widget.books[index].id == null) return;
+  onPressed(int index, String heroTag) {
+    final book = widget.books[index];
+    if (book.id == null) return;
 
-    if (multiSelectMode) {
-      context.read<SelectedBooksCubit>().onBookPressed(widget.books[index].id!);
+    if (context.read<SelectedBooksCubit>().state.isNotEmpty) {
+      context.read<SelectedBooksCubit>().onBookPressed(book.id!);
       return;
     }
 
-    context.read<CurrentBookCubit>().setBook(widget.books[index]);
+    context.read<CurrentBookCubit>().setBook(book);
 
     Navigator.push(
       context,
@@ -43,10 +44,14 @@ class _BooksListState extends State<BooksList>
   }
 
   onLongPressed(int index) {
-    if (widget.books[index].id == null) return;
+    final bookID = widget.books[index].id;
+    if (bookID == null) return;
 
-    context.read<SelectedBooksCubit>().onBookPressed(widget.books[index].id!);
+    context.read<SelectedBooksCubit>().onBookPressed(bookID);
   }
+
+  @override
+  bool get wantKeepAlive => true;
 
   @override
   Widget build(BuildContext context) {
@@ -54,11 +59,6 @@ class _BooksListState extends State<BooksList>
 
     return CustomScrollView(
       slivers: [
-        // SliverToBoxAdapter(
-        //   child: SizedBox(
-        //     height: MediaQuery.of(context).padding.top,
-        //   ),
-        // ),
         SliverToBoxAdapter(
           child: widget.allBooksCount != null
               ? Padding(
@@ -86,37 +86,23 @@ class _BooksListState extends State<BooksList>
                 )
               : const SizedBox(),
         ),
-        BlocBuilder<SelectedBooksCubit, List<int>>(builder: (context, list) {
-          return _buildList(list: list);
-        }),
+        SliverList.builder(
+          itemCount: widget.books.length,
+          itemBuilder: (context, index) {
+            final heroTag =
+                'tag_${widget.listNumber}_${widget.books[index].id}';
+
+            return BookCard(
+              book: widget.books[index],
+              heroTag: heroTag,
+              isLastItem: (widget.books.length == index + 1),
+              onPressed: () => onPressed(index, heroTag),
+              onLongPressed: () => onLongPressed(index),
+              isSelectable: true,
+            );
+          },
+        ),
       ],
-    );
-  }
-
-  @override
-  bool get wantKeepAlive => true;
-
-  Widget _buildList({
-    required List<int> list,
-  }) {
-    bool multiSelectMode = list.isNotEmpty;
-
-    return SliverList.builder(
-      itemCount: widget.books.length,
-      itemBuilder: (context, index) {
-        final heroTag = 'tag_${widget.listNumber}_${widget.books[index].id}';
-        Color? color = multiSelectMode && list.contains(widget.books[index].id)
-            ? Theme.of(context).colorScheme.tertiaryContainer
-            : Theme.of(context).colorScheme.secondaryContainer.withAlpha(120);
-        return BookCard(
-          book: widget.books[index],
-          heroTag: heroTag,
-          cardColor: color,
-          addBottomPadding: (widget.books.length == index + 1),
-          onPressed: () => onPressed(index, multiSelectMode, heroTag),
-          onLongPressed: () => onLongPressed(index),
-        );
-      },
     );
   }
 }
