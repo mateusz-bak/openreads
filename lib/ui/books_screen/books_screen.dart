@@ -8,7 +8,11 @@ import 'package:openreads/core/constants/enums/sort_type.dart';
 import 'package:openreads/core/helpers/helpers.dart';
 import 'package:openreads/generated/locale_keys.g.dart';
 import 'package:openreads/logic/bloc/display_bloc/display_bloc.dart';
-import 'package:openreads/logic/bloc/sort_bloc/sort_bloc.dart';
+import 'package:openreads/logic/bloc/sort_bloc/sort_finished_books_bloc.dart';
+import 'package:openreads/logic/bloc/sort_bloc/sort_for_later_books_bloc.dart';
+import 'package:openreads/logic/bloc/sort_bloc/sort_in_progress_books_bloc.dart';
+import 'package:openreads/logic/bloc/sort_bloc/sort_state.dart';
+import 'package:openreads/logic/bloc/sort_bloc/sort_unfinished_books_bloc.dart';
 import 'package:openreads/logic/cubit/book_lists_order_cubit.dart';
 import 'package:openreads/main.dart';
 import 'package:openreads/model/book.dart';
@@ -27,7 +31,7 @@ class _BooksScreenState extends State<BooksScreen>
   late ScrollController _chipScrollController;
 
   List<Book> _sortReadList({
-    required SetSortState state,
+    required SortState state,
     required List<Book> list,
   }) {
     if (state.onlyFavourite) {
@@ -51,41 +55,11 @@ class _BooksScreenState extends State<BooksScreen>
       list = _filterOutBookTypes(list, state.bookType!);
     }
 
-    switch (state.sortType) {
-      case SortType.byAuthor:
-        list = _sortByAuthor(list: list, isAsc: state.isAsc);
-        break;
-      case SortType.byRating:
-        list = _sortByRating(list: list, isAsc: state.isAsc);
-        break;
-      case SortType.byPages:
-        list = _sortByPages(list: list, isAsc: state.isAsc);
-        break;
-      case SortType.byStartDate:
-        list = _sortByStartDate(list: list, isAsc: state.isAsc);
-        break;
-      case SortType.byFinishDate:
-        list = _sortByFinishDate(list: list, isAsc: state.isAsc);
-        break;
-      case SortType.byPublicationYear:
-        list = _sortByPublicationYear(list: list, isAsc: state.isAsc);
-        break;
-      case SortType.byDateAdded:
-        list = _sortByDateAdded(list: list, isAsc: state.isAsc);
-        break;
-      case SortType.byDateModified:
-        list = _sortByDateModified(list: list, isAsc: state.isAsc);
-        break;
-
-      default:
-        list = _sortByTitle(list: list, isAsc: state.isAsc);
-    }
-
-    return list;
+    return _sort(list: list, sortType: state.sortType, isAsc: state.isAsc);
   }
 
   List<Book> _sortInProgressList({
-    required SetSortState state,
+    required SortState state,
     required List<Book> list,
   }) {
     if (state.tags != null) {
@@ -101,35 +75,11 @@ class _BooksScreenState extends State<BooksScreen>
       list = _filterOutBookTypes(list, state.bookType!);
     }
 
-    switch (state.sortType) {
-      case SortType.byAuthor:
-        list = _sortByAuthor(list: list, isAsc: state.isAsc);
-        break;
-
-      case SortType.byPages:
-        list = _sortByPages(list: list, isAsc: state.isAsc);
-        break;
-      case SortType.byStartDate:
-        list = _sortByStartDate(list: list, isAsc: state.isAsc);
-        break;
-      case SortType.byPublicationYear:
-        list = _sortByPublicationYear(list: list, isAsc: state.isAsc);
-        break;
-      case SortType.byDateAdded:
-        list = _sortByDateAdded(list: list, isAsc: state.isAsc);
-        break;
-      case SortType.byDateModified:
-        list = _sortByDateModified(list: list, isAsc: state.isAsc);
-        break;
-      default:
-        list = _sortByTitle(list: list, isAsc: state.isAsc);
-    }
-
-    return list;
+    return _sort(list: list, sortType: state.sortType, isAsc: state.isAsc);
   }
 
   List<Book> _sortForLaterList({
-    required SetSortState state,
+    required SortState state,
     required List<Book> list,
   }) {
     if (state.tags != null) {
@@ -145,32 +95,11 @@ class _BooksScreenState extends State<BooksScreen>
       list = _filterOutBookTypes(list, state.bookType!);
     }
 
-    switch (state.sortType) {
-      case SortType.byAuthor:
-        list = _sortByAuthor(list: list, isAsc: state.isAsc);
-        break;
-      case SortType.byPages:
-        list = _sortByPages(list: list, isAsc: state.isAsc);
-        break;
-      case SortType.byPublicationYear:
-        list = _sortByPublicationYear(list: list, isAsc: state.isAsc);
-        break;
-      case SortType.byDateAdded:
-        list = _sortByDateAdded(list: list, isAsc: state.isAsc);
-        break;
-      case SortType.byDateModified:
-        list = _sortByDateModified(list: list, isAsc: state.isAsc);
-        break;
-
-      default:
-        list = _sortByTitle(list: list, isAsc: state.isAsc);
-    }
-
-    return list;
+    return _sort(list: list, sortType: state.sortType, isAsc: state.isAsc);
   }
 
   List<Book> _sortUnfinishedList({
-    required SetSortState state,
+    required SortState state,
     required List<Book> list,
   }) {
     if (state.tags != null) {
@@ -186,30 +115,7 @@ class _BooksScreenState extends State<BooksScreen>
       list = _filterOutBookTypes(list, state.bookType!);
     }
 
-    switch (state.sortType) {
-      case SortType.byAuthor:
-        list = _sortByAuthor(list: list, isAsc: state.isAsc);
-        break;
-      case SortType.byPages:
-        list = _sortByPages(list: list, isAsc: state.isAsc);
-        break;
-      case SortType.byStartDate:
-        list = _sortByStartDate(list: list, isAsc: state.isAsc);
-        break;
-      case SortType.byPublicationYear:
-        list = _sortByPublicationYear(list: list, isAsc: state.isAsc);
-        break;
-      case SortType.byDateAdded:
-        list = _sortByDateAdded(list: list, isAsc: state.isAsc);
-        break;
-      case SortType.byDateModified:
-        list = _sortByDateModified(list: list, isAsc: state.isAsc);
-        break;
-      default:
-        list = _sortByTitle(list: list, isAsc: state.isAsc);
-    }
-
-    return list;
+    return _sort(list: list, sortType: state.sortType, isAsc: state.isAsc);
   }
 
   List<Book> _filterOutFav({required List<Book> list}) {
@@ -368,6 +274,33 @@ class _BooksScreenState extends State<BooksScreen>
     }
 
     return filteredOut;
+  }
+
+  List<Book> _sort({
+    required List<Book> list,
+    required SortType sortType,
+    required bool isAsc,
+  }) {
+    switch (sortType) {
+      case SortType.byTitle:
+        return _sortByTitle(list: list, isAsc: isAsc);
+      case SortType.byAuthor:
+        return _sortByAuthor(list: list, isAsc: isAsc);
+      case SortType.byRating:
+        return _sortByRating(list: list, isAsc: isAsc);
+      case SortType.byPages:
+        return _sortByPages(list: list, isAsc: isAsc);
+      case SortType.byStartDate:
+        return _sortByStartDate(list: list, isAsc: isAsc);
+      case SortType.byFinishDate:
+        return _sortByFinishDate(list: list, isAsc: isAsc);
+      case SortType.byPublicationYear:
+        return _sortByPublicationYear(list: list, isAsc: isAsc);
+      case SortType.byDateAdded:
+        return _sortByDateAdded(list: list, isAsc: isAsc);
+      case SortType.byDateModified:
+        return _sortByDateModified(list: list, isAsc: isAsc);
+    }
   }
 
   List<Book> _sortByTitle({
@@ -771,45 +704,66 @@ class _BooksScreenState extends State<BooksScreen>
     );
   }
 
-  StreamBuilder<List<Book>> _buildFinishedBooksTabView() {
-    return _buildBooksTabView(
-      listNumber: 0,
-      stream: bookCubit.finishedBooks,
-      sorting: _sortReadList,
+  BlocBuilder<SortFinishedBooksBloc, SortState> _buildFinishedBooksTabView() {
+    return BlocBuilder<SortFinishedBooksBloc, SortState>(
+      builder: (context, state) {
+        return _buildBooksTabView(
+          listNumber: 0,
+          stream: bookCubit.finishedBooks,
+          sortState: state,
+          sorting: _sortReadList,
+        );
+      },
     );
   }
 
-  StreamBuilder<List<Book>> _buildInProgressBooksTabView() {
-    return _buildBooksTabView(
-      listNumber: 1,
-      stream: bookCubit.inProgressBooks,
-      sorting: _sortInProgressList,
+  BlocBuilder<SortInProgressBooksBloc, SortState>
+      _buildInProgressBooksTabView() {
+    return BlocBuilder<SortInProgressBooksBloc, SortState>(
+      builder: (context, state) {
+        return _buildBooksTabView(
+          listNumber: 1,
+          stream: bookCubit.inProgressBooks,
+          sortState: state,
+          sorting: _sortInProgressList,
+        );
+      },
     );
   }
 
-  StreamBuilder<List<Book>> _buildToReadBooksTabView() {
-    return _buildBooksTabView(
-      listNumber: 2,
-      stream: bookCubit.toReadBooks,
-      sorting: _sortForLaterList,
+  BlocBuilder<SortForLaterBooksBloc, SortState> _buildToReadBooksTabView() {
+    return BlocBuilder<SortForLaterBooksBloc, SortState>(
+      builder: (context, state) {
+        return _buildBooksTabView(
+          listNumber: 2,
+          stream: bookCubit.toReadBooks,
+          sortState: state,
+          sorting: _sortForLaterList,
+        );
+      },
     );
   }
 
-  StreamBuilder<List<Book>> _buildUnfinishedBooksTabView() {
-    bookCubit.getUnfinishedBooks();
-
-    return _buildBooksTabView(
-      listNumber: 3,
-      stream: bookCubit.unfinishedBooks,
-      sorting: _sortUnfinishedList,
+  BlocBuilder<SortUnfinishedBooksBloc, SortState>
+      _buildUnfinishedBooksTabView() {
+    return BlocBuilder<SortUnfinishedBooksBloc, SortState>(
+      builder: (context, state) {
+        return _buildBooksTabView(
+          listNumber: 3,
+          stream: bookCubit.unfinishedBooks,
+          sortState: state,
+          sorting: _sortUnfinishedList,
+        );
+      },
     );
   }
 
   StreamBuilder<List<Book>> _buildBooksTabView({
     required int listNumber,
     required Stream<List<Book>> stream,
-    required List<Book> Function({
-      required SetSortState state,
+    required SortState sortState,
+    List<Book> Function({
+      required SortState state,
       required List<Book> list,
     })? sorting,
   }) {
@@ -821,49 +775,37 @@ class _BooksScreenState extends State<BooksScreen>
             return const ThisListIsEmpty();
           }
 
-          return BlocBuilder<SortBloc, SortState>(
-            builder: (context, state) {
-              if (state is SetSortState) {
-                return BlocBuilder<DisplayBloc, DisplayState>(
-                  builder: (context, displayState) {
-                    if (displayState is GridDisplayState) {
-                      return BooksGrid(
-                        books: sorting != null
-                            ? sorting(
-                                state: state,
-                                list: snapshot.data!,
-                              )
-                            : snapshot.data!,
-                        listNumber: listNumber,
-                        allBooksCount: snapshot.data!.length,
-                      );
-                    } else {
-                      return BooksList(
-                        books: sorting != null
-                            ? sorting(
-                                state: state,
-                                list: snapshot.data!,
-                              )
-                            : snapshot.data!,
-                        listNumber: listNumber,
-                        allBooksCount: snapshot.data!.length,
-                      );
-                    }
-                  },
+          return BlocBuilder<DisplayBloc, DisplayState>(
+            builder: (context, displayState) {
+              if (displayState is GridDisplayState) {
+                return BooksGrid(
+                  books: sorting != null
+                      ? sorting(
+                          state: sortState,
+                          list: snapshot.data!,
+                        )
+                      : snapshot.data!,
+                  listNumber: listNumber,
+                  allBooksCount: snapshot.data!.length,
                 );
               } else {
-                return const SizedBox.shrink();
+                return BooksList(
+                  books: sorting != null
+                      ? sorting(
+                          state: sortState,
+                          list: snapshot.data!,
+                        )
+                      : snapshot.data!,
+                  listNumber: listNumber,
+                  allBooksCount: snapshot.data!.length,
+                );
               }
             },
           );
         } else if (snapshot.hasError) {
-          return Text(
-            snapshot.error.toString(),
-          );
+          return Text(snapshot.error.toString());
         } else {
-          return const Center(
-            child: CircularProgressIndicator(),
-          );
+          return const Center(child: CircularProgressIndicator());
         }
       },
     );
