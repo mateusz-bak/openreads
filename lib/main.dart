@@ -19,7 +19,10 @@ import 'package:openreads/logic/bloc/migration_v1_to_v2_bloc/migration_v1_to_v2_
 import 'package:openreads/logic/bloc/open_lib_bloc/open_lib_bloc.dart';
 import 'package:openreads/logic/bloc/open_library_search_bloc/open_library_search_bloc.dart';
 import 'package:openreads/logic/bloc/rating_type_bloc/rating_type_bloc.dart';
-import 'package:openreads/logic/bloc/sort_bloc/sort_bloc.dart';
+import 'package:openreads/logic/bloc/sort_bloc/sort_finished_books_bloc.dart';
+import 'package:openreads/logic/bloc/sort_bloc/sort_for_later_books_bloc.dart';
+import 'package:openreads/logic/bloc/sort_bloc/sort_in_progress_books_bloc.dart';
+import 'package:openreads/logic/bloc/sort_bloc/sort_unfinished_books_bloc.dart';
 import 'package:openreads/logic/bloc/theme_bloc/theme_bloc.dart';
 import 'package:openreads/logic/bloc/welcome_bloc/welcome_bloc.dart';
 import 'package:openreads/logic/cubit/book_cubit.dart';
@@ -91,11 +94,17 @@ class App extends StatelessWidget {
       BlocProvider(create: (_) => DefaultBooksFormatCubit()),
       BlocProvider(create: (_) => ThemeBloc()),
       BlocProvider(create: (_) => DisplayBloc()),
-      BlocProvider(create: (_) => SortBloc()),
       BlocProvider(create: (_) => BooksTabIndexCubit()),
       BlocProvider(create: (_) => WelcomeBloc()),
       BlocProvider(create: (_) => RatingTypeBloc()),
       BlocProvider(create: (_) => MigrationV1ToV2Bloc()),
+    ];
+
+    final sortProviders = [
+      BlocProvider(create: (_) => SortFinishedBooksBloc()),
+      BlocProvider(create: (_) => SortInProgressBooksBloc()),
+      BlocProvider(create: (_) => SortForLaterBooksBloc()),
+      BlocProvider(create: (_) => SortUnfinishedBooksBloc()),
     ];
 
     final openLibraryProviders = [
@@ -111,6 +120,7 @@ class App extends StatelessWidget {
     return [
       ...bookProviders,
       ...settingsProviders,
+      ...sortProviders,
       ...openLibraryProviders,
     ];
   }

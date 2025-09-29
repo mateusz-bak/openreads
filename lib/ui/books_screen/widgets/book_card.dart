@@ -9,7 +9,11 @@ import 'package:openreads/core/helpers/helpers.dart';
 import 'package:openreads/core/themes/app_theme.dart';
 import 'package:openreads/generated/locale_keys.g.dart';
 import 'package:openreads/logic/bloc/rating_type_bloc/rating_type_bloc.dart';
-import 'package:openreads/logic/bloc/sort_bloc/sort_bloc.dart';
+import 'package:openreads/logic/bloc/sort_bloc/sort_finished_books_bloc.dart';
+import 'package:openreads/logic/bloc/sort_bloc/sort_for_later_books_bloc.dart';
+import 'package:openreads/logic/bloc/sort_bloc/sort_in_progress_books_bloc.dart';
+import 'package:openreads/logic/bloc/sort_bloc/sort_state.dart';
+import 'package:openreads/logic/bloc/sort_bloc/sort_unfinished_books_bloc.dart';
 import 'package:openreads/main.dart';
 import 'package:openreads/model/book.dart';
 
@@ -37,55 +41,70 @@ class BookCard extends StatefulWidget {
 
 class _BookCardState extends State<BookCard> {
   Widget _buildSortAttribute() {
-    return BlocBuilder<SortBloc, SortState>(
-      builder: (context, state) {
-        if (state is SetSortState) {
-          if (state.sortType == SortType.byPages) {
-            return (widget.book.pages != null)
-                ? _buildPagesAttribute()
-                : const SizedBox();
-          } else if (state.sortType == SortType.byStartDate) {
-            final latestStartDate = getLatestStartDate(widget.book);
+    switch (widget.book.status) {
+      case BookStatus.read:
+        return BlocBuilder<SortFinishedBooksBloc, SortState>(
+          builder: (_, state) => _buildSortAttributeContent(state.sortType),
+        );
+      case BookStatus.inProgress:
+        return BlocBuilder<SortInProgressBooksBloc, SortState>(
+          builder: (_, state) => _buildSortAttributeContent(state.sortType),
+        );
+      case BookStatus.forLater:
+        return BlocBuilder<SortForLaterBooksBloc, SortState>(
+          builder: (_, state) => _buildSortAttributeContent(state.sortType),
+        );
+      case BookStatus.unfinished:
+        return BlocBuilder<SortUnfinishedBooksBloc, SortState>(
+          builder: (_, state) => _buildSortAttributeContent(state.sortType),
+        );
+    }
+  }
 
-            return (latestStartDate != null)
-                ? _buildDateAttribute(
-                    latestStartDate,
-                    LocaleKeys.started_on_date.tr(),
-                    false,
-                  )
-                : const SizedBox();
-          } else if (state.sortType == SortType.byFinishDate) {
-            final latestFinishDate = getLatestFinishDate(widget.book);
+  Widget _buildSortAttributeContent(SortType sortType) {
+    if (sortType == SortType.byPages) {
+      return (widget.book.pages != null)
+          ? _buildPagesAttribute()
+          : const SizedBox();
+    } else if (sortType == SortType.byStartDate) {
+      final latestStartDate = getLatestStartDate(widget.book);
 
-            return (latestFinishDate != null)
-                ? _buildDateAttribute(
-                    latestFinishDate,
-                    LocaleKeys.finished_on_date.tr(),
-                    false,
-                  )
-                : const SizedBox();
-          } else if (state.sortType == SortType.byDateAdded) {
-            return _buildDateAttribute(
-              widget.book.dateAdded,
-              LocaleKeys.added_on.tr(),
-              true,
-            );
-          } else if (state.sortType == SortType.byDateModified) {
-            return _buildDateAttribute(
-              widget.book.dateModified,
-              LocaleKeys.modified_on.tr(),
-              true,
-            );
-          } else if (state.sortType == SortType.byPublicationYear) {
-            return (widget.book.publicationYear != null)
-                ? _buildPublicationYearAttribute()
-                : const SizedBox();
-          }
-        }
+      return (latestStartDate != null)
+          ? _buildDateAttribute(
+              latestStartDate,
+              LocaleKeys.started_on_date.tr(),
+              false,
+            )
+          : const SizedBox();
+    } else if (sortType == SortType.byFinishDate) {
+      final latestFinishDate = getLatestFinishDate(widget.book);
 
-        return const SizedBox();
-      },
-    );
+      return (latestFinishDate != null)
+          ? _buildDateAttribute(
+              latestFinishDate,
+              LocaleKeys.finished_on_date.tr(),
+              false,
+            )
+          : const SizedBox();
+    } else if (sortType == SortType.byDateAdded) {
+      return _buildDateAttribute(
+        widget.book.dateAdded,
+        LocaleKeys.added_on.tr(),
+        true,
+      );
+    } else if (sortType == SortType.byDateModified) {
+      return _buildDateAttribute(
+        widget.book.dateModified,
+        LocaleKeys.modified_on.tr(),
+        true,
+      );
+    } else if (sortType == SortType.byPublicationYear) {
+      return (widget.book.publicationYear != null)
+          ? _buildPublicationYearAttribute()
+          : const SizedBox();
+    }
+
+    return const SizedBox();
   }
 
   Text _buildPagesAttribute() =>
@@ -140,30 +159,43 @@ class _BookCardState extends State<BookCard> {
   }
 
   Widget _buildTags() {
-    return BlocBuilder<SortBloc, SortState>(
-      builder: (context, state) {
-        if (state is SetSortState) {
-          if (state.displayTags) {
-            return (widget.book.tags == null)
-                ? const SizedBox()
-                : Row(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    children: [
-                      Expanded(
-                        child: Wrap(
-                          children: _generateTagChips(
-                            context: context,
-                          ),
-                        ),
-                      ),
-                    ],
-                  );
-          }
-        }
+    switch (widget.book.status) {
+      case BookStatus.read:
+        return BlocBuilder<SortFinishedBooksBloc, SortState>(
+          builder: (_, state) => _buildTagsContent(state.displayTags),
+        );
+      case BookStatus.inProgress:
+        return BlocBuilder<SortInProgressBooksBloc, SortState>(
+          builder: (_, state) => _buildTagsContent(state.displayTags),
+        );
+      case BookStatus.forLater:
+        return BlocBuilder<SortForLaterBooksBloc, SortState>(
+          builder: (_, state) => _buildTagsContent(state.displayTags),
+        );
+      case BookStatus.unfinished:
+        return BlocBuilder<SortUnfinishedBooksBloc, SortState>(
+          builder: (_, state) => _buildTagsContent(state.displayTags),
+        );
+    }
+  }
 
-        return const SizedBox();
-      },
-    );
+  Widget _buildTagsContent(bool displayTags) {
+    if (displayTags) {
+      return (widget.book.tags == null)
+          ? const SizedBox()
+          : Row(
+              mainAxisAlignment: MainAxisAlignment.start,
+              children: [
+                Expanded(
+                  child: Wrap(
+                    children: _generateTagChips(context: context),
+                  ),
+                ),
+              ],
+            );
+    }
+
+    return const SizedBox();
   }
 
   Widget _buildTagChip({

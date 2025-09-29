@@ -74,6 +74,7 @@ class BookCubit extends Cubit {
     getFinishedBooks();
     getInProgressBooks();
     getToReadBooks();
+    getUnfinishedBooks();
     getAllBooks();
   }
 
