@@ -30,14 +30,24 @@ class SortFinishedBooksBloc extends HydratedBloc<SortEvent, SortState> {
     );
 
     on<ChangeBookTypeEvent>(
-        (event, emit) => emit(state.copyWith(bookType: event.bookType)));
+      (event, emit) => emit(
+        state.copyWith(
+          bookType: event.bookType,
+          resetBookType: event.bookType == null,
+        ),
+      ),
+    );
 
     on<ChangeYearsEvent>(
-      (event, emit) => emit(state.copyWith(years: event.years)),
+      (event, emit) => emit(
+        state.copyWith(years: event.years, resetYears: event.years == null),
+      ),
     );
 
     on<ChangeTagsEvent>(
-      (event, emit) => emit(state.copyWith(tags: event.tags)),
+      (event, emit) => emit(
+        state.copyWith(tags: event.tags, resetTags: event.tags == null),
+      ),
     );
 
     on<ChangeFilterTagsAsAnd>(
