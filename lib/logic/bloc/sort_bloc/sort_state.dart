@@ -30,21 +30,24 @@ class SortState extends Equatable {
     bool? isAsc,
     bool? onlyFavourite,
     String? years,
+    bool resetYears = false,
     String? tags,
+    bool resetTags = false,
     bool? displayTags,
     bool? filterTagsAsAnd,
     BookFormat? bookType,
+    bool resetBookType = false,
     bool? filterOutTags,
   }) {
     return SortState(
       sortType: sortType ?? this.sortType,
       isAsc: isAsc ?? this.isAsc,
       onlyFavourite: onlyFavourite ?? this.onlyFavourite,
-      years: years ?? this.years,
-      tags: tags ?? this.tags,
+      years: resetYears ? null : years ?? this.years,
+      tags: resetTags ? null : tags ?? this.tags,
       displayTags: displayTags ?? this.displayTags,
       filterTagsAsAnd: filterTagsAsAnd ?? this.filterTagsAsAnd,
-      bookType: bookType ?? this.bookType,
+      bookType: resetBookType ? null : bookType ?? this.bookType,
       filterOutTags: filterOutTags ?? this.filterOutTags,
     );
   }
@@ -62,7 +65,7 @@ class SortState extends Equatable {
 
     final sortType = sortTypeInt < SortType.values.length
         ? SortType.values[sortTypeInt]
-        : SortType.byDateModified;
+        : SortType.byTitle;
 
     return SortState(
       sortType: sortType,

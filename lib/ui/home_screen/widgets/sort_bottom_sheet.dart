@@ -221,14 +221,12 @@ class _SortBottomSheetState extends State<SortBottomSheet> {
       YearFilterChip chip = YearFilterChip(
         dbYear: dbYear,
         selected: isSelected,
-        onYearChipPressed: (bool selected) {
-          _onYearChipPressed(
-            bookStatus: bookStatus,
-            dbYear: dbYear,
-            selected: selected,
-            selectedYearsList: selectedYearsList,
-          );
-        },
+        onYearChipPressed: (bool selected) => _onYearChipPressed(
+          bookStatus: bookStatus,
+          dbYear: dbYear,
+          selected: selected,
+          selectedYearsList: selectedYearsList,
+        ),
       );
 
       if (isSelected) {
@@ -364,10 +362,8 @@ class _SortBottomSheetState extends State<SortBottomSheet> {
                         case BookStatus.inProgress:
                           return BlocBuilder<SortInProgressBooksBloc,
                               SortState>(
-                            builder: (context, state) => _buildBody(
-                              BookStatus.inProgress,
-                              state,
-                            ),
+                            builder: (context, state) =>
+                                _buildBody(BookStatus.inProgress, state),
                           );
                         case BookStatus.forLater:
                           return BlocBuilder<SortForLaterBooksBloc, SortState>(
@@ -377,10 +373,8 @@ class _SortBottomSheetState extends State<SortBottomSheet> {
                         case BookStatus.unfinished:
                           return BlocBuilder<SortUnfinishedBooksBloc,
                               SortState>(
-                            builder: (context, state) => _buildBody(
-                              BookStatus.unfinished,
-                              state,
-                            ),
+                            builder: (context, state) =>
+                                _buildBody(BookStatus.unfinished, state),
                           );
                       }
                     },
@@ -578,12 +572,8 @@ class _SortBottomSheetState extends State<SortBottomSheet> {
                     child: Container(
                       decoration: BoxDecoration(
                         color: Theme.of(context).colorScheme.surfaceVariant,
-                        borderRadius: BorderRadius.circular(
-                          cornerRadius,
-                        ),
-                        border: Border.all(
-                          color: dividerColor,
-                        ),
+                        borderRadius: BorderRadius.circular(cornerRadius),
+                        border: Border.all(color: dividerColor),
                       ),
                       child: SingleChildScrollView(
                         scrollDirection: Axis.horizontal,
