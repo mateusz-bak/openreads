@@ -322,7 +322,6 @@ class _HomeScreenState extends State<HomeScreen> {
 
   PreferredSizeWidget _buildAppBar(BuildContext context) {
     AppBar appBar = AppBar(
-      backgroundColor: Theme.of(context).colorScheme.surface.withOpacity(0.9),
       elevation: 0,
       scrolledUnderElevation: 0,
       title: const Row(
