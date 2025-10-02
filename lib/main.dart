@@ -208,6 +208,58 @@ class _OpenreadsAppState extends State<OpenreadsApp>
       SystemChrome.setEnabledSystemUIMode(SystemUiMode.edgeToEdge);
       final themeMode = widget.themeState.themeMode;
 
+      final lightColorScheme = ColorScheme.fromSeed(
+        seedColor: widget.themeState.useMaterialYou && lightScheme != null
+            ? lightScheme.primary
+            : widget.themeState.primaryColor,
+        dynamicSchemeVariant: DynamicSchemeVariant.fidelity,
+        brightness: Brightness.light,
+      );
+
+      final lightTheme = ThemeData(
+        colorScheme: lightColorScheme,
+        brightness: Brightness.light,
+        fontFamily: widget.themeState.fontFamily,
+      ).copyWith(
+        scaffoldBackgroundColor: lightColorScheme.surfaceContainerLowest,
+        appBarTheme: AppBarTheme(
+          backgroundColor: lightColorScheme.surfaceContainerLowest,
+        ),
+        navigationBarTheme: NavigationBarThemeData(
+          backgroundColor: lightColorScheme.surfaceContainerLow,
+        ),
+      );
+
+      final darkColorScheme = ColorScheme.fromSeed(
+        seedColor: widget.themeState.useMaterialYou && darkScheme != null
+            ? darkScheme.primary
+            : widget.themeState.primaryColor,
+        dynamicSchemeVariant: DynamicSchemeVariant.fidelity,
+        brightness: Brightness.dark,
+        surface: widget.themeState.amoledDark ? Colors.black : null,
+        surfaceContainer: widget.themeState.amoledDark ? Colors.black : null,
+      );
+
+      final darkTheme = ThemeData(
+        colorScheme: darkColorScheme,
+        brightness: Brightness.dark,
+        fontFamily: widget.themeState.fontFamily,
+      ).copyWith(
+        scaffoldBackgroundColor: widget.themeState.amoledDark
+            ? Colors.black
+            : darkColorScheme.surfaceContainerLowest,
+        appBarTheme: AppBarTheme(
+          backgroundColor: widget.themeState.amoledDark
+              ? Colors.black
+              : darkColorScheme.surfaceContainerLowest,
+        ),
+        navigationBarTheme: NavigationBarThemeData(
+          backgroundColor: widget.themeState.amoledDark
+              ? Colors.black
+              : darkColorScheme.surfaceContainerLow,
+        ),
+      );
+
       return AnnotatedRegion<SystemUiOverlayStyle>(
         value: SystemUiOverlayStyle(
           statusBarColor: Colors.transparent,
@@ -237,31 +289,8 @@ class _OpenreadsAppState extends State<OpenreadsApp>
         child: MaterialApp(
           title: Constants.appName,
           scaffoldMessengerKey: snackbarKey,
-          theme: ThemeData(
-            colorScheme: ColorScheme.fromSeed(
-              seedColor: widget.themeState.useMaterialYou && lightScheme != null
-                  ? lightScheme.primary
-                  : widget.themeState.primaryColor,
-              dynamicSchemeVariant: DynamicSchemeVariant.fidelity,
-              brightness: Brightness.light,
-            ),
-            brightness: Brightness.light,
-            fontFamily: widget.themeState.fontFamily,
-          ),
-          darkTheme: ThemeData(
-            colorScheme: ColorScheme.fromSeed(
-              seedColor: widget.themeState.useMaterialYou && darkScheme != null
-                  ? darkScheme.primary
-                  : widget.themeState.primaryColor,
-              dynamicSchemeVariant: DynamicSchemeVariant.fidelity,
-              brightness: Brightness.dark,
-              surface: widget.themeState.amoledDark ? Colors.black : null,
-              surfaceContainer:
-                  widget.themeState.amoledDark ? Colors.black : null,
-            ),
-            brightness: Brightness.dark,
-            fontFamily: widget.themeState.fontFamily,
-          ),
+          theme: lightTheme,
+          darkTheme: darkTheme,
           themeMode: themeMode,
           home: showWelcomeScreen
               ? WelcomeScreen(themeData: Theme.of(context))
