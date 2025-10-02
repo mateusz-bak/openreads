@@ -204,13 +204,7 @@ class _OpenreadsAppState extends State<OpenreadsApp>
       const NynorskCupertinoLocalizationsDelegate(),
     ];
 
-    return DynamicColorBuilder(
-        builder: (ColorScheme? lightDynamic, ColorScheme? darkDynamic) {
-      if (widget.themeState.amoledDark) {
-        darkDynamic = darkDynamic?.copyWith(
-          background: Colors.black,
-        );
-      }
+    return DynamicColorBuilder(builder: (lightScheme, darkScheme) {
       SystemChrome.setEnabledSystemUIMode(SystemUiMode.edgeToEdge);
       final themeMode = widget.themeState.themeMode;
 
@@ -244,27 +238,29 @@ class _OpenreadsAppState extends State<OpenreadsApp>
           title: Constants.appName,
           scaffoldMessengerKey: snackbarKey,
           theme: ThemeData(
-            useMaterial3: true,
-            colorSchemeSeed: widget.themeState.useMaterialYou
-                ? null
-                : widget.themeState.primaryColor,
-            colorScheme: widget.themeState.useMaterialYou ? lightDynamic : null,
+            colorScheme: ColorScheme.fromSeed(
+              seedColor: widget.themeState.useMaterialYou && lightScheme != null
+                  ? lightScheme.primary
+                  : widget.themeState.primaryColor,
+              dynamicSchemeVariant: DynamicSchemeVariant.fidelity,
+              brightness: Brightness.light,
+            ),
             brightness: Brightness.light,
             fontFamily: widget.themeState.fontFamily,
           ),
           darkTheme: ThemeData(
-            useMaterial3: true,
-            colorSchemeSeed: widget.themeState.useMaterialYou
-                ? null
-                : widget.themeState.primaryColor,
-            colorScheme: widget.themeState.useMaterialYou ? darkDynamic : null,
+            colorScheme: ColorScheme.fromSeed(
+              seedColor: widget.themeState.useMaterialYou && darkScheme != null
+                  ? darkScheme.primary
+                  : widget.themeState.primaryColor,
+              dynamicSchemeVariant: DynamicSchemeVariant.fidelity,
+              brightness: Brightness.dark,
+              surface: widget.themeState.amoledDark ? Colors.black : null,
+              surfaceContainer:
+                  widget.themeState.amoledDark ? Colors.black : null,
+            ),
             brightness: Brightness.dark,
             fontFamily: widget.themeState.fontFamily,
-            scaffoldBackgroundColor:
-                widget.themeState.amoledDark ? Colors.black : null,
-            appBarTheme: widget.themeState.amoledDark
-                ? const AppBarTheme(backgroundColor: Colors.black)
-                : null,
           ),
           themeMode: themeMode,
           home: showWelcomeScreen
