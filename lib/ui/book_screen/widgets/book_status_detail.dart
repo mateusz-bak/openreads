@@ -9,6 +9,7 @@ import 'package:openreads/logic/bloc/rating_type_bloc/rating_type_bloc.dart';
 import 'package:openreads/main.dart';
 import 'package:openreads/model/book.dart';
 import 'package:openreads/model/reading_time.dart';
+import 'package:openreads/ui/book_screen/widgets/widgets.dart';
 
 class BookStatusDetail extends StatefulWidget {
   const BookStatusDetail({
@@ -52,18 +53,69 @@ class _BookStatusDetailState extends State<BookStatusDetail> {
     return '(${LocaleKeys.day.plural(diff).tr()})';
   }
 
-  Widget _buildLikeButton() {
-    return Padding(
-      padding: const EdgeInsets.only(right: 10, top: 0),
-      child: GestureDetector(
-        onTap: widget.onLikeTap,
-        child: (widget.book.favourite)
-            ? FaIcon(
-                FontAwesomeIcons.solidHeart,
-                size: 30,
-                color: likeColor,
-              )
-            : const FaIcon(FontAwesomeIcons.solidHeart, size: 30),
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      padding: const EdgeInsets.fromLTRB(25, 0, 25, 50),
+      child: Column(
+        children: [
+          Row(
+            children: [
+              _buildStatusBox(context),
+              SizedBox(width: (widget.showChangeStatus) ? 20 : 0),
+              (widget.showChangeStatus)
+                  ? _buildChangeStatusButton(context)
+                  : const SizedBox(),
+            ],
+          ),
+          const SizedBox(height: 10),
+          _generateHowManyTimesRead(context),
+          ..._buildStartAndFinishDates(context),
+          SizedBox(height: (widget.showRatingAndLike) ? 20 : 0),
+          (widget.showRatingAndLike)
+              ? _buildRatingAndLike(context)
+              : const SizedBox(),
+        ],
+      ),
+    );
+  }
+
+  Expanded _buildStatusBox(BuildContext context) {
+    return Expanded(
+      child: Container(
+        decoration: BoxDecoration(
+          color: Theme.of(context).colorScheme.primaryContainer,
+          borderRadius: BorderRadius.circular(10),
+        ),
+        child: Padding(
+          padding: const EdgeInsets.symmetric(
+            vertical: 8,
+            horizontal: 10,
+          ),
+          child: Center(
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                Icon(
+                  widget.statusIcon,
+                  size: 20,
+                  color: Theme.of(context).colorScheme.onPrimaryContainer,
+                ),
+                const SizedBox(width: 10),
+                Text(
+                  widget.statusText,
+                  maxLines: 1,
+                  style: TextStyle(
+                    fontSize: 15,
+                    fontWeight: FontWeight.bold,
+                    color: Theme.of(context).colorScheme.onPrimaryContainer,
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ),
       ),
     );
   }
@@ -73,13 +125,12 @@ class _BookStatusDetailState extends State<BookStatusDetail> {
       onTap: widget.changeStatusAction,
       child: Container(
         decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(cornerRadius),
-          border: Border.all(color: dividerColor),
-          color: Theme.of(context).colorScheme.secondary,
+          borderRadius: BorderRadius.circular(10),
+          color: Theme.of(context).colorScheme.secondaryContainer,
         ),
         child: Padding(
           padding: const EdgeInsets.symmetric(
-            vertical: 5,
+            vertical: 8,
             horizontal: 10,
           ),
           child: Center(
@@ -92,9 +143,9 @@ class _BookStatusDetailState extends State<BookStatusDetail> {
                   widget.changeStatusText!,
                   maxLines: 1,
                   style: TextStyle(
-                    fontSize: 12,
+                    fontSize: 15,
                     fontWeight: FontWeight.bold,
-                    color: Theme.of(context).colorScheme.onSecondary,
+                    color: Theme.of(context).colorScheme.onSecondaryContainer,
                   ),
                 ),
               ],
@@ -105,101 +156,43 @@ class _BookStatusDetailState extends State<BookStatusDetail> {
     );
   }
 
-  @override
-  Widget build(BuildContext context) {
-    return Card(
-      shadowColor: Colors.transparent,
-      shape: RoundedRectangleBorder(
-        side: BorderSide(color: dividerColor, width: 1),
-        borderRadius: BorderRadius.circular(cornerRadius),
-      ),
-      color: Theme.of(context).colorScheme.secondaryContainer.withAlpha(120),
-      child: Container(
-        padding: const EdgeInsets.all(10),
-        child: Column(
+  Column _buildRatingAndLike(BuildContext context) {
+    return Column(
+      children: [
+        const SizedBox(height: 10),
+        Row(
           children: [
-            const SizedBox(height: 5),
-            Row(
-              children: [
-                Expanded(
-                  child: Container(
-                    decoration: BoxDecoration(
-                      color: Theme.of(context).colorScheme.primary,
-                      borderRadius: BorderRadius.circular(cornerRadius),
-                    ),
-                    child: Padding(
-                      padding: const EdgeInsets.symmetric(
-                        vertical: 5,
-                        horizontal: 10,
-                      ),
-                      child: Center(
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          children: [
-                            Icon(
-                              widget.statusIcon,
-                              size: 24,
-                              color: Theme.of(context).colorScheme.onPrimary,
-                            ),
-                            const SizedBox(width: 15),
-                            Text(
-                              widget.statusText,
-                              maxLines: 1,
-                              style: TextStyle(
-                                fontSize: 12,
-                                fontWeight: FontWeight.bold,
-                                color: Theme.of(context).colorScheme.onPrimary,
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                    ),
-                  ),
-                ),
-                SizedBox(width: (widget.showChangeStatus) ? 10 : 0),
-                (widget.showChangeStatus)
-                    ? _buildChangeStatusButton(context)
-                    : const SizedBox(),
-              ],
+            Text(
+              LocaleKeys.your_rating.tr(),
+              style: const TextStyle(
+                fontSize: 16,
+                fontWeight: FontWeight.bold,
+                height: 0.5,
+              ),
             ),
-            _generateHowManyTimesRead(context),
-            SizedBox(height: (widget.showRatingAndLike) ? 10 : 0),
-            (widget.showRatingAndLike)
-                ? Column(
-                    children: [
-                      Row(
-                        children: [
-                          Text(
-                            LocaleKeys.your_rating.tr(),
-                            style: const TextStyle(
-                              fontSize: 16,
-                              fontWeight: FontWeight.bold,
-                            ),
-                          ),
-                        ],
-                      ),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              _buildRating(context),
-                            ],
-                          ),
-                          _buildLikeButton(),
-                        ],
-                      ),
-                    ],
-                  )
-                : const SizedBox(),
-            const SizedBox(height: 10),
-            ..._buildStartAndFinishDates(context),
           ],
         ),
-      ),
+        Divider(
+          color: Theme.of(context).colorScheme.onSurface.withAlpha(25),
+        ),
+        const SizedBox(height: 3),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                _buildRating(context),
+              ],
+            ),
+            LikeButton(
+              isLiked: widget.book.favourite,
+              onTap: widget.onLikeTap,
+            ),
+          ],
+        ),
+      ],
     );
   }
 
@@ -211,13 +204,14 @@ class _BookStatusDetailState extends State<BookStatusDetail> {
             initialRating:
                 (widget.book.rating != null) ? widget.book.rating! / 10 : 0,
             allowHalfRating: true,
-            unratedColor: Theme.of(context).scaffoldBackgroundColor,
+            unratedColor: Theme.of(context).colorScheme.surfaceContainerLow,
             glow: false,
-            itemSize: 45,
+            itemSize: 34,
             ignoreGestures: true,
-            itemBuilder: (context, _) => Icon(
-              Icons.star_rounded,
-              color: ratingColor,
+            itemPadding: const EdgeInsets.only(right: 3),
+            itemBuilder: (context, _) => FaIcon(
+              FontAwesomeIcons.solidStar,
+              color: Theme.of(context).colorScheme.primaryContainer,
             ),
             onRatingUpdate: (_) {},
           );
@@ -230,15 +224,15 @@ class _BookStatusDetailState extends State<BookStatusDetail> {
                     ? '0'
                     : '${(widget.book.rating! / 10)}',
                 style: const TextStyle(
-                  fontSize: 16,
+                  fontSize: 18,
                   fontWeight: FontWeight.bold,
                 ),
               ),
-              const SizedBox(width: 5),
-              Icon(
-                Icons.star_rounded,
-                color: ratingColor,
-                size: 32,
+              const SizedBox(width: 8),
+              FaIcon(
+                FontAwesomeIcons.solidStar,
+                color: Theme.of(context).colorScheme.primaryContainer,
+                size: 16,
               ),
             ],
           );
@@ -279,7 +273,8 @@ class _BookStatusDetailState extends State<BookStatusDetail> {
       }
 
       widgets.add(
-        SizedBox(
+        Padding(
+          padding: const EdgeInsets.only(bottom: 3),
           child: Row(
             children: [
               Expanded(child: widget),
@@ -310,9 +305,8 @@ class _BookStatusDetailState extends State<BookStatusDetail> {
       selectionColor: ThemeGetters.getSelectionColor(context),
       text: TextSpan(
         style: TextStyle(
-          fontSize: 14,
-          fontWeight: FontWeight.bold,
-          color: Theme.of(context).colorScheme.onSurface,
+          fontSize: 13,
+          color: Theme.of(context).colorScheme.onSurface.withAlpha(180),
         ),
         children: [
           TextSpan(
@@ -321,7 +315,6 @@ class _BookStatusDetailState extends State<BookStatusDetail> {
           ),
           TextSpan(
             text: readingTimeText,
-            style: const TextStyle(fontWeight: FontWeight.normal),
           ),
         ],
       ),
@@ -345,9 +338,8 @@ class _BookStatusDetailState extends State<BookStatusDetail> {
       selectionColor: ThemeGetters.getSelectionColor(context),
       text: TextSpan(
         style: TextStyle(
-          fontSize: 14,
-          fontWeight: FontWeight.bold,
-          color: Theme.of(context).colorScheme.onSurface,
+          fontSize: 13,
+          color: Theme.of(context).colorScheme.onSurface.withAlpha(180),
         ),
         children: [
           TextSpan(
@@ -356,7 +348,6 @@ class _BookStatusDetailState extends State<BookStatusDetail> {
           ),
           TextSpan(
             text: readingTimeText,
-            style: const TextStyle(fontWeight: FontWeight.normal),
           ),
         ],
       ),
@@ -372,9 +363,8 @@ class _BookStatusDetailState extends State<BookStatusDetail> {
       selectionColor: ThemeGetters.getSelectionColor(context),
       text: TextSpan(
         style: TextStyle(
-          fontSize: 14,
-          fontWeight: FontWeight.bold,
-          color: Theme.of(context).colorScheme.onSurface,
+          fontSize: 13,
+          color: Theme.of(context).colorScheme.onSurface.withAlpha(180),
         ),
         children: [
           TextSpan(
@@ -397,10 +387,32 @@ class _BookStatusDetailState extends State<BookStatusDetail> {
 
     return timesRead > 1
         ? Padding(
-            padding: const EdgeInsets.fromLTRB(0, 5, 0, 5),
-            child: Text(LocaleKeys.read_x_times
-                .plural(widget.book.readings.length)
-                .tr()),
+            padding: const EdgeInsets.only(bottom: 5, top: 10),
+            child: Column(
+              children: [
+                Row(
+                  children: [
+                    Text(
+                      LocaleKeys.read_x_times
+                          .plural(widget.book.readings.length)
+                          .tr(),
+                      style: TextStyle(
+                        fontSize: 13,
+                        fontWeight: FontWeight.bold,
+                        color: Theme.of(context)
+                            .colorScheme
+                            .onSurface
+                            .withAlpha(220),
+                        height: 0.5,
+                      ),
+                    ),
+                  ],
+                ),
+                Divider(
+                  color: Theme.of(context).colorScheme.onSurface.withAlpha(25),
+                ),
+              ],
+            ),
           )
         : const SizedBox();
   }

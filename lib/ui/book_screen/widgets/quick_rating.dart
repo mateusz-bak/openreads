@@ -36,7 +36,7 @@ class _QuickRatingState extends State<QuickRating> {
           wrapAlignment: WrapAlignment.center,
           itemBuilder: (_, __) => Icon(
             Icons.star_rounded,
-            color: ratingColor,
+            color: Theme.of(context).colorScheme.primaryContainer,
           ),
           onRatingUpdate: widget.onRatingUpdate,
         ),

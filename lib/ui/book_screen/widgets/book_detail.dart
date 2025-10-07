@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
 
-import 'package:openreads/core/themes/app_theme.dart';
-
 class BookDetail extends StatelessWidget {
   const BookDetail({
     super.key,
@@ -14,34 +12,30 @@ class BookDetail extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Card(
-      shadowColor: Colors.transparent,
-      shape: RoundedRectangleBorder(
-        side: BorderSide(color: dividerColor, width: 1),
-        borderRadius: BorderRadius.circular(cornerRadius),
-      ),
-      color: Theme.of(context).colorScheme.secondaryContainer.withAlpha(120),
-      child: Container(
-        padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: [
-            Text(
-              title,
-              style: const TextStyle(
-                fontSize: 14,
-                fontWeight: FontWeight.bold,
-              ),
+    return Container(
+      padding: const EdgeInsets.fromLTRB(25, 0, 25, 5),
+      child: Row(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text(
+            title,
+            style: const TextStyle(
+              fontSize: 16,
+              fontWeight: FontWeight.bold,
             ),
-            Text(
+          ),
+          const SizedBox(width: 10),
+          Expanded(
+            child: Text(
               text,
+              textAlign: TextAlign.end,
               style: const TextStyle(
-                fontSize: 14,
+                fontSize: 16,
                 fontWeight: FontWeight.normal,
               ),
             ),
-          ],
-        ),
+          ),
+        ],
       ),
     );
   }
