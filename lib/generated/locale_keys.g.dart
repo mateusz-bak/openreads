@@ -287,4 +287,5 @@ abstract class LocaleKeys {
   static const create_discussion = 'create_discussion';
   static const set_default_tags = 'set_default_tags';
   static const add_new_default_tag = 'add_new_default_tag';
+  static const book_format = 'book_format';
 }

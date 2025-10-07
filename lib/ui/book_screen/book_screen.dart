@@ -129,129 +129,24 @@ class BookScreen extends StatelessWidget {
             return SingleChildScrollView(
               child: Column(
                 children: [
-                  (state.hasCover == true)
-                      ? Center(
-                          child: CoverView(
-                            heroTag: heroTag,
-                            book: state,
-                          ),
-                        )
-                      : SizedBox(
-                          height: mediaQuery.padding.top +
-                              AppBar().preferredSize.height,
-                        ),
-                  Padding(
-                    padding: const EdgeInsets.fromLTRB(5, 0, 5, 5),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        BookTitleDetail(
-                          title: state.title.toString(),
-                          subtitle: state.subtitle,
-                          author: state.author.toString(),
-                          publicationYear:
-                              (state.publicationYear ?? "").toString(),
-                          tags: state.tags?.split('|||||'),
-                          bookType: state.bookFormat,
-                        ),
-                        const SizedBox(height: 5),
-                        BookStatusDetail(
-                          book: state,
-                          statusIcon: _decideStatusIcon(state.status),
-                          statusText: _decideStatusText(
-                            state.status,
-                            context,
-                          ),
-                          onLikeTap: () => _onLikeTap(context, state),
-                          showChangeStatus:
-                              (state.status == BookStatus.inProgress ||
-                                  state.status == BookStatus.forLater ||
-                                  state.status == BookStatus.unfinished),
-                          changeStatusText: _decideChangeStatusText(
-                            state.status,
-                            context,
-                          ),
-                          changeStatusAction: () {
-                            _changeStatusAction(
-                              context,
-                              state.status,
-                              state,
-                            );
-                          },
-                          showRatingAndLike: state.status == BookStatus.read,
-                        ),
-                        SizedBox(
-                          height: (state.pages != null) ? 5 : 0,
-                        ),
-                        (state.pages != null)
-                            ? BookDetail(
-                                title: LocaleKeys.pages_uppercase.tr(),
-                                text: (state.pages ?? "").toString(),
-                              )
-                            : const SizedBox(),
-                        SizedBox(
-                          height: (state.description != null &&
-                                  state.description!.isNotEmpty)
-                              ? 5
-                              : 0,
-                        ),
-                        (state.description != null &&
-                                state.description!.isNotEmpty)
-                            ? BookDetail(
-                                title: LocaleKeys.description.tr(),
-                                text: state.description!,
-                              )
-                            : const SizedBox(),
-                        SizedBox(
-                          height: (state.isbn != null) ? 5 : 0,
-                        ),
-                        (state.isbn != null)
-                            ? BookDetail(
-                                title: LocaleKeys.isbn.tr(),
-                                text: (state.isbn ?? "").toString(),
-                              )
-                            : const SizedBox(),
-                        SizedBox(
-                          height: (state.olid != null) ? 5 : 0,
-                        ),
-                        (state.olid != null)
-                            ? BookDetail(
-                                title: LocaleKeys.open_library_ID.tr(),
-                                text: (state.olid ?? "").toString(),
-                              )
-                            : const SizedBox(),
-                        SizedBox(
-                          height: (state.myReview != null &&
-                                  state.myReview!.isNotEmpty)
-                              ? 5
-                              : 0,
-                        ),
-                        (state.myReview != null && state.myReview!.isNotEmpty)
-                            ? BookDetail(
-                                title: LocaleKeys.my_review.tr(),
-                                text: state.myReview!,
-                              )
-                            : const SizedBox(),
-                        SizedBox(
-                          height:
-                              (state.notes != null && state.notes!.isNotEmpty)
-                                  ? 5
-                                  : 0,
-                        ),
-                        (state.notes != null && state.notes!.isNotEmpty)
-                            ? BookDetail(
-                                title: LocaleKeys.notes.tr(),
-                                text: state.notes!,
-                              )
-                            : const SizedBox(),
-                        const SizedBox(height: 5),
-                        BookDetailDateAddedUpdated(
-                          dateAdded: state.dateAdded,
-                          dateModified: state.dateModified,
-                        ),
-                        const SizedBox(height: 50.0),
-                      ],
-                    ),
+                  _buildCoverSpace(state, mediaQuery),
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      _buildTitleDetail(state),
+                      _buildStatusDetail(state, context),
+                      _buildBookFormatDetail(state),
+                      _buildPublicationYearDetail(state),
+                      _buildPagesDetail(state),
+                      _buildISBNDetail(state),
+                      _buildOLIDDetail(state),
+                      const SizedBox(height: 50),
+                      _buildDescriptionDetail(state),
+                      _buildMyReviewDetail(state),
+                      _buildNotesDetail(state),
+                      _buildEditDates(state),
+                      const SizedBox(height: 100),
+                    ],
                   ),
                 ],
               ),
@@ -259,6 +154,141 @@ class BookScreen extends StatelessWidget {
           },
         ),
       ),
+    );
+  }
+
+  BookDetailDateAddedUpdated _buildEditDates(Book state) {
+    return BookDetailDateAddedUpdated(
+      dateAdded: state.dateAdded,
+      dateModified: state.dateModified,
+    );
+  }
+
+  Widget _buildNotesDetail(Book state) {
+    return (state.notes != null && state.notes!.isNotEmpty)
+        ? BookDetailLong(
+            title: LocaleKeys.notes.tr(),
+            text: state.notes!,
+          )
+        : const SizedBox();
+  }
+
+  Widget _buildMyReviewDetail(Book state) {
+    return (state.myReview != null && state.myReview!.isNotEmpty)
+        ? BookDetailLong(
+            title: LocaleKeys.my_review.tr(),
+            text: state.myReview!,
+          )
+        : const SizedBox();
+  }
+
+  Widget _buildDescriptionDetail(Book state) {
+    return (state.description != null && state.description!.isNotEmpty)
+        ? BookDetailLong(
+            title: LocaleKeys.description.tr(),
+            text: state.description!,
+          )
+        : const SizedBox();
+  }
+
+  Widget _buildOLIDDetail(Book state) {
+    return (state.olid != null)
+        ? BookDetail(
+            title: LocaleKeys.open_library_ID.tr(),
+            text: (state.olid ?? "").toString(),
+          )
+        : const SizedBox();
+  }
+
+  Widget _buildISBNDetail(Book state) {
+    return (state.isbn != null)
+        ? BookDetail(
+            title: LocaleKeys.isbn.tr(),
+            text: (state.isbn ?? "").toString(),
+          )
+        : const SizedBox();
+  }
+
+  Widget _buildPagesDetail(Book state) {
+    return (state.pages != null)
+        ? BookDetail(
+            title: LocaleKeys.pages_uppercase.tr(),
+            text: (state.pages ?? "").toString(),
+          )
+        : const SizedBox();
+  }
+
+  Widget _buildBookFormatDetail(Book state) {
+    return BookDetail(
+      title: LocaleKeys.book_format.tr(),
+      text: state.bookFormat == BookFormat.audiobook
+          ? LocaleKeys.book_format_audiobook.tr()
+          : state.bookFormat == BookFormat.ebook
+              ? LocaleKeys.book_format_ebook.tr()
+              : state.bookFormat == BookFormat.hardcover
+                  ? LocaleKeys.book_format_hardcover.tr()
+                  : LocaleKeys.book_format_paperback.tr(),
+    );
+  }
+
+  Widget _buildPublicationYearDetail(Book state) {
+    return (state.publicationYear != null)
+        ? BookDetail(
+            title: LocaleKeys.enter_publication_year.tr(),
+            text: (state.publicationYear ?? "").toString(),
+          )
+        : const SizedBox();
+  }
+
+  SingleChildRenderObjectWidget _buildCoverSpace(
+      Book state, MediaQueryData mediaQuery) {
+    return (state.hasCover == true)
+        ? Center(
+            child: CoverView(
+              heroTag: heroTag,
+              book: state,
+            ),
+          )
+        : SizedBox(
+            height: mediaQuery.padding.top + AppBar().preferredSize.height,
+          );
+  }
+
+  BookTitleDetail _buildTitleDetail(Book state) {
+    return BookTitleDetail(
+      title: state.title.toString(),
+      subtitle: state.subtitle,
+      author: state.author.toString(),
+      publicationYear: (state.publicationYear ?? "").toString(),
+      tags: state.tags?.split('|||||'),
+      bookType: state.bookFormat,
+    );
+  }
+
+  BookStatusDetail _buildStatusDetail(Book state, BuildContext context) {
+    return BookStatusDetail(
+      book: state,
+      statusIcon: _decideStatusIcon(state.status),
+      statusText: _decideStatusText(
+        state.status,
+        context,
+      ),
+      onLikeTap: () => _onLikeTap(context, state),
+      showChangeStatus: (state.status == BookStatus.inProgress ||
+          state.status == BookStatus.forLater ||
+          state.status == BookStatus.unfinished),
+      changeStatusText: _decideChangeStatusText(
+        state.status,
+        context,
+      ),
+      changeStatusAction: () {
+        _changeStatusAction(
+          context,
+          state.status,
+          state,
+        );
+      },
+      showRatingAndLike: state.status == BookStatus.read,
     );
   }
 }

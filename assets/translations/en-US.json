@@ -287,5 +287,6 @@
     "warning_yes_and_dont_show": "I'm okay with that and don't show this again",
     "create_discussion": "Create a discussion on GitHub",
     "set_default_tags": "Default tags for new books",
-    "add_new_default_tag": "Add new default tag:"
+    "add_new_default_tag": "Add new default tag:",
+    "book_format": "Book format"
 }

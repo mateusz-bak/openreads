@@ -1,7 +1,6 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
-import 'package:openreads/core/themes/app_theme.dart';
 import 'package:openreads/model/book.dart';
 import 'package:openreads/ui/book_screen/widgets/widgets.dart';
 
@@ -43,7 +42,7 @@ class _CoverViewState extends State<CoverView> {
       children: [
         SizedBox(
           width: mediaQuery.size.width,
-          height: (mediaQuery.size.height / 2.5) + mediaQuery.padding.top,
+          height: (mediaQuery.size.height / 2.5) + mediaQuery.padding.top + 20,
           child: const Stack(
             children: [
               CoverBackground(),
@@ -52,7 +51,7 @@ class _CoverViewState extends State<CoverView> {
         ),
         Column(
           children: [
-            SizedBox(height: mediaQuery.padding.top),
+            SizedBox(height: mediaQuery.padding.top - 20),
             Center(
               child: SizedBox(
                 height: mediaQuery.size.height / 2.5,
@@ -60,7 +59,7 @@ class _CoverViewState extends State<CoverView> {
                   padding: const EdgeInsets.fromLTRB(20, 0, 20, 20),
                   child: Center(
                     child: ClipRRect(
-                      borderRadius: BorderRadius.circular(cornerRadius),
+                      borderRadius: BorderRadius.circular(10),
                       child: coverFile != null
                           ? Hero(
                               tag: widget.heroTag ?? "",
@@ -78,6 +77,19 @@ class _CoverViewState extends State<CoverView> {
             ),
             const SizedBox(height: 10),
           ],
+        ),
+        Positioned(
+          bottom: 0,
+          child: Container(
+            height: 40,
+            width: mediaQuery.size.width,
+            decoration: BoxDecoration(
+              color: Theme.of(context).scaffoldBackgroundColor,
+              borderRadius: const BorderRadius.vertical(
+                top: Radius.circular(25),
+              ),
+            ),
+          ),
         ),
       ],
     );
