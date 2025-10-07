@@ -101,13 +101,16 @@ class _BooksListState extends State<BooksList>
   }) {
     bool multiSelectMode = list.isNotEmpty;
 
+    const unselectedCardColor = null;
+    final selectedCardColor = Theme.of(context).colorScheme.secondaryContainer;
+
     return SliverList.builder(
       itemCount: widget.books.length,
       itemBuilder: (context, index) {
         final heroTag = 'tag_${widget.listNumber}_${widget.books[index].id}';
         Color? color = multiSelectMode && list.contains(widget.books[index].id)
-            ? Theme.of(context).colorScheme.tertiaryContainer
-            : Theme.of(context).colorScheme.secondaryContainer.withAlpha(120);
+            ? selectedCardColor
+            : unselectedCardColor;
         return BookCard(
           book: widget.books[index],
           heroTag: heroTag,

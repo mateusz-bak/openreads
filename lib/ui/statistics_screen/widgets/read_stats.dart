@@ -43,15 +43,9 @@ class ReadStats extends StatelessWidget {
       onTap: book != null && book!.id != null
           ? () => onTap(context, heroKey)
           : null,
-      child: Card(
-        color: Theme.of(context).colorScheme.secondaryContainer.withAlpha(120),
-        shadowColor: Colors.transparent,
-        shape: RoundedRectangleBorder(
-          side: BorderSide(color: dividerColor, width: 1),
-          borderRadius: BorderRadius.circular(cornerRadius),
-        ),
+      child: Card.filled(
         child: Padding(
-          padding: const EdgeInsets.all(10.0),
+          padding: const EdgeInsets.all(15),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
@@ -74,7 +68,7 @@ class ReadStats extends StatelessWidget {
                             child: Image.file(
                               book!.getCoverFile()!,
                               fit: BoxFit.cover,
-                              width: 60,
+                              width: 70,
                             ),
                           ),
                         )
@@ -97,8 +91,10 @@ class ReadStats extends StatelessWidget {
                                   const SizedBox(width: 5),
                                   Icon(
                                     iconData,
-                                    size: 16,
-                                    color: ratingColor,
+                                    size: 18,
+                                    color: Theme.of(context)
+                                        .colorScheme
+                                        .primaryContainer,
                                   ),
                                 ],
                               ),

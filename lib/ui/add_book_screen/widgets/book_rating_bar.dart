@@ -41,6 +41,9 @@ class BookRatingBar extends StatelessWidget {
                   ),
                   child: Center(
                     child: RatingBar.builder(
+                      unratedColor: Theme.of(
+                        context,
+                      ).colorScheme.surfaceContainerLow,
                       initialRating:
                           (state.rating == null) ? 0.0 : state.rating! / 10,
                       allowHalfRating: true,
@@ -51,7 +54,7 @@ class BookRatingBar extends StatelessWidget {
                       wrapAlignment: WrapAlignment.center,
                       itemBuilder: (_, __) => Icon(
                         Icons.star_rounded,
-                        color: ratingColor,
+                        color: Theme.of(context).colorScheme.primaryContainer,
                       ),
                       onRatingUpdate: (rating) {
                         FocusManager.instance.primaryFocus?.unfocus();

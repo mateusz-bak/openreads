@@ -1,7 +1,6 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
-import 'package:openreads/core/themes/app_theme.dart';
 import 'package:openreads/generated/locale_keys.g.dart';
 import 'package:openreads/ui/statistics_screen/widgets/widgets.dart';
 import 'package:collection/collection.dart';
@@ -140,16 +139,20 @@ class ReadStatsByMonth extends StatelessWidget {
                       listEbooks[i] +
                       listAudiobooks[i])
                   .toDouble(),
-              width: MediaQuery.of(context).size.width / 20,
+              width: 15,
+              backDrawRodData: BackgroundBarChartRodData(
+                  show: true,
+                  toY: calculateMaxY(),
+                  color: theme.colorScheme.surfaceContainerHigh),
               color: theme.colorScheme.primary,
-              borderRadius: BorderRadius.circular(3),
+              borderRadius: BorderRadius.circular(5),
               rodStackItems: [
                 listPaperbackBooks[i] != 0
                     ? BarChartRodStackItem(
                         0,
                         (listPaperbackBooks[i] + listHardcoverBooks[i])
                             .toDouble(),
-                        theme.colorScheme.primary,
+                        theme.colorScheme.primaryContainer,
                       )
                     : BarChartRodStackItem(0, 0, Colors.transparent),
                 listEbooks[i] != 0
@@ -160,7 +163,7 @@ class ReadStatsByMonth extends StatelessWidget {
                                 listHardcoverBooks[i] +
                                 listEbooks[i])
                             .toDouble(),
-                        theme.colorScheme.primaryContainer,
+                        theme.colorScheme.secondaryContainer,
                       )
                     : BarChartRodStackItem(0, 0, Colors.transparent),
                 listAudiobooks[i] != 0
@@ -174,7 +177,7 @@ class ReadStatsByMonth extends StatelessWidget {
                                 listEbooks[i] +
                                 listAudiobooks[i])
                             .toDouble(),
-                        theme.colorScheme.onSurfaceVariant,
+                        theme.colorScheme.tertiaryContainer,
                       )
                     : BarChartRodStackItem(0, 0, Colors.transparent),
               ],
@@ -215,15 +218,9 @@ class ReadStatsByMonth extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Card(
-      color: Theme.of(context).colorScheme.secondaryContainer.withAlpha(120),
-      shadowColor: Colors.transparent,
-      shape: RoundedRectangleBorder(
-        side: BorderSide(color: dividerColor, width: 1),
-        borderRadius: BorderRadius.circular(cornerRadius),
-      ),
+    return Card.filled(
       child: Padding(
-        padding: const EdgeInsets.all(10.0),
+        padding: const EdgeInsets.all(15),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
@@ -284,19 +281,19 @@ class ReadStatsByMonth extends StatelessWidget {
               children: [
                 const SizedBox(height: 5),
                 ChartLegendElement(
-                  color: theme.colorScheme.onSurfaceVariant,
+                  color: theme.colorScheme.tertiaryContainer,
                   text: LocaleKeys.book_format_audiobook_plural.tr(),
                   number: listAudiobooks.sum,
                 ),
                 const SizedBox(height: 5),
                 ChartLegendElement(
-                  color: theme.colorScheme.primaryContainer,
+                  color: theme.colorScheme.secondaryContainer,
                   text: LocaleKeys.book_format_ebook_plural.tr(),
                   number: listEbooks.sum,
                 ),
                 const SizedBox(height: 5),
                 ChartLegendElement(
-                  color: theme.colorScheme.primary,
+                  color: theme.colorScheme.primaryContainer,
                   text: LocaleKeys.book_format_paper_plural.tr(),
                   number: listPaperbackBooks.sum + listHardcoverBooks.sum,
                 ),

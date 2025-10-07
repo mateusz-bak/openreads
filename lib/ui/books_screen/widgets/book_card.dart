@@ -1,3 +1,4 @@
+import 'dart:io';
 import 'package:diacritic/diacritic.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
@@ -205,15 +206,10 @@ class _BookCardState extends State<BookCard> {
     return Padding(
       padding: const EdgeInsets.only(right: 10),
       child: FilterChip(
-        backgroundColor: Theme.of(context).colorScheme.secondary,
         padding: const EdgeInsets.all(5),
-        side: BorderSide(color: dividerColor, width: 1),
         label: Text(
           tag,
-          style: TextStyle(
-            color: Theme.of(context).colorScheme.onSecondary,
-            fontSize: 12,
-          ),
+          style: const TextStyle(fontSize: 12),
         ),
         onSelected: (_) {},
       ),
@@ -247,14 +243,9 @@ class _BookCardState extends State<BookCard> {
     final coverFile = widget.book.getCoverFile();
 
     return Padding(
-      padding: EdgeInsets.fromLTRB(5, 0, 5, widget.addBottomPadding ? 90 : 0),
-      child: Card(
+      padding: EdgeInsets.fromLTRB(5, 0, 5, widget.addBottomPadding ? 90 : 5),
+      child: Card.filled(
         color: widget.cardColor,
-        shadowColor: Colors.transparent,
-        shape: RoundedRectangleBorder(
-          side: BorderSide(color: dividerColor, width: 1),
-          borderRadius: BorderRadius.circular(cornerRadius),
-        ),
         child: ClipRRect(
           borderRadius: BorderRadius.circular(cornerRadius),
           child: InkWell(
@@ -265,133 +256,138 @@ class _BookCardState extends State<BookCard> {
               child: Row(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  SizedBox(
-                    width: (coverFile != null) ? 70 : 0,
-                    height: 70 * 1.5,
-                    child: (coverFile != null)
-                        ? ClipRRect(
-                            borderRadius: BorderRadius.circular(3),
-                            child: Hero(
-                              tag: widget.heroTag,
-                              child: Image.file(
-                                coverFile,
-                                width: 70,
-                                height: 70 * 1.5,
-                                fit: BoxFit.cover,
-                                frameBuilder: (
-                                  BuildContext context,
-                                  Widget child,
-                                  int? frame,
-                                  bool wasSynchronouslyLoaded,
-                                ) {
-                                  if (wasSynchronouslyLoaded) {
-                                    return child;
-                                  }
-                                  return AnimatedOpacity(
-                                    opacity: frame == null ? 0 : 1,
-                                    duration: const Duration(milliseconds: 250),
-                                    curve: Curves.easeOut,
-                                    child: child,
-                                  );
-                                },
-                              ),
-                            ),
-                          )
-                        : const SizedBox(),
-                  ),
+                  _buildCover(coverFile),
                   SizedBox(width: (coverFile != null) ? 15 : 0),
-                  Expanded(
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Row(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Expanded(
-                              child: Text(
-                                widget.book.title,
-                                softWrap: true,
-                                overflow: TextOverflow.clip,
-                                style: const TextStyle(
-                                  fontSize: 15,
-                                  fontWeight: FontWeight.bold,
-                                ),
-                              ),
-                            ),
-                            widget.book.favourite
-                                ? Padding(
-                                    padding: const EdgeInsets.only(left: 10),
-                                    child: FaIcon(
-                                      FontAwesomeIcons.solidHeart,
-                                      size: 15,
-                                      color: likeColor,
-                                    ),
-                                  )
-                                : const SizedBox(),
-                            const SizedBox(width: 10),
-                            FaIcon(
-                              widget.book.bookFormat == BookFormat.audiobook
-                                  ? FontAwesomeIcons.headphones
-                                  : widget.book.bookFormat == BookFormat.ebook
-                                      ? FontAwesomeIcons.tabletScreenButton
-                                      : FontAwesomeIcons.bookOpen,
-                              size: 15,
-                              color: Theme.of(context)
-                                  .colorScheme
-                                  .onSurface
-                                  .withOpacity(0.4),
-                            ),
-                          ],
-                        ),
-                        Text(
-                          widget.book.author,
-                          softWrap: true,
-                          overflow: TextOverflow.clip,
-                          style: TextStyle(
-                            fontSize: 14,
-                            color: Theme.of(context)
-                                .colorScheme
-                                .onSurface
-                                .withOpacity(0.8),
-                          ),
-                        ),
-                        widget.book.publicationYear != null
-                            ? Text(
-                                widget.book.publicationYear.toString(),
-                                softWrap: true,
-                                overflow: TextOverflow.clip,
-                                style: TextStyle(
-                                  fontSize: 12,
-                                  color: Theme.of(context)
-                                      .colorScheme
-                                      .onSurface
-                                      .withOpacity(0.6),
-                                  letterSpacing: 0.05,
-                                ),
-                              )
-                            : const SizedBox(),
-                        const SizedBox(height: 5),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          children: [
-                            widget.book.status == BookStatus.read
-                                ? _buildRating(context)
-                                : const SizedBox(),
-                            _buildSortAttribute(),
-                          ],
-                        ),
-                        _buildTags(),
-                      ],
-                    ),
-                  ),
+                  _buildDetails(context),
                 ],
               ),
             ),
           ),
         ),
       ),
+    );
+  }
+
+  Expanded _buildDetails(BuildContext context) {
+    return Expanded(
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          Row(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Expanded(
+                child: Text(
+                  widget.book.title,
+                  softWrap: true,
+                  overflow: TextOverflow.clip,
+                  style: const TextStyle(
+                    fontSize: 15,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+              ),
+              widget.book.favourite
+                  ? Padding(
+                      padding: const EdgeInsets.only(left: 10),
+                      child: FaIcon(
+                        FontAwesomeIcons.solidHeart,
+                        size: 15,
+                        color: Theme.of(context).colorScheme.primaryContainer,
+                      ),
+                    )
+                  : const SizedBox(),
+              const SizedBox(width: 10),
+              FaIcon(
+                widget.book.bookFormat == BookFormat.audiobook
+                    ? FontAwesomeIcons.headphones
+                    : widget.book.bookFormat == BookFormat.ebook
+                        ? FontAwesomeIcons.tabletScreenButton
+                        : FontAwesomeIcons.bookOpen,
+                size: 15,
+                color: Theme.of(context).colorScheme.primaryContainer,
+              ),
+            ],
+          ),
+          Text(
+            widget.book.author,
+            softWrap: true,
+            overflow: TextOverflow.clip,
+            style: TextStyle(
+              fontSize: 14,
+              color: Theme.of(context).colorScheme.onSurface.withOpacity(0.8),
+            ),
+          ),
+          widget.book.publicationYear != null
+              ? Text(
+                  widget.book.publicationYear.toString(),
+                  softWrap: true,
+                  overflow: TextOverflow.clip,
+                  style: TextStyle(
+                    fontSize: 12,
+                    color: Theme.of(context)
+                        .colorScheme
+                        .onSurface
+                        .withOpacity(0.6),
+                    letterSpacing: 0.05,
+                  ),
+                )
+              : const SizedBox(),
+          const SizedBox(height: 5),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              widget.book.status == BookStatus.read
+                  ? _buildRating(context)
+                  : const SizedBox(),
+              _buildSortAttribute(),
+            ],
+          ),
+          _buildTags(),
+        ],
+      ),
+    );
+  }
+
+  SizedBox _buildCover(File? coverFile) {
+    const coverWidth = 85.0;
+    const coverHeight = coverWidth * 1.5;
+
+    return SizedBox(
+      width: (coverFile != null) ? coverWidth : 0,
+      height: coverHeight,
+      child: (coverFile != null)
+          ? ClipRRect(
+              borderRadius: BorderRadius.circular(3),
+              child: Hero(
+                tag: widget.heroTag,
+                child: Image.file(
+                  coverFile,
+                  width: coverWidth,
+                  height: coverHeight,
+                  fit: BoxFit.cover,
+                  frameBuilder: (
+                    BuildContext context,
+                    Widget child,
+                    int? frame,
+                    bool wasSynchronouslyLoaded,
+                  ) {
+                    if (wasSynchronouslyLoaded) {
+                      return child;
+                    }
+                    return AnimatedOpacity(
+                      opacity: frame == null ? 0 : 1,
+                      duration: const Duration(milliseconds: 250),
+                      curve: Curves.easeOut,
+                      child: child,
+                    );
+                  },
+                ),
+              ),
+            )
+          : const SizedBox(),
     );
   }
 
@@ -403,7 +399,7 @@ class _BookCardState extends State<BookCard> {
             initialRating:
                 (widget.book.rating == null) ? 0 : (widget.book.rating! / 10),
             allowHalfRating: true,
-            unratedColor: Theme.of(context).scaffoldBackgroundColor,
+            unratedColor: Theme.of(context).colorScheme.surfaceContainerLow,
             glow: false,
             glowRadius: 1,
             itemSize: 18,
@@ -411,7 +407,7 @@ class _BookCardState extends State<BookCard> {
             itemPadding: const EdgeInsets.only(right: 3),
             itemBuilder: (context, _) => FaIcon(
               FontAwesomeIcons.solidStar,
-              color: ratingColor,
+              color: Theme.of(context).colorScheme.primaryContainer,
             ),
             onRatingUpdate: (_) {},
           );
@@ -426,7 +422,7 @@ class _BookCardState extends State<BookCard> {
               const SizedBox(width: 5),
               FaIcon(
                 FontAwesomeIcons.solidStar,
-                color: ratingColor,
+                color: Theme.of(context).colorScheme.primaryContainer,
                 size: 14,
               ),
             ],
