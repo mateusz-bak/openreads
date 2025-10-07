@@ -39,14 +39,25 @@ class _HomeNavigationBarState extends State<HomeNavigationBar> {
         onDestinationSelected: (int index) {
           widget.onTap(index);
         },
+        indicatorColor: Theme.of(context).colorScheme.primaryContainer,
         selectedIndex: widget.currentIndex,
         destinations: <Widget>[
           NavigationDestination(
-            icon: const FaIcon(FontAwesomeIcons.bars),
+            icon: FaIcon(
+              FontAwesomeIcons.bars,
+              color: widget.currentIndex == 0
+                  ? Theme.of(context).colorScheme.onPrimaryContainer
+                  : Theme.of(context).colorScheme.onSurface,
+            ),
             label: LocaleKeys.books_settings.tr(),
           ),
           NavigationDestination(
-            icon: const FaIcon(FontAwesomeIcons.chartSimple),
+            icon: FaIcon(
+              FontAwesomeIcons.chartSimple,
+              color: widget.currentIndex == 1
+                  ? Theme.of(context).colorScheme.onPrimaryContainer
+                  : Theme.of(context).colorScheme.onSurface,
+            ),
             label: LocaleKeys.statistics.tr(),
           ),
           // ..._addHubDestination(useHub),

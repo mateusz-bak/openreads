@@ -44,10 +44,19 @@ class _BookTabChipState extends State<BooksTabChip> {
       padding: const EdgeInsets.fromLTRB(8, 0, 0, 0),
       child: BlocBuilder<BooksTabIndexCubit, int>(
         builder: (context, tabIndex) {
+          final isSelected = tabIndex == widget.index;
+
           return FilterChip(
-            selected: tabIndex == widget.index,
-            label: Text(widget.title),
-            visualDensity: VisualDensity.compact,
+            selectedColor: Theme.of(context).colorScheme.primaryContainer,
+            selected: isSelected,
+            label: Text(
+              widget.title,
+              style: TextStyle(
+                color: isSelected
+                    ? Theme.of(context).colorScheme.onPrimaryContainer
+                    : null,
+              ),
+            ),
             showCheckmark: false,
             onSelected: (bool _) {
               _scrollToChip(widget.index, context);

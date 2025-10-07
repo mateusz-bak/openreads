@@ -84,19 +84,11 @@ class _SimiliarBooksScreenState extends State<SimiliarBooksScreen> {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 5),
       child: FilterChip(
-        backgroundColor: Theme.of(context).colorScheme.secondary,
-        side: BorderSide(
-          color: dividerColor,
-          width: 1,
-        ),
         label: Text(
           tag,
-          overflow: TextOverflow.fade,
+          overflow: TextOverflow.ellipsis,
           softWrap: true,
-          maxLines: 5,
-          style: TextStyle(
-            color: Theme.of(context).colorScheme.onSecondary,
-          ),
+          maxLines: 1,
         ),
         clipBehavior: Clip.none,
         onSelected: (_) {},

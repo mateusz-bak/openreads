@@ -4,7 +4,7 @@ class ChartLegendElement extends StatelessWidget {
   const ChartLegendElement({
     super.key,
     required this.color,
-    this.size = 14,
+    this.size = 16,
     required this.text,
     required this.number,
   });
@@ -38,7 +38,7 @@ class ChartLegendElement extends StatelessWidget {
           Expanded(
             child: Text(
               '$text ($number)',
-              style: const TextStyle(fontSize: 11),
+              style: const TextStyle(fontSize: 12),
             ),
           ),
         ]);

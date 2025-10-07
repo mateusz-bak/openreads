@@ -6,9 +6,6 @@ double? _cornerRadius;
 Color get dividerColor => _dividerColor!;
 Color? _dividerColor;
 
-Color likeColor = const Color.fromARGB(255, 194, 49, 61);
-Color ratingColor = const Color.fromARGB(255, 255, 211, 114);
-
 Color primaryRed = const Color(0xffB73E3E);
 
 class AppTheme {
