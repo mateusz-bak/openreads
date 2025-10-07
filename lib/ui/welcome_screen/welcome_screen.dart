@@ -175,10 +175,20 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
                             LocaleKeys.welcome_1_description_1.tr(),
                             LocaleKeys.welcome_1_description_2.tr(),
                           ],
-                          image: Image.asset(
-                            'assets/icons/icon_cropped.png',
-                            width: 100,
-                            height: 100,
+                          image: Container(
+                            padding: const EdgeInsets.all(20),
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(20),
+                              color: Theme.of(context)
+                                  .colorScheme
+                                  .primaryContainer
+                                  .withAlpha(15),
+                            ),
+                            child: Image.asset(
+                              'assets/icons/icon_cropped.png',
+                              width: MediaQuery.of(context).size.width * 0.25,
+                              height: MediaQuery.of(context).size.width * 0.25,
+                            ),
                           ),
                         ),
                         WelcomePageText(
@@ -186,9 +196,12 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
                             LocaleKeys.welcome_2_description_1.tr(),
                             LocaleKeys.welcome_2_description_2.tr(),
                           ],
-                          image: const Icon(
+                          image: Icon(
                             FontAwesomeIcons.chartSimple,
                             size: 60,
+                            color: Theme.of(
+                              context,
+                            ).colorScheme.primaryContainer,
                           ),
                         ),
                         WelcomePageText(
@@ -197,9 +210,12 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
                             LocaleKeys.welcome_3_description_2.tr(),
                             LocaleKeys.welcome_3_description_3.tr(),
                           ],
-                          image: const Icon(
+                          image: Icon(
                             FontAwesomeIcons.code,
                             size: 60,
+                            color: Theme.of(
+                              context,
+                            ).colorScheme.primaryContainer,
                           ),
                         ),
                         WelcomePageChoices(
@@ -216,8 +232,9 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
                     controller: _controller,
                     count: 4,
                     effect: ExpandingDotsEffect(
-                      activeDotColor: Theme.of(context).colorScheme.primary,
-                      dotColor: Theme.of(context).colorScheme.surfaceVariant,
+                      activeDotColor:
+                          Theme.of(context).colorScheme.primaryContainer,
+                      dotColor: Theme.of(context).colorScheme.surfaceContainer,
                       dotHeight: 12,
                       dotWidth: 12,
                     ),

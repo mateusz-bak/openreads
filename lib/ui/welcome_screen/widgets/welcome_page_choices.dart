@@ -24,7 +24,6 @@ class WelcomePageChoices extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.all(20),
       child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Expanded(
             child: Column(
@@ -35,6 +34,7 @@ class WelcomePageChoices extends StatelessWidget {
                     Expanded(
                       child: Text(
                         LocaleKeys.help_to_get_started.tr(),
+                        textAlign: TextAlign.center,
                         style: const TextStyle(
                           fontSize: 20,
                           fontWeight: FontWeight.bold,
@@ -68,11 +68,11 @@ class WelcomePageChoices extends StatelessWidget {
                     ),
                   ),
                 ),
-                WelcomeChoiceButton(
+                WelcomeOpenAppButton(
                   description: LocaleKeys.start_adding_books.tr(),
                   onPressed: skipImportingBooks,
-                  isSkipImporting: true,
                 ),
+                const SizedBox(height: 40),
               ],
             ),
           ),
