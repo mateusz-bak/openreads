@@ -1,5 +1,6 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:openreads/core/constants/enums/book_status.dart';
 import 'package:openreads/generated/locale_keys.g.dart';
@@ -65,12 +66,16 @@ class SetBookListsOrderScreen extends StatelessWidget {
                         title: Text(
                           _getBookStatusTranslation(bookListsOrder[index]),
                         ),
+                        trailing: const Icon(Icons.drag_handle),
                       ),
                     ),
                 ],
                 onReorder: (int oldIndex, int newIndex) => context
                     .read<BookListsOrderCubit>()
                     .updateOrder(oldIndex, newIndex),
+                onReorderStart: (_) {
+                  HapticFeedback.heavyImpact();
+                },
               );
             }),
           ),
