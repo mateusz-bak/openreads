@@ -2,7 +2,9 @@ import 'dart:ui';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:openreads/core/constants/enums/enums.dart';
 import 'package:openreads/logic/cubit/current_book_cubit.dart';
+import 'package:openreads/logic/cubit/display_cubit.dart';
 import 'package:openreads/logic/cubit/selected_books_cubit.dart';
 import 'package:openreads/model/book.dart';
 import 'package:openreads/ui/book_screen/book_screen.dart';
@@ -14,11 +16,17 @@ class BooksGrid extends StatefulWidget {
     required this.books,
     required this.listNumber,
     required this.allBooksCount,
+    required this.gridType,
+    required this.gridSize,
+    required this.titleOverCover,
   });
 
   final List<Book> books;
   final int listNumber;
   final int allBooksCount;
+  final DisplayType gridType;
+  final int gridSize;
+  final bool titleOverCover;
 
   @override
   State<BooksGrid> createState() => _BooksGridState();
@@ -56,35 +64,9 @@ class _BooksGridState extends State<BooksGrid>
 
     return CustomScrollView(
       slivers: [
-        // SliverToBoxAdapter(
-        //   child: SizedBox(
-        //     height: MediaQuery.of(context).padding.top,
-        //   ),
-        // ),
-        SliverToBoxAdapter(
-          child: Padding(
-            padding: const EdgeInsets.fromLTRB(10, 0, 10, 10),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.end,
-              crossAxisAlignment: CrossAxisAlignment.end,
-              children: [
-                Text(
-                  '${widget.books.length} ',
-                  style: const TextStyle(fontSize: 13),
-                ),
-                Text(
-                  '(${widget.allBooksCount})',
-                  style: TextStyle(
-                    color: Theme.of(context)
-                        .colorScheme
-                        .onBackground
-                        .withOpacity(0.7),
-                    fontSize: 12,
-                  ),
-                ),
-              ],
-            ),
-          ),
+        NumberOfBooks(
+          filteredBooksCount: widget.books.length,
+          allBooksCount: widget.allBooksCount,
         ),
         BlocBuilder<SelectedBooksCubit, List<int>>(builder: (context, list) {
           return _buildGrid(list: list);
@@ -104,9 +86,12 @@ class _BooksGridState extends State<BooksGrid>
     return SliverPadding(
       padding: const EdgeInsets.fromLTRB(8, 8, 8, 90),
       sliver: SliverGrid.builder(
-        gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-          crossAxisCount: 3,
-          childAspectRatio: 1 / 1.5,
+        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+          crossAxisCount: widget.gridSize,
+          childAspectRatio: widget.gridType == DisplayType.detailedGrid &&
+                  !widget.titleOverCover
+              ? 1 / 1.7
+              : 1 / 1.5,
           mainAxisSpacing: 4,
           crossAxisSpacing: 4,
         ),
@@ -115,7 +100,7 @@ class _BooksGridState extends State<BooksGrid>
           final heroTag = 'tag_${widget.listNumber}_${widget.books[index].id}';
           Color borderColor =
               multiSelectMode && list.contains(widget.books[index].id)
-                  ? Theme.of(context).colorScheme.tertiary
+                  ? Theme.of(context).colorScheme.secondary
                   : Colors.transparent;
           final double borderWidth =
               multiSelectMode && list.contains(widget.books[index].id)
@@ -129,48 +114,83 @@ class _BooksGridState extends State<BooksGrid>
                         color: borderColor,
                         width: borderWidth,
                       ),
-                      borderRadius: BorderRadius.circular(3),
+                      borderRadius: BorderRadius.circular(10),
                     )
                   : null,
               child: Stack(
                 fit: StackFit.expand,
                 children: [
-                  BookGridCard(
-                    book: widget.books[index],
-                    heroTag: heroTag,
-                    addBottomPadding: (widget.books.length == index + 1),
-                    onPressed: () => _onPressed(
-                      index,
-                      multiSelectMode,
-                      heroTag,
-                    ),
-                    onLongPressed: () => onLongPressed(index),
+                  _buildCard(index, heroTag, multiSelectMode),
+                  _buildMultiSelectOverlay(
+                    multiSelectMode,
+                    list,
+                    index,
+                    heroTag,
                   ),
-                  multiSelectMode && list.contains(widget.books[index].id)
-                      ? InkWell(
-                          onTap: () => _onPressed(
-                            index,
-                            multiSelectMode,
-                            heroTag,
-                          ),
-                          onLongPress: () => onLongPressed(index),
-                          child: BackdropFilter(
-                            filter: ImageFilter.blur(sigmaX: 0.5, sigmaY: 0.5),
-                            child: Container(
-                              decoration: BoxDecoration(
-                                color: Theme.of(context)
-                                    .colorScheme
-                                    .primary
-                                    .withOpacity(0.2),
-                              ),
-                            ),
-                          ),
-                        )
-                      : const SizedBox(),
                 ],
               ));
         },
       ),
+    );
+  }
+
+  Widget _buildMultiSelectOverlay(
+    bool multiSelectMode,
+    List<int> list,
+    int index,
+    String heroTag,
+  ) {
+    if (!multiSelectMode || !list.contains(widget.books[index].id)) {
+      return const SizedBox();
+    }
+
+    return InkWell(
+      onTap: () => _onPressed(
+        index,
+        multiSelectMode,
+        heroTag,
+      ),
+      onLongPress: () => onLongPressed(index),
+      child: BackdropFilter(
+        filter: ImageFilter.blur(sigmaX: 0.5, sigmaY: 0.5),
+        child: Container(
+          decoration: BoxDecoration(
+            color: Theme.of(context).colorScheme.primary.withAlpha(150),
+          ),
+        ),
+      ),
+    );
+  }
+
+  Widget _buildCard(int index, String heroTag, bool multiSelectMode) {
+    return BlocBuilder<DisplayCubit, DisplayState>(
+      builder: (context, state) {
+        if (state.type == DisplayType.detailedGrid) {
+          return BookCardGridDetailed(
+            book: widget.books[index],
+            heroTag: heroTag,
+            addBottomPadding: (widget.books.length == index + 1),
+            onPressed: () => _onPressed(
+              index,
+              multiSelectMode,
+              heroTag,
+            ),
+            onLongPressed: () => onLongPressed(index),
+          );
+        } else {
+          return BookCardGrid(
+            book: widget.books[index],
+            heroTag: heroTag,
+            addBottomPadding: (widget.books.length == index + 1),
+            onPressed: () => _onPressed(
+              index,
+              multiSelectMode,
+              heroTag,
+            ),
+            onLongPressed: () => onLongPressed(index),
+          );
+        }
+      },
     );
   }
 }

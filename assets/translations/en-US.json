@@ -72,7 +72,7 @@
     "filter_by_finish_year": "Filter by finish year",
     "filter_by_book_format": "Filter by book format",
     "filter_by_tags": "Filter by tags",
-    "display_tags": "Display tags",
+    "display_tags": "Show tags",
     "only_books_with_all_tags": "Only books with all selected tags",
     "sort_filter": "Sort / filter",
     "statistics": "Statistics",
@@ -288,5 +288,16 @@
     "create_discussion": "Create a discussion on GitHub",
     "set_default_tags": "Default tags for new books",
     "add_new_default_tag": "Add new default tag:",
-    "book_format": "Book format"
+    "book_format": "Book format",
+    "display": "Display",
+    "list": "List",
+    "compact_list": "Compact list",
+    "grid": "Grid",
+    "detailed_grid": "Detailed grid",
+    "show_number_of_books": "Show number of books on top of the list",
+    "show_book_format": "Show book format",
+    "show_sort_attributes": "Show sort attributes",
+    "show_tags": "Show tags",
+    "grid_size": "Grid size",
+    "show_title_over_cover": "Show title over cover"
 }

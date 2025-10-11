@@ -74,7 +74,6 @@ abstract class LocaleKeys {
   static const filter_by_finish_year = 'filter_by_finish_year';
   static const filter_by_book_format = 'filter_by_book_format';
   static const filter_by_tags = 'filter_by_tags';
-  static const display_tags = 'display_tags';
   static const only_books_with_all_tags = 'only_books_with_all_tags';
   static const sort_filter = 'sort_filter';
   static const statistics = 'statistics';
@@ -288,4 +287,15 @@ abstract class LocaleKeys {
   static const set_default_tags = 'set_default_tags';
   static const add_new_default_tag = 'add_new_default_tag';
   static const book_format = 'book_format';
+  static const list = 'list';
+  static const compact_list = 'compact_list';
+  static const grid = 'grid';
+  static const detailed_grid = 'detailed_grid';
+  static const display = 'display';
+  static const show_number_of_books = 'show_number_of_books';
+  static const show_book_format = 'show_book_format';
+  static const show_sort_attributes = 'show_sort_attributes';
+  static const show_tags = 'show_tags';
+  static const grid_size = 'grid_size';
+  static const show_title_over_cover = 'show_title_over_cover';
 }

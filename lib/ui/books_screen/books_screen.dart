@@ -4,16 +4,17 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:openreads/core/constants/enums/book_format.dart';
 import 'package:openreads/core/constants/enums/book_status.dart';
+import 'package:openreads/core/constants/enums/display_type.dart';
 import 'package:openreads/core/constants/enums/sort_type.dart';
 import 'package:openreads/core/helpers/helpers.dart';
 import 'package:openreads/generated/locale_keys.g.dart';
-import 'package:openreads/logic/bloc/display_bloc/display_bloc.dart';
 import 'package:openreads/logic/bloc/sort_bloc/sort_finished_books_bloc.dart';
 import 'package:openreads/logic/bloc/sort_bloc/sort_for_later_books_bloc.dart';
 import 'package:openreads/logic/bloc/sort_bloc/sort_in_progress_books_bloc.dart';
 import 'package:openreads/logic/bloc/sort_bloc/sort_state.dart';
 import 'package:openreads/logic/bloc/sort_bloc/sort_unfinished_books_bloc.dart';
 import 'package:openreads/logic/cubit/book_lists_order_cubit.dart';
+import 'package:openreads/logic/cubit/display_cubit.dart';
 import 'package:openreads/main.dart';
 import 'package:openreads/model/book.dart';
 import 'package:openreads/ui/books_screen/widgets/widgets.dart';
@@ -661,6 +662,11 @@ class _BooksScreenState extends State<BooksScreen>
     return booksWithPublicationDate + booksWithoutPublicationDate;
   }
 
+  bool _displayIsGrid(DisplayState state) {
+    return state.type == DisplayType.grid ||
+        state.type == DisplayType.detailedGrid;
+  }
+
   @override
   bool get wantKeepAlive => true;
 
@@ -775,9 +781,9 @@ class _BooksScreenState extends State<BooksScreen>
             return const ThisListIsEmpty();
           }
 
-          return BlocBuilder<DisplayBloc, DisplayState>(
+          return BlocBuilder<DisplayCubit, DisplayState>(
             builder: (context, displayState) {
-              if (displayState is GridDisplayState) {
+              if (_displayIsGrid(displayState)) {
                 return BooksGrid(
                   books: sorting != null
                       ? sorting(
@@ -787,6 +793,9 @@ class _BooksScreenState extends State<BooksScreen>
                       : snapshot.data!,
                   listNumber: listNumber,
                   allBooksCount: snapshot.data!.length,
+                  gridType: displayState.type,
+                  gridSize: displayState.gridSize,
+                  titleOverCover: displayState.showTitleOverCover,
                 );
               } else {
                 return BooksList(

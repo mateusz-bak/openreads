@@ -63,7 +63,7 @@ class _SearchPageState extends State<SearchPage> {
                       itemBuilder: (context, index) {
                         final heroTag = 'tag_$index';
 
-                        return BookCard(
+                        return BookCardList(
                           book: snapshot.data![index],
                           heroTag: heroTag,
                           addBottomPadding:
