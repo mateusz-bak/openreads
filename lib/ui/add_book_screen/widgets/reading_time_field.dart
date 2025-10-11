@@ -64,7 +64,6 @@ class _BookReadingTimeField extends State<BookReadingTimeField> {
                         .colorScheme
                         .surfaceVariant
                         .withOpacity(0.5),
-                    border: Border.all(color: dividerColor),
                   ),
                   child: Padding(
                     padding: const EdgeInsets.symmetric(

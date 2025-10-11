@@ -73,7 +73,6 @@ class _BookTextFieldState extends State<BookTextField> {
         decoration: BoxDecoration(
           color: Theme.of(context).colorScheme.surfaceVariant.withOpacity(0.5),
           borderRadius: BorderRadius.circular(cornerRadius),
-          border: Border.all(color: dividerColor),
         ),
         child: Scrollbar(
           child: widget.suggestions != null && widget.suggestions!.isNotEmpty
@@ -102,7 +101,7 @@ class _BookTextFieldState extends State<BookTextField> {
             padding: const EdgeInsets.symmetric(vertical: 5),
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(cornerRadius),
-              border: Border.all(color: dividerColor),
+              // border: Border.all(color: dividerColor),
             ),
             child: child,
           );

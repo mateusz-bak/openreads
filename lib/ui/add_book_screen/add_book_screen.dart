@@ -619,7 +619,6 @@ class _AddBookScreenState extends State<AddBookScreen> {
                               .colorScheme
                               .surfaceVariant
                               .withOpacity(0.5),
-                          border: Border.all(color: dividerColor),
                         ),
                         child: Icon(
                           FontAwesomeIcons.barcode,

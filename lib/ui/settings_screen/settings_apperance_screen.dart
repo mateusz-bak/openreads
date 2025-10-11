@@ -196,125 +196,9 @@ class SettingsApperanceScreen extends StatelessWidget {
     );
   }
 
-  _showOutlinesDialog(BuildContext context) {
-    showDialog(
-      context: context,
-      builder: (BuildContext context) {
-        return Dialog(
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(cornerRadius),
-          ),
-          backgroundColor: Theme.of(context).colorScheme.surface,
-          child: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 20),
-            child: BlocBuilder<ThemeBloc, ThemeState>(
-              builder: (context, state) {
-                if (state is SetThemeState) {
-                  return Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      Padding(
-                        padding: const EdgeInsets.only(left: 10),
-                        child: Text(
-                          LocaleKeys.display_outlines.tr(),
-                          style: const TextStyle(
-                            fontSize: 18,
-                            fontWeight: FontWeight.bold,
-                          ),
-                        ),
-                      ),
-                      const SizedBox(height: 15),
-                      SettingsDialogButton(
-                        text: LocaleKeys.show_outlines.tr(),
-                        onPressed: () => _showOutlines(context, state),
-                      ),
-                      const SizedBox(height: 5),
-                      SettingsDialogButton(
-                        text: LocaleKeys.hide_outlines.tr(),
-                        onPressed: () => _hideOutlines(context, state),
-                      ),
-                    ],
-                  );
-                } else {
-                  return const SizedBox();
-                }
-              },
-            ),
-          ),
-        );
-      },
-    );
-  }
-
-  _showCornerRadiusDialog(BuildContext context) {
-    showDialog(
-      context: context,
-      builder: (BuildContext context) {
-        return Dialog(
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(cornerRadius),
-          ),
-          backgroundColor: Theme.of(context).colorScheme.surface,
-          child: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 20),
-            child: BlocBuilder<ThemeBloc, ThemeState>(
-              builder: (context, state) {
-                if (state is SetThemeState) {
-                  return Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      Padding(
-                        padding: const EdgeInsets.only(left: 10),
-                        child: Text(
-                          LocaleKeys.select_corner_radius.tr(),
-                          style: const TextStyle(
-                            fontSize: 18,
-                            fontWeight: FontWeight.bold,
-                          ),
-                        ),
-                      ),
-                      const SizedBox(height: 15),
-                      SettingsDialogButton(
-                        text: LocaleKeys.no_rounded_corners.tr(),
-                        onPressed: () => _changeCornerRadius(context, state, 0),
-                      ),
-                      const SizedBox(height: 5),
-                      SettingsDialogButton(
-                        text: LocaleKeys.small_rounded_corners.tr(),
-                        onPressed: () => _changeCornerRadius(context, state, 5),
-                      ),
-                      const SizedBox(height: 5),
-                      SettingsDialogButton(
-                        text: LocaleKeys.medium_rounded_corners.tr(),
-                        onPressed: () =>
-                            _changeCornerRadius(context, state, 10),
-                      ),
-                      const SizedBox(height: 5),
-                      SettingsDialogButton(
-                        text: LocaleKeys.big_rounded_corners.tr(),
-                        onPressed: () =>
-                            _changeCornerRadius(context, state, 20),
-                      ),
-                    ],
-                  );
-                } else {
-                  return const SizedBox();
-                }
-              },
-            ),
-          ),
-        );
-      },
-    );
-  }
-
   _setThemeModeAuto(BuildContext context, SetThemeState state) {
     BlocProvider.of<ThemeBloc>(context).add(ChangeThemeEvent(
       themeMode: ThemeMode.system,
-      showOutlines: state.showOutlines,
-      cornerRadius: state.cornerRadius,
       primaryColor: state.primaryColor,
       fontFamily: state.fontFamily,
       useMaterialYou: state.useMaterialYou,
@@ -327,8 +211,6 @@ class SettingsApperanceScreen extends StatelessWidget {
   _setThemeModeLight(BuildContext context, SetThemeState state) {
     BlocProvider.of<ThemeBloc>(context).add(ChangeThemeEvent(
       themeMode: ThemeMode.light,
-      showOutlines: state.showOutlines,
-      cornerRadius: state.cornerRadius,
       primaryColor: state.primaryColor,
       fontFamily: state.fontFamily,
       useMaterialYou: state.useMaterialYou,
@@ -341,8 +223,6 @@ class SettingsApperanceScreen extends StatelessWidget {
   _setThemeModeDark(BuildContext context, SetThemeState state) {
     BlocProvider.of<ThemeBloc>(context).add(ChangeThemeEvent(
       themeMode: ThemeMode.dark,
-      showOutlines: state.showOutlines,
-      cornerRadius: state.cornerRadius,
       primaryColor: state.primaryColor,
       fontFamily: state.fontFamily,
       useMaterialYou: state.useMaterialYou,
@@ -355,8 +235,6 @@ class SettingsApperanceScreen extends StatelessWidget {
   _setDarkMode(BuildContext context, SetThemeState state, bool amoledDark) {
     BlocProvider.of<ThemeBloc>(context).add(ChangeThemeEvent(
       themeMode: ThemeMode.dark,
-      showOutlines: state.showOutlines,
-      cornerRadius: state.cornerRadius,
       primaryColor: state.primaryColor,
       fontFamily: state.fontFamily,
       useMaterialYou: state.useMaterialYou,
@@ -373,53 +251,8 @@ class SettingsApperanceScreen extends StatelessWidget {
   ) {
     BlocProvider.of<ThemeBloc>(context).add(ChangeThemeEvent(
       themeMode: state.themeMode,
-      showOutlines: state.showOutlines,
-      cornerRadius: state.cornerRadius,
       primaryColor: state.primaryColor,
       fontFamily: fontFamily,
-      useMaterialYou: state.useMaterialYou,
-      amoledDark: state.amoledDark,
-    ));
-
-    Navigator.of(context).pop();
-  }
-
-  _showOutlines(BuildContext context, SetThemeState state) {
-    BlocProvider.of<ThemeBloc>(context).add(ChangeThemeEvent(
-      themeMode: state.themeMode,
-      showOutlines: true,
-      cornerRadius: state.cornerRadius,
-      primaryColor: state.primaryColor,
-      fontFamily: state.fontFamily,
-      useMaterialYou: state.useMaterialYou,
-      amoledDark: state.amoledDark,
-    ));
-
-    Navigator.of(context).pop();
-  }
-
-  _hideOutlines(BuildContext context, SetThemeState state) {
-    BlocProvider.of<ThemeBloc>(context).add(ChangeThemeEvent(
-      themeMode: state.themeMode,
-      showOutlines: false,
-      cornerRadius: state.cornerRadius,
-      primaryColor: state.primaryColor,
-      fontFamily: state.fontFamily,
-      useMaterialYou: state.useMaterialYou,
-      amoledDark: state.amoledDark,
-    ));
-
-    Navigator.of(context).pop();
-  }
-
-  _changeCornerRadius(
-      BuildContext context, SetThemeState state, double radius) {
-    BlocProvider.of<ThemeBloc>(context).add(ChangeThemeEvent(
-      themeMode: state.themeMode,
-      showOutlines: state.showOutlines,
-      cornerRadius: radius,
-      primaryColor: state.primaryColor,
-      fontFamily: state.fontFamily,
       useMaterialYou: state.useMaterialYou,
       amoledDark: state.amoledDark,
     ));
@@ -520,8 +353,6 @@ class SettingsApperanceScreen extends StatelessWidget {
                   _buildDarkModeSetting(context),
                   _buildFontSetting(context),
                   _buildRatingTypeSetting(context),
-                  _buildOutlinesSetting(context),
-                  _buildCornersSetting(context),
                 ],
               ),
             ],
@@ -701,80 +532,6 @@ class SettingsApperanceScreen extends StatelessWidget {
           ),
         );
       },
-    );
-  }
-
-  SettingsTile _buildCornersSetting(BuildContext context) {
-    return SettingsTile(
-      title: Text(
-        LocaleKeys.rounded_corners.tr(),
-        style: const TextStyle(
-          fontSize: 16,
-        ),
-      ),
-      leading: const Icon(Icons.rounded_corner_rounded),
-      description: BlocBuilder<ThemeBloc, ThemeState>(
-        builder: (_, themeState) {
-          if (themeState is SetThemeState) {
-            if (themeState.cornerRadius == 5) {
-              return Text(
-                LocaleKeys.small_rounded_corners.tr(),
-                style: const TextStyle(),
-              );
-            } else if (themeState.cornerRadius == 10) {
-              return Text(
-                LocaleKeys.medium_rounded_corners.tr(),
-                style: const TextStyle(),
-              );
-            } else if (themeState.cornerRadius == 20) {
-              return Text(
-                LocaleKeys.big_rounded_corners.tr(),
-                style: const TextStyle(),
-              );
-            } else {
-              return Text(
-                LocaleKeys.no_rounded_corners.tr(),
-                style: const TextStyle(),
-              );
-            }
-          } else {
-            return const SizedBox();
-          }
-        },
-      ),
-      onPressed: (context) => _showCornerRadiusDialog(context),
-    );
-  }
-
-  SettingsTile _buildOutlinesSetting(BuildContext context) {
-    return SettingsTile(
-      title: Text(
-        LocaleKeys.display_outlines.tr(),
-        style: const TextStyle(
-          fontSize: 16,
-        ),
-      ),
-      leading: const Icon(Icons.check_box_outline_blank_rounded),
-      description: BlocBuilder<ThemeBloc, ThemeState>(
-        builder: (_, themeState) {
-          if (themeState is SetThemeState) {
-            if (themeState.showOutlines) {
-              return Text(
-                LocaleKeys.show_outlines.tr(),
-                style: const TextStyle(),
-              );
-            } else {
-              return Text(
-                LocaleKeys.hide_outlines.tr(),
-                style: const TextStyle(),
-              );
-            }
-          } else {
-            return const SizedBox();
-          }
-        },
-      ),
-      onPressed: (context) => _showOutlinesDialog(context),
     );
   }
 }

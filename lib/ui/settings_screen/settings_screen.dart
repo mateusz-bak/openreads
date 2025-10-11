@@ -264,8 +264,6 @@ class SettingsScreen extends StatelessWidget {
 
     BlocProvider.of<ThemeBloc>(context).add(ChangeThemeEvent(
       themeMode: state.themeMode,
-      showOutlines: state.showOutlines,
-      cornerRadius: state.cornerRadius,
       primaryColor: state.primaryColor,
       fontFamily: state.fontFamily,
       useMaterialYou: state.useMaterialYou,

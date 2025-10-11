@@ -37,7 +37,6 @@ class BookRatingBar extends StatelessWidget {
                         .surfaceVariant
                         .withOpacity(0.5),
                     borderRadius: BorderRadius.circular(cornerRadius),
-                    border: Border.all(color: dividerColor),
                   ),
                   child: Center(
                     child: RatingBar.builder(

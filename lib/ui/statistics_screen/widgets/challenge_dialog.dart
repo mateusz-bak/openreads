@@ -200,7 +200,6 @@ class _ChallengeDialogState extends State<ChallengeDialog>
                             decoration: BoxDecoration(
                               color: Theme.of(context).colorScheme.surface,
                               borderRadius: BorderRadius.circular(cornerRadius),
-                              border: Border.all(color: dividerColor),
                             ),
                             child: TextField(
                               textAlign: TextAlign.center,
@@ -296,7 +295,6 @@ class _ChallengeDialogState extends State<ChallengeDialog>
                                         Theme.of(context).colorScheme.surface,
                                     borderRadius:
                                         BorderRadius.circular(cornerRadius),
-                                    border: Border.all(color: dividerColor),
                                   ),
                                   child: TextField(
                                     textAlign: TextAlign.center,

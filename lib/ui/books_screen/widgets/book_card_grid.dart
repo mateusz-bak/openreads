@@ -57,7 +57,6 @@ class BookCardGrid extends StatelessWidget {
       decoration: BoxDecoration(
         color: Theme.of(context).colorScheme.secondaryContainer.withAlpha(120),
         borderRadius: BorderRadius.circular(cornerRadius),
-        border: Border.all(color: dividerColor, width: 1),
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,

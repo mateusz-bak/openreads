@@ -52,7 +52,6 @@ class TagsField extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 5),
       child: FilterChip(
-        side: BorderSide(color: dividerColor, width: 1),
         label: Text(
           tag,
           style: TextStyle(
@@ -104,7 +103,7 @@ class TagsField extends StatelessWidget {
         decoration: BoxDecoration(
           color: Theme.of(context).colorScheme.surfaceVariant.withOpacity(0.5),
           borderRadius: BorderRadius.circular(cornerRadius),
-          border: Border.all(color: dividerColor),
+          // border: Border.all(color: dividerColor),
         ),
         child: Column(
           children: [
@@ -139,7 +138,7 @@ class TagsField extends StatelessWidget {
                     padding: const EdgeInsets.symmetric(vertical: 5),
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(cornerRadius),
-                      border: Border.all(color: dividerColor),
+                      // border: Border.all(color: dividerColor),
                     ),
                     child: child,
                   );

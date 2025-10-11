@@ -45,7 +45,6 @@ class BookCardOLEdition extends StatelessWidget {
                 ? Theme.of(context).colorScheme.primaryContainer.withAlpha(80)
                 : null,
             borderRadius: BorderRadius.circular(cornerRadius),
-            border: Border.all(color: dividerColor),
           ),
           child: Column(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,

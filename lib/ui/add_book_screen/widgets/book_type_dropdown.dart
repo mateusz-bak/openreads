@@ -39,9 +39,6 @@ class BookTypeDropdown extends StatelessWidget {
       padding: padding,
       child: Container(
         decoration: BoxDecoration(
-          border: Border.all(
-            color: dividerColor,
-          ),
           color: Theme.of(context).colorScheme.surfaceVariant.withOpacity(0.5),
           borderRadius: BorderRadius.only(
             topLeft: Radius.circular(cornerRadius),
