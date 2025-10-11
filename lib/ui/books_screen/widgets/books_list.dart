@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:openreads/core/constants/enums/enums.dart';
 import 'package:openreads/logic/cubit/current_book_cubit.dart';
+import 'package:openreads/logic/cubit/display_cubit.dart';
 import 'package:openreads/logic/cubit/selected_books_cubit.dart';
 import 'package:openreads/model/book.dart';
 import 'package:openreads/ui/book_screen/book_screen.dart';
@@ -54,38 +56,12 @@ class _BooksListState extends State<BooksList>
 
     return CustomScrollView(
       slivers: [
-        // SliverToBoxAdapter(
-        //   child: SizedBox(
-        //     height: MediaQuery.of(context).padding.top,
-        //   ),
-        // ),
-        SliverToBoxAdapter(
-          child: widget.allBooksCount != null
-              ? Padding(
-                  padding: const EdgeInsets.fromLTRB(10, 0, 10, 10),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.end,
-                    crossAxisAlignment: CrossAxisAlignment.end,
-                    children: [
-                      Text(
-                        '${widget.books.length} ',
-                        style: const TextStyle(fontSize: 13),
-                      ),
-                      Text(
-                        '(${widget.allBooksCount})',
-                        style: TextStyle(
-                          color: Theme.of(context)
-                              .colorScheme
-                              .onBackground
-                              .withOpacity(0.7),
-                          fontSize: 12,
-                        ),
-                      ),
-                    ],
-                  ),
-                )
-              : const SizedBox(),
-        ),
+        widget.allBooksCount != null
+            ? NumberOfBooks(
+                filteredBooksCount: widget.books.length,
+                allBooksCount: widget.allBooksCount!,
+              )
+            : const SliverToBoxAdapter(),
         BlocBuilder<SelectedBooksCubit, List<int>>(builder: (context, list) {
           return _buildList(list: list);
         }),
@@ -111,13 +87,30 @@ class _BooksListState extends State<BooksList>
         Color? color = multiSelectMode && list.contains(widget.books[index].id)
             ? selectedCardColor
             : unselectedCardColor;
-        return BookCard(
-          book: widget.books[index],
-          heroTag: heroTag,
-          cardColor: color,
-          addBottomPadding: (widget.books.length == index + 1),
-          onPressed: () => onPressed(index, multiSelectMode, heroTag),
-          onLongPressed: () => onLongPressed(index),
+        return BlocBuilder<DisplayCubit, DisplayState>(
+          builder: (context, state) {
+            if (state.type == DisplayType.compactList) {
+              return BookCardListCompact(
+                book: widget.books[index],
+                heroTag: heroTag,
+                cardColor: color,
+                addBottomPadding: (widget.books.length == index + 1),
+                onPressed: () => onPressed(index, multiSelectMode, heroTag),
+                onLongPressed: () => onLongPressed(index),
+              );
+            } else if (state.type == DisplayType.list) {
+              return BookCardList(
+                book: widget.books[index],
+                heroTag: heroTag,
+                cardColor: color,
+                addBottomPadding: (widget.books.length == index + 1),
+                onPressed: () => onPressed(index, multiSelectMode, heroTag),
+                onLongPressed: () => onLongPressed(index),
+              );
+            } else {
+              return const SizedBox.shrink();
+            }
+          },
         );
       },
     );

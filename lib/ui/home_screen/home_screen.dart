@@ -10,7 +10,6 @@ import 'package:openreads/core/constants/constants.dart';
 import 'package:openreads/core/constants/enums/book_status.dart';
 import 'package:openreads/core/themes/app_theme.dart';
 import 'package:openreads/generated/locale_keys.g.dart';
-import 'package:openreads/logic/bloc/display_bloc/display_bloc.dart';
 import 'package:openreads/logic/bloc/theme_bloc/theme_bloc.dart';
 import 'package:openreads/logic/cubit/default_book_status_cubit.dart';
 import 'package:openreads/logic/cubit/edit_book_cubit.dart';
@@ -18,6 +17,7 @@ import 'package:openreads/logic/cubit/selected_books_cubit.dart';
 import 'package:openreads/model/book.dart';
 import 'package:openreads/ui/add_book_screen/add_book_screen.dart';
 import 'package:openreads/ui/books_screen/books_screen.dart';
+import 'package:openreads/ui/display_screen/display_screen.dart';
 import 'package:openreads/ui/search_ol_screen/search_ol_screen.dart';
 import 'package:openreads/ui/search_page/search_page.dart';
 import 'package:openreads/ui/settings_screen/settings_screen.dart';
@@ -61,6 +61,17 @@ class _HomeScreenState extends State<HomeScreen> {
     }
   }
 
+  void goToDisplayScreen() {
+    FocusManager.instance.primaryFocus?.unfocus();
+
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) => const DisplayScreen(),
+      ),
+    );
+  }
+
   void goToSettingsScreen() {
     FocusManager.instance.primaryFocus?.unfocus();
 
@@ -98,20 +109,6 @@ class _HomeScreenState extends State<HomeScreen> {
     );
   }
 
-  void _changeBooksDisplayType() {
-    final state = context.read<DisplayBloc>().state;
-
-    if (state is GridDisplayState) {
-      BlocProvider.of<DisplayBloc>(context).add(
-        const ChangeDisplayEvent(displayAsGrid: false),
-      );
-    } else {
-      BlocProvider.of<DisplayBloc>(context).add(
-        const ChangeDisplayEvent(displayAsGrid: true),
-      );
-    }
-  }
-
   Future<void> _invokeMenuOption(String choice) async {
     await Future.delayed(const Duration(milliseconds: 0));
 
@@ -121,6 +118,8 @@ class _HomeScreenState extends State<HomeScreen> {
       if (choice == menuOptions[0]) {
         openSortFilterSheet();
       } else if (choice == menuOptions[1]) {
+        goToDisplayScreen();
+      } else if (choice == menuOptions[2]) {
         goToSettingsScreen();
       }
     } else if (currentPageIndex == 1) {
@@ -212,6 +211,7 @@ class _HomeScreenState extends State<HomeScreen> {
 
     if (currentPageIndex == 0) {
       menuOptions.add(LocaleKeys.sort_filter.tr());
+      menuOptions.add(LocaleKeys.display.tr());
     }
     menuOptions.add(LocaleKeys.settings.tr());
   }
@@ -337,20 +337,6 @@ class _HomeScreenState extends State<HomeScreen> {
             ? IconButton(
                 onPressed: _goToSearchInUserBooksPage,
                 icon: const Icon(Icons.search),
-              )
-            : const SizedBox(),
-        currentPageIndex == 0
-            ? IconButton(
-                onPressed: _changeBooksDisplayType,
-                icon: BlocBuilder<DisplayBloc, DisplayState>(
-                  builder: (context, state) {
-                    if (state is GridDisplayState) {
-                      return const Icon(Icons.list);
-                    } else {
-                      return const Icon(Icons.apps);
-                    }
-                  },
-                ),
               )
             : const SizedBox(),
         PopupMenuButton<String>(

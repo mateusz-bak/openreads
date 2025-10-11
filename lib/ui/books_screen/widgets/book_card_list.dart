@@ -1,3 +1,4 @@
+import 'dart:developer';
 import 'dart:io';
 import 'package:diacritic/diacritic.dart';
 import 'package:easy_localization/easy_localization.dart';
@@ -7,7 +8,6 @@ import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:openreads/core/constants/enums/enums.dart';
 import 'package:openreads/core/helpers/helpers.dart';
-import 'package:openreads/core/themes/app_theme.dart';
 import 'package:openreads/generated/locale_keys.g.dart';
 import 'package:openreads/logic/bloc/rating_type_bloc/rating_type_bloc.dart';
 import 'package:openreads/logic/bloc/sort_bloc/sort_finished_books_bloc.dart';
@@ -15,11 +15,12 @@ import 'package:openreads/logic/bloc/sort_bloc/sort_for_later_books_bloc.dart';
 import 'package:openreads/logic/bloc/sort_bloc/sort_in_progress_books_bloc.dart';
 import 'package:openreads/logic/bloc/sort_bloc/sort_state.dart';
 import 'package:openreads/logic/bloc/sort_bloc/sort_unfinished_books_bloc.dart';
+import 'package:openreads/logic/cubit/display_cubit.dart';
 import 'package:openreads/main.dart';
 import 'package:openreads/model/book.dart';
 
-class BookCard extends StatefulWidget {
-  const BookCard({
+class BookCardList extends StatelessWidget {
+  const BookCardList({
     super.key,
     required this.book,
     required this.onPressed,
@@ -36,39 +37,39 @@ class BookCard extends StatefulWidget {
   final Function()? onLongPressed;
   final Color? cardColor;
 
-  @override
-  State<BookCard> createState() => _BookCardState();
-}
-
-class _BookCardState extends State<BookCard> {
   Widget _buildSortAttribute() {
-    switch (widget.book.status) {
-      case BookStatus.read:
-        return BlocBuilder<SortFinishedBooksBloc, SortState>(
-          builder: (_, state) => _buildSortAttributeContent(state.sortType),
-        );
-      case BookStatus.inProgress:
-        return BlocBuilder<SortInProgressBooksBloc, SortState>(
-          builder: (_, state) => _buildSortAttributeContent(state.sortType),
-        );
-      case BookStatus.forLater:
-        return BlocBuilder<SortForLaterBooksBloc, SortState>(
-          builder: (_, state) => _buildSortAttributeContent(state.sortType),
-        );
-      case BookStatus.unfinished:
-        return BlocBuilder<SortUnfinishedBooksBloc, SortState>(
-          builder: (_, state) => _buildSortAttributeContent(state.sortType),
-        );
-    }
+    log('Rebuilding sort attribute');
+    return BlocBuilder<DisplayCubit, DisplayState>(
+      builder: (context, state) {
+        if (!state.sortAttributesOnList) return const SizedBox();
+
+        switch (book.status) {
+          case BookStatus.read:
+            return BlocBuilder<SortFinishedBooksBloc, SortState>(
+              builder: (_, state) => _buildSortAttributeContent(state.sortType),
+            );
+          case BookStatus.inProgress:
+            return BlocBuilder<SortInProgressBooksBloc, SortState>(
+              builder: (_, state) => _buildSortAttributeContent(state.sortType),
+            );
+          case BookStatus.forLater:
+            return BlocBuilder<SortForLaterBooksBloc, SortState>(
+              builder: (_, state) => _buildSortAttributeContent(state.sortType),
+            );
+          case BookStatus.unfinished:
+            return BlocBuilder<SortUnfinishedBooksBloc, SortState>(
+              builder: (_, state) => _buildSortAttributeContent(state.sortType),
+            );
+        }
+      },
+    );
   }
 
   Widget _buildSortAttributeContent(SortType sortType) {
     if (sortType == SortType.byPages) {
-      return (widget.book.pages != null)
-          ? _buildPagesAttribute()
-          : const SizedBox();
+      return (book.pages != null) ? _buildPagesAttribute() : const SizedBox();
     } else if (sortType == SortType.byStartDate) {
-      final latestStartDate = getLatestStartDate(widget.book);
+      final latestStartDate = getLatestStartDate(book);
 
       return (latestStartDate != null)
           ? _buildDateAttribute(
@@ -78,7 +79,7 @@ class _BookCardState extends State<BookCard> {
             )
           : const SizedBox();
     } else if (sortType == SortType.byFinishDate) {
-      final latestFinishDate = getLatestFinishDate(widget.book);
+      final latestFinishDate = getLatestFinishDate(book);
 
       return (latestFinishDate != null)
           ? _buildDateAttribute(
@@ -89,18 +90,18 @@ class _BookCardState extends State<BookCard> {
           : const SizedBox();
     } else if (sortType == SortType.byDateAdded) {
       return _buildDateAttribute(
-        widget.book.dateAdded,
+        book.dateAdded,
         LocaleKeys.added_on.tr(),
         true,
       );
     } else if (sortType == SortType.byDateModified) {
       return _buildDateAttribute(
-        widget.book.dateModified,
+        book.dateModified,
         LocaleKeys.modified_on.tr(),
         true,
       );
     } else if (sortType == SortType.byPublicationYear) {
-      return (widget.book.publicationYear != null)
+      return (book.publicationYear != null)
           ? _buildPublicationYearAttribute()
           : const SizedBox();
     }
@@ -109,7 +110,7 @@ class _BookCardState extends State<BookCard> {
   }
 
   Text _buildPagesAttribute() =>
-      Text('${widget.book.pages} ${LocaleKeys.pages_lowercase.tr()}');
+      Text('${book.pages} ${LocaleKeys.pages_lowercase.tr()}');
 
   Column _buildPublicationYearAttribute() {
     return Column(
@@ -120,7 +121,7 @@ class _BookCardState extends State<BookCard> {
           style: const TextStyle(fontSize: 12),
         ),
         Text(
-          widget.book.publicationYear.toString(),
+          book.publicationYear.toString(),
           style: const TextStyle(
             fontSize: 13,
             fontWeight: FontWeight.bold,
@@ -159,30 +160,26 @@ class _BookCardState extends State<BookCard> {
     );
   }
 
-  Widget _buildTags() {
-    switch (widget.book.status) {
-      case BookStatus.read:
-        return BlocBuilder<SortFinishedBooksBloc, SortState>(
-          builder: (_, state) => _buildTagsContent(state.displayTags),
-        );
-      case BookStatus.inProgress:
-        return BlocBuilder<SortInProgressBooksBloc, SortState>(
-          builder: (_, state) => _buildTagsContent(state.displayTags),
-        );
-      case BookStatus.forLater:
-        return BlocBuilder<SortForLaterBooksBloc, SortState>(
-          builder: (_, state) => _buildTagsContent(state.displayTags),
-        );
-      case BookStatus.unfinished:
-        return BlocBuilder<SortUnfinishedBooksBloc, SortState>(
-          builder: (_, state) => _buildTagsContent(state.displayTags),
-        );
-    }
+  Widget _buildTags(BuildContext context) {
+    return BlocBuilder<DisplayCubit, DisplayState>(
+      builder: (_, state) {
+        switch (book.status) {
+          case BookStatus.read:
+            return _buildTagsContent(state.tagsOnList, context);
+          case BookStatus.inProgress:
+            return _buildTagsContent(state.tagsOnList, context);
+          case BookStatus.forLater:
+            return _buildTagsContent(state.tagsOnList, context);
+          case BookStatus.unfinished:
+            return _buildTagsContent(state.tagsOnList, context);
+        }
+      },
+    );
   }
 
-  Widget _buildTagsContent(bool displayTags) {
+  Widget _buildTagsContent(bool displayTags, BuildContext context) {
     if (displayTags) {
-      return (widget.book.tags == null)
+      return (book.tags == null)
           ? const SizedBox()
           : Row(
               mainAxisAlignment: MainAxisAlignment.start,
@@ -219,11 +216,11 @@ class _BookCardState extends State<BookCard> {
   List<Widget> _generateTagChips({required BuildContext context}) {
     final chips = List<Widget>.empty(growable: true);
 
-    if (widget.book.tags == null) {
+    if (book.tags == null) {
       return [];
     }
 
-    final tags = widget.book.tags!.split('|||||');
+    final tags = book.tags!.split('|||||');
 
     tags.sort((a, b) => removeDiacritics(a.toLowerCase())
         .compareTo(removeDiacritics(b.toLowerCase())));
@@ -240,27 +237,25 @@ class _BookCardState extends State<BookCard> {
 
   @override
   Widget build(BuildContext context) {
-    final coverFile = widget.book.getCoverFile();
+    final coverFile = book.getCoverFile();
 
     return Padding(
-      padding: EdgeInsets.fromLTRB(5, 0, 5, widget.addBottomPadding ? 90 : 5),
+      padding: EdgeInsets.fromLTRB(5, 0, 5, addBottomPadding ? 90 : 5),
       child: Card.filled(
-        color: widget.cardColor,
-        child: ClipRRect(
-          borderRadius: BorderRadius.circular(cornerRadius),
-          child: InkWell(
-            onTap: widget.onPressed,
-            onLongPress: widget.onLongPressed,
-            child: Padding(
-              padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 10),
-              child: Row(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  _buildCover(coverFile),
-                  SizedBox(width: (coverFile != null) ? 15 : 0),
-                  _buildDetails(context),
-                ],
-              ),
+        color: cardColor,
+        child: InkWell(
+          onTap: onPressed,
+          onLongPress: onLongPressed,
+          borderRadius: BorderRadius.circular(12),
+          child: Padding(
+            padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 10),
+            child: Row(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                _buildCover(coverFile),
+                SizedBox(width: (coverFile != null) ? 15 : 0),
+                _buildDetails(context),
+              ],
             ),
           ),
         ),
@@ -279,7 +274,7 @@ class _BookCardState extends State<BookCard> {
             children: [
               Expanded(
                 child: Text(
-                  widget.book.title,
+                  book.title,
                   softWrap: true,
                   overflow: TextOverflow.clip,
                   style: const TextStyle(
@@ -288,7 +283,7 @@ class _BookCardState extends State<BookCard> {
                   ),
                 ),
               ),
-              widget.book.favourite
+              book.favourite
                   ? Padding(
                       padding: const EdgeInsets.only(left: 10),
                       child: FaIcon(
@@ -299,19 +294,11 @@ class _BookCardState extends State<BookCard> {
                     )
                   : const SizedBox(),
               const SizedBox(width: 10),
-              FaIcon(
-                widget.book.bookFormat == BookFormat.audiobook
-                    ? FontAwesomeIcons.headphones
-                    : widget.book.bookFormat == BookFormat.ebook
-                        ? FontAwesomeIcons.tabletScreenButton
-                        : FontAwesomeIcons.bookOpen,
-                size: 15,
-                color: Theme.of(context).colorScheme.primaryContainer,
-              ),
+              _buildBookFormatIcon(context),
             ],
           ),
           Text(
-            widget.book.author,
+            book.author,
             softWrap: true,
             overflow: TextOverflow.clip,
             style: TextStyle(
@@ -319,9 +306,9 @@ class _BookCardState extends State<BookCard> {
               color: Theme.of(context).colorScheme.onSurface.withOpacity(0.8),
             ),
           ),
-          widget.book.publicationYear != null
+          book.publicationYear != null
               ? Text(
-                  widget.book.publicationYear.toString(),
+                  book.publicationYear.toString(),
                   softWrap: true,
                   overflow: TextOverflow.clip,
                   style: TextStyle(
@@ -339,16 +326,32 @@ class _BookCardState extends State<BookCard> {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              widget.book.status == BookStatus.read
+              book.status == BookStatus.read
                   ? _buildRating(context)
                   : const SizedBox(),
               _buildSortAttribute(),
             ],
           ),
-          _buildTags(),
+          _buildTags(context),
         ],
       ),
     );
+  }
+
+  Widget _buildBookFormatIcon(BuildContext context) {
+    return BlocBuilder<DisplayCubit, DisplayState>(builder: (context, state) {
+      if (!state.bookFormatOnList) return const SizedBox();
+
+      return FaIcon(
+        book.bookFormat == BookFormat.audiobook
+            ? FontAwesomeIcons.headphones
+            : book.bookFormat == BookFormat.ebook
+                ? FontAwesomeIcons.tabletScreenButton
+                : FontAwesomeIcons.bookOpen,
+        size: 15,
+        color: Theme.of(context).colorScheme.primaryContainer,
+      );
+    });
   }
 
   SizedBox _buildCover(File? coverFile) {
@@ -362,7 +365,7 @@ class _BookCardState extends State<BookCard> {
           ? ClipRRect(
               borderRadius: BorderRadius.circular(3),
               child: Hero(
-                tag: widget.heroTag,
+                tag: heroTag,
                 child: Image.file(
                   coverFile,
                   width: coverWidth,
@@ -396,8 +399,7 @@ class _BookCardState extends State<BookCard> {
       builder: (context, state) {
         if (state is RatingTypeBar) {
           return RatingBar.builder(
-            initialRating:
-                (widget.book.rating == null) ? 0 : (widget.book.rating! / 10),
+            initialRating: (book.rating == null) ? 0 : (book.rating! / 10),
             allowHalfRating: true,
             unratedColor: Theme.of(context).colorScheme.surfaceContainerLow,
             glow: false,
@@ -415,9 +417,7 @@ class _BookCardState extends State<BookCard> {
           return Row(
             children: [
               Text(
-                (widget.book.rating == null)
-                    ? '0'
-                    : '${(widget.book.rating! / 10)}',
+                (book.rating == null) ? '0' : '${(book.rating! / 10)}',
               ),
               const SizedBox(width: 5),
               FaIcon(

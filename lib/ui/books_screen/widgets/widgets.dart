@@ -1,11 +1,12 @@
-export 'book_card.dart';
+export 'book_card_list.dart';
+export 'book_card_list_compact.dart';
 export 'books_list.dart';
 export 'add_book_method_button.dart';
 export 'year_filter_chip.dart';
 export 'tag_filter_chip.dart';
 export 'books_grid.dart';
-export 'book_grid_card.dart';
-export 'grid_card_cover.dart';
-export 'grid_card_no_cover.dart';
+export 'book_card_grid.dart';
+export 'book_card_grid_detailed.dart';
 export 'book_tag_chip.dart';
 export 'this_list_is_empty.dart';
+export 'number_of_books.dart';
