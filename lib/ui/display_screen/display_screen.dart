@@ -194,7 +194,7 @@ class DisplayScreen extends StatelessWidget {
           ),
           const SizedBox(width: 10),
           Text(
-            LocaleKeys.show_tags.tr(),
+            LocaleKeys.display_tags.tr(),
             style: const TextStyle(fontSize: 14, fontWeight: FontWeight.bold),
           ),
         ],
