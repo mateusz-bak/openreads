@@ -9,7 +9,6 @@ class SortState extends Equatable {
     required this.onlyFavourite,
     this.years,
     this.tags,
-    required this.displayTags,
     required this.filterTagsAsAnd,
     this.bookType,
     this.filterOutTags = false,
@@ -20,7 +19,6 @@ class SortState extends Equatable {
   final bool onlyFavourite;
   final String? years;
   final String? tags;
-  final bool displayTags;
   final bool filterTagsAsAnd;
   final BookFormat? bookType;
   final bool filterOutTags;
@@ -33,7 +31,6 @@ class SortState extends Equatable {
     bool resetYears = false,
     String? tags,
     bool resetTags = false,
-    bool? displayTags,
     bool? filterTagsAsAnd,
     BookFormat? bookType,
     bool resetBookType = false,
@@ -45,7 +42,6 @@ class SortState extends Equatable {
       onlyFavourite: onlyFavourite ?? this.onlyFavourite,
       years: resetYears ? null : years ?? this.years,
       tags: resetTags ? null : tags ?? this.tags,
-      displayTags: displayTags ?? this.displayTags,
       filterTagsAsAnd: filterTagsAsAnd ?? this.filterTagsAsAnd,
       bookType: resetBookType ? null : bookType ?? this.bookType,
       filterOutTags: filterOutTags ?? this.filterOutTags,
@@ -58,7 +54,6 @@ class SortState extends Equatable {
     final onlyFavourite = json['only_favourite'] as bool;
     final years = json['years'] as String?;
     final tags = json['tags'] as String?;
-    final displayTags = json['display_tags'] as bool;
     final filterTagsAsAnd = json['filter_tags_as_and'] as bool;
     final filterOutTags = json['filter_out_tags'] as bool;
     final bookType = json['filter_book_type'] as String?;
@@ -73,7 +68,6 @@ class SortState extends Equatable {
       onlyFavourite: onlyFavourite,
       years: years,
       tags: tags,
-      displayTags: displayTags,
       filterTagsAsAnd: filterTagsAsAnd,
       bookType: bookType == null ? null : BookFormat.values.byName(bookType),
       filterOutTags: filterOutTags,
@@ -87,7 +81,6 @@ class SortState extends Equatable {
       'only_favourite': onlyFavourite,
       'years': years,
       'tags': tags,
-      'display_tags': displayTags,
       'filter_tags_as_and': filterTagsAsAnd,
       'filter_book_type': bookType?.name,
       'filter_out_tags': filterOutTags,
@@ -101,7 +94,6 @@ class SortState extends Equatable {
         onlyFavourite,
         years,
         tags,
-        displayTags,
         filterTagsAsAnd,
         bookType,
         filterOutTags,
