@@ -1,7 +1,6 @@
 export 'book_card_list.dart';
 export 'book_card_list_compact.dart';
 export 'books_list.dart';
-export 'add_book_method_button.dart';
 export 'year_filter_chip.dart';
 export 'tag_filter_chip.dart';
 export 'books_grid.dart';
