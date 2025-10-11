@@ -286,7 +286,7 @@ abstract class LocaleKeys {
   static const show_number_of_books = 'show_number_of_books';
   static const show_book_format = 'show_book_format';
   static const show_sort_attributes = 'show_sort_attributes';
-  static const show_tags = 'show_tags';
+  static const display_tags = 'display_tags';
   static const grid_size = 'grid_size';
   static const show_title_over_cover = 'show_title_over_cover';
 }
