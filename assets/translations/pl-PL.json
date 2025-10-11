@@ -287,5 +287,6 @@
     "warning_yes_and_dont_show": "Nie przeszkadza mi to i nie pokazuj tego ostrzeżenia więcej",
     "create_discussion": "Utwórz dyskusję na GitHubie",
     "set_default_tags": "Domyślne tagi dla nowych książek",
-    "add_new_default_tag": "Dodaj nowy domyślny tag:"
+    "add_new_default_tag": "Dodaj nowy domyślny tag:",
+    "book_format": "Format książki"
 }
