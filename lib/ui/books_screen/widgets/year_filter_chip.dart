@@ -21,7 +21,6 @@ class YearFilterChip extends StatelessWidget {
       padding: const EdgeInsets.symmetric(horizontal: 5),
       child: FilterChip(
         backgroundColor: Theme.of(context).colorScheme.surface,
-        side: BorderSide(color: dividerColor, width: 1),
         label: Text(
           dbYear != null ? dbYear.toString() : LocaleKeys.select_all.tr(),
           style: TextStyle(

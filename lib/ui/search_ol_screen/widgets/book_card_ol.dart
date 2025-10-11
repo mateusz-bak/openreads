@@ -45,7 +45,6 @@ class BookCardOL extends StatelessWidget {
           color:
               Theme.of(context).colorScheme.secondaryContainer.withAlpha(120),
           borderRadius: BorderRadius.circular(cornerRadius),
-          border: Border.all(color: dividerColor),
         ),
         child: IntrinsicHeight(
           child: Row(
@@ -246,7 +245,7 @@ class BookCardOL extends StatelessWidget {
                                           borderRadius: BorderRadius.circular(
                                               cornerRadius),
                                           side: BorderSide(
-                                            color: dividerColor,
+                                            // color: dividerColor,
                                             width: 1,
                                           ),
                                         ),

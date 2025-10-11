@@ -38,7 +38,6 @@ class CoverPlaceholder extends StatelessWidget {
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(cornerRadius),
                 color: Theme.of(context).colorScheme.primary.withOpacity(0.1),
-                border: Border.all(color: dividerColor),
               ),
               child: Padding(
                 padding: const EdgeInsets.symmetric(

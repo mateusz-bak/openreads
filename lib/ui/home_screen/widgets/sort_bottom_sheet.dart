@@ -474,7 +474,6 @@ class _SortBottomSheetState extends State<SortBottomSheet> {
                       decoration: BoxDecoration(
                         color: Theme.of(context).colorScheme.surfaceVariant,
                         borderRadius: BorderRadius.circular(cornerRadius),
-                        border: Border.all(color: dividerColor),
                       ),
                       child: SingleChildScrollView(
                         scrollDirection: Axis.horizontal,
@@ -537,7 +536,7 @@ class _SortBottomSheetState extends State<SortBottomSheet> {
                       decoration: BoxDecoration(
                         color: Theme.of(context).colorScheme.surfaceVariant,
                         borderRadius: BorderRadius.circular(cornerRadius),
-                        border: Border.all(color: dividerColor),
+                        // border: Border.all(color: dividerColor),
                       ),
                       child: SingleChildScrollView(
                         scrollDirection: Axis.horizontal,
@@ -583,7 +582,7 @@ class _SortBottomSheetState extends State<SortBottomSheet> {
               decoration: BoxDecoration(
                 color: Theme.of(context).colorScheme.surfaceVariant,
                 borderRadius: BorderRadius.circular(cornerRadius),
-                border: Border.all(color: dividerColor),
+                // border: Border.all(color: dividerColor),
               ),
               child: Row(
                 children: [
@@ -620,7 +619,7 @@ class _SortBottomSheetState extends State<SortBottomSheet> {
               buttonStyleData: ButtonStyleData(
                 height: 42,
                 decoration: BoxDecoration(
-                  border: Border.all(color: dividerColor),
+                  // border: Border.all(color: dividerColor),
                   color: Theme.of(context).colorScheme.surfaceVariant,
                   borderRadius: BorderRadius.circular(cornerRadius),
                 ),
@@ -648,7 +647,7 @@ class _SortBottomSheetState extends State<SortBottomSheet> {
           decoration: BoxDecoration(
             color: Theme.of(context).colorScheme.surfaceVariant,
             borderRadius: BorderRadius.circular(cornerRadius),
-            border: Border.all(color: dividerColor),
+            // border: Border.all(color: dividerColor),
           ),
           child: _getOrderButton(bookStatus, sortState),
         )
@@ -663,7 +662,7 @@ class _SortBottomSheetState extends State<SortBottomSheet> {
         buttonStyleData: ButtonStyleData(
           height: 42,
           decoration: BoxDecoration(
-            border: Border.all(color: dividerColor),
+            // border: Border.all(color: dividerColor),
             color: Theme.of(context).colorScheme.surfaceVariant,
             borderRadius: BorderRadius.circular(cornerRadius),
           ),
@@ -707,7 +706,7 @@ class _SortBottomSheetState extends State<SortBottomSheet> {
               decoration: BoxDecoration(
                 color: Theme.of(context).colorScheme.surfaceVariant,
                 borderRadius: BorderRadius.circular(cornerRadius),
-                border: Border.all(color: dividerColor),
+                // border: Border.all(color: dividerColor),
               ),
               child: Row(
                 children: [
@@ -753,7 +752,7 @@ class _SortBottomSheetState extends State<SortBottomSheet> {
               decoration: BoxDecoration(
                 color: Theme.of(context).colorScheme.surfaceVariant,
                 borderRadius: BorderRadius.circular(cornerRadius),
-                border: Border.all(color: dividerColor),
+                // border: Border.all(color: dividerColor),
               ),
               child: Row(
                 children: [

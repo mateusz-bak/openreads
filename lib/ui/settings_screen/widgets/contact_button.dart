@@ -25,7 +25,6 @@ class ContactButton extends StatelessWidget {
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(cornerRadius),
           color: Theme.of(context).colorScheme.surfaceVariant.withOpacity(0.3),
-          border: Border.all(color: dividerColor),
         ),
         child: Column(
           children: [

@@ -141,15 +141,6 @@ abstract class LocaleKeys {
   static const font = 'font';
   static const select_font = 'select_font';
   static const font_default = 'font_default';
-  static const display_outlines = 'display_outlines';
-  static const show_outlines = 'show_outlines';
-  static const hide_outlines = 'hide_outlines';
-  static const rounded_corners = 'rounded_corners';
-  static const select_corner_radius = 'select_corner_radius';
-  static const no_rounded_corners = 'no_rounded_corners';
-  static const small_rounded_corners = 'small_rounded_corners';
-  static const medium_rounded_corners = 'medium_rounded_corners';
-  static const big_rounded_corners = 'big_rounded_corners';
   static const tabs_order = 'tabs_order';
   static const send_feedback = 'send_feedback';
   static const report_bugs_or_ideas = 'report_bugs_or_ideas';

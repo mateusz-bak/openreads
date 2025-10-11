@@ -19,7 +19,6 @@ class LanguageButton extends StatelessWidget {
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(cornerRadius),
           color: Theme.of(context).colorScheme.surfaceVariant,
-          border: Border.all(color: dividerColor),
         ),
         child: Row(
           crossAxisAlignment: CrossAxisAlignment.center,

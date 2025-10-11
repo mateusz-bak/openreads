@@ -3,17 +3,12 @@ import 'package:openreads/logic/bloc/theme_bloc/theme_bloc.dart';
 
 double get cornerRadius => _cornerRadius!;
 double? _cornerRadius;
-Color get dividerColor => _dividerColor!;
-Color? _dividerColor;
 
 Color primaryRed = const Color(0xffB73E3E);
 
 class AppTheme {
   static init(SetThemeState state, BuildContext context) {
-    _cornerRadius = state.cornerRadius;
-    _dividerColor = state.showOutlines
-        ? Theme.of(context).colorScheme.onSurface
-        : Colors.transparent;
+    _cornerRadius = 8;
   }
 }
 

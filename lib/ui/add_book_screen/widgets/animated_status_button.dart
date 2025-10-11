@@ -50,7 +50,6 @@ class AnimatedStatusButton extends StatelessWidget {
             color: isSelected
                 ? Theme.of(context).colorScheme.primary
                 : Theme.of(context).colorScheme.surfaceVariant.withOpacity(0.5),
-            border: Border.all(color: dividerColor),
           ),
           child: Padding(
             padding: const EdgeInsets.all(2),

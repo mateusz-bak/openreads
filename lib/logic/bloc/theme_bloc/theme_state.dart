@@ -13,8 +13,6 @@ class ChangingThemeState extends ThemeState {
 
 class SetThemeState extends ThemeState {
   final ThemeMode themeMode;
-  final bool showOutlines;
-  final double cornerRadius;
   final Color primaryColor;
   final String? fontFamily;
   final bool useMaterialYou;
@@ -22,8 +20,6 @@ class SetThemeState extends ThemeState {
 
   const SetThemeState({
     required this.themeMode,
-    required this.showOutlines,
-    required this.cornerRadius,
     required this.primaryColor,
     required this.fontFamily,
     required this.useMaterialYou,
@@ -32,8 +28,6 @@ class SetThemeState extends ThemeState {
 
   SetThemeState copyWith({
     ThemeMode? themeMode,
-    bool? showOutlines,
-    double? cornerRadius,
     Color? primaryColor,
     String? fontFamily,
     bool? useMaterialYou,
@@ -41,8 +35,6 @@ class SetThemeState extends ThemeState {
   }) {
     return SetThemeState(
       themeMode: themeMode ?? this.themeMode,
-      showOutlines: showOutlines ?? this.showOutlines,
-      cornerRadius: cornerRadius ?? this.cornerRadius,
       primaryColor: primaryColor ?? this.primaryColor,
       fontFamily: fontFamily ?? this.fontFamily,
       useMaterialYou: useMaterialYou ?? this.useMaterialYou,
@@ -53,8 +45,6 @@ class SetThemeState extends ThemeState {
   @override
   List<Object?> get props => [
         themeMode,
-        showOutlines,
-        cornerRadius,
         primaryColor,
         fontFamily,
         useMaterialYou,

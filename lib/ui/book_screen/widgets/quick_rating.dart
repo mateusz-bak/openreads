@@ -23,7 +23,6 @@ class _QuickRatingState extends State<QuickRating> {
       clipBehavior: Clip.hardEdge,
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(cornerRadius),
-        border: Border.all(color: dividerColor),
       ),
       child: Center(
         child: RatingBar.builder(
