@@ -23,7 +23,6 @@ class SetChallengeBox extends StatelessWidget {
     return Card(
       shadowColor: Colors.transparent,
       shape: RoundedRectangleBorder(
-        side: BorderSide(color: dividerColor, width: 1),
         borderRadius: BorderRadius.circular(cornerRadius),
       ),
       color: Theme.of(context).colorScheme.surfaceVariant,
