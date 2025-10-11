@@ -14,7 +14,6 @@ import 'package:openreads/core/constants/locale.dart';
 import 'package:openreads/core/helpers/locale_delegates/locale_delegates.dart';
 import 'package:openreads/core/helpers/old_android_http_overrides.dart';
 import 'package:openreads/logic/bloc/challenge_bloc/challenge_bloc.dart';
-import 'package:openreads/logic/bloc/display_bloc/display_bloc.dart';
 import 'package:openreads/logic/bloc/migration_v1_to_v2_bloc/migration_v1_to_v2_bloc.dart';
 import 'package:openreads/logic/bloc/open_lib_bloc/open_lib_bloc.dart';
 import 'package:openreads/logic/bloc/open_library_search_bloc/open_library_search_bloc.dart';
@@ -94,7 +93,6 @@ class App extends StatelessWidget {
     final settingsProviders = [
       BlocProvider(create: (_) => DefaultBooksFormatCubit()),
       BlocProvider(create: (_) => ThemeBloc()),
-      BlocProvider(create: (_) => DisplayBloc()),
       BlocProvider(create: (_) => DisplayCubit()),
       BlocProvider(create: (_) => BooksTabIndexCubit()),
       BlocProvider(create: (_) => WelcomeBloc()),

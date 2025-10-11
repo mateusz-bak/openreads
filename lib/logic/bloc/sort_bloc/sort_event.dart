@@ -75,12 +75,3 @@ class ChangeFilterOutTags extends SortEvent {
   @override
   List<Object?> get props => [filterOutTags];
 }
-
-class ChangeDisplayTagsEvent extends SortEvent {
-  final bool displayTags;
-
-  const ChangeDisplayTagsEvent(this.displayTags);
-
-  @override
-  List<Object?> get props => [displayTags];
-}

@@ -12,7 +12,6 @@ class SortUnfinishedBooksBloc extends HydratedBloc<SortEvent, SortState> {
             onlyFavourite: false,
             years: null,
             tags: null,
-            displayTags: false,
             filterTagsAsAnd: false,
             bookType: null,
           ),
@@ -66,10 +65,6 @@ class SortUnfinishedBooksBloc extends HydratedBloc<SortEvent, SortState> {
           filterTagsAsAnd: false,
         ),
       ),
-    );
-
-    on<ChangeDisplayTagsEvent>(
-      (event, emit) => emit(state.copyWith(displayTags: event.displayTags)),
     );
   }
 

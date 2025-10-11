@@ -414,42 +414,6 @@ class _SortBottomSheetState extends State<SortBottomSheet> {
         _buildFilterByTags(bookStatus, sortState.tags),
         _buildFilterTagsAsAnd(bookStatus, sortState.filterTagsAsAnd),
         _buildFilterOutTags(bookStatus, sortState.filterOutTags),
-        const SizedBox(height: 5),
-        _buildDisplayTags(bookStatus, sortState.displayTags),
-      ],
-    );
-  }
-
-  Row _buildDisplayTags(BookStatus bookStatus, bool displayTags) {
-    return Row(
-      children: [
-        Expanded(
-          child: InkWell(
-            onTap: () => _getBlocProvider(bookStatus)
-                .add(ChangeDisplayTagsEvent(!displayTags)),
-            child: Container(
-              decoration: BoxDecoration(
-                color: Theme.of(context).colorScheme.surfaceVariant,
-                borderRadius: BorderRadius.circular(cornerRadius),
-                border: Border.all(color: dividerColor),
-              ),
-              child: Row(
-                children: [
-                  Switch.adaptive(
-                    value: displayTags,
-                    onChanged: (value) => _getBlocProvider(bookStatus)
-                        .add(ChangeDisplayTagsEvent(value)),
-                  ),
-                  const SizedBox(width: 10),
-                  Text(
-                    LocaleKeys.display_tags.tr(),
-                    style: const TextStyle(fontSize: 16),
-                  ),
-                ],
-              ),
-            ),
-          ),
-        ),
       ],
     );
   }
