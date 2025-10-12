@@ -102,3 +102,38 @@ jobs:
 
     - name: Build iOS
       run: flutter build ios --no-codesign
+
+  linux_build:
+    name: Linux executable
+    runs-on: ubuntu-latest
+    steps:
+    - name: Check out code
+      uses: actions/checkout@v4
+
+    - name: Install Linux dependencies
+      run: |
+        sudo apt-get update -y
+        sudo apt-get install -y libgtk-3-dev
+
+    - name: Set up Flutter
+      uses: subosito/flutter-action@v2
+      with:
+        flutter-version: ${{ env.VERSION }}
+        cache: true
+
+    - name: Configure Flutter
+      run: |
+        flutter config --no-analytics
+        flutter config --enable-linux-desktop
+
+    - name: Get Flutter packages
+      run: flutter pub get
+
+    - name: Build Linux
+      run: flutter build --verbose linux --debug
+
+    - name: Store artifact
+      uses: actions/upload-artifact@v4
+      with:
+        name: linux-appbundle
+        path: build/linux/x64/debug/bundle/
