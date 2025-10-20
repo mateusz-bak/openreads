@@ -1,4 +1,3 @@
-import 'dart:developer';
 import 'dart:io';
 import 'package:diacritic/diacritic.dart';
 import 'package:easy_localization/easy_localization.dart';
@@ -38,7 +37,6 @@ class BookCardList extends StatelessWidget {
   final Color? cardColor;
 
   Widget _buildSortAttribute() {
-    log('Rebuilding sort attribute');
     return BlocBuilder<DisplayCubit, DisplayState>(
       builder: (context, state) {
         if (!state.sortAttributesOnList) return const SizedBox();
