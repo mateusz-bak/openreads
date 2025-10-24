@@ -168,8 +168,7 @@ class CSVImportBookwyrm {
     // Get status from shelf field or infer by reading/stopped dates
 
     // Default values of shelf field from bookwyrm export : read, reading, to-read, stopped-reading
-    final shelf =
-        csv[i][csv[0].indexOf('shelf')].toString();
+    final shelf = csv[i][csv[0].indexOf('shelf')].toString();
 
     switch (shelf) {
       case 'read':
@@ -187,9 +186,12 @@ class CSVImportBookwyrm {
         final finishDateIndex = csv[0].indexOf('finish_date');
         final stoppedDateIndex = csv[0].indexOf('stopped_date');
 
-        final hasStartDate = startDateIndex != -1 && csv[i][startDateIndex].toString().isNotEmpty;
-        final hasFinishDate = finishDateIndex != -1 && csv[i][finishDateIndex].toString().isNotEmpty;
-        final hasStoppedDate = stoppedDateIndex != -1 && csv[i][stoppedDateIndex].toString().isNotEmpty;
+        final hasStartDate = startDateIndex != -1 &&
+            csv[i][startDateIndex].toString().isNotEmpty;
+        final hasFinishDate = finishDateIndex != -1 &&
+            csv[i][finishDateIndex].toString().isNotEmpty;
+        final hasStoppedDate = stoppedDateIndex != -1 &&
+            csv[i][stoppedDateIndex].toString().isNotEmpty;
 
         if (hasFinishDate) {
           return BookStatus.read;
@@ -202,7 +204,7 @@ class CSVImportBookwyrm {
         }
     }
   }
-  
+
   static List<Reading> _getReadings(int i, List<List<dynamic>> csv) {
     List<Reading> readings = [];
 
