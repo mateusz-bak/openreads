@@ -556,9 +556,12 @@ class _AddBookScreenState extends State<AddBookScreen> {
                         icon: FontAwesomeIcons.solidCalendar,
                         keyboardType: TextInputType.number,
                         inputFormatters: <TextInputFormatter>[
-                          FilteringTextInputFormatter.digitsOnly
+                          // allow optional leading '-' for BCE years
+                          FilteringTextInputFormatter.allow(
+                              RegExp(r'^-?\d{0,4}')),
                         ],
-                        maxLength: 4,
+                        // allow space for a leading '-' (e.g. -500)
+                        maxLength: 5,
                         padding: const EdgeInsets.fromLTRB(5, 0, 10, 0),
                       ),
                     ),

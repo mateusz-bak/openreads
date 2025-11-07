@@ -81,7 +81,7 @@ class EditBookCubit extends Cubit<Book> {
   void setPublicationYear(String publicationYear) {
     final book = state.copyWith();
     book.publicationYear =
-        publicationYear.isEmpty ? null : int.parse(publicationYear);
+        publicationYear.isEmpty ? null : int.tryParse(publicationYear);
 
     emit(book);
   }
