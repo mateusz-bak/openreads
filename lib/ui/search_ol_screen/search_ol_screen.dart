@@ -399,7 +399,7 @@ class _SearchOLScreenState extends State<SearchOLScreen>
               opacity: (Platform.isAndroid || Platform.isIOS) ? 1.0 : 0.5,
               child: IconButton(
                 onPressed: _startScanner,
-                icon: const FaIcon(FontAwesomeIcons.solidCamera, size: 18),
+                icon: const FaIcon(FontAwesomeIcons.camera, size: 18),
               ),
             ),
           ],
