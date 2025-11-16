@@ -393,7 +393,7 @@ class _SearchOLScreenState extends State<SearchOLScreen>
           actions: [
             IconButton(
               onPressed: _startScanner,
-              icon: const FaIcon(FontAwesomeIcons.solidCamera, size: 18),
+              icon: const FaIcon(FontAwesomeIcons.camera, size: 18),
             ),
           ],
         ),
