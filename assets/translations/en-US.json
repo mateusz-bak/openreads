@@ -289,5 +289,6 @@
     "show_book_format": "Show book format",
     "show_sort_attributes": "Show sort attributes",
     "grid_size": "Grid size",
-    "show_title_over_cover": "Show title over cover"
+    "show_title_over_cover": "Show title over cover",
+    "internal_error": "An internal error occurred. Please try again and report a bug"
 }

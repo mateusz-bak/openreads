@@ -131,8 +131,12 @@ class BackupImport {
 
         final file = pickedFile!.files.single;
 
-        // iOS app was released when backup 5 was the latest
+        // app was ported to other platforms after backup 5 was introduced
         final infoFileVersion = _checkInfoFileVersion(file.bytes, tmpDir);
+        if (infoFileVersion == null) {
+          BackupGeneral.showInfoSnackbar(LocaleKeys.internal_error.tr());
+          return;
+        }
         if (infoFileVersion == 5) {
           // ignore: use_build_context_synchronously
           await _restoreBackupVersion5(context, file.bytes!, tmpDir);
@@ -163,7 +167,7 @@ class BackupImport {
     final decoder = ZipDecoder();
     final archive = decoder.decodeBytes(archiveBytes);
 
-    extractArchiveToDisk(archive, tmpPath.path);
+    extractArchiveToDiskSync(archive, tmpPath.path);
 
     String? booksData;
     booksData = File('${tmpPath.path}/books.backup').readAsStringSync();
@@ -224,7 +228,7 @@ class BackupImport {
     }
 
     final archive = ZipDecoder().decodeBytes(archiveBytes);
-    extractArchiveToDisk(archive, tmpPath.path);
+    extractArchiveToDiskSync(archive, tmpPath.path);
 
     var booksData = File('${tmpPath.path}/books.backup').readAsStringSync();
 
@@ -297,7 +301,7 @@ class BackupImport {
 
       final archive = ZipDecoder().decodeBytes(archiveBytes);
 
-      extractArchiveToDisk(archive, tmpPath.path);
+      extractArchiveToDiskSync(archive, tmpPath.path);
 
       final booksDB = await openDatabase(path.join(tmpPath.path, 'books.sql'));
       final result = await booksDB.query("Book");
@@ -452,12 +456,28 @@ class BackupImport {
     }
   }
 
+  static bool _extractFileToDiskSync(
+      Archive archive, String archiveFilePath, String outputPath) {
+    final ArchiveFile? entry = archive.find(archiveFilePath);
+    if (entry == null) return false;
+    final outputFilePath = path.join(outputPath, archiveFilePath);
+    final output = OutputFileStream(outputFilePath);
+    try {
+      entry.writeContent(output);
+    } catch (err) {
+      return false;
+    }
+    output.closeSync();
+    return true;
+  }
+
   // Open the info.txt file and check the backup version
   static int? _checkInfoFileVersion(Uint8List? backupFile, Directory tmpDir) {
     if (backupFile == null) return null;
 
     final archive = ZipDecoder().decodeBytes(backupFile);
-    extractArchiveToDisk(archive, tmpDir.path);
+    final ok = _extractFileToDiskSync(archive, "info.txt", tmpDir.path);
+    if (!ok) return null;
 
     final infoFile = File('${tmpDir.path}/info.txt');
     if (!infoFile.existsSync()) return null;
