@@ -20,6 +20,7 @@ class Book {
   bool deleted;
   int? rating;
   int? pages;
+  String? publisher;
   int? publicationYear;
   String? isbn;
   String? olid;
@@ -45,6 +46,7 @@ class Book {
     this.deleted = false,
     this.rating,
     this.pages,
+    this.publisher,
     this.publicationYear,
     this.isbn,
     this.olid,
@@ -95,6 +97,7 @@ class Book {
       hasCover: (json['has_cover'] == 1) ? true : false,
       deleted: (json['deleted'] == 1) ? true : false,
       pages: json['pages'],
+      publisher: json['publisher'],
       publicationYear: json['publication_year'],
       isbn: json['isbn'],
       olid: json['olid'],
@@ -135,6 +138,7 @@ class Book {
     bool? deleted,
     int? rating,
     int? pages,
+    String? publisher,
     int? publicationYear,
     String? isbn,
     String? olid,
@@ -160,6 +164,7 @@ class Book {
       deleted: deleted ?? this.deleted,
       rating: rating ?? this.rating,
       pages: pages ?? this.pages,
+      publisher: publisher ?? this.publisher,
       publicationYear: publicationYear ?? this.publicationYear,
       isbn: isbn ?? this.isbn,
       olid: olid ?? this.olid,
@@ -188,6 +193,7 @@ class Book {
       deleted: deleted,
       rating: rating,
       pages: pages,
+      publisher: publisher,
       publicationYear: publicationYear,
       isbn: isbn,
       olid: olid,
@@ -222,6 +228,7 @@ class Book {
       favourite: oldBook.bookIsFav == 1,
       deleted: oldBook.bookIsDeleted == 1,
       pages: oldBook.bookNumberOfPages,
+      publisher: oldBook.bookPublisher,
       publicationYear: oldBook.bookPublishYear,
       isbn: oldBook.bookISBN13 ?? oldBook.bookISBN10,
       olid: oldBook.bookOLID,
@@ -272,6 +279,7 @@ class Book {
       'favourite': favourite ? 1 : 0,
       'deleted': deleted ? 1 : 0,
       'pages': pages,
+      'publisher': publisher,
       'publication_year': publicationYear,
       'isbn': isbn,
       'olid': olid,
