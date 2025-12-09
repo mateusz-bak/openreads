@@ -100,9 +100,9 @@ class BookCardListCompact extends StatelessWidget {
               color: Theme.of(context).colorScheme.onSurface.withOpacity(0.8),
             ),
           ),
-          book.publicationYear != null
+          (book.publisher != null || book.publicationYear != null)
               ? Text(
-                  book.publicationYear.toString(),
+                  '${book.publisher ?? ''}${book.publisher != null && book.publicationYear != null ? ', ' : ''}${book.publicationYear ?? ''}',
                   softWrap: true,
                   overflow: TextOverflow.clip,
                   style: TextStyle(
