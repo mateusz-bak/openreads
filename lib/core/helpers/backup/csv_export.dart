@@ -91,6 +91,7 @@ class CSVExport {
         ('deleted'),
         ('rating'),
         ('pages'),
+        ('publisher'),
         ('publication_year'),
         ('isbn'),
         ('olid'),
@@ -127,6 +128,7 @@ class CSVExport {
         newRow.add(book.deleted.toString());
         newRow.add(book.rating != null ? (book.rating! / 10).toString() : '');
         newRow.add(book.pages != null ? book.pages.toString() : '');
+        newRow.add(book.publisher ?? '');
         newRow.add(book.publicationYear != null
             ? book.publicationYear.toString()
             : '');
