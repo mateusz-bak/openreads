@@ -2,6 +2,7 @@ import 'dart:io';
 import 'package:path/path.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:sqflite/sqflite.dart';
+import 'package:xdg_directories/xdg_directories.dart';
 
 // Instruction how to add a new database field:
 // 1. Add new parameters to the Book class in book.dart
@@ -19,7 +20,10 @@ class DatabaseProvider {
   late final Future<Database> db = createDatabase();
 
   Future<Database> createDatabase() async {
-    Directory docDirectory = await getApplicationDocumentsDirectory();
+    Directory docDirectory = Directory('${dataHome.path}/openreads');
+    if (Platform.isAndroid || Platform.isIOS) {
+      docDirectory = await getApplicationDocumentsDirectory();
+    }
 
     String path = join(
       docDirectory.path,
