@@ -11,6 +11,7 @@ class BookFromBackupV3 {
   final String? bookStartDate;
   final String? bookFinishDate;
   final int? bookNumberOfPages;
+  final String? bookPublisher;
   final int? bookPublishYear;
   final String? bookISBN13;
   final String? bookISBN10;
@@ -30,6 +31,7 @@ class BookFromBackupV3 {
     this.bookStartDate,
     this.bookFinishDate,
     this.bookNumberOfPages,
+    this.bookPublisher,
     this.bookPublishYear,
     this.bookISBN13,
     this.bookISBN10,
@@ -51,6 +53,7 @@ class BookFromBackupV3 {
       bookStartDate: json['item_bookStartDate'] as String?,
       bookFinishDate: json['item_bookFinishDate'] as String?,
       bookNumberOfPages: json['item_bookNumberOfPages'] as int?,
+      bookPublisher: json['item_bookPublisher'] as String?,
       bookPublishYear: json['item_bookPublishYear'] as int?,
       bookISBN13: json['item_bookISBN13'] as String?,
       bookISBN10: json['item_bookISBN10'] as String?,
