@@ -194,20 +194,22 @@ class _AddBookScreenState extends State<AddBookScreen> {
         builder: (context) {
           return AlertDialog.adaptive(
             title: Text(
-              LocaleKeys.coverStillDownloaded.tr(),
+              LocaleKeys.cover_still_downloaded.tr(),
             ),
             actionsAlignment: MainAxisAlignment.spaceBetween,
             actions: [
               Platform.isIOS
                   ? CupertinoDialogAction(
                       isDefaultAction: true,
-                      child: Text(LocaleKeys.waitForDownloadingToFinish.tr()),
+                      child:
+                          Text(LocaleKeys.wait_for_downloading_to_finish.tr()),
                       onPressed: () {
                         Navigator.of(context).pop(true);
                       },
                     )
                   : TextButton(
-                      child: Text(LocaleKeys.waitForDownloadingToFinish.tr()),
+                      child:
+                          Text(LocaleKeys.wait_for_downloading_to_finish.tr()),
                       onPressed: () {
                         Navigator.of(context).pop(true);
                       },
@@ -215,14 +217,14 @@ class _AddBookScreenState extends State<AddBookScreen> {
               Platform.isIOS
                   ? CupertinoDialogAction(
                       isDestructiveAction: true,
-                      child: Text(LocaleKeys.saveWithoutCover.tr()),
+                      child: Text(LocaleKeys.save_without_cover.tr()),
                       onPressed: () {
                         Navigator.of(context).pop(false);
                       },
                     )
                   : TextButton(
                       child: Text(
-                        LocaleKeys.saveWithoutCover.tr(),
+                        LocaleKeys.save_without_cover.tr(),
                         style: TextStyle(
                             color: Theme.of(context).colorScheme.error),
                       ),

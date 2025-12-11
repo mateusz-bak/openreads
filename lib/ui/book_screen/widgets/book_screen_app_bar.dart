@@ -141,7 +141,7 @@ class BookScreenAppBar extends StatelessWidget implements PreferredSizeWidget {
   Widget build(BuildContext context) {
     final moreButtonOptions = [
       LocaleKeys.edit_book.tr(),
-      LocaleKeys.duplicateBook.tr(),
+      LocaleKeys.duplicate_book.tr(),
     ];
 
     // Needed to add BlocBuilder because the status bar was changing
@@ -207,7 +207,7 @@ class BookScreenAppBar extends StatelessWidget implements PreferredSizeWidget {
 
                             final newBook = state.copyWith(
                               title:
-                                  '${state.title} ${LocaleKeys.copyBook.tr()}',
+                                  '${state.title} ${LocaleKeys.copy_book.tr()}',
                               readings: [],
                               rating: 0,
                             );
