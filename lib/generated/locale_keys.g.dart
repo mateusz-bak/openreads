@@ -221,6 +221,7 @@ abstract class LocaleKeys {
   static const dark_mode_amoled = 'dark_mode_amoled';
   static const selected = 'selected';
   static const change_book_format = 'change_book_format';
+  static const change_books_publisher = 'change_books_publisher';
   static const change_books_author = 'change_books_author';
   static const update_successful_message = 'update_successful_message';
   static const bulk_update_unsuccessful_message =

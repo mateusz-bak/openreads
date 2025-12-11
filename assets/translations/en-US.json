@@ -213,6 +213,7 @@
     "dark_mode_amoled": "AMOLED dark mode",
     "selected": "Selected",
     "change_book_format": "Change books format",
+    "change_books_publisher": "Change books publisher",
     "change_books_author": "Change books author",
     "update_successful_message": "Updated successfully!",
     "bulk_update_unsuccessful_message": "Could not update books details",
