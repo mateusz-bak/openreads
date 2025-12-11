@@ -66,6 +66,7 @@
     "finish_date_before_start": "Finish date cannot be before start date",
     "title": "Title",
     "author": "Author",
+    "publisher": "Publisher",
     "rating": "Rating",
     "description": "Description",
     "sort_by": "Sort by",
