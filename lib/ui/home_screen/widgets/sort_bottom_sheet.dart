@@ -37,6 +37,7 @@ List<SortType> _getValidSortOptions(BookStatus bookStatus) {
         SortType.byPages,
         SortType.byStartDate,
         SortType.byFinishDate,
+        SortType.byPublisher,
         SortType.byPublicationYear,
         SortType.byDateAdded,
         SortType.byDateModified,
@@ -87,6 +88,8 @@ String _getSortDropdownText(SortType sortType) {
       return LocaleKeys.start_date.tr();
     case SortType.byFinishDate:
       return LocaleKeys.finish_date.tr();
+    case SortType.byPublisher:
+      return LocaleKeys.publisher.tr();
     case SortType.byPublicationYear:
       return LocaleKeys.enter_publication_year.tr();
     case SortType.byDateAdded:
