@@ -53,6 +53,7 @@ abstract class LocaleKeys {
   static const enter_title = 'enter_title';
   static const enter_subtitle = 'enter_subtitle';
   static const enter_author = 'enter_author';
+  static const enter_publisher = 'enter_publisher';
   static const enter_pages = 'enter_pages';
   static const enter_publication_year = 'enter_publication_year';
   static const enter_description = 'enter_description';

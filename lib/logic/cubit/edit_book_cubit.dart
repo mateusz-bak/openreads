@@ -78,6 +78,12 @@ class EditBookCubit extends Cubit<Book> {
     emit(book);
   }
 
+  void setPublisher(String publisher) {
+    final book = state.copyWith();
+    book.publisher = publisher.isNotEmpty ? publisher : null;
+    emit(book);
+  }
+
   void setPublicationYear(String publicationYear) {
     final book = state.copyWith();
     book.publicationYear =

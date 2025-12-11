@@ -54,6 +54,7 @@ class _AddBookScreenState extends State<AddBookScreen> {
   final _subtitleCtrl = TextEditingController();
   final _authorCtrl = TextEditingController();
   final _pagesCtrl = TextEditingController();
+  final _publisherCtrl = TextEditingController();
   final _pubYearCtrl = TextEditingController();
   final _descriptionCtrl = TextEditingController();
   final _isbnCtrl = TextEditingController();
@@ -81,6 +82,7 @@ class _AddBookScreenState extends State<AddBookScreen> {
     _titleCtrl.text = book.title;
     _subtitleCtrl.text = book.subtitle ?? '';
     _authorCtrl.text = book.author;
+    _publisherCtrl.text = book.publisher ?? '';
     _pubYearCtrl.text = (book.publicationYear ?? '').toString();
     _pagesCtrl.text = (book.pages ?? '').toString();
     _descriptionCtrl.text = book.description ?? '';
@@ -359,6 +361,10 @@ class _AddBookScreenState extends State<AddBookScreen> {
       context.read<EditBookCubit>().setOLID(_olidCtrl.text);
     });
 
+    _publisherCtrl.addListener(() {
+      context.read<EditBookCubit>().setPublisher(_publisherCtrl.text);
+    });
+
     _pubYearCtrl.addListener(() {
       context.read<EditBookCubit>().setPublicationYear(_pubYearCtrl.text);
     });
@@ -415,6 +421,7 @@ class _AddBookScreenState extends State<AddBookScreen> {
     _subtitleCtrl.dispose();
     _authorCtrl.dispose();
     _pagesCtrl.dispose();
+    _publisherCtrl.dispose();
     _pubYearCtrl.dispose();
     _descriptionCtrl.dispose();
     _isbnCtrl.dispose();
@@ -534,6 +541,16 @@ class _AddBookScreenState extends State<AddBookScreen> {
                 BookTypeDropdown(
                   bookTypes: bookTypes,
                   changeBookType: _changeBookType,
+                ),
+                const SizedBox(height: 10),
+                BookTextField(
+                  controller: _publisherCtrl,
+                  hint: LocaleKeys.enter_publisher.tr(),
+                  icon: Icons.library_books,
+                  keyboardType: TextInputType.text,
+                  maxLines: 5,
+                  maxLength: 255,
+                  textCapitalization: TextCapitalization.sentences,
                 ),
                 const SizedBox(height: 10),
                 Row(
