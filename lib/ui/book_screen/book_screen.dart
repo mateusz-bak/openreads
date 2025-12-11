@@ -136,6 +136,7 @@ class BookScreen extends StatelessWidget {
                       _buildTitleDetail(state),
                       _buildStatusDetail(state, context),
                       _buildBookFormatDetail(state),
+                      _buildPublisherDetail(state),
                       _buildPublicationYearDetail(state),
                       _buildPagesDetail(state),
                       _buildISBNDetail(state),
@@ -229,6 +230,15 @@ class BookScreen extends StatelessWidget {
                   ? LocaleKeys.book_format_hardcover.tr()
                   : LocaleKeys.book_format_paperback.tr(),
     );
+  }
+
+  Widget _buildPublisherDetail(Book state) {
+    return (state.publisher != null)
+        ? BookDetail(
+            title: LocaleKeys.publisher.tr(),
+            text: state.publisher ?? "",
+          )
+        : const SizedBox();
   }
 
   Widget _buildPublicationYearDetail(Book state) {

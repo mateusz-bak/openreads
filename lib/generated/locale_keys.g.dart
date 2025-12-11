@@ -70,6 +70,7 @@ abstract class LocaleKeys {
   static const finish_date_before_start = 'finish_date_before_start';
   static const title = 'title';
   static const author = 'author';
+  static const publisher = 'publisher';
   static const rating = 'rating';
   static const description = 'description';
   static const sort_by = 'sort_by';
