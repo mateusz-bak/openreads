@@ -295,6 +295,8 @@ class _BooksScreenState extends State<BooksScreen>
         return _sortByStartDate(list: list, isAsc: isAsc);
       case SortType.byFinishDate:
         return _sortByFinishDate(list: list, isAsc: isAsc);
+      case SortType.byPublisher:
+        return _sortByPublisher(list: list, isAsc: isAsc);
       case SortType.byPublicationYear:
         return _sortByPublicationYear(list: list, isAsc: isAsc);
       case SortType.byDateAdded:
@@ -626,6 +628,39 @@ class _BooksScreenState extends State<BooksScreen>
     });
 
     return booksWithFinishDate + booksWithoutFinishDate;
+  }
+
+  List<Book> _sortByPublisher({
+    required List<Book> list,
+    required bool isAsc,
+  }) {
+    List<Book> booksWithoutPublisher = List.empty(growable: true);
+    List<Book> booksWithPublisher = List.empty(growable: true);
+
+    for (Book book in list) {
+      (book.publisher != null)
+          ? booksWithPublisher.add(book)
+          : booksWithoutPublisher.add(book);
+    }
+
+    booksWithPublisher.sort((a, b) {
+      int publisherSorting = a.publisher!.compareTo(b.publisher!);
+      if (!isAsc) {
+        publisherSorting *= -1;
+      }
+
+      if (publisherSorting == 0) {
+        int titleSorting = removeDiacritics(a.title.toString().toLowerCase())
+            .compareTo(removeDiacritics(b.title.toString().toLowerCase()));
+        if (!isAsc) {
+          titleSorting *= -1;
+        }
+        return titleSorting;
+      }
+      return publisherSorting;
+    });
+
+    return booksWithPublisher + booksWithoutPublisher;
   }
 
   List<Book> _sortByPublicationYear({
