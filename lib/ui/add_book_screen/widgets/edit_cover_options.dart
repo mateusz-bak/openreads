@@ -54,7 +54,7 @@ class EditCoverOptions extends StatelessWidget {
               onTap: loadCoverFromStorage,
             ),
             ListTile(
-              title: Text(LocaleKeys.searchOnlineForCover.tr()),
+              title: Text(LocaleKeys.search_online_for_cover.tr()),
               leading: FaIcon(
                 FontAwesomeIcons.magnifyingGlass,
                 color: Theme.of(context).colorScheme.primary,

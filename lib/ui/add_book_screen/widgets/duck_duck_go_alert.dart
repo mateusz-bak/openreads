@@ -40,7 +40,7 @@ class DuckDuckGoAlert extends StatelessWidget {
   Widget build(BuildContext context) {
     return buildPlatformSpecificAlertDialog(
       title: Text(
-        LocaleKeys.duckDuckGoWarning.tr(),
+        LocaleKeys.duck_duck_go_warning.tr(),
         style: Platform.isAndroid ? const TextStyle(fontSize: 16) : null,
       ),
       actionsAlignment: MainAxisAlignment.spaceBetween,
@@ -69,7 +69,7 @@ class DuckDuckGoAlert extends StatelessWidget {
       child: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 10),
         child: Text(
-          LocaleKeys.warningYes.tr(),
+          LocaleKeys.warning_yes.tr(),
           textAlign: TextAlign.end,
         ),
       ),
@@ -87,7 +87,7 @@ class DuckDuckGoAlert extends StatelessWidget {
       child: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 10),
         child: Text(
-          LocaleKeys.warningYesAndDontShow.tr(),
+          LocaleKeys.warning_yes_and_dont_show.tr(),
           textAlign: TextAlign.end,
         ),
       ),
@@ -106,7 +106,7 @@ class DuckDuckGoAlert extends StatelessWidget {
       ),
       child: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 10),
-        child: Text(LocaleKeys.warningNo.tr()),
+        child: Text(LocaleKeys.warning_no.tr()),
       ),
     );
   }
@@ -115,7 +115,7 @@ class DuckDuckGoAlert extends StatelessWidget {
     return CupertinoDialogAction(
       isDefaultAction: false,
       onPressed: () => _yesButtonAction(context),
-      child: Text(LocaleKeys.warningYes.tr()),
+      child: Text(LocaleKeys.warning_yes.tr()),
     );
   }
 
@@ -123,7 +123,7 @@ class DuckDuckGoAlert extends StatelessWidget {
     return CupertinoDialogAction(
       isDefaultAction: true,
       onPressed: () => _yesAndDontShowButtonAction(context),
-      child: Text(LocaleKeys.warningYesAndDontShow.tr()),
+      child: Text(LocaleKeys.warning_yes_and_dont_show.tr()),
     );
   }
 
@@ -131,7 +131,7 @@ class DuckDuckGoAlert extends StatelessWidget {
     return CupertinoDialogAction(
       isDefaultAction: false,
       onPressed: () => _noButtonAction(context),
-      child: Text(LocaleKeys.warningNo.tr()),
+      child: Text(LocaleKeys.warning_no.tr()),
     );
   }
 }
