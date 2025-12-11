@@ -543,15 +543,20 @@ class _AddBookScreenState extends State<AddBookScreen> {
                   changeBookType: _changeBookType,
                 ),
                 const SizedBox(height: 10),
-                BookTextField(
-                  controller: _publisherCtrl,
-                  hint: LocaleKeys.enter_publisher.tr(),
-                  icon: Icons.library_books,
-                  keyboardType: TextInputType.text,
-                  maxLines: 5,
-                  maxLength: 255,
-                  textCapitalization: TextCapitalization.sentences,
-                ),
+                StreamBuilder<List<String>>(
+                    stream: bookCubit.publishers,
+                    builder: (context, AsyncSnapshot<List<String>?> snapshot) {
+                      return BookTextField(
+                        controller: _publisherCtrl,
+                        hint: LocaleKeys.enter_publisher.tr(),
+                        icon: Icons.library_books,
+                        keyboardType: TextInputType.text,
+                        maxLines: 5,
+                        maxLength: 255,
+                        textCapitalization: TextCapitalization.sentences,
+                        suggestions: snapshot.data,
+                      );
+                    }),
                 const SizedBox(height: 10),
                 Row(
                   children: [

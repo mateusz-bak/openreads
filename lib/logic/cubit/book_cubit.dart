@@ -40,6 +40,8 @@ class BookCubit extends Cubit {
       BehaviorSubject<List<String>>();
   final BehaviorSubject<List<String>> _authorsFetcher =
       BehaviorSubject<List<String>>();
+  final BehaviorSubject<List<String>> _publishersFetcher =
+      BehaviorSubject<List<String>>();
   final BehaviorSubject<Book?> _bookFetcher = BehaviorSubject<Book?>();
   final BehaviorSubject<List<Book>?> _booksWithSameTagFetcher =
       BehaviorSubject<List<Book>?>();
@@ -56,6 +58,7 @@ class BookCubit extends Cubit {
   Stream<List<int>> get finishedYears => _finishedYearsFetcher.stream;
   Stream<List<String>> get tags => _tagsFetcher.stream;
   Stream<List<String>> get authors => _authorsFetcher.stream;
+  Stream<List<String>> get publishers => _publishersFetcher.stream;
   Stream<List<Book>?> get booksWithSameTag => _booksWithSameTagFetcher.stream;
   Stream<List<Book>?> get booksWithSameAuthor =>
       _booksWithSameAuthorFetcher.stream;
@@ -81,6 +84,7 @@ class BookCubit extends Cubit {
   Future<void> getAllBooks({
     bool getTags = true,
     bool getAuthors = true,
+    bool getPublishers = true,
   }) async {
     List<Book> books = await repository.getAllNotDeletedBooks();
     _booksFetcher.sink.add(books);
@@ -91,6 +95,10 @@ class BookCubit extends Cubit {
 
     if (getAuthors) {
       _authorsFetcher.sink.add(_getAuthors(books));
+    }
+
+    if (getPublishers) {
+      _publishersFetcher.sink.add(_getPublishers(books));
     }
   }
 
@@ -276,6 +284,22 @@ class BookCubit extends Cubit {
     authors.sort((a, b) => a.compareTo(b));
 
     return authors;
+  }
+
+  List<String> _getPublishers(List<Book> books) {
+    final publishers = List<String>.empty(growable: true);
+
+    for (var book in books) {
+      if (book.publisher != null &&
+          book.publisher!.isNotEmpty &&
+          !publishers.contains(book.publisher)) {
+        publishers.add(book.publisher!);
+      }
+    }
+
+    publishers.sort((a, b) => a.compareTo(b));
+
+    return publishers;
   }
 
   Future<bool> _checkIfCoverMigrationDone() async {
