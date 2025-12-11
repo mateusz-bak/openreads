@@ -68,6 +68,9 @@ class _SearchOLEditionsScreenState extends State<SearchOLEditionsScreen> {
               ? result.isbn10![0]
               : null,
       olid: (result.key != null) ? result.key!.replaceAll('/books/', '') : null,
+      publisher: (result.publishers != null && result.publishers!.isNotEmpty)
+          ? result.publishers![0]
+          : null,
       publicationYear: widget.firstPublishYear,
       bookFormat: result.physicalFormat ?? defaultBookFormat,
       readings: List<Reading>.empty(growable: true),
