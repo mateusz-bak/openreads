@@ -18,4 +18,6 @@ tags | Text (tags separated with \|\|\|\|\|)
 my_review | Text
 notes | Text
 book_format | paperback, hardcover, ebook, audiobook
-readings | List of readings separated by ";". Eeach reading is three vlues separated by "\|": start date (ISO 8601 String), finish date (ISO 8601 String), custom reading time (milliseconds Int)
+readings | List of readings separated by ";". Each reading is three values separated by "\|": start date (ISO 8601 String), finish date (ISO 8601 String), custom reading time (milliseconds Int)
+date_added | ISO 8601 String
+date_modified | ISO 8601 String
