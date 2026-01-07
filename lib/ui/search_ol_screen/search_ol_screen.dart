@@ -244,6 +244,8 @@ class _SearchOLScreenState extends State<SearchOLScreen>
   }
 
   void _startScanner() async {
+    if (!Platform.isAndroid && !Platform.isIOS) return;
+
     FocusManager.instance.primaryFocus?.unfocus();
     context.read<OpenLibrarySearchBloc>().add(const OpenLibrarySearchSetISBN());
 
@@ -391,7 +393,7 @@ class _SearchOLScreenState extends State<SearchOLScreen>
           actions: [
             IconButton(
               onPressed: _startScanner,
-              icon: const FaIcon(FontAwesomeIcons.solidCamera, size: 18),
+              icon: const FaIcon(FontAwesomeIcons.camera, size: 18),
             ),
           ],
         ),

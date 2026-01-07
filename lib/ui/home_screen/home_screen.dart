@@ -49,7 +49,7 @@ class _HomeScreenState extends State<HomeScreen> {
           return const SortBottomSheet();
         },
       );
-    } else if (Platform.isAndroid) {
+    } else {
       showModalBottomSheet(
         context: context,
         isScrollControlled: true,
@@ -142,7 +142,7 @@ class _HomeScreenState extends State<HomeScreen> {
           );
         },
       );
-    } else if (Platform.isAndroid) {
+    } else {
       showModalBottomSheet(
         context: context,
         backgroundColor: Colors.transparent,
@@ -189,6 +189,8 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 
   Future<void> _scanBarcode() async {
+    if (!Platform.isAndroid && !Platform.isIOS) return;
+
     _setEmptyBookForEditScreen();
 
     Navigator.pop(context);

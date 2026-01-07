@@ -47,7 +47,7 @@ class _ReadingRowState extends State<ReadingRow> {
               },
             );
           });
-    } else if (Platform.isAndroid) {
+    } else {
       final startDate = await showDatePicker(
         context: context,
         initialDate: widget.reading.startDate ?? DateTime.now(),
@@ -83,7 +83,7 @@ class _ReadingRowState extends State<ReadingRow> {
               },
             );
           });
-    } else if (Platform.isAndroid) {
+    } else {
       final finishDate = await showDatePicker(
         context: context,
         initialDate: widget.reading.finishDate ?? DateTime.now(),

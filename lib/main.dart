@@ -9,6 +9,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_displaymode/flutter_displaymode.dart';
 import 'package:hydrated_bloc/hydrated_bloc.dart';
 import 'package:intl/date_symbol_data_local.dart';
+import 'package:sqflite_common_ffi/sqflite_ffi.dart';
+import 'package:xdg_directories/xdg_directories.dart';
 import 'package:openreads/core/constants/constants.dart';
 import 'package:openreads/core/constants/locale.dart';
 import 'package:openreads/core/helpers/locale_delegates/locale_delegates.dart';
@@ -49,16 +51,25 @@ void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await EasyLocalization.ensureInitialized();
 
+  // Using sqflite_common_ffi on windows or linux which requires setup
+  if (Platform.isLinux || Platform.isWindows) {
+    sqfliteFfiInit();
+    databaseFactoryOrNull = databaseFactoryFfi;
+  }
+
   _setAndroidConfig();
 
+  appDocumentsDirectory = Directory('${dataHome.path}/openreads');
+  if (Platform.isAndroid || Platform.isIOS) {
+    appDocumentsDirectory = await getApplicationDocumentsDirectory();
+  }
+  appTempDirectory = await getTemporaryDirectory();
   HydratedBloc.storage = await HydratedStorage.build(
     storageDirectory: HydratedStorageDirectory(
-      (await getApplicationDocumentsDirectory()).path,
+      (appDocumentsDirectory).path,
     ),
   );
 
-  appDocumentsDirectory = await getApplicationDocumentsDirectory();
-  appTempDirectory = await getTemporaryDirectory();
   snackbarKey = GlobalKey<ScaffoldMessengerState>();
 
   bookCubit = BookCubit(); // TODO: move to app's context
