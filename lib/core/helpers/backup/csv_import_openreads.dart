@@ -92,6 +92,7 @@ class CSVImportOpenreads {
         deleted: _getBoolField(i, csv, 'deleted'),
         rating: _getRating(i, csv),
         pages: _getPages(i, csv),
+        publisher: _getField(i, csv, 'publisher'),
         publicationYear: _getPublicationYear(i, csv),
         isbn: _getISBN(i, csv),
         olid: _getOLID(i, csv),

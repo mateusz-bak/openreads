@@ -54,6 +54,7 @@ class _AddBookScreenState extends State<AddBookScreen> {
   final _subtitleCtrl = TextEditingController();
   final _authorCtrl = TextEditingController();
   final _pagesCtrl = TextEditingController();
+  final _publisherCtrl = TextEditingController();
   final _pubYearCtrl = TextEditingController();
   final _descriptionCtrl = TextEditingController();
   final _isbnCtrl = TextEditingController();
@@ -81,6 +82,7 @@ class _AddBookScreenState extends State<AddBookScreen> {
     _titleCtrl.text = book.title;
     _subtitleCtrl.text = book.subtitle ?? '';
     _authorCtrl.text = book.author;
+    _publisherCtrl.text = book.publisher ?? '';
     _pubYearCtrl.text = (book.publicationYear ?? '').toString();
     _pagesCtrl.text = (book.pages ?? '').toString();
     _descriptionCtrl.text = book.description ?? '';
@@ -194,20 +196,22 @@ class _AddBookScreenState extends State<AddBookScreen> {
         builder: (context) {
           return AlertDialog.adaptive(
             title: Text(
-              LocaleKeys.coverStillDownloaded.tr(),
+              LocaleKeys.cover_still_downloaded.tr(),
             ),
             actionsAlignment: MainAxisAlignment.spaceBetween,
             actions: [
               Platform.isIOS
                   ? CupertinoDialogAction(
                       isDefaultAction: true,
-                      child: Text(LocaleKeys.waitForDownloadingToFinish.tr()),
+                      child:
+                          Text(LocaleKeys.wait_for_downloading_to_finish.tr()),
                       onPressed: () {
                         Navigator.of(context).pop(true);
                       },
                     )
                   : TextButton(
-                      child: Text(LocaleKeys.waitForDownloadingToFinish.tr()),
+                      child:
+                          Text(LocaleKeys.wait_for_downloading_to_finish.tr()),
                       onPressed: () {
                         Navigator.of(context).pop(true);
                       },
@@ -215,14 +219,14 @@ class _AddBookScreenState extends State<AddBookScreen> {
               Platform.isIOS
                   ? CupertinoDialogAction(
                       isDestructiveAction: true,
-                      child: Text(LocaleKeys.saveWithoutCover.tr()),
+                      child: Text(LocaleKeys.save_without_cover.tr()),
                       onPressed: () {
                         Navigator.of(context).pop(false);
                       },
                     )
                   : TextButton(
                       child: Text(
-                        LocaleKeys.saveWithoutCover.tr(),
+                        LocaleKeys.save_without_cover.tr(),
                         style: TextStyle(
                             color: Theme.of(context).colorScheme.error),
                       ),
@@ -357,6 +361,10 @@ class _AddBookScreenState extends State<AddBookScreen> {
       context.read<EditBookCubit>().setOLID(_olidCtrl.text);
     });
 
+    _publisherCtrl.addListener(() {
+      context.read<EditBookCubit>().setPublisher(_publisherCtrl.text);
+    });
+
     _pubYearCtrl.addListener(() {
       context.read<EditBookCubit>().setPublicationYear(_pubYearCtrl.text);
     });
@@ -413,6 +421,7 @@ class _AddBookScreenState extends State<AddBookScreen> {
     _subtitleCtrl.dispose();
     _authorCtrl.dispose();
     _pagesCtrl.dispose();
+    _publisherCtrl.dispose();
     _pubYearCtrl.dispose();
     _descriptionCtrl.dispose();
     _isbnCtrl.dispose();
@@ -533,6 +542,21 @@ class _AddBookScreenState extends State<AddBookScreen> {
                   bookTypes: bookTypes,
                   changeBookType: _changeBookType,
                 ),
+                const SizedBox(height: 10),
+                StreamBuilder<List<String>>(
+                    stream: bookCubit.publishers,
+                    builder: (context, AsyncSnapshot<List<String>?> snapshot) {
+                      return BookTextField(
+                        controller: _publisherCtrl,
+                        hint: LocaleKeys.enter_publisher.tr(),
+                        icon: Icons.library_books,
+                        keyboardType: TextInputType.text,
+                        maxLines: 5,
+                        maxLength: 255,
+                        textCapitalization: TextCapitalization.sentences,
+                        suggestions: snapshot.data,
+                      );
+                    }),
                 const SizedBox(height: 10),
                 Row(
                   children: [

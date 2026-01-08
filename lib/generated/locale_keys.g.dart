@@ -1,5 +1,7 @@
 // DO NOT EDIT. This is code generated via package:easy_localization/generate.dart
 
+// ignore_for_file: constant_identifier_names
+
 abstract class LocaleKeys {
   static const books_finished = 'books_finished';
   static const books_in_progress = 'books_in_progress';
@@ -51,6 +53,7 @@ abstract class LocaleKeys {
   static const enter_title = 'enter_title';
   static const enter_subtitle = 'enter_subtitle';
   static const enter_author = 'enter_author';
+  static const enter_publisher = 'enter_publisher';
   static const enter_pages = 'enter_pages';
   static const enter_publication_year = 'enter_publication_year';
   static const enter_description = 'enter_description';
@@ -67,6 +70,7 @@ abstract class LocaleKeys {
   static const finish_date_before_start = 'finish_date_before_start';
   static const title = 'title';
   static const author = 'author';
+  static const publisher = 'publisher';
   static const rating = 'rating';
   static const description = 'description';
   static const sort_by = 'sort_by';
@@ -74,6 +78,7 @@ abstract class LocaleKeys {
   static const filter_by_finish_year = 'filter_by_finish_year';
   static const filter_by_book_format = 'filter_by_book_format';
   static const filter_by_tags = 'filter_by_tags';
+  static const display_tags = 'display_tags';
   static const only_books_with_all_tags = 'only_books_with_all_tags';
   static const sort_filter = 'sort_filter';
   static const statistics = 'statistics';
@@ -83,6 +88,7 @@ abstract class LocaleKeys {
   static const no_cover = 'no_cover';
   static const choose_edition = 'choose_edition';
   static const editions_lowercase = 'editions_lowercase';
+  static const only_editions_with_covers = 'only_editions_with_covers';
   static const published_lowercase = 'published_lowercase';
   static const cancel = 'cancel';
   static const flash_on = 'flash_on';
@@ -215,6 +221,7 @@ abstract class LocaleKeys {
   static const dark_mode_amoled = 'dark_mode_amoled';
   static const selected = 'selected';
   static const change_book_format = 'change_book_format';
+  static const change_books_publisher = 'change_books_publisher';
   static const change_books_author = 'change_books_author';
   static const update_successful_message = 'update_successful_message';
   static const bulk_update_unsuccessful_message =
@@ -230,15 +237,14 @@ abstract class LocaleKeys {
   static const choose_not_finished_shelf = 'choose_not_finished_shelf';
   static const import_successful = 'import_successful';
   static const ok = 'ok';
-  static const daysSetCustomTimeTitle = 'day.set_custom_time_title';
+  static const day_set_custom_time_title = 'day.set_custom_time_title';
   static const day = 'day';
-  static const hoursSetCustomTimeTitle = 'hour.set_custom_time_title';
+  static const hour_set_custom_time_title = 'hour.set_custom_time_title';
   static const hour = 'hour';
-  static const minutesSetCustomTimeTitle = 'minute.set_custom_time_title';
+  static const minute_set_custom_time_title = 'minute.set_custom_time_title';
   static const minute = 'minute';
   static const set_custom_reading_time = 'set_custom_reading_time';
   static const select_all = 'select_all';
-  static const only_editions_with_covers = 'only_editions_with_covers';
   static const general_search = 'general_search';
   static const no_search_results = 'no_search_results';
   static const click_to_add_book_manually = 'click_to_add_book_manually';
@@ -263,30 +269,30 @@ abstract class LocaleKeys {
   static const added_on = 'added_on';
   static const modified_on = 'modified_on';
   static const default_books_format = 'default_books_format';
-  static const coverStillDownloaded = 'cover_still_downloaded';
-  static const waitForDownloadingToFinish = 'wait_for_downloading_to_finish';
-  static const saveWithoutCover = 'save_without_cover';
-  static const searchOnlineForCover = 'search_online_for_cover';
-  static const bookCover = 'book_cover';
-  static const duplicateBook = 'duplicate_book';
-  static const copyBook = 'copy_book';
-  static const duckDuckGoWarning = 'duck_duck_go_warning';
-  static const warningYes = 'warning_yes';
-  static const warningNo = 'warning_no';
-  static const warningYesAndDontShow = 'warning_yes_and_dont_show';
+  static const cover_still_downloaded = 'cover_still_downloaded';
+  static const wait_for_downloading_to_finish =
+      'wait_for_downloading_to_finish';
+  static const save_without_cover = 'save_without_cover';
+  static const search_online_for_cover = 'search_online_for_cover';
+  static const book_cover = 'book_cover';
+  static const duplicate_book = 'duplicate_book';
+  static const copy_book = 'copy_book';
+  static const duck_duck_go_warning = 'duck_duck_go_warning';
+  static const warning_yes = 'warning_yes';
+  static const warning_no = 'warning_no';
+  static const warning_yes_and_dont_show = 'warning_yes_and_dont_show';
   static const create_discussion = 'create_discussion';
   static const set_default_tags = 'set_default_tags';
   static const add_new_default_tag = 'add_new_default_tag';
   static const book_format = 'book_format';
+  static const display = 'display';
   static const list = 'list';
   static const compact_list = 'compact_list';
   static const grid = 'grid';
   static const detailed_grid = 'detailed_grid';
-  static const display = 'display';
   static const show_number_of_books = 'show_number_of_books';
   static const show_book_format = 'show_book_format';
   static const show_sort_attributes = 'show_sort_attributes';
-  static const display_tags = 'display_tags';
   static const grid_size = 'grid_size';
   static const show_title_over_cover = 'show_title_over_cover';
 }

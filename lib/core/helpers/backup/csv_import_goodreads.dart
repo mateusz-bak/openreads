@@ -198,6 +198,7 @@ class CSVImportGoodreads {
         title: _getTitle(i, csv, headers),
         author: _getAuthor(i, csv, headers),
         isbn: _getISBN(i, csv, headers),
+        publisher: _getPublisher(i, csv, headers),
         rating: _getRating(i, csv, headers),
         pages: _getPages(i, csv, headers),
         publicationYear: _getPublicationYear(i, csv, headers),
@@ -253,6 +254,10 @@ class CSVImportGoodreads {
 
   static String _getTitle(int i, List<List<dynamic>> csv, List headers) {
     return csv[i][headers.indexOf('Title')].toString();
+  }
+
+  static String _getPublisher(int i, List<List<dynamic>> csv, List headers) {
+    return csv[i][headers.indexOf('Publisher')].toString();
   }
 
   static int? _getRating(int i, List<List<dynamic>> csv, List headers) {

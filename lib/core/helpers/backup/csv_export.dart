@@ -76,7 +76,11 @@ class CSVExport {
 
   static Future<String?> _prepareCSVExport() async {
     try {
-      await bookCubit.getAllBooks(getAuthors: false, getTags: false);
+      await bookCubit.getAllBooks(
+        getAuthors: false,
+        getTags: false,
+        getPublishers: false,
+      );
 
       final books = await bookCubit.allBooks.first;
       final rows = List<List<String>>.empty(growable: true);
@@ -91,6 +95,7 @@ class CSVExport {
         ('deleted'),
         ('rating'),
         ('pages'),
+        ('publisher'),
         ('publication_year'),
         ('isbn'),
         ('olid'),
@@ -127,6 +132,7 @@ class CSVExport {
         newRow.add(book.deleted.toString());
         newRow.add(book.rating != null ? (book.rating! / 10).toString() : '');
         newRow.add(book.pages != null ? book.pages.toString() : '');
+        newRow.add(book.publisher ?? '');
         newRow.add(book.publicationYear != null
             ? book.publicationYear.toString()
             : '');

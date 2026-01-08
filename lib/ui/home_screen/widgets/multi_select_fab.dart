@@ -28,11 +28,16 @@ class MultiSelectFAB extends StatelessWidget {
 
   final _authorCtrl = TextEditingController();
 
+  final _publisherCtrl = TextEditingController();
+
   String _getLabel(BulkEditOption bulkEditOption) {
     String label = '';
     switch (bulkEditOption) {
       case BulkEditOption.format:
         label = LocaleKeys.change_book_format.tr();
+        break;
+      case BulkEditOption.publisher:
+        label = LocaleKeys.change_books_publisher.tr();
         break;
       case BulkEditOption.author:
         label = LocaleKeys.change_books_author.tr();
@@ -42,6 +47,26 @@ class MultiSelectFAB extends StatelessWidget {
     }
 
     return label;
+  }
+
+  Widget _buildBulkEdit(BulkEditOption bulkEditOption, List<int> selectedList,
+      BuildContext context) {
+    Widget bulkEditWidget;
+    switch (bulkEditOption) {
+      case BulkEditOption.format:
+        bulkEditWidget = _buildEditFormat(selectedList, context);
+        break;
+      case BulkEditOption.publisher:
+        bulkEditWidget = _buildEditPublisher(selectedList, context);
+        break;
+      case BulkEditOption.author:
+        bulkEditWidget = _buildEditAuthor(selectedList, context);
+        break;
+      default:
+        bulkEditWidget = const SizedBox();
+    }
+
+    return bulkEditWidget;
   }
 
   Material _buildBottomSheet(
@@ -74,11 +99,7 @@ class MultiSelectFAB extends StatelessWidget {
               const SizedBox(height: 10),
               _buildHeader(bulkEditOption),
               const SizedBox(height: 30),
-              bulkEditOption == BulkEditOption.format
-                  ? _buildEditFormat(selectedList, context)
-                  : bulkEditOption == BulkEditOption.author
-                      ? _buildEditAuthor(selectedList, context)
-                      : const SizedBox(),
+              _buildBulkEdit(bulkEditOption, selectedList, context),
             ],
           ),
         ),
@@ -119,6 +140,40 @@ class MultiSelectFAB extends StatelessWidget {
     if (!context.mounted) return;
 
     // context.read<PbSyncBloc>().add(TriggerSyncEvent(booksToSync: booksToSync));
+  }
+
+  Future<void> _updateBooksPublisher(
+    BuildContext context,
+    List<int> selectedIds,
+  ) async {
+    List<Book> booksToSync = List.empty(growable: true);
+    final publisher = _publisherCtrl.text;
+
+    if (publisher.isEmpty) {
+      Navigator.pop(context);
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text(
+            LocaleKeys.bulk_update_unsuccessful_message.tr(),
+          ),
+        ),
+      );
+    }
+
+    for (final bookId in selectedIds) {
+      Book? book = await bookCubit.getBook(bookId);
+
+      if (book == null) continue;
+      book = book.copyWith(publisher: publisher);
+      booksToSync.add(book);
+
+      await bookCubit.updateBook(book);
+    }
+
+    Navigator.pop(context);
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(content: Text(LocaleKeys.update_successful_message.tr())),
+    );
   }
 
   Future<void> _updateBooksAuthor(
@@ -306,6 +361,44 @@ class MultiSelectFAB extends StatelessWidget {
               ),
               SpeedDialChild(
                 child: FaIcon(
+                  FontAwesomeIcons.book,
+                  color: Theme.of(context).colorScheme.onSecondary,
+                  size: 18,
+                ),
+                backgroundColor: Theme.of(context).colorScheme.secondary,
+                labelBackgroundColor:
+                    Theme.of(context).colorScheme.surfaceVariant,
+                foregroundColor: Theme.of(context).colorScheme.onSurfaceVariant,
+                label: LocaleKeys.change_books_publisher.tr(),
+                onTap: () {
+                  if (Platform.isIOS) {
+                    showCupertinoModalBottomSheet(
+                      context: context,
+                      expand: false,
+                      builder: (_) {
+                        return _buildBottomSheet(
+                          context,
+                          BulkEditOption.publisher,
+                          selectedList,
+                        );
+                      },
+                    );
+                  } else if (Platform.isAndroid) {
+                    showModalBottomSheet(
+                        isScrollControlled: true,
+                        context: context,
+                        builder: (context) {
+                          return _buildBottomSheet(
+                            context,
+                            BulkEditOption.publisher,
+                            selectedList,
+                          );
+                        });
+                  }
+                },
+              ),
+              SpeedDialChild(
+                child: FaIcon(
                   FontAwesomeIcons.user,
                   color: Theme.of(context).colorScheme.onSecondary,
                   size: 18,
@@ -388,6 +481,41 @@ class MultiSelectFAB extends StatelessWidget {
                   ),
                 ),
                 onPressed: () => _updateBooksAuthor(context, selectedList),
+                child: Text(LocaleKeys.save.tr()),
+              ),
+            ),
+          ],
+        ),
+      ],
+    );
+  }
+
+  Column _buildEditPublisher(List<int> selectedList, BuildContext context) {
+    return Column(
+      children: [
+        BookTextField(
+          controller: _publisherCtrl,
+          hint: LocaleKeys.enter_publisher.tr(),
+          icon: Icons.library_books,
+          keyboardType: TextInputType.name,
+          maxLines: 5,
+          maxLength: 255,
+          textCapitalization: TextCapitalization.words,
+          padding: const EdgeInsets.all(0),
+        ),
+        const SizedBox(height: 20),
+        Row(
+          children: [
+            Expanded(
+              child: FilledButton(
+                style: ButtonStyle(
+                  shape: MaterialStateProperty.all(
+                    RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(cornerRadius),
+                    ),
+                  ),
+                ),
+                onPressed: () => _updateBooksPublisher(context, selectedList),
                 child: Text(LocaleKeys.save.tr()),
               ),
             ),
