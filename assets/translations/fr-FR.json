@@ -275,5 +275,17 @@
     "duck_duck_go_warning": "La recherche de couverture en ligne utilise DuckDuckGo, qui est un service propriétaire. Soyez prudent avec les données partagées",
     "warning_yes": "Ça me va",
     "warning_no": "Retour",
-    "warning_yes_and_dont_show": "Ça me va, ne plus me le rappeler"
+    "warning_yes_and_dont_show": "Ça me va, ne plus me le rappeler",
+    "book_format": "Format de livre",
+    "display": "Affichage",
+    "list": "Liste",
+    "compact_list": "Liste compacte",
+    "grid": "Grille",
+    "detailed_grid": "Grille détaillée",
+    "show_number_of_books": "Affiche le nombre de livres en haut de la liste",
+    "show_sort_attributes": "Afficher les attributs de tri",
+    "grid_size": "Taille de la grille",
+    "show_title_over_cover": "Afficher le titre au dessus de la couverture",
+    "create_discussion": "Créer une discussion sur GitHub",
+    "set_default_tags": "Étiquette par défaut pour les nouveaux livres"
 }
