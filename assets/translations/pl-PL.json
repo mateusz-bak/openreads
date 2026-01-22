@@ -278,5 +278,16 @@
     "warning_yes_and_dont_show": "Nie przeszkadza mi to i nie pokazuj tego ostrzeżenia więcej",
     "create_discussion": "Utwórz dyskusję na GitHubie",
     "set_default_tags": "Domyślne tagi dla nowych książek",
-    "add_new_default_tag": "Dodaj nowy domyślny tag:"
+    "add_new_default_tag": "Dodaj nowy domyślny tag:",
+    "book_format": "Format książki",
+    "display": "Wyświetlanie",
+    "list": "Lista",
+    "compact_list": "Lista kompaktowa",
+    "grid": "Siatka",
+    "detailed_grid": "Szczegółowa siatka",
+    "show_number_of_books": "Pokaż liczbę książek na górze listy",
+    "show_book_format": "Pokaż format książki",
+    "show_sort_attributes": "Pokaż atrybuty sortowania",
+    "grid_size": "Rozmiar siatki",
+    "show_title_over_cover": "Pokaż tytuł na okładce"
 }
