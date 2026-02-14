@@ -4,6 +4,7 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:openreads/core/constants/constants.dart';
+import 'package:openreads/core/helpers/cross_platform/alert_dialog.dart';
 import 'package:openreads/core/themes/app_theme.dart';
 import 'package:openreads/generated/locale_keys.g.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -37,27 +38,27 @@ class DuckDuckGoAlert extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return AlertDialog.adaptive(
+    return buildPlatformSpecificAlertDialog(
       title: Text(
         LocaleKeys.duckDuckGoWarning.tr(),
         style: Platform.isAndroid ? const TextStyle(fontSize: 16) : null,
       ),
       actionsAlignment: MainAxisAlignment.spaceBetween,
       actions: [
-        Platform.isAndroid
-            ? _buildAndroidNoButton(context)
-            : _buildIOSNoButton(context),
-        Platform.isAndroid
-            ? _buildAndroidYesButton(context)
-            : _buildIOSYesButton(context),
-        Platform.isAndroid
-            ? _buildAndroidYesAndDontShowButton(context)
-            : _buildIOSYesAndDontShowButton(context),
+        Platform.isIOS
+            ? _buildIOSNoButton(context)
+            : _buildNonIOSNoButton(context),
+        Platform.isIOS
+            ? _buildIOSYesButton(context)
+            : _buildNonIOSYesButton(context),
+        Platform.isIOS
+            ? _buildIOSYesAndDontShowButton(context)
+            : _buildNonIOSYesAndDontShowButton(context),
       ],
     );
   }
 
-  Widget _buildAndroidYesButton(BuildContext context) {
+  Widget _buildNonIOSYesButton(BuildContext context) {
     return FilledButton.tonal(
       onPressed: () => _yesButtonAction(context),
       style: FilledButton.styleFrom(
@@ -75,7 +76,7 @@ class DuckDuckGoAlert extends StatelessWidget {
     );
   }
 
-  Widget _buildAndroidYesAndDontShowButton(BuildContext context) {
+  Widget _buildNonIOSYesAndDontShowButton(BuildContext context) {
     return FilledButton(
       onPressed: () => _yesAndDontShowButtonAction(context),
       style: FilledButton.styleFrom(
@@ -93,7 +94,7 @@ class DuckDuckGoAlert extends StatelessWidget {
     );
   }
 
-  Widget _buildAndroidNoButton(BuildContext context) {
+  Widget _buildNonIOSNoButton(BuildContext context) {
     return FilledButton(
       onPressed: () => _noButtonAction(context),
       style: TextButton.styleFrom(

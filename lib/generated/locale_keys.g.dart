@@ -289,4 +289,7 @@ abstract class LocaleKeys {
   static const display_tags = 'display_tags';
   static const grid_size = 'grid_size';
   static const show_title_over_cover = 'show_title_over_cover';
+  static const internal_error = 'internal_error';
+  static const action_not_supported_on_platform_error =
+      'action_not_supported_on_platform_error';
 }

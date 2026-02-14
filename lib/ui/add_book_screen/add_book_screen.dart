@@ -11,6 +11,7 @@ import 'package:loading_animation_widget/loading_animation_widget.dart';
 
 import 'package:openreads/core/constants/constants.dart';
 import 'package:openreads/core/constants/enums/enums.dart';
+import 'package:openreads/core/helpers/cross_platform/alert_dialog.dart';
 import 'package:openreads/core/helpers/helpers.dart';
 import 'package:openreads/core/themes/app_theme.dart';
 import 'package:openreads/generated/locale_keys.g.dart';
@@ -192,7 +193,7 @@ class _AddBookScreenState extends State<AddBookScreen> {
       return showDialog<bool>(
         context: context,
         builder: (context) {
-          return AlertDialog.adaptive(
+          return buildPlatformSpecificAlertDialog(
             title: Text(
               LocaleKeys.coverStillDownloaded.tr(),
             ),
@@ -588,42 +589,53 @@ class _AddBookScreenState extends State<AddBookScreen> {
                         maxLength: 20,
                       ),
                     ),
-                    InkWell(
-                      customBorder: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(cornerRadius),
-                      ),
-                      onTap: () async {
-                        var result = await BarcodeScanner.scan(
-                          options: ScanOptions(
-                            strings: {
-                              'cancel': LocaleKeys.cancel.tr(),
-                              'flash_on': LocaleKeys.flash_on.tr(),
-                              'flash_off': LocaleKeys.flash_off.tr(),
-                            },
-                          ),
-                        );
-
-                        if (result.type == ResultType.Barcode) {
-                          setState(() {
-                            _isbnCtrl.text = result.rawContent;
-                          });
-                        }
-                      },
-                      child: Container(
-                        height: 60,
-                        width: 60,
-                        padding: const EdgeInsets.all(10),
-                        decoration: BoxDecoration(
+                    Opacity(
+                      opacity:
+                          (Platform.isAndroid || Platform.isIOS) ? 1.0 : 0.5,
+                      child: InkWell(
+                        customBorder: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(cornerRadius),
-                          color: Theme.of(context)
-                              .colorScheme
-                              .surfaceVariant
-                              .withOpacity(0.5),
                         ),
-                        child: Icon(
-                          FontAwesomeIcons.barcode,
-                          size: 28,
-                          color: Theme.of(context).colorScheme.primary,
+                        onTap: () async {
+                          if (!(Platform.isAndroid || Platform.isIOS)) {
+                            errorSnackBar(LocaleKeys
+                                .action_not_supported_on_platform_error
+                                .tr());
+                            return;
+                          }
+
+                          var result = await BarcodeScanner.scan(
+                            options: ScanOptions(
+                              strings: {
+                                'cancel': LocaleKeys.cancel.tr(),
+                                'flash_on': LocaleKeys.flash_on.tr(),
+                                'flash_off': LocaleKeys.flash_off.tr(),
+                              },
+                            ),
+                          );
+
+                          if (result.type == ResultType.Barcode) {
+                            setState(() {
+                              _isbnCtrl.text = result.rawContent;
+                            });
+                          }
+                        },
+                        child: Container(
+                          height: 60,
+                          width: 60,
+                          padding: const EdgeInsets.all(10),
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(cornerRadius),
+                            color: Theme.of(context)
+                                .colorScheme
+                                .surfaceVariant
+                                .withOpacity(0.5),
+                          ),
+                          child: Icon(
+                            FontAwesomeIcons.barcode,
+                            size: 28,
+                            color: Theme.of(context).colorScheme.primary,
+                          ),
                         ),
                       ),
                     ),

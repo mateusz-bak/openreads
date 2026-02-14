@@ -8,6 +8,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:openreads/core/helpers/backup/backup.dart';
+import 'package:openreads/core/helpers/cross_platform/alert_dialog.dart';
 import 'package:openreads/logic/bloc/migration_v1_to_v2_bloc/migration_v1_to_v2_bloc.dart';
 import 'package:openreads/generated/locale_keys.g.dart';
 import 'package:openreads/logic/bloc/theme_bloc/theme_bloc.dart';
@@ -52,6 +53,10 @@ class _SettingsBackupScreenState extends State<SettingsBackupScreen> {
       }
     } else if (Platform.isIOS) {
       await BackupExport.createLocalBackup(context);
+    } else {
+      BackupGeneral.showInfoSnackbar(
+        LocaleKeys.action_not_supported_on_platform_error.tr(),
+      );
     }
 
     setState(() => _creatingLocal = false);
@@ -69,6 +74,10 @@ class _SettingsBackupScreenState extends State<SettingsBackupScreen> {
       }
     } else if (Platform.isIOS) {
       await CSVExport.exportCSV();
+    } else {
+      BackupGeneral.showInfoSnackbar(
+        LocaleKeys.action_not_supported_on_platform_error.tr(),
+      );
     }
 
     setState(() => _exportingCSV = false);
@@ -86,6 +95,10 @@ class _SettingsBackupScreenState extends State<SettingsBackupScreen> {
       }
     } else if (Platform.isIOS) {
       await CSVImportGoodreads.importCSV(context);
+    } else {
+      BackupGeneral.showInfoSnackbar(
+        LocaleKeys.action_not_supported_on_platform_error.tr(),
+      );
     }
 
     setState(() => _importingGoodreadsCSV = false);
@@ -103,6 +116,10 @@ class _SettingsBackupScreenState extends State<SettingsBackupScreen> {
       }
     } else if (Platform.isIOS) {
       await CSVImportBookwyrm.importCSV(context);
+    } else {
+      BackupGeneral.showInfoSnackbar(
+        LocaleKeys.action_not_supported_on_platform_error.tr(),
+      );
     }
 
     setState(() => _importingBookwyrmCSV = false);
@@ -120,12 +137,23 @@ class _SettingsBackupScreenState extends State<SettingsBackupScreen> {
       }
     } else if (Platform.isIOS) {
       await CSVImportOpenreads.importCSV(context);
+    } else {
+      BackupGeneral.showInfoSnackbar(
+        LocaleKeys.action_not_supported_on_platform_error.tr(),
+      );
     }
 
     setState(() => _importingCSV = false);
   }
 
   _startCreatingCloudBackup(context) async {
+    if (!(Platform.isAndroid || Platform.isIOS)) {
+      BackupGeneral.showInfoSnackbar(
+        LocaleKeys.action_not_supported_on_platform_error.tr(),
+      );
+      return;
+    }
+
     setState(() => _creatingCloud = true);
 
     final tmpBackupPath = await BackupExport.prepareTemporaryBackup(context);
@@ -148,7 +176,7 @@ class _SettingsBackupScreenState extends State<SettingsBackupScreen> {
       } else {
         await BackupImport.restoreLocalBackup(context);
       }
-    } else if (Platform.isIOS) {
+    } else {
       await BackupImport.restoreLocalBackup(context);
     }
 
@@ -321,7 +349,7 @@ class _SettingsBackupScreenState extends State<SettingsBackupScreen> {
         showDialog(
           context: context,
           builder: (context) {
-            return AlertDialog(
+            return buildPlatformSpecificAlertDialog(
               title: Text(
                 LocaleKeys.are_you_sure.tr(),
               ),
@@ -371,45 +399,39 @@ class _SettingsBackupScreenState extends State<SettingsBackupScreen> {
         showDialog(
           context: context,
           builder: (context) {
+            final actions = [
+              Platform.isIOS
+                  ? CupertinoDialogAction(
+                      onPressed: () {
+                        _startRestoringLocalBackup(builderContext);
+                        Navigator.of(context).pop();
+                      },
+                      child: Text(LocaleKeys.yes.tr()),
+                    )
+                  : FilledButton.tonal(
+                      onPressed: () {
+                        _startRestoringLocalBackup(builderContext);
+                        Navigator.of(context).pop();
+                      },
+                      child: Text(LocaleKeys.yes.tr()),
+                    ),
+              Platform.isIOS
+                  ? CupertinoDialogAction(
+                      isDefaultAction: true,
+                      onPressed: () => Navigator.of(context).pop(),
+                      child: Text(LocaleKeys.no.tr()),
+                    )
+                  : FilledButton(
+                      onPressed: () => Navigator.of(context).pop(),
+                      child: Text(LocaleKeys.no.tr()),
+                    ),
+            ];
             return Builder(
-              builder: (context) {
-                return AlertDialog.adaptive(
-                  title: Text(
-                    LocaleKeys.are_you_sure.tr(),
-                  ),
-                  content: Text(
-                    LocaleKeys.restore_backup_alert_content.tr(),
-                  ),
-                  actionsAlignment: MainAxisAlignment.spaceBetween,
-                  actions: [
-                    Platform.isIOS
-                        ? CupertinoDialogAction(
-                            onPressed: () {
-                              _startRestoringLocalBackup(builderContext);
-                              Navigator.of(context).pop();
-                            },
-                            child: Text(LocaleKeys.yes.tr()),
-                          )
-                        : FilledButton.tonal(
-                            onPressed: () {
-                              _startRestoringLocalBackup(builderContext);
-                              Navigator.of(context).pop();
-                            },
-                            child: Text(LocaleKeys.yes.tr()),
-                          ),
-                    Platform.isIOS
-                        ? CupertinoDialogAction(
-                            isDefaultAction: true,
-                            onPressed: () => Navigator.of(context).pop(),
-                            child: Text(LocaleKeys.no.tr()),
-                          )
-                        : FilledButton(
-                            onPressed: () => Navigator.of(context).pop(),
-                            child: Text(LocaleKeys.no.tr()),
-                          ),
-                  ],
-                );
-              },
+              builder: (context) => buildPlatformSpecificAlertDialog(
+                  title: Text(LocaleKeys.are_you_sure.tr()),
+                  content: Text(LocaleKeys.restore_backup_alert_content.tr()),
+                  actions: actions,
+                  actionsAlignment: MainAxisAlignment.spaceBetween),
             );
           },
         );
@@ -419,21 +441,30 @@ class _SettingsBackupScreenState extends State<SettingsBackupScreen> {
 
   SettingsTile _buildCreateCloudBackup() {
     return SettingsTile(
-      title: Text(
-        LocaleKeys.create_cloud_backup.tr(),
-        style: const TextStyle(
-          fontSize: 16,
+      title: Opacity(
+        opacity: (Platform.isAndroid || Platform.isIOS) ? 1.0 : 0.5,
+        child: Text(
+          LocaleKeys.create_cloud_backup.tr(),
+          style: const TextStyle(
+            fontSize: 16,
+          ),
         ),
       ),
-      leading: (_creatingCloud)
-          ? const SizedBox(
-              width: 24,
-              height: 24,
-              child: CircularProgressIndicator(),
-            )
-          : const Icon(FontAwesomeIcons.cloudArrowUp),
-      description: Text(
-        LocaleKeys.create_cloud_backup_description.tr(),
+      leading: Opacity(
+        opacity: (Platform.isAndroid || Platform.isIOS) ? 1.0 : 0.5,
+        child: (_creatingCloud)
+            ? const SizedBox(
+                width: 24,
+                height: 24,
+                child: CircularProgressIndicator(),
+              )
+            : const Icon(FontAwesomeIcons.cloudArrowUp),
+      ),
+      description: Opacity(
+        opacity: (Platform.isAndroid || Platform.isIOS) ? 1.0 : 0.5,
+        child: Text(
+          LocaleKeys.create_cloud_backup_description.tr(),
+        ),
       ),
       onPressed: _startCreatingCloudBackup,
     );
@@ -441,21 +472,30 @@ class _SettingsBackupScreenState extends State<SettingsBackupScreen> {
 
   SettingsTile _buildCreateLocalBackup() {
     return SettingsTile(
-      title: Text(
-        LocaleKeys.create_local_backup.tr(),
-        style: const TextStyle(
-          fontSize: 16,
+      title: Opacity(
+        opacity: (Platform.isAndroid || Platform.isIOS) ? 1.0 : 0.5,
+        child: Text(
+          LocaleKeys.create_local_backup.tr(),
+          style: const TextStyle(
+            fontSize: 16,
+          ),
         ),
       ),
-      leading: (_creatingLocal)
-          ? const SizedBox(
-              width: 24,
-              height: 24,
-              child: CircularProgressIndicator(),
-            )
-          : const Icon(FontAwesomeIcons.solidFloppyDisk),
-      description: Text(
-        LocaleKeys.create_local_backup_description.tr(),
+      leading: Opacity(
+        opacity: (Platform.isAndroid || Platform.isIOS) ? 1.0 : 0.5,
+        child: (_creatingLocal)
+            ? const SizedBox(
+                width: 24,
+                height: 24,
+                child: CircularProgressIndicator(),
+              )
+            : const Icon(FontAwesomeIcons.solidFloppyDisk),
+      ),
+      description: Opacity(
+        opacity: (Platform.isAndroid || Platform.isIOS) ? 1.0 : 0.5,
+        child: Text(
+          LocaleKeys.create_local_backup_description.tr(),
+        ),
       ),
       onPressed: _startCreatingLocalBackup,
     );
@@ -463,21 +503,30 @@ class _SettingsBackupScreenState extends State<SettingsBackupScreen> {
 
   SettingsTile _buildExportAsCSV() {
     return SettingsTile(
-      title: Text(
-        LocaleKeys.export_csv.tr(),
-        style: const TextStyle(
-          fontSize: 16,
+      title: Opacity(
+        opacity: (Platform.isAndroid || Platform.isIOS) ? 1.0 : 0.5,
+        child: Text(
+          LocaleKeys.export_csv.tr(),
+          style: const TextStyle(
+            fontSize: 16,
+          ),
         ),
       ),
-      leading: (_exportingCSV)
-          ? const SizedBox(
-              width: 24,
-              height: 24,
-              child: CircularProgressIndicator(),
-            )
-          : const Icon(FontAwesomeIcons.fileCsv),
-      description: Text(
-        LocaleKeys.export_csv_description_1.tr(),
+      leading: Opacity(
+        opacity: (Platform.isAndroid || Platform.isIOS) ? 1.0 : 0.5,
+        child: (_exportingCSV)
+            ? const SizedBox(
+                width: 24,
+                height: 24,
+                child: CircularProgressIndicator(),
+              )
+            : const Icon(FontAwesomeIcons.fileCsv),
+      ),
+      description: Opacity(
+        opacity: (Platform.isAndroid || Platform.isIOS) ? 1.0 : 0.5,
+        child: Text(
+          LocaleKeys.export_csv_description_1.tr(),
+        ),
       ),
       onPressed: _startExportingCSV,
     );
@@ -485,61 +534,79 @@ class _SettingsBackupScreenState extends State<SettingsBackupScreen> {
 
   SettingsTile _buildImportGoodreadsCSV() {
     return SettingsTile(
-      title: Text(
-        LocaleKeys.import_goodreads_csv.tr(),
-        style: const TextStyle(
-          fontSize: 16,
+      title: Opacity(
+        opacity: (Platform.isAndroid || Platform.isIOS) ? 1.0 : 0.5,
+        child: Text(
+          LocaleKeys.import_goodreads_csv.tr(),
+          style: const TextStyle(
+            fontSize: 16,
+          ),
         ),
       ),
-      leading: (_importingGoodreadsCSV)
-          ? const SizedBox(
-              width: 24,
-              height: 24,
-              child: CircularProgressIndicator(),
-            )
-          : const Icon(FontAwesomeIcons.g),
+      leading: Opacity(
+        opacity: (Platform.isAndroid || Platform.isIOS) ? 1.0 : 0.5,
+        child: (_importingGoodreadsCSV)
+            ? const SizedBox(
+                width: 24,
+                height: 24,
+                child: CircularProgressIndicator(),
+              )
+            : const Icon(FontAwesomeIcons.g),
+      ),
       onPressed: _startImportingGoodreadsCSV,
     );
   }
 
   SettingsTile _buildImportBookwyrmCSV() {
     return SettingsTile(
-      title: Text(
-        LocaleKeys.import_bookwyrm_csv.tr(),
-        style: const TextStyle(
-          fontSize: 16,
+      title: Opacity(
+        opacity: (Platform.isAndroid || Platform.isIOS) ? 1.0 : 0.5,
+        child: Text(
+          LocaleKeys.import_bookwyrm_csv.tr(),
+          style: const TextStyle(
+            fontSize: 16,
+          ),
         ),
       ),
-      leading: (_importingBookwyrmCSV)
-          ? const SizedBox(
-              width: 24,
-              height: 24,
-              child: CircularProgressIndicator(),
-            )
-          : const Icon(FontAwesomeIcons.b),
+      leading: Opacity(
+        opacity: (Platform.isAndroid || Platform.isIOS) ? 1.0 : 0.5,
+        child: (_importingBookwyrmCSV)
+            ? const SizedBox(
+                width: 24,
+                height: 24,
+                child: CircularProgressIndicator(),
+              )
+            : const Icon(FontAwesomeIcons.b),
+      ),
       onPressed: _startImportingBookwyrmCSV,
     );
   }
 
   SettingsTile _buildImportCSV() {
     return SettingsTile(
-      title: Text(
-        LocaleKeys.import_csv.tr(),
-        style: const TextStyle(
-          fontSize: 16,
+      title: Opacity(
+        opacity: (Platform.isAndroid || Platform.isIOS) ? 1.0 : 0.5,
+        child: Text(
+          LocaleKeys.import_csv.tr(),
+          style: const TextStyle(
+            fontSize: 16,
+          ),
         ),
       ),
-      leading: (_importingCSV)
-          ? const SizedBox(
-              width: 24,
-              height: 24,
-              child: CircularProgressIndicator(),
-            )
-          : Image.asset(
-              'assets/icons/icon_cropped.png',
-              width: 24,
-              height: 24,
-            ),
+      leading: Opacity(
+        opacity: (Platform.isAndroid || Platform.isIOS) ? 1.0 : 0.5,
+        child: (_importingCSV)
+            ? const SizedBox(
+                width: 24,
+                height: 24,
+                child: CircularProgressIndicator(),
+              )
+            : Image.asset(
+                'assets/icons/icon_cropped.png',
+                width: 24,
+                height: 24,
+              ),
+      ),
       onPressed: _startImportingCSV,
     );
   }
