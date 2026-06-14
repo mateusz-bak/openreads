@@ -62,7 +62,10 @@ class CSVImportOpenreads {
 
     final csvString = utf8.decode(csvBytes);
     final normalizedCsvString = csvString.replaceAll('\r\n', '\n');
-    final csv = const CsvToListConverter().convert(normalizedCsvString, eol: '\n');
+    final csv = const CsvToListConverter().convert(
+      normalizedCsvString,
+      eol: '\n',
+    );
 
     for (var i = 0; i < csv.length; i++) {
       // Skip first row with headers
