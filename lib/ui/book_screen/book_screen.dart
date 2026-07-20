@@ -73,6 +73,29 @@ class BookScreen extends StatelessWidget {
     );
   }
 
+  // A null result means the dialog was cancelled or left empty, so the stored
+  // progress is left untouched.
+  void _updateProgressAction(BuildContext context, Book book) async {
+    final currentPage = await showDialog<int?>(
+      context: context,
+      builder: (BuildContext context) {
+        return QuickProgressDialog(
+          currentPage: book.currentPage,
+          pages: book.pages,
+        );
+      },
+    );
+
+    if (currentPage == null) return;
+
+    book = book.copyWith(currentPage: currentPage);
+
+    bookCubit.updateBook(book);
+
+    if (!context.mounted) return;
+    context.read<CurrentBookCubit>().setBook(book);
+  }
+
   void _changeStatusAction(
     BuildContext context,
     BookStatus status,
@@ -138,6 +161,7 @@ class BookScreen extends StatelessWidget {
                       _buildBookFormatDetail(state),
                       _buildPublicationYearDetail(state),
                       _buildPagesDetail(state),
+                      _buildProgressDetail(state, context),
                       _buildISBNDetail(state),
                       _buildOLIDDetail(state),
                       const SizedBox(height: 50),
@@ -214,6 +238,16 @@ class BookScreen extends StatelessWidget {
         ? BookDetail(
             title: LocaleKeys.pages_uppercase.tr(),
             text: (state.pages ?? "").toString(),
+          )
+        : const SizedBox();
+  }
+
+  Widget _buildProgressDetail(Book state, BuildContext context) {
+    return (state.status == BookStatus.inProgress)
+        ? BookProgressDetail(
+            currentPage: state.currentPage,
+            pages: state.pages,
+            onTap: () => _updateProgressAction(context, state),
           )
         : const SizedBox();
   }

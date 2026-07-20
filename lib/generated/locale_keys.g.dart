@@ -43,6 +43,10 @@ abstract class LocaleKeys {
   static const skip = 'skip';
   static const pages_uppercase = 'pages_uppercase';
   static const pages_lowercase = 'pages_lowercase';
+  static const progress_uppercase = 'progress_uppercase';
+  static const update_progress = 'update_progress';
+  static const current_page = 'current_page';
+  static const not_started = 'not_started';
   static const click_to_add_cover = 'click_to_add_cover';
   static const start_date = 'start_date';
   static const finish_date = 'finish_date';

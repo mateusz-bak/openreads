@@ -1,27 +1,15 @@
-name: GitHub release
+name: Build release APK
 
+# Builds a signed APK and attaches it to the GitHub release, so Obtainium can
+# pick it up. Signing uses this fork's own keystore, not upstream's.
 on:
   release:
     types:
       - published
 
 jobs:
-  append_to_release:
-    name: Append project info
-    runs-on: ubuntu-latest
-    steps:
-    - name: Check out code
-      uses: actions/checkout@v4
-
-    - name: Add project info to Release
-      uses: irongut/EditRelease@v1.2.0
-      with:
-        token: ${{ secrets.GITHUB_TOKEN }}
-        id: ${{ github.event.release.id }}
-        files: "assets/project_info.md"
-
-  build_github:
-    name: Build split apks and attach to release
+  build_apk:
+    name: Build signed APK and attach to release
     runs-on: ubuntu-latest
 
     steps:
@@ -47,38 +35,24 @@ jobs:
           flutter config --no-analytics
           flutter pub get
 
-      - name: Configure Keystore for Android
+      - name: Configure keystore
         run: |
-          echo "$PLAY_STORE_UPLOAD_KEY" | base64 --decode > app/upload-keystore.jks
-          echo "storeFile=upload-keystore.jks" >> key.properties
-          echo "keyAlias=$KEYSTORE_KEY_ALIAS" >> key.properties
-          echo "storePassword=$KEYSTORE_STORE_PASSWORD" >> key.properties
-          echo "keyPassword=$KEYSTORE_KEY_PASSWORD" >> key.properties
+          echo "$KEYSTORE_BASE64" | base64 --decode > app/release-keystore.jks
+          echo "storeFile=release-keystore.jks" >> key.properties
+          echo "keyAlias=$KEY_ALIAS" >> key.properties
+          echo "storePassword=$KEYSTORE_PASSWORD" >> key.properties
+          echo "keyPassword=$KEY_PASSWORD" >> key.properties
         env:
-          PLAY_STORE_UPLOAD_KEY: ${{ secrets.PLAY_STORE_UPLOAD_KEY }}
-          KEYSTORE_KEY_ALIAS: ${{ secrets.KEYSTORE_KEY_ALIAS }}
-          KEYSTORE_KEY_PASSWORD: ${{ secrets.KEYSTORE_KEY_PASSWORD }}
-          KEYSTORE_STORE_PASSWORD: ${{ secrets.KEYSTORE_STORE_PASSWORD }}
+          KEYSTORE_BASE64: ${{ secrets.KEYSTORE_BASE64 }}
+          KEY_ALIAS: ${{ secrets.KEY_ALIAS }}
+          KEYSTORE_PASSWORD: ${{ secrets.KEYSTORE_PASSWORD }}
+          KEY_PASSWORD: ${{ secrets.KEY_PASSWORD }}
         working-directory: android
 
-      - name: Build full APK
+      - name: Build APK
         run: flutter build apk --release
 
-      - name: Build APKs split per abi
-        run: flutter build apk --release --split-per-abi
-
-      - name: Rename output files
-        run: |
-          mv "build/app/outputs/flutter-apk/app-release.apk" "build/app/outputs/flutter-apk/openreads-${{ github.event.release.tag_name }}-release.apk"
-          mv "build/app/outputs/flutter-apk/app-armeabi-v7a-release.apk" "build/app/outputs/flutter-apk/openreads-${{ github.event.release.tag_name }}-armeabi-v7a-release.apk"
-          mv "build/app/outputs/flutter-apk/app-arm64-v8a-release.apk" "build/app/outputs/flutter-apk/openreads-${{ github.event.release.tag_name }}-arm64-v8a-release.apk"
-          mv "build/app/outputs/flutter-apk/app-x86_64-release.apk" "build/app/outputs/flutter-apk/openreads-${{ github.event.release.tag_name }}-x86_64-release.apk"
-
-      - name: Attach apk files
-        uses: softprops/action-gh-release@v1
+      - name: Attach APK to release
+        uses: softprops/action-gh-release@v2
         with:
-          files: |
-            build/app/outputs/flutter-apk/openreads-${{ github.event.release.tag_name }}-release.apk
-            build/app/outputs/flutter-apk/openreads-${{ github.event.release.tag_name }}-armeabi-v7a-release.apk
-            build/app/outputs/flutter-apk/openreads-${{ github.event.release.tag_name }}-arm64-v8a-release.apk
-            build/app/outputs/flutter-apk/openreads-${{ github.event.release.tag_name }}-x86_64-release.apk
+          files: build/app/outputs/flutter-apk/app-release.apk
