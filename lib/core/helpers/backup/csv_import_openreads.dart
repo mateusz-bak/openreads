@@ -61,7 +61,7 @@ class CSVImportOpenreads {
     final books = List<Book>.empty(growable: true);
 
     final csvString = utf8.decode(csvBytes);
-    final csv = const CsvToListConverter().convert(csvString, eol: '\r\n');
+    final csv = _convertCSV(csvString);
 
     for (var i = 0; i < csv.length; i++) {
       // Skip first row with headers
@@ -76,6 +76,27 @@ class CSVImportOpenreads {
     }
 
     return books;
+  }
+
+  // Openreads exports use a comma delimiter and CRLF line endings, but files
+  // re-saved by spreadsheet apps may use ';' and/or LF. Auto-detect both by
+  // picking the combination whose header contains the 'title' column.
+  static List<List<dynamic>> _convertCSV(String csvString) {
+    for (final eol in ['\r\n', '\n']) {
+      for (final delimiter in [',', ';']) {
+        final parsed = CsvToListConverter(
+          fieldDelimiter: delimiter,
+          eol: eol,
+        ).convert(csvString);
+
+        if (parsed.isNotEmpty && parsed[0].contains('title')) {
+          return parsed;
+        }
+      }
+    }
+
+    // Fall back to the original behaviour if detection fails.
+    return const CsvToListConverter().convert(csvString, eol: '\r\n');
   }
 
   static Book? _parseBook(BuildContext context, int i, List<List> csv) {
@@ -135,7 +156,7 @@ class CSVImportOpenreads {
   }
 
   static bool _getBoolField(int i, List<List<dynamic>> csv, String field) {
-    return csv[i][csv[0].indexOf(field)].toString() == 'true';
+    return csv[i][csv[0].indexOf(field)].toString().toLowerCase() == 'true';
   }
 
   static List<Reading> _getReadingDates(
