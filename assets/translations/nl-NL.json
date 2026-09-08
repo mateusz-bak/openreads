@@ -275,5 +275,9 @@
     "date_added": "Datum toegevoegd",
     "date_modified": "Datum gewijzigd",
     "warning_no": "Ga terug",
-    "warning_yes_and_dont_show": "Ik vind het prima, en vraag me niet opnieuw"
+    "warning_yes_and_dont_show": "Ik vind het prima, en vraag me niet opnieuw",
+    "list": "Lijst",
+    "show_number_of_books": "Toon het aantal boeken bovenaan de lijst",
+    "create_discussion": "Start een dialoog op GitHub",
+    "compact_list": "Compacte lijst"
 }

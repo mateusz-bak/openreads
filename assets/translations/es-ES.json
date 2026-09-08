@@ -275,5 +275,13 @@
     "warning_no": "Volver atrás",
     "duplicate_book": "Duplicar libro",
     "warning_yes": "Me parece bien",
-    "warning_yes_and_dont_show": "Estoy de acuerdo. No volver a mostrar esto"
+    "warning_yes_and_dont_show": "Estoy de acuerdo. No volver a mostrar esto",
+    "compact_list": "Lista compacta",
+    "grid": "Cuadrícula",
+    "detailed_grid": "Cuadrícula detallada",
+    "show_number_of_books": "Mostrar número de libros al principio de la lista",
+    "show_sort_attributes": "Mostrar atributos de ordenación",
+    "grid_size": "Tamaño de cuadrícula",
+    "show_title_over_cover": "Mostrar título sobre portada",
+    "create_discussion": "Crear un debate en Github"
 }
