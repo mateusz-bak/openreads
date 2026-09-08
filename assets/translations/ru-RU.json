@@ -275,5 +275,19 @@
     "warning_no": "Не надо",
     "warning_yes_and_dont_show": "Я согласен и не надо больше спрашивать",
     "copy_book": "копия",
-    "cover_still_downloaded": "Обложка все ещё загружается"
+    "cover_still_downloaded": "Обложка все ещё загружается",
+    "set_default_tags": "Тэги по умолчанию для новых книг",
+    "add_new_default_tag": "Добавить новый тэг по умолчанию:",
+    "create_discussion": "Создать обсуждение на GitHub",
+    "book_format": "Формат книги",
+    "display": "Отображение",
+    "list": "Список",
+    "compact_list": "Компактный список",
+    "grid": "Сетка",
+    "detailed_grid": "Подробная сетка",
+    "show_number_of_books": "Показать количество книг вверху списка",
+    "show_book_format": "Показать формат книги",
+    "show_sort_attributes": "Показывать атрибуты сортировки",
+    "grid_size": "Размер сетки",
+    "show_title_over_cover": "Показать название над обложкой"
 }
