@@ -110,6 +110,7 @@ class TagsField extends StatelessWidget {
             Scrollbar(
               child: TypeAheadField(
                 controller: controller,
+                debounceDuration: Duration.zero,
                 itemBuilder: (context, suggestion) {
                   return Container(
                     color: Theme.of(context).colorScheme.surfaceVariant,
@@ -120,9 +121,18 @@ class TagsField extends StatelessWidget {
                 },
                 suggestionsCallback: (pattern) =>
                     allTags?.where((String option) {
+                      final selectedTags = context
+                              .read<EditBookCubit>()
+                              .state
+                              .tags
+                              ?.split('|||||')
+                              .where((t) => t.isNotEmpty)
+                              .toSet() ??
+                          <String>{};
                       return option
-                          .toLowerCase()
-                          .startsWith(pattern.toLowerCase());
+                              .toLowerCase()
+                              .startsWith(pattern.toLowerCase()) &&
+                          !selectedTags.contains(option);
                     }).toList() ??
                     [],
                 onSelected: (suggestion) {
