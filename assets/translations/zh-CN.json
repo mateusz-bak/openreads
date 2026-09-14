@@ -275,5 +275,7 @@
     "warning_no": "返回",
     "warning_yes_and_dont_show": "我知道了，下次不再提示",
     "save_without_cover": "不带封面保存",
-    "duplicate_book": "重复书籍"
+    "duplicate_book": "重复书籍",
+    "create_discussion": "在GitHub上创建一个讨论",
+    "set_default_tags": "新书的默认标签"
 }

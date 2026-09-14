@@ -110,7 +110,7 @@
     "translate_app": "Ajudeu amb la traducció",
     "app": "Aplicació",
     "apperance": "Aparença",
-    "about": "Sobre",
+    "about": "Quant a",
     "version": "Versió",
     "source_code": "Codi font",
     "source_code_description": "Mostra al GitHub",
@@ -263,8 +263,8 @@
     "read_x_times": "Llegit {} vegades",
     "date_added": "Data d'addició",
     "date_modified": "Data de modificació",
-    "added_on": "Afegit",
-    "modified_on": "Modificat",
+    "added_on": "Afegit el",
+    "modified_on": "Modificat el",
     "default_books_format": "Format per defecte dels llibres",
     "cover_still_downloaded": "La portada encara s'està descarregant",
     "wait_for_downloading_to_finish": "Esperar a que s'acabi la descàrrega",
@@ -275,5 +275,7 @@
     "copy_book": "còpia",
     "duck_duck_go_warning": "La cerca de portades a la xarxa es fa a través del DuckDuckGo, un programari de propietat. Cal tenir-ho en compte pel que fa a la privacitat de les dades",
     "warning_no": "Torna enrere",
-    "warning_yes_and_dont_show": "Hi estic d'acord. No em tornis a ensenyar aquest missatge."
+    "warning_yes_and_dont_show": "Hi estic d'acord. No em tornis a ensenyar aquest missatge.",
+    "create_discussion": "Creeu una discussió a GitHub",
+    "set_default_tags": "Etiquetes per defecte per a llibres nous"
 }
