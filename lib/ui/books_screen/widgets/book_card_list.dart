@@ -120,40 +120,24 @@ class BookCardList extends StatelessWidget {
         ),
         Text(
           book.publicationYear.toString(),
-          style: const TextStyle(
-            fontSize: 13,
-            fontWeight: FontWeight.bold,
-          ),
+          style: const TextStyle(fontSize: 13, fontWeight: FontWeight.bold),
         ),
       ],
     );
   }
 
-  Column _buildDateAttribute(
-    DateTime date,
-    String label,
-    bool includeTime,
-  ) {
-    const timeTextStyle = TextStyle(
-      fontSize: 13,
-      fontWeight: FontWeight.bold,
-    );
+  Column _buildDateAttribute(DateTime date, String label, bool includeTime) {
+    const timeTextStyle = TextStyle(fontSize: 13, fontWeight: FontWeight.bold);
     return Column(
       crossAxisAlignment: CrossAxisAlignment.end,
       children: [
-        Text(
-          label,
-          style: const TextStyle(fontSize: 12),
-        ),
+        Text(label, style: const TextStyle(fontSize: 12)),
         includeTime
             ? Text(
                 '${dateFormat.format(date)} ${date.hour}:${date.minute.toString().padLeft(2, '0')}',
                 style: timeTextStyle,
               )
-            : Text(
-                dateFormat.format(date),
-                style: timeTextStyle,
-              ),
+            : Text(dateFormat.format(date), style: timeTextStyle),
       ],
     );
   }
@@ -183,9 +167,7 @@ class BookCardList extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.start,
               children: [
                 Expanded(
-                  child: Wrap(
-                    children: _generateTagChips(context: context),
-                  ),
+                  child: Wrap(children: _generateTagChips(context: context)),
                 ),
               ],
             );
@@ -194,18 +176,12 @@ class BookCardList extends StatelessWidget {
     return const SizedBox();
   }
 
-  Widget _buildTagChip({
-    required String tag,
-    required BuildContext context,
-  }) {
+  Widget _buildTagChip({required String tag, required BuildContext context}) {
     return Padding(
       padding: const EdgeInsets.only(right: 10),
       child: FilterChip(
         padding: const EdgeInsets.all(5),
-        label: Text(
-          tag,
-          style: const TextStyle(fontSize: 12),
-        ),
+        label: Text(tag, style: const TextStyle(fontSize: 12)),
         onSelected: (_) {},
       ),
     );
@@ -220,14 +196,14 @@ class BookCardList extends StatelessWidget {
 
     final tags = book.tags!.split('|||||');
 
-    tags.sort((a, b) => removeDiacritics(a.toLowerCase())
-        .compareTo(removeDiacritics(b.toLowerCase())));
+    tags.sort(
+      (a, b) => removeDiacritics(
+        a.toLowerCase(),
+      ).compareTo(removeDiacritics(b.toLowerCase())),
+    );
 
     for (var tag in tags) {
-      chips.add(_buildTagChip(
-        tag: tag,
-        context: context,
-      ));
+      chips.add(_buildTagChip(tag: tag, context: context));
     }
 
     return chips;
@@ -295,6 +271,16 @@ class BookCardList extends StatelessWidget {
               _buildBookFormatIcon(context),
             ],
           ),
+          if (book.subtitle?.isNotEmpty == true)
+            Text(
+              book.subtitle!,
+              softWrap: true,
+              overflow: TextOverflow.clip,
+              style: TextStyle(
+                fontSize: 13,
+                color: Theme.of(context).colorScheme.onSurface.withOpacity(0.7),
+              ),
+            ),
           Text(
             book.author,
             softWrap: true,
@@ -311,10 +297,9 @@ class BookCardList extends StatelessWidget {
                   overflow: TextOverflow.clip,
                   style: TextStyle(
                     fontSize: 12,
-                    color: Theme.of(context)
-                        .colorScheme
-                        .onSurface
-                        .withOpacity(0.6),
+                    color: Theme.of(
+                      context,
+                    ).colorScheme.onSurface.withOpacity(0.6),
                     letterSpacing: 0.05,
                   ),
                 )
@@ -337,19 +322,21 @@ class BookCardList extends StatelessWidget {
   }
 
   Widget _buildBookFormatIcon(BuildContext context) {
-    return BlocBuilder<DisplayCubit, DisplayState>(builder: (context, state) {
-      if (!state.bookFormatOnList) return const SizedBox();
+    return BlocBuilder<DisplayCubit, DisplayState>(
+      builder: (context, state) {
+        if (!state.bookFormatOnList) return const SizedBox();
 
-      return FaIcon(
-        book.bookFormat == BookFormat.audiobook
-            ? FontAwesomeIcons.headphones
-            : book.bookFormat == BookFormat.ebook
-                ? FontAwesomeIcons.tabletScreenButton
-                : FontAwesomeIcons.bookOpen,
-        size: 15,
-        color: Theme.of(context).colorScheme.primaryContainer,
-      );
-    });
+        return FaIcon(
+          book.bookFormat == BookFormat.audiobook
+              ? FontAwesomeIcons.headphones
+              : book.bookFormat == BookFormat.ebook
+                  ? FontAwesomeIcons.tabletScreenButton
+                  : FontAwesomeIcons.bookOpen,
+          size: 15,
+          color: Theme.of(context).colorScheme.primaryContainer,
+        );
+      },
+    );
   }
 
   SizedBox _buildCover(File? coverFile) {
@@ -414,9 +401,7 @@ class BookCardList extends StatelessWidget {
         } else {
           return Row(
             children: [
-              Text(
-                (book.rating == null) ? '0' : '${(book.rating! / 10)}',
-              ),
+              Text((book.rating == null) ? '0' : '${(book.rating! / 10)}'),
               const SizedBox(width: 5),
               FaIcon(
                 FontAwesomeIcons.solidStar,

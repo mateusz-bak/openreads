@@ -33,9 +33,7 @@ class BookCardListCompact extends StatelessWidget {
     return Padding(
       padding: EdgeInsets.fromLTRB(5, 0, 5, addBottomPadding ? 90 : 5),
       child: Card.filled(
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(8),
-        ),
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
         color: cardColor,
         child: InkWell(
           onTap: onPressed,
@@ -91,6 +89,16 @@ class BookCardListCompact extends StatelessWidget {
               _buildBookFormatIcon(context),
             ],
           ),
+          if (book.subtitle?.isNotEmpty == true)
+            Text(
+              book.subtitle!,
+              softWrap: true,
+              overflow: TextOverflow.clip,
+              style: TextStyle(
+                fontSize: 12,
+                color: Theme.of(context).colorScheme.onSurface.withOpacity(0.7),
+              ),
+            ),
           Text(
             book.author,
             softWrap: true,
@@ -107,10 +115,9 @@ class BookCardListCompact extends StatelessWidget {
                   overflow: TextOverflow.clip,
                   style: TextStyle(
                     fontSize: 11,
-                    color: Theme.of(context)
-                        .colorScheme
-                        .onSurface
-                        .withOpacity(0.6),
+                    color: Theme.of(
+                      context,
+                    ).colorScheme.onSurface.withOpacity(0.6),
                     letterSpacing: 0.05,
                   ),
                 )
@@ -131,19 +138,21 @@ class BookCardListCompact extends StatelessWidget {
   }
 
   Widget _buildBookFormatIcon(BuildContext context) {
-    return BlocBuilder<DisplayCubit, DisplayState>(builder: (context, state) {
-      if (!state.bookFormatOnList) return const SizedBox();
+    return BlocBuilder<DisplayCubit, DisplayState>(
+      builder: (context, state) {
+        if (!state.bookFormatOnList) return const SizedBox();
 
-      return FaIcon(
-        book.bookFormat == BookFormat.audiobook
-            ? FontAwesomeIcons.headphones
-            : book.bookFormat == BookFormat.ebook
-                ? FontAwesomeIcons.tabletScreenButton
-                : FontAwesomeIcons.bookOpen,
-        size: 14,
-        color: Theme.of(context).colorScheme.primaryContainer,
-      );
-    });
+        return FaIcon(
+          book.bookFormat == BookFormat.audiobook
+              ? FontAwesomeIcons.headphones
+              : book.bookFormat == BookFormat.ebook
+                  ? FontAwesomeIcons.tabletScreenButton
+                  : FontAwesomeIcons.bookOpen,
+          size: 14,
+          color: Theme.of(context).colorScheme.primaryContainer,
+        );
+      },
+    );
   }
 
   SizedBox _buildCover(File? coverFile) {
@@ -208,9 +217,7 @@ class BookCardListCompact extends StatelessWidget {
         } else {
           return Row(
             children: [
-              Text(
-                (book.rating == null) ? '0' : '${(book.rating! / 10)}',
-              ),
+              Text((book.rating == null) ? '0' : '${(book.rating! / 10)}'),
               const SizedBox(width: 5),
               FaIcon(
                 FontAwesomeIcons.solidStar,
