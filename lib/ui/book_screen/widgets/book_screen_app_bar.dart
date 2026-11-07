@@ -5,6 +5,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:openreads/core/helpers/cross_platform/alert_dialog.dart';
 import 'package:openreads/core/themes/app_theme.dart';
 import 'package:openreads/generated/locale_keys.g.dart';
 import 'package:openreads/logic/bloc/theme_bloc/theme_bloc.dart';
@@ -31,7 +32,7 @@ class BookScreenAppBar extends StatelessWidget implements PreferredSizeWidget {
     showDialog(
       context: context,
       builder: (BuildContext context) {
-        return AlertDialog.adaptive(
+        return buildPlatformSpecificAlertDialog(
           shape: Platform.isAndroid
               ? RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(cornerRadius),

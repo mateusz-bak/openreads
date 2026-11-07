@@ -8,6 +8,7 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 import 'package:openreads/core/constants/constants.dart';
 import 'package:openreads/core/constants/enums/book_status.dart';
+import 'package:openreads/core/helpers/helpers.dart';
 import 'package:openreads/core/themes/app_theme.dart';
 import 'package:openreads/generated/locale_keys.g.dart';
 import 'package:openreads/logic/bloc/theme_bloc/theme_bloc.dart';
@@ -49,7 +50,7 @@ class _HomeScreenState extends State<HomeScreen> {
           return const SortBottomSheet();
         },
       );
-    } else if (Platform.isAndroid) {
+    } else {
       showModalBottomSheet(
         context: context,
         isScrollControlled: true,
@@ -142,7 +143,7 @@ class _HomeScreenState extends State<HomeScreen> {
           );
         },
       );
-    } else if (Platform.isAndroid) {
+    } else {
       showModalBottomSheet(
         context: context,
         backgroundColor: Colors.transparent,
@@ -189,6 +190,11 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 
   Future<void> _scanBarcode() async {
+    if (!(Platform.isAndroid || Platform.isIOS)) {
+      errorSnackBar(LocaleKeys.action_not_supported_on_platform_error.tr());
+      return;
+    }
+
     _setEmptyBookForEditScreen();
 
     Navigator.pop(context);

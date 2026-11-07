@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:openreads/generated/locale_keys.g.dart';
@@ -52,17 +54,32 @@ class WelcomePageChoices extends StatelessWidget {
                           description: LocaleKeys.restore_backup.tr(),
                           onPressed: restoreBackup,
                         ),
-                        WelcomeChoiceButton(
-                          description: LocaleKeys.import_csv.tr(),
-                          onPressed: importOpenreadsCsv,
+                        Opacity(
+                          opacity: (Platform.isAndroid || Platform.isIOS)
+                              ? 1.0
+                              : 0.5,
+                          child: WelcomeChoiceButton(
+                            description: LocaleKeys.import_csv.tr(),
+                            onPressed: importOpenreadsCsv,
+                          ),
                         ),
-                        WelcomeChoiceButton(
-                          description: LocaleKeys.import_goodreads_csv.tr(),
-                          onPressed: importGoodreadsCsv,
+                        Opacity(
+                          opacity: (Platform.isAndroid || Platform.isIOS)
+                              ? 1.0
+                              : 0.5,
+                          child: WelcomeChoiceButton(
+                            description: LocaleKeys.import_goodreads_csv.tr(),
+                            onPressed: importGoodreadsCsv,
+                          ),
                         ),
-                        WelcomeChoiceButton(
-                          description: LocaleKeys.import_bookwyrm_csv.tr(),
-                          onPressed: importBookwyrmCsv,
+                        Opacity(
+                          opacity: (Platform.isAndroid || Platform.isIOS)
+                              ? 1.0
+                              : 0.5,
+                          child: WelcomeChoiceButton(
+                            description: LocaleKeys.import_bookwyrm_csv.tr(),
+                            onPressed: importBookwyrmCsv,
+                          ),
                         ),
                       ],
                     ),
