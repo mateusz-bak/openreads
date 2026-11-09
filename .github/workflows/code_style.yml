@@ -2,9 +2,15 @@ name: Code style
 
 on:
   push:
+    branches:
+      - master
   pull_request:
     branches:
       - master
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.event.pull_request.number || github.sha }}
+  cancel-in-progress: true
 
 jobs:
   dart_format:
@@ -21,9 +27,14 @@ jobs:
       uses: subosito/flutter-action@v2
       with:
         flutter-version: ${{ env.VERSION }}
+        cache: true
+        pub-cache: true
 
     - name: Get Flutter packages
       run: flutter pub get
 
     - name: Format Dart code
       run: dart format --set-exit-if-changed lib
+
+    - name: Analyze Dart code
+      run: flutter analyze --no-fatal-infos --no-fatal-warnings
