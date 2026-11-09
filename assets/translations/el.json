@@ -1,4 +1,6 @@
 {
     "books_finished": "Ολοκληρωμένο",
-    "book_status_finished": "Ολοκληρωμένο"
+    "book_status_finished": "Ολοκληρωμένο",
+    "books_for_later": "Για αργότερα",
+    "books_unfinished": "Ανολοκλήρωτα"
 }
