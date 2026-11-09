@@ -555,7 +555,9 @@ class _AddBookScreenState extends State<AddBookScreen> {
                         controller: _pubYearCtrl,
                         hint: LocaleKeys.enter_publication_year.tr(),
                         icon: FontAwesomeIcons.solidCalendar,
-                        keyboardType: TextInputType.number,
+                        keyboardType: const TextInputType.numberWithOptions(
+                          signed: true,
+                        ),
                         inputFormatters: <TextInputFormatter>[
                           // allow optional leading '-' for BCE years
                           FilteringTextInputFormatter.allow(
