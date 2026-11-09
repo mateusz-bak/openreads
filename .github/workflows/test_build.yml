@@ -8,6 +8,10 @@ on:
     branches:
       - master
 
+concurrency:
+  group: ${{ github.workflow }}-${{ github.event.pull_request.number || github.sha }}
+  cancel-in-progress: true
+
 jobs:
   android_apk_build:
     name: Android apk
@@ -30,6 +34,8 @@ jobs:
       uses: subosito/flutter-action@v2
       with:
         flutter-version: ${{ env.VERSION }}
+        cache: true
+        pub-cache: true
 
     - name: Remove signing config
       run: awk '/release \{/ {f=1} !f; /}/ && f {f=0}' build.gradle > temp && mv temp build.gradle
@@ -42,10 +48,11 @@ jobs:
       run: flutter pub get
 
     - name: Build APK
-      run: flutter build -v apk
+      run: flutter build apk
 
   android_appbundle_build:
     name: Android appbundle
+    if: github.event_name == 'push' # compiles the same code as the apk job
     runs-on: ubuntu-latest
     steps:
     - name: Check out code
@@ -65,6 +72,8 @@ jobs:
       uses: subosito/flutter-action@v2
       with:
         flutter-version: ${{ env.VERSION }}
+        cache: true
+        pub-cache: true
 
     - name: Remove signing config
       run: awk '/release \{/ {f=1} !f; /}/ && f {f=0}' build.gradle > temp && mv temp build.gradle
@@ -77,11 +86,11 @@ jobs:
       run: flutter pub get
 
     - name: Build appbundle
-      run: flutter build -v appbundle
+      run: flutter build appbundle
 
   ios_build:
     name: iOS ipa
-    runs-on: macos-14
+    runs-on: macos-15
     steps:
     - name: Check out code
       uses: actions/checkout@v4
@@ -93,6 +102,8 @@ jobs:
       uses: subosito/flutter-action@v2
       with:
         flutter-version: ${{ env.VERSION }}
+        cache: true
+        pub-cache: true
 
     - name: Configure Flutter
       run: flutter config --no-analytics
@@ -100,8 +111,13 @@ jobs:
     - name: Get Flutter packages
       run: flutter pub get
 
-    - name: Build iOS
-      run: flutter build ios --no-codesign
+    - name: Build iOS (simulator)
+      if: github.event_name == 'pull_request'
+      run: flutter build ios --simulator --debug # much faster than a release build
+
+    - name: Build iOS (release)
+      if: github.event_name == 'push'
+      run: flutter build ios --release --no-codesign
 
   linux_build:
     name: Linux executable
@@ -113,27 +129,23 @@ jobs:
     - name: Install Linux dependencies
       run: |
         sudo apt-get update -y
-        sudo apt-get install -y libgtk-3-dev
+        sudo apt-get install -y clang cmake ninja-build pkg-config libgtk-3-dev liblzma-dev
+
+    - name: Set up Flutter version
+      run: echo "VERSION=$(cat .flutter-version)" >> $GITHUB_ENV
 
     - name: Set up Flutter
       uses: subosito/flutter-action@v2
       with:
         flutter-version: ${{ env.VERSION }}
         cache: true
+        pub-cache: true
 
     - name: Configure Flutter
-      run: |
-        flutter config --no-analytics
-        flutter config --enable-linux-desktop
+      run: flutter config --no-analytics
 
     - name: Get Flutter packages
       run: flutter pub get
 
     - name: Build Linux
-      run: flutter build --verbose linux --debug
-
-    - name: Store artifact
-      uses: actions/upload-artifact@v4
-      with:
-        name: linux-appbundle
-        path: build/linux/x64/debug/bundle/
+      run: flutter build linux --debug
