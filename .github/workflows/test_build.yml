@@ -44,10 +44,6 @@ jobs:
         cache: true
         pub-cache: true
 
-    - name: Remove signing config
-      run: awk '/release \{/ {f=1} !f; /}/ && f {f=0}' build.gradle > temp && mv temp build.gradle
-      working-directory: android/app
-
     - name: Disable analytics
       run: |
         flutter config --no-analytics
@@ -83,10 +79,6 @@ jobs:
         flutter-version: ${{ env.VERSION }}
         cache: true
         pub-cache: true
-
-    - name: Remove signing config
-      run: awk '/release \{/ {f=1} !f; /}/ && f {f=0}' build.gradle > temp && mv temp build.gradle
-      working-directory: android/app
 
     - name: Disable analytics
       run: |
