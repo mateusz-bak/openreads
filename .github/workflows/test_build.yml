@@ -53,7 +53,7 @@ jobs:
       run: flutter pub get
 
     - name: Build APK
-      run: flutter build apk
+      run: flutter build apk ${{ github.event_name == 'pull_request' && '--target-platform android-arm64' || '' }}
 
   android_appbundle_build:
     name: Android appbundle
