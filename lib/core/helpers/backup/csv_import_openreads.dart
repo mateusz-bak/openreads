@@ -79,24 +79,21 @@ class CSVImportOpenreads {
   }
 
   // Openreads exports use a comma delimiter and CRLF line endings, but files
-  // re-saved by spreadsheet apps may use ';' and/or LF. Auto-detect both by
-  // picking the combination whose header contains the 'title' column.
+  // re-saved by spreadsheet apps may use ';' and/or LF.
   static List<List<dynamic>> _convertCSV(String csvString) {
-    for (final eol in ['\r\n', '\n']) {
-      for (final delimiter in [',', ';']) {
-        final parsed = CsvToListConverter(
-          fieldDelimiter: delimiter,
-          eol: eol,
-        ).convert(csvString);
+    // Excel's "CSV UTF-8" adds a BOM, which would hide the 'title' column
+    if (csvString.startsWith('\uFEFF')) csvString = csvString.substring(1);
 
-        if (parsed.isNotEmpty && parsed[0].contains('title')) {
-          return parsed;
-        }
-      }
-    }
+    final headerEnd = csvString.indexOf('\n');
+    final header =
+        headerEnd != -1 ? csvString.substring(0, headerEnd) : csvString;
+    final eol = header.endsWith('\r') ? '\r\n' : '\n';
+    final delimiter = header.contains(';') && !header.contains(',') ? ';' : ',';
 
-    // Fall back to the original behaviour if detection fails.
-    return const CsvToListConverter().convert(csvString, eol: '\r\n');
+    return CsvToListConverter(
+      fieldDelimiter: delimiter,
+      eol: eol,
+    ).convert(csvString);
   }
 
   static Book? _parseBook(BuildContext context, int i, List<List> csv) {
