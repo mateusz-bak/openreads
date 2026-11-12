@@ -149,13 +149,13 @@ class CSVImportBookwyrm {
 
   static int? _getRating(int i, List<List<dynamic>> csv) {
     // Example rating fields:
-    // 0
-    // 5
-    final rating = int.tryParse(
+    // 4.00
+    // 4.50
+    final rating = double.tryParse(
       csv[i][csv[0].indexOf('rating')].toString(),
     );
 
-    return rating != null && rating != 0 ? rating * 10 : null;
+    return rating != null && rating != 0 ? (rating * 10).round() : null;
   }
 
   static String? _getMyReview(int i, List<List<dynamic>> csv) {
