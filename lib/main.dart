@@ -40,6 +40,7 @@ import 'package:openreads/resources/open_library_service.dart';
 import 'package:openreads/ui/home_screen/home_screen.dart';
 import 'package:openreads/ui/welcome_screen/welcome_screen.dart';
 import 'package:path_provider/path_provider.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 late BookCubit bookCubit;
 late Directory appDocumentsDirectory;
@@ -49,6 +50,7 @@ late DateFormat dateFormat;
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  await _migrateNorwegianLocale();
   await EasyLocalization.ensureInitialized();
 
   // Using sqflite_common_ffi on windows or linux which requires setup
@@ -314,6 +316,15 @@ class _OpenreadsAppState extends State<OpenreadsApp>
   }
 }
 
+// Norwegian Bokmål moved from no-NO to nb-NO,
+Future<void> _migrateNorwegianLocale() async {
+  final SharedPreferences prefs = await SharedPreferences.getInstance();
+
+  if (prefs.getString('locale') == 'no_NO') {
+    await prefs.setString('locale', 'nb_NO');
+  }
+}
+
 Future<void> _setAndroidConfig() async {
   if (Platform.isAndroid) {
     var androidInfo = await DeviceInfoPlugin().androidInfo;
@@ -338,7 +349,7 @@ Future _initDateFormat(BuildContext context) async {
 
   // Fallback to another locale as nn-NO is not supported by Flutter
   if (locale == const Locale('nn').toString()) {
-    locale = const Locale('no', 'NO').toString();
+    locale = const Locale('nb', 'NO').toString();
   }
 
   // ignore: use_build_context_synchronously
