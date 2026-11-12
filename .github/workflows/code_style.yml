@@ -2,28 +2,51 @@ name: Code style
 
 on:
   push:
+    branches:
+      - master
   pull_request:
     branches:
       - master
 
+concurrency:
+  group: ${{ github.workflow }}-${{ github.event.pull_request.number || github.sha }}
+  cancel-in-progress: true
+
+permissions:
+  contents: read
+
+env:
+  FLUTTER_SUPPRESS_ANALYTICS: 'true'
+  DO_NOT_TRACK: '1'
+
 jobs:
   dart_format:
     name: Dart format
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-26.04
     steps:
     - name: Checkout code
-      uses: actions/checkout@v4
+      uses: actions/checkout@v7
 
     - name: Set up Flutter version
       run: echo "VERSION=$(cat .flutter-version)" >> $GITHUB_ENV
 
     - name: Set up Flutter
-      uses: subosito/flutter-action@v2
+      uses: subosito/flutter-action@1a449444c387b1966244ae4d4f8c696479add0b2 # v2.23.0
       with:
         flutter-version: ${{ env.VERSION }}
+        cache: true
+        pub-cache: true
+
+    - name: Disable analytics
+      run: |
+        flutter config --no-analytics
+        dart --disable-analytics
 
     - name: Get Flutter packages
       run: flutter pub get
 
     - name: Format Dart code
       run: dart format --set-exit-if-changed lib
+
+    - name: Analyze Dart code
+      run: flutter analyze --no-fatal-infos --no-fatal-warnings

@@ -98,9 +98,9 @@ class CSVImportBookwyrm {
         olid: _getOLID(i, csv),
         rating: _getRating(i, csv),
         myReview: _getMyReview(i, csv),
-        status: BookStatus.read,
-        readings: List<Reading>.empty(growable: true),
-        dateAdded: DateTime.now(),
+        status: _getStatus(i, csv),
+        readings: _getReadings(i, csv),
+        dateAdded: _getDateAdded(i, csv),
         dateModified: DateTime.now(),
       );
     } catch (e) {
@@ -149,18 +149,118 @@ class CSVImportBookwyrm {
 
   static int? _getRating(int i, List<List<dynamic>> csv) {
     // Example rating fields:
-    // 0
-    // 5
-    final rating = int.tryParse(
+    // 4.00
+    // 4.50
+    final rating = double.tryParse(
       csv[i][csv[0].indexOf('rating')].toString(),
     );
 
-    return rating != null && rating != 0 ? rating * 10 : null;
+    return rating != null && rating != 0 ? (rating * 10).round() : null;
   }
 
   static String? _getMyReview(int i, List<List<dynamic>> csv) {
     final myReview = csv[i][csv[0].indexOf('review_content')].toString();
 
     return myReview.isNotEmpty ? myReview : null;
+  }
+
+  static BookStatus _getStatus(int i, List<List<dynamic>> csv) {
+    // Get status from shelf field or infer by reading/stopped dates
+
+    // Default values of shelf field from bookwyrm export : read, reading, to-read, stopped-reading
+    final shelfIndex = csv[0].indexOf('shelf');
+
+    // exports from BookWyrm 0.7.1 and older have no shelf and date columns
+    if (shelfIndex == -1) return BookStatus.read;
+
+    final shelf = csv[i][shelfIndex].toString();
+
+    switch (shelf) {
+      case 'read':
+        return BookStatus.read;
+      case 'reading':
+        return BookStatus.inProgress;
+      case 'to-read':
+        return BookStatus.forLater;
+      case 'stopped-reading':
+        return BookStatus.unfinished;
+      default:
+        // Unknown/other/empty value -> Infer status by dates
+        // In bookwyrm export, there is *either* a finish date or a stopped date
+        final startDateIndex = csv[0].indexOf('start_date');
+        final finishDateIndex = csv[0].indexOf('finish_date');
+        final stoppedDateIndex = csv[0].indexOf('stopped_date');
+
+        final hasStartDate = startDateIndex != -1 &&
+            csv[i][startDateIndex].toString().isNotEmpty;
+        final hasFinishDate = finishDateIndex != -1 &&
+            csv[i][finishDateIndex].toString().isNotEmpty;
+        final hasStoppedDate = stoppedDateIndex != -1 &&
+            csv[i][stoppedDateIndex].toString().isNotEmpty;
+
+        if (hasFinishDate) {
+          return BookStatus.read;
+        } else if (hasStoppedDate) {
+          return BookStatus.unfinished;
+        } else if (hasStartDate) {
+          return BookStatus.inProgress;
+        } else {
+          return BookStatus.forLater;
+        }
+    }
+  }
+
+  static List<Reading> _getReadings(int i, List<List<dynamic>> csv) {
+    List<Reading> readings = [];
+
+    final startDateIndex = csv[0].indexOf('start_date');
+    final finishDateIndex = csv[0].indexOf('finish_date');
+    final stoppedDateIndex = csv[0].indexOf('stopped_date');
+
+    DateTime? startDate;
+    DateTime? finishDate;
+    DateTime? stoppedDate;
+
+    if (startDateIndex != -1) {
+      final startDateString = csv[i][startDateIndex].toString();
+      if (startDateString.isNotEmpty) {
+        startDate = DateTime.parse(startDateString);
+      }
+    }
+
+    if (finishDateIndex != -1) {
+      final finishDateString = csv[i][finishDateIndex].toString();
+      if (finishDateString.isNotEmpty) {
+        finishDate = DateTime.parse(finishDateString);
+      }
+    }
+
+    if (stoppedDateIndex != -1) {
+      final stoppedDateString = csv[i][stoppedDateIndex].toString();
+      if (stoppedDateString.isNotEmpty) {
+        stoppedDate = DateTime.parse(stoppedDateString);
+      }
+    }
+
+    if (startDate != null || finishDate != null || stoppedDate != null) {
+      readings.add(Reading(
+        startDate: startDate,
+        finishDate: finishDate ?? stoppedDate,
+      ));
+    }
+
+    return readings;
+  }
+
+  static DateTime _getDateAdded(int i, List<List<dynamic>> csv) {
+    final dateAddedIndex = csv[0].indexOf('shelf_date');
+    final dateAddedString =
+        dateAddedIndex != -1 ? csv[i][dateAddedIndex].toString() : '';
+
+    if (dateAddedString.isNotEmpty) {
+      return DateTime.parse(dateAddedString);
+    } else {
+      return DateTime.now();
+    }
   }
 }

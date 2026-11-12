@@ -5,6 +5,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:openreads/core/helpers/cross_platform/alert_dialog.dart';
 import 'package:openreads/core/themes/app_theme.dart';
 import 'package:openreads/generated/locale_keys.g.dart';
 import 'package:openreads/model/reading_time.dart';
@@ -133,7 +134,7 @@ class _BookReadingTimeField extends State<BookReadingTimeField> {
   Future<String?> buildShowDialog(BuildContext context) {
     return showDialog(
         context: context,
-        builder: (BuildContext context) => AlertDialog.adaptive(
+        builder: (BuildContext context) => buildPlatformSpecificAlertDialog(
             title: Text(
               LocaleKeys.set_custom_reading_time.tr(),
               style: const TextStyle(fontSize: 20),

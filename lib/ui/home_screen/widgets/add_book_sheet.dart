@@ -61,13 +61,16 @@ class _AddBookSheetState extends State<AddBookSheet> {
               ),
               onTap: widget.searchInOpenLibrary,
             ),
-            ListTile(
-              title: Text(LocaleKeys.add_scan.tr()),
-              leading: FaIcon(
-                FontAwesomeIcons.barcode,
-                color: Theme.of(context).colorScheme.primary,
+            Opacity(
+              opacity: (Platform.isAndroid || Platform.isIOS) ? 1.0 : 0.5,
+              child: ListTile(
+                title: Text(LocaleKeys.add_scan.tr()),
+                leading: FaIcon(
+                  FontAwesomeIcons.barcode,
+                  color: Theme.of(context).colorScheme.primary,
+                ),
+                onTap: widget.scanBarcode,
               ),
-              onTap: widget.scanBarcode,
             ),
             const SizedBox(height: 10)
           ],
