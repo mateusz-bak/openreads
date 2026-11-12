@@ -19,7 +19,7 @@ class NynorskMaterialLocalizationsDelegate
 
     return SynchronousFuture<MaterialLocalizations>(
       await GlobalMaterialLocalizations.delegate.load(
-        const Locale('no', 'NO'),
+        const Locale('nb', 'NO'),
       ),
     );
   }
@@ -43,7 +43,7 @@ class NynorskCupertinoLocalizationsDelegate
 
     return SynchronousFuture<CupertinoLocalizations>(
       await GlobalCupertinoLocalizations.delegate.load(
-        const Locale('no', 'NO'),
+        const Locale('nb', 'NO'),
       ),
     );
   }

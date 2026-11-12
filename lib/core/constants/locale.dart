@@ -30,7 +30,7 @@ final supportedLocales = [
   AppLanguage('മലയാളം', const Locale('ml')),
   AppLanguage('မြန်မာစကား', const Locale('my')),
   AppLanguage('Nederlands', const Locale('nl', 'NL')),
-  AppLanguage('Norsk', const Locale('no', 'NO')),
+  AppLanguage('Norsk bokmål', const Locale('nb', 'NO')),
   AppLanguage('Nynorsk', const Locale('nn')),
   AppLanguage('ଓଡ଼ିଆ', const Locale('or', 'IN')),
   AppLanguage('ਪੰਜਾਬੀ', const Locale('pa')),
