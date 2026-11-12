@@ -168,7 +168,12 @@ class CSVImportBookwyrm {
     // Get status from shelf field or infer by reading/stopped dates
 
     // Default values of shelf field from bookwyrm export : read, reading, to-read, stopped-reading
-    final shelf = csv[i][csv[0].indexOf('shelf')].toString();
+    final shelfIndex = csv[0].indexOf('shelf');
+
+    // exports from BookWyrm 0.7.1 and older have no shelf and date columns
+    if (shelfIndex == -1) return BookStatus.read;
+
+    final shelf = csv[i][shelfIndex].toString();
 
     switch (shelf) {
       case 'read':
@@ -248,7 +253,9 @@ class CSVImportBookwyrm {
   }
 
   static DateTime _getDateAdded(int i, List<List<dynamic>> csv) {
-    final dateAddedString = csv[i][csv[0].indexOf('shelf_date')].toString();
+    final dateAddedIndex = csv[0].indexOf('shelf_date');
+    final dateAddedString =
+        dateAddedIndex != -1 ? csv[i][dateAddedIndex].toString() : '';
 
     if (dateAddedString.isNotEmpty) {
       return DateTime.parse(dateAddedString);
