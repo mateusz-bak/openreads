@@ -2,10 +2,8 @@ import 'dart:convert';
 import 'dart:io';
 
 import 'package:equatable/equatable.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:openreads/core/constants/constants.dart';
 import 'package:openreads/logic/bloc/challenge_bloc/challenge_bloc.dart';
 import 'package:openreads/main.dart';
 import 'package:openreads/model/book.dart';
@@ -15,8 +13,7 @@ import 'package:openreads/model/yearly_challenge.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:path/path.dart' as path;
 import 'package:sqflite/sqflite.dart';
-import 'package:image/image.dart' as img;
-import 'package:blurhash_dart/blurhash_dart.dart' as blurhash_dart;
+import 'package:openreads/core/helpers/helpers.dart';
 
 part 'migration_v1_to_v2_event.dart';
 part 'migration_v1_to_v2_state.dart';
@@ -144,20 +141,10 @@ class MigrationV1ToV2Bloc
     int total,
     int done,
   ) async {
-    final blurHash = await compute(_generateBlurHash, book.bookCoverImg);
+    final blurHash = await createBlurHash(book.bookCoverImg);
     final newBook = Book.fromBookFromBackupV3(book, blurHash);
 
     bookCubit.addBook(newBook, refreshBooks: false);
-  }
-
-  static String? _generateBlurHash(Uint8List? cover) {
-    if (cover == null) return null;
-
-    return blurhash_dart.BlurHash.encode(
-      img.decodeImage(cover)!,
-      numCompX: Constants.blurHashX,
-      numCompY: Constants.blurHashY,
-    ).hash;
   }
 
   Future<void> _migrateYearsFromV1ToV2(

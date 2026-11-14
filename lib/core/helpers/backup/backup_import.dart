@@ -8,15 +8,13 @@ import 'package:flutter/material.dart';
 import 'package:archive/archive_io.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:openreads/core/constants/constants.dart';
 import 'package:openreads/logic/cubit/backup_progress_cubit.dart';
 import 'package:openreads/ui/home_screen/home_screen.dart';
 import 'package:saf_stream/saf_stream.dart';
 import 'package:saf_util/saf_util.dart';
 import 'package:sqflite/sqflite.dart';
 import 'package:path/path.dart' as path;
-import 'package:blurhash_dart/blurhash_dart.dart' as blurhash_dart;
-import 'package:image/image.dart' as img;
+import 'package:openreads/core/helpers/helpers.dart';
 
 import 'package:openreads/core/helpers/backup/backup.dart';
 import 'package:openreads/generated/locale_keys.g.dart';
@@ -401,7 +399,7 @@ class BackupImport {
 
   static Future<void> _addBookFromBackupV3(
       BuildContext context, BookFromBackupV3 book) async {
-    final blurHash = await compute(_generateBlurHash, book.bookCoverImg);
+    final blurHash = await createBlurHash(book.bookCoverImg);
     final newBook = Book.fromBookFromBackupV3(book, blurHash);
 
     Uint8List? cover;
@@ -416,16 +414,6 @@ class BackupImport {
       refreshBooks: false,
       cover: cover,
     );
-  }
-
-  static String? _generateBlurHash(Uint8List? cover) {
-    if (cover == null) return null;
-
-    return blurhash_dart.BlurHash.encode(
-      img.decodeImage(cover)!,
-      numCompX: Constants.blurHashX,
-      numCompY: Constants.blurHashY,
-    ).hash;
   }
 
   static _restoreChallengeTargetsV4(

@@ -12,8 +12,7 @@ import 'package:openreads/resources/repository.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:rxdart/rxdart.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:blurhash_dart/blurhash_dart.dart' as blurhash_dart;
-import 'package:image/image.dart' as img;
+import 'package:openreads/core/helpers/helpers.dart';
 
 import 'package:openreads/core/constants/enums/enums.dart';
 
@@ -360,7 +359,7 @@ class BookCubit extends Cubit {
     final file = File('${appDocumentsDirectory.path}/${book.id}.jpg');
     await file.writeAsBytes(cover);
 
-    final blurHash = _generateBlurHash(cover);
+    final blurHash = await createBlurHash(cover);
 
     await bookCubit.updateBook(book.copyWith(
       hasCover: true,
@@ -368,15 +367,5 @@ class BookCubit extends Cubit {
     ));
 
     return true;
-  }
-
-  static String? _generateBlurHash(Uint8List? cover) {
-    if (cover == null) return null;
-
-    return blurhash_dart.BlurHash.encode(
-      img.decodeImage(cover)!,
-      numCompX: Constants.blurHashX,
-      numCompY: Constants.blurHashY,
-    ).hash;
   }
 }
