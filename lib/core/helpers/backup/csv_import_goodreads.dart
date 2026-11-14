@@ -257,8 +257,10 @@ class CSVImportGoodreads {
     return csv[i][headers.indexOf('Title')].toString();
   }
 
-  static String _getPublisher(int i, List<List<dynamic>> csv, List headers) {
-    return csv[i][headers.indexOf('Publisher')].toString();
+  static String? _getPublisher(int i, List<List<dynamic>> csv, List headers) {
+    final publisher = csv[i][headers.indexOf('Publisher')].toString();
+
+    return publisher.isNotEmpty ? publisher : null;
   }
 
   static int? _getRating(int i, List<List<dynamic>> csv, List headers) {

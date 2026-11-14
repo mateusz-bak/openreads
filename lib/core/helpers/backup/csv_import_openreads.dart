@@ -110,7 +110,7 @@ class CSVImportOpenreads {
         deleted: _getBoolField(i, csv, 'deleted'),
         rating: _getRating(i, csv),
         pages: _getPages(i, csv),
-        publisher: _getField(i, csv, 'publisher'),
+        publisher: _getPublisher(i, csv),
         publicationYear: _getPublicationYear(i, csv),
         isbn: _getISBN(i, csv),
         olid: _getOLID(i, csv),
@@ -137,6 +137,17 @@ class CSVImportOpenreads {
     } else {
       return null;
     }
+  }
+
+  static String? _getPublisher(int i, List<List<dynamic>> csv) {
+    final publisherIndex = csv[0].indexOf('publisher');
+
+    // exports from versions before the publisher field have no publisher column
+    if (publisherIndex == -1) return null;
+
+    final publisher = csv[i][publisherIndex].toString();
+
+    return publisher.isNotEmpty ? publisher : null;
   }
 
   static String? _getOLID(int i, List<List<dynamic>> csv) {
