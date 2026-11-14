@@ -1,6 +1,5 @@
 import 'dart:io';
 
-import 'package:barcode_scan2/barcode_scan2.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -23,6 +22,7 @@ import 'package:openreads/model/ol_search_result.dart';
 import 'package:openreads/resources/open_library_service.dart';
 import 'package:openreads/ui/add_book_screen/add_book_screen.dart';
 import 'package:openreads/ui/add_book_screen/widgets/widgets.dart';
+import 'package:openreads/ui/barcode_scanner_screen/barcode_scanner_screen.dart';
 import 'package:openreads/ui/common/keyboard_dismissable.dart';
 import 'package:openreads/ui/search_ol_editions_screen/search_ol_editions_screen.dart';
 import 'package:openreads/ui/search_ol_screen/widgets/widgets.dart';
@@ -48,7 +48,6 @@ class _SearchOLScreenState extends State<SearchOLScreen>
   final _pageSize = 10;
   String? _searchTerm;
   int? numberOfResults;
-  ScanResult? scanResult;
   int searchTimestamp = 0;
 
   bool searchActivated = false;
@@ -253,26 +252,23 @@ class _SearchOLScreenState extends State<SearchOLScreen>
     FocusManager.instance.primaryFocus?.unfocus();
     context.read<OpenLibrarySearchBloc>().add(const OpenLibrarySearchSetISBN());
 
-    var result = await BarcodeScanner.scan(
-      options: ScanOptions(
-        strings: {
-          'cancel': LocaleKeys.cancel.tr(),
-          'flash_on': LocaleKeys.flash_on.tr(),
-          'flash_off': LocaleKeys.flash_off.tr(),
-        },
-      ),
+    final isbn = await Navigator.push<String>(
+      context,
+      MaterialPageRoute(builder: (context) => const BarcodeScannerScreen()),
     );
 
-    if (result.type == ResultType.Barcode) {
+    if (!mounted) return;
+
+    if (isbn != null) {
       setState(() {
         _searchingISBNError = false;
         searchActivated = true;
-        _searchController.text = result.rawContent;
+        _searchController.text = isbn;
       });
 
-      _searchTerm = result.rawContent;
+      _searchTerm = isbn;
       // _pagingController.refresh();
-      _searchByISBN(result.rawContent);
+      _searchByISBN(isbn);
     }
   }
 

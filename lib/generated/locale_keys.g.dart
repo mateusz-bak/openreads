@@ -91,8 +91,6 @@ abstract class LocaleKeys {
   static const only_editions_with_covers = 'only_editions_with_covers';
   static const published_lowercase = 'published_lowercase';
   static const cancel = 'cancel';
-  static const flash_on = 'flash_on';
-  static const flash_off = 'flash_off';
   static const search_in_books = 'search_in_books';
   static const search = 'search';
   static const results_lowercase = 'results_lowercase';
@@ -298,4 +296,5 @@ abstract class LocaleKeys {
   static const internal_error = 'internal_error';
   static const action_not_supported_on_platform_error =
       'action_not_supported_on_platform_error';
+  static const camera_error = 'camera_error';
 }

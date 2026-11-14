@@ -1,5 +1,4 @@
 import 'dart:io';
-import 'package:barcode_scan2/barcode_scan2.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -25,6 +24,7 @@ import 'package:openreads/main.dart';
 import 'package:openreads/model/book.dart';
 import 'package:openreads/ui/add_book_screen/widgets/cover_view_edit.dart';
 import 'package:openreads/ui/add_book_screen/widgets/widgets.dart';
+import 'package:openreads/ui/barcode_scanner_screen/barcode_scanner_screen.dart';
 import 'package:openreads/ui/book_screen/book_screen.dart';
 import 'package:openreads/ui/common/keyboard_dismissable.dart';
 
@@ -633,19 +633,19 @@ class _AddBookScreenState extends State<AddBookScreen> {
                             return;
                           }
 
-                          var result = await BarcodeScanner.scan(
-                            options: ScanOptions(
-                              strings: {
-                                'cancel': LocaleKeys.cancel.tr(),
-                                'flash_on': LocaleKeys.flash_on.tr(),
-                                'flash_off': LocaleKeys.flash_off.tr(),
-                              },
+                          final isbn = await Navigator.push<String>(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) =>
+                                  const BarcodeScannerScreen(),
                             ),
                           );
 
-                          if (result.type == ResultType.Barcode) {
+                          if (!mounted) return;
+
+                          if (isbn != null) {
                             setState(() {
-                              _isbnCtrl.text = result.rawContent;
+                              _isbnCtrl.text = isbn;
                             });
                           }
                         },
