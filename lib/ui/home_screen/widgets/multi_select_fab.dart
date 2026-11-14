@@ -158,6 +158,7 @@ class MultiSelectFAB extends StatelessWidget {
           ),
         ),
       );
+      return;
     }
 
     for (final bookId in selectedIds) {
@@ -169,6 +170,8 @@ class MultiSelectFAB extends StatelessWidget {
 
       await bookCubit.updateBook(book);
     }
+
+    if (!context.mounted) return;
 
     Navigator.pop(context);
     ScaffoldMessenger.of(context).showSnackBar(
