@@ -644,7 +644,8 @@ class _BooksScreenState extends State<BooksScreen>
     }
 
     booksWithPublisher.sort((a, b) {
-      int publisherSorting = a.publisher!.compareTo(b.publisher!);
+      int publisherSorting = removeDiacritics(a.publisher!.toLowerCase())
+          .compareTo(removeDiacritics(b.publisher!.toLowerCase()));
       if (!isAsc) {
         publisherSorting *= -1;
       }
