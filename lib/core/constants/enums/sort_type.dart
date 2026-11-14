@@ -5,8 +5,8 @@ enum SortType {
   byPages,
   byStartDate,
   byFinishDate,
-  byPublisher,
   byPublicationYear,
   byDateAdded,
   byDateModified,
+  byPublisher,
 }
