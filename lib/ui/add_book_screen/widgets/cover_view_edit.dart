@@ -5,10 +5,8 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
-import 'package:image/image.dart' as img;
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:blurhash_dart/blurhash_dart.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
@@ -19,6 +17,7 @@ import 'package:openreads/core/constants/constants.dart';
 import 'package:openreads/core/themes/app_theme.dart';
 import 'package:openreads/generated/locale_keys.g.dart';
 import 'package:openreads/logic/cubit/edit_book_cubit.dart';
+import 'package:openreads/ui/common/blur_hash_background.dart';
 import 'package:openreads/main.dart';
 import 'package:openreads/ui/add_book_screen/widgets/edit_cover_options.dart';
 import 'package:openreads/ui/add_book_screen/widgets/widgets.dart';
@@ -360,13 +359,10 @@ class _CoverViewEditState extends State<CoverViewEdit> {
       return const SizedBox();
     }
 
-    final image = BlurHash.decode(blurHashString).toImage(35, 20);
-
-    return Image(
-      image: MemoryImage(Uint8List.fromList(img.encodeJpg(image))),
-      fit: BoxFit.cover,
+    return SizedBox(
       width: boxConstraints.maxWidth,
       height: boxConstraints.maxWidth / 1.2,
+      child: BlurHashBackground(blurHash: blurHashString),
     );
   }
 }
