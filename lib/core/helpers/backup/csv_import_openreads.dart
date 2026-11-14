@@ -87,13 +87,10 @@ class CSVImportOpenreads {
     final headerEnd = csvString.indexOf('\n');
     final header =
         headerEnd != -1 ? csvString.substring(0, headerEnd) : csvString;
-    final eol = header.endsWith('\r') ? '\r\n' : '\n';
     final delimiter = header.contains(';') && !header.contains(',') ? ';' : ',';
 
-    return CsvToListConverter(
-      fieldDelimiter: delimiter,
-      eol: eol,
-    ).convert(csvString);
+    // the decoder handles both CRLF and LF line endings
+    return Csv(fieldDelimiter: delimiter, autoDetect: false).decode(csvString);
   }
 
   static Book? _parseBook(BuildContext context, int i, List<List> csv) {

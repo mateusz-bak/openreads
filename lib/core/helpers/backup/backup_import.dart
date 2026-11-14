@@ -90,10 +90,7 @@ class BackupImport {
 
         final pickedFile = await safUtil.pickFile();
 
-        if (pickedFile == null) {
-          BackupGeneral.showInfoSnackbar(LocaleKeys.backup_not_valid.tr());
-          return;
-        }
+        if (pickedFile == null) return;
 
         final file = await safStream.readFileBytes(pickedFile.uri);
 
@@ -125,21 +122,21 @@ class BackupImport {
           }
         }
       } else {
-        FilePickerResult? pickedFile = await FilePicker.platform.pickFiles(
-          withData: true,
-        );
+        final pickedFile = await FilePicker.pickFile();
 
-        final file = pickedFile!.files.single;
+        if (pickedFile == null) return;
+
+        final file = await pickedFile.readAsBytes();
 
         // app was ported to other platforms after backup 5 was introduced
-        final infoFileVersion = _checkInfoFileVersion(file.bytes, tmpDir);
+        final infoFileVersion = _checkInfoFileVersion(file, tmpDir);
         if (infoFileVersion == null) {
           BackupGeneral.showInfoSnackbar(LocaleKeys.internal_error.tr());
           return;
         }
         if (infoFileVersion == 5) {
           // ignore: use_build_context_synchronously
-          await _restoreBackupVersion5(context, file.bytes!, tmpDir);
+          await _restoreBackupVersion5(context, file, tmpDir);
         } else {
           BackupGeneral.showInfoSnackbar(LocaleKeys.backup_not_valid.tr());
           return;
@@ -165,9 +162,9 @@ class BackupImport {
     Directory tmpPath,
   ) async {
     final decoder = ZipDecoder();
-    final archive = decoder.decodeBytes(archiveBytes);
+    final archive = decoder.decodeBytes(archiveBytes, throwOnError: true);
 
-    extractArchiveToDiskSync(archive, tmpPath.path);
+    extractArchiveToDiskSync(archive, tmpPath.path, throwOnError: true);
 
     String? booksData;
     booksData = File('${tmpPath.path}/books.backup').readAsStringSync();
@@ -227,8 +224,8 @@ class BackupImport {
       return;
     }
 
-    final archive = ZipDecoder().decodeBytes(archiveBytes);
-    extractArchiveToDiskSync(archive, tmpPath.path);
+    final archive = ZipDecoder().decodeBytes(archiveBytes, throwOnError: true);
+    extractArchiveToDiskSync(archive, tmpPath.path, throwOnError: true);
 
     var booksData = File('${tmpPath.path}/books.backup').readAsStringSync();
 
@@ -299,9 +296,10 @@ class BackupImport {
         return;
       }
 
-      final archive = ZipDecoder().decodeBytes(archiveBytes);
+      final archive =
+          ZipDecoder().decodeBytes(archiveBytes, throwOnError: true);
 
-      extractArchiveToDiskSync(archive, tmpPath.path);
+      extractArchiveToDiskSync(archive, tmpPath.path, throwOnError: true);
 
       final booksDB = await openDatabase(path.join(tmpPath.path, 'books.sql'));
       final result = await booksDB.query("Book");
@@ -475,7 +473,14 @@ class BackupImport {
   static int? _checkInfoFileVersion(Uint8List? backupFile, Directory tmpDir) {
     if (backupFile == null) return null;
 
-    final archive = ZipDecoder().decodeBytes(backupFile);
+    final Archive archive;
+    try {
+      archive = ZipDecoder().decodeBytes(backupFile, throwOnError: true);
+    } on ArchiveException {
+      // not a zip file or a damaged one
+      return null;
+    }
+
     final ok = _extractFileToDiskSync(archive, "info.txt", tmpDir.path);
     if (!ok) return null;
 

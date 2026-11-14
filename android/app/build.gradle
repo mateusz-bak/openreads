@@ -29,7 +29,8 @@ if (keystorePropertiesFile.exists()) {
 
 android {
     namespace "software.mdev.bookstracker"
-    compileSdk flutter.compileSdkVersion
+    // permission_handler needs at least 37
+    compileSdk Math.max(flutter.compileSdkVersion, 37)
     ndkVersion flutter.ndkVersion
 
     compileOptions {

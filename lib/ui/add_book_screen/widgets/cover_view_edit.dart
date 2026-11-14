@@ -335,7 +335,7 @@ class _CoverViewEditState extends State<CoverViewEdit> {
                             foregroundColor: Colors.white,
                             backgroundColor: Colors.red.shade400,
                           ),
-                          icon: const Icon(FontAwesomeIcons.trash),
+                          icon: const FaIcon(FontAwesomeIcons.trash),
                           onPressed: () => _deleteCover(context),
                           iconSize: 16,
                         ),

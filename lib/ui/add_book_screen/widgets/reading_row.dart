@@ -152,7 +152,7 @@ class _ReadingRowState extends State<ReadingRow> {
                         Expanded(
                           child: SetDateButton(
                             defaultHeight: Constants.formHeight,
-                            icon: FontAwesomeIcons.play,
+                            icon: FontAwesomeIcons.play.data,
                             date: widget.reading.startDate,
                             text: LocaleKeys.start_date.tr(),
                             onPressed: _showStartDatePicker,
@@ -166,7 +166,7 @@ class _ReadingRowState extends State<ReadingRow> {
                         Expanded(
                           child: SetDateButton(
                             defaultHeight: Constants.formHeight,
-                            icon: FontAwesomeIcons.flagCheckered,
+                            icon: FontAwesomeIcons.flagCheckered.data,
                             date: widget.reading.finishDate,
                             text: LocaleKeys.finish_date.tr(),
                             onPressed: _showFinishDatePicker,

@@ -565,7 +565,7 @@ class _AddBookScreenState extends State<AddBookScreen> {
                       child: BookTextField(
                         controller: _pagesCtrl,
                         hint: LocaleKeys.enter_pages.tr(),
-                        icon: FontAwesomeIcons.solidFileLines,
+                        icon: FontAwesomeIcons.solidFileLines.data,
                         keyboardType: TextInputType.number,
                         inputFormatters: <TextInputFormatter>[
                           FilteringTextInputFormatter.digitsOnly
@@ -578,7 +578,7 @@ class _AddBookScreenState extends State<AddBookScreen> {
                       child: BookTextField(
                         controller: _pubYearCtrl,
                         hint: LocaleKeys.enter_publication_year.tr(),
-                        icon: FontAwesomeIcons.solidCalendar,
+                        icon: FontAwesomeIcons.solidCalendar.data,
                         keyboardType: const TextInputType.numberWithOptions(
                           signed: true,
                         ),
@@ -598,7 +598,7 @@ class _AddBookScreenState extends State<AddBookScreen> {
                 BookTextField(
                   controller: _descriptionCtrl,
                   hint: LocaleKeys.enter_description.tr(),
-                  icon: FontAwesomeIcons.solidKeyboard,
+                  icon: FontAwesomeIcons.solidKeyboard.data,
                   keyboardType: TextInputType.multiline,
                   maxLength: 5000,
                   hideCounter: false,
@@ -612,7 +612,7 @@ class _AddBookScreenState extends State<AddBookScreen> {
                       child: BookTextField(
                         controller: _isbnCtrl,
                         hint: LocaleKeys.isbn.tr(),
-                        icon: FontAwesomeIcons.i,
+                        icon: FontAwesomeIcons.i.data,
                         textCapitalization: TextCapitalization.characters,
                         keyboardType: TextInputType.text,
                         maxLength: 20,
@@ -661,7 +661,7 @@ class _AddBookScreenState extends State<AddBookScreen> {
                                 .withOpacity(0.5),
                           ),
                           child: Icon(
-                            FontAwesomeIcons.barcode,
+                            FontAwesomeIcons.barcode.data,
                             size: 28,
                             color: Theme.of(context).colorScheme.primary,
                           ),
@@ -675,7 +675,7 @@ class _AddBookScreenState extends State<AddBookScreen> {
                 BookTextField(
                   controller: _olidCtrl,
                   hint: LocaleKeys.open_library_ID.tr(),
-                  icon: FontAwesomeIcons.o,
+                  icon: FontAwesomeIcons.o.data,
                   keyboardType: TextInputType.text,
                   maxLength: 20,
                   textCapitalization: TextCapitalization.characters,
@@ -687,7 +687,7 @@ class _AddBookScreenState extends State<AddBookScreen> {
                     return TagsField(
                       controller: _tagsCtrl,
                       hint: LocaleKeys.enter_tags.tr(),
-                      icon: FontAwesomeIcons.tags,
+                      icon: FontAwesomeIcons.tags.data,
                       keyboardType: TextInputType.text,
                       maxLength: Constants.maxTagLength,
                       onSubmitted: (_) => _addNewTag(),
@@ -704,7 +704,7 @@ class _AddBookScreenState extends State<AddBookScreen> {
                 BookTextField(
                   controller: _myReviewCtrl,
                   hint: LocaleKeys.my_review.tr(),
-                  icon: FontAwesomeIcons.solidKeyboard,
+                  icon: FontAwesomeIcons.solidKeyboard.data,
                   keyboardType: TextInputType.multiline,
                   maxLength: 5000,
                   hideCounter: false,
@@ -715,7 +715,7 @@ class _AddBookScreenState extends State<AddBookScreen> {
                 BookTextField(
                   controller: _notesCtrl,
                   hint: LocaleKeys.notes.tr(),
-                  icon: FontAwesomeIcons.noteSticky,
+                  icon: FontAwesomeIcons.noteSticky.data,
                   keyboardType: TextInputType.multiline,
                   maxLength: 5000,
                   hideCounter: false,

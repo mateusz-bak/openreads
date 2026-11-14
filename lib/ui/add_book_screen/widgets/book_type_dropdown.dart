@@ -7,7 +7,7 @@ import 'package:openreads/core/themes/app_theme.dart';
 import 'package:openreads/logic/cubit/edit_book_cubit.dart';
 import 'package:openreads/model/book.dart';
 
-class BookTypeDropdown extends StatelessWidget {
+class BookTypeDropdown extends StatefulWidget {
   const BookTypeDropdown(
       {super.key,
       required this.bookTypes,
@@ -18,25 +18,38 @@ class BookTypeDropdown extends StatelessWidget {
   final Function(String?) changeBookType;
   final EdgeInsets padding;
 
+  @override
+  State<BookTypeDropdown> createState() => _BookTypeDropdownState();
+}
+
+class _BookTypeDropdownState extends State<BookTypeDropdown> {
+  final _valueNotifier = ValueNotifier<String?>(null);
+
   String _getBookTypeDropdownValue(BookFormat bookType) {
     switch (bookType) {
       case BookFormat.paperback:
-        return bookTypes[0];
+        return widget.bookTypes[0];
       case BookFormat.hardcover:
-        return bookTypes[1];
+        return widget.bookTypes[1];
       case BookFormat.ebook:
-        return bookTypes[2];
+        return widget.bookTypes[2];
       case BookFormat.audiobook:
-        return bookTypes[3];
+        return widget.bookTypes[3];
       default:
-        return bookTypes[0];
+        return widget.bookTypes[0];
     }
+  }
+
+  @override
+  void dispose() {
+    _valueNotifier.dispose();
+    super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: padding,
+      padding: widget.padding,
       child: Container(
         decoration: BoxDecoration(
           color: Theme.of(context).colorScheme.surfaceVariant.withOpacity(0.5),
@@ -49,6 +62,8 @@ class BookTypeDropdown extends StatelessWidget {
         ),
         child: BlocBuilder<EditBookCubit, Book>(
           builder: (context, state) {
+            _valueNotifier.value = _getBookTypeDropdownValue(state.bookFormat);
+
             return Row(
               children: [
                 Container(
@@ -85,17 +100,17 @@ class BookTypeDropdown extends StatelessWidget {
                           color: Colors.transparent,
                         ),
                       ),
-                      items: bookTypes
-                          .map((item) => DropdownMenuItem<String>(
+                      items: widget.bookTypes
+                          .map((item) => DropdownItem<String>(
                                 value: item,
                                 child: Text(item,
                                     overflow: TextOverflow.ellipsis,
                                     style: const TextStyle(fontSize: 14)),
                               ))
                           .toList(),
-                      value: _getBookTypeDropdownValue(state.bookFormat),
+                      valueListenable: _valueNotifier,
                       onChanged: (value) {
-                        changeBookType(value);
+                        widget.changeBookType(value);
                       },
                     ),
                   ),

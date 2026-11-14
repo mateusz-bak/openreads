@@ -76,7 +76,7 @@ class _BookReadingTimeField extends State<BookReadingTimeField> {
                         mainAxisAlignment: MainAxisAlignment.start,
                         crossAxisAlignment: CrossAxisAlignment.center,
                         children: [
-                          Icon(
+                          FaIcon(
                             FontAwesomeIcons.solidClock,
                             color: Theme.of(context).colorScheme.primary,
                           ),

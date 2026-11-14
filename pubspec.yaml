@@ -11,72 +11,71 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
-  cupertino_icons: ^1.0.2
+  cupertino_icons: ^2.0.0
   flutter_rating_bar: ^4.0.1
-  sqflite: ^2.1.0
-  sqflite_common_ffi: ^2.1.4
-  path_provider: ^2.0.11
+  sqflite: ^2.4.6
+  sqflite_common_ffi: ^2.4.7
+  path_provider: ^2.1.6
   rxdart: ^0.28.0
-  path: ^1.9.0
-  flutter_displaymode: ^0.6.0
-  image_picker: ^1.0.0
-  image_cropper: ^9.0.0
-  flutter_bloc: ^9.0.0
-  blurhash:
-    git:
-      url: https://github.com/mateusz-bak/blurhash.git
-      ref: master
-  image: ^4.0.15
-  fl_chart: ^0.70.2
-  dropdown_button2: ^2.0.0
-  equatable: ^2.0.5
-  connectivity_plus: ^6.0.1
-  http: ^1.2.0
+  path: ^1.9.1
+  flutter_displaymode: ^0.7.0
+  image_picker: ^1.2.4
+  image_cropper: ^13.0.0
+  flutter_bloc: ^9.1.1
+  image: ^4.13.1
+  fl_chart: ^1.3.1
+  dropdown_button2: ^3.1.0
+  equatable: ^2.1.0
+  connectivity_plus: ^7.3.2
+  http: ^1.6.0
   cached_network_image: ^3.4.1
-  loading_animation_widget: ^1.2.0+3
+  loading_animation_widget: ^1.3.0
   infinite_scroll_pagination: ^5.1.1
-  flutter_staggered_grid_view: ^0.7.0
-  settings_ui: ^2.0.2
-  url_launcher: ^6.1.6
-  font_awesome_flutter: ^10.2.1
-  hydrated_bloc: ^10.0.0
-  barcode_scan2: ^4.2.1
-  permission_handler: ^12.0.1
-  filesystem_picker: ^4.0.0
-  archive: ^4.0.2
-  share_plus: ^11.1.0
-  device_info_plus: ^11.2.2
-  dynamic_color: ^1.6.2
-  image_fade: ^0.6.2
-  package_info_plus: ^8.0.0
-  animated_widgets: ^1.1.0
-  shared_preferences: ^2.2.1
-  easy_localization: ^3.0.7
-  flutter_typeahead: ^5.0.1
-  flex_color_picker: ^3.2.2
-  diacritic: ^0.1.4
+  settings_ui: ^3.0.1
+  url_launcher: ^6.3.3
+  font_awesome_flutter: ^11.0.0
+  hydrated_bloc: ^11.0.0
+  permission_handler: ^13.0.2
+  filesystem_picker: ^4.1.0
+  archive: ^4.7.1
+  share_plus: ^13.3.1
+  device_info_plus: ^13.3.0
+  dynamic_color: ^1.9.0
+  package_info_plus: ^10.2.2
+  shared_preferences: ^2.5.6
+  easy_localization: ^3.0.8
+  flutter_typeahead: ^6.0.0
+  flex_color_picker: ^3.8.0
+  diacritic: ^0.1.6
   flutter_speed_dial: ^7.0.0
   blurhash_dart: ^1.2.1
-  csv: ^6.0.0
-  file_picker: ^8.3.1
-  smooth_page_indicator: ^1.1.0
-  intl: ^0.20.2
+  csv: ^8.0.0
+  file_picker: ^13.3.3
+  smooth_page_indicator: ^3.0.0
+  intl: ^0.20.3
   dotted_border: ^3.1.0
-  flutter_cache_manager: ^3.3.1
+  flutter_cache_manager: ^3.5.0
   modal_bottom_sheet: ^3.0.0
-  saf_stream: ^0.12.3
-  saf_util: ^0.11.0
+  saf_stream: ^4.0.3
+  saf_util: ^3.1.1
   
   flutter_localizations:
     sdk: flutter
-  blurhash_ffi: ^1.2.7
   xdg_directories: ^1.1.0
+  flutter_zxing: ^3.1.1
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
-  flutter_lints: ^5.0.0
-  flutter_launcher_icons: "^0.13.1"
+  flutter_lints: ^6.0.0
+  flutter_launcher_icons: ^0.14.4
+
+# use the system SQLite like sqlite3 2.x did (Linux needs libsqlite3), instead
+# of downloading prebuilt binaries at build time and bundling them in every app
+hooks:
+  user_defines:
+    sqlite3:
+      source: system
 
 flutter_launcher_icons:
   image_path: "./assets/icons/icon.png"

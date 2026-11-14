@@ -140,20 +140,14 @@ class BackupGeneral {
 
       final pickedFile = await safUtil.pickFile();
 
-      if (pickedFile == null) {
-        BackupGeneral.showInfoSnackbar(LocaleKeys.backup_not_valid.tr());
-        return null;
-      }
+      if (pickedFile == null) return null;
 
       return await safStream.readFileBytes(pickedFile.uri);
     } else if (Platform.isIOS) {
-      FilePickerResult? result = await FilePicker.platform.pickFiles(
-        withData: true,
-      );
+      final pickedFile = await FilePicker.pickFile();
 
-      if (result != null) {
-        File file = File(result.files.single.path!);
-        return file.readAsBytesSync();
+      if (pickedFile != null) {
+        return await pickedFile.readAsBytes();
       }
     }
 
