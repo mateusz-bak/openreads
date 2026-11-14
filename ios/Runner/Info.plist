@@ -34,7 +34,9 @@
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
 	<key>NSCameraUsageDescription</key>
-	<string>$(PRODUCT_NAME) would like to use your camera to take a picture of the book cover</string>
+	<string>$(PRODUCT_NAME) would like to use your camera to scan book barcodes and take pictures of book covers</string>
+	<key>NSMicrophoneUsageDescription</key>
+	<string>$(PRODUCT_NAME) does not use the microphone. The barcode scanner uses only the camera</string>
 	<key>NSPhotoLibraryUsageDescription</key>
 	<string>$(PRODUCT_NAME) would like access to your photo gallery to choose the book cover image</string>
 	<key>UIApplicationSceneManifest</key>
