@@ -67,7 +67,7 @@ class CSVImportGoodreads {
     final books = List<Book>.empty(growable: true);
 
     final csvString = utf8.decode(csvBytes);
-    final csv = const CsvToListConverter().convert(csvString, eol: '\n');
+    final csv = Csv(autoDetect: false).decode(csvString);
 
     final headers = csv[0];
 

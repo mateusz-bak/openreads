@@ -161,11 +161,7 @@ class CSVExport {
         rows.add(newRow);
       }
 
-      return const ListToCsvConverter().convert(
-        rows,
-        textDelimiter: '"',
-        textEndDelimiter: '"',
-      );
+      return Csv().encode(rows);
     } catch (e) {
       BackupGeneral.showInfoSnackbar(e.toString());
 

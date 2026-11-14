@@ -117,6 +117,9 @@ String _getBookTypeDropdownText(BookFormat? bookFormat) {
 }
 
 class _SortBottomSheetState extends State<SortBottomSheet> {
+  final _sortTypeNotifier = ValueNotifier<SortType?>(null);
+  final _bookFormatNotifier = ValueNotifier<BookFormat?>(null);
+
   Bloc _getBlocProvider(BookStatus bookStatus) {
     switch (bookStatus) {
       case BookStatus.read:
@@ -328,6 +331,13 @@ class _SortBottomSheetState extends State<SortBottomSheet> {
     );
 
     return chips;
+  }
+
+  @override
+  void dispose() {
+    _sortTypeNotifier.dispose();
+    _bookFormatNotifier.dispose();
+    super.dispose();
   }
 
   @override
@@ -616,6 +626,8 @@ class _SortBottomSheetState extends State<SortBottomSheet> {
   }
 
   Row _buildSortDropdown(BookStatus bookStatus, SortState sortState) {
+    _sortTypeNotifier.value = sortState.sortType;
+
     return Row(
       children: [
         Expanded(
@@ -632,7 +644,7 @@ class _SortBottomSheetState extends State<SortBottomSheet> {
               ),
               items: _getValidSortOptions(bookStatus)
                   .map(
-                    (item) => DropdownMenuItem<SortType>(
+                    (item) => DropdownItem<SortType>(
                       value: item,
                       child: Text(
                         _getSortDropdownText(item),
@@ -641,7 +653,7 @@ class _SortBottomSheetState extends State<SortBottomSheet> {
                     ),
                   )
                   .toList(),
-              value: sortState.sortType,
+              valueListenable: _sortTypeNotifier,
               onChanged: (value) => _getBlocProvider(bookStatus).add(
                 ChangeSortTypeEvent(value ?? SortType.byTitle),
               ),
@@ -662,6 +674,8 @@ class _SortBottomSheetState extends State<SortBottomSheet> {
   }
 
   Widget _buildBookTypeFilter(BookStatus bookStatus, BookFormat? bookFormat) {
+    _bookFormatNotifier.value = bookFormat;
+
     return DropdownButtonHideUnderline(
       child: DropdownButton2<BookFormat?>(
         isExpanded: true,
@@ -674,7 +688,7 @@ class _SortBottomSheetState extends State<SortBottomSheet> {
           ),
         ),
         items: [
-          DropdownMenuItem<BookFormat?>(
+          DropdownItem<BookFormat?>(
             value: null,
             child: Text(
               _getBookTypeDropdownText(null),
@@ -682,7 +696,7 @@ class _SortBottomSheetState extends State<SortBottomSheet> {
             ),
           ),
           ...BookFormat.values.map(
-            (item) => DropdownMenuItem<BookFormat>(
+            (item) => DropdownItem<BookFormat?>(
               value: item,
               child: Text(
                 _getBookTypeDropdownText(item),
@@ -691,7 +705,7 @@ class _SortBottomSheetState extends State<SortBottomSheet> {
             ),
           )
         ],
-        value: bookFormat,
+        valueListenable: _bookFormatNotifier,
         onChanged: (value) =>
             _getBlocProvider(bookStatus).add(ChangeBookTypeEvent(value)),
       ),

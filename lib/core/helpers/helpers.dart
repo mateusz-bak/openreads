@@ -87,7 +87,7 @@ Future<CroppedFile?> cropImage(BuildContext context, Uint8List cover) async {
       AndroidUiSettings(
         toolbarTitle: LocaleKeys.edit_cover.tr(),
         toolbarColor: Colors.black,
-        statusBarColor: Colors.black,
+        statusBarLight: false,
         toolbarWidgetColor: Colors.white,
         backgroundColor: colorScheme.surface,
         cropGridColor: Colors.black87,

@@ -203,7 +203,7 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
                             LocaleKeys.welcome_2_description_1.tr(),
                             LocaleKeys.welcome_2_description_2.tr(),
                           ],
-                          image: Icon(
+                          image: FaIcon(
                             FontAwesomeIcons.chartSimple,
                             size: 60,
                             color: Theme.of(
@@ -217,7 +217,7 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
                             LocaleKeys.welcome_3_description_2.tr(),
                             LocaleKeys.welcome_3_description_3.tr(),
                           ],
-                          image: Icon(
+                          image: FaIcon(
                             FontAwesomeIcons.code,
                             size: 60,
                             color: Theme.of(
