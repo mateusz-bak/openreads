@@ -1,0 +1,8 @@
+- Independent and dynamic sorting for each shelf
+- Filter out already chosen tags
+- Negative publication years
+- Publisher field
+- CSV improvements
+- UI improvements
+- Performance improvements
+- Fixed typos and translations
