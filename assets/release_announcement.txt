@@ -1,0 +1,5 @@
+Openreads {tag} is out!
+
+{changelog}
+
+https://github.com/mateusz-bak/openreads/releases/tag/{tag}
