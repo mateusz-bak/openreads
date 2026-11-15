@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:openreads/core/helpers/helpers.dart';
 import 'package:openreads/logic/cubit/display_cubit.dart';
 import 'package:openreads/model/book.dart';
 
@@ -62,25 +63,33 @@ class BookCardGridDetailed extends StatelessWidget {
         children: [
           Hero(
             tag: heroTag,
-            child: Image.file(
-              file,
-              fit: BoxFit.cover,
-              frameBuilder: (
-                BuildContext context,
-                Widget child,
-                int? frame,
-                bool wasSynchronouslyLoaded,
-              ) {
-                if (wasSynchronouslyLoaded) {
-                  return child;
-                }
-                return AnimatedOpacity(
-                  opacity: frame == null ? 0 : 1,
-                  duration: const Duration(milliseconds: 250),
-                  curve: Curves.easeOut,
-                  child: child,
-                );
-              },
+            transitionOnUserGestures: true,
+            flightShuttleBuilder: buildCoverHeroFlight,
+            child: ClipRRect(
+              borderRadius: const BorderRadius.only(
+                topLeft: Radius.circular(8),
+                topRight: Radius.circular(8),
+              ),
+              child: Image.file(
+                file,
+                fit: BoxFit.cover,
+                frameBuilder: (
+                  BuildContext context,
+                  Widget child,
+                  int? frame,
+                  bool wasSynchronouslyLoaded,
+                ) {
+                  if (wasSynchronouslyLoaded) {
+                    return child;
+                  }
+                  return AnimatedOpacity(
+                    opacity: frame == null ? 0 : 1,
+                    duration: const Duration(milliseconds: 250),
+                    curve: Curves.easeOut,
+                    child: child,
+                  );
+                },
+              ),
             ),
           ),
           _buildTitleOverlay(),

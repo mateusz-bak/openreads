@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
+import 'package:openreads/core/helpers/helpers.dart';
 import 'package:openreads/model/book.dart';
 import 'package:openreads/ui/book_screen/widgets/widgets.dart';
 
@@ -58,19 +59,21 @@ class _CoverViewState extends State<CoverView> {
                 child: Padding(
                   padding: const EdgeInsets.fromLTRB(20, 0, 20, 20),
                   child: Center(
-                    child: ClipRRect(
-                      borderRadius: BorderRadius.circular(10),
-                      child: coverFile != null
-                          ? Hero(
-                              tag: widget.heroTag ?? "",
+                    child: coverFile != null
+                        ? Hero(
+                            tag: widget.heroTag ?? "",
+                            transitionOnUserGestures: true,
+                            flightShuttleBuilder: buildCoverHeroFlight,
+                            child: ClipRRect(
+                              borderRadius: BorderRadius.circular(10),
                               child: Image.file(
                                 coverFile!,
                                 fit: BoxFit.cover,
                                 height: mediaQuery.size.height / 2.5,
                               ),
-                            )
-                          : const SizedBox(),
-                    ),
+                            ),
+                          )
+                        : const SizedBox(),
                   ),
                 ),
               ),

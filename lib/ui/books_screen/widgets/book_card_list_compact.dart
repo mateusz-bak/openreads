@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:openreads/core/helpers/helpers.dart';
 import 'package:openreads/core/constants/enums/enums.dart';
 import 'package:openreads/logic/bloc/rating_type_bloc/rating_type_bloc.dart';
 import 'package:openreads/logic/cubit/display_cubit.dart';
@@ -154,10 +155,12 @@ class BookCardListCompact extends StatelessWidget {
       width: (coverFile != null) ? coverWidth : 0,
       height: coverHeight,
       child: (coverFile != null)
-          ? ClipRRect(
-              borderRadius: BorderRadius.circular(3),
-              child: Hero(
-                tag: heroTag,
+          ? Hero(
+              tag: heroTag,
+              transitionOnUserGestures: true,
+              flightShuttleBuilder: buildCoverHeroFlight,
+              child: ClipRRect(
+                borderRadius: BorderRadius.circular(3),
                 child: Image.file(
                   coverFile,
                   width: coverWidth,
