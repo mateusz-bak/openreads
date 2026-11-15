@@ -1,5 +1,6 @@
 changelog:
   exclude:
     authors:
+      - dependabot
       - renovate
       - weblate
