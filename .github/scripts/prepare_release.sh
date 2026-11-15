@@ -36,17 +36,11 @@ if [ "$version" = "$current_version" ] || [ "$highest" != "$version" ]; then
 fi
 sed -i "s/^version: .*/version: $version+$build/" pubspec.yaml
 
-# changelog, without blank lines
-body="$(jq -r .body <<< "$draft")"
-if [[ "$body" != *'<!-- changelog -->'* || "$body" != *'<!-- /changelog -->'* ]]; then
-  echo "::error::The draft release needs both <!-- changelog --> and <!-- /changelog -->"
-  exit 1
-fi
-changelog="$(tr -d '\r' <<< "$body" \
-  | sed -n '/<!-- changelog -->/,/<!-- \/changelog -->/p' \
-  | grep -v -e '<!-- changelog -->' -e '<!-- /changelog -->' -e '^[[:space:]]*$' || true)"
+# changelog: the "- " lines at the top of the release notes, up to the first other line
+changelog="$(jq -r .body <<< "$draft" | tr -d '\r' \
+  | awk '/^- / { print; found = 1; next } !found && NF == 0 { next } { exit }')"
 if [ -z "$changelog" ]; then
-  echo "::error::No text between <!-- changelog --> and <!-- /changelog --> in the draft release"
+  echo "::error::The draft release notes must start with the changelog as \"- \" lines"
   exit 1
 fi
 
