@@ -23,7 +23,7 @@
 <a href='https://play.google.com/store/apps/details?id=software.mdev.bookstracker'><img height=70 alt='Get it on Google Play' src='https://play.google.com/intl/en_us/badges/images/generic/en_badge_web_generic.png'/></a>
 <a href='https://apps.apple.com/app/id6476542305'><img height=70 alt='Download on App Store' src='https://raw.githubusercontent.com/mateusz-bak/openreads/master/doc/app_store/download_on_app_store.png'/></a>
 
-### Openreads is a privacy oriented and open source cross-platform app written in Flutter available for Android and iOS for keeping track of your books.  
+### Openreads is a privacy oriented and open source cross-platform app written in Flutter available for Android, iOS and Linux for keeping track of your books.  
 #### There are four lists provided so you won't get confused:  
 - books you finished,  
 - books you are currently reading,  
@@ -49,6 +49,10 @@ You can use custom tags and filter through them.
  <img src='doc/gplay/app-mockup/Google Pixel 4 XL Screenshot 4.png' width='19%'/>
 </p>  
 <br/>
+
+## Linux
+Download `openreads-<version>-linux-x64.tar.gz` from the [latest release](https://github.com/mateusz-bak/openreads/releases/latest), unpack it and run `openreads/openreads`.
+It needs GTK 3 and SQLite: `libgtk-3-0` and `libsqlite3-dev` on Debian/Ubuntu, `gtk3` and `sqlite-devel` on Fedora, `gtk3` and `sqlite` on Arch.
 
 ## 🤝 Contributing
 
