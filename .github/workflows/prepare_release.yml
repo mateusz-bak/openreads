@@ -1,0 +1,41 @@
+name: Prepare release
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: write
+  pull-requests: write
+
+jobs:
+  prepare_release:
+    name: Create release PR
+    if: github.ref == 'refs/heads/master'
+    runs-on: ubuntu-26.04
+    steps:
+    - name: Check out code
+      uses: actions/checkout@v7
+
+    - name: Bump version and create changelog from draft release
+      run: .github/scripts/prepare_release.sh
+      env:
+        GH_TOKEN: ${{ github.token }}
+
+    - name: Create release PR
+      run: |
+        git config user.name "github-actions[bot]"
+        git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+        git checkout -b "release/$TAG"
+        git add pubspec.yaml "fastlane/metadata/android/en-US/changelogs/$BUILD.txt"
+        git commit -m "build: Upgraded app to $VERSION ($BUILD)"
+        git push origin "release/$TAG"
+        gh pr create --base master --title "build: Upgraded app to $VERSION ($BUILD)" \
+          --body "Merging publishes the draft release $TAG and uploads the app to Google Play."
+      env:
+        GH_TOKEN: ${{ github.token }}
+
+    - name: Complete previous Google Play release
+      run: .github/scripts/complete_play_rollout.sh
+      env:
+        PACKAGE_NAME: software.mdev.bookstracker
+        SERVICE_ACCOUNT_JSON: ${{ secrets.SERVICE_ACCOUNT_JSON }}

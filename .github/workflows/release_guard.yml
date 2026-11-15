@@ -1,0 +1,26 @@
+name: Release guard
+
+# Releases published by the Publish release workflow don't trigger this
+# (GITHUB_TOKEN events start no workflows), so every run is a manual publish
+on:
+  release:
+    types:
+      - published
+
+permissions:
+  contents: write
+
+jobs:
+  revert_release:
+    name: Revert manually published release
+    runs-on: ubuntu-26.04
+    steps:
+    - name: Revert release to draftI
+      run: |
+        gh api -X PATCH "repos/$GITHUB_REPOSITORY/releases/$RELEASE_ID" -F draft=true > /dev/null
+        echo "::error::Release $TAG was published by hand and was reverted to a draft. Delete the tag if it was just created, then use Actions > Prepare release."
+        exit 1
+      env:
+        GH_TOKEN: ${{ github.token }}
+        RELEASE_ID: ${{ github.event.release.id }}
+        TAG: ${{ github.event.release.tag_name }}
