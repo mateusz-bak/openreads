@@ -1,7 +1,5 @@
 import 'dart:io';
 
-import 'package:animated_widgets/widgets/rotation_animated.dart';
-import 'package:animated_widgets/widgets/shake_animated_widget.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -404,10 +402,7 @@ class SettingsScreen extends StatelessWidget {
         ),
       ),
       description: Text(LocaleKeys.support_the_project_description.tr()),
-      leading: ShakeAnimatedWidget(
-        duration: const Duration(seconds: 3),
-        shakeAngle: Rotation.deg(z: 20),
-        curve: Curves.bounceInOut,
+      leading: ShakeAnimation(
         child: FaIcon(
           FontAwesomeIcons.mugHot,
           color: Theme.of(context).colorScheme.primary,
