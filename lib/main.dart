@@ -330,9 +330,7 @@ Future<void> _setAndroidConfig() async {
     var androidInfo = await DeviceInfoPlugin().androidInfo;
     var sdkInt = androidInfo.version.sdkInt;
 
-    if (sdkInt >= 23) {
-      await FlutterDisplayMode.setHighRefreshRate();
-    }
+    await FlutterDisplayMode.setHighRefreshRate();
 
     // https://github.com/dart-lang/http/issues/627
     if (sdkInt <= 25) {
