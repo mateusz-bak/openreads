@@ -61,6 +61,13 @@ android {
     }
 
     buildTypes {
+        // installs next to the release app
+        debug {
+            applicationIdSuffix ".debug"
+        }
+        profile {
+            applicationIdSuffix ".debug"
+        }
         release {
             if (keystorePropertiesFile.exists()) {
                 signingConfig signingConfigs.release
