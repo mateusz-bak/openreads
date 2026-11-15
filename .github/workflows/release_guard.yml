@@ -15,7 +15,7 @@ jobs:
     name: Revert manually published release
     runs-on: ubuntu-26.04
     steps:
-    - name: Revert release to draftI
+    - name: Revert release to draft
       run: |
         gh api -X PATCH "repos/$GITHUB_REPOSITORY/releases/$RELEASE_ID" -F draft=true > /dev/null
         echo "::error::Release $TAG was published by hand and was reverted to a draft. Delete the tag if it was just created, then use Actions > Prepare release."
