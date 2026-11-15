@@ -93,7 +93,7 @@ jobs:
 
   ios_build:
     name: iOS ipa
-    runs-on: macos-15
+    runs-on: macos-26
     env:
       COCOAPODS_DISABLE_STATS: 'true'
     steps:
