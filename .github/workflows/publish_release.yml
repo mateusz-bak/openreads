@@ -27,6 +27,13 @@ jobs:
     outputs:
       tag: ${{ steps.publish.outputs.tag }}
     steps:
+      - name: Check out project info
+        uses: actions/checkout@v7
+        with:
+          ref: ${{ github.event.pull_request.merge_commit_sha }}
+          sparse-checkout: assets/project_info.md
+          sparse-checkout-cone-mode: false
+
       - name: Publish draft release with the tag on the merge commit
         id: publish
         run: |
@@ -36,7 +43,9 @@ jobs:
             echo "::error::Expected one draft release for $TAG"
             exit 1
           fi
-          gh api -X PATCH "repos/$GITHUB_REPOSITORY/releases/$ID" -f target_commitish="$MERGE_SHA" -F draft=false > /dev/null
+          BODY="$(gh api "repos/$GITHUB_REPOSITORY/releases/$ID" --jq .body)"
+          gh api -X PATCH "repos/$GITHUB_REPOSITORY/releases/$ID" -f target_commitish="$MERGE_SHA" -F draft=false \
+            -f body="$BODY"$'\n'"$(cat assets/project_info.md)" > /dev/null
           echo "tag=$TAG" >> "$GITHUB_OUTPUT"
         env:
           GH_TOKEN: ${{ github.token }}
@@ -101,12 +110,10 @@ jobs:
           mv "build/app/outputs/flutter-apk/app-arm64-v8a-release.apk" "build/app/outputs/flutter-apk/openreads-${{ needs.publish_github_release.outputs.tag }}-arm64-v8a-release.apk"
           mv "build/app/outputs/flutter-apk/app-x86_64-release.apk" "build/app/outputs/flutter-apk/openreads-${{ needs.publish_github_release.outputs.tag }}-x86_64-release.apk"
 
-      - name: Attach apk files and project info
+      - name: Attach apk files
         uses: softprops/action-gh-release@8a0cd651e5b2365bd640854a3fa5dfc70e4875f3 # v3.0.4
         with:
           tag_name: ${{ needs.publish_github_release.outputs.tag }}
-          body_path: assets/project_info.md
-          append_body: true
           files: |
             build/app/outputs/flutter-apk/openreads-${{ needs.publish_github_release.outputs.tag }}-release.apk
             build/app/outputs/flutter-apk/openreads-${{ needs.publish_github_release.outputs.tag }}-armeabi-v7a-release.apk
