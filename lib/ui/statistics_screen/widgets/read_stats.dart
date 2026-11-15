@@ -2,6 +2,7 @@ import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:openreads/core/helpers/helpers.dart';
 import 'package:openreads/core/themes/app_theme.dart';
 import 'package:openreads/logic/cubit/current_book_cubit.dart';
 import 'package:openreads/model/book.dart';
@@ -65,6 +66,8 @@ class ReadStats extends StatelessWidget {
                           padding: const EdgeInsets.only(right: 10),
                           child: Hero(
                             tag: '${book?.id}-$heroKey',
+                            transitionOnUserGestures: true,
+                            flightShuttleBuilder: buildCoverHeroFlight,
                             child: Image.file(
                               book!.getCoverFile()!,
                               fit: BoxFit.cover,

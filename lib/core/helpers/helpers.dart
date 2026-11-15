@@ -138,3 +138,38 @@ Future<CroppedFile?> cropImage(BuildContext context, Uint8List cover) async {
     ],
   );
 }
+
+// covers are rounded inside their heroes, so the flying cover keeps rounded
+// corners and its radius moves between the radii of both screens
+Widget buildCoverHeroFlight(
+  BuildContext flightContext,
+  Animation<double> animation,
+  HeroFlightDirection flightDirection,
+  BuildContext fromHeroContext,
+  BuildContext toHeroContext,
+) {
+  final fromChild = (fromHeroContext.widget as Hero).child;
+  final toChild = (toHeroContext.widget as Hero).child;
+
+  // the animation runs from the pushed route's start, also when popping
+  final isPush = flightDirection == HeroFlightDirection.push;
+  final begin = _getCoverRadius(isPush ? fromChild : toChild);
+  final end = _getCoverRadius(isPush ? toChild : fromChild);
+
+  return AnimatedBuilder(
+    animation: animation,
+    builder: (context, child) {
+      return ClipRRect(
+        borderRadius: BorderRadiusGeometry.lerp(begin, end, animation.value)!,
+        child: child,
+      );
+    },
+    child: toChild is ClipRRect ? toChild.child : toChild,
+  );
+}
+
+BorderRadiusGeometry _getCoverRadius(Widget heroChild) {
+  if (heroChild is ClipRRect) return heroChild.borderRadius;
+
+  return BorderRadius.zero;
+}

@@ -360,10 +360,12 @@ class BookCardList extends StatelessWidget {
       width: (coverFile != null) ? coverWidth : 0,
       height: coverHeight,
       child: (coverFile != null)
-          ? ClipRRect(
-              borderRadius: BorderRadius.circular(3),
-              child: Hero(
-                tag: heroTag,
+          ? Hero(
+              tag: heroTag,
+              transitionOnUserGestures: true,
+              flightShuttleBuilder: buildCoverHeroFlight,
+              child: ClipRRect(
+                borderRadius: BorderRadius.circular(3),
                 child: Image.file(
                   coverFile,
                   width: coverWidth,

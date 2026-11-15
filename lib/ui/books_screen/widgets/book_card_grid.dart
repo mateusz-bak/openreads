@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
+import 'package:openreads/core/helpers/helpers.dart';
 import 'package:openreads/core/themes/app_theme.dart';
 import 'package:openreads/model/book.dart';
 
@@ -101,25 +102,30 @@ class BookCardGrid extends StatelessWidget {
   Widget _buildCardWithCover({required String heroTag, required File file}) {
     return Hero(
       tag: heroTag,
-      child: Image.file(
-        file,
-        fit: BoxFit.cover,
-        frameBuilder: (
-          BuildContext context,
-          Widget child,
-          int? frame,
-          bool wasSynchronouslyLoaded,
-        ) {
-          if (wasSynchronouslyLoaded) {
-            return child;
-          }
-          return AnimatedOpacity(
-            opacity: frame == null ? 0 : 1,
-            duration: const Duration(milliseconds: 250),
-            curve: Curves.easeOut,
-            child: child,
-          );
-        },
+      transitionOnUserGestures: true,
+      flightShuttleBuilder: buildCoverHeroFlight,
+      child: ClipRRect(
+        borderRadius: BorderRadius.circular(8),
+        child: Image.file(
+          file,
+          fit: BoxFit.cover,
+          frameBuilder: (
+            BuildContext context,
+            Widget child,
+            int? frame,
+            bool wasSynchronouslyLoaded,
+          ) {
+            if (wasSynchronouslyLoaded) {
+              return child;
+            }
+            return AnimatedOpacity(
+              opacity: frame == null ? 0 : 1,
+              duration: const Duration(milliseconds: 250),
+              curve: Curves.easeOut,
+              child: child,
+            );
+          },
+        ),
       ),
     );
   }
