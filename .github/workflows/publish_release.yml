@@ -27,11 +27,15 @@ jobs:
     outputs:
       tag: ${{ steps.publish.outputs.tag }}
     steps:
-      - name: Check out project info
+      - name: Check out project info and changelog
         uses: actions/checkout@v7
         with:
           ref: ${{ github.event.pull_request.merge_commit_sha }}
-          sparse-checkout: assets/project_info.md
+          sparse-checkout: |
+            assets/project_info.md
+            assets/release_announcement.txt
+            pubspec.yaml
+            fastlane/metadata/android/en-US/changelogs/
           sparse-checkout-cone-mode: false
 
       - name: Publish draft release with the tag on the merge commit
@@ -54,6 +58,21 @@ jobs:
           GH_TOKEN: ${{ github.token }}
           HEAD_REF: ${{ github.event.pull_request.head.ref }}
           MERGE_SHA: ${{ github.event.pull_request.merge_commit_sha }}
+
+      - name: Announce release on Matrix
+        continue-on-error: true
+        run: |
+          BUILD="$(grep '^version:' pubspec.yaml | cut -d '+' -f2)"
+          MESSAGE="$(cat assets/release_announcement.txt)"
+          MESSAGE="${MESSAGE//"{tag}"/$TAG}"
+          MESSAGE="${MESSAGE//"{changelog}"/$(cat "fastlane/metadata/android/en-US/changelogs/$BUILD.txt")}"
+          curl -sS --fail-with-body -X PUT -H "Authorization: Bearer $MATRIX_ACCESS_TOKEN" \
+            "https://matrix.org/_matrix/client/v3/rooms/$ROOM/send/m.room.message/$GITHUB_RUN_ID-$GITHUB_RUN_ATTEMPT" \
+            -d "$(jq -n --arg body "$MESSAGE" '{msgtype: "m.text", body: $body}')"
+        env:
+          MATRIX_ACCESS_TOKEN: ${{ secrets.MATRIX_ACCESS_TOKEN }}
+          ROOM: '%21HRsxusjQtcBhgtYWtR%3Amatrix.org'
+          TAG: ${{ steps.publish.outputs.tag }}
 
   build_github:
     name: Build split apks and attach to release
