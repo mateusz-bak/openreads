@@ -44,6 +44,9 @@ jobs:
             exit 1
           fi
           BODY="$(gh api "repos/$GITHUB_REPOSITORY/releases/$ID" --jq .body)"
+          # the summary on top becomes What's Changed, the generated list Merged pull requests
+          BODY="${BODY/"## What's Changed"/"### Merged pull requests"}"
+          BODY="### What's Changed"$'\n\n'"${BODY/"## New Contributors"/"### New Contributors"}"
           gh api -X PATCH "repos/$GITHUB_REPOSITORY/releases/$ID" -f target_commitish="$MERGE_SHA" -F draft=false \
             -f body="$BODY"$'\n'"$(cat assets/project_info.md)" > /dev/null
           echo "tag=$TAG" >> "$GITHUB_OUTPUT"
