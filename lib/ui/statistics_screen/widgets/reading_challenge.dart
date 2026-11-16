@@ -12,6 +12,7 @@ class ReadingChallenge extends StatelessWidget {
     required this.year,
     this.booksTarget,
     this.pagesTarget,
+    this.onSharePressed,
     this.isSecondary = false,
   });
 
@@ -22,6 +23,7 @@ class ReadingChallenge extends StatelessWidget {
   final int? booksTarget;
   final int? pagesTarget;
   final int year;
+  final Function()? onSharePressed;
   final bool isSecondary;
 
   @override
@@ -55,13 +57,21 @@ class ReadingChallenge extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text(
-                title,
-                style: TextStyle(
-                  fontSize: isSecondary ? 14 : 16,
-                  fontWeight: FontWeight.bold,
-                  color: onCardColor,
-                ),
+              Row(
+                children: [
+                  Expanded(
+                    child: Text(
+                      title,
+                      style: TextStyle(
+                        fontSize: isSecondary ? 14 : 16,
+                        fontWeight: FontWeight.bold,
+                        color: onCardColor,
+                      ),
+                    ),
+                  ),
+                  if (onSharePressed != null)
+                    ShareYearButton(onPressed: onSharePressed!),
+                ],
               ),
               const SizedBox(height: 10),
               Row(
