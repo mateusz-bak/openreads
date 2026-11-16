@@ -4,6 +4,7 @@ import 'package:openreads/model/app_language.dart';
 
 final supportedLocales = [
   AppLanguage('العربية', const Locale('ar', 'SA')),
+  AppLanguage('བོད་སྐད་', const Locale('bo')),
   AppLanguage('català', const Locale('ca', 'ES')),
   AppLanguage('čeština', const Locale('cs', 'CZ')),
   AppLanguage('Deutsch', const Locale('de', 'DE')),
@@ -13,6 +14,7 @@ final supportedLocales = [
   AppLanguage('Euskara', const Locale('eu')),
   AppLanguage('eesti keel', const Locale('et')),
   AppLanguage('español', const Locale('es', 'ES')),
+  AppLanguage('فارسی', const Locale('fa')),
   AppLanguage('suomi', const Locale('fi', 'FI')),
   AppLanguage('Filipino', const Locale('fil', 'PH')),
   AppLanguage('français', const Locale('fr', 'FR')),
@@ -29,10 +31,12 @@ final supportedLocales = [
   AppLanguage('limba română', const Locale('ro', 'RO')),
   AppLanguage('മലയാളം', const Locale('ml')),
   AppLanguage('မြန်မာစကား', const Locale('my')),
+  AppLanguage('नेपाली', const Locale('ne')),
   AppLanguage('Nederlands', const Locale('nl', 'NL')),
   AppLanguage('Norsk bokmål', const Locale('nb', 'NO')),
   AppLanguage('Nynorsk', const Locale('nn')),
   AppLanguage('ଓଡ଼ିଆ', const Locale('or', 'IN')),
+  AppLanguage('پنجابی', const Locale('pa', 'PK')),
   AppLanguage('ਪੰਜਾਬੀ', const Locale('pa')),
   AppLanguage('polski', const Locale('pl', 'PL')),
   AppLanguage('português', const Locale('pt', 'PT')),
@@ -43,4 +47,8 @@ final supportedLocales = [
   AppLanguage('Українська', const Locale('uk', 'UA')),
   AppLanguage('Tiếng Việt', const Locale('vi', 'VN')),
   AppLanguage('中文', const Locale('zh', 'CN')),
+  AppLanguage(
+    '繁體中文',
+    const Locale.fromSubtags(languageCode: 'zh', scriptCode: 'Hant'),
+  ),
 ];

@@ -350,6 +350,13 @@ Future _initDateFormat(BuildContext context) async {
     locale = const Locale('nb', 'NO').toString();
   }
 
+  // Fallback for locales without date symbols in intl (e.g. bo)
+  locale = Intl.verifiedLocale(
+    locale,
+    DateFormat.localeExists,
+    onFailure: (_) => const Locale('en', 'US').toString(),
+  )!;
+
   // ignore: use_build_context_synchronously
   dateFormat = DateFormat.yMMMMd(locale);
 }
