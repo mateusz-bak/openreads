@@ -28,6 +28,11 @@ class SortForLaterBooksBloc extends HydratedBloc<SortEvent, SortState> {
       (event, emit) => emit(state.copyWith(onlyFavourite: event.onlyFavourite)),
     );
 
+    on<ChangeIgnoreArticlesEvent>(
+      (event, emit) =>
+          emit(state.copyWith(ignoreArticles: event.ignoreArticles)),
+    );
+
     on<ChangeBookTypeEvent>(
       (event, emit) => emit(
         state.copyWith(

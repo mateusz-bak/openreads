@@ -300,5 +300,6 @@
     "only_books_with_covers": "Show only books with covers",
     "customize": "Customize",
     "hide_rereads": "Hide re-reads",
-    "all_ratings": "All"
+    "all_ratings": "All",
+    "ignore_leading_articles": "Ignore leading articles (The, Der, Le…)"
 }

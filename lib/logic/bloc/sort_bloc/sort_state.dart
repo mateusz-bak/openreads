@@ -12,6 +12,7 @@ class SortState extends Equatable {
     required this.filterTagsAsAnd,
     this.bookType,
     this.filterOutTags = false,
+    this.ignoreArticles = false,
   });
 
   final SortType sortType;
@@ -22,6 +23,7 @@ class SortState extends Equatable {
   final bool filterTagsAsAnd;
   final BookFormat? bookType;
   final bool filterOutTags;
+  final bool ignoreArticles;
 
   SortState copyWith({
     SortType? sortType,
@@ -35,6 +37,7 @@ class SortState extends Equatable {
     BookFormat? bookType,
     bool resetBookType = false,
     bool? filterOutTags,
+    bool? ignoreArticles,
   }) {
     return SortState(
       sortType: sortType ?? this.sortType,
@@ -45,6 +48,7 @@ class SortState extends Equatable {
       filterTagsAsAnd: filterTagsAsAnd ?? this.filterTagsAsAnd,
       bookType: resetBookType ? null : bookType ?? this.bookType,
       filterOutTags: filterOutTags ?? this.filterOutTags,
+      ignoreArticles: ignoreArticles ?? this.ignoreArticles,
     );
   }
 
@@ -57,6 +61,7 @@ class SortState extends Equatable {
     final filterTagsAsAnd = json['filter_tags_as_and'] as bool;
     final filterOutTags = json['filter_out_tags'] as bool;
     final bookType = json['filter_book_type'] as String?;
+    final ignoreArticles = json['ignore_articles'] as bool? ?? false;
 
     final sortType = sortTypeInt < SortType.values.length
         ? SortType.values[sortTypeInt]
@@ -71,6 +76,7 @@ class SortState extends Equatable {
       filterTagsAsAnd: filterTagsAsAnd,
       bookType: bookType == null ? null : BookFormat.values.byName(bookType),
       filterOutTags: filterOutTags,
+      ignoreArticles: ignoreArticles,
     );
   }
 
@@ -84,6 +90,7 @@ class SortState extends Equatable {
       'filter_tags_as_and': filterTagsAsAnd,
       'filter_book_type': bookType?.name,
       'filter_out_tags': filterOutTags,
+      'ignore_articles': ignoreArticles,
     };
   }
 
@@ -97,5 +104,6 @@ class SortState extends Equatable {
         filterTagsAsAnd,
         bookType,
         filterOutTags,
+        ignoreArticles,
       ];
 }

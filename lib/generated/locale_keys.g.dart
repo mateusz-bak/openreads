@@ -304,4 +304,5 @@ abstract class LocaleKeys {
   static const customize = 'customize';
   static const hide_rereads = 'hide_rereads';
   static const all_ratings = 'all_ratings';
+  static const ignore_leading_articles = 'ignore_leading_articles';
 }

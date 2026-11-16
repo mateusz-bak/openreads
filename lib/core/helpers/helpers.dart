@@ -181,3 +181,38 @@ String normalizeForSearch(String text) {
       .replaceAll(RegExp(r'[\p{P}\p{S}\s]+', unicode: true), ' ')
       .trim();
 }
+
+const _leadingArticles = [
+  'the',
+  'a',
+  'an',
+  'der',
+  'die',
+  'das',
+  'le',
+  'la',
+  'les',
+  'el',
+  'los',
+  'las',
+  'il',
+  'lo',
+  'gli',
+];
+
+String getTitleSortKey(String title, bool ignoreArticles) {
+  final key = removeDiacritics(title.toLowerCase()).trim();
+  if (!ignoreArticles) return key;
+
+  // French and Italian l' is joined with the next word (L'Étranger)
+  final elision = RegExp(r"^l['’]\s*");
+  if (elision.hasMatch(key)) return key.replaceFirst(elision, '');
+
+  final firstSpace = key.indexOf(' ');
+  if (firstSpace > 0 &&
+      _leadingArticles.contains(key.substring(0, firstSpace))) {
+    return key.substring(firstSpace + 1).trimLeft();
+  }
+
+  return key;
+}
