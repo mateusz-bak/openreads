@@ -17,6 +17,7 @@ import 'package:openreads/logic/bloc/sort_bloc/sort_unfinished_books_bloc.dart';
 import 'package:openreads/logic/cubit/display_cubit.dart';
 import 'package:openreads/main.dart';
 import 'package:openreads/model/book.dart';
+import 'package:openreads/ui/similiar_books_screen/similiar_books_screen.dart';
 
 class BookCardList extends StatelessWidget {
   const BookCardList({
@@ -27,6 +28,7 @@ class BookCardList extends StatelessWidget {
     required this.addBottomPadding,
     this.onLongPressed,
     this.cardColor,
+    this.selectedTag,
   });
 
   final Book book;
@@ -35,6 +37,7 @@ class BookCardList extends StatelessWidget {
   final Function() onPressed;
   final Function()? onLongPressed;
   final Color? cardColor;
+  final String? selectedTag;
 
   Widget _buildSortAttribute() {
     return BlocBuilder<DisplayCubit, DisplayState>(
@@ -202,11 +205,24 @@ class BookCardList extends StatelessWidget {
       padding: const EdgeInsets.only(right: 10),
       child: FilterChip(
         padding: const EdgeInsets.all(5),
+        selected: tag == selectedTag,
+        showCheckmark: false,
         label: Text(
           tag,
           style: const TextStyle(fontSize: 12),
         ),
-        onSelected: (_) {},
+        onSelected: (_) {
+          if (tag == selectedTag) return;
+
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) => SimiliarBooksScreen(
+                tag: tag,
+              ),
+            ),
+          );
+        },
       ),
     );
   }

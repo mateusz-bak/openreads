@@ -14,11 +14,13 @@ class BooksList extends StatefulWidget {
     required this.books,
     required this.listNumber,
     this.allBooksCount,
+    this.selectedTag,
   });
 
   final List<Book> books;
   final int listNumber;
   final int? allBooksCount;
+  final String? selectedTag;
 
   @override
   State<BooksList> createState() => _BooksListState();
@@ -106,6 +108,7 @@ class _BooksListState extends State<BooksList>
                 addBottomPadding: (widget.books.length == index + 1),
                 onPressed: () => onPressed(index, multiSelectMode, heroTag),
                 onLongPressed: () => onLongPressed(index),
+                selectedTag: widget.selectedTag,
               );
             } else {
               return const SizedBox.shrink();
