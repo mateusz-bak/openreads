@@ -234,7 +234,7 @@ class SettingsApperanceScreen extends StatelessWidget {
 
   _setDarkMode(BuildContext context, SetThemeState state, bool amoledDark) {
     BlocProvider.of<ThemeBloc>(context).add(ChangeThemeEvent(
-      themeMode: ThemeMode.dark,
+      themeMode: state.themeMode,
       primaryColor: state.primaryColor,
       fontFamily: state.fontFamily,
       useMaterialYou: state.useMaterialYou,
