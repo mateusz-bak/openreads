@@ -255,6 +255,7 @@ class Statistics extends StatelessWidget {
           } else {
             return ReadingChallenge(
               title: LocaleKeys.pages_challenge.tr(),
+              isSecondary: true,
               value: value,
               target: selectedTarget.first.pages ?? 0,
               setChallenge: setChallenge,

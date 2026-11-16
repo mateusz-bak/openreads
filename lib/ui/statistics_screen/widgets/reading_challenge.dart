@@ -12,6 +12,7 @@ class ReadingChallenge extends StatelessWidget {
     required this.year,
     this.booksTarget,
     this.pagesTarget,
+    this.isSecondary = false,
   });
 
   final int value;
@@ -21,11 +22,22 @@ class ReadingChallenge extends StatelessWidget {
   final int? booksTarget;
   final int? pagesTarget;
   final int year;
+  final bool isSecondary;
 
   @override
   Widget build(BuildContext context) {
+    final colorScheme = Theme.of(context).colorScheme;
+    final cardColor = isSecondary
+        ? colorScheme.surfaceContainerHigh
+        : colorScheme.primaryContainer.withAlpha(255);
+    final onCardColor =
+        isSecondary ? colorScheme.onSurface : colorScheme.onPrimaryContainer;
+    // primary is too close to primaryContainer in dark mode
+    final barColor =
+        isSecondary ? colorScheme.primary : colorScheme.onPrimaryContainer;
+
     return Card.filled(
-      color: Theme.of(context).colorScheme.primaryContainer.withAlpha(255),
+      color: cardColor,
       child: InkWell(
         onTap: () => showDialog(
             context: context,
@@ -46,9 +58,9 @@ class ReadingChallenge extends StatelessWidget {
               Text(
                 title,
                 style: TextStyle(
-                  fontSize: 16,
+                  fontSize: isSecondary ? 14 : 16,
                   fontWeight: FontWeight.bold,
-                  color: Theme.of(context).colorScheme.onPrimaryContainer,
+                  color: onCardColor,
                 ),
               ),
               const SizedBox(height: 10),
@@ -58,7 +70,7 @@ class ReadingChallenge extends StatelessWidget {
                     child: Container(
                       padding: const EdgeInsets.all(2),
                       decoration: BoxDecoration(
-                        color: Theme.of(context).colorScheme.surface,
+                        color: barColor.withAlpha(50),
                         borderRadius: BorderRadius.circular(15),
                       ),
                       child: Row(
@@ -69,8 +81,7 @@ class ReadingChallenge extends StatelessWidget {
                                   child: Container(
                                     height: 10,
                                     decoration: BoxDecoration(
-                                      color:
-                                          Theme.of(context).colorScheme.primary,
+                                      color: barColor,
                                       borderRadius: BorderRadius.circular(20),
                                     ),
                                   ),
@@ -99,7 +110,7 @@ class ReadingChallenge extends StatelessWidget {
                     '$value/$target',
                     style: TextStyle(
                       fontSize: 16,
-                      color: Theme.of(context).colorScheme.onPrimaryContainer,
+                      color: onCardColor,
                     ),
                   ),
                   Text(
@@ -108,7 +119,7 @@ class ReadingChallenge extends StatelessWidget {
                         : '${((value / target * 100) <= 100) ? (value / target * 100).toStringAsFixed(2) : 100}%',
                     style: TextStyle(
                       fontSize: 16,
-                      color: Theme.of(context).colorScheme.onPrimaryContainer,
+                      color: onCardColor,
                     ),
                   ),
                 ],
