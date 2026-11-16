@@ -66,6 +66,7 @@ class _SimiliarBooksScreenState extends State<SimiliarBooksScreen> {
               return BooksList(
                 books: snapshot.data!,
                 listNumber: 0,
+                selectedTag: widget.tag,
               );
             } else if (snapshot.hasError) {
               return Text(
