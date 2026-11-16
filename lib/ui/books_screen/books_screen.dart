@@ -14,6 +14,7 @@ import 'package:openreads/logic/bloc/sort_bloc/sort_in_progress_books_bloc.dart'
 import 'package:openreads/logic/bloc/sort_bloc/sort_state.dart';
 import 'package:openreads/logic/bloc/sort_bloc/sort_unfinished_books_bloc.dart';
 import 'package:openreads/logic/cubit/book_lists_order_cubit.dart';
+import 'package:openreads/logic/cubit/books_tab_index_cubit.dart';
 import 'package:openreads/logic/cubit/display_cubit.dart';
 import 'package:openreads/main.dart';
 import 'package:openreads/model/book.dart';
@@ -703,6 +704,12 @@ class _BooksScreenState extends State<BooksScreen>
         state.type == DisplayType.detailedGrid;
   }
 
+  void _onTabChanged() {
+    if (_tabController.indexIsChanging) return;
+
+    context.read<BooksTabIndexCubit>().setTabIndex(_tabController.index);
+  }
+
   @override
   bool get wantKeepAlive => true;
 
@@ -711,6 +718,7 @@ class _BooksScreenState extends State<BooksScreen>
     super.initState();
 
     _tabController = TabController(length: 4, vsync: this);
+    _tabController.addListener(_onTabChanged);
     _chipScrollController = ScrollController();
   }
 
@@ -736,7 +744,6 @@ class _BooksScreenState extends State<BooksScreen>
             Expanded(
               child: TabBarView(
                 controller: _tabController,
-                physics: const NeverScrollableScrollPhysics(),
                 children: _buildTabs(context, bookListsOrder),
               ),
             ),
