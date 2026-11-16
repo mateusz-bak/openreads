@@ -1,7 +1,10 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:openreads/core/constants/enums/enums.dart';
 import 'package:openreads/core/themes/app_theme.dart';
 import 'package:openreads/generated/locale_keys.g.dart';
+import 'package:openreads/logic/cubit/display_cubit.dart';
 import 'package:openreads/main.dart';
 import 'package:openreads/model/book.dart';
 import 'package:openreads/ui/books_screen/widgets/widgets.dart';
@@ -63,10 +66,26 @@ class _SimiliarBooksScreenState extends State<SimiliarBooksScreen> {
               : bookCubit.booksWithSameAuthor,
           builder: (context, AsyncSnapshot<List<Book>?> snapshot) {
             if (snapshot.hasData) {
-              return BooksList(
-                books: snapshot.data!,
-                listNumber: 0,
-                selectedTag: widget.tag,
+              return BlocBuilder<DisplayCubit, DisplayState>(
+                builder: (context, displayState) {
+                  if (displayState.type == DisplayType.grid ||
+                      displayState.type == DisplayType.detailedGrid) {
+                    return BooksGrid(
+                      books: snapshot.data!,
+                      listNumber: 0,
+                      allBooksCount: snapshot.data!.length,
+                      gridType: displayState.type,
+                      gridSize: displayState.gridSize,
+                      titleOverCover: displayState.showTitleOverCover,
+                    );
+                  }
+
+                  return BooksList(
+                    books: snapshot.data!,
+                    listNumber: 0,
+                    selectedTag: widget.tag,
+                  );
+                },
               );
             } else if (snapshot.hasError) {
               return Text(
