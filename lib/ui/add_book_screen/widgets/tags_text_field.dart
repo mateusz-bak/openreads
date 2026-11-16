@@ -2,6 +2,7 @@ import 'package:diacritic/diacritic.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:openreads/core/helpers/helpers.dart';
 import 'package:openreads/core/themes/app_theme.dart';
 import 'package:flutter_typeahead/flutter_typeahead.dart';
 import 'package:openreads/logic/cubit/edit_book_cubit.dart';
@@ -129,9 +130,8 @@ class TagsField extends StatelessWidget {
                               .where((t) => t.isNotEmpty)
                               .toSet() ??
                           <String>{};
-                      return option
-                              .toLowerCase()
-                              .startsWith(pattern.toLowerCase()) &&
+                      return normalizeForSearch(option)
+                              .contains(normalizeForSearch(pattern)) &&
                           !selectedTags.contains(option);
                     }).toList() ??
                     [],
