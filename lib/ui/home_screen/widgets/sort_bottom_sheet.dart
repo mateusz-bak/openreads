@@ -490,7 +490,9 @@ class _SortBottomSheetState extends State<SortBottomSheet> {
                   Expanded(
                     child: Container(
                       decoration: BoxDecoration(
-                        color: Theme.of(context).colorScheme.surfaceVariant,
+                        color: Theme.of(context)
+                            .colorScheme
+                            .surfaceContainerHighest,
                         borderRadius: BorderRadius.circular(cornerRadius),
                       ),
                       child: SingleChildScrollView(
@@ -552,7 +554,9 @@ class _SortBottomSheetState extends State<SortBottomSheet> {
                   Expanded(
                     child: Container(
                       decoration: BoxDecoration(
-                        color: Theme.of(context).colorScheme.surfaceVariant,
+                        color: Theme.of(context)
+                            .colorScheme
+                            .surfaceContainerHighest,
                         borderRadius: BorderRadius.circular(cornerRadius),
                         // border: Border.all(color: dividerColor),
                       ),
@@ -598,7 +602,7 @@ class _SortBottomSheetState extends State<SortBottomSheet> {
                 .add(ChangeIgnoreArticlesEvent(!ignoreArticles)),
             child: Container(
               decoration: BoxDecoration(
-                color: Theme.of(context).colorScheme.surfaceVariant,
+                color: Theme.of(context).colorScheme.surfaceContainerHighest,
                 borderRadius: BorderRadius.circular(cornerRadius),
               ),
               child: Row(
@@ -637,7 +641,7 @@ class _SortBottomSheetState extends State<SortBottomSheet> {
                 .add(ChangeOnlyFavouriteEvent(!onlyFavourite)),
             child: Container(
               decoration: BoxDecoration(
-                color: Theme.of(context).colorScheme.surfaceVariant,
+                color: Theme.of(context).colorScheme.surfaceContainerHighest,
                 borderRadius: BorderRadius.circular(cornerRadius),
                 // border: Border.all(color: dividerColor),
               ),
@@ -679,7 +683,7 @@ class _SortBottomSheetState extends State<SortBottomSheet> {
                 height: 42,
                 decoration: BoxDecoration(
                   // border: Border.all(color: dividerColor),
-                  color: Theme.of(context).colorScheme.surfaceVariant,
+                  color: Theme.of(context).colorScheme.surfaceContainerHighest,
                   borderRadius: BorderRadius.circular(cornerRadius),
                 ),
               ),
@@ -704,7 +708,7 @@ class _SortBottomSheetState extends State<SortBottomSheet> {
         const SizedBox(width: 5),
         Container(
           decoration: BoxDecoration(
-            color: Theme.of(context).colorScheme.surfaceVariant,
+            color: Theme.of(context).colorScheme.surfaceContainerHighest,
             borderRadius: BorderRadius.circular(cornerRadius),
             // border: Border.all(color: dividerColor),
           ),
@@ -724,7 +728,7 @@ class _SortBottomSheetState extends State<SortBottomSheet> {
           height: 42,
           decoration: BoxDecoration(
             // border: Border.all(color: dividerColor),
-            color: Theme.of(context).colorScheme.surfaceVariant,
+            color: Theme.of(context).colorScheme.surfaceContainerHighest,
             borderRadius: BorderRadius.circular(cornerRadius),
           ),
         ),
@@ -765,7 +769,7 @@ class _SortBottomSheetState extends State<SortBottomSheet> {
             padding: const EdgeInsets.only(top: 10),
             child: Container(
               decoration: BoxDecoration(
-                color: Theme.of(context).colorScheme.surfaceVariant,
+                color: Theme.of(context).colorScheme.surfaceContainerHighest,
                 borderRadius: BorderRadius.circular(cornerRadius),
                 // border: Border.all(color: dividerColor),
               ),
@@ -811,7 +815,7 @@ class _SortBottomSheetState extends State<SortBottomSheet> {
             padding: const EdgeInsets.only(top: 10),
             child: Container(
               decoration: BoxDecoration(
-                color: Theme.of(context).colorScheme.surfaceVariant,
+                color: Theme.of(context).colorScheme.surfaceContainerHighest,
                 borderRadius: BorderRadius.circular(cornerRadius),
                 // border: Border.all(color: dividerColor),
               ),
