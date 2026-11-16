@@ -317,14 +317,17 @@ class _SearchOLScreenState extends State<SearchOLScreen>
     final searchType = _getOLSearchTypeEnum(
       context.read<OpenLibrarySearchBloc>().state,
     );
+    final defaultBookFormat = context.read<DefaultBooksFormatCubit>().state;
+    final defaultTags = context.read<DefaultBookTagsCubit>().state;
 
     final book = Book(
       title: searchType == OLSearchType.title ? _searchController.text : '',
       author: searchType == OLSearchType.author ? _searchController.text : '',
-      status: BookStatus.read,
+      status: widget.status,
       isbn: searchType == OLSearchType.isbn ? _searchController.text : null,
+      bookFormat: defaultBookFormat,
       readings: List<Reading>.empty(growable: true),
-      tags: 'owned',
+      tags: defaultTags.isNotEmpty ? defaultTags.join('|||||') : null,
       dateAdded: DateTime.now(),
       dateModified: DateTime.now(),
     );
