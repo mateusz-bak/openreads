@@ -1,6 +1,7 @@
 import 'dart:io';
 import 'dart:ui' as ui;
 
+import 'package:diacritic/diacritic.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -172,4 +173,11 @@ BorderRadiusGeometry _getCoverRadius(Widget heroChild) {
   if (heroChild is ClipRRect) return heroChild.borderRadius;
 
   return BorderRadius.zero;
+}
+
+// lowercase, no accents, punctuation as spaces
+String normalizeForSearch(String text) {
+  return removeDiacritics(text.toLowerCase())
+      .replaceAll(RegExp(r'[\p{P}\p{S}\s]+', unicode: true), ' ')
+      .trim();
 }

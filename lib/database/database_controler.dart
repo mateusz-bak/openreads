@@ -1,4 +1,5 @@
 import 'package:openreads/core/constants/enums/enums.dart';
+import 'package:openreads/core/helpers/helpers.dart';
 import 'package:openreads/database/database_provider.dart';
 import 'package:openreads/model/book.dart';
 import 'package:sqflite/sqflite.dart';
@@ -66,19 +67,17 @@ class DatabaseController {
     var result = await db.query(
       "booksTable",
       columns: columns,
-      where:
-          "(title LIKE ? OR subtitle LIKE ? OR author LIKE ?) AND deleted LIKE ?",
-      whereArgs: [
-        '%$query%',
-        '%$query%',
-        '%$query%',
-        '0',
-      ],
+      where: 'deleted = 0',
     );
 
-    return result.isNotEmpty
-        ? result.map((item) => Book.fromJSON(item)).toList()
-        : [];
+    // filtered here as SQLite can't ignore accents
+    final normalizedQuery = normalizeForSearch(query);
+
+    return result
+        .map((item) => Book.fromJSON(item))
+        .where((book) => [book.title, book.subtitle ?? '', book.author].any(
+            (value) => normalizeForSearch(value).contains(normalizedQuery)))
+        .toList();
   }
 
   Future<int> countBooks({
@@ -210,13 +209,15 @@ class DatabaseController {
 
     var result = await db.query(
       "booksTable",
-      where: 'author = ? AND deleted = 0',
-      whereArgs: [author],
+      where: 'deleted = 0',
       orderBy: 'publication_year ASC',
     );
 
-    return result.isNotEmpty
-        ? result.map((item) => Book.fromJSON(item)).toList()
-        : [];
+    final normalizedAuthor = normalizeForSearch(author);
+
+    return result
+        .map((item) => Book.fromJSON(item))
+        .where((book) => normalizeForSearch(book.author) == normalizedAuthor)
+        .toList();
   }
 }

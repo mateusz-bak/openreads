@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_typeahead/flutter_typeahead.dart';
 
+import 'package:openreads/core/helpers/helpers.dart';
 import 'package:openreads/core/themes/app_theme.dart';
 
 class BookTextField extends StatefulWidget {
@@ -108,7 +109,8 @@ class _BookTextFieldState extends State<BookTextField> {
         },
         suggestionsCallback: (pattern) {
           return widget.suggestions!.where((String option) {
-            return option.toLowerCase().startsWith(pattern.toLowerCase());
+            return normalizeForSearch(option)
+                .contains(normalizeForSearch(pattern));
           }).toList();
         },
         onSelected: (suggestion) {
