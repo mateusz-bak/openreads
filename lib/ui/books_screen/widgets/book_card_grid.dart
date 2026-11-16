@@ -63,22 +63,24 @@ class BookCardGrid extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         mainAxisAlignment: MainAxisAlignment.end,
         children: [
-          Row(
-            children: [
-              Expanded(
-                child: Text(
-                  book.title,
-                  softWrap: true,
-                  maxLines: 5,
-                  overflow: TextOverflow.ellipsis,
-                  textAlign: TextAlign.start,
-                  style: const TextStyle(
-                    fontSize: 15,
-                    fontWeight: FontWeight.bold,
+          Flexible(
+            child: Row(
+              children: [
+                Expanded(
+                  child: Text(
+                    book.title,
+                    softWrap: true,
+                    maxLines: 5,
+                    overflow: TextOverflow.ellipsis,
+                    textAlign: TextAlign.start,
+                    style: const TextStyle(
+                      fontSize: 15,
+                      fontWeight: FontWeight.bold,
+                    ),
                   ),
                 ),
-              ),
-            ],
+              ],
+            ),
           ),
           book.subtitle != null && book.subtitle!.isNotEmpty
               ? Row(
