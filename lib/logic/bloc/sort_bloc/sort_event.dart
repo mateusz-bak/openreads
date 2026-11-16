@@ -75,3 +75,12 @@ class ChangeFilterOutTags extends SortEvent {
   @override
   List<Object?> get props => [filterOutTags];
 }
+
+class ChangeIgnoreArticlesEvent extends SortEvent {
+  final bool ignoreArticles;
+
+  const ChangeIgnoreArticlesEvent(this.ignoreArticles);
+
+  @override
+  List<Object?> get props => [ignoreArticles];
+}

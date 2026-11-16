@@ -416,6 +416,8 @@ class _SortBottomSheetState extends State<SortBottomSheet> {
         const SizedBox(height: 5),
         _buildSortDropdown(bookStatus, sortState),
         const SizedBox(height: 5),
+        _buildIgnoreArticlesSwitch(bookStatus, sortState.ignoreArticles),
+        const SizedBox(height: 5),
         if (bookStatus == BookStatus.read)
           _buildOnlyFavouriteSwitch(bookStatus, sortState.onlyFavourite),
         const SizedBox(height: 5),
@@ -584,6 +586,45 @@ class _SortBottomSheetState extends State<SortBottomSheet> {
           return const Center(child: CircularProgressIndicator());
         }
       },
+    );
+  }
+
+  Row _buildIgnoreArticlesSwitch(BookStatus bookStatus, bool ignoreArticles) {
+    return Row(
+      children: [
+        Expanded(
+          child: InkWell(
+            onTap: () => _getBlocProvider(bookStatus)
+                .add(ChangeIgnoreArticlesEvent(!ignoreArticles)),
+            child: Container(
+              decoration: BoxDecoration(
+                color: Theme.of(context).colorScheme.surfaceVariant,
+                borderRadius: BorderRadius.circular(cornerRadius),
+              ),
+              child: Row(
+                children: [
+                  SizedBox(
+                    height: 40,
+                    child: Switch.adaptive(
+                      value: ignoreArticles,
+                      onChanged: (value) => _getBlocProvider(bookStatus).add(
+                        ChangeIgnoreArticlesEvent(value),
+                      ),
+                    ),
+                  ),
+                  const SizedBox(width: 8),
+                  Expanded(
+                    child: Text(
+                      LocaleKeys.ignore_leading_articles.tr(),
+                      style: const TextStyle(fontSize: 16),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ),
+        ),
+      ],
     );
   }
 

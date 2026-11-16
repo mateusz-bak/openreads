@@ -57,7 +57,12 @@ class _BooksScreenState extends State<BooksScreen>
       list = _filterOutBookTypes(list, state.bookType!);
     }
 
-    return _sort(list: list, sortType: state.sortType, isAsc: state.isAsc);
+    return _sort(
+      list: list,
+      sortType: state.sortType,
+      isAsc: state.isAsc,
+      ignoreArticles: state.ignoreArticles,
+    );
   }
 
   List<Book> _sortInProgressList({
@@ -77,7 +82,12 @@ class _BooksScreenState extends State<BooksScreen>
       list = _filterOutBookTypes(list, state.bookType!);
     }
 
-    return _sort(list: list, sortType: state.sortType, isAsc: state.isAsc);
+    return _sort(
+      list: list,
+      sortType: state.sortType,
+      isAsc: state.isAsc,
+      ignoreArticles: state.ignoreArticles,
+    );
   }
 
   List<Book> _sortForLaterList({
@@ -97,7 +107,12 @@ class _BooksScreenState extends State<BooksScreen>
       list = _filterOutBookTypes(list, state.bookType!);
     }
 
-    return _sort(list: list, sortType: state.sortType, isAsc: state.isAsc);
+    return _sort(
+      list: list,
+      sortType: state.sortType,
+      isAsc: state.isAsc,
+      ignoreArticles: state.ignoreArticles,
+    );
   }
 
   List<Book> _sortUnfinishedList({
@@ -117,7 +132,12 @@ class _BooksScreenState extends State<BooksScreen>
       list = _filterOutBookTypes(list, state.bookType!);
     }
 
-    return _sort(list: list, sortType: state.sortType, isAsc: state.isAsc);
+    return _sort(
+      list: list,
+      sortType: state.sortType,
+      isAsc: state.isAsc,
+      ignoreArticles: state.ignoreArticles,
+    );
   }
 
   List<Book> _filterOutFav({required List<Book> list}) {
@@ -282,40 +302,82 @@ class _BooksScreenState extends State<BooksScreen>
     required List<Book> list,
     required SortType sortType,
     required bool isAsc,
+    required bool ignoreArticles,
   }) {
     switch (sortType) {
       case SortType.byTitle:
-        return _sortByTitle(list: list, isAsc: isAsc);
+        return _sortByTitle(
+          list: list,
+          isAsc: isAsc,
+          ignoreArticles: ignoreArticles,
+        );
       case SortType.byAuthor:
-        return _sortByAuthor(list: list, isAsc: isAsc);
+        return _sortByAuthor(
+          list: list,
+          isAsc: isAsc,
+          ignoreArticles: ignoreArticles,
+        );
       case SortType.byRating:
-        return _sortByRating(list: list, isAsc: isAsc);
+        return _sortByRating(
+          list: list,
+          isAsc: isAsc,
+          ignoreArticles: ignoreArticles,
+        );
       case SortType.byPages:
-        return _sortByPages(list: list, isAsc: isAsc);
+        return _sortByPages(
+          list: list,
+          isAsc: isAsc,
+          ignoreArticles: ignoreArticles,
+        );
       case SortType.byStartDate:
-        return _sortByStartDate(list: list, isAsc: isAsc);
+        return _sortByStartDate(
+          list: list,
+          isAsc: isAsc,
+          ignoreArticles: ignoreArticles,
+        );
       case SortType.byFinishDate:
-        return _sortByFinishDate(list: list, isAsc: isAsc);
+        return _sortByFinishDate(
+          list: list,
+          isAsc: isAsc,
+          ignoreArticles: ignoreArticles,
+        );
       case SortType.byPublisher:
-        return _sortByPublisher(list: list, isAsc: isAsc);
+        return _sortByPublisher(
+          list: list,
+          isAsc: isAsc,
+          ignoreArticles: ignoreArticles,
+        );
       case SortType.byPublicationYear:
-        return _sortByPublicationYear(list: list, isAsc: isAsc);
+        return _sortByPublicationYear(
+          list: list,
+          isAsc: isAsc,
+          ignoreArticles: ignoreArticles,
+        );
       case SortType.byDateAdded:
-        return _sortByDateAdded(list: list, isAsc: isAsc);
+        return _sortByDateAdded(
+          list: list,
+          isAsc: isAsc,
+          ignoreArticles: ignoreArticles,
+        );
       case SortType.byDateModified:
-        return _sortByDateModified(list: list, isAsc: isAsc);
+        return _sortByDateModified(
+          list: list,
+          isAsc: isAsc,
+          ignoreArticles: ignoreArticles,
+        );
     }
   }
 
   List<Book> _sortByTitle({
     required List<Book> list,
     required bool isAsc,
+    required bool ignoreArticles,
   }) {
     isAsc
-        ? list.sort((a, b) => removeDiacritics(a.title.toString().toLowerCase())
-            .compareTo(removeDiacritics(b.title.toString().toLowerCase())))
-        : list.sort((b, a) => removeDiacritics(a.title.toString().toLowerCase())
-            .compareTo(removeDiacritics(b.title.toString().toLowerCase())));
+        ? list.sort((a, b) => getTitleSortKey(a.title, ignoreArticles)
+            .compareTo(getTitleSortKey(b.title, ignoreArticles)))
+        : list.sort((b, a) => getTitleSortKey(a.title, ignoreArticles)
+            .compareTo(getTitleSortKey(b.title, ignoreArticles)));
     // no secondary sorting
 
     return list;
@@ -324,6 +386,7 @@ class _BooksScreenState extends State<BooksScreen>
   List<Book> _sortByAuthor({
     required List<Book> list,
     required bool isAsc,
+    required bool ignoreArticles,
   }) {
     list.sort((a, b) {
       int authorSorting = removeDiacritics(a.author.toString().toLowerCase())
@@ -342,8 +405,8 @@ class _BooksScreenState extends State<BooksScreen>
         }
         if (releaseSorting == 0) {
           // tertiary sorting, by title
-          int titleSorting = removeDiacritics(a.title.toString().toLowerCase())
-              .compareTo(removeDiacritics(b.title.toString().toLowerCase()));
+          int titleSorting = getTitleSortKey(a.title, ignoreArticles)
+              .compareTo(getTitleSortKey(b.title, ignoreArticles));
           if (!isAsc) {
             titleSorting *= -1;
           }
@@ -360,6 +423,7 @@ class _BooksScreenState extends State<BooksScreen>
   List<Book> _sortByRating({
     required List<Book> list,
     required bool isAsc,
+    required bool ignoreArticles,
   }) {
     List<Book> booksNotRated = List.empty(growable: true);
     List<Book> booksRated = List.empty(growable: true);
@@ -384,8 +448,8 @@ class _BooksScreenState extends State<BooksScreen>
         }
         if (releaseSorting == 0) {
           // tertiary sorting, by title
-          int titleSorting = removeDiacritics(a.title.toString().toLowerCase())
-              .compareTo(removeDiacritics(b.title.toString().toLowerCase()));
+          int titleSorting = getTitleSortKey(a.title, ignoreArticles)
+              .compareTo(getTitleSortKey(b.title, ignoreArticles));
           if (!isAsc) {
             titleSorting *= -1;
           }
@@ -402,6 +466,7 @@ class _BooksScreenState extends State<BooksScreen>
   List<Book> _sortByPages({
     required List<Book> list,
     required bool isAsc,
+    required bool ignoreArticles,
   }) {
     List<Book> booksWithoutPages = List.empty(growable: true);
     List<Book> booksWithPages = List.empty(growable: true);
@@ -428,8 +493,8 @@ class _BooksScreenState extends State<BooksScreen>
         }
         if (releaseSorting == 0) {
           // tertiary sorting, by title
-          int titleSorting = removeDiacritics(a.title.toString().toLowerCase())
-              .compareTo(removeDiacritics(b.title.toString().toLowerCase()));
+          int titleSorting = getTitleSortKey(a.title, ignoreArticles)
+              .compareTo(getTitleSortKey(b.title, ignoreArticles));
           if (!isAsc) {
             titleSorting *= -1;
           }
@@ -446,6 +511,7 @@ class _BooksScreenState extends State<BooksScreen>
   List<Book> _sortByDateAdded({
     required List<Book> list,
     required bool isAsc,
+    required bool ignoreArticles,
   }) {
     list.sort((a, b) {
       int dateAddedSorting = a.dateAdded.millisecondsSinceEpoch
@@ -465,8 +531,8 @@ class _BooksScreenState extends State<BooksScreen>
         }
         if (releaseSorting == 0) {
           // tertiary sorting, by title
-          int titleSorting = removeDiacritics(a.title.toString().toLowerCase())
-              .compareTo(removeDiacritics(b.title.toString().toLowerCase()));
+          int titleSorting = getTitleSortKey(a.title, ignoreArticles)
+              .compareTo(getTitleSortKey(b.title, ignoreArticles));
           if (!isAsc) {
             titleSorting *= -1;
           }
@@ -483,6 +549,7 @@ class _BooksScreenState extends State<BooksScreen>
   List<Book> _sortByDateModified({
     required List<Book> list,
     required bool isAsc,
+    required bool ignoreArticles,
   }) {
     list.sort((a, b) {
       int dateModifiedSorting = a.dateModified.millisecondsSinceEpoch
@@ -502,8 +569,8 @@ class _BooksScreenState extends State<BooksScreen>
         }
         if (releaseSorting == 0) {
           // tertiary sorting, by title
-          int titleSorting = removeDiacritics(a.title.toString().toLowerCase())
-              .compareTo(removeDiacritics(b.title.toString().toLowerCase()));
+          int titleSorting = getTitleSortKey(a.title, ignoreArticles)
+              .compareTo(getTitleSortKey(b.title, ignoreArticles));
           if (!isAsc) {
             titleSorting *= -1;
           }
@@ -520,6 +587,7 @@ class _BooksScreenState extends State<BooksScreen>
   List<Book> _sortByStartDate({
     required List<Book> list,
     required bool isAsc,
+    required bool ignoreArticles,
   }) {
     List<Book> booksWithoutStartDate = List.empty(growable: true);
     List<Book> booksWithStartDate = List.empty(growable: true);
@@ -559,8 +627,8 @@ class _BooksScreenState extends State<BooksScreen>
         }
         if (releaseSorting == 0) {
           // tertiary sorting, by title
-          int titleSorting = removeDiacritics(a.title.toString().toLowerCase())
-              .compareTo(removeDiacritics(b.title.toString().toLowerCase()));
+          int titleSorting = getTitleSortKey(a.title, ignoreArticles)
+              .compareTo(getTitleSortKey(b.title, ignoreArticles));
           if (!isAsc) {
             titleSorting *= -1;
           }
@@ -577,6 +645,7 @@ class _BooksScreenState extends State<BooksScreen>
   List<Book> _sortByFinishDate({
     required List<Book> list,
     required bool isAsc,
+    required bool ignoreArticles,
   }) {
     List<Book> booksWithoutFinishDate = List.empty(growable: true);
     List<Book> booksWithFinishDate = List.empty(growable: true);
@@ -616,8 +685,8 @@ class _BooksScreenState extends State<BooksScreen>
         }
         if (releaseSorting == 0) {
           // tertiary sorting, by title
-          int titleSorting = removeDiacritics(a.title.toString().toLowerCase())
-              .compareTo(removeDiacritics(b.title.toString().toLowerCase()));
+          int titleSorting = getTitleSortKey(a.title, ignoreArticles)
+              .compareTo(getTitleSortKey(b.title, ignoreArticles));
           if (!isAsc) {
             titleSorting *= -1;
           }
@@ -634,6 +703,7 @@ class _BooksScreenState extends State<BooksScreen>
   List<Book> _sortByPublisher({
     required List<Book> list,
     required bool isAsc,
+    required bool ignoreArticles,
   }) {
     List<Book> booksWithoutPublisher = List.empty(growable: true);
     List<Book> booksWithPublisher = List.empty(growable: true);
@@ -652,8 +722,8 @@ class _BooksScreenState extends State<BooksScreen>
       }
 
       if (publisherSorting == 0) {
-        int titleSorting = removeDiacritics(a.title.toString().toLowerCase())
-            .compareTo(removeDiacritics(b.title.toString().toLowerCase()));
+        int titleSorting = getTitleSortKey(a.title, ignoreArticles)
+            .compareTo(getTitleSortKey(b.title, ignoreArticles));
         if (!isAsc) {
           titleSorting *= -1;
         }
@@ -668,6 +738,7 @@ class _BooksScreenState extends State<BooksScreen>
   List<Book> _sortByPublicationYear({
     required List<Book> list,
     required bool isAsc,
+    required bool ignoreArticles,
   }) {
     List<Book> booksWithoutPublicationDate = List.empty(growable: true);
     List<Book> booksWithPublicationDate = List.empty(growable: true);
@@ -686,8 +757,8 @@ class _BooksScreenState extends State<BooksScreen>
       }
 
       if (publicationYearSorting == 0) {
-        int titleSorting = removeDiacritics(a.title.toString().toLowerCase())
-            .compareTo(removeDiacritics(b.title.toString().toLowerCase()));
+        int titleSorting = getTitleSortKey(a.title, ignoreArticles)
+            .compareTo(getTitleSortKey(b.title, ignoreArticles));
         if (!isAsc) {
           titleSorting *= -1;
         }
