@@ -7,8 +7,10 @@ import 'package:openreads/generated/locale_keys.g.dart';
 import 'package:openreads/logic/bloc/challenge_bloc/challenge_bloc.dart';
 import 'package:openreads/logic/bloc/stats_bloc/stats_bloc.dart';
 
+import 'package:openreads/model/book_read_stat.dart';
 import 'package:openreads/model/yearly_challenge.dart';
 import 'package:openreads/ui/statistics_screen/widgets/widgets.dart';
+import 'package:openreads/ui/year_summary_screen/year_summary_screen.dart';
 
 class Statistics extends StatelessWidget {
   final StatsLoaded state;
@@ -23,6 +25,61 @@ class Statistics extends StatelessWidget {
     required this.state,
     required this.setChallenge,
   });
+
+  List<YearlyChallenge> _parseYearlyChallenges(String yearlyChallenges) {
+    final challenges = List<YearlyChallenge>.empty(
+      growable: true,
+    );
+
+    final jsons = yearlyChallenges.split('|||||');
+    for (var json in jsons) {
+      final decodedJson = jsonDecode(json);
+      final yearlyChallenge = YearlyChallenge.fromJSON(decodedJson);
+      challenges.add(yearlyChallenge);
+    }
+
+    return challenges;
+  }
+
+  void _openYearSummary(BuildContext context, int year) {
+    YearlyChallenge? challenge;
+    final challengeState = context.read<ChallengeBloc>().state;
+    if (challengeState is SetChallengeState &&
+        challengeState.yearlyChallenges != null) {
+      final yearlyChallenges = _parseYearlyChallenges(
+        challengeState.yearlyChallenges!,
+      );
+      // same entry as in the challenge cards
+      for (var yearlyChallenge in yearlyChallenges) {
+        if (yearlyChallenge.year == year) {
+          challenge = yearlyChallenge;
+          break;
+        }
+      }
+    }
+
+    int sumForYear(List<BookReadStat> stats) {
+      final statsForYear = stats.where((element) => element.year == year);
+
+      return statsForYear.isNotEmpty
+          ? statsForYear.first.values.reduce((a, b) => a + b)
+          : 0;
+    }
+
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) => YearSummaryScreen(
+          year: year,
+          books: state.finishedBooks,
+          finishedBooks: sumForYear(state.finishedBooksByMonthAllTypes),
+          finishedPages: sumForYear(state.finishedPagesByMonthAllTypes),
+          booksTarget: challenge?.books,
+          pagesTarget: challenge?.pages,
+        ),
+      ),
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -153,16 +210,9 @@ class Statistics extends StatelessWidget {
       builder: (context, challengeState) {
         if (challengeState is SetChallengeState &&
             challengeState.yearlyChallenges != null) {
-          final yearlyChallenges = List<YearlyChallenge>.empty(
-            growable: true,
+          final yearlyChallenges = _parseYearlyChallenges(
+            challengeState.yearlyChallenges!,
           );
-
-          final jsons = challengeState.yearlyChallenges!.split('|||||');
-          for (var json in jsons) {
-            final decodedJson = jsonDecode(json);
-            final yearlyChallenge = YearlyChallenge.fromJSON(decodedJson);
-            yearlyChallenges.add(yearlyChallenge);
-          }
 
           final selectedTarget = yearlyChallenges.where((element) {
             return (year == null)
@@ -182,12 +232,7 @@ class Statistics extends StatelessWidget {
               : 0;
 
           if (selectedTarget.isEmpty || selectedTarget.first.books == null) {
-            return (year == null)
-                ? SetChallengeBox(
-                    setChallenge: setChallenge,
-                    year: year ?? DateTime.now().year,
-                  )
-                : const SizedBox();
+            return _buildNoBooksChallenge(context, state, year);
           } else {
             return ReadingChallenge(
               title: LocaleKeys.books_challenge.tr(),
@@ -197,17 +242,45 @@ class Statistics extends StatelessWidget {
               booksTarget: selectedTarget.first.books,
               pagesTarget: selectedTarget.first.pages,
               year: year ?? DateTime.now().year,
+              onSharePressed: state.years.contains(year ?? DateTime.now().year)
+                  ? () => _openYearSummary(
+                        context,
+                        year ?? DateTime.now().year,
+                      )
+                  : null,
             );
           }
         } else {
-          return (year == null)
-              ? SetChallengeBox(
-                  setChallenge: setChallenge,
-                  year: year ?? DateTime.now().year,
-                )
-              : const SizedBox();
+          return _buildNoBooksChallenge(context, state, year);
         }
       },
+    );
+  }
+
+  Widget _buildNoBooksChallenge(
+    BuildContext context,
+    StatsLoaded state,
+    int? year,
+  ) {
+    if (year != null) {
+      return ShareYearBox(
+        onPressed: () => _openYearSummary(context, year),
+      );
+    }
+
+    final currentYear = DateTime.now().year;
+
+    return Column(
+      children: [
+        SetChallengeBox(
+          setChallenge: setChallenge,
+          year: currentYear,
+        ),
+        if (state.years.contains(currentYear))
+          ShareYearBox(
+            onPressed: () => _openYearSummary(context, currentYear),
+          ),
+      ],
     );
   }
 
@@ -220,16 +293,9 @@ class Statistics extends StatelessWidget {
       builder: (context, challengeState) {
         if (challengeState is SetChallengeState &&
             challengeState.yearlyChallenges != null) {
-          final yearlyChallenges = List<YearlyChallenge>.empty(
-            growable: true,
+          final yearlyChallenges = _parseYearlyChallenges(
+            challengeState.yearlyChallenges!,
           );
-
-          final jsons = challengeState.yearlyChallenges!.split('|||||');
-          for (var json in jsons) {
-            final decodedJson = jsonDecode(json);
-            final yearlyChallenge = YearlyChallenge.fromJSON(decodedJson);
-            yearlyChallenges.add(yearlyChallenge);
-          }
 
           final selectedTarget = yearlyChallenges.where((element) {
             return (year == null)

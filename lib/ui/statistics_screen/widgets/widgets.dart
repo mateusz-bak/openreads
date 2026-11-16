@@ -5,3 +5,5 @@ export 'chart_legend_element.dart';
 export 'reading_challenge.dart';
 export 'challenge_dialog.dart';
 export 'set_challenge_box.dart';
+export 'share_year_box.dart';
+export 'share_year_button.dart';

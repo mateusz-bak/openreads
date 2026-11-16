@@ -297,4 +297,11 @@ abstract class LocaleKeys {
   static const action_not_supported_on_platform_error =
       'action_not_supported_on_platform_error';
   static const camera_error = 'camera_error';
+  static const share_year_in_books = 'share_year_in_books';
+  static const my_year_in_books = 'my_year_in_books';
+  static const share = 'share';
+  static const only_books_with_covers = 'only_books_with_covers';
+  static const customize = 'customize';
+  static const hide_rereads = 'hide_rereads';
+  static const all_ratings = 'all_ratings';
 }

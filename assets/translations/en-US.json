@@ -293,5 +293,12 @@
     "show_title_over_cover": "Show title over cover",
     "internal_error": "An internal error occurred. Please try again and report a bug",
     "action_not_supported_on_platform_error": "This action is not supported on current platform",
-    "camera_error": "Could not open the camera. Check the camera permission in the app settings."
+    "camera_error": "Could not open the camera. Check the camera permission in the app settings.",
+    "share_year_in_books": "Share your year in books",
+    "my_year_in_books": "My year in books",
+    "share": "Share",
+    "only_books_with_covers": "Show only books with covers",
+    "customize": "Customize",
+    "hide_rereads": "Hide re-reads",
+    "all_ratings": "All"
 }
