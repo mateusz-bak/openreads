@@ -137,8 +137,6 @@
     "migration_v1_to_v2_retrigger": "v2.0 माइग्रेशन फिर से चलाएँ",
     "migration_v1_to_v2_retrigger_description": "यदि v2.0 में अपडेट के बाद पुस्तकें दिखाई नहीं दे रही हैं तो क्लिक करें।",
     "dark_mode_style": "गहरी मोड शैली",
-    "flash_on": "फ़्लैश चालू करें",
-    "flash_off": "फ़्लैश बंद",
     "search": "खोजें",
     "set_pages_goal": "पेज लक्ष्य निर्धारित करें:",
     "search_in_books": "अपनी पुस्तकों में खोजें",

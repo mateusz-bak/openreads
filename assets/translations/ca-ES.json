@@ -144,8 +144,6 @@
     "migration_v1_to_v2_2": "No abandoneu aquesta pantalla abans que tots els llibres es traslladin, perquè els perdreu!",
     "migration_v1_to_v2_finished": "S'ha finalitzat el trasllat de llibres, premeu START.",
     "set_books_goal_for_year": "Establiu un objectiu de llibres pel",
-    "flash_on": "Encén el flaix",
-    "flash_off": "Apaga el flaix",
     "finished_books_by_month": "Llibres acabats per mes",
     "book_format_ebook": "Llibre electrònic",
     "book_format_paperback": "Tapa tova",
