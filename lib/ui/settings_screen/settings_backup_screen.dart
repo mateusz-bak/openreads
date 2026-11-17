@@ -101,6 +101,7 @@ class _SettingsBackupScreenState extends State<SettingsBackupScreen> {
       );
     }
 
+    if (!mounted) return;
     setState(() => _importingGoodreadsCSV = false);
   }
 
@@ -122,6 +123,7 @@ class _SettingsBackupScreenState extends State<SettingsBackupScreen> {
       );
     }
 
+    if (!mounted) return;
     setState(() => _importingBookwyrmCSV = false);
   }
 
@@ -143,6 +145,7 @@ class _SettingsBackupScreenState extends State<SettingsBackupScreen> {
       );
     }
 
+    if (!mounted) return;
     setState(() => _importingCSV = false);
   }
 
