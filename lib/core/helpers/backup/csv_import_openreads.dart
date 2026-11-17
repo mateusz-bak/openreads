@@ -209,7 +209,7 @@ class CSVImportOpenreads {
     if (rating == null) {
       return null;
     } else {
-      return (rating * 10).toInt();
+      return (rating * 2).round() * 5;
     }
   }
 

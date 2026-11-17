@@ -155,7 +155,7 @@ class CSVImportBookwyrm {
       csv[i][csv[0].indexOf('rating')].toString(),
     );
 
-    return rating != null && rating != 0 ? (rating * 10).round() : null;
+    return rating != null && rating != 0 ? (rating * 2).round() * 5 : null;
   }
 
   static String? _getMyReview(int i, List<List<dynamic>> csv) {
