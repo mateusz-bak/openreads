@@ -12,6 +12,7 @@ class WelcomePageChoices extends StatelessWidget {
     required this.importOpenreadsCsv,
     required this.importGoodreadsCsv,
     required this.importBookwyrmCsv,
+    required this.importStoryGraphCsv,
     required this.skipImportingBooks,
   });
 
@@ -19,6 +20,7 @@ class WelcomePageChoices extends StatelessWidget {
   final Function() importOpenreadsCsv;
   final Function() importGoodreadsCsv;
   final Function() importBookwyrmCsv;
+  final Function() importStoryGraphCsv;
   final Function() skipImportingBooks;
 
   @override
@@ -79,6 +81,15 @@ class WelcomePageChoices extends StatelessWidget {
                           child: WelcomeChoiceButton(
                             description: LocaleKeys.import_bookwyrm_csv.tr(),
                             onPressed: importBookwyrmCsv,
+                          ),
+                        ),
+                        Opacity(
+                          opacity: (Platform.isAndroid || Platform.isIOS)
+                              ? 1.0
+                              : 0.5,
+                          child: WelcomeChoiceButton(
+                            description: LocaleKeys.import_storygraph_csv.tr(),
+                            onPressed: importStoryGraphCsv,
                           ),
                         ),
                       ],

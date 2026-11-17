@@ -36,6 +36,7 @@ class _SettingsBackupScreenState extends State<SettingsBackupScreen> {
   bool _exportingCSV = false;
   bool _importingGoodreadsCSV = false;
   bool _importingBookwyrmCSV = false;
+  bool _importingStoryGraphCSV = false;
   bool _importingCSV = false;
 
   late DeviceInfoPlugin deviceInfo;
@@ -125,6 +126,30 @@ class _SettingsBackupScreenState extends State<SettingsBackupScreen> {
 
     if (!mounted) return;
     setState(() => _importingBookwyrmCSV = false);
+  }
+
+  Future<void> _startImportingStoryGraphCSV(BuildContext context) async {
+    setState(() => _importingStoryGraphCSV = true);
+
+    if (Platform.isAndroid) {
+      if (androidInfo.version.sdkInt < 30) {
+        await BackupGeneral.requestStoragePermission(context);
+        if (!context.mounted) return;
+
+        await CSVImportStoryGraph.importCSVLegacyStorage(context);
+      } else {
+        await CSVImportStoryGraph.importCSV(context);
+      }
+    } else if (Platform.isIOS) {
+      await CSVImportStoryGraph.importCSV(context);
+    } else {
+      BackupGeneral.showInfoSnackbar(
+        LocaleKeys.action_not_supported_on_platform_error.tr(),
+      );
+    }
+
+    if (!mounted) return;
+    setState(() => _importingStoryGraphCSV = false);
   }
 
   _startImportingCSV(context) async {
@@ -289,6 +314,7 @@ class _SettingsBackupScreenState extends State<SettingsBackupScreen> {
                             _buildImportCSV(),
                             _buildImportGoodreadsCSV(),
                             _buildImportBookwyrmCSV(),
+                            _buildImportStoryGraphCSV(),
                           ],
                         ),
                       ],
@@ -582,6 +608,31 @@ class _SettingsBackupScreenState extends State<SettingsBackupScreen> {
             : const FaIcon(FontAwesomeIcons.b),
       ),
       onPressed: _startImportingBookwyrmCSV,
+    );
+  }
+
+  SettingsTile _buildImportStoryGraphCSV() {
+    return SettingsTile(
+      title: Opacity(
+        opacity: (Platform.isAndroid || Platform.isIOS) ? 1.0 : 0.5,
+        child: Text(
+          LocaleKeys.import_storygraph_csv.tr(),
+          style: const TextStyle(
+            fontSize: 16,
+          ),
+        ),
+      ),
+      leading: Opacity(
+        opacity: (Platform.isAndroid || Platform.isIOS) ? 1.0 : 0.5,
+        child: (_importingStoryGraphCSV)
+            ? const SizedBox(
+                width: 24,
+                height: 24,
+                child: CircularProgressIndicator(),
+              )
+            : const FaIcon(FontAwesomeIcons.s),
+      ),
+      onPressed: _startImportingStoryGraphCSV,
     );
   }
 

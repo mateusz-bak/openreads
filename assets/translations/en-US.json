@@ -301,5 +301,7 @@
     "customize": "Customize",
     "hide_rereads": "Hide re-reads",
     "all_ratings": "All",
-    "ignore_leading_articles": "Ignore leading articles (The, Der, Le…)"
+    "ignore_leading_articles": "Ignore leading articles (The, Der, Le…)",
+    "import_storygraph_csv": "Import StoryGraph CSV",
+    "csv_not_valid": "This CSV file does not match the selected import"
 }

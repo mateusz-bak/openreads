@@ -50,6 +50,7 @@ dependencies:
   flutter_speed_dial: ^7.0.0
   blurhash_dart: ^1.2.1
   csv: ^8.0.0
+  html: ^0.15.7
   file_picker: ^13.3.3
   smooth_page_indicator: ^3.0.0
   intl: ^0.20.3
