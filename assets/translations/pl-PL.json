@@ -287,5 +287,8 @@
     "show_book_format": "Pokaż format książki",
     "show_sort_attributes": "Pokaż atrybuty sortowania",
     "grid_size": "Rozmiar siatki",
-    "show_title_over_cover": "Pokaż tytuł na okładce"
+    "show_title_over_cover": "Pokaż tytuł na okładce",
+    "enter_publisher": "Wprowadź wydawcę",
+    "publisher": "Wydawca",
+    "change_books_publisher": "Zmień wydawców"
 }
