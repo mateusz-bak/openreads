@@ -305,4 +305,6 @@ abstract class LocaleKeys {
   static const hide_rereads = 'hide_rereads';
   static const all_ratings = 'all_ratings';
   static const ignore_leading_articles = 'ignore_leading_articles';
+  static const import_storygraph_csv = 'import_storygraph_csv';
+  static const csv_not_valid = 'csv_not_valid';
 }

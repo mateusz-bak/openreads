@@ -8,6 +8,7 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:openreads/core/helpers/backup/backup_general.dart';
 import 'package:openreads/core/helpers/backup/backup_import.dart';
 import 'package:openreads/core/helpers/backup/csv_import_bookwyrm.dart';
+import 'package:openreads/core/helpers/backup/csv_import_storygraph.dart';
 import 'package:openreads/core/helpers/backup/csv_import_goodreads.dart';
 import 'package:openreads/core/helpers/backup/csv_import_openreads.dart';
 import 'package:openreads/core/themes/app_theme.dart';
@@ -135,6 +136,31 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
     }
   }
 
+  Future<void> _importStoryGraphCsv() async {
+    if (_checkIfMigrationIsOngoing()) return;
+    _setWelcomeState();
+
+    if (Platform.isAndroid) {
+      final androidInfo = await DeviceInfoPlugin().androidInfo;
+      if (!mounted) return;
+
+      if (androidInfo.version.sdkInt < 30) {
+        await BackupGeneral.requestStoragePermission(context);
+        if (!mounted) return;
+
+        await CSVImportStoryGraph.importCSVLegacyStorage(context);
+      } else {
+        await CSVImportStoryGraph.importCSV(context);
+      }
+    } else if (Platform.isIOS) {
+      await CSVImportStoryGraph.importCSV(context);
+    } else {
+      BackupGeneral.showInfoSnackbar(
+        LocaleKeys.action_not_supported_on_platform_error.tr(),
+      );
+    }
+  }
+
   _skipImportingBooks() {
     if (_checkIfMigrationIsOngoing()) return;
 
@@ -230,6 +256,7 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
                           importOpenreadsCsv: _importOpenreadsCsv,
                           importGoodreadsCsv: _importGoodreadsCsv,
                           importBookwyrmCsv: _importBookwyrmCsv,
+                          importStoryGraphCsv: _importStoryGraphCsv,
                           skipImportingBooks: _skipImportingBooks,
                         ),
                       ],
