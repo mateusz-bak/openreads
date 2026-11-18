@@ -27,23 +27,8 @@ jobs:
     - name: Checkout code
       uses: actions/checkout@v7
 
-    - name: Set up Flutter version
-      run: echo "VERSION=$(cat .flutter-version)" >> $GITHUB_ENV
-
     - name: Set up Flutter
-      uses: subosito/flutter-action@1a449444c387b1966244ae4d4f8c696479add0b2 # v2.23.0
-      with:
-        flutter-version: ${{ env.VERSION }}
-        cache: true
-        pub-cache: true
-
-    - name: Disable analytics
-      run: |
-        flutter config --no-analytics
-        dart --disable-analytics
-
-    - name: Get Flutter packages
-      run: flutter pub get
+      uses: ./.github/actions/setup_flutter
 
     - name: Format Dart code
       run: dart format --set-exit-if-changed lib

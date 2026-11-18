@@ -1,0 +1,31 @@
+name: Set up Flutter
+description: Installs the Flutter version from .flutter-version and gets packages
+
+inputs:
+  cache:
+    description: Cache the Flutter SDK and pub packages
+    default: 'true'
+
+runs:
+  using: composite
+  steps:
+    - name: Set up Flutter version
+      shell: bash
+      run: echo "VERSION=$(cat .flutter-version)" >> $GITHUB_ENV
+
+    - name: Set up Flutter
+      uses: subosito/flutter-action@1a449444c387b1966244ae4d4f8c696479add0b2 # v2.23.0
+      with:
+        flutter-version: ${{ env.VERSION }}
+        cache: ${{ inputs.cache }}
+        pub-cache: ${{ inputs.cache }}
+
+    - name: Disable analytics
+      shell: bash
+      run: |
+        flutter config --no-analytics
+        dart --disable-analytics
+
+    - name: Get Flutter packages
+      shell: bash
+      run: flutter pub get
