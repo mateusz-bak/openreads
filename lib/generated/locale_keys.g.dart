@@ -310,4 +310,6 @@ abstract class LocaleKeys {
   static const reading_goal = 'reading_goal';
   static const books_lowercase = 'books_lowercase';
   static const reading_goal_change_warning = 'reading_goal_change_warning';
+  static const cover_search_error = 'cover_search_error';
+  static const try_again = 'try_again';
 }

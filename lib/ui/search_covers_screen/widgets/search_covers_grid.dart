@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -9,6 +10,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
 import 'package:loading_animation_widget/loading_animation_widget.dart';
 import 'package:openreads/core/helpers/helpers.dart';
+import 'package:openreads/generated/locale_keys.g.dart';
 
 import 'package:openreads/core/themes/app_theme.dart';
 import 'package:openreads/logic/cubit/edit_book_cubit.dart';
@@ -26,6 +28,21 @@ class SearchCoversGrid extends StatefulWidget {
 }
 
 class _SearchCoversGridState extends State<SearchCoversGrid> {
+  // tiles rebuilt after scrolling keep their size instead of jumping
+  final Map<String, double> _aspectRatios = {};
+
+  void _rememberAspectRatio(String imageURL, ImageProvider imageProvider) {
+    if (_aspectRatios.containsKey(imageURL)) return;
+
+    final stream = imageProvider.resolve(ImageConfiguration.empty);
+    late final ImageStreamListener listener;
+    listener = ImageStreamListener((info, _) {
+      _aspectRatios[imageURL] = info.image.width / info.image.height;
+      stream.removeListener(listener);
+    });
+    stream.addListener(listener);
+  }
+
   void _editSelectedCover({
     required BuildContext context,
     required Uint8List? bytes,
@@ -87,6 +104,12 @@ class _SearchCoversGridState extends State<SearchCoversGrid> {
                 size: 50,
               ),
       ),
+      firstPageErrorIndicatorBuilder: (_) => _buildError(
+        onRetry: widget.pagingController.refresh,
+      ),
+      newPageErrorIndicatorBuilder: (_) => _buildError(
+        onRetry: widget.pagingController.fetchNextPage,
+      ),
       itemBuilder: (context, imageURL, _) => InkWell(
         onTap: () async {
           final file = await DefaultCacheManager().getSingleFile(imageURL);
@@ -95,17 +118,53 @@ class _SearchCoversGridState extends State<SearchCoversGrid> {
           _editSelectedCover(context: context, bytes: bytes);
         },
         borderRadius: BorderRadius.circular(cornerRadius),
-        child: CachedNetworkImage(
-          imageUrl: imageURL,
-          imageBuilder: (context, imageProvider) => Padding(
-            padding: const EdgeInsets.all(0),
-            child: ClipRRect(
-              borderRadius: BorderRadius.circular(cornerRadius),
-              child: Image(image: imageProvider),
-            ),
+        child: _aspectRatios.containsKey(imageURL)
+            ? AspectRatio(
+                aspectRatio: _aspectRatios[imageURL]!,
+                child: _buildCover(imageURL),
+              )
+            : _buildCover(imageURL),
+      ),
+    );
+  }
+
+  Widget _buildCover(String imageURL) {
+    return CachedNetworkImage(
+      imageUrl: imageURL,
+      imageBuilder: (context, imageProvider) {
+        _rememberAspectRatio(imageURL, imageProvider);
+
+        return ClipRRect(
+          borderRadius: BorderRadius.circular(cornerRadius),
+          child: Image(image: imageProvider, fit: BoxFit.cover),
+        );
+      },
+      errorWidget: (context, url, error) => const SizedBox(),
+    );
+  }
+
+  Widget _buildError({required Function() onRetry}) {
+    return Padding(
+      padding: const EdgeInsets.all(20),
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          Text(
+            LocaleKeys.cover_search_error.tr(),
+            textAlign: TextAlign.center,
+            style: const TextStyle(fontSize: 16),
           ),
-          errorWidget: (context, url, error) => const SizedBox(),
-        ),
+          const SizedBox(height: 15),
+          FilledButton.tonal(
+            onPressed: onRetry,
+            style: FilledButton.styleFrom(
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(cornerRadius),
+              ),
+            ),
+            child: Text(LocaleKeys.try_again.tr()),
+          ),
+        ],
       ),
     );
   }
