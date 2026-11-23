@@ -122,9 +122,7 @@ class BookTitleDetail extends StatelessWidget {
               author,
               style: TextStyle(
                 fontSize: 18,
-                color: Theme.of(
-                  context,
-                ).colorScheme.onSurface.withAlpha(240),
+                color: Theme.of(context).colorScheme.primary,
               ),
             ),
           ),

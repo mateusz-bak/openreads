@@ -2,7 +2,6 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:openreads/core/constants/enums/enums.dart';
-import 'package:openreads/core/themes/app_theme.dart';
 import 'package:openreads/generated/locale_keys.g.dart';
 import 'package:openreads/logic/cubit/display_cubit.dart';
 import 'package:openreads/main.dart';
@@ -14,10 +13,12 @@ class SimiliarBooksScreen extends StatefulWidget {
     super.key,
     this.tag,
     this.author,
+    this.publisher,
   });
 
   final String? tag;
   final String? author;
+  final String? publisher;
 
   @override
   State<SimiliarBooksScreen> createState() => _SimiliarBooksScreenState();
@@ -30,6 +31,8 @@ class _SimiliarBooksScreenState extends State<SimiliarBooksScreen> {
       bookCubit.getBooksWithSameTag(widget.tag!);
     } else if (widget.author != null) {
       bookCubit.getBooksWithSameAuthor(widget.author!);
+    } else if (widget.publisher != null) {
+      bookCubit.getBooksWithSamePublisher(widget.publisher!);
     }
     super.initState();
   }
@@ -47,23 +50,46 @@ class _SimiliarBooksScreenState extends State<SimiliarBooksScreen> {
                         '${LocaleKeys.author.tr()}: ',
                         style: const TextStyle(fontSize: 18),
                       )
-                    : const SizedBox(),
+                    : widget.publisher != null
+                        ? Text(
+                            '${LocaleKeys.publisher.tr()}: ',
+                            style: const TextStyle(fontSize: 18),
+                          )
+                        : const SizedBox(),
             widget.tag != null
                 ? _buildTag(widget.tag!)
                 : widget.author != null
-                    ? Text(
-                        widget.author!,
-                        style: const TextStyle(
-                            fontSize: 18, fontWeight: FontWeight.bold),
+                    ? Flexible(
+                        child: Text(
+                          widget.author!,
+                          overflow: TextOverflow.ellipsis,
+                          style: const TextStyle(
+                            fontSize: 18,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
                       )
-                    : const SizedBox(),
+                    : widget.publisher != null
+                        ? Flexible(
+                            child: Text(
+                              widget.publisher!,
+                              overflow: TextOverflow.ellipsis,
+                              style: const TextStyle(
+                                fontSize: 18,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                          )
+                        : const SizedBox(),
           ],
         ),
       ),
       body: StreamBuilder(
           stream: widget.tag != null
               ? bookCubit.booksWithSameTag
-              : bookCubit.booksWithSameAuthor,
+              : widget.author != null
+                  ? bookCubit.booksWithSameAuthor
+                  : bookCubit.booksWithSamePublisher,
           builder: (context, AsyncSnapshot<List<Book>?> snapshot) {
             if (snapshot.hasData) {
               return BlocBuilder<DisplayCubit, DisplayState>(
