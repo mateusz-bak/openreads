@@ -148,6 +148,11 @@ class _BookTextFieldState extends State<BookTextField> {
               )
             : null,
         border: InputBorder.none,
+        // without a label the text is centered, the same height as the clear button
+        isDense: widget.hint == null ? true : null,
+        contentPadding: widget.hint == null
+            ? const EdgeInsets.symmetric(vertical: 13.5)
+            : null,
         counterText: widget.hideCounter ? "" : null,
         suffixIcon: showClearButton
             ? IconButton(
