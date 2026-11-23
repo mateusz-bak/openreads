@@ -12,6 +12,8 @@ import 'package:openreads/core/helpers/helpers.dart';
 import 'package:openreads/core/themes/app_theme.dart';
 import 'package:openreads/generated/locale_keys.g.dart';
 import 'package:openreads/logic/bloc/theme_bloc/theme_bloc.dart';
+import 'package:openreads/logic/cubit/book_lists_order_cubit.dart';
+import 'package:openreads/logic/cubit/books_tab_index_cubit.dart';
 import 'package:openreads/logic/cubit/default_book_status_cubit.dart';
 import 'package:openreads/logic/cubit/edit_book_cubit.dart';
 import 'package:openreads/logic/cubit/selected_books_cubit.dart';
@@ -84,15 +86,9 @@ class _HomeScreenState extends State<HomeScreen> {
     );
   }
 
-  //TODO: fix this logic
   BookStatus _getStatusForNewBook() {
-    // if (_tabController.index == inProgressIndex) {
-    //   return BookStatus.inProgress;
-    // } else if (_tabController.index == 2) {
-    //   return BookStatus.forLater;
-    // } else {
-    return BookStatus.read;
-    // }
+    final tabIndex = context.read<BooksTabIndexCubit>().state;
+    return context.read<BookListsOrderCubit>().state[tabIndex];
   }
 
   void _setEmptyBookForEditScreen() {
