@@ -8,6 +8,7 @@ import 'package:openreads/main.dart';
 import 'package:openreads/model/book.dart';
 import 'package:openreads/model/reading.dart';
 import 'package:openreads/ui/book_screen/widgets/widgets.dart';
+import 'package:openreads/ui/similiar_books_screen/similiar_books_screen.dart';
 
 class BookScreen extends StatelessWidget {
   const BookScreen({
@@ -136,7 +137,7 @@ class BookScreen extends StatelessWidget {
                       _buildTitleDetail(state),
                       _buildStatusDetail(state, context),
                       _buildBookFormatDetail(state),
-                      _buildPublisherDetail(state),
+                      _buildPublisherDetail(state, context),
                       _buildPublicationYearDetail(state),
                       _buildPagesDetail(state),
                       _buildISBNDetail(state),
@@ -232,11 +233,19 @@ class BookScreen extends StatelessWidget {
     );
   }
 
-  Widget _buildPublisherDetail(Book state) {
+  Widget _buildPublisherDetail(Book state, BuildContext context) {
     return (state.publisher != null)
         ? BookDetail(
             title: LocaleKeys.publisher.tr(),
             text: state.publisher ?? "",
+            onTap: () => Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) => SimiliarBooksScreen(
+                  publisher: state.publisher,
+                ),
+              ),
+            ),
           )
         : const SizedBox();
   }

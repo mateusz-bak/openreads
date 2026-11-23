@@ -46,6 +46,8 @@ class BookCubit extends Cubit {
       BehaviorSubject<List<Book>?>();
   final BehaviorSubject<List<Book>?> _booksWithSameAuthorFetcher =
       BehaviorSubject<List<Book>?>();
+  final BehaviorSubject<List<Book>?> _booksWithSamePublisherFetcher =
+      BehaviorSubject<List<Book>?>();
 
   Stream<List<Book>> get allBooks => _booksFetcher.stream;
   Stream<List<Book>> get finishedBooks => _finishedBooksFetcher.stream;
@@ -61,6 +63,8 @@ class BookCubit extends Cubit {
   Stream<List<Book>?> get booksWithSameTag => _booksWithSameTagFetcher.stream;
   Stream<List<Book>?> get booksWithSameAuthor =>
       _booksWithSameAuthorFetcher.stream;
+  Stream<List<Book>?> get booksWithSamePublisher =>
+      _booksWithSamePublisherFetcher.stream;
 
   Stream<Book?> get book => _bookFetcher.stream;
 
@@ -347,6 +351,14 @@ class BookCubit extends Cubit {
     List<Book> books = await repository.getBooksWithSameAuthor(author);
 
     _booksWithSameAuthorFetcher.sink.add(books);
+  }
+
+  Future<void> getBooksWithSamePublisher(String publisher) async {
+    _booksWithSamePublisherFetcher.sink.add(null);
+
+    List<Book> books = await repository.getBooksWithSamePublisher(publisher);
+
+    _booksWithSamePublisherFetcher.sink.add(books);
   }
 
   Future<bool> downloadCoverByISBN(Book book) async {

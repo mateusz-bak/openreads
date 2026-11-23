@@ -220,4 +220,22 @@ class DatabaseController {
         .where((book) => normalizeForSearch(book.author) == normalizedAuthor)
         .toList();
   }
+
+  Future<List<Book>> getBooksWithSamePublisher(String publisher) async {
+    final db = await dbClient.db;
+
+    var result = await db.query(
+      "booksTable",
+      where: 'deleted = 0 AND publisher IS NOT NULL',
+      orderBy: 'publication_year ASC',
+    );
+
+    final normalizedPublisher = normalizeForSearch(publisher);
+
+    return result
+        .map((item) => Book.fromJSON(item))
+        .where((book) =>
+            normalizeForSearch(book.publisher ?? '') == normalizedPublisher)
+        .toList();
+  }
 }

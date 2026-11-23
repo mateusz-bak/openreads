@@ -44,4 +44,7 @@ class Repository {
 
   Future<List<Book>> getBooksWithSameAuthor(String author) =>
       dbController.getBooksWithSameAuthor(author);
+
+  Future<List<Book>> getBooksWithSamePublisher(String publisher) =>
+      dbController.getBooksWithSamePublisher(publisher);
 }
