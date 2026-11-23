@@ -210,10 +210,27 @@ class _SearchOLScreenState extends State<SearchOLScreen>
     });
     final edition = await OpenLibraryService().getEditionByISBN(isbn: isbn);
 
-    final authors = List<String>.empty(growable: true);
+    final authorKeys = List<String>.empty(growable: true);
     for (final author in edition?.authors ?? []) {
-      final authorResult =
-          await OpenLibraryService().getAuthor(key: author.key);
+      if (author.key != null) authorKeys.add(author.key!);
+    }
+
+    // many editions have no authors, they are only listed in the work
+    final workKey = edition?.works != null && edition!.works!.isNotEmpty
+        ? edition.works![0].key
+        : null;
+    if (authorKeys.isEmpty && workKey != null) {
+      try {
+        final work = await OpenLibraryService().getWork(workKey);
+        authorKeys.addAll(work.authorKeys ?? []);
+      } catch (error) {
+        // the book can still be added without authors
+      }
+    }
+
+    final authors = List<String>.empty(growable: true);
+    for (final authorKey in authorKeys) {
+      final authorResult = await OpenLibraryService().getAuthor(key: authorKey);
 
       if (authorResult?.name != null) {
         authors.add(authorResult!.name!);
@@ -353,7 +370,7 @@ class _SearchOLScreenState extends State<SearchOLScreen>
           title: item.title!,
           subtitle: item.subtitle,
           author: (item.authorName != null && item.authorName!.isNotEmpty)
-              ? item.authorName![0]
+              ? item.authorName!.join(', ')
               : '',
           pagesMedian: item.medianPages,
           isbn: item.isbn,
@@ -465,7 +482,7 @@ class _SearchOLScreenState extends State<SearchOLScreen>
         title: item.title ?? '',
         subtitle: item.subtitle,
         author: (item.authorName != null && item.authorName!.isNotEmpty)
-            ? item.authorName![0]
+            ? item.authorName!.join(', ')
             : '',
         coverKey: item.coverEditionKey,
         editions: item.editionKey,
@@ -476,7 +493,7 @@ class _SearchOLScreenState extends State<SearchOLScreen>
           title: item.title ?? '',
           subtitle: item.subtitle,
           author: (item.authorName != null && item.authorName!.isNotEmpty)
-              ? item.authorName![0]
+              ? item.authorName!.join(', ')
               : '',
           pagesMedian: item.medianPages,
           isbn: item.isbn,
