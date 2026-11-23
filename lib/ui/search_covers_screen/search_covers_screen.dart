@@ -37,34 +37,55 @@ class _SearchCoversScreenState extends State<SearchCoversScreen> {
     'accept-language': 'en-US,en;q=0.9',
   };
 
+  // page keys are DuckDuckGo result offsets, the next one comes with each page
   late final PagingController<int, String> _pagingController = PagingController(
     fetchPage: (pageKey) => _fetchPage(pageKey),
-    getNextPageKey: (state) =>
-        state.lastPageIsEmpty ? null : state.nextIntPageKey,
+    getNextPageKey: (state) => state.keys == null ? 0 : _nextOffset,
   );
 
   late TextEditingController controller;
   String searchQuery = '';
 
-  Future<List<String>> _fetchPage(int pageKey) async {
-    try {
-      await _getDuckDuckGoToken();
-      final newItems = await _getImageResults();
+  // DuckDuckGo limits requests, so the token is reused for the same query
+  String? _token;
+  String? _tokenQuery;
+  int? _nextOffset;
 
-      List<String> newImages = List<String>.empty(growable: true);
-      for (var item in newItems['results']) {
-        newImages.add(item['image']);
-      }
-      return newImages;
-    } catch (error) {
-      // TODO: Handle error and show message to user
-      return [];
+  Future<List<String>> _fetchPage(int pageKey) async {
+    if (_token == null || _tokenQuery != searchQuery) {
+      await _getDuckDuckGoToken();
     }
+
+    final newItems = await _getImageResults(pageKey);
+
+    _nextOffset = _getNextOffset(newItems['next']);
+
+    final results = newItems['results'];
+    if (results is! List) {
+      throw Exception('Image search returned no results list');
+    }
+
+    List<String> newImages = List<String>.empty(growable: true);
+    for (var item in results) {
+      newImages.add(item['image']);
+    }
+    return newImages;
   }
 
-  Future _getDuckDuckGoToken() async {
+  int? _getNextOffset(dynamic next) {
+    if (next is! String) return null;
+
+    final offset = Uri.parse(next).queryParameters['s'];
+    return offset != null ? int.tryParse(offset) : null;
+  }
+
+  Future<void> _getDuckDuckGoToken() async {
     final url = Uri.parse(Constants.duckDuckGoURL);
     final tokenResponse = await http.post(url, body: {'q': searchQuery});
+
+    if (tokenResponse.statusCode != 200) {
+      throw Exception('Token request failed: ${tokenResponse.statusCode}');
+    }
 
     final tokenMatch = RegExp(r'vqd=([\d-]+)\&').firstMatch(
       tokenResponse.body,
@@ -74,26 +95,34 @@ class _SearchCoversScreenState extends State<SearchCoversScreen> {
       throw Exception('Token Parsing Failed !');
     }
 
-    final token = tokenMatch.group(1);
+    _token = tokenMatch.group(1);
+    _tokenQuery = searchQuery;
+  }
+
+  Future<dynamic> _getImageResults(int offset) async {
+    final requestUrl = Uri.parse(Constants.duckDuckGoImagesURL);
 
     params = {
       'l': 'us-en',
       'o': 'json',
-      'q': searchQuery,
-      'vqd': token,
+      'q': _tokenQuery,
+      'vqd': _token,
       'f': ',,,',
       'p': '1',
+      's': '$offset',
       'v7exp': 'a',
     };
-  }
-
-  Future<dynamic> _getImageResults() async {
-    final requestUrl = Uri.parse(Constants.duckDuckGoImagesURL);
 
     final response = await http.get(
       requestUrl.replace(queryParameters: params),
       headers: headers,
     );
+
+    // a blocked request does not return JSON, a new token may help next time
+    if (response.statusCode != 200) {
+      _token = null;
+      throw Exception('Image search failed: ${response.statusCode}');
+    }
 
     return jsonDecode(response.body);
   }

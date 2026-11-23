@@ -306,5 +306,7 @@
     "csv_not_valid": "This CSV file does not match the selected import",
     "reading_goal": "Reading goal",
     "books_lowercase": "books",
-    "reading_goal_change_warning": "Your current goal will be changed."
+    "reading_goal_change_warning": "Your current goal will be changed.",
+    "cover_search_error": "Could not load covers. Online search may be limited for a few minutes, please try again later.",
+    "try_again": "Try again"
 }
