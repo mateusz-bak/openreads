@@ -303,5 +303,8 @@
     "all_ratings": "All",
     "ignore_leading_articles": "Ignore leading articles (The, Der, Le…)",
     "import_storygraph_csv": "Import StoryGraph CSV",
-    "csv_not_valid": "This CSV file does not match the selected import"
+    "csv_not_valid": "This CSV file does not match the selected import",
+    "reading_goal": "Reading goal",
+    "books_lowercase": "books",
+    "reading_goal_change_warning": "Your current goal will be changed."
 }
