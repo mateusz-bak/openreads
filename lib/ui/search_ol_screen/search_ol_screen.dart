@@ -406,7 +406,7 @@ class _SearchOLScreenState extends State<SearchOLScreen>
         body: Column(
           children: [
             _buildSearchField(context),
-            _buildSearchTypesRadio(),
+            _buildSearchTypeChips(),
             _buildDivider(),
             _buildNumberOfResults(),
             (searchActivated)
@@ -571,26 +571,26 @@ class _SearchOLScreenState extends State<SearchOLScreen>
     );
   }
 
-  Align _buildSearchTypesRadio() {
-    return Align(
-      alignment: Alignment.centerLeft,
-      child: BlocBuilder<OpenLibrarySearchBloc, OpenLibrarySearchState>(
-        builder: (context, state) {
-          return Wrap(
-            alignment: WrapAlignment.start,
-            crossAxisAlignment: WrapCrossAlignment.center,
-            children: [
-              for (var i = 0; i < 4; i++) ...[
-                if (i != 0) const SizedBox(width: 5),
-                OLSearchRadio(
-                  searchType: OLSearchType.values[i],
-                  activeSearchType: _getOLSearchTypeEnum(state),
-                  onChanged: _changeSearchType,
-                ),
+  Padding _buildSearchTypeChips() {
+    return Padding(
+      padding: const EdgeInsets.fromLTRB(10, 0, 10, 5),
+      child: Align(
+        alignment: AlignmentDirectional.centerStart,
+        child: BlocBuilder<OpenLibrarySearchBloc, OpenLibrarySearchState>(
+          builder: (context, state) {
+            return Wrap(
+              spacing: 8,
+              children: [
+                for (var i = 0; i < 4; i++)
+                  OLSearchTypeChip(
+                    searchType: OLSearchType.values[i],
+                    activeSearchType: _getOLSearchTypeEnum(state),
+                    onSelected: _changeSearchType,
+                  ),
               ],
-            ],
-          );
-        },
+            );
+          },
+        ),
       ),
     );
   }
