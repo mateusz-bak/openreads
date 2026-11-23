@@ -307,4 +307,7 @@ abstract class LocaleKeys {
   static const ignore_leading_articles = 'ignore_leading_articles';
   static const import_storygraph_csv = 'import_storygraph_csv';
   static const csv_not_valid = 'csv_not_valid';
+  static const reading_goal = 'reading_goal';
+  static const books_lowercase = 'books_lowercase';
+  static const reading_goal_change_warning = 'reading_goal_change_warning';
 }

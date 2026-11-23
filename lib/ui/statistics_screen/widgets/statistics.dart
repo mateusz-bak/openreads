@@ -142,8 +142,7 @@ class Statistics extends StatelessWidget {
             child: Column(
               mainAxisAlignment: MainAxisAlignment.start,
               children: [
-                _buildBooksChallenge(context, state, null),
-                _buildPagesChallenge(context, state, null),
+                _buildReadingGoal(context, state, null),
                 _buildAllBooksStat(context),
                 _buildFinishedBooksByMonth(context, state, null),
                 _buildFinishedPagesByMonth(context, state, null),
@@ -175,8 +174,7 @@ class Statistics extends StatelessWidget {
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.start,
                     children: [
-                      _buildBooksChallenge(context, state, year),
-                      _buildPagesChallenge(context, state, year),
+                      _buildReadingGoal(context, state, year),
                       _buildFinishedBooksByMonth(context, state, year),
                       _buildFinishedPagesByMonth(context, state, year),
                       _buildNumberOfFinishedBooks(context, state, year),
@@ -201,138 +199,75 @@ class Statistics extends StatelessWidget {
     return tabs;
   }
 
-  BlocBuilder<dynamic, dynamic> _buildBooksChallenge(
+  Widget _buildReadingGoal(
     BuildContext context,
     StatsLoaded state,
     int? year,
   ) {
-    return BlocBuilder<ChallengeBloc, ChallengeState>(
-      builder: (context, challengeState) {
-        if (challengeState is SetChallengeState &&
-            challengeState.yearlyChallenges != null) {
-          final yearlyChallenges = _parseYearlyChallenges(
-            challengeState.yearlyChallenges!,
-          );
+    final currentYear = DateTime.now().year;
+    final goalYear = year ?? currentYear;
 
-          final selectedTarget = yearlyChallenges.where((element) {
-            return (year == null)
-                ? element.year == DateTime.now().year
-                : element.year == year;
-          });
+    int sumForYear(List<BookReadStat> stats) {
+      final statsForYear = stats.where((element) => element.year == goalYear);
 
-          final selectedValue =
-              state.finishedBooksByMonthAllTypes.where((element) {
-            return (year == null)
-                ? element.year == DateTime.now().year
-                : element.year == year;
-          });
-
-          final value = selectedValue.isNotEmpty
-              ? selectedValue.first.values.reduce((a, b) => a + b)
-              : 0;
-
-          if (selectedTarget.isEmpty || selectedTarget.first.books == null) {
-            return _buildNoBooksChallenge(context, state, year);
-          } else {
-            return ReadingChallenge(
-              title: LocaleKeys.books_challenge.tr(),
-              value: value,
-              target: selectedTarget.first.books ?? 0,
-              setChallenge: setChallenge,
-              booksTarget: selectedTarget.first.books,
-              pagesTarget: selectedTarget.first.pages,
-              year: year ?? DateTime.now().year,
-              onSharePressed: state.years.contains(year ?? DateTime.now().year)
-                  ? () => _openYearSummary(
-                        context,
-                        year ?? DateTime.now().year,
-                      )
-                  : null,
-            );
-          }
-        } else {
-          return _buildNoBooksChallenge(context, state, year);
-        }
-      },
-    );
-  }
-
-  Widget _buildNoBooksChallenge(
-    BuildContext context,
-    StatsLoaded state,
-    int? year,
-  ) {
-    if (year != null) {
-      return ShareYearBox(
-        onPressed: () => _openYearSummary(context, year),
-      );
+      return statsForYear.isNotEmpty
+          ? statsForYear.first.values.reduce((a, b) => a + b)
+          : 0;
     }
 
-    final currentYear = DateTime.now().year;
+    final onSharePressed = state.years.contains(goalYear)
+        ? () => _openYearSummary(context, goalYear)
+        : null;
 
-    return Column(
-      children: [
-        SetChallengeBox(
-          setChallenge: setChallenge,
-          year: currentYear,
-        ),
-        if (state.years.contains(currentYear))
-          ShareYearBox(
-            onPressed: () => _openYearSummary(context, currentYear),
-          ),
-      ],
-    );
-  }
-
-  BlocBuilder<dynamic, dynamic> _buildPagesChallenge(
-    BuildContext context,
-    StatsLoaded state,
-    int? year,
-  ) {
     return BlocBuilder<ChallengeBloc, ChallengeState>(
       builder: (context, challengeState) {
+        YearlyChallenge? challenge;
         if (challengeState is SetChallengeState &&
             challengeState.yearlyChallenges != null) {
           final yearlyChallenges = _parseYearlyChallenges(
             challengeState.yearlyChallenges!,
           );
 
-          final selectedTarget = yearlyChallenges.where((element) {
-            return (year == null)
-                ? element.year == DateTime.now().year
-                : element.year == year;
-          });
-
-          final selectedValue =
-              state.finishedPagesByMonthAllTypes.where((element) {
-            return (year == null)
-                ? element.year == DateTime.now().year
-                : element.year == year;
-          });
-
-          final value = selectedValue.isNotEmpty
-              ? selectedValue.first.values.reduce((a, b) => a + b)
-              : 0;
-
-          if (selectedTarget.isEmpty) {
-            return const SizedBox();
-          } else if (selectedTarget.first.pages == null) {
-            return const SizedBox();
-          } else {
-            return ReadingChallenge(
-              title: LocaleKeys.pages_challenge.tr(),
-              isSecondary: true,
-              value: value,
-              target: selectedTarget.first.pages ?? 0,
-              setChallenge: setChallenge,
-              booksTarget: selectedTarget.first.books,
-              pagesTarget: selectedTarget.first.pages,
-              year: year ?? DateTime.now().year,
-            );
+          for (var yearlyChallenge in yearlyChallenges) {
+            if (yearlyChallenge.year == goalYear) {
+              challenge = yearlyChallenge;
+              break;
+            }
           }
-        } else {
-          return const SizedBox();
         }
+
+        // targets of 0 can come from old backups and mean no goal
+        final booksTarget =
+            (challenge?.books ?? 0) > 0 ? challenge!.books : null;
+        final pagesTarget =
+            (challenge?.pages ?? 0) > 0 ? challenge!.pages : null;
+        final hasGoal = booksTarget != null || pagesTarget != null;
+
+        final card = ReadingGoalCard(
+          // keeps the editor state separate for every year tab
+          key: ValueKey('reading_goal_$goalYear'),
+          year: goalYear,
+          booksValue: sumForYear(state.finishedBooksByMonthAllTypes),
+          pagesValue: sumForYear(state.finishedPagesByMonthAllTypes),
+          booksTarget: booksTarget,
+          pagesTarget: pagesTarget,
+          setChallenge: setChallenge,
+          onSharePressed: onSharePressed,
+          isCompact: !hasGoal && goalYear < currentYear,
+        );
+
+        // past years without a goal only get a small button to set it
+        if (!hasGoal && goalYear < currentYear) {
+          return Column(
+            children: [
+              if (onSharePressed != null)
+                ShareYearBox(onPressed: onSharePressed),
+              card,
+            ],
+          );
+        }
+
+        return card;
       },
     );
   }
