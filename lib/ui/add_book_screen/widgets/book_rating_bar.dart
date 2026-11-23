@@ -42,7 +42,7 @@ class BookRatingBar extends StatelessWidget {
                     child: RatingBar.builder(
                       unratedColor: Theme.of(
                         context,
-                      ).colorScheme.surfaceContainerLow,
+                      ).colorScheme.outlineVariant,
                       initialRating:
                           (state.rating == null) ? 0.0 : state.rating! / 10,
                       allowHalfRating: true,
