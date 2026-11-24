@@ -129,14 +129,24 @@ class _SearchCoversGridState extends State<SearchCoversGrid> {
   }
 
   Widget _buildCover(String imageURL) {
+    final mediaQuery = MediaQuery.of(context);
+
+    // full size covers fill the image cache and get reloaded after scrolling
+    final tileWidth =
+        (mediaQuery.size.width / 2 * mediaQuery.devicePixelRatio).round();
+
     return CachedNetworkImage(
       imageUrl: imageURL,
+      memCacheWidth: tileWidth,
       imageBuilder: (context, imageProvider) {
-        _rememberAspectRatio(imageURL, imageProvider);
+        // imageBuilder gets the full size provider, resize it the same way
+        final resizedImage = ResizeImage(imageProvider, width: tileWidth);
+
+        _rememberAspectRatio(imageURL, resizedImage);
 
         return ClipRRect(
           borderRadius: BorderRadius.circular(cornerRadius),
-          child: Image(image: imageProvider, fit: BoxFit.cover),
+          child: Image(image: resizedImage, fit: BoxFit.cover),
         );
       },
       errorWidget: (context, url, error) => const SizedBox(),
