@@ -14,33 +14,29 @@ class BookDetailLong extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      padding: const EdgeInsets.fromLTRB(25, 0, 25, 50),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.stretch,
-        children: [
-          Text(
-            title,
-            style: const TextStyle(
-              fontSize: 16,
-              fontWeight: FontWeight.bold,
-              height: 0.5,
-            ),
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.stretch,
+      children: [
+        Text(
+          title,
+          style: const TextStyle(
+            fontSize: 16,
+            fontWeight: FontWeight.bold,
+            height: 0.5,
           ),
-          Divider(
-            color: Theme.of(context).colorScheme.onSurface.withAlpha(25),
+        ),
+        Divider(
+          color: Theme.of(context).colorScheme.onSurface.withAlpha(25),
+        ),
+        const SizedBox(height: 5),
+        Text(
+          text,
+          style: const TextStyle(
+            fontSize: 14,
+            fontWeight: FontWeight.normal,
           ),
-          const SizedBox(height: 5),
-          Text(
-            text,
-            textAlign: TextAlign.justify,
-            style: const TextStyle(
-              fontSize: 14,
-              fontWeight: FontWeight.normal,
-            ),
-          ),
-        ],
-      ),
+        ),
+      ],
     );
   }
 }

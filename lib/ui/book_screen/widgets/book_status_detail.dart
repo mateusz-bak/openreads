@@ -53,30 +53,33 @@ class _BookStatusDetailState extends State<BookStatusDetail> {
     return '(${LocaleKeys.day.plural(diff).tr()})';
   }
 
+  bool _hasReadingDates() {
+    return widget.book.readings.any(
+      (reading) => reading.startDate != null || reading.finishDate != null,
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
-    return Container(
-      padding: const EdgeInsets.fromLTRB(25, 0, 25, 50),
-      child: Column(
-        children: [
-          Row(
-            children: [
-              _buildStatusBox(context),
-              SizedBox(width: (widget.showChangeStatus) ? 20 : 0),
-              (widget.showChangeStatus)
-                  ? _buildChangeStatusButton(context)
-                  : const SizedBox(),
-            ],
-          ),
-          const SizedBox(height: 10),
-          _generateHowManyTimesRead(context),
-          ..._buildStartAndFinishDates(context),
-          SizedBox(height: (widget.showRatingAndLike) ? 20 : 0),
-          (widget.showRatingAndLike)
-              ? _buildRatingAndLike(context)
-              : const SizedBox(),
-        ],
-      ),
+    return Column(
+      children: [
+        Row(
+          children: [
+            _buildStatusBox(context),
+            SizedBox(width: (widget.showChangeStatus) ? 20 : 0),
+            (widget.showChangeStatus)
+                ? _buildChangeStatusButton(context)
+                : const SizedBox(),
+          ],
+        ),
+        SizedBox(height: _hasReadingDates() ? 10 : 0),
+        _generateHowManyTimesRead(context),
+        ..._buildStartAndFinishDates(context),
+        SizedBox(height: (widget.showRatingAndLike) ? 20 : 0),
+        (widget.showRatingAndLike)
+            ? _buildRatingAndLike(context)
+            : const SizedBox(),
+      ],
     );
   }
 
@@ -204,7 +207,7 @@ class _BookStatusDetailState extends State<BookStatusDetail> {
             initialRating:
                 (widget.book.rating != null) ? widget.book.rating! / 10 : 0,
             allowHalfRating: true,
-            unratedColor: Theme.of(context).colorScheme.surfaceContainerLow,
+            unratedColor: Theme.of(context).colorScheme.surfaceContainerHighest,
             glow: false,
             itemSize: 34,
             ignoreGestures: true,
@@ -312,6 +315,7 @@ class _BookStatusDetailState extends State<BookStatusDetail> {
           TextSpan(
             text:
                 '${dateFormat.format(startDate)} - ${dateFormat.format(finishDate)}',
+            style: TextStyle(color: Theme.of(context).colorScheme.primary),
           ),
           TextSpan(
             text: readingTimeText,
@@ -343,8 +347,11 @@ class _BookStatusDetailState extends State<BookStatusDetail> {
         ),
         children: [
           TextSpan(
-            text:
-                '${LocaleKeys.finished_on_date.tr()} ${dateFormat.format(finishDate)}',
+            text: '${LocaleKeys.finished_on_date.tr()} ',
+          ),
+          TextSpan(
+            text: dateFormat.format(finishDate),
+            style: TextStyle(color: Theme.of(context).colorScheme.primary),
           ),
           TextSpan(
             text: readingTimeText,
@@ -368,8 +375,11 @@ class _BookStatusDetailState extends State<BookStatusDetail> {
         ),
         children: [
           TextSpan(
-            text:
-                '${LocaleKeys.started_on_date.tr()} ${dateFormat.format(startDate)}',
+            text: '${LocaleKeys.started_on_date.tr()} ',
+          ),
+          TextSpan(
+            text: dateFormat.format(startDate),
+            style: TextStyle(color: Theme.of(context).colorScheme.primary),
           ),
         ],
       ),

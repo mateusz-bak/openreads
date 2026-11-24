@@ -127,34 +127,82 @@ class BookScreen extends StatelessWidget {
         appBar: const BookScreenAppBar(),
         body: BlocBuilder<CurrentBookCubit, Book>(
           builder: (context, state) {
-            return SingleChildScrollView(
-              child: Column(
-                children: [
-                  _buildCoverSpace(state, mediaQuery),
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      _buildTitleDetail(state),
-                      _buildStatusDetail(state, context),
-                      _buildBookFormatDetail(state),
-                      _buildPublisherDetail(state, context),
-                      _buildPublicationYearDetail(state),
-                      _buildPagesDetail(state),
-                      _buildISBNDetail(state),
-                      _buildOLIDDetail(state),
-                      const SizedBox(height: 50),
-                      _buildDescriptionDetail(state),
-                      _buildMyReviewDetail(state),
-                      _buildNotesDetail(state),
-                      _buildEditDates(state),
-                      const SizedBox(height: 100),
-                    ],
-                  ),
-                ],
+            if (state.hasCover != true) {
+              return SingleChildScrollView(
+                child: Column(
+                  children: [
+                    SizedBox(
+                      height: mediaQuery.padding.top +
+                          AppBar().preferredSize.height,
+                    ),
+                    _buildDetails(state, context),
+                  ],
+                ),
+              );
+            }
+
+            // body padding includes the app bar, the same as in CoverView
+            final bodyMediaQuery = MediaQuery.of(context);
+
+            return ParallaxCoverLayout(
+              coverHeight: (bodyMediaQuery.size.height / 2.5) +
+                  bodyMediaQuery.padding.top +
+                  20,
+              cover: Align(
+                alignment: Alignment.topCenter,
+                child: CoverView(
+                  heroTag: heroTag,
+                  book: state,
+                ),
               ),
+              child: _buildDetails(state, context),
             );
           },
         ),
+      ),
+    );
+  }
+
+  Column _buildDetails(Book state, BuildContext context) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        // title is not in a card, it continues the cover sheet
+        Padding(
+          padding: const EdgeInsets.fromLTRB(25, 0, 25, 15),
+          child: _buildTitleDetail(state),
+        ),
+        _buildCard(context, _buildStatusDetail(state, context)),
+        _buildCard(
+          context,
+          Column(
+            children: [
+              _buildBookFormatDetail(state),
+              _buildPublisherDetail(state, context),
+              _buildPublicationYearDetail(state),
+              _buildPagesDetail(state),
+              _buildISBNDetail(state),
+              _buildOLIDDetail(state),
+            ],
+          ),
+        ),
+        _buildDescriptionDetail(state, context),
+        _buildMyReviewDetail(state, context),
+        _buildNotesDetail(state, context),
+        const SizedBox(height: 10),
+        _buildEditDates(state),
+        const SizedBox(height: 100),
+      ],
+    );
+  }
+
+  Widget _buildCard(BuildContext context, Widget child) {
+    return Card.filled(
+      color: Theme.of(context).colorScheme.surfaceContainerLow,
+      margin: const EdgeInsets.fromLTRB(10, 0, 10, 10),
+      child: Padding(
+        padding: const EdgeInsets.all(15),
+        child: child,
       ),
     );
   }
@@ -166,29 +214,38 @@ class BookScreen extends StatelessWidget {
     );
   }
 
-  Widget _buildNotesDetail(Book state) {
+  Widget _buildNotesDetail(Book state, BuildContext context) {
     return (state.notes != null && state.notes!.isNotEmpty)
-        ? BookDetailLong(
-            title: LocaleKeys.notes.tr(),
-            text: state.notes!,
+        ? _buildCard(
+            context,
+            BookDetailLong(
+              title: LocaleKeys.notes.tr(),
+              text: state.notes!,
+            ),
           )
         : const SizedBox();
   }
 
-  Widget _buildMyReviewDetail(Book state) {
+  Widget _buildMyReviewDetail(Book state, BuildContext context) {
     return (state.myReview != null && state.myReview!.isNotEmpty)
-        ? BookDetailLong(
-            title: LocaleKeys.my_review.tr(),
-            text: state.myReview!,
+        ? _buildCard(
+            context,
+            BookDetailLong(
+              title: LocaleKeys.my_review.tr(),
+              text: state.myReview!,
+            ),
           )
         : const SizedBox();
   }
 
-  Widget _buildDescriptionDetail(Book state) {
+  Widget _buildDescriptionDetail(Book state, BuildContext context) {
     return (state.description != null && state.description!.isNotEmpty)
-        ? BookDetailLong(
-            title: LocaleKeys.description.tr(),
-            text: state.description!,
+        ? _buildCard(
+            context,
+            BookDetailLong(
+              title: LocaleKeys.description.tr(),
+              text: state.description!,
+            ),
           )
         : const SizedBox();
   }
@@ -257,20 +314,6 @@ class BookScreen extends StatelessWidget {
             text: (state.publicationYear ?? "").toString(),
           )
         : const SizedBox();
-  }
-
-  SingleChildRenderObjectWidget _buildCoverSpace(
-      Book state, MediaQueryData mediaQuery) {
-    return (state.hasCover == true)
-        ? Center(
-            child: CoverView(
-              heroTag: heroTag,
-              book: state,
-            ),
-          )
-        : SizedBox(
-            height: mediaQuery.padding.top + AppBar().preferredSize.height,
-          );
   }
 
   BookTitleDetail _buildTitleDetail(Book state) {
