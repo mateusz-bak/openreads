@@ -95,6 +95,7 @@ flutter:
     - assets/images/
     - assets/icons/
     - assets/translations/
+    - assets/fonts/licenses/
   fonts:
     - family: Montserrat
       fonts:

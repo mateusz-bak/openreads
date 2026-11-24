@@ -87,11 +87,6 @@ Submit an issue here: [Openreads issues](https://github.com/mateusz-bak/openread
 
 Take a look at our [CONTRIBUTING.md](CONTRIBUTING.md) file.
 
-## 📄 Attributions
-
-### 👁️‍🗨️ Icons
-[Font Awesome](https://fontawesome.com/ "Font Awesome")
-
 ## ❓ FAQ
 
 - **What platforms is Openreads available for?** </br>
