@@ -1,0 +1,33 @@
+name: Announce Flutter upgrade
+
+on:
+  push:
+    branches:
+      - master
+    paths:
+      - .flutter-version
+
+permissions:
+  contents: read
+
+jobs:
+  announce_on_matrix:
+    name: Announce Flutter upgrade on Matrix
+    runs-on: ubuntu-26.04
+    steps:
+      - name: Check out Flutter version
+        uses: actions/checkout@v7
+        with:
+          sparse-checkout: .flutter-version
+          sparse-checkout-cone-mode: false
+
+      - name: Post to the dev room
+        run: |
+          VERSION="$(tr -d '[:space:]' < .flutter-version)"
+          MESSAGE="Openreads now uses Flutter $VERSION: $GITHUB_SERVER_URL/$GITHUB_REPOSITORY/commit/$GITHUB_SHA"
+          curl -sS --fail-with-body -X PUT -H "Authorization: Bearer $MATRIX_ACCESS_TOKEN" \
+            "https://matrix.org/_matrix/client/v3/rooms/$ROOM/send/m.room.message/$GITHUB_RUN_ID-$GITHUB_RUN_ATTEMPT" \
+            -d "$(jq -n --arg body "$MESSAGE" '{msgtype: "m.text", body: $body}')"
+        env:
+          MATRIX_ACCESS_TOKEN: ${{ secrets.MATRIX_ACCESS_TOKEN }}
+          ROOM: '%21ygcyIzQTLyajkAQjDS%3Amatrix.org'
