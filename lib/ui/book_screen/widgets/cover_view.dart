@@ -81,19 +81,6 @@ class _CoverViewState extends State<CoverView> {
             const SizedBox(height: 10),
           ],
         ),
-        Positioned(
-          bottom: 0,
-          child: Container(
-            height: 40,
-            width: mediaQuery.size.width,
-            decoration: BoxDecoration(
-              color: Theme.of(context).scaffoldBackgroundColor,
-              borderRadius: const BorderRadius.vertical(
-                top: Radius.circular(25),
-              ),
-            ),
-          ),
-        ),
       ],
     );
   }

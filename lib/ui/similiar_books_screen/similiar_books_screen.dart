@@ -98,7 +98,7 @@ class _SimiliarBooksScreenState extends State<SimiliarBooksScreen> {
                       displayState.type == DisplayType.detailedGrid) {
                     return BooksGrid(
                       books: snapshot.data!,
-                      listNumber: 0,
+                      listNumber: 6,
                       allBooksCount: snapshot.data!.length,
                       gridType: displayState.type,
                       gridSize: displayState.gridSize,
@@ -108,7 +108,7 @@ class _SimiliarBooksScreenState extends State<SimiliarBooksScreen> {
 
                   return BooksList(
                     books: snapshot.data!,
-                    listNumber: 0,
+                    listNumber: 6,
                     selectedTag: widget.tag,
                   );
                 },

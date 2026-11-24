@@ -28,13 +28,17 @@ class BookTitleDetail extends StatelessWidget {
   }) {
     return FilterChip(
       visualDensity: VisualDensity.compact,
-      backgroundColor: Theme.of(context).colorScheme.surface,
+      backgroundColor: Theme.of(context).colorScheme.secondaryContainer,
+      side: BorderSide.none,
       label: Text(
         tag,
         overflow: TextOverflow.ellipsis,
         softWrap: true,
         maxLines: 1,
-        style: const TextStyle(fontSize: 12),
+        style: TextStyle(
+          fontSize: 12,
+          color: Theme.of(context).colorScheme.onSecondaryContainer,
+        ),
       ),
       clipBehavior: Clip.none,
       onSelected: (_) {
@@ -88,56 +92,53 @@ class BookTitleDetail extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      padding: const EdgeInsets.fromLTRB(25, 0, 25, 25),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.stretch,
-        children: [
-          Text(
-            title,
-            style: const TextStyle(
-              fontSize: 26,
-              fontWeight: FontWeight.bold,
-            ),
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.stretch,
+      children: [
+        Text(
+          title,
+          style: const TextStyle(
+            fontSize: 26,
+            fontWeight: FontWeight.bold,
           ),
-          subtitle != null
-              ? Text(
-                  subtitle!,
-                  style: TextStyle(
-                    fontSize: 16,
-                    color: Theme.of(
-                      context,
-                    ).colorScheme.onSurface.withAlpha(200),
-                  ),
-                )
-              : const SizedBox(),
-          Divider(
-            color: Theme.of(context).colorScheme.onSurface.withAlpha(25),
-          ),
-          const SizedBox(height: 5),
-          InkWell(
-            borderRadius: BorderRadius.circular(cornerRadius),
-            onTap: () => _navigateToSimiliarAuthorBooksScreen(context),
-            child: Text(
-              author,
-              style: TextStyle(
-                fontSize: 18,
-                color: Theme.of(context).colorScheme.primary,
-              ),
-            ),
-          ),
-          const SizedBox(height: 10),
-          Row(
-            children: [
-              Expanded(
-                child: Wrap(
-                  children: _generateTagChips(context: context),
+        ),
+        subtitle != null
+            ? Text(
+                subtitle!,
+                style: TextStyle(
+                  fontSize: 16,
+                  color: Theme.of(
+                    context,
+                  ).colorScheme.onSurface.withAlpha(200),
                 ),
-              ),
-            ],
+              )
+            : const SizedBox(),
+        Divider(
+          color: Theme.of(context).colorScheme.onSurface.withAlpha(25),
+        ),
+        const SizedBox(height: 5),
+        InkWell(
+          borderRadius: BorderRadius.circular(cornerRadius),
+          onTap: () => _navigateToSimiliarAuthorBooksScreen(context),
+          child: Text(
+            author,
+            style: TextStyle(
+              fontSize: 18,
+              color: Theme.of(context).colorScheme.primary,
+            ),
           ),
-        ],
-      ),
+        ),
+        const SizedBox(height: 10),
+        Row(
+          children: [
+            Expanded(
+              child: Wrap(
+                children: _generateTagChips(context: context),
+              ),
+            ),
+          ],
+        ),
+      ],
     );
   }
 }
