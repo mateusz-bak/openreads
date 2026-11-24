@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:device_info_plus/device_info_plus.dart';
 import 'package:dynamic_color/dynamic_color.dart';
 import 'package:easy_localization/easy_localization.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -52,6 +53,7 @@ void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await _migrateNorwegianLocale();
   await EasyLocalization.ensureInitialized();
+  _registerFontLicenses();
 
   // Using sqflite_common_ffi on windows or linux which requires setup
   if (Platform.isLinux || Platform.isWindows) {
@@ -314,6 +316,21 @@ class _OpenreadsAppState extends State<OpenreadsApp>
       );
     });
   }
+}
+
+// bundled fonts are not pub packages, so their licenses are added by hand
+void _registerFontLicenses() {
+  LicenseRegistry.addLicense(() async* {
+    for (final font in Constants.fonts) {
+      final name = font['text']!;
+      final fileName = name.toLowerCase().replaceAll(' ', '_');
+
+      yield LicenseEntryWithLineBreaks(
+        [name],
+        await rootBundle.loadString('assets/fonts/licenses/$fileName.txt'),
+      );
+    }
+  });
 }
 
 // Norwegian Bokmål moved from no-NO to nb-NO,

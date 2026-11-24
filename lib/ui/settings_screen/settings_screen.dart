@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
+import 'package:openreads/core/constants/constants.dart';
 import 'package:openreads/core/constants/enums/enums.dart';
 import 'package:openreads/core/constants/locale.dart';
 import 'package:openreads/core/themes/app_theme.dart';
@@ -288,6 +289,27 @@ class SettingsScreen extends StatelessWidget {
         if (url == null) return;
 
         launchUrl(Uri.parse(url), mode: LaunchMode.externalApplication);
+      },
+    );
+  }
+
+  SettingsTile _buildOpenSourceLicensesSetting({
+    String? version,
+    required BuildContext context,
+  }) {
+    return SettingsTile.navigation(
+      // translated by Flutter, so no new key is needed
+      title: Text(
+        MaterialLocalizations.of(context).viewLicensesButtonLabel,
+        style: const TextStyle(fontSize: 16),
+      ),
+      leading: const Icon(Icons.description_rounded),
+      onPressed: (context) {
+        showLicensePage(
+          context: context,
+          applicationName: Constants.appName,
+          applicationVersion: version,
+        );
       },
     );
   }
@@ -770,6 +792,10 @@ class SettingsScreen extends StatelessWidget {
                             description: licence,
                             url: licenceUrl,
                             iconData: Icons.copyright_rounded,
+                            context: context,
+                          ),
+                          _buildOpenSourceLicensesSetting(
+                            version: version,
                             context: context,
                           ),
                         ],
