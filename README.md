@@ -19,6 +19,7 @@
 <br/>
 
 <a href='https://github.com/mateusz-bak/openreads/releases/latest'><img height=70 alt='Get it on Github' src='https://raw.githubusercontent.com/mateusz-bak/openreads/master/doc/github/get-it-on-github.png'/></a>
+<a href='https://apps.obtainium.imranr.dev/redirect?r=obtainium://app/%7B%22id%22%3A%22software.mdev.bookstracker%22%2C%22url%22%3A%22https%3A%2F%2Fgithub.com%2Fmateusz-bak%2Fopenreads%22%2C%22author%22%3A%22mateusz-bak%22%2C%22name%22%3A%22Openreads%22%2C%22additionalSettings%22%3A%22%7B%5C%22autoApkFilterByArch%5C%22%3Atrue%7D%22%7D'><img height=70 alt='Get it on Obtainium' src='https://raw.githubusercontent.com/mateusz-bak/openreads/master/doc/obtainium/get-it-on-obtainium.png'/></a>
 <a href='https://f-droid.org/en/packages/software.mdev.bookstracker'><img height=70 alt='Get it on F-Droid' src='https://fdroid.gitlab.io/artwork/badge/get-it-on.png'/></a>
 <a href='https://play.google.com/store/apps/details?id=software.mdev.bookstracker'><img height=70 alt='Get it on Google Play' src='https://play.google.com/intl/en_us/badges/images/generic/en_badge_web_generic.png'/></a>
 <a href='https://apps.apple.com/app/id6476542305'><img height=70 alt='Download on App Store' src='https://raw.githubusercontent.com/mateusz-bak/openreads/master/doc/app_store/download_on_app_store.png'/></a>
