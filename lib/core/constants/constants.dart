@@ -7,6 +7,7 @@ class Constants {
   static const blurHashY = 2;
 
   static const maxTagLength = 100;
+  static const maxLongTextLength = 50000;
 
   static const duckDuckGoURL = 'https://duckduckgo.com/';
   static const duckDuckGoImagesURL = 'https://duckduckgo.com/i.js';

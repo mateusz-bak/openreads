@@ -10,3 +10,4 @@ export 'quick_rating_dialog.dart';
 export 'book_detail_long.dart';
 export 'like_button.dart';
 export 'parallax_cover_layout.dart';
+export 'book_detail_long_sheet.dart';
