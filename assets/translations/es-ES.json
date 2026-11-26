@@ -220,7 +220,7 @@
     },
     "book_format_hardcover_plural": "Libros de tapa dura",
     "change_book_format": "Cambiar el formato de los libros",
-    "ok": "DE ACUERDO",
+    "ok": "Aceptar",
     "filter_by_book_format": "Filtrar por formato del libro",
     "set_custom_reading_time": "Fijar el tiempo de lectura personalizado",
     "day": {
@@ -283,5 +283,8 @@
     "show_title_over_cover": "Mostrar título sobre portada",
     "create_discussion": "Crear un debate en Github",
     "list": "Lista",
-    "show_book_format": "Mostrar formato de libro"
+    "show_book_format": "Mostrar formato de libro",
+    "add_new_default_tag": "Añadir nueva etiqueta predeterminada:",
+    "book_format": "Formato del libro",
+    "display": "Visualización"
 }
